@@ -14,3 +14,6 @@ However, it is not a fork.
 
 This client will run on Windows, Linux and Mac natively, but binairies will only be provided for Windows. <br/>
 Linux and Mac users will have compile the source code themselves.
+
+<h3>Screenshot</h3>
+<img src="http://i.imgur.com/eMxaxib.png"/>
