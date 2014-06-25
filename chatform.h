@@ -31,12 +31,13 @@ public:
     void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
     void addMessage(QLabel* author, QLabel* message, QLabel* date);
 
-
 signals:
     void sendMessage(int, QString);
+    void sendFile(int32_t, QString, QByteArray);
 
 private slots:
     void onSendTriggered();
+    void onAttachClicked();
     void onSliderRangeChanged();
 
 private:
@@ -46,7 +47,7 @@ private:
     QGridLayout *mainChatLayout;
     QLabel *avatar, *name, *statusMessage;
     ChatTextEdit *msgEdit;
-    QPushButton *sendButton;
+    QPushButton *sendButton, *fileButton;
     QScrollArea *chatArea;
     QWidget *main, *head, *chatAreaWidget;
     QString previousName;

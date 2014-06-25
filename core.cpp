@@ -29,6 +29,7 @@
 #include "settings.h"
 
 const QString Core::CONFIG_FILE_NAME = "tox_save";
+QList<ToxFile> Core::fileSendQueue;
 
 Core::Core() :
     tox(nullptr)
@@ -37,8 +38,11 @@ Core::Core() :
     toxTimer->setSingleShot(true);
     saveTimer = new QTimer(this);
     saveTimer->start(TOX_SAVE_INTERVAL);
+    fileTimer = new QTimer(this);
+    fileTimer->start(TOX_FILE_INTERVAL);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
     connect(saveTimer, &QTimer::timeout, this, &Core::saveConfiguration);
+    connect(fileTimer, &QTimer::timeout, this, &Core::fileHeartbeat);
     connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::bootstrapDht);
 }
 
@@ -126,6 +130,74 @@ void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t 
     emit static_cast<Core*>(core)->groupNamelistChanged(groupnumber, peernumber, change);
 }
 
+void Core::onFileSendRequestCallback(Tox* tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
+                                          uint8_t *filename, uint16_t filename_length, void *userdata)
+{
+    qDebug() << "Core: File send request callback";
+}
+void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
+                                      uint8_t control_type, uint8_t *data, uint16_t length, void *userdata)
+{
+    if (control_type == TOX_FILECONTROL_ACCEPT && receive_send == 1)
+    {
+        qDebug() << "Core: File control callback, file accepted";
+        int chunkSize = tox_file_data_size(tox, friendnumber);
+        if (chunkSize == -1)
+        {
+            qWarning("Core::onFileControlCallback: Error getting preffered chunk size, aborting file send");
+            // TODO: Warn the Friend* that we're aborting (emit)
+            return;
+        }
+        ToxFile* file{nullptr};
+        for (ToxFile& f : fileSendQueue)
+        {
+            if (f.fileNum == filenumber)
+            {
+                file = &f;
+                break;
+            }
+        }
+        if (!file)
+        {
+            qWarning("Core::onFileControlCallback: No such file in queue");
+            // TODO: Warn the Friend* that we're aborting (emit)
+            return;
+        }
+        chunkSize = std::min(chunkSize, file->fileData.size());
+        QByteArray toSend = file->fileData.mid(file->bytesSent, chunkSize);
+        if (tox_file_send_data(tox, friendnumber, filenumber, (uint8_t*)toSend.data(), toSend.size()) == -1)
+        {
+            qWarning("Core::onFileControlCallback: Error sending first data chunk, aborting");
+            // TODO: Warn the Friend* that we're aborting (emit)
+            return;
+        }
+        else
+        {
+            file->bytesSent += chunkSize;
+            if (file->bytesSent >= file->fileData.size())
+            {
+                qWarning("Core::onFileControlCallback: Transfer finished");
+                tox_file_send_control(tox, friendnumber, 0, filenumber, TOX_FILECONTROL_FINISHED, nullptr, 0);
+                // TODO: Notify the Friend* that we're done sending (emit)
+            }
+            else
+            {
+                file->status = ToxFile::TRANSMITTING;
+            }
+        }
+    }
+    else
+    {
+        qDebug() << QString("Core: File control callback, receive_send=%1, control_type=%2")
+                    .arg(receive_send).arg(control_type);
+    }
+}
+
+void Core::onFileDataCallback(Tox* tox, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *userdata)
+{
+    qDebug() << "Core: File data callback";
+}
+
 void Core::acceptFriendRequest(const QString& userId)
 {
     int friendId = tox_add_friend_norequest(tox, CUserId(userId).data());
@@ -177,6 +249,20 @@ void Core::sendGroupMessage(int groupId, const QString& message)
     CString cMessage(message);
 
     tox_group_message_send(tox, groupId, cMessage.data(), cMessage.size());
+}
+
+void Core::sendFile(int32_t friendId, QString Filename, QByteArray data)
+{
+    QByteArray fileName = Filename.toUtf8();
+    int fileNum = tox_new_file_sender(tox, friendId, data.size(), (uint8_t*)fileName.data(), fileName.size());
+    if (fileNum == -1)
+    {
+        qWarning() << "Core::sendFile: Can't create the Tox file sender";
+        // TODO: Notify Widget (with the friendId), Widget will notify the chatForm
+        return;
+    }
+
+    fileSendQueue.append(ToxFile(fileNum, friendId, data, fileName));
 }
 
 void Core::removeFriend(int friendId)
@@ -261,6 +347,44 @@ void Core::process()
     if (!tox_isconnected(tox))
         bootstrapDht();
     toxTimer->start(tox_do_interval(tox));
+}
+
+void Core::fileHeartbeat()
+{
+    for (ToxFile& file : fileSendQueue)
+    {
+        if (file.status == ToxFile::TRANSMITTING)
+        {
+            int chunkSize = tox_file_data_size(tox, file.friendId);
+            if (chunkSize == -1)
+            {
+                qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
+                file.status = ToxFile::STOPPED;
+                // TODO: Warn the Friend* and the peer that we're aborting (emit and tox_control_...)
+                return;
+            }
+            chunkSize = std::min(chunkSize, file.fileData.size());
+            QByteArray toSend = file.fileData.mid(file.bytesSent, chunkSize);
+            if (tox_file_send_data(tox, file.friendId, file.fileNum, (uint8_t*)toSend.data(), toSend.size()) == -1)
+            {
+                qWarning("Core::fileHeartbeat: Error sending data chunk");
+                continue;
+            }
+            else
+            {
+                file.bytesSent += chunkSize;
+                if (file.bytesSent >= file.fileData.size())
+                {
+                    qDebug("Core::fileHeartbeat: Transfer finished");
+                    tox_file_send_control(tox, file.friendId, 0, file.fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
+                    file.status = ToxFile::STOPPED; // TODO: Remove it from the list and return;
+                    // TODO: Notify the Friend* that we're done sending (emit)
+                }
+                else
+                    qDebug() << QString("Core::fileHeartbeat: sent %1/%2 bytes").arg(file.bytesSent).arg(file.fileData.size());
+            }
+        }
+    }
 }
 
 void Core::checkConnection()
@@ -400,6 +524,9 @@ void Core::start()
     tox_callback_group_invite(tox, onGroupInvite, this);
     tox_callback_group_message(tox, onGroupMessage, this);
     tox_callback_group_namelist_change(tox, onGroupNamelistChange, this);
+    tox_callback_file_send_request(tox, onFileSendRequestCallback, this);
+    tox_callback_file_control(tox, onFileControlCallback, this);
+    tox_callback_file_data(tox, onFileDataCallback, this);
 
     uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
     tox_get_address(tox, friendAddress);

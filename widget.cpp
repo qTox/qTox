@@ -21,6 +21,8 @@ Widget::Widget(QWidget *parent) :
     ui->setupUi(this);
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
+    ui->mainHead->layout()->setMargin(0);
+    ui->mainHead->layout()->setSpacing(0);
     QWidget* friendListWidget = new QWidget();
     friendListWidget->setLayout(new QVBoxLayout());
     friendListWidget->layout()->setSpacing(0);
@@ -34,6 +36,7 @@ Widget::Widget(QWidget *parent) :
 
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<uint8_t>("uint8_t");
+    qRegisterMetaType<int32_t>("int32_t");
 
     core = new Core();
     coreThread = new QThread(this);
@@ -223,6 +226,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->widget, SIGNAL(friendWidgetClicked(FriendWidget*)), this, SLOT(onFriendWidgetClicked(FriendWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
+    connect(newfriend->chatForm, SIGNAL(sendFile(int32_t,QString,QByteArray)), core, SLOT(sendFile(int32_t,QString,QByteArray)));
 }
 
 void Widget::onFriendStatusChanged(int friendId, Status status)

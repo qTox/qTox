@@ -21,14 +21,17 @@
 
 #include <tox/tox.h>
 
+#include <cstdint>
 #include <QDateTime>
 #include <QObject>
 #include <QTimer>
 #include <QString>
 #include <QList>
+#include <QByteArray>
 
 #define GROUPCHAT_MAX_SIZE 32
-#define TOX_SAVE_INTERVAL 10*1000
+#define TOX_SAVE_INTERVAL 30*1000
+#define TOX_FILE_INTERVAL 50
 
 struct DhtServer
 {
@@ -36,6 +39,27 @@ struct DhtServer
     QString userId;
     QString address;
     int port;
+};
+
+struct ToxFile
+{
+    enum FileStatus
+    {
+        STOPPED,
+        PAUSED,
+        TRANSMITTING
+    };
+
+    ToxFile(int FileNum, int FriendId, QByteArray FileData, QByteArray FileName)
+        : fileNum(FileNum), friendId(FriendId), fileData{FileData},
+          fileName{FileName}, bytesSent{0}, status{STOPPED} {}
+
+    int fileNum;
+    int friendId;
+    QByteArray fileData;
+    QByteArray fileName;
+    long long bytesSent;
+    FileStatus status;
 };
 
 class Core : public QObject
@@ -57,6 +81,11 @@ private:
     static void onGroupInvite(Tox *tox, int friendnumber, uint8_t *group_public_key, void *userdata);
     static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber, uint8_t * message, uint16_t length, void *userdata);
     static void onGroupNamelistChange(Tox *tox, int groupnumber, int peernumber, uint8_t change, void *userdata);
+    static void onFileSendRequestCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
+                                          uint8_t *filename, uint16_t filename_length, void *userdata);
+    static void onFileControlCallback(Tox *tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
+                                      uint8_t control_type, uint8_t *data, uint16_t length, void *userdata);
+    static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *userdata);
 
     void checkConnection();
 
@@ -67,9 +96,10 @@ private:
     void checkLastOnline(int friendId);
 
     Tox* tox;
-    QTimer *toxTimer, *saveTimer;
+    QTimer *toxTimer, *saveTimer, *fileTimer;
     QList<DhtServer> dhtServerList;
     int dhtServerId;
+    static QList<ToxFile> fileSendQueue;
 
     static const QString CONFIG_FILE_NAME;
 
@@ -153,15 +183,18 @@ public slots:
     void removeGroup(int groupId);
 
     void sendMessage(int friendId, const QString& message);
+    void sendGroupMessage(int groupId, const QString& message);
     void sendAction(int friendId, const QString& action);
     void sendTyping(int friendId, bool typing);
-    void sendGroupMessage(int groupId, const QString& message);
+
+    void sendFile(int32_t friendId, QString Filename, QByteArray data);
 
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
     void setStatus(Status status);
 
     void process();
+    void fileHeartbeat();
 
     void bootstrapDht();
 

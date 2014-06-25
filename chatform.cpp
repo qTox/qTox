@@ -5,6 +5,7 @@
 #include <QFont>
 #include <QTime>
 #include <QScrollBar>
+#include <QFileDialog>
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend), curRow{0}, lockSliderToBottom{true}
@@ -15,7 +16,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout();
     mainChatLayout = new QGridLayout();
     msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton();
+    sendButton = new QPushButton(), fileButton = new QPushButton();
     chatArea = new QScrollArea();
 
     QFont bold;
@@ -31,14 +32,19 @@ ChatForm::ChatForm(Friend* chatFriend)
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setSpacing(10);
 
+    msgEdit->setFixedHeight(50);
+    QPalette toxgreen;
+    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
     sendButton->setIcon(QIcon("img/button icons/sendmessage_2x.png"));
     sendButton->setFlat(true);
-    QPalette pal;
-    pal.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    sendButton->setPalette(pal);
+    sendButton->setPalette(toxgreen);
     sendButton->setAutoFillBackground(true);
-    msgEdit->setFixedHeight(50);
     sendButton->setFixedSize(50, 50);
+    fileButton->setIcon(QIcon("img/button icons/attach_2x.png"));
+    fileButton->setFlat(true);
+    fileButton->setPalette(toxgreen);
+    fileButton->setAutoFillBackground(true);
+    fileButton->setIconSize(QSize(40,40));
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
@@ -52,6 +58,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headLayout->addWidget(avatar);
     headLayout->addLayout(headTextLayout);
     headLayout->addStretch();
+    headLayout->addWidget(fileButton);
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(name);
@@ -61,6 +68,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     chatArea->setWidget(chatAreaWidget);
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
+    connect(fileButton, SIGNAL(clicked()), this, SLOT(onAttachClicked()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
     connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
 }
@@ -143,6 +151,24 @@ void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     mainChatLayout->setRowStretch(curRow+1, 1);
     mainChatLayout->setRowStretch(curRow, 0);
     curRow++;
+}
+
+void ChatForm::onAttachClicked()
+{
+    QString path = QFileDialog::getOpenFileName(0,"Send a file");
+    if (path.isEmpty())
+        return;
+
+    QFile file(path);
+    if (!file.exists() || !file.open(QIODevice::ReadOnly))
+        return;
+    QByteArray fileData = file.readAll();
+    file.close();
+    QFileInfo fi(path);
+
+    // TODO: Show file send widget
+
+    emit sendFile(f->friendId, fi.fileName(), fileData);
 }
 
 void ChatForm::onSliderRangeChanged()
