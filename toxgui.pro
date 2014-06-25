@@ -41,7 +41,7 @@ HEADERS  += widget.h \
     addfriendform.h \
     settingsform.h \
     editablelabelwidget.h \
-    elidelabel.hpp \
+    elidelabel.h \
     copyableelidelabel.h \
     elidelabel.h \
     esclineedit.h \
