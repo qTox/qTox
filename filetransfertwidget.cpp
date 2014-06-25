@@ -11,12 +11,14 @@ FileTransfertWidget::FileTransfertWidget(ToxFile *File)
     QFont prettysmall;
     prettysmall.setPixelSize(10);
     QPalette greybg;
-    greybg.setColor(QPalette::Window, Qt::gray);
+    greybg.setColor(QPalette::Window, QColor(209,209,209));
+    greybg.setColor(QPalette::Base, QColor(150,150,150));
     setPalette(greybg);
     setAutoFillBackground(true);
 
     setFixedSize(250,50);
     setLayout(mainLayout);
+    mainLayout->setMargin(0);
 
     filename->setText(file->fileName);
     filename->setFont(prettysmall);
@@ -27,6 +29,8 @@ FileTransfertWidget::FileTransfertWidget(ToxFile *File)
     eta->setText("00:00");
     eta->setFont(prettysmall);
     progress->setValue(0);
+    progress->setMinimumHeight(11);
+    progress->setFont(prettysmall);
 
     topright->setIcon(QIcon("img/button icons/no_2x.png"));
     if (file->direction == ToxFile::SENDING)
@@ -34,8 +38,18 @@ FileTransfertWidget::FileTransfertWidget(ToxFile *File)
     else
         bottomright->setIcon(QIcon("img/button icons/yes_2x.png"));
 
-    topright->setIconSize(QSize(25,25));
-    bottomright->setIconSize(QSize(25,25));
+    QPalette toxgreen;
+    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
+    topright->setIconSize(QSize(10,10));
+    topright->setFixedSize(24,24);
+    topright->setFlat(true);
+    topright->setAutoFillBackground(true);
+    topright->setPalette(toxgreen);
+    bottomright->setIconSize(QSize(10,10));
+    bottomright->setFixedSize(24,24);
+    bottomright->setFlat(true);
+    bottomright->setAutoFillBackground(true);
+    bottomright->setPalette(toxgreen);
 
     mainLayout->addWidget(pic);
     mainLayout->addLayout(infoLayout);
@@ -44,12 +58,18 @@ FileTransfertWidget::FileTransfertWidget(ToxFile *File)
     infoLayout->addWidget(filename);
     infoLayout->addLayout(textLayout);
     infoLayout->addWidget(progress);
+    infoLayout->setMargin(5);
 
     textLayout->addWidget(size);
     textLayout->addWidget(speed);
     textLayout->addWidget(eta);
     textLayout->setMargin(0);
     textLayout->setSpacing(5);
+
+    buttonLayout->addWidget(topright);
+    buttonLayout->addWidget(bottomright);
+    buttonLayout->setMargin(0);
+    buttonLayout->setSpacing(2);
 }
 
 QString FileTransfertWidget::getHumanReadableSize(int size)
@@ -86,10 +106,30 @@ void FileTransfertWidget::onFileTransferInfo(ToxFile* File)
 
 void FileTransfertWidget::onFileTransferCancelled(ToxFile* File)
 {
-
+    if (File != file)
+            return;
+    progress->hide();
+    speed->hide();
+    eta->hide();
+    topright->hide();
+    bottomright->hide();
+    QPalette toxred;
+    toxred.setColor(QPalette::Window, QColor(200,78,78)); // Tox Red
+    setPalette(toxred);
 }
 
 void FileTransfertWidget::onFileTransferFinished(ToxFile* File)
 {
-
+    if (File != file)
+            return;
+    progress->hide();
+    speed->hide();
+    eta->hide();
+    topright->setIcon(QIcon("img/button icons/yes_2x.png"));
+    buttonLayout->addStretch();
+    buttonLayout->setSpacing(0);
+    bottomright->hide();
+    QPalette toxgreen;
+    toxgreen.setColor(QPalette::Window, QColor(107,194,96)); // Tox Green
+    setPalette(toxgreen);
 }

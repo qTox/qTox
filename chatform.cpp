@@ -180,7 +180,10 @@ void ChatForm::onSliderRangeChanged()
 
 void ChatForm::startFileSend(ToxFile *file)
 {
-    QLabel *author = new QLabel(Widget::getInstance()->getUsername()), *date = new QLabel();
+    if (file->friendId != f->friendId)
+        return;
+    QLabel *author = new QLabel(Widget::getInstance()->getUsername());
+    QLabel *date = new QLabel(QTime::currentTime().toString("mm:ss"));
     QScrollBar* scroll = chatArea->verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);
@@ -207,4 +210,6 @@ void ChatForm::startFileSend(ToxFile *file)
     curRow++;
 
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransfertWidget::onFileTransferInfo);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransfertWidget::onFileTransferCancelled);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
 }

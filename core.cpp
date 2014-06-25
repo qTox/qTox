@@ -161,7 +161,9 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         if (chunkSize == -1)
         {
             qWarning("Core::onFileControlCallback: Error getting preffered chunk size, aborting file send");
-            // TODO: Warn the Friend* that we're aborting (emit)
+            file->status = ToxFile::STOPPED;
+            emit static_cast<Core*>(core)->fileTransferFinished(file);
+            tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
             return;
         }
         chunkSize = std::min(chunkSize, file->fileData.size());
@@ -169,7 +171,9 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         if (tox_file_send_data(tox, friendnumber, filenumber, (uint8_t*)toSend.data(), toSend.size()) == -1)
         {
             qWarning("Core::onFileControlCallback: Error sending first data chunk, aborting");
-            // TODO: Warn the Friend* that we're aborting (emit)
+            file->status = ToxFile::STOPPED;
+            emit static_cast<Core*>(core)->fileTransferFinished(file);
+            tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
             return;
         }
         else
@@ -264,7 +268,6 @@ void Core::sendFile(int32_t friendId, QString Filename, QByteArray data)
     if (fileNum == -1)
     {
         qWarning() << "Core::sendFile: Can't create the Tox file sender";
-        // TODO: Notify Widget (with the friendId), Widget will notify the chatForm
         return;
     }
 
@@ -369,7 +372,8 @@ void Core::fileHeartbeat()
             {
                 qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
                 file.status = ToxFile::STOPPED;
-                // TODO: Warn the Friend* and the peer that we're aborting (emit and tox_control_...)
+                emit fileTransferFinished(&file);
+                tox_file_send_control(tox, file.friendId, 0, file.fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
                 return;
             }
             chunkSize = std::min(chunkSize, file.fileData.size());
@@ -387,7 +391,7 @@ void Core::fileHeartbeat()
                     qDebug("Core::fileHeartbeat: Transfer finished");
                     tox_file_send_control(tox, file.friendId, 0, file.fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
                     file.status = ToxFile::STOPPED; // TODO: Remove it from the list and return;
-                    // TODO: Notify the Friend* that we're done sending (emit)
+                    emit fileTransferFinished(&file);
                 }
                 else
                     qDebug() << QString("Core::fileHeartbeat: sent %1/%2 bytes").arg(file.bytesSent).arg(file.fileData.size());
