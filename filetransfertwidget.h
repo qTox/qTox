@@ -24,6 +24,9 @@ public slots:
     void onFileTransferCancelled(ToxFile* File);
     void onFileTransferFinished(ToxFile* File);
 
+private slots:
+    void cancelTransfer();
+
 private:
     QString getHumanReadableSize(int size);
 

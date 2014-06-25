@@ -195,6 +195,7 @@ public slots:
     void sendTyping(int friendId, bool typing);
 
     void sendFile(int32_t friendId, QString Filename, QByteArray data);
+    void cancelFileSend(ToxFile* file);
 
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);

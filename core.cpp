@@ -162,7 +162,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         {
             qWarning("Core::onFileControlCallback: Error getting preffered chunk size, aborting file send");
             file->status = ToxFile::STOPPED;
-            emit static_cast<Core*>(core)->fileTransferFinished(file);
+            emit static_cast<Core*>(core)->fileTransferCancelled(file);
             tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
             return;
         }
@@ -172,7 +172,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         {
             qWarning("Core::onFileControlCallback: Error sending first data chunk, aborting");
             file->status = ToxFile::STOPPED;
-            emit static_cast<Core*>(core)->fileTransferFinished(file);
+            emit static_cast<Core*>(core)->fileTransferCancelled(file);
             tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
             return;
         }
@@ -276,6 +276,13 @@ void Core::sendFile(int32_t friendId, QString Filename, QByteArray data)
     emit fileSendStarted(&fileSendQueue.last());
 }
 
+void Core::cancelFileSend(ToxFile* file)
+{
+    file->status = ToxFile::STOPPED;
+    emit fileTransferCancelled(file);
+    tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
+}
+
 void Core::removeFriend(int friendId)
 {
     if (tox_del_friend(tox, friendId) == -1) {
@@ -372,7 +379,7 @@ void Core::fileHeartbeat()
             {
                 qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
                 file.status = ToxFile::STOPPED;
-                emit fileTransferFinished(&file);
+                emit fileTransferCancelled(&file);
                 tox_file_send_control(tox, file.friendId, 0, file.fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
                 return;
             }

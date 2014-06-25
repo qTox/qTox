@@ -25,7 +25,7 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     QString getUsername();
-    const Core* getCore();
+    Core* getCore();
     static Widget* getInstance();
     ~Widget();
 

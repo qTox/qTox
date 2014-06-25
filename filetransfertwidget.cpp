@@ -1,4 +1,6 @@
 #include "filetransfertwidget.h"
+#include "widget.h"
+#include "core.h"
 
 FileTransfertWidget::FileTransfertWidget(ToxFile *File)
     : file{File}, lastUpdate{QDateTime::currentDateTime()}, lastBytesSent{0}
@@ -33,6 +35,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile *File)
     progress->setFont(prettysmall);
 
     topright->setIcon(QIcon("img/button icons/no_2x.png"));
+    connect(topright, SIGNAL(clicked()), this, SLOT(cancelTransfer()));
     if (file->direction == ToxFile::SENDING)
         bottomright->setIcon(QIcon("img/button icons/pause_2x.png"));
     else
@@ -108,6 +111,7 @@ void FileTransfertWidget::onFileTransferCancelled(ToxFile* File)
 {
     if (File != file)
             return;
+    disconnect(topright);
     progress->hide();
     speed->hide();
     eta->hide();
@@ -122,6 +126,7 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile* File)
 {
     if (File != file)
             return;
+    disconnect(topright);
     progress->hide();
     speed->hide();
     eta->hide();
@@ -132,4 +137,9 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile* File)
     QPalette toxgreen;
     toxgreen.setColor(QPalette::Window, QColor(107,194,96)); // Tox Green
     setPalette(toxgreen);
+}
+
+void FileTransfertWidget::cancelTransfer()
+{
+    Widget::getInstance()->getCore()->cancelFileSend(file);
 }

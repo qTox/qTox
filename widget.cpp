@@ -374,7 +374,7 @@ void Widget::removeGroup(int groupId)
         onAddClicked();
 }
 
-const Core* Widget::getCore()
+Core *Widget::getCore()
 {
     return core;
 }
