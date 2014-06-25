@@ -136,30 +136,31 @@ void Core::onFileSendRequestCallback(Tox* tox, int32_t friendnumber, uint8_t fil
     qDebug() << "Core: File send request callback";
 }
 void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
-                                      uint8_t control_type, uint8_t *data, uint16_t length, void *userdata)
+                                      uint8_t control_type, uint8_t *data, uint16_t length, void *core)
 {
+    ToxFile* file{nullptr};
+    for (ToxFile& f : fileSendQueue)
+    {
+        if (f.fileNum == filenumber)
+        {
+            file = &f;
+            break;
+        }
+    }
+    if (!file)
+    {
+        qWarning("Core::onFileControlCallback: No such file in queue");
+        // TODO: Warn the Friend* that we're aborting (emit)
+        return;
+    }
     if (control_type == TOX_FILECONTROL_ACCEPT && receive_send == 1)
     {
+        emit static_cast<Core*>(core)->fileTransferAccepted(file);
         qDebug() << "Core: File control callback, file accepted";
         int chunkSize = tox_file_data_size(tox, friendnumber);
         if (chunkSize == -1)
         {
             qWarning("Core::onFileControlCallback: Error getting preffered chunk size, aborting file send");
-            // TODO: Warn the Friend* that we're aborting (emit)
-            return;
-        }
-        ToxFile* file{nullptr};
-        for (ToxFile& f : fileSendQueue)
-        {
-            if (f.fileNum == filenumber)
-            {
-                file = &f;
-                break;
-            }
-        }
-        if (!file)
-        {
-            qWarning("Core::onFileControlCallback: No such file in queue");
             // TODO: Warn the Friend* that we're aborting (emit)
             return;
         }
@@ -178,13 +179,18 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
             {
                 qWarning("Core::onFileControlCallback: Transfer finished");
                 tox_file_send_control(tox, friendnumber, 0, filenumber, TOX_FILECONTROL_FINISHED, nullptr, 0);
-                // TODO: Notify the Friend* that we're done sending (emit)
+                emit static_cast<Core*>(core)->fileTransferFinished(file);
             }
             else
             {
                 file->status = ToxFile::TRANSMITTING;
             }
         }
+    }
+    else if (receive_send == 1 && control_type == TOX_FILECONTROL_KILL)
+    {
+        file->status = ToxFile::STOPPED;
+        emit static_cast<Core*>(core)->fileTransferCancelled(file);
     }
     else
     {
@@ -262,7 +268,9 @@ void Core::sendFile(int32_t friendId, QString Filename, QByteArray data)
         return;
     }
 
-    fileSendQueue.append(ToxFile(fileNum, friendId, data, fileName));
+    fileSendQueue.append(ToxFile(fileNum, friendId, data, fileName, ToxFile::SENDING));
+
+    emit fileSendStarted(&fileSendQueue.last());
 }
 
 void Core::removeFriend(int friendId)
@@ -355,6 +363,7 @@ void Core::fileHeartbeat()
     {
         if (file.status == ToxFile::TRANSMITTING)
         {
+            emit fileTransferInfo(&file);
             int chunkSize = tox_file_data_size(tox, file.friendId);
             if (chunkSize == -1)
             {

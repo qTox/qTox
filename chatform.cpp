@@ -2,6 +2,7 @@
 #include "friend.h"
 #include "friendwidget.h"
 #include "widget.h"
+#include "filetransfertwidget.h"
 #include <QFont>
 #include <QTime>
 #include <QScrollBar>
@@ -67,6 +68,7 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     chatArea->setWidget(chatAreaWidget);
 
+    connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(fileButton, SIGNAL(clicked()), this, SLOT(onAttachClicked()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
@@ -166,8 +168,6 @@ void ChatForm::onAttachClicked()
     file.close();
     QFileInfo fi(path);
 
-    // TODO: Show file send widget
-
     emit sendFile(f->friendId, fi.fileName(), fileData);
 }
 
@@ -176,4 +176,35 @@ void ChatForm::onSliderRangeChanged()
     QScrollBar* scroll = chatArea->verticalScrollBar();
     if (lockSliderToBottom)
          scroll->setValue(scroll->maximum());
+}
+
+void ChatForm::startFileSend(ToxFile *file)
+{
+    QLabel *author = new QLabel(Widget::getInstance()->getUsername()), *date = new QLabel();
+    QScrollBar* scroll = chatArea->verticalScrollBar();
+    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
+    author->setAlignment(Qt::AlignTop | Qt::AlignRight);
+    date->setAlignment(Qt::AlignTop);
+    QPalette pal;
+    pal.setColor(QPalette::WindowText, Qt::gray);
+    author->setPalette(pal);
+    if (previousName.isEmpty() || previousName != author->text())
+    {
+        if (curRow)
+        {
+            mainChatLayout->setRowStretch(curRow, 0);
+            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
+            curRow++;
+        }
+        mainChatLayout->addWidget(author, curRow, 0);
+    }
+    FileTransfertWidget* fileTrans = new FileTransfertWidget(file);
+    previousName = author->text();
+    mainChatLayout->addWidget(fileTrans, curRow, 1);
+    mainChatLayout->addWidget(date, curRow, 3);
+    mainChatLayout->setRowStretch(curRow+1, 1);
+    mainChatLayout->setRowStretch(curRow, 0);
+    curRow++;
+
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransfertWidget::onFileTransferInfo);
 }

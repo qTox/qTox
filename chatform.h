@@ -12,6 +12,7 @@
 
 #include "chattextedit.h"
 #include "ui_widget.h"
+#include "core.h"
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5
@@ -34,6 +35,9 @@ public:
 signals:
     void sendMessage(int, QString);
     void sendFile(int32_t, QString, QByteArray);
+
+public slots:
+    void startFileSend(ToxFile* file);
 
 private slots:
     void onSendTriggered();

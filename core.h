@@ -50,9 +50,15 @@ struct ToxFile
         TRANSMITTING
     };
 
-    ToxFile(int FileNum, int FriendId, QByteArray FileData, QByteArray FileName)
+    enum FileDirection : bool
+    {
+        SENDING,
+        RECEIVING
+    };
+
+    ToxFile(int FileNum, int FriendId, QByteArray FileData, QByteArray FileName, FileDirection Direction)
         : fileNum(FileNum), friendId(FriendId), fileData{FileData},
-          fileName{FileName}, bytesSent{0}, status{STOPPED} {}
+          fileName{FileName}, bytesSent{0}, status{STOPPED}, direction{Direction} {}
 
     int fileNum;
     int friendId;
@@ -60,6 +66,7 @@ struct ToxFile
     QByteArray fileName;
     long long bytesSent;
     FileStatus status;
+    FileDirection direction;
 };
 
 class Core : public QObject
@@ -84,7 +91,7 @@ private:
     static void onFileSendRequestCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
                                           uint8_t *filename, uint16_t filename_length, void *userdata);
     static void onFileControlCallback(Tox *tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
-                                      uint8_t control_type, uint8_t *data, uint16_t length, void *userdata);
+                                      uint8_t control_type, uint8_t *data, uint16_t length, void *core);
     static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *userdata);
 
     void checkConnection();
@@ -243,6 +250,12 @@ signals:
 
     void failedToStart();
 
+    void fileSendStarted(ToxFile* file);
+    void fileTransferAccepted(ToxFile* file);
+    void fileTransferCancelled(ToxFile* file);
+    void fileTransferFinished(ToxFile* file);
+    void fileTransferPaused(ToxFile* file);
+    void fileTransferInfo(ToxFile* file);
 };
 
 #endif // CORE_HPP

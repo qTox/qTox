@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     groupwidget.cpp \
     group.cpp \
     grouplist.cpp \
-    groupchatform.cpp
+    groupchatform.cpp \
+    filetransfertwidget.cpp
 
 HEADERS  += widget.h \
     core.h \
@@ -43,7 +44,6 @@ HEADERS  += widget.h \
     editablelabelwidget.h \
     elidelabel.h \
     copyableelidelabel.h \
-    elidelabel.h \
     esclineedit.h \
     friendlist.h \
     friend.h \
@@ -54,7 +54,8 @@ HEADERS  += widget.h \
     groupwidget.h \
     group.h \
     grouplist.h \
-    groupchatform.h
+    groupchatform.h \
+    filetransfertwidget.h
 
 FORMS    += widget.ui
 
