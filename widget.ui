@@ -2633,7 +2633,7 @@
   <customwidget>
    <class>EditableLabelWidget</class>
    <extends>QLabel</extends>
-   <header>editablelabelwidget.h</header>
+   <header>widget/tool/editablelabelwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
