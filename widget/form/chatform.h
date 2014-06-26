@@ -51,11 +51,11 @@ private slots:
 private:
     Friend* f;
     QHBoxLayout *headLayout, *mainFootLayout;
-    QVBoxLayout *headTextLayout, *mainLayout;
+    QVBoxLayout *headTextLayout, *mainLayout, *footButtonsSmall;
     QGridLayout *mainChatLayout;
     QLabel *avatar, *name, *statusMessage;
     ChatTextEdit *msgEdit;
-    QPushButton *sendButton, *fileButton, *callButton;
+    QPushButton *sendButton, *fileButton, *emoteButton, *callButton;
     QScrollArea *chatArea;
     QWidget *main, *head, *chatAreaWidget;
     QString previousName;
