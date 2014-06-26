@@ -37,7 +37,7 @@ public:
         QString name;
         QString userId;
         QString address;
-        int port;
+        quint16 port;
     };
 
     const QList<DhtServer>& getDhtServerList() const;

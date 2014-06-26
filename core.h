@@ -32,6 +32,7 @@
 #define GROUPCHAT_MAX_SIZE 32
 #define TOX_SAVE_INTERVAL 30*1000
 #define TOX_FILE_INTERVAL 50
+#define TOX_BOOTSTRAP_INTERVAL 10*1000
 
 struct DhtServer
 {
@@ -95,6 +96,7 @@ private:
     static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *userdata);
 
     void checkConnection();
+    void onBootstrapTimer();
 
     void loadConfiguration();
     void saveConfiguration();
@@ -103,7 +105,7 @@ private:
     void checkLastOnline(int friendId);
 
     Tox* tox;
-    QTimer *toxTimer, *saveTimer, *fileTimer;
+    QTimer *toxTimer, *saveTimer, *fileTimer, *bootstrapTimer;
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     static QList<ToxFile> fileSendQueue;

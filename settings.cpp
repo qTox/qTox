@@ -21,6 +21,7 @@
 #include <QFile>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QDebug>
 
 const QString Settings::FILENAME = "settings.ini";
 
@@ -52,6 +53,7 @@ void Settings::load()
     //if no settings file exist -- use the default one
     QFile file(filePath);
     if (!file.exists()) {
+        qDebug() << "No settings file found, using defaults";
         filePath = ":/conf/" + FILENAME;
     }
 

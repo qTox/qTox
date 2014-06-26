@@ -80,8 +80,6 @@ Widget::Widget(QWidget *parent) :
     coreThread->start();
 
     friendForm.show(*ui);
-
-    // TODO: For the friendlist just stack friend widgets in a scrollable widget's layout
 }
 
 Widget::~Widget()
@@ -128,7 +126,7 @@ void Widget::onDisconnected()
 void Widget::onFailedToStartCore()
 {
     QMessageBox critical(this);
-    critical.setText("Toxcor failed to start, the application will terminate after you close this message.");
+    critical.setText("Toxcore failed to start, the application will terminate after you close this message.");
     critical.setIcon(QMessageBox::Critical);
     critical.exec();
     qApp->quit();

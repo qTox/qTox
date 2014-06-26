@@ -16,8 +16,6 @@
 
 #include "core.h"
 
-#include <cstdint>
-
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -40,9 +38,12 @@ Core::Core() :
     saveTimer->start(TOX_SAVE_INTERVAL);
     fileTimer = new QTimer(this);
     fileTimer->start(TOX_FILE_INTERVAL);
+    bootstrapTimer = new QTimer(this);
+    bootstrapTimer->start(TOX_BOOTSTRAP_INTERVAL);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
     connect(saveTimer, &QTimer::timeout, this, &Core::saveConfiguration);
     connect(fileTimer, &QTimer::timeout, this, &Core::fileHeartbeat);
+    connect(bootstrapTimer, &QTimer::timeout, this, &Core::onBootstrapTimer);
     connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::bootstrapDht);
 }
 
@@ -52,6 +53,12 @@ Core::~Core()
         saveConfiguration();
         tox_kill(tox);
     }
+}
+
+void Core::onBootstrapTimer()
+{
+    if(!tox_isconnected(tox))
+        bootstrapDht();
 }
 
 void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core)
@@ -346,11 +353,25 @@ void Core::setStatus(Status status)
 
 void Core::bootstrapDht()
 {
+    qDebug() << "Core: Bootstraping DHT";
     const Settings& s = Settings::getInstance();
     QList<Settings::DhtServer> dhtServerList = s.getDhtServerList();
 
-    for (const Settings::DhtServer& dhtServer : dhtServerList) {
-       tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(), 0, qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data());
+    static int j = 0;
+    int i=0;
+    int listSize = dhtServerList.size();
+    while (i<2)
+    {
+        const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
+        if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
+            0, qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
+            qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
+                        +QString(", port ")+QString().setNum(qToBigEndian(dhtServer.port));
+        else
+            qDebug() << "Core: Error bootstraping from "+dhtServer.name;
+
+        j++;
+        i++;
     }
 }
 
@@ -362,8 +383,6 @@ void Core::process()
     fflush(stdout);
 #endif
     checkConnection();
-    if (!tox_isconnected(tox))
-        bootstrapDht();
     toxTimer->start(tox_do_interval(tox));
 }
 
@@ -412,9 +431,11 @@ void Core::checkConnection()
     static bool isConnected = false;
 
     if (tox_isconnected(tox) && !isConnected) {
+        qDebug() << "Core: Connected to DHT";
         emit connected();
         isConnected = true;
     } else if (!tox_isconnected(tox) && isConnected) {
+        qDebug() << "Core: Disconnected to DHT";
         emit disconnected();
         isConnected = false;
     }
@@ -523,8 +544,7 @@ void Core::checkLastOnline(int friendId) {
 
 void Core::start()
 {
-    tox = tox_new(0);
-
+    tox = tox_new(1);
     if (tox == nullptr) {
         qCritical() << "Core failed to start";
         emit failedToStart();
@@ -532,6 +552,17 @@ void Core::start()
     }
 
     loadConfiguration();
+
+    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
+    tox_get_address(tox, friendAddress);
+
+    emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
+
+    CString cUsername(Settings::getInstance().getUsername());
+    tox_set_name(tox, cUsername.data(), cUsername.size());
+
+    CString cStatusMessage(Settings::getInstance().getStatusMessage());
+    tox_set_status_message(tox, cStatusMessage.data(), cStatusMessage.size());
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
@@ -547,17 +578,6 @@ void Core::start()
     tox_callback_file_send_request(tox, onFileSendRequestCallback, this);
     tox_callback_file_control(tox, onFileControlCallback, this);
     tox_callback_file_data(tox, onFileDataCallback, this);
-
-    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
-    tox_get_address(tox, friendAddress);
-
-    emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
-
-    CString cUsername(Settings::getInstance().getUsername());
-    tox_set_name(tox, cUsername.data(), cUsername.size());
-
-    CString cStatusMessage(Settings::getInstance().getStatusMessage());
-    tox_set_status_message(tox, cStatusMessage.data(), cStatusMessage.size());
 
     bootstrapDht();
 
