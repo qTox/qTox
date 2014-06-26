@@ -101,6 +101,18 @@ void Core::start()
     tox_callback_file_control(tox, onFileControlCallback, this);
     tox_callback_file_data(tox, onFileDataCallback, this);
 
+    toxav_register_callstate_callback(onAvInvite, av_OnInvite, this);
+    toxav_register_callstate_callback(onAvStart, av_OnStart, this);
+    toxav_register_callstate_callback(onAvCancel, av_OnCancel, this);
+    toxav_register_callstate_callback(onAvReject, av_OnReject, this);
+    toxav_register_callstate_callback(onAvEnd, av_OnEnd, this);
+    toxav_register_callstate_callback(onAvRinging, av_OnRinging, this);
+    toxav_register_callstate_callback(onAvStarting, av_OnStarting, this);
+    toxav_register_callstate_callback(onAvEnding, av_OnEnding, this);
+    toxav_register_callstate_callback(onAvError, av_OnError, this);
+    toxav_register_callstate_callback(onAvRequestTimeout, av_OnRequestTimeout, this);
+    toxav_register_callstate_callback(onAvPeerTimeout, av_OnPeerTimeout, this);
+
     uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
     tox_get_address(tox, friendAddress);
 
@@ -861,4 +873,59 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
     file->status = ToxFile::STOPPED;
     emit core->fileTransferFinished(*file);
     removeFileFromQueue(true, file->friendId, file->fileNum);
+}
+
+void Core::onAvInvite(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV invite";
+}
+
+void Core::onAvStart(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV start";
+}
+
+void Core::onAvCancel(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV cancel";
+}
+
+void Core::onAvReject(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV reject";
+}
+
+void Core::onAvEnd(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV end";
+}
+
+void Core::onAvRinging(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV ringing";
+}
+
+void Core::onAvStarting(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV starting";
+}
+
+void Core::onAvEnding(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV ending";
+}
+
+void Core::onAvError(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV error";
+}
+
+void Core::onAvRequestTimeout(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV request timeout";
+}
+
+void Core::onAvPeerTimeout(int32_t call_index, void* toxav)
+{
+    qDebug() << "Core: AV peer timeout";
 }

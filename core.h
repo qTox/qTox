@@ -184,6 +184,18 @@ private:
                                       uint8_t control_type, uint8_t *data, uint16_t length, void *core);
     static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *userdata);
 
+    static void onAvInvite(int32_t call_index, void* toxav);
+    static void onAvStart(int32_t call_index, void* toxav);
+    static void onAvCancel(int32_t call_index, void* toxav);
+    static void onAvReject(int32_t call_index, void* toxav);
+    static void onAvEnd(int32_t call_index, void* toxav);
+    static void onAvRinging(int32_t call_index, void* toxav);
+    static void onAvStarting(int32_t call_index, void* toxav);
+    static void onAvEnding(int32_t call_index, void* toxav);
+    static void onAvError(int32_t call_index, void* toxav);
+    static void onAvRequestTimeout(int32_t call_index, void* toxav);
+    static void onAvPeerTimeout(int32_t call_index, void* toxav);
+
     void checkConnection();
     void onBootstrapTimer();
 
