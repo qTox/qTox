@@ -289,6 +289,12 @@ void Widget::onFriendUsernameLoaded(int friendId, const QString& username)
 
 void Widget::onFriendWidgetClicked(FriendWidget *widget)
 {
+    if (activeFriendWidget != 0)
+    {
+        activeFriendWidget->setAsInactiveFriend();
+    }
+    activeFriendWidget = widget;
+    widget->setAsActiveFriend();
     Friend* f = FriendList::findFriend(widget->friendId);
     if (!f)
         return;

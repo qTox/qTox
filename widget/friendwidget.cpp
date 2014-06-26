@@ -5,6 +5,7 @@
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
 {
+    this->setAutoFillBackground(true);
     this->setLayout(&layout);
     this->setFixedWidth(225);
     this->setFixedHeight(55);
@@ -59,4 +60,36 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             return;
         }
     }
+}
+
+void FriendWidget::setAsActiveFriend()
+{
+    QFont small;
+    small.setPixelSize(10);
+    statusMessage.setFont(small);
+    QPalette pal;
+    pal.setColor(QPalette::WindowText,Qt::darkGray);
+    statusMessage.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::black);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, Qt::white);
+    this->setPalette(pal3);
+}
+
+void FriendWidget::setAsInactiveFriend()
+{
+    QFont small;
+    small.setPixelSize(10);
+    statusMessage.setFont(small);
+    QPalette pal;
+    pal.setColor(QPalette::WindowText,Qt::gray);
+    statusMessage.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::white);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, QColor(63,63,63,255));
+    this->setPalette(pal3);
 }
