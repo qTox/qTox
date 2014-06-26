@@ -185,7 +185,7 @@ void ChatForm::startFileSend(ToxFile file)
     if (file.friendId != f->friendId)
         return;
     QLabel *author = new QLabel(Widget::getInstance()->getUsername());
-    QLabel *date = new QLabel(QTime::currentTime().toString("mm:ss"));
+    QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
     QScrollBar* scroll = chatArea->verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);
@@ -221,7 +221,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     if (file.friendId != f->friendId)
         return;
     QLabel *author = new QLabel(f->getName());
-    QLabel *date = new QLabel(QTime::currentTime().toString("mm:ss"));
+    QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
     QScrollBar* scroll = chatArea->verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);
