@@ -13,7 +13,7 @@ However, it is not a fork.
 
 <h2>Requirements</h2>
 
-This client will run on Windows, Linux and Mac natively, but binairies will only be provided for Windows. <br/>
+This client will run on Windows, Linux and Mac natively, but binairies are only be provided for Windows at the moment. <br/>
 Linux and Mac users will have compile the source code themselves.
 
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/18/artifact/toxgui-win32.zip">Windows download</a>
