@@ -10,7 +10,7 @@
 #include <QScrollArea>
 #include <QTime>
 
-#include "chattextedit.h"
+#include "widget/tool/chattextedit.h"
 #include "ui_widget.h"
 
 // Spacing in px inserted when the author of the last message changes

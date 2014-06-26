@@ -1,8 +1,8 @@
 #include "chatform.h"
 #include "friend.h"
-#include "friendwidget.h"
-#include "widget.h"
-#include "filetransfertwidget.h"
+#include "widget/friendwidget.h"
+#include "widget/widget.h"
+#include "widget/filetransfertwidget.h"
 #include <QFont>
 #include <QTime>
 #include <QScrollBar>
@@ -17,7 +17,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout();
     mainChatLayout = new QGridLayout();
     msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton(), fileButton = new QPushButton();
+    sendButton = new QPushButton(), fileButton = new QPushButton(), callButton = new QPushButton();
     chatArea = new QScrollArea();
 
     QFont bold;
@@ -48,6 +48,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     fileButton->setAutoFillBackground(true);
     fileButton->setIconSize(QSize(20,20));
     fileButton->setFixedSize(50,40);
+    callButton->setIcon(QIcon("img/button icons/call_2x.png"));
+    callButton->setFlat(true);
+    callButton->setPalette(toxgreen);
+    callButton->setAutoFillBackground(true);
+    callButton->setIconSize(QSize(20,20));
+    callButton->setFixedSize(50,40);
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
@@ -61,6 +67,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headLayout->addWidget(avatar);
     headLayout->addLayout(headTextLayout);
     headLayout->addStretch();
+    headLayout->addWidget(callButton);
     headLayout->addWidget(fileButton);
 
     headTextLayout->addStretch();
@@ -247,4 +254,14 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransfertWidget::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransfertWidget::onFileTransferCancelled);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
+}
+
+void ChatForm::onCallReceived()
+{
+
+}
+
+void ChatForm::onCallTriggered()
+{
+
 }

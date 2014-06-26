@@ -5,8 +5,8 @@
 #include <QWidget>
 #include <QString>
 #include "core.h"
-#include "addfriendform.h"
-#include "settingsform.h"
+#include "widget/form/addfriendform.h"
+#include "widget/form/settingsform.h"
 
 namespace Ui {
 class Widget;

@@ -20,6 +20,7 @@
 #include "status.h"
 
 #include <tox/tox.h>
+#include <tox/toxav.h>
 
 #include <cstdint>
 #include <QDateTime>
@@ -76,108 +77,6 @@ public:
     explicit Core();
     ~Core();
 
-private:
-    static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
-    static void onFriendMessage(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
-    static void onFriendNameChange(Tox* tox, int friendId, uint8_t* cName, uint16_t cNameSize, void* core);
-    static void onFriendTypingChange(Tox* tox, int friendId, uint8_t isTyping, void* core);
-    static void onStatusMessageChanged(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
-    static void onUserStatusChanged(Tox* tox, int friendId, uint8_t userstatus, void* core);
-    static void onConnectionStatusChanged(Tox* tox, int friendId, uint8_t status, void* core);
-    static void onAction(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
-    static void onGroupInvite(Tox *tox, int friendnumber, uint8_t *group_public_key, void *userdata);
-    static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber, uint8_t * message, uint16_t length, void *userdata);
-    static void onGroupNamelistChange(Tox *tox, int groupnumber, int peernumber, uint8_t change, void *userdata);
-    static void onFileSendRequestCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
-                                          uint8_t *filename, uint16_t filename_length, void *userdata);
-    static void onFileControlCallback(Tox *tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
-                                      uint8_t control_type, uint8_t *data, uint16_t length, void *core);
-    static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *userdata);
-
-    void checkConnection();
-    void onBootstrapTimer();
-
-    void loadConfiguration();
-    void saveConfiguration();
-    void loadFriends();
-    static void sendAllFileData(Core* core, ToxFile* file);
-
-    static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
-
-    void checkLastOnline(int friendId);
-
-    Tox* tox;
-    QTimer *toxTimer, *saveTimer, *fileTimer, *bootstrapTimer;
-    QList<DhtServer> dhtServerList;
-    int dhtServerId;
-    static QList<ToxFile> fileSendQueue, fileRecvQueue;
-
-    static const QString CONFIG_FILE_NAME;
-
-    class CData
-    {
-    public:
-        uint8_t* data();
-        uint16_t size();
-
-    protected:
-        explicit CData(const QString& data, uint16_t byteSize);
-        virtual ~CData();
-
-        static QString toString(const uint8_t* cData, const uint16_t cDataSize);
-
-    private:
-        uint8_t* cData;
-        uint16_t cDataSize;
-
-        static uint16_t fromString(const QString& userId, uint8_t* cData);
-    };
-
-    class CUserId : public CData
-    {
-    public:
-        explicit CUserId(const QString& userId);
-
-        static QString toString(const uint8_t *cUserId);
-
-    private:
-        static const uint16_t SIZE = TOX_CLIENT_ID_SIZE;
-
-    };
-
-    class CFriendAddress : public CData
-    {
-    public:
-        explicit CFriendAddress(const QString& friendAddress);
-
-        static QString toString(const uint8_t* cFriendAddress);
-
-    private:
-        static const uint16_t SIZE = TOX_FRIEND_ADDRESS_SIZE;
-
-    };
-
-    class CString
-    {
-    public:
-        explicit CString(const QString& string);
-        ~CString();
-
-        uint8_t* data();
-        uint16_t size();
-
-        static QString toString(const uint8_t* cMessage, const uint16_t cMessageSize);
-
-    private:
-        const static int MAX_SIZE_OF_UTF8_ENCODED_CHARACTER = 4;
-
-        uint8_t* cString;
-        uint16_t cStringSize;
-
-        static uint16_t fromString(const QString& message, uint8_t* cMessage);
-    };
-
-public:
     int getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
     QList<QString> getGroupPeerNames(int groupId) const;
@@ -266,6 +165,46 @@ signals:
     void fileTransferFinished(ToxFile file);
     void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
     void fileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection direction);
+
+private:
+    static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
+    static void onFriendMessage(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
+    static void onFriendNameChange(Tox* tox, int friendId, uint8_t* cName, uint16_t cNameSize, void* core);
+    static void onFriendTypingChange(Tox* tox, int friendId, uint8_t isTyping, void* core);
+    static void onStatusMessageChanged(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
+    static void onUserStatusChanged(Tox* tox, int friendId, uint8_t userstatus, void* core);
+    static void onConnectionStatusChanged(Tox* tox, int friendId, uint8_t status, void* core);
+    static void onAction(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
+    static void onGroupInvite(Tox *tox, int friendnumber, uint8_t *group_public_key, void *userdata);
+    static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber, uint8_t * message, uint16_t length, void *userdata);
+    static void onGroupNamelistChange(Tox *tox, int groupnumber, int peernumber, uint8_t change, void *userdata);
+    static void onFileSendRequestCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
+                                          uint8_t *filename, uint16_t filename_length, void *userdata);
+    static void onFileControlCallback(Tox *tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
+                                      uint8_t control_type, uint8_t *data, uint16_t length, void *core);
+    static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *userdata);
+
+    void checkConnection();
+    void onBootstrapTimer();
+
+    void loadConfiguration();
+    void saveConfiguration();
+    void loadFriends();
+    static void sendAllFileData(Core* core, ToxFile* file);
+
+    static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
+
+    void checkLastOnline(int friendId);
+
+private:
+    Tox* tox;
+    ToxAv* toxav;
+    QTimer *toxTimer, *saveTimer, *fileTimer, *bootstrapTimer;
+    QList<DhtServer> dhtServerList;
+    int dhtServerId;
+    static QList<ToxFile> fileSendQueue, fileRecvQueue;
+
+    static const QString CONFIG_FILE_NAME;
 };
 
 #endif // CORE_HPP

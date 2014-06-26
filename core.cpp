@@ -15,6 +15,8 @@
 */
 
 #include "core.h"
+#include "cdata.h"
+#include "cstring.h"
 
 #include <QDebug>
 #include <QDir>
@@ -31,6 +33,7 @@
 #define TOX_SAVE_INTERVAL 30*1000
 #define TOX_FILE_INTERVAL 20
 #define TOX_BOOTSTRAP_INTERVAL 10*1000
+#define TOXAV_MAX_CALLS 32
 
 const QString Core::CONFIG_FILE_NAME = "tox_save";
 QList<ToxFile> Core::fileSendQueue;
@@ -58,8 +61,60 @@ Core::~Core()
 {
     if (tox) {
         saveConfiguration();
+        toxav_kill(toxav);
         tox_kill(tox);
     }
+}
+
+void Core::start()
+{
+    tox = tox_new(1);
+    if (tox == nullptr)
+    {
+        qCritical() << "Tox core failed to start";
+        emit failedToStart();
+        return;
+    }
+
+    toxav = toxav_new(tox, TOXAV_MAX_CALLS);
+    if (toxav == nullptr)
+    {
+        qCritical() << "Toxav core failed to start";
+        emit failedToStart();
+        return;
+    }
+
+    loadConfiguration();
+
+    tox_callback_friend_request(tox, onFriendRequest, this);
+    tox_callback_friend_message(tox, onFriendMessage, this);
+    tox_callback_friend_action(tox, onAction, this);
+    tox_callback_name_change(tox, onFriendNameChange, this);
+    tox_callback_typing_change(tox, onFriendTypingChange, this);
+    tox_callback_status_message(tox, onStatusMessageChanged, this);
+    tox_callback_user_status(tox, onUserStatusChanged, this);
+    tox_callback_connection_status(tox, onConnectionStatusChanged, this);
+    tox_callback_group_invite(tox, onGroupInvite, this);
+    tox_callback_group_message(tox, onGroupMessage, this);
+    tox_callback_group_namelist_change(tox, onGroupNamelistChange, this);
+    tox_callback_file_send_request(tox, onFileSendRequestCallback, this);
+    tox_callback_file_control(tox, onFileControlCallback, this);
+    tox_callback_file_data(tox, onFileDataCallback, this);
+
+    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
+    tox_get_address(tox, friendAddress);
+
+    emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
+
+    CString cUsername(Settings::getInstance().getUsername());
+    tox_set_name(tox, cUsername.data(), cUsername.size());
+
+    CString cStatusMessage(Settings::getInstance().getStatusMessage());
+    tox_set_status_message(tox, cStatusMessage.data(), cStatusMessage.size());
+
+    bootstrapDht();
+
+    toxTimer->start(tox_do_interval(tox));
 }
 
 void Core::onBootstrapTimer()
@@ -680,48 +735,6 @@ void Core::checkLastOnline(int friendId) {
     }
 }
 
-void Core::start()
-{
-    tox = tox_new(1);
-    if (tox == nullptr) {
-        qCritical() << "Core failed to start";
-        emit failedToStart();
-        return;
-    }
-
-    loadConfiguration();
-
-    tox_callback_friend_request(tox, onFriendRequest, this);
-    tox_callback_friend_message(tox, onFriendMessage, this);
-    tox_callback_friend_action(tox, onAction, this);
-    tox_callback_name_change(tox, onFriendNameChange, this);
-    tox_callback_typing_change(tox, onFriendTypingChange, this);
-    tox_callback_status_message(tox, onStatusMessageChanged, this);
-    tox_callback_user_status(tox, onUserStatusChanged, this);
-    tox_callback_connection_status(tox, onConnectionStatusChanged, this);
-    tox_callback_group_invite(tox, onGroupInvite, this);
-    tox_callback_group_message(tox, onGroupMessage, this);
-    tox_callback_group_namelist_change(tox, onGroupNamelistChange, this);
-    tox_callback_file_send_request(tox, onFileSendRequestCallback, this);
-    tox_callback_file_control(tox, onFileControlCallback, this);
-    tox_callback_file_data(tox, onFileDataCallback, this);
-
-    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
-    tox_get_address(tox, friendAddress);
-
-    emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
-
-    CString cUsername(Settings::getInstance().getUsername());
-    tox_set_name(tox, cUsername.data(), cUsername.size());
-
-    CString cStatusMessage(Settings::getInstance().getStatusMessage());
-    tox_set_status_message(tox, cStatusMessage.data(), cStatusMessage.size());
-
-    bootstrapDht();
-
-    toxTimer->start(tox_do_interval(tox));
-}
-
 int Core::getGroupNumberPeers(int groupId) const
 {
     return tox_group_number_peers(tox, groupId);
@@ -766,105 +779,6 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
 int Core::joinGroupchat(int32_t friendnumber, uint8_t* friend_group_public_key) const
 {
     return tox_join_groupchat(tox, friendnumber, friend_group_public_key);
-}
-
-// CData
-
-Core::CData::CData(const QString &data, uint16_t byteSize)
-{
-    cData = new uint8_t[byteSize];
-    cDataSize = fromString(data, cData);
-}
-
-Core::CData::~CData()
-{
-    delete[] cData;
-}
-
-uint8_t* Core::CData::data()
-{
-    return cData;
-}
-
-uint16_t Core::CData::size()
-{
-    return cDataSize;
-}
-
-QString Core::CData::toString(const uint8_t *cData, const uint16_t cDataSize)
-{
-    return QString(QByteArray(reinterpret_cast<const char*>(cData), cDataSize).toHex()).toUpper();
-}
-
-uint16_t Core::CData::fromString(const QString& data, uint8_t* cData)
-{
-    QByteArray arr = QByteArray::fromHex(data.toLower().toLatin1());
-    memcpy(cData, reinterpret_cast<uint8_t*>(arr.data()), arr.size());
-    return arr.size();
-}
-
-
-// CUserId
-
-Core::CUserId::CUserId(const QString &userId) :
-    CData(userId, SIZE)
-{
-    // intentionally left empty
-}
-
-QString Core::CUserId::toString(const uint8_t* cUserId)
-{
-    return CData::toString(cUserId, SIZE);
-}
-
-
-// CFriendAddress
-
-Core::CFriendAddress::CFriendAddress(const QString &friendAddress) :
-    CData(friendAddress, SIZE)
-{
-    // intentionally left empty
-}
-
-QString Core::CFriendAddress::toString(const uint8_t *cFriendAddress)
-{
-    return CData::toString(cFriendAddress, SIZE);
-}
-
-
-// CString
-
-Core::CString::CString(const QString& string)
-{
-    cString = new uint8_t[string.length() * MAX_SIZE_OF_UTF8_ENCODED_CHARACTER]();
-    cStringSize = fromString(string, cString);
-}
-
-Core::CString::~CString()
-{
-    delete[] cString;
-}
-
-uint8_t* Core::CString::data()
-{
-    return cString;
-}
-
-uint16_t Core::CString::size()
-{
-    return cStringSize;
-}
-
-QString Core::CString::toString(const uint8_t* cString, uint16_t cStringSize)
-{
-    return QString::fromUtf8(reinterpret_cast<const char*>(cString), cStringSize);
-}
-
-uint16_t Core::CString::fromString(const QString& string, uint8_t* cString)
-{
-    QByteArray byteArray = QByteArray(string.toUtf8());
-    memcpy(cString, reinterpret_cast<uint8_t*>(byteArray.data()), byteArray.size());
-    return byteArray.size();
 }
 
 void Core::quitGroupChat(int groupId) const

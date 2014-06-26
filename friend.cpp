@@ -1,6 +1,6 @@
 #include "friend.h"
 #include "friendlist.h"
-#include "friendwidget.h"
+#include "widget/friendwidget.h"
 
 Friend::Friend(int FriendId, QString UserId)
     : friendId(FriendId), userId(UserId)

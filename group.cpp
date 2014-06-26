@@ -1,9 +1,9 @@
 #include "group.h"
-#include "groupwidget.h"
-#include "groupchatform.h"
+#include "widget/groupwidget.h"
+#include "widget/form/groupchatform.h"
 #include "friendlist.h"
 #include "friend.h"
-#include "widget.h"
+#include "widget/widget.h"
 #include "core.h"
 #include <QDebug>
 

@@ -10,7 +10,7 @@
 #include <QScrollArea>
 #include <QTime>
 
-#include "chattextedit.h"
+#include "widget/tool/chattextedit.h"
 #include "ui_widget.h"
 #include "core.h"
 
@@ -34,16 +34,19 @@ public:
 
 signals:
     void sendMessage(int, QString);
-    void sendFile(int32_t, QString, QByteArray);
+    void sendFile(int32_t friendId, QString, QByteArray);
+    void startCall(int friendId);
 
 public slots:
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
+    void onCallReceived();
 
 private slots:
     void onSendTriggered();
     void onAttachClicked();
     void onSliderRangeChanged();
+    void onCallTriggered();
 
 private:
     Friend* f;
@@ -52,7 +55,7 @@ private:
     QGridLayout *mainChatLayout;
     QLabel *avatar, *name, *statusMessage;
     ChatTextEdit *msgEdit;
-    QPushButton *sendButton, *fileButton;
+    QPushButton *sendButton, *fileButton, *callButton;
     QScrollArea *chatArea;
     QWidget *main, *head, *chatAreaWidget;
     QString previousName;

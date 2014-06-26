@@ -1,7 +1,7 @@
 #include "groupchatform.h"
 #include "group.h"
-#include "groupwidget.h"
-#include "widget.h"
+#include "widget/groupwidget.h"
+#include "widget/widget.h"
 #include "friend.h"
 #include "friendlist.h"
 #include <QFont>

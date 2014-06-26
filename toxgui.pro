@@ -11,51 +11,29 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = toxgui
 TEMPLATE = app
 
-
-SOURCES += main.cpp\
-        widget.cpp \
-    core.cpp \
-    status.cpp \
-    settings.cpp \
-    addfriendform.cpp \
-    settingsform.cpp \
-    editablelabelwidget.cpp \
-    copyableelidelabel.cpp \
-    elidelabel.cpp \
-    esclineedit.cpp \
-    friendlist.cpp \
-    friend.cpp \
-    chatform.cpp \
-    chattextedit.cpp \
-    friendrequestdialog.cpp \
-    friendwidget.cpp \
-    groupwidget.cpp \
-    group.cpp \
-    grouplist.cpp \
-    groupchatform.cpp \
-    filetransfertwidget.cpp
-
-HEADERS  += widget.h \
-    core.h \
-    status.h \
-    settings.h \
-    addfriendform.h \
-    settingsform.h \
-    editablelabelwidget.h \
-    elidelabel.h \
-    copyableelidelabel.h \
-    esclineedit.h \
-    friendlist.h \
+HEADERS  += widget/form/addfriendform.h \
+    widget/form/chatform.h \
+    widget/form/groupchatform.h \
+    widget/form/settingsform.h \
+    widget/tool/chattextedit.h \
+    widget/tool/copyableelidelabel.h \
+    widget/tool/editablelabelwidget.h \
+    widget/tool/elidelabel.h \
+    widget/tool/esclineedit.h \
+    widget/tool/friendrequestdialog.h \
+    widget/filetransfertwidget.h \
+    widget/friendwidget.h \
+    widget/groupwidget.h \
+    widget/widget.h \
     friend.h \
-    chatform.h \
-    chattextedit.h \
-    friendrequestdialog.h \
-    friendwidget.h \
-    groupwidget.h \
     group.h \
     grouplist.h \
-    groupchatform.h \
-    filetransfertwidget.h
+    settings.h \
+    status.h \
+    core.h \
+    friendlist.h \
+    cdata.h \
+    cstring.h
 
 FORMS    += widget.ui
 
@@ -64,4 +42,30 @@ CONFIG += c++11
 RESOURCES += \
     res.qrc
 
-LIBS += -ltoxcore -lsodium
+LIBS += -ltoxcore -ltoxav -lsodium
+
+SOURCES += \
+    widget/form/addfriendform.cpp \
+    widget/form/chatform.cpp \
+    widget/form/groupchatform.cpp \
+    widget/form/settingsform.cpp \
+    widget/tool/chattextedit.cpp \
+    widget/tool/copyableelidelabel.cpp \
+    widget/tool/editablelabelwidget.cpp \
+    widget/tool/elidelabel.cpp \
+    widget/tool/esclineedit.cpp \
+    widget/tool/friendrequestdialog.cpp \
+    widget/filetransfertwidget.cpp \
+    widget/friendwidget.cpp \
+    widget/groupwidget.cpp \
+    widget/widget.cpp \
+    core.cpp \
+    friend.cpp \
+    friendlist.cpp \
+    group.cpp \
+    grouplist.cpp \
+    main.cpp \
+    settings.cpp \
+    status.cpp \
+    cdata.cpp \
+    cstring.cpp

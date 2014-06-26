@@ -2,7 +2,7 @@
 #define FRIEND_H
 
 #include <QString>
-#include "chatform.h"
+#include "widget/form/chatform.h"
 
 class FriendWidget;
 

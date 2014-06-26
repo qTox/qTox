@@ -3,12 +3,12 @@
 #include "settings.h"
 #include "friend.h"
 #include "friendlist.h"
-#include "friendrequestdialog.h"
-#include "friendwidget.h"
+#include "widget/tool/friendrequestdialog.h"
+#include "widget/friendwidget.h"
 #include "grouplist.h"
 #include "group.h"
-#include "groupwidget.h"
-#include "groupchatform.h"
+#include "widget/groupwidget.h"
+#include "widget/form/groupchatform.h"
 #include <QMessageBox>
 #include <QDebug>
 
