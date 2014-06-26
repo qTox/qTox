@@ -9,11 +9,13 @@ However, it is not a fork.
 
 - Friends chat
 - Group chats (experimental, can only accept invitations)
+- File transfers, with previewing of images
 
 <h2>Requirements</h2>
 
 This client will run on Windows, Linux and Mac natively, but binairies will only be provided for Windows. <br/>
 Linux and Mac users will have compile the source code themselves.
 
-<h3>Screenshot</h3>
+<h3>Screenshots</h3>
 <img src="http://i.imgur.com/eMxaxib.png"/>
+<img src="http://i.imgur.com/66ARBGC.png"/>
