@@ -37,7 +37,8 @@ signals:
     void sendFile(int32_t, QString, QByteArray);
 
 public slots:
-    void startFileSend(ToxFile* file);
+    void startFileSend(ToxFile file);
+    void onFileRecvRequest(ToxFile file);
 
 private slots:
     void onSendTriggered();

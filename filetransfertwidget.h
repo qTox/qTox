@@ -17,15 +17,19 @@ class FileTransfertWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FileTransfertWidget(ToxFile* File);
+    FileTransfertWidget(ToxFile File);
 
 public slots:
-    void onFileTransferInfo(ToxFile* File);
-    void onFileTransferCancelled(ToxFile* File);
-    void onFileTransferFinished(ToxFile* File);
+    void onFileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection Direction);
+    void onFileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection Direction);
+    void onFileTransferFinished(ToxFile File);
 
 private slots:
     void cancelTransfer();
+    void rejectRecvRequest();
+    void acceptRecvRequest();
+    void pauseResumeRecv();
+    void pauseResumeSend();
 
 private:
     QString getHumanReadableSize(int size);
@@ -34,11 +38,14 @@ private:
     QLabel *pic, *filename, *size, *speed, *eta;
     QPushButton *topright, *bottomright;
     QProgressBar *progress;
-    ToxFile* file;
     QHBoxLayout *mainLayout, *textLayout;
     QVBoxLayout *infoLayout, *buttonLayout;
     QDateTime lastUpdate;
     long long lastBytesSent;
+    int fileNum;
+    int friendId;
+    QString savePath;
+    ToxFile::FileDirection direction;
 };
 
 #endif // FILETRANSFERTWIDGET_H

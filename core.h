@@ -28,11 +28,7 @@
 #include <QString>
 #include <QList>
 #include <QByteArray>
-
-#define GROUPCHAT_MAX_SIZE 32
-#define TOX_SAVE_INTERVAL 30*1000
-#define TOX_FILE_INTERVAL 50
-#define TOX_BOOTSTRAP_INTERVAL 10*1000
+#include <QFuture>
 
 struct DhtServer
 {
@@ -57,17 +53,20 @@ struct ToxFile
         RECEIVING
     };
 
-    ToxFile(int FileNum, int FriendId, QByteArray FileData, QByteArray FileName, FileDirection Direction)
-        : fileNum(FileNum), friendId(FriendId), fileData{FileData},
-          fileName{FileName}, bytesSent{0}, status{STOPPED}, direction{Direction} {}
+    ToxFile()=default;
+    ToxFile(int FileNum, int FriendId, QByteArray FileData, long long Filesize, QByteArray FileName, FileDirection Direction)
+        : fileNum(FileNum), friendId(FriendId), fileData{FileData}, fileName{FileName},
+          bytesSent{0}, filesize(Filesize), status{STOPPED}, direction{Direction} {}
 
     int fileNum;
     int friendId;
     QByteArray fileData;
     QByteArray fileName;
     long long bytesSent;
+    long long filesize;
     FileStatus status;
     FileDirection direction;
+    QFuture<void> sendFuture;
 };
 
 class Core : public QObject
@@ -101,6 +100,9 @@ private:
     void loadConfiguration();
     void saveConfiguration();
     void loadFriends();
+    static void sendAllFileData(Core* core, ToxFile* file);
+
+    static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);
 
@@ -108,7 +110,7 @@ private:
     QTimer *toxTimer, *saveTimer, *fileTimer, *bootstrapTimer;
     QList<DhtServer> dhtServerList;
     int dhtServerId;
-    static QList<ToxFile> fileSendQueue;
+    static QList<ToxFile> fileSendQueue, fileRecvQueue;
 
     static const QString CONFIG_FILE_NAME;
 
@@ -197,14 +199,18 @@ public slots:
     void sendTyping(int friendId, bool typing);
 
     void sendFile(int32_t friendId, QString Filename, QByteArray data);
-    void cancelFileSend(ToxFile* file);
+    void cancelFileSend(int friendId, int fileNum);
+    void cancelFileRecv(int friendId, int fileNum);
+    void rejectFileRecvRequest(int friendId, int fileNum);
+    void acceptFileRecvRequest(int friendId, int fileNum);
+    void pauseResumeFileSend(int friendId, int fileNum);
+    void pauseResumeFileRecv(int friendId, int fileNum);
 
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
     void setStatus(Status status);
 
     void process();
-    void fileHeartbeat();
 
     void bootstrapDht();
 
@@ -253,12 +259,13 @@ signals:
 
     void failedToStart();
 
-    void fileSendStarted(ToxFile* file);
-    void fileTransferAccepted(ToxFile* file);
-    void fileTransferCancelled(ToxFile* file);
-    void fileTransferFinished(ToxFile* file);
-    void fileTransferPaused(ToxFile* file);
-    void fileTransferInfo(ToxFile* file);
+    void fileSendStarted(ToxFile file);
+    void fileReceiveRequested(ToxFile file);
+    void fileTransferAccepted(ToxFile file);
+    void fileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection direction);
+    void fileTransferFinished(ToxFile file);
+    void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
+    void fileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection direction);
 };
 
 #endif // CORE_HPP

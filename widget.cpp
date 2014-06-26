@@ -37,6 +37,8 @@ Widget::Widget(QWidget *parent) :
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<int32_t>("int32_t");
+    qRegisterMetaType<ToxFile>("ToxFile");
+    qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
     core = new Core();
     coreThread = new QThread(this);
@@ -51,6 +53,7 @@ Widget::Widget(QWidget *parent) :
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
     connect(core, &Core::friendAddressGenerated, &settingsForm, &SettingsForm::setFriendAddress);
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
+    connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
@@ -217,6 +220,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
+    qDebug() << "Adding friend with id "+userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
@@ -225,6 +229,12 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
     connect(newfriend->chatForm, SIGNAL(sendFile(int32_t,QString,QByteArray)), core, SLOT(sendFile(int32_t,QString,QByteArray)));
+    connect(core, &Core::fileReceiveRequested, newfriend->chatForm, &ChatForm::onFileRecvRequest);
+}
+
+void Widget::addFriendFailed(const QString&)
+{
+    QMessageBox::critical(0,"Error","Couldn't request friendship");
 }
 
 void Widget::onFriendStatusChanged(int friendId, Status status)

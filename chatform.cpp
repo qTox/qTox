@@ -41,11 +41,13 @@ ChatForm::ChatForm(Friend* chatFriend)
     sendButton->setPalette(toxgreen);
     sendButton->setAutoFillBackground(true);
     sendButton->setFixedSize(50, 50);
+    sendButton->setIconSize(QSize(25,25));
     fileButton->setIcon(QIcon("img/button icons/attach_2x.png"));
     fileButton->setFlat(true);
     fileButton->setPalette(toxgreen);
     fileButton->setAutoFillBackground(true);
-    fileButton->setIconSize(QSize(40,40));
+    fileButton->setIconSize(QSize(20,20));
+    fileButton->setFixedSize(50,40);
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
@@ -178,9 +180,9 @@ void ChatForm::onSliderRangeChanged()
          scroll->setValue(scroll->maximum());
 }
 
-void ChatForm::startFileSend(ToxFile *file)
+void ChatForm::startFileSend(ToxFile file)
 {
-    if (file->friendId != f->friendId)
+    if (file.friendId != f->friendId)
         return;
     QLabel *author = new QLabel(Widget::getInstance()->getUsername());
     QLabel *date = new QLabel(QTime::currentTime().toString("mm:ss"));
@@ -191,6 +193,39 @@ void ChatForm::startFileSend(ToxFile *file)
     QPalette pal;
     pal.setColor(QPalette::WindowText, Qt::gray);
     author->setPalette(pal);
+    if (previousName.isEmpty() || previousName != author->text())
+    {
+        if (curRow)
+        {
+            mainChatLayout->setRowStretch(curRow, 0);
+            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
+            curRow++;
+        }
+        mainChatLayout->addWidget(author, curRow, 0);
+    }
+    FileTransfertWidget* fileTrans = new FileTransfertWidget(file);
+    previousName = author->text();
+    mainChatLayout->addWidget(fileTrans, curRow, 1);
+    mainChatLayout->addWidget(date, curRow, 3);
+    mainChatLayout->setRowStretch(curRow+1, 1);
+    mainChatLayout->setRowStretch(curRow, 0);
+    curRow++;
+
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransfertWidget::onFileTransferInfo);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransfertWidget::onFileTransferCancelled);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
+}
+
+void ChatForm::onFileRecvRequest(ToxFile file)
+{
+    if (file.friendId != f->friendId)
+        return;
+    QLabel *author = new QLabel(f->getName());
+    QLabel *date = new QLabel(QTime::currentTime().toString("mm:ss"));
+    QScrollBar* scroll = chatArea->verticalScrollBar();
+    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
+    author->setAlignment(Qt::AlignTop | Qt::AlignRight);
+    date->setAlignment(Qt::AlignTop);
     if (previousName.isEmpty() || previousName != author->text())
     {
         if (curRow)

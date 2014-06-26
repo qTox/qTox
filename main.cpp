@@ -15,3 +15,10 @@ int main(int argc, char *argv[])
 
     return errorcode;
 }
+
+/** TODO
+ *
+ * Sort the friend list by status, online first then busy then offline
+ * Don't do anything if a friend is disconnected, don't print to the chat
+ *
+ */
