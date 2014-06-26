@@ -63,12 +63,12 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     QPalette toxgreen;
     toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
     topright->setIconSize(QSize(10,10));
-    topright->setFixedSize(24,24);
+    topright->setFixedSize(25,25);
     topright->setFlat(true);
     topright->setAutoFillBackground(true);
     topright->setPalette(toxgreen);
     bottomright->setIconSize(QSize(10,10));
-    bottomright->setFixedSize(24,24);
+    bottomright->setFixedSize(25,25);
     bottomright->setFlat(true);
     bottomright->setAutoFillBackground(true);
     bottomright->setPalette(toxgreen);
@@ -89,9 +89,10 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     textLayout->setSpacing(5);
 
     buttonLayout->addWidget(topright);
+    buttonLayout->addSpacing(2);
     buttonLayout->addWidget(bottomright);
     buttonLayout->setMargin(0);
-    buttonLayout->setSpacing(2);
+    buttonLayout->setSpacing(0);
 }
 
 QString FileTransfertWidget::getHumanReadableSize(int size)

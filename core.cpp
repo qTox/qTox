@@ -935,7 +935,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
         QByteArray toSend = file->fileData.mid(file->bytesSent, chunkSize);
         if (tox_file_send_data(core->tox, file->friendId, file->fileNum, (uint8_t*)toSend.data(), toSend.size()) == -1)
         {
-            qWarning("Core::fileHeartbeat: Error sending data chunk");
+            //qWarning("Core::fileHeartbeat: Error sending data chunk");
             QThread::sleep(0);
             continue;
         }
