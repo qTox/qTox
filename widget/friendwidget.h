@@ -12,7 +12,10 @@ struct FriendWidget : public QWidget
 public:
     FriendWidget(int FriendId, QString id);
     void mouseReleaseEvent (QMouseEvent* event);
+    void mousePressEvent(QMouseEvent *event);
     void contextMenuEvent(QContextMenuEvent * event);
+    void enterEvent(QEvent* event);
+    void leaveEvent(QEvent* event);
     void setAsActiveChatroom();
     void setAsInactiveChatroom();
 
@@ -25,6 +28,10 @@ public:
     QLabel avatar, name, statusMessage, statusPic;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
+
+private:
+    QColor lastColor;
+    int isActiveWidget;
 };
 
 #endif // FRIENDWIDGET_H

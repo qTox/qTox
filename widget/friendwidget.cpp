@@ -16,6 +16,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 
     avatar.setPixmap(QPixmap("img/contact list icons/contact.png"));
     name.setText(id);
+    //statusPic.setAlignment(Qt::AlignHCenter);
     statusPic.setPixmap(QPixmap("img/status/dot_away.png"));
     QFont small;
     small.setPixelSize(10);
@@ -37,6 +38,8 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     layout.addSpacing(5);
     layout.addWidget(&statusPic);
     layout.addSpacing(5);
+
+    isActiveWidget = 0;
 }
 
 void FriendWidget::mouseReleaseEvent (QMouseEvent*)
@@ -62,8 +65,51 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     }
 }
 
+void FriendWidget::mousePressEvent(QMouseEvent *event)
+{
+    if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
+    {
+        if (isActiveWidget)
+        {
+            QPalette pal;
+            pal.setColor(QPalette::Background, QColor(250,250,250,255));
+            this->setPalette(pal);
+        }
+        else
+        {
+            QPalette pal;
+            pal.setColor(QPalette::Background, QColor(85,85,85,255));
+            this->setPalette(pal);
+        }
+    }
+}
+
+void FriendWidget::enterEvent(QEvent*)
+{
+    if (isActiveWidget != 1)
+    {
+        QPalette pal;
+        pal.setColor(QPalette::Background, QColor(75,75,75,255));
+        lastColor = this->palette().background().color();
+        this->setPalette(pal);
+    }
+}
+
+void FriendWidget::leaveEvent(QEvent*)
+{
+    if (isActiveWidget != 1)
+    {
+        QPalette pal;
+        pal.setColor(QPalette::Background, lastColor);
+        this->setPalette(pal);
+    }
+}
+
+
 void FriendWidget::setAsActiveChatroom()
 {
+    isActiveWidget = 1;
+
     QFont small;
     small.setPixelSize(10);
     statusMessage.setFont(small);
@@ -81,6 +127,8 @@ void FriendWidget::setAsActiveChatroom()
 
 void FriendWidget::setAsInactiveChatroom()
 {
+    isActiveWidget = 0;
+
     QFont small;
     small.setPixelSize(10);
     statusMessage.setFont(small);
