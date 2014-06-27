@@ -38,6 +38,7 @@ signals:
     void startCall(int friendId);
     void answerCall(int callId);
     void hangupCall(int callId);
+    void cancelCall(int callId, int friendId);
 
 public slots:
     void startFileSend(ToxFile file);
@@ -46,7 +47,10 @@ public slots:
     void onAvStart(int FriendId, int CallId);
     void onAvCancel(int FriendId, int CallId);
     void onAvEnd(int FriendId, int CallId);
+    void onAvRinging(int FriendId, int CallId);
+    void onAvStarting(int FriendId, int CallId);
     void onAvEnding(int FriendId, int CallId);
+    void onAvRequestTimeout(int FriendId, int CallId);
 
 private slots:
     void onSendTriggered();
@@ -55,6 +59,7 @@ private slots:
     void onCallTriggered();
     void onAnswerCallTriggered();
     void onHangupCallTriggered();
+    void onCancelCallTriggered();
 
 private:
     Friend* f;

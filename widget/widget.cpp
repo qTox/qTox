@@ -231,12 +231,17 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->chatForm, SIGNAL(sendFile(int32_t,QString,QByteArray)), core, SLOT(sendFile(int32_t,QString,QByteArray)));
     connect(newfriend->chatForm, SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
     connect(newfriend->chatForm, SIGNAL(hangupCall(int)), core, SLOT(hangupCall(int)));
+    connect(newfriend->chatForm, SIGNAL(startCall(int)), core, SLOT(startCall(int)));
+    connect(newfriend->chatForm, SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
     connect(core, &Core::fileReceiveRequested, newfriend->chatForm, &ChatForm::onFileRecvRequest);
     connect(core, &Core::avInvite, newfriend->chatForm, &ChatForm::onAvInvite);
     connect(core, &Core::avStart, newfriend->chatForm, &ChatForm::onAvStart);
     connect(core, &Core::avCancel, newfriend->chatForm, &ChatForm::onAvCancel);
     connect(core, &Core::avEnd, newfriend->chatForm, &ChatForm::onAvEnd);
+    connect(core, &Core::avRinging, newfriend->chatForm, &ChatForm::onAvRinging);
+    connect(core, &Core::avStarting, newfriend->chatForm, &ChatForm::onAvStarting);
     connect(core, &Core::avEnding, newfriend->chatForm, &ChatForm::onAvEnding);
+    connect(core, &Core::avRequestTimeout, newfriend->chatForm, &ChatForm::onAvRequestTimeout);
 }
 
 void Widget::addFriendFailed(const QString&)

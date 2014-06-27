@@ -113,6 +113,8 @@ public slots:
 
     void answerCall(int callId);
     void hangupCall(int callId);
+    void startCall(int friendId);
+    void cancelCall(int callId, int friendId);
 
 signals:
     void connected();
@@ -171,7 +173,10 @@ signals:
     void avStart(int friendId, int callIndex);
     void avCancel(int friendId, int callIndex);
     void avEnd(int friendId, int callIndex);
+    void avRinging(int friendId, int callIndex);
+    void avStarting(int friendId, int callIndex);
     void avEnding(int friendId, int callIndex);
+    void avRequestTimeout(int friendId, int callIndex);
 
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);

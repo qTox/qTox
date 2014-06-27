@@ -316,7 +316,41 @@ void ChatForm::onAvEnd(int FriendId, int)
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
 }
 
+void ChatForm::onAvRinging(int FriendId, int CallId)
+{
+    if (FriendId != f->friendId)
+        return;
+    callId = CallId;
+    QPalette pal;
+    pal.setColor(QPalette::Button, Qt::gray); // Call ringing grey
+    callButton->setPalette(pal);
+    callButton->disconnect();
+    connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
+}
+
+void ChatForm::onAvStarting(int FriendId, int)
+{
+    if (FriendId != f->friendId)
+        return;
+    QPalette toxred;
+    toxred.setColor(QPalette::Button, QColor(200,78,78)); // Tox Red
+    callButton->setPalette(toxred);
+    callButton->disconnect();
+    connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
+}
+
 void ChatForm::onAvEnding(int FriendId, int)
+{
+    if (FriendId != f->friendId)
+        return;
+    QPalette toxgreen;
+    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
+    callButton->setPalette(toxgreen);
+    callButton->disconnect();
+    connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+}
+
+void ChatForm::onAvRequestTimeout(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
@@ -339,5 +373,16 @@ void ChatForm::onHangupCallTriggered()
 
 void ChatForm::onCallTriggered()
 {
+    callButton->disconnect();
+    emit startCall(f->friendId);
+}
 
+void ChatForm::onCancelCallTriggered()
+{
+    QPalette toxgreen;
+    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
+    callButton->setPalette(toxgreen);
+    callButton->disconnect();
+    connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    emit cancelCall(callId, f->friendId);
 }

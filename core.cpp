@@ -34,6 +34,7 @@
 #define TOX_FILE_INTERVAL 20
 #define TOX_BOOTSTRAP_INTERVAL 10*1000
 #define TOXAV_MAX_CALLS 32
+#define TOXAV_RINGING_TIME 15
 
 const QString Core::CONFIG_FILE_NAME = "tox_save";
 QList<ToxFile> Core::fileSendQueue;
@@ -934,12 +935,28 @@ void Core::onAvEnd(int32_t call_index, void* core)
 
 void Core::onAvRinging(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV ringing";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV ringing";
+        return;
+    }
+    qDebug() << QString("Core: AV ringing with %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avRinging(friendId, call_index);
 }
 
 void Core::onAvStarting(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV starting";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV starting";
+        return;
+    }
+    qDebug() << QString("Core: AV starting %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avStarting(friendId, call_index);
 }
 
 void Core::onAvEnding(int32_t call_index, void* core)
@@ -962,7 +979,15 @@ void Core::onAvError(int32_t call_index, void* core)
 
 void Core::onAvRequestTimeout(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV request timeout";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV request timeout";
+        return;
+    }
+    qDebug() << QString("Core: AV request timeout with %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avRequestTimeout(friendId, call_index);
 }
 
 void Core::onAvPeerTimeout(int32_t call_index, void* core)
@@ -980,4 +1005,17 @@ void Core::hangupCall(int callId)
 {
     qDebug() << QString("Core: hanging up call %1").arg(callId);
     toxav_hangup(toxav, callId);
+}
+
+void Core::startCall(int friendId)
+{
+    qDebug() << QString("Core: Starting call with %1").arg(friendId);
+    int callId;
+    toxav_call(toxav, &callId, friendId, TypeAudio, TOXAV_RINGING_TIME);
+}
+
+void Core::cancelCall(int callId, int friendId)
+{
+    qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
+    toxav_cancel(toxav, callId, friendId, 0);
 }
