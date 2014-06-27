@@ -51,6 +51,7 @@ public slots:
     void onAvStarting(int FriendId, int CallId);
     void onAvEnding(int FriendId, int CallId);
     void onAvRequestTimeout(int FriendId, int CallId);
+    void onAvPeerTimeout(int FriendId, int CallId);
 
 private slots:
     void onSendTriggered();

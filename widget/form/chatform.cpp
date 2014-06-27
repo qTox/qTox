@@ -153,6 +153,7 @@ void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);
     date->setAlignment(Qt::AlignTop);
+    message->setTextInteractionFlags(Qt::TextSelectableByMouse);
     if (author->text() == Widget::getInstance()->getUsername())
     {
         QPalette pal;
@@ -351,6 +352,17 @@ void ChatForm::onAvEnding(int FriendId, int)
 }
 
 void ChatForm::onAvRequestTimeout(int FriendId, int)
+{
+    if (FriendId != f->friendId)
+        return;
+    QPalette toxgreen;
+    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
+    callButton->setPalette(toxgreen);
+    callButton->disconnect();
+    connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+}
+
+void ChatForm::onAvPeerTimeout(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;

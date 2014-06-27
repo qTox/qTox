@@ -259,6 +259,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::avStarting, newfriend->chatForm, &ChatForm::onAvStarting);
     connect(core, &Core::avEnding, newfriend->chatForm, &ChatForm::onAvEnding);
     connect(core, &Core::avRequestTimeout, newfriend->chatForm, &ChatForm::onAvRequestTimeout);
+    connect(core, &Core::avPeerTimeout, newfriend->chatForm, &ChatForm::onAvPeerTimeout);
 }
 
 void Widget::addFriendFailed(const QString&)
@@ -464,7 +465,7 @@ void Widget::removeGroup(int groupId)
 {
     Group* g = GroupList::findGroup(groupId);
     if (g->widget == activeGroupWidget)
-        activeGroupWidget == nullptr;
+        activeGroupWidget = nullptr;
     GroupList::removeGroup(groupId);
     core->removeGroup(groupId);
     delete g;

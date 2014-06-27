@@ -10,7 +10,7 @@ However, it is not a fork.
 - Friends chat
 - Group chats (experimental, can only accept invitations)
 - File transfers, with previewing of images
-- Audio calls (hearing only, not talking at the moment)
+- Audio calls
 
 <h2>Requirements</h2>
 
