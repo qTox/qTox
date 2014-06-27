@@ -1076,9 +1076,13 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
         int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
         uint8_t buf[framesize*2];
         int len = toxav_recv_audio(toxav, callId, framesize, (int16_t*)buf);
-        qDebug() << QString("Core: Received %1 audio bytes").arg(len);
         if (len < 0)
         {
+            if (len == -3) // Not in call !
+            {
+                qWarning("Core: Trying to play audio in an inactive call!");
+                return;
+            }
             qDebug() << QString("Core::playCallAudio: Error receiving audio: %1").arg(len);
             QThread::msleep(5);
             continue;
