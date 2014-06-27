@@ -60,8 +60,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     callButton->setFlat(true);
     callButton->setPalette(toxgreen);
     callButton->setAutoFillBackground(true);
-    callButton->setIconSize(QSize(32,32));
-    callButton->setFixedSize(50,50);
+    callButton->setIconSize(QSize(25,25));
+    callButton->setFixedSize(50,40);
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
@@ -73,7 +73,9 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     mainFootLayout->addWidget(msgEdit);
     mainFootLayout->addLayout(footButtonsSmall);
+    mainFootLayout->addSpacing(5);
     mainFootLayout->addWidget(sendButton);
+    mainFootLayout->setSpacing(0);
 
     head->setLayout(headLayout);
     headLayout->addWidget(avatar);

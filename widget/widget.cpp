@@ -15,8 +15,7 @@
 Widget *Widget::instance{nullptr};
 
 Widget::Widget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Widget)
+    QWidget(parent), ui(new Ui::Widget), activeFriendWidget{nullptr}
 {
     ui->setupUi(this);
     ui->mainContent->setLayout(new QVBoxLayout());
@@ -174,6 +173,7 @@ void Widget::hideMainForms()
         item->widget()->hide();
     while ((item = ui->mainContent->layout()->takeAt(0)) != 0)
         item->widget()->hide();
+    activeFriendWidget->setAsInactiveFriend();
 }
 
 void Widget::onUsernameChanged(const QString& newUsername)
@@ -296,7 +296,7 @@ void Widget::onFriendUsernameLoaded(int friendId, const QString& username)
 
 void Widget::onFriendWidgetClicked(FriendWidget *widget)
 {
-    if (activeFriendWidget != 0)
+    if (activeFriendWidget != nullptr)
     {
         activeFriendWidget->setAsInactiveFriend();
     }
