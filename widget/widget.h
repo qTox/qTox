@@ -82,6 +82,8 @@ private:
     static Widget* instance;
     FriendWidget* activeFriendWidget;
     GroupWidget* activeGroupWidget;
+    void updateFriendStatusLights(int friendId);
+    int isFriendWidgetActive, isGroupWidgetActive;
 };
 
 #endif // WIDGET_H
