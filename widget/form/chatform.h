@@ -36,17 +36,25 @@ signals:
     void sendMessage(int, QString);
     void sendFile(int32_t friendId, QString, QByteArray);
     void startCall(int friendId);
+    void answerCall(int callId);
+    void hangupCall(int callId);
 
 public slots:
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
-    void onCallReceived();
+    void onAvInvite(int FriendId, int CallId);
+    void onAvStart(int FriendId, int CallId);
+    void onAvCancel(int FriendId, int CallId);
+    void onAvEnd(int FriendId, int CallId);
+    void onAvEnding(int FriendId, int CallId);
 
 private slots:
     void onSendTriggered();
     void onAttachClicked();
     void onSliderRangeChanged();
     void onCallTriggered();
+    void onAnswerCallTriggered();
+    void onHangupCallTriggered();
 
 private:
     Friend* f;
@@ -61,6 +69,7 @@ private:
     QString previousName;
     int curRow;
     bool lockSliderToBottom;
+    int callId;
 };
 
 #endif // CHATFORM_H

@@ -85,12 +85,18 @@ public:
 
 public slots:
     void start();
+    void process();
+    void bootstrapDht();
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
 
     void removeFriend(int friendId);
     void removeGroup(int groupId);
+
+    void setUsername(const QString& username);
+    void setStatusMessage(const QString& message);
+    void setStatus(Status status);
 
     void sendMessage(int friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
@@ -105,13 +111,8 @@ public slots:
     void pauseResumeFileSend(int friendId, int fileNum);
     void pauseResumeFileRecv(int friendId, int fileNum);
 
-    void setUsername(const QString& username);
-    void setStatusMessage(const QString& message);
-    void setStatus(Status status);
-
-    void process();
-
-    void bootstrapDht();
+    void answerCall(int callId);
+    void hangupCall(int callId);
 
 signals:
     void connected();
@@ -165,6 +166,12 @@ signals:
     void fileTransferFinished(ToxFile file);
     void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
     void fileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection direction);
+
+    void avInvite(int friendId, int callIndex);
+    void avStart(int friendId, int callIndex);
+    void avCancel(int friendId, int callIndex);
+    void avEnd(int friendId, int callIndex);
+    void avEnding(int friendId, int callIndex);
 
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);

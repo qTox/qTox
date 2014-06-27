@@ -875,57 +875,109 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
     removeFileFromQueue(true, file->friendId, file->fileNum);
 }
 
-void Core::onAvInvite(int32_t call_index, void* toxav)
+void Core::onAvInvite(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV invite";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV invite";
+        return;
+    }
+    qDebug() << QString("Core: AV invite from %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avInvite(friendId, call_index);
 }
 
-void Core::onAvStart(int32_t call_index, void* toxav)
+void Core::onAvStart(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV start";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV start";
+        return;
+    }
+    qDebug() << QString("Core: AV start from %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avStart(friendId, call_index);
 }
 
-void Core::onAvCancel(int32_t call_index, void* toxav)
+void Core::onAvCancel(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV cancel";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV cancel";
+        return;
+    }
+    qDebug() << QString("Core: AV cancel from %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avCancel(friendId, call_index);
 }
 
-void Core::onAvReject(int32_t call_index, void* toxav)
+void Core::onAvReject(int32_t call_index, void* core)
 {
     qDebug() << "Core: AV reject";
 }
 
-void Core::onAvEnd(int32_t call_index, void* toxav)
+void Core::onAvEnd(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV end";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV end";
+        return;
+    }
+    qDebug() << QString("Core: AV end from %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avEnd(friendId, call_index);
 }
 
-void Core::onAvRinging(int32_t call_index, void* toxav)
+void Core::onAvRinging(int32_t call_index, void* core)
 {
     qDebug() << "Core: AV ringing";
 }
 
-void Core::onAvStarting(int32_t call_index, void* toxav)
+void Core::onAvStarting(int32_t call_index, void* core)
 {
     qDebug() << "Core: AV starting";
 }
 
-void Core::onAvEnding(int32_t call_index, void* toxav)
+void Core::onAvEnding(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV ending";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV ending";
+        return;
+    }
+    qDebug() << QString("Core: AV ending from %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avEnding(friendId, call_index);
 }
 
-void Core::onAvError(int32_t call_index, void* toxav)
+void Core::onAvError(int32_t call_index, void* core)
 {
     qDebug() << "Core: AV error";
 }
 
-void Core::onAvRequestTimeout(int32_t call_index, void* toxav)
+void Core::onAvRequestTimeout(int32_t call_index, void* core)
 {
     qDebug() << "Core: AV request timeout";
 }
 
-void Core::onAvPeerTimeout(int32_t call_index, void* toxav)
+void Core::onAvPeerTimeout(int32_t call_index, void* core)
 {
     qDebug() << "Core: AV peer timeout";
+}
+
+void Core::answerCall(int callId)
+{
+    qDebug() << QString("Core: answering call %1").arg(callId);
+    toxav_answer(toxav, callId, TypeAudio);
+}
+
+void Core::hangupCall(int callId)
+{
+    qDebug() << QString("Core: hanging up call %1").arg(callId);
+    toxav_hangup(toxav, callId);
 }
