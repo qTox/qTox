@@ -33,3 +33,21 @@ int main(int argc, char *argv[])
  * An extra side panel for groupchats, like Venom does (?)
  *
  */
+
+/** NAMES :
+Botox
+Ricin
+Anthrax
+Sarin
+Cyanide
+Polonium
+Mercury
+Arsenic
+qTox
+plague
+Britney
+Nightshade
+Belladonna
+toxer
+GoyIM
+ */

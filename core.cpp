@@ -17,6 +17,7 @@
 #include "core.h"
 #include "cdata.h"
 #include "cstring.h"
+#include "settings.h"
 
 #include <QDebug>
 #include <QDir>
@@ -27,18 +28,10 @@
 #include <QThread>
 #include <QtConcurrent/QtConcurrent>
 
-#include "settings.h"
-
-#define GROUPCHAT_MAX_SIZE 32
-#define TOX_SAVE_INTERVAL 30*1000
-#define TOX_FILE_INTERVAL 20
-#define TOX_BOOTSTRAP_INTERVAL 10*1000
-#define TOXAV_MAX_CALLS 32
-#define TOXAV_RINGING_TIME 15
-
 const QString Core::CONFIG_FILE_NAME = "tox_save";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
+ToxCall Core::calls[TOXAV_MAX_CALLS];
 
 Core::Core() :
     tox(nullptr)
@@ -629,7 +622,9 @@ void Core::process()
     fflush(stdout);
 #endif
     checkConnection();
-    toxTimer->start(tox_do_interval(tox));
+    int toxInterval = tox_do_interval(tox);
+    //qDebug() << QString("Tox interval %1").arg(toxInterval);
+    toxTimer->start(50);
 }
 
 void Core::checkConnection()
@@ -899,6 +894,8 @@ void Core::onAvStart(int32_t call_index, void* core)
     }
     qDebug() << QString("Core: AV start from %1").arg(friendId);
 
+    prepareCall(friendId, call_index, static_cast<Core*>(core)->toxav);
+
     emit static_cast<Core*>(core)->avStart(friendId, call_index);
 }
 
@@ -930,6 +927,8 @@ void Core::onAvEnd(int32_t call_index, void* core)
     }
     qDebug() << QString("Core: AV end from %1").arg(friendId);
 
+    cleanupCall(call_index);
+
     emit static_cast<Core*>(core)->avEnd(friendId, call_index);
 }
 
@@ -956,6 +955,8 @@ void Core::onAvStarting(int32_t call_index, void* core)
     }
     qDebug() << QString("Core: AV starting %1").arg(friendId);
 
+    prepareCall(friendId, call_index, static_cast<Core*>(core)->toxav);
+
     emit static_cast<Core*>(core)->avStarting(friendId, call_index);
 }
 
@@ -968,6 +969,8 @@ void Core::onAvEnding(int32_t call_index, void* core)
         return;
     }
     qDebug() << QString("Core: AV ending from %1").arg(friendId);
+
+    cleanupCall(call_index);
 
     emit static_cast<Core*>(core)->avEnding(friendId, call_index);
 }
@@ -1018,4 +1021,100 @@ void Core::cancelCall(int callId, int friendId)
 {
     qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
     toxav_cancel(toxav, callId, friendId, 0);
+}
+
+void Core::prepareCall(int friendId, int callId, ToxAv* toxav)
+{
+    qDebug() << QString("Core: preparing call %1").arg(callId);
+    calls[callId].callId = callId;
+    calls[callId].friendId = friendId;
+    calls[callId].codecSettings = av_DefaultSettings;
+    toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, false);
+    QAudioFormat format;
+    format.setSampleRate(calls[callId].codecSettings.audio_sample_rate);
+    format.setChannelCount(calls[callId].codecSettings.audio_channels);
+    format.setSampleSize(16);
+    format.setCodec("audio/pcm");
+    format.setByteOrder(QAudioFormat::LittleEndian);
+    format.setSampleType(QAudioFormat::SignedInt);
+    QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
+    if (!info.isFormatSupported(format)) {
+        calls[callId].audioOutput = nullptr;
+        qWarning() << "Core: Raw audio format not supported by backend, cannot play audio.";
+        return;
+    }
+
+    calls[callId].audioOutput = new QAudioOutput(format);
+    calls[callId].active = true;
+
+    calls[callId].audioOutput->setBufferSize(24000);
+    calls[callId].audioOutput->start(&calls[callId].audioBuffer);
+    if (calls[callId].audioOutput->state() == QAudio::StoppedState
+            && calls[callId].audioOutput->error() == QAudio::OpenError)
+    {
+        qWarning() << "Core: Unable to start audio";
+    }
+    else
+        qDebug() << QString("Core: Audio started, buffer size %1").arg(calls[callId].audioOutput->bufferSize());
+    calls[callId].playFuture = QtConcurrent::run(playCallAudio, callId, toxav);
+}
+
+void Core::cleanupCall(int callId)
+{
+    qDebug() << QString("Core: cleaning up call %1").arg(callId);
+    calls[callId].active = false;
+    calls[callId].playFuture.waitForFinished();
+    if (calls[callId].audioOutput != nullptr)
+    {
+        delete calls[callId].audioOutput;
+    }
+    calls[callId].audioBuffer.clear();
+}
+
+void Core::playCallAudio(int callId, ToxAv* toxav)
+{
+    while (calls[callId].active)
+    {
+        int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
+        uint8_t buf[framesize*2];
+        int len = toxav_recv_audio(toxav, callId, framesize, (int16_t*)buf);
+        if (len < 0)
+        {
+            if (len == -3) // Not in call !
+            {
+                qWarning("Core: Trying to play audio in an inactive call!");
+                return;
+            }
+            qDebug() << QString("Core::playCallAudio: Error receiving audio: %1").arg(len);
+            QThread::msleep(5);
+            continue;
+        }
+        if (len == 0)
+        {
+            qApp->processEvents();
+            QThread::msleep(5);
+            continue;
+        }
+        //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
+                    //.arg(len*2).arg(calls[callId].audioOutput->bytesFree()).arg(calls[callId].audioBuffer.bufferSize());
+        calls[callId].audioBuffer.writeData((char*)buf, len*2);
+        int state = calls[callId].audioOutput->state();
+        if (state != QAudio::ActiveState)
+        {
+            qDebug() << QString("Core: Audio state is %1").arg(state);
+        }
+        int error = calls[callId].audioOutput->error();
+        if (error != QAudio::NoError)
+            qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
+
+        QThread::msleep(5);
+    }
+}
+
+void Core::sendCallAudio(int callId, ToxAv* toxav)
+{
+    while (calls[callId].active)
+    {
+        QThread::msleep(calls[callId].codecSettings.audio_frame_duration / 2);
+    }
 }

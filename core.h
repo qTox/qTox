@@ -18,6 +18,7 @@
 #define CORE_HPP
 
 #include "status.h"
+#include "audiobuffer.h"
 
 #include <tox/tox.h>
 #include <tox/toxav.h>
@@ -30,6 +31,15 @@
 #include <QList>
 #include <QByteArray>
 #include <QFuture>
+#include <QBuffer>
+#include <QAudioOutput>
+
+#define TOXAV_MAX_CALLS 16
+#define GROUPCHAT_MAX_SIZE 32
+#define TOX_SAVE_INTERVAL 30*1000
+#define TOX_FILE_INTERVAL 20
+#define TOX_BOOTSTRAP_INTERVAL 10*1000
+#define TOXAV_RINGING_TIME 15
 
 struct DhtServer
 {
@@ -68,6 +78,18 @@ struct ToxFile
     FileStatus status;
     FileDirection direction;
     QFuture<void> sendFuture;
+};
+
+struct ToxCall
+{
+public:
+    AudioBuffer audioBuffer;
+    QAudioOutput* audioOutput;
+    ToxAvCodecSettings codecSettings;
+    int callId;
+    int friendId;
+    bool active;
+    QFuture<void> playFuture;
 };
 
 class Core : public QObject
@@ -208,6 +230,11 @@ private:
     static void onAvRequestTimeout(int32_t call_index, void* toxav);
     static void onAvPeerTimeout(int32_t call_index, void* toxav);
 
+    static void prepareCall(int friendId, int callId, ToxAv *toxav);
+    static void cleanupCall(int callId);
+    static void playCallAudio(int callId, ToxAv* toxav); // Blocking, start in a thread
+    static void sendCallAudio(int callId, ToxAv* toxav); // Blocking, start in a thread
+
     void checkConnection();
     void onBootstrapTimer();
 
@@ -227,6 +254,7 @@ private:
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
+    static ToxCall calls[TOXAV_MAX_CALLS];
 
     static const QString CONFIG_FILE_NAME;
 };

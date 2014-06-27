@@ -10,6 +10,7 @@ However, it is not a fork.
 - Friends chat
 - Group chats (experimental, can only accept invitations)
 - File transfers, with previewing of images
+- Audio calls (hearing only, not talking at the moment)
 
 <h2>Requirements</h2>
 
@@ -19,5 +20,6 @@ Linux and Mac users will have compile the source code themselves.
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a>
 
 <h3>Screenshots</h3>
+<h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
 <img src="http://i.imgur.com/eMxaxib.png"/>
 <img src="http://i.imgur.com/66ARBGC.png"/>
