@@ -452,7 +452,7 @@ void Widget::removeGroup(int groupId)
 {
     Group* g = GroupList::findGroup(groupId);
     if (g->widget == activeGroupWidget)
-        activeGroupWidget == nullptr;
+        activeGroupWidget = nullptr;
     GroupList::removeGroup(groupId);
     core->removeGroup(groupId);
     delete g;
