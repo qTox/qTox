@@ -11,6 +11,7 @@
 #include "widget/form/groupchatform.h"
 #include <QMessageBox>
 #include <QDebug>
+#include <QSound>
 
 Widget *Widget::instance{nullptr};
 
@@ -347,10 +348,16 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
     {
         Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
         if ((f->friendId != f2->friendId) || isFriendWidgetActive == 0)
+        {
             f->hasNewMessages = 1;
+            playMessageNotification();
+        }
     }
     else
+    {
         f->hasNewMessages = 1;
+        playMessageNotification();
+    }
 
     updateFriendStatusLights(friendId);
 }
@@ -371,6 +378,11 @@ void Widget::updateFriendStatusLights(int friendId)
         f->widget->statusPic.setPixmap(QPixmap("img/status/dot_away.png"));
     else if (status == Status::Offline && f->hasNewMessages == 1)
         f->widget->statusPic.setPixmap(QPixmap("img/status/dot_away_notification.png"));
+}
+
+void Widget::playMessageNotification()
+{
+    QSound::play("audio/notification.wav");
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
