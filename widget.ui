@@ -940,7 +940,7 @@
         <property name="autoFillBackground">
          <bool>true</bool>
         </property>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="profilePicture">
          <property name="geometry">
           <rect>
            <x>10</x>

@@ -13,6 +13,8 @@ public:
     FriendWidget(int FriendId, QString id);
     void mouseReleaseEvent (QMouseEvent* event);
     void contextMenuEvent(QContextMenuEvent * event);
+    void enterEvent(QEvent* event);
+    void leaveEvent(QEvent* event);
     void setAsActiveChatroom();
     void setAsInactiveChatroom();
 
@@ -25,6 +27,10 @@ public:
     QLabel avatar, name, statusMessage, statusPic;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
+
+private:
+    void mousePressEvent(QMouseEvent *event);
+    int isActiveWidget, isCursorOver;
 };
 
 #endif // FRIENDWIDGET_H
