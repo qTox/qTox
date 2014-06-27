@@ -430,8 +430,15 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
         {
             playMessageNotification();
             g->hasNewMessages = 1;
+            g->userWasMentioned = 1;
             g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat_notification.png"));
         }
+        else
+            if (g->hasNewMessages == 0)
+            {
+                g->hasNewMessages = 1;
+                g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat_newmessages.png"));
+            }
     }
 }
 
@@ -473,6 +480,7 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     if (g->hasNewMessages != 0)
     {
         g->hasNewMessages = 0;
+        g->userWasMentioned = 0;
         g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
     }
 }
