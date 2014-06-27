@@ -33,7 +33,8 @@ HEADERS  += widget/form/addfriendform.h \
     core.h \
     friendlist.h \
     cdata.h \
-    cstring.h
+    cstring.h \
+    audiobuffer.h
 
 FORMS    += widget.ui
 
@@ -68,4 +69,5 @@ SOURCES += \
     settings.cpp \
     status.cpp \
     cdata.cpp \
-    cstring.cpp
+    cstring.cpp \
+    audiobuffer.cpp

@@ -18,6 +18,7 @@
 #define CORE_HPP
 
 #include "status.h"
+#include "audiobuffer.h"
 
 #include <tox/tox.h>
 #include <tox/toxav.h>
@@ -33,7 +34,7 @@
 #include <QBuffer>
 #include <QAudioOutput>
 
-#define TOXAV_MAX_CALLS 32
+#define TOXAV_MAX_CALLS 16
 #define GROUPCHAT_MAX_SIZE 32
 #define TOX_SAVE_INTERVAL 30*1000
 #define TOX_FILE_INTERVAL 20
@@ -82,7 +83,7 @@ struct ToxFile
 struct ToxCall
 {
 public:
-    QBuffer audioBuffer;
+    AudioBuffer audioBuffer;
     QAudioOutput* audioOutput;
     ToxAvCodecSettings codecSettings;
     int callId;

@@ -17,6 +17,7 @@
 #include "core.h"
 #include "cdata.h"
 #include "cstring.h"
+#include "settings.h"
 
 #include <QDebug>
 #include <QDir>
@@ -26,8 +27,6 @@
 #include <QtEndian>
 #include <QThread>
 #include <QtConcurrent/QtConcurrent>
-
-#include "settings.h"
 
 const QString Core::CONFIG_FILE_NAME = "tox_save";
 QList<ToxFile> Core::fileSendQueue;
@@ -623,7 +622,9 @@ void Core::process()
     fflush(stdout);
 #endif
     checkConnection();
-    toxTimer->start(tox_do_interval(tox));
+    int toxInterval = tox_do_interval(tox);
+    //qDebug() << QString("Tox interval %1").arg(toxInterval);
+    toxTimer->start(50);
 }
 
 void Core::checkConnection()
@@ -1027,7 +1028,6 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav)
     qDebug() << QString("Core: preparing call %1").arg(callId);
     calls[callId].callId = callId;
     calls[callId].friendId = friendId;
-    calls[callId].audioBuffer.open(QBuffer::ReadWrite);
     calls[callId].codecSettings = av_DefaultSettings;
     toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, false);
     QAudioFormat format;
@@ -1047,11 +1047,16 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav)
     calls[callId].audioOutput = new QAudioOutput(format);
     calls[callId].active = true;
 
-    QtConcurrent::run(playCallAudio, callId, toxav);
+    calls[callId].audioOutput->setBufferSize(24000);
     calls[callId].audioOutput->start(&calls[callId].audioBuffer);
     if (calls[callId].audioOutput->state() == QAudio::StoppedState
             && calls[callId].audioOutput->error() == QAudio::OpenError)
+    {
         qWarning() << "Core: Unable to start audio";
+    }
+    else
+        qDebug() << QString("Core: Audio started, buffer size %1").arg(calls[callId].audioOutput->bufferSize());
+    QtConcurrent::run(playCallAudio, callId, toxav);
 }
 
 void Core::cleanupCall(int callId)
@@ -1062,7 +1067,6 @@ void Core::cleanupCall(int callId)
     {
         delete calls[callId].audioOutput;
     }
-    calls[callId].audioBuffer.close();
 }
 
 void Core::playCallAudio(int callId, ToxAv* toxav)
@@ -1070,25 +1074,34 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
     while (calls[callId].active)
     {
         int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
-        int16_t buf[framesize];
-        int len = toxav_recv_audio(toxav, callId, framesize, buf);
+        uint8_t buf[framesize*2];
+        int len = toxav_recv_audio(toxav, callId, framesize, (int16_t*)buf);
+        qDebug() << QString("Core: Received %1 audio bytes").arg(len);
         if (len < 0)
         {
-            qDebug() << "Core::playCallAudio: Error receiving audio";
-            QThread::msleep(calls[callId].codecSettings.audio_frame_duration / 2);
+            qDebug() << QString("Core::playCallAudio: Error receiving audio: %1").arg(len);
+            QThread::msleep(5);
             continue;
         }
         if (len == 0)
+        {
+            qApp->processEvents();
+            QThread::msleep(5);
             continue;
-        qDebug() << QString("Core::playCallAudio: Playing %1 frames/sample").arg(len);
-        calls[callId].audioBuffer.write((char*)buf, len*2);
-        calls[callId].audioBuffer.seek(0);
-        calls[callId].audioOutput->resume();
+        }
+        //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
+                    //.arg(len*2).arg(calls[callId].audioOutput->bytesFree()).arg(calls[callId].audioBuffer.bufferSize());
+        calls[callId].audioBuffer.writeData((char*)buf, len*2);
+        int state = calls[callId].audioOutput->state();
+        if (state != QAudio::ActiveState)
+        {
+            qDebug() << QString("Core: Audio state is %1").arg(state);
+        }
         int error = calls[callId].audioOutput->error();
         if (error != QAudio::NoError)
             qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
 
-        QThread::msleep(calls[callId].codecSettings.audio_frame_duration / 2);
+        QThread::msleep(5);
     }
 }
 
