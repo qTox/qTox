@@ -173,13 +173,18 @@ void Widget::hideMainForms()
         item->widget()->hide();
     while ((item = ui->mainContent->layout()->takeAt(0)) != 0)
         item->widget()->hide();
+    
     if (activeFriendWidget != nullptr)
     {
-        activeFriendWidget->setAsInactiveChatroom();
+        Friend* f = FriendList::findFriend(activeFriendWidget->friendId);
+        if (f != nullptr)
+            activeFriendWidget->setAsInactiveChatroom();
     }
     if (activeGroupWidget != nullptr)
     {
-        activeGroupWidget->setAsInactiveChatroom();
+        Group* g = GroupList::findGroup(activeGroupWidget->groupId);
+        if (g != nullptr)
+            activeGroupWidget->setAsInactiveChatroom();
     }
 }
 

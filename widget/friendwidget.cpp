@@ -76,6 +76,7 @@ void FriendWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
+    avatar.setPixmap(QPixmap("img/contact list icons/contact_dark.png"));
 }
 
 void FriendWidget::setAsInactiveChatroom()
@@ -92,4 +93,5 @@ void FriendWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(63,63,63,255));
     this->setPalette(pal3);
+    avatar.setPixmap(QPixmap("img/contact list icons/contact.png"));
 }

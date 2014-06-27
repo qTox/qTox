@@ -40,6 +40,8 @@ void AddFriendForm::onSendTriggered()
     QString id = toxId.text(), msg = message.toPlainText();
     if (id.isEmpty())
         return;
+    if (msg.isEmpty())
+        msg = "Tox me maybe?";
 
     emit friendRequested(id, msg);
 }
