@@ -18,7 +18,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     textLayout.setMargin(0);
 
     avatar.setPixmap(QPixmap("img/contact list icons/group_2x.png"));
-    statusPic.setPixmap(QPixmap("img/status/dot_away.png"));
+    statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
     name.setText(Name);
     QFont small;
     small.setPixelSize(10);
