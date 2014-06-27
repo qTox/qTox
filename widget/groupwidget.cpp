@@ -18,6 +18,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     textLayout.setMargin(0);
 
     avatar.setPixmap(QPixmap("img/contact list icons/group_2x.png"));
+    statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
     name.setText(Name);
     QFont small;
     small.setPixelSize(10);
@@ -41,6 +42,9 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     layout.addSpacing(5);
     layout.addLayout(&textLayout);
     layout.addStretch();
+    layout.addSpacing(5);
+    layout.addWidget(&statusPic);
+    layout.addSpacing(5);
 
     isActiveWidget = 0;
 }
@@ -72,9 +76,18 @@ void GroupWidget::mousePressEvent(QMouseEvent *event)
 {
     if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
     {
-        QPalette pal;
-        pal.setColor(QPalette::Background, QColor(85,85,85,255));
-        this->setPalette(pal);
+        if (isActiveWidget)
+        {
+            QPalette pal;
+            pal.setColor(QPalette::Background, QColor(250,250,250,255));
+            this->setPalette(pal);
+        }
+        else
+        {
+            QPalette pal;
+            pal.setColor(QPalette::Background, QColor(85,85,85,255));
+            this->setPalette(pal);
+        }
     }
 }
 
