@@ -405,7 +405,7 @@ void Widget::removeFriend(int friendId)
         onAddClicked();
 }
 
-void Widget::onGroupInviteReceived(int friendId, uint8_t* publicKey)
+void Widget::onGroupInviteReceived(int32_t friendId, uint8_t* publicKey)
 {
     int groupId = core->joinGroupchat(friendId, publicKey);
     if (groupId == -1)
@@ -413,7 +413,6 @@ void Widget::onGroupInviteReceived(int friendId, uint8_t* publicKey)
         qWarning() << "Widget::onGroupInviteReceived: Unable to accept invitation";
         return;
     }
-    //createGroup(groupId);
 }
 
 void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message)

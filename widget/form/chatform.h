@@ -9,6 +9,7 @@
 #include <QTextEdit>
 #include <QScrollArea>
 #include <QTime>
+#include <QPoint>
 
 #include "widget/tool/chattextedit.h"
 #include "ui_widget.h"
@@ -61,6 +62,8 @@ private slots:
     void onAnswerCallTriggered();
     void onHangupCallTriggered();
     void onCancelCallTriggered();
+    void onChatContextMenuRequested(QPoint pos);
+    void onSaveLogClicked();
 
 private:
     Friend* f;

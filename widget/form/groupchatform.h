@@ -37,6 +37,8 @@ signals:
 private slots:
     void onSendTriggered();
     void onSliderRangeChanged();
+    void onChatContextMenuRequested(QPoint pos);
+    void onSaveLogClicked();
 
 private:
     Group* group;

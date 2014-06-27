@@ -7,6 +7,9 @@
 #include <QFont>
 #include <QTime>
 #include <QScrollBar>
+#include <QMenu>
+#include <QFile>
+#include <QFileDialog>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), curRow{0}, lockSliderToBottom{true}
@@ -38,6 +41,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     chatAreaWidget->setLayout(mainChatLayout);
     chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     chatArea->setWidgetResizable(true);
+    chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setHorizontalSpacing(10);
 
@@ -78,6 +82,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
     connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
+    connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
 }
 
 GroupChatForm::~GroupChatForm()
@@ -149,16 +154,24 @@ void GroupChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
         {
             mainChatLayout->setRowStretch(curRow, 0);
             mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
-            curRow++;
         }
-        mainChatLayout->addWidget(author, curRow, 0);
+        previousName = author->text();
+        curRow++;
     }
-    previousName = author->text();
+    else if (curRow)// onSaveLogClicked expects 0 or 3 QLabel per line
+        author->setText("");
+    mainChatLayout->addWidget(author, curRow, 0);
     mainChatLayout->addWidget(message, curRow, 1);
     mainChatLayout->addWidget(date, curRow, 3);
     mainChatLayout->setRowStretch(curRow+1, 1);
     mainChatLayout->setRowStretch(curRow, 0);
     curRow++;
+    author->setContextMenuPolicy(Qt::CustomContextMenu);
+    message->setContextMenuPolicy(Qt::CustomContextMenu);
+    date->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(author, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(message, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(date, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
 }
 
 void GroupChatForm::onSliderRangeChanged()
@@ -176,4 +189,45 @@ void GroupChatForm::onUserListChanged()
         names.append(s+", ");
     names.chop(2);
     namesList->setText(names);
+}
+
+void GroupChatForm::onChatContextMenuRequested(QPoint pos)
+{
+    QWidget* sender = (QWidget*)QObject::sender();
+    pos = sender->mapToGlobal(pos);
+    QMenu menu;
+    menu.addAction("Save chat log", this, SLOT(onSaveLogClicked()));
+    menu.exec(pos);
+}
+
+void GroupChatForm::onSaveLogClicked()
+{
+    QString path = QFileDialog::getSaveFileName(0,"Save chat log");
+    if (path.isEmpty())
+        return;
+
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    QString log;
+    QList<QLabel*> labels = chatAreaWidget->findChildren<QLabel*>();
+    int i=0;
+    for (QLabel* label : labels)
+    {
+        log += label->text();
+        if (i==2)
+        {
+            i=0;
+            log += '\n';
+        }
+        else
+        {
+            log += '\t';
+            i++;
+        }
+    }
+
+    file.write(log.toUtf8());
+    file.close();
 }
