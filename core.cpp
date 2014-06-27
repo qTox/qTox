@@ -1056,17 +1056,19 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav)
     }
     else
         qDebug() << QString("Core: Audio started, buffer size %1").arg(calls[callId].audioOutput->bufferSize());
-    QtConcurrent::run(playCallAudio, callId, toxav);
+    calls[callId].playFuture = QtConcurrent::run(playCallAudio, callId, toxav);
 }
 
 void Core::cleanupCall(int callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
     calls[callId].active = false;
+    calls[callId].playFuture.waitForFinished();
     if (calls[callId].audioOutput != nullptr)
     {
         delete calls[callId].audioOutput;
     }
+    calls[callId].audioBuffer.clear();
 }
 
 void Core::playCallAudio(int callId, ToxAv* toxav)

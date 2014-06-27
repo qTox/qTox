@@ -89,6 +89,7 @@ public:
     int callId;
     int friendId;
     bool active;
+    QFuture<void> playFuture;
 };
 
 class Core : public QObject

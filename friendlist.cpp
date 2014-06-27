@@ -6,6 +6,9 @@ QList<Friend*> FriendList::friendList;
 
 Friend* FriendList::addFriend(int friendId, QString userId)
 {
+    for (Friend* f : friendList)
+        if (f->friendId == friendId)
+            qWarning() << "FriendList::addFriend: friendId already taken";
     Friend* newfriend = new Friend(friendId, userId);
     friendList.append(newfriend);
     return newfriend;

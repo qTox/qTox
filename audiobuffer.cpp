@@ -34,3 +34,8 @@ qint64 AudioBuffer::bufferSize() const
 {
     return buffer.size();
 }
+
+void AudioBuffer::clear()
+{
+    buffer.clear();
+}

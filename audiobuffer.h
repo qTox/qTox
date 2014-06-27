@@ -15,6 +15,7 @@ public:
     qint64 writeData(const char *data, qint64 len);
     qint64 bytesAvailable() const;
     qint64 bufferSize() const;
+    void clear();
 
 private:
     QByteArray buffer;

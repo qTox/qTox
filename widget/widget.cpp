@@ -383,6 +383,8 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 void Widget::removeFriend(int friendId)
 {
     Friend* f = FriendList::findFriend(friendId);
+    if (f->widget == activeFriendWidget)
+        activeFriendWidget = nullptr;
     FriendList::removeFriend(friendId);
     core->removeFriend(friendId);
     delete f;
@@ -449,6 +451,8 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
 void Widget::removeGroup(int groupId)
 {
     Group* g = GroupList::findGroup(groupId);
+    if (g->widget == activeGroupWidget)
+        activeGroupWidget == nullptr;
     GroupList::removeGroup(groupId);
     core->removeGroup(groupId);
     delete g;
