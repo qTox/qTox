@@ -25,7 +25,7 @@ signals:
 
 public:
     int groupId;
-    QLabel avatar, name, nusers;
+    QLabel avatar, name, nusers, statusPic;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
     void setAsInactiveChatroom();

@@ -16,6 +16,9 @@ Group::Group(int GroupId, QString Name)
     peerInfoTimer.setInterval(500);
     peerInfoTimer.setSingleShot(false);
     //peerInfoTimer.start();
+
+    //in groupchats, we only notify on messages containing your name
+    hasNewMessages = 0;
 }
 
 Group::~Group()

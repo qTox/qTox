@@ -423,6 +423,16 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
         return;
 
     g->chatForm->addGroupMessage(message, friendgroupnumber);
+
+    if (isGroupWidgetActive != 1 || (g->groupId != activeGroupWidget->groupId))
+    {
+        if (message.contains(Settings::getInstance().getUsername(), Qt::CaseInsensitive))
+        {
+            playMessageNotification();
+            g->hasNewMessages = 1;
+            g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat_notification.png"));
+        }
+    }
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
@@ -459,6 +469,12 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     widget->setAsActiveChatroom();
     isFriendWidgetActive = 0;
     isGroupWidgetActive = 1;
+
+    if (g->hasNewMessages != 0)
+    {
+        g->hasNewMessages = 0;
+        g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
+    }
 }
 
 void Widget::removeGroup(int groupId)

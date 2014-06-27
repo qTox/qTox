@@ -32,6 +32,7 @@ public:
     GroupChatForm* chatForm;
     bool hasPeerInfo;
     QTimer peerInfoTimer;
+    int hasNewMessages;
 };
 
 #endif // GROUP_H
