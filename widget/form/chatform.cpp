@@ -14,10 +14,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     main = new QWidget(), head = new QWidget(), chatAreaWidget = new QWidget();
     name = new QLabel(), avatar = new QLabel(), statusMessage = new QLabel();
     headLayout = new QHBoxLayout(), mainFootLayout = new QHBoxLayout();
-    headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout();
+    headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout(), footButtonsSmall = new QVBoxLayout();
     mainChatLayout = new QGridLayout();
     msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton(), fileButton = new QPushButton(), callButton = new QPushButton();
+    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(), callButton = new QPushButton();
     chatArea = new QScrollArea();
 
     QFont bold;
@@ -33,34 +33,46 @@ ChatForm::ChatForm(Friend* chatFriend)
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setSpacing(10);
 
+    footButtonsSmall->setSpacing(2);
+
     msgEdit->setFixedHeight(50);
     QPalette toxgreen;
     toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    sendButton->setIcon(QIcon("img/button icons/sendmessage_2x.png"));
+    sendButton->setIcon(QIcon("img/button icons/sendmessage.svg"));
     sendButton->setFlat(true);
     sendButton->setPalette(toxgreen);
     sendButton->setAutoFillBackground(true);
     sendButton->setFixedSize(50, 50);
-    sendButton->setIconSize(QSize(25,25));
-    fileButton->setIcon(QIcon("img/button icons/attach_2x.png"));
+    sendButton->setIconSize(QSize(32,32));
+    fileButton->setIcon(QIcon("img/button icons/attach.svg"));
     fileButton->setFlat(true);
     fileButton->setPalette(toxgreen);
     fileButton->setAutoFillBackground(true);
-    fileButton->setIconSize(QSize(20,20));
-    fileButton->setFixedSize(50,40);
-    callButton->setIcon(QIcon("img/button icons/call_2x.png"));
+    fileButton->setIconSize(QSize(16,16));
+    fileButton->setFixedSize(24,24);
+    emoteButton->setIcon(QIcon("img/button icons/emoticon.svg"));
+    emoteButton->setFlat(true);
+    emoteButton->setPalette(toxgreen);
+    emoteButton->setAutoFillBackground(true);
+    emoteButton->setIconSize(QSize(16,16));
+    emoteButton->setFixedSize(24,24);
+    callButton->setIcon(QIcon("img/button icons/call.svg"));
     callButton->setFlat(true);
     callButton->setPalette(toxgreen);
     callButton->setAutoFillBackground(true);
-    callButton->setIconSize(QSize(20,20));
-    callButton->setFixedSize(50,40);
+    callButton->setIconSize(QSize(32,32));
+    callButton->setFixedSize(50,50);
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
     mainLayout->addLayout(mainFootLayout);
     mainLayout->setMargin(0);
 
+    footButtonsSmall->addWidget(emoteButton);
+    footButtonsSmall->addWidget(fileButton);
+
     mainFootLayout->addWidget(msgEdit);
+    mainFootLayout->addLayout(footButtonsSmall);
     mainFootLayout->addWidget(sendButton);
 
     head->setLayout(headLayout);
@@ -68,7 +80,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     headLayout->addLayout(headTextLayout);
     headLayout->addStretch();
     headLayout->addWidget(callButton);
-    headLayout->addWidget(fileButton);
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(name);

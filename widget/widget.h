@@ -80,6 +80,7 @@ private:
     AddFriendForm friendForm;
     SettingsForm settingsForm;
     static Widget* instance;
+    FriendWidget* activeFriendWidget;
 };
 
 #endif // WIDGET_H

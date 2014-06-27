@@ -13,6 +13,8 @@ public:
     FriendWidget(int FriendId, QString id);
     void mouseReleaseEvent (QMouseEvent* event);
     void contextMenuEvent(QContextMenuEvent * event);
+    void setAsActiveFriend();
+    void setAsInactiveFriend();
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
