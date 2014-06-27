@@ -124,7 +124,7 @@ void GroupWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/contact list icons/group_dark_2x.png"));
+    avatar.setPixmap(QPixmap("img/contact list icons/group_dark.png"));
 }
 
 void GroupWidget::setAsInactiveChatroom()
