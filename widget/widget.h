@@ -81,6 +81,7 @@ private:
     SettingsForm settingsForm;
     static Widget* instance;
     FriendWidget* activeFriendWidget;
+    GroupWidget* activeGroupWidget;
 };
 
 #endif // WIDGET_H
