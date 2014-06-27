@@ -25,6 +25,7 @@ public:
     QLabel avatar, name, statusMessage, statusPic;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
+    void setNotificationLight();
 };
 
 #endif // FRIENDWIDGET_H

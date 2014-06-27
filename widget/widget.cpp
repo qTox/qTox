@@ -82,6 +82,8 @@ Widget::Widget(QWidget *parent) :
     coreThread->start();
 
     friendForm.show(*ui);
+    isFriendWidgetActive = 0;
+    isGroupWidgetActive = 0;
 }
 
 Widget::~Widget()
@@ -164,6 +166,8 @@ void Widget::onSettingsClicked()
 {
     hideMainForms();
     settingsForm.show(*ui);
+    isFriendWidgetActive = 0;
+    isGroupWidgetActive = 0;
 }
 
 void Widget::hideMainForms()
@@ -267,12 +271,8 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (!f)
         return;
 
-    if (status == Status::Online)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_online.png"));
-    else if (status == Status::Busy || status == Status::Away)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_idle.png"));
-    else if (status == Status::Offline)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_away.png"));
+    f->friendStatus = status;
+    updateFriendStatusLights(friendId);
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -325,6 +325,13 @@ void Widget::onFriendWidgetClicked(FriendWidget *widget)
     }
     activeFriendWidget = widget;
     widget->setAsActiveChatroom();
+    isFriendWidgetActive = 1;
+    isGroupWidgetActive = 0;
+
+    if (f->hasNewMessages != 0)
+        f->hasNewMessages = 0;
+
+    updateFriendStatusLights(f->friendId);
 }
 
 void Widget::onFriendMessageReceived(int friendId, const QString& message)
@@ -334,6 +341,35 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
         return;
 
     f->chatForm->addFriendMessage(message);
+
+    if (activeFriendWidget != nullptr)
+    {
+        Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
+        if ((f->friendId != f2->friendId) || isFriendWidgetActive == 0)
+            f->hasNewMessages = 1;
+    }
+    else
+        f->hasNewMessages = 1;
+
+    updateFriendStatusLights(friendId);
+}
+
+void Widget::updateFriendStatusLights(int friendId)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    Status status = f->friendStatus;
+    if (status == Status::Online && f->hasNewMessages == 0)
+        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_online.png"));
+    else if (status == Status::Online && f->hasNewMessages == 1)
+        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_online_notification.png"));
+    else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 0)
+        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_idle.png"));
+    else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 1)
+        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_idle_notification.png"));
+    else if (status == Status::Offline && f->hasNewMessages == 0)
+        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_away.png"));
+    else if (status == Status::Offline && f->hasNewMessages == 1)
+        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_away_notification.png"));
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
@@ -406,6 +442,8 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     }
     activeGroupWidget = widget;
     widget->setAsActiveChatroom();
+    isFriendWidgetActive = 0;
+    isGroupWidgetActive = 1;
 }
 
 void Widget::removeGroup(int groupId)

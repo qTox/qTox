@@ -3,6 +3,7 @@
 
 #include <QString>
 #include "widget/form/chatform.h"
+#include "status.h"
 
 class FriendWidget;
 
@@ -20,6 +21,8 @@ public:
     int friendId;
     QString userId;
     ChatForm* chatForm;
+    int hasNewMessages;
+    Status friendStatus;
 };
 
 #endif // FRIEND_H
