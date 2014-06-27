@@ -8,6 +8,7 @@
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
+    this->setAutoFillBackground(true);
     this->setLayout(&layout);
     this->setFixedWidth(225);
     this->setFixedHeight(55);
@@ -72,4 +73,36 @@ void GroupWidget::onUserListChanged()
         nusers.setText(QString("%1 users in chat").arg(g->nPeers));
     else
         nusers.setText("0 users in chat");
+}
+
+void GroupWidget::setAsActiveChatroom()
+{
+    QFont small;
+    small.setPixelSize(10);
+    nusers.setFont(small);
+    QPalette pal;
+    pal.setColor(QPalette::WindowText,Qt::darkGray);
+    nusers.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::black);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, Qt::white);
+    this->setPalette(pal3);
+}
+
+void GroupWidget::setAsInactiveChatroom()
+{
+    QFont small;
+    small.setPixelSize(10);
+    nusers.setFont(small);
+    QPalette pal;
+    pal.setColor(QPalette::WindowText,Qt::gray);
+    nusers.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::white);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, QColor(63,63,63,255));
+    this->setPalette(pal3);
 }

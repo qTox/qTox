@@ -15,7 +15,7 @@
 Widget *Widget::instance{nullptr};
 
 Widget::Widget(QWidget *parent) :
-    QWidget(parent), ui(new Ui::Widget), activeFriendWidget{nullptr}
+    QWidget(parent), ui(new Ui::Widget), activeFriendWidget{nullptr}, activeGroupWidget{nullptr}
 {
     ui->setupUi(this);
     ui->mainContent->setLayout(new QVBoxLayout());
@@ -173,7 +173,14 @@ void Widget::hideMainForms()
         item->widget()->hide();
     while ((item = ui->mainContent->layout()->takeAt(0)) != 0)
         item->widget()->hide();
-    activeFriendWidget->setAsInactiveFriend();
+    if (activeFriendWidget != nullptr)
+    {
+        activeFriendWidget->setAsInactiveChatroom();
+    }
+    if (activeGroupWidget != nullptr)
+    {
+        activeGroupWidget->setAsInactiveChatroom();
+    }
 }
 
 void Widget::onUsernameChanged(const QString& newUsername)
@@ -301,18 +308,18 @@ void Widget::onFriendUsernameLoaded(int friendId, const QString& username)
 
 void Widget::onFriendWidgetClicked(FriendWidget *widget)
 {
-    if (activeFriendWidget != nullptr)
-    {
-        activeFriendWidget->setAsInactiveFriend();
-    }
-    activeFriendWidget = widget;
-    widget->setAsActiveFriend();
     Friend* f = FriendList::findFriend(widget->friendId);
     if (!f)
         return;
 
     hideMainForms();
     f->chatForm->show(*ui);
+    if (activeFriendWidget != nullptr)
+    {
+        activeFriendWidget->setAsInactiveChatroom();
+    }
+    activeFriendWidget = widget;
+    widget->setAsActiveChatroom();
 }
 
 void Widget::onFriendMessageReceived(int friendId, const QString& message)
@@ -388,6 +395,12 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
 
     hideMainForms();
     g->chatForm->show(*ui);
+    if (activeGroupWidget != nullptr)
+    {
+        activeGroupWidget->setAsInactiveChatroom();
+    }
+    activeGroupWidget = widget;
+    widget->setAsActiveChatroom();
 }
 
 void Widget::removeGroup(int groupId)

@@ -24,6 +24,8 @@ public:
     QLabel avatar, name, nusers;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
+    void setAsInactiveChatroom();
+    void setAsActiveChatroom();
 };
 
 #endif // GROUPWIDGET_H

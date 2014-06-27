@@ -62,7 +62,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     }
 }
 
-void FriendWidget::setAsActiveFriend()
+void FriendWidget::setAsActiveChatroom()
 {
     QFont small;
     small.setPixelSize(10);
@@ -78,7 +78,7 @@ void FriendWidget::setAsActiveFriend()
     this->setPalette(pal3);
 }
 
-void FriendWidget::setAsInactiveFriend()
+void FriendWidget::setAsInactiveChatroom()
 {
     QFont small;
     small.setPixelSize(10);

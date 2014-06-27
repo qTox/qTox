@@ -42,6 +42,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     mainChatLayout->setHorizontalSpacing(10);
 
     sendButton->setIcon(QIcon("img/button icons/sendmessage_2x.png"));
+    sendButton->setIconSize(QSize(32,32));
     sendButton->setFlat(true);
     QPalette pal;
     pal.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
