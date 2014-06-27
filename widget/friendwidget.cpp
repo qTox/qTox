@@ -39,8 +39,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     layout.addWidget(&statusPic);
     layout.addSpacing(5);
 
-    int isActiveWidget = 0;
-    int isCursorOver = 0;
+    isActiveWidget = 0;
 }
 
 void FriendWidget::mouseReleaseEvent (QMouseEvent*)
@@ -70,15 +69,23 @@ void FriendWidget::mousePressEvent(QMouseEvent *event)
 {
     if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
     {
-        QPalette pal;
-        pal.setColor(QPalette::Background, QColor(85,85,85,255));
-        this->setPalette(pal);
+        if (isActiveWidget)
+        {
+            QPalette pal;
+            pal.setColor(QPalette::Background, QColor(250,250,250,255));
+            this->setPalette(pal);
+        }
+        else
+        {
+            QPalette pal;
+            pal.setColor(QPalette::Background, QColor(85,85,85,255));
+            this->setPalette(pal);
+        }
     }
 }
 
 void FriendWidget::enterEvent(QEvent*)
 {
-    isCursorOver = 1;
     if (isActiveWidget != 1)
     {
         QPalette pal;

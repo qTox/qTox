@@ -12,6 +12,7 @@ struct FriendWidget : public QWidget
 public:
     FriendWidget(int FriendId, QString id);
     void mouseReleaseEvent (QMouseEvent* event);
+    void mousePressEvent(QMouseEvent *event);
     void contextMenuEvent(QContextMenuEvent * event);
     void enterEvent(QEvent* event);
     void leaveEvent(QEvent* event);
@@ -29,8 +30,8 @@ public:
     QVBoxLayout textLayout;
 
 private:
-    void mousePressEvent(QMouseEvent *event);
-    int isActiveWidget, isCursorOver;
+    QColor lastColor;
+    int isActiveWidget;
 };
 
 #endif // FRIENDWIDGET_H

@@ -41,6 +41,8 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     layout.addSpacing(5);
     layout.addLayout(&textLayout);
     layout.addStretch();
+
+    isActiveWidget = 0;
 }
 
 void GroupWidget::mouseReleaseEvent (QMouseEvent*)
@@ -66,6 +68,37 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
     }
 }
 
+void GroupWidget::mousePressEvent(QMouseEvent *event)
+{
+    if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
+    {
+        QPalette pal;
+        pal.setColor(QPalette::Background, QColor(85,85,85,255));
+        this->setPalette(pal);
+    }
+}
+
+void GroupWidget::enterEvent(QEvent*)
+{
+    if (isActiveWidget != 1)
+    {
+        QPalette pal;
+        pal.setColor(QPalette::Background, QColor(75,75,75,255));
+        lastColor = this->palette().background().color();
+        this->setPalette(pal);
+    }
+}
+
+void GroupWidget::leaveEvent(QEvent*)
+{
+    if (isActiveWidget != 1)
+    {
+        QPalette pal;
+        pal.setColor(QPalette::Background, lastColor);
+        this->setPalette(pal);
+    }
+}
+
 void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
@@ -77,6 +110,8 @@ void GroupWidget::onUserListChanged()
 
 void GroupWidget::setAsActiveChatroom()
 {
+    isActiveWidget = 1;
+
     QFont small;
     small.setPixelSize(10);
     nusers.setFont(small);
@@ -94,6 +129,8 @@ void GroupWidget::setAsActiveChatroom()
 
 void GroupWidget::setAsInactiveChatroom()
 {
+    isActiveWidget = 0;
+
     QFont small;
     small.setPixelSize(10);
     nusers.setFont(small);
