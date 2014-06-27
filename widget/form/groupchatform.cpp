@@ -133,6 +133,7 @@ void GroupChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     date->setAlignment(Qt::AlignTop);
+    message->setTextInteractionFlags(Qt::TextSelectableByMouse);
     if (author->text() == Widget::getInstance()->getUsername())
     {
         QPalette pal;
