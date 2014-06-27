@@ -33,6 +33,7 @@
 #include <QFuture>
 #include <QBuffer>
 #include <QAudioOutput>
+#include <QAudioInput>
 
 #define TOXAV_MAX_CALLS 16
 #define GROUPCHAT_MAX_SIZE 32
@@ -85,11 +86,14 @@ struct ToxCall
 public:
     AudioBuffer audioBuffer;
     QAudioOutput* audioOutput;
+    QAudioInput* audioInput;
+    QIODevice* audioInputDevice;
     ToxAvCodecSettings codecSettings;
     int callId;
     int friendId;
     bool active;
     QFuture<void> playFuture;
+    QFuture<void> recordFuture;
 };
 
 class Core : public QObject
@@ -199,6 +203,7 @@ signals:
     void avStarting(int friendId, int callIndex);
     void avEnding(int friendId, int callIndex);
     void avRequestTimeout(int friendId, int callIndex);
+    void avPeerTimeout(int friendId, int callIndex);
 
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);

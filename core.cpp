@@ -622,7 +622,7 @@ void Core::process()
     fflush(stdout);
 #endif
     checkConnection();
-    int toxInterval = tox_do_interval(tox);
+    //int toxInterval = tox_do_interval(tox);
     //qDebug() << QString("Tox interval %1").arg(toxInterval);
     toxTimer->start(50);
 }
@@ -995,7 +995,15 @@ void Core::onAvRequestTimeout(int32_t call_index, void* core)
 
 void Core::onAvPeerTimeout(int32_t call_index, void* core)
 {
-    qDebug() << "Core: AV peer timeout";
+    int friendId = toxav_get_peer_id(static_cast<Core*>(core)->toxav, call_index, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV peer timeout";
+        return;
+    }
+    qDebug() << QString("Core: AV peer timeout with %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avPeerTimeout(friendId, call_index);
 }
 
 void Core::answerCall(int callId)
@@ -1007,6 +1015,7 @@ void Core::answerCall(int callId)
 void Core::hangupCall(int callId)
 {
     qDebug() << QString("Core: hanging up call %1").arg(callId);
+    calls[callId].active = false;
     toxav_hangup(toxav, callId);
 }
 
@@ -1020,6 +1029,7 @@ void Core::startCall(int friendId)
 void Core::cancelCall(int callId, int friendId)
 {
     qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
+    calls[callId].active = false;
     toxav_cancel(toxav, callId, friendId, 0);
 }
 
@@ -1030,6 +1040,8 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav)
     calls[callId].friendId = friendId;
     calls[callId].codecSettings = av_DefaultSettings;
     toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, false);
+
+    // Prepare output
     QAudioFormat format;
     format.setSampleRate(calls[callId].codecSettings.audio_sample_rate);
     format.setChannelCount(calls[callId].codecSettings.audio_channels);
@@ -1037,26 +1049,35 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav)
     format.setCodec("audio/pcm");
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::SignedInt);
-    QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
-    if (!info.isFormatSupported(format)) {
-        calls[callId].audioOutput = nullptr;
-        qWarning() << "Core: Raw audio format not supported by backend, cannot play audio.";
-        return;
-    }
-
-    calls[callId].audioOutput = new QAudioOutput(format);
-    calls[callId].active = true;
-
-    calls[callId].audioOutput->setBufferSize(24000);
-    calls[callId].audioOutput->start(&calls[callId].audioBuffer);
-    if (calls[callId].audioOutput->state() == QAudio::StoppedState
-            && calls[callId].audioOutput->error() == QAudio::OpenError)
+    if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(format))
     {
-        qWarning() << "Core: Unable to start audio";
+        calls[callId].audioOutput = nullptr;
+        qWarning() << "Core: Raw audio format not supported by output backend, cannot play audio.";
     }
     else
-        qDebug() << QString("Core: Audio started, buffer size %1").arg(calls[callId].audioOutput->bufferSize());
-    calls[callId].playFuture = QtConcurrent::run(playCallAudio, callId, toxav);
+    {
+        calls[callId].audioOutput = new QAudioOutput(format);
+        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
+    }
+
+    // Start input
+    if (!QAudioDeviceInfo::defaultInputDevice().isFormatSupported(format))
+    {
+        calls[callId].audioInput = nullptr;
+        qWarning() << "Default input format not supported, cannot record audio";
+    }
+    else
+    {
+        calls[callId].audioInput = new QAudioInput(format);
+        calls[callId].audioInputDevice = calls[callId].audioInput->start();
+    }
+
+    // Go
+    if (calls[callId].audioOutput != nullptr)
+        calls[callId].playFuture = QtConcurrent::run(playCallAudio, callId, toxav);
+    if (calls[callId].audioInput != nullptr)
+        calls[callId].recordFuture = QtConcurrent::run(sendCallAudio, callId, toxav);
+    calls[callId].active = true;
 }
 
 void Core::cleanupCall(int callId)
@@ -1064,6 +1085,7 @@ void Core::cleanupCall(int callId)
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
     calls[callId].active = false;
     calls[callId].playFuture.waitForFinished();
+    calls[callId].recordFuture.waitForFinished();
     if (calls[callId].audioOutput != nullptr)
     {
         delete calls[callId].audioOutput;
@@ -1115,6 +1137,28 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
 {
     while (calls[callId].active)
     {
-        QThread::msleep(calls[callId].codecSettings.audio_frame_duration / 2);
+        int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
+        uint8_t buf[framesize*2], dest[framesize*2];
+        int bytesReady = calls[callId].audioInput->bytesReady();
+        if (bytesReady >= framesize*2)
+        {
+            calls[callId].audioInputDevice->read((char*)buf, framesize*2);
+            int result = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize);
+            if (result < 0)
+            {
+                qWarning() << QString("Core: Unable to prepare audio frame, error %1").arg(result);
+                QThread::msleep(5);
+                continue;
+            }
+            result = toxav_send_audio(toxav, callId, dest, result);
+            if (result < 0)
+            {
+                qWarning() << QString("Core: Unable to send audio frame, error %1").arg(result);
+                QThread::msleep(5);
+                continue;
+            }
+        }
+        else
+            QThread::msleep(5);
     }
 }

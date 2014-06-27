@@ -361,6 +361,17 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
 }
 
+void ChatForm::onAvPeerTimeout(int FriendId, int)
+{
+    if (FriendId != f->friendId)
+        return;
+    QPalette toxgreen;
+    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
+    callButton->setPalette(toxgreen);
+    callButton->disconnect();
+    connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+}
+
 void ChatForm::onAnswerCallTriggered()
 {
     emit answerCall(callId);
