@@ -40,12 +40,14 @@ private:
     QProgressBar *progress;
     QHBoxLayout *mainLayout, *textLayout;
     QVBoxLayout *infoLayout, *buttonLayout;
+    QWidget* buttonWidget;
     QDateTime lastUpdate;
     long long lastBytesSent;
     int fileNum;
     int friendId;
     QString savePath;
     ToxFile::FileDirection direction;
+    QString stopFileButtonStylesheet, pauseFileButtonStylesheet, acceptFileButtonStylesheet;
 };
 
 #endif // FILETRANSFERTWIDGET_H

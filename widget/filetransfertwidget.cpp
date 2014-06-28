@@ -13,6 +13,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     progress = new QProgressBar();
     mainLayout = new QHBoxLayout(), textLayout = new QHBoxLayout();
     infoLayout = new QVBoxLayout(), buttonLayout = new QVBoxLayout();
+    buttonWidget = new QWidget();
     QFont prettysmall;
     prettysmall.setPixelSize(10);
     QPalette greybg;
@@ -21,7 +22,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     setPalette(greybg);
     setAutoFillBackground(true);
 
-    setMinimumSize(250,50);
+    setMinimumSize(250,58);
     setLayout(mainLayout);
     mainLayout->setMargin(0);
 
@@ -38,11 +39,31 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     progress->setValue(0);
     progress->setMinimumHeight(11);
     progress->setFont(prettysmall);
+    QPalette whitebg;
+    whitebg.setColor(QPalette::Window, QColor(255,255,255));
+    buttonWidget->setPalette(whitebg);
+    buttonWidget->setAutoFillBackground(true);
+    buttonWidget->setLayout(buttonLayout);
 
-    topright->setIcon(QIcon("img/button icons/no_2x.png"));
+    QFile f1("ui/stopFileButton/style.css");
+    f1.open(QFile::ReadOnly | QFile::Text);
+    QTextStream stopFileButtonStylesheetStream(&f1);
+    stopFileButtonStylesheet = stopFileButtonStylesheetStream.readAll();
+
+    QFile f2("ui/pauseFileButton/style.css");
+    f2.open(QFile::ReadOnly | QFile::Text);
+    QTextStream pauseFileButtonStylesheetStream(&f2);
+    pauseFileButtonStylesheet = pauseFileButtonStylesheetStream.readAll();
+
+    QFile f3("ui/acceptFileButton/style.css");
+    f3.open(QFile::ReadOnly | QFile::Text);
+    QTextStream acceptFileButtonStylesheetStream(&f3);
+    acceptFileButtonStylesheet = acceptFileButtonStylesheetStream.readAll();
+
+    topright->setStyleSheet(stopFileButtonStylesheet);
     if (File.direction == ToxFile::SENDING)
     {
-        bottomright->setIcon(QIcon("img/button icons/pause_2x.png"));
+        bottomright->setStyleSheet(pauseFileButtonStylesheet);
         connect(topright, SIGNAL(clicked()), this, SLOT(cancelTransfer()));
         connect(bottomright, SIGNAL(clicked()), this, SLOT(pauseResumeSend()));
 
@@ -55,7 +76,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     }
     else
     {
-        bottomright->setIcon(QIcon("img/button icons/yes_2x.png"));
+        bottomright->setStyleSheet(acceptFileButtonStylesheet);
         connect(topright, SIGNAL(clicked()), this, SLOT(rejectRecvRequest()));
         connect(bottomright, SIGNAL(clicked()), this, SLOT(acceptRecvRequest()));
     }
@@ -63,24 +84,29 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     QPalette toxgreen;
     toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
     topright->setIconSize(QSize(10,10));
-    topright->setFixedSize(25,25);
+    topright->setMinimumSize(25,28);
     topright->setFlat(true);
     topright->setAutoFillBackground(true);
     topright->setPalette(toxgreen);
     bottomright->setIconSize(QSize(10,10));
-    bottomright->setFixedSize(25,25);
+    bottomright->setMinimumSize(25,28);
     bottomright->setFlat(true);
     bottomright->setAutoFillBackground(true);
     bottomright->setPalette(toxgreen);
 
+    mainLayout->addStretch();
     mainLayout->addWidget(pic);
-    mainLayout->addLayout(infoLayout);
-    mainLayout->addLayout(buttonLayout);
+    mainLayout->addLayout(infoLayout,3);
+    mainLayout->addStretch();
+    mainLayout->addWidget(buttonWidget);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(0);
 
     infoLayout->addWidget(filename);
     infoLayout->addLayout(textLayout);
     infoLayout->addWidget(progress);
-    infoLayout->setMargin(5);
+    infoLayout->setMargin(4);
+    infoLayout->setSpacing(4);
 
     textLayout->addWidget(size);
     textLayout->addWidget(speed);
@@ -91,7 +117,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     buttonLayout->addWidget(topright);
     buttonLayout->addSpacing(2);
     buttonLayout->addWidget(bottomright);
-    buttonLayout->setMargin(0);
+    buttonLayout->setContentsMargins(2,0,0,0);
     buttonLayout->setSpacing(0);
 }
 
@@ -157,10 +183,9 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile File)
     progress->hide();
     speed->hide();
     eta->hide();
-    topright->setIcon(QIcon("img/button icons/yes_2x.png"));
-    buttonLayout->addStretch();
-    buttonLayout->setSpacing(0);
+    topright->hide();
     bottomright->hide();
+     // TODO: Maybe just replace the whole buttonWidget with a single round CSS that shows the accept icon
     QPalette toxgreen;
     toxgreen.setColor(QPalette::Window, QColor(107,194,96)); // Tox Green
     setPalette(toxgreen);
@@ -201,7 +226,7 @@ void FileTransfertWidget::acceptRecvRequest()
 
     savePath = path;
 
-    bottomright->setIcon(QIcon("img/button icons/pause_2x.png"));
+    bottomright->setStyleSheet(pauseFileButtonStylesheet);
     bottomright->disconnect();
     connect(bottomright, SIGNAL(clicked()), this, SLOT(pauseResumeRecv()));
     Widget::getInstance()->getCore()->acceptFileRecvRequest(friendId, fileNum);
