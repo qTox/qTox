@@ -1,0 +1,26 @@
+QTextEdit {
+	border-color: #c4c1bd;
+	border-style: solid;
+	border-width: 1px 0 1px 1px;
+}
+
+QTextEdit:hover {
+	border-color: #d7d4d1;
+}
+
+QTextEdit:pressed {
+	border-color: #4ea6ea;
+}
+
+QTextEdit#group {
+	/*border-radius: 0 6px 6px 0; would use to round corners in groupchat, but Qt's implementation seems to be bugged*/
+	border: 1px solid #c4c1bd;
+}
+
+QTextEdit#group:hover {
+	border-color: #d7d4d1;
+}
+
+QTextEdit#group:pressed {
+	border-color: #4ea6ea;
+}
