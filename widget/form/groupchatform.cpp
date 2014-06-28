@@ -39,9 +39,39 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     namesList->setFont(small);
 
     chatAreaWidget->setLayout(mainChatLayout);
+    QString chatAreaStylesheet = "";
+    try
+    {
+        QFile f("ui/chatArea/chatArea.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream chatAreaStylesheetStream(&f);
+        chatAreaStylesheet = chatAreaStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    chatArea->setStyleSheet(chatAreaStylesheet);
     chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     chatArea->setWidgetResizable(true);
     chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
+    chatArea->setFrameStyle(QFrame::NoFrame);
+
+    mainChatLayout->setColumnStretch(1,1);
+    mainChatLayout->setSpacing(10);
+
+
+    QString msgEditStylesheet = "";
+    try
+    {
+        QFile f("ui/msgEdit/msgEdit.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream msgEditStylesheetStream(&f);
+        msgEditStylesheet = msgEditStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    msgEdit->setObjectName("group");
+    msgEdit->setStyleSheet(msgEditStylesheet);
+    msgEdit->setFixedHeight(50);
+    msgEdit->setFrameStyle(QFrame::NoFrame);
+
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setHorizontalSpacing(10);
 
@@ -56,7 +86,6 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     catch (int e) {}
     sendButton->setStyleSheet(sendButtonStylesheet);
 
-    msgEdit->setFixedHeight(50);
     sendButton->setFixedSize(50, 50);
 
     main->setLayout(mainLayout);
