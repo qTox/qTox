@@ -24,6 +24,10 @@ int main(int argc, char *argv[])
  * Notifications/ringing when a call is received
  * Sort the friend list by status, online first then busy then offline
  * Don't do anything if a friend is disconnected, don't print to the chat
+ * Changing online/away/busy/offline by clicking the bubble
+ * /me action messages
+ * Popup windows for adding friends and changing settings
+ * And logging of the chat
  * Show the picture's size between name and size after transfer completion if it's a pic
  * Adjust all status icons to match the mockup, including scooting the friendslist ones to the left and making the user one the same size
  * Sidepanel (friendlist) should be resizeable
