@@ -1,3 +1,12 @@
+QScrollArea {
+    background: transparent;
+    border: 0 0 0 0;
+}
+
+QScrollArea > QWidget > QWidget { 
+    background: transparent; 
+}
+
 QScrollBar:vertical  {
     background: white;
     width: 10px;
@@ -10,7 +19,7 @@ QScrollBar::handle:vertical  {
 }
 
 QScrollBar::handle:vertical:hover  {
-    background: #e7e7e7;
+    background: #e3e3e3;
 }
 
 QScrollBar::handle:vertical:pressed  {
