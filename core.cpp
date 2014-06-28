@@ -28,7 +28,7 @@
 #include <QThread>
 #include <QtConcurrent/QtConcurrent>
 
-const QString Core::CONFIG_FILE_NAME = "tox_save";
+const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 ToxCall Core::calls[TOXAV_MAX_CALLS];

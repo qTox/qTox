@@ -174,7 +174,7 @@ QString Settings::getSettingsDirPath()
 #ifdef Q_OS_WIN
     return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
 #else
-    return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + '/' + qApp->organizationName() + '/' + qApp->applicationName();
+    return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + '/' + "tox" + '/';
 #endif
 }
 
