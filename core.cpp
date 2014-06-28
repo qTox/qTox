@@ -786,6 +786,7 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
 
 int Core::joinGroupchat(int32_t friendnumber, uint8_t* friend_group_public_key) const
 {
+    qDebug() << QString("Trying to join groupchat invite by friend %1").arg(friendnumber);
     return tox_join_groupchat(tox, friendnumber, friend_group_public_key);
 }
 
@@ -1161,4 +1162,9 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
         else
             QThread::msleep(5);
     }
+}
+
+void Core::groupInviteFriend(int friendId, int groupId)
+{
+    tox_invite_friend(tox, friendId, groupId);
 }

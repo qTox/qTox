@@ -7,8 +7,8 @@ However, it is not a fork.
 
 <h2>Features</h2>
 
-- Friends chat
-- Group chats (experimental, can only accept invitations)
+- One to one chat with friends
+- Group chats
 - File transfers, with previewing of images
 - Audio calls
 

@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
  * Adjust all status icons to match the mockup, including scooting the friendslist ones to the left and making the user one the same size
  * Sidepanel (friendlist) should be resizeable
  * The online/offline/away status at the top (our) is way too big i think (follow the mockup/uTox)
- * In-chat messages should have line wrapping
  * An extra side panel for groupchats, like Venom does (?)
  *
  */

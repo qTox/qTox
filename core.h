@@ -116,6 +116,7 @@ public slots:
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
+    void groupInviteFriend(int friendId, int groupId);
 
     void removeFriend(int friendId);
     void removeGroup(int groupId);

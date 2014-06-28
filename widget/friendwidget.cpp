@@ -1,4 +1,8 @@
 #include "friendwidget.h"
+#include "group.h"
+#include "grouplist.h"
+#include "groupwidget.h"
+#include "widget.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 
@@ -52,6 +56,15 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QPoint pos = event->globalPos();
     QMenu menu;
     menu.addAction("Remove friend");
+    QMenu* inviteMenu = menu.addMenu("Invite in group");
+    QMap<QAction*, Group*> groupActions;
+    for (Group* group : GroupList::groupList)
+    {
+        QAction* groupAction = inviteMenu->addAction(group->widget->name.text());
+        groupActions[groupAction] =  group;
+    }
+    if (groupActions.isEmpty())
+        inviteMenu->setEnabled(false);
 
     QAction* selectedItem = menu.exec(pos);
     if (selectedItem)
@@ -61,6 +74,11 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             hide();
             emit removeFriend(friendId);
             return;
+        }
+        else if (groupActions.contains(selectedItem))
+        {
+            Group* group = groupActions[selectedItem];
+            Widget::getInstance()->getCore()->groupInviteFriend(friendId, group->groupId);
         }
     }
 }
