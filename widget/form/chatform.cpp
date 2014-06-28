@@ -156,6 +156,7 @@ void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);
     date->setAlignment(Qt::AlignTop);
+    message->setWordWrap(true);
     message->setTextInteractionFlags(Qt::TextBrowserInteraction);
     author->setTextInteractionFlags(Qt::TextBrowserInteraction);
     date->setTextInteractionFlags(Qt::TextBrowserInteraction);
