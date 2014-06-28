@@ -29,15 +29,38 @@ ChatForm::ChatForm(Friend* chatFriend)
     avatar->setPixmap(*chatFriend->widget->avatar.pixmap());
 
     chatAreaWidget->setLayout(mainChatLayout);
+    QString chatAreaStylesheet = "";
+    try
+    {
+        QFile f("ui/chatArea/chatArea.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream chatAreaStylesheetStream(&f);
+        chatAreaStylesheet = chatAreaStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    chatArea->setStyleSheet(chatAreaStylesheet);
     chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     chatArea->setWidgetResizable(true);
     chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
+    chatArea->setFrameStyle(QFrame::NoFrame);
+
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setSpacing(10);
 
     footButtonsSmall->setSpacing(2);
 
+    QString msgEditStylesheet = "";
+    try
+    {
+        QFile f("ui/msgEdit/msgEdit.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream msgEditStylesheetStream(&f);
+        msgEditStylesheet = msgEditStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    msgEdit->setStyleSheet(msgEditStylesheet);
     msgEdit->setFixedHeight(50);
+    msgEdit->setFrameStyle(QFrame::NoFrame);
 
     QString sendButtonStylesheet = "";
     try
@@ -49,10 +72,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     }
     catch (int e) {}
     sendButton->setStyleSheet(sendButtonStylesheet);
-
-    QPalette toxgreen;
-    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-
 
     QString fileButtonStylesheet = "";
     try
