@@ -16,3 +16,7 @@ QPushButton:pressed
 {
    background-image: url("ui/emoteButton/emoteButtonPressed.png");
 }
+
+QPushButton:focus {
+    outline: none;
+}

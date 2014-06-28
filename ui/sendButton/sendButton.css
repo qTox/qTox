@@ -16,3 +16,7 @@ QPushButton:pressed
 {
    background-image: url("ui/sendButton/sendButtonPressed.png");
 }
+
+QPushButton:focus {
+    outline: none;
+}

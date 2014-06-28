@@ -66,3 +66,7 @@ QPushButton#grey
     height: 40px;
 }
 
+QPushButton:focus {
+    outline: none;
+}
+
