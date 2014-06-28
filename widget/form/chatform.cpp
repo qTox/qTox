@@ -29,9 +29,20 @@ ChatForm::ChatForm(Friend* chatFriend)
     avatar->setPixmap(*chatFriend->widget->avatar.pixmap());
 
     chatAreaWidget->setLayout(mainChatLayout);
+    QString chatAreaStylesheet = "";
+    try
+    {
+        QFile f("ui/chatArea/chatArea.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream chatAreaStylesheetStream(&f);
+        chatAreaStylesheet = chatAreaStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    chatArea->setStyleSheet(chatAreaStylesheet);
     chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     chatArea->setWidgetResizable(true);
     chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
+
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setSpacing(10);
 
