@@ -350,13 +350,13 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
         if ((f->friendId != f2->friendId) || isFriendWidgetActive == 0)
         {
             f->hasNewMessages = 1;
-            playMessageNotification();
+            newMessageAlert();
         }
     }
     else
     {
         f->hasNewMessages = 1;
-        playMessageNotification();
+        newMessageAlert();
     }
 
     updateFriendStatusLights(friendId);
@@ -380,8 +380,9 @@ void Widget::updateFriendStatusLights(int friendId)
         f->widget->statusPic.setPixmap(QPixmap("img/status/dot_away_notification.png"));
 }
 
-void Widget::playMessageNotification()
+void Widget::newMessageAlert()
 {
+    QApplication::alert(this, 1000);
     QSound::play("audio/notification.wav");
 }
 
@@ -427,7 +428,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
     {
         if (message.contains(Settings::getInstance().getUsername(), Qt::CaseInsensitive))
         {
-            playMessageNotification();
+            newMessageAlert();
             g->hasNewMessages = 1;
             g->userWasMentioned = 1;
             g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat_notification.png"));
