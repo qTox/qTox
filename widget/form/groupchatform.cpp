@@ -45,13 +45,17 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setHorizontalSpacing(10);
 
-    sendButton->setIcon(QIcon("img/button icons/sendmessage_2x.png"));
-    sendButton->setIconSize(QSize(32,32));
-    sendButton->setFlat(true);
-    QPalette pal;
-    pal.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    sendButton->setPalette(pal);
-    sendButton->setAutoFillBackground(true);
+    QString sendButtonStylesheet = "";
+    try
+    {
+        QFile f("ui/sendButton/sendButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream sendButtonStylesheetStream(&f);
+        sendButtonStylesheet = sendButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    sendButton->setStyleSheet(sendButtonStylesheet);
+
     msgEdit->setFixedHeight(50);
     sendButton->setFixedSize(50, 50);
 

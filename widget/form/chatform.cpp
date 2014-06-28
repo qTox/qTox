@@ -18,7 +18,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout(), footButtonsSmall = new QVBoxLayout();
     mainChatLayout = new QGridLayout();
     msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(), callButton = new QPushButton();
+    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(), callButton = new QPushButton(), videoButton = new QPushButton();
     chatArea = new QScrollArea();
 
     QFont bold;
@@ -89,7 +89,17 @@ ChatForm::ChatForm(Friend* chatFriend)
     callButton->setObjectName("green");
     callButton->setStyleSheet(callButtonStylesheet);
 
-
+    QString videoButtonStylesheet = "";
+    try
+    {
+        QFile f("ui/videoButton/videoButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream videoButtonStylesheetStream(&f);
+        videoButtonStylesheet = videoButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    videoButton->setObjectName("green");
+    videoButton->setStyleSheet(videoButtonStylesheet);
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
@@ -110,6 +120,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headLayout->addLayout(headTextLayout);
     headLayout->addStretch();
     headLayout->addWidget(callButton);
+    headLayout->addWidget(videoButton);
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(name);

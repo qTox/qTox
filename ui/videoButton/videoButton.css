@@ -1,0 +1,68 @@
+QPushButton#green
+{
+    background-color: transparent;
+    background-image: url("ui/videoButton/videoButton.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+
+QPushButton#green:hover
+{
+   background-image: url("ui/videoButton/videoButtonHover.png");
+}
+
+QPushButton#green:pressed
+{
+   background-image: url("ui/videoButton/videoButtonPressed.png");
+}
+
+QPushButton#red
+{
+    background-color: transparent;
+    background-image: url("ui/videoButton/videoButtonRed.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+QPushButton#red:hover
+{
+   background-image: url("ui/videoButton/videoButtonRedHover.png");
+}
+
+QPushButton#red:pressed
+{
+   background-image: url("ui/videoButton/videoButtonRedPressed.png");
+}
+
+QPushButton#yellow
+{
+    background-color: transparent;
+    background-image: url("ui/videoButton/videoButtonYellow.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+QPushButton#yellow:hover
+{
+   background-image: url("ui/videoButton/videoButtonYellowHover.png");
+}
+
+QPushButton#yellow:pressed
+{
+   background-image: url("ui/videoButton/videoButtonYellowPressed.png");
+}
+
+QPushButton#grey
+{
+    background-color: transparent;
+    background-image: url("ui/videoButton/videoButtonDisabled.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+
