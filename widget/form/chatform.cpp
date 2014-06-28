@@ -18,7 +18,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout(), footButtonsSmall = new QVBoxLayout();
     mainChatLayout = new QGridLayout();
     msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(), callButton = new QPushButton();
+    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(), callButton = new QPushButton(), videoButton = new QPushButton();
     chatArea = new QScrollArea();
 
     QFont bold;
@@ -38,32 +38,68 @@ ChatForm::ChatForm(Friend* chatFriend)
     footButtonsSmall->setSpacing(2);
 
     msgEdit->setFixedHeight(50);
+
+    QString sendButtonStylesheet = "";
+    try
+    {
+        QFile f("ui/sendButton/sendButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream sendButtonStylesheetStream(&f);
+        sendButtonStylesheet = sendButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    sendButton->setStyleSheet(sendButtonStylesheet);
+
     QPalette toxgreen;
     toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    sendButton->setIcon(QIcon("img/button icons/sendmessage_2x.png"));
-    sendButton->setFlat(true);
-    sendButton->setPalette(toxgreen);
-    sendButton->setAutoFillBackground(true);
-    sendButton->setFixedSize(50, 50);
-    sendButton->setIconSize(QSize(32,32));
-    fileButton->setIcon(QIcon("img/button icons/attach_2x.png"));
-    fileButton->setFlat(true);
-    fileButton->setPalette(toxgreen);
-    fileButton->setAutoFillBackground(true);
-    fileButton->setIconSize(QSize(16,16));
-    fileButton->setFixedSize(24,24);
-    emoteButton->setIcon(QIcon("img/button icons/emoticon_2x.png"));
-    emoteButton->setFlat(true);
-    emoteButton->setPalette(toxgreen);
-    emoteButton->setAutoFillBackground(true);
-    emoteButton->setIconSize(QSize(16,16));
-    emoteButton->setFixedSize(24,24);
-    callButton->setIcon(QIcon("img/button icons/call_2x.png"));
-    callButton->setFlat(true);
-    callButton->setPalette(toxgreen);
-    callButton->setAutoFillBackground(true);
-    callButton->setIconSize(QSize(25,25));
-    callButton->setFixedSize(50,40);
+
+
+    QString fileButtonStylesheet = "";
+    try
+    {
+        QFile f("ui/fileButton/fileButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream fileButtonStylesheetStream(&f);
+        fileButtonStylesheet = fileButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    fileButton->setStyleSheet(fileButtonStylesheet);
+
+
+    QString emoteButtonStylesheet = "";
+    try
+    {
+        QFile f("ui/emoteButton/emoteButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream emoteButtonStylesheetStream(&f);
+        emoteButtonStylesheet = emoteButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    emoteButton->setStyleSheet(emoteButtonStylesheet);
+
+    QString callButtonStylesheet = "";
+    try
+    {
+        QFile f("ui/callButton/callButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream callButtonStylesheetStream(&f);
+        callButtonStylesheet = callButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    callButton->setObjectName("green");
+    callButton->setStyleSheet(callButtonStylesheet);
+
+    QString videoButtonStylesheet = "";
+    try
+    {
+        QFile f("ui/videoButton/videoButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream videoButtonStylesheetStream(&f);
+        videoButtonStylesheet = videoButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    videoButton->setObjectName("green");
+    videoButton->setStyleSheet(videoButtonStylesheet);
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
@@ -84,6 +120,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headLayout->addLayout(headTextLayout);
     headLayout->addStretch();
     headLayout->addWidget(callButton);
+    headLayout->addWidget(videoButton);
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(name);
@@ -290,9 +327,8 @@ void ChatForm::onAvInvite(int FriendId, int CallId)
     if (FriendId != f->friendId)
         return;
     callId = CallId;
-    QPalette callinvitePal;
-    callinvitePal.setColor(QPalette::Button, QColor(206, 191, 69)); // Call invite orange
-    callButton->setPalette(callinvitePal);
+    callButton->setObjectName("yellow");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
 }
@@ -302,9 +338,8 @@ void ChatForm::onAvStart(int FriendId, int CallId)
     if (FriendId != f->friendId)
         return;
     callId = CallId;
-    QPalette toxred;
-    toxred.setColor(QPalette::Button, QColor(200,78,78)); // Tox Red
-    callButton->setPalette(toxred);
+    callButton->setObjectName("red");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
 }
@@ -313,9 +348,8 @@ void ChatForm::onAvCancel(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
-    QPalette toxgreen;
-    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    callButton->setPalette(toxgreen);
+    callButton->setObjectName("red");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
 }
@@ -324,9 +358,8 @@ void ChatForm::onAvEnd(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
-    QPalette toxgreen;
-    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    callButton->setPalette(toxgreen);
+    callButton->setObjectName("green");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
 }
@@ -336,9 +369,8 @@ void ChatForm::onAvRinging(int FriendId, int CallId)
     if (FriendId != f->friendId)
         return;
     callId = CallId;
-    QPalette pal;
-    pal.setColor(QPalette::Button, Qt::gray); // Call ringing grey
-    callButton->setPalette(pal);
+    callButton->setObjectName("grey");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
 }
@@ -347,9 +379,8 @@ void ChatForm::onAvStarting(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
-    QPalette toxred;
-    toxred.setColor(QPalette::Button, QColor(200,78,78)); // Tox Red
-    callButton->setPalette(toxred);
+    callButton->setObjectName("red");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
 }
@@ -358,9 +389,8 @@ void ChatForm::onAvEnding(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
-    QPalette toxgreen;
-    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    callButton->setPalette(toxgreen);
+    callButton->setObjectName("green");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
 }
@@ -369,9 +399,8 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
-    QPalette toxgreen;
-    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    callButton->setPalette(toxgreen);
+    callButton->setObjectName("green");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
 }
@@ -380,9 +409,8 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
-    QPalette toxgreen;
-    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    callButton->setPalette(toxgreen);
+    callButton->setObjectName("green");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
 }
@@ -405,9 +433,8 @@ void ChatForm::onCallTriggered()
 
 void ChatForm::onCancelCallTriggered()
 {
-    QPalette toxgreen;
-    toxgreen.setColor(QPalette::Button, QColor(107,194,96)); // Tox Green
-    callButton->setPalette(toxgreen);
+    callButton->setObjectName("green");
+    callButton->style()->polish(callButton);
     callButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     emit cancelCall(callId, f->friendId);

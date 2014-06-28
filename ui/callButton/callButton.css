@@ -1,0 +1,72 @@
+QPushButton#green
+{
+    background-color: transparent;
+    background-image: url("ui/callButton/callButton.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+
+QPushButton#green:hover
+{
+   background-image: url("ui/callButton/callButtonHover.png");
+}
+
+QPushButton#green:pressed
+{
+   background-image: url("ui/callButton/callButtonPressed.png");
+}
+
+QPushButton#red
+{
+    background-color: transparent;
+    background-image: url("ui/callButton/callButtonRed.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+QPushButton#red:hover
+{
+   background-image: url("ui/callButton/callButtonRedHover.png");
+}
+
+QPushButton#red:pressed
+{
+   background-image: url("ui/callButton/callButtonRedPressed.png");
+}
+
+QPushButton#yellow
+{
+    background-color: transparent;
+    background-image: url("ui/callButton/callButtonYellow.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+QPushButton#yellow:hover
+{
+   background-image: url("ui/callButton/callButtonYellowHover.png");
+}
+
+QPushButton#yellow:pressed
+{
+   background-image: url("ui/callButton/callButtonYellowPressed.png");
+}
+
+QPushButton#grey
+{
+    background-color: transparent;
+    background-image: url("ui/callButton/callButtonDisabled.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+
+QPushButton:focus {
+    outline: none;
+}
+

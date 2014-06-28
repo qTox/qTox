@@ -84,7 +84,7 @@ private:
     GroupWidget* activeGroupWidget;
     void updateFriendStatusLights(int friendId);
     int isFriendWidgetActive, isGroupWidgetActive;
-    void playMessageNotification();
+    void newMessageAlert();
 };
 
 #endif // WIDGET_H

@@ -72,7 +72,7 @@ private:
     QGridLayout *mainChatLayout;
     QLabel *avatar, *name, *statusMessage;
     ChatTextEdit *msgEdit;
-    QPushButton *sendButton, *fileButton, *emoteButton, *callButton;
+    QPushButton *sendButton, *fileButton, *emoteButton, *callButton, *videoButton;
     QScrollArea *chatArea;
     QWidget *main, *head, *chatAreaWidget;
     QString previousName;
