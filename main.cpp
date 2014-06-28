@@ -30,6 +30,11 @@ int main(int argc, char *argv[])
  * The online/offline/away status at the top (our) is way too big i think (follow the mockup/uTox)
  * An extra side panel for groupchats, like Venom does (?)
  *
+ * In the file transfer widget:
+ * >There is more padding on the left side compared to the right.
+ * >Maybe put the file size should be in the same row as the name.
+ * >Right-align the ETA.
+ *
  */
 
 /** NAMES :
