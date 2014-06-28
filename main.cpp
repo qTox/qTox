@@ -19,6 +19,8 @@ int main(int argc, char *argv[])
 /** TODO
  * ">using a dedicated tool to maintain a TODO list" edition
  *
+ * Sending large files (~380MB) "restarts" after ~10MB. Goes back to 0%, consumes twice as much ram (reloads the file?)
+ * => Don't load the whole file at once, load small chunks (25MB?) when needed, then free them and load the next
  * Notifications/ringing when a call is received
  * Sort the friend list by status, online first then busy then offline
  * Don't do anything if a friend is disconnected, don't print to the chat

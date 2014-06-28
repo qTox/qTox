@@ -1059,6 +1059,11 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav)
     {
         calls[callId].audioOutput = new QAudioOutput(format);
         calls[callId].audioOutput->start(&calls[callId].audioBuffer);
+        int error = calls[callId].audioOutput->error();
+        if (error != QAudio::NoError)
+        {
+            qWarning() << QString("Core: Error %1 when starting audio output").arg(error);
+        }
     }
 
     // Start input
@@ -1119,12 +1124,14 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
             continue;
         }
         //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
-                    //.arg(len*2).arg(calls[callId].audioOutput->bytesFree()).arg(calls[callId].audioBuffer.bufferSize());
+        //            .arg(len*2).arg(calls[callId].audioOutput->bytesFree()).arg(calls[callId].audioBuffer.bufferSize());
         calls[callId].audioBuffer.writeData((char*)buf, len*2);
         int state = calls[callId].audioOutput->state();
         if (state != QAudio::ActiveState)
         {
             qDebug() << QString("Core: Audio state is %1").arg(state);
+            if (state == 3)
+                calls[callId].audioOutput->start(&calls[callId].audioBuffer);
         }
         int error = calls[callId].audioOutput->error();
         if (error != QAudio::NoError)
