@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 /** TODO
  * ">using a dedicated tool to maintain a TODO list" edition
  *
+ * Notifications/ringing when a call is received
  * Sort the friend list by status, online first then busy then offline
  * Don't do anything if a friend is disconnected, don't print to the chat
  * Show the picture's size between name and size after transfer completion if it's a pic

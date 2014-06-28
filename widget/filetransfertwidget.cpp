@@ -169,6 +169,10 @@ void FileTransfertWidget::onFileTransferCancelled(int FriendId, int FileNum, Tox
     eta->hide();
     topright->hide();
     bottomright->hide();
+    QPalette whiteText;
+    whiteText.setColor(QPalette::WindowText, Qt::white);
+    filename->setPalette(whiteText);
+    size->setPalette(whiteText);
     QPalette toxred;
     toxred.setColor(QPalette::Window, QColor(200,78,78)); // Tox Red
     setPalette(toxred);
@@ -185,6 +189,10 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile File)
     eta->hide();
     topright->hide();
     bottomright->hide();
+    QPalette whiteText;
+    whiteText.setColor(QPalette::WindowText, Qt::white);
+    filename->setPalette(whiteText);
+    size->setPalette(whiteText);
      // TODO: Maybe just replace the whole buttonWidget with a single round CSS that shows the accept icon
     QPalette toxgreen;
     toxgreen.setColor(QPalette::Window, QColor(107,194,96)); // Tox Green
