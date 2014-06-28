@@ -17,6 +17,9 @@ SettingsForm::SettingsForm()
     id.setFont(small);
     id.setTextInteractionFlags(Qt::TextSelectableByMouse);
 
+    camview = new SelfCamView();
+    videoTest.setText("Test video");
+
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);
     layout.addWidget(&name);
@@ -24,14 +27,18 @@ SettingsForm::SettingsForm()
     layout.addWidget(&statusText);
     layout.addWidget(&idLabel);
     layout.addWidget(&id);
+    layout.addWidget(&videoTest);
     layout.addStretch();
 
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
+
+    connect(&videoTest, SIGNAL(clicked()), this, SLOT(onTestVideoClicked()));
 }
 
 SettingsForm::~SettingsForm()
 {
+    delete camview;
 }
 
 void SettingsForm::setFriendAddress(const QString& friendAddress)
@@ -47,4 +54,9 @@ void SettingsForm::show(Ui::Widget &ui)
     ui.mainHead->layout()->addWidget(head);
     main->show();
     head->show();
+}
+
+void SettingsForm::onTestVideoClicked()
+{
+     camview->show();
 }

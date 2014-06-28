@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QSpacerItem>
 #include "ui_widget.h"
+#include "widget/selfcamview.h"
 
 class SettingsForm : public QObject
 {
@@ -21,10 +22,15 @@ public:
 public slots:
     void setFriendAddress(const QString& friendAddress);
 
+private slots:
+    void onTestVideoClicked();
+
 private:
     QLabel headLabel, nameLabel, statusTextLabel, idLabel, id;
+    QPushButton videoTest;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head;
+    SelfCamView* camview;
 
 public:
     QLineEdit name, statusText;
