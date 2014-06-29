@@ -1,4 +1,5 @@
 #include "settingsform.h"
+#include "widget/widget.h"
 #include <QFont>
 
 SettingsForm::SettingsForm()
@@ -17,7 +18,6 @@ SettingsForm::SettingsForm()
     id.setFont(small);
     id.setTextInteractionFlags(Qt::TextSelectableByMouse);
 
-    camview = new SelfCamView();
     videoTest.setText("Test video");
 
     main->setLayout(&layout);
@@ -38,7 +38,6 @@ SettingsForm::SettingsForm()
 
 SettingsForm::~SettingsForm()
 {
-    delete camview;
 }
 
 void SettingsForm::setFriendAddress(const QString& friendAddress)
@@ -58,5 +57,5 @@ void SettingsForm::show(Ui::Widget &ui)
 
 void SettingsForm::onTestVideoClicked()
 {
-     camview->show();
+     Widget::getInstance()->showTestCamview();
 }

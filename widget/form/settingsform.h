@@ -30,7 +30,6 @@ private:
     QPushButton videoTest;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head;
-    SelfCamView* camview;
 
 public:
     QLineEdit name, statusText;

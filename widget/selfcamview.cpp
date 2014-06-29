@@ -3,78 +3,49 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QShowEvent>
+#include <QVideoFrame>
 
-SelfCamView::SelfCamView(QWidget* parent)
-    : QWidget(parent), camera(nullptr), mainLayout{new QHBoxLayout()}
+#include "videosurface.h"
+#include "widget.h"
+
+SelfCamView::SelfCamView(Camera* Cam, QWidget* parent)
+    : QWidget(parent), displayLabel{new QLabel},
+      mainLayout{new QHBoxLayout()}, cam(Cam)
 {
     setLayout(mainLayout);
     setWindowTitle("Tox video test");
     setMinimumSize(320,240);
 
-    QByteArray cameraDevice;
+    updateDisplayTimer.setInterval(75);
+    updateDisplayTimer.setSingleShot(false);
 
-    /*
-    QActionGroup *videoDevicesGroup = new QActionGroup(this);
-    videoDevicesGroup->setExclusive(true);
-    foreach(const QByteArray &deviceName, QCamera::availableDevices()) {
-        QString description = camera->deviceDescription(deviceName);
-        QAction *videoDeviceAction = new QAction(description, videoDevicesGroup);
-        videoDeviceAction->setCheckable(true);
-        videoDeviceAction->setData(QVariant(deviceName));
-        if (cameraDevice.isEmpty()) {
-            cameraDevice = deviceName;
-            videoDeviceAction->setChecked(true);
-        }
-        ui->menuDevices->addAction(videoDeviceAction);
-    }
+    displayLabel->setScaledContents(true);
 
-    connect(videoDevicesGroup, SIGNAL(triggered(QAction*)), SLOT(updateCameraDevice(QAction*)));
-    */
+    mainLayout->addWidget(displayLabel);
 
-    viewfinder = new QCameraViewfinder(this);
-    mainLayout->addWidget(viewfinder);
-    viewfinder->show();
-
-    setCamera(cameraDevice);
+    connect(&updateDisplayTimer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
 }
 
 SelfCamView::~SelfCamView()
 {
-    delete camera;
-}
-
-void SelfCamView::setCamera(const QByteArray &cameraDevice)
-{
-    delete camera;
-
-    if (cameraDevice.isEmpty())
-        camera = new QCamera;
-    else
-        camera = new QCamera(cameraDevice);
-
-    //connect(camera, SIGNAL(stateChanged(QCamera::State)), this, SLOT(updateCameraState(QCamera::State)));
-    connect(camera, SIGNAL(error(QCamera::Error)), this, SLOT(displayCameraError()));
-
-    camera->setViewfinder(viewfinder);
-
-    //updateCameraState(camera->state());
-
-    camera->setCaptureMode(QCamera::CaptureVideo);
-}
-
-void SelfCamView::displayCameraError()
-{
-    QMessageBox::warning(this, tr("Camera error"), camera->errorString());
 }
 
 void SelfCamView::closeEvent(QCloseEvent* event)
 {
-    camera->stop();
+    cam->unsuscribe();
+    updateDisplayTimer.stop();
     event->accept();
 }
 
 void SelfCamView::showEvent(QShowEvent* event)
 {
-    camera->start();
+    cam->suscribe();
+    updateDisplayTimer.start();
     event->accept();
 }
+
+void SelfCamView::updateDisplay()
+{
+    displayLabel->setPixmap(QPixmap::fromImage(cam->getLastImage()));
+}
+

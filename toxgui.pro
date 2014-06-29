@@ -35,7 +35,9 @@ HEADERS  += widget/form/addfriendform.h \
     cdata.h \
     cstring.h \
     audiobuffer.h \
-    widget/selfcamview.h
+    widget/selfcamview.h \
+    widget/videosurface.h \
+    widget/camera.h
 
 FORMS    += widget.ui
 
@@ -44,7 +46,7 @@ CONFIG += c++11
 RESOURCES += \
     res.qrc
 
-LIBS += -ltoxcore -ltoxav -lsodium
+LIBS += -ltoxcore -ltoxav -lsodium -lvpx
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -72,50 +74,52 @@ SOURCES += \
     cdata.cpp \
     cstring.cpp \
     audiobuffer.cpp \
-    widget/selfcamview.cpp
+    widget/selfcamview.cpp \
+    widget/videosurface.cpp \
+    widget/camera.cpp
 
 
 
 ### EXAMPLE BUILD SETTINGS FOR WINDOWS
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -ltoxcore
+win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -ltoxcore
 
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
 
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/toxcore.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libtoxcore.a
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/toxcore.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libtoxcore.a
 
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -ltoxav
+win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -ltoxav
 
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
 
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/toxav.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libtoxav.a
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/toxav.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libtoxav.a
 
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lvpx
+win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lvpx
 
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
 
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/vpx.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libvpx.a
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/vpx.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libvpx.a
 
 
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lopus
+win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lopus
 
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
 
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/opus.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libopus.a
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/opus.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libopus.a
 
-#win32: LIBS += -lws2_32
+win32: LIBS += -lws2_32
 
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lsodium
+win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lsodium
 
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
+DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
 
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/sodium.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libsodium.a
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/sodium.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libsodium.a

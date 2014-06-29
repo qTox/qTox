@@ -1,37 +1,37 @@
 #ifndef SELFCAMVIEW_H
 #define SELFCAMVIEW_H
 
-#include <QCamera>
-#include <QCameraImageCapture>
-#include <QMediaRecorder>
 #include <QWidget>
-#include <QVideoWidget>
-#include <QCameraViewfinder>
 #include <QHBoxLayout>
+#include <QTimer>
+#include <QLabel>
+#include "camera.h"
 
 class QCloseEvent;
 class QShowEvent;
+class QPainter;
 
 class SelfCamView : public QWidget
 {
     Q_OBJECT
 
 public:
-    SelfCamView(QWidget *parent=0);
+    SelfCamView(Camera* Cam, QWidget *parent=0);
     ~SelfCamView();
+
+private slots:
+    void updateDisplay();
 
 private:
     void closeEvent(QCloseEvent*);
     void showEvent(QShowEvent*);
-
-private slots:
-    void setCamera(const QByteArray &cameraDevice);
-    void displayCameraError();
+    void paint(QPainter *painter);
 
 private:
-    QCamera *camera;
-    QCameraViewfinder* viewfinder;
+    QLabel *displayLabel;
     QHBoxLayout* mainLayout;
+    Camera* cam;
+    QTimer updateDisplayTimer;
 };
 
 #endif // SELFCAMVIEW_H
