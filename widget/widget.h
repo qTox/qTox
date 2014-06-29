@@ -7,6 +7,7 @@
 #include "core.h"
 #include "widget/form/addfriendform.h"
 #include "widget/form/settingsform.h"
+#include "camera.h"
 
 namespace Ui {
 class Widget;
@@ -27,6 +28,7 @@ public:
     QString getUsername();
     Core* getCore();
     static Widget* getInstance();
+    void showTestCamview();
     ~Widget();
 
 signals:
@@ -62,6 +64,7 @@ private slots:
     void onFriendWidgetClicked(FriendWidget* widget);
     void onFriendMessageReceived(int friendId, const QString& message);
     void onFriendRequestReceived(const QString& userId, const QString& message);
+    void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, uint8_t *publicKey);
     void onGroupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
@@ -72,6 +75,8 @@ private slots:
 private:
     void hideMainForms();
     Group* createGroup(int groupId);
+    void newMessageAlert();
+    void updateFriendStatusLights(int friendId);
 
 private:
     Ui::Widget *ui;
@@ -82,9 +87,9 @@ private:
     static Widget* instance;
     FriendWidget* activeFriendWidget;
     GroupWidget* activeGroupWidget;
-    void updateFriendStatusLights(int friendId);
     int isFriendWidgetActive, isGroupWidgetActive;
-    void newMessageAlert();
+    SelfCamView* camview;
+    Camera* camera;
 };
 
 #endif // WIDGET_H

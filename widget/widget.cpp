@@ -34,6 +34,9 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
+    camera = new Camera;
+    camview = new SelfCamView(camera);
+
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<int32_t>("int32_t");
@@ -65,6 +68,7 @@ Widget::Widget(QWidget *parent) :
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
+    connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
 
     connect(this, &Widget::statusSet, core, &Core::setStatus);
     connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
@@ -93,6 +97,7 @@ Widget::~Widget()
     coreThread->exit();
     coreThread->wait();
     delete core;
+    delete camview;
 
     hideMainForms();
 
@@ -155,7 +160,7 @@ void Widget::onAddClicked()
 
 void Widget::onGroupClicked()
 {
-
+    core->createGroup();
 }
 
 void Widget::onTransferClicked()
@@ -520,4 +525,14 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
     return newgroup;
+}
+
+void Widget::showTestCamview()
+{
+    camview->show();
+}
+
+void Widget::onEmptyGroupCreated(int groupId)
+{
+    createGroup(groupId);
 }

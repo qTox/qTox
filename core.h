@@ -42,6 +42,10 @@
 #define TOX_BOOTSTRAP_INTERVAL 10*1000
 #define TOXAV_RINGING_TIME 15
 
+// TODO: Put that in the settings
+#define TOXAV_VIDEO_WIDTH 640
+#define TOXAV_VIDEO_HEIGHT 480
+
 struct DhtServer
 {
     QString name;
@@ -91,9 +95,10 @@ public:
     ToxAvCodecSettings codecSettings;
     int callId;
     int friendId;
-    bool active;
+    bool videoEnabled;
     QFuture<void> playFuture;
     QFuture<void> recordFuture;
+    bool active;
 };
 
 class Core : public QObject
@@ -108,6 +113,7 @@ public:
     QList<QString> getGroupPeerNames(int groupId) const;
     int joinGroupchat(int32_t friendnumber, uint8_t* friend_group_public_key) const;
     void quitGroupChat(int groupId) const;
+    void dispatchVideoFrame(vpx_image img) const;
 
 public slots:
     void start();
@@ -117,6 +123,7 @@ public slots:
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
     void groupInviteFriend(int friendId, int groupId);
+    void createGroup();
 
     void removeFriend(int friendId);
     void removeGroup(int groupId);
@@ -140,7 +147,7 @@ public slots:
 
     void answerCall(int callId);
     void hangupCall(int callId);
-    void startCall(int friendId);
+    void startCall(int friendId, bool video=false);
     void cancelCall(int callId, int friendId);
 
 signals:
@@ -166,6 +173,7 @@ signals:
 
     void friendLastSeenChanged(int friendId, const QDateTime& dateTime);
 
+    void emptyGroupCreated(int groupnumber);
     void groupInviteReceived(int friendnumber, uint8_t *group_public_key);
     void groupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
@@ -236,10 +244,11 @@ private:
     static void onAvRequestTimeout(int32_t call_index, void* toxav);
     static void onAvPeerTimeout(int32_t call_index, void* toxav);
 
-    static void prepareCall(int friendId, int callId, ToxAv *toxav);
+    static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
     static void playCallAudio(int callId, ToxAv* toxav); // Blocking, start in a thread
     static void sendCallAudio(int callId, ToxAv* toxav); // Blocking, start in a thread
+    static void sendVideoFrame(int callId, ToxAv* toxav, vpx_image img);
 
     void checkConnection();
     void onBootstrapTimer();
