@@ -20,14 +20,20 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 
     avatar.setPixmap(QPixmap("img/contact list icons/contact.png"));
     name.setText(id);
-    //statusPic.setAlignment(Qt::AlignHCenter);
     statusPic.setPixmap(QPixmap("img/status/dot_away.png"));
+
     QFont small;
     small.setPixelSize(10);
     statusMessage.setFont(small);
     QPalette pal;
     pal.setColor(QPalette::WindowText,Qt::gray);
     statusMessage.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::white);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
+    this->setPalette(pal3);
 
     textLayout.addStretch();
     textLayout.addWidget(&name);
