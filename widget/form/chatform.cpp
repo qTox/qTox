@@ -26,7 +26,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     name->setText(chatFriend->widget->name.text());
     name->setFont(bold);
     statusMessage->setText(chatFriend->widget->statusMessage.text());
-    avatar->setPixmap(*chatFriend->widget->avatar.pixmap());
+
+    // No real avatar support in toxcore, better draw a pretty picture
+    //avatar->setPixmap(*chatFriend->widget->avatar.pixmap());
+    avatar->setPixmap(QPixmap("img/contact list icons/contact_dark.png"));
 
     chatAreaWidget->setLayout(mainChatLayout);
     QString chatAreaStylesheet = "";
@@ -45,7 +48,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     chatArea->setFrameStyle(QFrame::NoFrame);
 
     mainChatLayout->setColumnStretch(1,1);
-    mainChatLayout->setSpacing(10);
+    mainChatLayout->setSpacing(5);
 
     footButtonsSmall->setSpacing(2);
 
