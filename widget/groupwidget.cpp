@@ -20,12 +20,20 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     avatar.setPixmap(QPixmap("img/contact list icons/group_2x.png"));
     statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
     name.setText(Name);
+
     QFont small;
     small.setPixelSize(10);
     nusers.setFont(small);
     QPalette pal;
     pal.setColor(QPalette::WindowText,Qt::gray);
     nusers.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::white);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
+    this->setPalette(pal3);
+
     Group* g = GroupList::findGroup(groupId);
     if (g)
         nusers.setText(QString("%1 users in chat").arg(g->peers.size()));
