@@ -12,6 +12,9 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QSound>
+#include <QTextStream>
+#include <QFile>
+#include <QString>
 
 Widget *Widget::instance{nullptr};
 
@@ -33,6 +36,17 @@ Widget::Widget(QWidget *parent) :
     ui->nameLabel->setText(Settings::getInstance().getUsername());
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    QString friendListStylesheet = "";
+    try
+    {
+        QFile f("ui/friendList/friendList.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream friendListStylesheetStream(&f);
+        friendListStylesheet = friendListStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    ui->friendList->setStyleSheet(friendListStylesheet);
 
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<uint8_t>("uint8_t");
