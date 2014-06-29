@@ -48,7 +48,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     chatArea->setFrameStyle(QFrame::NoFrame);
 
     mainChatLayout->setColumnStretch(1,1);
-    mainChatLayout->setSpacing(2);
+    mainChatLayout->setSpacing(5);
 
     footButtonsSmall->setSpacing(2);
 
@@ -124,10 +124,9 @@ ChatForm::ChatForm(Friend* chatFriend)
     videoButton->setStyleSheet(videoButtonStylesheet);
 
     main->setLayout(mainLayout);
-    mainLayout->setMargin(0);
     mainLayout->addWidget(chatArea);
     mainLayout->addLayout(mainFootLayout);
-
+    mainLayout->setMargin(0);
 
     footButtonsSmall->addWidget(emoteButton);
     footButtonsSmall->addWidget(fileButton);

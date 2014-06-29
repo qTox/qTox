@@ -11,7 +11,8 @@ int main(int argc, char *argv[])
 
     int errorcode = a.exec();
 
-    delete w;
+    //if (w != nullptr)
+     //   delete w;
 
     return errorcode;
 }

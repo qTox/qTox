@@ -11,7 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = toxgui
 TEMPLATE = app
 
-HEADERS  += widget/form/addfriendform.h \
+HEADERS  += \
+    widget/form/addfriendform.h \
     widget/form/chatform.h \
     widget/form/groupchatform.h \
     widget/form/settingsform.h \
@@ -37,12 +38,15 @@ HEADERS  += widget/form/addfriendform.h \
     audiobuffer.h \
     widget/selfcamview.h
 
-FORMS    += widget.ui
+FORMS    += \
+    widget.ui
 
 CONFIG += c++11
 
 RESOURCES += \
-    res.qrc
+    res.qrc \
+    CustomWindow.qrc
+
 
 LIBS += -ltoxcore -ltoxav -lsodium
 

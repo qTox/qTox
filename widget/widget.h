@@ -7,6 +7,15 @@
 #include "core.h"
 #include "widget/form/addfriendform.h"
 #include "widget/form/settingsform.h"
+#include <QHBoxLayout>
+#include <QMenu>
+#include <QString>
+
+
+/**
+  * Pixels around the border to mouse cursor change.
+  **/
+#define PIXELS_TO_ACT 5
 
 namespace Ui {
 class Widget;
@@ -24,10 +33,17 @@ class Widget : public QWidget
 
 public:
     explicit Widget(QWidget *parent = 0);
-    QString getUsername();
-    Core* getCore();
     static Widget* getInstance();
     ~Widget();
+    enum TitleMode { CleanTitle = 0, OnlyCloseButton, MenuOff, MaxMinOff, FullScreenMode, MaximizeModeOff, MinimizeModeOff, FullTitle };
+    void setTitlebarMode(const TitleMode &flag);
+    void setTitlebarMenu(QMenu *menu, const QString &icon = "");
+    void setCentralWidget(QWidget *widget, const QString &widgetName);
+    QString getUsername();
+    Core* getCore();
+
+protected slots:
+    void moveWindow(QMouseEvent *e);
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -38,6 +54,8 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
 
 private slots:
+    void maximizeBtnClicked();
+    void minimizeBtnClicked();
     void onConnected();
     void onDisconnected();
     void onStatusSet(Status status);
@@ -75,11 +93,27 @@ private:
 
 private:
     Ui::Widget *ui;
+    static Widget* instance;
     Core* core;
     QThread* coreThread;
+    QHBoxLayout *centralLayout;
+    QPoint dragPosition;
+    TitleMode m_titleMode;
+    bool moveWidget;
+    bool inResizeZone;
+    bool allowToResize;
+    bool resizeVerSup;
+    bool resizeHorEsq;
+    bool resizeDiagSupEsq;
+    bool resizeDiagSupDer;
+    void mouseMoveEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
+    void mouseDoubleClickEvent(QMouseEvent *e);
+    void paintEvent (QPaintEvent *);
+    void resizeWindow(QMouseEvent *e);
     AddFriendForm friendForm;
     SettingsForm settingsForm;
-    static Widget* instance;
     FriendWidget* activeFriendWidget;
     GroupWidget* activeGroupWidget;
     void updateFriendStatusLights(int friendId);

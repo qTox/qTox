@@ -84,33 +84,16 @@ QScrollBar::handle:horizontal:pressed  {
 
 QScrollBar::add-line:horizontal {
     background: url("ui/chatArea/scrollBarRightArrow.png") center;
-    width: 10px;
+    width: 0px;
     subcontrol-position: right;
     subcontrol-origin: margin;
 }
 
-QScrollBar::add-line:horizontal:hover {
-    background: url("ui/chatArea/scrollBarRightArrowHover.png") center;
-}
-
-QScrollBar::add-line:horizontal:pressed {
-    background: url("ui/chatArea/scrollBarRightArrowPressed.png") center;
-}
-
 QScrollBar::sub-line:horizontal {
     background: url("ui/chatArea/scrollBarLeftArrow.png") center;
-    width: 10px;
+    width: 0px;
     subcontrol-position: left;
     subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:horizontal:hover {
-    background: url("ui/chatArea/scrollBarLeftArrowHover.png") center;
-}
-
-QScrollBar::sub-line:horizontal:pressed {
-    background: url("ui/chatArea/scrollBarLeftArrowPressed.png") center;
-
 }
 
 QScrollBar:QScrollBar::down-arrow:horizontal  {

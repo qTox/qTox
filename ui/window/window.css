@@ -1,0 +1,29 @@
+Widget
+{
+    background-color: blue;
+    border: 1px solid black;
+}
+
+Widget#titleBar
+{
+    border: 1px solid black;
+    border-top: 0px solid transparent;
+    background-color: rgb(255,0,0);
+}
+
+QToolButton, QToolButton::menu-indicator, QToolButton::up-arrow, QToolButton::down-arrow, QToolButton::left-arrow, QToolButton::right-arrow, QToolButton::pressed
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+}
+
+QPushButton, QPushButton::menu-indicator, QPushButton::up-arrow, QPushButton::down-arrow, QPushButton::left-arrow, QPushButton::right-arrow, QPushButton::pressed
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+}
+
+QPushButton:pressed
+{
+
+}
