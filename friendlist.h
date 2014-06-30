@@ -4,7 +4,7 @@
 #include <QString>
 #include <QList>
 
-class Friend;
+struct Friend;
 
 class FriendList
 {

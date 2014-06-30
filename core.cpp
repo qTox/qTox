@@ -37,6 +37,7 @@ ToxCall Core::calls[TOXAV_MAX_CALLS];
 Core::Core(Camera* cam) :
     tox(nullptr), camera(cam)
 {
+    qDebug() << "A NEW CORE HAS STARTED !";
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
     saveTimer = new QTimer(this);
@@ -934,7 +935,7 @@ void Core::onAvCancel(int32_t call_index, void* core)
     emit static_cast<Core*>(core)->avCancel(friendId, call_index);
 }
 
-void Core::onAvReject(int32_t call_index, void* core)
+void Core::onAvReject(int32_t, void*)
 {
     qDebug() << "Core: AV reject";
 }
@@ -1013,7 +1014,7 @@ void Core::onAvEnding(int32_t call_index, void* core)
     emit static_cast<Core*>(core)->avEnding(friendId, call_index);
 }
 
-void Core::onAvError(int32_t call_index, void* core)
+void Core::onAvError(int32_t, void*)
 {
     qDebug() << "Core: AV error";
 }

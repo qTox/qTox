@@ -16,9 +16,9 @@ class Widget;
 class GroupWidget;
 class AddFriendForm;
 class SettingsForm;
-class FriendWidget;
+struct FriendWidget;
 class Group;
-class Friend;
+struct Friend;
 
 class Widget : public QWidget
 {

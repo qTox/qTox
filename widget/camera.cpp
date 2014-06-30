@@ -179,7 +179,7 @@ vpx_image Camera::getLastVPXImage()
 {
     lastFrame.map(QAbstractVideoBuffer::ReadOnly);
     int w = lastFrame.width(), h = lastFrame.height();
-    int bpl = lastFrame.bytesPerLine(), cxbpl = bpl/2;
+    int bpl = lastFrame.bytesPerLine();
     vpx_image img;
     vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched
 
