@@ -113,12 +113,6 @@ void Core::start()
 
     emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
 
-    CString cUsername(Settings::getInstance().getUsername());
-    tox_set_name(tox, cUsername.data(), cUsername.size());
-
-    CString cStatusMessage(Settings::getInstance().getStatusMessage());
-    tox_set_status_message(tox, cStatusMessage.data(), cStatusMessage.size());
-
     bootstrapDht();
 
     toxTimer->start(tox_do_interval(tox));
@@ -126,6 +120,8 @@ void Core::start()
 
 void Core::onBootstrapTimer()
 {
+    if (!tox)
+        return;
     if(!tox_isconnected(tox))
         bootstrapDht();
 }
