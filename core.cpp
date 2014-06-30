@@ -1116,8 +1116,13 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
 
     // Go
     /// BUG: TODO: Memory corryption and crashes atexit when playCallAudio is threaded
-    if (calls[callId].audioOutput != nullptr)
-        calls[callId].playFuture = QtConcurrent::run(playCallAudio, callId, toxav);
+    //if (calls[callId].audioOutput != nullptr)
+    //    calls[callId].playFuture = QtConcurrent::run(playCallAudio, callId, toxav);
+
+    calls[callId].playAudioTimer.setInterval(5);
+    calls[callId].playAudioTimer.setSingleShot(true);
+    connect(&calls[callId].playAudioTimer, &QTimer::timeout, [=](){playCallAudio(callId,toxav);});
+    calls[callId].playAudioTimer.start();
     if (calls[callId].audioInput != nullptr)
         calls[callId].recordFuture = QtConcurrent::run(sendCallAudio, callId, toxav);
     calls[callId].active = true;
@@ -1138,43 +1143,43 @@ void Core::cleanupCall(int callId)
 
 void Core::playCallAudio(int callId, ToxAv* toxav)
 {
-    while (calls[callId].active)
+    if (!calls[callId].active)
+        return;
+    int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
+    uint8_t buf[framesize*2];
+    int len = toxav_recv_audio(toxav, callId, framesize, (int16_t*)buf);
+    if (len < 0)
     {
-        int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
-        uint8_t buf[framesize*2];
-        int len = toxav_recv_audio(toxav, callId, framesize, (int16_t*)buf);
-        if (len < 0)
+        if (len == -3) // Not in call !
         {
-            if (len == -3) // Not in call !
-            {
-                qWarning("Core: Trying to play audio in an inactive call!");
-                return;
-            }
-            qDebug() << QString("Core::playCallAudio: Error receiving audio: %1").arg(len);
-            QThread::msleep(5);
-            continue;
+            qWarning("Core: Trying to play audio in an inactive call!");
+            return;
         }
-        if (len == 0)
-        {
-            QThread::msleep(5); /// BUG: Another thread crashed with corruption while we slept here
-            continue;
-        }
-        //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
-        //            .arg(len*2).arg(calls[callId].audioOutput->bytesFree()).arg(calls[callId].audioBuffer.bufferSize());
-        calls[callId].audioBuffer.writeData((char*)buf, len*2);
-        int state = calls[callId].audioOutput->state();
-        if (state != QAudio::ActiveState)
-        {
-            qDebug() << QString("Core: Audio state is %1").arg(state);
-            if (state == 3)
-                calls[callId].audioOutput->start(&calls[callId].audioBuffer);
-        }
-        int error = calls[callId].audioOutput->error();
-        if (error != QAudio::NoError)
-            qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
-
-        QThread::msleep(5);
+        qDebug() << QString("Core::playCallAudio: Error receiving audio: %1").arg(len);
+        calls[callId].playAudioTimer.start();
+        return;
     }
+    if (len == 0)
+    {
+        calls[callId].playAudioTimer.start();
+        return;
+    }
+    //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
+    //            .arg(len*2).arg(calls[callId].audioOutput->bytesFree()).arg(calls[callId].audioBuffer.bufferSize());
+    calls[callId].audioBuffer.writeData((char*)buf, len*2);
+    int state = calls[callId].audioOutput->state();
+    if (state != QAudio::ActiveState)
+    {
+        qDebug() << QString("Core: Audio state is %1").arg(state);
+        if (state == 3 && calls[callId].audioBuffer.bytesAvailable() >= framesize*2)
+            calls[callId].audioOutput->start(&calls[callId].audioBuffer);
+    }
+    int error = calls[callId].audioOutput->error();
+    if (error != QAudio::NoError)
+        qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
+
+
+    calls[callId].playAudioTimer.start();
 }
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)

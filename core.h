@@ -93,6 +93,7 @@ public:
     QAudioInput* audioInput;
     QIODevice* audioInputDevice;
     ToxAvCodecSettings codecSettings;
+    QTimer playAudioTimer, sendAudioTimer;
     int callId;
     int friendId;
     bool videoEnabled;

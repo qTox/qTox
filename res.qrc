@@ -2,4 +2,7 @@
     <qresource prefix="/conf">
         <file alias="settings.ini">res/settings.ini</file>
     </qresource>
+    <qresource prefix="/font">
+        <file alias="DejaVuSans.ttf">res/DejaVuSans.ttf</file>
+    </qresource>
 </RCC>

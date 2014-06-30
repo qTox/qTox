@@ -20,7 +20,7 @@
 
 CData::CData(const QString &data, uint16_t byteSize)
 {
-    cData = new uint8_t[byteSize];
+    cData = new uint8_t[byteSize+1];
     cDataSize = fromString(data, cData);
 }
 

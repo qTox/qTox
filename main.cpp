@@ -1,11 +1,16 @@
 #include "widget/widget.h"
 #include <QApplication>
+#include <QFontDatabase>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setApplicationName("Toxgui");
     a.setOrganizationName("Tox");
+
+    // install Unicode 6.1 supporting font
+    QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
+
     Widget* w = Widget::getInstance();
     w->show();
 
