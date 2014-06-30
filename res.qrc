@@ -5,4 +5,8 @@
     <qresource prefix="/font">
         <file alias="DejaVuSans.ttf">res/DejaVuSans.ttf</file>
     </qresource>
+    <qresource prefix="/">
+        <file>audio/notification.wav</file>
+        <file>img/icon.png</file>
+    </qresource>
 </RCC>

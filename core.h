@@ -17,7 +17,6 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "status.h"
 #include "audiobuffer.h"
 
 #include <tox/tox.h>
@@ -49,6 +48,8 @@
 #define TOXAV_VIDEO_HEIGHT 480
 
 class Camera;
+
+enum class Status : int {Online = 0, Away, Busy, Offline};
 
 struct DhtServer
 {
@@ -131,9 +132,9 @@ public slots:
     void removeFriend(int friendId);
     void removeGroup(int groupId);
 
+    void setStatus(Status status);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
-    void setStatus(Status status);
 
     void sendMessage(int friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);

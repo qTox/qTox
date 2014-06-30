@@ -29,7 +29,6 @@ HEADERS  += widget/form/addfriendform.h \
     group.h \
     grouplist.h \
     settings.h \
-    status.h \
     core.h \
     friendlist.h \
     cdata.h \
@@ -71,7 +70,6 @@ SOURCES += \
     grouplist.cpp \
     main.cpp \
     settings.cpp \
-    status.cpp \
     cdata.cpp \
     cstring.cpp \
     audiobuffer.cpp \

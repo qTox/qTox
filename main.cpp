@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
 /** TODO
  * ">using a dedicated tool to maintain a TODO list" edition
  *
+ * QRC FILES DO YOU EVEN INTO THEM ? Fix it soon for packaging and Urras.
  * Most cameras use YUYV, implement YUYV -> YUV240
- * Groupchat users count not updated when people leave
  * Sending large files (~380MB) "restarts" after ~10MB. Goes back to 0%, consumes twice as much ram (reloads the file?)
  * => Don't load the whole file at once, load small chunks (25MB?) when needed, then free them and load the next
  * Sort the friend list by status, online first then busy then offline
