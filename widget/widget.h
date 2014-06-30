@@ -90,7 +90,6 @@ private slots:
     void removeFriend(int friendId);
     void removeGroup(int groupId);
 
-    void resetMouseCursor();
 private:
     void hideMainForms();
     Group* createGroup(int groupId);
@@ -123,6 +122,7 @@ private:
     void updateFriendStatusLights(int friendId);
     int isFriendWidgetActive, isGroupWidgetActive;
     void newMessageAlert();
+    bool event(QEvent *event);
 };
 
 #endif // WIDGET_H

@@ -38,7 +38,7 @@ Widget::Widget(QWidget *parent) :
         windowStylesheet = windowStylesheetStream.readAll();
     }
     catch (int e) {}
-    this->setObjectName("mainWindow");
+    this->setObjectName("activeWindow");
     this->setStyleSheet(windowStylesheet);
 
 
@@ -249,7 +249,6 @@ Widget* Widget::getInstance()
 
 void Widget::mouseMoveEvent(QMouseEvent *e)
 {
-    qDebug() << "mm";
     int xMouse = e->pos().x();
     int yMouse = e->pos().y();
     int wWidth = this->geometry().width();
@@ -297,7 +296,6 @@ void Widget::mouseMoveEvent(QMouseEvent *e)
         setCursor(Qt::SizeVerCursor);
 
         resizeWindow(e);
-        //qDebug() << yMouse << " " << wHeight << " " << allowToResize;
     }
     //Cursor part top
     else if (yMouse <= PIXELS_TO_ACT or allowToResize)
@@ -327,6 +325,22 @@ void Widget::mouseMoveEvent(QMouseEvent *e)
 //    ui->titleBar->setObjectName("titleBar");
 //    ui->titleBar->style()->polish(ui->titleBar);
 //}
+
+bool Widget::event(QEvent * event)
+{
+    switch(event->type())
+    {
+    case QEvent::WindowActivate:
+            this->setObjectName("activeWindow");
+            this->style()->polish(this);
+        break;
+    case QEvent::WindowDeactivate:
+            this->setObjectName("inactiveWindow");
+            this->style()->polish(this);
+        break;
+    } ;
+    return QWidget::event(event);
+}
 
 void Widget::mousePressEvent(QMouseEvent *e)
 {

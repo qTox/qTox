@@ -1,22 +1,28 @@
-Widget#mainWindow
+Widget#activeWindow
 {
     background-color: #DFDFDF;
     border: 2px solid #ABABAB;
 }
 
+Widget#inactiveWindow
+{
+    background-color: #f4f4f4;
+    border: 2px solid #ABABAB;
+}
+/*
 Widget#titleBar
 {
-    border: 1px solid #ABABAB;
+    border: 10px solid #ABABAB;
     border-top: 0px solid transparent;
     background-color: #DFDFDF;
 }
 
 Widget#titleBarInactive
 {
-    border: 1px solid #ABABAB;
+    border: 5px solid #ABABAB;
     border-top: 0px solid transparent;
     background-color: #F1F1F1;
-}
+}*/
 
 QToolButton#tbMenu
 {
@@ -32,6 +38,7 @@ QPushButton#minimizeButton
     image: url("ui/window/minimizeButton.png");}
 QPushButton#minimizeButton:hover {image: url("ui/window/minimizeButtonHover.png");}
 QPushButton#minimizeButton:pressed {image: url("ui/window/minimizeButtonPressed.png");}
+QPushButton#minimizeButton:focus {outline: none;}
 
 QPushButton#maximizeButton
 {
@@ -40,6 +47,7 @@ QPushButton#maximizeButton
     image: url("ui/window/maximizeButton.png");}
 QPushButton#maximizeButton:hover {image: url("ui/window/maximizeButtonHover.png");}
 QPushButton#maximizeButton:pressed {image: url("ui/window/maximizeButtonPressed.png");}
+QPushButton#maximizeButton:focus {outline: none;}
 
 QPushButton#closeButton
 {
@@ -48,6 +56,7 @@ QPushButton#closeButton
     image: url("ui/window/closeButton.png");}
 QPushButton#closeButton:hover {image: url("ui/window/closeButtonHover.png");}
 QPushButton#closeButton:pressed {image: url("ui/window/closeButtonPressed.png");}
+QPushButton#closeButton:focus {outline: none;}
 
 QPushButton#restoreButton
 {
@@ -56,3 +65,40 @@ QPushButton#restoreButton
     image: url("ui/window/restoreButton.png");}
 QPushButton#restoreButton:hover {image: url("ui/window/restoreButtonHover.png");}
 QPushButton#restoreButton:pressed {image: url("ui/window/restoreButtonPressed.png");}
+QPushButton#restoreButton:focus {outline: none;}
+
+QScrollArea#friendList {
+    background: #414141!important;
+}
+
+QScrollBar#friendList:vertical  {
+    background: #414141!important;
+    width: 14px!important;
+    margin-top: 2px!important;
+    margin-bottom: 2px!important;
+}
+
+QScrollBar#friendList:handle:vertical  {
+    background: #1c1c1c!important;
+    min-height: 20px!important;
+    border-radius: 3px!important;
+    overflow: hidden!important;
+    margin-left: 2px!important;
+    margin-right: 2px!important;
+}
+
+QScrollBar#friendList:handle:vertical:hover  {
+    background: #2d2d2d!important;
+}
+
+QScrollBar#friendList:handle:vertical:pressed  {
+    background: #171717!important;
+}
+
+QScrollBar#friendList:add-line:vertical {height: 0px!important;subcontrol-position: bottom!important;subcontrol-origin: margin!important;}
+
+QScrollBar#friendList:sub-line:vertical {height: 0px!important;subcontrol-position: top!important;subcontrol-origin: margin!important;}
+ 
+QScrollBar#friendList:add-page:vertical, QScrollBar::sub-page:vertical  {
+    background: none!important;
+}

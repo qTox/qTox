@@ -45,7 +45,6 @@ CONFIG += c++11
 
 RESOURCES += \
     res.qrc \
-    CustomWindow.qrc
 
 
 LIBS += -ltoxcore -ltoxav -lsodium
