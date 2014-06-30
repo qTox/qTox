@@ -69,13 +69,14 @@ QString AddFriendForm::getMessage() const
 
 void AddFriendForm::onSendTriggered()
 {
-    const QString id  = toxId.text().trimmed();
+    QString id = toxId.text().trimmed();
 
     if (id.isEmpty()) {
         showWarning("Please fill in a valid Tox ID");
     } else if (isToxId(id)) {
         emit friendRequested(id, getMessage());
     } else {
+        id = id.replace("@", "._tox.");
         dns.setName(id);
         dns.lookup();
     }
