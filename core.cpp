@@ -668,6 +668,12 @@ void Core::loadConfiguration()
 
 void Core::saveConfiguration()
 {
+    if (!tox)
+    {
+        qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
+        return;
+    }
+
     QString path = Settings::getSettingsDirPath();
 
     QDir directory(path);
