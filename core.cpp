@@ -37,7 +37,6 @@ ToxCall Core::calls[TOXAV_MAX_CALLS];
 Core::Core(Camera* cam) :
     tox(nullptr), camera(cam)
 {
-    qDebug() << "A NEW CORE HAS STARTED !";
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
     saveTimer = new QTimer(this);
@@ -1185,22 +1184,26 @@ void Core::cleanupCall(int callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
     calls[callId].active = false;
+    disconnect(&calls[callId].playAudioTimer,0,0,0);
+    disconnect(&calls[callId].sendAudioTimer,0,0,0);
+    disconnect(&calls[callId].playVideoTimer,0,0,0);
+    disconnect(&calls[callId].sendVideoTimer,0,0,0);
+    calls[callId].playAudioTimer.stop();
+    calls[callId].sendAudioTimer.stop();
+    calls[callId].playVideoTimer.stop();
+    calls[callId].sendVideoTimer.stop();
     if (calls[callId].audioOutput != nullptr)
     {
         delete calls[callId].audioOutput;
         calls[callId].audioOutput = nullptr;
-        disconnect(&calls[callId].playAudioTimer,0,0,0);
     }
     if (calls[callId].audioInput != nullptr)
     {
         delete calls[callId].audioInput;
         calls[callId].audioInput = nullptr;
-        disconnect(&calls[callId].sendAudioTimer,0,0,0);
     }
     if (calls[callId].videoEnabled)
         Widget::getInstance()->getCamera()->unsuscribe();
-    disconnect(&calls[callId].playVideoTimer,0,0,0);
-    disconnect(&calls[callId].sendVideoTimer,0,0,0);
     calls[callId].audioBuffer.clear();
 }
 
@@ -1224,13 +1227,12 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
     }
     if (len == 0)
     {
-        if (calls[callId].audioBuffer.bufferSize() >= framesize*2)
-            calls[callId].playAudioTimer.start();
+        calls[callId].playAudioTimer.start();
         return;
     }
     //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
     //            .arg(len*2).arg(calls[callId].audioOutput->bytesFree()).arg(calls[callId].audioBuffer.bufferSize());
-    calls[callId].audioBuffer.writeData((char*)buf, len*2);
+    calls[callId].audioBuffer.write((char*)buf, len*2);
     int state = calls[callId].audioOutput->state();
     if (state != QAudio::ActiveState)
     {
@@ -1241,7 +1243,6 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
     int error = calls[callId].audioOutput->error();
     if (error != QAudio::NoError)
         qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
-
 
     calls[callId].playAudioTimer.start();
 }
