@@ -19,25 +19,21 @@
   <property name="windowTitle">
    <string>Tox</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>ui/window/app_icon.png</normaloff>ui/window/app_icon.png</iconset>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>1</number>
+    <number>2</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>2</number>
    </property>
    <property name="bottomMargin">
-    <number>1</number>
+    <number>2</number>
    </property>
    <item>
     <widget class="QWidget" name="titleBar" native="true">
@@ -156,10 +152,6 @@
           <height>22</height>
          </size>
         </property>
-        <property name="icon">
-         <iconset resource="CustomWindow.qrc">
-          <normaloff>:/ui/images/app_min.png</normaloff>:/ui/images/app_min.png</iconset>
-        </property>
         <property name="iconSize">
          <size>
           <width>22</width>
@@ -185,10 +177,6 @@
           <height>22</height>
          </size>
         </property>
-        <property name="icon">
-         <iconset resource="CustomWindow.qrc">
-          <normaloff>:/ui/images/app_max.png</normaloff>:/ui/images/app_max.png</iconset>
-        </property>
         <property name="iconSize">
          <size>
           <width>22</width>
@@ -213,10 +201,6 @@
           <width>22</width>
           <height>22</height>
          </size>
-        </property>
-        <property name="icon">
-         <iconset resource="CustomWindow.qrc">
-          <normaloff>:/ui/images/app_close.png</normaloff>:/ui/images/app_close.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1761,7 +1745,7 @@
               <x>0</x>
               <y>0</y>
               <width>225</width>
-              <height>201</height>
+              <height>199</height>
              </rect>
             </property>
            </widget>
@@ -2300,7 +2284,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../../../toxgui/img/contact list icons/settings.png</normaloff>../../../toxgui/img/contact list icons/settings.png</iconset>
+                <normaloff>img/contact list icons/settings.png</normaloff>img/contact list icons/settings.png</iconset>
               </property>
               <property name="flat">
                <bool>true</bool>
@@ -2769,6 +2753,9 @@
              <height>60</height>
             </size>
            </property>
+           <property name="mouseTracking">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -2864,9 +2851,7 @@
    <header>widget/tool/editablelabelwidget.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="CustomWindow.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>actionClose</sender>

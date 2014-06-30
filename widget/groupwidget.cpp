@@ -8,6 +8,7 @@
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
+    this->setMouseTracking(true);
     this->setAutoFillBackground(true);
     this->setLayout(&layout);
     this->setFixedWidth(225);

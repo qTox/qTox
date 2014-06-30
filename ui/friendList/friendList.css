@@ -1,61 +1,35 @@
-QScrollArea {
-    background: #414141;
+QScrollArea#friendList {
+    background: #414141!important;
 }
 
-QScrollArea > QWidget > QWidget { 
-    background: #414141; 
+QScrollBar#friendList:vertical  {
+    background: #414141!important;
+    width: 14px!important;
+    margin-top: 2px!important;
+    margin-bottom: 2px!important;
 }
 
-QScrollBar:vertical  {
-    background: transparent;
-    width: 14px;
-    margin-top: 2px;
-    margin-bottom: 2px;
+QScrollBar#friendList:handle:vertical  {
+    background: #1c1c1c!important;
+    min-height: 20px!important;
+    border-radius: 3px!important;
+    overflow: hidden!important;
+    margin-left: 2px!important;
+    margin-right: 2px!important;
 }
 
-QScrollBar::handle:vertical  {
-    background: #1c1c1c;
-    min-height: 20px;
-    border-radius: 3px;
-    overflow: hidden;
-    margin-left: 2px;
-    margin-right: 2px;
+QScrollBar#friendList:handle:vertical:hover  {
+    background: #2d2d2d!important;
 }
 
-QScrollBar::handle:vertical:hover  {
-    background: #2d2d2d;
+QScrollBar#friendList:handle:vertical:pressed  {
+    background: #171717!important;
 }
 
-QScrollBar::handle:vertical:pressed  {
-    background: #171717;
-}
+QScrollBar#friendList:add-line:vertical {height: 0px!important;subcontrol-position: bottom!important;subcontrol-origin: margin!important;}
 
-QScrollBar::add-line:vertical {
-    background: url("ui/chatArea/scrollBarDownArrow.png") center;
-    height: 0px;
-    subcontrol-position: bottom;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:vertical {
-    background: url("ui/chatArea/scrollBarUpArrow.png") center;
-    height: 0px;
-    subcontrol-position: top;
-    subcontrol-origin: margin;
-}
-
-QScrollBar:QScrollBar::down-arrow:vertical  {
-    width: 10;
-    height: 10px;
-    background: white;
-}
-
-QScrollBar:QScrollBar::up-arrow:vertical  {
-    width: 10px;
-    height: 10px;
-    background: white;
-}
+QScrollBar#friendList:sub-line:vertical {height: 0px!important;subcontrol-position: top!important;subcontrol-origin: margin!important;}
  
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical  {
-    background: none;
+QScrollBar#friendList:add-page:vertical, QScrollBar::sub-page:vertical  {
+    background: none!important;
 }

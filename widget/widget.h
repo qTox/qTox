@@ -42,6 +42,9 @@ public:
     QString getUsername();
     Core* getCore();
 
+    //void setStyleSheet(const QString &styleSheet);
+    //void setObjectName(const QString &objectName);
+
 protected slots:
     void moveWindow(QMouseEvent *e);
 
@@ -87,6 +90,7 @@ private slots:
     void removeFriend(int friendId);
     void removeGroup(int groupId);
 
+    void resetMouseCursor();
 private:
     void hideMainForms();
     Group* createGroup(int groupId);

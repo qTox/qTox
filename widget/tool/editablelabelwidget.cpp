@@ -57,11 +57,8 @@ EditableLabelWidget::EditableLabelWidget(QWidget* parent) :
     // Set dark background for >windows
     QColor toxDarkAsMySoul(28,28,28);
     QPalette darkPal;
-    darkPal.setColor(QPalette::Window, QColor(75,75,10));
+    darkPal.setColor(QPalette::Window, toxDarkAsMySoul);
     darkPal.setColor(QPalette::Base, toxDarkAsMySoul);
-    darkPal.setColor(QPalette::Text, QColor(255,255,255));
-    darkPal.setColor(QPalette::WindowText, QColor(75,75,10));
-    darkPal.setColor(QPalette::ButtonText, QColor(15,65,10));
     lineEdit->setPalette(darkPal);
 
     connect(lineEdit, &EscLineEdit::editingFinished,        this, &EditableLabelWidget::onLabelChangeSubmited);

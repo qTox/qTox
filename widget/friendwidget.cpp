@@ -9,6 +9,7 @@
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
 {
+    this->setMouseTracking(true);
     this->setAutoFillBackground(true);
     this->setLayout(&layout);
     this->setFixedWidth(225);

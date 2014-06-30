@@ -1,29 +1,58 @@
-Widget
+Widget#mainWindow
 {
-    background-color: blue;
-    border: 1px solid black;
+    background-color: #DFDFDF;
+    border: 2px solid #ABABAB;
 }
 
 Widget#titleBar
 {
-    border: 1px solid black;
+    border: 1px solid #ABABAB;
     border-top: 0px solid transparent;
-    background-color: rgb(255,0,0);
+    background-color: #DFDFDF;
 }
 
-QToolButton, QToolButton::menu-indicator, QToolButton::up-arrow, QToolButton::down-arrow, QToolButton::left-arrow, QToolButton::right-arrow, QToolButton::pressed
+Widget#titleBarInactive
+{
+    border: 1px solid #ABABAB;
+    border-top: 0px solid transparent;
+    background-color: #F1F1F1;
+}
+
+QToolButton#tbMenu
 {
     border: 0px solid transparent;
     background-color: transparent;
 }
 
-QPushButton, QPushButton::menu-indicator, QPushButton::up-arrow, QPushButton::down-arrow, QPushButton::left-arrow, QPushButton::right-arrow, QPushButton::pressed
+
+QPushButton#minimizeButton
 {
     border: 0px solid transparent;
     background-color: transparent;
-}
+    image: url("ui/window/minimizeButton.png");}
+QPushButton#minimizeButton:hover {image: url("ui/window/minimizeButtonHover.png");}
+QPushButton#minimizeButton:pressed {image: url("ui/window/minimizeButtonPressed.png");}
 
-QPushButton:pressed
+QPushButton#maximizeButton
 {
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url("ui/window/maximizeButton.png");}
+QPushButton#maximizeButton:hover {image: url("ui/window/maximizeButtonHover.png");}
+QPushButton#maximizeButton:pressed {image: url("ui/window/maximizeButtonPressed.png");}
 
-}
+QPushButton#closeButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url("ui/window/closeButton.png");}
+QPushButton#closeButton:hover {image: url("ui/window/closeButtonHover.png");}
+QPushButton#closeButton:pressed {image: url("ui/window/closeButtonPressed.png");}
+
+QPushButton#restoreButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url("ui/window/restoreButton.png");}
+QPushButton#restoreButton:hover {image: url("ui/window/restoreButtonHover.png");}
+QPushButton#restoreButton:pressed {image: url("ui/window/restoreButtonPressed.png");}

@@ -26,6 +26,9 @@ Widget *Widget::instance{nullptr};
 Widget::Widget(QWidget *parent) :
     QWidget(parent), ui(new Ui::Widget), activeFriendWidget{nullptr}, activeGroupWidget{nullptr}
 {
+    ui->setupUi(this);
+    this->installEventFilter(this);
+
     QString windowStylesheet = "";
     try
     {
@@ -35,10 +38,14 @@ Widget::Widget(QWidget *parent) :
         windowStylesheet = windowStylesheetStream.readAll();
     }
     catch (int e) {}
-    setStyleSheet(windowStylesheet);
+    this->setObjectName("mainWindow");
+    this->setStyleSheet(windowStylesheet);
 
-    ui->setupUi(this);
-    ui->tbMenu->setIcon(QIcon(":/ui/images/app_icon.png"));
+
+    ui->tbMenu->setIcon(QIcon("ui/window/applicationIcon.png"));
+    ui->pbMin->setObjectName("minimizeButton");
+    ui->pbMax->setObjectName("maximizeButton");
+    ui->pbClose->setObjectName("closeButton");
 
     setWindowFlags(Qt::CustomizeWindowHint);
     setWindowFlags(Qt::FramelessWindowHint);
@@ -77,10 +84,22 @@ Widget::Widget(QWidget *parent) :
     if (settings.value("maximized").toBool())
     {
         showMaximized();
-        ui->pbMax->setIcon(QIcon(":/ui/images/app_rest.png"));
+        ui->pbMax->setObjectName("restoreButton");
     }
 
-    ui->centralWidget->setMouseTracking(true);
+//    ui->centralWidget->setMouseTracking(true);
+//    ui->friendList->setMouseTracking(true);
+//    ui->mainPanel->setMouseTracking(true);
+//    ui->statusPanel->setMouseTracking(true);
+//    ui->
+
+    QList<QWidget*> widgets = this->findChildren<QWidget*>();
+
+    foreach (QWidget *widget, widgets)
+    {
+        widget->setMouseTracking(true);
+    }
+    //ui->mainHead->setMouseTracking(true);
 
     centralLayout = new QHBoxLayout(ui->centralWidget);
     centralLayout->setContentsMargins(9,9,9,9);
@@ -109,6 +128,7 @@ Widget::Widget(QWidget *parent) :
         friendListStylesheet = friendListStylesheetStream.readAll();
     }
     catch (int e) {}
+    ui->friendList->setObjectName("friendList");
     ui->friendList->setStyleSheet(friendListStylesheet);
 
     qRegisterMetaType<Status>("Status");
@@ -191,13 +211,49 @@ Widget* Widget::getInstance()
     return instance;
 }
 
+//bool Widget::eventFilter(QObject *object, QEvent *event)
+//{
+//    if (event->type() == QEvent::FocusOut)
+//    {
+//        if (object == ui->)
+//        {
+//            qWarning(object->objectName().toLatin1().data());
+//        }
+//    }
+//    return false;
+//}
+
+//void Widget::setStyleSheet( const QString& styleSheet )
+//{
+//    static QString ss;
+//    static QString defaultSS;
+//    if( defaultSS.isEmpty() )
+//    {
+//        Widget tmp;
+//        ui->setupUi( &tmp );
+//        defaultSS = tmp.styleSheet();
+//    }
+//    ss = styleSheet.isEmpty() ? defaultSS : styleSheet;
+//    ss.replace( "Widget", objectName() );
+//    QWidget::setStyleSheet( ss );
+//}
+
+
+//void Widget::setObjectName( const QString& objectName )
+//{
+//    //YB_DEBUG_FUNC_BEGIN;
+//    QWidget::setObjectName( objectName );
+//    setStyleSheet( "" );
+//}
+
 
 void Widget::mouseMoveEvent(QMouseEvent *e)
 {
+    qDebug() << "mm";
     int xMouse = e->pos().x();
     int yMouse = e->pos().y();
-    int wWidth = geometry().width();
-    int wHeight = geometry().height();
+    int wWidth = this->geometry().width();
+    int wHeight = this->geometry().height();
 
     if (moveWidget)
     {
@@ -206,7 +262,7 @@ void Widget::mouseMoveEvent(QMouseEvent *e)
     }
     else if (allowToResize)
         resizeWindow(e);
-    //Cursor part dreta
+    //right
     else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
     {
         inResizeZone = true;
@@ -220,7 +276,7 @@ void Widget::mouseMoveEvent(QMouseEvent *e)
 
         resizeWindow(e);
     }
-    //Cursor part esquerra
+    //left
     else if (xMouse <= PIXELS_TO_ACT or allowToResize)
     {
         inResizeZone = true;
@@ -234,15 +290,16 @@ void Widget::mouseMoveEvent(QMouseEvent *e)
 
         resizeWindow(e);
     }
-    //Cursor part inferior
+    //bottom edge
     else if ((yMouse >= wHeight - PIXELS_TO_ACT) or allowToResize)
     {
         inResizeZone = true;
         setCursor(Qt::SizeVerCursor);
 
         resizeWindow(e);
+        //qDebug() << yMouse << " " << wHeight << " " << allowToResize;
     }
-    //Cursor part superior
+    //Cursor part top
     else if (yMouse <= PIXELS_TO_ACT or allowToResize)
     {
         inResizeZone = true;
@@ -258,6 +315,18 @@ void Widget::mouseMoveEvent(QMouseEvent *e)
 
     e->accept();
 }
+
+//void Widget::focusOutEvent(QFocusEvent* e)
+//{
+//    ui->titleBar->setObjectName("titleBarInactive");
+//    ui->titleBar->style()->polish(ui->titleBar);
+//}
+
+//void Widget::focusInEvent(QFocusEvent* e)
+//{
+//    ui->titleBar->setObjectName("titleBar");
+//    ui->titleBar->style()->polish(ui->titleBar);
+//}
 
 void Widget::mousePressEvent(QMouseEvent *e)
 {
@@ -664,6 +733,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     qDebug() << "Adding friend with id "+userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QWidget* widget = ui->friendList->widget();
+    widget->setMouseTracking(true);
     QLayout* layout = widget->layout();
     layout->addWidget(newfriend->widget);
     connect(newfriend->widget, SIGNAL(friendWidgetClicked(FriendWidget*)), this, SLOT(onFriendWidgetClicked(FriendWidget*)));
