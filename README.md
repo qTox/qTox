@@ -12,6 +12,7 @@ However, it is not a fork.
 - File transfers, with previewing of images
 - Audio calls
 - Video calls
+- Tox DNS
 
 <h2>Requirements</h2>
 
