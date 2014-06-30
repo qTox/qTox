@@ -1,12 +1,20 @@
 #include "camera.h"
 #include <QVideoSurfaceFormat>
 #include <QMessageBox>
+#include <QVideoEncoderSettings>
+#include <QVideoEncoderSettingsControl>
 
 Camera::Camera()
     : refcount{0}, camera{new QCamera}
 {
     camera->setCaptureMode(QCamera::CaptureVideo);
     camera->setViewfinder(this);
+
+    QMediaService *m = camera->service();
+    QVideoEncoderSettingsControl *enc = m->requestControl<QVideoEncoderSettingsControl*>();
+    QVideoEncoderSettings sets = enc->videoSettings();
+    sets.setResolution(640, 480);
+    enc->setVideoSettings(sets);
 
     connect(camera, SIGNAL(error(QCamera::Error)), this, SLOT(onCameraError(QCamera::Error)));
 
@@ -191,7 +199,7 @@ vpx_image Camera::getLastVPXImage()
         img.planes[VPX_PLANE_U] = vData;
         img.planes[VPX_PLANE_V] = uData;
     }
-    else if (frameFormat == QVideoFrame::Format_RGB32)
+    else if (frameFormat == QVideoFrame::Format_RGB32 || frameFormat == QVideoFrame::Format_ARGB32)
     {
         img.w = img.h = 0; // Invalid frame. TODO: Implement conversion
         qWarning() << "Camera: Can't convert from RGB32! Go complain at github.com/tux3/toxgui";

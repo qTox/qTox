@@ -1172,7 +1172,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         calls[callId].sendVideoTimer.setSingleShot(true);
         connect(&calls[callId].sendVideoTimer, &QTimer::timeout, [=](){
             Widget::getInstance()->getCore()->sendCallVideo(callId);});
-        //calls[callId].sendVideoTimer.start();
+        calls[callId].sendVideoTimer.start();
 
         Widget::getInstance()->getCamera()->suscribe();
     }
@@ -1300,14 +1300,15 @@ void Core::sendCallVideo(int callId)
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    uint8_t videobuf[TOXAV_VIDEO_WIDTH * TOXAV_VIDEO_HEIGHT * 4];
+    const int bufsize = TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4;
+    uint8_t videobuf[bufsize];
     vpx_image frame = camera->getLastVPXImage();
     if (frame.w && frame.h)
     {
         int result;
-        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, sizeof(videobuf), &frame)) < 0)
+        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, bufsize, &frame)) < 0)
         {
-            qDebug() << "Core: toxav_prepare_video_frame error\n";
+            qDebug() << QString("Core: toxav_prepare_video_frame: error %1").arg(result);
             calls[callId].sendVideoTimer.start();
             return;
         }

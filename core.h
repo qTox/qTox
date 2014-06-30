@@ -43,6 +43,8 @@
 #define TOXAV_RINGING_TIME 15
 
 // TODO: Put that in the settings
+#define TOXAV_MAX_VIDEO_WIDTH 1600
+#define TOXAV_MAX_VIDEO_HEIGHT 1200
 #define TOXAV_VIDEO_WIDTH 640
 #define TOXAV_VIDEO_HEIGHT 480
 
