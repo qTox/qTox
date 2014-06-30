@@ -371,6 +371,14 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         videoButton->style()->polish(videoButton);
         connect(callButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
     }
+
+    Widget* w = Widget::getInstance();
+    if (!w->isFriendWidgetCurActiveWidget(f))
+    {
+        w->newMessageAlert();
+        f->hasNewMessages=true;
+        w->updateFriendStatusLights(f->friendId);
+    }
 }
 
 void ChatForm::onAvStart(int FriendId, int CallId, bool video)

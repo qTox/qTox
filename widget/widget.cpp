@@ -543,3 +543,18 @@ void Widget::onEmptyGroupCreated(int groupId)
 {
     createGroup(groupId);
 }
+
+bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
+{
+    if (!f)
+        return false;
+    if (activeFriendWidget != nullptr)
+    {
+        Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
+        if ((f->friendId != f2->friendId) || isFriendWidgetActive == 0)
+            return false;
+    }
+    else
+        return false;
+    return true;
+}

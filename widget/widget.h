@@ -18,6 +18,7 @@ class AddFriendForm;
 class SettingsForm;
 class FriendWidget;
 class Group;
+class Friend;
 
 class Widget : public QWidget
 {
@@ -30,6 +31,9 @@ public:
     Camera* getCamera();
     static Widget* getInstance();
     void showTestCamview();
+    void newMessageAlert();
+    bool isFriendWidgetCurActiveWidget(Friend* f);
+    void updateFriendStatusLights(int friendId);
     ~Widget();
 
 signals:
@@ -76,8 +80,6 @@ private slots:
 private:
     void hideMainForms();
     Group* createGroup(int groupId);
-    void newMessageAlert();
-    void updateFriendStatusLights(int friendId);
 
 private:
     Ui::Widget *ui;
