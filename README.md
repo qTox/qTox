@@ -11,6 +11,7 @@ However, it is not a fork.
 - Group chats
 - File transfers, with previewing of images
 - Audio calls
+- Video calls (EXPERIMENTAL, receiving video only, not sending)
 
 <h2>Requirements</h2>
 
