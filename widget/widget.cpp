@@ -353,7 +353,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
     if (activeFriendWidget != nullptr)
     {
         Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
-        if ((f->friendId != f2->friendId) || isFriendWidgetActive == 0)
+        if (((f->friendId != f2->friendId) || isFriendWidgetActive == 0) || this->window()->isMinimized())
         {
             f->hasNewMessages = 1;
             newMessageAlert();
@@ -390,6 +390,7 @@ void Widget::newMessageAlert()
 {
     QApplication::alert(this, 1000);
     QSound::play("audio/notification.wav");
+    qWarning() << "ping";
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
@@ -430,7 +431,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
 
     g->chatForm->addGroupMessage(message, friendgroupnumber);
 
-    if (isGroupWidgetActive != 1 || (g->groupId != activeGroupWidget->groupId))
+    if ((isGroupWidgetActive != 1 || (g->groupId != activeGroupWidget->groupId)) || activeGroupWidget->windowState().testFlag(Qt::WindowMinimized))
     {
         if (message.contains(Settings::getInstance().getUsername(), Qt::CaseInsensitive))
         {
