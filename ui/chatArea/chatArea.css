@@ -64,7 +64,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical  {
 QScrollBar:horizontal  {
     background: white;
     height: 10px;
-    margin: 0 12px 0 12px;
+    margin: 0 2px 0 2px;
 }
 
 QScrollBar::handle:horizontal  {

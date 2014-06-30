@@ -66,39 +66,3 @@ QPushButton#restoreButton
 QPushButton#restoreButton:hover {image: url("ui/window/restoreButtonHover.png");}
 QPushButton#restoreButton:pressed {image: url("ui/window/restoreButtonPressed.png");}
 QPushButton#restoreButton:focus {outline: none;}
-
-QScrollArea#friendList {
-    background: #414141!important;
-}
-
-QScrollBar#friendList:vertical  {
-    background: #414141!important;
-    width: 14px!important;
-    margin-top: 2px!important;
-    margin-bottom: 2px!important;
-}
-
-QScrollBar#friendList:handle:vertical  {
-    background: #1c1c1c!important;
-    min-height: 20px!important;
-    border-radius: 3px!important;
-    overflow: hidden!important;
-    margin-left: 2px!important;
-    margin-right: 2px!important;
-}
-
-QScrollBar#friendList:handle:vertical:hover  {
-    background: #2d2d2d!important;
-}
-
-QScrollBar#friendList:handle:vertical:pressed  {
-    background: #171717!important;
-}
-
-QScrollBar#friendList:add-line:vertical {height: 0px!important;subcontrol-position: bottom!important;subcontrol-origin: margin!important;}
-
-QScrollBar#friendList:sub-line:vertical {height: 0px!important;subcontrol-position: top!important;subcontrol-origin: margin!important;}
- 
-QScrollBar#friendList:add-page:vertical, QScrollBar::sub-page:vertical  {
-    background: none!important;
-}

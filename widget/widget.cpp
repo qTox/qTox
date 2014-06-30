@@ -27,7 +27,6 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent), ui(new Ui::Widget), activeFriendWidget{nullptr}, activeGroupWidget{nullptr}
 {
     ui->setupUi(this);
-    this->installEventFilter(this);
 
     QString windowStylesheet = "";
     try
@@ -40,6 +39,20 @@ Widget::Widget(QWidget *parent) :
     catch (int e) {}
     this->setObjectName("activeWindow");
     this->setStyleSheet(windowStylesheet);
+    ui->statusPanel->setStyleSheet(QString(""));
+    ui->friendList->setStyleSheet(QString(""));
+
+    QString friendListStylesheet = "";
+    try
+    {
+        QFile f("ui/friendList/friendList.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream friendListStylesheetStream(&f);
+        friendListStylesheet = friendListStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    ui->friendList->setObjectName("friendList");
+    ui->friendList->setStyleSheet(friendListStylesheet);
 
 
     ui->tbMenu->setIcon(QIcon("ui/window/applicationIcon.png"));
@@ -116,20 +129,12 @@ Widget::Widget(QWidget *parent) :
     ui->friendList->setWidget(friendListWidget);
 
     ui->nameLabel->setText(Settings::getInstance().getUsername());
+    ui->nameLabel->label->setStyleSheet("QLabel { color : white; font-size: 11pt; font-weight:bold;}");
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
+    ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QString friendListStylesheet = "";
-    try
-    {
-        QFile f("ui/friendList/friendList.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream friendListStylesheetStream(&f);
-        friendListStylesheet = friendListStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    ui->friendList->setObjectName("friendList");
-    ui->friendList->setStyleSheet(friendListStylesheet);
+
 
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<uint8_t>("uint8_t");
@@ -210,18 +215,6 @@ Widget* Widget::getInstance()
         instance = new Widget();
     return instance;
 }
-
-//bool Widget::eventFilter(QObject *object, QEvent *event)
-//{
-//    if (event->type() == QEvent::FocusOut)
-//    {
-//        if (object == ui->)
-//        {
-//            qWarning(object->objectName().toLatin1().data());
-//        }
-//    }
-//    return false;
-//}
 
 //void Widget::setStyleSheet( const QString& styleSheet )
 //{
@@ -314,31 +307,18 @@ void Widget::mouseMoveEvent(QMouseEvent *e)
     e->accept();
 }
 
-//void Widget::focusOutEvent(QFocusEvent* e)
-//{
-//    ui->titleBar->setObjectName("titleBarInactive");
-//    ui->titleBar->style()->polish(ui->titleBar);
-//}
-
-//void Widget::focusInEvent(QFocusEvent* e)
-//{
-//    ui->titleBar->setObjectName("titleBar");
-//    ui->titleBar->style()->polish(ui->titleBar);
-//}
-
 bool Widget::event(QEvent * event)
 {
-    switch(event->type())
+    if (event->type() == QEvent::WindowActivate)
     {
-    case QEvent::WindowActivate:
-            this->setObjectName("activeWindow");
-            this->style()->polish(this);
-        break;
-    case QEvent::WindowDeactivate:
-            this->setObjectName("inactiveWindow");
-            this->style()->polish(this);
-        break;
-    } ;
+        this->setObjectName("activeWindow");
+        this->style()->polish(this);
+    }
+    else if (event->type() == QEvent::WindowDeactivate)
+    {
+        this->setObjectName("inactiveWindow");
+        this->style()->polish(this);
+    }
     return QWidget::event(event);
 }
 
