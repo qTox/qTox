@@ -44,6 +44,7 @@ Widget::Widget(QWidget *parent) :
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
     core = new Core(camera);
+    core = new Core(nullptr);
     coreThread = new QThread(this);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);

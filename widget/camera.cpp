@@ -10,11 +10,13 @@ Camera::Camera()
     camera->setCaptureMode(QCamera::CaptureVideo);
     camera->setViewfinder(this);
 
+    /* CRASHES ON WINDOWS !
     QMediaService *m = camera->service();
     QVideoEncoderSettingsControl *enc = m->requestControl<QVideoEncoderSettingsControl*>();
     QVideoEncoderSettings sets = enc->videoSettings();
     sets.setResolution(640, 480);
     enc->setVideoSettings(sets);
+    */
 
     connect(camera, SIGNAL(error(QCamera::Error)), this, SLOT(onCameraError(QCamera::Error)));
 
