@@ -22,7 +22,7 @@ qint64 AudioBuffer::readData(char *data, qint64 len)
 qint64 AudioBuffer::writeData(const char* data, qint64 len)
 {
     buffer.append(data, len);
-    return 0;
+    return len;
 }
 
 qint64 AudioBuffer::bytesAvailable() const
