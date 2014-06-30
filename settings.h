@@ -109,6 +109,8 @@ public:
     bool isTypingNotificationEnabled() const;
     void setTypingNotification(bool enabled);
 
+    int getThemePrefs() const;
+    void setThemePrefs(int pref);
 private:
     Settings();
     Settings(Settings &settings) = delete;
@@ -142,6 +144,7 @@ private:
     QString emojiFontFamily;
     int     emojiFontPointSize;
     bool minimizeOnClose;
+    int useNativeTheme;
 
     // ChatView
     int firstColumnHandlePos;

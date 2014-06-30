@@ -28,91 +28,104 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QString windowStylesheet = "";
-    try
+    useNativeTheme = Settings::getInstance().getThemePrefs();
+
+    if (useNativeTheme)
     {
-        QFile f("ui/window/window.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream windowStylesheetStream(&f);
-        windowStylesheet = windowStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    this->setObjectName("activeWindow");
-    this->setStyleSheet(windowStylesheet);
-    ui->statusPanel->setStyleSheet(QString(""));
-    ui->friendList->setStyleSheet(QString(""));
+        ui->titleBar->hide();
+        setWindowFlags(windowFlags() & ~Qt::FramelessWindowHint);
+        this->layout()->setContentsMargins(0, 0, 0, 0);
 
-    QString friendListStylesheet = "";
-    try
+        QString friendListStylesheet = "";
+        try
+        {
+            QFile f("ui/friendList/friendList.css");
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream friendListStylesheetStream(&f);
+            friendListStylesheet = friendListStylesheetStream.readAll();
+        }
+        catch (int e) {}
+        ui->friendList->setObjectName("friendList");
+        ui->friendList->setStyleSheet(friendListStylesheet);
+    }
+    else
     {
-        QFile f("ui/friendList/friendList.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream friendListStylesheetStream(&f);
-        friendListStylesheet = friendListStylesheetStream.readAll();
+        QString windowStylesheet = "";
+        try
+        {
+            QFile f("ui/window/window.css");
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream windowStylesheetStream(&f);
+            windowStylesheet = windowStylesheetStream.readAll();
+        }
+        catch (int e) {}
+        this->setObjectName("activeWindow");
+        this->setStyleSheet(windowStylesheet);
+        ui->statusPanel->setStyleSheet(QString(""));
+        ui->friendList->setStyleSheet(QString(""));
+
+        QString friendListStylesheet = "";
+        try
+        {
+            QFile f("ui/friendList/friendList.css");
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream friendListStylesheetStream(&f);
+            friendListStylesheet = friendListStylesheetStream.readAll();
+        }
+        catch (int e) {}
+        ui->friendList->setObjectName("friendList");
+        ui->friendList->setStyleSheet(friendListStylesheet);
+
+        ui->tbMenu->setIcon(QIcon("ui/window/applicationIcon.png"));
+        ui->pbMin->setObjectName("minimizeButton");
+        ui->pbMax->setObjectName("maximizeButton");
+        ui->pbClose->setObjectName("closeButton");
+
+        setWindowFlags(Qt::CustomizeWindowHint);
+        setWindowFlags(Qt::FramelessWindowHint);
+        setAttribute(Qt::WA_DeleteOnClose);
+        setMouseTracking(true);
+        ui->titleBar->setMouseTracking(true);
+        ui->LTitle->setMouseTracking(true);
+        ui->tbMenu->setMouseTracking(true);
+        ui->pbMin->setMouseTracking(true);
+        ui->pbMax->setMouseTracking(true);
+        ui->pbClose->setMouseTracking(true);
+
+        addAction(ui->actionClose);
+
+        connect(ui->pbMin, SIGNAL(clicked()), this, SLOT(minimizeBtnClicked()));
+        connect(ui->pbMax, SIGNAL(clicked()), this, SLOT(maximizeBtnClicked()));
+        connect(ui->pbClose, SIGNAL(clicked()), this, SLOT(close()));
+
+        m_titleMode = FullTitle;
+        moveWidget = false;
+        inResizeZone = false;
+        allowToResize = false;
+        resizeVerSup = false;
+        resizeHorEsq = false;
+        resizeDiagSupEsq = false;
+        resizeDiagSupDer = false;
+
+        QSettings settings("windowSettings.ini", QSettings::IniFormat);
+        QRect geo = settings.value("geometry").toRect();
+
+        if (geo.height() > 0 and geo.x() < QApplication::desktop()->width() and geo.width() > 0 and geo.y() < QApplication::desktop()->height())
+            setGeometry(geo);
+
+        if (settings.value("maximized").toBool())
+        {
+            showMaximized();
+            ui->pbMax->setObjectName("restoreButton");
+        }
+
+        QList<QWidget*> widgets = this->findChildren<QWidget*>();
+
+        foreach (QWidget *widget, widgets)
+        {
+            widget->setMouseTracking(true);
+        }
     }
-    catch (int e) {}
-    ui->friendList->setObjectName("friendList");
-    ui->friendList->setStyleSheet(friendListStylesheet);
-
-
-    ui->tbMenu->setIcon(QIcon("ui/window/applicationIcon.png"));
-    ui->pbMin->setObjectName("minimizeButton");
-    ui->pbMax->setObjectName("maximizeButton");
-    ui->pbClose->setObjectName("closeButton");
-
-    setWindowFlags(Qt::CustomizeWindowHint);
-    setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_DeleteOnClose);
-    setMouseTracking(true);
-    ui->titleBar->setMouseTracking(true);
-    ui->LTitle->setMouseTracking(true);
-    ui->tbMenu->setMouseTracking(true);
-    ui->pbMin->setMouseTracking(true);
-    ui->pbMax->setMouseTracking(true);
-    ui->pbClose->setMouseTracking(true);
-
-    addAction(ui->actionClose);
-
-    connect(ui->pbMin, SIGNAL(clicked()), this, SLOT(minimizeBtnClicked()));
-    connect(ui->pbMax, SIGNAL(clicked()), this, SLOT(maximizeBtnClicked()));
-    connect(ui->pbClose, SIGNAL(clicked()), this, SLOT(close()));
-
-    //Per poder rebre les dades del ratolí sense haver de clicar cap botó
-    m_titleMode = FullTitle;
-    moveWidget = false;
-    inResizeZone = false;
-    allowToResize = false;
-    resizeVerSup = false;
-    resizeHorEsq = false;
-    resizeDiagSupEsq = false;
-    resizeDiagSupDer = false;
-
-
-    QSettings settings("dialogs.ini", QSettings::IniFormat);
-    QRect geo = settings.value("geometry").toRect();
-
-    if (geo.height() > 0 and geo.x() < QApplication::desktop()->width() and geo.width() > 0 and geo.y() < QApplication::desktop()->height())
-        setGeometry(geo);
-
-    if (settings.value("maximized").toBool())
-    {
-        showMaximized();
-        ui->pbMax->setObjectName("restoreButton");
-    }
-
-//    ui->centralWidget->setMouseTracking(true);
-//    ui->friendList->setMouseTracking(true);
-//    ui->mainPanel->setMouseTracking(true);
-//    ui->statusPanel->setMouseTracking(true);
-//    ui->
-
-    QList<QWidget*> widgets = this->findChildren<QWidget*>();
-
-    foreach (QWidget *widget, widgets)
-    {
-        widget->setMouseTracking(true);
-    }
-    //ui->mainHead->setMouseTracking(true);
 
     centralLayout = new QHBoxLayout(ui->centralWidget);
     centralLayout->setContentsMargins(9,9,9,9);
@@ -216,105 +229,84 @@ Widget* Widget::getInstance()
     return instance;
 }
 
-//void Widget::setStyleSheet( const QString& styleSheet )
-//{
-//    static QString ss;
-//    static QString defaultSS;
-//    if( defaultSS.isEmpty() )
-//    {
-//        Widget tmp;
-//        ui->setupUi( &tmp );
-//        defaultSS = tmp.styleSheet();
-//    }
-//    ss = styleSheet.isEmpty() ? defaultSS : styleSheet;
-//    ss.replace( "Widget", objectName() );
-//    QWidget::setStyleSheet( ss );
-//}
-
-
-//void Widget::setObjectName( const QString& objectName )
-//{
-//    //YB_DEBUG_FUNC_BEGIN;
-//    QWidget::setObjectName( objectName );
-//    setStyleSheet( "" );
-//}
-
-
 void Widget::mouseMoveEvent(QMouseEvent *e)
 {
-    int xMouse = e->pos().x();
-    int yMouse = e->pos().y();
-    int wWidth = this->geometry().width();
-    int wHeight = this->geometry().height();
-
-    if (moveWidget)
+    if (!useNativeTheme)
     {
-        inResizeZone = false;
-        moveWindow(e);
-    }
-    else if (allowToResize)
-        resizeWindow(e);
-    //right
-    else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
-    {
-        inResizeZone = true;
+        int xMouse = e->pos().x();
+        int yMouse = e->pos().y();
+        int wWidth = this->geometry().width();
+        int wHeight = this->geometry().height();
 
-        if (yMouse >= wHeight - PIXELS_TO_ACT)
-            setCursor(Qt::SizeFDiagCursor);
-        else if (yMouse <= PIXELS_TO_ACT)
-            setCursor(Qt::SizeBDiagCursor);
+        if (moveWidget)
+        {
+            inResizeZone = false;
+            moveWindow(e);
+        }
+        else if (allowToResize)
+            resizeWindow(e);
+        //right
+        else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+
+            if (yMouse >= wHeight - PIXELS_TO_ACT)
+                setCursor(Qt::SizeFDiagCursor);
+            else if (yMouse <= PIXELS_TO_ACT)
+                setCursor(Qt::SizeBDiagCursor);
+            else
+                setCursor(Qt::SizeHorCursor);
+
+            resizeWindow(e);
+        }
+        //left
+        else if (xMouse <= PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+
+            if (yMouse >= wHeight - PIXELS_TO_ACT)
+                setCursor(Qt::SizeBDiagCursor);
+            else if (yMouse <= PIXELS_TO_ACT)
+                setCursor(Qt::SizeFDiagCursor);
+            else
+                setCursor(Qt::SizeHorCursor);
+
+            resizeWindow(e);
+        }
+        //bottom edge
+        else if ((yMouse >= wHeight - PIXELS_TO_ACT) or allowToResize)
+        {
+            inResizeZone = true;
+            setCursor(Qt::SizeVerCursor);
+
+            resizeWindow(e);
+        }
+        //Cursor part top
+        else if (yMouse <= PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+            setCursor(Qt::SizeVerCursor);
+
+            resizeWindow(e);
+        }
         else
-            setCursor(Qt::SizeHorCursor);
+        {
+            inResizeZone = false;
+            setCursor(Qt::ArrowCursor);
+        }
 
-        resizeWindow(e);
+        e->accept();
     }
-    //left
-    else if (xMouse <= PIXELS_TO_ACT or allowToResize)
-    {
-        inResizeZone = true;
-
-        if (yMouse >= wHeight - PIXELS_TO_ACT)
-            setCursor(Qt::SizeBDiagCursor);
-        else if (yMouse <= PIXELS_TO_ACT)
-            setCursor(Qt::SizeFDiagCursor);
-        else
-            setCursor(Qt::SizeHorCursor);
-
-        resizeWindow(e);
-    }
-    //bottom edge
-    else if ((yMouse >= wHeight - PIXELS_TO_ACT) or allowToResize)
-    {
-        inResizeZone = true;
-        setCursor(Qt::SizeVerCursor);
-
-        resizeWindow(e);
-    }
-    //Cursor part top
-    else if (yMouse <= PIXELS_TO_ACT or allowToResize)
-    {
-        inResizeZone = true;
-        setCursor(Qt::SizeVerCursor);
-
-        resizeWindow(e);
-    }
-    else
-    {
-        inResizeZone = false;
-        setCursor(Qt::ArrowCursor);
-    }
-
-    e->accept();
 }
 
 bool Widget::event(QEvent * event)
 {
-    if (event->type() == QEvent::WindowActivate)
+    if (event->type() == QEvent::WindowActivate && !useNativeTheme)
     {
         this->setObjectName("activeWindow");
         this->style()->polish(this);
     }
-    else if (event->type() == QEvent::WindowDeactivate)
+    else if (event->type() == QEvent::WindowDeactivate && !useNativeTheme)
     {
         this->setObjectName("inactiveWindow");
         this->style()->polish(this);
@@ -324,58 +316,67 @@ bool Widget::event(QEvent * event)
 
 void Widget::mousePressEvent(QMouseEvent *e)
 {
-    if (e->button() == Qt::LeftButton)
+    if (!useNativeTheme)
     {
-        if (inResizeZone)
+        if (e->button() == Qt::LeftButton)
         {
-            allowToResize = true;
-
-            if (e->pos().y() <= PIXELS_TO_ACT)
+            if (inResizeZone)
             {
-                if (e->pos().x() <= PIXELS_TO_ACT)
-                    resizeDiagSupEsq = true;
-                else if (e->pos().x() >= geometry().width() - PIXELS_TO_ACT)
-                    resizeDiagSupDer = true;
-                else
-                    resizeVerSup = true;
-            }
-            else if (e->pos().x() <= PIXELS_TO_ACT)
-                resizeHorEsq = true;
-        }
-        else if (e->pos().x() >= PIXELS_TO_ACT and e->pos().x() < ui->titleBar->geometry().width()
-                 and e->pos().y() >= PIXELS_TO_ACT and e->pos().y() < ui->titleBar->geometry().height())
-        {
-            moveWidget = true;
-            dragPosition = e->globalPos() - frameGeometry().topLeft();
-        }
-    }
+                allowToResize = true;
 
-    e->accept();
+                if (e->pos().y() <= PIXELS_TO_ACT)
+                {
+                    if (e->pos().x() <= PIXELS_TO_ACT)
+                        resizeDiagSupEsq = true;
+                    else if (e->pos().x() >= geometry().width() - PIXELS_TO_ACT)
+                        resizeDiagSupDer = true;
+                    else
+                        resizeVerSup = true;
+                }
+                else if (e->pos().x() <= PIXELS_TO_ACT)
+                    resizeHorEsq = true;
+            }
+            else if (e->pos().x() >= PIXELS_TO_ACT and e->pos().x() < ui->titleBar->geometry().width()
+                     and e->pos().y() >= PIXELS_TO_ACT and e->pos().y() < ui->titleBar->geometry().height())
+            {
+                moveWidget = true;
+                dragPosition = e->globalPos() - frameGeometry().topLeft();
+            }
+        }
+
+        e->accept();
+    }
 }
 
 void Widget::mouseReleaseEvent(QMouseEvent *e)
 {
-    moveWidget = false;
-    allowToResize = false;
-    resizeVerSup = false;
-    resizeHorEsq = false;
-    resizeDiagSupEsq = false;
-    resizeDiagSupDer = false;
+    if (!useNativeTheme)
+    {
+        moveWidget = false;
+        allowToResize = false;
+        resizeVerSup = false;
+        resizeHorEsq = false;
+        resizeDiagSupEsq = false;
+        resizeDiagSupDer = false;
 
-    e->accept();
+        e->accept();
+    }
 }
 
 void Widget::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    if (e->pos().x() < ui->tbMenu->geometry().right() and e->pos().y() < ui->tbMenu->geometry().bottom()
-        and e->pos().x() >=  ui->tbMenu->geometry().x() and e->pos().y() >= ui->tbMenu->geometry().y()
-        and ui->tbMenu->isVisible())
-        close();
-    else if (e->pos().x() < ui->titleBar->geometry().width()
-             and e->pos().y() < ui->titleBar->geometry().height()
-             and m_titleMode != FullScreenMode)
-        maximizeBtnClicked();
-    e->accept();
+    if (!useNativeTheme)
+    {
+        if (e->pos().x() < ui->tbMenu->geometry().right() and e->pos().y() < ui->tbMenu->geometry().bottom()
+                and e->pos().x() >=  ui->tbMenu->geometry().x() and e->pos().y() >= ui->tbMenu->geometry().y()
+                and ui->tbMenu->isVisible())
+            close();
+        else if (e->pos().x() < ui->titleBar->geometry().width()
+                 and e->pos().y() < ui->titleBar->geometry().height()
+                 and m_titleMode != FullScreenMode)
+            maximizeBtnClicked();
+        e->accept();
+    }
 }
 
 void Widget::paintEvent (QPaintEvent *)
@@ -388,100 +389,80 @@ void Widget::paintEvent (QPaintEvent *)
 
 void Widget::moveWindow(QMouseEvent *e)
 {
-    if (e->buttons() & Qt::LeftButton)
+    if (!useNativeTheme)
     {
-        move(e->globalPos() - dragPosition);
-        e->accept();
+        if (e->buttons() & Qt::LeftButton)
+        {
+            move(e->globalPos() - dragPosition);
+            e->accept();
+        }
     }
 }
 
 void Widget::resizeWindow(QMouseEvent *e)
 {
-    if (allowToResize)
+    if (!useNativeTheme)
     {
-        int xMouse = e->pos().x();
-        int yMouse = e->pos().y();
-        int wWidth = geometry().width();
-        int wHeight = geometry().height();
-
-        if (cursor().shape() == Qt::SizeVerCursor)
+        if (allowToResize)
         {
-            if (resizeVerSup)
-            {
-                int newY = geometry().y() + yMouse;
-                int newHeight = wHeight - yMouse;
+            int xMouse = e->pos().x();
+            int yMouse = e->pos().y();
+            int wWidth = geometry().width();
+            int wHeight = geometry().height();
 
-                if (newHeight > minimumSizeHint().height())
+            if (cursor().shape() == Qt::SizeVerCursor)
+            {
+                if (resizeVerSup)
                 {
-                    resize(wWidth, newHeight);
-                    move(geometry().x(), newY);
-                }
-            }
-            else
-                resize(wWidth, yMouse+1);
-        }
-        else if (cursor().shape() == Qt::SizeHorCursor)
-        {
-            if (resizeHorEsq)
-            {
-                int newX = geometry().x() + xMouse;
-                int newWidth = wWidth - xMouse;
+                    int newY = geometry().y() + yMouse;
+                    int newHeight = wHeight - yMouse;
 
-                if (newWidth > minimumSizeHint().width())
+                    if (newHeight > minimumSizeHint().height())
+                    {
+                        resize(wWidth, newHeight);
+                        move(geometry().x(), newY);
+                    }
+                }
+                else
+                    resize(wWidth, yMouse+1);
+            }
+            else if (cursor().shape() == Qt::SizeHorCursor)
+            {
+                if (resizeHorEsq)
                 {
-                    resize(newWidth, wHeight);
-                    move(newX, geometry().y());
+                    int newX = geometry().x() + xMouse;
+                    int newWidth = wWidth - xMouse;
+
+                    if (newWidth > minimumSizeHint().width())
+                    {
+                        resize(newWidth, wHeight);
+                        move(newX, geometry().y());
+                    }
                 }
+                else
+                    resize(xMouse, wHeight);
             }
-            else
-                resize(xMouse, wHeight);
-        }
-        else if (cursor().shape() == Qt::SizeBDiagCursor)
-        {
-            int newX = 0;
-            int newWidth = 0;
-            int newY = 0;
-            int newHeight = 0;
+            else if (cursor().shape() == Qt::SizeBDiagCursor)
+            {
+                int newX = 0;
+                int newWidth = 0;
+                int newY = 0;
+                int newHeight = 0;
 
-            if (resizeDiagSupDer)
-            {
-                newX = geometry().x();
-                newWidth = xMouse;
-                newY = geometry().y() + yMouse;
-                newHeight = wHeight - yMouse;
-            }
-            else
-            {
-                newX = geometry().x() + xMouse;
-                newWidth = wWidth - xMouse;
-                newY = geometry().y();
-                newHeight = yMouse;
-            }
-
-            if (newWidth >= minimumSizeHint().width() and newHeight >= minimumSizeHint().height())
-            {
-                resize(newWidth, newHeight);
-                move(newX, newY);
-            }
-            else if (newWidth >= minimumSizeHint().width())
-            {
-                resize(newWidth, wHeight);
-                move(newX, geometry().y());
-            }
-            else if (newHeight >= minimumSizeHint().height())
-            {
-                resize(wWidth, newHeight);
-                move(geometry().x(), newY);
-            }
-        }
-        else if (cursor().shape() == Qt::SizeFDiagCursor)
-        {
-            if (resizeDiagSupEsq)
-            {
-                int newX = geometry().x() + xMouse;
-                int newWidth = wWidth - xMouse;
-                int newY = geometry().y() + yMouse;
-                int newHeight = wHeight - yMouse;
+                if (resizeDiagSupDer)
+                {
+                    newX = geometry().x();
+                    newWidth = xMouse;
+                    newY = geometry().y() + yMouse;
+                    newHeight = wHeight - yMouse;
+                }
+                else
+                {
+                    newX = geometry().x() + xMouse;
+                    newWidth = wWidth - xMouse;
+                    newY = geometry().y();
+                    newHeight = yMouse;
+                }
 
                 if (newWidth >= minimumSizeHint().width() and newHeight >= minimumSizeHint().height())
                 {
@@ -499,11 +480,37 @@ void Widget::resizeWindow(QMouseEvent *e)
                     move(geometry().x(), newY);
                 }
             }
-            else
-                resize(xMouse+1, yMouse+1);
-        }
+            else if (cursor().shape() == Qt::SizeFDiagCursor)
+            {
+                if (resizeDiagSupEsq)
+                {
+                    int newX = geometry().x() + xMouse;
+                    int newWidth = wWidth - xMouse;
+                    int newY = geometry().y() + yMouse;
+                    int newHeight = wHeight - yMouse;
 
-        e->accept();
+                    if (newWidth >= minimumSizeHint().width() and newHeight >= minimumSizeHint().height())
+                    {
+                        resize(newWidth, newHeight);
+                        move(newX, newY);
+                    }
+                    else if (newWidth >= minimumSizeHint().width())
+                    {
+                        resize(newWidth, wHeight);
+                        move(newX, geometry().y());
+                    }
+                    else if (newHeight >= minimumSizeHint().height())
+                    {
+                        resize(wWidth, newHeight);
+                        move(geometry().x(), newY);
+                    }
+                }
+                else
+                    resize(xMouse+1, yMouse+1);
+            }
+
+            e->accept();
+        }
     }
 }
 

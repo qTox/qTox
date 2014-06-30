@@ -41,9 +41,7 @@ public:
     void setCentralWidget(QWidget *widget, const QString &widgetName);
     QString getUsername();
     Core* getCore();
-
-    //void setStyleSheet(const QString &styleSheet);
-    //void setObjectName(const QString &objectName);
+    int useNativeTheme;
 
 protected slots:
     void moveWindow(QMouseEvent *e);

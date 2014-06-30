@@ -102,6 +102,7 @@ void Settings::load()
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
+        useNativeTheme = s.value("useNativeTheme", 1).toInt();
     s.endGroup();
 
     s.beginGroup("Privacy");
@@ -342,4 +343,14 @@ bool Settings::isTypingNotificationEnabled() const
 void Settings::setTypingNotification(bool enabled)
 {
     typingNotification = enabled;
+}
+
+int Settings::getThemePrefs() const
+{
+    return useNativeTheme;
+}
+
+void Settings::setThemePrefs(int pref)
+{
+    useNativeTheme = pref;
 }
