@@ -27,6 +27,7 @@ public:
     explicit Widget(QWidget *parent = 0);
     QString getUsername();
     Core* getCore();
+    Camera* getCamera();
     static Widget* getInstance();
     void showTestCamview();
     ~Widget();

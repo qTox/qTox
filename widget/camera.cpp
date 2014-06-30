@@ -164,3 +164,40 @@ QImage Camera::getLastImage()
     lastFrame.unmap();
     return img;
 }
+
+vpx_image Camera::getLastVPXImage()
+{
+    lastFrame.map(QAbstractVideoBuffer::ReadOnly);
+    int w = lastFrame.width(), h = lastFrame.height();
+    int bpl = lastFrame.bytesPerLine(), cxbpl = bpl/2;
+    vpx_image img;
+    vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched
+
+    if (frameFormat == QVideoFrame::Format_YUV420P)
+    {
+        uint8_t* yData = lastFrame.bits();
+        uint8_t* uData = yData + (bpl * h);
+        uint8_t* vData = uData + (bpl * h / 4);
+        img.planes[VPX_PLANE_Y] = yData;
+        img.planes[VPX_PLANE_U] = uData;
+        img.planes[VPX_PLANE_V] = vData;
+    }
+    else if (frameFormat == QVideoFrame::Format_YV12)
+    {
+        uint8_t* yData = lastFrame.bits();
+        uint8_t* uData = yData + (bpl * h);
+        uint8_t* vData = uData + (bpl * h / 4);
+        img.planes[VPX_PLANE_Y] = yData;
+        img.planes[VPX_PLANE_U] = vData;
+        img.planes[VPX_PLANE_V] = uData;
+    }
+    else if (frameFormat == QVideoFrame::Format_RGB32)
+    {
+        img.w = img.h = 0; // Invalid frame. TODO: Implement conversion
+        qWarning() << "Camera: Can't convert from RGB32! Go complain at github.com/tux3/toxgui";
+    }
+
+    lastFrame.unmap();
+    return img;
+
+}

@@ -23,6 +23,7 @@ public slots:
 
 private:
     QLabel *displayLabel;
+    QImage lastFrame;
     QHBoxLayout* mainLayout;
 };
 

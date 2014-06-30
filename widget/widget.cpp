@@ -43,7 +43,7 @@ Widget::Widget(QWidget *parent) :
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
-    core = new Core();
+    core = new Core(camera);
     coreThread = new QThread(this);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
@@ -121,6 +121,11 @@ Widget* Widget::getInstance()
 QString Widget::getUsername()
 {
     return ui->nameLabel->text();
+}
+
+Camera* Widget::getCamera()
+{
+    return camera;
 }
 
 void Widget::onConnected()

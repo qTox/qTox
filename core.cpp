@@ -34,8 +34,8 @@ QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 
-Core::Core() :
-    tox(nullptr)
+Core::Core(Camera* cam) :
+    tox(nullptr), camera(cam)
 {
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -1142,6 +1142,8 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     }
 
     // Go
+    calls[callId].active = true;
+
     if (calls[callId].audioOutput != nullptr)
     {
         calls[callId].playAudioTimer.setInterval(5);
@@ -1158,13 +1160,22 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         calls[callId].sendAudioTimer.start();
     }
 
-    calls[callId].playVideoTimer.setInterval(50);
-    calls[callId].playVideoTimer.setSingleShot(true);
-    connect(&calls[callId].playVideoTimer, &QTimer::timeout, [=](){
-        Widget::getInstance()->getCore()->playCallVideo(callId);});
-    calls[callId].playVideoTimer.start();
+    if (calls[callId].videoEnabled)
+    {
+        calls[callId].playVideoTimer.setInterval(50);
+        calls[callId].playVideoTimer.setSingleShot(true);
+        connect(&calls[callId].playVideoTimer, &QTimer::timeout, [=](){
+            Widget::getInstance()->getCore()->playCallVideo(callId);});
+        calls[callId].playVideoTimer.start();
 
-    calls[callId].active = true;
+        calls[callId].sendVideoTimer.setInterval(50);
+        calls[callId].sendVideoTimer.setSingleShot(true);
+        connect(&calls[callId].sendVideoTimer, &QTimer::timeout, [=](){
+            Widget::getInstance()->getCore()->sendCallVideo(callId);});
+        //calls[callId].sendVideoTimer.start();
+
+        Widget::getInstance()->getCamera()->suscribe();
+    }
 }
 
 void Core::cleanupCall(int callId)
@@ -1183,6 +1194,8 @@ void Core::cleanupCall(int callId)
         calls[callId].audioInput = nullptr;
         disconnect(&calls[callId].sendAudioTimer,0,0,0);
     }
+    if (calls[callId].videoEnabled)
+        Widget::getInstance()->getCamera()->unsuscribe();
     disconnect(&calls[callId].playVideoTimer,0,0,0);
     disconnect(&calls[callId].sendVideoTimer,0,0,0);
     calls[callId].audioBuffer.clear();
@@ -1268,7 +1281,13 @@ void Core::playCallVideo(int callId)
     if(toxav_recv_video(toxav, callId, &image) == 0)
     {
         if (image)
+        {
             emit videoFrameReceived(*image);
+        }
+        else
+        {
+            //qDebug() << "Core: Received null video frame\n";
+        }
     }
     else
         qDebug() << "Core: Error receiving video frame\n";
@@ -1276,19 +1295,31 @@ void Core::playCallVideo(int callId)
     calls[callId].playVideoTimer.start();
 }
 
-
-void Core::sendVideoFrame(int callId, ToxAv* toxav, vpx_image img)
+void Core::sendCallVideo(int callId)
 {
-    uint8_t videobuf[TOXAV_VIDEO_WIDTH * TOXAV_VIDEO_HEIGHT * 4];
-    int result;
-    if((result = toxav_prepare_video_frame(toxav, callId, videobuf, sizeof(videobuf), &img)) < 0)
-    {
-        qDebug() << QString("Core: Error preparing video frame: %1").arg(result);
+    if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
-    }
 
-    if((result = toxav_send_video(toxav, callId, videobuf, result)) < 0)
-        qDebug() << QString("Core: Error sending video frame: %1").arg(result);
+    uint8_t videobuf[TOXAV_VIDEO_WIDTH * TOXAV_VIDEO_HEIGHT * 4];
+    vpx_image frame = camera->getLastVPXImage();
+    if (frame.w && frame.h)
+    {
+        int result;
+        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, sizeof(videobuf), &frame)) < 0)
+        {
+            qDebug() << "Core: toxav_prepare_video_frame error\n";
+            calls[callId].sendVideoTimer.start();
+            return;
+        }
+
+        if((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
+            qDebug() << QString("Core: toxav_send_video error: %1").arg(result);
+
+    }
+    else
+        qDebug("Core::sendCallVideo: Invalid frame (bad camera ?)");
+
+    calls[callId].sendVideoTimer.start();
 }
 
 void Core::groupInviteFriend(int friendId, int groupId)
@@ -1299,15 +1330,4 @@ void Core::groupInviteFriend(int friendId, int groupId)
 void Core::createGroup()
 {
     emit emptyGroupCreated(tox_add_groupchat(tox));
-}
-
-void Core::dispatchVideoFrame(vpx_image img) const
-{
-    for (int i=0; i<TOXAV_MAX_CALLS; i++)
-    {
-        if (calls[i].active && calls[i].videoEnabled)
-        {
-            sendVideoFrame(i, toxav, img);
-        }
-    }
 }
