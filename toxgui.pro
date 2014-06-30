@@ -37,7 +37,8 @@ HEADERS  += widget/form/addfriendform.h \
     audiobuffer.h \
     widget/selfcamview.h \
     widget/videosurface.h \
-    widget/camera.h
+    widget/camera.h \
+    widget/netcamview.h
 
 FORMS    += widget.ui
 
@@ -76,7 +77,8 @@ SOURCES += \
     audiobuffer.cpp \
     widget/selfcamview.cpp \
     widget/videosurface.cpp \
-    widget/camera.cpp
+    widget/camera.cpp \
+    widget/netcamview.cpp
 
 
 

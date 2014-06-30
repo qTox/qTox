@@ -93,12 +93,10 @@ public:
     QAudioInput* audioInput;
     QIODevice* audioInputDevice;
     ToxAvCodecSettings codecSettings;
-    QTimer playAudioTimer, sendAudioTimer;
+    QTimer playAudioTimer, sendAudioTimer, playVideoTimer, sendVideoTimer;
     int callId;
     int friendId;
     bool videoEnabled;
-    QFuture<void> playFuture;
-    QFuture<void> recordFuture;
     bool active;
 };
 
@@ -205,15 +203,17 @@ signals:
     void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
     void fileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection direction);
 
-    void avInvite(int friendId, int callIndex);
-    void avStart(int friendId, int callIndex);
+    void avInvite(int friendId, int callIndex, bool video);
+    void avStart(int friendId, int callIndex, bool video);
     void avCancel(int friendId, int callIndex);
     void avEnd(int friendId, int callIndex);
-    void avRinging(int friendId, int callIndex);
-    void avStarting(int friendId, int callIndex);
+    void avRinging(int friendId, int callIndex, bool video);
+    void avStarting(int friendId, int callIndex, bool video);
     void avEnding(int friendId, int callIndex);
     void avRequestTimeout(int friendId, int callIndex);
     void avPeerTimeout(int friendId, int callIndex);
+
+    void videoFrameReceived(vpx_image frame);
 
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
@@ -247,8 +247,9 @@ private:
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
-    static void playCallAudio(int callId, ToxAv* toxav); // Blocking, start in a thread
+    static void playCallAudio(int callId, ToxAv* toxav);
     static void sendCallAudio(int callId, ToxAv* toxav); // Blocking, start in a thread
+    void playCallVideo(int callId);
     static void sendVideoFrame(int callId, ToxAv* toxav, vpx_image img);
 
     void checkConnection();

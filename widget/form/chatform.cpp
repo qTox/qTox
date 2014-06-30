@@ -20,6 +20,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     msgEdit = new ChatTextEdit();
     sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(), callButton = new QPushButton(), videoButton = new QPushButton();
     chatArea = new QScrollArea();
+    netcam = new NetCamView();
 
     QFont bold;
     bold.setBold(true);
@@ -152,9 +153,11 @@ ChatForm::ChatForm(Friend* chatFriend)
     chatArea->setWidget(chatAreaWidget);
 
     connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
+    connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(fileButton, SIGNAL(clicked()), this, SLOT(onAttachClicked()));
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
     connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
     connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
@@ -164,6 +167,7 @@ ChatForm::~ChatForm()
 {
     delete main;
     delete head;
+    delete netcam;
 }
 
 void ChatForm::show(Ui::Widget &ui)
@@ -344,97 +348,186 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
 }
 
-void ChatForm::onAvInvite(int FriendId, int CallId)
+void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
     callId = CallId;
-    callButton->setObjectName("yellow");
-    callButton->style()->polish(callButton);
     callButton->disconnect();
-    connect(callButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
+    videoButton->disconnect();
+    if (video)
+    {
+        callButton->setObjectName("grey");
+        callButton->style()->polish(callButton);
+        videoButton->setObjectName("yellow");
+        videoButton->style()->polish(videoButton);
+        connect(videoButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
+    }
+    else
+    {
+        callButton->setObjectName("yellow");
+        callButton->style()->polish(callButton);
+        videoButton->setObjectName("grey");
+        videoButton->style()->polish(videoButton);
+        connect(callButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
+    }
 }
 
-void ChatForm::onAvStart(int FriendId, int CallId)
+void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
     callId = CallId;
-    callButton->setObjectName("red");
-    callButton->style()->polish(callButton);
     callButton->disconnect();
-    connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
+    videoButton->disconnect();
+    if (video)
+    {
+        callButton->setObjectName("grey");
+        callButton->style()->polish(callButton);
+        videoButton->setObjectName("red");
+        videoButton->style()->polish(videoButton);
+        connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
+        netcam->show();
+    }
+    else
+    {
+        callButton->setObjectName("red");
+        callButton->style()->polish(callButton);
+        videoButton->setObjectName("grey");
+        videoButton->style()->polish(videoButton);
+        connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
+    }
 }
 
 void ChatForm::onAvCancel(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
-    callButton->setObjectName("red");
-    callButton->style()->polish(callButton);
     callButton->disconnect();
+    videoButton->disconnect();
+    callButton->setObjectName("green");
+    callButton->style()->polish(callButton);
+    videoButton->setObjectName("green");
+    videoButton->style()->polish(videoButton);
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+    netcam->hide();
 }
 
 void ChatForm::onAvEnd(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+    callButton->disconnect();
+    videoButton->disconnect();
     callButton->setObjectName("green");
     callButton->style()->polish(callButton);
-    callButton->disconnect();
+    videoButton->setObjectName("green");
+    videoButton->style()->polish(videoButton);
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+    netcam->hide();
 }
 
-void ChatForm::onAvRinging(int FriendId, int CallId)
+void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
     callId = CallId;
-    callButton->setObjectName("grey");
-    callButton->style()->polish(callButton);
     callButton->disconnect();
-    connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
+    videoButton->disconnect();
+    if (video)
+    {
+        callButton->setObjectName("grey");
+        callButton->style()->polish(callButton);
+        videoButton->setObjectName("yellow");
+        videoButton->style()->polish(videoButton);
+        connect(videoButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
+    }
+    else
+    {
+        callButton->setObjectName("yellow");
+        callButton->style()->polish(callButton);
+        videoButton->setObjectName("grey");
+        videoButton->style()->polish(videoButton);
+        connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
+    }
 }
 
-void ChatForm::onAvStarting(int FriendId, int)
+void ChatForm::onAvStarting(int FriendId, int, bool video)
 {
     if (FriendId != f->friendId)
         return;
-    callButton->setObjectName("red");
-    callButton->style()->polish(callButton);
     callButton->disconnect();
-    connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
+    videoButton->disconnect();
+    if (video)
+    {
+        callButton->setObjectName("grey");
+        callButton->style()->polish(callButton);
+        videoButton->setObjectName("red");
+        videoButton->style()->polish(videoButton);
+        connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
+        netcam->show();
+    }
+    else
+    {
+        callButton->setObjectName("red");
+        callButton->style()->polish(callButton);
+        videoButton->setObjectName("grey");
+        videoButton->style()->polish(videoButton);
+        connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
+    }
 }
 
 void ChatForm::onAvEnding(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+    callButton->disconnect();
+    videoButton->disconnect();
     callButton->setObjectName("green");
     callButton->style()->polish(callButton);
     callButton->disconnect();
+    videoButton->setObjectName("green");
+    videoButton->style()->polish(videoButton);
+    videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+    netcam->hide();
 }
 
 void ChatForm::onAvRequestTimeout(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+    callButton->disconnect();
+    videoButton->disconnect();
     callButton->setObjectName("green");
     callButton->style()->polish(callButton);
     callButton->disconnect();
+    videoButton->setObjectName("green");
+    videoButton->style()->polish(videoButton);
+    videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+    netcam->hide();
 }
 
 void ChatForm::onAvPeerTimeout(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+    callButton->disconnect();
+    videoButton->disconnect();
     callButton->setObjectName("green");
     callButton->style()->polish(callButton);
     callButton->disconnect();
+    videoButton->setObjectName("green");
+    videoButton->style()->polish(videoButton);
+    videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+    netcam->hide();
 }
 
 void ChatForm::onAnswerCallTriggered()
@@ -450,15 +543,30 @@ void ChatForm::onHangupCallTriggered()
 void ChatForm::onCallTriggered()
 {
     callButton->disconnect();
+    videoButton->disconnect();
     emit startCall(f->friendId);
+}
+
+void ChatForm::onVideoCallTriggered()
+{
+    callButton->disconnect();
+    videoButton->disconnect();
+    emit startVideoCall(f->friendId, true);
 }
 
 void ChatForm::onCancelCallTriggered()
 {
+    callButton->disconnect();
+    videoButton->disconnect();
     callButton->setObjectName("green");
     callButton->style()->polish(callButton);
     callButton->disconnect();
+    videoButton->setObjectName("green");
+    videoButton->style()->polish(videoButton);
+    videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+    netcam->hide();
     emit cancelCall(callId, f->friendId);
 }
 
