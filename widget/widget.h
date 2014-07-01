@@ -86,6 +86,7 @@ private slots:
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupWidgetClicked(GroupWidget* widget);
     void removeFriend(int friendId);
+    void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
 
 protected slots:
