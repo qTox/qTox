@@ -519,7 +519,7 @@ void Widget::updateFriendStatusLights(int friendId)
 
 void Widget::newMessageAlert()
 {
-    QApplication::alert(this, 1000);
+    QApplication::alert(this);
     QSound::play(":audio/notification.wav");
 }
 
