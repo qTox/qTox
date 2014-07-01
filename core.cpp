@@ -1028,6 +1028,8 @@ void Core::onAvRequestTimeout(int32_t call_index, void* core)
     }
     qDebug() << QString("Core: AV request timeout with %1").arg(friendId);
 
+    cleanupCall(call_index);
+
     emit static_cast<Core*>(core)->avRequestTimeout(friendId, call_index);
 }
 
@@ -1040,6 +1042,8 @@ void Core::onAvPeerTimeout(int32_t call_index, void* core)
         return;
     }
     qDebug() << QString("Core: AV peer timeout with %1").arg(friendId);
+
+    cleanupCall(call_index);
 
     emit static_cast<Core*>(core)->avPeerTimeout(friendId, call_index);
 }
