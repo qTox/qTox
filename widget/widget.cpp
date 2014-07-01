@@ -20,6 +20,7 @@
 #include <QDesktopWidget>
 #include <QCursor>
 #include <QSettings>
+#include <QClipboard>
 
 Widget *Widget::instance{nullptr};
 
@@ -378,6 +379,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     layout->addWidget(newfriend->widget);
     connect(newfriend->widget, SIGNAL(friendWidgetClicked(FriendWidget*)), this, SLOT(onFriendWidgetClicked(FriendWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
+    connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
     connect(newfriend->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
     connect(newfriend->chatForm, SIGNAL(sendFile(int32_t,QString,QByteArray)), core, SLOT(sendFile(int32_t,QString,QByteArray)));
     connect(newfriend->chatForm, SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
@@ -539,6 +541,17 @@ void Widget::removeFriend(int friendId)
     delete f;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
+}
+
+void Widget::copyFriendIdToClipboard(int friendId)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    if (f != nullptr)
+    {
+        QClipboard *clipboard = QApplication::clipboard();
+        clipboard->setText(f->userId, QClipboard::Clipboard);
+        clipboard->deleteLater();
+    }
 }
 
 void Widget::onGroupInviteReceived(int32_t friendId, uint8_t* publicKey)

@@ -22,6 +22,7 @@ public:
 signals:
     void friendWidgetClicked(FriendWidget* widget);
     void removeFriend(int friendId);
+    void copyFriendIdToClipboard(int friendId);
 
 public:
     int friendId;

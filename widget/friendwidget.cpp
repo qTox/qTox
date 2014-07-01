@@ -62,7 +62,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    menu.addAction("Remove friend");
+    menu.addAction("Copy friend ID");
     QMenu* inviteMenu = menu.addMenu("Invite in group");
     QMap<QAction*, Group*> groupActions;
     for (Group* group : GroupList::groupList)
@@ -72,11 +72,18 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     }
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
+    menu.addSeparator();
+    menu.addAction("Remove friend");
 
     QAction* selectedItem = menu.exec(pos);
     if (selectedItem)
     {
-        if (selectedItem->text() == "Remove friend")
+        if (selectedItem->text() == "Copy friend ID")
+        {
+            emit copyFriendIdToClipboard(friendId);
+            return;
+        }
+        else if (selectedItem->text() == "Remove friend")
         {
             hide();
             emit removeFriend(friendId);
