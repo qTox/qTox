@@ -1,0 +1,68 @@
+Widget#activeWindow
+{
+    background-color: #DFDFDF;
+    border: 2px solid #ABABAB;
+}
+
+Widget#inactiveWindow
+{
+    background-color: #f4f4f4;
+    border: 2px solid #ABABAB;
+}
+/*
+Widget#titleBar
+{
+    border: 10px solid #ABABAB;
+    border-top: 0px solid transparent;
+    background-color: #DFDFDF;
+}
+
+Widget#titleBarInactive
+{
+    border: 5px solid #ABABAB;
+    border-top: 0px solid transparent;
+    background-color: #F1F1F1;
+}*/
+
+QToolButton#tbMenu
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+}
+
+
+QPushButton#minimizeButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url(":ui/window/minimizeButton.png");}
+QPushButton#minimizeButton:hover {image: url(":ui/window/minimizeButtonHover.png");}
+QPushButton#minimizeButton:pressed {image: url(":ui/window/minimizeButtonPressed.png");}
+QPushButton#minimizeButton:focus {outline: none;}
+
+QPushButton#maximizeButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url(":ui/window/maximizeButton.png");}
+QPushButton#maximizeButton:hover {image: url(":ui/window/maximizeButtonHover.png");}
+QPushButton#maximizeButton:pressed {image: url(":ui/window/maximizeButtonPressed.png");}
+QPushButton#maximizeButton:focus {outline: none;}
+
+QPushButton#closeButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url(":ui/window/closeButton.png");}
+QPushButton#closeButton:hover {image: url(":ui/window/closeButtonHover.png");}
+QPushButton#closeButton:pressed {image: url(":ui/window/closeButtonPressed.png");}
+QPushButton#closeButton:focus {outline: none;}
+
+QPushButton#restoreButton
+{
+    border: 0px solid transparent;
+    background-color: transparent;
+    image: url(":ui/window/restoreButton.png");}
+QPushButton#restoreButton:hover {image: url(":ui/window/restoreButtonHover.png");}
+QPushButton#restoreButton:pressed {image: url(":ui/window/restoreButtonPressed.png");}
+QPushButton#restoreButton:focus {outline: none;}

@@ -9,6 +9,7 @@
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
 {
+    this->setMouseTracking(true);
     this->setAutoFillBackground(true);
     this->setLayout(&layout);
     this->setFixedWidth(225);
@@ -18,16 +19,22 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     textLayout.setSpacing(0);
     textLayout.setMargin(0);
 
-    avatar.setPixmap(QPixmap(":/img/contact.png"));
+    avatar.setPixmap(QPixmap(":img/contact.png"));
     name.setText(id);
     //statusPic.setAlignment(Qt::AlignHCenter);
-    statusPic.setPixmap(QPixmap(":/img/status/dot_away.png"));
+    statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     QFont small;
     small.setPixelSize(10);
     statusMessage.setFont(small);
     QPalette pal;
     pal.setColor(QPalette::WindowText,Qt::gray);
     statusMessage.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::white);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
+    this->setPalette(pal3);
 
     textLayout.addStretch();
     textLayout.addWidget(&name);
@@ -140,7 +147,7 @@ void FriendWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap(":/img/contact_dark.png"));
+    avatar.setPixmap(QPixmap(":img/contact_dark.png"));
 }
 
 void FriendWidget::setAsInactiveChatroom()
@@ -159,5 +166,5 @@ void FriendWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap(":/img/contact.png"));
+    avatar.setPixmap(QPixmap(":img/contact.png"));
 }
