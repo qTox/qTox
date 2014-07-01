@@ -1275,7 +1275,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
             calls[callId].sendAudioTimer.start();
             return;
         }
-        calls[callId].sendAudioTimer.start(0);
+        calls[callId].sendAudioTimer.start(1);
     }
     else
         calls[callId].sendAudioTimer.start();
