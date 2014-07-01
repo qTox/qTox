@@ -1,19 +1,6 @@
 <RCC>
     <qresource prefix="/conf">
         <file alias="settings.ini">res/settings.ini</file>
-        <file>ui/window/applicationIcon.png</file>
-        <file>ui/window/closeButton.png</file>
-        <file>ui/window/closeButtonHover.png</file>
-        <file>ui/window/closeButtonPressed.png</file>
-        <file>ui/window/maximizeButton.png</file>
-        <file>ui/window/maximizeButtonHover.png</file>
-        <file>ui/window/maximizeButtonPressed.png</file>
-        <file>ui/window/minimizeButton.png</file>
-        <file>ui/window/minimizeButtonHover.png</file>
-        <file>ui/window/minimizeButtonPressed.png</file>
-        <file>ui/window/restoreButton.png</file>
-        <file>ui/window/restoreButtonHover.png</file>
-        <file>ui/window/restoreButtonPressed.png</file>
     </qresource>
     <qresource prefix="/font">
         <file alias="DejaVuSans.ttf">res/DejaVuSans.ttf</file>
@@ -95,5 +82,18 @@
         <file>ui/videoButton/videoButtonYellowHover.png</file>
         <file>ui/videoButton/videoButtonYellowPressed.png</file>
         <file>img/group_dark.png</file>
+        <file>ui/window/applicationIcon.png</file>
+        <file>ui/window/closeButton.png</file>
+        <file>ui/window/closeButtonHover.png</file>
+        <file>ui/window/closeButtonPressed.png</file>
+        <file>ui/window/maximizeButton.png</file>
+        <file>ui/window/maximizeButtonHover.png</file>
+        <file>ui/window/maximizeButtonPressed.png</file>
+        <file>ui/window/minimizeButton.png</file>
+        <file>ui/window/minimizeButtonHover.png</file>
+        <file>ui/window/minimizeButtonPressed.png</file>
+        <file>ui/window/restoreButton.png</file>
+        <file>ui/window/restoreButtonHover.png</file>
+        <file>ui/window/restoreButtonPressed.png</file>
     </qresource>
 </RCC>
