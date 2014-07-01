@@ -884,7 +884,7 @@ void Core::onAvInvite(int32_t call_index, void* core)
         return;
     }
 
-    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, friendId);
+    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, 0);
     if (transType == TypeVideo)
     {
         qDebug() << QString("Core: AV invite from %1 with video").arg(friendId);
@@ -906,7 +906,7 @@ void Core::onAvStart(int32_t call_index, void* core)
         return;
     }
 
-    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, friendId);
+    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, 0);
     if (transType == TypeVideo)
     {
         qDebug() << QString("Core: AV start from %1 with video").arg(friendId);
@@ -983,7 +983,7 @@ void Core::onAvStarting(int32_t call_index, void* core)
         qWarning() << "Core: Received invalid AV starting";
         return;
     }
-    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, friendId);
+    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, 0);
     if (transType == TypeVideo)
     {
         qDebug() << QString("Core: AV starting from %1 with video").arg(friendId);
@@ -1052,7 +1052,7 @@ void Core::answerCall(int callId)
         qWarning() << "Core: Received invalid AV answer peer ID";
         return;
     }
-    int transType = toxav_get_peer_transmission_type(toxav, callId, friendId);
+    int transType = toxav_get_peer_transmission_type(toxav, callId, 0);
     if (transType == TypeVideo)
     {
         qDebug() << QString("Core: answering call %1 with video").arg(callId);
