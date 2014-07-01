@@ -1227,11 +1227,13 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
         }
         qDebug() << QString("Core::playCallAudio: Error receiving audio: %1").arg(len);
         calls[callId].playAudioTimer.start();
+        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
         return;
     }
     if (len == 0)
     {
         calls[callId].playAudioTimer.start();
+        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
         return;
     }
     //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
@@ -1241,7 +1243,7 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
     if (state != QAudio::ActiveState)
     {
         qDebug() << QString("Core: Audio state is %1").arg(state);
-        if (state == 3 && calls[callId].audioBuffer.bufferSize() >= framesize*2)
+        //if (state == 3 && calls[callId].audioBuffer.bufferSize() >= framesize*2)
             calls[callId].audioOutput->start(&calls[callId].audioBuffer);
     }
     int error = calls[callId].audioOutput->error();
