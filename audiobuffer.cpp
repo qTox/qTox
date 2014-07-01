@@ -3,7 +3,7 @@
 AudioBuffer::AudioBuffer() :
     QIODevice(0)
 {
-    open(QIODevice::ReadOnly);
+    open(QIODevice::ReadWrite);
 }
 
 AudioBuffer::~AudioBuffer()
