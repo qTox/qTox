@@ -602,7 +602,7 @@ void Core::bootstrapDht()
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
             0, qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
             qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
-                        +QString(", port ")+QString().setNum(qToBigEndian(dhtServer.port));
+                        +QString(", port ")+QString().setNum(dhtServer.port);
         else
             qDebug() << "Core: Error bootstraping from "+dhtServer.name;
 
