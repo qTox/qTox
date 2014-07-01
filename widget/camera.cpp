@@ -4,6 +4,21 @@
 #include <QVideoEncoderSettings>
 #include <QVideoEncoderSettingsControl>
 
+static inline float getR(int Y, int V)
+{
+    return qMax(qMin((int)(1.164*(Y - 16) + 1.596*(V - 128)),255),0);
+}
+
+static inline float getG(int Y, int U, int V)
+{
+    return qMax(qMin((int)(1.164*(Y - 16) - 0.813*(V - 128) - 0.391*(U - 128)),255),0);
+}
+
+static inline float getB(int Y, int U)
+{
+    return qMax(qMin((int)(1.164*(Y - 16) + 2.018*(U - 128)),255),0);
+}
+
 Camera::Camera()
     : refcount{0}, camera{new QCamera}
 {
@@ -132,13 +147,13 @@ QImage Camera::getLastImage()
             uint32_t* scanline = (uint32_t*)img.scanLine(i);
             for (int j=0; j < bpl; j++)
             {
-                float Y = yData[i*bpl + j];
-                float U = uData[i*cxbpl/2 + j/2];
-                float V = vData[i*cxbpl/2 + j/2];
+                int Y = yData[i*bpl + j];
+                int U = uData[i/2*cxbpl + j/2];
+                int V = vData[i/2*cxbpl + j/2];
 
-                uint8_t R = qMax(qMin((int)(Y + 1.402 * (V - 128)),255),0);
-                uint8_t G = qMax(qMin((int)(Y - 0.344 * (U - 128) - 0.714 * (V - 128)),255),0);
-                uint8_t B = qMax(qMin((int)(Y + 1.772 * (U - 128)),255),0);
+                uint8_t R = getR(Y,V);
+                uint8_t G = getG(Y,U,V);
+                uint8_t B = getB(Y,U);
 
                 scanline[j] = (0xFF<<24) + (R<<16) + (G<<8) + B;
             }
@@ -154,13 +169,13 @@ QImage Camera::getLastImage()
             uint32_t* scanline = (uint32_t*)img.scanLine(i);
             for (int j=0; j < bpl; j++)
             {
-                float Y = yData[i*bpl + j];
-                float U = uData[i*cxbpl/2 + j/2];
-                float V = vData[i*cxbpl/2 + j/2];
+                int Y = yData[i*bpl + j];
+                int U = uData[i/2*cxbpl + j/2];
+                int V = vData[i/2*cxbpl + j/2];
 
-                uint8_t R = qMax(qMin((int)(Y + 1.402 * (V - 128)),255),0);
-                uint8_t G = qMax(qMin((int)(Y - 0.344 * (U - 128) - 0.714 * (V - 128)),255),0);
-                uint8_t B = qMax(qMin((int)(Y + 1.772 * (U - 128)),255),0);
+                uint8_t R = getR(Y,V);
+                uint8_t G = getG(Y,U,V);
+                uint8_t B = getB(Y,U);
 
                 scanline[j] = (0xFF<<24) + (R<<16) + (G<<8) + B;
             }
