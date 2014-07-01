@@ -20,16 +20,16 @@ void NetCamView::updateDisplay(vpx_image frame)
     QImage img(w, h, QImage::Format_RGB32);
 
     uint8_t* yData = frame.planes[VPX_PLANE_Y];
-    uint8_t* uData = frame.planes[VPX_PLANE_V];
-    uint8_t* vData = frame.planes[VPX_PLANE_U];
+    uint8_t* uData = frame.planes[VPX_PLANE_U];
+    uint8_t* vData = frame.planes[VPX_PLANE_V];
     for (int i = 0; i< h; i++)
     {
         uint32_t* scanline = (uint32_t*)img.scanLine(i);
         for (int j=0; j < w; j++)
         {
             float Y = yData[i*bpl + j];
-            float U = uData[i*cxbpl/2 + j/2];
-            float V = vData[i*cxbpl/2 + j/2];
+            float U = uData[i/2*cxbpl + j/2];
+            float V = vData[i/2*cxbpl + j/2];
 
             uint8_t R = qMax(qMin((int)(Y + 1.402 * (V - 128)),255),0);
             uint8_t G = qMax(qMin((int)(Y - 0.344 * (U - 128) - 0.714 * (V - 128)),255),0);

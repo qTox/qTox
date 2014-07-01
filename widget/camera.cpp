@@ -132,7 +132,11 @@ bool Camera::isFormatSupported(const QVideoSurfaceFormat& format) const
 
 QImage Camera::getLastImage()
 {
-    lastFrame.map(QAbstractVideoBuffer::ReadOnly);
+    if (!lastFrame.map(QAbstractVideoBuffer::ReadOnly))
+    {
+        qWarning() << "Camera::getLastImage: Error maping last frame";
+        return QImage();
+    }
     int w = lastFrame.width(), h = lastFrame.height();
     int bpl = lastFrame.bytesPerLine(), cxbpl = bpl/2;
     QImage img(w, h, QImage::Format_RGB32);
