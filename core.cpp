@@ -239,8 +239,10 @@ void Core::onFileSendRequestCallback(Tox*, int32_t friendnumber, uint8_t filenum
 {
     qDebug() << QString("Core: Received file request %1 with friend %2").arg(filenumber).arg(friendnumber);
 
-    fileRecvQueue.append(ToxFile(filenumber, friendnumber, QByteArray(), filesize,
-                    CString::toString(filename,filename_length).toUtf8(), ToxFile::RECEIVING));
+    ToxFile file{filenumber, friendnumber,
+                CString::toString(filename,filename_length).toUtf8(), "", ToxFile::RECEIVING};
+    file.filesize = filesize;
+    fileRecvQueue.append(file);
     emit static_cast<Core*>(core)->fileReceiveRequested(fileRecvQueue.last());
 }
 void Core::onFileControlCallback(Tox*, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
@@ -330,7 +332,7 @@ void Core::onFileDataCallback(Tox*, int32_t friendnumber, uint8_t filenumber, co
         return;
     }
 
-    file->fileData.append((char*)data,length);
+    file->file->write((char*)data,length);
     file->bytesSent += length;
     //qDebug() << QString("Core::onFileDataCallback: received %1/%2 bytes").arg(file->fileData.size()).arg(file->filesize);
     emit static_cast<Core*>(core)->fileTransferInfo(file->friendId, file->fileNum,
@@ -392,10 +394,10 @@ void Core::sendGroupMessage(int groupId, const QString& message)
     tox_group_message_send(tox, groupId, cMessage.data(), cMessage.size());
 }
 
-void Core::sendFile(int32_t friendId, QString Filename, QByteArray data)
+void Core::sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize)
 {
     QByteArray fileName = Filename.toUtf8();
-    int fileNum = tox_new_file_sender(tox, friendId, data.size(), (uint8_t*)fileName.data(), fileName.size());
+    int fileNum = tox_new_file_sender(tox, friendId, filesize, (uint8_t*)fileName.data(), fileName.size());
     if (fileNum == -1)
     {
         qWarning() << "Core::sendFile: Can't create the Tox file sender";
@@ -403,7 +405,9 @@ void Core::sendFile(int32_t friendId, QString Filename, QByteArray data)
     }
     qDebug() << QString("Core::sendFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
 
-    fileSendQueue.append(ToxFile(fileNum, friendId, data, data.size(), fileName, ToxFile::SENDING));
+    ToxFile file{fileNum, friendId, fileName, FilePath, ToxFile::SENDING};
+    file.filesize = filesize;
+    fileSendQueue.append(file);
 
     emit fileSendStarted(fileSendQueue.last());
 }
@@ -910,7 +914,7 @@ void Core::removeFileFromQueue(bool sendQueue, int friendId, int fileId)
 
 void Core::sendAllFileData(Core *core, ToxFile* file)
 {
-    while (file->bytesSent < file->fileData.size())
+    while (file->bytesSent < file->filesize)
     {
         if (file->status == ToxFile::PAUSED)
         {
@@ -924,7 +928,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
         }
         emit core->fileTransferInfo(file->friendId, file->fileNum, file->filesize, file->bytesSent, ToxFile::SENDING);
         qApp->processEvents();
-        int chunkSize = tox_file_data_size(core->tox, file->friendId);
+        long long chunkSize = tox_file_data_size(core->tox, file->friendId);
         if (chunkSize == -1)
         {
             qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
@@ -934,8 +938,8 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
             removeFileFromQueue(true, file->friendId, file->fileNum);
             return;
         }
-        chunkSize = std::min(chunkSize, file->fileData.size());
-        QByteArray toSend = file->fileData.mid(file->bytesSent, chunkSize);
+        chunkSize = std::min(chunkSize, file->filesize);
+        QByteArray toSend = file->file->read(chunkSize);
         if (tox_file_send_data(core->tox, file->friendId, file->fileNum, (uint8_t*)toSend.data(), toSend.size()) == -1)
         {
             //qWarning("Core::fileHeartbeat: Error sending data chunk");

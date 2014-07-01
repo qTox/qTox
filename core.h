@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QString>
+#include <QFile>
 #include <QList>
 #include <QByteArray>
 #include <QFuture>
@@ -73,14 +74,18 @@ struct ToxFile
     };
 
     ToxFile()=default;
-    ToxFile(int FileNum, int FriendId, QByteArray FileData, long long Filesize, QByteArray FileName, FileDirection Direction)
-        : fileNum(FileNum), friendId(FriendId), fileData{FileData}, fileName{FileName},
-          bytesSent{0}, filesize(Filesize), status{STOPPED}, direction{Direction} {}
+    ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePath, FileDirection Direction)
+        : fileNum(FileNum), friendId(FriendId), fileName{FileName}, filePath{FilePath}, file{new QFile(filePath)},
+        bytesSent{0}, filesize{0}, status{STOPPED}, direction{Direction} {}
+    ~ToxFile(){file->close(); delete file;}
+    void setFilePath(QString path) {filePath=path; file->setFileName(path);}
+    bool open(bool write) {return write?file->open(QIODevice::WriteOnly):file->open(QIODevice::ReadOnly);}
 
     int fileNum;
     int friendId;
-    QByteArray fileData;
     QByteArray fileName;
+    QString filePath;
+    QFile* file;
     long long bytesSent;
     long long filesize;
     FileStatus status;
@@ -147,7 +152,7 @@ public slots:
     void sendAction(int friendId, const QString& action);
     void sendTyping(int friendId, bool typing);
 
-    void sendFile(int32_t friendId, QString Filename, QByteArray data);
+    void sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize);
     void cancelFileSend(int friendId, int fileNum);
     void cancelFileRecv(int friendId, int fileNum);
     void rejectFileRecvRequest(int friendId, int fileNum);

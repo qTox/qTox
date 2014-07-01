@@ -93,7 +93,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
         connect(bottomright, SIGNAL(clicked()), this, SLOT(pauseResumeSend()));
 
         QPixmap preview;
-        if (preview.loadFromData(File.fileData))
+        if (preview.loadFromData(File.file->readAll()))
         {
             preview = preview.scaledToHeight(40);
             pic->setPixmap(preview);
@@ -234,14 +234,8 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile File)
 
     if (File.direction == ToxFile::RECEIVING)
     {
-        QFile saveFile(savePath);
-        if (!saveFile.open(QIODevice::WriteOnly))
-            return;
-        saveFile.write(File.fileData);
-        saveFile.close();
-
         QPixmap preview;
-        if (preview.loadFromData(File.fileData))
+        if (preview.loadFromData(File.file->readAll()))
         {
             preview = preview.scaledToHeight(40);
             pic->setPixmap(preview);
