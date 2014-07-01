@@ -28,7 +28,7 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QSettings settings("windowSettings.ini", QSettings::IniFormat);
+    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
     if (!settings.contains("useNativeTheme"))
         useNativeTheme = 1;
     else
@@ -43,7 +43,7 @@ Widget::Widget(QWidget *parent) :
         QString friendListStylesheet = "";
         try
         {
-            QFile f("ui/friendList/friendList.css");
+            QFile f(":ui/friendList/friendList.css");
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream friendListStylesheetStream(&f);
             friendListStylesheet = friendListStylesheetStream.readAll();
@@ -57,7 +57,7 @@ Widget::Widget(QWidget *parent) :
         QString windowStylesheet = "";
         try
         {
-            QFile f("ui/window/window.css");
+            QFile f(":ui/window/window.css");
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream windowStylesheetStream(&f);
             windowStylesheet = windowStylesheetStream.readAll();
@@ -71,7 +71,7 @@ Widget::Widget(QWidget *parent) :
         QString friendListStylesheet = "";
         try
         {
-            QFile f("ui/friendList/friendList.css");
+            QFile f(":ui/friendList/friendList.css");
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream friendListStylesheetStream(&f);
             friendListStylesheet = friendListStylesheetStream.readAll();
@@ -111,8 +111,8 @@ Widget::Widget(QWidget *parent) :
         resizeDiagSupEsq = false;
         resizeDiagSupDer = false;
 
-        QSettings settings("windowSettings.ini", QSettings::IniFormat);
-        QRect geo = settings.value("geometry").toRect();
+    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
+    QRect geo = settings.value("geometry").toRect();
 
         if (geo.height() > 0 and geo.x() < QApplication::desktop()->width() and geo.width() > 0 and geo.y() < QApplication::desktop()->height())
             setGeometry(geo);
@@ -134,7 +134,6 @@ Widget::Widget(QWidget *parent) :
     isWindowMinimized = 0;
 
     centralLayout = new QHBoxLayout(ui->centralWidget);
-    centralLayout->setContentsMargins(9,9,9,9);
 
 
     ui->mainContent->setLayout(new QVBoxLayout());
@@ -227,7 +226,7 @@ Widget::~Widget()
     for (Group* g : GroupList::groupList)
         delete g;
     GroupList::groupList.clear();
-    QSettings settings("windowSettings.ini", QSettings::IniFormat);
+    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
     settings.setValue("geometry", geometry());
     settings.setValue("maximized", isMaximized());
     settings.setValue("useNativeTheme", useNativeTheme);
@@ -771,7 +770,6 @@ bool Widget::event(QEvent * e)
             this->setObjectName("activeWindow");
             this->style()->polish(this);
         }
-        qDebug() << "test";
         isWindowMinimized = 0;
         if (isFriendWidgetActive && activeFriendWidget != nullptr)
         {

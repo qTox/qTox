@@ -95,5 +95,7 @@
         <file>ui/window/restoreButton.png</file>
         <file>ui/window/restoreButtonHover.png</file>
         <file>ui/window/restoreButtonPressed.png</file>
+        <file>ui/friendList/friendList.css</file>
+        <file>ui/window/window.css</file>
     </qresource>
 </RCC>
