@@ -83,7 +83,11 @@ bool Camera::start(const QVideoSurfaceFormat &format)
 bool Camera::present(const QVideoFrame &frame)
 {
     QVideoFrame frameMap(frame); // Basically a const_cast because shallow copies
-    frameMap.map(QAbstractVideoBuffer::ReadOnly);
+    if (!frameMap.map(QAbstractVideoBuffer::ReadOnly))
+    {
+        qWarning() << "Camera::present: Unable to map frame";
+        return false;
+    }
     int w = frameMap.width(), h = frameMap.height();
     int bpl = frameMap.bytesPerLine(), size = frameMap.mappedBytes();
     QVideoFrame frameCopy(size, QSize(w, h), bpl, frameMap.pixelFormat());

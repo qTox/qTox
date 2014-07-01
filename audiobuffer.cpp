@@ -13,9 +13,10 @@ AudioBuffer::~AudioBuffer()
 
 qint64 AudioBuffer::readData(char *data, qint64 len)
 {
+    qint64 total;
     bufferMutex.lock();
     try {
-        const qint64 total = qMin((qint64)buffer.size(), len);
+        total = qMin((qint64)buffer.size(), len);
         memcpy(data, buffer.constData(), total);
         buffer = buffer.mid(total);
     }
