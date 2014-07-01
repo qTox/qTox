@@ -21,7 +21,7 @@ Linux and Mac users will have compile the source code themselves.
 
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a><br/>
 <a href="http://speedy.sh/XXtHa/toxgui">Linux download (1st July 2014 01:30 GMT)</a><br/>
-Note that the Linux download probably doesn't work because stal is gay.
+Note that the Linux download has not been tested.
 
 <h3>Screenshots</h3>
 <h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
