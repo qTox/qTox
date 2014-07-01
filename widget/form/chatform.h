@@ -52,7 +52,7 @@ public:
 
 signals:
     void sendMessage(int, QString);
-    void sendFile(int32_t friendId, QString, QByteArray);
+    void sendFile(int32_t friendId, QString, QString, long long);
     void startCall(int friendId);
     void startVideoCall(int friendId, bool video);
     void answerCall(int callId);

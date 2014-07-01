@@ -295,11 +295,11 @@ void ChatForm::onAttachClicked()
     QFile file(path);
     if (!file.exists() || !file.open(QIODevice::ReadOnly))
         return;
-    QByteArray fileData = file.readAll();
+    long long filesize = file.size();
     file.close();
     QFileInfo fi(path);
 
-    emit sendFile(f->friendId, fi.fileName(), fileData);
+    emit sendFile(f->friendId, fi.fileName(), path, filesize);
 }
 
 void ChatForm::onSliderRangeChanged()
