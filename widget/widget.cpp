@@ -26,7 +26,6 @@ Widget *Widget::instance{nullptr};
 Widget::Widget(QWidget *parent) :
     QWidget(parent), ui(new Ui::Widget), activeFriendWidget{nullptr}, activeGroupWidget{nullptr}
 {
-    //qApp->installEventFilter( this );
     ui->setupUi(this);
 
     QSettings settings("windowSettings.ini", QSettings::IniFormat);
@@ -618,7 +617,7 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     {
         g->hasNewMessages = 0;
         g->userWasMentioned = 0;
-        g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
+        g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
     }
 }
 
