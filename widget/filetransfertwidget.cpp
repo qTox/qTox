@@ -45,17 +45,17 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     buttonWidget->setAutoFillBackground(true);
     buttonWidget->setLayout(buttonLayout);
 
-    QFile f1("ui/stopFileButton/style.css");
+    QFile f1(":/ui/stopFileButton/style.css");
     f1.open(QFile::ReadOnly | QFile::Text);
     QTextStream stopFileButtonStylesheetStream(&f1);
     stopFileButtonStylesheet = stopFileButtonStylesheetStream.readAll();
 
-    QFile f2("ui/pauseFileButton/style.css");
+    QFile f2(":/ui/pauseFileButton/style.css");
     f2.open(QFile::ReadOnly | QFile::Text);
     QTextStream pauseFileButtonStylesheetStream(&f2);
     pauseFileButtonStylesheet = pauseFileButtonStylesheetStream.readAll();
 
-    QFile f3("ui/acceptFileButton/style.css");
+    QFile f3(":/ui/acceptFileButton/style.css");
     f3.open(QFile::ReadOnly | QFile::Text);
     QTextStream acceptFileButtonStylesheetStream(&f3);
     acceptFileButtonStylesheet = acceptFileButtonStylesheetStream.readAll();

@@ -1,7 +1,7 @@
 QPushButton#green
 {
     background-color: transparent;
-    background-image: url("ui/callButton/callButton.png");
+    background-image: url(":/ui/callButton/callButton.png");
     background-repeat: none;    
     border: none;
     width: 50px;
@@ -10,18 +10,18 @@ QPushButton#green
 
 QPushButton#green:hover
 {
-   background-image: url("ui/callButton/callButtonHover.png");
+   background-image: url(":/ui/callButton/callButtonHover.png");
 }
 
 QPushButton#green:pressed
 {
-   background-image: url("ui/callButton/callButtonPressed.png");
+   background-image: url(":/ui/callButton/callButtonPressed.png");
 }
 
 QPushButton#red
 {
     background-color: transparent;
-    background-image: url("ui/callButton/callButtonRed.png");
+    background-image: url(":/ui/callButton/callButtonRed.png");
     background-repeat: none;    
     border: none;
     width: 50px;
@@ -29,18 +29,18 @@ QPushButton#red
 }
 QPushButton#red:hover
 {
-   background-image: url("ui/callButton/callButtonRedHover.png");
+   background-image: url(":/ui/callButton/callButtonRedHover.png");
 }
 
 QPushButton#red:pressed
 {
-   background-image: url("ui/callButton/callButtonRedPressed.png");
+   background-image: url(":/ui/callButton/callButtonRedPressed.png");
 }
 
 QPushButton#yellow
 {
     background-color: transparent;
-    background-image: url("ui/callButton/callButtonYellow.png");
+    background-image: url(":/ui/callButton/callButtonYellow.png");
     background-repeat: none;    
     border: none;
     width: 50px;
@@ -48,18 +48,18 @@ QPushButton#yellow
 }
 QPushButton#yellow:hover
 {
-   background-image: url("ui/callButton/callButtonYellowHover.png");
+   background-image: url(":/ui/callButton/callButtonYellowHover.png");
 }
 
 QPushButton#yellow:pressed
 {
-   background-image: url("ui/callButton/callButtonYellowPressed.png");
+   background-image: url(":/ui/callButton/callButtonYellowPressed.png");
 }
 
 QPushButton#grey
 {
     background-color: transparent;
-    background-image: url("ui/callButton/callButtonDisabled.png");
+    background-image: url(":/ui/callButton/callButtonDisabled.png");
     background-repeat: none;    
     border: none;
     width: 50px;

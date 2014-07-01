@@ -20,8 +20,8 @@
    <string>Tox</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>img/icon.png</normaloff>img/icon.png</iconset>
+   <iconset resource="res.qrc">
+    <normaloff>:/img/icon.png</normaloff>:/img/icon.png</iconset>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -947,7 +947,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>img/contact list icons/contact.png</pixmap>
+          <pixmap resource="res.qrc">:/img/contact.png</pixmap>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -1083,7 +1083,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>img/status/dot_away_2x.png</pixmap>
+          <pixmap resource="res.qrc">:/img/status/dot_away_2x.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -1986,8 +1986,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>img/contact list icons/add.png</normaloff>img/contact list icons/add.png</iconset>
+            <iconset resource="res.qrc">
+             <normaloff>:/img/add.png</normaloff>:/img/add.png</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -2006,8 +2006,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>img/contact list icons/group.png</normaloff>img/contact list icons/group.png</iconset>
+            <iconset resource="res.qrc">
+             <normaloff>:/img/group.png</normaloff>:/img/group.png</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -2032,8 +2032,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>img/contact list icons/transfer.png</normaloff>img/contact list icons/transfer.png</iconset>
+            <iconset resource="res.qrc">
+             <normaloff>:/img/transfer.png</normaloff>:/img/transfer.png</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -2058,8 +2058,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>img/contact list icons/settings.png</normaloff>img/contact list icons/settings.png</iconset>
+            <iconset resource="res.qrc">
+             <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -2603,6 +2603,8 @@
    <header>widget/tool/editablelabelwidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

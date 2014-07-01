@@ -30,13 +30,13 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     // No real avatar support in toxcore, better draw a pretty picture
     //avatar->setPixmap(*chatFriend->widget->avatar.pixmap());
-    avatar->setPixmap(QPixmap("img/contact list icons/contact_dark.png"));
+    avatar->setPixmap(QPixmap(":/img/contact_dark.png"));
 
     chatAreaWidget->setLayout(mainChatLayout);
     QString chatAreaStylesheet = "";
     try
     {
-        QFile f("ui/chatArea/chatArea.css");
+        QFile f(":/ui/chatArea/chatArea.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream chatAreaStylesheetStream(&f);
         chatAreaStylesheet = chatAreaStylesheetStream.readAll();
@@ -56,7 +56,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     QString msgEditStylesheet = "";
     try
     {
-        QFile f("ui/msgEdit/msgEdit.css");
+        QFile f(":/ui/msgEdit/msgEdit.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream msgEditStylesheetStream(&f);
         msgEditStylesheet = msgEditStylesheetStream.readAll();
@@ -69,7 +69,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     QString sendButtonStylesheet = "";
     try
     {
-        QFile f("ui/sendButton/sendButton.css");
+        QFile f(":/ui/sendButton/sendButton.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream sendButtonStylesheetStream(&f);
         sendButtonStylesheet = sendButtonStylesheetStream.readAll();
@@ -80,7 +80,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     QString fileButtonStylesheet = "";
     try
     {
-        QFile f("ui/fileButton/fileButton.css");
+        QFile f(":/ui/fileButton/fileButton.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream fileButtonStylesheetStream(&f);
         fileButtonStylesheet = fileButtonStylesheetStream.readAll();
@@ -92,7 +92,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     QString emoteButtonStylesheet = "";
     try
     {
-        QFile f("ui/emoteButton/emoteButton.css");
+        QFile f(":/ui/emoteButton/emoteButton.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream emoteButtonStylesheetStream(&f);
         emoteButtonStylesheet = emoteButtonStylesheetStream.readAll();
@@ -103,7 +103,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     QString callButtonStylesheet = "";
     try
     {
-        QFile f("ui/callButton/callButton.css");
+        QFile f(":/ui/callButton/callButton.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream callButtonStylesheetStream(&f);
         callButtonStylesheet = callButtonStylesheetStream.readAll();
@@ -115,7 +115,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     QString videoButtonStylesheet = "";
     try
     {
-        QFile f("ui/videoButton/videoButton.css");
+        QFile f(":/ui/videoButton/videoButton.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream videoButtonStylesheetStream(&f);
         videoButtonStylesheet = videoButtonStylesheetStream.readAll();

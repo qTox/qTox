@@ -150,11 +150,11 @@ void Widget::onFailedToStartCore()
 void Widget::onStatusSet(Status status)
 {
     if (status == Status::Online)
-        ui->statImg->setPixmap(QPixmap("img/status/dot_online_2x.png"));
+        ui->statImg->setPixmap(QPixmap(":/img/status/dot_online_2x.png"));
     else if (status == Status::Busy || status == Status::Away)
-        ui->statImg->setPixmap(QPixmap("img/status/dot_idle_2x.png"));
+        ui->statImg->setPixmap(QPixmap(":/img/status/dot_idle_2x.png"));
     else if (status == Status::Offline)
-        ui->statImg->setPixmap(QPixmap("img/status/dot_away_2x.png"));
+        ui->statImg->setPixmap(QPixmap(":/img/status/dot_away_2x.png"));
 }
 
 void Widget::onAddClicked()
@@ -378,23 +378,23 @@ void Widget::updateFriendStatusLights(int friendId)
     Friend* f = FriendList::findFriend(friendId);
     Status status = f->friendStatus;
     if (status == Status::Online && f->hasNewMessages == 0)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_online.png"));
+        f->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_online.png"));
     else if (status == Status::Online && f->hasNewMessages == 1)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_online_notification.png"));
+        f->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_online_notification.png"));
     else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 0)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_idle.png"));
+        f->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_idle.png"));
     else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 1)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_idle_notification.png"));
+        f->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_idle_notification.png"));
     else if (status == Status::Offline && f->hasNewMessages == 0)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_away.png"));
+        f->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_away.png"));
     else if (status == Status::Offline && f->hasNewMessages == 1)
-        f->widget->statusPic.setPixmap(QPixmap("img/status/dot_away_notification.png"));
+        f->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_away_notification.png"));
 }
 
 void Widget::newMessageAlert()
 {
     QApplication::alert(this, 1000);
-    QSound::play("audio/notification.wav");
+    QSound::play(":/audio/notification.wav");
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
@@ -442,13 +442,13 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
             newMessageAlert();
             g->hasNewMessages = 1;
             g->userWasMentioned = 1;
-            g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat_notification.png"));
+            g->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_groupchat_notification.png"));
         }
         else
             if (g->hasNewMessages == 0)
             {
                 g->hasNewMessages = 1;
-                g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat_newmessages.png"));
+                g->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_groupchat_newmessages.png"));
             }
     }
 }
@@ -492,7 +492,7 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     {
         g->hasNewMessages = 0;
         g->userWasMentioned = 0;
-        g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
+        g->widget->statusPic.setPixmap(QPixmap(":/img/status/dot_groupchat.png"));
     }
 }
 

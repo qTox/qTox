@@ -30,7 +30,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     name->setFont(bold);
     nusers->setFont(small);
     nusers->setText(QString("%1 users in chat").arg(group->peers.size()));
-    avatar->setPixmap(QPixmap("img/contact list icons/group.png"));
+    avatar->setPixmap(QPixmap(":/img/group.png"));
     QString names;
     for (QString& s : group->peers)
         names.append(s+", ");
@@ -42,7 +42,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     QString chatAreaStylesheet = "";
     try
     {
-        QFile f("ui/chatArea/chatArea.css");
+        QFile f(":/ui/chatArea/chatArea.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream chatAreaStylesheetStream(&f);
         chatAreaStylesheet = chatAreaStylesheetStream.readAll();
@@ -61,7 +61,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     QString msgEditStylesheet = "";
     try
     {
-        QFile f("ui/msgEdit/msgEdit.css");
+        QFile f(":/ui/msgEdit/msgEdit.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream msgEditStylesheetStream(&f);
         msgEditStylesheet = msgEditStylesheetStream.readAll();
@@ -78,7 +78,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     QString sendButtonStylesheet = "";
     try
     {
-        QFile f("ui/sendButton/sendButton.css");
+        QFile f(":/ui/sendButton/sendButton.css");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream sendButtonStylesheetStream(&f);
         sendButtonStylesheet = sendButtonStylesheetStream.readAll();

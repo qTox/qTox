@@ -17,8 +17,8 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     textLayout.setSpacing(0);
     textLayout.setMargin(0);
 
-    avatar.setPixmap(QPixmap("img/contact list icons/group_2x.png"));
-    statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
+    avatar.setPixmap(QPixmap(":/img/group.png"));
+    statusPic.setPixmap(QPixmap(":/img/status/dot_groupchat.png"));
     name.setText(Name);
     QFont small;
     small.setPixelSize(10);
@@ -137,7 +137,7 @@ void GroupWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/contact list icons/group_dark.png"));
+    avatar.setPixmap(QPixmap(":/img/group_dark.png"));
 }
 
 void GroupWidget::setAsInactiveChatroom()
@@ -156,5 +156,5 @@ void GroupWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/contact list icons/group_2x.png"));
+    avatar.setPixmap(QPixmap(":/img/group.png"));
 }
