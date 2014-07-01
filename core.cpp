@@ -63,7 +63,7 @@ Core::~Core()
 
 void Core::start()
 {
-    tox = tox_new(0); // IPv6 causes some weird routers to crash, according to anon
+    tox = tox_new(1); // IPv6 enabled, needed for LAN discovery, but can crash some weird routers
     if (tox == nullptr)
     {
         qCritical() << "Tox core failed to start";
