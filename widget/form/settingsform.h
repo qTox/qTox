@@ -7,6 +7,7 @@
 #include <QString>
 #include <QObject>
 #include <QSpacerItem>
+#include <QCheckBox>
 #include "ui_widget.h"
 #include "widget/selfcamview.h"
 
@@ -24,10 +25,12 @@ public slots:
 
 private slots:
     void onTestVideoClicked();
+    void onEnableIPv6Updated();
 
 private:
     QLabel headLabel, nameLabel, statusTextLabel, idLabel, id;
     QPushButton videoTest;
+    QCheckBox enableIPv6;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head;
 

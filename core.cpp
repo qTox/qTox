@@ -63,7 +63,13 @@ Core::~Core()
 
 void Core::start()
 {
-    tox = tox_new(1); // IPv6 enabled, needed for LAN discovery, but can crash some weird routers
+    // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be disabled in options.
+    bool enableIPv6 = Settings::getInstance().getEnableIPv6();
+    if (enableIPv6)
+        qDebug() << "Core starting with IPv6 enabled";
+    else
+        qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
+    tox = tox_new(enableIPv6);
     if (tox == nullptr)
     {
         qCritical() << "Tox core failed to start";
