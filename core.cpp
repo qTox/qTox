@@ -407,6 +407,10 @@ void Core::sendFile(int32_t friendId, QString Filename, QString FilePath, long l
 
     ToxFile file{fileNum, friendId, fileName, FilePath, ToxFile::SENDING};
     file.filesize = filesize;
+    if (!file.open(false))
+    {
+        qWarning() << QString("Core::sendFile: Can't open file, error: %1").arg(file.file->errorString());
+    }
     fileSendQueue.append(file);
 
     emit fileSendStarted(fileSendQueue.last());
@@ -543,7 +547,7 @@ void Core::rejectFileRecvRequest(int friendId, int fileNum)
     removeFileFromQueue(false, friendId, fileNum);
 }
 
-void Core::acceptFileRecvRequest(int friendId, int fileNum)
+void Core::acceptFileRecvRequest(int friendId, int fileNum, QString path)
 {
     ToxFile* file{nullptr};
     for (ToxFile& f : fileRecvQueue)
@@ -557,6 +561,12 @@ void Core::acceptFileRecvRequest(int friendId, int fileNum)
     if (!file)
     {
         qWarning("Core::acceptFileRecvRequest: No such file in queue");
+        return;
+    }
+    file->setFilePath(path);
+    if (!file->open(true))
+    {
+        qWarning() << "Core::acceptFileRecvRequest: Unable to open file";
         return;
     }
     file->status = ToxFile::TRANSMITTING;
@@ -889,6 +899,8 @@ void Core::removeFileFromQueue(bool sendQueue, int friendId, int fileId)
             if (fileSendQueue[i].friendId == friendId && fileSendQueue[i].fileNum == fileId)
             {
                 found = true;
+                fileSendQueue[i].file->close();
+                delete fileSendQueue[i].file;
                 fileSendQueue.removeAt(i);
                 continue;
             }
@@ -902,6 +914,8 @@ void Core::removeFileFromQueue(bool sendQueue, int friendId, int fileId)
             if (fileRecvQueue[i].friendId == friendId && fileRecvQueue[i].fileNum == fileId)
             {
                 found = true;
+                fileRecvQueue[i].file->close();
+                delete fileRecvQueue[i].file;
                 fileRecvQueue.removeAt(i);
                 continue;
             }
@@ -918,7 +932,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
     {
         if (file->status == ToxFile::PAUSED)
         {
-            QThread::sleep(0);
+            QThread::sleep(5);
             continue;
         }
         else if (file->status == ToxFile::STOPPED)
@@ -939,14 +953,33 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
             return;
         }
         chunkSize = std::min(chunkSize, file->filesize);
-        QByteArray toSend = file->file->read(chunkSize);
-        if (tox_file_send_data(core->tox, file->friendId, file->fileNum, (uint8_t*)toSend.data(), toSend.size()) == -1)
+        uint8_t* data = new uint8_t[chunkSize];
+        file->file->seek(file->bytesSent);
+        int readSize = file->file->read((char*)data, chunkSize);
+        if (readSize == -1)
         {
-            //qWarning("Core::fileHeartbeat: Error sending data chunk");
-            QThread::sleep(0);
+            qWarning() << QString("Core::sendAllFileData: Error reading from file: %1").arg(file->file->errorString());
+            delete[] data;
+            QThread::msleep(5);
             continue;
         }
-        file->bytesSent += chunkSize;
+        else if (readSize == 0)
+        {
+            qWarning() << QString("Core::sendAllFileData: Nothing to read from file: %1").arg(file->file->errorString());
+            delete[] data;
+            QThread::msleep(5);
+            continue;
+        }
+        if (tox_file_send_data(core->tox, file->friendId, file->fileNum, data, readSize) == -1)
+        {
+            //qWarning("Core::fileHeartbeat: Error sending data chunk");
+            core->process();
+            delete[] data;
+            QThread::msleep(5);
+            continue;
+        }
+        delete[] data;
+        file->bytesSent += readSize;
         //qDebug() << QString("Core::fileHeartbeat: sent %1/%2 bytes").arg(file->bytesSent).arg(file->fileData.size());
     }
     qDebug("Core::fileHeartbeat: Transfer finished");

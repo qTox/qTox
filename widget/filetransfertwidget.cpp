@@ -93,11 +93,13 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
         connect(bottomright, SIGNAL(clicked()), this, SLOT(pauseResumeSend()));
 
         QPixmap preview;
+        File.file->seek(0);
         if (preview.loadFromData(File.file->readAll()))
         {
             preview = preview.scaledToHeight(40);
             pic->setPixmap(preview);
         }
+        File.file->seek(0);
     }
     else
     {
@@ -167,7 +169,10 @@ void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int File
         return;
     int diff = BytesSent - lastBytesSent;
     if (diff < 0)
+    {
+        qWarning() << "FileTransfertWidget::onFileTransferInfo: Negative transfer speed !";
         diff = 0;
+    }
     int rawspeed = diff / timediff;
     speed->setText(getHumanReadableSize(rawspeed)+"/s");
     size->setText(getHumanReadableSize(Filesize));
@@ -265,7 +270,7 @@ void FileTransfertWidget::acceptRecvRequest()
     bottomright->setStyleSheet(pauseFileButtonStylesheet);
     bottomright->disconnect();
     connect(bottomright, SIGNAL(clicked()), this, SLOT(pauseResumeRecv()));
-    Widget::getInstance()->getCore()->acceptFileRecvRequest(friendId, fileNum);
+    Widget::getInstance()->getCore()->acceptFileRecvRequest(friendId, fileNum, path);
 }
 
 void FileTransfertWidget::pauseResumeRecv()

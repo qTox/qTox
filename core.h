@@ -77,9 +77,9 @@ struct ToxFile
     ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePath, FileDirection Direction)
         : fileNum(FileNum), friendId(FriendId), fileName{FileName}, filePath{FilePath}, file{new QFile(filePath)},
         bytesSent{0}, filesize{0}, status{STOPPED}, direction{Direction} {}
-    ~ToxFile(){file->close(); delete file;}
+    ~ToxFile(){}
     void setFilePath(QString path) {filePath=path; file->setFileName(path);}
-    bool open(bool write) {return write?file->open(QIODevice::WriteOnly):file->open(QIODevice::ReadOnly);}
+    bool open(bool write) {return write?file->open(QIODevice::ReadWrite):file->open(QIODevice::ReadOnly);}
 
     int fileNum;
     int friendId;
@@ -156,7 +156,7 @@ public slots:
     void cancelFileSend(int friendId, int fileNum);
     void cancelFileRecv(int friendId, int fileNum);
     void rejectFileRecvRequest(int friendId, int fileNum);
-    void acceptFileRecvRequest(int friendId, int fileNum);
+    void acceptFileRecvRequest(int friendId, int fileNum, QString path);
     void pauseResumeFileSend(int friendId, int fileNum);
     void pauseResumeFileRecv(int friendId, int fileNum);
 
