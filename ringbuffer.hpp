@@ -34,6 +34,7 @@ public:
         size_t nextTail = currentTail + maxSize;
 
         if (nextTail < currentTail) {
+            // single overflow protection
             return -1;
         } else if (nextTail >= capacity) {
             bytesAlreadyWritten = capacity - currentTail;
@@ -55,6 +56,9 @@ public:
             return -1;
         }
 
+        // we should ensure here that data doesn't contain any noise
+        memset(data, 0, maxSize * sizeof(char));
+
         const size_t currentTail = tail.load();
         size_t currentHead = head.load();
         const qint64 contains =  currentHead <= currentTail ?
@@ -67,6 +71,7 @@ public:
         size_t nextHead = currentHead + maxSize;
 
         if (nextHead < currentHead) {
+            // single overflow protection
             return -1;
         } else if (nextHead >= capacity) {
             bytesAlreadyRead = capacity - currentHead;
@@ -78,7 +83,30 @@ public:
         memcpy(data + bytesAlreadyRead, buffer + currentHead, bytesToRead * sizeof(char));
         head.store(nextHead);
 
+#ifdef _WIN32
+        // this hack is necessary for windows since the QAudioOutput stops consuming
+        // if the returned value at the first call is equals to 0. Furthermore
+        // returning a small value like 1 or 100 at the first call of this function
+        // by QAudioOutput will end in laggy sound. In short this hack ensures that:
+        //
+        // 1. QAudioOutput will not stop consuming bytes
+        // 2. The audio output does not lag
+        return 4096;
+#else
+        // in linux this just works fine
         return maxSize;
+#endif
+    }
+
+    qint64 bytesAvailable()
+    {
+        const size_t currentTail = tail.load();
+        size_t currentHead = head.load();
+        const qint64 contains =  currentHead <= currentTail ?
+            currentTail - currentHead :
+            capacity - (currentHead - currentTail);
+
+        return contains + QIODevice::bytesAvailable();
     }
 
     bool isSequential()
