@@ -226,7 +226,7 @@ void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     if (author->text() == Widget::getInstance()->getUsername())
     {
         QPalette pal;
-        pal.setColor(QPalette::WindowText, Qt::gray);
+        pal.setColor(QPalette::WindowText, QColor(100,100,100));
         author->setPalette(pal);
         message->setPalette(pal);
     }
