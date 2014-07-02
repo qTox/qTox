@@ -10,7 +10,7 @@ template<size_t SIZE>
 class Ringbuffer : public QIODevice
 {
 public:
-    enum {capacity = SIZE + 1};
+    enum {capacity = SIZE};
     Ringbuffer(QObject* parent = 0) : QIODevice(parent), tail(0), head(0)
     {
         static_assert(SIZE > 0, "the size of the buffer must be > 0");
