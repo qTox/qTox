@@ -4,19 +4,35 @@
 #include <QVideoEncoderSettings>
 #include <QVideoEncoderSettingsControl>
 
-static inline float getR(int Y, int V)
+static inline void fromYCbCrToRGB(
+        uint8_t Y, uint8_t Cb, uint8_t Cr,
+        uint8_t& R, uint8_t& G, uint8_t& B)
 {
-    return qMax(qMin((int)(1.164*(Y - 16) + 1.596*(V - 128)),255),0);
-}
+    int r = Y + ((1436 * (Cr - 128)) >> 10),
+        g = Y - ((354 * (Cb - 128) + 732 * (Cr - 128)) >> 10),
+        b = Y + ((1814 * (Cb - 128)) >> 10);
 
-static inline float getG(int Y, int U, int V)
-{
-    return qMax(qMin((int)(1.164*(Y - 16) - 0.813*(V - 128) - 0.391*(U - 128)),255),0);
-}
+    if(r < 0) {
+        r = 0;
+    } else if(r > 255) {
+        r = 255;
+    }
 
-static inline float getB(int Y, int U)
-{
-    return qMax(qMin((int)(1.164*(Y - 16) + 2.018*(U - 128)),255),0);
+    if(g < 0) {
+        g = 0;
+    } else if(g > 255) {
+        g = 255;
+    }
+
+    if(b < 0) {
+        b = 0;
+    } else if(b > 255) {
+        b = 255;
+    }
+
+    R = static_cast<uint8_t>(r);
+    G = static_cast<uint8_t>(g);
+    B = static_cast<uint8_t>(b);
 }
 
 Camera::Camera()
@@ -155,13 +171,12 @@ QImage Camera::getLastImage()
             uint32_t* scanline = (uint32_t*)img.scanLine(i);
             for (int j=0; j < bpl; j++)
             {
-                int Y = yData[i*bpl + j];
-                int U = uData[i/2*cxbpl + j/2];
-                int V = vData[i/2*cxbpl + j/2];
+                uint8_t Y = yData[i*bpl + j];
+                uint8_t U = uData[i/2*cxbpl + j/2];
+                uint8_t V = vData[i/2*cxbpl + j/2];
 
-                uint8_t R = getR(Y,V);
-                uint8_t G = getG(Y,U,V);
-                uint8_t B = getB(Y,U);
+                uint8_t R, G, B;
+                fromYCbCrToRGB(Y, U, V, R, G, B);
 
                 scanline[j] = (0xFF<<24) + (R<<16) + (G<<8) + B;
             }
@@ -177,13 +192,12 @@ QImage Camera::getLastImage()
             uint32_t* scanline = (uint32_t*)img.scanLine(i);
             for (int j=0; j < bpl; j++)
             {
-                int Y = yData[i*bpl + j];
-                int U = uData[i/2*cxbpl + j/2];
-                int V = vData[i/2*cxbpl + j/2];
+                uint8_t Y = yData[i*bpl + j];
+                uint8_t U = uData[i/2*cxbpl + j/2];
+                uint8_t V = vData[i/2*cxbpl + j/2];
 
-                uint8_t R = getR(Y,V);
-                uint8_t G = getG(Y,U,V);
-                uint8_t B = getB(Y,U);
+                uint8_t R, G, B;
+                fromYCbCrToRGB(Y, U, V, R, G, B);
 
                 scanline[j] = (0xFF<<24) + (R<<16) + (G<<8) + B;
             }
@@ -203,7 +217,11 @@ vpx_image Camera::getLastVPXImage()
     vpx_image img;
     if (!lastFrame.isValid())
         return img;
-    lastFrame.map(QAbstractVideoBuffer::ReadOnly);
+    if (!lastFrame.map(QAbstractVideoBuffer::ReadOnly))
+    {
+        qWarning() << "Camera::getLastVPXImage: Error maping last frame";
+        return img;
+    }
     int w = lastFrame.width(), h = lastFrame.height();
     int bpl = lastFrame.bytesPerLine();
     vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched

@@ -83,6 +83,7 @@ void Settings::load()
     s.beginGroup("General");
         username = s.value("username", "My name").toString();
         statusMessage = s.value("statusMessage", "My status").toString();
+        enableIPv6 = s.value("enableIPv6", true).toBool();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -142,6 +143,7 @@ void Settings::save()
     s.beginGroup("General");
         s.setValue("username", username);
         s.setValue("statusMessage", statusMessage);
+        s.setValue("enableIPv6", enableIPv6);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -207,6 +209,16 @@ QString Settings::getStatusMessage() const
 void Settings::setStatusMessage(const QString& newMessage)
 {
     statusMessage = newMessage;
+}
+
+bool Settings::getEnableIPv6() const
+{
+    return enableIPv6;
+}
+
+void Settings::setEnableIPv6(bool newValue)
+{
+    enableIPv6 = newValue;
 }
 
 bool Settings::getEnableLogging() const
