@@ -108,7 +108,7 @@ private:
     bool resizeHorEsq;
     bool resizeDiagSupEsq;
     bool resizeDiagSupDer;
-    void mouseMoveEvent(QMouseEvent *e);
+    //void mouseMoveEvent(QMouseEvent *e);
     void mousePressEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void mouseDoubleClickEvent(QMouseEvent *e);

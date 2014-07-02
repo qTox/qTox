@@ -89,13 +89,6 @@ Widget::Widget(QWidget *parent) :
         setWindowFlags(Qt::CustomizeWindowHint);
         setWindowFlags(Qt::FramelessWindowHint);
         setAttribute(Qt::WA_DeleteOnClose);
-        setMouseTracking(true);
-        ui->titleBar->setMouseTracking(true);
-        ui->LTitle->setMouseTracking(true);
-        ui->tbMenu->setMouseTracking(true);
-        ui->pbMin->setMouseTracking(true);
-        ui->pbMax->setMouseTracking(true);
-        ui->pbClose->setMouseTracking(true);
 
         addAction(ui->actionClose);
 
@@ -153,6 +146,15 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    setMouseTracking(true);
+    ui->titleBar->setMouseTracking(true);
+    ui->LTitle->setMouseTracking(true);
+    ui->tbMenu->setMouseTracking(true);
+    ui->pbMin->setMouseTracking(true);
+    ui->pbMax->setMouseTracking(true);
+    ui->pbClose->setMouseTracking(true);
+    //ui->->setMouseTracking(true);
 
     camera = new Camera;
     camview = new SelfCamView(camera);
@@ -550,7 +552,6 @@ void Widget::copyFriendIdToClipboard(int friendId)
     {
         QClipboard *clipboard = QApplication::clipboard();
         clipboard->setText(f->userId, QClipboard::Clipboard);
-        clipboard->deleteLater();
     }
 }
 
@@ -695,78 +696,6 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
     return true;
 }
 
-
-
-void Widget::mouseMoveEvent(QMouseEvent *e)
-{
-    if (!useNativeTheme)
-    {
-        int xMouse = e->pos().x();
-        int yMouse = e->pos().y();
-        int wWidth = this->geometry().width();
-        int wHeight = this->geometry().height();
-
-        if (moveWidget)
-        {
-            inResizeZone = false;
-            moveWindow(e);
-        }
-        else if (allowToResize)
-            resizeWindow(e);
-        //right
-        else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-
-            if (yMouse >= wHeight - PIXELS_TO_ACT)
-                setCursor(Qt::SizeFDiagCursor);
-            else if (yMouse <= PIXELS_TO_ACT)
-                setCursor(Qt::SizeBDiagCursor);
-            else
-                setCursor(Qt::SizeHorCursor);
-
-            resizeWindow(e);
-        }
-        //left
-        else if (xMouse <= PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-
-            if (yMouse >= wHeight - PIXELS_TO_ACT)
-                setCursor(Qt::SizeBDiagCursor);
-            else if (yMouse <= PIXELS_TO_ACT)
-                setCursor(Qt::SizeFDiagCursor);
-            else
-                setCursor(Qt::SizeHorCursor);
-
-            resizeWindow(e);
-        }
-        //bottom edge
-        else if ((yMouse >= wHeight - PIXELS_TO_ACT) or allowToResize)
-        {
-            inResizeZone = true;
-            setCursor(Qt::SizeVerCursor);
-
-            resizeWindow(e);
-        }
-        //Cursor part top
-        else if (yMouse <= PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-            setCursor(Qt::SizeVerCursor);
-
-            resizeWindow(e);
-        }
-        else
-        {
-            inResizeZone = false;
-            setCursor(Qt::ArrowCursor);
-        }
-
-        e->accept();
-    }
-}
-
 bool Widget::event(QEvent * e)
 {
     if (e->type() == QEvent::WindowStateChange)
@@ -802,6 +731,73 @@ bool Widget::event(QEvent * e)
     {
         this->setObjectName("inactiveWindow");
         this->style()->polish(this);
+    }
+    else if (e->type() == QEvent::MouseMove && !useNativeTheme)
+    {
+        QMouseEvent *k = (QMouseEvent *)e;
+        int xMouse = k->pos().x();
+        int yMouse = k->pos().y();
+        int wWidth = this->geometry().width();
+        int wHeight = this->geometry().height();
+
+        if (moveWidget)
+        {
+            inResizeZone = false;
+            moveWindow(k);
+        }
+        else if (allowToResize)
+            resizeWindow(k);
+        //right
+        else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+
+            if (yMouse >= wHeight - PIXELS_TO_ACT)
+                setCursor(Qt::SizeFDiagCursor);
+            else if (yMouse <= PIXELS_TO_ACT)
+                setCursor(Qt::SizeBDiagCursor);
+            else
+                setCursor(Qt::SizeHorCursor);
+
+            resizeWindow(k);
+        }
+        //left
+        else if (xMouse <= PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+
+            if (yMouse >= wHeight - PIXELS_TO_ACT)
+                setCursor(Qt::SizeBDiagCursor);
+            else if (yMouse <= PIXELS_TO_ACT)
+                setCursor(Qt::SizeFDiagCursor);
+            else
+                setCursor(Qt::SizeHorCursor);
+
+            resizeWindow(k);
+        }
+        //bottom edge
+        else if ((yMouse >= wHeight - PIXELS_TO_ACT) or allowToResize)
+        {
+            inResizeZone = true;
+            setCursor(Qt::SizeVerCursor);
+
+            resizeWindow(k);
+        }
+        //Cursor part top
+        else if (yMouse <= PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+            setCursor(Qt::SizeVerCursor);
+
+            resizeWindow(k);
+        }
+        else
+        {
+            inResizeZone = false;
+            setCursor(Qt::ArrowCursor);
+        }
+
+        e->accept();
     }
 
     return QWidget::event(e);
