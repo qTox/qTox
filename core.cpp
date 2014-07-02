@@ -34,8 +34,8 @@ QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 
-Core::Core() :
-    tox(nullptr)
+Core::Core(Camera* cam) :
+    tox(nullptr), camera(cam)
 {
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -63,7 +63,13 @@ Core::~Core()
 
 void Core::start()
 {
-    tox = tox_new(1);
+    // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be disabled in options.
+    bool enableIPv6 = Settings::getInstance().getEnableIPv6();
+    if (enableIPv6)
+        qDebug() << "Core starting with IPv6 enabled";
+    else
+        qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
+    tox = tox_new(enableIPv6);
     if (tox == nullptr)
     {
         qCritical() << "Tox core failed to start";
@@ -113,12 +119,6 @@ void Core::start()
 
     emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
 
-    CString cUsername(Settings::getInstance().getUsername());
-    tox_set_name(tox, cUsername.data(), cUsername.size());
-
-    CString cStatusMessage(Settings::getInstance().getStatusMessage());
-    tox_set_status_message(tox, cStatusMessage.data(), cStatusMessage.size());
-
     bootstrapDht();
 
     toxTimer->start(tox_do_interval(tox));
@@ -126,6 +126,8 @@ void Core::start()
 
 void Core::onBootstrapTimer()
 {
+    if (!tox)
+        return;
     if(!tox_isconnected(tox))
         bootstrapDht();
 }
@@ -606,7 +608,7 @@ void Core::bootstrapDht()
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
             0, qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
             qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
-                        +QString(", port ")+QString().setNum(qToBigEndian(dhtServer.port));
+                        +QString(", port ")+QString().setNum(dhtServer.port);
         else
             qDebug() << "Core: Error bootstraping from "+dhtServer.name;
 
@@ -672,6 +674,12 @@ void Core::loadConfiguration()
 
 void Core::saveConfiguration()
 {
+    if (!tox)
+    {
+        qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
+        return;
+    }
+
     QString path = Settings::getSettingsDirPath();
 
     QDir directory(path);
@@ -882,7 +890,7 @@ void Core::onAvInvite(int32_t call_index, void* core)
         return;
     }
 
-    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, friendId);
+    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, 0);
     if (transType == TypeVideo)
     {
         qDebug() << QString("Core: AV invite from %1 with video").arg(friendId);
@@ -904,7 +912,7 @@ void Core::onAvStart(int32_t call_index, void* core)
         return;
     }
 
-    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, friendId);
+    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, 0);
     if (transType == TypeVideo)
     {
         qDebug() << QString("Core: AV start from %1 with video").arg(friendId);
@@ -932,7 +940,7 @@ void Core::onAvCancel(int32_t call_index, void* core)
     emit static_cast<Core*>(core)->avCancel(friendId, call_index);
 }
 
-void Core::onAvReject(int32_t call_index, void* core)
+void Core::onAvReject(int32_t, void*)
 {
     qDebug() << "Core: AV reject";
 }
@@ -981,7 +989,7 @@ void Core::onAvStarting(int32_t call_index, void* core)
         qWarning() << "Core: Received invalid AV starting";
         return;
     }
-    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, friendId);
+    int transType = toxav_get_peer_transmission_type(static_cast<Core*>(core)->toxav, call_index, 0);
     if (transType == TypeVideo)
     {
         qDebug() << QString("Core: AV starting from %1 with video").arg(friendId);
@@ -1011,7 +1019,7 @@ void Core::onAvEnding(int32_t call_index, void* core)
     emit static_cast<Core*>(core)->avEnding(friendId, call_index);
 }
 
-void Core::onAvError(int32_t call_index, void* core)
+void Core::onAvError(int32_t, void*)
 {
     qDebug() << "Core: AV error";
 }
@@ -1026,6 +1034,8 @@ void Core::onAvRequestTimeout(int32_t call_index, void* core)
     }
     qDebug() << QString("Core: AV request timeout with %1").arg(friendId);
 
+    cleanupCall(call_index);
+
     emit static_cast<Core*>(core)->avRequestTimeout(friendId, call_index);
 }
 
@@ -1039,6 +1049,8 @@ void Core::onAvPeerTimeout(int32_t call_index, void* core)
     }
     qDebug() << QString("Core: AV peer timeout with %1").arg(friendId);
 
+    cleanupCall(call_index);
+
     emit static_cast<Core*>(core)->avPeerTimeout(friendId, call_index);
 }
 
@@ -1050,7 +1062,7 @@ void Core::answerCall(int callId)
         qWarning() << "Core: Received invalid AV answer peer ID";
         return;
     }
-    int transType = toxav_get_peer_transmission_type(toxav, callId, friendId);
+    int transType = toxav_get_peer_transmission_type(toxav, callId, 0);
     if (transType == TypeVideo)
     {
         qDebug() << QString("Core: answering call %1 with video").arg(callId);
@@ -1142,6 +1154,8 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     }
 
     // Go
+    calls[callId].active = true;
+
     if (calls[callId].audioOutput != nullptr)
     {
         calls[callId].playAudioTimer.setInterval(5);
@@ -1158,33 +1172,48 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         calls[callId].sendAudioTimer.start();
     }
 
-    calls[callId].playVideoTimer.setInterval(50);
-    calls[callId].playVideoTimer.setSingleShot(true);
-    connect(&calls[callId].playVideoTimer, &QTimer::timeout, [=](){
-        Widget::getInstance()->getCore()->playCallVideo(callId);});
-    calls[callId].playVideoTimer.start();
+    if (calls[callId].videoEnabled)
+    {
+        calls[callId].playVideoTimer.setInterval(50);
+        calls[callId].playVideoTimer.setSingleShot(true);
+        connect(&calls[callId].playVideoTimer, &QTimer::timeout, [=](){
+            Widget::getInstance()->getCore()->playCallVideo(callId);});
+        calls[callId].playVideoTimer.start();
 
-    calls[callId].active = true;
+        calls[callId].sendVideoTimer.setInterval(50);
+        calls[callId].sendVideoTimer.setSingleShot(true);
+        connect(&calls[callId].sendVideoTimer, &QTimer::timeout, [=](){
+            Widget::getInstance()->getCore()->sendCallVideo(callId);});
+        calls[callId].sendVideoTimer.start();
+
+        Widget::getInstance()->getCamera()->suscribe();
+    }
 }
 
 void Core::cleanupCall(int callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
     calls[callId].active = false;
+    disconnect(&calls[callId].playAudioTimer,0,0,0);
+    disconnect(&calls[callId].sendAudioTimer,0,0,0);
+    disconnect(&calls[callId].playVideoTimer,0,0,0);
+    disconnect(&calls[callId].sendVideoTimer,0,0,0);
+    calls[callId].playAudioTimer.stop();
+    calls[callId].sendAudioTimer.stop();
+    calls[callId].playVideoTimer.stop();
+    calls[callId].sendVideoTimer.stop();
     if (calls[callId].audioOutput != nullptr)
     {
         delete calls[callId].audioOutput;
         calls[callId].audioOutput = nullptr;
-        disconnect(&calls[callId].playAudioTimer,0,0,0);
     }
     if (calls[callId].audioInput != nullptr)
     {
         delete calls[callId].audioInput;
         calls[callId].audioInput = nullptr;
-        disconnect(&calls[callId].sendAudioTimer,0,0,0);
     }
-    disconnect(&calls[callId].playVideoTimer,0,0,0);
-    disconnect(&calls[callId].sendVideoTimer,0,0,0);
+    if (calls[callId].videoEnabled)
+        Widget::getInstance()->getCamera()->unsuscribe();
     calls[callId].audioBuffer.clear();
 }
 
@@ -1208,13 +1237,12 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
     }
     if (len == 0)
     {
-        if (calls[callId].audioBuffer.bufferSize() >= framesize*2)
-            calls[callId].playAudioTimer.start();
+        calls[callId].playAudioTimer.start();
         return;
     }
     //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
     //            .arg(len*2).arg(calls[callId].audioOutput->bytesFree()).arg(calls[callId].audioBuffer.bufferSize());
-    calls[callId].audioBuffer.writeData((char*)buf, len*2);
+    calls[callId].audioBuffer.write((char*)buf, len*2);
     int state = calls[callId].audioOutput->state();
     if (state != QAudio::ActiveState)
     {
@@ -1225,7 +1253,6 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
     int error = calls[callId].audioOutput->error();
     if (error != QAudio::NoError)
         qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
-
 
     calls[callId].playAudioTimer.start();
 }
@@ -1254,7 +1281,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
             calls[callId].sendAudioTimer.start();
             return;
         }
-        calls[callId].sendAudioTimer.start(0);
+        calls[callId].sendAudioTimer.start();
     }
     else
         calls[callId].sendAudioTimer.start();
@@ -1268,7 +1295,13 @@ void Core::playCallVideo(int callId)
     if(toxav_recv_video(toxav, callId, &image) == 0)
     {
         if (image)
+        {
             emit videoFrameReceived(*image);
+        }
+        else
+        {
+            //qDebug() << "Core: Received null video frame\n";
+        }
     }
     else
         qDebug() << "Core: Error receiving video frame\n";
@@ -1276,19 +1309,32 @@ void Core::playCallVideo(int callId)
     calls[callId].playVideoTimer.start();
 }
 
-
-void Core::sendVideoFrame(int callId, ToxAv* toxav, vpx_image img)
+void Core::sendCallVideo(int callId)
 {
-    uint8_t videobuf[TOXAV_VIDEO_WIDTH * TOXAV_VIDEO_HEIGHT * 4];
-    int result;
-    if((result = toxav_prepare_video_frame(toxav, callId, videobuf, sizeof(videobuf), &img)) < 0)
-    {
-        qDebug() << QString("Core: Error preparing video frame: %1").arg(result);
+    if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
-    }
 
-    if((result = toxav_send_video(toxav, callId, videobuf, result)) < 0)
-        qDebug() << QString("Core: Error sending video frame: %1").arg(result);
+    const int bufsize = TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4;
+    uint8_t videobuf[bufsize];
+    vpx_image frame = camera->getLastVPXImage();
+    if (frame.w && frame.h)
+    {
+        int result;
+        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, bufsize, &frame)) < 0)
+        {
+            qDebug() << QString("Core: toxav_prepare_video_frame: error %1").arg(result);
+            calls[callId].sendVideoTimer.start();
+            return;
+        }
+
+        if((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
+            qDebug() << QString("Core: toxav_send_video error: %1").arg(result);
+
+    }
+    else
+        qDebug("Core::sendCallVideo: Invalid frame (bad camera ?)");
+
+    calls[callId].sendVideoTimer.start();
 }
 
 void Core::groupInviteFriend(int friendId, int groupId)
@@ -1299,15 +1345,4 @@ void Core::groupInviteFriend(int friendId, int groupId)
 void Core::createGroup()
 {
     emit emptyGroupCreated(tox_add_groupchat(tox));
-}
-
-void Core::dispatchVideoFrame(vpx_image img) const
-{
-    for (int i=0; i<TOXAV_MAX_CALLS; i++)
-    {
-        if (calls[i].active && calls[i].videoEnabled)
-        {
-            sendVideoFrame(i, toxav, img);
-        }
-    }
 }

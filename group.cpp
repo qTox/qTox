@@ -90,6 +90,7 @@ void Group::addPeer(int peerId, QString name)
 void Group::removePeer(int peerId)
 {
     peers.remove(peerId);
+    nPeers--;
     widget->onUserListChanged();
     chatForm->onUserListChanged();
 }

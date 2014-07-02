@@ -1,7 +1,7 @@
 QPushButton
 {
     background-color: transparent;
-    background-image: url("ui/sendButton/sendButton.png");
+    background-image: url(":/ui/sendButton/sendButton.png");
     background-repeat: none;    
     border: none;
     width: 50px;
@@ -9,12 +9,12 @@ QPushButton
 }
 QPushButton:hover
 {
-   background-image: url("ui/sendButton/sendButtonHover.png");
+   background-image: url(":/ui/sendButton/sendButtonHover.png");
 }
 
 QPushButton:pressed
 {
-   background-image: url("ui/sendButton/sendButtonPressed.png");
+   background-image: url(":/ui/sendButton/sendButtonPressed.png");
 }
 
 QPushButton:focus {

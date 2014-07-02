@@ -17,7 +17,6 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "status.h"
 #include "audiobuffer.h"
 
 #include <tox/tox.h>
@@ -43,8 +42,14 @@
 #define TOXAV_RINGING_TIME 15
 
 // TODO: Put that in the settings
+#define TOXAV_MAX_VIDEO_WIDTH 1600
+#define TOXAV_MAX_VIDEO_HEIGHT 1200
 #define TOXAV_VIDEO_WIDTH 640
 #define TOXAV_VIDEO_HEIGHT 480
+
+class Camera;
+
+enum class Status : int {Online = 0, Away, Busy, Offline};
 
 struct DhtServer
 {
@@ -104,7 +109,7 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    explicit Core();
+    explicit Core(Camera* cam);
     ~Core();
 
     int getGroupNumberPeers(int groupId) const;
@@ -127,9 +132,9 @@ public slots:
     void removeFriend(int friendId);
     void removeGroup(int groupId);
 
+    void setStatus(Status status);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
-    void setStatus(Status status);
 
     void sendMessage(int friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
@@ -250,7 +255,7 @@ private:
     static void playCallAudio(int callId, ToxAv* toxav);
     static void sendCallAudio(int callId, ToxAv* toxav); // Blocking, start in a thread
     void playCallVideo(int callId);
-    static void sendVideoFrame(int callId, ToxAv* toxav, vpx_image img);
+    void sendCallVideo(int callId);
 
     void checkConnection();
     void onBootstrapTimer();
@@ -268,6 +273,7 @@ private:
     Tox* tox;
     ToxAv* toxav;
     QTimer *toxTimer, *saveTimer, *fileTimer, *bootstrapTimer;
+    Camera* camera;
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;

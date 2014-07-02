@@ -7,7 +7,7 @@
 
 #define RETRY_PEER_INFO_INTERVAL 500
 
-class Friend;
+struct Friend;
 class GroupWidget;
 class GroupChatForm;
 

@@ -11,7 +11,7 @@
 
 #include "core.h"
 
-class ToxFile;
+struct ToxFile;
 
 class FileTransfertWidget : public QWidget
 {

@@ -49,6 +49,9 @@ public:
     QString getStatusMessage() const;
     void setStatusMessage(const QString& newMessage);
 
+    bool getEnableIPv6() const;
+    void setEnableIPv6(bool newValue);
+
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
 
@@ -129,6 +132,8 @@ private:
 
     QString username;
     QString statusMessage;
+
+    bool enableIPv6;
 
     bool enableLogging;
     bool encryptLogs;

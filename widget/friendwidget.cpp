@@ -9,6 +9,7 @@
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
 {
+    this->setMouseTracking(true);
     this->setAutoFillBackground(true);
     this->setLayout(&layout);
     this->setFixedWidth(225);
@@ -18,16 +19,22 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     textLayout.setSpacing(0);
     textLayout.setMargin(0);
 
-    avatar.setPixmap(QPixmap("img/contact list icons/contact.png"));
+    avatar.setPixmap(QPixmap(":img/contact.png"));
     name.setText(id);
     //statusPic.setAlignment(Qt::AlignHCenter);
-    statusPic.setPixmap(QPixmap("img/status/dot_away.png"));
+    statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     QFont small;
     small.setPixelSize(10);
     statusMessage.setFont(small);
     QPalette pal;
     pal.setColor(QPalette::WindowText,Qt::gray);
     statusMessage.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::white);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
+    this->setPalette(pal3);
 
     textLayout.addStretch();
     textLayout.addWidget(&name);
@@ -55,7 +62,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    menu.addAction("Remove friend");
+    menu.addAction("Copy friend ID");
     QMenu* inviteMenu = menu.addMenu("Invite in group");
     QMap<QAction*, Group*> groupActions;
     for (Group* group : GroupList::groupList)
@@ -65,11 +72,18 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     }
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
+    menu.addSeparator();
+    menu.addAction("Remove friend");
 
     QAction* selectedItem = menu.exec(pos);
     if (selectedItem)
     {
-        if (selectedItem->text() == "Remove friend")
+        if (selectedItem->text() == "Copy friend ID")
+        {
+            emit copyFriendIdToClipboard(friendId);
+            return;
+        }
+        else if (selectedItem->text() == "Remove friend")
         {
             hide();
             emit removeFriend(friendId);
@@ -140,7 +154,7 @@ void FriendWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/contact list icons/contact_dark.png"));
+    avatar.setPixmap(QPixmap(":img/contact_dark.png"));
 }
 
 void FriendWidget::setAsInactiveChatroom()
@@ -159,5 +173,5 @@ void FriendWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/contact list icons/contact.png"));
+    avatar.setPixmap(QPixmap(":img/contact.png"));
 }

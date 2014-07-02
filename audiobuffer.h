@@ -3,6 +3,7 @@
 
 #include <QIODevice>
 #include <QByteArray>
+#include <QMutex>
 
 class AudioBuffer : public QIODevice
 {
@@ -19,6 +20,7 @@ public:
 
 private:
     QByteArray buffer;
+    mutable QMutex bufferMutex;
 };
 
 #endif // AUDIOBUFFER_H

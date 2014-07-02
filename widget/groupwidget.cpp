@@ -8,6 +8,7 @@
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
+    this->setMouseTracking(true);
     this->setAutoFillBackground(true);
     this->setLayout(&layout);
     this->setFixedWidth(225);
@@ -17,8 +18,8 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     textLayout.setSpacing(0);
     textLayout.setMargin(0);
 
-    avatar.setPixmap(QPixmap("img/contact list icons/group_2x.png"));
-    statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
+    avatar.setPixmap(QPixmap(":img/group.png"));
+    statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
     name.setText(Name);
     QFont small;
     small.setPixelSize(10);
@@ -26,6 +27,12 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     QPalette pal;
     pal.setColor(QPalette::WindowText,Qt::gray);
     nusers.setPalette(pal);
+    QPalette pal2;
+    pal2.setColor(QPalette::WindowText,Qt::white);
+    name.setPalette(pal2);
+    QPalette pal3;
+    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
+    this->setPalette(pal3);
     Group* g = GroupList::findGroup(groupId);
     if (g)
         nusers.setText(QString("%1 users in chat").arg(g->peers.size()));
@@ -137,7 +144,7 @@ void GroupWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/contact list icons/group_dark.png"));
+    avatar.setPixmap(QPixmap(":img/group_dark.png"));
 }
 
 void GroupWidget::setAsInactiveChatroom()
@@ -156,5 +163,5 @@ void GroupWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/contact list icons/group_2x.png"));
+    avatar.setPixmap(QPixmap("img/group.png"));
 }

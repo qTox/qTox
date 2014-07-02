@@ -16,7 +16,7 @@ SelfCamView::SelfCamView(Camera* Cam, QWidget* parent)
     setWindowTitle("Tox video test");
     setMinimumSize(320,240);
 
-    updateDisplayTimer.setInterval(75);
+    updateDisplayTimer.setInterval(5);
     updateDisplayTimer.setSingleShot(false);
 
     displayLabel->setScaledContents(true);

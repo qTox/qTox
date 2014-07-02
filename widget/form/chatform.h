@@ -19,7 +19,7 @@
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5
 
-class Friend;
+struct Friend;
 
 class ChatForm : public QObject
 {

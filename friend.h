@@ -3,9 +3,8 @@
 
 #include <QString>
 #include "widget/form/chatform.h"
-#include "status.h"
 
-class FriendWidget;
+struct FriendWidget;
 
 struct Friend
 {

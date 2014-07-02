@@ -1,5 +1,6 @@
 #include "settingsform.h"
 #include "widget/widget.h"
+#include "settings.h"
 #include <QFont>
 
 SettingsForm::SettingsForm()
@@ -19,6 +20,8 @@ SettingsForm::SettingsForm()
     id.setTextInteractionFlags(Qt::TextSelectableByMouse);
 
     videoTest.setText("Test video");
+    enableIPv6.setText("Enable IPv6 (recommended)");
+    enableIPv6.setChecked(Settings::getInstance().getEnableIPv6());
 
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);
@@ -28,12 +31,14 @@ SettingsForm::SettingsForm()
     layout.addWidget(&idLabel);
     layout.addWidget(&id);
     layout.addWidget(&videoTest);
+    layout.addWidget(&enableIPv6);
     layout.addStretch();
 
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
 
     connect(&videoTest, SIGNAL(clicked()), this, SLOT(onTestVideoClicked()));
+    connect(&enableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
 }
 
 SettingsForm::~SettingsForm()
@@ -58,4 +63,9 @@ void SettingsForm::show(Ui::Widget &ui)
 void SettingsForm::onTestVideoClicked()
 {
      Widget::getInstance()->showTestCamview();
+}
+
+void SettingsForm::onEnableIPv6Updated()
+{
+    Settings::getInstance().setEnableIPv6(enableIPv6.isChecked());
 }

@@ -3,7 +3,7 @@
 AudioBuffer::AudioBuffer() :
     QIODevice(0)
 {
-    open(QIODevice::ReadOnly);
+    open(QIODevice::ReadWrite);
 }
 
 AudioBuffer::~AudioBuffer()
@@ -13,29 +13,56 @@ AudioBuffer::~AudioBuffer()
 
 qint64 AudioBuffer::readData(char *data, qint64 len)
 {
-    const qint64 total = qMin((qint64)buffer.size(), len);
-    memcpy(data, buffer.constData(), total);
-    buffer = buffer.mid(total);
+    qint64 total;
+    bufferMutex.lock();
+    try {
+        total = qMin((qint64)buffer.size(), len);
+        memcpy(data, buffer.constData(), total);
+        buffer = buffer.mid(total);
+    }
+    catch (...)
+    {
+        bufferMutex.unlock();
+        return 0;
+    }
+    bufferMutex.unlock();
     return total;
 }
 
 qint64 AudioBuffer::writeData(const char* data, qint64 len)
 {
-    buffer.append(data, len);
-    return 0;
+    bufferMutex.lock();
+    try {
+        buffer.append(data, len);
+    }
+    catch (...)
+    {
+        bufferMutex.unlock();
+        return 0;
+    }
+    bufferMutex.unlock();
+    return len;
 }
 
 qint64 AudioBuffer::bytesAvailable() const
 {
-    return buffer.size() + QIODevice::bytesAvailable();
+    bufferMutex.lock();
+    long long size = buffer.size() + QIODevice::bytesAvailable();
+    bufferMutex.unlock();
+    return size;
 }
 
 qint64 AudioBuffer::bufferSize() const
 {
-    return buffer.size();
+    bufferMutex.lock();
+    long long size = buffer.size();
+    bufferMutex.unlock();
+    return size;
 }
 
 void AudioBuffer::clear()
 {
+    bufferMutex.lock();
     buffer.clear();
+    bufferMutex.unlock();
 }

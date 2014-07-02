@@ -1,7 +1,7 @@
 QPushButton
 {
     background-color: transparent;
-    background-image: url("ui/stopFileButton/default.png");
+    background-image: url(":/ui/stopFileButton/default.png");
     background-repeat: none;    
     border: none;
     width: 24px;
@@ -9,12 +9,12 @@ QPushButton
 }
 QPushButton:hover
 {
-   background-image: url("ui/stopFileButton/hover.png");
+   background-image: url(":/ui/stopFileButton/hover.png");
 }
 
 QPushButton:pressed
 {
-   background-image: url("ui/stopFileButton/pressed.png");
+   background-image: url(":/ui/stopFileButton/pressed.png");
 }
 
 QPushButton:focus {

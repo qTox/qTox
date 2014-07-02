@@ -21,7 +21,7 @@ bool VideoSurface::start(const QVideoSurfaceFormat &format)
     }
 }
 
-bool VideoSurface::present(const QVideoFrame &frame)
+bool VideoSurface::present(const QVideoFrame&)
 {
     /*
     mFrame = frame;

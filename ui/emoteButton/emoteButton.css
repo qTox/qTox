@@ -1,7 +1,7 @@
 QPushButton
 {
     background-color: transparent;
-    background-image: url("ui/emoteButton/emoteButton.png");
+    background-image: url(":/ui/emoteButton/emoteButton.png");
     background-repeat: none;    
     border: none;
     width: 24px;
@@ -9,12 +9,12 @@ QPushButton
 }
 QPushButton:hover
 {
-   background-image: url("ui/emoteButton/emoteButtonHover.png");
+   background-image: url(":/ui/emoteButton/emoteButtonHover.png");
 }
 
 QPushButton:pressed
 {
-   background-image: url("ui/emoteButton/emoteButtonPressed.png");
+   background-image: url(":/ui/emoteButton/emoteButtonPressed.png");
 }
 
 QPushButton:focus {
