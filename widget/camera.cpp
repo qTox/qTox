@@ -217,7 +217,11 @@ vpx_image Camera::getLastVPXImage()
     vpx_image img;
     if (!lastFrame.isValid())
         return img;
-    lastFrame.map(QAbstractVideoBuffer::ReadOnly);
+    if (!lastFrame.map(QAbstractVideoBuffer::ReadOnly))
+    {
+        qWarning() << "Camera::getLastVPXImage: Error maping last frame";
+        return img;
+    }
     int w = lastFrame.width(), h = lastFrame.height();
     int bpl = lastFrame.bytesPerLine();
     vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched
