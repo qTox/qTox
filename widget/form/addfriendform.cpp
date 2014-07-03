@@ -12,12 +12,12 @@ AddFriendForm::AddFriendForm() : dns(this)
     main = new QWidget(), head = new QWidget();
     QFont bold;
     bold.setBold(true);
-    headLabel.setText("Add Friends");
+    headLabel.setText(tr("Add Friends"));
     headLabel.setFont(bold);
 
-    toxIdLabel.setText("Tox ID");
-    messageLabel.setText("Message");
-    sendButton.setText("Send friend request");
+    toxIdLabel.setText(tr("Tox ID","Tox ID of the person you're sending a friend request to"));
+    messageLabel.setText(tr("Message","The message you send in friend requests"));
+    sendButton.setText(tr("Send friend request"));
 
     main->setLayout(&layout);
     layout.addWidget(&toxIdLabel);
@@ -64,7 +64,7 @@ void AddFriendForm::showWarning(const QString &message) const
 QString AddFriendForm::getMessage() const
 {
     const QString msg = message.toPlainText();
-    return !msg.isEmpty() ? msg : "Tox me maybe?";
+    return !msg.isEmpty() ? msg : tr("Tox me maybe?","Default message in friend requests if the field is left blank. Write something appropriate!");
 }
 
 void AddFriendForm::onSendTriggered()
@@ -72,7 +72,7 @@ void AddFriendForm::onSendTriggered()
     QString id = toxId.text().trimmed();
 
     if (id.isEmpty()) {
-        showWarning("Please fill in a valid Tox ID");
+        showWarning(tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
     } else if (isToxId(id)) {
         emit friendRequested(id, getMessage());
     } else {
@@ -87,38 +87,38 @@ void AddFriendForm::handleDnsLookup()
     const QString idKeyWord("id=");
 
     if (dns.error() != QDnsLookup::NoError) {
-        showWarning("Error while looking up DNS");
+        showWarning(tr("Error while looking up DNS","The DNS gives the Tox ID associated to toxme.se addresses"));
         return;
     }
 
     const QList<QDnsTextRecord> textRecords = dns.textRecords();
     if (textRecords.length() != 1) {
-        showWarning("Unexpected number of text records");
+        showWarning(tr("Unexpected number of text records", "Error with the DNS"));
         return;
     }
 
     const QList<QByteArray> textRecordValues = textRecords.first().values();
     if (textRecordValues.length() != 1) {
-        showWarning("Unexpected number of values in text record");
+        showWarning(tr("Unexpected number of values in text record", "Error with the DNS"));
         return;
     }
 
     const QString entry(textRecordValues.first());
     int idx = entry.indexOf(idKeyWord);
     if (idx < 0) {
-        showWarning("The DNS lookup does not contain any Tox ID");
+        showWarning(tr("The DNS lookup does not contain any Tox ID", "Error with the DNS"));
         return;
     }
 
     idx += idKeyWord.length();
     if (entry.length() < idx + static_cast<int>(TOX_ID_SIZE)) {
-        showWarning("The DNS lookup does not contain a valid Tox ID");
+        showWarning(tr("The DNS lookup does not contain a valid Tox ID", "Error with the DNS"));
         return;
     }
 
     const QString friendAdress = entry.mid(idx, TOX_ID_SIZE);
     if (!isToxId(friendAdress)) {
-        showWarning("The DNS lookup does not contain a valid Tox ID");
+        showWarning(tr("The DNS lookup does not contain a valid Tox ID", "Error with the DNS"));
         return;
     }
 

@@ -200,6 +200,7 @@ Widget::Widget(QWidget *parent) :
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
+    connect(ui->statImg, SIGNAL(clicked()), this, SLOT(onStatusImgClicked()));
     connect(&settingsForm.name, SIGNAL(textChanged(QString)), this, SLOT(onUsernameChanged(QString)));
     connect(&settingsForm.statusText, SIGNAL(textChanged(QString)), this, SLOT(onStatusMessageChanged(QString)));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -276,8 +277,10 @@ void Widget::onStatusSet(Status status)
 {
     if (status == Status::Online)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_online_2x.png"));
-    else if (status == Status::Busy || status == Status::Away)
+    else if (status == Status::Away)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_idle_2x.png"));
+    else if (status == Status::Busy)
+        ui->statImg->setPixmap(QPixmap(":img/status/dot_busy_2x.png"));
     else if (status == Status::Offline)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_away_2x.png"));
 }
@@ -507,10 +510,14 @@ void Widget::updateFriendStatusLights(int friendId)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     else if (status == Status::Online && f->hasNewMessages == 1)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-    else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 0)
+    else if (status == Status::Away && f->hasNewMessages == 0)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
-    else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 1)
+    else if (status == Status::Away && f->hasNewMessages == 1)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
+    else if (status == Status::Busy && f->hasNewMessages == 0)
+        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
+    else if (status == Status::Busy && f->hasNewMessages == 1)
+        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
     else if (status == Status::Offline && f->hasNewMessages == 0)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     else if (status == Status::Offline && f->hasNewMessages == 1)
@@ -554,7 +561,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, uint8_t* publicKey)
+void Widget::onGroupInviteReceived(int32_t friendId, const uint8_t* publicKey)
 {
     int groupId = core->joinGroupchat(friendId, publicKey);
     if (groupId == -1)
@@ -1099,3 +1106,22 @@ void Widget::minimizeBtnClicked()
     }
 }
 
+void Widget::onStatusImgClicked()
+{
+    QMenu menu;
+    menu.addAction(tr("Online","Button to set your status to 'Online'"));
+    menu.addAction(tr("Away","Button to set your status to 'Away'"));
+    menu.addAction(tr("Busy","Button to set your status to 'Busy'"));
+
+    QPoint pos = QCursor::pos();
+    QAction* selectedItem = menu.exec(pos);
+    if (selectedItem)
+    {
+        if (selectedItem->text() == "Online")
+            core->setStatus(Status::Online);
+        else if (selectedItem->text() == "Away")
+            core->setStatus(Status::Away);
+        else if (selectedItem->text() == "Busy")
+            core->setStatus(Status::Busy);
+    }
+}

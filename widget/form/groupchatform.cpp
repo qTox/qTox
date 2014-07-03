@@ -29,7 +29,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     name->setText(group->widget->name.text());
     name->setFont(bold);
     nusers->setFont(small);
-    nusers->setText(QString("%1 users in chat").arg(group->peers.size()));
+    nusers->setText(tr("%1 users in chat").arg(group->peers.size()));
     avatar->setPixmap(QPixmap(":/img/group.png"));
     QString names;
     for (QString& s : group->peers)
@@ -152,7 +152,7 @@ void GroupChatForm::addGroupMessage(QString message, int peerId)
     if (group->peers.contains(peerId))
         msgAuthor = new QLabel(group->peers[peerId]);
     else
-        msgAuthor = new QLabel("<Unknown>");
+        msgAuthor = new QLabel(tr("<Unknown>"));
 
     QLabel *msgText = new QLabel(message);
     QLabel *msgDate = new QLabel(QTime::currentTime().toString("hh:mm"));
@@ -217,7 +217,7 @@ void GroupChatForm::onSliderRangeChanged()
 
 void GroupChatForm::onUserListChanged()
 {
-    nusers->setText(QString("%1 users in chat").arg(group->nPeers));
+    nusers->setText(tr("%1 users in chat").arg(group->nPeers));
     QString names;
     for (QString& s : group->peers)
         names.append(s+", ");
@@ -236,7 +236,7 @@ void GroupChatForm::onChatContextMenuRequested(QPoint pos)
 
 void GroupChatForm::onSaveLogClicked()
 {
-    QString path = QFileDialog::getSaveFileName(0,"Save chat log");
+    QString path = QFileDialog::getSaveFileName(0,tr("Save chat log"));
     if (path.isEmpty())
         return;
 
