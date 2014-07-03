@@ -277,8 +277,10 @@ void Widget::onStatusSet(Status status)
 {
     if (status == Status::Online)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_online_2x.png"));
-    else if (status == Status::Busy || status == Status::Away)
+    else if (status == Status::Away)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_idle_2x.png"));
+    else if (status == Status::Busy)
+        ui->statImg->setPixmap(QPixmap(":img/status/dot_busy_2x.png"));
     else if (status == Status::Offline)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_away_2x.png"));
 }
@@ -508,10 +510,14 @@ void Widget::updateFriendStatusLights(int friendId)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     else if (status == Status::Online && f->hasNewMessages == 1)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-    else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 0)
+    else if (status == Status::Away && f->hasNewMessages == 0)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
-    else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 1)
+    else if (status == Status::Away && f->hasNewMessages == 1)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
+    else if (status == Status::Busy && f->hasNewMessages == 0)
+        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
+    else if (status == Status::Busy && f->hasNewMessages == 1)
+        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
     else if (status == Status::Offline && f->hasNewMessages == 0)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     else if (status == Status::Offline && f->hasNewMessages == 1)
