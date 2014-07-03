@@ -149,7 +149,7 @@ void GroupWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap(":img/group.png"));
+    avatar.setPixmap(QPixmap(":img/group_dark.png"));
 }
 
 void GroupWidget::setAsInactiveChatroom()
@@ -168,5 +168,5 @@ void GroupWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/group.png"));
+    avatar.setPixmap(QPixmap(":img/group.png"));
 }

@@ -11,16 +11,12 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 {
     this->setMouseTracking(true);
     this->setAutoFillBackground(true);
-    //this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
-    //this->setMinimumWidth(225);
     this->setFixedWidth(225);
     this->setFixedHeight(55);
     this->setLayout(&layout);
-    //layout.setSpacing(0);
+    layout.setSpacing(0);
     layout.setMargin(0);
     layout.setStretchFactor(this, 100);
-    //this->setFixedWidth(225);
-    //this->setMaximumWidth();
     textLayout.setSpacing(0);
     textLayout.setMargin(0);
 
