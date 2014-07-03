@@ -88,6 +88,7 @@ private slots:
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
+    void onStatusImgClicked();
 
 protected slots:
     void moveWindow(QMouseEvent *e);
