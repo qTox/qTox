@@ -44,6 +44,7 @@ public:
     void updateFriendStatusLights(int friendId);
     int useNativeTheme;
     ~Widget();
+    void updateFriendListWidth();
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -88,6 +89,7 @@ private slots:
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
+    void splitterMoved(int pos, int index);
 
 protected slots:
     void moveWindow(QMouseEvent *e);
@@ -98,7 +100,7 @@ private:
 
 private:
     Ui::Widget *ui;
-    QHBoxLayout *centralLayout;
+    QSplitter *centralLayout;
     QPoint dragPosition;
     TitleMode m_titleMode;
     bool moveWidget;
@@ -108,7 +110,6 @@ private:
     bool resizeHorEsq;
     bool resizeDiagSupEsq;
     bool resizeDiagSupDer;
-    //void mouseMoveEvent(QMouseEvent *e);
     void mousePressEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void mouseDoubleClickEvent(QMouseEvent *e);
@@ -126,6 +127,7 @@ private:
     int isFriendWidgetActive, isGroupWidgetActive;
     SelfCamView* camview;
     Camera* camera;
+    bool notify(QObject *receiver, QEvent *event);
 };
 
 #endif // WIDGET_H

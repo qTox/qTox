@@ -18,6 +18,7 @@ public:
     void leaveEvent(QEvent* event);
     void setAsActiveChatroom();
     void setAsInactiveChatroom();
+    void setNewFixedWidth(int newWidth);
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);

@@ -56,6 +56,11 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     isActiveWidget = 0;
 }
 
+void GroupWidget::setNewFixedWidth(int newWidth)
+{
+    this->setFixedWidth(newWidth);
+}
+
 void GroupWidget::mouseReleaseEvent (QMouseEvent*)
 {
     emit groupWidgetClicked(this);
@@ -144,7 +149,7 @@ void GroupWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap(":img/group_dark.png"));
+    avatar.setPixmap(QPixmap(":img/group.png"));
 }
 
 void GroupWidget::setAsInactiveChatroom()
