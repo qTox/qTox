@@ -54,6 +54,9 @@ signals:
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
 
+protected:
+    void resizeEvent(QResizeEvent *);
+
 private slots:
     void maximizeBtnClicked();
     void minimizeBtnClicked();

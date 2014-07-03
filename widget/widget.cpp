@@ -728,10 +728,16 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
     return true;
 }
 
+void Widget::resizeEvent(QResizeEvent *)
+{
+    updateFriendListWidth();
+}
+
 
 bool Widget::event(QEvent * e)
 {
-    if (e->type() == QEvent::WindowStateChange)
+
+    if( e->type() == QEvent::WindowStateChange )
     {
         if(windowState().testFlag(Qt::WindowMinimized) == true)
         {
