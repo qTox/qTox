@@ -68,7 +68,7 @@
         <location filename="widget/form/addfriendform.cpp" line="121"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>Ответе DNS не содержит корректных Tox ID</translation>
+        <translation type="unfinished">Ответ DNS не содержит корректных Tox ID</translation>
     </message>
 </context>
 <context>
