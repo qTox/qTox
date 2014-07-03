@@ -200,6 +200,7 @@ Widget::Widget(QWidget *parent) :
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
+    connect(ui->statImg, SIGNAL(clicked()), this, SLOT(onStatusImgClicked()));
     connect(&settingsForm.name, SIGNAL(textChanged(QString)), this, SLOT(onUsernameChanged(QString)));
     connect(&settingsForm.statusText, SIGNAL(textChanged(QString)), this, SLOT(onStatusMessageChanged(QString)));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -1099,3 +1100,22 @@ void Widget::minimizeBtnClicked()
     }
 }
 
+void Widget::onStatusImgClicked()
+{
+    QMenu menu;
+    menu.addAction("Online");
+    menu.addAction("Away");
+    menu.addAction("Busy");
+
+    QPoint pos = QCursor::pos();
+    QAction* selectedItem = menu.exec(pos);
+    if (selectedItem)
+    {
+        if (selectedItem->text() == "Online")
+            core->setStatus(Status::Online);
+        else if (selectedItem->text() == "Away")
+            core->setStatus(Status::Away);
+        else if (selectedItem->text() == "Busy")
+            core->setStatus(Status::Busy);
+    }
+}
