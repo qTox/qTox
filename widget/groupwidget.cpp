@@ -35,9 +35,9 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     this->setPalette(pal3);
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        nusers.setText(QString(tr("%1 users in chat")).arg(g->peers.size()));
+        nusers.setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
     else
-        nusers.setText(tr("0 users in chat"));
+        nusers.setText(GroupWidget::tr("0 users in chat"));
 
     textLayout.addStretch();
     textLayout.addWidget(&name);

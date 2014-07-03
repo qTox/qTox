@@ -29,7 +29,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     name->setText(group->widget->name.text());
     name->setFont(bold);
     nusers->setFont(small);
-    nusers->setText(tr("%1 users in chat").arg(group->peers.size()));
+    nusers->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
     avatar->setPixmap(QPixmap(":/img/group.png"));
     QString names;
     for (QString& s : group->peers)
