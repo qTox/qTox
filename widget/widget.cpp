@@ -227,6 +227,7 @@ Widget::Widget(QWidget *parent) :
 
 Widget::~Widget()
 {
+    core->saveConfiguration();
     instance = nullptr;
     coreThread->exit();
     coreThread->wait();
@@ -428,6 +429,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::avEnding, newfriend->chatForm, &ChatForm::onAvEnding);
     connect(core, &Core::avRequestTimeout, newfriend->chatForm, &ChatForm::onAvRequestTimeout);
     connect(core, &Core::avPeerTimeout, newfriend->chatForm, &ChatForm::onAvPeerTimeout);
+    core->saveConfiguration();
 }
 
 void Widget::addFriendFailed(const QString&)
@@ -763,7 +765,7 @@ bool Widget::event(QEvent * e)
             Group* g = GroupList::findGroup(activeGroupWidget->groupId);
             g->hasNewMessages = 0;
             g->userWasMentioned = 0;
-            g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
+            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
         }
     }
     else if (e->type() == QEvent::WindowDeactivate && !useNativeTheme)
