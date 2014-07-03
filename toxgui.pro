@@ -5,11 +5,36 @@
 #-------------------------------------------------
 
 QT       += core gui multimedia multimediawidgets
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = toxgui
-TEMPLATE = app
+TARGET    = toxgui
+TEMPLATE  = app
+FORMS    += widget.ui
+CONFIG   += c++11
+
+RESOURCES += \
+    res.qrc
+
+INCLUDEPATH += libs/include
+win32 {
+    LIBS += libs/lib/libtoxav.a libs/lib/libopus.a libs/lib/libvpx.a libs/lib/libtoxcore.a -lws2_32 libs/lib/libsodium.a
+} else {
+    LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
+}
+
+#### Static linux build
+#LIBS += -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lvpx -lopus -lgstaudiodecoder -lgstcamerabin -lgstmediacapture \
+#     -lgstmediaplayer -lqgsttools_p -lgstaudio-0.10 -lgstinterfaces-0.10 -lgstvideo-0.10 -lgstpbutils-0.10 \
+#        -lgstapp-0.10 -lgstbase-0.10 -lgstreamer-0.10 -lgobject-2.0 -lgmodule-2.0 -lxml2 \
+#         -lqtaudio_alsa -lasound -lqtmultimedia_m3u \
+#     -lqtaccessiblewidgets -lqconnmanbearer -lqgenericbearer -lqnmbearer \
+#      -lqxcb -lX11-xcb -lXi -lxcb-render-util -lxcb-glx -lxcb-render -ldbus-1 \
+#    -lxcb -lxcb-image -lxcb-icccm -lxcb-sync -lxcb-xfixes -lxcb-shm -lxcb-randr -lxcb-shape \
+#    -lxcb-keysyms -lxcb-xkb -lfontconfig -lfreetype -lXrender -lXext -lX11 \
+#    -lmtdev -lqdds -lqicns -lqico -lqjp2 -lqmng -lqtga -lqtiff -lqwbmp -lqwebp \
+#   -lpng -lz -licui18n -licuuc -licudata -lm -ldl -lgthread-2.0 \
+#     -pthread -lglib-2.0 -lrt -lGL -lpthread -Wl,-Bdynamic
+#QMAKE_CXXFLAGS += -Os -flto -static-libstdc++ -static-libgcc
 
 HEADERS  += widget/form/addfriendform.h \
     widget/form/chatform.h \
@@ -38,29 +63,6 @@ HEADERS  += widget/form/addfriendform.h \
     widget/videosurface.h \
     widget/camera.h \
     widget/netcamview.h
-
-FORMS    += widget.ui
-
-CONFIG += c++11
-
-RESOURCES += \
-    res.qrc
-
-LIBS += -ltoxcore -ltoxav -lsodium -lvpx
-
-#### Static linux build
-#LIBS += -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lvpx -lopus -lgstaudiodecoder -lgstcamerabin -lgstmediacapture \
-#     -lgstmediaplayer -lqgsttools_p -lgstaudio-0.10 -lgstinterfaces-0.10 -lgstvideo-0.10 -lgstpbutils-0.10 \
-#        -lgstapp-0.10 -lgstbase-0.10 -lgstreamer-0.10 -lgobject-2.0 -lgmodule-2.0 -lxml2 \
-#         -lqtaudio_alsa -lasound -lqtmultimedia_m3u \
-#     -lqtaccessiblewidgets -lqconnmanbearer -lqgenericbearer -lqnmbearer \
-#      -lqxcb -lX11-xcb -lXi -lxcb-render-util -lxcb-glx -lxcb-render -ldbus-1 \
-#    -lxcb -lxcb-image -lxcb-icccm -lxcb-sync -lxcb-xfixes -lxcb-shm -lxcb-randr -lxcb-shape \
-#    -lxcb-keysyms -lxcb-xkb -lfontconfig -lfreetype -lXrender -lXext -lX11 \
-#    -lmtdev -lqdds -lqicns -lqico -lqjp2 -lqmng -lqtga -lqtiff -lqwbmp -lqwebp \
-#   -lpng -lz -licui18n -licuuc -licudata -lm -ldl -lgthread-2.0 \
-#     -pthread -lglib-2.0 -lrt -lGL -lpthread -Wl,-Bdynamic
-#QMAKE_CXXFLAGS += -Os -flto -static-libstdc++ -static-libgcc
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -91,49 +93,3 @@ SOURCES += \
     widget/videosurface.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp
-
-
-
-### EXAMPLE BUILD SETTINGS FOR WINDOWS
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -ltoxcore
-
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/toxcore.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libtoxcore.a
-
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -ltoxav
-
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/toxav.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libtoxav.a
-
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lvpx
-
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/vpx.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libvpx.a
-
-
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lopus
-
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/opus.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libopus.a
-
-#win32: LIBS += -lws2_32
-
-#win32: LIBS += -L$$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/ -lsodium
-
-#INCLUDEPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-#DEPENDPATH += $$PWD/../../../../Downloads/libtoxcore-win32-i686/include
-
-#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/sodium.lib
-#else:win32-g++: PRE_TARGETDEPS += $$PWD/../../../../Downloads/libtoxcore-win32-i686/lib/libsodium.a
