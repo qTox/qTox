@@ -146,6 +146,7 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->centralWidget->setStyleSheet("QSplitter{background-color: white;}");
 
     this->setMouseTracking(true);
 
