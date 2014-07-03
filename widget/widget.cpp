@@ -554,7 +554,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, uint8_t* publicKey)
+void Widget::onGroupInviteReceived(int32_t friendId, const uint8_t* publicKey)
 {
     int groupId = core->joinGroupchat(friendId, publicKey);
     if (groupId == -1)
