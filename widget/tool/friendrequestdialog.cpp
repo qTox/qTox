@@ -27,22 +27,22 @@ FriendRequestDialog::FriendRequestDialog(QWidget *parent, const QString &userId,
     QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setWindowTitle("Friend request");
+    setWindowTitle(tr("Friend request","Title of the window to aceept/deny a friend request"));
 
-    QLabel *friendsLabel = new QLabel("Someone wants to make friends with you.", this);
-    QLabel *userIdLabel = new QLabel("User ID:", this);
+    QLabel *friendsLabel = new QLabel(tr("Someone wants to make friends with you"), this);
+    QLabel *userIdLabel = new QLabel(tr("User ID:"), this);
     QLineEdit *userIdEdit = new QLineEdit(userId, this);
     userIdEdit->setCursorPosition(0);
     userIdEdit->setReadOnly(true);
-    QLabel *messageLabel = new QLabel("Friend request message:", this);
+    QLabel *messageLabel = new QLabel(tr("Friend request message:"), this);
     QPlainTextEdit *messageEdit = new QPlainTextEdit(message, this);
     messageEdit->setReadOnly(true);
 
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
 
-    buttonBox->addButton("Accept", QDialogButtonBox::AcceptRole);
-    buttonBox->addButton("Reject", QDialogButtonBox::RejectRole);
+    buttonBox->addButton(tr("Accept","Accept a friend request"), QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(tr("Reject","Reject a friend request"), QDialogButtonBox::RejectRole);
 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &FriendRequestDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FriendRequestDialog::reject);

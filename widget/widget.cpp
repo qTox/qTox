@@ -1109,9 +1109,9 @@ void Widget::minimizeBtnClicked()
 void Widget::onStatusImgClicked()
 {
     QMenu menu;
-    menu.addAction("Online");
-    menu.addAction("Away");
-    menu.addAction("Busy");
+    menu.addAction(tr("Online","Button to set your status to 'Online'"));
+    menu.addAction(tr("Away","Button to set your status to 'Away'"));
+    menu.addAction(tr("Busy","Button to set your status to 'Busy'"));
 
     QPoint pos = QCursor::pos();
     QAction* selectedItem = menu.exec(pos);

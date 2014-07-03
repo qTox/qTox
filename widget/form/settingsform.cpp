@@ -10,17 +10,17 @@ SettingsForm::SettingsForm()
     QFont bold, small;
     bold.setBold(true);
     small.setPixelSize(7);
-    headLabel.setText("User Settings");
+    headLabel.setText(tr("User Settings","\"Headline\" of the window"));
     headLabel.setFont(bold);
 
-    nameLabel.setText("Name");
-    statusTextLabel.setText("Status");
+    nameLabel.setText(tr("Name","Username/nick"));
+    statusTextLabel.setText(tr("Status","Status message"));
     idLabel.setText("Tox ID");
     id.setFont(small);
     id.setTextInteractionFlags(Qt::TextSelectableByMouse);
 
-    videoTest.setText("Test video");
-    enableIPv6.setText("Enable IPv6 (recommended)");
+    videoTest.setText(tr("Test video","Text on a button to test the video/webcam"));
+    enableIPv6.setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
     enableIPv6.setChecked(Settings::getInstance().getEnableIPv6());
 
     main->setLayout(&layout);

@@ -258,7 +258,7 @@ void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
 
 void ChatForm::onAttachClicked()
 {
-    QString path = QFileDialog::getOpenFileName(0,"Send a file");
+    QString path = QFileDialog::getOpenFileName(0,tr("Send a file"));
     if (path.isEmpty())
         return;
 
@@ -583,13 +583,13 @@ void ChatForm::onChatContextMenuRequested(QPoint pos)
     QWidget* sender = (QWidget*)QObject::sender();
     pos = sender->mapToGlobal(pos);
     QMenu menu;
-    menu.addAction("Save chat log", this, SLOT(onSaveLogClicked()));
+    menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
     menu.exec(pos);
 }
 
 void ChatForm::onSaveLogClicked()
 {
-    QString path = QFileDialog::getSaveFileName(0,"Save chat log");
+    QString path = QFileDialog::getSaveFileName(0,tr("Save chat log"));
     if (path.isEmpty())
         return;
 
