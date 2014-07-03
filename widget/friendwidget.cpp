@@ -62,8 +62,8 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    menu.addAction("Copy friend ID");
-    QMenu* inviteMenu = menu.addMenu("Invite in group");
+    menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
+    QMenu* inviteMenu = menu.addMenu(tr("Invite in group","Menu to invite a friend in a groupchat"));
     QMap<QAction*, Group*> groupActions;
     for (Group* group : GroupList::groupList)
     {
@@ -73,7 +73,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
     menu.addSeparator();
-    menu.addAction("Remove friend");
+    menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
 
     QAction* selectedItem = menu.exec(pos);
     if (selectedItem)

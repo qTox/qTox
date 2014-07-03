@@ -142,8 +142,8 @@ bool Camera::isFormatSupported(const QVideoSurfaceFormat& format) const
     }
     else
     {
-        QMessageBox::warning(0, "Camera eror",
-                QString("Camera format %1 not supported, can't use the camera")
+        QMessageBox::warning(0, tr("Camera eror"),
+                tr("Camera format %1 not supported, can't use the camera")
                 .arg(format.pixelFormat()));
         return false;
     }
