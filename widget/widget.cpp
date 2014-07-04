@@ -138,7 +138,6 @@ Widget::Widget(QWidget *parent) :
     friendListWidget->layout()->setSpacing(0);
     friendListWidget->layout()->setMargin(0);
     friendListWidget->setLayoutDirection(Qt::LeftToRight);
-    //friendListWidget->
     ui->friendList->setWidget(friendListWidget);
 
     ui->nameLabel->setText(Settings::getInstance().getUsername());
@@ -146,7 +145,6 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    ui->centralWidget->setStyleSheet("QSplitter{background-color: white;}");
 
     this->setMouseTracking(true);
 
