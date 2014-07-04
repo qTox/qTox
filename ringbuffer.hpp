@@ -98,10 +98,10 @@ public:
 #endif
     }
 
-    qint64 bytesAvailable()
+    qint64 bytesAvailable() const
     {
         const size_t currentTail = tail.load();
-        size_t currentHead = head.load();
+        const size_t currentHead = head.load();
         const qint64 contains =  currentHead <= currentTail ?
             currentTail - currentHead :
             capacity - (currentHead - currentTail);
