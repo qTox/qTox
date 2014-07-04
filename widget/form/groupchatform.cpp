@@ -167,6 +167,8 @@ void GroupChatForm::addMessage(QString author, QString message, QString date)
 
 void GroupChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
 {
+    QPalette greentext;
+    greentext.setColor(QPalette::WindowText, QColor(61,204,61));
     QScrollBar* scroll = chatArea->verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignLeft);
@@ -194,6 +196,8 @@ void GroupChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     }
     else if (curRow)// onSaveLogClicked expects 0 or 3 QLabel per line
         author->setText("");
+    if (message->text()[0] == '>')
+        message->setPalette(greentext);
     mainChatLayout->addWidget(author, curRow, 0);
     mainChatLayout->addWidget(message, curRow, 1);
     mainChatLayout->addWidget(date, curRow, 3);
