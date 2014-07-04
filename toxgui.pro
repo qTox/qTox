@@ -19,7 +19,7 @@ RESOURCES += \
 
 INCLUDEPATH += libs/include
 win32 {
-    LIBS += libs/lib/libtoxav.a libs/lib/libopus.a libs/lib/libvpx.a libs/lib/libtoxcore.a -lws2_32 libs/lib/libsodium.a
+    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a
 } else {
     LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
 }
