@@ -4,11 +4,13 @@
 #include "math.h"
 #include <QFileDialog>
 #include <QPixmap>
+#include <QPainter>
 
 FileTransfertWidget::FileTransfertWidget(ToxFile File)
     : lastUpdate{QDateTime::currentDateTime()}, lastBytesSent{0},
       fileNum{File.fileNum}, friendId{File.friendId}, direction{File.direction}
 {
+    background = new QFrame;
     pic=new QLabel(), filename=new QLabel(), size=new QLabel(), speed=new QLabel(), eta=new QLabel();
     topright = new QPushButton(), bottomright = new QPushButton();
     progress = new QProgressBar();
@@ -17,6 +19,11 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     buttonWidget = new QWidget();
     QFont prettysmall;
     prettysmall.setPixelSize(10);
+    this->setObjectName("default");
+    QFile f0(":/ui/fileTransferWidget/fileTransferWidget.css");
+    f0.open(QFile::ReadOnly | QFile::Text);
+    QTextStream fileTransfertWidgetStylesheet(&f0);
+    this->setStyleSheet(fileTransfertWidgetStylesheet.readAll());
     QPalette greybg;
     greybg.setColor(QPalette::Window, QColor(209,209,209));
     greybg.setColor(QPalette::Base, QColor(150,150,150));
@@ -164,6 +171,7 @@ void FileTransfertWidget::onFileTransferCancelled(int FriendId, int FileNum, Tox
 {
     if (FileNum != fileNum || FriendId != friendId || Direction != direction)
             return;
+    buttonLayout->setContentsMargins(0,0,0,0);
     disconnect(topright);
     disconnect(Widget::getInstance()->getCore(),0,this,0);
     progress->hide();
@@ -175,15 +183,15 @@ void FileTransfertWidget::onFileTransferCancelled(int FriendId, int FileNum, Tox
     whiteText.setColor(QPalette::WindowText, Qt::white);
     filename->setPalette(whiteText);
     size->setPalette(whiteText);
-    QPalette toxred;
-    toxred.setColor(QPalette::Window, QColor(200,78,78)); // Tox Red
-    setPalette(toxred);
+    this->setObjectName("error");
+    this->style()->polish(this);
 }
 
 void FileTransfertWidget::onFileTransferFinished(ToxFile File)
 {
     if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
             return;
+    buttonLayout->setContentsMargins(0,0,0,0);
     topright->disconnect();
     disconnect(Widget::getInstance()->getCore(),0,this,0);
     progress->hide();
@@ -195,10 +203,8 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile File)
     whiteText.setColor(QPalette::WindowText, Qt::white);
     filename->setPalette(whiteText);
     size->setPalette(whiteText);
-     // TODO: Maybe just replace the whole buttonWidget with a single round CSS that shows the accept icon
-    QPalette toxgreen;
-    toxgreen.setColor(QPalette::Window, QColor(107,194,96)); // Tox Green
-    setPalette(toxgreen);
+    this->setObjectName("success");
+    this->style()->polish(this);
 
     if (File.direction == ToxFile::RECEIVING)
     {
@@ -250,4 +256,12 @@ void FileTransfertWidget::pauseResumeRecv()
 void FileTransfertWidget::pauseResumeSend()
 {
     Widget::getInstance()->getCore()->pauseResumeFileSend(friendId, fileNum);
+}
+
+void FileTransfertWidget::paintEvent(QPaintEvent *)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }

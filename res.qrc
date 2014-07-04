@@ -102,5 +102,6 @@
         <file>img/status/dot_busy_notification.png</file>
         <file>translations/fr.qm</file>
         <file>translations/ru.qm</file>
+        <file>ui/fileTransferWidget/fileTransferWidget.css</file>
     </qresource>
 </RCC>
