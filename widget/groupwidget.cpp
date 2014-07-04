@@ -70,17 +70,14 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    menu.addAction(tr("Quit group","Menu to quit a groupchat"));
+    QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
 
     QAction* selectedItem = menu.exec(pos);
-    if (selectedItem)
+    if (selectedItem == quitGroup)
     {
-        if (selectedItem->text() == "Quit group")
-        {
-            hide();
-            emit removeGroup(groupId);
-            return;
-        }
+        hide();
+        emit removeGroup(groupId);
+        return;
     }
 }
 

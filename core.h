@@ -273,7 +273,7 @@ private:
 private:
     Tox* tox;
     ToxAv* toxav;
-    QTimer *toxTimer, *saveTimer, *fileTimer, *bootstrapTimer;
+    QTimer *toxTimer, *fileTimer, *bootstrapTimer; //, *saveTimer;
     Camera* camera;
     QList<DhtServer> dhtServerList;
     int dhtServerId;

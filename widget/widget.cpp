@@ -1146,19 +1146,16 @@ void Widget::minimizeBtnClicked()
 void Widget::onStatusImgClicked()
 {
     QMenu menu;
-    menu.addAction(tr("Online","Button to set your status to 'Online'"));
-    menu.addAction(tr("Away","Button to set your status to 'Away'"));
-    menu.addAction(tr("Busy","Button to set your status to 'Busy'"));
+    QAction* online = menu.addAction(tr("Online","Button to set your status to 'Online'"));
+    QAction* away = menu.addAction(tr("Away","Button to set your status to 'Away'"));
+    QAction* busy = menu.addAction(tr("Busy","Button to set your status to 'Busy'"));
 
     QPoint pos = QCursor::pos();
     QAction* selectedItem = menu.exec(pos);
-    if (selectedItem)
-    {
-        if (selectedItem->text() == "Online")
-            core->setStatus(Status::Online);
-        else if (selectedItem->text() == "Away")
-            core->setStatus(Status::Away);
-        else if (selectedItem->text() == "Busy")
-            core->setStatus(Status::Busy);
-    }
+    if (selectedItem == online)
+        core->setStatus(Status::Online);
+    else if (selectedItem == away)
+        core->setStatus(Status::Away);
+    else if (selectedItem == busy)
+        core->setStatus(Status::Busy);
 }
