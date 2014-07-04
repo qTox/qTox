@@ -1495,6 +1495,9 @@ QSplitter:handle{
             </item>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout">
+              <property name="spacing">
+               <number>0</number>
+              </property>
               <item>
                <widget class="EditableLabelWidget" name="nameLabel">
                 <property name="enabled">
