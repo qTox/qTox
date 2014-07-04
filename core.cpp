@@ -137,12 +137,12 @@ void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cUserId, const uint8_t* 
     emit static_cast<Core*>(core)->friendRequestReceived(CUserId::toString(cUserId), CString::toString(cMessage, cMessageSize));
 }
 
-void Core::onFriendMessage(Tox*/* tox*/, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core)
+void Core::onFriendMessage(Tox*/* tox*/, int friendId, const uint8_t* cMessage, uint16_t cMessageSize, void* core)
 {
     emit static_cast<Core*>(core)->friendMessageReceived(friendId, CString::toString(cMessage, cMessageSize));
 }
 
-void Core::onFriendNameChange(Tox*/* tox*/, int friendId, uint8_t* cName, uint16_t cNameSize, void* core)
+void Core::onFriendNameChange(Tox*/* tox*/, int friendId, const uint8_t* cName, uint16_t cNameSize, void* core)
 {
     emit static_cast<Core*>(core)->friendUsernameChanged(friendId, CString::toString(cName, cNameSize));
 }
@@ -152,7 +152,7 @@ void Core::onFriendTypingChange(Tox*/* tox*/, int friendId, uint8_t isTyping, vo
     emit static_cast<Core*>(core)->friendTypingChanged(friendId, isTyping ? true : false);
 }
 
-void Core::onStatusMessageChanged(Tox*/* tox*/, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core)
+void Core::onStatusMessageChanged(Tox*/* tox*/, int friendId, const uint8_t* cMessage, uint16_t cMessageSize, void* core)
 {
     emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId, CString::toString(cMessage, cMessageSize));
 }
@@ -186,18 +186,18 @@ void Core::onConnectionStatusChanged(Tox*/* tox*/, int friendId, uint8_t status,
     }
 }
 
-void Core::onAction(Tox*/* tox*/, int friendId, uint8_t *cMessage, uint16_t cMessageSize, void *core)
+void Core::onAction(Tox*/* tox*/, int friendId, const uint8_t *cMessage, uint16_t cMessageSize, void *core)
 {
     emit static_cast<Core*>(core)->actionReceived(friendId, CString::toString(cMessage, cMessageSize));
 }
 
-void Core::onGroupInvite(Tox*, int friendnumber, uint8_t *group_public_key, void *core)
+void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key, void *core)
 {
     qDebug() << QString("Core: Group invite by %1").arg(friendnumber);
     emit static_cast<Core*>(core)->groupInviteReceived(friendnumber, group_public_key);
 }
 
-void Core::onGroupMessage(Tox*, int groupnumber, int friendgroupnumber, uint8_t * message, uint16_t length, void *core)
+void Core::onGroupMessage(Tox*, int groupnumber, int friendgroupnumber, const uint8_t * message, uint16_t length, void *core)
 {
     emit static_cast<Core*>(core)->groupMessageReceived(groupnumber, friendgroupnumber, CString::toString(message, length));
 }
@@ -209,7 +209,7 @@ void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t 
 }
 
 void Core::onFileSendRequestCallback(Tox*, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
-                                          uint8_t *filename, uint16_t filename_length, void *core)
+                                          const uint8_t *filename, uint16_t filename_length, void *core)
 {
     qDebug() << QString("Core: Received file request %1 with friend %2").arg(filenumber).arg(friendnumber);
 
@@ -218,7 +218,7 @@ void Core::onFileSendRequestCallback(Tox*, int32_t friendnumber, uint8_t filenum
     emit static_cast<Core*>(core)->fileReceiveRequested(fileRecvQueue.last());
 }
 void Core::onFileControlCallback(Tox*, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
-                                      uint8_t control_type, uint8_t*, uint16_t, void *core)
+                                      uint8_t control_type, const uint8_t*, uint16_t, void *core)
 {
     ToxFile* file{nullptr};
     if (receive_send == 1)
@@ -287,7 +287,7 @@ void Core::onFileControlCallback(Tox*, int32_t friendnumber, uint8_t receive_sen
     }
 }
 
-void Core::onFileDataCallback(Tox*, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *core)
+void Core::onFileDataCallback(Tox*, int32_t friendnumber, uint8_t filenumber, const uint8_t *data, uint16_t length, void *core)
 {
     ToxFile* file{nullptr};
     for (ToxFile& f : fileRecvQueue)
@@ -798,7 +798,7 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
     return names;
 }
 
-int Core::joinGroupchat(int32_t friendnumber, uint8_t* friend_group_public_key) const
+int Core::joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key) const
 {
     qDebug() << QString("Trying to join groupchat invite by friend %1").arg(friendnumber);
     return tox_join_groupchat(tox, friendnumber, friend_group_public_key);

@@ -21,6 +21,7 @@
 
 class CopyableElideLabel : public ElideLabel
 {
+    Q_OBJECT
 public:
     explicit CopyableElideLabel(QWidget* parent = 0);
 

@@ -85,13 +85,14 @@ private slots:
     void onFriendMessageReceived(int friendId, const QString& message);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void onEmptyGroupCreated(int groupId);
-    void onGroupInviteReceived(int32_t friendId, uint8_t *publicKey);
+    void onGroupInviteReceived(int32_t friendId, const uint8_t *publicKey);
     void onGroupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupWidgetClicked(GroupWidget* widget);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
+    void onStatusImgClicked();
     void splitterMoved(int pos, int index);
 
 protected slots:

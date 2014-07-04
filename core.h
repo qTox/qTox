@@ -115,7 +115,7 @@ public:
     int getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
     QList<QString> getGroupPeerNames(int groupId) const;
-    int joinGroupchat(int32_t friendnumber, uint8_t* friend_group_public_key) const;
+    int joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key) const;
     void quitGroupChat(int groupId) const;
     void dispatchVideoFrame(vpx_image img) const;
 
@@ -180,7 +180,7 @@ signals:
     void friendLastSeenChanged(int friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(int friendnumber, uint8_t *group_public_key);
+    void groupInviteReceived(int friendnumber, const uint8_t *group_public_key);
     void groupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
 
@@ -224,21 +224,21 @@ signals:
 
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
-    static void onFriendMessage(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
-    static void onFriendNameChange(Tox* tox, int friendId, uint8_t* cName, uint16_t cNameSize, void* core);
+    static void onFriendMessage(Tox* tox, int friendId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
+    static void onFriendNameChange(Tox* tox, int friendId, const uint8_t* cName, uint16_t cNameSize, void* core);
     static void onFriendTypingChange(Tox* tox, int friendId, uint8_t isTyping, void* core);
-    static void onStatusMessageChanged(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
+    static void onStatusMessageChanged(Tox* tox, int friendId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
     static void onUserStatusChanged(Tox* tox, int friendId, uint8_t userstatus, void* core);
     static void onConnectionStatusChanged(Tox* tox, int friendId, uint8_t status, void* core);
-    static void onAction(Tox* tox, int friendId, uint8_t* cMessage, uint16_t cMessageSize, void* core);
-    static void onGroupInvite(Tox *tox, int friendnumber, uint8_t *group_public_key, void *userdata);
-    static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber, uint8_t * message, uint16_t length, void *userdata);
+    static void onAction(Tox* tox, int friendId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
+    static void onGroupInvite(Tox *tox, int friendnumber, const uint8_t *group_public_key, void *userdata);
+    static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber, const uint8_t * message, uint16_t length, void *userdata);
     static void onGroupNamelistChange(Tox *tox, int groupnumber, int peernumber, uint8_t change, void *userdata);
     static void onFileSendRequestCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
-                                          uint8_t *filename, uint16_t filename_length, void *userdata);
+                                          const uint8_t *filename, uint16_t filename_length, void *userdata);
     static void onFileControlCallback(Tox *tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
-                                      uint8_t control_type, uint8_t *data, uint16_t length, void *core);
-    static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint8_t *data, uint16_t length, void *userdata);
+                                      uint8_t control_type, const uint8_t *data, uint16_t length, void *core);
+    static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, const uint8_t *data, uint16_t length, void *userdata);
 
     static void onAvInvite(int32_t call_index, void* toxav);
     static void onAvStart(int32_t call_index, void* toxav);
@@ -273,7 +273,7 @@ private:
 private:
     Tox* tox;
     ToxAv* toxav;
-    QTimer *toxTimer, *saveTimer, *fileTimer, *bootstrapTimer;
+    QTimer *toxTimer, *fileTimer, *bootstrapTimer; //, *saveTimer;
     Camera* camera;
     QList<DhtServer> dhtServerList;
     int dhtServerId;

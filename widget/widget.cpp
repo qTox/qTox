@@ -160,7 +160,6 @@ Widget::Widget(QWidget *parent) :
     ui->pbMin->setMouseTracking(true);
     ui->pbMax->setMouseTracking(true);
     ui->pbClose->setMouseTracking(true);
-    ui->statusHead->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->statusHead->setMouseTracking(true);
 
     QList<int> currentSizes = ui->centralWidget->sizes();
@@ -214,6 +213,7 @@ Widget::Widget(QWidget *parent) :
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
+    connect(ui->statImg, SIGNAL(clicked()), this, SLOT(onStatusImgClicked()));
     connect(&settingsForm.name, SIGNAL(textChanged(QString)), this, SLOT(onUsernameChanged(QString)));
     connect(&settingsForm.statusText, SIGNAL(textChanged(QString)), this, SLOT(onStatusMessageChanged(QString)));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -258,7 +258,7 @@ Widget* Widget::getInstance()
 
 //Super ugly hack to enable resizable friend widgets
 //There should be a way to set them to resize automagicly, but I can't seem to find it.
-void Widget::splitterMoved(int pos, int index)
+void Widget::splitterMoved(int, int)
 {
     updateFriendListWidth();
 }
@@ -307,8 +307,10 @@ void Widget::onStatusSet(Status status)
 {
     if (status == Status::Online)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_online_2x.png"));
-    else if (status == Status::Busy || status == Status::Away)
+    else if (status == Status::Away)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_idle_2x.png"));
+    else if (status == Status::Busy)
+        ui->statImg->setPixmap(QPixmap(":img/status/dot_busy_2x.png"));
     else if (status == Status::Offline)
         ui->statImg->setPixmap(QPixmap(":img/status/dot_away_2x.png"));
 }
@@ -540,10 +542,14 @@ void Widget::updateFriendStatusLights(int friendId)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     else if (status == Status::Online && f->hasNewMessages == 1)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-    else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 0)
+    else if (status == Status::Away && f->hasNewMessages == 0)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
-    else if ((status == Status::Busy || status == Status::Away) && f->hasNewMessages == 1)
+    else if (status == Status::Away && f->hasNewMessages == 1)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
+    else if (status == Status::Busy && f->hasNewMessages == 0)
+        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
+    else if (status == Status::Busy && f->hasNewMessages == 1)
+        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
     else if (status == Status::Offline && f->hasNewMessages == 0)
         f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     else if (status == Status::Offline && f->hasNewMessages == 1)
@@ -587,7 +593,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, uint8_t* publicKey)
+void Widget::onGroupInviteReceived(int32_t friendId, const uint8_t* publicKey)
 {
     int groupId = core->joinGroupchat(friendId, publicKey);
     if (groupId == -1)
@@ -1137,3 +1143,19 @@ void Widget::minimizeBtnClicked()
     }
 }
 
+void Widget::onStatusImgClicked()
+{
+    QMenu menu;
+    QAction* online = menu.addAction(tr("Online","Button to set your status to 'Online'"));
+    QAction* away = menu.addAction(tr("Away","Button to set your status to 'Away'"));
+    QAction* busy = menu.addAction(tr("Busy","Button to set your status to 'Busy'"));
+
+    QPoint pos = QCursor::pos();
+    QAction* selectedItem = menu.exec(pos);
+    if (selectedItem == online)
+        core->setStatus(Status::Online);
+    else if (selectedItem == away)
+        core->setStatus(Status::Away);
+    else if (selectedItem == busy)
+        core->setStatus(Status::Busy);
+}

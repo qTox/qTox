@@ -1,6 +1,7 @@
 #include "filetransfertwidget.h"
 #include "widget.h"
 #include "core.h"
+#include "math.h"
 #include <QFileDialog>
 #include <QPixmap>
 
@@ -229,7 +230,7 @@ void FileTransfertWidget::rejectRecvRequest()
 
 void FileTransfertWidget::acceptRecvRequest()
 {
-    QString path = QFileDialog::getSaveFileName(0,"Save a file",QDir::currentPath()+'/'+filename->text());
+    QString path = QFileDialog::getSaveFileName(0,tr("Save a file","Title of the file saving dialog"),QDir::currentPath()+'/'+filename->text());
     if (path.isEmpty())
         return;
 

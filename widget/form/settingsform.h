@@ -8,6 +8,9 @@
 #include <QObject>
 #include <QSpacerItem>
 #include <QCheckBox>
+#include <QPushButton>
+#include <QTextEdit>
+#include "widget/tool/clickablelabel.h"
 #include "ui_widget.h"
 #include "widget/selfcamview.h"
 
@@ -26,11 +29,15 @@ public slots:
 private slots:
     void onTestVideoClicked();
     void onEnableIPv6Updated();
+    void onUseTranslationUpdated();
+    void copyIdClicked();
 
 private:
-    QLabel headLabel, nameLabel, statusTextLabel, idLabel, id;
+    QLabel headLabel, nameLabel, statusTextLabel;
+    QTextEdit id;
+    ClickableLabel idLabel;
     QPushButton videoTest;
-    QCheckBox enableIPv6;
+    QCheckBox enableIPv6, useTranslations;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head;
 

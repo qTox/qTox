@@ -35,9 +35,9 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     this->setPalette(pal3);
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        nusers.setText(QString("%1 users in chat").arg(g->peers.size()));
+        nusers.setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
     else
-        nusers.setText("0 users in chat");
+        nusers.setText(GroupWidget::tr("0 users in chat"));
 
     textLayout.addStretch();
     textLayout.addWidget(&name);
@@ -70,17 +70,14 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    menu.addAction("Quit group");
+    QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
 
     QAction* selectedItem = menu.exec(pos);
-    if (selectedItem)
+    if (selectedItem == quitGroup)
     {
-        if (selectedItem->text() == "Quit group")
-        {
-            hide();
-            emit removeGroup(groupId);
-            return;
-        }
+        hide();
+        emit removeGroup(groupId);
+        return;
     }
 }
 
@@ -128,9 +125,9 @@ void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        nusers.setText(QString("%1 users in chat").arg(g->nPeers));
+        nusers.setText(tr("%1 users in chat").arg(g->nPeers));
     else
-        nusers.setText("0 users in chat");
+        nusers.setText(tr("0 users in chat"));
 }
 
 void GroupWidget::setAsActiveChatroom()

@@ -52,6 +52,9 @@ public:
     bool getEnableIPv6() const;
     void setEnableIPv6(bool newValue);
 
+    bool getUseTranslations() const;
+    void setUseTranslations(bool newValue);
+
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
 
@@ -134,6 +137,7 @@ private:
     QString statusMessage;
 
     bool enableIPv6;
+    bool useTranslations;
 
     bool enableLogging;
     bool encryptLogs;

@@ -781,16 +781,7 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>0</number>
        </property>
        <item>
@@ -1788,7 +1779,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="statImg">
+             <widget class="ClickableLabel" name="statImg">
               <property name="minimumSize">
                <size>
                 <width>40</width>
@@ -1808,7 +1799,7 @@
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap>../../c/toxgui/img/status/dot_away_2x.png</pixmap>
+               <pixmap resource="res.qrc">:/img/status/dot_away_2x.png</pixmap>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -1821,10 +1812,6 @@
            </layout>
           </item>
          </layout>
-         <zorder>profilePicture</zorder>
-         <zorder>statImg</zorder>
-         <zorder>nameLabel</zorder>
-         <zorder>statusLabel</zorder>
         </widget>
        </item>
        <item>
@@ -1858,7 +1845,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>225</width>
+            <width>258</width>
             <height>199</height>
            </rect>
           </property>
@@ -2304,16 +2291,7 @@
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
           <item>
@@ -2914,16 +2892,7 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>0</number>
        </property>
        <item>
@@ -3046,6 +3015,11 @@
    <class>EditableLabelWidget</class>
    <extends>QLabel</extends>
    <header>widget/tool/editablelabelwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>widget/tool/clickablelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

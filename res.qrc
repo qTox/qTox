@@ -97,5 +97,10 @@
         <file>ui/window/restoreButtonPressed.png</file>
         <file>ui/friendList/friendList.css</file>
         <file>ui/window/window.css</file>
+        <file>img/status/dot_busy.png</file>
+        <file>img/status/dot_busy_2x.png</file>
+        <file>img/status/dot_busy_notification.png</file>
+        <file>translations/fr.qm</file>
+        <file>translations/ru.qm</file>
     </qresource>
 </RCC>
