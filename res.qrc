@@ -100,5 +100,6 @@
         <file>img/status/dot_busy.png</file>
         <file>img/status/dot_busy_2x.png</file>
         <file>img/status/dot_busy_notification.png</file>
+        <file>translations/fr.qm</file>
     </qresource>
 </RCC>

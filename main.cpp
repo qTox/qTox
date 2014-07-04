@@ -1,6 +1,7 @@
 #include "widget/widget.h"
 #include <QApplication>
 #include <QFontDatabase>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
@@ -8,7 +9,16 @@ int main(int argc, char *argv[])
     a.setApplicationName("Toxgui");
     a.setOrganizationName("Tox");
 
-    // install Unicode 6.1 supporting font
+    // Load translations
+    QString locale = QLocale::system().name().section('_', 0, 0);
+    QTranslator translator;
+    if (translator.load(locale,":translations/"))
+        qDebug() << "Loaded translation "+locale;
+    else
+        qDebug() << "Error loading translation "+locale;
+    a.installTranslator(&translator);
+
+    // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
 
     Widget* w = Widget::getInstance();

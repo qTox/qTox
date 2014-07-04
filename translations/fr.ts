@@ -23,19 +23,19 @@
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="20"/>
         <source>Send friend request</source>
-        <translation>Envoyer une demande d&apos;ami</translation>
+        <translation>Envoyer la demande d&apos;ami</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="67"/>
         <source>Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Je souhaiterais vous ajouter en tant qu&apos;ami</translation>
+        <translation>Je souhaiterais vous ajouter à mes contacts</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="75"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Merci d&apos;écrire un ID Tox valide</translation>
+        <translation>Merci de remplir un ID Tox valide</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="90"/>
@@ -53,20 +53,20 @@
         <location filename="../widget/form/addfriendform.cpp" line="102"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
-        <translation>Nombre d&apos;entrées numétiques innetendues dans l&apos;entrée texte</translation>
+        <translation>Nombre d&apos;entrées numériques dans l&apos;entrée texte innatendu</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="109"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>La requête DNS ne contient aucun ID Tox</translation>
+        <translation>La réponse DNS ne contient aucun ID Tox</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="115"/>
         <location filename="../widget/form/addfriendform.cpp" line="121"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>La requête DNS ne contient pas d&apos;ID Tox valide</translation>
+        <translation>La réponse DNS ne contient pas d&apos;ID Tox valide</translation>
     </message>
 </context>
 <context>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../widget/camera.cpp" line="146"/>
         <source>Camera format %1 not supported, can&apos;t use the camera</source>
-        <translation>Format de caméra %1 non supporté, impossible d&apos;utiliser la caméra</translation>
+        <translation>Format %1 de la caméra non supporté, impossible de l&apos;utiliser</translation>
     </message>
 </context>
 <context>
@@ -110,7 +110,7 @@
         <location filename="../widget/filetransfertwidget.cpp" line="231"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation>Sauvegarder le fichier</translation>
+        <translation>Sauvegarder un fichier</translation>
     </message>
 </context>
 <context>
@@ -134,7 +134,7 @@
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="37"/>
         <source>Friend request message:</source>
-        <translation>Message de la demande: </translation>
+        <translation>Message de demande d&apos;ami:</translation>
     </message>
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="44"/>
@@ -173,6 +173,12 @@
 <context>
     <name>GroupChatForm</name>
     <message>
+        <location filename="../widget/form/groupchatform.cpp" line="32"/>
+        <source>%1 users in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation>%1 personnes</translation>
+    </message>
+    <message>
         <location filename="../widget/form/groupchatform.cpp" line="155"/>
         <source>&lt;Unknown&gt;</source>
         <translation>&lt;Inconnu&gt;</translation>
@@ -191,20 +197,31 @@
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="68"/>
-        <source>Quit group</source>
-        <comment>Menu to quit a groupchat</comment>
-        <translation>Quitter le groupe</translation>
-    </message>
-    <message>
+        <location filename="../widget/groupwidget.cpp" line="38"/>
         <location filename="../widget/groupwidget.cpp" line="126"/>
         <source>%1 users in chat</source>
         <translation>%1 personnes</translation>
     </message>
     <message>
+        <location filename="../widget/groupwidget.cpp" line="40"/>
         <location filename="../widget/groupwidget.cpp" line="128"/>
         <source>0 users in chat</source>
         <translation>0 personnes</translation>
+    </message>
+    <message>
+        <location filename="../widget/groupwidget.cpp" line="68"/>
+        <source>Quit group</source>
+        <comment>Menu to quit a groupchat</comment>
+        <translation>Quitter le groupe</translation>
+    </message>
+</context>
+<context>
+    <name>SelfCamView</name>
+    <message>
+        <location filename="../widget/selfcamview.cpp" line="16"/>
+        <source>Tox video test</source>
+        <comment>Title of the window to test the video/webcam</comment>
+        <translation>Test vidéo Tox</translation>
     </message>
 </context>
 <context>
@@ -237,7 +254,7 @@
         <location filename="../widget/form/settingsform.cpp" line="23"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
-        <translation>Activé l&apos;IPv6 (recommandé)</translation>
+        <translation>Activer IPv6 (recommandé)</translation>
     </message>
 </context>
 <context>
@@ -277,7 +294,7 @@
         <location filename="../widget/widget.cpp" line="1113"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Absent</translation>
+        <translation>Indisponnible</translation>
     </message>
     <message>
         <location filename="../widget/widget.cpp" line="1114"/>
