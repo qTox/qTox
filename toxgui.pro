@@ -12,7 +12,8 @@ TEMPLATE  = app
 FORMS    += widget.ui
 CONFIG   += c++11
 
-TRANSLATIONS = translations/fr.ts
+TRANSLATIONS = translations/fr.ts \
+               translations/ru.ts
 
 RESOURCES += \
     res.qrc
