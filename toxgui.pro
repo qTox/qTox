@@ -17,7 +17,7 @@ TRANSLATIONS = translations/fr.ts \
 
 RESOURCES += res.qrc
 
-target.path = /usr/bin
+target.path = /usr/local/bin
 INSTALLS += target
 
 INCLUDEPATH += libs/include
