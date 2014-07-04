@@ -1,6 +1,7 @@
 #include "filetransfertwidget.h"
 #include "widget.h"
 #include "core.h"
+#include "math.h"
 #include <QFileDialog>
 #include <QPixmap>
 

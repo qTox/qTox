@@ -85,15 +85,7 @@ To do this, search for the INCLUDES line and add the following to the end;
 
 Save the Makefile.
 
-<h4>Final Steps</h4>
-
-Open up TextEdit/TextWrangler/etc and open up the widget/filetransfertwidget.cpp file and add the following include;
-
-```bash
-#include <math.h>
-```
-
-This will stop toxgui failing to make under OSX.
+<h5>Final Steps</h5>
 
 The final step is to run 
 ```bash
