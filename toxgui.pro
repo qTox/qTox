@@ -15,8 +15,10 @@ CONFIG   += c++11
 TRANSLATIONS = translations/fr.ts \
                translations/ru.ts
 
-RESOURCES += \
-    res.qrc
+RESOURCES += res.qrc
+
+target.path = /usr/bin
+INSTALLS += target
 
 INCLUDEPATH += libs/include
 win32 {
