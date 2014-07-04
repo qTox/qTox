@@ -119,6 +119,8 @@ public:
     void quitGroupChat(int groupId) const;
     void dispatchVideoFrame(vpx_image img) const;
 
+    void saveConfiguration();
+
 public slots:
     void start();
     void process();
@@ -261,7 +263,6 @@ private:
     void onBootstrapTimer();
 
     void loadConfiguration();
-    void saveConfiguration();
     void loadFriends();
     static void sendAllFileData(Core* core, ToxFile* file);
 

@@ -23,6 +23,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     setAutoFillBackground(true);
 
     setMinimumSize(250,58);
+    setMaximumHeight(58);
     setLayout(mainLayout);
     mainLayout->setMargin(0);
 

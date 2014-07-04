@@ -38,7 +38,6 @@ Widget::Widget(QWidget *parent) :
     if (useNativeTheme)
     {
         ui->titleBar->hide();
-        //setWindowFlags(windowFlags() & ~Qt::FramelessWindowHint);
         this->layout()->setContentsMargins(0, 0, 0, 0);
 
         QString friendListStylesheet = "";
@@ -89,13 +88,6 @@ Widget::Widget(QWidget *parent) :
         setWindowFlags(Qt::CustomizeWindowHint);
         setWindowFlags(Qt::FramelessWindowHint);
         setAttribute(Qt::WA_DeleteOnClose);
-        setMouseTracking(true);
-        ui->titleBar->setMouseTracking(true);
-        ui->LTitle->setMouseTracking(true);
-        ui->tbMenu->setMouseTracking(true);
-        ui->pbMin->setMouseTracking(true);
-        ui->pbMax->setMouseTracking(true);
-        ui->pbClose->setMouseTracking(true);
 
         addAction(ui->actionClose);
 
@@ -116,7 +108,7 @@ Widget::Widget(QWidget *parent) :
     QRect geo = settings.value("geometry").toRect();
 
         if (geo.height() > 0 and geo.x() < QApplication::desktop()->width() and geo.width() > 0 and geo.y() < QApplication::desktop()->height())
-            setGeometry(geo);
+            this->setGeometry(geo);
 
         if (settings.value("maximized").toBool())
         {
@@ -134,7 +126,7 @@ Widget::Widget(QWidget *parent) :
 
     isWindowMinimized = 0;
 
-    centralLayout = new QHBoxLayout(ui->centralWidget);
+    //centralLayout = new QSplitter(ui->centralWidget);
 
 
     ui->mainContent->setLayout(new QVBoxLayout());
@@ -146,6 +138,7 @@ Widget::Widget(QWidget *parent) :
     friendListWidget->layout()->setSpacing(0);
     friendListWidget->layout()->setMargin(0);
     friendListWidget->setLayoutDirection(Qt::LeftToRight);
+    //friendListWidget->
     ui->friendList->setWidget(friendListWidget);
 
     ui->nameLabel->setText(Settings::getInstance().getUsername());
@@ -153,6 +146,25 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->centralWidget->setStyleSheet("QSplitter{background-color: white;}");
+
+    this->setMouseTracking(true);
+
+    QList<QWidget*> widgets = this->findChildren<QWidget*>();
+    foreach (QWidget *widget, widgets)
+        widget->setMouseTracking(true);
+
+    ui->titleBar->setMouseTracking(true);
+    ui->LTitle->setMouseTracking(true);
+    ui->tbMenu->setMouseTracking(true);
+    ui->pbMin->setMouseTracking(true);
+    ui->pbMax->setMouseTracking(true);
+    ui->pbClose->setMouseTracking(true);
+    ui->statusHead->setMouseTracking(true);
+
+    QList<int> currentSizes = ui->centralWidget->sizes();
+    currentSizes[0] = 225;
+    ui->centralWidget->setSizes(currentSizes);
 
     camera = new Camera;
     camview = new SelfCamView(camera);
@@ -194,6 +206,7 @@ Widget::Widget(QWidget *parent) :
     connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
+    connect(ui->centralWidget, SIGNAL(splitterMoved(int,int)),this, SLOT(splitterMoved(int,int)));
     connect(ui->addButton, SIGNAL(clicked()), this, SLOT(onAddClicked()));
     connect(ui->groupButton, SIGNAL(clicked()), this, SLOT(onGroupClicked()));
     connect(ui->transferButton, SIGNAL(clicked()), this, SLOT(onTransferClicked()));
@@ -214,6 +227,7 @@ Widget::Widget(QWidget *parent) :
 
 Widget::~Widget()
 {
+    core->saveConfiguration();
     instance = nullptr;
     coreThread->exit();
     coreThread->wait();
@@ -233,7 +247,6 @@ Widget::~Widget()
     settings.setValue("maximized", isMaximized());
     settings.setValue("useNativeTheme", useNativeTheme);
     delete ui;
-    delete centralLayout;
 }
 
 Widget* Widget::getInstance()
@@ -243,6 +256,23 @@ Widget* Widget::getInstance()
     return instance;
 }
 
+//Super ugly hack to enable resizable friend widgets
+//There should be a way to set them to resize automagicly, but I can't seem to find it.
+void Widget::splitterMoved(int, int)
+{
+    updateFriendListWidth();
+}
+
+void Widget::updateFriendListWidth()
+{
+    int newWidth = ui->friendList->width();
+    for (Friend* f : FriendList::friendList)
+        if (f->widget != nullptr)
+            f->widget->setNewFixedWidth(newWidth);
+    for (Group* g : GroupList::groupList)
+        if (g->widget != nullptr)
+            g->widget->setNewFixedWidth(newWidth);
+}
 
 QString Widget::getUsername()
 {
@@ -380,6 +410,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
     layout->addWidget(newfriend->widget);
+    updateFriendListWidth();
     connect(newfriend->widget, SIGNAL(friendWidgetClicked(FriendWidget*)), this, SLOT(onFriendWidgetClicked(FriendWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -400,6 +431,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::avEnding, newfriend->chatForm, &ChatForm::onAvEnding);
     connect(core, &Core::avRequestTimeout, newfriend->chatForm, &ChatForm::onAvRequestTimeout);
     connect(core, &Core::avPeerTimeout, newfriend->chatForm, &ChatForm::onAvPeerTimeout);
+    core->saveConfiguration();
 }
 
 void Widget::addFriendFailed(const QString&)
@@ -541,6 +573,7 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 void Widget::removeFriend(int friendId)
 {
     Friend* f = FriendList::findFriend(friendId);
+    f->widget->setAsInactiveChatroom();
     if (f->widget == activeFriendWidget)
         activeFriendWidget = nullptr;
     FriendList::removeFriend(friendId);
@@ -557,7 +590,6 @@ void Widget::copyFriendIdToClipboard(int friendId)
     {
         QClipboard *clipboard = QApplication::clipboard();
         clipboard->setText(f->userId, QClipboard::Clipboard);
-        clipboard->deleteLater();
     }
 }
 
@@ -643,6 +675,7 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
 void Widget::removeGroup(int groupId)
 {
     Group* g = GroupList::findGroup(groupId);
+    g->widget->setAsInactiveChatroom();
     if (g->widget == activeGroupWidget)
         activeGroupWidget = nullptr;
     GroupList::removeGroup(groupId);
@@ -671,6 +704,7 @@ Group *Widget::createGroup(int groupId)
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
     layout->addWidget(newgroup->widget);
+    updateFriendListWidth();
     connect(newgroup->widget, SIGNAL(groupWidgetClicked(GroupWidget*)), this, SLOT(onGroupWidgetClicked(GroupWidget*)));
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
@@ -702,81 +736,16 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
     return true;
 }
 
-
-
-void Widget::mouseMoveEvent(QMouseEvent *e)
+void Widget::resizeEvent(QResizeEvent *)
 {
-    if (!useNativeTheme)
-    {
-        int xMouse = e->pos().x();
-        int yMouse = e->pos().y();
-        int wWidth = this->geometry().width();
-        int wHeight = this->geometry().height();
-
-        if (moveWidget)
-        {
-            inResizeZone = false;
-            moveWindow(e);
-        }
-        else if (allowToResize)
-            resizeWindow(e);
-        //right
-        else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-
-            if (yMouse >= wHeight - PIXELS_TO_ACT)
-                setCursor(Qt::SizeFDiagCursor);
-            else if (yMouse <= PIXELS_TO_ACT)
-                setCursor(Qt::SizeBDiagCursor);
-            else
-                setCursor(Qt::SizeHorCursor);
-
-            resizeWindow(e);
-        }
-        //left
-        else if (xMouse <= PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-
-            if (yMouse >= wHeight - PIXELS_TO_ACT)
-                setCursor(Qt::SizeBDiagCursor);
-            else if (yMouse <= PIXELS_TO_ACT)
-                setCursor(Qt::SizeFDiagCursor);
-            else
-                setCursor(Qt::SizeHorCursor);
-
-            resizeWindow(e);
-        }
-        //bottom edge
-        else if ((yMouse >= wHeight - PIXELS_TO_ACT) or allowToResize)
-        {
-            inResizeZone = true;
-            setCursor(Qt::SizeVerCursor);
-
-            resizeWindow(e);
-        }
-        //Cursor part top
-        else if (yMouse <= PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-            setCursor(Qt::SizeVerCursor);
-
-            resizeWindow(e);
-        }
-        else
-        {
-            inResizeZone = false;
-            setCursor(Qt::ArrowCursor);
-        }
-
-        e->accept();
-    }
+    updateFriendListWidth();
 }
+
 
 bool Widget::event(QEvent * e)
 {
-    if (e->type() == QEvent::WindowStateChange)
+
+    if( e->type() == QEvent::WindowStateChange )
     {
         if(windowState().testFlag(Qt::WindowMinimized) == true)
         {
@@ -802,13 +771,80 @@ bool Widget::event(QEvent * e)
             Group* g = GroupList::findGroup(activeGroupWidget->groupId);
             g->hasNewMessages = 0;
             g->userWasMentioned = 0;
-            g->widget->statusPic.setPixmap(QPixmap("img/status/dot_groupchat.png"));
+            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
         }
     }
     else if (e->type() == QEvent::WindowDeactivate && !useNativeTheme)
     {
         this->setObjectName("inactiveWindow");
         this->style()->polish(this);
+    }
+    else if (e->type() == QEvent::MouseMove && !useNativeTheme)
+    {
+        QMouseEvent *k = (QMouseEvent *)e;
+        int xMouse = k->pos().x();
+        int yMouse = k->pos().y();
+        int wWidth = this->geometry().width();
+        int wHeight = this->geometry().height();
+
+        if (moveWidget)
+        {
+            inResizeZone = false;
+            moveWindow(k);
+        }
+        else if (allowToResize)
+            resizeWindow(k);
+        //right
+        else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+
+            if (yMouse >= wHeight - PIXELS_TO_ACT)
+                setCursor(Qt::SizeFDiagCursor);
+            else if (yMouse <= PIXELS_TO_ACT)
+                setCursor(Qt::SizeBDiagCursor);
+            else
+                setCursor(Qt::SizeHorCursor);
+
+            resizeWindow(k);
+        }
+        //left
+        else if (xMouse <= PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+
+            if (yMouse >= wHeight - PIXELS_TO_ACT)
+                setCursor(Qt::SizeBDiagCursor);
+            else if (yMouse <= PIXELS_TO_ACT)
+                setCursor(Qt::SizeFDiagCursor);
+            else
+                setCursor(Qt::SizeHorCursor);
+
+            resizeWindow(k);
+        }
+        //bottom edge
+        else if ((yMouse >= wHeight - PIXELS_TO_ACT) or allowToResize)
+        {
+            inResizeZone = true;
+            setCursor(Qt::SizeVerCursor);
+
+            resizeWindow(k);
+        }
+        //Cursor part top
+        else if (yMouse <= PIXELS_TO_ACT or allowToResize)
+        {
+            inResizeZone = true;
+            setCursor(Qt::SizeVerCursor);
+
+            resizeWindow(k);
+        }
+        else
+        {
+            inResizeZone = false;
+            setCursor(Qt::ArrowCursor);
+        }
+
+        e->accept();
     }
 
     return QWidget::event(e);
@@ -901,6 +937,7 @@ void Widget::moveWindow(QMouseEvent *e)
 
 void Widget::resizeWindow(QMouseEvent *e)
 {
+    updateFriendListWidth();
     if (!useNativeTheme)
     {
         if (allowToResize)
@@ -1019,7 +1056,7 @@ void Widget::setCentralWidget(QWidget *widget, const QString &widgetName)
     connect(widget, SIGNAL(cancelled()), this, SLOT(close()));
 
     centralLayout->addWidget(widget);
-    ui->centralWidget->setLayout(centralLayout);
+    //ui->centralWidget->setLayout(centralLayout);
     ui->LTitle->setText(widgetName);
 }
 

@@ -22,6 +22,7 @@ public:
     ChatForm* chatForm;
     int hasNewMessages;
     Status friendStatus;
+    QPixmap avatar;
 };
 
 #endif // FRIEND_H

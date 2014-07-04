@@ -75,6 +75,8 @@ void AddFriendForm::onSendTriggered()
         showWarning(tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
     } else if (isToxId(id)) {
         emit friendRequested(id, getMessage());
+        this->toxId.setText("");
+        this->message.setText("");
     } else {
         id = id.replace("@", "._tox.");
         dns.setName(id);

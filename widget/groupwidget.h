@@ -30,6 +30,7 @@ public:
     QVBoxLayout textLayout;
     void setAsInactiveChatroom();
     void setAsActiveChatroom();
+    void setNewFixedWidth(int newWidth);
 
 private:
     QColor lastColor;
