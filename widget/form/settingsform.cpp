@@ -22,14 +22,14 @@ SettingsForm::SettingsForm()
     id.setTextInteractionFlags(Qt::TextSelectableByMouse);
     id.setReadOnly(true);
     id.setFrameStyle(QFrame::NoFrame);
-    id.setMinimumHeight(10);
-    id.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    id.setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-    id.setMaximumHeight(40);
+    id.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    id.setFixedHeight(id.document()->size().height());
 
     videoTest.setText(tr("Test video","Text on a button to test the video/webcam"));
     enableIPv6.setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
     enableIPv6.setChecked(Settings::getInstance().getEnableIPv6());
+    useTranslations.setText(tr("Use translations","Text on a checkbox to enable translations"));
+    useTranslations.setChecked(Settings::getInstance().getUseTranslations());
 
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);
@@ -40,6 +40,7 @@ SettingsForm::SettingsForm()
     layout.addWidget(&id);
     layout.addWidget(&videoTest);
     layout.addWidget(&enableIPv6);
+    layout.addWidget(&useTranslations);
     layout.addStretch();
 
     head->setLayout(&headLayout);
@@ -83,4 +84,9 @@ void SettingsForm::copyIdClicked()
 {
     id.selectAll();;
     QApplication::clipboard()->setText(id.toPlainText());
+}
+
+void SettingsForm::onUseTranslationUpdated()
+{
+    Settings::getInstance().setUseTranslations(useTranslations.isChecked());
 }

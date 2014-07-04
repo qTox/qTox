@@ -29,6 +29,7 @@ public slots:
 private slots:
     void onTestVideoClicked();
     void onEnableIPv6Updated();
+    void onUseTranslationUpdated();
     void copyIdClicked();
 
 private:
@@ -36,7 +37,7 @@ private:
     QTextEdit id;
     ClickableLabel idLabel;
     QPushButton videoTest;
-    QCheckBox enableIPv6;
+    QCheckBox enableIPv6, useTranslations;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head;
 
