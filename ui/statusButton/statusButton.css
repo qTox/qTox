@@ -4,6 +4,8 @@ QPushButton
     background-color: rgb(65,65,65);
     border: none;
     border-radius: 6px;
+    width: 20px;
+    height: 40px;
 }
 
 QPushButton#online
