@@ -2028,12 +2028,9 @@ QSplitter:handle{
              <widget class="QPushButton" name="statusButton">
               <property name="minimumSize">
                <size>
-                <width>21</width>
+                <width>20</width>
                 <height>40</height>
                </size>
-              </property>
-              <property name="autoFillBackground">
-               <bool>true</bool>
               </property>
               <property name="text">
                <string/>
@@ -2047,6 +2044,15 @@ QSplitter:handle{
                 <width>10</width>
                 <height>10</height>
                </size>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default">
+               <bool>false</bool>
               </property>
               <property name="flat">
                <bool>true</bool>

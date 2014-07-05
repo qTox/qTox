@@ -93,7 +93,9 @@ private slots:
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
     void splitterMoved(int pos, int index);
-    void statusButtonClicked();
+    void setStatusOnline();
+    void setStatusAway();
+    void setStatusBusy();
 
 protected slots:
     void moveWindow(QMouseEvent *e);

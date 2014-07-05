@@ -147,6 +147,15 @@ Widget::Widget(QWidget *parent) :
     QTextStream statusButtonStylesheetStream(&f1);
     ui->statusButton->setStyleSheet(statusButtonStylesheetStream.readAll());
 
+    QMenu *statusButtonMenu = new QMenu(ui->statusButton);
+    QAction* setStatusOnline = statusButtonMenu->addAction(tr("Online","Button to set your status to 'Online'"));
+    setStatusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
+    QAction* setStatusAway = statusButtonMenu->addAction(tr("Away","Button to set your status to 'Away'"));
+    setStatusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
+    QAction* setStatusBusy = statusButtonMenu->addAction(tr("Busy","Button to set your status to 'Busy'"));
+    setStatusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+    ui->statusButton->setMenu(statusButtonMenu);
+
     this->setMouseTracking(true);
 
     QList<QWidget*> widgets = this->findChildren<QWidget*>();
@@ -212,7 +221,9 @@ Widget::Widget(QWidget *parent) :
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
-    connect(ui->statusButton, SIGNAL(clicked()), this, SLOT(statusButtonClicked()));
+    connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
+    connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
+    connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(&settingsForm.name, SIGNAL(textEdited(QString)), this, SLOT(onUsernameChanged(QString)));
     connect(&settingsForm.statusText, SIGNAL(textEdited(QString)), this, SLOT(onStatusMessageChanged(QString)));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -1113,23 +1124,17 @@ void Widget::minimizeBtnClicked()
     }
 }
 
-void Widget::statusButtonClicked()
+void Widget::setStatusOnline()
 {
-    QMenu menu;
-    QAction* online = menu.addAction(tr("Online","Button to set your status to 'Online'"));
-    online->setIcon(QIcon(":ui/statusButton/dot_online.png"));
-    QAction* away = menu.addAction(tr("Away","Button to set your status to 'Away'"));
-    away->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
-    QAction* busy = menu.addAction(tr("Busy","Button to set your status to 'Busy'"));
-    busy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+    core->setStatus(Status::Online);
+}
 
-    ui->statusButton->setMenu(&menu);
-    //Ugly hack since QMenu wouldn't show up properly on Win32
-    QAction* selectedItem = ui->statusButton->menu()->exec(ui->statusButton->mapToGlobal(QPoint(0,ui->statusButton->height())));
-    if (selectedItem == online)
-        core->setStatus(Status::Online);
-    else if (selectedItem == away)
-        core->setStatus(Status::Away);
-    else if (selectedItem == busy)
-        core->setStatus(Status::Busy);
+void Widget::setStatusAway()
+{
+    core->setStatus(Status::Away);
+}
+
+void Widget::setStatusBusy()
+{
+    core->setStatus(Status::Busy);
 }

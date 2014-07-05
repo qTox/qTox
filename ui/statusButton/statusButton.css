@@ -5,10 +5,13 @@ QPushButton
     border: none;
     border-radius: 6px;
 }
-QPushButton:hover
+
+/*Disabled due to a bug preventing button status from 
+  resetting to default after menu item pressed
+QPushButton:hover 
 {
    background-color: rgb(75,75,75);
-}
+}*/
 
 QPushButton:pressed
 {
