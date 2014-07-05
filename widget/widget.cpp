@@ -87,7 +87,6 @@ Widget::Widget(QWidget *parent) :
 
         setWindowFlags(Qt::CustomizeWindowHint);
         setWindowFlags(Qt::FramelessWindowHint);
-        setAttribute(Qt::WA_DeleteOnClose);
 
         addAction(ui->actionClose);
 
@@ -796,13 +795,16 @@ bool Widget::event(QEvent * e)
             inResizeZone = true;
 
             if (yMouse >= wHeight - PIXELS_TO_ACT)
+            {
                 setCursor(Qt::SizeFDiagCursor);
+                resizeWindow(k);
+            }
             else if (yMouse <= PIXELS_TO_ACT)
+            {
                 setCursor(Qt::SizeBDiagCursor);
-            else
-                setCursor(Qt::SizeHorCursor);
+                resizeWindow(k);
+            }
 
-            resizeWindow(k);
         }
         else
         {
