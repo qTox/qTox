@@ -152,6 +152,14 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     chatArea->setWidget(chatAreaWidget);
 
+    //Fix for incorrect layouts on OS X as per
+    //https://bugreports.qt-project.org/browse/QTBUG-14591
+    sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+
     connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
