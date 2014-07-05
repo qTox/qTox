@@ -11,7 +11,7 @@
 #include "widget/form/settingsform.h"
 #include "camera.h"
 
-#define PIXELS_TO_ACT 5
+#define PIXELS_TO_ACT 7
 
 namespace Ui {
 class Widget;
