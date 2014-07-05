@@ -55,11 +55,11 @@ EditableLabelWidget::EditableLabelWidget(QWidget* parent) :
     lineEdit->setMinimumHeight(label->fontMetrics().lineSpacing() + LINE_SPACING_OFFSET);
 
     // Set dark background for >windows
-    QColor toxDarkAsMySoul(28,28,28);
-    QPalette darkPal;
-    darkPal.setColor(QPalette::Window, toxDarkAsMySoul);
-    darkPal.setColor(QPalette::Base, toxDarkAsMySoul);
-    lineEdit->setPalette(darkPal);
+    //QColor toxDarkAsMySoul(28,28,28);
+    //QPalette darkPal;
+    //darkPal.setColor(QPalette::Window, toxDarkAsMySoul);
+    //darkPal.setColor(QPalette::Base, toxDarkAsMySoul);
+    //lineEdit->setPalette(darkPal);
 
     connect(lineEdit, &EscLineEdit::editingFinished,        this, &EditableLabelWidget::onLabelChangeSubmited);
     connect(lineEdit, &EscLineEdit::escPressed,             this, &EditableLabelWidget::onLabelChangeCancelled);

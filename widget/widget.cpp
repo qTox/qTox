@@ -138,7 +138,6 @@ Widget::Widget(QWidget *parent) :
     friendListWidget->layout()->setSpacing(0);
     friendListWidget->layout()->setMargin(0);
     friendListWidget->setLayoutDirection(Qt::LeftToRight);
-    //friendListWidget->
     ui->friendList->setWidget(friendListWidget);
 
     ui->nameLabel->setText(Settings::getInstance().getUsername());
@@ -146,7 +145,6 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    ui->centralWidget->setStyleSheet("QSplitter{background-color: white;}");
 
     this->setMouseTracking(true);
 
@@ -214,8 +212,8 @@ Widget::Widget(QWidget *parent) :
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
     connect(ui->statImg, SIGNAL(clicked()), this, SLOT(onStatusImgClicked()));
-    connect(&settingsForm.name, SIGNAL(textChanged(QString)), this, SLOT(onUsernameChanged(QString)));
-    connect(&settingsForm.statusText, SIGNAL(textChanged(QString)), this, SLOT(onStatusMessageChanged(QString)));
+    connect(&settingsForm.name, SIGNAL(textEdited(QString)), this, SLOT(onUsernameChanged(QString)));
+    connect(&settingsForm.statusText, SIGNAL(textEdited(QString)), this, SLOT(onStatusMessageChanged(QString)));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
 
     coreThread->start();
@@ -431,7 +429,6 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::avEnding, newfriend->chatForm, &ChatForm::onAvEnding);
     connect(core, &Core::avRequestTimeout, newfriend->chatForm, &ChatForm::onAvRequestTimeout);
     connect(core, &Core::avPeerTimeout, newfriend->chatForm, &ChatForm::onAvPeerTimeout);
-    core->saveConfiguration();
 }
 
 void Widget::addFriendFailed(const QString&)
