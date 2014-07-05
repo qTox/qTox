@@ -334,6 +334,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
     } else {
         emit friendAdded(friendId, userId);
     }
+    saveConfiguration();
 }
 
 void Core::sendMessage(int friendId, const QString& message)
