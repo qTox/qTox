@@ -16,11 +16,11 @@
 
 QProgressBar {
      background-color: transparent;
-     border: 1px solid black;
+     border: 1px solid rgb(150,150,150);
      height: 11px;
  }
 
  QProgressBar::chunk {
-     background-color: black;
+     background-color: rgb(150,150,150);
      width: 2px;
  }

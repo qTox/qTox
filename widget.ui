@@ -2026,18 +2026,23 @@ QSplitter:handle{
             </item>
             <item>
              <widget class="QPushButton" name="statusButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>20</width>
                 <height>40</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
                <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="res.qrc">
-                <normaloff>:/ui/statusButton/dot_away.png</normaloff>:/ui/statusButton/dot_away.png</iconset>
               </property>
               <property name="iconSize">
                <size>

@@ -156,6 +156,7 @@ Widget::Widget(QWidget *parent) :
     setStatusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
     ui->statusButton->setMenu(statusButtonMenu);
 
+
     this->setMouseTracking(true);
 
     QList<QWidget*> widgets = this->findChildren<QWidget*>();
@@ -315,14 +316,28 @@ void Widget::onFailedToStartCore()
 
 void Widget::onStatusSet(Status status)
 {
+    //We have to use stylesheets here, there's no way to
+    //prevent the button icon from moving when pressed otherwise
     if (status == Status::Online)
-        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_online.png"));
+    {
+        ui->statusButton->setObjectName("online");
+        ui->statusButton->style()->polish(ui->statusButton);
+    }
     else if (status == Status::Away)
-        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
+    {
+        ui->statusButton->setObjectName("away");
+        ui->statusButton->style()->polish(ui->statusButton);
+    }
     else if (status == Status::Busy)
-        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+    {
+        ui->statusButton->setObjectName("busy");
+        ui->statusButton->style()->polish(ui->statusButton);
+    }
     else if (status == Status::Offline)
-        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_away.png"));
+    {
+        ui->statusButton->setObjectName("offline");
+        ui->statusButton->style()->polish(ui->statusButton);
+    }
 }
 
 void Widget::onAddClicked()
