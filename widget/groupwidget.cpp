@@ -76,6 +76,8 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
     if (selectedItem == quitGroup)
     {
         hide();
+        show(); //Toggle visibility to work around bug of repaintEvent() not being fired on parent widget when this is hidden
+        hide();
         emit removeGroup(groupId);
         return;
     }

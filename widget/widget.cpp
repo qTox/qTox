@@ -791,7 +791,6 @@ bool Widget::event(QEvent * e)
         }
         else if (allowToResize)
             resizeWindow(k);
-        //right
         else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
         {
             inResizeZone = true;
@@ -802,36 +801,6 @@ bool Widget::event(QEvent * e)
                 setCursor(Qt::SizeBDiagCursor);
             else
                 setCursor(Qt::SizeHorCursor);
-
-            resizeWindow(k);
-        }
-        //left
-        else if (xMouse <= PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-
-            if (yMouse >= wHeight - PIXELS_TO_ACT)
-                setCursor(Qt::SizeBDiagCursor);
-            else if (yMouse <= PIXELS_TO_ACT)
-                setCursor(Qt::SizeFDiagCursor);
-            else
-                setCursor(Qt::SizeHorCursor);
-
-            resizeWindow(k);
-        }
-        //bottom edge
-        else if ((yMouse >= wHeight - PIXELS_TO_ACT) or allowToResize)
-        {
-            inResizeZone = true;
-            setCursor(Qt::SizeVerCursor);
-
-            resizeWindow(k);
-        }
-        //Cursor part top
-        else if (yMouse <= PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-            setCursor(Qt::SizeVerCursor);
 
             resizeWindow(k);
         }
