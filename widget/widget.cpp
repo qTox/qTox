@@ -125,9 +125,6 @@ Widget::Widget(QWidget *parent) :
 
     isWindowMinimized = 0;
 
-    //centralLayout = new QSplitter(ui->centralWidget);
-
-
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
@@ -144,6 +141,11 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    QFile f1(":/ui/statusButton/statusButton.css");
+    f1.open(QFile::ReadOnly | QFile::Text);
+    QTextStream statusButtonStylesheetStream(&f1);
+    ui->statusButton->setStyleSheet(statusButtonStylesheetStream.readAll());
 
     this->setMouseTracking(true);
 
@@ -210,7 +212,7 @@ Widget::Widget(QWidget *parent) :
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
-    connect(ui->statImg, SIGNAL(clicked()), this, SLOT(onStatusImgClicked()));
+    connect(ui->statusButton, SIGNAL(clicked()), this, SLOT(statusButtonClicked()));
     connect(&settingsForm.name, SIGNAL(textEdited(QString)), this, SLOT(onUsernameChanged(QString)));
     connect(&settingsForm.statusText, SIGNAL(textEdited(QString)), this, SLOT(onStatusMessageChanged(QString)));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -303,13 +305,13 @@ void Widget::onFailedToStartCore()
 void Widget::onStatusSet(Status status)
 {
     if (status == Status::Online)
-        ui->statImg->setPixmap(QPixmap(":img/status/dot_online_2x.png"));
+        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_online.png"));
     else if (status == Status::Away)
-        ui->statImg->setPixmap(QPixmap(":img/status/dot_idle_2x.png"));
+        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
     else if (status == Status::Busy)
-        ui->statImg->setPixmap(QPixmap(":img/status/dot_busy_2x.png"));
+        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
     else if (status == Status::Offline)
-        ui->statImg->setPixmap(QPixmap(":img/status/dot_away_2x.png"));
+        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_away.png"));
 }
 
 void Widget::onAddClicked()
@@ -1111,15 +1113,19 @@ void Widget::minimizeBtnClicked()
     }
 }
 
-void Widget::onStatusImgClicked()
+void Widget::statusButtonClicked()
 {
     QMenu menu;
     QAction* online = menu.addAction(tr("Online","Button to set your status to 'Online'"));
+    online->setIcon(QIcon(":ui/statusButton/dot_online.png"));
     QAction* away = menu.addAction(tr("Away","Button to set your status to 'Away'"));
+    away->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
     QAction* busy = menu.addAction(tr("Busy","Button to set your status to 'Busy'"));
+    busy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
 
-    QPoint pos = QCursor::pos();
-    QAction* selectedItem = menu.exec(pos);
+    ui->statusButton->setMenu(&menu);
+    //Ugly hack since QMenu wouldn't show up properly on Win32
+    QAction* selectedItem = ui->statusButton->menu()->exec(ui->statusButton->mapToGlobal(QPoint(0,ui->statusButton->height())));
     if (selectedItem == online)
         core->setStatus(Status::Online);
     else if (selectedItem == away)

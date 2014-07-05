@@ -2025,32 +2025,30 @@ QSplitter:handle{
              </spacer>
             </item>
             <item>
-             <widget class="ClickableLabel" name="statImg">
+             <widget class="QPushButton" name="statusButton">
               <property name="minimumSize">
                <size>
-                <width>40</width>
+                <width>21</width>
                 <height>40</height>
                </size>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
+              <property name="autoFillBackground">
+               <bool>true</bool>
               </property>
               <property name="text">
                <string/>
               </property>
-              <property name="pixmap">
-               <pixmap resource="res.qrc">:/img/status/dot_away_2x.png</pixmap>
+              <property name="icon">
+               <iconset resource="res.qrc">
+                <normaloff>:/ui/statusButton/dot_away.png</normaloff>:/ui/statusButton/dot_away.png</iconset>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
+              <property name="iconSize">
+               <size>
+                <width>10</width>
+                <height>10</height>
+               </size>
               </property>
-              <property name="wordWrap">
+              <property name="flat">
                <bool>true</bool>
               </property>
              </widget>
@@ -2077,6 +2075,9 @@ QSplitter:handle{
          <property name="layoutDirection">
           <enum>Qt::RightToLeft</enum>
          </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -2091,7 +2092,7 @@ QSplitter:handle{
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>256</width>
+            <width>255</width>
             <height>199</height>
            </rect>
           </property>
@@ -3279,11 +3280,6 @@ QSplitter:handle{
    <class>EditableLabelWidget</class>
    <extends>QLabel</extends>
    <header>widget/tool/editablelabelwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>widget/tool/clickablelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>
