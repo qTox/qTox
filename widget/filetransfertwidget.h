@@ -16,6 +16,7 @@ struct ToxFile;
 class FileTransfertWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     FileTransfertWidget(ToxFile File);
 
@@ -48,6 +49,7 @@ private:
     QString savePath;
     ToxFile::FileDirection direction;
     QString stopFileButtonStylesheet, pauseFileButtonStylesheet, acceptFileButtonStylesheet;
+    void paintEvent(QPaintEvent *);
 };
 
 #endif // FILETRANSFERTWIDGET_H
