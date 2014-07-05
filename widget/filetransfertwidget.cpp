@@ -118,9 +118,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     infoLayout->setSpacing(4);
 
     textLayout->addWidget(size);
-    textLayout->addStretch(.5);
     textLayout->addWidget(speed);
-    textLayout->addStretch(.5);
     textLayout->addWidget(eta);
     textLayout->setMargin(2);
     textLayout->setSpacing(5);
