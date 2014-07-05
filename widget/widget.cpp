@@ -584,7 +584,6 @@ void Widget::copyFriendIdToClipboard(int friendId)
     Friend* f = FriendList::findFriend(friendId);
     if (f != nullptr)
     {
-        qDebug() << f->userId;
         QClipboard *clipboard = QApplication::clipboard();
         clipboard->setText(f->userId, QClipboard::Clipboard);
     }
