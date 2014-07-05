@@ -38,32 +38,38 @@
         <translation>Merci de remplir un ID Tox valide</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="90"/>
+        <location filename="../widget/form/addfriendform.cpp" line="92"/>
+        <source>This address does not exist</source>
+        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/addfriendform.cpp" line="96"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Erreur en consultant le serveur DNS</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="96"/>
+        <location filename="../widget/form/addfriendform.cpp" line="102"/>
         <source>Unexpected number of text records</source>
         <comment>Error with the DNS</comment>
         <translation>Nombre d&apos;entrées texte innatendu</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="102"/>
+        <location filename="../widget/form/addfriendform.cpp" line="108"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Nombre d&apos;entrées numériques dans l&apos;entrée texte innatendu</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="109"/>
+        <location filename="../widget/form/addfriendform.cpp" line="115"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La réponse DNS ne contient aucun ID Tox</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="115"/>
         <location filename="../widget/form/addfriendform.cpp" line="121"/>
+        <location filename="../widget/form/addfriendform.cpp" line="127"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La réponse DNS ne contient pas d&apos;ID Tox valide</translation>
@@ -85,13 +91,13 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="261"/>
+        <location filename="../widget/form/chatform.cpp" line="265"/>
         <source>Send a file</source>
         <translation>Envoyer un fichier</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="586"/>
-        <location filename="../widget/form/chatform.cpp" line="592"/>
+        <location filename="../widget/form/chatform.cpp" line="590"/>
+        <location filename="../widget/form/chatform.cpp" line="596"/>
         <source>Save chat log</source>
         <translation>Sauvegarder l&apos;historique de conversation</translation>
     </message>
@@ -107,7 +113,7 @@
 <context>
     <name>FileTransfertWidget</name>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="231"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="249"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Sauvegarder un fichier</translation>
@@ -152,19 +158,19 @@
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="65"/>
+        <location filename="../widget/friendwidget.cpp" line="71"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Copier l&apos;ID ami</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="66"/>
+        <location filename="../widget/friendwidget.cpp" line="72"/>
         <source>Invite in group</source>
         <comment>Menu to invite a friend in a groupchat</comment>
         <translation>Inviter dans un groupe</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="76"/>
+        <location filename="../widget/friendwidget.cpp" line="82"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Supprimer ami</translation>
@@ -184,12 +190,12 @@
         <translation>&lt;Inconnu&gt;</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="220"/>
+        <location filename="../widget/form/groupchatform.cpp" line="224"/>
         <source>%1 users in chat</source>
         <translation>%1 personnes</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="239"/>
+        <location filename="../widget/form/groupchatform.cpp" line="243"/>
         <source>Save chat log</source>
         <translation>Sauvegarder l&apos;historique de conversation</translation>
     </message>
@@ -198,18 +204,18 @@
     <name>GroupWidget</name>
     <message>
         <location filename="../widget/groupwidget.cpp" line="38"/>
-        <location filename="../widget/groupwidget.cpp" line="126"/>
+        <location filename="../widget/groupwidget.cpp" line="130"/>
         <source>%1 users in chat</source>
         <translation>%1 personnes</translation>
     </message>
     <message>
         <location filename="../widget/groupwidget.cpp" line="40"/>
-        <location filename="../widget/groupwidget.cpp" line="128"/>
+        <location filename="../widget/groupwidget.cpp" line="132"/>
         <source>0 users in chat</source>
         <translation>0 personnes</translation>
     </message>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="68"/>
+        <location filename="../widget/groupwidget.cpp" line="73"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Quitter le groupe</translation>
@@ -227,80 +233,83 @@
 <context>
     <name>SettingsForm</name>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="13"/>
+        <location filename="../widget/form/settingsform.cpp" line="15"/>
         <source>User Settings</source>
         <comment>&quot;Headline&quot; of the window</comment>
         <translation>Configuration</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="16"/>
+        <location filename="../widget/form/settingsform.cpp" line="18"/>
         <source>Name</source>
         <comment>Username/nick</comment>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="17"/>
+        <location filename="../widget/form/settingsform.cpp" line="19"/>
         <source>Status</source>
         <comment>Status message</comment>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="22"/>
+        <location filename="../widget/form/settingsform.cpp" line="28"/>
         <source>Test video</source>
         <comment>Text on a button to test the video/webcam</comment>
         <translation>Tester la vidéo</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="23"/>
+        <location filename="../widget/form/settingsform.cpp" line="29"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
         <translation>Activer IPv6 (recommandé)</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settingsform.cpp" line="31"/>
+        <source>Use translations</source>
+        <comment>Text on a checkbox to enable translations</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../widget.ui" line="20"/>
+        <location filename="../widget.ui" line="26"/>
         <source>Tox</source>
         <translation>Tox</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="1593"/>
+        <location filename="../widget.ui" line="1935"/>
         <source>Your name</source>
         <translation>Votre nom</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="1675"/>
+        <location filename="../widget.ui" line="2017"/>
         <source>Your status</source>
         <translation>Votre status</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="2811"/>
+        <location filename="../widget.ui" line="3293"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="2814"/>
+        <location filename="../widget.ui" line="3296"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="1112"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>Connecté</translation>
+        <translation type="obsolete">Connecté</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="1113"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Indisponnible</translation>
+        <translation type="obsolete">Indisponnible</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="1114"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Occupé</translation>
+        <translation type="obsolete">Occupé</translation>
     </message>
 </context>
 </TS>

@@ -13,7 +13,8 @@ FORMS    += widget.ui
 CONFIG   += c++11
 
 TRANSLATIONS = translations/fr.ts \
-               translations/ru.ts
+               translations/ru.ts \
+               translations/de.ts
 
 RESOURCES += res.qrc
 
