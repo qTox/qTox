@@ -10,7 +10,6 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     : lastUpdate{QDateTime::currentDateTime()}, lastBytesSent{0},
       fileNum{File.fileNum}, friendId{File.friendId}, direction{File.direction}
 {
-    background = new QFrame;
     pic=new QLabel(), filename=new QLabel(), size=new QLabel(), speed=new QLabel(), eta=new QLabel();
     topright = new QPushButton(), bottomright = new QPushButton();
     progress = new QProgressBar();
@@ -48,6 +47,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     progress->setValue(0);
     progress->setMinimumHeight(11);
     progress->setFont(prettysmall);
+    progress->setTextVisible(false);
     QPalette whitebg;
     whitebg.setColor(QPalette::Window, QColor(255,255,255));
     buttonWidget->setPalette(whitebg);
@@ -118,9 +118,11 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     infoLayout->setSpacing(4);
 
     textLayout->addWidget(size);
+    textLayout->addStretch(.5);
     textLayout->addWidget(speed);
+    textLayout->addStretch(.5);
     textLayout->addWidget(eta);
-    textLayout->setMargin(0);
+    textLayout->setMargin(2);
     textLayout->setSpacing(5);
 
     buttonLayout->addWidget(topright);
@@ -185,13 +187,16 @@ void FileTransfertWidget::onFileTransferCancelled(int FriendId, int FileNum, Tox
     size->setPalette(whiteText);
     this->setObjectName("error");
     this->style()->polish(this);
+
+    //Toggle window visibility to fix draw order bug
+    this->hide();
+    this->show();
 }
 
 void FileTransfertWidget::onFileTransferFinished(ToxFile File)
 {
     if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
             return;
-    buttonLayout->setContentsMargins(0,0,0,0);
     topright->disconnect();
     disconnect(Widget::getInstance()->getCore(),0,this,0);
     progress->hide();
@@ -199,12 +204,17 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile File)
     eta->hide();
     topright->hide();
     bottomright->hide();
+    buttonLayout->setContentsMargins(0,0,0,0);
     QPalette whiteText;
     whiteText.setColor(QPalette::WindowText, Qt::white);
     filename->setPalette(whiteText);
     size->setPalette(whiteText);
     this->setObjectName("success");
     this->style()->polish(this);
+
+    //Toggle window visibility to fix draw order bug
+    this->hide();
+    this->show();
 
     if (File.direction == ToxFile::RECEIVING)
     {

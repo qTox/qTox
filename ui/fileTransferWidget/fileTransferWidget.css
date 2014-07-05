@@ -10,6 +10,17 @@
 }
 
 #success {
-	border-radius: 6px;
 	background-color: rgb(107,194,96);
+	border-radius: 6px;
 }
+
+QProgressBar {
+     background-color: transparent;
+     border: 1px solid black;
+     height: 11px;
+ }
+
+ QProgressBar::chunk {
+     background-color: black;
+     width: 2px;
+ }
