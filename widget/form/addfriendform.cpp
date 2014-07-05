@@ -88,7 +88,11 @@ void AddFriendForm::handleDnsLookup()
 {
     const QString idKeyWord("id=");
 
-    if (dns.error() != QDnsLookup::NoError) {
+    if (dns.error() == QDnsLookup::NotFoundError) {
+        showWarning(tr("This address does not exist","The DNS gives the Tox ID associated to toxme.se addresses"));
+        return;
+    }
+    else if (dns.error() != QDnsLookup::NoError) {
         showWarning(tr("Error while looking up DNS","The DNS gives the Tox ID associated to toxme.se addresses"));
         return;
     }
