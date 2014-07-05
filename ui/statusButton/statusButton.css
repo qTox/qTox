@@ -1,0 +1,23 @@
+QPushButton
+{
+	background: none;
+    background-color: rgb(65,65,65);
+    border: none;
+    border-radius: 6px;
+}
+
+/*Disabled due to a bug preventing button status from 
+  resetting to default after menu item pressed
+QPushButton:hover 
+{
+   background-color: rgb(75,75,75);
+}*/
+
+QPushButton:pressed
+{
+   background-color: rgb(55,55,55);
+}
+
+QPushButton:focus {
+    outline: none;
+}

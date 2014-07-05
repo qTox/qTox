@@ -125,9 +125,6 @@ Widget::Widget(QWidget *parent) :
 
     isWindowMinimized = 0;
 
-    //centralLayout = new QSplitter(ui->centralWidget);
-
-
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
@@ -144,6 +141,20 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    QFile f1(":/ui/statusButton/statusButton.css");
+    f1.open(QFile::ReadOnly | QFile::Text);
+    QTextStream statusButtonStylesheetStream(&f1);
+    ui->statusButton->setStyleSheet(statusButtonStylesheetStream.readAll());
+
+    QMenu *statusButtonMenu = new QMenu(ui->statusButton);
+    QAction* setStatusOnline = statusButtonMenu->addAction(tr("Online","Button to set your status to 'Online'"));
+    setStatusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
+    QAction* setStatusAway = statusButtonMenu->addAction(tr("Away","Button to set your status to 'Away'"));
+    setStatusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
+    QAction* setStatusBusy = statusButtonMenu->addAction(tr("Busy","Button to set your status to 'Busy'"));
+    setStatusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+    ui->statusButton->setMenu(statusButtonMenu);
 
     this->setMouseTracking(true);
 
@@ -210,7 +221,9 @@ Widget::Widget(QWidget *parent) :
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
-    connect(ui->statImg, SIGNAL(clicked()), this, SLOT(onStatusImgClicked()));
+    connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
+    connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
+    connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(&settingsForm.name, SIGNAL(textEdited(QString)), this, SLOT(onUsernameChanged(QString)));
     connect(&settingsForm.statusText, SIGNAL(textEdited(QString)), this, SLOT(onStatusMessageChanged(QString)));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -303,13 +316,13 @@ void Widget::onFailedToStartCore()
 void Widget::onStatusSet(Status status)
 {
     if (status == Status::Online)
-        ui->statImg->setPixmap(QPixmap(":img/status/dot_online_2x.png"));
+        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_online.png"));
     else if (status == Status::Away)
-        ui->statImg->setPixmap(QPixmap(":img/status/dot_idle_2x.png"));
+        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
     else if (status == Status::Busy)
-        ui->statImg->setPixmap(QPixmap(":img/status/dot_busy_2x.png"));
+        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
     else if (status == Status::Offline)
-        ui->statImg->setPixmap(QPixmap(":img/status/dot_away_2x.png"));
+        ui->statusButton->setIcon(QIcon(":ui/statusButton/dot_away.png"));
 }
 
 void Widget::onAddClicked()
@@ -1111,19 +1124,17 @@ void Widget::minimizeBtnClicked()
     }
 }
 
-void Widget::onStatusImgClicked()
+void Widget::setStatusOnline()
 {
-    QMenu menu;
-    QAction* online = menu.addAction(tr("Online","Button to set your status to 'Online'"));
-    QAction* away = menu.addAction(tr("Away","Button to set your status to 'Away'"));
-    QAction* busy = menu.addAction(tr("Busy","Button to set your status to 'Busy'"));
+    core->setStatus(Status::Online);
+}
 
-    QPoint pos = QCursor::pos();
-    QAction* selectedItem = menu.exec(pos);
-    if (selectedItem == online)
-        core->setStatus(Status::Online);
-    else if (selectedItem == away)
-        core->setStatus(Status::Away);
-    else if (selectedItem == busy)
-        core->setStatus(Status::Busy);
+void Widget::setStatusAway()
+{
+    core->setStatus(Status::Away);
+}
+
+void Widget::setStatusBusy()
+{
+    core->setStatus(Status::Busy);
 }
