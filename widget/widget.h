@@ -52,6 +52,7 @@ public:
     void setCentralWidget(QWidget *widget, const QString &widgetName);
     QString getUsername();
     Core* getCore();
+    QThread* getCoreThread();
     Camera* getCamera();
     static Widget* getInstance();
     void showTestCamview();

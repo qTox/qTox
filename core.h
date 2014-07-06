@@ -98,7 +98,7 @@ public:
     QAudioInput* audioInput;
     QIODevice* audioInputDevice;
     ToxAvCodecSettings codecSettings;
-    QTimer playAudioTimer, sendAudioTimer, playVideoTimer, sendVideoTimer;
+    QTimer *playAudioTimer, *sendAudioTimer, *playVideoTimer, *sendVideoTimer;
     int callId;
     int friendId;
     bool videoEnabled;
@@ -109,7 +109,7 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    explicit Core(Camera* cam);
+    explicit Core(Camera* cam, QThread* coreThread);
     ~Core();
 
     int getGroupNumberPeers(int groupId) const;

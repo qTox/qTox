@@ -128,6 +128,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     chatArea->setWidget(chatAreaWidget);
 
+    sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
     connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
