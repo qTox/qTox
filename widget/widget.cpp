@@ -175,6 +175,9 @@ Widget::Widget(QWidget *parent) :
     currentSizes[0] = 225;
     ui->centralWidget->setSizes(currentSizes);
 
+    ui->statusButton->setObjectName("offline");
+    ui->statusButton->style()->polish(ui->statusButton);
+
     camera = new Camera;
     camview = new SelfCamView(camera);
 
