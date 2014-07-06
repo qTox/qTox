@@ -203,8 +203,8 @@ Widget::Widget(QWidget *parent) :
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
-    core = new Core(camera);
     coreThread = new QThread(this);
+    core = new Core(camera, coreThread);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
 
@@ -291,6 +291,11 @@ Widget* Widget::getInstance()
 void Widget::splitterMoved(int, int)
 {
     updateFriendListWidth();
+}
+
+QThread* Widget::getCoreThread()
+{
+    return coreThread;
 }
 
 void Widget::updateFriendListWidth()

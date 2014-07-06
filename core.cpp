@@ -34,7 +34,7 @@ QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 
-Core::Core(Camera* cam) :
+Core::Core(Camera* cam, QThread *coreThread) :
     tox(nullptr), camera(cam)
 {
     toxTimer = new QTimer(this);
@@ -50,6 +50,21 @@ Core::Core(Camera* cam) :
     //connect(fileTimer, &QTimer::timeout, this, &Core::fileHeartbeat);
     connect(bootstrapTimer, &QTimer::timeout, this, &Core::onBootstrapTimer);
     connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::bootstrapDht);
+
+    for (int i=0; i<TOXAV_MAX_CALLS;i++)
+    {
+        calls[i].playAudioTimer = new QTimer(this);
+        calls[i].sendAudioTimer = new QTimer(this);
+        calls[i].playVideoTimer = new QTimer(this);
+        calls[i].sendVideoTimer = new QTimer(this);
+        calls[i].audioBuffer.moveToThread(coreThread);
+        calls[i].playAudioTimer->moveToThread(coreThread);
+        calls[i].sendAudioTimer->moveToThread(coreThread);
+        calls[i].playVideoTimer->moveToThread(coreThread);
+        calls[i].sendVideoTimer->moveToThread(coreThread);
+        connect(calls[i].playVideoTimer, &QTimer::timeout, [this,i](){playCallVideo(i);});
+        connect(calls[i].sendVideoTimer, &QTimer::timeout, [this,i](){sendCallVideo(i);});
+    }
 }
 
 Core::~Core()
@@ -1164,33 +1179,29 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
 
     if (calls[callId].audioOutput != nullptr)
     {
-        calls[callId].playAudioTimer.setInterval(5);
-        calls[callId].playAudioTimer.setSingleShot(true);
-        connect(&calls[callId].playAudioTimer, &QTimer::timeout, [=](){playCallAudio(callId,toxav);});
-        calls[callId].playAudioTimer.start();
+        calls[callId].playAudioTimer->setInterval(5);
+        calls[callId].playAudioTimer->setSingleShot(true);
+        connect(calls[callId].playAudioTimer, &QTimer::timeout, [=](){playCallAudio(callId,toxav);});
+        calls[callId].playAudioTimer->start();
     }
 
     if (calls[callId].audioInput != nullptr)
     {
-        calls[callId].sendAudioTimer.setInterval(5);
-        calls[callId].sendAudioTimer.setSingleShot(true);
-        connect(&calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
-        calls[callId].sendAudioTimer.start();
+        calls[callId].sendAudioTimer->setInterval(5);
+        calls[callId].sendAudioTimer->setSingleShot(true);
+        connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
+        calls[callId].sendAudioTimer->start();
     }
 
     if (calls[callId].videoEnabled)
     {
-        calls[callId].playVideoTimer.setInterval(50);
-        calls[callId].playVideoTimer.setSingleShot(true);
-        connect(&calls[callId].playVideoTimer, &QTimer::timeout, [=](){
-            Widget::getInstance()->getCore()->playCallVideo(callId);});
-        calls[callId].playVideoTimer.start();
+        calls[callId].playVideoTimer->setInterval(50);
+        calls[callId].playVideoTimer->setSingleShot(true);
+        calls[callId].playVideoTimer->start();
 
-        calls[callId].sendVideoTimer.setInterval(50);
-        calls[callId].sendVideoTimer.setSingleShot(true);
-        connect(&calls[callId].sendVideoTimer, &QTimer::timeout, [=](){
-            Widget::getInstance()->getCore()->sendCallVideo(callId);});
-        calls[callId].sendVideoTimer.start();
+        calls[callId].sendVideoTimer->setInterval(50);
+        calls[callId].sendVideoTimer->setSingleShot(true);
+        calls[callId].sendVideoTimer->start();
 
         Widget::getInstance()->getCamera()->suscribe();
     }
@@ -1200,14 +1211,12 @@ void Core::cleanupCall(int callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
     calls[callId].active = false;
-    disconnect(&calls[callId].playAudioTimer,0,0,0);
-    disconnect(&calls[callId].sendAudioTimer,0,0,0);
-    disconnect(&calls[callId].playVideoTimer,0,0,0);
-    disconnect(&calls[callId].sendVideoTimer,0,0,0);
-    calls[callId].playAudioTimer.stop();
-    calls[callId].sendAudioTimer.stop();
-    calls[callId].playVideoTimer.stop();
-    calls[callId].sendVideoTimer.stop();
+    disconnect(calls[callId].playAudioTimer,0,0,0);
+    disconnect(calls[callId].sendAudioTimer,0,0,0);
+    calls[callId].playAudioTimer->stop();
+    calls[callId].sendAudioTimer->stop();
+    calls[callId].playVideoTimer->stop();
+    calls[callId].sendVideoTimer->stop();
     if (calls[callId].audioOutput != nullptr)
     {
         delete calls[callId].audioOutput;
@@ -1238,12 +1247,12 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
             return;
         }
         qDebug() << QString("Core::playCallAudio: Error receiving audio: %1").arg(len);
-        calls[callId].playAudioTimer.start();
+        calls[callId].playAudioTimer->start();
         return;
     }
     if (len == 0)
     {
-        calls[callId].playAudioTimer.start();
+        calls[callId].playAudioTimer->start();
         return;
     }
     //qDebug() << QString("Core: Received %1 bytes, %2 audio bytes free, %3 core buffer size")
@@ -1260,7 +1269,7 @@ void Core::playCallAudio(int callId, ToxAv* toxav)
     if (error != QAudio::NoError)
         qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
 
-    calls[callId].playAudioTimer.start();
+    calls[callId].playAudioTimer->start();
 }
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
@@ -1277,20 +1286,20 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
         if (result < 0)
         {
             qWarning() << QString("Core: Unable to prepare audio frame, error %1").arg(result);
-            calls[callId].sendAudioTimer.start();
+            calls[callId].sendAudioTimer->start();
             return;
         }
         result = toxav_send_audio(toxav, callId, dest, result);
         if (result < 0)
         {
             qWarning() << QString("Core: Unable to send audio frame, error %1").arg(result);
-            calls[callId].sendAudioTimer.start();
+            calls[callId].sendAudioTimer->start();
             return;
         }
-        calls[callId].sendAudioTimer.start();
+        calls[callId].sendAudioTimer->start();
     }
     else
-        calls[callId].sendAudioTimer.start();
+        calls[callId].sendAudioTimer->start();
 }
 
 void Core::playCallVideo(int callId)
@@ -1312,7 +1321,7 @@ void Core::playCallVideo(int callId)
     else
         qDebug() << "Core: Error receiving video frame\n";
 
-    calls[callId].playVideoTimer.start();
+    calls[callId].playVideoTimer->start();
 }
 
 void Core::sendCallVideo(int callId)
@@ -1320,8 +1329,8 @@ void Core::sendCallVideo(int callId)
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    const int bufsize = TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4;
-    uint8_t videobuf[bufsize];
+    static const int bufsize = TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4;
+    static uint8_t* videobuf = new uint8_t[bufsize];
     vpx_image frame = camera->getLastVPXImage();
     if (frame.w && frame.h)
     {
@@ -1329,7 +1338,7 @@ void Core::sendCallVideo(int callId)
         if((result = toxav_prepare_video_frame(toxav, callId, videobuf, bufsize, &frame)) < 0)
         {
             qDebug() << QString("Core: toxav_prepare_video_frame: error %1").arg(result);
-            calls[callId].sendVideoTimer.start();
+            calls[callId].sendVideoTimer->start();
             return;
         }
 
@@ -1340,7 +1349,7 @@ void Core::sendCallVideo(int callId)
     else
         qDebug("Core::sendCallVideo: Invalid frame (bad camera ?)");
 
-    calls[callId].sendVideoTimer.start();
+    calls[callId].sendVideoTimer->start();
 }
 
 void Core::groupInviteFriend(int friendId, int groupId)
