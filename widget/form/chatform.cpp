@@ -173,8 +173,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+//    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+//    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+//    msgEdit->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+//    chatArea->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
