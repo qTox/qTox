@@ -2600,6 +2600,9 @@ QSplitter:handle{
             <property name="flat">
              <bool>true</bool>
             </property>
+            <property name="toolTip">
+             <string>Add friends</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -2638,6 +2641,9 @@ QSplitter:handle{
             </property>
             <property name="flat">
              <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>Create a group chat</string>
             </property>
            </widget>
           </item>
@@ -2684,6 +2690,9 @@ QSplitter:handle{
             <property name="flat">
              <bool>true</bool>
             </property>
+            <property name="toolTip">
+             <string>(button inactive currently)</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -2728,6 +2737,9 @@ QSplitter:handle{
             </property>
             <property name="flat">
              <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>Change your settings</string>
             </property>
            </widget>
           </item>
