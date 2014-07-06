@@ -29,7 +29,7 @@ public:
     enum {capacity = SIZE};
     AudioBuffer(QObject* parent = 0) : QIODevice(parent), tail(0), head(0)
     {
-        static_assert(SIZE > 0, "the size of the buffer must be > 0");
+        static_assert(SIZE > 1, "the size of the buffer must be > 1");
         QIODevice::open(QIODevice::ReadWrite);
     }
 
