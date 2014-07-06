@@ -17,7 +17,7 @@ SettingsForm::SettingsForm()
 
     nameLabel.setText(tr("Name","Username/nick"));
     statusTextLabel.setText(tr("Status","Status message"));
-    idLabel.setText("Tox ID (click here to copy)");
+    idLabel.setText("Tox ID " + tr("(click here to copy)", "Click on this text to copy TID to clipboard"));
     id.setFont(small);
     id.setTextInteractionFlags(Qt::TextSelectableByMouse);
     id.setReadOnly(true);
@@ -48,6 +48,7 @@ SettingsForm::SettingsForm()
 
     connect(&videoTest, SIGNAL(clicked()), this, SLOT(onTestVideoClicked()));
     connect(&enableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
+    connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
     connect(&idLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
 }
 
