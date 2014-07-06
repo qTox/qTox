@@ -73,16 +73,6 @@ public:
             return -1;
         }
 
-#ifdef _WIN32
-        // for more information please read the
-        // comment at the end of this function
-
-        // we should ensure here that data doesn't contain any noise
-        memset(data, 0, maxSize * sizeof(char));
-        // maxSize will be modified, remember it
-        const qint64 returnSize = maxSize;
-#endif
-
         const size_t currentTail = tail.load();
         size_t currentHead = head.load();
         const qint64 contains =  currentHead <= currentTail ?
@@ -107,19 +97,7 @@ public:
         memcpy(data + bytesAlreadyRead, buffer + currentHead, bytesToRead * sizeof(char));
         head.store(nextHead);
 
-#ifdef _WIN32
-        // this hack is necessary for windows since the QAudioOutput stops consuming
-        // if the returned value at the first call is equals to 0. Furthermore
-        // returning a small value like 1 or 100 at the first call of this function
-        // by QAudioOutput will end in laggy sound. In short this hack ensures that:
-        //
-        // 1. QAudioOutput will not stop consuming bytes
-        // 2. The audio output does not lag
-        return returnSize;
-#else
-        // on linux this just works fine
         return maxSize;
-#endif
     }
 
     qint64 bufferSize() const
