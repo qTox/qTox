@@ -18,8 +18,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1920</width>
-    <height>1080</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -2590,6 +2590,9 @@ QSplitter:handle{
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Add friends</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -2599,9 +2602,6 @@ QSplitter:handle{
             </property>
             <property name="flat">
              <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string>Add friends</string>
             </property>
            </widget>
           </item>
@@ -2632,6 +2632,9 @@ QSplitter:handle{
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Create a group chat</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -2641,9 +2644,6 @@ QSplitter:handle{
             </property>
             <property name="flat">
              <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string>Create a group chat</string>
             </property>
            </widget>
           </item>
@@ -2680,6 +2680,9 @@ QSplitter:handle{
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>(button inactive currently)</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -2689,9 +2692,6 @@ QSplitter:handle{
             </property>
             <property name="flat">
              <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string>(button inactive currently)</string>
             </property>
            </widget>
           </item>
@@ -2728,6 +2728,9 @@ QSplitter:handle{
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Change your settings</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -2737,9 +2740,6 @@ QSplitter:handle{
             </property>
             <property name="flat">
              <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string>Change your settings</string>
             </property>
            </widget>
           </item>
