@@ -1,3 +1,19 @@
+/*
+    Copyright (C) 2014 by Project Tox <https://tox.im>
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    This program is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+    See the COPYING file for more details.
+*/
+
 #include "widget.h"
 #include "ui_widget.h"
 #include "settings.h"
@@ -174,6 +190,9 @@ Widget::Widget(QWidget *parent) :
     QList<int> currentSizes = ui->centralWidget->sizes();
     currentSizes[0] = 225;
     ui->centralWidget->setSizes(currentSizes);
+
+    ui->statusButton->setObjectName("offline");
+    ui->statusButton->style()->polish(ui->statusButton);
 
     camera = new Camera;
     camview = new SelfCamView(camera);
@@ -642,13 +661,19 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
             newMessageAlert();
             g->hasNewMessages = 1;
             g->userWasMentioned = 1;
-            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
+            if (useNativeTheme)
+                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+            else
+                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
         }
         else
             if (g->hasNewMessages == 0)
             {
                 g->hasNewMessages = 1;
-                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
+                if (useNativeTheme)
+                    g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+                else
+                    g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
             }
     }
 }
@@ -692,7 +717,10 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     {
         g->hasNewMessages = 0;
         g->userWasMentioned = 0;
-        g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+        if (useNativeTheme)
+            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+        else
+            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
     }
 }
 
@@ -728,6 +756,8 @@ Group *Widget::createGroup(int groupId)
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
     layout->addWidget(newgroup->widget);
+    if (useNativeTheme)
+        newgroup->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     updateFriendListWidth();
     connect(newgroup->widget, SIGNAL(groupWidgetClicked(GroupWidget*)), this, SLOT(onGroupWidgetClicked(GroupWidget*)));
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
@@ -795,7 +825,10 @@ bool Widget::event(QEvent * e)
             Group* g = GroupList::findGroup(activeGroupWidget->groupId);
             g->hasNewMessages = 0;
             g->userWasMentioned = 0;
-            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+            if (useNativeTheme)
+                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+            else
+                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
         }
     }
     else if (e->type() == QEvent::WindowDeactivate && !useNativeTheme)
