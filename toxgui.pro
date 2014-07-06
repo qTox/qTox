@@ -4,6 +4,22 @@
 #
 #-------------------------------------------------
 
+
+#    Copyright (C) 2014 by Project Tox <https://tox.im>
+#
+#    This file is part of qTox, a Qt-based graphical interface for Tox.
+#
+#    This program is libre software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+#    See the COPYING file for more details.
+
+
 QT       += core gui network multimedia multimediawidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,7 +29,8 @@ FORMS    += widget.ui
 CONFIG   += c++11
 
 TRANSLATIONS = translations/fr.ts \
-               translations/ru.ts
+               translations/ru.ts \
+               translations/de.ts
 
 RESOURCES += res.qrc
 
@@ -22,7 +39,7 @@ INSTALLS += target
 
 INCLUDEPATH += libs/include
 win32 {
-    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a
+    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread
 } else {
     LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
 }

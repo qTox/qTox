@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2014 by Project Tox <https://tox.im>
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    This program is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+    See the COPYING file for more details.
+-->
+
 <ui version="4.0">
  <class>Widget</class>
  <widget class="QWidget" name="Widget">
@@ -18,8 +34,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1920</width>
-    <height>1080</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -2030,7 +2046,7 @@ QSplitter:handle{
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>2</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
@@ -2115,7 +2131,7 @@ QSplitter:handle{
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>255</width>
+            <width>256</width>
             <height>199</height>
            </rect>
           </property>
@@ -2590,6 +2606,9 @@ QSplitter:handle{
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Add friends</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -2628,6 +2647,9 @@ QSplitter:handle{
             </property>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="toolTip">
+             <string>Create a group chat</string>
             </property>
             <property name="text">
              <string/>
@@ -2674,6 +2696,9 @@ QSplitter:handle{
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>(button inactive currently)</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -2718,6 +2743,9 @@ QSplitter:handle{
             </property>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="toolTip">
+             <string>Change your settings</string>
             </property>
             <property name="text">
              <string/>

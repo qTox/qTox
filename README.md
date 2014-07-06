@@ -57,6 +57,8 @@ export PATH=/location/to/qmake/binary:$PATH
 
 For myself, the qmake binary was located in /Users/mouseym/Qt/5.3/clang_64/bin/.
 
+This is not a permanent change, it will revert when you close the terminal window, to add it permanently you will need to add echo the above line to your .profile/.bash_profile.
+
 Once this is installed, do the following;
 
 ```bash
@@ -71,7 +73,7 @@ Open up the Makefile in a text editor (TextEdit/TextWrangler, etc).
 
 You will need to modify the Makefile to point to your toxcore libs/includes.
 
-The first change you will need to make is to point the Makefile towards the tox libs installed on your system. (Generally this is /usr/local/libs/).
+The first change you will need to make is to point the Makefile towards the tox libs installed on your system. (Generally this is /usr/local/lib/).
 
 Look for the line in the Makefile which references /toxgui/lib/libs/ and replace with the above).
 
@@ -80,8 +82,9 @@ The second change to Makefile is to add the location of the includes (On my syst
 To do this, search for the INCLUDES line and add the following to the end;
 
 ```bash
--I/usr/local/include/tox/
+-I/usr/local/include/
 ```
+Do not point it to the tox/ directory as the build script will look in there for you.
 
 Save the Makefile.
 
