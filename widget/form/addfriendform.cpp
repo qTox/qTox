@@ -2,8 +2,9 @@
 
 #include <QFont>
 #include <QMessageBox>
+#include <tox/tox.h>
 
-#define TOX_ID_SIZE 76
+#define TOX_ID_LENGTH 2*TOX_FRIEND_ADDRESS_SIZE
 
 AddFriendForm::AddFriendForm() : dns(this)
 {
@@ -50,7 +51,7 @@ void AddFriendForm::show(Ui::Widget &ui)
 bool AddFriendForm::isToxId(const QString &value) const
 {
     const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");
-    return value.length() == TOX_ID_SIZE && value.contains(hexRegExp);
+    return value.length() == TOX_ID_LENGTH && value.contains(hexRegExp);
 }
 
 void AddFriendForm::showWarning(const QString &message) const
@@ -117,12 +118,12 @@ void AddFriendForm::handleDnsLookup()
     }
 
     idx += idKeyWord.length();
-    if (entry.length() < idx + static_cast<int>(TOX_ID_SIZE)) {
+    if (entry.length() < idx + static_cast<int>(TOX_ID_LENGTH)) {
         showWarning(tr("The DNS lookup does not contain a valid Tox ID", "Error with the DNS"));
         return;
     }
 
-    const QString friendAdress = entry.mid(idx, TOX_ID_SIZE);
+    const QString friendAdress = entry.mid(idx, TOX_ID_LENGTH);
     if (!isToxId(friendAdress)) {
         showWarning(tr("The DNS lookup does not contain a valid Tox ID", "Error with the DNS"));
         return;
