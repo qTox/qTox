@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia multimediawidgets
+QT       += core gui network multimedia multimediawidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET    = toxgui
@@ -12,12 +12,18 @@ TEMPLATE  = app
 FORMS    += widget.ui
 CONFIG   += c++11
 
-RESOURCES += \
-    res.qrc
+TRANSLATIONS = translations/fr.ts \
+               translations/ru.ts \
+               translations/de.ts
+
+RESOURCES += res.qrc
+
+target.path = /usr/local/bin
+INSTALLS += target
 
 INCLUDEPATH += libs/include
 win32 {
-    LIBS += libs/lib/libtoxav.a libs/lib/libopus.a libs/lib/libvpx.a libs/lib/libtoxcore.a -lws2_32 libs/lib/libsodium.a
+    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a
 } else {
     LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
 }

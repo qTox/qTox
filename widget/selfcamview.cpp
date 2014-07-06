@@ -13,7 +13,7 @@ SelfCamView::SelfCamView(Camera* Cam, QWidget* parent)
       mainLayout{new QHBoxLayout()}, cam(Cam)
 {
     setLayout(mainLayout);
-    setWindowTitle(tr("Tox video test","Title of the window to test the video/webcam"));
+    setWindowTitle(SelfCamView::tr("Tox video test","Title of the window to test the video/webcam"));
     setMinimumSize(320,240);
 
     updateDisplayTimer.setInterval(5);

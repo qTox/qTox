@@ -1,0 +1,60 @@
+QPushButton
+{
+    background: none;
+    background-color: rgb(65,65,65);
+    border: none;
+    border-radius: 6px;
+    width: 20px;
+    height: 40px;
+}
+
+QPushButton#online
+{
+  image: url(":ui/statusButton/dot_online.png") center center;
+}
+
+QPushButton#away
+{
+  image: url(":ui/statusButton/dot_idle.png") center center;
+}
+
+QPushButton#busy
+{
+  image: url(":ui/statusButton/dot_busy.png") center center;
+}
+
+QPushButton#offline
+{
+  image: url(":ui/statusButton/dot_away.png") center center;
+}
+
+QPushButton:default 
+{
+   background-color: rgb(65,65,65);
+}
+
+/*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
+QPushButton:hover 
+{
+   background-color: rgb(75,75,75);
+}
+
+QPushButton:pressed
+{
+   background-color: rgb(55,55,55);
+}
+
+QPushButton:focus {
+    outline: none;
+}
+
+QPushButton::menu-indicator {image: none;}
+
+QPushButton::menu-indicator:pressed, QPushButton::menu-indicator:open 
+{
+  image: url(":ui/statusButton/menu_indicator.png");
+  subcontrol-origin: padding;
+  subcontrol-position: bottom center;
+  position: relative;
+    bottom: 2px;
+}

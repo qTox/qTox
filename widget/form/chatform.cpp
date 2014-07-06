@@ -152,6 +152,14 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     chatArea->setWidget(chatAreaWidget);
 
+    //Fix for incorrect layouts on OS X as per
+    //https://bugreports.qt-project.org/browse/QTBUG-14591
+    sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+
     connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
@@ -215,6 +223,8 @@ void ChatForm::addMessage(QString author, QString message, QString date)
 
 void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
 {
+    QPalette greentext;
+    greentext.setColor(QPalette::WindowText, QColor(61,204,61));
     QScrollBar* scroll = chatArea->verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);
@@ -242,6 +252,8 @@ void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     }
     else if (curRow)// onSaveLogClicked expects 0 or 3 QLabel per line
         author->setText("");
+    if (message->text()[0] == '>')
+        message->setPalette(greentext);
     mainChatLayout->addWidget(author, curRow, 0);
     mainChatLayout->addWidget(message, curRow, 1);
     mainChatLayout->addWidget(date, curRow, 3);

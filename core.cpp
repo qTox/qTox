@@ -39,14 +39,14 @@ Core::Core(Camera* cam) :
 {
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
-    saveTimer = new QTimer(this);
-    saveTimer->start(TOX_SAVE_INTERVAL);
+    //saveTimer = new QTimer(this);
+    //saveTimer->start(TOX_SAVE_INTERVAL);
     //fileTimer = new QTimer(this);
     //fileTimer->start(TOX_FILE_INTERVAL);
     bootstrapTimer = new QTimer(this);
     bootstrapTimer->start(TOX_BOOTSTRAP_INTERVAL);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
-    connect(saveTimer, &QTimer::timeout, this, &Core::saveConfiguration);
+    //connect(saveTimer, &QTimer::timeout, this, &Core::saveConfiguration); //Disable save timer in favor of saving on events
     //connect(fileTimer, &QTimer::timeout, this, &Core::fileHeartbeat);
     connect(bootstrapTimer, &QTimer::timeout, this, &Core::onBootstrapTimer);
     connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::bootstrapDht);
@@ -317,6 +317,7 @@ void Core::acceptFriendRequest(const QString& userId)
     if (friendId == -1) {
         emit failedToAddFriend(userId);
     } else {
+        saveConfiguration();
         emit friendAdded(friendId, userId);
     }
 }
@@ -333,6 +334,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
     } else {
         emit friendAdded(friendId, userId);
     }
+    saveConfiguration();
 }
 
 void Core::sendMessage(int friendId, const QString& message)
@@ -537,6 +539,7 @@ void Core::removeFriend(int friendId)
     if (tox_del_friend(tox, friendId) == -1) {
         emit failedToRemoveFriend(friendId);
     } else {
+        saveConfiguration();
         emit friendRemoved(friendId);
     }
 }
@@ -553,6 +556,7 @@ void Core::setUsername(const QString& username)
     if (tox_set_name(tox, cUsername.data(), cUsername.size()) == -1) {
         emit failedToSetUsername(username);
     } else {
+        saveConfiguration();
         emit usernameSet(username);
     }
 }
@@ -564,6 +568,7 @@ void Core::setStatusMessage(const QString& message)
     if (tox_set_status_message(tox, cMessage.data(), cMessage.size()) == -1) {
         emit failedToSetStatusMessage(message);
     } else {
+        saveConfiguration();
         emit statusMessageSet(message);
     }
 }
@@ -587,6 +592,7 @@ void Core::setStatus(Status status)
     }
 
     if (tox_set_user_status(tox, userstatus) == 0) {
+        saveConfiguration();
         emit statusSet(status);
     } else {
         emit failedToSetStatus(status);
@@ -1112,8 +1118,8 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].callId = callId;
     calls[callId].friendId = friendId;
     calls[callId].codecSettings = av_DefaultSettings;
-    calls[callId].codecSettings.video_width = TOXAV_VIDEO_WIDTH;
-    calls[callId].codecSettings.video_height = TOXAV_VIDEO_HEIGHT;
+    calls[callId].codecSettings.max_video_width = TOXAV_VIDEO_WIDTH;
+    calls[callId].codecSettings.max_video_height = TOXAV_VIDEO_HEIGHT;
     calls[callId].videoEnabled = videoEnabled;
     toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, videoEnabled);
 

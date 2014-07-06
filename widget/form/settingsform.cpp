@@ -2,6 +2,8 @@
 #include "widget/widget.h"
 #include "settings.h"
 #include <QFont>
+#include <QClipboard>
+#include <QApplication>
 
 SettingsForm::SettingsForm()
     : QObject()
@@ -9,19 +11,25 @@ SettingsForm::SettingsForm()
     main = new QWidget(), head = new QWidget();
     QFont bold, small;
     bold.setBold(true);
-    small.setPixelSize(7);
+    small.setPixelSize(13);
     headLabel.setText(tr("User Settings","\"Headline\" of the window"));
     headLabel.setFont(bold);
 
     nameLabel.setText(tr("Name","Username/nick"));
     statusTextLabel.setText(tr("Status","Status message"));
-    idLabel.setText("Tox ID");
+    idLabel.setText("Tox ID (click here to copy)");
     id.setFont(small);
     id.setTextInteractionFlags(Qt::TextSelectableByMouse);
+    id.setReadOnly(true);
+    id.setFrameStyle(QFrame::NoFrame);
+    id.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    id.setFixedHeight(id.document()->size().height());
 
     videoTest.setText(tr("Test video","Text on a button to test the video/webcam"));
     enableIPv6.setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
     enableIPv6.setChecked(Settings::getInstance().getEnableIPv6());
+    useTranslations.setText(tr("Use translations","Text on a checkbox to enable translations"));
+    useTranslations.setChecked(Settings::getInstance().getUseTranslations());
 
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);
@@ -32,6 +40,7 @@ SettingsForm::SettingsForm()
     layout.addWidget(&id);
     layout.addWidget(&videoTest);
     layout.addWidget(&enableIPv6);
+    layout.addWidget(&useTranslations);
     layout.addStretch();
 
     head->setLayout(&headLayout);
@@ -39,6 +48,7 @@ SettingsForm::SettingsForm()
 
     connect(&videoTest, SIGNAL(clicked()), this, SLOT(onTestVideoClicked()));
     connect(&enableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
+    connect(&idLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
 }
 
 SettingsForm::~SettingsForm()
@@ -68,4 +78,15 @@ void SettingsForm::onTestVideoClicked()
 void SettingsForm::onEnableIPv6Updated()
 {
     Settings::getInstance().setEnableIPv6(enableIPv6.isChecked());
+}
+
+void SettingsForm::copyIdClicked()
+{
+    id.selectAll();;
+    QApplication::clipboard()->setText(id.toPlainText());
+}
+
+void SettingsForm::onUseTranslationUpdated()
+{
+    Settings::getInstance().setUseTranslations(useTranslations.isChecked());
 }

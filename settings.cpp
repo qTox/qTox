@@ -72,18 +72,11 @@ void Settings::load()
         s.endArray();
     s.endGroup();
 
-    //NOTE: uncomment when logging will be implemented
-/*
-    s.beginGroup("Logging");
-       enableLogging = s.value("enableLogging", false).toBool();
-       encryptLogs = s.value("encryptLogs", true).toBool();
-    s.endGroup();
-*/
-
     s.beginGroup("General");
         username = s.value("username", "My name").toString();
         statusMessage = s.value("statusMessage", "My status").toString();
         enableIPv6 = s.value("enableIPv6", true).toBool();
+        useTranslations = s.value("useTranslations", true).toBool();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -132,18 +125,11 @@ void Settings::save()
         s.endArray();
     s.endGroup();
 
-    //NOTE: uncomment when logging will be implemented
-/*
-    s.beginGroup("Logging");
-        s.setValue("storeLogs", enableLogging);
-        s.setValue("encryptLogs", encryptLogs);
-    s.endGroup();
-*/
-
     s.beginGroup("General");
         s.setValue("username", username);
         s.setValue("statusMessage", statusMessage);
         s.setValue("enableIPv6", enableIPv6);
+        s.setValue("useTranslations",useTranslations);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -219,6 +205,16 @@ bool Settings::getEnableIPv6() const
 void Settings::setEnableIPv6(bool newValue)
 {
     enableIPv6 = newValue;
+}
+
+bool Settings::getUseTranslations() const
+{
+    return useTranslations;
+}
+
+void Settings::setUseTranslations(bool newValue)
+{
+    useTranslations = newValue;
 }
 
 bool Settings::getEnableLogging() const

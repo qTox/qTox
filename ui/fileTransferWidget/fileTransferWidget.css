@@ -1,0 +1,26 @@
+#default {
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	background-color: rgb(209,209,209);
+}
+
+#error {
+	border-radius: 6px;
+	background-color: rgb(200,78,78);
+}
+
+#success {
+	background-color: rgb(107,194,96);
+	border-radius: 6px;
+}
+
+QProgressBar {
+     background-color: transparent;
+     border: 1px solid rgb(150,150,150);
+     height: 11px;
+ }
+
+ QProgressBar::chunk {
+     background-color: rgb(150,150,150);
+     width: 2px;
+ }

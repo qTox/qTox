@@ -35,9 +35,9 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     this->setPalette(pal3);
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        nusers.setText(QString(tr("%1 users in chat")).arg(g->peers.size()));
+        nusers.setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
     else
-        nusers.setText(tr("0 users in chat"));
+        nusers.setText(GroupWidget::tr("0 users in chat"));
 
     textLayout.addStretch();
     textLayout.addWidget(&name);
@@ -56,6 +56,11 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     isActiveWidget = 0;
 }
 
+void GroupWidget::setNewFixedWidth(int newWidth)
+{
+    this->setFixedWidth(newWidth);
+}
+
 void GroupWidget::mouseReleaseEvent (QMouseEvent*)
 {
     emit groupWidgetClicked(this);
@@ -65,17 +70,16 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    menu.addAction(tr("Quit group","Menu to quit a groupchat"));
+    QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
 
     QAction* selectedItem = menu.exec(pos);
-    if (selectedItem)
+    if (selectedItem == quitGroup)
     {
-        if (selectedItem->text() == "Quit group")
-        {
-            hide();
-            emit removeGroup(groupId);
-            return;
-        }
+        hide();
+        show(); //Toggle visibility to work around bug of repaintEvent() not being fired on parent widget when this is hidden
+        hide();
+        emit removeGroup(groupId);
+        return;
     }
 }
 
@@ -163,5 +167,5 @@ void GroupWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap("img/group.png"));
+    avatar.setPixmap(QPixmap(":img/group.png"));
 }
