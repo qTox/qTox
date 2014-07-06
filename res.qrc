@@ -109,5 +109,6 @@
         <file>ui/statusButton/dot_online.png</file>
         <file>ui/statusButton/statusButton.css</file>
         <file>ui/statusButton/menu_indicator.png</file>
+        <file>translations/de.qm</file>
     </qresource>
 </RCC>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>AddFriendForm</name>
     <message>
@@ -41,31 +41,37 @@
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="92"/>
+        <source>This address does not exist</source>
+        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/addfriendform.cpp" line="96"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Ошибка при просмотре DNS</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="98"/>
+        <location filename="../widget/form/addfriendform.cpp" line="102"/>
         <source>Unexpected number of text records</source>
         <comment>Error with the DNS</comment>
         <translation>Непредвиденное количество текстовых записей</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="104"/>
+        <location filename="../widget/form/addfriendform.cpp" line="108"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Непредвиденное количество значений в текстовой записи</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="111"/>
+        <location filename="../widget/form/addfriendform.cpp" line="115"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>В ответе DNS ни одного Tox ID</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="117"/>
-        <location filename="../widget/form/addfriendform.cpp" line="123"/>
+        <location filename="../widget/form/addfriendform.cpp" line="121"/>
+        <location filename="../widget/form/addfriendform.cpp" line="127"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>Ответ DNS не содержит корректных Tox ID</translation>
@@ -87,13 +93,13 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="261"/>
+        <location filename="../widget/form/chatform.cpp" line="265"/>
         <source>Send a file</source>
         <translation type="unfinished">Отправить файл</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="586"/>
-        <location filename="../widget/form/chatform.cpp" line="592"/>
+        <location filename="../widget/form/chatform.cpp" line="590"/>
+        <location filename="../widget/form/chatform.cpp" line="596"/>
         <source>Save chat log</source>
         <translation>Сохранить лог чата</translation>
     </message>
@@ -109,7 +115,7 @@
 <context>
     <name>FileTransfertWidget</name>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="233"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="249"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Сохранить файл</translation>
@@ -188,12 +194,12 @@
         <translation>&lt;Неизвестно&gt;</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="220"/>
+        <location filename="../widget/form/groupchatform.cpp" line="224"/>
         <source>%1 users in chat</source>
         <translation>%1 пользователей в чате</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="239"/>
+        <location filename="../widget/form/groupchatform.cpp" line="243"/>
         <source>Save chat log</source>
         <translation>Сохранить лог чата</translation>
     </message>
@@ -208,13 +214,13 @@
     </message>
     <message>
         <location filename="../widget/groupwidget.cpp" line="38"/>
-        <location filename="../widget/groupwidget.cpp" line="128"/>
+        <location filename="../widget/groupwidget.cpp" line="130"/>
         <source>%1 users in chat</source>
         <translation>%1 пользователей в чате</translation>
     </message>
     <message>
         <location filename="../widget/groupwidget.cpp" line="40"/>
-        <location filename="../widget/groupwidget.cpp" line="130"/>
+        <location filename="../widget/groupwidget.cpp" line="132"/>
         <source>0 users in chat</source>
         <translation>Ни одного пользователя в чате</translation>
     </message>
@@ -231,34 +237,40 @@
 <context>
     <name>SettingsForm</name>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="13"/>
+        <location filename="../widget/form/settingsform.cpp" line="15"/>
         <source>User Settings</source>
         <comment>&quot;Headline&quot; of the window</comment>
         <translation>Пользовательские настройки</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="16"/>
+        <location filename="../widget/form/settingsform.cpp" line="18"/>
         <source>Name</source>
         <comment>Username/nick</comment>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="17"/>
+        <location filename="../widget/form/settingsform.cpp" line="19"/>
         <source>Status</source>
         <comment>Status message</comment>
         <translation>Статус</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="22"/>
+        <location filename="../widget/form/settingsform.cpp" line="28"/>
         <source>Test video</source>
         <comment>Text on a button to test the video/webcam</comment>
         <translation>Проверить видео</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="23"/>
+        <location filename="../widget/form/settingsform.cpp" line="29"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
         <translation>Включить IPv6 (рекомендуется)</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settingsform.cpp" line="31"/>
+        <source>Use translations</source>
+        <comment>Text on a checkbox to enable translations</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -269,43 +281,40 @@
         <translation>Tox</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="1683"/>
+        <location filename="../widget.ui" line="1935"/>
         <source>Your name</source>
         <translation>Ваше имя</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="1759"/>
+        <location filename="../widget.ui" line="2017"/>
         <source>Your status</source>
         <translation>Ваш статус</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="3005"/>
+        <location filename="../widget.ui" line="3293"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="3008"/>
+        <location filename="../widget.ui" line="3296"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="1149"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>В сети</translation>
+        <translation type="obsolete">В сети</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="1150"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translatorcomment>Вероятно, это не столь долгое путешествие</translatorcomment>
-        <translation>Отошёл</translation>
+        <translation type="obsolete">Отошёл</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="1151"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Занят</translation>
+        <translation type="obsolete">Занят</translation>
     </message>
 </context>
 </TS>
