@@ -1118,8 +1118,8 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].callId = callId;
     calls[callId].friendId = friendId;
     calls[callId].codecSettings = av_DefaultSettings;
-    calls[callId].codecSettings.video_width = TOXAV_VIDEO_WIDTH;
-    calls[callId].codecSettings.video_height = TOXAV_VIDEO_HEIGHT;
+    calls[callId].codecSettings.max_video_width = TOXAV_VIDEO_WIDTH;
+    calls[callId].codecSettings.max_video_height = TOXAV_VIDEO_HEIGHT;
     calls[callId].videoEnabled = videoEnabled;
     toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, videoEnabled);
 
