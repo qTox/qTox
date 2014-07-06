@@ -642,13 +642,19 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
             newMessageAlert();
             g->hasNewMessages = 1;
             g->userWasMentioned = 1;
-            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
+            if (useNativeTheme)
+                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+            else
+                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
         }
         else
             if (g->hasNewMessages == 0)
             {
                 g->hasNewMessages = 1;
-                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
+                if (useNativeTheme)
+                    g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+                else
+                    g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
             }
     }
 }
@@ -692,7 +698,10 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     {
         g->hasNewMessages = 0;
         g->userWasMentioned = 0;
-        g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+        if (useNativeTheme)
+            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+        else
+            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
     }
 }
 
@@ -728,6 +737,8 @@ Group *Widget::createGroup(int groupId)
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
     layout->addWidget(newgroup->widget);
+    if (useNativeTheme)
+        newgroup->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     updateFriendListWidth();
     connect(newgroup->widget, SIGNAL(groupWidgetClicked(GroupWidget*)), this, SLOT(onGroupWidgetClicked(GroupWidget*)));
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
@@ -795,7 +806,10 @@ bool Widget::event(QEvent * e)
             Group* g = GroupList::findGroup(activeGroupWidget->groupId);
             g->hasNewMessages = 0;
             g->userWasMentioned = 0;
-            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+            if (useNativeTheme)
+                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+            else
+                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
         }
     }
     else if (e->type() == QEvent::WindowDeactivate && !useNativeTheme)
