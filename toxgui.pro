@@ -111,7 +111,6 @@ SOURCES += \
     settings.cpp \
     cdata.cpp \
     cstring.cpp \
-    audiobuffer.cpp \
     widget/selfcamview.cpp \
     widget/videosurface.cpp \
     widget/camera.cpp \

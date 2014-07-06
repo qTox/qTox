@@ -93,7 +93,7 @@ struct ToxFile
 struct ToxCall
 {
 public:
-    AudioBuffer audioBuffer;
+    AudioBuffer<16384 /*16 kb*/> audioBuffer;
     QAudioOutput* audioOutput;
     QAudioInput* audioInput;
     QIODevice* audioInputDevice;
