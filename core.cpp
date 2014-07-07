@@ -53,10 +53,10 @@ Core::Core(Camera* cam, QThread *coreThread) :
 
     for (int i=0; i<TOXAV_MAX_CALLS;i++)
     {
-        calls[i].playAudioTimer = new QTimer(this);
-        calls[i].sendAudioTimer = new QTimer(this);
-        calls[i].playVideoTimer = new QTimer(this);
-        calls[i].sendVideoTimer = new QTimer(this);
+        calls[i].playAudioTimer = new QTimer();
+        calls[i].sendAudioTimer = new QTimer();
+        calls[i].playVideoTimer = new QTimer();
+        calls[i].sendVideoTimer = new QTimer();
         calls[i].audioBuffer.moveToThread(coreThread);
         calls[i].playAudioTimer->moveToThread(coreThread);
         calls[i].sendAudioTimer->moveToThread(coreThread);
