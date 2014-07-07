@@ -244,8 +244,8 @@ Widget::Widget(QWidget *parent) :
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
-    connect(&settingsForm.name, SIGNAL(textEdited(QString)), this, SLOT(onUsernameChanged(QString)));
-    connect(&settingsForm.statusText, SIGNAL(textEdited(QString)), this, SLOT(onStatusMessageChanged(QString)));
+    connect(&settingsForm.name, SIGNAL(editingFinished()), this, SLOT(onUsernameChanged()));
+    connect(&settingsForm.statusText, SIGNAL(editingFinished()), this, SLOT(onStatusMessageChanged()));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
 
     coreThread->start();
@@ -410,8 +410,9 @@ void Widget::hideMainForms()
     }
 }
 
-void Widget::onUsernameChanged(const QString& newUsername)
+void Widget::onUsernameChanged()
 {
+    const QString newUsername = settingsForm.name.text();
     ui->nameLabel->setText(newUsername);
     settingsForm.name.setText(newUsername);
     core->setUsername(newUsername);
@@ -431,8 +432,9 @@ void Widget::setUsername(const QString& username)
     Settings::getInstance().setUsername(username);
 }
 
-void Widget::onStatusMessageChanged(const QString& newStatusMessage)
+void Widget::onStatusMessageChanged()
 {
+    const QString newStatusMessage = settingsForm.statusText.text();
     ui->statusLabel->setText(newStatusMessage);
     settingsForm.statusText.setText(newStatusMessage);
     core->setStatusMessage(newStatusMessage);
