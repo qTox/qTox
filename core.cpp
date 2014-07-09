@@ -1152,6 +1152,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     else
     {
         calls[callId].audioOutput = new QAudioOutput(format);
+        calls[callId].audioOutput->setBufferSize(1900*30); // Make this bigger to get less underflows, but more latency
         calls[callId].audioOutput->start(&calls[callId].audioBuffer);
         int error = calls[callId].audioOutput->error();
         if (error != QAudio::NoError)
@@ -1177,7 +1178,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
 
     if (calls[callId].audioInput != nullptr)
     {
-        calls[callId].sendAudioTimer->setInterval(5);
+        calls[callId].sendAudioTimer->setInterval(2);
         calls[callId].sendAudioTimer->setSingleShot(true);
         connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
         calls[callId].sendAudioTimer->start();
@@ -1215,7 +1216,7 @@ void Core::cleanupCall(int callId)
     calls[callId].audioBuffer.clear();
 }
 
-void Core::playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int length)
+void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length)
 {
     calls[callId].audioBuffer.write((char*)data, length*2);
     int state = calls[callId].audioOutput->state();
