@@ -98,7 +98,7 @@ public:
     QAudioInput* audioInput;
     QIODevice* audioInputDevice;
     ToxAvCodecSettings codecSettings;
-    QTimer *playAudioTimer, *sendAudioTimer, *playVideoTimer, *sendVideoTimer;
+    QTimer *sendAudioTimer, *sendVideoTimer;
     int callId;
     int friendId;
     bool videoEnabled;
@@ -254,9 +254,9 @@ private:
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
-    static void playCallAudio(int callId, ToxAv* toxav);
-    static void sendCallAudio(int callId, ToxAv* toxav); // Blocking, start in a thread
-    void playCallVideo(int callId);
+    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int length); // Callback
+    static void sendCallAudio(int callId, ToxAv* toxav);
+    static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img);
     void sendCallVideo(int callId);
 
     void checkConnection();
