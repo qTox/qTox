@@ -215,8 +215,8 @@ Widget::Widget(QWidget *parent) :
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
     connect(core, &Core::friendAddressGenerated, &settingsForm, &SettingsForm::setFriendAddress);
-    connect(core, SIGNAL(Core::fileDownloadFinished(QString&)), &filesForm, SLOT(FilesForm::onFileDownloadComplete(QString&)));
-    connect(core, SIGNAL(Core::fileUploadFinished(QString&)), &filesForm, SLOT(FilesForm::onFileUploadComplete(QString&)));
+    connect(core, SIGNAL(fileDownloadFinished(const QString&)), &filesForm, SLOT(onFileDownloadComplete(const QString&)));
+    connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
