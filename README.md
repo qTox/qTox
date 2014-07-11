@@ -68,27 +68,12 @@ cd toxgui
 qmake
 ```
 
-Do not run make, as we need further modifications to toxgui.
-
-Open up the Makefile in a text editor (TextEdit/TextWrangler, etc).
-
-You will need to modify the Makefile to point to your toxcore libs/includes.
-
-The first change you will need to make is to point the Makefile towards the tox libs installed on your system. (Generally this is /usr/local/lib/).
-
-Look for the line in the Makefile which references /toxgui/lib/libs/ and replace with the above).
-
-The second change to Makefile is to add the location of the includes (On my system these were placed in /usr/local/include/tox/).
-
-To do this, search for the INCLUDES line and add the following to the end;
-
-```bash
--I/usr/local/include/
+Now, we need to create a symlink to /usr/local/lib/ and /usr/local/include/
 ```
-Do not point it to the tox/ directory as the build script will look in there for you.
-
-Save the Makefile.
-
+mkdir -p $HOME/toxgui/libs
+sudo ln -s /usr/local/lib $HOME/toxgui/libs/lib
+sudo ln -s /usr/local/include  $HOME/toxgui/libs/include
+```
 <h5>Final Steps</h5>
 
 The final step is to run 
