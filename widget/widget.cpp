@@ -152,9 +152,10 @@ Widget::Widget(QWidget *parent) :
     friendListWidget->setLayoutDirection(Qt::LeftToRight);
     ui->friendList->setWidget(friendListWidget);
 
-    ui->nameLabel->setText(Settings::getInstance().getUsername());
+    // delay setting username and message until Core inits
+    //ui->nameLabel->setText(core->getUsername());
     ui->nameLabel->label->setStyleSheet("QLabel { color : white; font-size: 11pt; font-weight:bold;}");
-    ui->statusLabel->setText(Settings::getInstance().getStatusMessage());
+    //ui->statusLabel->setText(core->getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -434,7 +435,6 @@ void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     settingsForm.name.setText(username);
-    Settings::getInstance().setUsername(username);
 }
 
 void Widget::onStatusMessageChanged()
@@ -456,7 +456,6 @@ void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
     settingsForm.statusText.setText(statusMessage);
-    Settings::getInstance().setStatusMessage(statusMessage);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)
@@ -668,7 +667,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
 
     if ((isGroupWidgetActive != 1 || (g->groupId != activeGroupWidget->groupId)) || isWindowMinimized)
     {
-        if (message.contains(Settings::getInstance().getUsername(), Qt::CaseInsensitive))
+        if (message.contains(core->getUsername(), Qt::CaseInsensitive))
         {
             newMessageAlert();
             g->hasNewMessages = 1;

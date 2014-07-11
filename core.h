@@ -120,6 +120,9 @@ public:
     void dispatchVideoFrame(vpx_image img) const;
 
     void saveConfiguration();
+    
+    QString getUsername();
+    QString getStatusMessage();
 
 public slots:
     void start();

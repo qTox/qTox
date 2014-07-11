@@ -43,12 +43,6 @@ public:
     const QList<DhtServer>& getDhtServerList() const;
     void setDhtServerList(const QList<DhtServer>& newDhtServerList);
 
-    QString getUsername() const;
-    void setUsername(const QString& newUsername);
-
-    QString getStatusMessage() const;
-    void setStatusMessage(const QString& newMessage);
-
     bool getEnableIPv6() const;
     void setEnableIPv6(bool newValue);
 
@@ -132,9 +126,6 @@ private:
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     bool dontShowDhtDialog;
-
-    QString username;
-    QString statusMessage;
 
     bool enableIPv6;
     bool useTranslations;

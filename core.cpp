@@ -563,6 +563,17 @@ void Core::removeGroup(int groupId)
     tox_del_groupchat(tox, groupId);
 }
 
+QString Core::getUsername()
+{
+    int size = tox_get_self_name_size(tox);
+    uint8_t* name = new uint8_t[size];
+    if (tox_get_self_name(tox, name) == size)
+        return QString(CString::toString(name, size));
+    else
+        return QString();
+    delete[] name;
+}
+
 void Core::setUsername(const QString& username)
 {
     CString cUsername(username);
@@ -573,6 +584,17 @@ void Core::setUsername(const QString& username)
         saveConfiguration();
         emit usernameSet(username);
     }
+}
+
+QString Core::getStatusMessage()
+{
+    int size = tox_get_self_status_message_size(tox);
+    uint8_t* name = new uint8_t[size];
+    if (tox_get_self_status_message(tox, name, size) == size)
+        return QString(CString::toString(name, size));
+    else
+        return QString();
+    delete[] name;
 }
 
 void Core::setStatusMessage(const QString& message)
@@ -696,6 +718,15 @@ void Core::loadConfiguration()
     }
 
     configurationFile.close();
+
+    // set GUI with user and statusmsg
+    QString name = getUsername();
+    if (name != "")
+        emit usernameSet(name);
+    
+    QString msg = getStatusMessage();
+    if (msg != "")
+        emit statusMessageSet(msg);
 
     loadFriends();
 }
