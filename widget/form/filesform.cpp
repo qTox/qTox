@@ -29,10 +29,6 @@ FilesForm::FilesForm()
     
     main.addTab(&recvd, tr("Downloads"));
     main.addTab(&sent, tr("Uploads"));
-
-    //these need to go in widget.cpp (I think, not really sure atm)
-    //connect(something, SIGNAL(DOWNLOAD_DONE), this, SLOT(onFileDownloadComplete()));
-    //connect(something, SIGNAL(DOWNLOAD_DONE), this, SLOT(onFileUploadComplete()));
     
     connect(&sent, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onFileActivated(QListWidgetItem*)));
 

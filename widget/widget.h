@@ -35,8 +35,6 @@ class Widget;
 }
 
 class GroupWidget;
-//class AddFriendForm;
-//class SettingsForm;
 struct FriendWidget;
 class Group;
 struct Friend;
