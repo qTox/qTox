@@ -30,7 +30,8 @@ FilesForm::FilesForm()
     main.addTab(&recvd, tr("Downloads"));
     main.addTab(&sent, tr("Uploads"));
     
-    connect(&sent, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onFileActivated(QListWidgetItem*)));
+    connect(&sent, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onUploadFileActivated(QListWidgetItem*)));
+    connect(&recvd, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onDownloadFileActivated(QListWidgetItem*)));
 
 }
 
@@ -52,17 +53,31 @@ void FilesForm::show(Ui::Widget& ui)
 
 void FilesForm::onFileDownloadComplete(const QString& path)
 {
-    QListWidgetItem* tmp = new QListWidgetItem(/*QIcon("checkmark.png"),*/path);
+    QListWidgetItem* tmp = new QListWidgetItem(QIcon(":/img/checkmark.png"), path);
     recvd.addItem(tmp);
 }
 
 void FilesForm::onFileUploadComplete(const QString& path)
 {
-    QListWidgetItem* tmp = new QListWidgetItem(/*QIcon("checkmark.png"),*/path);
+    QListWidgetItem* tmp = new QListWidgetItem(QIcon(":/img/checkmark.png"), path);
     sent.addItem(tmp);
 }
 
-void FilesForm::onFileActivated(QListWidgetItem* item)
+// sadly, the ToxFile struct in core only has the file name, not the file path...
+// so currently, these don't work as intended (though for now, downloads might work
+// whenever they're not saved anywhere custom, thanks to the hack)
+// I could do some digging around, but for now I'm tired and others already 
+// might know it without me needing to dig, so...
+void FilesForm::onDownloadFileActivated(QListWidgetItem* item)
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(item->text()));
+    QUrl url = QUrl::fromLocalFile("./" + item->text());
+    qDebug() << "Opening '" << url << "'";
+    QDesktopServices::openUrl(url);
+}
+
+void FilesForm::onUploadFileActivated(QListWidgetItem* item)
+{
+    QUrl url = QUrl::fromLocalFile(item->text());
+    qDebug() << "Opening '" << url << "'";
+    QDesktopServices::openUrl(url);
 }

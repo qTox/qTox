@@ -26,6 +26,7 @@
         <file>img/add.png</file>
         <file>img/settings.png</file>
         <file>img/transfer.png</file>
+        <file>img/checkmark.png</file>
         <file>ui/acceptFileButton/default.png</file>
         <file>ui/acceptFileButton/hover.png</file>
         <file>ui/acceptFileButton/pressed.png</file>

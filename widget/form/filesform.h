@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QUrl>
+#include <QDebug>
 
 class FilesForm : public QObject
 {
@@ -42,10 +43,11 @@ public slots:
     void onFileUploadComplete(const QString& path);
     
 private slots:
-    void onFileActivated(QListWidgetItem* item);
+    void onDownloadFileActivated(QListWidgetItem* item);
+    void onUploadFileActivated(QListWidgetItem* item);
 
 private:
-    QWidget *head;
+    QWidget* head;
     QLabel headLabel;
     QVBoxLayout headLayout;
 
