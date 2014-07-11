@@ -17,12 +17,14 @@ However, it is not a fork.
 
 <h2>Requirements</h2>
 
-This client will run on Windows, Linux and Mac natively, but binairies are only be provided for Windows at the moment. <br/>
-Linux and Mac users will have to compile the source code themselves.
+This client will run on Windows, Linux and Mac natively, but binaries are only regularly built for windows <br/>
+Linux and Mac users will have to compile the source code themselves if they want the latest updates.
 
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a><br/>
 <a href="http://speedy.sh/XXtHa/toxgui">Linux download (1st July 2014 01:30 GMT)</a><br/>
-Note that the Linux download has not been tested and is not kept up to date.
+Note that the Linux download has not been tested and may not be up to date.
+<a href="https://mega.co.nz/#!xkpQFABa!zK1XNpN9mkaSuaKS2X-ml0bXU5zNtBVtLGShrBo2ka4">Mac download (11th July 2014 17:45 GMT)</a><br/>
+Note that the Mac download has not been tested and may not be up to date.
 
 <h3>Screenshots</h3>
 <h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
