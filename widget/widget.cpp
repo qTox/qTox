@@ -215,6 +215,8 @@ Widget::Widget(QWidget *parent) :
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
     connect(core, &Core::friendAddressGenerated, &settingsForm, &SettingsForm::setFriendAddress);
+    connect(core, SIGNAL(Core::fileDownloadFinished(QString&)), &filesForm, SLOT(FilesForm::onFileDownloadComplete(QString&)));
+    connect(core, SIGNAL(Core::fileUploadFinished(QString&)), &filesForm, SLOT(FilesForm::onFileUploadComplete(QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
@@ -377,7 +379,10 @@ void Widget::onGroupClicked()
 
 void Widget::onTransferClicked()
 {
-
+    hideMainForms();
+    filesForm.show(*ui);
+    isFriendWidgetActive = 0;
+    isGroupWidgetActive = 0;
 }
 
 void Widget::onSettingsClicked()

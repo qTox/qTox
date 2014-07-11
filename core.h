@@ -207,6 +207,8 @@ signals:
     void fileTransferAccepted(ToxFile file);
     void fileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection direction);
     void fileTransferFinished(ToxFile file);
+    void fileUploadFinished(const QString& path);
+    void fileDownloadFinished(const QString& path);
     void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
     void fileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection direction);
 
@@ -269,6 +271,9 @@ private:
     static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);
+
+private slots:
+     void onFileTransferFinished(ToxFile file);
 
 private:
     Tox* tox;

@@ -50,6 +50,7 @@ Core::Core(Camera* cam, QThread *coreThread) :
     //connect(fileTimer, &QTimer::timeout, this, &Core::fileHeartbeat);
     connect(bootstrapTimer, &QTimer::timeout, this, &Core::onBootstrapTimer);
     connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::bootstrapDht);
+    connect(this, SIGNAL(fileTransferFinished(ToxFile)), this, SLOT(onFileTransferFinished(ToxFile)));
 
     for (int i=0; i<TOXAV_MAX_CALLS;i++)
     {
@@ -610,6 +611,14 @@ void Core::setStatus(Status status)
     } else {
         emit failedToSetStatus(status);
     }
+}
+
+void Core::onFileTransferFinished(ToxFile file)
+{
+     if (file.direction == file.SENDING)
+          emit fileUploadFinished(QString(file.fileName));
+     else
+          emit fileDownloadFinished(QString(file.fileName));
 }
 
 void Core::bootstrapDht()
