@@ -20,6 +20,38 @@
 #include <QApplication>
 #include <QtConcurrent/QtConcurrent>
 
+static inline void fromYCbCrToRGB(
+        uint8_t Y, uint8_t Cb, uint8_t Cr,
+        uint8_t& R, uint8_t& G, uint8_t& B)
+{
+    int r = Y + ((1436 * (Cr - 128)) >> 10),
+        g = Y - ((354 * (Cb - 128) + 732 * (Cr - 128)) >> 10),
+        b = Y + ((1814 * (Cb - 128)) >> 10);
+
+    if(r < 0) {
+        r = 0;
+    } else if(r > 255) {
+        r = 255;
+    }
+
+    if(g < 0) {
+        g = 0;
+    } else if(g > 255) {
+        g = 255;
+    }
+
+    if(b < 0) {
+        b = 0;
+    } else if(b > 255) {
+        b = 255;
+    }
+
+    R = static_cast<uint8_t>(r);
+    G = static_cast<uint8_t>(g);
+    B = static_cast<uint8_t>(b);
+}
+
+
 NetCamView::NetCamView(QWidget* parent)
     : QWidget(parent), displayLabel{new QLabel},
       mainLayout{new QHBoxLayout()}
@@ -42,9 +74,7 @@ void NetCamView::updateDisplay(vpx_image* frame)
 
     core->increaseVideoBusyness();
 
-    QFuture<QImage> future = QtConcurrent::run(convert,*frame);
-    qApp->processEvents();
-    QImage img = future.result();
+    QImage img = convert(*frame);
 
     vpx_img_free(frame);
     displayLabel->setPixmap(QPixmap::fromImage(img));
@@ -66,16 +96,16 @@ QImage NetCamView::convert(vpx_image& frame)
         uint32_t* scanline = (uint32_t*)img.scanLine(i);
         for (int j=0; j < w; j++)
         {
-            float Y = yData[i*bpl + j];
-            float U = uData[i/2*cxbpl + j/2];
-            float V = vData[i/2*cxbpl + j/2];
+            uint8_t Y = yData[i*bpl + j];
+            uint8_t U = uData[i/2*cxbpl + j/2];
+            uint8_t V = vData[i/2*cxbpl + j/2];
 
-            uint8_t R = qMax(qMin((int)(Y + 1.402 * (V - 128)),255),0);
-            uint8_t G = qMax(qMin((int)(Y - 0.344 * (U - 128) - 0.714 * (V - 128)),255),0);
-            uint8_t B = qMax(qMin((int)(Y + 1.772 * (U - 128)),255),0);
+            uint8_t R, G, B;
+            fromYCbCrToRGB(Y, U, V, R, G, B);
 
             scanline[j] = (0xFF<<24) + (R<<16) + (G<<8) + B;
         }
     }
+
     return img;
 }
