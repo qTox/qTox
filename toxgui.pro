@@ -46,17 +46,13 @@ win32 {
 }
 
 #### Static linux build
-#LIBS += -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lvpx -lopus -lgstaudiodecoder -lgstcamerabin -lgstmediacapture \
-#     -lgstmediaplayer -lqgsttools_p -lgstaudio-0.10 -lgstinterfaces-0.10 -lgstvideo-0.10 -lgstpbutils-0.10 \
-#        -lgstapp-0.10 -lgstbase-0.10 -lgstreamer-0.10 -lgobject-2.0 -lgmodule-2.0 -lxml2 \
-#         -lqtaudio_alsa -lasound -lqtmultimedia_m3u \
-#     -lqtaccessiblewidgets -lqconnmanbearer -lqgenericbearer -lqnmbearer \
-#      -lqxcb -lX11-xcb -lXi -lxcb-render-util -lxcb-glx -lxcb-render -ldbus-1 \
-#    -lxcb -lxcb-image -lxcb-icccm -lxcb-sync -lxcb-xfixes -lxcb-shm -lxcb-randr -lxcb-shape \
+#LIBS += -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lvpx -lopus \
+#      -lgstbase-0.10 -lgstreamer-0.10 -lgmodule-2.0 -lgstaudio-0.10 -lxml2 \
+#       -lX11-xcb -lXi -lxcb-render-util -lxcb-glx -lxcb-render -ldbus-1 \
+#    -lxcb -lXau -lXdmcp -lxcb-image -lxcb-icccm -lxcb-sync -lxcb-xfixes -lxcb-shm -lxcb-randr -lxcb-shape \
 #    -lxcb-keysyms -lxcb-xkb -lfontconfig -lfreetype -lXrender -lXext -lX11 \
-#    -lmtdev -lqdds -lqicns -lqico -lqjp2 -lqmng -lqtga -lqtiff -lqwbmp -lqwebp \
-#   -lpng -lz -licui18n -licuuc -licudata -lm -ldl -lgthread-2.0 \
-#     -pthread -lglib-2.0 -lrt -lGL -lpthread -Wl,-Bdynamic
+#   -lpng -lz -licui18n -licuuc -licudata -lm -lgthread-2.0 \
+#     -pthread -lrt -lGL -lpthread -Wl,-Bdynamic -ldl -lc
 #QMAKE_CXXFLAGS += -Os -flto -static-libstdc++ -static-libgcc
 
 HEADERS  += widget/form/addfriendform.h \
