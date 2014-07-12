@@ -53,13 +53,13 @@ void FilesForm::show(Ui::Widget& ui)
 
 void FilesForm::onFileDownloadComplete(const QString& path)
 {
-    QListWidgetItem* tmp = new QListWidgetItem(QIcon(":/img/checkmark.png"), path);
+    QListWidgetItem* tmp = new QListWidgetItem(QIcon("ui/acceptFileButton/default.png"), path);
     recvd.addItem(tmp);
 }
 
 void FilesForm::onFileUploadComplete(const QString& path)
 {
-    QListWidgetItem* tmp = new QListWidgetItem(QIcon(":/img/checkmark.png"), path);
+    QListWidgetItem* tmp = new QListWidgetItem(QIcon("ui/acceptFileButton/default.png"), path);
     sent.addItem(tmp);
 }
 
