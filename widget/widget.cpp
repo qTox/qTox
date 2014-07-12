@@ -202,6 +202,7 @@ Widget::Widget(QWidget *parent) :
     qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<int32_t>("int32_t");
+    qRegisterMetaType<int64_t>("int64_t");
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
@@ -471,7 +472,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
     connect(newfriend->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
-    connect(newfriend->chatForm, SIGNAL(sendFile(int32_t,QString,QByteArray)), core, SLOT(sendFile(int32_t,QString,QByteArray)));
+    connect(newfriend->chatForm, SIGNAL(sendFile(int32_t, QString, QString, long long)), core, SLOT(sendFile(int32_t, QString, QString, long long)));
     connect(newfriend->chatForm, SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
     connect(newfriend->chatForm, SIGNAL(hangupCall(int)), core, SLOT(hangupCall(int)));
     connect(newfriend->chatForm, SIGNAL(startCall(int)), core, SLOT(startCall(int)));

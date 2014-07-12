@@ -334,7 +334,7 @@ void Core::onFileDataCallback(Tox*, int32_t friendnumber, uint8_t filenumber, co
 
     file->file->write((char*)data,length);
     file->bytesSent += length;
-    //qDebug() << QString("Core::onFileDataCallback: received %1/%2 bytes").arg(file->fileData.size()).arg(file->filesize);
+    //qDebug() << QString("Core::onFileDataCallback: received %1/%2 bytes").arg(file->bytesSent).arg(file->filesize);
     emit static_cast<Core*>(core)->fileTransferInfo(file->friendId, file->fileNum,
                                             file->filesize, file->bytesSent, ToxFile::RECEIVING);
 }

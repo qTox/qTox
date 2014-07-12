@@ -159,7 +159,7 @@ QString FileTransfertWidget::getHumanReadableSize(int size)
     return QString().setNum(size / pow(1024, exp),'g',3).append(suffix[exp]);
 }
 
-void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection Direction)
+void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction)
 {
     if (FileNum != fileNum || FriendId != friendId || Direction != direction)
             return;
@@ -167,7 +167,7 @@ void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int File
     int timediff = lastUpdate.secsTo(newtime);
     if (timediff <= 0)
         return;
-    int diff = BytesSent - lastBytesSent;
+    qint64 diff = BytesSent - lastBytesSent;
     if (diff < 0)
     {
         qWarning() << "FileTransfertWidget::onFileTransferInfo: Negative transfer speed !";
@@ -186,6 +186,7 @@ void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int File
         progress->setValue(0);
     else
         progress->setValue(BytesSent*100/Filesize);
+    qDebug() << QString("FT: received %1/%2 bytes, progress is %3%").arg(BytesSent).arg(Filesize).arg(BytesSent*100/Filesize);
     lastUpdate = newtime;
     lastBytesSent = BytesSent;
 }

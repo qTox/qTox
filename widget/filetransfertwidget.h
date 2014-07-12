@@ -37,7 +37,7 @@ public:
     FileTransfertWidget(ToxFile File);
 
 public slots:
-    void onFileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection Direction);
+    void onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction);
     void onFileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection Direction);
     void onFileTransferFinished(ToxFile File);
 

@@ -219,7 +219,7 @@ signals:
     void fileUploadFinished(const QString& path);
     void fileDownloadFinished(const QString& path);
     void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
-    void fileTransferInfo(int FriendId, int FileNum, int Filesize, int BytesSent, ToxFile::FileDirection direction);
+    void fileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction);
 
     void avInvite(int friendId, int callIndex, bool video);
     void avStart(int friendId, int callIndex, bool video);
