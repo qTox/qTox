@@ -1317,7 +1317,7 @@ void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img)
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    if (videoBusyness >= 2)
+    if (videoBusyness >= 1)
         qWarning() << "Core: playCallVideo: Busy, dropping current frame";
     else
         emit Widget::getInstance()->getCore()->videoFrameReceived(img);
