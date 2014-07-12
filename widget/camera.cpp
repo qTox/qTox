@@ -231,6 +231,7 @@ QImage Camera::getLastImage()
 vpx_image Camera::getLastVPXImage()
 {
     vpx_image img;
+    img.w = img.h = 0;
     if (!lastFrame.isValid())
         return img;
     if (!lastFrame.map(QAbstractVideoBuffer::ReadOnly))

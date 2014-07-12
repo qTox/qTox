@@ -33,10 +33,14 @@ const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 ToxCall Core::calls[TOXAV_MAX_CALLS];
+const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
+uint8_t* Core::videobuf;
 
 Core::Core(Camera* cam, QThread *coreThread) :
     tox(nullptr), camera(cam)
 {
+    videobuf = new uint8_t[videobufsize];
+
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
     //saveTimer = new QTimer(this);
@@ -69,6 +73,12 @@ Core::~Core()
         saveConfiguration();
         toxav_kill(toxav);
         tox_kill(tox);
+    }
+
+    if (videobuf)
+    {
+        delete[] videobuf;
+        videobuf=nullptr;
     }
 }
 
@@ -1171,8 +1181,8 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].callId = callId;
     calls[callId].friendId = friendId;
     calls[callId].codecSettings = av_DefaultSettings;
-    calls[callId].codecSettings.max_video_width = TOXAV_VIDEO_WIDTH;
-    calls[callId].codecSettings.max_video_height = TOXAV_VIDEO_HEIGHT;
+    calls[callId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
+    calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
     calls[callId].videoEnabled = videoEnabled;
     toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, videoEnabled);
 
@@ -1316,15 +1326,14 @@ void Core::sendCallVideo(int callId)
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    static const int bufsize = TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4;
-    static uint8_t* videobuf = new uint8_t[bufsize];
     vpx_image frame = camera->getLastVPXImage();
     if (frame.w && frame.h)
     {
         int result;
-        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, bufsize, &frame)) < 0)
+        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, videobufsize, &frame)) < 0)
         {
             qDebug() << QString("Core: toxav_prepare_video_frame: error %1").arg(result);
+            vpx_img_free(&frame);
             calls[callId].sendVideoTimer->start();
             return;
         }
@@ -1332,9 +1341,7 @@ void Core::sendCallVideo(int callId)
         if((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
             qDebug() << QString("Core: toxav_send_video error: %1").arg(result);
 
-
-        emit Widget::getInstance()->getCore()->videoFrameReceived(frame);
-
+        vpx_img_free(&frame);
     }
     else
         qDebug("Core::sendCallVideo: Invalid frame (bad camera ?)");

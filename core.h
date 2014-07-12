@@ -44,8 +44,6 @@
 // TODO: Put that in the settings
 #define TOXAV_MAX_VIDEO_WIDTH 1600
 #define TOXAV_MAX_VIDEO_HEIGHT 1200
-#define TOXAV_VIDEO_WIDTH 640
-#define TOXAV_VIDEO_HEIGHT 480
 
 class Camera;
 
@@ -289,6 +287,8 @@ private:
     static ToxCall calls[TOXAV_MAX_CALLS];
 
     static const QString CONFIG_FILE_NAME;
+    static const int videobufsize;
+    static uint8_t* videobuf;
 };
 
 #endif // CORE_HPP

@@ -32,6 +32,10 @@ NetCamView::NetCamView(QWidget* parent)
 void NetCamView::updateDisplay(vpx_image frame)
 {
     int w = frame.d_w, h = frame.d_h;
+
+    if (!frame.w || !frame.h || !w || !h)
+        return;
+
     int bpl = frame.stride[VPX_PLANE_Y], cxbpl = frame.stride[VPX_PLANE_V];
     QImage img(w, h, QImage::Format_RGB32);
 
@@ -55,6 +59,6 @@ void NetCamView::updateDisplay(vpx_image frame)
         }
     }
 
-    lastFrame = img;
+    vpx_img_free(&frame);
     displayLabel->setPixmap(QPixmap::fromImage(img));
 }

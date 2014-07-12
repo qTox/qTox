@@ -22,7 +22,7 @@
 VideoSurface::VideoSurface()
     : QAbstractVideoSurface()
 {
-    vpx_img_alloc(&input, VPX_IMG_FMT_YV12, TOXAV_VIDEO_WIDTH, TOXAV_VIDEO_HEIGHT, 1);
+    vpx_img_alloc(&input, VPX_IMG_FMT_YV12, TOXAV_MAX_VIDEO_WIDTH, TOXAV_MAX_VIDEO_HEIGHT, 1);
 }
 
 bool VideoSurface::start(const QVideoSurfaceFormat &format)
