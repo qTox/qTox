@@ -46,6 +46,8 @@ SettingsForm::SettingsForm()
     enableIPv6.setChecked(Settings::getInstance().getEnableIPv6());
     useTranslations.setText(tr("Use translations","Text on a checkbox to enable translations"));
     useTranslations.setChecked(Settings::getInstance().getUseTranslations());
+    makeToxPortable.setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
+    makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
 
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);
@@ -57,6 +59,7 @@ SettingsForm::SettingsForm()
     layout.addWidget(&videoTest);
     layout.addWidget(&enableIPv6);
     layout.addWidget(&useTranslations);
+    layout.addWidget(&makeToxPortable);
     layout.addStretch();
 
     head->setLayout(&headLayout);
@@ -65,6 +68,7 @@ SettingsForm::SettingsForm()
     connect(&videoTest, SIGNAL(clicked()), this, SLOT(onTestVideoClicked()));
     connect(&enableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
     connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
+    connect(&makeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
     connect(&idLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
 }
 
@@ -106,4 +110,9 @@ void SettingsForm::copyIdClicked()
 void SettingsForm::onUseTranslationUpdated()
 {
     Settings::getInstance().setUseTranslations(useTranslations.isChecked());
+}
+
+void SettingsForm::onMakeToxPortableUpdated()
+{
+    Settings::getInstance().setMakeToxPortable(makeToxPortable.isChecked());
 }

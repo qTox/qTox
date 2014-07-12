@@ -24,6 +24,7 @@
 #include <QDebug>
 
 const QString Settings::FILENAME = "settings.ini";
+bool Settings::makeToxPortable{false};
 
 Settings::Settings() :
     loaded(false)
@@ -47,6 +48,10 @@ void Settings::load()
     if (loaded) {
         return;
     }
+
+    QFile portableSettings(FILENAME);
+    if (portableSettings.exists())
+        makeToxPortable=true;
 
     QString filePath = getSettingsDirPath() + '/' + FILENAME;
 
@@ -75,6 +80,7 @@ void Settings::load()
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
         useTranslations = s.value("useTranslations", true).toBool();
+        makeToxPortable = s.value("makeToxPortable", false).toBool();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -106,8 +112,12 @@ void Settings::load()
 void Settings::save()
 {
     QString filePath = getSettingsDirPath() + '/' + FILENAME;
+    save(filePath);
+}
 
-    QSettings s(filePath, QSettings::IniFormat);
+void Settings::save(QString path)
+{
+    QSettings s(path, QSettings::IniFormat);
 
     s.clear();
 
@@ -126,6 +136,7 @@ void Settings::save()
     s.beginGroup("General");
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("useTranslations",useTranslations);
+        s.setValue("makeToxPortable",makeToxPortable);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -154,6 +165,9 @@ void Settings::save()
 
 QString Settings::getSettingsDirPath()
 {
+    if (makeToxPortable)
+        return ".";
+
     // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
     return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
@@ -181,6 +195,17 @@ bool Settings::getEnableIPv6() const
 void Settings::setEnableIPv6(bool newValue)
 {
     enableIPv6 = newValue;
+}
+
+bool Settings::getMakeToxPortable() const
+{
+    return makeToxPortable;
+}
+
+void Settings::setMakeToxPortable(bool newValue)
+{
+    makeToxPortable = newValue;
+    save(FILENAME); // Commit to the portable file that we don't want to use it
 }
 
 bool Settings::getUseTranslations() const

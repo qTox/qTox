@@ -46,6 +46,9 @@ public:
     bool getEnableIPv6() const;
     void setEnableIPv6(bool newValue);
 
+    bool getMakeToxPortable() const;
+    void setMakeToxPortable(bool newValue);
+
     bool getUseTranslations() const;
     void setUseTranslations(bool newValue);
 
@@ -115,6 +118,7 @@ private:
     Settings& operator=(const Settings&) = delete;
 
     void save();
+    void save(QString path);
     void load();
 
 
@@ -129,6 +133,7 @@ private:
 
     bool enableIPv6;
     bool useTranslations;
+    static bool makeToxPortable;
 
     bool enableLogging;
     bool encryptLogs;
