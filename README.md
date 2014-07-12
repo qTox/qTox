@@ -11,7 +11,7 @@ However, it is not a fork.
 - Group chats
 - File transfers, with previewing of images
 - Audio calls
-- Video calls (experimental)
+- Video calls (alpha)
 - Tox DNS
 - Translations in various languages
 
@@ -22,7 +22,7 @@ Linux users will have to compile the source code themselves if they want the lat
 
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a><br/>
 <a href="https://jenkins.libtoxcore.so/job/ToxGUI%20OS%20X/lastSuccessfulBuild/artifact/toxgui.dmg">Mac download </a><br/>
-<a href="http://speedy.sh/XXtHa/toxgui">Linux download (1st July 2014 01:30 GMT)</a><br/>
+<a href="https://mega.co.nz/#!9l5B0QqZ!O2glB8XE_Tcf4zTub2WEk-_9Ra43RoeiFV-AQBKDZJU">Linux download (12st July 2014 20:30 GMT)</a><br/>
 Note that the Linux download has not been tested and may not be up to date.<br/>
 
 <h3>Screenshots</h3>
