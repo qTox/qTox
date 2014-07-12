@@ -50,6 +50,7 @@ Core::Core(Camera* cam, QThread *coreThread) :
     //connect(fileTimer, &QTimer::timeout, this, &Core::fileHeartbeat);
     connect(bootstrapTimer, &QTimer::timeout, this, &Core::onBootstrapTimer);
     connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::bootstrapDht);
+    connect(this, SIGNAL(fileTransferFinished(ToxFile)), this, SLOT(onFileTransferFinished(ToxFile)));
 
     for (int i=0; i<TOXAV_MAX_CALLS;i++)
     {
@@ -562,6 +563,17 @@ void Core::removeGroup(int groupId)
     tox_del_groupchat(tox, groupId);
 }
 
+QString Core::getUsername()
+{
+    int size = tox_get_self_name_size(tox);
+    uint8_t* name = new uint8_t[size];
+    if (tox_get_self_name(tox, name) == size)
+        return QString(CString::toString(name, size));
+    else
+        return QString();
+    delete[] name;
+}
+
 void Core::setUsername(const QString& username)
 {
     CString cUsername(username);
@@ -572,6 +584,17 @@ void Core::setUsername(const QString& username)
         saveConfiguration();
         emit usernameSet(username);
     }
+}
+
+QString Core::getStatusMessage()
+{
+    int size = tox_get_self_status_message_size(tox);
+    uint8_t* name = new uint8_t[size];
+    if (tox_get_self_status_message(tox, name, size) == size)
+        return QString(CString::toString(name, size));
+    else
+        return QString();
+    delete[] name;
 }
 
 void Core::setStatusMessage(const QString& message)
@@ -610,6 +633,14 @@ void Core::setStatus(Status status)
     } else {
         emit failedToSetStatus(status);
     }
+}
+
+void Core::onFileTransferFinished(ToxFile file)
+{
+     if (file.direction == file.SENDING)
+          emit fileUploadFinished(QString(file.fileName));
+     else
+          emit fileDownloadFinished(QString(file.fileName));
 }
 
 void Core::bootstrapDht()
@@ -687,6 +718,15 @@ void Core::loadConfiguration()
     }
 
     configurationFile.close();
+
+    // set GUI with user and statusmsg
+    QString name = getUsername();
+    if (name != "")
+        emit usernameSet(name);
+    
+    QString msg = getStatusMessage();
+    if (msg != "")
+        emit statusMessageSet(msg);
 
     loadFriends();
 }

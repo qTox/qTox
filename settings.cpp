@@ -73,8 +73,6 @@ void Settings::load()
     s.endGroup();
 
     s.beginGroup("General");
-        username = s.value("username", "My name").toString();
-        statusMessage = s.value("statusMessage", "My status").toString();
         enableIPv6 = s.value("enableIPv6", true).toBool();
         useTranslations = s.value("useTranslations", true).toBool();
     s.endGroup();
@@ -126,8 +124,6 @@ void Settings::save()
     s.endGroup();
 
     s.beginGroup("General");
-        s.setValue("username", username);
-        s.setValue("statusMessage", statusMessage);
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("useTranslations",useTranslations);
     s.endGroup();
@@ -175,26 +171,6 @@ void Settings::setDhtServerList(const QList<DhtServer>& newDhtServerList)
 {
     dhtServerList = newDhtServerList;
     emit dhtServerListChanged();
-}
-
-QString Settings::getUsername() const
-{
-    return username;
-}
-
-void Settings::setUsername(const QString& newUsername)
-{
-    username = newUsername;
-}
-
-QString Settings::getStatusMessage() const
-{
-    return statusMessage;
-}
-
-void Settings::setStatusMessage(const QString& newMessage)
-{
-    statusMessage = newMessage;
 }
 
 bool Settings::getEnableIPv6() const

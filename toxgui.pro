@@ -63,6 +63,7 @@ HEADERS  += widget/form/addfriendform.h \
     widget/form/chatform.h \
     widget/form/groupchatform.h \
     widget/form/settingsform.h \
+    widget/form/filesform.h \
     widget/tool/chattextedit.h \
     widget/tool/copyableelidelabel.h \
     widget/tool/editablelabelwidget.h \
@@ -93,6 +94,7 @@ SOURCES += \
     widget/form/chatform.cpp \
     widget/form/groupchatform.cpp \
     widget/form/settingsform.cpp \
+    widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
     widget/tool/copyableelidelabel.cpp \
     widget/tool/editablelabelwidget.cpp \

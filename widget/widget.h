@@ -25,6 +25,7 @@
 #include "core.h"
 #include "widget/form/addfriendform.h"
 #include "widget/form/settingsform.h"
+#include "widget/form/filesform.h"
 #include "camera.h"
 
 #define PIXELS_TO_ACT 7
@@ -34,8 +35,6 @@ class Widget;
 }
 
 class GroupWidget;
-class AddFriendForm;
-class SettingsForm;
 struct FriendWidget;
 class Group;
 struct Friend;
@@ -144,6 +143,7 @@ private:
     QThread* coreThread;
     AddFriendForm friendForm;
     SettingsForm settingsForm;
+    FilesForm filesForm;
     static Widget* instance;
     FriendWidget* activeFriendWidget;
     GroupWidget* activeGroupWidget;
