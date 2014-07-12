@@ -240,10 +240,15 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile File)
     if (File.direction == ToxFile::RECEIVING)
     {
         QPixmap preview;
-        if (preview.loadFromData(File.file->readAll()))
+        QFile previewFile(File.filePath);
+        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= 1024*1024*25) // Don't preview big (>25MiB) images
         {
-            preview = preview.scaledToHeight(40);
-            pic->setPixmap(preview);
+            if (preview.loadFromData(previewFile.readAll()))
+            {
+                preview = preview.scaledToHeight(40);
+                pic->setPixmap(preview);
+            }
+            previewFile.close();
         }
     }
 }
