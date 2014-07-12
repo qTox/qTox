@@ -198,6 +198,7 @@ Widget::Widget(QWidget *parent) :
     camview = new SelfCamView(camera);
 
     qRegisterMetaType<Status>("Status");
+    qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<ToxFile>("ToxFile");
