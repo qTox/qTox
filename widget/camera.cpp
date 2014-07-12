@@ -263,8 +263,47 @@ vpx_image Camera::getLastVPXImage()
     }
     else if (frameFormat == QVideoFrame::Format_RGB32 || frameFormat == QVideoFrame::Format_ARGB32)
     {
-        img.w = img.h = 0; // Invalid frame. TODO: Implement conversion
-        qWarning() << "Camera: Can't convert from RGB32! Go complain at github.com/tux3/toxgui";
+        qWarning() << "Camera::getLastVPXImage: Using experimental RGB32 conversion code";
+        uint8_t* rgb = lastFrame.bits();
+        size_t i=0, j=0;
+
+        for( size_t line = 0; line < h; ++line )
+        {
+            if( !(line % 2) )
+            {
+                for( size_t x = 0; x < w; x += 2 )
+                {
+                    uint8_t r = rgb[4 * i + 1];
+                    uint8_t g = rgb[4 * i + 2];
+                    uint8_t b = rgb[4 * i + 3];
+
+                    img.planes[VPX_PLANE_Y][i] = ((66*r + 129*g + 25*b) >> 8) + 16;
+                    img.planes[VPX_PLANE_U][j] = ((-38*r + -74*g + 112*b) >> 8) + 128;
+                    img.planes[VPX_PLANE_V][j] = ((112*r + -94*g + -18*b) >> 8) + 128;
+                    i++;
+                    j++;
+
+                    r = rgb[4 * i + 1];
+                    g = rgb[4 * i + 2];
+                    b = rgb[4 * i + 3];
+
+                    img.planes[VPX_PLANE_Y][i] = ((66*r + 129*g + 25*b) >> 8) + 16;
+                    i++;
+                }
+            }
+            else
+            {
+                for( size_t x = 0; x < w; x += 1 )
+                {
+                    uint8_t r = rgb[4 * i + 1];
+                    uint8_t g = rgb[4 * i + 2];
+                    uint8_t b = rgb[4 * i + 3];
+
+                    img.planes[VPX_PLANE_Y][i] = ((66*r + 129*g + 25*b) >> 8) + 16;
+                    i++;
+                }
+            }
+        }
     }
 
     lastFrame.unmap();
