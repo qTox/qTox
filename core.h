@@ -122,6 +122,9 @@ public:
     QString getUsername();
     QString getStatusMessage();
 
+    void increaseVideoBusyness();
+    void decreaseVideoBusyness();
+
 public slots:
     void start();
     void process();
@@ -223,7 +226,7 @@ signals:
     void avRequestTimeout(int friendId, int callIndex);
     void avPeerTimeout(int friendId, int callIndex);
 
-    void videoFrameReceived(vpx_image frame);
+    void videoFrameReceived(vpx_image* frame);
 
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
@@ -289,6 +292,7 @@ private:
     static const QString CONFIG_FILE_NAME;
     static const int videobufsize;
     static uint8_t* videobuf;
+    static int videoBusyness; // Used to know when to drop frames
 };
 
 #endif // CORE_HPP

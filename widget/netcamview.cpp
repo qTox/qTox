@@ -15,6 +15,10 @@
 */
 
 #include "netcamview.h"
+#include "core.h"
+#include "widget.h"
+#include <QApplication>
+#include <QtConcurrent/QtConcurrent>
 
 NetCamView::NetCamView(QWidget* parent)
     : QWidget(parent), displayLabel{new QLabel},
@@ -29,13 +33,28 @@ NetCamView::NetCamView(QWidget* parent)
     mainLayout->addWidget(displayLabel);
 }
 
-void NetCamView::updateDisplay(vpx_image frame)
+void NetCamView::updateDisplay(vpx_image* frame)
 {
-    int w = frame.d_w, h = frame.d_h;
-
-    if (!frame.w || !frame.h || !w || !h)
+    if (!frame->w || !frame->h)
         return;
 
+    Core* core = Widget::getInstance()->getCore();
+
+    core->increaseVideoBusyness();
+
+    QFuture<QImage> future = QtConcurrent::run(convert,*frame);
+    qApp->processEvents();
+    QImage img = future.result();
+
+    vpx_img_free(frame);
+    displayLabel->setPixmap(QPixmap::fromImage(img));
+
+    core->decreaseVideoBusyness();
+}
+
+QImage NetCamView::convert(vpx_image& frame)
+{
+    int w = frame.d_w, h = frame.d_h;
     int bpl = frame.stride[VPX_PLANE_Y], cxbpl = frame.stride[VPX_PLANE_V];
     QImage img(w, h, QImage::Format_RGB32);
 
@@ -58,7 +77,5 @@ void NetCamView::updateDisplay(vpx_image frame)
             scanline[j] = (0xFF<<24) + (R<<16) + (G<<8) + B;
         }
     }
-
-    vpx_img_free(&frame);
-    displayLabel->setPixmap(QPixmap::fromImage(img));
+    return img;
 }

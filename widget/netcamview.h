@@ -35,7 +35,10 @@ public:
     NetCamView(QWidget *parent=0);
 
 public slots:
-    void updateDisplay(vpx_image frame);
+    void updateDisplay(vpx_image* frame);
+
+private:
+    static QImage convert(vpx_image& frame);
 
 private:
     QLabel *displayLabel;

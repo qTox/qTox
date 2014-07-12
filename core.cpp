@@ -35,11 +35,13 @@ QList<ToxFile> Core::fileRecvQueue;
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
+int Core::videoBusyness;
 
 Core::Core(Camera* cam, QThread *coreThread) :
     tox(nullptr), camera(cam)
 {
     videobuf = new uint8_t[videobufsize];
+    videoBusyness=0;
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -1312,13 +1314,14 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
 
 void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img)
 {
-    qDebug() << "Core: Got video frame";
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    qDebug() << "Core: Got video frame, call's active";
-
-    emit Widget::getInstance()->getCore()->videoFrameReceived(*img);
+    if (videoBusyness >= 2)
+        qWarning() << "Core: playCallVideo: Busy, dropping current frame";
+    else
+        emit Widget::getInstance()->getCore()->videoFrameReceived(img);
+    vpx_img_free(img);
 }
 
 void Core::sendCallVideo(int callId)
@@ -1357,4 +1360,14 @@ void Core::groupInviteFriend(int friendId, int groupId)
 void Core::createGroup()
 {
     emit emptyGroupCreated(tox_add_groupchat(tox));
+}
+
+void Core::increaseVideoBusyness()
+{
+    videoBusyness++;
+}
+
+void Core::decreaseVideoBusyness()
+{
+    videoBusyness--;
 }
