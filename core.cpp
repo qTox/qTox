@@ -19,7 +19,10 @@
 #include "cstring.h"
 #include "settings.h"
 #include "widget/widget.h"
+#include "audioinputproxy.h"
+#include "audiooutputproxy.h"
 
+#include <functional>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -58,13 +61,15 @@ Core::Core(Camera* cam, QThread *coreThread) :
     connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::bootstrapDht);
     connect(this, SIGNAL(fileTransferFinished(ToxFile)), this, SLOT(onFileTransferFinished(ToxFile)));
 
-    for (int i=0; i<TOXAV_MAX_CALLS;i++)
+    for (int i=0; i<TOXAV_MAX_CALLS; i++)
     {
-        calls[i].sendAudioTimer = new QTimer();
-        calls[i].sendVideoTimer = new QTimer();
-        calls[i].audioBuffer.moveToThread(coreThread);
-        calls[i].sendAudioTimer->moveToThread(coreThread);
-        calls[i].sendVideoTimer->moveToThread(coreThread);
+        calls[i].audioInputProxy = nullptr; // TODO: struct -> class; constructor + destructor
+        calls[i].audioOutputProxy = nullptr; // and here too
+        calls[i].framesize = 0;
+        calls[i].audio_packet_samples = nullptr;
+        calls[i].audio_packet_data = nullptr;
+        calls[i].sendVideoTimer = new QTimer(this); // TODO: "this" will not work until our parent not defined
+        calls[i].sendVideoTimer->moveToThread(coreThread); // TODO: QObject inheritance allows to do it automatically
         connect(calls[i].sendVideoTimer, &QTimer::timeout, [this,i](){sendCallVideo(i);});
     }
 }
@@ -1155,6 +1160,7 @@ void Core::onAvPeerTimeout(int32_t call_index, void* core)
         qWarning() << "Core: Received invalid AV peer timeout";
         return;
     }
+
     qDebug() << QString("Core: AV peer timeout with %1").arg(friendId);
 
     cleanupCall(call_index);
@@ -1223,6 +1229,9 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
     calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
     calls[callId].videoEnabled = videoEnabled;
+    calls[callId].framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;;
+    calls[callId].audio_packet_samples = new char[calls[callId].framesize * 2];
+    calls[callId].audio_packet_data = new char[calls[callId].framesize * 2];
     toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, videoEnabled);
 
     // Prepare output
@@ -1238,11 +1247,11 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         calls[callId].audioOutput = nullptr;
         qWarning() << "Core: Raw audio format not supported by output backend, cannot play audio.";
     }
-    else if (calls[callId].audioOutput==nullptr)
+    else if (calls[callId].audioOutput==nullptr) // TODO: shouldn't it be undefined behaviour?
     {
         calls[callId].audioOutput = new QAudioOutput(format);
-        calls[callId].audioOutput->setBufferSize(1900*30); // Make this bigger to get less underflows, but more latency
-        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
+        calls[callId].audioOutputProxy = new AudioOutputProxy(); // TODO: init with proper parent
+        calls[callId].audioOutput->start(calls[callId].audioOutputProxy);
         int error = calls[callId].audioOutput->error();
         if (error != QAudio::NoError)
         {
@@ -1256,22 +1265,21 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         calls[callId].audioInput = nullptr;
         qWarning() << "Default input format not supported, cannot record audio";
     }
-    else if (calls[callId].audioInput==nullptr)
+    else if (calls[callId].audioInput==nullptr) // TODO: shouldn't it be undefined behaviour?
     {
         calls[callId].audioInput = new QAudioInput(format);
-        calls[callId].audioInputDevice = calls[callId].audioInput->start();
+        calls[callId].audioInputProxy = new AudioInputProxy(); // TODO: init with proper parent
+        calls[callId].audioInputProxy->callback = [=]() { Core::sendCallAudio(callId, toxav); };
+        calls[callId].audioInput->start(calls[callId].audioInputProxy);
+        int error = calls[callId].audioInput->error();
+        if (error != QAudio::NoError)
+        {
+            qWarning() << QString("Core: Error %1 when starting audio input").arg(error);
+        }
     }
 
     // Go
     calls[callId].active = true;
-
-    if (calls[callId].audioInput != nullptr)
-    {
-        calls[callId].sendAudioTimer->setInterval(2);
-        calls[callId].sendAudioTimer->setSingleShot(true);
-        connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
-        calls[callId].sendAudioTimer->start();
-    }
 
     if (calls[callId].videoEnabled)
     {
@@ -1287,8 +1295,6 @@ void Core::cleanupCall(int callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
     calls[callId].active = false;
-    disconnect(calls[callId].sendAudioTimer,0,0,0);
-    calls[callId].sendAudioTimer->stop();
     calls[callId].sendVideoTimer->stop();
     if (calls[callId].audioOutput != nullptr)
     {
@@ -1300,53 +1306,79 @@ void Core::cleanupCall(int callId)
     }
     if (calls[callId].videoEnabled)
         Widget::getInstance()->getCamera()->unsuscribe();
-    calls[callId].audioBuffer.clear();
+
+    calls[callId].audioInputProxy = nullptr; // TODO: test that harakiri here goes well
+    calls[callId].audioOutputProxy = nullptr; // and here too
+    calls[callId].framesize = 0;
+    delete [] calls[callId].audio_packet_samples; calls[callId].audio_packet_samples = nullptr;
+    delete [] calls[callId].audio_packet_data; calls[callId].audio_packet_data = nullptr;
 }
 
 void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length)
 {
+    qDebug() << "playCallAudio callback" << calls[callId].active;
     if (!calls[callId].active)
         return;
-    calls[callId].audioBuffer.write((char*)data, length*2);
+
     int state = calls[callId].audioOutput->state();
-    if (state != QAudio::ActiveState)
-    {
-        qDebug() << QString("Core: Audio state is %1").arg(state);
-        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
+    if (state == QAudio::ActiveState) { // TODO: check if deadlock possible.
+        qint64 written = 0;
+        while (written != length*2) {
+            written += calls[callId].audioOutputProxy->write((char*)data+written, length*2-written);
+        }
+    } else {
+        if (state == QAudio::SuspendedState) { // TODO: we can subscribe
+            qWarning()<< "Core::playCallAudio() audioOutput state is suspended";
+        } else if (state == QAudio::StoppedState) {
+            qWarning() << "Core::playCallAudio() audioOutput state is stopped";
+        } else if (state == QAudio::IdleState) {
+            qWarning() << "Core::playCallAudio() audioOutput state is idle";
+        } else {
+            qWarning() << "Core::playCallAudio() audioOutput state is unknown: " << state;
+        }
     }
-    int error = calls[callId].audioOutput->error();
-    if (error != QAudio::NoError)
-        qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
+
+    int error = calls[callId].audioOutput->error(); // TODO: we can subscribe
+    if (error == QAudio::NoError) {
+        // (^__^)
+    } else if (error == QAudio::OpenError) {
+        qWarning() << "Core::playCallAudio() audioOutput OpenError";
+    } else if (error == QAudio::IOError) {
+        qWarning() << "Core::playCallAudio() audioOutput IOError";
+    } else if (error == QAudio::UnderrunError) {
+        qWarning() << "Core::playCallAudio() audioOutput UnderrunError";
+    } else if (error == QAudio::FatalError) {
+        qWarning() << "Core::playCallAudio() audioOutput FatalError";
+    } else {
+        qWarning() << "Core::playCallAudio() unknown error: " << error;
+    }
 }
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
 {
     if (!calls[callId].active)
         return;
-    int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
-    uint8_t buf[framesize*2], dest[framesize*2];
-    int bytesReady = calls[callId].audioInput->bytesReady();
-    if (bytesReady >= framesize*2)
-    {
-        calls[callId].audioInputDevice->read((char*)buf, framesize*2);
-        int result = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize);
-        if (result < 0)
-        {
-            qWarning() << QString("Core: Unable to prepare audio frame, error %1").arg(result);
-            calls[callId].sendAudioTimer->start();
-            return;
-        }
-        result = toxav_send_audio(toxav, callId, dest, result);
-        if (result < 0)
-        {
-            qWarning() << QString("Core: Unable to send audio frame, error %1").arg(result);
-            calls[callId].sendAudioTimer->start();
-            return;
-        }
-        calls[callId].sendAudioTimer->start();
+
+    auto bytesReady = calls[callId].audioInputProxy->bytesAvailable();
+    if (bytesReady < calls[callId].framesize*2) {
+        qDebug() << "not enough samples" << bytesReady << "of" << calls[callId].framesize*2;
+        return;
     }
-    else
-        calls[callId].sendAudioTimer->start();
+
+    int result = toxav_prepare_audio_frame(toxav, callId,
+                                           (uint8_t*)calls[callId].audio_packet_data,
+                                           calls[callId].framesize*2,
+                                           (int16_t*)calls[callId].audio_packet_samples,
+                                           calls[callId].framesize);
+    if (result < 0) {
+        qWarning() << QString("Core: Unable to prepare audio frame, error %1").arg(result);
+        return;
+    }
+
+    result = toxav_send_audio(toxav, callId, (uint8_t*)calls[callId].audio_packet_data, result);
+    if (result < 0) {
+        qWarning() << QString("Core: Unable to send audio frame, error %1").arg(result);
+    }
 }
 
 void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img)
