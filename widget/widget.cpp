@@ -575,7 +575,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
     if (activeFriendWidget != nullptr)
     {
         Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
-        if (((f->friendId != f2->friendId) || isFriendWidgetActive == 0) || isWindowMinimized)
+        if (((f->friendId != f2->friendId) || isFriendWidgetActive == 0) || isWindowMinimized || !isActiveWindow())
         {
             f->hasNewMessages = 1;
             newMessageAlert();
@@ -667,7 +667,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
 
     g->chatForm->addGroupMessage(message, friendgroupnumber);
 
-    if ((isGroupWidgetActive != 1 || (g->groupId != activeGroupWidget->groupId)) || isWindowMinimized)
+    if ((isGroupWidgetActive != 1 || (g->groupId != activeGroupWidget->groupId)) || isWindowMinimized || !isActiveWindow())
     {
         if (message.contains(core->getUsername(), Qt::CaseInsensitive))
         {
@@ -769,8 +769,8 @@ Group *Widget::createGroup(int groupId)
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
     layout->addWidget(newgroup->widget);
-    if (useNativeTheme)
-        newgroup->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+    if (!useNativeTheme)
+        newgroup->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
     updateFriendListWidth();
     connect(newgroup->widget, SIGNAL(groupWidgetClicked(GroupWidget*)), this, SLOT(onGroupWidgetClicked(GroupWidget*)));
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
