@@ -23,7 +23,7 @@
 QT       += core gui network multimedia multimediawidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET    = toxgui
+TARGET    = qtox
 TEMPLATE  = app
 FORMS    += widget.ui
 CONFIG   += c++11
