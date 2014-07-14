@@ -2,8 +2,7 @@
 
 ################ parameters ################
 # directory where the script is located
-SCRIPT_NAME=$(readlink -f $0)
-SCRIPT_DIR=`dirname $SCRIPT_NAME`
+SCRIPT_DIR=$( cd $(dirname $0); pwd -P)
 
 # directory where dependencies will be installed
 INSTALL_DIR=libs
