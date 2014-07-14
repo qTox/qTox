@@ -17,8 +17,6 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "audiobuffer.h"
-
 #include <tox/tox.h>
 #include <tox/toxav.h>
 
@@ -47,6 +45,8 @@
 #define TOXAV_MAX_VIDEO_HEIGHT 1200
 
 class Camera;
+class AudioInputProxy;
+class AudioOutputProxy;
 
 enum class Status : int {Online = 0, Away, Busy, Offline};
 
@@ -96,14 +96,18 @@ struct ToxFile
 struct ToxCall
 {
 public:
-    AudioBuffer audioBuffer;
+    // TODO: why so srs?
+    AudioInputProxy *audioInputProxy;
+    AudioOutputProxy *audioOutputProxy;
     QAudioOutput* audioOutput;
     QAudioInput* audioInput;
-    QIODevice* audioInputDevice;
     ToxAvCodecSettings codecSettings;
-    QTimer *sendAudioTimer, *sendVideoTimer;
+    QTimer *sendVideoTimer;
     int callId;
     int friendId;
+    int framesize;
+    char *audio_packet_samples;
+    char *audio_packet_data;
     bool videoEnabled;
     bool active;
 };
