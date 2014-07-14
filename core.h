@@ -101,7 +101,6 @@ public:
     AudioOutputProxy *audioOutputProxy;
     QAudioOutput* audioOutput;
     QAudioInput* audioInput;
-    QIODevice* audioInputDevice;
     ToxAvCodecSettings codecSettings;
     QTimer *sendVideoTimer;
     int callId;

@@ -6,9 +6,10 @@
 
 AudioOutputProxy::AudioOutputProxy(QObject *parent) :
     QIODevice(parent),
-    ring_buffer(new MemRing<char>(RING_SIZE))
+    ring_buffer(new MemRing<int16_t>(RING_SIZE))
 {
-    open(QIODevice::ReadWrite);
+    open(QIODevice::ReadWrite | QIODevice::Unbuffered);
+    qDebug() << "AudioOutputProxy::AudioOutputProxy";
 }
 
 AudioOutputProxy::~AudioOutputProxy()
@@ -17,33 +18,28 @@ AudioOutputProxy::~AudioOutputProxy()
         delete ring_buffer;
         ring_buffer = 0;
     }
-
     close();
+    qDebug() << "AudioOutputProxy::~AudioOutputProxy";
 }
 
 qint64 AudioOutputProxy::readData(char *data, qint64 len)
 {
-    qDebug() << "AudioOutputProxy::readData" << len;
-
-    size_t ret = ring_buffer->pull(data, len);
-    if (ret < (size_t)len) {
-        memset(data + ret, 0, len-ret);
-    }
-
-    return len; // device will be closed if we will return != len
+    qDebug() << "AudioOutputProxy::read" << len;
+    return ring_buffer->pull((int16_t*)data, len/2)*2;
 }
 
 qint64 AudioOutputProxy::writeData(const char* data, qint64 len)
 {
-    qDebug() << "AudioOutputProxy::writeData" << len;
-    if (len > RING_SIZE/8) {
-        len = RING_SIZE/8;
-    }
-
-    return ring_buffer->push((char*)data, len);
+//    qDebug() << "AudioOutputProxy::write" << len;
+    return ring_buffer->push((int16_t*)data, len/2)*2;
 }
 
 qint64 AudioOutputProxy::bytesAvailable() const
 {
     return ring_buffer->readSpace() + QIODevice::bytesAvailable();
+}
+
+bool AudioOutputProxy::isSequential() const
+{
+    return true;
 }

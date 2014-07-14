@@ -1242,13 +1242,9 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     format.setCodec("audio/pcm");
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::SignedInt);
-    if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(format))
+    if (QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(format))
     {
-        calls[callId].audioOutput = nullptr;
-        qWarning() << "Core: Raw audio format not supported by output backend, cannot play audio.";
-    }
-    else if (calls[callId].audioOutput==nullptr) // TODO: shouldn't it be undefined behaviour?
-    {
+        qDebug() << "Core: opening output device";
         calls[callId].audioOutput = new QAudioOutput(format);
         calls[callId].audioOutputProxy = new AudioOutputProxy(); // TODO: init with proper parent
         calls[callId].audioOutput->start(calls[callId].audioOutputProxy);
@@ -1257,16 +1253,14 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         {
             qWarning() << QString("Core: Error %1 when starting audio output").arg(error);
         }
+    } else {
+        qFatal("Core: Raw audio format not supported by output backend, cannot play audio.");
     }
 
     // Start input
-    if (!QAudioDeviceInfo::defaultInputDevice().isFormatSupported(format))
+    if (QAudioDeviceInfo::defaultInputDevice().isFormatSupported(format))
     {
-        calls[callId].audioInput = nullptr;
-        qWarning() << "Default input format not supported, cannot record audio";
-    }
-    else if (calls[callId].audioInput==nullptr) // TODO: shouldn't it be undefined behaviour?
-    {
+        qDebug() << "Core: opening input device";
         calls[callId].audioInput = new QAudioInput(format);
         calls[callId].audioInputProxy = new AudioInputProxy(); // TODO: init with proper parent
         calls[callId].audioInputProxy->callback = [=]() { Core::sendCallAudio(callId, toxav); };
@@ -1276,6 +1270,8 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         {
             qWarning() << QString("Core: Error %1 when starting audio input").arg(error);
         }
+    } else {
+        qFatal("Default input format not supported, cannot record audio");
     }
 
     // Go
@@ -1299,15 +1295,21 @@ void Core::cleanupCall(int callId)
     if (calls[callId].audioOutput != nullptr)
     {
         calls[callId].audioOutput->stop();
+        delete calls[callId].audioOutput;
+        calls[callId].audioOutput = nullptr;
     }
     if (calls[callId].audioInput != nullptr)
     {
         calls[callId].audioInput->stop();
+        delete calls[callId].audioInput;
+        calls[callId].audioInput = nullptr;
     }
     if (calls[callId].videoEnabled)
         Widget::getInstance()->getCamera()->unsuscribe();
 
+    calls[callId].audioInputProxy->deleteLater();
     calls[callId].audioInputProxy = nullptr; // TODO: test that harakiri here goes well
+    calls[callId].audioOutputProxy->deleteLater();
     calls[callId].audioOutputProxy = nullptr; // and here too
     calls[callId].framesize = 0;
     delete [] calls[callId].audio_packet_samples; calls[callId].audio_packet_samples = nullptr;
@@ -1316,26 +1318,24 @@ void Core::cleanupCall(int callId)
 
 void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length)
 {
-    qDebug() << "playCallAudio callback" << calls[callId].active;
     if (!calls[callId].active)
         return;
 
+    calls[callId].audioOutputProxy->write((char*)data, length*2);
+
+    // TODO: we can subscribes
     int state = calls[callId].audioOutput->state();
-    if (state == QAudio::ActiveState) { // TODO: check if deadlock possible.
-        qint64 written = 0;
-        while (written != length*2) {
-            written += calls[callId].audioOutputProxy->write((char*)data+written, length*2-written);
-        }
+    if (state == QAudio::ActiveState) {
+        // everything is fine
+    } else if (state == QAudio::SuspendedState) {
+        calls[callId].audioOutput->resume();
+        qWarning()<< "Core::playCallAudio() audioOutput state is suspended";
+    } else if (state == QAudio::IdleState) {
+//        qWarning() << "Core::playCallAudio() audioOutput state is idle";
+    } else if (state == QAudio::StoppedState) {
+        qWarning() << "Core::playCallAudio() audioOutput state is stopped";
     } else {
-        if (state == QAudio::SuspendedState) { // TODO: we can subscribe
-            qWarning()<< "Core::playCallAudio() audioOutput state is suspended";
-        } else if (state == QAudio::StoppedState) {
-            qWarning() << "Core::playCallAudio() audioOutput state is stopped";
-        } else if (state == QAudio::IdleState) {
-            qWarning() << "Core::playCallAudio() audioOutput state is idle";
-        } else {
-            qWarning() << "Core::playCallAudio() audioOutput state is unknown: " << state;
-        }
+        qWarning() << "Core::playCallAudio() audioOutput state is unknown: " << state;
     }
 
     int error = calls[callId].audioOutput->error(); // TODO: we can subscribe
@@ -1346,7 +1346,7 @@ void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length)
     } else if (error == QAudio::IOError) {
         qWarning() << "Core::playCallAudio() audioOutput IOError";
     } else if (error == QAudio::UnderrunError) {
-        qWarning() << "Core::playCallAudio() audioOutput UnderrunError";
+//        qWarning() << "Core::playCallAudio() audioOutput UnderrunError";
     } else if (error == QAudio::FatalError) {
         qWarning() << "Core::playCallAudio() audioOutput FatalError";
     } else {
@@ -1364,6 +1364,8 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
         qDebug() << "not enough samples" << bytesReady << "of" << calls[callId].framesize*2;
         return;
     }
+
+    calls[callId].audioInputProxy->read(calls[callId].audio_packet_samples, calls[callId].framesize*2);
 
     int result = toxav_prepare_audio_frame(toxav, callId,
                                            (uint8_t*)calls[callId].audio_packet_data,

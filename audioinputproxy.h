@@ -13,13 +13,15 @@ public:
     virtual ~AudioInputProxy();
 
     std::function< void() > callback;
-
-    qint64 readData(char *data, qint64 maxlen);
-    qint64 writeData(const char *data, qint64 len);
     qint64 bytesAvailable() const;
 
+protected:
+    qint64 readData(char *data, qint64 maxlen);
+    qint64 writeData(const char *data, qint64 len);
+    bool isSequential() const;
+
 private:
-    MemRing<char> *ring_buffer;
+    MemRing<int16_t> *ring_buffer;
 };
 
 #endif // AUDIOINPUTPROXY_H
