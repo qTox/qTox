@@ -4,72 +4,72 @@
 <context>
     <name>AddFriendForm</name>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="15"/>
+        <location filename="../widget/form/addfriendform.cpp" line="32"/>
         <source>Add Friends</source>
-        <translation>Aggiungi Contatti</translation>
+        <translation>Aggiungi Contatto</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="18"/>
+        <location filename="../widget/form/addfriendform.cpp" line="35"/>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="19"/>
+        <location filename="../widget/form/addfriendform.cpp" line="36"/>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
         <translation>Messaggio</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="20"/>
+        <location filename="../widget/form/addfriendform.cpp" line="37"/>
         <source>Send friend request</source>
         <translation>Invia richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="67"/>
+        <location filename="../widget/form/addfriendform.cpp" line="84"/>
         <source>Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>Permettimi di aggiungerti alla mia lista contatti</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="75"/>
+        <location filename="../widget/form/addfriendform.cpp" line="92"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
         <translation>Inserisci un Tox ID valido</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="92"/>
+        <location filename="../widget/form/addfriendform.cpp" line="109"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Questo indirizzo non esiste</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="96"/>
+        <location filename="../widget/form/addfriendform.cpp" line="113"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Errore nel consultare il server DNS</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="102"/>
+        <location filename="../widget/form/addfriendform.cpp" line="119"/>
         <source>Unexpected number of text records</source>
         <comment>Error with the DNS</comment>
         <translation>Numero inaspettato di text-records</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="108"/>
+        <location filename="../widget/form/addfriendform.cpp" line="125"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Numero inaspettato di valori nel text-record</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="115"/>
+        <location filename="../widget/form/addfriendform.cpp" line="132"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La risposta del server DNS non contiene nessun Tox ID</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="121"/>
-        <location filename="../widget/form/addfriendform.cpp" line="127"/>
+        <location filename="../widget/form/addfriendform.cpp" line="138"/>
+        <location filename="../widget/form/addfriendform.cpp" line="144"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La risposta del server DNS non contiene un Tox ID valido</translation>
@@ -78,12 +78,12 @@
 <context>
     <name>Camera</name>
     <message>
-        <location filename="../widget/camera.cpp" line="145"/>
+        <location filename="../widget/camera.cpp" line="161"/>
         <source>Camera eror</source>
         <translation>Errore webcam</translation>
     </message>
     <message>
-        <location filename="../widget/camera.cpp" line="146"/>
+        <location filename="../widget/camera.cpp" line="162"/>
         <source>Camera format %1 not supported, can&apos;t use the camera</source>
         <translation>Formato webcam %1 non supportato, impossibile usare la webcam</translation>
     </message>
@@ -91,13 +91,13 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="265"/>
+        <location filename="../widget/form/chatform.cpp" line="291"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="590"/>
-        <location filename="../widget/form/chatform.cpp" line="596"/>
+        <location filename="../widget/form/chatform.cpp" line="616"/>
+        <location filename="../widget/form/chatform.cpp" line="622"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -113,10 +113,29 @@
 <context>
     <name>FileTransfertWidget</name>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="249"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="270"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Salva file</translation>
+    </message>
+</context>
+<context>
+    <name>FilesForm</name>
+    <message>
+        <location filename="../widget/form/filesform.cpp" line="25"/>
+        <source>Transfered Files</source>
+        <comment>&quot;Headline&quot; of the window</comment>
+        <translation>Files inviati</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/filesform.cpp" line="30"/>
+        <source>Downloads</source>
+        <translation>Ricevuti</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/filesform.cpp" line="31"/>
+        <source>Uploads</source>
+        <translation>Inviati</translation>
     </message>
 </context>
 <context>
@@ -158,19 +177,19 @@
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="71"/>
+        <location filename="../widget/friendwidget.cpp" line="87"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Copia Tox ID del contatto</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="72"/>
+        <location filename="../widget/friendwidget.cpp" line="88"/>
         <source>Invite in group</source>
         <comment>Menu to invite a friend in a groupchat</comment>
         <translation>Invita nel gruppo</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="82"/>
+        <location filename="../widget/friendwidget.cpp" line="98"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Rimuovi contatto</translation>
@@ -179,23 +198,23 @@
 <context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="32"/>
+        <location filename="../widget/form/groupchatform.cpp" line="48"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="155"/>
+        <location filename="../widget/form/groupchatform.cpp" line="173"/>
         <source>&lt;Unknown&gt;</source>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="224"/>
+        <location filename="../widget/form/groupchatform.cpp" line="242"/>
         <source>%1 users in chat</source>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="243"/>
+        <location filename="../widget/form/groupchatform.cpp" line="261"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -203,19 +222,19 @@
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="38"/>
-        <location filename="../widget/groupwidget.cpp" line="130"/>
+        <location filename="../widget/groupwidget.cpp" line="54"/>
+        <location filename="../widget/groupwidget.cpp" line="146"/>
         <source>%1 users in chat</source>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="40"/>
-        <location filename="../widget/groupwidget.cpp" line="132"/>
+        <location filename="../widget/groupwidget.cpp" line="56"/>
+        <location filename="../widget/groupwidget.cpp" line="148"/>
         <source>0 users in chat</source>
         <translation>0 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="73"/>
+        <location filename="../widget/groupwidget.cpp" line="89"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Esci dal gruppo</translation>
@@ -224,75 +243,107 @@
 <context>
     <name>SelfCamView</name>
     <message>
-        <location filename="../widget/selfcamview.cpp" line="16"/>
+        <location filename="../widget/selfcamview.cpp" line="32"/>
         <source>Tox video test</source>
         <comment>Title of the window to test the video/webcam</comment>
-        <translation>Test vidéo Tox</translation>
+        <translation>qTox video test</translation>
     </message>
 </context>
 <context>
     <name>SettingsForm</name>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="15"/>
+        <location filename="../widget/form/settingsform.cpp" line="31"/>
         <source>User Settings</source>
         <comment>&quot;Headline&quot; of the window</comment>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="18"/>
+        <location filename="../widget/form/settingsform.cpp" line="34"/>
         <source>Name</source>
         <comment>Username/nick</comment>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="19"/>
+        <location filename="../widget/form/settingsform.cpp" line="35"/>
         <source>Status</source>
         <comment>Status message</comment>
         <translation>Stato</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="28"/>
-        <source>Test video</source>
-        <comment>Text on a button to test the video/webcam</comment>
-        <translation>Prova il video</translation>
+        <location filename="../widget/form/settingsform.cpp" line="36"/>
+        <source>(click here to copy)</source>
+        <comment>Click on this text to copy TID to clipboard</comment>
+        <translation>(clicca qui per copiare)</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="29"/>
+        <location filename="../widget/form/settingsform.cpp" line="44"/>
+        <source>Test video</source>
+        <comment>Text on a button to test the video/webcam</comment>
+        <translation>Prova la webcam</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settingsform.cpp" line="45"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
         <translation>Abilita IPv6 (consigliato)</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="31"/>
+        <location filename="../widget/form/settingsform.cpp" line="47"/>
         <source>Use translations</source>
         <comment>Text on a checkbox to enable translations</comment>
         <translation>Abilita traduzioni</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settingsform.cpp" line="49"/>
+        <source>Make Tox portable</source>
+        <comment>Text on a checkbox to make qTox a portable application</comment>
+        <translation>Rendi qTox portabile</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../widget.ui" line="26"/>
+        <location filename="../widget.ui" line="42"/>
         <source>Tox</source>
         <translation>Tox</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="1935"/>
+        <location filename="../widget.ui" line="1951"/>
         <source>Your name</source>
-        <translation>Il tuo nome</translation>
+        <translation>Tox User</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="2017"/>
+        <location filename="../widget.ui" line="2033"/>
         <source>Your status</source>
-        <translation>Il tuo stato</translation>
+        <translation>Toxin on qTox</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="3293"/>
+        <location filename="../widget.ui" line="2610"/>
+        <source>Add friends</source>
+        <translation>Aggiungi contatto</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="2652"/>
+        <source>Create a group chat</source>
+        <translation>Crea un gruppo</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="2700"/>
+        <source>(button inactive currently)</source>
+        <translation>(bottone attualmente inattivo)</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="2748"/>
+        <source>Change your settings</source>
+        <translation>Cambia le impostazioni</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="3321"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="3296"/>
+        <location filename="../widget.ui" line="3324"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
