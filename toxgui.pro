@@ -43,7 +43,7 @@ win32 {
     LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread
 } macx {
     INCLUDEPATH += /usr/local/include/
-    LIBS += -L/usr/local/lib/ -ltoxcore -ltoxav -lsodium -lvpx
+    LIBS += -L$$PWD/libs/lib/ -L/usr/local/lib/ -ltoxcore -ltoxav -lsodium -lvpx
     ICON = toxgui.icns
 } else {
     LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
