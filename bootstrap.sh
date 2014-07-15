@@ -78,7 +78,7 @@ mkdir -p ${BASE_DIR}
 # thus we should remove the cloned repositories
 # if exists, otherwise cloning them may fail
 rm -rf ${BASE_DIR}/${SODIUM_DIR}
-rm -rf ${SBASE_DIR}/${TOX_CORE}
+rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 
 
 
