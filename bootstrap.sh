@@ -2,8 +2,7 @@
 
 ################ parameters ################
 # directory where the script is located
-SCRIPT_NAME=$(readlink -f $0)
-SCRIPT_DIR=`dirname $SCRIPT_NAME`
+SCRIPT_DIR=$( cd $(dirname $0); pwd -P)
 
 # directory where dependencies will be installed
 INSTALL_DIR=libs
@@ -21,6 +20,24 @@ TOX_CORE_DIR=libtoxcore-latest
 # if this script gets the parameter -t or --tox
 TOX_ONLY=false
 
+if [ -z "$BASE_DIR" ]; then
+    echo "internal error detected!"
+    echo "BASE_DIR should not be empty... aborting"
+    exit 1
+fi
+
+if [ -z "$SODIUM_DIR" ]; then
+    echo "internal error detected!"
+    echo "SODIUM_DIR should not be empty... aborting"
+    exit 1
+fi
+
+if [ -z "$TOX_CORE_DIR" ]; then
+    echo "internal error detected!"
+    echo "TOX_CORE_DIR should not be empty... aborting"
+    exit 1
+fi
+
 
 
 ########## check input parameters ##########
@@ -34,34 +51,34 @@ if [ $# -ge 1 ] ; then
         fi
     
 		# print help
-		echo "Use this script to install/update libsodium and libtoxcore in ${INSTALL_DIR}"
-		echo ""
-		echo "usage:"
-		echo "    ${0} [-t|--tox|-h|--help]"
-		echo ""
-		echo "parameters:"
-		echo "    -h|--help: displays this help"
-		echo "    -t|--tox : only install/update libtoxcore"
-		echo "               requires an already installed libsodium"
-		echo ""
-		echo "example usages:"
-		echo "    ${0}    -- to install libsodium and libtoxcore"
-		echo "    ${0} -t -- to update already installed libtoxcore"
-		exit 1
+        echo "Use this script to install/update libsodium and libtoxcore in ${INSTALL_DIR}"
+        echo ""
+        echo "usage:"
+        echo "    ${0} [-t|--tox|-h|--help]"
+        echo ""
+        echo "parameters:"
+        echo "    -h|--help: displays this help"
+        echo "    -t|--tox : only install/update libtoxcore"
+        echo "               requires an already installed libsodium"
+        echo ""
+        echo "example usages:"
+        echo "    ${0}    -- to install libsodium and libtoxcore"
+        echo "    ${0} -t -- to update already installed libtoxcore"
+        exit 1
 	fi
 fi
 
 
 
 ############### prepare step ###############
-# create INSTALL_DIR directory if necessary
+# create BASE_DIR directory if necessary
 mkdir -p ${BASE_DIR}
 
 # maybe an earlier run of this script failed
 # thus we should remove the cloned repositories
 # if exists, otherwise cloning them may fail
 rm -rf ${BASE_DIR}/${SODIUM_DIR}
-rm -rf ${SBASE_DIR}/${TOX_CORE}
+rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 
 
 
