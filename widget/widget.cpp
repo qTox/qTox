@@ -422,6 +422,7 @@ void Widget::onUsernameChanged()
 {
     const QString newUsername = settingsForm.name.text();
     ui->nameLabel->setText(newUsername);
+    ui->nameLabel->setToolTip(newUsername); // for overlength names
     settingsForm.name.setText(newUsername);
     core->setUsername(newUsername);
 }
@@ -429,6 +430,7 @@ void Widget::onUsernameChanged()
 void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
 {
     ui->nameLabel->setText(oldUsername); // restore old username until Core tells us to set it
+    ui->nameLabel->setToolTip(oldUsername); // for overlength names
     settingsForm.name.setText(oldUsername);
     core->setUsername(newUsername);
 }
@@ -436,6 +438,7 @@ void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUse
 void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
+    ui->nameLabel->setToolTip(username); // for overlength names
     settingsForm.name.setText(username);
 }
 
@@ -443,6 +446,7 @@ void Widget::onStatusMessageChanged()
 {
     const QString newStatusMessage = settingsForm.statusText.text();
     ui->statusLabel->setText(newStatusMessage);
+    ui->statusLabel->setToolTip(newStatusMessage); // for overlength messsages
     settingsForm.statusText.setText(newStatusMessage);
     core->setStatusMessage(newStatusMessage);
 }
@@ -450,6 +454,7 @@ void Widget::onStatusMessageChanged()
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
 {
     ui->statusLabel->setText(oldStatusMessage); // restore old status message until Core tells us to set it
+    ui->statusLabel->setToolTip(oldStatusMessage); // for overlength messsages
     settingsForm.statusText.setText(oldStatusMessage);
     core->setStatusMessage(newStatusMessage);
 }
@@ -457,6 +462,7 @@ void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QStri
 void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
+    ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
     settingsForm.statusText.setText(statusMessage);
 }
 
