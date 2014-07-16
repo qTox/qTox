@@ -76,6 +76,7 @@ SettingsForm::SettingsForm()
     buttons.addWidget(&delConf);
     hboxcont2->setLayout(&buttons);
     layout.addWidget(hboxcont2);
+    layout.addWidget(&importConf);
     layout.addWidget(&videoTest);
     layout.addWidget(&enableIPv6);
     layout.addWidget(&useTranslations);
