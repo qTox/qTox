@@ -2697,7 +2697,7 @@ QSplitter:handle{
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="toolTip">
-             <string>(button inactive currently)</string>
+             <string>View completed file transfers</string>
             </property>
             <property name="text">
              <string/>

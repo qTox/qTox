@@ -27,6 +27,7 @@
 #include <QVBoxLayout>
 #include <QUrl>
 #include <QDebug>
+#include <QFileInfo>
 
 class FilesForm : public QObject
 {
@@ -43,8 +44,7 @@ public slots:
     void onFileUploadComplete(const QString& path);
     
 private slots:
-    void onDownloadFileActivated(QListWidgetItem* item);
-    void onUploadFileActivated(QListWidgetItem* item);
+    void onFileActivated(QListWidgetItem* item);
 
 private:
     QWidget* head;
@@ -55,10 +55,15 @@ private:
     I should really look into the new fangled list thingy, to deactivate
     specific items in the list */
     QTabWidget main;
-    QListWidget sent, recvd;
+    QListWidget* sent, * recvd;
 
 };
 
-#include "ui_widget.h"
+class ListWidgetItem : public QListWidgetItem
+{
+    using QListWidgetItem::QListWidgetItem;
+  public:
+    QString path;
+};
 
 #endif // FILESFORM_H
