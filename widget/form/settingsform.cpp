@@ -25,14 +25,16 @@ SettingsForm::SettingsForm()
     : QObject()
 {
     main = new QWidget(), head = new QWidget();
+    hboxcont1 = new QWidget(), hboxcont2 = new QWidget();
     QFont bold, small;
     bold.setBold(true);
     small.setPixelSize(13);
     headLabel.setText(tr("User Settings","\"Headline\" of the window"));
     headLabel.setFont(bold);
 
-    nameLabel.setText(tr("Name","Username/nick"));
-    statusTextLabel.setText(tr("Status","Status message"));
+    //nameLabel.setText(tr("Name","Username/nick"));
+    //statusTextLabel.setText(tr("Status","Status message"));
+    
     idLabel.setText("Tox ID " + tr("(click here to copy)", "Click on this text to copy TID to clipboard"));
     id.setFont(small);
     id.setTextInteractionFlags(Qt::TextSelectableByMouse);
@@ -40,6 +42,15 @@ SettingsForm::SettingsForm()
     id.setFrameStyle(QFrame::NoFrame);
     id.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     id.setFixedHeight(id.document()->size().height());
+    
+    profilesLabel.setText(tr("Available profiles:", "Labels the profile selection box"));
+    populateProfiles();
+    loadConf.setText(tr("Load profile", "button to load selected profile"));
+    exportConf.setText(tr("Export profile", "button to save selected profile elsewhere"));
+    delConf.setText(tr("Delete profile", "button to delete selected profile from disk"));
+    delConf.setToolTip(tr("This is useful to remain safe on public computers", "describes the delete profile button"));
+    //delConf.setWhatsThis(tr("This is useful to remain safe on public computers", "describes the delete profile button"));
+    importConf.setText(tr("Import profile", "button to locate a profile"));
 
     videoTest.setText(tr("Test video","Text on a button to test the video/webcam"));
     enableIPv6.setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
@@ -50,12 +61,21 @@ SettingsForm::SettingsForm()
     makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
 
     main->setLayout(&layout);
-    layout.addWidget(&nameLabel);
-    layout.addWidget(&name);
-    layout.addWidget(&statusTextLabel);
-    layout.addWidget(&statusText);
+    //layout.addWidget(&nameLabel);
+    //layout.addWidget(&name);
+    //layout.addWidget(&statusTextLabel);
+    //layout.addWidget(&statusText);
     layout.addWidget(&idLabel);
     layout.addWidget(&id);
+    cbox.addWidget(&profilesLabel);
+    cbox.addWidget(&profiles);
+    hboxcont1->setLayout(&cbox);
+    layout.addWidget(hboxcont1);
+    buttons.addWidget(&loadConf);
+    buttons.addWidget(&exportConf);
+    buttons.addWidget(&delConf);
+    hboxcont2->setLayout(&buttons);
+    layout.addWidget(hboxcont2);
     layout.addWidget(&videoTest);
     layout.addWidget(&enableIPv6);
     layout.addWidget(&useTranslations);
@@ -76,6 +96,16 @@ SettingsForm::~SettingsForm()
 {
 }
 
+void SettingsForm::populateProfiles()
+{
+    QDir dir(Settings::getSettingsDirPath());
+	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+	dir.setNameFilters(QStringList("*.tox"));
+	for(QFileInfo file : dir.entryInfoList()) {
+		profiles.addItem(file.completeBaseName());
+	}
+}
+
 void SettingsForm::setFriendAddress(const QString& friendAddress)
 {
     id.setText(friendAddress);
@@ -83,8 +113,8 @@ void SettingsForm::setFriendAddress(const QString& friendAddress)
 
 void SettingsForm::show(Ui::Widget &ui)
 {
-    name.setText(ui.nameLabel->text());
-    statusText.setText(ui.statusLabel->text());
+    //name.setText(ui.nameLabel->text());
+    //statusText.setText(ui.statusLabel->text());
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
     main->show();

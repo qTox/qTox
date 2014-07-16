@@ -249,8 +249,8 @@ Widget::Widget(QWidget *parent) :
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
-    connect(&settingsForm.name, SIGNAL(editingFinished()), this, SLOT(onUsernameChanged()));
-    connect(&settingsForm.statusText, SIGNAL(editingFinished()), this, SLOT(onStatusMessageChanged()));
+    //connect(&settingsForm.name, SIGNAL(editingFinished()), this, SLOT(onUsernameChanged()));
+    //connect(&settingsForm.statusText, SIGNAL(editingFinished()), this, SLOT(onStatusMessageChanged()));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
 
     coreThread->start();
@@ -418,44 +418,56 @@ void Widget::hideMainForms()
     }
 }
 
-void Widget::onUsernameChanged()
+/*void Widget::onUsernameChanged()
 {
-    const QString newUsername = settingsForm.name.text();
+    //const QString newUsername = settingsForm.name.text();
     ui->nameLabel->setText(newUsername);
     ui->nameLabel->setToolTip(newUsername); // for overlength names
     settingsForm.name.setText(newUsername);
     core->setUsername(newUsername);
-}
+}*/
 
 void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
 {
     ui->nameLabel->setText(oldUsername); // restore old username until Core tells us to set it
     ui->nameLabel->setToolTip(oldUsername); // for overlength names
-    settingsForm.name.setText(oldUsername);
+    //settingsForm.name.setText(oldUsername);
     core->setUsername(newUsername);
+    
+    // move the data file with it
+    QString dir = Settings::getSettingsDirPath();
+    QFile::rename(dir + '/' + oldUsername + core->TOX_EXT, dir + '/' + newUsername + core->TOX_EXT);
+    // and update current profile
+    Settings::getInstance().setCurrentProfile(newUsername);
 }
-
+// ugh... Widget::onUsernameChanged() calls Core::setUsername, 
+// which emits Core::usernameSet, which is connect to this function:
 void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     ui->nameLabel->setToolTip(username); // for overlength names
-    settingsForm.name.setText(username);
+    //settingsForm.name.setText(username);
 }
+// the end result is that the ui gets updated twice -- and actually,
+// I believe this function is dead code, since the only way to change
+// username now is via the ui (since I killed the settings version)
+// the chain of calls before was surely much messier with two ways
+// to modify the username...
 
-void Widget::onStatusMessageChanged()
+/*void Widget::onStatusMessageChanged()
 {
     const QString newStatusMessage = settingsForm.statusText.text();
     ui->statusLabel->setText(newStatusMessage);
     ui->statusLabel->setToolTip(newStatusMessage); // for overlength messsages
     settingsForm.statusText.setText(newStatusMessage);
     core->setStatusMessage(newStatusMessage);
-}
+}*/
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
 {
     ui->statusLabel->setText(oldStatusMessage); // restore old status message until Core tells us to set it
     ui->statusLabel->setToolTip(oldStatusMessage); // for overlength messsages
-    settingsForm.statusText.setText(oldStatusMessage);
+    //settingsForm.statusText.setText(oldStatusMessage);
     core->setStatusMessage(newStatusMessage);
 }
 
@@ -463,7 +475,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
     ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
-    settingsForm.statusText.setText(statusMessage);
+    //settingsForm.statusText.setText(statusMessage);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)

@@ -26,6 +26,9 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QComboBox>
+#include <QDir>
+#include <QFileInfo>
 #include "widget/tool/clickablelabel.h"
 #include "ui_widget.h"
 #include "widget/selfcamview.h"
@@ -50,16 +53,20 @@ private slots:
     void copyIdClicked();
 
 private:
-    QLabel headLabel, nameLabel, statusTextLabel;
+    QLabel headLabel;/*, nameLabel, statusTextLabel;*/
     QTextEdit id;
     ClickableLabel idLabel;
-    QPushButton videoTest;
+    QLabel profilesLabel;
+    QComboBox profiles;
+    QPushButton loadConf, exportConf, delConf, importConf, videoTest;
+    QHBoxLayout cbox, buttons;
     QCheckBox enableIPv6, useTranslations, makeToxPortable;
     QVBoxLayout layout, headLayout;
-    QWidget *main, *head;
+    QWidget *main, *head, *hboxcont1, *hboxcont2;
+    void populateProfiles();
 
 public:
-    QLineEdit name, statusText;
+    //QLineEdit name, statusText;
 };
 
 #endif // SETTINGSFORM_H
