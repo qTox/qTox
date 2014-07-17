@@ -21,8 +21,8 @@
 #include <QClipboard>
 #include <QApplication>
 
-SettingsForm::SettingsForm()
-    : QObject()
+SettingsForm::SettingsForm(Core* core)
+    : QObject(), core(core)
 {
     main = new QWidget(), head = new QWidget();
     hboxcont1 = new QWidget(), hboxcont2 = new QWidget();
@@ -86,6 +86,10 @@ SettingsForm::SettingsForm()
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
 
+    connect(&loadConf, SIGNAL(clicked()), this, SLOT(onLoadClicked()));
+    connect(&exportConf, SIGNAL(clicked()), this, SLOT(onExportClicked()));
+    connect(&delConf, SIGNAL(clicked()), this, SLOT(onDeleteClicked()));
+    connect(&importConf, SIGNAL(clicked()), this, SLOT(onImportClicked()));
     connect(&videoTest, SIGNAL(clicked()), this, SLOT(onTestVideoClicked()));
     connect(&enableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
     connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
@@ -107,6 +111,11 @@ void SettingsForm::populateProfiles()
 	}
 }
 
+QString SettingsForm::getSelectedSavePath()
+{
+    return Settings::getSettingsDirPath() + profiles.currentText() + core->TOX_EXT;
+}
+
 void SettingsForm::setFriendAddress(const QString& friendAddress)
 {
     id.setText(friendAddress);
@@ -120,6 +129,37 @@ void SettingsForm::show(Ui::Widget &ui)
     ui.mainHead->layout()->addWidget(head);
     main->show();
     head->show();
+}
+
+void SettingsForm::onLoadClicked()
+{
+    core->saveConfiguration();
+    core->loadConfiguration(getSelectedSavePath());
+    // loadConf also setsCurrentProfile
+}
+
+void SettingsForm::onExportClicked()
+{
+    QString current = getSelectedSavePath();
+    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"), QDir::homePath() + '/' + profiles.currentText() + core->TOX_EXT, tr("Tox save file (*.tox)", "save dialog filter"));
+    // dunno if that "~" works
+    QFile::copy(getSelectedSavePath(), path);
+}
+
+void SettingsForm::onDeleteClicked()
+{ // this should really be guarded by a pop up
+    QFile::remove(getSelectedSavePath());
+}
+
+void SettingsForm::onImportClicked()
+{
+    QString path = QFileDialog::getOpenFileName(0, tr("Import profile", "import dialog title"), QDir::homePath(), tr("Tox save file (*.tox)", "import dialog filter"));
+    // again, the "~"...
+    QFileInfo info(path);
+    QString profile = info.completeBaseName();
+    QString profilePath = Settings::getSettingsDirPath() + profile + core->TOX_EXT;
+    QFile::copy(path, profilePath);
+    core->loadConfiguration(profilePath);
 }
 
 void SettingsForm::onTestVideoClicked()

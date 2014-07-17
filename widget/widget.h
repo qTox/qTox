@@ -142,7 +142,7 @@ private:
     Core* core;
     QThread* coreThread;
     AddFriendForm friendForm;
-    SettingsForm settingsForm;
+    SettingsForm* settingsForm;
     FilesForm filesForm;
     static Widget* instance;
     FriendWidget* activeFriendWidget;

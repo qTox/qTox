@@ -29,15 +29,17 @@
 #include <QComboBox>
 #include <QDir>
 #include <QFileInfo>
+#include <QFileDialog>
 #include "widget/tool/clickablelabel.h"
 #include "ui_widget.h"
 #include "widget/selfcamview.h"
+#include "core.h"
 
 class SettingsForm : public QObject
 {
     Q_OBJECT
 public:
-    SettingsForm();
+    SettingsForm(Core* core);
     ~SettingsForm();
 
     void show(Ui::Widget& ui);
@@ -46,6 +48,10 @@ public slots:
     void setFriendAddress(const QString& friendAddress);
 
 private slots:
+    void onLoadClicked();
+    void onExportClicked();
+    void onDeleteClicked();
+    void onImportClicked();
     void onTestVideoClicked();
     void onEnableIPv6Updated();
     void onUseTranslationUpdated();
@@ -64,6 +70,8 @@ private:
     QVBoxLayout layout, headLayout;
     QWidget *main, *head, *hboxcont1, *hboxcont2;
     void populateProfiles();
+    QString getSelectedSavePath();
+    Core* core;
 
 public:
     //QLineEdit name, statusText;

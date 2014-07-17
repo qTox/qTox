@@ -141,6 +141,8 @@ Widget::Widget(QWidget *parent) :
 
     isWindowMinimized = 0;
 
+    settingsForm = new SettingsForm(core);
+
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
@@ -217,7 +219,7 @@ Widget::Widget(QWidget *parent) :
     connect(core, &Core::statusSet, this, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
-    connect(core, &Core::friendAddressGenerated, &settingsForm, &SettingsForm::setFriendAddress);
+    connect(core, &Core::friendAddressGenerated, settingsForm, &SettingsForm::setFriendAddress);
     connect(core, SIGNAL(fileDownloadFinished(const QString&)), &filesForm, SLOT(onFileDownloadComplete(const QString&)));
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
@@ -281,6 +283,7 @@ Widget::~Widget()
     settings.setValue("geometry", geometry());
     settings.setValue("maximized", isMaximized());
     settings.setValue("useNativeTheme", useNativeTheme);
+    delete settingsForm;
     delete ui;
 }
 
@@ -391,7 +394,7 @@ void Widget::onTransferClicked()
 void Widget::onSettingsClicked()
 {
     hideMainForms();
-    settingsForm.show(*ui);
+    settingsForm->show(*ui);
     isFriendWidgetActive = 0;
     isGroupWidgetActive = 0;
 }
