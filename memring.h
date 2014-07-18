@@ -21,7 +21,7 @@ public:
         _size = _size_mask = 1 << power_of_two;
         _size_mask -= 1;
 
-        _buff = reinterpret_cast<T*>(malloc(_size * sizeof(T)));
+        _buff = new T[_size];
 
         if (!_buff)
             throw std::exception();
@@ -29,7 +29,7 @@ public:
 
     ~MemRing() {
         if (_buff)
-            free(_buff);
+            delete [] _buff;
     }
 
     size_t readSpace()

@@ -106,7 +106,7 @@ public:
     int callId;
     int friendId;
     int framesize;
-    char *audio_packet_samples;
+    int16_t *audio_packet_samples;
     char *audio_packet_data;
     bool videoEnabled;
     bool active;

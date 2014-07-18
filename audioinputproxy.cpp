@@ -2,14 +2,14 @@
 
 #include <QDebug>
 
-#define RING_SIZE 44100*2*2
+#define RING_SIZE 11025
 
 AudioInputProxy::AudioInputProxy(QObject *parent) :
     QIODevice(parent),
     callback(nullptr),
     ring_buffer(new MemRing<int16_t>(RING_SIZE))
 {
-    open(QIODevice::ReadWrite | QIODevice::Unbuffered);
+    open(QIODevice::WriteOnly | QIODevice::Unbuffered);
     qDebug() << "AudioInputProxy::AudioInputProxy";
 }
 

@@ -1230,7 +1230,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
     calls[callId].videoEnabled = videoEnabled;
     calls[callId].framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;;
-    calls[callId].audio_packet_samples = new char[calls[callId].framesize * 2];
+    calls[callId].audio_packet_samples = new int16_t[calls[callId].framesize];
     calls[callId].audio_packet_data = new char[calls[callId].framesize * 2];
     toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, videoEnabled);
 
@@ -1321,7 +1321,7 @@ void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length)
     if (!calls[callId].active)
         return;
 
-    calls[callId].audioOutputProxy->write((char*)data, length*2);
+    calls[callId].audioOutputProxy->push(data, length);
 
     // TODO: we can subscribes
     int state = calls[callId].audioOutput->state();
@@ -1359,27 +1359,29 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     if (!calls[callId].active)
         return;
 
-    auto bytesReady = calls[callId].audioInputProxy->bytesAvailable();
-    if (bytesReady < calls[callId].framesize*2) {
-        qDebug() << "not enough samples" << bytesReady << "of" << calls[callId].framesize*2;
-        return;
-    }
+    while (true) {
+        auto samplesReady = calls[callId].audioInputProxy->readSpace();
+        if (samplesReady < calls[callId].framesize) {
+            qDebug() << "not enough samples ready" << samplesReady << "of" << calls[callId].framesize;
+            return;
+        }
 
-    calls[callId].audioInputProxy->read(calls[callId].audio_packet_samples, calls[callId].framesize*2);
+        calls[callId].audioInputProxy->pull(calls[callId].audio_packet_samples, calls[callId].framesize);
 
-    int result = toxav_prepare_audio_frame(toxav, callId,
-                                           (uint8_t*)calls[callId].audio_packet_data,
-                                           calls[callId].framesize*2,
-                                           (int16_t*)calls[callId].audio_packet_samples,
-                                           calls[callId].framesize);
-    if (result < 0) {
-        qWarning() << QString("Core: Unable to prepare audio frame, error %1").arg(result);
-        return;
-    }
+        int result = toxav_prepare_audio_frame(toxav, callId,
+                                               (uint8_t*)calls[callId].audio_packet_data,
+                                               calls[callId].framesize*2,
+                                               calls[callId].audio_packet_samples,
+                                               calls[callId].framesize);
+        if (result < 0) {
+            qWarning() << QString("Core: Unable to prepare audio frame, error %1").arg(result);
+            return;
+        }
 
-    result = toxav_send_audio(toxav, callId, (uint8_t*)calls[callId].audio_packet_data, result);
-    if (result < 0) {
-        qWarning() << QString("Core: Unable to send audio frame, error %1").arg(result);
+        result = toxav_send_audio(toxav, callId, (uint8_t*)calls[callId].audio_packet_data, result);
+        if (result < 0) {
+            qWarning() << QString("Core: Unable to send audio frame, error %1").arg(result);
+        }
     }
 }
 
