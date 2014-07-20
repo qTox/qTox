@@ -151,6 +151,7 @@ private:
     SelfCamView* camview;
     Camera* camera;
     bool notify(QObject *receiver, QEvent *event);
+    bool eventFilter(QObject *, QEvent *event);
 };
 
 #endif // WIDGET_H
