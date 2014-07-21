@@ -41,6 +41,10 @@ INSTALLS += target
 INCLUDEPATH += libs/include
 win32 {
     LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread
+} macx {
+    INCLUDEPATH += /usr/local/include/
+    LIBS += -L$$PWD/libs/lib/ -L/usr/local/lib/ -ltoxcore -ltoxav -lsodium -lvpx
+    ICON = toxgui.icns
 } else {
     LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
 }
@@ -78,12 +82,13 @@ HEADERS  += widget/form/addfriendform.h \
     friendlist.h \
     cdata.h \
     cstring.h \
-    audiobuffer.h \
     widget/selfcamview.h \
     widget/videosurface.h \
     widget/camera.h \
     widget/netcamview.h \
-    widget/tool/clickablelabel.h
+    widget/tool/clickablelabel.h \
+    audioinputproxy.h \
+    audiooutputproxy.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -110,9 +115,10 @@ SOURCES += \
     settings.cpp \
     cdata.cpp \
     cstring.cpp \
-    audiobuffer.cpp \
     widget/selfcamview.cpp \
     widget/videosurface.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
-    widget/tool/clickablelabel.cpp
+    widget/tool/clickablelabel.cpp \
+    audioinputproxy.cpp \
+    audiooutputproxy.cpp
