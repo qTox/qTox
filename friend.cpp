@@ -36,12 +36,14 @@ Friend::~Friend()
 void Friend::setName(QString name)
 {
     widget->name.setText(name);
+    widget->name.setToolTip(name); // for overlength names
     chatForm->setName(name);
 }
 
 void Friend::setStatusMessage(QString message)
 {
     widget->statusMessage.setText(message);
+    widget->statusMessage.setToolTip(message); // for overlength messsages
     chatForm->setStatusMessage(message);
 }
 

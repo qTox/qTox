@@ -207,11 +207,13 @@ void ChatForm::show(Ui::Widget &ui)
 void ChatForm::setName(QString newName)
 {
     name->setText(newName);
+    name->setToolTip(newName); // for overlength names
 }
 
 void ChatForm::setStatusMessage(QString newMessage)
 {
     statusMessage->setText(newMessage);
+    statusMessage->setToolTip(newMessage); // for overlength messsages
 }
 
 void ChatForm::onSendTriggered()
