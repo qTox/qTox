@@ -21,6 +21,7 @@
 #include <QFileDialog>
 #include <QPixmap>
 #include <QPainter>
+#include <QMessageBox>
 
 FileTransfertWidget::FileTransfertWidget(ToxFile File)
     : lastUpdate{QDateTime::currentDateTime()}, lastBytesSent{0},
@@ -265,11 +266,40 @@ void FileTransfertWidget::rejectRecvRequest()
     onFileTransferCancelled(friendId, fileNum, direction);
 }
 
+// for whatever the fuck reason, QFileInfo::isWritable() always fails for files that don't exist
+// which makes it useless for our case
+// since QDir doesn't have an isWritable(), the only option I can think of is to make/delete the file
+// surely this is a common problem that has a qt-implemented solution?
+bool isWritable(QString& path)
+{
+    QFile file(path);
+    bool exists = file.exists();
+    bool out = file.open(QIODevice::WriteOnly);
+    file.close();
+    if (!exists)
+        file.remove();
+    return out;
+}
+
 void FileTransfertWidget::acceptRecvRequest()
 {
-    QString path = QFileDialog::getSaveFileName(0,tr("Save a file","Title of the file saving dialog"),QDir::currentPath()+'/'+filename->text());
-    if (path.isEmpty())
-        return;
+    QString path;
+    while (true)
+    {
+        path = QFileDialog::getSaveFileName(0,tr("Save a file","Title of the file saving dialog"),QDir::currentPath()+'/'+filename->text());
+        if (path.isEmpty())
+            return;
+        else
+        {
+            //bool savable = QFileInfo(path).isWritable();
+            //qDebug() << path << " is writable: " << savable;
+            //qDebug() << "/home/bill/bliss.pdf writable: " << QFileInfo("/home/bill/bliss.pdf").isWritable();
+            if (isWritable(path))
+                break;
+            else
+                QMessageBox::warning(0, tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+        }
+    }
 
     savePath = path;
 
