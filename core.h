@@ -230,6 +230,7 @@ signals:
     void avEnding(int friendId, int callIndex);
     void avRequestTimeout(int friendId, int callIndex);
     void avPeerTimeout(int friendId, int callIndex);
+    void avMediaChange(int friendId, int callIndex);
 
     void videoFrameReceived(vpx_image* frame);
 
@@ -251,17 +252,17 @@ private:
                                       uint8_t control_type, const uint8_t *data, uint16_t length, void *core);
     static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, const uint8_t *data, uint16_t length, void *userdata);
 
-    static void onAvInvite(int32_t call_index, void* toxav);
-    static void onAvStart(int32_t call_index, void* toxav);
-    static void onAvCancel(int32_t call_index, void* toxav);
-    static void onAvReject(int32_t call_index, void* toxav);
-    static void onAvEnd(int32_t call_index, void* toxav);
-    static void onAvRinging(int32_t call_index, void* toxav);
-    static void onAvStarting(int32_t call_index, void* toxav);
-    static void onAvEnding(int32_t call_index, void* toxav);
-    static void onAvError(int32_t call_index, void* toxav);
-    static void onAvRequestTimeout(int32_t call_index, void* toxav);
-    static void onAvPeerTimeout(int32_t call_index, void* toxav);
+    static void onAvInvite(void* toxav, int32_t call_index, void* core);
+    static void onAvStart(void* toxav, int32_t call_index, void* core);
+    static void onAvCancel(void* toxav, int32_t call_index, void* core);
+    static void onAvReject(void* toxav, int32_t call_index, void* core);
+    static void onAvEnd(void* toxav, int32_t call_index, void* core);
+    static void onAvRinging(void* toxav, int32_t call_index, void* core);
+    static void onAvStarting(void* toxav, int32_t call_index, void* core);
+    static void onAvEnding(void* toxav, int32_t call_index, void* core);
+    static void onAvRequestTimeout(void* toxav, int32_t call_index, void* core);
+    static void onAvPeerTimeout(void* toxav, int32_t call_index, void* core);
+    static void onAvMediaChange(void* toxav, int32_t call_index, void* core);
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
