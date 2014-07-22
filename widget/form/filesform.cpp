@@ -27,18 +27,25 @@ FilesForm::FilesForm()
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
     
-    main.addTab(&recvd, tr("Downloads"));
-    main.addTab(&sent, tr("Uploads"));
+    recvd = new QListWidget;
+    sent = new QListWidget;
     
-    connect(&sent, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onUploadFileActivated(QListWidgetItem*)));
-    connect(&recvd, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onDownloadFileActivated(QListWidgetItem*)));
+    main.addTab(recvd, tr("Downloads"));
+    main.addTab(sent, tr("Uploads"));
+    
+    connect(sent, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onFileActivated(QListWidgetItem*)));
+    connect(recvd, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onFileActivated(QListWidgetItem*)));
 
 }
 
 FilesForm::~FilesForm()
 {
-    //delete head;
-    // having this line caused a SIGABRT because free() received an invalid pointer
+#if 0    
+    delete recvd; // docs claim this will clean up children
+    delete sent;
+    delete head;
+#endif
+    // having these lines caused a SIGABRT because free() received an invalid pointer
     // but since this is only called on program shutdown anyways, 
     // I'm not too bummed about removing it
 }
@@ -53,14 +60,16 @@ void FilesForm::show(Ui::Widget& ui)
 
 void FilesForm::onFileDownloadComplete(const QString& path)
 {
-    QListWidgetItem* tmp = new QListWidgetItem(QIcon(":/ui/acceptFileButton/default.png"), path);
-    recvd.addItem(tmp);
+    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/acceptFileButton/default.png"), QFileInfo(path).fileName());
+    tmp->path = path;
+    recvd->addItem(tmp);
 }
 
 void FilesForm::onFileUploadComplete(const QString& path)
 {
-    QListWidgetItem* tmp = new QListWidgetItem(QIcon(":/ui/acceptFileButton/default.png"), path);
-    sent.addItem(tmp);
+    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/acceptFileButton/default.png"), QFileInfo(path).fileName());
+    tmp->path = path;
+    sent->addItem(tmp);
 }
 
 // sadly, the ToxFile struct in core only has the file name, not the file path...
@@ -68,16 +77,10 @@ void FilesForm::onFileUploadComplete(const QString& path)
 // whenever they're not saved anywhere custom, thanks to the hack)
 // I could do some digging around, but for now I'm tired and others already 
 // might know it without me needing to dig, so...
-void FilesForm::onDownloadFileActivated(QListWidgetItem* item)
+void FilesForm::onFileActivated(QListWidgetItem* item)
 {
-    QUrl url = QUrl::fromLocalFile("./" + item->text());
-    qDebug() << "Opening '" << url << "'";
-    QDesktopServices::openUrl(url);
-}
-
-void FilesForm::onUploadFileActivated(QListWidgetItem* item)
-{
-    QUrl url = QUrl::fromLocalFile(item->text());
+    ListWidgetItem* tmp = dynamic_cast<ListWidgetItem*> (item);
+    QUrl url = QUrl::fromLocalFile(tmp->path);
     qDebug() << "Opening '" << url << "'";
     QDesktopServices::openUrl(url);
 }

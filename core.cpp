@@ -664,9 +664,9 @@ void Core::setStatus(Status status)
 void Core::onFileTransferFinished(ToxFile file)
 {
      if (file.direction == file.SENDING)
-          emit fileUploadFinished(QString(file.fileName));
+          emit fileUploadFinished(file.filePath);
      else
-          emit fileDownloadFinished(QString(file.fileName));
+          emit fileDownloadFinished(file.filePath);
 }
 
 void Core::bootstrapDht()
@@ -952,6 +952,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
             removeFileFromQueue(true, file->friendId, file->fileNum);
             return;
         }
+        qDebug() << "chunkSize: " << chunkSize;
         chunkSize = std::min(chunkSize, file->filesize);
         uint8_t* data = new uint8_t[chunkSize];
         file->file->seek(file->bytesSent);
