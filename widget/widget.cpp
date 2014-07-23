@@ -190,6 +190,8 @@ Widget::Widget(QWidget *parent) :
     ui->pbClose->setMouseTracking(true);
     ui->statusHead->setMouseTracking(true);
 
+    ui->friendList->viewport()->installEventFilter(this);
+
     QList<int> currentSizes = ui->centralWidget->sizes();
     currentSizes[0] = 225;
     ui->centralWidget->setSizes(currentSizes);
@@ -1219,4 +1221,18 @@ void Widget::setStatusAway()
 void Widget::setStatusBusy()
 {
     core->setStatus(Status::Busy);
+}
+
+bool Widget::eventFilter(QObject *, QEvent *event)
+{
+    if (event->type() == QEvent::Wheel)
+    {
+        QWheelEvent * whlEvnt =  static_cast< QWheelEvent * >( event );
+        if (whlEvnt->angleDelta().x() != 0)
+        {
+            event->accept();
+            return true;
+        }
+    }
+    return false;
 }
