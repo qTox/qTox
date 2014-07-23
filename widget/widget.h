@@ -106,6 +106,7 @@ private slots:
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupWidgetClicked(GroupWidget* widget);
     void removeFriend(int friendId);
+    void clearFriends();
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
     void splitterMoved(int pos, int index);
@@ -119,6 +120,7 @@ protected slots:
 private:
     void hideMainForms();
     Group* createGroup(int groupId);
+    void removeFriend(Friend* f);
 
 private:
     Ui::Widget *ui;
@@ -142,7 +144,7 @@ private:
     Core* core;
     QThread* coreThread;
     AddFriendForm friendForm;
-    SettingsForm* settingsForm;
+    SettingsForm settingsForm;
     FilesForm filesForm;
     static Widget* instance;
     FriendWidget* activeFriendWidget;

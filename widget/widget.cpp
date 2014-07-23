@@ -141,8 +141,6 @@ Widget::Widget(QWidget *parent) :
 
     isWindowMinimized = 0;
 
-    settingsForm = new SettingsForm(core);
-
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
@@ -221,11 +219,12 @@ Widget::Widget(QWidget *parent) :
     connect(core, &Core::statusSet, this, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
-    connect(core, &Core::friendAddressGenerated, settingsForm, &SettingsForm::setFriendAddress);
+    connect(core, &Core::friendAddressGenerated, &settingsForm, &SettingsForm::setFriendAddress);
     connect(core, SIGNAL(fileDownloadFinished(const QString&)), &filesForm, SLOT(onFileDownloadComplete(const QString&)));
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
+    connect(core, &Core::clearFriends, this, &Widget::clearFriends);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
@@ -285,7 +284,6 @@ Widget::~Widget()
     settings.setValue("geometry", geometry());
     settings.setValue("maximized", isMaximized());
     settings.setValue("useNativeTheme", useNativeTheme);
-    delete settingsForm;
     delete ui;
 }
 
@@ -396,7 +394,7 @@ void Widget::onTransferClicked()
 void Widget::onSettingsClicked()
 {
     hideMainForms();
-    settingsForm->show(*ui);
+    settingsForm.show(*ui);
     isFriendWidgetActive = 0;
     isGroupWidgetActive = 0;
 }
@@ -439,11 +437,12 @@ void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUse
     //settingsForm.name.setText(oldUsername);
     core->setUsername(newUsername);
     
-    // move the data file with it
+    /*// move the data file with it
     QString dir = Settings::getSettingsDirPath();
-    QFile::rename(dir + '/' + oldUsername + core->TOX_EXT, dir + '/' + newUsername + core->TOX_EXT);
+    QFile::rename(dir + '/' + core->sanitize(oldUsername) + core->TOX_EXT, dir + '/' + core->sanitize(newUsername) + core->TOX_EXT);
     // and update current profile
     Settings::getInstance().setCurrentProfile(newUsername);
+    */
 }
 // ugh... Widget::onUsernameChanged() calls Core::setUsername, 
 // which emits Core::usernameSet, which is connect to this function:
@@ -649,17 +648,27 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
         emit friendRequestAccepted(userId);
 }
 
-void Widget::removeFriend(int friendId)
+void Widget::removeFriend(Friend* f)
 {
-    Friend* f = FriendList::findFriend(friendId);
     f->widget->setAsInactiveChatroom();
     if (f->widget == activeFriendWidget)
         activeFriendWidget = nullptr;
-    FriendList::removeFriend(friendId);
-    core->removeFriend(friendId);
+    FriendList::removeFriend(f->friendId);
+    core->removeFriend(f->friendId);
     delete f;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
+}
+
+void Widget::removeFriend(int friendId)
+{
+    removeFriend(FriendList::findFriend(friendId));
+}
+
+void Widget::clearFriends()
+{ // used for dynamic profile loading
+    for (Friend* f : FriendList::friendList)
+        removeFriend(f);
 }
 
 void Widget::copyFriendIdToClipboard(int friendId)

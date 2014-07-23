@@ -126,7 +126,7 @@ public:
 
     void saveConfiguration(QString path = "");
     void loadConfiguration(QString path = "");
-    QString sanitize(QString name);
+    static QString sanitize(QString name);
     
     QString getUsername();
     QString getStatusMessage();
@@ -177,6 +177,7 @@ signals:
     void friendMessageReceived(int friendId, const QString& message);
 
     void friendAdded(int friendId, const QString& userId);
+    void clearFriends();
 
     void friendStatusChanged(int friendId, Status status);
     void friendStatusMessageChanged(int friendId, const QString& message);

@@ -21,8 +21,8 @@
 #include <QClipboard>
 #include <QApplication>
 
-SettingsForm::SettingsForm(Core* core)
-    : QObject(), core(core)
+SettingsForm::SettingsForm()
+    : QObject()
 {
     main = new QWidget(), head = new QWidget();
     hboxcont1 = new QWidget(), hboxcont2 = new QWidget();
@@ -81,7 +81,7 @@ SettingsForm::SettingsForm(Core* core)
     layout.addWidget(&enableIPv6);
     layout.addWidget(&useTranslations);
     layout.addWidget(&makeToxPortable);
-    layout.addStretch();
+    //layout.addStretch();
 
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
@@ -113,7 +113,7 @@ void SettingsForm::populateProfiles()
 
 QString SettingsForm::getSelectedSavePath()
 {
-    return Settings::getSettingsDirPath() + profiles.currentText() + core->TOX_EXT;
+    return Settings::getSettingsDirPath() + profiles.currentText() + Widget::getInstance()->getCore()->TOX_EXT;
 }
 
 void SettingsForm::setFriendAddress(const QString& friendAddress)
@@ -133,33 +133,45 @@ void SettingsForm::show(Ui::Widget &ui)
 
 void SettingsForm::onLoadClicked()
 {
-    core->saveConfiguration();
-    core->loadConfiguration(getSelectedSavePath());
+    Widget::getInstance()->getCore()->saveConfiguration();
+    Widget::getInstance()->getCore()->loadConfiguration(getSelectedSavePath());
     // loadConf also setsCurrentProfile
 }
 
 void SettingsForm::onExportClicked()
 {
     QString current = getSelectedSavePath();
-    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"), QDir::homePath() + '/' + profiles.currentText() + core->TOX_EXT, tr("Tox save file (*.tox)", "save dialog filter"));
-    // dunno if that "~" works
+    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"), QDir::homePath() + '/' + profiles.currentText() + Widget::getInstance()->getCore()->TOX_EXT, tr("Tox save file (*.tox)", "save dialog filter"));
     QFile::copy(getSelectedSavePath(), path);
 }
 
 void SettingsForm::onDeleteClicked()
-{ // this should really be guarded by a pop up
-    QFile::remove(getSelectedSavePath());
+{
+    if (Settings::getInstance().getCurrentProfile() == profiles.currentText())
+    {
+        QMessageBox::warning(main, tr("Profile currently loaded","current profile deletion warning title"), tr("This profile is currently in use. Please load a different profile before deleting this one.","current profile deletion warning text"));
+    }
+    else
+    {        
+        QMessageBox::StandardButton resp = QMessageBox::question(main,
+            tr("Deletion imminent!","deletion confirmation title"), tr("Are you sure you want to delete this profile?","deletion confirmation text"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        if (resp == QMessageBox::Yes)
+        {
+            QFile::remove(getSelectedSavePath());
+            profiles.removeItem(profiles.currentIndex());
+        }
+    }
 }
 
 void SettingsForm::onImportClicked()
 {
     QString path = QFileDialog::getOpenFileName(0, tr("Import profile", "import dialog title"), QDir::homePath(), tr("Tox save file (*.tox)", "import dialog filter"));
-    // again, the "~"...
     QFileInfo info(path);
     QString profile = info.completeBaseName();
-    QString profilePath = Settings::getSettingsDirPath() + profile + core->TOX_EXT;
+    QString profilePath = Settings::getSettingsDirPath() + profile + Widget::getInstance()->getCore()->TOX_EXT;
     QFile::copy(path, profilePath);
-    core->loadConfiguration(profilePath);
+    Widget::getInstance()->getCore()->loadConfiguration(profilePath);
+    profiles.addItem(profile);
 }
 
 void SettingsForm::onTestVideoClicked()

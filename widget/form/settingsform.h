@@ -30,6 +30,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QFileDialog>
+#include <QMessageBox>
 #include "widget/tool/clickablelabel.h"
 #include "ui_widget.h"
 #include "widget/selfcamview.h"
@@ -39,7 +40,7 @@ class SettingsForm : public QObject
 {
     Q_OBJECT
 public:
-    SettingsForm(Core* core);
+    SettingsForm();
     ~SettingsForm();
 
     void show(Ui::Widget& ui);
@@ -71,7 +72,6 @@ private:
     QWidget *main, *head, *hboxcont1, *hboxcont2;
     void populateProfiles();
     QString getSelectedSavePath();
-    Core* core;
 
 public:
     //QLineEdit name, statusText;

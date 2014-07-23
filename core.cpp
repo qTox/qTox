@@ -723,17 +723,19 @@ void Core::checkConnection()
     }
 }
 
-QString sanitize(QString name)
+QString Core::sanitize(QString name)
 {
     // do things
     return name;
 }
 
 void Core::loadConfiguration(QString path)
-{
+{ // note to self: this really needs refactoring into the GUI, making the path mandatory here
+  // but for now it's bedtime
     if (path == "")
     {
         // read from settings whose profile?
+        QString profile = Settings::getInstance().getCurrentProfile();
         path = Settings::getSettingsDirPath() + '/' + Settings::getInstance().getCurrentProfile() + TOX_EXT;
         QFile file(path);
         
@@ -742,6 +744,11 @@ void Core::loadConfiguration(QString path)
         {
             path = Settings::getSettingsDirPath() + '/' + CONFIG_FILE_NAME;
         }
+    }
+    else
+    {
+        QString profile = QFileInfo(path).completeBaseName();
+        Settings::getInstance().setCurrentProfile(profile);
     }
 
     QFile conf(path);
@@ -768,10 +775,7 @@ void Core::loadConfiguration(QString path)
     // set GUI with user and statusmsg
     QString name = getUsername();
     if (name != "")
-    {
         emit usernameSet(name);
-        Settings::getInstance().setCurrentProfile(name);
-    }
     
     QString msg = getStatusMessage();
     if (msg != "")
@@ -825,6 +829,7 @@ void Core::loadFriends()
 {
     const uint32_t friendCount = tox_count_friendlist(tox);
     if (friendCount > 0) {
+        emit clearFriends();
         // assuming there are not that many friends to fill up the whole stack
         int32_t *ids = new int32_t[friendCount];
         tox_get_friendlist(tox, ids, friendCount);
