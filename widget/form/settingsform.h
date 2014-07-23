@@ -26,15 +26,20 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QComboBox>
+#include <QDir>
+#include <QFileInfo>
+#include <QFileDialog>
 #include "widget/tool/clickablelabel.h"
 #include "ui_widget.h"
 #include "widget/selfcamview.h"
+#include "core.h"
 
 class SettingsForm : public QObject
 {
     Q_OBJECT
 public:
-    SettingsForm();
+    SettingsForm(Core* core);
     ~SettingsForm();
 
     void show(Ui::Widget& ui);
@@ -43,6 +48,10 @@ public slots:
     void setFriendAddress(const QString& friendAddress);
 
 private slots:
+    void onLoadClicked();
+    void onExportClicked();
+    void onDeleteClicked();
+    void onImportClicked();
     void onTestVideoClicked();
     void onEnableIPv6Updated();
     void onUseTranslationUpdated();
@@ -50,16 +59,22 @@ private slots:
     void copyIdClicked();
 
 private:
-    QLabel headLabel, nameLabel, statusTextLabel;
+    QLabel headLabel;/*, nameLabel, statusTextLabel;*/
     QTextEdit id;
     ClickableLabel idLabel;
-    QPushButton videoTest;
+    QLabel profilesLabel;
+    QComboBox profiles;
+    QPushButton loadConf, exportConf, delConf, importConf, videoTest;
+    QHBoxLayout cbox, buttons;
     QCheckBox enableIPv6, useTranslations, makeToxPortable;
     QVBoxLayout layout, headLayout;
-    QWidget *main, *head;
+    QWidget *main, *head, *hboxcont1, *hboxcont2;
+    void populateProfiles();
+    QString getSelectedSavePath();
+    Core* core;
 
 public:
-    QLineEdit name, statusText;
+    //QLineEdit name, statusText;
 };
 
 #endif // SETTINGSFORM_H

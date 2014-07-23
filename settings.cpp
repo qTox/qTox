@@ -81,6 +81,7 @@ void Settings::load()
         enableIPv6 = s.value("enableIPv6", true).toBool();
         useTranslations = s.value("useTranslations", true).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
+        currentProfile = s.value("currentProfile", ".data").toString();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -137,6 +138,7 @@ void Settings::save(QString path)
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("useTranslations",useTranslations);
         s.setValue("makeToxPortable",makeToxPortable);
+        s.setValue("currentProfile", currentProfile);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -206,6 +208,16 @@ void Settings::setMakeToxPortable(bool newValue)
 {
     makeToxPortable = newValue;
     save(FILENAME); // Commit to the portable file that we don't want to use it
+}
+
+QString Settings::getCurrentProfile() const
+{
+    return currentProfile;
+}
+
+void Settings::setCurrentProfile(QString profile)
+{
+    currentProfile = profile;
 }
 
 bool Settings::getUseTranslations() const

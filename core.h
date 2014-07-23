@@ -114,6 +114,8 @@ class Core : public QObject
 public:
     explicit Core(Camera* cam, QThread* coreThread);
     ~Core();
+    
+    static const QString TOX_EXT;
 
     int getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
@@ -122,7 +124,9 @@ public:
     void quitGroupChat(int groupId) const;
     void dispatchVideoFrame(vpx_image img) const;
 
-    void saveConfiguration();
+    void saveConfiguration(QString path = "");
+    void loadConfiguration(QString path = "");
+    QString sanitize(QString name);
     
     QString getUsername();
     QString getStatusMessage();
@@ -274,7 +278,6 @@ private:
     void checkConnection();
     void onBootstrapTimer();
 
-    void loadConfiguration();
     void loadFriends();
     static void sendAllFileData(Core* core, ToxFile* file);
 

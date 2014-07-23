@@ -30,6 +30,7 @@
 #include <QtConcurrent/QtConcurrent>
 
 const QString Core::CONFIG_FILE_NAME = "data";
+const QString Core::TOX_EXT = ".tox";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 ToxCall Core::calls[TOXAV_MAX_CALLS];
@@ -108,6 +109,7 @@ void Core::start()
         return;
     }
 
+    // this will attempt to get the last profile from settings
     loadConfiguration();
 
     tox_callback_friend_request(tox, onFriendRequest, this);
@@ -721,34 +723,55 @@ void Core::checkConnection()
     }
 }
 
-void Core::loadConfiguration()
+QString sanitize(QString name)
 {
-    QString path = Settings::getSettingsDirPath() + '/' + CONFIG_FILE_NAME;
+    // do things
+    return name;
+}
 
-    QFile configurationFile(path);
+void Core::loadConfiguration(QString path)
+{
+    if (path == "")
+    {
+        // read from settings whose profile?
+        path = Settings::getSettingsDirPath() + '/' + Settings::getInstance().getCurrentProfile() + TOX_EXT;
+        QFile file(path);
+        
+        // if the last profile doesn't exist, fall back to old "data"
+        if (!file.exists())
+        {
+            path = Settings::getSettingsDirPath() + '/' + CONFIG_FILE_NAME;
+        }
+    }
 
-    if (!configurationFile.exists()) {
+    QFile conf(path);
+    qDebug() << "Core::loadConfiguration: reading from " << path;
+
+    if (!conf.exists()) {
         qWarning() << "The Tox configuration file was not found";
         return;
     }
 
-    if (!configurationFile.open(QIODevice::ReadOnly)) {
+    if (!conf.open(QIODevice::ReadOnly)) {
         qCritical() << "File " << path << " cannot be opened";
         return;
     }
 
-    qint64 fileSize = configurationFile.size();
+    qint64 fileSize = conf.size();
     if (fileSize > 0) {
-        QByteArray data = configurationFile.readAll();
+        QByteArray data = conf.readAll();
         tox_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size());
     }
 
-    configurationFile.close();
+    conf.close();
 
     // set GUI with user and statusmsg
     QString name = getUsername();
     if (name != "")
+    {
         emit usernameSet(name);
+        Settings::getInstance().setCurrentProfile(name);
+    }
     
     QString msg = getStatusMessage();
     if (msg != "")
@@ -757,7 +780,7 @@ void Core::loadConfiguration()
     loadFriends();
 }
 
-void Core::saveConfiguration()
+void Core::saveConfiguration(QString path)
 {
     if (!tox)
     {
@@ -765,23 +788,28 @@ void Core::saveConfiguration()
         return;
     }
 
-    QString path = Settings::getSettingsDirPath();
-
-    QDir directory(path);
-
-    if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
-        qCritical() << "Error while creating directory " << path;
-        return;
+    if (path == "")
+    {
+        QString dir = Settings::getSettingsDirPath();
+        QDir directory(dir);
+        if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
+            qCritical() << "Error while creating directory " << dir;
+            return;
+        }
+        
+        path = dir + Settings::getInstance().getCurrentProfile() + TOX_EXT;
+        QFileInfo info(dir);
+        if (!info.exists()) // fall back to old school 'data'
+            path = dir + '/' + CONFIG_FILE_NAME;
     }
-
-    path += '/' + CONFIG_FILE_NAME;
+    
     QSaveFile configurationFile(path);
     if (!configurationFile.open(QIODevice::WriteOnly)) {
         qCritical() << "File " << path << " cannot be opened";
         return;
     }
 
-    qDebug() << "Core: writing tox_save";
+    qDebug() << "Core: writing tox_save to " << path;
     uint32_t fileSize = tox_size(tox);
     if (fileSize > 0 && fileSize <= INT32_MAX) {
         uint8_t *data = new uint8_t[fileSize];
@@ -789,6 +817,7 @@ void Core::saveConfiguration()
         configurationFile.write(reinterpret_cast<char *>(data), fileSize);
         configurationFile.commit();
         delete[] data;
+        //configurationFile.close();
     }
 }
 

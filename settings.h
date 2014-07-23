@@ -49,6 +49,9 @@ public:
     bool getMakeToxPortable() const;
     void setMakeToxPortable(bool newValue);
 
+    QString getCurrentProfile() const;
+    void setCurrentProfile(QString profile);
+
     bool getUseTranslations() const;
     void setUseTranslations(bool newValue);
 
@@ -134,6 +137,7 @@ private:
     bool enableIPv6;
     bool useTranslations;
     static bool makeToxPortable;
+    QString currentProfile;
 
     bool enableLogging;
     bool encryptLogs;
