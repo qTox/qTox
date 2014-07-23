@@ -40,7 +40,7 @@ INSTALLS += target
 
 INCLUDEPATH += libs/include
 win32 {
-    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread
+    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
 } else {
     LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
 }
