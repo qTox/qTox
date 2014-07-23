@@ -20,6 +20,7 @@
 ChatTextEdit::ChatTextEdit(QWidget *parent) :
     QTextEdit(parent)
 {
+    setPlaceholderText("Type your message here...");
 }
 
 void ChatTextEdit::keyPressEvent(QKeyEvent * event)
