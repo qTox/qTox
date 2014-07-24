@@ -26,50 +26,50 @@
         <translation>Invia richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="84"/>
+        <location filename="../widget/form/addfriendform.cpp" line="38"/>
         <source>Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>Permettimi di aggiungerti alla mia lista contatti</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="92"/>
+        <location filename="../widget/form/addfriendform.cpp" line="93"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
         <translation>Inserisci un Tox ID valido</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="109"/>
+        <location filename="../widget/form/addfriendform.cpp" line="110"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Questo indirizzo non esiste</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="113"/>
+        <location filename="../widget/form/addfriendform.cpp" line="114"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Errore nel consultare il server DNS</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="119"/>
+        <location filename="../widget/form/addfriendform.cpp" line="120"/>
         <source>Unexpected number of text records</source>
         <comment>Error with the DNS</comment>
         <translation>Numero inaspettato di text-records</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="125"/>
+        <location filename="../widget/form/addfriendform.cpp" line="126"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Numero inaspettato di valori nel text-record</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="132"/>
+        <location filename="../widget/form/addfriendform.cpp" line="133"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La risposta del server DNS non contiene nessun Tox ID</translation>
     </message>
     <message>
-        <location filename="../widget/form/addfriendform.cpp" line="138"/>
-        <location filename="../widget/form/addfriendform.cpp" line="144"/>
+        <location filename="../widget/form/addfriendform.cpp" line="139"/>
+        <location filename="../widget/form/addfriendform.cpp" line="145"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La risposta del server DNS non contiene un Tox ID valido</translation>
@@ -91,13 +91,13 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="291"/>
+        <location filename="../widget/form/chatform.cpp" line="293"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="616"/>
-        <location filename="../widget/form/chatform.cpp" line="622"/>
+        <location filename="../widget/form/chatform.cpp" line="618"/>
+        <location filename="../widget/form/chatform.cpp" line="624"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -113,10 +113,22 @@
 <context>
     <name>FileTransfertWidget</name>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="270"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="289"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Salva file</translation>
+    </message>
+    <message>
+        <location filename="../widget/filetransfertwidget.cpp" line="300"/>
+        <source>Location not writable</source>
+        <comment>Title of permissions popup</comment>
+        <translation>Errore</translation>
+    </message>
+    <message>
+        <location filename="../widget/filetransfertwidget.cpp" line="300"/>
+        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
+        <comment>text of permissions popup</comment>
+        <translation>Non hai sufficienti permessi per scrivere in questa locazione. Scegli un&apos;altra posizione, o annulla il salvataggio.</translation>
     </message>
 </context>
 <context>
@@ -128,12 +140,12 @@
         <translation>Files inviati</translation>
     </message>
     <message>
-        <location filename="../widget/form/filesform.cpp" line="30"/>
+        <location filename="../widget/form/filesform.cpp" line="33"/>
         <source>Downloads</source>
         <translation>Ricevuti</translation>
     </message>
     <message>
-        <location filename="../widget/form/filesform.cpp" line="31"/>
+        <location filename="../widget/form/filesform.cpp" line="34"/>
         <source>Uploads</source>
         <translation>Inviati</translation>
     </message>
@@ -329,8 +341,12 @@
     </message>
     <message>
         <location filename="../widget.ui" line="2700"/>
+        <source>View completed file transfers</source>
+        <translation>Visualizza i trasferimenti completati</translation>
+    </message>
+    <message>
         <source>(button inactive currently)</source>
-        <translation>(bottone attualmente inattivo)</translation>
+        <translation type="obsolete">(bottone attualmente inattivo)</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="2748"/>
