@@ -124,8 +124,10 @@ public:
     void quitGroupChat(int groupId) const;
     void dispatchVideoFrame(vpx_image img) const;
 
-    void saveConfiguration(QString path = "");
-    void loadConfiguration(QString path = "");
+    void saveConfiguration();
+    void saveConfiguration(const QString& path);
+    void loadConfiguration(QString path);
+    
     static QString sanitize(QString name);
     
     QString getUsername();

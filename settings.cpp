@@ -81,7 +81,7 @@ void Settings::load()
         enableIPv6 = s.value("enableIPv6", true).toBool();
         useTranslations = s.value("useTranslations", true).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
-        currentProfile = s.value("currentProfile", ".data").toString();
+        currentProfile = s.value("currentProfile", "").toString();
     s.endGroup();
 
     s.beginGroup("Widgets");

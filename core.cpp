@@ -732,6 +732,7 @@ QString Core::sanitize(QString name)
 void Core::loadConfiguration(QString path)
 { // note to self: this really needs refactoring into the GUI, making the path mandatory here
   // but for now it's bedtime
+  // also loadFriends/clearFriends is borked as fuck
     if (path == "")
     {
         // read from settings whose profile?
@@ -784,27 +785,34 @@ void Core::loadConfiguration(QString path)
     loadFriends();
 }
 
-void Core::saveConfiguration(QString path)
+void Core::saveConfiguration()
+{
+    QString dir = Settings::getSettingsDirPath();
+    QDir directory(dir);
+    if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
+        qCritical() << "Error while creating directory " << dir;
+        return;
+    }
+    
+    QString profile = Settings::getInstance().getCurrentProfile();
+    if (profile == "")
+    { // no profile active; this should only happen on startup, if at all
+        profile = sanitize(getUsername());
+        Settings::getInstance().setCurrentProfile(profile);
+    }
+    
+    QString path = dir + profile + TOX_EXT;
+    QFileInfo info(path);
+    if (!info.exists()) // fall back to old school 'data'
+        path = dir + '/' + CONFIG_FILE_NAME;
+}
+
+void Core::saveConfiguration(const QString& path)
 {
     if (!tox)
     {
         qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
         return;
-    }
-
-    if (path == "")
-    {
-        QString dir = Settings::getSettingsDirPath();
-        QDir directory(dir);
-        if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
-            qCritical() << "Error while creating directory " << dir;
-            return;
-        }
-        
-        path = dir + Settings::getInstance().getCurrentProfile() + TOX_EXT;
-        QFileInfo info(dir);
-        if (!info.exists()) // fall back to old school 'data'
-            path = dir + '/' + CONFIG_FILE_NAME;
     }
     
     QSaveFile configurationFile(path);
