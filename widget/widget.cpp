@@ -1213,11 +1213,7 @@ bool Widget::eventFilter(QObject *, QEvent *event)
     if (event->type() == QEvent::Wheel)
     {
         QWheelEvent * whlEvnt =  static_cast< QWheelEvent * >( event );
-        if (whlEvnt->angleDelta().x() != 0)
-        {
-            event->accept();
-            return true;
-        }
+        whlEvnt->angleDelta().setX(0);
     }
     return false;
 }
