@@ -20,7 +20,7 @@
 #    See the COPYING file for more details.
 
 
-QT       += core gui network multimedia multimediawidgets
+QT       += core gui network multimedia multimediawidgets xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET    = qtox
@@ -83,7 +83,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/videosurface.h \
     widget/camera.h \
     widget/netcamview.h \
-    widget/tool/clickablelabel.h
+    widget/tool/clickablelabel.h \
+    smileypack.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -115,4 +116,5 @@ SOURCES += \
     widget/videosurface.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
-    widget/tool/clickablelabel.cpp
+    widget/tool/clickablelabel.cpp \
+    smileypack.cpp

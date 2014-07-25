@@ -20,6 +20,8 @@
 #include <QFont>
 #include <QClipboard>
 #include <QApplication>
+#include <QFileDialog>
+#include <QDir>
 
 SettingsForm::SettingsForm()
     : QObject()
@@ -49,6 +51,9 @@ SettingsForm::SettingsForm()
     makeToxPortable.setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
     makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
 
+    smileyPackLabel.setText(tr("Smiley Pack", "Text on smiley pack label"));
+    smileyPackFilename.setText(Settings::getInstance().getSmileyPack());
+
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);
     layout.addWidget(&name);
@@ -60,6 +65,9 @@ SettingsForm::SettingsForm()
     layout.addWidget(&enableIPv6);
     layout.addWidget(&useTranslations);
     layout.addWidget(&makeToxPortable);
+    layout.addWidget(&smileyPackLabel);
+    layout.addWidget(&smileyPackFilename);
+    layout.addWidget(&smileyBrowseFileButton);
     layout.addStretch();
 
     head->setLayout(&headLayout);
@@ -70,6 +78,7 @@ SettingsForm::SettingsForm()
     connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
     connect(&makeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
     connect(&idLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
+    connect(&smileyBrowseFileButton, SIGNAL(clicked()), this, SLOT(onBrowseSmileyFilename()));
 }
 
 SettingsForm::~SettingsForm()
@@ -116,3 +125,17 @@ void SettingsForm::onMakeToxPortableUpdated()
 {
     Settings::getInstance().setMakeToxPortable(makeToxPortable.isChecked());
 }
+
+void SettingsForm::onBrowseSmileyFilename()
+{
+    // directory containing a file called emoticons.xml
+    QString filename = QFileDialog::getOpenFileName(nullptr, tr("Select smiley pack"), QDir::currentPath(), "emoticons.xml");
+
+    // get relative path to app's local directory
+    QString relPath = QDir::current().relativeFilePath(filename);
+
+    // save
+    Settings::getInstance().setSmileyPack(relPath);
+    smileyPackFilename.setText(relPath);
+}
+

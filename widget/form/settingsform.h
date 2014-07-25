@@ -47,17 +47,19 @@ private slots:
     void onEnableIPv6Updated();
     void onUseTranslationUpdated();
     void onMakeToxPortableUpdated();
+    void onBrowseSmileyFilename();
     void copyIdClicked();
 
 private:
-    QLabel headLabel, nameLabel, statusTextLabel;
+    QLabel headLabel, nameLabel, statusTextLabel, smileyPackLabel;
     QTextEdit id;
     ClickableLabel idLabel;
     QPushButton videoTest;
     QCheckBox enableIPv6, useTranslations, makeToxPortable;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head;
-
+    QLineEdit smileyPackFilename;
+    QToolButton smileyBrowseFileButton;
 public:
     QLineEdit name, statusText;
 };

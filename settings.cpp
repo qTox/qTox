@@ -258,12 +258,12 @@ void Settings::setAnimationEnabled(bool newValue)
     enableSmoothAnimation = newValue;
 }
 
-QByteArray Settings::getSmileyPack() const
+QString Settings::getSmileyPack() const
 {
     return smileyPack;
 }
 
-void Settings::setSmileyPack(const QByteArray &value)
+void Settings::setSmileyPack(const QString &value)
 {
     smileyPack = value;
     emit smileyPackChanged();
