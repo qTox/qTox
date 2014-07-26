@@ -21,7 +21,7 @@
 #include <QString>
 #include <QObject>
 
-//maps emoticons to smilies
+//maps emoticons to smileys
 class SmileyPack : public QObject
 {
     Q_OBJECT

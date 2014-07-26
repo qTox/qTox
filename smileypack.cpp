@@ -95,8 +95,8 @@ QString SmileyPack::replaceEmoticons(const QString &msg) const
     int index = msg.indexOf(exp);
     int offset = 0;
 
-    // if a word is key of a smiley, replace it by it's corresponding image in Rich Text
-    while (index >= 0 || exp.matchedLength() > 0)
+    // if a word is key of a smiley, replace it by its corresponding image in Rich Text
+    while (index >= 0)
     {
         QString key = exp.cap();
         if (lookupTable.contains(key))
