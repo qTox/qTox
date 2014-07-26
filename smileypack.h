@@ -26,18 +26,20 @@ class SmileyPack : public QObject
 {
     Q_OBJECT
 public:
-    SmileyPack();
-    SmileyPack(SmileyPack&) = delete;
-    SmileyPack& operator=(const SmileyPack&) = delete;
-
     static SmileyPack& getInstance();
 
     bool load(const QString &filename);
     QString replaceEmoticons(const QString& msg) const;
-protected:
-    QHash<QString, QString> lookupTable; // matches an emoticon with its corresponding smiley
+
 private slots:
     void onSmileyPackChanged();
+
+private:
+    SmileyPack();
+    SmileyPack(SmileyPack&) = delete;
+    SmileyPack& operator=(const SmileyPack&) = delete;
+
+    QHash<QString, QString> lookupTable; // matches an emoticon to its corresponding smiley
 };
 
 #endif // SMILEYPACK_H
