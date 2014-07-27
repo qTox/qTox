@@ -1003,8 +1003,16 @@ void Core::onAvInvite(void* _toxav, int32_t call_index, void* core)
         return;
     }
 
-    int transType = toxav_get_peer_transmission_type(toxav, call_index, 0);
-    if (transType == TypeVideo)
+    ToxAvCSettings* transSettings = new ToxAvCSettings;
+    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
+    if (err != ErrorNone)
+    {
+        qWarning() << "Core::onAvInvite: error getting call type";
+        delete transSettings;
+        return;
+    }
+
+    if (transSettings->call_type == TypeVideo)
     {
         qDebug() << QString("Core: AV invite from %1 with video").arg(friendId);
         emit static_cast<Core*>(core)->avInvite(friendId, call_index, true);
@@ -1014,6 +1022,8 @@ void Core::onAvInvite(void* _toxav, int32_t call_index, void* core)
         qDebug() << QString("Core: AV invite from %1 without video").arg(friendId);
         emit static_cast<Core*>(core)->avInvite(friendId, call_index, false);
     }
+
+    delete transSettings;
 }
 
 void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
@@ -1027,8 +1037,16 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
         return;
     }
 
-    int transType = toxav_get_peer_transmission_type(toxav, call_index, 0);
-    if (transType == TypeVideo)
+    ToxAvCSettings* transSettings = new ToxAvCSettings;
+    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
+    if (err != ErrorNone)
+    {
+        qWarning() << "Core::onAvStart: error getting call type";
+        delete transSettings;
+        return;
+    }
+    
+    if (transSettings->call_type == TypeVideo)
     {
         qDebug() << QString("Core: AV start from %1 with video").arg(friendId);
         prepareCall(friendId, call_index, toxav, true);
@@ -1040,6 +1058,8 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
         prepareCall(friendId, call_index, toxav, false);
         emit static_cast<Core*>(core)->avStart(friendId, call_index, false);
     }
+    
+    delete transSettings;
 }
 
 void Core::onAvCancel(void* _toxav, int32_t call_index, void* core)
@@ -1112,8 +1132,17 @@ void Core::onAvStarting(void* _toxav, int32_t call_index, void* core)
         qWarning() << "Core: Received invalid AV starting";
         return;
     }
-    int transType = toxav_get_peer_transmission_type(toxav, call_index, 0);
-    if (transType == TypeVideo)
+    
+    ToxAvCSettings* transSettings = new ToxAvCSettings;
+    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
+    if (err != ErrorNone)
+    {
+        qWarning() << "Core::onAvStarting: error getting call type";
+        delete transSettings;
+        return;
+    }
+    
+    if (transSettings->call_type == TypeVideo)
     {
         qDebug() << QString("Core: AV starting from %1 with video").arg(friendId);
         prepareCall(friendId, call_index, toxav, true);
@@ -1125,6 +1154,8 @@ void Core::onAvStarting(void* _toxav, int32_t call_index, void* core)
         prepareCall(friendId, call_index, toxav, false);
         emit static_cast<Core*>(core)->avStarting(friendId, call_index, false);
     }
+
+    delete transSettings;
 }
 
 void Core::onAvEnding(void* _toxav, int32_t call_index, void* core)
@@ -1181,6 +1212,7 @@ void Core::onAvPeerTimeout(void* _toxav, int32_t call_index, void* core)
 void Core::onAvMediaChange(void*, int32_t, void*)
 {
     // HALP, PLS COMPLETE MEH
+    qWarning() << "If you see this, please complain on GitHub about seeing me! (Don't forget to say what caused me!)";
 }
 
 void Core::answerCall(int callId)
@@ -1191,17 +1223,28 @@ void Core::answerCall(int callId)
         qWarning() << "Core: Received invalid AV answer peer ID";
         return;
     }
-    int transType = toxav_get_peer_transmission_type(toxav, callId, 0);
-    if (transType == TypeVideo)
+
+    ToxAvCSettings* transSettings = new ToxAvCSettings;
+    int err = toxav_get_peer_csettings(toxav, callId, 0, transSettings);
+    if (err != ErrorNone)
+    {
+         qWarning() << "Core::answerCall: error getting call settings";
+         delete transSettings;
+         return;
+    }
+
+    if (transSettings->call_type == TypeVideo)
     {
         qDebug() << QString("Core: answering call %1 with video").arg(callId);
-        toxav_answer(toxav, callId, TypeVideo);
+        toxav_answer(toxav, callId, transSettings);
     }
     else
     {
         qDebug() << QString("Core: answering call %1 without video").arg(callId);
-        toxav_answer(toxav, callId, TypeAudio);
+        toxav_answer(toxav, callId, transSettings);
     }
+    
+    delete transSettings;
 }
 
 void Core::hangupCall(int callId)
@@ -1214,16 +1257,21 @@ void Core::hangupCall(int callId)
 void Core::startCall(int friendId, bool video)
 {
     int callId;
+    ToxAvCSettings cSettings = av_DefaultSettings;
+    cSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
+    cSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
     if (video)
     {
         qDebug() << QString("Core: Starting new call with %1 with video").arg(friendId);
-        toxav_call(toxav, &callId, friendId, TypeVideo, TOXAV_RINGING_TIME);
+        cSettings.call_type = TypeVideo;
+        toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME);
         calls[callId].videoEnabled=true;
     }
     else
     {
         qDebug() << QString("Core: Starting new call with %1 without video").arg(friendId);
-        toxav_call(toxav, &callId, friendId, TypeAudio, TOXAV_RINGING_TIME);
+        cSettings.call_type = TypeAudio;
+        toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME);
         calls[callId].videoEnabled=false;
     }
 }
@@ -1240,11 +1288,13 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     qDebug() << QString("Core: preparing call %1").arg(callId);
     calls[callId].callId = callId;
     calls[callId].friendId = friendId;
+    // the following three lines are also now redundant from startCall, but are
+    // necessary there for outbound and here for inbound
     calls[callId].codecSettings = av_DefaultSettings;
     calls[callId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
     calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
     calls[callId].videoEnabled = videoEnabled;
-    toxav_prepare_transmission(toxav, callId, &calls[callId].codecSettings, videoEnabled);
+    toxav_prepare_transmission(toxav, callId, av_jbufdc, av_VADd, videoEnabled);
 
     // Prepare output
     QAudioFormat format;
