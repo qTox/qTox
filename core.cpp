@@ -108,6 +108,8 @@ void Core::start()
         return;
     }
 
+    qsrand(time(nullptr));
+
     loadConfiguration();
 
     tox_callback_friend_request(tox, onFriendRequest, this);
@@ -675,9 +677,9 @@ void Core::bootstrapDht()
     const Settings& s = Settings::getInstance();
     QList<Settings::DhtServer> dhtServerList = s.getDhtServerList();
 
-    static int j = 0;
-    int i=0;
     int listSize = dhtServerList.size();
+    static int j = qrand() % listSize;
+    int i=0;
     while (i<5)
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
