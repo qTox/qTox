@@ -130,6 +130,8 @@ public:
     
     static QString sanitize(QString name);
     
+    QString getIDString();
+    
     QString getUsername();
     QString getStatusMessage();
 

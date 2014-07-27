@@ -109,8 +109,22 @@ void Core::start()
         return;
     }
 
-    // this will attempt to get the last profile from settings
-    loadConfiguration();
+    // where do we find the data file?
+    QString path;
+    {   // read data from whose profile?
+        path = Settings::getSettingsDirPath() + '/' + Settings::getInstance().getCurrentProfile() + TOX_EXT;
+        
+#if 1 // deprecation attempt
+        // if the last profile doesn't exist, fall back to old "data"
+        //! or maybe, should we give an option to choose other existing profiles?
+        QFile file(path);
+        if (!file.exists())
+        {
+            path = Settings::getSettingsDirPath() + '/' + CONFIG_FILE_NAME;
+        }
+#endif
+    }
+    loadConfiguration(path);
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
@@ -591,6 +605,15 @@ void Core::removeGroup(int groupId)
     tox_del_groupchat(tox, groupId);
 }
 
+QString Core::getIDString()
+{
+    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
+    tox_get_address(tox, friendAddress);
+    return CFriendAddress::toString(friendAddress).left(12);
+    // 12 is the smallest multiple of four such that
+    // 16^n > 10^10 (which is roughly the planet's population)
+}
+
 QString Core::getUsername()
 {
     int size = tox_get_self_name_size(tox);
@@ -609,8 +632,8 @@ void Core::setUsername(const QString& username)
     if (tox_set_name(tox, cUsername.data(), cUsername.size()) == -1) {
         emit failedToSetUsername(username);
     } else {
-        saveConfiguration();
         emit usernameSet(username);
+        saveConfiguration();
     }
 }
 
@@ -730,28 +753,8 @@ QString Core::sanitize(QString name)
 }
 
 void Core::loadConfiguration(QString path)
-{ // note to self: this really needs refactoring into the GUI, making the path mandatory here
-  // but for now it's bedtime
-  // also loadFriends/clearFriends is borked as fuck
-    if (path == "")
-    {
-        // read from settings whose profile?
-        QString profile = Settings::getInstance().getCurrentProfile();
-        path = Settings::getSettingsDirPath() + '/' + Settings::getInstance().getCurrentProfile() + TOX_EXT;
-        QFile file(path);
-        
-        // if the last profile doesn't exist, fall back to old "data"
-        if (!file.exists())
-        {
-            path = Settings::getSettingsDirPath() + '/' + CONFIG_FILE_NAME;
-        }
-    }
-    else
-    {
-        QString profile = QFileInfo(path).completeBaseName();
-        Settings::getInstance().setCurrentProfile(profile);
-    }
-
+{ // also loadFriends/clearFriends is borked as fuck
+    // setting the profile is now the responsibility of the caller
     QFile conf(path);
     qDebug() << "Core::loadConfiguration: reading from " << path;
 
@@ -795,16 +798,24 @@ void Core::saveConfiguration()
     }
     
     QString profile = Settings::getInstance().getCurrentProfile();
+    //qDebug() << "saveConf read profile: " << profile;
     if (profile == "")
     { // no profile active; this should only happen on startup, if at all
         profile = sanitize(getUsername());
+        if (profile == "") // happens on creation of a new Tox ID
+            profile = getIDString();
+        //qDebug() << "saveConf: read sanitized user as " << profile;
         Settings::getInstance().setCurrentProfile(profile);
     }
     
     QString path = dir + profile + TOX_EXT;
     QFileInfo info(path);
     if (!info.exists()) // fall back to old school 'data'
-        path = dir + '/' + CONFIG_FILE_NAME;
+    {   //path = dir + '/' + CONFIG_FILE_NAME;
+        qDebug() << path << " does not exist";
+    }
+    
+    saveConfiguration(path);
 }
 
 void Core::saveConfiguration(const QString& path)

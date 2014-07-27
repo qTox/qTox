@@ -31,9 +31,6 @@ SettingsForm::SettingsForm()
     small.setPixelSize(13);
     headLabel.setText(tr("User Settings","\"Headline\" of the window"));
     headLabel.setFont(bold);
-
-    //nameLabel.setText(tr("Name","Username/nick"));
-    //statusTextLabel.setText(tr("Status","Status message"));
     
     idLabel.setText("Tox ID " + tr("(click here to copy)", "Click on this text to copy TID to clipboard"));
     id.setFont(small);
@@ -44,7 +41,6 @@ SettingsForm::SettingsForm()
     id.setFixedHeight(id.document()->size().height());
     
     profilesLabel.setText(tr("Available profiles:", "Labels the profile selection box"));
-    populateProfiles();
     loadConf.setText(tr("Load profile", "button to load selected profile"));
     exportConf.setText(tr("Export profile", "button to save selected profile elsewhere"));
     delConf.setText(tr("Delete profile", "button to delete selected profile from disk"));
@@ -61,10 +57,6 @@ SettingsForm::SettingsForm()
     makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
 
     main->setLayout(&layout);
-    //layout.addWidget(&nameLabel);
-    //layout.addWidget(&name);
-    //layout.addWidget(&statusTextLabel);
-    //layout.addWidget(&statusText);
     layout.addWidget(&idLabel);
     layout.addWidget(&id);
     cbox.addWidget(&profilesLabel);
@@ -123,8 +115,7 @@ void SettingsForm::setFriendAddress(const QString& friendAddress)
 
 void SettingsForm::show(Ui::Widget &ui)
 {
-    //name.setText(ui.nameLabel->text());
-    //statusText.setText(ui.statusLabel->text());
+    populateProfiles();
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
     main->show();
@@ -134,8 +125,8 @@ void SettingsForm::show(Ui::Widget &ui)
 void SettingsForm::onLoadClicked()
 {
     Widget::getInstance()->getCore()->saveConfiguration();
+    Settings::getInstance().setCurrentProfile(profiles.currentText());
     Widget::getInstance()->getCore()->loadConfiguration(getSelectedSavePath());
-    // loadConf also setsCurrentProfile
 }
 
 void SettingsForm::onExportClicked()
@@ -169,6 +160,7 @@ void SettingsForm::onImportClicked()
     QFileInfo info(path);
     QString profile = info.completeBaseName();
     QString profilePath = Settings::getSettingsDirPath() + profile + Widget::getInstance()->getCore()->TOX_EXT;
+    Settings::getInstance().setCurrentProfile(profile);
     QFile::copy(path, profilePath);
     Widget::getInstance()->getCore()->loadConfiguration(profilePath);
     profiles.addItem(profile);

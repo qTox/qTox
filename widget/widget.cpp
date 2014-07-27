@@ -208,8 +208,9 @@ Widget::Widget(QWidget *parent) :
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
+    // QString path = detectProfiles();
     coreThread = new QThread(this);
-    core = new Core(camera, coreThread);
+    core = new Core(camera, coreThread/*, profile*/);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
 
