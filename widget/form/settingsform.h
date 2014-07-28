@@ -44,6 +44,7 @@ public:
     ~SettingsForm();
 
     void show(Ui::Widget& ui);
+    static QList<QString> searchProfiles();
 
 public slots:
     void setFriendAddress(const QString& friendAddress);
@@ -70,7 +71,6 @@ private:
     QCheckBox enableIPv6, useTranslations, makeToxPortable;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head, *hboxcont1, *hboxcont2;
-    void populateProfiles();
     QString getSelectedSavePath();
 
 public:

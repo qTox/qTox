@@ -93,14 +93,17 @@ SettingsForm::~SettingsForm()
 {
 }
 
-void SettingsForm::populateProfiles()
+QList<QString> SettingsForm::searchProfiles()
 {
+    QList<QString> out;
     QDir dir(Settings::getSettingsDirPath());
 	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 	dir.setNameFilters(QStringList("*.tox"));
-	for(QFileInfo file : dir.entryInfoList()) {
-		profiles.addItem(file.completeBaseName());
+	for(QFileInfo file : dir.entryInfoList())
+	{
+		out += file.completeBaseName();
 	}
+	return out;
 }
 
 QString SettingsForm::getSelectedSavePath()
@@ -115,7 +118,11 @@ void SettingsForm::setFriendAddress(const QString& friendAddress)
 
 void SettingsForm::show(Ui::Widget &ui)
 {
-    populateProfiles();
+    profiles.clear();
+    for (QString profile : searchProfiles())
+    {
+        profiles.addItem(profile);
+    }
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
     main->show();
