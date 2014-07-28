@@ -1352,6 +1352,11 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
 
         Widget::getInstance()->getCamera()->suscribe();
     }
+    else if (calls[callId].audioInput == nullptr && calls[callId].audioOutput == nullptr)
+    {
+        qWarning() << "Audio only call can neither play nor record audio, killing call";
+        toxav_hangup(toxav, callId);
+    }
 }
 
 void Core::cleanupCall(int callId)
@@ -1376,7 +1381,7 @@ void Core::cleanupCall(int callId)
 
 void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length)
 {
-    if (!calls[callId].active)
+    if (!calls[callId].active || calls[callId].audioOutput == nullptr)
         return;
     calls[callId].audioBuffer.write((char*)data, length*2);
     int state = calls[callId].audioOutput->state();
@@ -1392,7 +1397,7 @@ void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length)
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
 {
-    if (!calls[callId].active)
+    if (!calls[callId].active || calls[callId].audioInput == nullptr)
         return;
     int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
     uint8_t buf[framesize*2], dest[framesize*2];
