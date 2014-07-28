@@ -48,6 +48,7 @@ SettingsForm::SettingsForm()
     useTranslations.setChecked(Settings::getInstance().getUseTranslations());
     makeToxPortable.setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
     makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
+    makeToxPortable.setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
 
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);

@@ -100,7 +100,7 @@ public:
     QAudioOutput* audioOutput;
     QAudioInput* audioInput;
     QIODevice* audioInputDevice;
-    ToxAvCodecSettings codecSettings;
+    ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer, *sendVideoTimer;
     int callId;
     int friendId;
