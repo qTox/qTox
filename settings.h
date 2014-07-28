@@ -83,8 +83,8 @@ public:
     bool isAnimationEnabled() const;
     void setAnimationEnabled(bool newValue);
 
-    QByteArray getSmileyPack() const;
-    void setSmileyPack(const QByteArray &value);
+    QString getSmileyPack() const;
+    void setSmileyPack(const QString &value);
 
     bool isCurstomEmojiFont() const;
     void setCurstomEmojiFont(bool value);
@@ -142,7 +142,7 @@ private:
 
     // GUI
     bool enableSmoothAnimation;
-    QByteArray smileyPack;
+    QString smileyPack;
     bool customEmojiFont;
     QString emojiFontFamily;
     int     emojiFontPointSize;
