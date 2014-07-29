@@ -84,10 +84,9 @@ bool SmileyPack::load(const QString& filename)
     return true;
 }
 
-QString SmileyPack::replaceEmoticons(const QString &msg)
+QString SmileyPack::replaceEmoticons(QString msg)
 {
-    QString out = msg;
-    QRegExp exp("\\S*"); // matches words
+    QRegExp exp("\\S+"); // matches words
 
     int index = msg.indexOf(exp);
     int offset = 0;
@@ -105,19 +104,19 @@ QString SmileyPack::replaceEmoticons(const QString &msg)
 
             QString imgRichText = "<img src=\"data:image/png;base64," % cache[file] % "\">";
 
-            out.replace(index + offset, key.length(), imgRichText);
-            offset += imgRichText.length() - key.length();
+            msg.replace(index + offset, key.length(), imgRichText);
+            index += imgRichText.length() - key.length();
         }
-        index = msg.indexOf(exp, index + exp.matchedLength() + 1);
+        index = msg.indexOf(exp, index + key.length());
     }
 
-    return out;
+    return msg;
 }
 
 void SmileyPack::loadSmiley(const QString &name)
 {
     QSize size(16, 16); // TODO: adapt to text size
-    QString filename = path % "/" % name;
+    QString filename = path % '/' % name;
     QImage img(filename);
 
     if (!img.isNull())

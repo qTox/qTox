@@ -29,7 +29,7 @@ public:
     static SmileyPack& getInstance();
 
     bool load(const QString &filename);
-    QString replaceEmoticons(const QString& msg);
+    QString replaceEmoticons(QString msg);
 
 private slots:
     void onSmileyPackChanged();
@@ -42,7 +42,7 @@ private:
     void loadSmiley(const QString& name);
 
     QHash<QString, QString> assignmentTable; // matches an emoticon to its corresponding smiley
-    QHash<QString, QString> cache;
+    QHash<QString, QString> cache; // base64 representation of a smiley
     QString path; // directory containing the cfg file
 };
 
