@@ -37,15 +37,15 @@ SmileyPack& SmileyPack::getInstance()
 bool SmileyPack::load(const QString& filename)
 {
     // discard old data
-    lookupTable.clear();
-    QDir::setSearchPaths("smiley", QStringList());
+    assignmentTable.clear();
+    cache.clear();
 
     // open emoticons.xml
     QFile xmlFile(filename);
     if(!xmlFile.open(QIODevice::ReadOnly))
         return false; // cannot open file
 
-    /* parse the cfg document
+    /* parse the cfg file
      * sample:
      * <?xml version='1.0'?>
      * <messaging-emoticon-map>
@@ -72,22 +72,19 @@ bool SmileyPack::load(const QString& filename)
         while (!stringElement.isNull())
         {
             QString rune = stringElement.text();
-            lookupTable.insert(rune, file); // add it to the map
+            assignmentTable.insert(rune, file);
 
             stringElement = stringElement.nextSibling().toElement();
         }
     }
 
-    // Rich Text makes use of Qt's resource system, so
-    // let Qt know about our smilies
-    QFileInfo info(filename);
-    QDir::setSearchPaths("smiley", QStringList() << info.absolutePath());
+    path = QFileInfo(filename).absolutePath();
 
     // success!
     return true;
 }
 
-QString SmileyPack::replaceEmoticons(const QString &msg) const
+QString SmileyPack::replaceEmoticons(const QString &msg)
 {
     QString out = msg;
     QRegExp exp("\\S*"); // matches words
@@ -99,21 +96,40 @@ QString SmileyPack::replaceEmoticons(const QString &msg) const
     while (index >= 0)
     {
         QString key = exp.cap();
-        if (lookupTable.contains(key))
+        if (assignmentTable.contains(key))
         {
-            QString width = QString::number(16);
-            QString height = QString::number(16);
+            QString file = assignmentTable[key];
+            if (!cache.contains(file)) {
+                loadSmiley(file);
+            }
 
-            QString img = lookupTable[key];
-            QString imgRt = "<img src=\"smiley:" + img + "\" width=\"" + width + "\" height=\"" + height + "\">";
+            QString imgRichText = "<img src=\"data:image/png;base64," + cache[file] + "\">";
 
-            out.replace(index + offset, key.length(), imgRt);
-            offset += imgRt.length() - key.length();
+            out.replace(index + offset, key.length(), imgRichText);
+            offset += imgRichText.length() - key.length();
         }
         index = msg.indexOf(exp, index + exp.matchedLength() + 1);
     }
 
     return out;
+}
+
+void SmileyPack::loadSmiley(const QString &name)
+{
+    QSize size(16, 16); // TODO: adapt to text size
+    QString filename = path + "/" + name;
+    QImage img(filename);
+
+    if (!img.isNull())
+    {
+        QImage scaledImg = img.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        QByteArray scaledImgData;
+        QBuffer buffer(&scaledImgData);
+        scaledImg.save(&buffer, "PNG");
+
+        cache.insert(name, scaledImgData.toBase64());
+    }
 }
 
 void SmileyPack::onSmileyPackChanged()
