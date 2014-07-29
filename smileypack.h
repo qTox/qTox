@@ -42,7 +42,7 @@ private:
     void loadSmiley(const QString& name);
 
     QHash<QString, QString> assignmentTable; // matches an emoticon to its corresponding smiley
-    QHash<QString, QByteArray> cache;
+    QHash<QString, QString> cache;
     QString path; // directory containing the cfg file
 };
 

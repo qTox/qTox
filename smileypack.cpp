@@ -103,7 +103,7 @@ QString SmileyPack::replaceEmoticons(const QString &msg)
                 loadSmiley(file);
             }
 
-            QString imgRichText = "<img src=\"data:image/png;base64," + cache[file] + "\">";
+            QString imgRichText = "<img src=\"data:image/png;base64," % cache[file] % "\">";
 
             out.replace(index + offset, key.length(), imgRichText);
             offset += imgRichText.length() - key.length();
@@ -117,7 +117,7 @@ QString SmileyPack::replaceEmoticons(const QString &msg)
 void SmileyPack::loadSmiley(const QString &name)
 {
     QSize size(16, 16); // TODO: adapt to text size
-    QString filename = path + "/" + name;
+    QString filename = path % "/" % name;
     QImage img(filename);
 
     if (!img.isNull())
