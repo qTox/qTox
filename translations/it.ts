@@ -91,13 +91,13 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="293"/>
+        <location filename="../widget/form/chatform.cpp" line="295"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="618"/>
-        <location filename="../widget/form/chatform.cpp" line="624"/>
+        <location filename="../widget/form/chatform.cpp" line="620"/>
+        <location filename="../widget/form/chatform.cpp" line="626"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -264,52 +264,69 @@
 <context>
     <name>SettingsForm</name>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="31"/>
+        <location filename="../widget/form/settingsform.cpp" line="33"/>
         <source>User Settings</source>
         <comment>&quot;Headline&quot; of the window</comment>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="34"/>
+        <location filename="../widget/form/settingsform.cpp" line="36"/>
         <source>Name</source>
         <comment>Username/nick</comment>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="35"/>
+        <location filename="../widget/form/settingsform.cpp" line="37"/>
         <source>Status</source>
         <comment>Status message</comment>
         <translation>Stato</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="36"/>
+        <location filename="../widget/form/settingsform.cpp" line="38"/>
         <source>(click here to copy)</source>
         <comment>Click on this text to copy TID to clipboard</comment>
         <translation>(clicca qui per copiare)</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="44"/>
+        <location filename="../widget/form/settingsform.cpp" line="46"/>
         <source>Test video</source>
         <comment>Text on a button to test the video/webcam</comment>
         <translation>Prova la webcam</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="45"/>
+        <location filename="../widget/form/settingsform.cpp" line="47"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
         <translation>Abilita IPv6 (consigliato)</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="47"/>
+        <location filename="../widget/form/settingsform.cpp" line="49"/>
         <source>Use translations</source>
         <comment>Text on a checkbox to enable translations</comment>
         <translation>Abilita traduzioni</translation>
     </message>
     <message>
-        <location filename="../widget/form/settingsform.cpp" line="49"/>
+        <location filename="../widget/form/settingsform.cpp" line="51"/>
         <source>Make Tox portable</source>
         <comment>Text on a checkbox to make qTox a portable application</comment>
         <translation>Rendi qTox portabile</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settingsform.cpp" line="53"/>
+        <source>Save settings to the working directory instead of the usual conf dir</source>
+        <comment>describes makeToxPortable checkbox</comment>
+        <translation>Slava le impostazioni nella directory di lavoro corrente, invece della directory di default</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settingsform.cpp" line="55"/>
+        <source>Smiley Pack</source>
+        <comment>Text on smiley pack label</comment>
+        <translation>Emoticons</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settingsform.cpp" line="133"/>
+        <source>Select smiley pack</source>
+        <translation>Scegli pacchetto emoticons</translation>
     </message>
 </context>
 <context>
