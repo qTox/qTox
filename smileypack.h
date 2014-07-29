@@ -29,7 +29,7 @@ public:
     static SmileyPack& getInstance();
 
     bool load(const QString &filename);
-    QString replaceEmoticons(const QString& msg) const;
+    QString replaceEmoticons(QString msg);
 
 private slots:
     void onSmileyPackChanged();
@@ -39,7 +39,11 @@ private:
     SmileyPack(SmileyPack&) = delete;
     SmileyPack& operator=(const SmileyPack&) = delete;
 
-    QHash<QString, QString> lookupTable; // matches an emoticon to its corresponding smiley
+    void loadSmiley(const QString& name);
+
+    QHash<QString, QString> assignmentTable; // matches an emoticon to its corresponding smiley
+    QHash<QString, QString> cache; // base64 representation of a smiley
+    QString path; // directory containing the cfg file
 };
 
 #endif // SMILEYPACK_H
