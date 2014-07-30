@@ -17,6 +17,7 @@
 #include "settingsform.h"
 #include "widget/widget.h"
 #include "settings.h"
+#include "smileypack.h"
 #include <QFont>
 #include <QClipboard>
 #include <QApplication>
@@ -52,7 +53,8 @@ SettingsForm::SettingsForm()
     makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
 
     smileyPackLabel.setText(tr("Smiley Pack", "Text on smiley pack label"));
-    smileyPackFilename.setText(Settings::getInstance().getSmileyPack());
+    smileyPackBrowser.addItems(SmileyPack::listSmileyPacks("./smileys"));
+    smileyPackBrowser.setCurrentText(Settings::getInstance().getSmileyPack());
 
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);
@@ -66,8 +68,7 @@ SettingsForm::SettingsForm()
     layout.addWidget(&useTranslations);
     layout.addWidget(&makeToxPortable);
     layout.addWidget(&smileyPackLabel);
-    layout.addWidget(&smileyPackFilename);
-    layout.addWidget(&smileyBrowseFileButton);
+    layout.addWidget(&smileyPackBrowser);
     layout.addStretch();
 
     head->setLayout(&headLayout);
@@ -78,7 +79,7 @@ SettingsForm::SettingsForm()
     connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
     connect(&makeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
     connect(&idLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(&smileyBrowseFileButton, SIGNAL(clicked()), this, SLOT(onBrowseSmileyFilename()));
+    connect(&smileyPackBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onSmileyBrowserTextChanged(QString)));
 }
 
 SettingsForm::~SettingsForm()
@@ -126,16 +127,7 @@ void SettingsForm::onMakeToxPortableUpdated()
     Settings::getInstance().setMakeToxPortable(makeToxPortable.isChecked());
 }
 
-void SettingsForm::onBrowseSmileyFilename()
+void SettingsForm::onSmileyBrowserTextChanged(const QString &filename)
 {
-    // directory containing a file called emoticons.xml
-    QString filename = QFileDialog::getOpenFileName(nullptr, tr("Select smiley pack"), QDir::currentPath(), "emoticons.xml");
-
-    // get relative path to app's local directory
-    QString relPath = QDir::current().relativeFilePath(filename);
-
-    // save
-    Settings::getInstance().setSmileyPack(relPath);
-    smileyPackFilename.setText(relPath);
+    Settings::getInstance().setSmileyPack(filename);
 }
-

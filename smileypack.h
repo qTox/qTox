@@ -31,6 +31,8 @@ public:
     bool load(const QString &filename);
     QString replaceEmoticons(QString msg);
 
+    static QStringList listSmileyPacks(const QString& path);
+
 private slots:
     void onSmileyPackChanged();
 

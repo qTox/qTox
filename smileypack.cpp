@@ -34,6 +34,25 @@ SmileyPack& SmileyPack::getInstance()
     return smileyPack;
 }
 
+QStringList SmileyPack::listSmileyPacks(const QString &path)
+{
+    QStringList smileyPacks;
+
+    QDir dir(path);
+    foreach (const QString& subdirectory, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+    {
+        dir.cd(subdirectory);
+
+        QFileInfoList entries = dir.entryInfoList(QStringList() << "emoticons.xml", QDir::Files);
+        if (entries.size() > 0) // does it contain a file called emoticons.xml?
+            smileyPacks << QDir(QCoreApplication::applicationDirPath()).relativeFilePath(entries[0].absoluteFilePath());
+
+        dir.cdUp();
+    }
+
+    return smileyPacks;
+}
+
 bool SmileyPack::load(const QString& filename)
 {
     // discard old data
@@ -89,7 +108,6 @@ QString SmileyPack::replaceEmoticons(QString msg)
     QRegExp exp("\\S+"); // matches words
 
     int index = msg.indexOf(exp);
-    int offset = 0;
 
     // if a word is key of a smiley, replace it by its corresponding image in Rich Text
     while (index >= 0)
@@ -104,7 +122,7 @@ QString SmileyPack::replaceEmoticons(QString msg)
 
             QString imgRichText = "<img src=\"data:image/png;base64," % cache[file] % "\">";
 
-            msg.replace(index + offset, key.length(), imgRichText);
+            msg.replace(index, key.length(), imgRichText);
             index += imgRichText.length() - key.length();
         }
         index = msg.indexOf(exp, index + key.length());
