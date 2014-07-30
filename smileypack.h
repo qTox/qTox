@@ -18,8 +18,9 @@
 #define SMILEYPACK_H
 
 #include <QHash>
-#include <QString>
 #include <QObject>
+#include <QString>
+#include <QStringList>
 
 //maps emoticons to smileys
 class SmileyPack : public QObject
@@ -30,6 +31,9 @@ public:
 
     bool load(const QString &filename);
     QString replaceEmoticons(QString msg);
+    QList<QStringList> getEmoticons() const;
+    QString getRichText(const QString& key);
+    QIcon getIcon(const QString& key);
 
     static QStringList listSmileyPacks(const QString& path);
 
@@ -46,6 +50,7 @@ private:
     QHash<QString, QString> assignmentTable; // matches an emoticon to its corresponding smiley
     QHash<QString, QString> cache; // base64 representation of a smiley
     QString path; // directory containing the cfg file
+    QList<QStringList> emoticons;
 };
 
 #endif // SMILEYPACK_H

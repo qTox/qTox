@@ -25,6 +25,8 @@
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QMenu>
+#include <QWidgetAction>
+#include <QGridLayout>
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend), curRow{0}, lockSliderToBottom{true}
@@ -188,6 +190,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
     connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
     connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(emoteButton, SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
 }
 
 ChatForm::~ChatForm()
@@ -651,4 +654,54 @@ void ChatForm::onSaveLogClicked()
 
     file.write(log.toUtf8());
     file.close();
+}
+
+void ChatForm::onEmoteButtonClicked()
+{
+    QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
+
+    QMenu menu;
+    QGridLayout* gridLayout = new QGridLayout;
+    menu.setLayout(gridLayout);
+
+    int colCount = sqrt(emoticons.size()) + 1;
+    int row = 0;
+    int col = 0;
+    for (QStringList set : emoticons)
+    {
+        QPushButton* button = new QPushButton;
+        button->setIcon(SmileyPack::getInstance().getIcon(set[0]));
+        button->setToolTip(set.join(" "));
+        button->setProperty("sequence", set[0]);
+        connect(button, &QPushButton::clicked, this, &ChatForm::onAddEmote);
+
+        gridLayout->addWidget(button, row, ++col);
+        if (col >= colCount)
+        {
+            col = 0;
+            row++;
+        }
+    }
+
+    QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
+    if (sender)
+    {
+        QPoint pos(gridLayout->totalSizeHint().width() / 2, gridLayout->totalSizeHint().height());
+        menu.exec(sender->mapToGlobal(-pos));
+    }
+}
+
+void ChatForm::onAddEmote()
+{
+    // hide the QMenu
+    QMenu* menu = qobject_cast<QMenu*>(QObject::sender()->parent());
+    if (menu)
+        menu->hide();
+
+    // insert the emoticon
+    QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
+    if (sender)
+        msgEdit->insertPlainText(' ' + sender->property("sequence").toString() + ' ');
+
+    msgEdit->setFocus(); // refocus so that you can continue typing
 }

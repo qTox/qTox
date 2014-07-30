@@ -83,6 +83,8 @@ private slots:
     void onCancelCallTriggered();
     void onChatContextMenuRequested(QPoint pos);
     void onSaveLogClicked();
+    void onEmoteButtonClicked();
+    void onAddEmote();
 
 private:
     Friend* f;

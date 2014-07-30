@@ -58,6 +58,7 @@ bool SmileyPack::load(const QString& filename)
     // discard old data
     assignmentTable.clear();
     cache.clear();
+    emoticons.clear();
 
     // open emoticons.xml
     QFile xmlFile(filename);
@@ -88,13 +89,17 @@ bool SmileyPack::load(const QString& filename)
         QString file = emoticonElements.at(i).attributes().namedItem("file").nodeValue();
         QDomElement stringElement = emoticonElements.at(i).firstChildElement("string");
 
+        QStringList emoticonSet; // { ":)", ":-)" } etc.
+
         while (!stringElement.isNull())
         {
-            QString rune = stringElement.text();
-            assignmentTable.insert(rune, file);
+            QString emoticon = stringElement.text();
+            assignmentTable.insert(emoticon, file);
+            emoticonSet.push_back(emoticon);
 
             stringElement = stringElement.nextSibling().toElement();
         }
+        emoticons.push_back(emoticonSet);
     }
 
     path = QFileInfo(filename).absolutePath();
@@ -129,6 +134,26 @@ QString SmileyPack::replaceEmoticons(QString msg)
     }
 
     return msg;
+}
+
+QList<QStringList> SmileyPack::getEmoticons() const
+{
+    return emoticons;
+}
+
+QString SmileyPack::getRichText(const QString &key)
+{
+    QString file = assignmentTable[key];
+    if (!cache.contains(file)) {
+        loadSmiley(file);
+    }
+
+    return "<img src=\"data:image/png;base64," % cache[file] % "\">";
+}
+
+QIcon SmileyPack::getIcon(const QString &key)
+{
+    return QIcon(path + '/' + assignmentTable[key]);
 }
 
 void SmileyPack::loadSmiley(const QString &name)
