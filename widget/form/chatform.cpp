@@ -667,7 +667,7 @@ void ChatForm::onEmoteButtonClicked()
     int colCount = sqrt(emoticons.size()) + 1;
     int row = 0;
     int col = 0;
-    for (QStringList set : emoticons)
+    for (const QStringList& set : emoticons)
     {
         QPushButton* button = new QPushButton;
         button->setIcon(SmileyPack::getInstance().getIcon(set[0]));
