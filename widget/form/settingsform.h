@@ -26,6 +26,7 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QComboBox>
 #include "widget/tool/clickablelabel.h"
 #include "ui_widget.h"
 #include "widget/selfcamview.h"
@@ -47,7 +48,7 @@ private slots:
     void onEnableIPv6Updated();
     void onUseTranslationUpdated();
     void onMakeToxPortableUpdated();
-    void onBrowseSmileyFilename();
+    void onSmileyBrowserIndexChanged(int index);
     void copyIdClicked();
 
 private:
@@ -58,8 +59,7 @@ private:
     QCheckBox enableIPv6, useTranslations, makeToxPortable;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head;
-    QLineEdit smileyPackFilename;
-    QToolButton smileyBrowseFileButton;
+    QComboBox smileyPackBrowser;
 public:
     QLineEdit name, statusText;
 };
