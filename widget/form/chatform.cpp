@@ -242,7 +242,7 @@ void ChatForm::addFriendMessage(QString message)
 
 void ChatForm::addMessage(QString author, QString message, QString date)
 {
-    message = SmileyPack::getInstance().replaceEmoticons(message);
+    message = SmileyPack::getInstance().smileyfied(message);
     addMessage(new QLabel(author), new QLabel(message), new QLabel(date));
 }
 
@@ -670,7 +670,7 @@ void ChatForm::onEmoteButtonClicked()
     for (const QStringList& set : emoticons)
     {
         QPushButton* button = new QPushButton;
-        button->setIcon(SmileyPack::getInstance().getIcon(set[0]));
+        button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]));
         button->setToolTip(set.join(" "));
         button->setProperty("sequence", set[0]);
         connect(button, &QPushButton::clicked, this, &ChatForm::onAddEmote);

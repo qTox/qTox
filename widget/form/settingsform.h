@@ -48,7 +48,7 @@ private slots:
     void onEnableIPv6Updated();
     void onUseTranslationUpdated();
     void onMakeToxPortableUpdated();
-    void onSmileyBrowserTextChanged(const QString& filename);
+    void onSmileyBrowserIndexChanged(int index);
     void copyIdClicked();
 
 private:

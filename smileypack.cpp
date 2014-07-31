@@ -34,9 +34,9 @@ SmileyPack& SmileyPack::getInstance()
     return smileyPack;
 }
 
-QStringList SmileyPack::listSmileyPacks(const QString &path)
+QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QString &path)
 {
-    QStringList smileyPacks;
+    QList<QPair<QString, QString> > smileyPacks;
 
     QDir dir(path);
     foreach (const QString& subdirectory, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
@@ -45,7 +45,11 @@ QStringList SmileyPack::listSmileyPacks(const QString &path)
 
         QFileInfoList entries = dir.entryInfoList(QStringList() << "emoticons.xml", QDir::Files);
         if (entries.size() > 0) // does it contain a file called emoticons.xml?
-            smileyPacks << QDir(QCoreApplication::applicationDirPath()).relativeFilePath(entries[0].absoluteFilePath());
+        {
+            QString packageName = dir.dirName();
+            QString relPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(entries[0].absoluteFilePath());
+            smileyPacks << QPair<QString, QString>(packageName, relPath);
+        }
 
         dir.cdUp();
     }
@@ -57,7 +61,7 @@ bool SmileyPack::load(const QString& filename)
 {
     // discard old data
     filenameTable.clear();
-    cache.clear();
+    imgCache.clear();
     emoticons.clear();
     path.clear();
 
@@ -110,7 +114,7 @@ bool SmileyPack::load(const QString& filename)
     return true;
 }
 
-QString SmileyPack::replaceEmoticons(QString msg)
+QString SmileyPack::smileyfied(QString msg)
 {
     QRegExp exp("\\S+"); // matches words
 
@@ -122,7 +126,7 @@ QString SmileyPack::replaceEmoticons(QString msg)
         QString key = exp.cap();
         if (filenameTable.contains(key))
         {
-            QString imgRichText = getSmileyAsRichText(key);
+            QString imgRichText = getAsRichText(key);
 
             msg.replace(index, key.length(), imgRichText);
             index += imgRichText.length() - key.length();
@@ -138,12 +142,12 @@ QList<QStringList> SmileyPack::getEmoticons() const
     return emoticons;
 }
 
-QString SmileyPack::getSmileyAsRichText(const QString &key)
+QString SmileyPack::getAsRichText(const QString &key)
 {
     return "<img src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
 }
 
-QIcon SmileyPack::getIcon(const QString &key)
+QIcon SmileyPack::getAsIcon(const QString &key)
 {
     QPixmap pm;
     pm.loadFromData(getCachedSmiley(key), "PNG");
@@ -165,7 +169,7 @@ void SmileyPack::cacheSmiley(const QString &name)
         QBuffer buffer(&scaledImgData);
         scaledImg.save(&buffer, "PNG");
 
-        cache.insert(name, scaledImgData);
+        imgCache.insert(name, scaledImgData);
     }
 }
 
@@ -177,11 +181,11 @@ QByteArray SmileyPack::getCachedSmiley(const QString &key)
 
     // cache it if needed
     QString file = filenameTable.value(key);
-    if (!cache.contains(file)) {
+    if (!imgCache.contains(file)) {
         cacheSmiley(file);
     }
 
-    return cache.value(file);
+    return imgCache.value(file);
 }
 
 void SmileyPack::onSmileyPackChanged()

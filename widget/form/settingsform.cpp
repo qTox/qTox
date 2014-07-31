@@ -53,8 +53,9 @@ SettingsForm::SettingsForm()
     makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
 
     smileyPackLabel.setText(tr("Smiley Pack", "Text on smiley pack label"));
-    smileyPackBrowser.addItems(SmileyPack::listSmileyPacks("./smileys"));
-    smileyPackBrowser.setCurrentText(Settings::getInstance().getSmileyPack());
+    for (auto entry : SmileyPack::listSmileyPacks("./smileys"))
+        smileyPackBrowser.addItem(entry.first, entry.second);
+    smileyPackBrowser.setCurrentIndex(smileyPackBrowser.findData(Settings::getInstance().getSmileyPack()));
 
     main->setLayout(&layout);
     layout.addWidget(&nameLabel);
@@ -79,7 +80,7 @@ SettingsForm::SettingsForm()
     connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
     connect(&makeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
     connect(&idLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(&smileyPackBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onSmileyBrowserTextChanged(QString)));
+    connect(&smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
 }
 
 SettingsForm::~SettingsForm()
@@ -127,7 +128,8 @@ void SettingsForm::onMakeToxPortableUpdated()
     Settings::getInstance().setMakeToxPortable(makeToxPortable.isChecked());
 }
 
-void SettingsForm::onSmileyBrowserTextChanged(const QString &filename)
+void SettingsForm::onSmileyBrowserIndexChanged(int index)
 {
+    QString filename = smileyPackBrowser.itemData(index).toString();
     Settings::getInstance().setSmileyPack(filename);
 }

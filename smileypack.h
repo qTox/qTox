@@ -28,13 +28,13 @@ class SmileyPack : public QObject
     Q_OBJECT
 public:
     static SmileyPack& getInstance();
-    static QStringList listSmileyPacks(const QString& path);
+    static QList<QPair<QString, QString>> listSmileyPacks(const QString& path);
 
     bool load(const QString &filename);
-    QString replaceEmoticons(QString msg);
+    QString smileyfied(QString msg);
     QList<QStringList> getEmoticons() const;
-    QString getSmileyAsRichText(const QString& key);
-    QIcon getIcon(const QString& key);  
+    QString getAsRichText(const QString& key);
+    QIcon getAsIcon(const QString& key);
 
 private slots:
     void onSmileyPackChanged();
@@ -48,9 +48,9 @@ private:
     QByteArray getCachedSmiley(const QString& key);
 
     QHash<QString, QString> filenameTable; // matches an emoticon to its corresponding smiley ie. ":)" -> "happy.png"
-    QHash<QString, QByteArray> cache; // (scaled) representation of a smiley ie. "happy.png" -> data
+    QHash<QString, QByteArray> imgCache; // (scaled) representation of a smiley ie. "happy.png" -> data
+    QList<QStringList> emoticons; // {{ ":)", ":-)" }, {":(", ...}, ... }
     QString path; // directory containing the cfg and image files
-    QList<QStringList> emoticons;
 };
 
 #endif // SMILEYPACK_H
