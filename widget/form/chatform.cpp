@@ -20,6 +20,7 @@
 #include "widget/friendwidget.h"
 #include "widget/widget.h"
 #include "widget/filetransfertwidget.h"
+#include "widget/emoticonswidget.h"
 #include <QFont>
 #include <QTime>
 #include <QScrollBar>
@@ -176,10 +177,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-//    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-//    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-//    msgEdit->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-//    chatArea->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    //    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    //    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    //    msgEdit->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    //    chatArea->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
@@ -313,7 +314,7 @@ void ChatForm::onSliderRangeChanged()
 {
     QScrollBar* scroll = chatArea->verticalScrollBar();
     if (lockSliderToBottom)
-         scroll->setValue(scroll->maximum());
+        scroll->setValue(scroll->maximum());
 }
 
 void ChatForm::startFileSend(ToxFile file)
@@ -658,50 +659,23 @@ void ChatForm::onSaveLogClicked()
 
 void ChatForm::onEmoteButtonClicked()
 {
-    QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
-
-    QMenu menu;
-    QGridLayout* gridLayout = new QGridLayout;
-    menu.setLayout(gridLayout);
-
-    int colCount = sqrt(emoticons.size()) + 1;
-    int row = 0;
-    int col = 0;
-    for (const QStringList& set : emoticons)
-    {
-        QPushButton* button = new QPushButton;
-        button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]));
-        button->setToolTip(set.join(" "));
-        button->setProperty("sequence", set[0]);
-        connect(button, &QPushButton::clicked, this, &ChatForm::onAddEmote);
-
-        gridLayout->addWidget(button, row, ++col);
-        if (col >= colCount)
-        {
-            col = 0;
-            row++;
-        }
-    }
+    EmoticonsWidget widget;
+    connect(&widget, &EmoticonsWidget::insertEmoticon, this, &ChatForm::onEmoteInsertRequested);
 
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
     if (sender)
     {
-        QPoint pos(gridLayout->totalSizeHint().width() / 2, gridLayout->totalSizeHint().height());
-        menu.exec(sender->mapToGlobal(-pos));
+        QPoint pos(widget.sizeHint().width() / 2, widget.sizeHint().height());
+        widget.exec(sender->mapToGlobal(-pos - QPoint(0, 10)));
     }
 }
 
-void ChatForm::onAddEmote()
+void ChatForm::onEmoteInsertRequested(QString str)
 {
-    // hide the QMenu
-    QMenu* menu = qobject_cast<QMenu*>(QObject::sender()->parent());
-    if (menu)
-        menu->hide();
-
     // insert the emoticon
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
     if (sender)
-        msgEdit->insertPlainText(' ' + sender->property("sequence").toString() + ' ');
+        msgEdit->insertPlainText(str);
 
-    msgEdit->setFocus(); // refocus so that you can continue typing
+    msgEdit->setFocus(); // refocus so that we can continue typing
 }

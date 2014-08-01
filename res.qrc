@@ -111,5 +111,8 @@
         <file>ui/statusButton/menu_indicator.png</file>
         <file>translations/de.qm</file>
         <file>translations/it.qm</file>
+        <file>ui/emoticonWidget/dot_page.png</file>
+        <file>ui/emoticonWidget/dot_page_current.png</file>
+        <file>ui/emoticonWidget/emoticonWidget.css</file>
     </qresource>
 </RCC>
