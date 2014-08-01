@@ -1,20 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
-    This file is part of qTox, a Qt-based graphical interface for Tox.
-
-    This program is libre software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-    See the COPYING file for more details.
--->
-
 <ui version="4.0">
  <class>Widget</class>
  <widget class="QWidget" name="Widget">
@@ -23,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>320</height>
+    <height>420</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>640</width>
-    <height>320</height>
+    <height>420</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -2131,8 +2115,8 @@ QSplitter:handle{
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>256</width>
-            <height>199</height>
+            <width>255</width>
+            <height>299</height>
            </rect>
           </property>
          </widget>
