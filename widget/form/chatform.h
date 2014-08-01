@@ -84,7 +84,7 @@ private slots:
     void onChatContextMenuRequested(QPoint pos);
     void onSaveLogClicked();
     void onEmoteButtonClicked();
-    void onAddEmote();
+    void onEmoteInsertRequested(QString str);
 
 private:
     Friend* f;

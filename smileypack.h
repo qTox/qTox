@@ -28,7 +28,7 @@ class SmileyPack : public QObject
     Q_OBJECT
 public:
     static SmileyPack& getInstance();
-    static QList<QPair<QString, QString>> listSmileyPacks(const QString& path);
+    static QList<QPair<QString, QString>> listSmileyPacks(const QString& path = "./smileys");
 
     bool load(const QString &filename);
     QString smileyfied(QString msg);

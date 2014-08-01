@@ -15,6 +15,7 @@
 */
 
 #include "settings.h"
+#include "smileypack.h"
 
 #include <QApplication>
 #include <QDir>
@@ -22,6 +23,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDebug>
+#include <QList>
 
 const QString Settings::FILENAME = "settings.ini";
 bool Settings::makeToxPortable{false};
@@ -92,7 +94,7 @@ void Settings::load()
 
     s.beginGroup("GUI");
         enableSmoothAnimation = s.value("smoothAnimation", true).toBool();
-        smileyPack = s.value("smileyPack").toByteArray();
+        smileyPack = s.value("smileyPack", !SmileyPack::listSmileyPacks().empty() ? SmileyPack::listSmileyPacks()[0].second : "").toString();
         customEmojiFont = s.value("customEmojiFont", true).toBool();
         emojiFontFamily = s.value("emojiFontFamily", "DejaVu Sans").toString();
         emojiFontPointSize = s.value("emojiFontPointSize", QApplication::font().pointSize()).toInt();

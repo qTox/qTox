@@ -54,7 +54,7 @@ SettingsForm::SettingsForm()
     makeToxPortable.setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
 
     smileyPackLabel.setText(tr("Smiley Pack", "Text on smiley pack label"));
-    for (auto entry : SmileyPack::listSmileyPacks("./smileys"))
+    for (auto entry : SmileyPack::listSmileyPacks())
         smileyPackBrowser.addItem(entry.first, entry.second);
     smileyPackBrowser.setCurrentIndex(smileyPackBrowser.findData(Settings::getInstance().getSmileyPack()));
 

@@ -1,0 +1,49 @@
+QPushButton
+{
+    background-color: transparent;
+    background-repeat: none;    
+    border: none;
+    width: 18px;
+    height: 18px;
+}
+
+QRadioButton::indicator
+{
+     width: 13px;
+     height: 13px;
+}
+
+QRadioButton::indicator::unchecked 
+{
+     image: url(:/ui/emoticonWidget/dot_page.png);
+}
+
+QRadioButton::indicator:unchecked:hover 
+{
+     image: url(:/ui/emoticonWidget/dot_page.png);
+}
+
+QRadioButton::indicator:unchecked:pressed 
+{
+     image: url(:/ui/emoticonWidget/dot_page.png);
+}
+
+QRadioButton::indicator::checked 
+{
+     image: url(:/ui/emoticonWidget/dot_page_current.png);
+}
+
+QRadioButton::indicator:checked:hover 
+{
+     image: url(:/ui/emoticonWidget/dot_page_current.png);
+}
+
+QRadioButton::indicator:checked:pressed 
+{
+     image: url(:/ui/emoticonWidget/dot_page.png);
+}
+ 
+QMenu
+{
+     background-color: rgb(240,240,240); /* sets background of the menu */
+}
