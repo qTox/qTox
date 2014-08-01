@@ -20,6 +20,8 @@
 #include "settings.h"
 #include "widget/widget.h"
 
+#include <ctime>
+
 #include <QDebug>
 #include <QDir>
 #include <QFile>
