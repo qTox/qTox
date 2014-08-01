@@ -53,7 +53,7 @@ SettingsForm::SettingsForm()
     makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
 
     smileyPackLabel.setText(tr("Smiley Pack", "Text on smiley pack label"));
-    for (auto entry : SmileyPack::listSmileyPacks("./smileys"))
+    for (auto entry : SmileyPack::listSmileyPacks())
         smileyPackBrowser.addItem(entry.first, entry.second);
     smileyPackBrowser.setCurrentIndex(smileyPackBrowser.findData(Settings::getInstance().getSmileyPack()));
 
