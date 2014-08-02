@@ -141,8 +141,8 @@ void Core::start()
     toxav_register_callstate_callback(toxav, onAvRequestTimeout, av_OnRequestTimeout, this);
     toxav_register_callstate_callback(toxav, onAvPeerTimeout, av_OnPeerTimeout, this);
 
-    toxav_register_audio_recv_callback(toxav, playCallAudio);
-    toxav_register_video_recv_callback(toxav, playCallVideo);
+    toxav_register_audio_recv_callback(toxav, playCallAudio, this);
+    toxav_register_video_recv_callback(toxav, playCallVideo, this);
 
     uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
     tox_get_address(tox, friendAddress);
@@ -1381,7 +1381,7 @@ void Core::cleanupCall(int callId)
     calls[callId].audioBuffer.clear();
 }
 
-void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length)
+void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length, void *user_data)
 {
     if (!calls[callId].active || calls[callId].audioOutput == nullptr)
         return;
@@ -1427,7 +1427,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
         calls[callId].sendAudioTimer->start();
 }
 
-void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img)
+void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_data)
 {
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
