@@ -65,5 +65,10 @@
     <string>;D</string>
     <string>;-D</string>
   </emoticon>
+  
+  <emoticon file="angry.png">
+    <string>😠</string>
+    <string>:@</string>
+  </emoticon>
    
 </messaging-emoticon-map>
