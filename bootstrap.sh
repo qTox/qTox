@@ -103,15 +103,15 @@ rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 if [[ $TOX_ONLY = "false" ]]; then
     git clone git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR}
     pushd ${BASE_DIR}/${SODIUM_DIR}
-    git checkout tags/0.5.0
+    git checkout tags/0.6.1
     ./autogen.sh
-    
+
     if [[ $GLOBAL = "false" ]]; then
         ./configure --prefix=${BASE_DIR}/
     else
         ./configure
     fi
-    
+
     make -j2 check
     
     if [[ $GLOBAL = "false" ]]; then
