@@ -249,7 +249,7 @@ void Core::onFileSendRequestCallback(Tox*, int32_t friendnumber, uint8_t filenum
     fileRecvQueue.append(file);
     emit static_cast<Core*>(core)->fileReceiveRequested(fileRecvQueue.last());
 }
-void Core::onFileControlCallback(Tox*, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
+void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
                                       uint8_t control_type, const uint8_t*, uint16_t, void *core)
 {
     ToxFile* file{nullptr};
@@ -280,7 +280,7 @@ void Core::onFileControlCallback(Tox*, int32_t friendnumber, uint8_t receive_sen
         qWarning("Core::onFileControlCallback: No such file in queue");
         return;
     }
-    if (control_type == TOX_FILECONTROL_ACCEPT && receive_send == 1)
+    if      (receive_send == 1 && control_type == TOX_FILECONTROL_ACCEPT)
     {
         file->status = ToxFile::TRANSMITTING;
         emit static_cast<Core*>(core)->fileTransferAccepted(*file);
@@ -294,7 +294,15 @@ void Core::onFileControlCallback(Tox*, int32_t friendnumber, uint8_t receive_sen
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
         file->sendFuture.waitForFinished(); // Wait for sendAllFileData to return before deleting the ToxFile
-        removeFileFromQueue(true, file->friendId, file->fileNum);
+        removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
+    }
+    else if (receive_send == 1 && control_type == TOX_FILECONTROL_FINISHED)
+    {
+        qDebug() << QString("Core::onFileControlCallback: Transfer of file %1 to friend %2 is complete")
+                    .arg(file->fileNum).arg(file->friendId);
+        file->status = ToxFile::STOPPED;
+        emit static_cast<Core*>(core)->fileTransferFinished(*file);
+        removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else if (receive_send == 0 && control_type == TOX_FILECONTROL_KILL)
     {
@@ -302,7 +310,7 @@ void Core::onFileControlCallback(Tox*, int32_t friendnumber, uint8_t receive_sen
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::RECEIVING);
-        removeFileFromQueue(false, file->friendId, file->fileNum);
+        removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else if (receive_send == 0 && control_type == TOX_FILECONTROL_FINISHED)
     {
@@ -310,7 +318,9 @@ void Core::onFileControlCallback(Tox*, int32_t friendnumber, uint8_t receive_sen
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferFinished(*file);
-        removeFileFromQueue(false, file->friendId, file->fileNum);
+        removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
+        // confirm receive is complete
+        tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
     }
     else
     {
@@ -989,9 +999,6 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
     }
     qDebug("Core::fileHeartbeat: Transfer finished");
     tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
-    file->status = ToxFile::STOPPED;
-    emit core->fileTransferFinished(*file);
-    removeFileFromQueue(true, file->friendId, file->fileNum);
 }
 
 void Core::onAvInvite(void* _toxav, int32_t call_index, void* core)
