@@ -1,0 +1,79 @@
+<?xml version='1.0'?>
+<messaging-emoticon-map>
+  <emoticon file="happy.png">
+    <string>😊</string>
+    <string>:)</string>
+    <string>:-)</string>
+  </emoticon>
+  
+  <emoticon file="cool.png">
+    <string>😎</string>
+    <string>8-)</string>
+    <string>8)</string>
+  </emoticon>
+  
+  <emoticon file="stunned.png">
+    <string>😲</string>
+    <string>:O</string>
+    <string>:-O</string>
+  </emoticon>
+  
+  <emoticon file="tongue.png">
+    <string>😋</string>
+    <string>:p</string>
+    <string>:P</string>
+  </emoticon>
+  
+  <emoticon file="uncertain.png">
+    <string>😕</string>
+    <string>:/</string>
+    <string>:-/</string>
+  </emoticon>
+  
+  <emoticon file="wink.png">
+    <string>😉</string>
+    <string>;)</string>
+    <string>;-)</string>
+  </emoticon>
+  
+  <emoticon file="sad.png">
+    <string>😖</string>
+    <string>:(</string>
+    <string>:-(</string>
+  </emoticon>
+  
+  <emoticon file="crying.png">
+    <string>😢</string>
+    <string>;(</string>
+    <string>;-(</string>
+  </emoticon>
+  
+  <emoticon file="smile.png">
+    <string>😃</string>
+    <string>:D</string>
+    <string>:-D</string>
+  </emoticon>
+  
+  <emoticon file="plain.png">
+    <string>😐</string>
+    <string>:|</string>
+    <string>:-|</string>
+  </emoticon>
+  
+  <emoticon file="laugh.png">
+    <string>😄</string>
+    <string>;D</string>
+    <string>;-D</string>
+  </emoticon>
+  
+  <emoticon file="angry.png">
+    <string>😠</string>
+    <string>:@</string>
+  </emoticon>
+   
+  <emoticon file="scared.png">
+    <string>😨</string>
+    <string>D:</string>
+  </emoticon>
+  
+</messaging-emoticon-map>
