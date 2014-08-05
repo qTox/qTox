@@ -71,4 +71,9 @@
     <string>:@</string>
   </emoticon>
    
+  <emoticon file="scared.png">
+    <string>😨</string>
+    <string>D:</string>
+  </emoticon>
+  
 </messaging-emoticon-map>
