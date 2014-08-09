@@ -106,6 +106,8 @@ void Core::start()
                 emit failedToStart();
                 return;
             }
+            else
+                qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery may not work properly.";
         }
         else
         {
