@@ -97,9 +97,22 @@ void Core::start()
     tox = tox_new(enableIPv6);
     if (tox == nullptr)
     {
-        qCritical() << "Tox core failed to start";
-        emit failedToStart();
-        return;
+        if (enableIPv6) // Fallback to IPv4
+        {
+            tox = tox_new(false);
+            if (tox == nullptr)
+            {
+                qCritical() << "Tox core failed to start";
+                emit failedToStart();
+                return;
+            }
+        }
+        else
+        {
+            qCritical() << "Tox core failed to start";
+            emit failedToStart();
+            return;
+        }
     }
 
     toxav = toxav_new(tox, TOXAV_MAX_CALLS);
