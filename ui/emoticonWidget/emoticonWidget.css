@@ -9,8 +9,8 @@ QPushButton
 
 QRadioButton::indicator
 {
-     width: 13px;
-     height: 13px;
+     width: 10px;
+     height: 10px;
 }
 
 QRadioButton::indicator::unchecked 
@@ -20,12 +20,12 @@ QRadioButton::indicator::unchecked
 
 QRadioButton::indicator:unchecked:hover 
 {
-     image: url(:/ui/emoticonWidget/dot_page.png);
+     image: url(:/ui/emoticonWidget/dot_page_hover.png);
 }
 
 QRadioButton::indicator:unchecked:pressed 
 {
-     image: url(:/ui/emoticonWidget/dot_page.png);
+     image: url(:/ui/emoticonWidget/dot_page_hover.png);
 }
 
 QRadioButton::indicator::checked 
@@ -46,4 +46,5 @@ QRadioButton::indicator:checked:pressed
 QMenu
 {
      background-color: rgb(240,240,240); /* sets background of the menu */
+     border: 1px solid;
 }
