@@ -22,13 +22,15 @@
 #include <QString>
 #include <QStringList>
 
+#define SMILEYPACK_DEFAULT_PATH "./smileys"
+
 //maps emoticons to smileys
 class SmileyPack : public QObject
 {
     Q_OBJECT
 public:
     static SmileyPack& getInstance();
-    static QList<QPair<QString, QString>> listSmileyPacks(const QString& path = "./smileys");
+    static QList<QPair<QString, QString>> listSmileyPacks(const QString& path = SMILEYPACK_DEFAULT_PATH);
     static bool isValid(const QString& filename);
 
     bool load(const QString &filename);
