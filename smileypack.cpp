@@ -57,6 +57,11 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QString &path)
     return smileyPacks;
 }
 
+bool SmileyPack::isValid(const QString &filename)
+{
+    return QFile(filename).exists();
+}
+
 bool SmileyPack::load(const QString& filename)
 {
     // discard old data

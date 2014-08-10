@@ -94,7 +94,7 @@ void Settings::load()
 
     s.beginGroup("GUI");
         enableSmoothAnimation = s.value("smoothAnimation", true).toBool();
-        smileyPack = s.value("smileyPack", !SmileyPack::listSmileyPacks().empty() ? SmileyPack::listSmileyPacks()[0].second : "").toString();
+        smileyPack = s.value("smileyPack", QString()).toString();
         customEmojiFont = s.value("customEmojiFont", true).toBool();
         emojiFontFamily = s.value("emojiFontFamily", "DejaVu Sans").toString();
         emojiFontPointSize = s.value("emojiFontPointSize", QApplication::font().pointSize()).toInt();
@@ -107,6 +107,10 @@ void Settings::load()
     s.beginGroup("Privacy");
         typingNotification = s.value("typingNotification", false).toBool();
     s.endGroup();
+
+    // try to set a smiley pack if none is selected
+    if (!SmileyPack::isValid(smileyPack) && !SmileyPack::listSmileyPacks().isEmpty())
+        smileyPack = SmileyPack::listSmileyPacks()[0].second;
 
     loaded = true;
 }
