@@ -659,14 +659,18 @@ void ChatForm::onSaveLogClicked()
 
 void ChatForm::onEmoteButtonClicked()
 {
+    // don't show the smiley selection widget if there are no smileys available
+    if (SmileyPack::getInstance().getEmoticons().empty())
+        return;
+
     EmoticonsWidget widget;
     connect(&widget, &EmoticonsWidget::insertEmoticon, this, &ChatForm::onEmoteInsertRequested);
 
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
     if (sender)
     {
-        QPoint pos(widget.sizeHint().width() / 2, widget.sizeHint().height());
-        widget.exec(sender->mapToGlobal(-pos - QPoint(0, 10)));
+        QPoint pos = -QPoint(widget.sizeHint().width() / 2, widget.sizeHint().height()) - QPoint(0, 10);
+        widget.exec(sender->mapToGlobal(pos));
     }
 }
 
