@@ -184,14 +184,14 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
-    connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
-    connect(fileButton, SIGNAL(clicked()), this, SLOT(onAttachClicked()));
-    connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
-    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
-    connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
-    connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
-    connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
-    connect(emoteButton, SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
+    connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
+    connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
+    connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
+    connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
+    connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
+    connect(chatArea->verticalScrollBar(), &QScrollBar::rangeChanged, this, &ChatForm::onSliderRangeChanged);
+    connect(chatArea, &QScrollArea::customContextMenuRequested, this, &ChatForm::onChatContextMenuRequested);
+    connect(emoteButton,  &QPushButton::clicked, this, &ChatForm::onEmoteButtonClicked);
 }
 
 ChatForm::~ChatForm()
