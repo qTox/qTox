@@ -33,16 +33,6 @@ QRadioButton::indicator::checked
      image: url(:/ui/emoticonWidget/dot_page_current.png);
 }
 
-QRadioButton::indicator:checked:hover 
-{
-     image: url(:/ui/emoticonWidget/dot_page_current.png);
-}
-
-QRadioButton::indicator:checked:pressed 
-{
-     image: url(:/ui/emoticonWidget/dot_page.png);
-}
- 
 QMenu
 {
      background-color: rgb(240,240,240); /* sets background of the menu */
