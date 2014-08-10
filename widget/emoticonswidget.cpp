@@ -64,12 +64,16 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
         page->setLayout(pageLayout);
         stack.addWidget(page);
 
-        QRadioButton* pageButton = new QRadioButton;
-        pageButton->setProperty("pageIndex", i);
-        pageButton->setChecked(i == 0);
-        buttonLayout->addWidget(pageButton);
+        // page buttons are only needed if there is more than 1 page
+        if (pageCount > 1)
+        {
+            QRadioButton* pageButton = new QRadioButton;
+            pageButton->setProperty("pageIndex", i);
+            pageButton->setChecked(i == 0);
+            buttonLayout->addWidget(pageButton);
 
-        connect(pageButton, &QRadioButton::clicked, this, &EmoticonsWidget::onPageButtonClicked);
+            connect(pageButton, &QRadioButton::clicked, this, &EmoticonsWidget::onPageButtonClicked);
+        }
     }
     buttonLayout->addStretch();
 
