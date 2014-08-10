@@ -85,7 +85,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/netcamview.h \
     widget/tool/clickablelabel.h \
     smileypack.h \
-    widget/emoticonswidget.h
+    widget/emoticonswidget.h \
+    style.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -119,4 +120,5 @@ SOURCES += \
     widget/netcamview.cpp \
     widget/tool/clickablelabel.cpp \
     smileypack.cpp \
-    widget/emoticonswidget.cpp
+    widget/emoticonswidget.cpp \
+    style.cpp

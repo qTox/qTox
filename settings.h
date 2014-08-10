@@ -112,6 +112,12 @@ public:
     bool isTypingNotificationEnabled() const;
     void setTypingNotification(bool enabled);
 
+    bool getUseNativeStyle() const;
+    void setUseNativeStyle(bool value);
+
+    bool getUseNativeDecoration() const;
+    void setUseNativeDecoration(bool value);
+
 private:
     Settings();
     Settings(Settings &settings) = delete;
@@ -147,6 +153,8 @@ private:
     QString emojiFontFamily;
     int     emojiFontPointSize;
     bool minimizeOnClose;
+    bool useNativeStyle;
+    bool useNativeDecoration;
 
     // ChatView
     int firstColumnHandlePos;

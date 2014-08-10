@@ -25,6 +25,7 @@
 #include "group.h"
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
+#include "style.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QSound>
@@ -45,98 +46,54 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
-    if (!settings.contains("useNativeTheme"))
-        useNativeTheme = 1;
-    else
-        useNativeTheme = settings.value("useNativeTheme").toInt();
+    ui->titleBar->hide();
+    layout()->setContentsMargins(0, 0, 0, 0);
+    ui->friendList->setObjectName("friendList");
+    ui->friendList->setStyleSheet(Style::get(":ui/friendList/friendList.css"));
 
-    if (useNativeTheme)
+    setStyleSheet(Style::get(":ui/window/window.css"));
+    //ui->statusPanel->setStyleSheet(QString(""));
+    //ui->friendList->setStyleSheet(QString(""));
+
+    ui->friendList->setObjectName("friendList");
+    ui->friendList->setStyleSheet(Style::get(":ui/friendList/friendList.css"));
+
+    ui->tbMenu->setIcon(QIcon(":ui/window/applicationIcon.png"));
+    ui->pbMin->setObjectName("minimizeButton");
+    ui->pbMax->setObjectName("maximizeButton");
+    ui->pbClose->setObjectName("closeButton");
+
+    if (!Settings::getInstance().getUseNativeDecoration())
     {
-        ui->titleBar->hide();
-        this->layout()->setContentsMargins(0, 0, 0, 0);
-
-        QString friendListStylesheet = "";
-        try
-        {
-            QFile f(":ui/friendList/friendList.css");
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream friendListStylesheetStream(&f);
-            friendListStylesheet = friendListStylesheetStream.readAll();
-        }
-        catch (int e) {}
-        ui->friendList->setObjectName("friendList");
-        ui->friendList->setStyleSheet(friendListStylesheet);
-    }
-    else
-    {
-        QString windowStylesheet = "";
-        try
-        {
-            QFile f(":ui/window/window.css");
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream windowStylesheetStream(&f);
-            windowStylesheet = windowStylesheetStream.readAll();
-        }
-        catch (int e) {}
-        this->setObjectName("activeWindow");
-        this->setStyleSheet(windowStylesheet);
-        ui->statusPanel->setStyleSheet(QString(""));
-        ui->friendList->setStyleSheet(QString(""));
-
-        QString friendListStylesheet = "";
-        try
-        {
-            QFile f(":ui/friendList/friendList.css");
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream friendListStylesheetStream(&f);
-            friendListStylesheet = friendListStylesheetStream.readAll();
-        }
-        catch (int e) {}
-        ui->friendList->setObjectName("friendList");
-        ui->friendList->setStyleSheet(friendListStylesheet);
-
-        ui->tbMenu->setIcon(QIcon(":ui/window/applicationIcon.png"));
-        ui->pbMin->setObjectName("minimizeButton");
-        ui->pbMax->setObjectName("maximizeButton");
-        ui->pbClose->setObjectName("closeButton");
-
         setWindowFlags(Qt::CustomizeWindowHint);
         setWindowFlags(Qt::FramelessWindowHint);
+    }
 
-        addAction(ui->actionClose);
+    addAction(ui->actionClose);
 
-        connect(ui->pbMin, SIGNAL(clicked()), this, SLOT(minimizeBtnClicked()));
-        connect(ui->pbMax, SIGNAL(clicked()), this, SLOT(maximizeBtnClicked()));
-        connect(ui->pbClose, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui->pbMin, SIGNAL(clicked()), this, SLOT(minimizeBtnClicked()));
+    connect(ui->pbMax, SIGNAL(clicked()), this, SLOT(maximizeBtnClicked()));
+    connect(ui->pbClose, SIGNAL(clicked()), this, SLOT(close()));
 
-        m_titleMode = FullTitle;
-        moveWidget = false;
-        inResizeZone = false;
-        allowToResize = false;
-        resizeVerSup = false;
-        resizeHorEsq = false;
-        resizeDiagSupEsq = false;
-        resizeDiagSupDer = false;
+    m_titleMode = FullTitle;
+    moveWidget = false;
+    inResizeZone = false;
+    allowToResize = false;
+    resizeVerSup = false;
+    resizeHorEsq = false;
+    resizeDiagSupEsq = false;
+    resizeDiagSupDer = false;
 
     QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
     QRect geo = settings.value("geometry").toRect();
 
-        if (geo.height() > 0 and geo.x() < QApplication::desktop()->width() and geo.width() > 0 and geo.y() < QApplication::desktop()->height())
-            this->setGeometry(geo);
+    if (geo.height() > 0 and geo.x() < QApplication::desktop()->width() and geo.width() > 0 and geo.y() < QApplication::desktop()->height())
+        this->setGeometry(geo);
 
-        if (settings.value("maximized").toBool())
-        {
-            showMaximized();
-            ui->pbMax->setObjectName("restoreButton");
-        }
-
-        QList<QWidget*> widgets = this->findChildren<QWidget*>();
-
-        foreach (QWidget *widget, widgets)
-        {
-            widget->setMouseTracking(true);
-        }
+    if (settings.value("maximized").toBool())
+    {
+        showMaximized();
+        ui->pbMax->setObjectName("restoreButton");
     }
 
     isWindowMinimized = 0;
@@ -174,11 +131,11 @@ Widget::Widget(QWidget *parent) :
     ui->statusButton->setMenu(statusButtonMenu);
 
 
-    this->setMouseTracking(true);
+//    this->setMouseTracking(true);
 
-    QList<QWidget*> widgets = this->findChildren<QWidget*>();
-    foreach (QWidget *widget, widgets)
-        widget->setMouseTracking(true);
+//    QList<QWidget*> widgets = this->findChildren<QWidget*>();
+//    foreach (QWidget *widget, widgets)
+//        widget->setMouseTracking(true);
 
     ui->titleBar->setMouseTracking(true);
     ui->LTitle->setMouseTracking(true);
@@ -1116,47 +1073,47 @@ void Widget::setTitlebarMode(const TitleMode &flag)
 
     switch (m_titleMode)
     {
-        case CleanTitle:
-            ui->tbMenu->setHidden(true);
-            ui->pbMin->setHidden(true);
-            ui->pbMax->setHidden(true);
-            ui->pbClose->setHidden(true);
-            break;
-        case OnlyCloseButton:
-            ui->tbMenu->setHidden(true);
-            ui->pbMin->setHidden(true);
-            ui->pbMax->setHidden(true);
-            break;
-        case MenuOff:
-            ui->tbMenu->setHidden(true);
-            break;
-        case MaxMinOff:
-            ui->pbMin->setHidden(true);
-            ui->pbMax->setHidden(true);
-            break;
-        case FullScreenMode:
-            ui->pbMax->setHidden(true);
-            showMaximized();
-            break;
-        case MaximizeModeOff:
-            ui->pbMax->setHidden(true);
-            break;
-        case MinimizeModeOff:
-            ui->pbMin->setHidden(true);
-            break;
-        case FullTitle:
-            ui->tbMenu->setVisible(true);
-            ui->pbMin->setVisible(true);
-            ui->pbMax->setVisible(true);
-            ui->pbClose->setVisible(true);
-            break;
-            break;
-        default:
-            ui->tbMenu->setVisible(true);
-            ui->pbMin->setVisible(true);
-            ui->pbMax->setVisible(true);
-            ui->pbClose->setVisible(true);
-            break;
+    case CleanTitle:
+        ui->tbMenu->setHidden(true);
+        ui->pbMin->setHidden(true);
+        ui->pbMax->setHidden(true);
+        ui->pbClose->setHidden(true);
+        break;
+    case OnlyCloseButton:
+        ui->tbMenu->setHidden(true);
+        ui->pbMin->setHidden(true);
+        ui->pbMax->setHidden(true);
+        break;
+    case MenuOff:
+        ui->tbMenu->setHidden(true);
+        break;
+    case MaxMinOff:
+        ui->pbMin->setHidden(true);
+        ui->pbMax->setHidden(true);
+        break;
+    case FullScreenMode:
+        ui->pbMax->setHidden(true);
+        showMaximized();
+        break;
+    case MaximizeModeOff:
+        ui->pbMax->setHidden(true);
+        break;
+    case MinimizeModeOff:
+        ui->pbMin->setHidden(true);
+        break;
+    case FullTitle:
+        ui->tbMenu->setVisible(true);
+        ui->pbMin->setVisible(true);
+        ui->pbMax->setVisible(true);
+        ui->pbClose->setVisible(true);
+        break;
+        break;
+    default:
+        ui->tbMenu->setVisible(true);
+        ui->pbMin->setVisible(true);
+        ui->pbMax->setVisible(true);
+        ui->pbClose->setVisible(true);
+        break;
     }
     ui->LTitle->setVisible(true);
 }

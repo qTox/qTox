@@ -21,6 +21,7 @@
 #include "widget/widget.h"
 #include "widget/filetransfertwidget.h"
 #include "widget/emoticonswidget.h"
+#include "style.h"
 #include <QFont>
 #include <QTime>
 #include <QScrollBar>
@@ -53,16 +54,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"));
 
     chatAreaWidget->setLayout(mainChatLayout);
-    QString chatAreaStylesheet = "";
-    try
-    {
-        QFile f(":/ui/chatArea/chatArea.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream chatAreaStylesheetStream(&f);
-        chatAreaStylesheet = chatAreaStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    chatArea->setStyleSheet(chatAreaStylesheet);
+    chatAreaWidget->setStyleSheet(Style::get(":/ui/chatArea/chatArea.css"));
+
     chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     chatArea->setWidgetResizable(true);
     chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -73,76 +66,19 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     footButtonsSmall->setSpacing(2);
 
-    QString msgEditStylesheet = "";
-    try
-    {
-        QFile f(":/ui/msgEdit/msgEdit.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream msgEditStylesheetStream(&f);
-        msgEditStylesheet = msgEditStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    msgEdit->setStyleSheet(msgEditStylesheet);
+    msgEdit->setStyleSheet(Style::get(":/ui/msgEdit/msgEdit.css"));
     msgEdit->setFixedHeight(50);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
-    QString sendButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/sendButton/sendButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream sendButtonStylesheetStream(&f);
-        sendButtonStylesheet = sendButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    sendButton->setStyleSheet(sendButtonStylesheet);
+    sendButton->setStyleSheet(Style::get(":/ui/sendButton/sendButton.css"));
+    fileButton->setStyleSheet(Style::get(":/ui/fileButton/fileButton.css"));
+    emoteButton->setStyleSheet(Style::get(":/ui/emoteButton/emoteButton.css"));
 
-    QString fileButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/fileButton/fileButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream fileButtonStylesheetStream(&f);
-        fileButtonStylesheet = fileButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    fileButton->setStyleSheet(fileButtonStylesheet);
-
-
-    QString emoteButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/emoteButton/emoteButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream emoteButtonStylesheetStream(&f);
-        emoteButtonStylesheet = emoteButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    emoteButton->setStyleSheet(emoteButtonStylesheet);
-
-    QString callButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/callButton/callButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream callButtonStylesheetStream(&f);
-        callButtonStylesheet = callButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
     callButton->setObjectName("green");
-    callButton->setStyleSheet(callButtonStylesheet);
+    callButton->setStyleSheet(Style::get(":/ui/callButton/callButton.css"));
 
-    QString videoButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/videoButton/videoButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream videoButtonStylesheetStream(&f);
-        videoButtonStylesheet = videoButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
     videoButton->setObjectName("green");
-    videoButton->setStyleSheet(videoButtonStylesheet);
+    videoButton->setStyleSheet(Style::get(":/ui/videoButton/videoButton.css"));
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
