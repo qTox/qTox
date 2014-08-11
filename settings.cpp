@@ -104,6 +104,9 @@ void Settings::load()
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
         useNativeDecoration = s.value("nativeDecoration", true).toBool();
+    s.endGroup();
+
+    s.beginGroup("State");
         windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
         windowState = s.value("windowState", QByteArray()).toByteArray();
         splitterState = s.value("splitterState", QByteArray()).toByteArray();
@@ -169,6 +172,9 @@ void Settings::save(QString path)
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("nativeStyle", useNativeStyle);
         s.setValue("nativeDecoration", useNativeDecoration);
+    s.endGroup();
+
+    s.beginGroup("State");
         s.setValue("windowGeometry", windowGeometry);
         s.setValue("windowState", windowState);
         s.setValue("splitterState", splitterState);
