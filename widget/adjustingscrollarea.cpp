@@ -18,6 +18,7 @@
 
 #include <QEvent>
 #include <QLayout>
+#include <QScrollBar>
 #include <QDebug>
 
 AdjustingScrollArea::AdjustingScrollArea(QWidget *parent) :
@@ -35,7 +36,10 @@ void AdjustingScrollArea::resizeEvent(QResizeEvent *ev)
 QSize AdjustingScrollArea::sizeHint() const
 {
     if (widget())
-        return widget()->sizeHint();
+    {
+        int scrollbarWidth = verticalScrollBar()->isVisible() ? verticalScrollBar()->width() : 0;
+        return widget()->sizeHint() + QSize(scrollbarWidth, 0);
+    }
 
     return QScrollArea::sizeHint();
 }

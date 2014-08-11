@@ -113,7 +113,6 @@ Widget::Widget(QWidget *parent)
     ui->mainHead->layout()->setSpacing(0);
 
     QWidget* friendListWidget = new QWidget();
-    //friendListWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
     friendListWidget->setLayout(new QVBoxLayout());
     friendListWidget->layout()->setSpacing(0);
     friendListWidget->layout()->setMargin(0);
