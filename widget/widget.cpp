@@ -15,7 +15,7 @@
 */
 
 #include "widget.h"
-#include "ui_widget.h"
+#include "ui_mainwindow.h"
 #include "settings.h"
 #include "friend.h"
 #include "friendlist.h"
@@ -41,10 +41,20 @@
 
 Widget *Widget::instance{nullptr};
 
-Widget::Widget(QWidget *parent) :
-    QWidget(parent), ui(new Ui::Widget), activeFriendWidget{nullptr}, activeGroupWidget{nullptr}
+Widget::Widget(QWidget *parent)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      activeFriendWidget{nullptr},
+      activeGroupWidget{nullptr}
 {
     ui->setupUi(this);
+
+    ui->statusbar->hide();
+    ui->menubar->hide();
+
+    //restore window state
+    restoreGeometry(Settings::getInstance().getWindowGeometry());
+    restoreState(Settings::getInstance().getWindowState());
 
     ui->titleBar->hide();
     layout()->setContentsMargins(0, 0, 0, 0);
@@ -84,29 +94,17 @@ Widget::Widget(QWidget *parent) :
     resizeDiagSupEsq = false;
     resizeDiagSupDer = false;
 
-    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
-    QRect geo = settings.value("geometry").toRect();
-
-    if (geo.height() > 0 and geo.x() < QApplication::desktop()->width() and geo.width() > 0 and geo.y() < QApplication::desktop()->height())
-        this->setGeometry(geo);
-
-    if (settings.value("maximized").toBool())
-    {
-        showMaximized();
-        ui->pbMax->setObjectName("restoreButton");
-    }
-
     isWindowMinimized = 0;
 
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
+
     QWidget* friendListWidget = new QWidget();
     friendListWidget->setLayout(new QVBoxLayout());
     friendListWidget->layout()->setSpacing(0);
     friendListWidget->layout()->setMargin(0);
-    friendListWidget->setLayoutDirection(Qt::LeftToRight);
     ui->friendList->setWidget(friendListWidget);
 
     // delay setting username and message until Core inits
@@ -116,10 +114,7 @@ Widget::Widget(QWidget *parent) :
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
     ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QFile f1(":/ui/statusButton/statusButton.css");
-    f1.open(QFile::ReadOnly | QFile::Text);
-    QTextStream statusButtonStylesheetStream(&f1);
-    ui->statusButton->setStyleSheet(statusButtonStylesheetStream.readAll());
+    ui->statusButton->setStyleSheet(Style::get(":/ui/statusButton/statusButton.css"));
 
     QMenu *statusButtonMenu = new QMenu(ui->statusButton);
     QAction* setStatusOnline = statusButtonMenu->addAction(tr("Online","Button to set your status to 'Online'"));
@@ -147,9 +142,9 @@ Widget::Widget(QWidget *parent) :
 
     ui->friendList->viewport()->installEventFilter(this);
 
-    QList<int> currentSizes = ui->centralWidget->sizes();
-    currentSizes[0] = 225;
-    ui->centralWidget->setSizes(currentSizes);
+//    QList<int> currentSizes = ui->centralWidget->sizes();
+//    currentSizes[0] = 225;
+//    ui->centralWidget->setSizes(currentSizes);
 
     ui->statusButton->setObjectName("offline");
     ui->statusButton->style()->polish(ui->statusButton);
@@ -198,7 +193,6 @@ Widget::Widget(QWidget *parent) :
     connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
-    connect(ui->centralWidget, SIGNAL(splitterMoved(int,int)),this, SLOT(splitterMoved(int,int)));
     connect(ui->addButton, SIGNAL(clicked()), this, SLOT(onAddClicked()));
     connect(ui->groupButton, SIGNAL(clicked()), this, SLOT(onGroupClicked()));
     connect(ui->transferButton, SIGNAL(clicked()), this, SLOT(onTransferClicked()));
@@ -236,10 +230,6 @@ Widget::~Widget()
     for (Group* g : GroupList::groupList)
         delete g;
     GroupList::groupList.clear();
-    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
-    settings.setValue("geometry", geometry());
-    settings.setValue("maximized", isMaximized());
-    settings.setValue("useNativeTheme", useNativeTheme);
     delete ui;
 }
 
@@ -250,27 +240,16 @@ Widget* Widget::getInstance()
     return instance;
 }
 
-//Super ugly hack to enable resizable friend widgets
-//There should be a way to set them to resize automagicly, but I can't seem to find it.
-void Widget::splitterMoved(int, int)
-{
-    updateFriendListWidth();
-}
-
 QThread* Widget::getCoreThread()
 {
     return coreThread;
 }
 
-void Widget::updateFriendListWidth()
+void Widget::closeEvent(QCloseEvent *event)
 {
-    int newWidth = ui->friendList->width();
-    for (Friend* f : FriendList::friendList)
-        if (f->widget != nullptr)
-            f->widget->setNewFixedWidth(newWidth);
-    for (Group* g : GroupList::groupList)
-        if (g->widget != nullptr)
-            g->widget->setNewFixedWidth(newWidth);
+    Settings::getInstance().setWindowGeometry(saveGeometry());
+    Settings::getInstance().setWindowState(saveState());
+    QWidget::closeEvent(event);
 }
 
 QString Widget::getUsername()
@@ -432,7 +411,6 @@ void Widget::addFriend(int friendId, const QString &userId)
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
     layout->addWidget(newfriend->widget);
-    updateFriendListWidth();
     connect(newfriend->widget, SIGNAL(friendWidgetClicked(FriendWidget*)), this, SLOT(onFriendWidgetClicked(FriendWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -736,7 +714,7 @@ Group *Widget::createGroup(int groupId)
     layout->addWidget(newgroup->widget);
     if (!useNativeTheme)
         newgroup->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
-    updateFriendListWidth();
+
     connect(newgroup->widget, SIGNAL(groupWidgetClicked(GroupWidget*)), this, SLOT(onGroupWidgetClicked(GroupWidget*)));
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
@@ -767,12 +745,6 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
         return false;
     return true;
 }
-
-void Widget::resizeEvent(QResizeEvent *)
-{
-    updateFriendListWidth();
-}
-
 
 bool Widget::event(QEvent * e)
 {
@@ -944,7 +916,6 @@ void Widget::moveWindow(QMouseEvent *e)
 
 void Widget::resizeWindow(QMouseEvent *e)
 {
-    updateFriendListWidth();
     if (!useNativeTheme)
     {
         if (allowToResize)

@@ -27,7 +27,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 {
     this->setMouseTracking(true);
     this->setAutoFillBackground(true);
-    this->setFixedWidth(225);
     this->setFixedHeight(55);
     this->setLayout(&layout);
     layout.setSpacing(0);
@@ -68,11 +67,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     layout.addSpacing(5);
 
     isActiveWidget = 0;
-}
-
-void FriendWidget::setNewFixedWidth(int newWidth)
-{
-    this->setFixedWidth(newWidth);
 }
 
 void FriendWidget::mouseReleaseEvent (QMouseEvent*)

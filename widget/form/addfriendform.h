@@ -17,7 +17,7 @@
 #ifndef ADDFRIENDFORM_H
 #define ADDFRIENDFORM_H
 
-#include "ui_widget.h"
+#include "ui_mainwindow.h"
 
 #include <QVBoxLayout>
 #include <QLabel>
@@ -33,7 +33,7 @@ public:
     AddFriendForm();
     ~AddFriendForm();
 
-    void show(Ui::Widget& ui);
+    void show(Ui::MainWindow &ui);
     bool isToxId(const QString& value) const;
     void showWarning(const QString& message) const;
     QString getMessage() const;

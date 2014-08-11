@@ -118,6 +118,12 @@ public:
     bool getUseNativeDecoration() const;
     void setUseNativeDecoration(bool value);
 
+    QByteArray getWindowGeometry() const;
+    void setWindowGeometry(const QByteArray &value);
+
+    QByteArray getWindowState() const;
+    void setWindowState(const QByteArray &value);
+
 private:
     Settings();
     Settings(Settings &settings) = delete;
@@ -155,6 +161,8 @@ private:
     bool minimizeOnClose;
     bool useNativeStyle;
     bool useNativeDecoration;
+    QByteArray windowGeometry;
+    QByteArray windowState;
 
     // ChatView
     int firstColumnHandlePos;

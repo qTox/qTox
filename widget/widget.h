@@ -18,7 +18,7 @@
 #define WIDGET_H
 
 #include <QThread>
-#include <QWidget>
+#include <QMainWindow>
 #include <QString>
 #include <QHBoxLayout>
 #include <QMenu>
@@ -31,7 +31,7 @@
 #define PIXELS_TO_ACT 7
 
 namespace Ui {
-class Widget;
+class MainWindow;
 }
 
 class GroupWidget;
@@ -39,7 +39,7 @@ struct FriendWidget;
 class Group;
 struct Friend;
 
-class Widget : public QWidget
+class Widget : public QMainWindow
 {
     Q_OBJECT
 
@@ -60,7 +60,8 @@ public:
     void updateFriendStatusLights(int friendId);
     int useNativeTheme;
     ~Widget();
-    void updateFriendListWidth();
+
+    virtual void closeEvent(QCloseEvent *event);
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -69,9 +70,6 @@ signals:
     void statusSelected(Status status);
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
-
-protected:
-    void resizeEvent(QResizeEvent *);
 
 private slots:
     void maximizeBtnClicked();
@@ -108,7 +106,6 @@ private slots:
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
-    void splitterMoved(int pos, int index);
     void setStatusOnline();
     void setStatusAway();
     void setStatusBusy();
@@ -121,7 +118,7 @@ private:
     Group* createGroup(int groupId);
 
 private:
-    Ui::Widget *ui;
+    Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
     TitleMode m_titleMode;

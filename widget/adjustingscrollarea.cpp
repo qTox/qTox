@@ -14,22 +14,22 @@
     See the COPYING file for more details.
 */
 
-#include "style.h"
-#include "settings.h"
+#include "adjustingscrollarea.h"
 
-#include <QFile>
-#include <QDebug>
+#include <QEvent>
+#include <QLayout>
 
-QString Style::get(const QString &filename)
+AdjustingScrollArea::AdjustingScrollArea(QWidget *parent) :
+    QScrollArea(parent)
 {
-    if (!Settings::getInstance().getUseNativeStyle())
+}
+
+void AdjustingScrollArea::resizeEvent(QResizeEvent *ev)
+{
+    if (widget())
     {
-        QFile file(filename);
-        if (file.open(QFile::ReadOnly | QFile::Text))
-            return file.readAll();
-        else
-            qWarning() << "Style " << filename << " not found";
+        widget()->setMinimumWidth(width());
     }
 
-    return QString();
+    QScrollArea::resizeEvent(ev);
 }

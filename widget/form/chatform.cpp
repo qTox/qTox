@@ -137,7 +137,7 @@ ChatForm::~ChatForm()
     delete netcam;
 }
 
-void ChatForm::show(Ui::Widget &ui)
+void ChatForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);

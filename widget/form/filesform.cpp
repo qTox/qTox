@@ -50,7 +50,7 @@ FilesForm::~FilesForm()
     // I'm not too bummed about removing it
 }
 
-void FilesForm::show(Ui::Widget& ui)
+void FilesForm::show(Ui::MainWindow& ui)
 {
     ui.mainContent->layout()->addWidget(&main);
     ui.mainHead->layout()->addWidget(head);

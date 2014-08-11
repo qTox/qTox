@@ -104,6 +104,8 @@ void Settings::load()
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
         useNativeDecoration = s.value("nativeDecoration", true).toBool();
+        windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
+        windowState = s.value("windowState", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Privacy");
@@ -162,6 +164,8 @@ void Settings::save(QString path)
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("nativeStyle", useNativeStyle);
         s.setValue("nativeDecoration", useNativeDecoration);
+        s.setValue("windowGeometry", windowGeometry);
+        s.setValue("windowState", windowState);
     s.endGroup();
 
     s.beginGroup("Privacy");
@@ -357,6 +361,26 @@ bool Settings::getUseNativeDecoration() const
 void Settings::setUseNativeDecoration(bool value)
 {
     useNativeDecoration = value;
+}
+
+QByteArray Settings::getWindowGeometry() const
+{
+    return windowGeometry;
+}
+
+void Settings::setWindowGeometry(const QByteArray &value)
+{
+    windowGeometry = value;
+}
+
+QByteArray Settings::getWindowState() const
+{
+    return windowState;
+}
+
+void Settings::setWindowState(const QByteArray &value)
+{
+    windowState = value;
 }
 
 bool Settings::isMinimizeOnCloseEnabled() const

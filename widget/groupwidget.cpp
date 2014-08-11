@@ -27,7 +27,6 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     this->setMouseTracking(true);
     this->setAutoFillBackground(true);
     this->setLayout(&layout);
-    this->setFixedWidth(225);
     this->setFixedHeight(55);
     layout.setSpacing(0);
     layout.setMargin(0);
@@ -70,11 +69,6 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     layout.addSpacing(5);
 
     isActiveWidget = 0;
-}
-
-void GroupWidget::setNewFixedWidth(int newWidth)
-{
-    this->setFixedWidth(newWidth);
 }
 
 void GroupWidget::mouseReleaseEvent (QMouseEvent*)

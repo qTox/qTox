@@ -142,7 +142,7 @@ GroupChatForm::~GroupChatForm()
     delete main;
 }
 
-void GroupChatForm::show(Ui::Widget &ui)
+void GroupChatForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
