@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
-    <height>600</height>
+    <width>716</width>
+    <height>543</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -231,6 +231,12 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
       </property>
       <property name="palette">
        <palette>
@@ -536,6 +542,9 @@ QSplitter:handle{
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
+      <property name="handleWidth">
+       <number>6</number>
+      </property>
       <property name="childrenCollapsible">
        <bool>false</bool>
       </property>
@@ -545,18 +554,6 @@ QSplitter:handle{
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>225</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>1920</width>
-         <height>16777215</height>
-        </size>
        </property>
        <property name="palette">
         <palette>
@@ -1029,12 +1026,6 @@ QSplitter:handle{
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>225</width>
-            <height>60</height>
-           </size>
           </property>
           <property name="palette">
            <palette>
@@ -2076,16 +2067,10 @@ QSplitter:handle{
         <item>
          <widget class="AdjustingScrollArea" name="friendList">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>225</width>
-            <height>0</height>
-           </size>
           </property>
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
@@ -2107,10 +2092,11 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>501</width>
-             <height>430</height>
+             <width>335</width>
+             <height>379</height>
             </rect>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5"/>
           </widget>
          </widget>
         </item>
@@ -2120,16 +2106,10 @@ QSplitter:handle{
            <bool>true</bool>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>225</width>
-            <height>35</height>
-           </size>
           </property>
           <property name="palette">
            <palette>
@@ -2598,22 +2578,6 @@ QSplitter:handle{
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Maximum</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>500</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
             <widget class="QPushButton" name="groupButton">
              <property name="minimumSize">
               <size>
@@ -2638,22 +2602,6 @@ QSplitter:handle{
               <bool>true</bool>
              </property>
             </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Maximum</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>500</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item>
             <widget class="QPushButton" name="transferButton">
@@ -2686,22 +2634,6 @@ QSplitter:handle{
               <bool>true</bool>
              </property>
             </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Maximum</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>500</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item>
             <widget class="QPushButton" name="settingsButton">
@@ -2742,16 +2674,10 @@ QSplitter:handle{
       </widget>
       <widget class="QWidget" name="mainPanel" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>1</horstretch>
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>375</width>
-         <height>0</height>
-        </size>
        </property>
        <property name="palette">
         <palette>
@@ -3301,7 +3227,7 @@ QSplitter:handle{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>882</width>
+     <width>716</width>
      <height>24</height>
     </rect>
    </property>

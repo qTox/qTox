@@ -58,7 +58,6 @@ public:
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
     void updateFriendStatusLights(int friendId);
-    int useNativeTheme;
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);

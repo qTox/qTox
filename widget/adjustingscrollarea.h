@@ -26,6 +26,7 @@ public:
     explicit AdjustingScrollArea(QWidget *parent = 0);
 
     virtual void resizeEvent(QResizeEvent *ev);
+    virtual QSize sizeHint() const override;
 signals:
 
 public slots:

@@ -18,18 +18,24 @@
 
 #include <QEvent>
 #include <QLayout>
+#include <QDebug>
 
 AdjustingScrollArea::AdjustingScrollArea(QWidget *parent) :
     QScrollArea(parent)
 {
+
 }
 
 void AdjustingScrollArea::resizeEvent(QResizeEvent *ev)
 {
-    if (widget())
-    {
-        widget()->setMinimumWidth(width());
-    }
-
+    updateGeometry();
     QScrollArea::resizeEvent(ev);
+}
+
+QSize AdjustingScrollArea::sizeHint() const
+{
+    if (widget())
+        return widget()->sizeHint();
+
+    return QScrollArea::sizeHint();
 }
