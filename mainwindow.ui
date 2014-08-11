@@ -225,7 +225,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QSplitter" name="centralWidget">
+     <widget class="QSplitter" name="mainSplitter">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>

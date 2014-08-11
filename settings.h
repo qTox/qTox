@@ -124,6 +124,9 @@ public:
     QByteArray getWindowState() const;
     void setWindowState(const QByteArray &value);
 
+    QByteArray getSplitterState() const;
+    void setSplitterState(const QByteArray &value);
+
 private:
     Settings();
     Settings(Settings &settings) = delete;
@@ -163,6 +166,7 @@ private:
     bool useNativeDecoration;
     QByteArray windowGeometry;
     QByteArray windowState;
+    QByteArray splitterState;
 
     // ChatView
     int firstColumnHandlePos;

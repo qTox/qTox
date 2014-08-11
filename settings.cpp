@@ -106,6 +106,7 @@ void Settings::load()
         useNativeDecoration = s.value("nativeDecoration", true).toBool();
         windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
         windowState = s.value("windowState", QByteArray()).toByteArray();
+        splitterState = s.value("splitterState", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Privacy");
@@ -166,6 +167,7 @@ void Settings::save(QString path)
         s.setValue("nativeDecoration", useNativeDecoration);
         s.setValue("windowGeometry", windowGeometry);
         s.setValue("windowState", windowState);
+        s.setValue("splitterState", splitterState);
     s.endGroup();
 
     s.beginGroup("Privacy");
@@ -381,6 +383,16 @@ QByteArray Settings::getWindowState() const
 void Settings::setWindowState(const QByteArray &value)
 {
     windowState = value;
+}
+
+QByteArray Settings::getSplitterState() const
+{
+    return splitterState;
+}
+
+void Settings::setSplitterState(const QByteArray &value)
+{
+    splitterState = value;
 }
 
 bool Settings::isMinimizeOnCloseEnabled() const

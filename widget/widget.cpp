@@ -55,6 +55,7 @@ Widget::Widget(QWidget *parent)
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());
     restoreState(Settings::getInstance().getWindowState());
+    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
 
     if (Settings::getInstance().getUseNativeDecoration())
     {
@@ -147,8 +148,8 @@ Widget::Widget(QWidget *parent)
     //ui->friendList->viewport()->installEventFilter(this);
 
     // disable proportional scaling
-    ui->centralWidget->setStretchFactor(0,0);
-    ui->centralWidget->setStretchFactor(1,1);
+    ui->mainSplitter->setStretchFactor(0,0);
+    ui->mainSplitter->setStretchFactor(1,1);
 
     ui->statusButton->setObjectName("offline");
     ui->statusButton->style()->polish(ui->statusButton);
@@ -253,6 +254,7 @@ void Widget::closeEvent(QCloseEvent *event)
 {
     Settings::getInstance().setWindowGeometry(saveGeometry());
     Settings::getInstance().setWindowState(saveState());
+    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
     QWidget::closeEvent(event);
 }
 
