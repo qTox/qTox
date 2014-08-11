@@ -16,6 +16,7 @@
 
 #include "emoticonswidget.h"
 #include "smileypack.h"
+#include "style.h"
 
 #include <QPushButton>
 #include <QRadioButton>
@@ -26,11 +27,7 @@
 EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     QMenu(parent)
 {
-    QFile f(":/ui/emoticonWidget/emoticonWidget.css");
-    f.open(QFile::ReadOnly | QFile::Text);
-    QString pageButtonCss = f.readAll();
-    setStyleSheet(pageButtonCss);
-
+    setStyleSheet(Style::get(":/ui/emoticonWidget/emoticonWidget.css"));
     setLayout(&layout);
     layout.addWidget(&stack);
 
