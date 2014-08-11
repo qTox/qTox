@@ -267,11 +267,11 @@ vpx_image Camera::getLastVPXImage()
         uint8_t* rgb = lastFrame.bits();
         size_t i=0, j=0;
 
-        for( size_t line = 0; line < h; ++line )
+        for( int line = 0; line < h; ++line )
         {
             if( !(line % 2) )
             {
-                for( size_t x = 0; x < w; x += 2 )
+                for( int x = 0; x < w; x += 2 )
                 {
                     uint8_t r = rgb[4 * i + 1];
                     uint8_t g = rgb[4 * i + 2];
@@ -293,7 +293,7 @@ vpx_image Camera::getLastVPXImage()
             }
             else
             {
-                for( size_t x = 0; x < w; x += 1 )
+                for( int x = 0; x < w; x += 1 )
                 {
                     uint8_t r = rgb[4 * i + 1];
                     uint8_t g = rgb[4 * i + 2];

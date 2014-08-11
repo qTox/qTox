@@ -1405,6 +1405,8 @@ void Core::cleanupCall(int callId)
 
 void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length, void *user_data)
 {
+    Q_UNUSED(user_data);
+
     if (!calls[callId].active || calls[callId].audioOutput == nullptr)
         return;
     calls[callId].audioBuffer.write((char*)data, length*2);
@@ -1451,6 +1453,8 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
 
 void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_data)
 {
+    Q_UNUSED(user_data);
+
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
