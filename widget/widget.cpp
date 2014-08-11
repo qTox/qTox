@@ -118,6 +118,7 @@ Widget::Widget(QWidget *parent)
     friendListWidget->layout()->setMargin(0);
     friendListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     ui->friendList->setWidget(friendListWidget);
+    ui->friendList->setLayoutDirection(Qt::RightToLeft);
 
     // delay setting username and message until Core inits
     //ui->nameLabel->setText(core->getUsername());

@@ -25,16 +25,16 @@
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
 {
-    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-    this->setMouseTracking(true);
-    this->setAutoFillBackground(true);
-    this->setFixedHeight(55);
-    this->setLayout(&layout);
+    setMouseTracking(true);
+    setAutoFillBackground(true);
+    setFixedHeight(55);
+    setLayout(&layout);
     layout.setSpacing(0);
     layout.setMargin(0);
     layout.setStretchFactor(this, 100);
     textLayout.setSpacing(0);
     textLayout.setMargin(0);
+    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     avatar.setPixmap(QPixmap(":img/contact.png"));
     name.setText(id);
