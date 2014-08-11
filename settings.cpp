@@ -102,6 +102,11 @@ void Settings::load()
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
+        useNativeStyle = s.value("nativeStyle", false).toBool();
+        useNativeDecoration = s.value("nativeDecoration", true).toBool();
+        windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
+        windowState = s.value("windowState", QByteArray()).toByteArray();
+        splitterState = s.value("splitterState", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Privacy");
@@ -162,6 +167,11 @@ void Settings::save(QString path)
         s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
+        s.setValue("nativeStyle", useNativeStyle);
+        s.setValue("nativeDecoration", useNativeDecoration);
+        s.setValue("windowGeometry", windowGeometry);
+        s.setValue("windowState", windowState);
+        s.setValue("splitterState", splitterState);
     s.endGroup();
 
     s.beginGroup("Privacy");
@@ -337,6 +347,56 @@ void Settings::setEmojiFontFamily(const QString &value)
 {
     emojiFontFamily = value;
     emit emojiFontChanged();
+}
+
+bool Settings::getUseNativeStyle() const
+{
+    return useNativeStyle;
+}
+
+void Settings::setUseNativeStyle(bool value)
+{
+    useNativeStyle = value;
+}
+
+bool Settings::getUseNativeDecoration() const
+{
+    return useNativeDecoration;
+}
+
+void Settings::setUseNativeDecoration(bool value)
+{
+    useNativeDecoration = value;
+}
+
+QByteArray Settings::getWindowGeometry() const
+{
+    return windowGeometry;
+}
+
+void Settings::setWindowGeometry(const QByteArray &value)
+{
+    windowGeometry = value;
+}
+
+QByteArray Settings::getWindowState() const
+{
+    return windowState;
+}
+
+void Settings::setWindowState(const QByteArray &value)
+{
+    windowState = value;
+}
+
+QByteArray Settings::getSplitterState() const
+{
+    return splitterState;
+}
+
+void Settings::setSplitterState(const QByteArray &value)
+{
+    splitterState = value;
 }
 
 bool Settings::isMinimizeOnCloseEnabled() const

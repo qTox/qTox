@@ -28,7 +28,7 @@
 #include <QPoint>
 
 #include "widget/tool/chattextedit.h"
-#include "ui_widget.h"
+#include "ui_mainwindow.h"
 #include "core.h"
 #include "widget/netcamview.h"
 
@@ -43,7 +43,7 @@ class ChatForm : public QObject
 public:
     ChatForm(Friend* chatFriend);
     ~ChatForm();
-    void show(Ui::Widget& ui);
+    void show(Ui::MainWindow &ui);
     void setName(QString newName);
     void setStatusMessage(QString newMessage);
     void addFriendMessage(QString message);

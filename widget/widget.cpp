@@ -15,7 +15,7 @@
 */
 
 #include "widget.h"
-#include "ui_widget.h"
+#include "ui_mainwindow.h"
 #include "settings.h"
 #include "friend.h"
 #include "friendlist.h"
@@ -25,6 +25,7 @@
 #include "group.h"
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
+#include "style.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QSound>
@@ -40,61 +41,39 @@
 
 Widget *Widget::instance{nullptr};
 
-Widget::Widget(QWidget *parent) :
-    QWidget(parent), ui(new Ui::Widget), activeFriendWidget{nullptr}, activeGroupWidget{nullptr}
+Widget::Widget(QWidget *parent)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      activeFriendWidget{nullptr},
+      activeGroupWidget{nullptr}
 {
     ui->setupUi(this);
 
-    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
-    if (!settings.contains("useNativeTheme"))
-        useNativeTheme = 1;
-    else
-        useNativeTheme = settings.value("useNativeTheme").toInt();
+    ui->statusbar->hide();
+    ui->menubar->hide();
 
-    if (useNativeTheme)
+    //restore window state
+    restoreGeometry(Settings::getInstance().getWindowGeometry());
+    restoreState(Settings::getInstance().getWindowState());
+    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
+
+    if (Settings::getInstance().getUseNativeDecoration())
     {
         ui->titleBar->hide();
         this->layout()->setContentsMargins(0, 0, 0, 0);
 
-        QString friendListStylesheet = "";
-        try
-        {
-            QFile f(":ui/friendList/friendList.css");
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream friendListStylesheetStream(&f);
-            friendListStylesheet = friendListStylesheetStream.readAll();
-        }
-        catch (int e) {}
         ui->friendList->setObjectName("friendList");
-        ui->friendList->setStyleSheet(friendListStylesheet);
+        ui->friendList->setStyleSheet(Style::get(":ui/friendList/friendList.css"));
     }
     else
     {
-        QString windowStylesheet = "";
-        try
-        {
-            QFile f(":ui/window/window.css");
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream windowStylesheetStream(&f);
-            windowStylesheet = windowStylesheetStream.readAll();
-        }
-        catch (int e) {}
         this->setObjectName("activeWindow");
-        this->setStyleSheet(windowStylesheet);
+        this->setStyleSheet(Style::get(":ui/window/window.css"));
         ui->statusPanel->setStyleSheet(QString(""));
         ui->friendList->setStyleSheet(QString(""));
 
-        QString friendListStylesheet = "";
-        try
-        {
-            QFile f(":ui/friendList/friendList.css");
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream friendListStylesheetStream(&f);
-            friendListStylesheet = friendListStylesheetStream.readAll();
-        }
-        catch (int e) {}
         ui->friendList->setObjectName("friendList");
-        ui->friendList->setStyleSheet(friendListStylesheet);
+        ui->friendList->setStyleSheet(Style::get(":ui/friendList/friendList.css"));
 
         ui->tbMenu->setIcon(QIcon(":ui/window/applicationIcon.png"));
         ui->pbMin->setObjectName("minimizeButton");
@@ -119,23 +98,10 @@ Widget::Widget(QWidget *parent) :
         resizeDiagSupEsq = false;
         resizeDiagSupDer = false;
 
-    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
-    QRect geo = settings.value("geometry").toRect();
-
-        if (geo.height() > 0 and geo.x() < QApplication::desktop()->width() and geo.width() > 0 and geo.y() < QApplication::desktop()->height())
-            this->setGeometry(geo);
-
-        if (settings.value("maximized").toBool())
+        if (isMaximized())
         {
             showMaximized();
             ui->pbMax->setObjectName("restoreButton");
-        }
-
-        QList<QWidget*> widgets = this->findChildren<QWidget*>();
-
-        foreach (QWidget *widget, widgets)
-        {
-            widget->setMouseTracking(true);
         }
     }
 
@@ -145,11 +111,12 @@ Widget::Widget(QWidget *parent) :
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
+
     QWidget* friendListWidget = new QWidget();
     friendListWidget->setLayout(new QVBoxLayout());
     friendListWidget->layout()->setSpacing(0);
     friendListWidget->layout()->setMargin(0);
-    friendListWidget->setLayoutDirection(Qt::LeftToRight);
+    friendListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     ui->friendList->setWidget(friendListWidget);
 
     // delay setting username and message until Core inits
@@ -157,12 +124,8 @@ Widget::Widget(QWidget *parent) :
     ui->nameLabel->label->setStyleSheet("QLabel { color : white; font-size: 11pt; font-weight:bold;}");
     //ui->statusLabel->setText(core->getStatusMessage());
     ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
-    ui->friendList->widget()->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QFile f1(":/ui/statusButton/statusButton.css");
-    f1.open(QFile::ReadOnly | QFile::Text);
-    QTextStream statusButtonStylesheetStream(&f1);
-    ui->statusButton->setStyleSheet(statusButtonStylesheetStream.readAll());
+    ui->statusButton->setStyleSheet(Style::get(":/ui/statusButton/statusButton.css"));
 
     QMenu *statusButtonMenu = new QMenu(ui->statusButton);
     QAction* setStatusOnline = statusButtonMenu->addAction(tr("Online","Button to set your status to 'Online'"));
@@ -173,13 +136,6 @@ Widget::Widget(QWidget *parent) :
     setStatusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
     ui->statusButton->setMenu(statusButtonMenu);
 
-
-    this->setMouseTracking(true);
-
-    QList<QWidget*> widgets = this->findChildren<QWidget*>();
-    foreach (QWidget *widget, widgets)
-        widget->setMouseTracking(true);
-
     ui->titleBar->setMouseTracking(true);
     ui->LTitle->setMouseTracking(true);
     ui->tbMenu->setMouseTracking(true);
@@ -188,11 +144,11 @@ Widget::Widget(QWidget *parent) :
     ui->pbClose->setMouseTracking(true);
     ui->statusHead->setMouseTracking(true);
 
-    ui->friendList->viewport()->installEventFilter(this);
+    //ui->friendList->viewport()->installEventFilter(this);
 
-    QList<int> currentSizes = ui->centralWidget->sizes();
-    currentSizes[0] = 225;
-    ui->centralWidget->setSizes(currentSizes);
+    // disable proportional scaling
+    ui->mainSplitter->setStretchFactor(0,0);
+    ui->mainSplitter->setStretchFactor(1,1);
 
     ui->statusButton->setObjectName("offline");
     ui->statusButton->style()->polish(ui->statusButton);
@@ -241,7 +197,6 @@ Widget::Widget(QWidget *parent) :
     connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
-    connect(ui->centralWidget, SIGNAL(splitterMoved(int,int)),this, SLOT(splitterMoved(int,int)));
     connect(ui->addButton, SIGNAL(clicked()), this, SLOT(onAddClicked()));
     connect(ui->groupButton, SIGNAL(clicked()), this, SLOT(onGroupClicked()));
     connect(ui->transferButton, SIGNAL(clicked()), this, SLOT(onTransferClicked()));
@@ -279,10 +234,6 @@ Widget::~Widget()
     for (Group* g : GroupList::groupList)
         delete g;
     GroupList::groupList.clear();
-    QSettings settings(Settings::getInstance().getSettingsDirPath() + '/' + "windowSettings.ini", QSettings::IniFormat);
-    settings.setValue("geometry", geometry());
-    settings.setValue("maximized", isMaximized());
-    settings.setValue("useNativeTheme", useNativeTheme);
     delete ui;
 }
 
@@ -293,27 +244,17 @@ Widget* Widget::getInstance()
     return instance;
 }
 
-//Super ugly hack to enable resizable friend widgets
-//There should be a way to set them to resize automagicly, but I can't seem to find it.
-void Widget::splitterMoved(int, int)
-{
-    updateFriendListWidth();
-}
-
 QThread* Widget::getCoreThread()
 {
     return coreThread;
 }
 
-void Widget::updateFriendListWidth()
+void Widget::closeEvent(QCloseEvent *event)
 {
-    int newWidth = ui->friendList->width();
-    for (Friend* f : FriendList::friendList)
-        if (f->widget != nullptr)
-            f->widget->setNewFixedWidth(newWidth);
-    for (Group* g : GroupList::groupList)
-        if (g->widget != nullptr)
-            g->widget->setNewFixedWidth(newWidth);
+    Settings::getInstance().setWindowGeometry(saveGeometry());
+    Settings::getInstance().setWindowState(saveState());
+    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+    QWidget::closeEvent(event);
 }
 
 QString Widget::getUsername()
@@ -475,7 +416,6 @@ void Widget::addFriend(int friendId, const QString &userId)
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
     layout->addWidget(newfriend->widget);
-    updateFriendListWidth();
     connect(newfriend->widget, SIGNAL(friendWidgetClicked(FriendWidget*)), this, SLOT(onFriendWidgetClicked(FriendWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -682,7 +622,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
             newMessageAlert();
             g->hasNewMessages = 1;
             g->userWasMentioned = 1;
-            if (useNativeTheme)
+            if (Settings::getInstance().getUseNativeDecoration())
                 g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
             else
                 g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
@@ -691,7 +631,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
             if (g->hasNewMessages == 0)
             {
                 g->hasNewMessages = 1;
-                if (useNativeTheme)
+                if (Settings::getInstance().getUseNativeDecoration())
                     g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
                 else
                     g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
@@ -738,7 +678,7 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     {
         g->hasNewMessages = 0;
         g->userWasMentioned = 0;
-        if (useNativeTheme)
+        if (Settings::getInstance().getUseNativeDecoration())
             g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
         else
             g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
@@ -777,9 +717,9 @@ Group *Widget::createGroup(int groupId)
     QWidget* widget = ui->friendList->widget();
     QLayout* layout = widget->layout();
     layout->addWidget(newgroup->widget);
-    if (!useNativeTheme)
+    if (!Settings::getInstance().getUseNativeDecoration())
         newgroup->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
-    updateFriendListWidth();
+
     connect(newgroup->widget, SIGNAL(groupWidgetClicked(GroupWidget*)), this, SLOT(onGroupWidgetClicked(GroupWidget*)));
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
@@ -811,12 +751,6 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
     return true;
 }
 
-void Widget::resizeEvent(QResizeEvent *)
-{
-    updateFriendListWidth();
-}
-
-
 bool Widget::event(QEvent * e)
 {
 
@@ -829,7 +763,7 @@ bool Widget::event(QEvent * e)
     }
     else if (e->type() == QEvent::WindowActivate)
     {
-        if (!useNativeTheme)
+        if (!Settings::getInstance().getUseNativeDecoration())
         {
             this->setObjectName("activeWindow");
             this->style()->polish(this);
@@ -846,18 +780,18 @@ bool Widget::event(QEvent * e)
             Group* g = GroupList::findGroup(activeGroupWidget->groupId);
             g->hasNewMessages = 0;
             g->userWasMentioned = 0;
-            if (useNativeTheme)
+            if (Settings::getInstance().getUseNativeDecoration())
                 g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
             else
                 g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
         }
     }
-    else if (e->type() == QEvent::WindowDeactivate && !useNativeTheme)
+    else if (e->type() == QEvent::WindowDeactivate && !Settings::getInstance().getUseNativeDecoration())
     {
         this->setObjectName("inactiveWindow");
         this->style()->polish(this);
     }
-    else if (e->type() == QEvent::MouseMove && !useNativeTheme)
+    else if (e->type() == QEvent::MouseMove && !Settings::getInstance().getUseNativeDecoration())
     {
         QMouseEvent *k = (QMouseEvent *)e;
         int xMouse = k->pos().x();
@@ -902,7 +836,7 @@ bool Widget::event(QEvent * e)
 
 void Widget::mousePressEvent(QMouseEvent *e)
 {
-    if (!useNativeTheme)
+    if (!Settings::getInstance().getUseNativeDecoration())
     {
         if (e->button() == Qt::LeftButton)
         {
@@ -936,7 +870,7 @@ void Widget::mousePressEvent(QMouseEvent *e)
 
 void Widget::mouseReleaseEvent(QMouseEvent *e)
 {
-    if (!useNativeTheme)
+    if (!Settings::getInstance().getUseNativeDecoration())
     {
         moveWidget = false;
         allowToResize = false;
@@ -951,7 +885,7 @@ void Widget::mouseReleaseEvent(QMouseEvent *e)
 
 void Widget::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    if (!useNativeTheme)
+    if (!Settings::getInstance().getUseNativeDecoration())
     {
         if (e->pos().x() < ui->tbMenu->geometry().right() and e->pos().y() < ui->tbMenu->geometry().bottom()
                 and e->pos().x() >=  ui->tbMenu->geometry().x() and e->pos().y() >= ui->tbMenu->geometry().y()
@@ -975,7 +909,7 @@ void Widget::paintEvent (QPaintEvent *)
 
 void Widget::moveWindow(QMouseEvent *e)
 {
-    if (!useNativeTheme)
+    if (!Settings::getInstance().getUseNativeDecoration())
     {
         if (e->buttons() & Qt::LeftButton)
         {
@@ -987,8 +921,7 @@ void Widget::moveWindow(QMouseEvent *e)
 
 void Widget::resizeWindow(QMouseEvent *e)
 {
-    updateFriendListWidth();
-    if (!useNativeTheme)
+    if (!Settings::getInstance().getUseNativeDecoration())
     {
         if (allowToResize)
         {
@@ -1116,47 +1049,47 @@ void Widget::setTitlebarMode(const TitleMode &flag)
 
     switch (m_titleMode)
     {
-        case CleanTitle:
-            ui->tbMenu->setHidden(true);
-            ui->pbMin->setHidden(true);
-            ui->pbMax->setHidden(true);
-            ui->pbClose->setHidden(true);
-            break;
-        case OnlyCloseButton:
-            ui->tbMenu->setHidden(true);
-            ui->pbMin->setHidden(true);
-            ui->pbMax->setHidden(true);
-            break;
-        case MenuOff:
-            ui->tbMenu->setHidden(true);
-            break;
-        case MaxMinOff:
-            ui->pbMin->setHidden(true);
-            ui->pbMax->setHidden(true);
-            break;
-        case FullScreenMode:
-            ui->pbMax->setHidden(true);
-            showMaximized();
-            break;
-        case MaximizeModeOff:
-            ui->pbMax->setHidden(true);
-            break;
-        case MinimizeModeOff:
-            ui->pbMin->setHidden(true);
-            break;
-        case FullTitle:
-            ui->tbMenu->setVisible(true);
-            ui->pbMin->setVisible(true);
-            ui->pbMax->setVisible(true);
-            ui->pbClose->setVisible(true);
-            break;
-            break;
-        default:
-            ui->tbMenu->setVisible(true);
-            ui->pbMin->setVisible(true);
-            ui->pbMax->setVisible(true);
-            ui->pbClose->setVisible(true);
-            break;
+    case CleanTitle:
+        ui->tbMenu->setHidden(true);
+        ui->pbMin->setHidden(true);
+        ui->pbMax->setHidden(true);
+        ui->pbClose->setHidden(true);
+        break;
+    case OnlyCloseButton:
+        ui->tbMenu->setHidden(true);
+        ui->pbMin->setHidden(true);
+        ui->pbMax->setHidden(true);
+        break;
+    case MenuOff:
+        ui->tbMenu->setHidden(true);
+        break;
+    case MaxMinOff:
+        ui->pbMin->setHidden(true);
+        ui->pbMax->setHidden(true);
+        break;
+    case FullScreenMode:
+        ui->pbMax->setHidden(true);
+        showMaximized();
+        break;
+    case MaximizeModeOff:
+        ui->pbMax->setHidden(true);
+        break;
+    case MinimizeModeOff:
+        ui->pbMin->setHidden(true);
+        break;
+    case FullTitle:
+        ui->tbMenu->setVisible(true);
+        ui->pbMin->setVisible(true);
+        ui->pbMax->setVisible(true);
+        ui->pbClose->setVisible(true);
+        break;
+        break;
+    default:
+        ui->tbMenu->setVisible(true);
+        ui->pbMin->setVisible(true);
+        ui->pbMax->setVisible(true);
+        ui->pbClose->setVisible(true);
+        break;
     }
     ui->LTitle->setVisible(true);
 }
