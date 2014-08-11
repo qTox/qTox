@@ -114,5 +114,6 @@
         <file>ui/emoticonWidget/dot_page.png</file>
         <file>ui/emoticonWidget/dot_page_current.png</file>
         <file>ui/emoticonWidget/emoticonWidget.css</file>
+        <file>ui/emoticonWidget/dot_page_hover.png</file>
     </qresource>
 </RCC>

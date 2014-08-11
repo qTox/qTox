@@ -17,7 +17,7 @@
 #ifndef FILESFORM_H
 #define FILESFORM_H
 
-#include "ui_widget.h"
+#include "ui_mainwindow.h"
 
 #include <QListWidget>
 #include <QTabWidget>
@@ -37,7 +37,7 @@ public:
     FilesForm();
     ~FilesForm();
 
-    void show(Ui::Widget& ui);
+    void show(Ui::MainWindow &ui);
 
 public slots:
     void onFileDownloadComplete(const QString& path);

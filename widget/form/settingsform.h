@@ -28,7 +28,7 @@
 #include <QTextEdit>
 #include <QComboBox>
 #include "widget/tool/clickablelabel.h"
-#include "ui_widget.h"
+#include "ui_mainwindow.h"
 #include "widget/selfcamview.h"
 
 class SettingsForm : public QObject
@@ -38,7 +38,7 @@ public:
     SettingsForm();
     ~SettingsForm();
 
-    void show(Ui::Widget& ui);
+    void show(Ui::MainWindow &ui);
 
 public slots:
     void setFriendAddress(const QString& friendAddress);

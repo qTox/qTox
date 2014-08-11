@@ -18,6 +18,7 @@
 #include "widget.h"
 #include "core.h"
 #include "math.h"
+#include "style.h"
 #include <QFileDialog>
 #include <QPixmap>
 #include <QPainter>
@@ -36,10 +37,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     QFont prettysmall;
     prettysmall.setPixelSize(10);
     this->setObjectName("default");
-    QFile f0(":/ui/fileTransferWidget/fileTransferWidget.css");
-    f0.open(QFile::ReadOnly | QFile::Text);
-    QTextStream fileTransfertWidgetStylesheet(&f0);
-    this->setStyleSheet(fileTransfertWidgetStylesheet.readAll());
+    this->setStyleSheet(Style::get(":/ui/fileTransferWidget/fileTransferWidget.css"));
     QPalette greybg;
     greybg.setColor(QPalette::Window, QColor(209,209,209));
     greybg.setColor(QPalette::Base, QColor(150,150,150));
@@ -71,20 +69,9 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     buttonWidget->setAutoFillBackground(true);
     buttonWidget->setLayout(buttonLayout);
 
-    QFile f1(":/ui/stopFileButton/style.css");
-    f1.open(QFile::ReadOnly | QFile::Text);
-    QTextStream stopFileButtonStylesheetStream(&f1);
-    stopFileButtonStylesheet = stopFileButtonStylesheetStream.readAll();
-
-    QFile f2(":/ui/pauseFileButton/style.css");
-    f2.open(QFile::ReadOnly | QFile::Text);
-    QTextStream pauseFileButtonStylesheetStream(&f2);
-    pauseFileButtonStylesheet = pauseFileButtonStylesheetStream.readAll();
-
-    QFile f3(":/ui/acceptFileButton/style.css");
-    f3.open(QFile::ReadOnly | QFile::Text);
-    QTextStream acceptFileButtonStylesheetStream(&f3);
-    acceptFileButtonStylesheet = acceptFileButtonStylesheetStream.readAll();
+    stopFileButtonStylesheet = Style::get(":/ui/stopFileButton/style.css");
+    pauseFileButtonStylesheet = Style::get(":/ui/pauseFileButton/style.css");
+    acceptFileButtonStylesheet = Style::get(":/ui/acceptFileButton/style.css");
 
     topright->setStyleSheet(stopFileButtonStylesheet);
     if (File.direction == ToxFile::SENDING)

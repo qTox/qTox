@@ -93,7 +93,7 @@ void SettingsForm::setFriendAddress(const QString& friendAddress)
     id.setText(friendAddress);
 }
 
-void SettingsForm::show(Ui::Widget &ui)
+void SettingsForm::show(Ui::MainWindow &ui)
 {
     name.setText(ui.nameLabel->text());
     statusText.setText(ui.statusLabel->text());

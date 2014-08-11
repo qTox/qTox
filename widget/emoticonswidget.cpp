@@ -16,6 +16,7 @@
 
 #include "emoticonswidget.h"
 #include "smileypack.h"
+#include "style.h"
 
 #include <QPushButton>
 #include <QRadioButton>
@@ -26,11 +27,7 @@
 EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     QMenu(parent)
 {
-    QFile f(":/ui/emoticonWidget/emoticonWidget.css");
-    f.open(QFile::ReadOnly | QFile::Text);
-    QString pageButtonCss = f.readAll();
-    setStyleSheet(pageButtonCss);
-
+    setStyleSheet(Style::get(":/ui/emoticonWidget/emoticonWidget.css"));
     setLayout(&layout);
     layout.addWidget(&stack);
 
@@ -64,12 +61,16 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
         page->setLayout(pageLayout);
         stack.addWidget(page);
 
-        QRadioButton* pageButton = new QRadioButton;
-        pageButton->setProperty("pageIndex", i);
-        pageButton->setChecked(i == 0);
-        buttonLayout->addWidget(pageButton);
+        // page buttons are only needed if there is more than 1 page
+        if (pageCount > 1)
+        {
+            QRadioButton* pageButton = new QRadioButton;
+            pageButton->setProperty("pageIndex", i);
+            pageButton->setChecked(i == 0);
+            buttonLayout->addWidget(pageButton);
 
-        connect(pageButton, &QRadioButton::clicked, this, &EmoticonsWidget::onPageButtonClicked);
+            connect(pageButton, &QRadioButton::clicked, this, &EmoticonsWidget::onPageButtonClicked);
+        }
     }
     buttonLayout->addStretch();
 
