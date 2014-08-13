@@ -1,0 +1,34 @@
+QPushButton#green
+{
+    background-color: transparent;
+    background-image: url(":/micButton/micButton.css");
+    background-repeat: none; 
+    border: none;
+    width: 25px;
+    height: 20px;
+}
+
+QPushButton#green:hover
+{
+    background-image:url(":/ui/micButton/micButtonHover.png");
+}
+
+QPushButton#red
+{
+    background-color: transparent;
+    background-image: url(":/ui/micButton/micButtonPressed.png");
+    background-repeat: none; 
+    border: none;
+    width: 25px;
+    height: 20px;
+}
+
+QPushButton#grey
+{
+    background-color: transparent;
+    background-image: url(":/ui/callButton/callButtonDisabled.png");
+    background-repeat: none;    
+    border: none;
+    width: 25px;
+    height: 20px;
+}
