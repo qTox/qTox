@@ -1,0 +1,20 @@
+QPushButton#green
+{
+    background-color: transparent;
+    background-image: url(":/ui/volButton/volButton.png");
+    background-repeat: none;
+    border: none;
+    width: 25px;
+    height: 20px;
+}
+
+QPushButton#green:hover
+{
+    background-image: url(":/ui/volButton/volButtonHover.png"); 
+}
+
+QPushButton#green:pressed
+{
+   background-image: url(":/ui/volButton/volButtonPressed.png");
+}
+
