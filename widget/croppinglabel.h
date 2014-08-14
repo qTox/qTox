@@ -30,9 +30,8 @@ public:
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
 
-signals:
-
-public slots:
+protected:
+    void setElidedText();
 
 private:
     QString origText;

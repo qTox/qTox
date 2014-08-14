@@ -16,24 +16,21 @@
 
 #include "croppinglabel.h"
 
-CroppingLabel::CroppingLabel(QWidget *parent)
+CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
-void CroppingLabel::setText(const QString &text)
+void CroppingLabel::setText(const QString& text)
 {
     origText = text;
-    setToolTip(text);
-
-    QLabel::setText(fontMetrics().elidedText(text, Qt::ElideRight, width()));
+    setElidedText();
 }
 
-void CroppingLabel::resizeEvent(QResizeEvent *ev)
+void CroppingLabel::resizeEvent(QResizeEvent* ev)
 {
-    setText(origText);
-
+    setElidedText();
     QLabel::resizeEvent(ev);
 }
 
@@ -45,4 +42,15 @@ QSize CroppingLabel::sizeHint() const
 QSize CroppingLabel::minimumSizeHint() const
 {
     return QSize(fontMetrics().width("..."), QLabel::minimumSizeHint().height());
+}
+
+void CroppingLabel::setElidedText()
+{
+    QString elidedText = fontMetrics().elidedText(origText, Qt::ElideRight, width());
+    if (elidedText != origText)
+        setToolTip(origText);
+    else
+        setToolTip(QString());
+
+    QLabel::setText(elidedText);
 }
