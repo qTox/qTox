@@ -122,5 +122,7 @@
         <file>ui/micButton/micButtonDisabled.png</file>
         <file>ui/micButton/micButtonHover.png</file>
         <file>ui/micButton/micButtonPressed.png</file>
+        <file>ui/micButton/micButton.css</file>
+        <file>ui/volButton/volButton.css</file>
     </qresource>
 </RCC>

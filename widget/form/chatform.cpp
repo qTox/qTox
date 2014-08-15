@@ -36,10 +36,13 @@ ChatForm::ChatForm(Friend* chatFriend)
     main = new QWidget(), head = new QWidget(), chatAreaWidget = new QWidget();
     name = new QLabel(), avatar = new QLabel(), statusMessage = new QLabel();
     headLayout = new QHBoxLayout(), mainFootLayout = new QHBoxLayout();
-    headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout(), footButtonsSmall = new QVBoxLayout();
+    headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout(),
+        footButtonsSmall = new QVBoxLayout(), volMicLayout = new QVBoxLayout();
     mainChatLayout = new QGridLayout();
     msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(), callButton = new QPushButton(), videoButton = new QPushButton();
+    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(),
+        callButton = new QPushButton(), videoButton = new QPushButton(),
+        volButton = new QPushButton(), micButton = new QPushButton();
     chatArea = new QScrollArea();
     netcam = new NetCamView();
 
@@ -80,6 +83,30 @@ ChatForm::ChatForm(Friend* chatFriend)
     videoButton->setObjectName("green");
     videoButton->setStyleSheet(Style::get(":/ui/videoButton/videoButton.css"));
 
+    QString volButtonStylesheet = "";
+    try
+    {
+        QFile f(":/ui/volButton/volButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream volButtonStylesheetStream(&f);
+        volButtonStylesheet = volButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    volButton->setObjectName("green");
+    volButton->setStyleSheet(volButtonStylesheet);
+
+    QString micButtonStylesheet = "";
+    try
+    {
+        QFile f(":/ui/micButton/micButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream micButtonStylesheetStream(&f);
+        micButtonStylesheet = micButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    micButton->setObjectName("green");
+    micButton->setStyleSheet(micButtonStylesheet);
+
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
     mainLayout->addLayout(mainFootLayout);
@@ -98,8 +125,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     headLayout->addWidget(avatar);
     headLayout->addLayout(headTextLayout);
     headLayout->addStretch();
+    headLayout->addLayout(volMicLayout);
     headLayout->addWidget(callButton);
     headLayout->addWidget(videoButton);
+
+    volMicLayout->addWidget(micButton);
+    volMicLayout->addWidget(volButton);
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(name);
