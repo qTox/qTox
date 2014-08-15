@@ -26,9 +26,13 @@ QPushButton#red
 QPushButton#grey
 {
     background-color: transparent;
-    background-image: url(":/ui/callButton/callButtonDisabled.png");
+    background-image: url(":/ui/micButton/micButtonDisabled.png");
     background-repeat: none;    
     border: none;
     width: 25px;
     height: 20px;
+}
+
+QPushButton:focus {
+    outline: none;
 }

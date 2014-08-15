@@ -89,11 +89,11 @@ private slots:
 private:
     Friend* f;
     QHBoxLayout *headLayout, *mainFootLayout;
-    QVBoxLayout *headTextLayout, *mainLayout, *footButtonsSmall;
+    QVBoxLayout *headTextLayout, *mainLayout, *footButtonsSmall, *volMicLayout;
     QGridLayout *mainChatLayout;
     QLabel *avatar, *name, *statusMessage;
     ChatTextEdit *msgEdit;
-    QPushButton *sendButton, *fileButton, *emoteButton, *callButton, *videoButton;
+    QPushButton *sendButton, *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
     QScrollArea *chatArea;
     QWidget *main, *head, *chatAreaWidget;
     QString previousName;
