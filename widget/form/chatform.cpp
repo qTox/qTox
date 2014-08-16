@@ -179,12 +179,13 @@ void ChatForm::addFriendMessage(QString message)
 
 void ChatForm::addMessage(QString author, QString message, QString date)
 {
-    message = SmileyPack::getInstance().smileyfied(message);
     addMessage(new QLabel(author), new QLabel(message), new QLabel(date));
 }
 
 void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
 {
+    message->setText(SmileyPack::getInstance().smileyfied(message->text()));
+
     QScrollBar* scroll = chatArea->verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);

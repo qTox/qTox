@@ -54,7 +54,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     this->setPalette(pal3);
 
     name.setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-    statusMessage.setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
     textLayout.addStretch();
     textLayout.addWidget(&name);
@@ -65,7 +64,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     layout.addWidget(&avatar);
     layout.addSpacing(5);
     layout.addLayout(&textLayout);
-    layout.addStretch();
     layout.addSpacing(5);
     layout.addWidget(&statusPic);
     layout.addSpacing(5);
@@ -76,8 +74,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     layout.update();
     layout.activate();
     updateGeometry();
-
-    qDebug() << "friend" << minimumSizeHint();
 }
 
 void FriendWidget::mouseReleaseEvent (QMouseEvent*)

@@ -22,6 +22,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
+#include "croppinglabel.h"
+
 struct FriendWidget : public QWidget
 {
     Q_OBJECT
@@ -42,7 +44,8 @@ signals:
 
 public:
     int friendId;
-    QLabel avatar, name, statusMessage, statusPic;
+    QLabel avatar, name, statusPic;
+    CroppingLabel statusMessage;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
 
