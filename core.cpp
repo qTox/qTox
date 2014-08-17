@@ -94,12 +94,21 @@ void Core::start()
         qDebug() << "Core starting with IPv6 enabled";
     else
         qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
-    tox = tox_new(enableIPv6);
+
+    Tox_Options toxOptions;
+    toxOptions.ipv6enabled = enableIPv6;
+    toxOptions.udp_disabled = 0;
+    toxOptions.proxy_enabled = false;
+    toxOptions.proxy_address[0] = 0;
+    toxOptions.proxy_port = 0;
+
+    tox = tox_new(&toxOptions);
     if (tox == nullptr)
     {
         if (enableIPv6) // Fallback to IPv4
         {
-            tox = tox_new(false);
+            toxOptions.ipv6enabled = false;
+            tox = tox_new(&toxOptions);
             if (tox == nullptr)
             {
                 qCritical() << "Tox core failed to start";
@@ -711,7 +720,7 @@ void Core::bootstrapDht()
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
-            0, qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
+            qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
             qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
                         +QString(", port ")+QString().setNum(dhtServer.port);
         else
