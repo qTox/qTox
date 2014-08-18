@@ -44,8 +44,8 @@ signals:
 
 public:
     int friendId;
-    QLabel avatar, name, statusPic;
-    CroppingLabel statusMessage;
+    QLabel avatar, statusPic;
+    CroppingLabel name, statusMessage;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
 

@@ -24,7 +24,7 @@ CroppingLabel::CroppingLabel(QWidget* parent)
 
 void CroppingLabel::setText(const QString& text)
 {
-    origText = text;
+    origText = text.trimmed();
     setElidedText();
 }
 
