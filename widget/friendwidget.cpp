@@ -53,8 +53,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
 
-    name.setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-
     textLayout.addStretch();
     textLayout.addWidget(&name);
     textLayout.addWidget(&statusMessage);
