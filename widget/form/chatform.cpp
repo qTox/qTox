@@ -44,6 +44,7 @@ ChatForm::ChatForm(Friend* chatFriend)
         volButton = new QPushButton(), micButton = new QPushButton();
     chatArea = new QScrollArea();
     netcam = new NetCamView();
+    audioInputFlag = false;
 
     QFont bold;
     bold.setBold(true);
@@ -223,6 +224,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
     connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
     connect(emoteButton, SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
+    connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
 }
 
 ChatForm::~ChatForm()
@@ -609,19 +611,22 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 
 void ChatForm::onAnswerCallTriggered()
 {
+    audioInputFlag = !audioInputFlag;
     emit answerCall(callId);
 }
 
 void ChatForm::onHangupCallTriggered()
 {
+    audioInputFlag = !audioInputFlag;
     emit hangupCall(callId);
 }
 
 void ChatForm::onCallTriggered()
 {
-    callButton->disconnect();
-    videoButton->disconnect();
-    emit startCall(f->friendId);
+  audioInputFlag = !audioInputFlag;
+  callButton->disconnect();
+  videoButton->disconnect();
+  emit startCall(f->friendId);
 }
 
 void ChatForm::onVideoCallTriggered()
@@ -633,6 +638,7 @@ void ChatForm::onVideoCallTriggered()
 
 void ChatForm::onCancelCallTriggered()
 {
+    audioInputFlag = !audioInputFlag;
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -709,4 +715,22 @@ void ChatForm::onEmoteInsertRequested(QString str)
         msgEdit->insertPlainText(str);
 
     msgEdit->setFocus(); // refocus so that we can continue typing
+}
+
+void ChatForm::onMicMuteToggle()
+{
+  if (audioInputFlag == true)
+    {
+      emit micMuteToggle(callId);
+      if (micButton->objectName() == "red")
+        {
+          micButton->setObjectName("green");
+          micButton->style()->polish(micButton);
+        }
+      else
+        {
+          micButton->setObjectName("red");
+          micButton->style()->polish(micButton);
+        }
+    }
 }

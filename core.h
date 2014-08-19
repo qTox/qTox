@@ -165,6 +165,8 @@ public slots:
     void startCall(int friendId, bool video=false);
     void cancelCall(int callId, int friendId);
 
+    void micMuteToggle(int callId);
+
 signals:
     void connected();
     void disconnected();

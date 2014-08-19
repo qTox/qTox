@@ -58,6 +58,7 @@ signals:
     void answerCall(int callId);
     void hangupCall(int callId);
     void cancelCall(int callId, int friendId);
+    void micMuteToggle(int callId);
 
 public slots:
     void startFileSend(ToxFile file);
@@ -71,6 +72,7 @@ public slots:
     void onAvEnding(int FriendId, int CallId);
     void onAvRequestTimeout(int FriendId, int CallId);
     void onAvPeerTimeout(int FriendId, int CallId);
+    void onMicMuteToggle();
 
 private slots:
     void onSendTriggered();
@@ -99,7 +101,7 @@ private:
     QString previousName;
     NetCamView* netcam;
     int curRow;
-    bool lockSliderToBottom;
+    bool lockSliderToBottom, audioInputFlag;
     int callId;
 };
 
