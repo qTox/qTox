@@ -30,7 +30,6 @@
 #include <QtEndian>
 #include <QThread>
 #include <QtConcurrent/QtConcurrent>
-#include <QMessageBox>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
@@ -1512,8 +1511,8 @@ void Core::decreaseVideoBusyness()
 
 void Core::micMuteToggle(int callId)
 {
-//  if (calls[callId].audioInput->state() == QAudio::ActiveState)
-//    calls[callId].audioInput->stop();
-//  else
-//    calls[callId].audioInput->start();
+  if (calls[callId].audioInput->state() == QAudio::ActiveState)
+    calls[callId].audioInput->stop();
+  else
+    calls[callId].audioInput->start();
 }
