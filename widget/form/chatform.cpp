@@ -569,6 +569,8 @@ void ChatForm::onHangupCallTriggered()
 {
     audioInputFlag = !audioInputFlag;
     emit hangupCall(callId);
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
 }
 
 void ChatForm::onCallTriggered()
