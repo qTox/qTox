@@ -427,6 +427,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->chatForm, SIGNAL(startCall(int)), core, SLOT(startCall(int)));
     connect(newfriend->chatForm, SIGNAL(startVideoCall(int,bool)), core, SLOT(startCall(int,bool)));
     connect(newfriend->chatForm, SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
+    connect(newfriend->chatForm, SIGNAL(micMuteToggle(int)), core, SLOT(micMuteToggle(int)));
     connect(core, &Core::fileReceiveRequested, newfriend->chatForm, &ChatForm::onFileRecvRequest);
     connect(core, &Core::avInvite, newfriend->chatForm, &ChatForm::onAvInvite);
     connect(core, &Core::avStart, newfriend->chatForm, &ChatForm::onAvStart);

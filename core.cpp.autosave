@@ -95,21 +95,12 @@ void Core::start()
         qDebug() << "Core starting with IPv6 enabled";
     else
         qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
-
-    Tox_Options toxOptions;
-    toxOptions.ipv6enabled = enableIPv6;
-    toxOptions.udp_disabled = 0;
-    toxOptions.proxy_enabled = false;
-    toxOptions.proxy_address[0] = 0;
-    toxOptions.proxy_port = 0;
-
-    tox = tox_new(&toxOptions);
+    tox = tox_new(enableIPv6);
     if (tox == nullptr)
     {
         if (enableIPv6) // Fallback to IPv4
         {
-            toxOptions.ipv6enabled = false;
-            tox = tox_new(&toxOptions);
+            tox = tox_new(false);
             if (tox == nullptr)
             {
                 qCritical() << "Tox core failed to start";
@@ -721,7 +712,7 @@ void Core::bootstrapDht()
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
-            qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
+            0, qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
             qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
                         +QString(", port ")+QString().setNum(dhtServer.port);
         else
@@ -1415,8 +1406,6 @@ void Core::cleanupCall(int callId)
 
 void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length, void *user_data)
 {
-    Q_UNUSED(user_data);
-
     if (!calls[callId].active || calls[callId].audioOutput == nullptr)
         return;
     calls[callId].audioBuffer.write((char*)data, length*2);
@@ -1463,8 +1452,6 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
 
 void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_data)
 {
-    Q_UNUSED(user_data);
-
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
@@ -1525,8 +1512,8 @@ void Core::decreaseVideoBusyness()
 
 void Core::micMuteToggle(int callId)
 {
-//  if (calls[callId].audioInput->state() == QAudio::ActiveState)
-//    calls[callId].audioInput->stop();
-//  else
-//    calls[callId].audioInput->start();
+  if (calls[callId].audioInput->state() == QAudio::ActiveState)
+    calls[callId].audioInput->stop();
+  else
+    calls[callId].audioInput->start();
 }
