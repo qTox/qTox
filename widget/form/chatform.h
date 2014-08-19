@@ -58,6 +58,7 @@ signals:
     void answerCall(int callId);
     void hangupCall(int callId);
     void cancelCall(int callId, int friendId);
+    void micMuteToggle(int callId);
 
 public slots:
     void startFileSend(ToxFile file);
@@ -71,6 +72,7 @@ public slots:
     void onAvEnding(int FriendId, int CallId);
     void onAvRequestTimeout(int FriendId, int CallId);
     void onAvPeerTimeout(int FriendId, int CallId);
+    void onMicMuteToggle();
 
 private slots:
     void onSendTriggered();
@@ -89,17 +91,17 @@ private slots:
 private:
     Friend* f;
     QHBoxLayout *headLayout, *mainFootLayout;
-    QVBoxLayout *headTextLayout, *mainLayout, *footButtonsSmall;
+    QVBoxLayout *headTextLayout, *mainLayout, *footButtonsSmall, *volMicLayout;
     QGridLayout *mainChatLayout;
     QLabel *avatar, *name, *statusMessage;
     ChatTextEdit *msgEdit;
-    QPushButton *sendButton, *fileButton, *emoteButton, *callButton, *videoButton;
+    QPushButton *sendButton, *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
     QScrollArea *chatArea;
     QWidget *main, *head, *chatAreaWidget;
     QString previousName;
     NetCamView* netcam;
     int curRow;
-    bool lockSliderToBottom;
+    bool lockSliderToBottom, audioInputFlag;
     int callId;
 };
 

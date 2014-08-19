@@ -1506,5 +1506,13 @@ void Core::increaseVideoBusyness()
 
 void Core::decreaseVideoBusyness()
 {
-    videoBusyness--;
+  videoBusyness--;
+}
+
+void Core::micMuteToggle(int callId)
+{
+  if (calls[callId].audioInput->state() == QAudio::ActiveState)
+    calls[callId].audioInput->suspend();
+  else
+    calls[callId].audioInput->start();
 }
