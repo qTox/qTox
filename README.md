@@ -39,7 +39,14 @@ Then run the script bootstrap.sh (for Linux and Mac) or bootsrap.bat (for Window
 And finally run the commands "qmake" and "make" to start building qTox.
 
 
-<h3>OSX Install Guide</h3>
+<h3>OSX Easy Install</h3>
+
+Since https://github.com/ReDetection/homebrew-qtox you can easily install qtox with homebrew 
+```bash
+brew install --HEAD ReDetection/qtox/qtox
+```
+
+<h3>OSX Full Install Guide</h3>
 
 <strong>This guide is intended for people who wish to use an existing or new ProjectTox-Core installation separate to the bundled installation with qTox, if you do not wish to use a separate installation you can skip to the section titled 'Final Steps'.</strong>
 
