@@ -112,12 +112,8 @@ Widget::Widget(QWidget *parent)
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
 
-    QWidget* friendListWidget = new QWidget();
-    friendListWidget->setLayout(new QVBoxLayout());
-    friendListWidget->layout()->setSpacing(0);
-    friendListWidget->layout()->setMargin(0);
-    friendListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    ui->friendList->setWidget(friendListWidget);
+    contactListWidget = new FriendListWidget();
+    ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
 
     // delay setting username and message until Core inits
@@ -414,8 +410,7 @@ void Widget::addFriend(int friendId, const QString &userId)
 {
     qDebug() << "Adding friend with id "+userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
-    QWidget* widget = ui->friendList->widget();
-    QLayout* layout = widget->layout();
+    QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->widget);
     connect(newfriend->widget, SIGNAL(friendWidgetClicked(FriendWidget*)), this, SLOT(onFriendWidgetClicked(FriendWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
@@ -451,8 +446,14 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (!f)
         return;
 
+    contactListWidget->moveWidget(f->widget, status);
+
     f->friendStatus = status;
     updateFriendStatusLights(friendId);
+
+    // Workaround widget style after returning to list
+    if (f->widget->isActive())
+        f->widget->setAsActiveChatroom();
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -716,8 +717,7 @@ Group *Widget::createGroup(int groupId)
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName);
-    QWidget* widget = ui->friendList->widget();
-    QLayout* layout = widget->layout();
+    QLayout* layout = contactListWidget->getGroupLayout();
     layout->addWidget(newgroup->widget);
     if (!Settings::getInstance().getUseNativeDecoration())
         newgroup->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
