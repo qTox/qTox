@@ -36,6 +36,7 @@ public:
     void leaveEvent(QEvent* event);
     void setAsActiveChatroom();
     void setAsInactiveChatroom();
+    int isActive();
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);

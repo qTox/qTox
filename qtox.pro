@@ -89,7 +89,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/emoticonswidget.h \
     style.h \
     widget/adjustingscrollarea.h \
-    widget/croppinglabel.h
+    widget/croppinglabel.h \
+    widget/friendlistwidget.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -126,4 +127,5 @@ SOURCES += \
     widget/emoticonswidget.cpp \
     style.cpp \
     widget/adjustingscrollarea.cpp \
-    widget/croppinglabel.cpp
+    widget/croppinglabel.cpp \
+    widget/friendlistwidget.cpp

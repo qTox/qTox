@@ -27,6 +27,7 @@
 #include "widget/form/settingsform.h"
 #include "widget/form/filesform.h"
 #include "camera.h"
+#include "friendlistwidget.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -143,6 +144,7 @@ private:
     static Widget* instance;
     FriendWidget* activeFriendWidget;
     GroupWidget* activeGroupWidget;
+    FriendListWidget* contactListWidget;
     int isFriendWidgetActive, isGroupWidgetActive;
     SelfCamView* camview;
     Camera* camera;

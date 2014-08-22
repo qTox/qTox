@@ -198,3 +198,8 @@ void FriendWidget::setAsInactiveChatroom()
     this->setPalette(pal3);
     avatar.setPixmap(QPixmap(":img/contact.png"));
 }
+
+int FriendWidget::isActive()
+{
+    return isActiveWidget;
+}
