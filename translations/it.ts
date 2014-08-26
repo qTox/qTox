@@ -91,13 +91,13 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="249"/>
+        <location filename="../widget/form/chatform.cpp" line="282"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="574"/>
-        <location filename="../widget/form/chatform.cpp" line="580"/>
+        <location filename="../widget/form/chatform.cpp" line="613"/>
+        <location filename="../widget/form/chatform.cpp" line="619"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -137,7 +137,7 @@
         <location filename="../widget/form/filesform.cpp" line="25"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Files inviati</translation>
+        <translation>Files Trasferiti</translation>
     </message>
     <message>
         <location filename="../widget/form/filesform.cpp" line="33"/>
