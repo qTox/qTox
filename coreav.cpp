@@ -173,6 +173,9 @@ void Core::cleanupCall(int callId)
         calls[callId].audioInput->stop();
     if (calls[callId].videoEnabled)
         Widget::getInstance()->getCamera()->unsuscribe();
+    alcMakeContextCurrent(nullptr);
+    alcDestroyContext(calls[callId].alContext);
+    alcCloseDevice(calls[callId].alOutDev);
 }
 
 void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int samples, void *user_data)
