@@ -163,7 +163,6 @@ void Core::playCallAudio(ToxAv* toxav, int32_t callId, int16_t *data, int sample
     ToxAvCSettings dest;
     if(toxav_get_peer_csettings(toxav, callId, 0, &dest) == 0)
         playAudioBuffer(callId, data, samples, dest.audio_channels, dest.audio_sample_rate);
-    //playAudioBuffer(callId, data, samples, 1, av_DefaultSettings.audio_sample_rate);
 }
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
@@ -509,7 +508,7 @@ void Core::playAudioBuffer(int callId, int16_t *data, int samples, unsigned chan
     }
     else
     {
-        qDebug() << "Core: Dropped audio frame" << sampleRate << ", " << channels<<", "<<samples;
+        qDebug() << "Core: Dropped audio frame";
         return;
     }
 
