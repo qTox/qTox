@@ -1,13 +1,109 @@
 #include "core.h"
 #include "widget/widget.h"
 
-#include <AL/al.h>
-#include <AL/alc.h>
-
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
 int Core::videoBusyness;
+
+void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled)
+{
+    qDebug() << QString("Core: preparing call %1").arg(callId);
+    calls[callId].callId = callId;
+    calls[callId].friendId = friendId;
+    // the following three lines are also now redundant from startCall, but are
+    // necessary there for outbound and here for inbound
+    calls[callId].codecSettings = av_DefaultSettings;
+    calls[callId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
+    calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
+    calls[callId].videoEnabled = videoEnabled;
+    toxav_prepare_transmission(toxav, callId, av_jbufdc, av_VADd, videoEnabled);
+
+    // Audio output
+    calls[callId].alOutDev = alcOpenDevice(nullptr);
+    if (!calls[callId].alOutDev)
+    {
+        qWarning() << "Coreav: Cannot open output audio device, hanging up call";
+        toxav_hangup(toxav, callId);
+        return;
+    }
+    calls[callId].alContext=alcCreateContext(calls[callId].alOutDev,nullptr);
+    if (!alcMakeContextCurrent(calls[callId].alContext))
+    {
+        qWarning() << "Coreav: Cannot create output audio context, hanging up call";
+        alcCloseDevice(calls[callId].alOutDev);
+        toxav_hangup(toxav, callId);
+        return;
+    }
+    alGenSources(1, &calls[callId].alSource);
+
+    // Prepare output
+    QAudioFormat format;
+    format.setSampleRate(calls[callId].codecSettings.audio_sample_rate);
+    format.setChannelCount(calls[callId].codecSettings.audio_channels);
+    format.setSampleSize(16);
+    format.setCodec("audio/pcm");
+    format.setByteOrder(QAudioFormat::LittleEndian);
+    format.setSampleType(QAudioFormat::SignedInt);
+    if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(format))
+    {
+        calls[callId].audioOutput = nullptr;
+        qWarning() << "Core: Raw audio format not supported by output backend, cannot play audio.";
+    }
+    else if (calls[callId].audioOutput==nullptr)
+    {
+        calls[callId].audioOutput = new QAudioOutput(format);
+        calls[callId].audioOutput->setBufferSize(1900*30); // Make this bigger to get less underflows, but more latency
+        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
+        int error = calls[callId].audioOutput->error();
+        if (error != QAudio::NoError)
+        {
+            qWarning() << QString("Core: Error %1 when starting audio output").arg(error);
+        }
+    }
+
+    // Start input
+    if (!QAudioDeviceInfo::defaultInputDevice().isFormatSupported(format))
+    {
+        calls[callId].audioInput = nullptr;
+        qWarning() << "Core: Default input format not supported, cannot record audio";
+    }
+    else if (calls[callId].audioInput==nullptr)
+    {
+        qDebug() << "Core: Starting new audio input";
+        calls[callId].audioInput = new QAudioInput(format);
+        calls[callId].audioInputDevice = calls[callId].audioInput->start();
+    }
+    else if (calls[callId].audioInput->state() == QAudio::StoppedState)
+    {
+        calls[callId].audioInputDevice = calls[callId].audioInput->start();
+    }
+
+    // Go
+    calls[callId].active = true;
+
+    if (calls[callId].audioInput != nullptr)
+    {
+        calls[callId].sendAudioTimer->setInterval(2);
+        calls[callId].sendAudioTimer->setSingleShot(true);
+        connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
+        calls[callId].sendAudioTimer->start();
+    }
+
+    if (calls[callId].videoEnabled)
+    {
+        calls[callId].sendVideoTimer->setInterval(50);
+        calls[callId].sendVideoTimer->setSingleShot(true);
+        calls[callId].sendVideoTimer->start();
+
+        Widget::getInstance()->getCamera()->suscribe();
+    }
+    else if (calls[callId].audioInput == nullptr && calls[callId].audioOutput == nullptr)
+    {
+        qWarning() << "Audio only call can neither play nor record audio, killing call";
+        toxav_hangup(toxav, callId);
+    }
+}
 
 void Core::onAvMediaChange(void*, int32_t, void*)
 {
@@ -83,87 +179,6 @@ void Core::cancelCall(int callId, int friendId)
     toxav_cancel(toxav, callId, friendId, 0);
 }
 
-void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled)
-{
-    qDebug() << QString("Core: preparing call %1").arg(callId);
-    calls[callId].callId = callId;
-    calls[callId].friendId = friendId;
-    // the following three lines are also now redundant from startCall, but are
-    // necessary there for outbound and here for inbound
-    calls[callId].codecSettings = av_DefaultSettings;
-    calls[callId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
-    calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
-    calls[callId].videoEnabled = videoEnabled;
-    toxav_prepare_transmission(toxav, callId, av_jbufdc, av_VADd, videoEnabled);
-
-    // Prepare output
-    QAudioFormat format;
-    format.setSampleRate(calls[callId].codecSettings.audio_sample_rate);
-    format.setChannelCount(calls[callId].codecSettings.audio_channels);
-    format.setSampleSize(16);
-    format.setCodec("audio/pcm");
-    format.setByteOrder(QAudioFormat::LittleEndian);
-    format.setSampleType(QAudioFormat::SignedInt);
-    if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(format))
-    {
-        calls[callId].audioOutput = nullptr;
-        qWarning() << "Core: Raw audio format not supported by output backend, cannot play audio.";
-    }
-    else if (calls[callId].audioOutput==nullptr)
-    {
-        calls[callId].audioOutput = new QAudioOutput(format);
-        calls[callId].audioOutput->setBufferSize(1900*30); // Make this bigger to get less underflows, but more latency
-        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
-        int error = calls[callId].audioOutput->error();
-        if (error != QAudio::NoError)
-        {
-            qWarning() << QString("Core: Error %1 when starting audio output").arg(error);
-        }
-    }
-
-    // Start input
-    if (!QAudioDeviceInfo::defaultInputDevice().isFormatSupported(format))
-    {
-        calls[callId].audioInput = nullptr;
-        qWarning() << "Core: Default input format not supported, cannot record audio";
-    }
-    else if (calls[callId].audioInput==nullptr)
-    {
-        qDebug() << "Core: Starting new audio input";
-        calls[callId].audioInput = new QAudioInput(format);
-        calls[callId].audioInputDevice = calls[callId].audioInput->start();
-    }
-    else if (calls[callId].audioInput->state() == QAudio::StoppedState)
-    {
-        calls[callId].audioInputDevice = calls[callId].audioInput->start();
-    }
-
-    // Go
-    calls[callId].active = true;
-
-    if (calls[callId].audioInput != nullptr)
-    {
-        calls[callId].sendAudioTimer->setInterval(2);
-        calls[callId].sendAudioTimer->setSingleShot(true);
-        connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
-        calls[callId].sendAudioTimer->start();
-    }
-
-    if (calls[callId].videoEnabled)
-    {
-        calls[callId].sendVideoTimer->setInterval(50);
-        calls[callId].sendVideoTimer->setSingleShot(true);
-        calls[callId].sendVideoTimer->start();
-
-        Widget::getInstance()->getCamera()->suscribe();
-    }
-    else if (calls[callId].audioInput == nullptr && calls[callId].audioOutput == nullptr)
-    {
-        qWarning() << "Audio only call can neither play nor record audio, killing call";
-        toxav_hangup(toxav, callId);
-    }
-}
-
 void Core::cleanupCall(int callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
@@ -184,22 +199,14 @@ void Core::cleanupCall(int callId)
     calls[callId].audioBuffer.clear();
 }
 
-void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length, void *user_data)
+void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int samples, void *user_data)
 {
     Q_UNUSED(user_data);
 
     if (!calls[callId].active || calls[callId].audioOutput == nullptr)
         return;
-    calls[callId].audioBuffer.write((char*)data, length*2);
-    int state = calls[callId].audioOutput->state();
-    if (state != QAudio::ActiveState)
-    {
-        qDebug() << QString("Core: Audio state is %1").arg(state);
-        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
-    }
-    int error = calls[callId].audioOutput->error();
-    if (error != QAudio::NoError)
-        qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
+
+    playAudioBuffer(callId, data, samples);
 }
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
@@ -509,4 +516,48 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
     }
 
     delete transSettings;
+}
+
+void Core::playAudioBuffer(int callId, int16_t *data, int samples)
+{
+    unsigned channels = calls[callId].codecSettings.audio_channels;
+    if(!channels || channels > 2) {
+        qWarning() << "Core::playAudioBuffer: trying to play on "<<channels<<" channels! Giving up.";
+        return;
+    }
+
+    ALuint bufid;
+    ALint processed, queued;
+    alGetSourcei(calls[callId].alSource, AL_BUFFERS_PROCESSED, &processed);
+    alGetSourcei(calls[callId].alSource, AL_BUFFERS_QUEUED, &queued);
+    alSourcei(calls[callId].alSource, AL_LOOPING, AL_FALSE);
+
+    if(processed)
+    {
+        ALuint bufids[processed];
+        alSourceUnqueueBuffers(calls[callId].alSource, processed, bufids);
+        alDeleteBuffers(processed - 1, bufids + 1);
+        bufid = bufids[0];
+    }
+    else if(queued < 16)
+    {
+        alGenBuffers(1, &bufid);
+    }
+    else
+    {
+        qDebug() << "Core: Dropped audio frame";
+        return;
+    }
+
+    alBufferData(bufid, (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data,
+                    samples * 2 * channels, calls[callId].codecSettings.audio_sample_rate);
+    alSourceQueueBuffers(calls[callId].alSource, 1, &bufid);
+
+    ALint state;
+    alGetSourcei(calls[callId].alSource, AL_SOURCE_STATE, &state);
+    if(state != AL_PLAYING)
+    {
+        alSourcePlay(calls[callId].alSource);
+        qDebug() << "Core: Starting audio source of call " << callId;
+    }
 }

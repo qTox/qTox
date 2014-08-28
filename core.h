@@ -22,6 +22,9 @@
 #include <tox/tox.h>
 #include <tox/toxav.h>
 
+#include <AL/al.h>
+#include <AL/alc.h>
+
 #include <cstdint>
 #include <QDateTime>
 #include <QObject>
@@ -106,6 +109,9 @@ public:
     int friendId;
     bool videoEnabled;
     bool active;
+    ALCdevice* alOutDev, *alInDev;
+    ALCcontext* alContext;
+    ALuint alSource;
 };
 
 class Core : public QObject
@@ -268,8 +274,9 @@ private:
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
-    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int length, void *user_data); // Callback
+    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int samples, void *user_data); // Callback
     static void sendCallAudio(int callId, ToxAv* toxav);
+    static void playAudioBuffer(int callId, int16_t *data, int samples);
     static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
@@ -278,8 +285,8 @@ private:
 
     void loadConfiguration();
     void loadFriends();
-    static void sendAllFileData(Core* core, ToxFile* file);
 
+    static void sendAllFileData(Core* core, ToxFile* file);
     static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);
