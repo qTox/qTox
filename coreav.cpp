@@ -186,6 +186,8 @@ void Core::cleanupCall(int callId)
     alcMakeContextCurrent(nullptr);
     alcDestroyContext(calls[callId].alContext);
     alcCloseDevice(calls[callId].alOutDev);
+    alcCaptureStop(calls[callId].alInDev);
+    alcCaptureCloseDevice(calls[callId].alInDev);
 }
 
 void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int samples, void *user_data)
