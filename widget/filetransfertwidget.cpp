@@ -171,10 +171,15 @@ void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t 
     etaTime = etaTime.addSecs(etaSecs);
     eta->setText(etaTime.toString("mm:ss"));
     if (!Filesize)
+    {
         progress->setValue(0);
+        qDebug() << QString("FT: received %1 bytes of an empty file, stop sending sequential devices, zetok!").arg(BytesSent);
+    }
     else
+    {
         progress->setValue(BytesSent*100/Filesize);
-    qDebug() << QString("FT: received %1/%2 bytes, progress is %3%").arg(BytesSent).arg(Filesize).arg(BytesSent*100/Filesize);
+        qDebug() << QString("FT: received %1/%2 bytes, progress is %3%").arg(BytesSent).arg(Filesize).arg(BytesSent*100/Filesize);
+    }
     lastUpdate = newtime;
     lastBytesSent = BytesSent;
 }
