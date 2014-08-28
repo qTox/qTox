@@ -17,8 +17,6 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "audiobuffer.h"
-
 #include <tox/tox.h>
 #include <tox/toxav.h>
 
@@ -99,7 +97,6 @@ struct ToxFile
 struct ToxCall
 {
 public:
-    AudioBuffer audioBuffer;
     QAudioInput* audioInput;
     QIODevice* audioInputDevice;
     ToxAvCSettings codecSettings;

@@ -60,7 +60,6 @@ Core::Core(Camera* cam, QThread *coreThread) :
     {
         calls[i].sendAudioTimer = new QTimer();
         calls[i].sendVideoTimer = new QTimer();
-        calls[i].audioBuffer.moveToThread(coreThread);
         calls[i].sendAudioTimer->moveToThread(coreThread);
         calls[i].sendVideoTimer->moveToThread(coreThread);
         connect(calls[i].sendVideoTimer, &QTimer::timeout, [this,i](){sendCallVideo(i);});

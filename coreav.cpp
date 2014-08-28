@@ -170,12 +170,9 @@ void Core::cleanupCall(int callId)
     calls[callId].sendAudioTimer->stop();
     calls[callId].sendVideoTimer->stop();
     if (calls[callId].audioInput != nullptr)
-    {
         calls[callId].audioInput->stop();
-    }
     if (calls[callId].videoEnabled)
         Widget::getInstance()->getCamera()->unsuscribe();
-    calls[callId].audioBuffer.clear();
 }
 
 void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int samples, void *user_data)
