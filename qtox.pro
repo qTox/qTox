@@ -128,4 +128,5 @@ SOURCES += \
     style.cpp \
     widget/adjustingscrollarea.cpp \
     widget/croppinglabel.cpp \
-    widget/friendlistwidget.cpp
+    widget/friendlistwidget.cpp \
+    coreav.cpp
