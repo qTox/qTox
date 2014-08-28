@@ -970,7 +970,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
     {
         if (file->status == ToxFile::PAUSED)
         {
-            QThread::sleep(5);
+            QThread::sleep(1);
             continue;
         }
         else if (file->status == ToxFile::STOPPED)
@@ -990,7 +990,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
             removeFileFromQueue(true, file->friendId, file->fileNum);
             return;
         }
-        qDebug() << "chunkSize: " << chunkSize;
+        //qDebug() << "chunkSize: " << chunkSize;
         chunkSize = std::min(chunkSize, file->filesize);
         uint8_t* data = new uint8_t[chunkSize];
         file->file->seek(file->bytesSent);
@@ -1023,6 +1023,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
     }
     qDebug("Core::fileHeartbeat: Transfer finished");
     tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
+    emit core->fileTransferFinished(*file);
 }
 
 void Core::onAvInvite(void* _toxav, int32_t call_index, void* core)
