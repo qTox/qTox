@@ -337,9 +337,9 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferFinished(*file);
-        removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
         // confirm receive is complete
         tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
+        removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else
     {
