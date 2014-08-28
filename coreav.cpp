@@ -153,14 +153,17 @@ void Core::cleanupCall(int callId)
     alcCaptureCloseDevice(calls[callId].alInDev);
 }
 
-void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int samples, void *user_data)
+void Core::playCallAudio(ToxAv* toxav, int32_t callId, int16_t *data, int samples, void *user_data)
 {
     Q_UNUSED(user_data);
 
     if (!calls[callId].active)
         return;
 
-    playAudioBuffer(callId, data, samples);
+    ToxAvCSettings dest;
+    if(toxav_get_peer_csettings(toxav, callId, 0, &dest) == 0)
+        playAudioBuffer(callId, data, samples, dest.audio_channels, dest.audio_sample_rate);
+    //playAudioBuffer(callId, data, samples, 1, av_DefaultSettings.audio_sample_rate);
 }
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
@@ -479,10 +482,10 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
 }
 
 // This function's logic was shamelessly stolen from uTox
-void Core::playAudioBuffer(int callId, int16_t *data, int samples)
+void Core::playAudioBuffer(int callId, int16_t *data, int samples, unsigned channels, int sampleRate)
 {
-    unsigned channels = calls[callId].codecSettings.audio_channels;
-    if(!channels || channels > 2) {
+    if(!channels || channels > 2)
+    {
         qWarning() << "Core::playAudioBuffer: trying to play on "<<channels<<" channels! Giving up.";
         return;
     }
@@ -506,12 +509,12 @@ void Core::playAudioBuffer(int callId, int16_t *data, int samples)
     }
     else
     {
-        qDebug() << "Core: Dropped audio frame";
+        qDebug() << "Core: Dropped audio frame" << sampleRate << ", " << channels<<", "<<samples;
         return;
     }
 
     alBufferData(bufid, (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data,
-                    samples * 2 * channels, calls[callId].codecSettings.audio_sample_rate);
+                    samples * 2 * channels, sampleRate);
     alSourceQueueBuffers(calls[callId].alSource, 1, &bufid);
 
     ALint state;

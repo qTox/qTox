@@ -271,7 +271,7 @@ private:
     static void cleanupCall(int callId);
     static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int samples, void *user_data); // Callback
     static void sendCallAudio(int callId, ToxAv* toxav);
-    static void playAudioBuffer(int callId, int16_t *data, int samples);
+    static void playAudioBuffer(int callId, int16_t *data, int samples, unsigned channels, int sampleRate);
     static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
