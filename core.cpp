@@ -21,6 +21,7 @@
 #include "widget/widget.h"
 
 #include <ctime>
+#include <functional>
 
 #include <QDebug>
 #include <QDir>
@@ -45,8 +46,6 @@ Core::Core(Camera* cam, QThread *coreThread) :
     toxTimer->setSingleShot(true);
     //saveTimer = new QTimer(this);
     //saveTimer->start(TOX_SAVE_INTERVAL);
-    //fileTimer = new QTimer(this);
-    //fileTimer->start(TOX_FILE_INTERVAL);
     bootstrapTimer = new QTimer(this);
     bootstrapTimer->start(TOX_BOOTSTRAP_INTERVAL);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
@@ -304,7 +303,10 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         file->status = ToxFile::TRANSMITTING;
         emit static_cast<Core*>(core)->fileTransferAccepted(*file);
         qDebug() << "Core: File control callback, file accepted";
-        file->sendFuture = QtConcurrent::run(sendAllFileData, static_cast<Core*>(core), file);
+        file->sendTimer = new QTimer(static_cast<Core*>(core));
+        connect(file->sendTimer, &QTimer::timeout, std::bind(sendAllFileData,static_cast<Core*>(core), file));
+        file->sendTimer->setSingleShot(true);
+        file->sendTimer->start(TOX_FILE_INTERVAL);
     }
     else if (receive_send == 1 && control_type == TOX_FILECONTROL_KILL)
     {
@@ -312,7 +314,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
-        file->sendFuture.waitForFinished(); // Wait for sendAllFileData to return before deleting the ToxFile
+        while (file->sendTimer) QThread::msleep(1); // Wait for sendAllFileData to return before deleting the ToxFile
         removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else if (receive_send == 1 && control_type == TOX_FILECONTROL_FINISHED)
@@ -532,7 +534,7 @@ void Core::cancelFileSend(int friendId, int fileNum)
     file->status = ToxFile::STOPPED;
     emit fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
     tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
-    file->sendFuture.waitForFinished(); // Wait until sendAllFileData returns before deleting
+    while (file->sendTimer) QThread::msleep(1); // Wait until sendAllFileData returns before deleting
     removeFileFromQueue(true, friendId, fileNum);
 }
 
@@ -961,64 +963,77 @@ void Core::removeFileFromQueue(bool sendQueue, int friendId, int fileId)
 
 void Core::sendAllFileData(Core *core, ToxFile* file)
 {
-    while (file->bytesSent < file->filesize)
+    if (file->status == ToxFile::PAUSED)
     {
-        if (file->status == ToxFile::PAUSED)
-        {
-            QThread::sleep(1);
-            continue;
-        }
-        else if (file->status == ToxFile::STOPPED)
-        {
-            qWarning("Core::sendAllFileData: File is stopped");
-            return;
-        }
-        emit core->fileTransferInfo(file->friendId, file->fileNum, file->filesize, file->bytesSent, ToxFile::SENDING);
-        qApp->processEvents();
-        long long chunkSize = tox_file_data_size(core->tox, file->friendId);
-        if (chunkSize == -1)
-        {
-            qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
-            file->status = ToxFile::STOPPED;
-            emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
-            tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
-            removeFileFromQueue(true, file->friendId, file->fileNum);
-            return;
-        }
-        //qDebug() << "chunkSize: " << chunkSize;
-        chunkSize = std::min(chunkSize, file->filesize);
-        uint8_t* data = new uint8_t[chunkSize];
-        file->file->seek(file->bytesSent);
-        int readSize = file->file->read((char*)data, chunkSize);
-        if (readSize == -1)
-        {
-            qWarning() << QString("Core::sendAllFileData: Error reading from file: %1").arg(file->file->errorString());
-            delete[] data;
-            QThread::msleep(5);
-            continue;
-        }
-        else if (readSize == 0)
-        {
-            qWarning() << QString("Core::sendAllFileData: Nothing to read from file: %1").arg(file->file->errorString());
-            delete[] data;
-            QThread::msleep(5);
-            continue;
-        }
-        if (tox_file_send_data(core->tox, file->friendId, file->fileNum, data, readSize) == -1)
-        {
-            //qWarning("Core::fileHeartbeat: Error sending data chunk");
-            //core->process();
-            delete[] data;
-            QThread::msleep(5);
-            continue;
-        }
-        delete[] data;
-        file->bytesSent += readSize;
-        //qDebug() << QString("Core::fileHeartbeat: sent %1/%2 bytes").arg(file->bytesSent).arg(file->fileData.size());
+        file->sendTimer->start(TOX_FILE_INTERVAL);
+        return;
     }
-    qDebug("Core::fileHeartbeat: Transfer finished");
-    tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
-    emit core->fileTransferFinished(*file);
+    else if (file->status == ToxFile::STOPPED)
+    {
+        qWarning("Core::sendAllFileData: File is stopped");
+        file->sendTimer->disconnect();
+        delete file->sendTimer;
+        file->sendTimer = nullptr;
+        return;
+    }
+    emit core->fileTransferInfo(file->friendId, file->fileNum, file->filesize, file->bytesSent, ToxFile::SENDING);
+    qApp->processEvents();
+    long long chunkSize = tox_file_data_size(core->tox, file->friendId);
+    if (chunkSize == -1)
+    {
+        qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
+        file->status = ToxFile::STOPPED;
+        emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+        tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
+        removeFileFromQueue(true, file->friendId, file->fileNum);
+        return;
+    }
+    //qDebug() << "chunkSize: " << chunkSize;
+    chunkSize = std::min(chunkSize, file->filesize);
+    uint8_t* data = new uint8_t[chunkSize];
+    file->file->seek(file->bytesSent);
+    int readSize = file->file->read((char*)data, chunkSize);
+    if (readSize == -1)
+    {
+        qWarning() << QString("Core::sendAllFileData: Error reading from file: %1").arg(file->file->errorString());
+        delete[] data;
+        file->sendTimer->start(TOX_FILE_INTERVAL);
+        return;
+    }
+    else if (readSize == 0)
+    {
+        qWarning() << QString("Core::sendAllFileData: Nothing to read from file: %1").arg(file->file->errorString());
+        delete[] data;
+        file->sendTimer->start(TOX_FILE_INTERVAL);
+        return;
+    }
+    if (tox_file_send_data(core->tox, file->friendId, file->fileNum, data, readSize) == -1)
+    {
+        //qWarning("Core::fileHeartbeat: Error sending data chunk");
+        //core->process();
+        delete[] data;
+        QThread::msleep(1);
+        file->sendTimer->start(TOX_FILE_INTERVAL);
+        return;
+    }
+    delete[] data;
+    file->bytesSent += readSize;
+    //qDebug() << QString("Core::fileHeartbeat: sent %1/%2 bytes").arg(file->bytesSent).arg(file->fileData.size());
+
+    if (file->bytesSent < file->filesize)
+    {
+        file->sendTimer->start(TOX_FILE_INTERVAL);
+        return;
+    }
+    else
+    {
+        qDebug("Core: File transfer finished");
+        file->sendTimer->disconnect();
+        delete file->sendTimer;
+        file->sendTimer = nullptr;
+        tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
+        emit core->fileTransferFinished(*file);
+    }
 }
 
 void Core::groupInviteFriend(int friendId, int groupId)

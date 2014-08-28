@@ -39,7 +39,7 @@
 #define TOXAV_MAX_CALLS 16
 #define GROUPCHAT_MAX_SIZE 32
 #define TOX_SAVE_INTERVAL 30*1000
-#define TOX_FILE_INTERVAL 20
+#define TOX_FILE_INTERVAL 1
 #define TOX_BOOTSTRAP_INTERVAL 10*1000
 #define TOXAV_RINGING_TIME 15
 
@@ -91,7 +91,7 @@ struct ToxFile
     long long filesize;
     FileStatus status;
     FileDirection direction;
-    QFuture<void> sendFuture;
+    QTimer* sendTimer;
 };
 
 struct ToxCall
