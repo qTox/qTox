@@ -97,14 +97,13 @@ struct ToxFile
 struct ToxCall
 {
 public:
-    QAudioInput* audioInput;
-    QIODevice* audioInputDevice;
     ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer, *sendVideoTimer;
     int callId;
     int friendId;
     bool videoEnabled;
     bool active;
+    bool muteMic;
     ALCdevice* alOutDev, *alInDev;
     ALCcontext* alContext;
     ALuint alSource;
