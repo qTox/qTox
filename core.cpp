@@ -1359,11 +1359,16 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     if (!QAudioDeviceInfo::defaultInputDevice().isFormatSupported(format))
     {
         calls[callId].audioInput = nullptr;
-        qWarning() << "Default input format not supported, cannot record audio";
+        qWarning() << "Core: Default input format not supported, cannot record audio";
     }
     else if (calls[callId].audioInput==nullptr)
     {
+        qDebug() << "Core: Starting new audio input";
         calls[callId].audioInput = new QAudioInput(format);
+        calls[callId].audioInputDevice = calls[callId].audioInput->start();
+    }
+    else if (calls[callId].audioInput->state() == QAudio::StoppedState)
+    {
         calls[callId].audioInputDevice = calls[callId].audioInput->start();
     }
 
