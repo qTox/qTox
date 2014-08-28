@@ -37,7 +37,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     }
     alGenSources(1, &calls[callId].alSource);
 
-    // Prepare output
+    // Start input
     QAudioFormat format;
     format.setSampleRate(calls[callId].codecSettings.audio_sample_rate);
     format.setChannelCount(calls[callId].codecSettings.audio_channels);
@@ -45,24 +45,6 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     format.setCodec("audio/pcm");
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::SignedInt);
-    if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(format))
-    {
-        calls[callId].audioOutput = nullptr;
-        qWarning() << "Core: Raw audio format not supported by output backend, cannot play audio.";
-    }
-    else if (calls[callId].audioOutput==nullptr)
-    {
-        calls[callId].audioOutput = new QAudioOutput(format);
-        calls[callId].audioOutput->setBufferSize(1900*30); // Make this bigger to get less underflows, but more latency
-        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
-        int error = calls[callId].audioOutput->error();
-        if (error != QAudio::NoError)
-        {
-            qWarning() << QString("Core: Error %1 when starting audio output").arg(error);
-        }
-    }
-
-    // Start input
     if (!QAudioDeviceInfo::defaultInputDevice().isFormatSupported(format))
     {
         calls[callId].audioInput = nullptr;
@@ -98,10 +80,11 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
 
         Widget::getInstance()->getCamera()->suscribe();
     }
-    else if (calls[callId].audioInput == nullptr && calls[callId].audioOutput == nullptr)
+    else if (calls[callId].audioInput == nullptr)
     {
-        qWarning() << "Audio only call can neither play nor record audio, killing call";
+        qWarning() << "Audio only call can not record audio, killing call";
         toxav_hangup(toxav, callId);
+        return;
     }
 }
 
@@ -186,10 +169,6 @@ void Core::cleanupCall(int callId)
     disconnect(calls[callId].sendAudioTimer,0,0,0);
     calls[callId].sendAudioTimer->stop();
     calls[callId].sendVideoTimer->stop();
-    if (calls[callId].audioOutput != nullptr)
-    {
-        calls[callId].audioOutput->stop();
-    }
     if (calls[callId].audioInput != nullptr)
     {
         calls[callId].audioInput->stop();
@@ -203,7 +182,7 @@ void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int samples, voi
 {
     Q_UNUSED(user_data);
 
-    if (!calls[callId].active || calls[callId].audioOutput == nullptr)
+    if (!calls[callId].active)
         return;
 
     playAudioBuffer(callId, data, samples);
@@ -518,6 +497,7 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
     delete transSettings;
 }
 
+// This function's logic was shamelessly stolen from uTox
 void Core::playAudioBuffer(int callId, int16_t *data, int samples)
 {
     unsigned channels = calls[callId].codecSettings.audio_channels;

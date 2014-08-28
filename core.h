@@ -100,7 +100,6 @@ struct ToxCall
 {
 public:
     AudioBuffer audioBuffer;
-    QAudioOutput* audioOutput;
     QAudioInput* audioInput;
     QIODevice* audioInputDevice;
     ToxAvCSettings codecSettings;
