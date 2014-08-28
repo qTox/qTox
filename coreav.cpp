@@ -37,6 +37,16 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     }
     alGenSources(1, &calls[callId].alSource);
 
+    // Audio Input
+    calls[callId].alInDev = alcCaptureOpenDevice(NULL,av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16, (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
+    if (!calls[callId].alInDev)
+    {
+        qWarning() << "Coreav: Cannot open input audio device, hanging up call";
+        toxav_hangup(toxav, callId);
+        return;
+    }
+    alcCaptureStart(calls[callId].alInDev);
+
     // Start input
     QAudioFormat format;
     format.setSampleRate(calls[callId].codecSettings.audio_sample_rate);
@@ -190,10 +200,37 @@ void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int samples, voi
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
 {
-    if (!calls[callId].active || calls[callId].audioInput == nullptr)
+    if (!calls[callId].active)
         return;
+
     int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
     uint8_t buf[framesize*2], dest[framesize*2];
+
+    bool frame = false;
+    ALint samples;
+    alcGetIntegerv(calls[callId].alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
+    if(samples >= framesize)
+    {
+        alcCaptureSamples(calls[callId].alInDev, buf, framesize);
+        frame = 1;
+    }
+
+    if(frame)
+    {
+        int r;
+        if((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
+        {
+            qDebug() << "Core: toxav_prepare_audio_frame error";
+            calls[callId].sendAudioTimer->start();
+            return;
+        }
+
+        if((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
+            qDebug() << "Core: toxav_send_audio error";
+    }
+    calls[callId].sendAudioTimer->start();
+
+    /*
     int bytesReady = calls[callId].audioInput->bytesReady();
     if (bytesReady >= framesize*2)
     {
@@ -216,6 +253,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     }
     else
         calls[callId].sendAudioTimer->start();
+    */
 }
 
 void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_data)
