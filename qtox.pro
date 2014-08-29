@@ -43,7 +43,7 @@ INCLUDEPATH += libs/include
 win32 {
     LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libopenal32.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
 } macx {
-    LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL
+    LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui -lopencv_imgproc
 } else {
     LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
 }
