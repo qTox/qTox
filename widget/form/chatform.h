@@ -72,6 +72,7 @@ public slots:
     void onAvEnding(int FriendId, int CallId);
     void onAvRequestTimeout(int FriendId, int CallId);
     void onAvPeerTimeout(int FriendId, int CallId);
+    void onAvMediaChange(int FriendId, int CallId, bool video);
     void onMicMuteToggle();
 
 private slots:

@@ -54,19 +54,37 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].sendAudioTimer->setSingleShot(true);
     connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
     calls[callId].sendAudioTimer->start();
+    calls[callId].sendVideoTimer->setInterval(50);
+    calls[callId].sendVideoTimer->setSingleShot(true);
     if (calls[callId].videoEnabled)
     {
-        calls[callId].sendVideoTimer->setInterval(50);
-        calls[callId].sendVideoTimer->setSingleShot(true);
         calls[callId].sendVideoTimer->start();
         Widget::getInstance()->getCamera()->suscribe();
     }
 }
 
-void Core::onAvMediaChange(void*, int32_t, void*)
+void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
 {
-    // HALP, PLS COMPLETE MEH
-    qWarning() << "If you see this, please complain on GitHub about seeing me! (Don't forget to say what caused me!)";
+    ToxAvCSettings settings;
+    toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &settings);
+    int friendId = toxav_get_peer_id((ToxAv*)toxav, callId, 0);
+
+    qWarning() << "Core: Received media change from friend "<<friendId;
+
+    if (settings.call_type == TypeAudio)
+    {
+        calls[callId].videoEnabled = false;
+        calls[callId].sendVideoTimer->stop();
+        Widget::getInstance()->getCamera()->unsuscribe();
+        emit ((Core*)core)->avMediaChange(friendId, callId, false);
+    }
+    else
+    {
+        Widget::getInstance()->getCamera()->suscribe();
+        calls[callId].videoEnabled = true;
+        calls[callId].sendVideoTimer->start();
+        emit ((Core*)core)->avMediaChange(friendId, callId, true);
+    }
 }
 
 void Core::answerCall(int callId)
@@ -241,7 +259,9 @@ void Core::sendCallVideo(int callId)
         vpx_img_free(&frame);
     }
     else
+    {
         qDebug("Core::sendCallVideo: Invalid frame (bad camera ?)");
+    }
 
     calls[callId].sendVideoTimer->start();
 }
@@ -262,11 +282,11 @@ void Core::micMuteToggle(int callId)
     calls[callId].muteMic = !calls[callId].muteMic;
 }
 
-void Core::onAvCancel(void* _toxav, int32_t call_index, void* core)
+void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+    int friendId = toxav_get_peer_id(toxav, callId, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV cancel";
@@ -274,7 +294,9 @@ void Core::onAvCancel(void* _toxav, int32_t call_index, void* core)
     }
     qDebug() << QString("Core: AV cancel from %1").arg(friendId);
 
-    emit static_cast<Core*>(core)->avCancel(friendId, call_index);
+    calls[callId].active = false;
+
+    emit static_cast<Core*>(core)->avCancel(friendId, callId);
 }
 
 void Core::onAvReject(void*, int32_t, void*)

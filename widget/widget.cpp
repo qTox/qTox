@@ -435,6 +435,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::avEnding, newfriend->chatForm, &ChatForm::onAvEnding);
     connect(core, &Core::avRequestTimeout, newfriend->chatForm, &ChatForm::onAvRequestTimeout);
     connect(core, &Core::avPeerTimeout, newfriend->chatForm, &ChatForm::onAvPeerTimeout);
+    connect(core, &Core::avMediaChange, newfriend->chatForm, &ChatForm::onAvMediaChange);
 }
 
 void Widget::addFriendFailed(const QString&)

@@ -573,6 +573,18 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
     netcam->hide();
 }
 
+void ChatForm::onAvMediaChange(int, int, bool video)
+{
+    if (video)
+    {
+        netcam->show();
+    }
+    else
+    {
+        netcam->hide();
+    }
+}
+
 void ChatForm::onAnswerCallTriggered()
 {
     audioInputFlag = true;

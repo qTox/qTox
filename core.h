@@ -233,7 +233,7 @@ signals:
     void avEnding(int friendId, int callIndex);
     void avRequestTimeout(int friendId, int callIndex);
     void avPeerTimeout(int friendId, int callIndex);
-    void avMediaChange(int friendId, int callIndex);
+    void avMediaChange(int friendId, int callIndex, bool videoEnabled);
 
     void videoFrameReceived(vpx_image* frame);
 
@@ -265,7 +265,7 @@ private:
     static void onAvEnding(void* toxav, int32_t call_index, void* core);
     static void onAvRequestTimeout(void* toxav, int32_t call_index, void* core);
     static void onAvPeerTimeout(void* toxav, int32_t call_index, void* core);
-    static void onAvMediaChange(void* toxav, int32_t call_index, void* core);
+    static void onAvMediaChange(void *toxav, int32_t call_index, void* core);
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
