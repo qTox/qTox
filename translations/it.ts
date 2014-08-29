@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="it_IT">
+<TS version="2.1" language="it_IT">
 <context>
     <name>AddFriendForm</name>
     <message>
@@ -91,13 +91,13 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="249"/>
+        <location filename="../widget/form/chatform.cpp" line="283"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="574"/>
-        <location filename="../widget/form/chatform.cpp" line="580"/>
+        <location filename="../widget/form/chatform.cpp" line="620"/>
+        <location filename="../widget/form/chatform.cpp" line="626"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -113,19 +113,19 @@
 <context>
     <name>FileTransfertWidget</name>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="276"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="281"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Salva file</translation>
     </message>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="287"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="292"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="287"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="292"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Non hai sufficienti permessi per scrivere in questa locazione. Scegli un&apos;altra posizione, o annulla il salvataggio.</translation>
@@ -419,19 +419,22 @@
         <translation type="obsolete">Ctrl+Q</translation>
     </message>
     <message>
+        <location filename="../widget/widget.cpp" line="128"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="obsolete">Online</translation>
+        <translation type="unfinished">Online</translation>
     </message>
     <message>
+        <location filename="../widget/widget.cpp" line="130"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="obsolete">Assente</translation>
+        <translation type="unfinished">Assente</translation>
     </message>
     <message>
+        <location filename="../widget/widget.cpp" line="132"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="obsolete">Occupato</translation>
+        <translation type="unfinished">Occupato</translation>
     </message>
 </context>
 </TS>
