@@ -29,6 +29,7 @@
 #include <QMenu>
 #include <QWidgetAction>
 #include <QGridLayout>
+#include <QMessageBox>
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend), curRow{0}, lockSliderToBottom{true}
@@ -286,6 +287,12 @@ void ChatForm::onAttachClicked()
     QFile file(path);
     if (!file.exists() || !file.open(QIODevice::ReadOnly))
         return;
+    if (file.isSequential())
+    {
+        QMessageBox::critical(0, "Bad Idea", "You're trying to send a special (sequential) file, that's not going to work!");
+        return;
+        file.close();
+    }
     long long filesize = file.size();
     file.close();
     QFileInfo fi(path);

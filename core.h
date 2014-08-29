@@ -17,10 +17,11 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "audiobuffer.h"
-
 #include <tox/tox.h>
 #include <tox/toxav.h>
+
+#include <AL/al.h>
+#include <AL/alc.h>
 
 #include <cstdint>
 #include <QDateTime>
@@ -38,7 +39,7 @@
 #define TOXAV_MAX_CALLS 16
 #define GROUPCHAT_MAX_SIZE 32
 #define TOX_SAVE_INTERVAL 30*1000
-#define TOX_FILE_INTERVAL 20
+#define TOX_FILE_INTERVAL 1
 #define TOX_BOOTSTRAP_INTERVAL 10*1000
 #define TOXAV_RINGING_TIME 15
 
@@ -90,22 +91,22 @@ struct ToxFile
     long long filesize;
     FileStatus status;
     FileDirection direction;
-    QFuture<void> sendFuture;
+    QTimer* sendTimer;
 };
 
 struct ToxCall
 {
 public:
-    AudioBuffer audioBuffer;
-    QAudioOutput* audioOutput;
-    QAudioInput* audioInput;
-    QIODevice* audioInputDevice;
     ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer, *sendVideoTimer;
     int callId;
     int friendId;
     bool videoEnabled;
     bool active;
+    bool muteMic;
+    ALCdevice* alOutDev, *alInDev;
+    ALCcontext* alContext;
+    ALuint alSource;
 };
 
 class Core : public QObject
@@ -268,8 +269,9 @@ private:
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
-    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int length, void *user_data); // Callback
+    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int samples, void *user_data); // Callback
     static void sendCallAudio(int callId, ToxAv* toxav);
+    static void playAudioBuffer(int callId, int16_t *data, int samples, unsigned channels, int sampleRate);
     static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
@@ -278,8 +280,8 @@ private:
 
     void loadConfiguration();
     void loadFriends();
-    static void sendAllFileData(Core* core, ToxFile* file);
 
+    static void sendAllFileData(Core* core, ToxFile* file);
     static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);

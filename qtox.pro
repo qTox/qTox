@@ -41,9 +41,9 @@ INSTALLS += target
 
 INCLUDEPATH += libs/include
 win32 {
-    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
+    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libopenal32.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
 } else {
-    LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
+    LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -lopenal
 }
 
 #### Static linux build
@@ -79,7 +79,6 @@ HEADERS  += widget/form/addfriendform.h \
     friendlist.h \
     cdata.h \
     cstring.h \
-    audiobuffer.h \
     widget/selfcamview.h \
     widget/videosurface.h \
     widget/camera.h \
@@ -117,7 +116,6 @@ SOURCES += \
     settings.cpp \
     cdata.cpp \
     cstring.cpp \
-    audiobuffer.cpp \
     widget/selfcamview.cpp \
     widget/videosurface.cpp \
     widget/camera.cpp \
@@ -128,4 +126,5 @@ SOURCES += \
     style.cpp \
     widget/adjustingscrollarea.cpp \
     widget/croppinglabel.cpp \
-    widget/friendlistwidget.cpp
+    widget/friendlistwidget.cpp \
+    coreav.cpp

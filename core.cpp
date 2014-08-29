@@ -21,6 +21,7 @@
 #include "widget/widget.h"
 
 #include <ctime>
+#include <functional>
 
 #include <QDebug>
 #include <QDir>
@@ -34,10 +35,6 @@
 const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
-ToxCall Core::calls[TOXAV_MAX_CALLS];
-const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
-uint8_t* Core::videobuf;
-int Core::videoBusyness;
 
 Core::Core(Camera* cam, QThread *coreThread) :
     tox(nullptr), camera(cam)
@@ -49,8 +46,6 @@ Core::Core(Camera* cam, QThread *coreThread) :
     toxTimer->setSingleShot(true);
     //saveTimer = new QTimer(this);
     //saveTimer->start(TOX_SAVE_INTERVAL);
-    //fileTimer = new QTimer(this);
-    //fileTimer->start(TOX_FILE_INTERVAL);
     bootstrapTimer = new QTimer(this);
     bootstrapTimer->start(TOX_BOOTSTRAP_INTERVAL);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
@@ -64,7 +59,6 @@ Core::Core(Camera* cam, QThread *coreThread) :
     {
         calls[i].sendAudioTimer = new QTimer();
         calls[i].sendVideoTimer = new QTimer();
-        calls[i].audioBuffer.moveToThread(coreThread);
         calls[i].sendAudioTimer->moveToThread(coreThread);
         calls[i].sendVideoTimer->moveToThread(coreThread);
         connect(calls[i].sendVideoTimer, &QTimer::timeout, [this,i](){sendCallVideo(i);});
@@ -309,7 +303,10 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         file->status = ToxFile::TRANSMITTING;
         emit static_cast<Core*>(core)->fileTransferAccepted(*file);
         qDebug() << "Core: File control callback, file accepted";
-        file->sendFuture = QtConcurrent::run(sendAllFileData, static_cast<Core*>(core), file);
+        file->sendTimer = new QTimer(static_cast<Core*>(core));
+        connect(file->sendTimer, &QTimer::timeout, std::bind(sendAllFileData,static_cast<Core*>(core), file));
+        file->sendTimer->setSingleShot(true);
+        file->sendTimer->start(TOX_FILE_INTERVAL);
     }
     else if (receive_send == 1 && control_type == TOX_FILECONTROL_KILL)
     {
@@ -317,7 +314,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
-        file->sendFuture.waitForFinished(); // Wait for sendAllFileData to return before deleting the ToxFile
+        while (file->sendTimer) QThread::msleep(1); // Wait for sendAllFileData to return before deleting the ToxFile
         removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else if (receive_send == 1 && control_type == TOX_FILECONTROL_FINISHED)
@@ -342,9 +339,9 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferFinished(*file);
-        removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
         // confirm receive is complete
         tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
+        removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else
     {
@@ -537,7 +534,7 @@ void Core::cancelFileSend(int friendId, int fileNum)
     file->status = ToxFile::STOPPED;
     emit fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
     tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
-    file->sendFuture.waitForFinished(); // Wait until sendAllFileData returns before deleting
+    while (file->sendTimer) QThread::msleep(1); // Wait until sendAllFileData returns before deleting
     removeFileFromQueue(true, friendId, fileNum);
 }
 
@@ -966,540 +963,77 @@ void Core::removeFileFromQueue(bool sendQueue, int friendId, int fileId)
 
 void Core::sendAllFileData(Core *core, ToxFile* file)
 {
-    while (file->bytesSent < file->filesize)
+    if (file->status == ToxFile::PAUSED)
     {
-        if (file->status == ToxFile::PAUSED)
-        {
-            QThread::sleep(5);
-            continue;
-        }
-        else if (file->status == ToxFile::STOPPED)
-        {
-            qWarning("Core::sendAllFileData: File is stopped");
-            return;
-        }
-        emit core->fileTransferInfo(file->friendId, file->fileNum, file->filesize, file->bytesSent, ToxFile::SENDING);
-        qApp->processEvents();
-        long long chunkSize = tox_file_data_size(core->tox, file->friendId);
-        if (chunkSize == -1)
-        {
-            qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
-            file->status = ToxFile::STOPPED;
-            emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
-            tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
-            removeFileFromQueue(true, file->friendId, file->fileNum);
-            return;
-        }
-        qDebug() << "chunkSize: " << chunkSize;
-        chunkSize = std::min(chunkSize, file->filesize);
-        uint8_t* data = new uint8_t[chunkSize];
-        file->file->seek(file->bytesSent);
-        int readSize = file->file->read((char*)data, chunkSize);
-        if (readSize == -1)
-        {
-            qWarning() << QString("Core::sendAllFileData: Error reading from file: %1").arg(file->file->errorString());
-            delete[] data;
-            QThread::msleep(5);
-            continue;
-        }
-        else if (readSize == 0)
-        {
-            qWarning() << QString("Core::sendAllFileData: Nothing to read from file: %1").arg(file->file->errorString());
-            delete[] data;
-            QThread::msleep(5);
-            continue;
-        }
-        if (tox_file_send_data(core->tox, file->friendId, file->fileNum, data, readSize) == -1)
-        {
-            //qWarning("Core::fileHeartbeat: Error sending data chunk");
-            core->process();
-            delete[] data;
-            QThread::msleep(5);
-            continue;
-        }
+        file->sendTimer->start(TOX_FILE_INTERVAL);
+        return;
+    }
+    else if (file->status == ToxFile::STOPPED)
+    {
+        qWarning("Core::sendAllFileData: File is stopped");
+        file->sendTimer->disconnect();
+        delete file->sendTimer;
+        file->sendTimer = nullptr;
+        return;
+    }
+    emit core->fileTransferInfo(file->friendId, file->fileNum, file->filesize, file->bytesSent, ToxFile::SENDING);
+    qApp->processEvents();
+    long long chunkSize = tox_file_data_size(core->tox, file->friendId);
+    if (chunkSize == -1)
+    {
+        qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
+        file->status = ToxFile::STOPPED;
+        emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+        tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
+        removeFileFromQueue(true, file->friendId, file->fileNum);
+        return;
+    }
+    //qDebug() << "chunkSize: " << chunkSize;
+    chunkSize = std::min(chunkSize, file->filesize);
+    uint8_t* data = new uint8_t[chunkSize];
+    file->file->seek(file->bytesSent);
+    int readSize = file->file->read((char*)data, chunkSize);
+    if (readSize == -1)
+    {
+        qWarning() << QString("Core::sendAllFileData: Error reading from file: %1").arg(file->file->errorString());
         delete[] data;
-        file->bytesSent += readSize;
-        //qDebug() << QString("Core::fileHeartbeat: sent %1/%2 bytes").arg(file->bytesSent).arg(file->fileData.size());
-    }
-    qDebug("Core::fileHeartbeat: Transfer finished");
-    tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
-}
-
-void Core::onAvInvite(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-    
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV invite";
+        file->sendTimer->start(TOX_FILE_INTERVAL);
         return;
     }
-
-    ToxAvCSettings* transSettings = new ToxAvCSettings;
-    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
-    if (err != ErrorNone)
+    else if (readSize == 0)
     {
-        qWarning() << "Core::onAvInvite: error getting call type";
-        delete transSettings;
+        qWarning() << QString("Core::sendAllFileData: Nothing to read from file: %1").arg(file->file->errorString());
+        delete[] data;
+        file->sendTimer->start(TOX_FILE_INTERVAL);
         return;
     }
-
-    if (transSettings->call_type == TypeVideo)
+    if (tox_file_send_data(core->tox, file->friendId, file->fileNum, data, readSize) == -1)
     {
-        qDebug() << QString("Core: AV invite from %1 with video").arg(friendId);
-        emit static_cast<Core*>(core)->avInvite(friendId, call_index, true);
+        //qWarning("Core::fileHeartbeat: Error sending data chunk");
+        //core->process();
+        delete[] data;
+        QThread::msleep(1);
+        file->sendTimer->start(TOX_FILE_INTERVAL);
+        return;
+    }
+    delete[] data;
+    file->bytesSent += readSize;
+    //qDebug() << QString("Core::fileHeartbeat: sent %1/%2 bytes").arg(file->bytesSent).arg(file->fileData.size());
+
+    if (file->bytesSent < file->filesize)
+    {
+        file->sendTimer->start(TOX_FILE_INTERVAL);
+        return;
     }
     else
     {
-        qDebug() << QString("Core: AV invite from %1 without video").arg(friendId);
-        emit static_cast<Core*>(core)->avInvite(friendId, call_index, false);
+        qDebug("Core: File transfer finished");
+        file->sendTimer->disconnect();
+        delete file->sendTimer;
+        file->sendTimer = nullptr;
+        tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
+        emit core->fileTransferFinished(*file);
     }
-
-    delete transSettings;
-}
-
-void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-    
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV start";
-        return;
-    }
-
-    ToxAvCSettings* transSettings = new ToxAvCSettings;
-    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
-    if (err != ErrorNone)
-    {
-        qWarning() << "Core::onAvStart: error getting call type";
-        delete transSettings;
-        return;
-    }
-    
-    if (transSettings->call_type == TypeVideo)
-    {
-        qDebug() << QString("Core: AV start from %1 with video").arg(friendId);
-        prepareCall(friendId, call_index, toxav, true);
-        emit static_cast<Core*>(core)->avStart(friendId, call_index, true);
-    }
-    else
-    {
-        qDebug() << QString("Core: AV start from %1 without video").arg(friendId);
-        prepareCall(friendId, call_index, toxav, false);
-        emit static_cast<Core*>(core)->avStart(friendId, call_index, false);
-    }
-    
-    delete transSettings;
-}
-
-void Core::onAvCancel(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV cancel";
-        return;
-    }
-    qDebug() << QString("Core: AV cancel from %1").arg(friendId);
-
-    emit static_cast<Core*>(core)->avCancel(friendId, call_index);
-}
-
-void Core::onAvReject(void*, int32_t, void*)
-{
-    qDebug() << "Core: AV reject";
-}
-
-void Core::onAvEnd(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV end";
-        return;
-    }
-    qDebug() << QString("Core: AV end from %1").arg(friendId);
-
-    cleanupCall(call_index);
-
-    emit static_cast<Core*>(core)->avEnd(friendId, call_index);
-}
-
-void Core::onAvRinging(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV ringing";
-        return;
-    }
-
-    if (calls[call_index].videoEnabled)
-    {
-        qDebug() << QString("Core: AV ringing with %1 with video").arg(friendId);
-        emit static_cast<Core*>(core)->avRinging(friendId, call_index, true);
-    }
-    else
-    {
-        qDebug() << QString("Core: AV ringing with %1 without video").arg(friendId);
-        emit static_cast<Core*>(core)->avRinging(friendId, call_index, false);
-    }
-}
-
-void Core::onAvStarting(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV starting";
-        return;
-    }
-    
-    ToxAvCSettings* transSettings = new ToxAvCSettings;
-    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
-    if (err != ErrorNone)
-    {
-        qWarning() << "Core::onAvStarting: error getting call type";
-        delete transSettings;
-        return;
-    }
-    
-    if (transSettings->call_type == TypeVideo)
-    {
-        qDebug() << QString("Core: AV starting from %1 with video").arg(friendId);
-        prepareCall(friendId, call_index, toxav, true);
-        emit static_cast<Core*>(core)->avStarting(friendId, call_index, true);
-    }
-    else
-    {
-        qDebug() << QString("Core: AV starting from %1 without video").arg(friendId);
-        prepareCall(friendId, call_index, toxav, false);
-        emit static_cast<Core*>(core)->avStarting(friendId, call_index, false);
-    }
-
-    delete transSettings;
-}
-
-void Core::onAvEnding(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV ending";
-        return;
-    }
-    qDebug() << QString("Core: AV ending from %1").arg(friendId);
-
-    cleanupCall(call_index);
-
-    emit static_cast<Core*>(core)->avEnding(friendId, call_index);
-}
-
-void Core::onAvRequestTimeout(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV request timeout";
-        return;
-    }
-    qDebug() << QString("Core: AV request timeout with %1").arg(friendId);
-
-    cleanupCall(call_index);
-
-    emit static_cast<Core*>(core)->avRequestTimeout(friendId, call_index);
-}
-
-void Core::onAvPeerTimeout(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV peer timeout";
-        return;
-    }
-    qDebug() << QString("Core: AV peer timeout with %1").arg(friendId);
-
-    cleanupCall(call_index);
-
-    emit static_cast<Core*>(core)->avPeerTimeout(friendId, call_index);
-}
-
-void Core::onAvMediaChange(void*, int32_t, void*)
-{
-    // HALP, PLS COMPLETE MEH
-    qWarning() << "If you see this, please complain on GitHub about seeing me! (Don't forget to say what caused me!)";
-}
-
-void Core::answerCall(int callId)
-{    
-    int friendId = toxav_get_peer_id(toxav, callId, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV answer peer ID";
-        return;
-    }
-
-    ToxAvCSettings* transSettings = new ToxAvCSettings;
-    int err = toxav_get_peer_csettings(toxav, callId, 0, transSettings);
-    if (err != ErrorNone)
-    {
-         qWarning() << "Core::answerCall: error getting call settings";
-         delete transSettings;
-         return;
-    }
-
-    if (transSettings->call_type == TypeVideo)
-    {
-        qDebug() << QString("Core: answering call %1 with video").arg(callId);
-        toxav_answer(toxav, callId, transSettings);
-    }
-    else
-    {
-        qDebug() << QString("Core: answering call %1 without video").arg(callId);
-        toxav_answer(toxav, callId, transSettings);
-    }
-    
-    delete transSettings;
-}
-
-void Core::hangupCall(int callId)
-{
-    qDebug() << QString("Core: hanging up call %1").arg(callId);
-    calls[callId].active = false;
-    toxav_hangup(toxav, callId);
-}
-
-void Core::startCall(int friendId, bool video)
-{
-    int callId;
-    ToxAvCSettings cSettings = av_DefaultSettings;
-    cSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
-    cSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
-    if (video)
-    {
-        qDebug() << QString("Core: Starting new call with %1 with video").arg(friendId);
-        cSettings.call_type = TypeVideo;
-        toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME);
-        calls[callId].videoEnabled=true;
-    }
-    else
-    {
-        qDebug() << QString("Core: Starting new call with %1 without video").arg(friendId);
-        cSettings.call_type = TypeAudio;
-        toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME);
-        calls[callId].videoEnabled=false;
-    }
-}
-
-void Core::cancelCall(int callId, int friendId)
-{
-    qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
-    calls[callId].active = false;
-    toxav_cancel(toxav, callId, friendId, 0);
-}
-
-void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled)
-{
-    qDebug() << QString("Core: preparing call %1").arg(callId);
-    calls[callId].callId = callId;
-    calls[callId].friendId = friendId;
-    // the following three lines are also now redundant from startCall, but are
-    // necessary there for outbound and here for inbound
-    calls[callId].codecSettings = av_DefaultSettings;
-    calls[callId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
-    calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
-    calls[callId].videoEnabled = videoEnabled;
-    toxav_prepare_transmission(toxav, callId, av_jbufdc, av_VADd, videoEnabled);
-
-    // Prepare output
-    QAudioFormat format;
-    format.setSampleRate(calls[callId].codecSettings.audio_sample_rate);
-    format.setChannelCount(calls[callId].codecSettings.audio_channels);
-    format.setSampleSize(16);
-    format.setCodec("audio/pcm");
-    format.setByteOrder(QAudioFormat::LittleEndian);
-    format.setSampleType(QAudioFormat::SignedInt);
-    if (!QAudioDeviceInfo::defaultOutputDevice().isFormatSupported(format))
-    {
-        calls[callId].audioOutput = nullptr;
-        qWarning() << "Core: Raw audio format not supported by output backend, cannot play audio.";
-    }
-    else if (calls[callId].audioOutput==nullptr)
-    {
-        calls[callId].audioOutput = new QAudioOutput(format);
-        calls[callId].audioOutput->setBufferSize(1900*30); // Make this bigger to get less underflows, but more latency
-        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
-        int error = calls[callId].audioOutput->error();
-        if (error != QAudio::NoError)
-        {
-            qWarning() << QString("Core: Error %1 when starting audio output").arg(error);
-        }
-    }
-
-    // Start input
-    if (!QAudioDeviceInfo::defaultInputDevice().isFormatSupported(format))
-    {
-        calls[callId].audioInput = nullptr;
-        qWarning() << "Default input format not supported, cannot record audio";
-    }
-    else if (calls[callId].audioInput==nullptr)
-    {
-        calls[callId].audioInput = new QAudioInput(format);
-        calls[callId].audioInputDevice = calls[callId].audioInput->start();
-    }
-
-    // Go
-    calls[callId].active = true;
-
-    if (calls[callId].audioInput != nullptr)
-    {
-        calls[callId].sendAudioTimer->setInterval(2);
-        calls[callId].sendAudioTimer->setSingleShot(true);
-        connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
-        calls[callId].sendAudioTimer->start();
-    }
-
-    if (calls[callId].videoEnabled)
-    {
-        calls[callId].sendVideoTimer->setInterval(50);
-        calls[callId].sendVideoTimer->setSingleShot(true);
-        calls[callId].sendVideoTimer->start();
-
-        Widget::getInstance()->getCamera()->suscribe();
-    }
-    else if (calls[callId].audioInput == nullptr && calls[callId].audioOutput == nullptr)
-    {
-        qWarning() << "Audio only call can neither play nor record audio, killing call";
-        toxav_hangup(toxav, callId);
-    }
-}
-
-void Core::cleanupCall(int callId)
-{
-    qDebug() << QString("Core: cleaning up call %1").arg(callId);
-    calls[callId].active = false;
-    disconnect(calls[callId].sendAudioTimer,0,0,0);
-    calls[callId].sendAudioTimer->stop();
-    calls[callId].sendVideoTimer->stop();
-    if (calls[callId].audioOutput != nullptr)
-    {
-        calls[callId].audioOutput->stop();
-    }
-    if (calls[callId].audioInput != nullptr)
-    {
-        calls[callId].audioInput->stop();
-    }
-    if (calls[callId].videoEnabled)
-        Widget::getInstance()->getCamera()->unsuscribe();
-    calls[callId].audioBuffer.clear();
-}
-
-void Core::playCallAudio(ToxAv*, int32_t callId, int16_t *data, int length, void *user_data)
-{
-    Q_UNUSED(user_data);
-
-    if (!calls[callId].active || calls[callId].audioOutput == nullptr)
-        return;
-    calls[callId].audioBuffer.write((char*)data, length*2);
-    int state = calls[callId].audioOutput->state();
-    if (state != QAudio::ActiveState)
-    {
-        qDebug() << QString("Core: Audio state is %1").arg(state);
-        calls[callId].audioOutput->start(&calls[callId].audioBuffer);
-    }
-    int error = calls[callId].audioOutput->error();
-    if (error != QAudio::NoError)
-        qWarning() << QString("Core::playCallAudio: Error: %1").arg(error);
-}
-
-void Core::sendCallAudio(int callId, ToxAv* toxav)
-{
-    if (!calls[callId].active || calls[callId].audioInput == nullptr)
-        return;
-    int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
-    uint8_t buf[framesize*2], dest[framesize*2];
-    int bytesReady = calls[callId].audioInput->bytesReady();
-    if (bytesReady >= framesize*2)
-    {
-        calls[callId].audioInputDevice->read((char*)buf, framesize*2);
-        int result = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize);
-        if (result < 0)
-        {
-            qWarning() << QString("Core: Unable to prepare audio frame, error %1").arg(result);
-            calls[callId].sendAudioTimer->start();
-            return;
-        }
-        result = toxav_send_audio(toxav, callId, dest, result);
-        if (result < 0)
-        {
-            qWarning() << QString("Core: Unable to send audio frame, error %1").arg(result);
-            calls[callId].sendAudioTimer->start();
-            return;
-        }
-        calls[callId].sendAudioTimer->start();
-    }
-    else
-        calls[callId].sendAudioTimer->start();
-}
-
-void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_data)
-{
-    Q_UNUSED(user_data);
-
-    if (!calls[callId].active || !calls[callId].videoEnabled)
-        return;
-
-    if (videoBusyness >= 1)
-        qWarning() << "Core: playCallVideo: Busy, dropping current frame";
-    else
-        emit Widget::getInstance()->getCore()->videoFrameReceived(img);
-    vpx_img_free(img);
-}
-
-void Core::sendCallVideo(int callId)
-{
-    if (!calls[callId].active || !calls[callId].videoEnabled)
-        return;
-
-    vpx_image frame = camera->getLastVPXImage();
-    if (frame.w && frame.h)
-    {
-        int result;
-        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, videobufsize, &frame)) < 0)
-        {
-            qDebug() << QString("Core: toxav_prepare_video_frame: error %1").arg(result);
-            vpx_img_free(&frame);
-            calls[callId].sendVideoTimer->start();
-            return;
-        }
-
-        if((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
-            qDebug() << QString("Core: toxav_send_video error: %1").arg(result);
-
-        vpx_img_free(&frame);
-    }
-    else
-        qDebug("Core::sendCallVideo: Invalid frame (bad camera ?)");
-
-    calls[callId].sendVideoTimer->start();
 }
 
 void Core::groupInviteFriend(int friendId, int groupId)
@@ -1510,22 +1044,4 @@ void Core::groupInviteFriend(int friendId, int groupId)
 void Core::createGroup()
 {
     emit emptyGroupCreated(tox_add_groupchat(tox));
-}
-
-void Core::increaseVideoBusyness()
-{
-    videoBusyness++;
-}
-
-void Core::decreaseVideoBusyness()
-{
-  videoBusyness--;
-}
-
-void Core::micMuteToggle(int callId)
-{
-  if (calls[callId].audioInput->state() == QAudio::ActiveState)
-    calls[callId].audioInput->suspend();
-  else
-    calls[callId].audioInput->start();
 }

@@ -91,13 +91,13 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="282"/>
+        <location filename="../widget/form/chatform.cpp" line="283"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="613"/>
-        <location filename="../widget/form/chatform.cpp" line="619"/>
+        <location filename="../widget/form/chatform.cpp" line="620"/>
+        <location filename="../widget/form/chatform.cpp" line="626"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -113,19 +113,19 @@
 <context>
     <name>FileTransfertWidget</name>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="276"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="281"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Salva file</translation>
     </message>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="287"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="292"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="287"/>
+        <location filename="../widget/filetransfertwidget.cpp" line="292"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Non hai sufficienti permessi per scrivere in questa locazione. Scegli un&apos;altra posizione, o annulla il salvataggio.</translation>

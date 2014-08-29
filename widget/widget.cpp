@@ -219,7 +219,9 @@ Widget::~Widget()
     core->saveConfiguration();
     instance = nullptr;
     coreThread->exit();
-    coreThread->wait();
+    coreThread->wait(500); // In case of deadlock (can happen with QtAudio/PA bugs)
+    if (!coreThread->isFinished())
+        coreThread->terminate();
     delete core;
     delete camview;
 
