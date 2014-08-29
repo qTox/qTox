@@ -411,6 +411,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 {
+    audioInputFlag = true;
     if (FriendId != f->friendId)
         return;
     callId = CallId;
@@ -437,6 +438,7 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvCancel(int FriendId, int)
 {
+    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
     callButton->disconnect();
@@ -452,6 +454,7 @@ void ChatForm::onAvCancel(int FriendId, int)
 
 void ChatForm::onAvEnd(int FriendId, int)
 {
+    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
     callButton->disconnect();
@@ -492,6 +495,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvStarting(int FriendId, int, bool video)
 {
+    audioInputFlag = true;
     if (FriendId != f->friendId)
         return;
     callButton->disconnect();
@@ -517,6 +521,7 @@ void ChatForm::onAvStarting(int FriendId, int, bool video)
 
 void ChatForm::onAvEnding(int FriendId, int)
 {
+    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
     callButton->disconnect();
@@ -534,6 +539,7 @@ void ChatForm::onAvEnding(int FriendId, int)
 
 void ChatForm::onAvRequestTimeout(int FriendId, int)
 {
+    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
     callButton->disconnect();
@@ -551,6 +557,7 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
 
 void ChatForm::onAvPeerTimeout(int FriendId, int)
 {
+    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
     callButton->disconnect();
@@ -568,13 +575,13 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 
 void ChatForm::onAnswerCallTriggered()
 {
-    audioInputFlag = !audioInputFlag;
+    audioInputFlag = true;
     emit answerCall(callId);
 }
 
 void ChatForm::onHangupCallTriggered()
 {
-    audioInputFlag = !audioInputFlag;
+    audioInputFlag = false;
     emit hangupCall(callId);
     micButton->setObjectName("green");
     micButton->style()->polish(micButton);
@@ -582,7 +589,7 @@ void ChatForm::onHangupCallTriggered()
 
 void ChatForm::onCallTriggered()
 {
-  audioInputFlag = !audioInputFlag;
+  audioInputFlag = true;
   callButton->disconnect();
   videoButton->disconnect();
   emit startCall(f->friendId);
@@ -590,6 +597,7 @@ void ChatForm::onCallTriggered()
 
 void ChatForm::onVideoCallTriggered()
 {
+    audioInputFlag = true;
     callButton->disconnect();
     videoButton->disconnect();
     emit startVideoCall(f->friendId, true);
@@ -597,7 +605,7 @@ void ChatForm::onVideoCallTriggered()
 
 void ChatForm::onCancelCallTriggered()
 {
-    audioInputFlag = !audioInputFlag;
+    audioInputFlag = false;
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -682,18 +690,18 @@ void ChatForm::onEmoteInsertRequested(QString str)
 
 void ChatForm::onMicMuteToggle()
 {
-  if (audioInputFlag == true)
+    if (audioInputFlag == true)
     {
-      emit micMuteToggle(callId);
-      if (micButton->objectName() == "red")
+        emit micMuteToggle(callId);
+        if (micButton->objectName() == "red")
         {
-          micButton->setObjectName("green");
-          micButton->style()->polish(micButton);
+            micButton->setObjectName("green");
+            micButton->style()->polish(micButton);
         }
-      else
+        else
         {
-          micButton->setObjectName("red");
-          micButton->style()->polish(micButton);
+            micButton->setObjectName("red");
+            micButton->style()->polish(micButton);
         }
     }
 }
