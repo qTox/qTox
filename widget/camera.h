@@ -41,7 +41,6 @@ public:
     void suscribe(); ///< Call this once before trying to get frames
     void unsuscribe(); ///< Call this once when you don't need frames anymore
     cv::Mat getLastFrame(); ///< Get the last captured frame
-    QVideoFrame getLastVideoFrame(); ///< Get the last captured frame
     QImage getLastImage(); ///< Convert the last frame to a QImage (can be expensive !)
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
     bool isFormatSupported(const QVideoSurfaceFormat & format) const;
