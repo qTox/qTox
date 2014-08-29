@@ -311,6 +311,7 @@ void ChatForm::startFileSend(ToxFile file)
 {
     if (file.friendId != f->friendId)
         return;
+
     QLabel *author = new QLabel(Widget::getInstance()->getUsername());
     QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
     QScrollBar* scroll = chatArea->verticalScrollBar();
@@ -347,6 +348,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 {
     if (file.friendId != f->friendId)
         return;
+
     QLabel *author = new QLabel(f->getName());
     QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
     QScrollBar* scroll = chatArea->verticalScrollBar();
@@ -380,6 +382,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
+
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
@@ -411,9 +414,10 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 {
-    audioInputFlag = true;
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = true;
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
@@ -438,9 +442,12 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvCancel(int FriendId, int)
 {
-    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -454,9 +461,12 @@ void ChatForm::onAvCancel(int FriendId, int)
 
 void ChatForm::onAvEnd(int FriendId, int)
 {
-    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -472,6 +482,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
+
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
@@ -495,9 +506,9 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvStarting(int FriendId, int, bool video)
 {
-    audioInputFlag = true;
     if (FriendId != f->friendId)
         return;
+
     callButton->disconnect();
     videoButton->disconnect();
     if (video)
@@ -521,9 +532,12 @@ void ChatForm::onAvStarting(int FriendId, int, bool video)
 
 void ChatForm::onAvEnding(int FriendId, int)
 {
-    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -539,9 +553,12 @@ void ChatForm::onAvEnding(int FriendId, int)
 
 void ChatForm::onAvRequestTimeout(int FriendId, int)
 {
-    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -557,9 +574,12 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
 
 void ChatForm::onAvPeerTimeout(int FriendId, int)
 {
-    audioInputFlag = false;
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -618,6 +638,8 @@ void ChatForm::onVideoCallTriggered()
 void ChatForm::onCancelCallTriggered()
 {
     audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
