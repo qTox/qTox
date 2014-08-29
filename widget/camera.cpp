@@ -20,6 +20,8 @@
 #include <QVideoEncoderSettings>
 #include <QVideoEncoderSettingsControl>
 
+using namespace cv;
+
 static inline void fromYCbCrToRGB(
         uint8_t Y, uint8_t Cb, uint8_t Cr,
         uint8_t& R, uint8_t& G, uint8_t& B)
@@ -75,7 +77,7 @@ void Camera::suscribe()
     if (refcount <= 0)
     {
         refcount = 1;
-        camera->start();
+        cap.open(0);
     }
     else
         refcount++;
@@ -87,14 +89,21 @@ void Camera::unsuscribe()
 
     if (refcount <= 0)
     {
-        camera->stop();
+        cap.release();
         refcount = 0;
     }
 }
 
-QVideoFrame Camera::getLastFrame()
+QVideoFrame Camera::getLastVideoFrame()
 {
     return lastFrame;
+}
+
+Mat Camera::getLastFrame()
+{
+    Mat frame;
+    cap >> frame;
+    return frame;
 }
 
 bool Camera::start(const QVideoSurfaceFormat &format)

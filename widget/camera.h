@@ -21,6 +21,7 @@
 #include <QVideoFrame>
 #include <QAbstractVideoSurface>
 #include "vpx/vpx_image.h"
+#include "opencv2/opencv.hpp"
 
 /**
  * This class is a wrapper to share a camera's captured video frames
@@ -39,7 +40,8 @@ public:
     Camera();
     void suscribe(); ///< Call this once before trying to get frames
     void unsuscribe(); ///< Call this once when you don't need frames anymore
-    QVideoFrame getLastFrame(); ///< Get the last captured frame
+    cv::Mat getLastFrame(); ///< Get the last captured frame
+    QVideoFrame getLastVideoFrame(); ///< Get the last captured frame
     QImage getLastImage(); ///< Convert the last frame to a QImage (can be expensive !)
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
     bool isFormatSupported(const QVideoSurfaceFormat & format) const;
@@ -58,6 +60,8 @@ private:
     QVideoFrame lastFrame;
     int frameFormat;
     QList<QVideoFrame::PixelFormat> supportedFormats;
+
+    cv::VideoCapture cap;
 };
 
 #endif // CAMERA_H
