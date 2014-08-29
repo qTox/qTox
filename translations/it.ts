@@ -419,19 +419,22 @@
         <translation type="obsolete">Ctrl+Q</translation>
     </message>
     <message>
+        <location filename="../widget/widget.cpp" line="128"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="obsolete">Online</translation>
+        <translation>Online</translation>
     </message>
     <message>
+        <location filename="../widget/widget.cpp" line="130"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="obsolete">Assente</translation>
+        <translation>Assente</translation>
     </message>
     <message>
+        <location filename="../widget/widget.cpp" line="132"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="obsolete">Occupato</translation>
+        <translation>Occupato</translation>
     </message>
 </context>
 </TS>

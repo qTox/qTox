@@ -125,11 +125,11 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->setStyleSheet(Style::get(":/ui/statusButton/statusButton.css"));
 
     QMenu *statusButtonMenu = new QMenu(ui->statusButton);
-    QAction* setStatusOnline = statusButtonMenu->addAction(tr("Online","Button to set your status to 'Online'"));
+    QAction* setStatusOnline = statusButtonMenu->addAction(Widget::tr("Online","Button to set your status to 'Online'"));
     setStatusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
-    QAction* setStatusAway = statusButtonMenu->addAction(tr("Away","Button to set your status to 'Away'"));
+    QAction* setStatusAway = statusButtonMenu->addAction(Widget::tr("Away","Button to set your status to 'Away'"));
     setStatusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
-    QAction* setStatusBusy = statusButtonMenu->addAction(tr("Busy","Button to set your status to 'Busy'"));
+    QAction* setStatusBusy = statusButtonMenu->addAction(Widget::tr("Busy","Button to set your status to 'Busy'"));
     setStatusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
     ui->statusButton->setMenu(statusButtonMenu);
 
