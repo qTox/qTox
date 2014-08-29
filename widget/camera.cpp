@@ -190,7 +190,7 @@ vpx_image Camera::getLastVPXImage()
     int w = frame.size().width, h = frame.size().height;
     vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched
 
-    qWarning() << "Camera::getLastVPXImage: Using experimental RGB32 conversion code" << w << ","<<h;
+    //qWarning() << "Camera::getLastVPXImage: Using experimental RGB32 conversion code" << w << ","<<h;
     size_t i=0, j=0;
 
     for( int line = 0; line < h; ++line )
@@ -205,8 +205,8 @@ vpx_image Camera::getLastVPXImage()
                 uint8_t b = srcrow[x][0];
 
                 img.planes[VPX_PLANE_Y][i] = ((66*r + 129*g + 25*b) >> 8) + 16;
-                img.planes[VPX_PLANE_U][j] = ((-38*r + -74*g + 112*b) >> 8) + 128;
-                img.planes[VPX_PLANE_V][j] = ((112*r + -94*g + -18*b) >> 8) + 128;
+                img.planes[VPX_PLANE_V][j] = ((-38*r + -74*g + 112*b) >> 8) + 128;
+                img.planes[VPX_PLANE_U][j] = ((112*r + -94*g + -18*b) >> 8) + 128;
                 i++;
                 j++;
 

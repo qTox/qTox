@@ -64,7 +64,6 @@ void SelfCamView::showEvent(QShowEvent* event)
 
 void SelfCamView::updateDisplay()
 {
-    cam->getLastVPXImage();
     displayLabel->setPixmap(QPixmap::fromImage(cam->getLastImage()));
 }
 
