@@ -340,7 +340,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferFinished(*file);
         // confirm receive is complete
-        tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
+        tox_file_send_control(tox, file->friendId, 1, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
         removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else
@@ -997,14 +997,20 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
     {
         qWarning() << QString("Core::sendAllFileData: Error reading from file: %1").arg(file->file->errorString());
         delete[] data;
-        file->sendTimer->start(TOX_FILE_INTERVAL);
+        file->status = ToxFile::STOPPED;
+        emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+        tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
+        removeFileFromQueue(true, file->friendId, file->fileNum);
         return;
     }
     else if (readSize == 0)
     {
         qWarning() << QString("Core::sendAllFileData: Nothing to read from file: %1").arg(file->file->errorString());
         delete[] data;
-        file->sendTimer->start(TOX_FILE_INTERVAL);
+        file->status = ToxFile::STOPPED;
+        emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+        tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
+        removeFileFromQueue(true, file->friendId, file->fileNum);
         return;
     }
     if (tox_file_send_data(core->tox, file->friendId, file->fileNum, data, readSize) == -1)
@@ -1027,12 +1033,12 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
     }
     else
     {
-        qDebug("Core: File transfer finished");
+        //qDebug("Core: File transfer finished");
         file->sendTimer->disconnect();
         delete file->sendTimer;
         file->sendTimer = nullptr;
         tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
-        emit core->fileTransferFinished(*file);
+        //emit core->fileTransferFinished(*file);
     }
 }
 
