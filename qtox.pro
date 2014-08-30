@@ -45,7 +45,7 @@ win32 {
 } macx {
     LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
 } else {
-    LIBS += -L$$PWD/libs/lib/ -Wl,-Bstatic -ltoxcore -ltoxav -Wl,-Bdynamic -lopus -lsodium -lvpx -lopenal -lopencv_core -lopencv_highgui
+    LIBS += -L$$PWD/libs/lib/ -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -Wl,-Bdynamic -lopus -lvpx -lopenal -lopencv_core -lopencv_highgui
 }
 
 #### Static linux build
