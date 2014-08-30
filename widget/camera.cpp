@@ -15,10 +15,7 @@
 */
 
 #include "camera.h"
-#include <QVideoSurfaceFormat>
 #include <QMessageBox>
-#include <QVideoEncoderSettings>
-#include <QVideoEncoderSettingsControl>
 
 using namespace cv;
 

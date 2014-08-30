@@ -8,6 +8,7 @@ int Core::videoBusyness;
 
 ALCdevice* Core::alOutDev, *Core::alInDev;
 ALCcontext* Core::alContext;
+ALuint Core::alMainSource;
 
 void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled)
 {

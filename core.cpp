@@ -78,6 +78,8 @@ Core::Core(Camera* cam, QThread *coreThread) :
             qWarning() << "Core: Cannot create output audio context";
             alcCloseDevice(alOutDev);
         }
+        else
+            alGenSources(1, &alMainSource);
     }
     alInDev = alcCaptureOpenDevice(NULL,av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
                                    (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);

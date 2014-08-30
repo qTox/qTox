@@ -15,13 +15,9 @@
 */
 
 #include "selfcamview.h"
-#include <QActionGroup>
-#include <QMessageBox>
 #include <QCloseEvent>
 #include <QShowEvent>
-#include <QVideoFrame>
 
-#include "videosurface.h"
 #include "widget.h"
 
 using namespace cv;

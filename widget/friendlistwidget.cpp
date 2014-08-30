@@ -14,6 +14,7 @@
     See the COPYING file for more details.
 */
 #include "friendlistwidget.h"
+#include <QDebug>
 
 FriendListWidget::FriendListWidget(QWidget *parent) :
     QWidget(parent)

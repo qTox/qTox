@@ -31,10 +31,6 @@
 #include <QFile>
 #include <QList>
 #include <QByteArray>
-#include <QFuture>
-#include <QBuffer>
-#include <QAudioOutput>
-#include <QAudioInput>
 
 #define TOXAV_MAX_CALLS 16
 #define GROUPCHAT_MAX_SIZE 32
@@ -304,6 +300,8 @@ private:
 
     static ALCdevice* alOutDev, *alInDev;
     static ALCcontext* alContext;
+public:
+    static ALuint alMainSource;
 };
 
 #endif // CORE_HPP

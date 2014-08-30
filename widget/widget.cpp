@@ -28,7 +28,6 @@
 #include "style.h"
 #include <QMessageBox>
 #include <QDebug>
-#include <QSound>
 #include <QTextStream>
 #include <QFile>
 #include <QString>
@@ -569,7 +568,21 @@ void Widget::updateFriendStatusLights(int friendId)
 void Widget::newMessageAlert()
 {
     QApplication::alert(this);
-    QSound::play(":audio/notification.wav");
+
+    static QFile sndFile(":audio/notification.wav");
+    static QByteArray sndData;
+    if (sndData.isEmpty())
+    {
+        sndFile.open(QIODevice::ReadOnly);
+        sndData = sndFile.readAll();
+        sndFile.close();
+    }
+
+    ALuint buffer;
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, AL_FORMAT_STEREO16, sndData.data(), sndData.size(), 44100);
+    alSourcei(core->alMainSource, AL_BUFFER, buffer);
+    alSourcePlay(core->alMainSource);
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
