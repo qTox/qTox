@@ -811,7 +811,7 @@ void Core::checkConnection()
 
 void Core::loadConfiguration()
 {
-    QString path = Settings::getSettingsDirPath() + '/' + CONFIG_FILE_NAME;
+    QString path = QDir(Settings::getSettingsDirPath()).filePath(CONFIG_FILE_NAME);
 
     QFile configurationFile(path);
 
@@ -862,7 +862,7 @@ void Core::saveConfiguration()
         return;
     }
 
-    path += '/' + CONFIG_FILE_NAME;
+    path = directory.filePath(CONFIG_FILE_NAME);
     QSaveFile configurationFile(path);
     if (!configurationFile.open(QIODevice::WriteOnly)) {
         qCritical() << "File " << path << " cannot be opened";

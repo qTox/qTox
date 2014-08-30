@@ -163,7 +163,7 @@ QIcon SmileyPack::getAsIcon(const QString &key)
 void SmileyPack::cacheSmiley(const QString &name)
 {
     QSize size(16, 16); // TODO: adapt to text size
-    QString filename = path % '/' % name;
+    QString filename = QDir(path).filePath(name);
     QImage img(filename);
 
     if (!img.isNull())

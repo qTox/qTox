@@ -278,7 +278,7 @@ void FileTransfertWidget::acceptRecvRequest()
     QString path;
     while (true)
     {
-        path = QFileDialog::getSaveFileName(this,tr("Save a file","Title of the file saving dialog"),QDir::currentPath()+'/'+filename->text());
+        path = QFileDialog::getSaveFileName(this, tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename->text()));
         if (path.isEmpty())
             return;
         else

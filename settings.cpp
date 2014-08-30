@@ -55,7 +55,7 @@ void Settings::load()
     if (portableSettings.exists())
         makeToxPortable=true;
 
-    QString filePath = getSettingsDirPath() + '/' + FILENAME;
+    QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
 
     //if no settings file exist -- use the default one
     QFile file(filePath);
@@ -125,7 +125,7 @@ void Settings::load()
 
 void Settings::save()
 {
-    QString filePath = getSettingsDirPath() + '/' + FILENAME;
+    QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
     save(filePath);
 }
 
@@ -194,7 +194,7 @@ QString Settings::getSettingsDirPath()
 #ifdef Q_OS_WIN
     return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
 #else
-    return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + '/' + "tox" + '/';
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + "tox");
 #endif
 }
 
