@@ -738,14 +738,23 @@ void Core::onFileTransferFinished(ToxFile file)
 
 void Core::bootstrapDht()
 {
-    qDebug() << "Core: Bootstraping DHT";
     const Settings& s = Settings::getInstance();
     QList<Settings::DhtServer> dhtServerList = s.getDhtServerList();
 
     int listSize = dhtServerList.size();
-    static int j = qrand() % listSize;
+    static int j = qrand() % listSize, n=0;
+
+    // We couldn't connect after trying 6 different nodes, let's try something else
+    if (n>3)
+    {
+        qDebug() << "Core: We're having trouble connecting to the DHT, slowing down";
+        bootstrapTimer->setInterval(TOX_BOOTSTRAP_INTERVAL*(n-1));
+    }
+    else
+        qDebug() << "Core: Connecting to the DHT ...";
+
     int i=0;
-    while (i<5)
+    while (i < (2 - (n>3)))
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
@@ -755,8 +764,10 @@ void Core::bootstrapDht()
         else
             qDebug() << "Core: Error bootstraping from "+dhtServer.name;
 
+        tox_do(tox);
         j++;
         i++;
+        n++;
     }
 }
 
