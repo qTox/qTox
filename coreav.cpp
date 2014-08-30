@@ -6,6 +6,9 @@ const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4}
 uint8_t* Core::videobuf;
 int Core::videoBusyness;
 
+ALCdevice* Core::alOutDev, *Core::alInDev;
+ALCcontext* Core::alContext;
+
 void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled)
 {
     qDebug() << QString("Core: preparing call %1").arg(callId);
@@ -20,33 +23,9 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].videoEnabled = videoEnabled;
     toxav_prepare_transmission(toxav, callId, av_jbufdc, av_VADd, videoEnabled);
 
-    // Audio output
-    calls[callId].alOutDev = alcOpenDevice(nullptr);
-    if (!calls[callId].alOutDev)
-    {
-        qWarning() << "Coreav: Cannot open output audio device, hanging up call";
-        toxav_hangup(toxav, callId);
-        return;
-    }
-    calls[callId].alContext=alcCreateContext(calls[callId].alOutDev,nullptr);
-    if (!alcMakeContextCurrent(calls[callId].alContext))
-    {
-        qWarning() << "Coreav: Cannot create output audio context, hanging up call";
-        alcCloseDevice(calls[callId].alOutDev);
-        toxav_hangup(toxav, callId);
-        return;
-    }
+    // Audio
     alGenSources(1, &calls[callId].alSource);
-
-    // Audio Input
-    calls[callId].alInDev = alcCaptureOpenDevice(NULL,av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16, (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
-    if (!calls[callId].alInDev)
-    {
-        qWarning() << "Coreav: Cannot open input audio device, hanging up call";
-        toxav_hangup(toxav, callId);
-        return;
-    }
-    alcCaptureStart(calls[callId].alInDev);
+    alcCaptureStart(alInDev);
 
     // Go
     calls[callId].active = true;
@@ -164,11 +143,7 @@ void Core::cleanupCall(int callId)
     calls[callId].sendVideoTimer->stop();
     if (calls[callId].videoEnabled)
         Widget::getInstance()->getCamera()->unsuscribe();
-    alcMakeContextCurrent(nullptr);
-    alcDestroyContext(calls[callId].alContext);
-    alcCloseDevice(calls[callId].alOutDev);
-    alcCaptureStop(calls[callId].alInDev);
-    alcCaptureCloseDevice(calls[callId].alInDev);
+    alcCaptureStop(alInDev);
 }
 
 void Core::playCallAudio(ToxAv* toxav, int32_t callId, int16_t *data, int samples, void *user_data)
@@ -199,10 +174,10 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
 
     bool frame = false;
     ALint samples;
-    alcGetIntegerv(calls[callId].alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
+    alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
     if(samples >= framesize)
     {
-        alcCaptureSamples(calls[callId].alInDev, buf, framesize);
+        alcCaptureSamples(alInDev, buf, framesize);
         frame = 1;
     }
 

@@ -63,6 +63,26 @@ Core::Core(Camera* cam, QThread *coreThread) :
         calls[i].sendVideoTimer->moveToThread(coreThread);
         connect(calls[i].sendVideoTimer, &QTimer::timeout, [this,i](){sendCallVideo(i);});
     }
+
+    // OpenAL init
+    alOutDev = alcOpenDevice(nullptr);
+    if (!alOutDev)
+    {
+        qWarning() << "Core: Cannot open output audio device";
+    }
+    else
+    {
+        alContext=alcCreateContext(alOutDev,nullptr);
+        if (!alcMakeContextCurrent(alContext))
+        {
+            qWarning() << "Core: Cannot create output audio context";
+            alcCloseDevice(alOutDev);
+        }
+    }
+    alInDev = alcCaptureOpenDevice(NULL,av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
+                                   (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
+    if (!alInDev)
+        qWarning() << "Core: Cannot open input audio device";
 }
 
 Core::~Core()
@@ -78,6 +98,16 @@ Core::~Core()
         delete[] videobuf;
         videobuf=nullptr;
     }
+
+    if (alContext)
+    {
+        alcMakeContextCurrent(nullptr);
+        alcDestroyContext(alContext);
+    }
+    if (alOutDev)
+        alcCloseDevice(alOutDev);
+    if (alInDev)
+        alcCaptureCloseDevice(alInDev);
 }
 
 void Core::start()

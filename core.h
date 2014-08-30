@@ -104,8 +104,6 @@ public:
     bool videoEnabled;
     bool active;
     bool muteMic;
-    ALCdevice* alOutDev, *alInDev;
-    ALCcontext* alContext;
     ALuint alSource;
 };
 
@@ -303,6 +301,9 @@ private:
     static const int videobufsize;
     static uint8_t* videobuf;
     static int videoBusyness; // Used to know when to drop frames
+
+    static ALCdevice* alOutDev, *alInDev;
+    static ALCcontext* alContext;
 };
 
 #endif // CORE_HPP
