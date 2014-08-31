@@ -3,4 +3,4 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/qmake.mk
 
-PREFIX=$(CURDIR)/debian/qtox/usr
+QMAKE=qmake STATICPKG=YES
