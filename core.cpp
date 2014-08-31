@@ -1087,8 +1087,8 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
         //qWarning("Core::fileHeartbeat: Error sending data chunk");
         //core->process();
         delete[] data;
-        QThread::msleep(1);
-        file->sendTimer->start(TOX_FILE_INTERVAL);
+        //QThread::msleep(1);
+        file->sendTimer->start(1+TOX_FILE_INTERVAL);
         return;
     }
     delete[] data;
