@@ -145,7 +145,6 @@ private:
     FriendWidget* activeFriendWidget;
     GroupWidget* activeGroupWidget;
     FriendListWidget* contactListWidget;
-    int isFriendWidgetActive, isGroupWidgetActive;
     SelfCamView* camview;
     Camera* camera;
     bool notify(QObject *receiver, QEvent *event);

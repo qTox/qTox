@@ -209,8 +209,6 @@ Widget::Widget(QWidget *parent)
     coreThread->start();
 
     friendForm.show(*ui);
-    isFriendWidgetActive = 0;
-    isGroupWidgetActive = 0;
 }
 
 Widget::~Widget()
@@ -325,16 +323,16 @@ void Widget::onTransferClicked()
 {
     hideMainForms();
     filesForm.show(*ui);
-    isFriendWidgetActive = 0;
-    isGroupWidgetActive = 0;
+    activeFriendWidget = nullptr;
+    activeGroupWidget = nullptr;
 }
 
 void Widget::onSettingsClicked()
 {
     hideMainForms();
     settingsForm.show(*ui);
-    isFriendWidgetActive = 0;
-    isGroupWidgetActive = 0;
+    activeFriendWidget = nullptr;
+    activeGroupWidget = nullptr;
 }
 
 void Widget::hideMainForms()
@@ -508,8 +506,7 @@ void Widget::onFriendWidgetClicked(FriendWidget *widget)
     }
     activeFriendWidget = widget;
     widget->setAsActiveChatroom();
-    isFriendWidgetActive = 1;
-    isGroupWidgetActive = 0;
+    activeGroupWidget = nullptr;
 
     if (f->hasNewEvents != 0)
         f->hasNewEvents = 0;
@@ -528,7 +525,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
     if (activeFriendWidget != nullptr)
     {
         Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
-        if (((f->friendId != f2->friendId) || isFriendWidgetActive == 0) || isWindowMinimized || !isActiveWindow())
+        if ((f->friendId != f2->friendId) || isWindowMinimized || !isActiveWindow())
         {
             f->hasNewEvents = 1;
             newMessageAlert();
@@ -612,7 +609,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
 
     g->chatForm->addGroupMessage(message, friendgroupnumber);
 
-    if ((isGroupWidgetActive != 1 || (activeGroupWidget && g->groupId != activeGroupWidget->groupId)) || isWindowMinimized || !isActiveWindow())
+    if (((activeGroupWidget && g->groupId != activeGroupWidget->groupId)) || isWindowMinimized || !isActiveWindow())
     {
         if (message.contains(core->getUsername(), Qt::CaseInsensitive))
         {
@@ -668,8 +665,7 @@ void Widget::onGroupWidgetClicked(GroupWidget* widget)
     }
     activeGroupWidget = widget;
     widget->setAsActiveChatroom();
-    isFriendWidgetActive = 0;
-    isGroupWidgetActive = 1;
+    activeFriendWidget = nullptr;
 
     if (g->hasNewMessages != 0)
     {
@@ -739,7 +735,7 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
     if (activeFriendWidget != nullptr)
     {
         Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
-        if ((f->friendId != f2->friendId) || isFriendWidgetActive == 0)
+        if (f->friendId != f2->friendId)
             return false;
     }
     else
@@ -765,13 +761,13 @@ bool Widget::event(QEvent * e)
             this->style()->polish(this);
         }
         isWindowMinimized = 0;
-        if (isFriendWidgetActive && activeFriendWidget != nullptr)
+        if (activeFriendWidget != nullptr)
         {
             Friend* f = FriendList::findFriend(activeFriendWidget->friendId);
             f->hasNewEvents = 0;
             f->widget->updateStatusLight();
         }
-        else if (isGroupWidgetActive && activeGroupWidget != nullptr)
+        else if (activeGroupWidget != nullptr)
         {
             Group* g = GroupList::findGroup(activeGroupWidget->groupId);
             g->hasNewMessages = 0;
