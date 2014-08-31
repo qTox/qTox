@@ -376,6 +376,13 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransfertWidget::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransfertWidget::onFileTransferCancelled);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
+
+    if (!f->widget->isActive())
+    {
+        f->hasNewEvents = 1;
+        // FIXME: add sound alert, as for incoming message
+    }
+    f->widget->updateStatusLight();
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
@@ -407,7 +414,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     if (!w->isFriendWidgetCurActiveWidget(f))
     {
         w->newMessageAlert();
-        f->hasNewMessages=true;
+        f->hasNewEvents=true;
         f->widget->updateStatusLight();
     }
 }

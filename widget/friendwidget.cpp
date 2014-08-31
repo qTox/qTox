@@ -211,20 +211,20 @@ void FriendWidget::updateStatusLight()
     Friend* f = FriendList::findFriend(friendId);
     Status status = f->friendStatus;
 
-    if (status == Status::Online && f->hasNewMessages == 0)
+    if (status == Status::Online && f->hasNewEvents == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-    else if (status == Status::Online && f->hasNewMessages == 1)
+    else if (status == Status::Online && f->hasNewEvents == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-    else if (status == Status::Away && f->hasNewMessages == 0)
+    else if (status == Status::Away && f->hasNewEvents == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
-    else if (status == Status::Away && f->hasNewMessages == 1)
+    else if (status == Status::Away && f->hasNewEvents == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
-    else if (status == Status::Busy && f->hasNewMessages == 0)
+    else if (status == Status::Busy && f->hasNewEvents == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
-    else if (status == Status::Busy && f->hasNewMessages == 1)
+    else if (status == Status::Busy && f->hasNewEvents == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
-    else if (status == Status::Offline && f->hasNewMessages == 0)
+    else if (status == Status::Offline && f->hasNewEvents == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
-    else if (status == Status::Offline && f->hasNewMessages == 1)
+    else if (status == Status::Offline && f->hasNewEvents == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.png"));
 }

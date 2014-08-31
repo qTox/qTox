@@ -511,8 +511,8 @@ void Widget::onFriendWidgetClicked(FriendWidget *widget)
     isFriendWidgetActive = 1;
     isGroupWidgetActive = 0;
 
-    if (f->hasNewMessages != 0)
-        f->hasNewMessages = 0;
+    if (f->hasNewEvents != 0)
+        f->hasNewEvents = 0;
 
     f->widget->updateStatusLight();
 }
@@ -530,13 +530,13 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
         Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
         if (((f->friendId != f2->friendId) || isFriendWidgetActive == 0) || isWindowMinimized || !isActiveWindow())
         {
-            f->hasNewMessages = 1;
+            f->hasNewEvents = 1;
             newMessageAlert();
         }
     }
     else
     {
-        f->hasNewMessages = 1;
+        f->hasNewEvents = 1;
         newMessageAlert();
     }
 
@@ -768,7 +768,7 @@ bool Widget::event(QEvent * e)
         if (isFriendWidgetActive && activeFriendWidget != nullptr)
         {
             Friend* f = FriendList::findFriend(activeFriendWidget->friendId);
-            f->hasNewMessages = 0;
+            f->hasNewEvents = 0;
             f->widget->updateStatusLight();
         }
         else if (isGroupWidgetActive && activeGroupWidget != nullptr)
