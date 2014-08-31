@@ -16,6 +16,7 @@
 
 #include "settings.h"
 #include "smileypack.h"
+#include "widget/widget.h"
 
 #include <QApplication>
 #include <QDir>
@@ -75,6 +76,16 @@ void Settings::load()
             server.address = s.value("address").toString();
             server.port = s.value("port").toInt();
             dhtServerList << server;
+        }
+        s.endArray();
+    s.endGroup();
+
+    friendAddresses.clear();
+    s.beginGroup("Friends");
+        int size = s.beginReadArray("fullAddresses");
+        for (int i = 0; i < size; i ++) {
+            s.setArrayIndex(i);
+            friendAddresses.append(s.value("addr").toString());
         }
         s.endArray();
     s.endGroup();
@@ -143,6 +154,15 @@ void Settings::save(QString path)
             s.setValue("userId", dhtServerList[i].userId);
             s.setValue("address", dhtServerList[i].address);
             s.setValue("port", dhtServerList[i].port);
+        }
+        s.endArray();
+    s.endGroup();
+
+    s.beginGroup("Friends");
+        s.beginWriteArray("fullAddresses", friendAddresses.size());
+        for (int i = 0; i < friendAddresses.size(); i ++) {
+            s.setArrayIndex(i);
+            s.setValue("addr", friendAddresses[i]);
         }
         s.endArray();
     s.endGroup();

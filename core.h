@@ -118,6 +118,7 @@ public:
     int getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
     QList<QString> getGroupPeerNames(int groupId) const;
+    QString getFriendAddress(int friendNumber) const;
     int joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key) const;
     void quitGroupChat(int groupId) const;
     void dispatchVideoFrame(vpx_image img) const;

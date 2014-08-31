@@ -437,6 +437,19 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
     if (friendId < 0) {
         emit failedToAddFriend(userId);
     } else {
+        // Update our friendAddresses
+        bool found=false;
+        QList<QString>& friendAddresses = Settings::getInstance().friendAddresses;
+        for (QString& addr : friendAddresses)
+        {
+            if (addr.toUpper().contains(friendAddress))
+            {
+                addr = friendAddress;
+                found = true;
+            }
+        }
+        if (!found)
+            friendAddresses.append(friendAddress);
         emit friendAdded(friendId, userId);
     }
     saveConfiguration();
@@ -878,6 +891,9 @@ void Core::saveConfiguration()
         configurationFile.commit();
         delete[] data;
     }
+
+    qDebug() << "Core: writing settings";
+    Settings::getInstance().save();
 }
 
 void Core::loadFriends()
@@ -1103,4 +1119,20 @@ void Core::groupInviteFriend(int friendId, int groupId)
 void Core::createGroup()
 {
     emit emptyGroupCreated(tox_add_groupchat(tox));
+}
+
+QString Core::getFriendAddress(int friendNumber) const
+{
+    // If we don't know the full address of the client, return just the id, otherwise get the full address
+    uint8_t rawid[TOX_CLIENT_ID_SIZE];
+    tox_get_client_id(tox, friendNumber, rawid);
+    QByteArray data((char*)rawid,TOX_CLIENT_ID_SIZE);
+    QString id = data.toHex().toUpper();
+
+    QList<QString>& friendAddresses = Settings::getInstance().friendAddresses;
+    for (QString addr : friendAddresses)
+        if (addr.toUpper().contains(id))
+            return addr;
+
+    return id;
 }

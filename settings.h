@@ -127,16 +127,16 @@ public:
     QByteArray getSplitterState() const;
     void setSplitterState(const QByteArray &value);
 
-private:
-    Settings();
-    Settings(Settings &settings) = delete;
-    Settings& operator=(const Settings&) = delete;
-
+public:
+    QList<QString> friendAddresses;
     void save();
     void save(QString path);
     void load();
 
-
+private:
+    Settings();
+    Settings(Settings &settings) = delete;
+    Settings& operator=(const Settings&) = delete;
 
     static const QString FILENAME;
 
