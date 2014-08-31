@@ -248,6 +248,8 @@ void Settings::setMakeToxPortable(bool newValue)
 {
     makeToxPortable = newValue;
     save(FILENAME); // Commit to the portable file that we don't want to use it
+    if (!newValue) // Update the new file right now if not already done
+        save();
 }
 
 bool Settings::getUseTranslations() const
