@@ -144,7 +144,7 @@ QString FileTransfertWidget::getHumanReadableSize(unsigned long long size)
     int exp = 0;
     if (size)
         exp = std::min( (int) (log(size) / log(1024)), (int) (sizeof(suffix) / sizeof(suffix[0]) - 1));
-    return QString().setNum(size / pow(1024, exp),'g',3).append(suffix[exp]);
+    return QString().setNum(size / pow(1024, exp),'f',3).append(suffix[exp]);
 }
 
 void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction)
