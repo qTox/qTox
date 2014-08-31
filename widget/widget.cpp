@@ -451,7 +451,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     contactListWidget->moveWidget(f->widget, status);
 
     f->friendStatus = status;
-    updateFriendStatusLights(friendId);
+    f->widget->updateStatusLight();
 
     // Workaround widget style after returning to list
     if (f->widget->isActive())
@@ -514,7 +514,7 @@ void Widget::onFriendWidgetClicked(FriendWidget *widget)
     if (f->hasNewMessages != 0)
         f->hasNewMessages = 0;
 
-    updateFriendStatusLights(f->friendId);
+    f->widget->updateStatusLight();
 }
 
 void Widget::onFriendMessageReceived(int friendId, const QString& message)
@@ -540,29 +540,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
         newMessageAlert();
     }
 
-    updateFriendStatusLights(friendId);
-}
-
-void Widget::updateFriendStatusLights(int friendId)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    Status status = f->friendStatus;
-    if (status == Status::Online && f->hasNewMessages == 0)
-        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-    else if (status == Status::Online && f->hasNewMessages == 1)
-        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-    else if (status == Status::Away && f->hasNewMessages == 0)
-        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
-    else if (status == Status::Away && f->hasNewMessages == 1)
-        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
-    else if (status == Status::Busy && f->hasNewMessages == 0)
-        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
-    else if (status == Status::Busy && f->hasNewMessages == 1)
-        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
-    else if (status == Status::Offline && f->hasNewMessages == 0)
-        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
-    else if (status == Status::Offline && f->hasNewMessages == 1)
-        f->widget->statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.png"));
+    f->widget->updateStatusLight();
 }
 
 void Widget::newMessageAlert()
@@ -791,7 +769,7 @@ bool Widget::event(QEvent * e)
         {
             Friend* f = FriendList::findFriend(activeFriendWidget->friendId);
             f->hasNewMessages = 0;
-            updateFriendStatusLights(f->friendId);
+            f->widget->updateStatusLight();
         }
         else if (isGroupWidgetActive && activeGroupWidget != nullptr)
         {

@@ -408,7 +408,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     {
         w->newMessageAlert();
         f->hasNewMessages=true;
-        w->updateFriendStatusLights(f->friendId);
+        f->widget->updateStatusLight();
     }
 }
 

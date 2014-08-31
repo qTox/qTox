@@ -58,7 +58,6 @@ public:
     void showTestCamview();
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
-    void updateFriendStatusLights(int friendId);
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
