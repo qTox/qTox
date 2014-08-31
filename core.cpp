@@ -1072,7 +1072,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
         //core->process();
         delete[] data;
         QThread::msleep(1);
-        file->sendTimer->start(5+TOX_FILE_INTERVAL);
+        file->sendTimer->start(TOX_FILE_INTERVAL);
         return;
     }
     delete[] data;
