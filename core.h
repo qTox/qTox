@@ -20,8 +20,13 @@
 #include <tox/tox.h>
 #include <tox/toxav.h>
 
-#include <AL/al.h>
-#include <AL/alc.h>
+#if defined(__APPLE__) && defined(__MACH__)
+ #include <OpenAL/al.h>
+ #include <OpenAL/alc.h>
+#else
+ #include <AL/al.h>
+ #include <AL/alc.h>
+#endif
 
 #include <cstdint>
 #include <QDateTime>
