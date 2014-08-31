@@ -21,7 +21,7 @@ This client runs on Windows, Linux and Mac natively, but is not build regularly 
 Linux users will have to compile the source code themselves if they want the latest updates.
 
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a><br/>
-<a href="https://jenkins.libtoxcore.so/job/ToxGUI%20OS%20X/lastSuccessfulBuild/artifact/toxgui.dmg">Mac download </a><br/>
+<a href="https://jenkins.libtoxcore.so/job/ToxGUI%20OS%20X/lastSuccessfulBuild/artifact/qtox.dmg">Mac download </a><br/>
 <a href="https://mega.co.nz/#!9l5B0QqZ!O2glB8XE_Tcf4zTub2WEk-_9Ra43RoeiFV-AQBKDZJU">Linux download (12st July 2014 20:30 GMT)</a><br/>
 Note that the Linux download has not been tested and may not be up to date.<br/>
 
