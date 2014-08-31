@@ -138,7 +138,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     buttonLayout->setSpacing(0);
 }
 
-QString FileTransfertWidget::getHumanReadableSize(int size)
+QString FileTransfertWidget::getHumanReadableSize(unsigned long long size)
 {
     static const char* suffix[] = {"B","kiB","MiB","GiB","TiB"};
     int exp = 0;
@@ -161,7 +161,7 @@ void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t 
         qWarning() << "FileTransfertWidget::onFileTransferInfo: Negative transfer speed !";
         diff = 0;
     }
-    int rawspeed = diff / timediff;
+    long rawspeed = diff / timediff;
     speed->setText(getHumanReadableSize(rawspeed)+"/s");
     size->setText(getHumanReadableSize(Filesize));
     if (!rawspeed)
