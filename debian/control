@@ -1,0 +1,12 @@
+Source: qtox
+Maintainer: John Smith <barrdetwix@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.5
+Build-Depends: debhelper (>= 9), qt5-qmake, qt5-default, libopenal-dev, libopencv-dev, cdbs
+
+Package: qtox
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Tox client
+ qTox is a powerful Tox client that follows the Tox design guidelines
