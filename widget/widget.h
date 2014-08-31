@@ -58,6 +58,7 @@ public:
     void showTestCamview();
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
+    bool getIsWindowMinimized();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);

@@ -1146,3 +1146,8 @@ bool Widget::eventFilter(QObject *, QEvent *event)
     }
     return false;
 }
+
+bool Widget::getIsWindowMinimized()
+{
+    return static_cast<bool>(isWindowMinimized);
+}

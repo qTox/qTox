@@ -377,12 +377,13 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransfertWidget::onFileTransferCancelled);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
 
-    if (!f->widget->isActive())
+    Widget* w = Widget::getInstance();
+    if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
     {
-        f->hasNewEvents = 1;
-        // FIXME: add sound alert, as for incoming message
+        w->newMessageAlert();
+        f->hasNewEvents=true;
+        f->widget->updateStatusLight();
     }
-    f->widget->updateStatusLight();
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
@@ -411,7 +412,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     }
 
     Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f))
+    if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
     {
         w->newMessageAlert();
         f->hasNewEvents=true;
