@@ -37,6 +37,7 @@ public:
     void setAsActiveChatroom();
     void setAsInactiveChatroom();
     int isActive();
+    void updateStatusLight();
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);

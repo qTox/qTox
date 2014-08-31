@@ -23,7 +23,7 @@ Friend::Friend(int FriendId, QString UserId)
 {
     widget = new FriendWidget(friendId, userId);
     chatForm = new ChatForm(this);
-    hasNewMessages = 0;
+    hasNewEvents = 0;
     friendStatus = Status::Offline;
 }
 
