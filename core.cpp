@@ -346,7 +346,14 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
         emit static_cast<Core*>(core)->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
-        while (file->sendTimer) QThread::msleep(1); // Wait for sendAllFileData to return before deleting the ToxFile
+        // Wait for sendAllFileData to return before deleting the ToxFile, we MUST ensure this or we'll use after free
+        while (file->sendTimer)
+        {
+            if (!file->sendTimer->isActive()) // Force it to clean itself up if it isn't already done
+                sendAllFileData(static_cast<Core*>(core), file);
+            QThread::msleep(1);
+            qApp->processEvents();
+        }
         removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else if (receive_send == 1 && control_type == TOX_FILECONTROL_FINISHED)
@@ -496,7 +503,7 @@ void Core::pauseResumeFileSend(int friendId, int fileNum)
     }
     if (!file)
     {
-        qWarning("Core::cancelFileSend: No such file in queue");
+        qWarning("Core::pauseResumeFileSend: No such file in queue");
         return;
     }
     if (file->status == ToxFile::TRANSMITTING)
