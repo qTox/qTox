@@ -42,8 +42,6 @@ signals:
 
 protected:
     void setElidedText();
-    void acceptText();
-    void rejectText();
     void hideTextEdit(bool acceptText);
     void showTextEdit();
 
