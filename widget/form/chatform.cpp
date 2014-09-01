@@ -218,8 +218,6 @@ void ChatForm::addMessage(QString author, QString message, QString date)
 
 void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
 {
-    message->setText(SmileyPack::getInstance().smileyfied(message->text()));
-
     QScrollBar* scroll = chatArea->verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);
@@ -262,6 +260,7 @@ void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
         finalMessage += "<br>";
     }
     message->setText(finalMessage.left(finalMessage.length()-4));
+    message->setText(SmileyPack::getInstance().smileyfied(message->text()));
     message->setTextFormat(Qt::RichText);
 
     mainChatLayout->addWidget(author, curRow, 0);
