@@ -74,11 +74,9 @@ QSize CroppingLabel::minimumSizeHint() const
 void CroppingLabel::mouseReleaseEvent(QMouseEvent *e)
 {
     if (editable)
-    {
-        blockPaintEvents = true;
-        textEdit->show();
-        textEdit->setFocus();
-    }
+        showTextEdit();
+
+    emit clicked();
 
     QLabel::mouseReleaseEvent(e);
 }
@@ -126,8 +124,19 @@ void CroppingLabel::setElidedText()
 void CroppingLabel::hideTextEdit(bool acceptText)
 {
     if (acceptText)
+    {
+        emit textChanged(textEdit->text(), origText);
         setText(textEdit->text());
+    }
 
     textEdit->hide();
     blockPaintEvents = false;
+}
+
+void CroppingLabel::showTextEdit()
+{
+    blockPaintEvents = true;
+    textEdit->show();
+    textEdit->setFocus();
+    textEdit->setText(origText);
 }

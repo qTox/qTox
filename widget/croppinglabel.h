@@ -36,11 +36,16 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent *e);
     virtual bool eventFilter(QObject *obj, QEvent *e);
 
+signals:
+    void textChanged(QString newText, QString oldText);
+    void clicked();
+
 protected:
     void setElidedText();
     void acceptText();
     void rejectText();
     void hideTextEdit(bool acceptText);
+    void showTextEdit();
 
 private:
     QString origText;
