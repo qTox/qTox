@@ -15,29 +15,64 @@ However, it is not a fork.
 - Tox DNS
 - Translations in various languages
 
-<h2>Requirements</h2>
+<h2>Downloads</h2>
 
-This client runs on Windows, Linux and Mac natively, but is not build regularly for Linux <br/>
-Linux users will have to compile the source code themselves if they want the latest updates.
+This client runs on Windows, Linux and Mac natively.<br/>
 
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a><br/>
 <a href="https://jenkins.libtoxcore.so/job/ToxGUI%20OS%20X/lastSuccessfulBuild/artifact/qtox.dmg">Mac download </a><br/>
-<a href="https://mega.co.nz/#!9l5B0QqZ!O2glB8XE_Tcf4zTub2WEk-_9Ra43RoeiFV-AQBKDZJU">Linux download (12st July 2014 20:30 GMT)</a><br/>
-Note that the Linux download has not been tested and may not be up to date.<br/>
+<a href="https://jenkins.libtoxcore.so/job/qTox-linux-amd64/">Linux download</a> (click "Last successful artifacts")<br/>
 
 <h3>Screenshots</h3>
 <h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
 <img src="http://i.imgur.com/mMUdr6u.png"/>
 <img src="http://i.imgur.com/66ARBGC.png"/>
 
-<h3>Compiling</h3>
-Compiling toxgui requires Qt 5.2 with the Qt Multimedia module and a C++11 compatible compiler. 
-It also requires the toxcore and toxav libraries.
+<h3>Compiling on GNU-Linux</h3>
+<h4>Acquiring dependencies</h4>
+Compiling qTox requires several dependencies, however these are easily installable
+with your system's package manager. The step-by-step instructions assume Debian-style apt, but
+it should be easy enough to get the packes with yum or pacman.
 
-To compile, first clone or download the qTox repository and open a terminal in the qTox folder.
-Then run the script bootstrap.sh (for Linux and Mac) or bootsrap.bat (for Windows) to download an up-to-date toxcore.
-And finally run the commands "qmake" and "make" to start building qTox.
+First, we need Qt 5.2 with a C++11 compatible compiler:
+```bash
+sudo apt-get install build-essential qt5-qmake qt5-default
+```
 
+toxcore and toxav, the client-agnostic network code for Tox, has several dependencies 
+of its own (see <a href="https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix">its installation guide for more details</a>):
+```bash
+sudo apt-get install libtool autotools-dev automake checkinstall check git yasm libopus-dev libvpx-dev
+```
+
+Finally, qTox itself requires OpenAL and OpenCV:
+```bash
+sudo apt-get install libopenal-dev libopencv-dev
+```
+
+<h4>Compilation</h4>
+
+Having acquired all the dependencies, the following commands should get and compile qTox:
+
+```bash
+wget -O qtox.tgz https://github.com/tux3/qTox/archive/master.tar.gz
+tar xvf qtox.tgz
+cd qTox-master
+./bootstrap.sh # This will automagically download and compile libsodium, toxcore, and toxav
+qmake
+make # Should compile to "qtox"
+```
+
+And that's it!
+
+<h4>Building packages</h4>
+
+qTox now has the experimental and probably-dodgy ability to package itself (in .deb
+form natively, and .rpm form with <a href="http://joeyh.name/code/alien/">alien</a>).
+
+After installing the required dependencies, run `bootstrap.sh` and then run the
+`buildPackages.sh` script, found in the tools folder. It will automatically get the
+necessary packages for building .debs, so be prepared to type your password for sudo.
 
 <h3>OSX Easy Install</h3>
 
