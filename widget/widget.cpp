@@ -115,11 +115,14 @@ Widget::Widget(QWidget *parent)
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
 
+    ui->nameLabel->setEditable(true);
+    ui->statusLabel->setEditable(true);
+
     // delay setting username and message until Core inits
     //ui->nameLabel->setText(core->getUsername());
-    ui->nameLabel->label->setStyleSheet("QLabel { color : white; font-size: 11pt; font-weight:bold;}");
+    ui->nameLabel->setStyleSheet("QLabel { color : white; font-size: 11pt; font-weight:bold;}");
     //ui->statusLabel->setText(core->getStatusMessage());
-    ui->statusLabel->label->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
+    ui->statusLabel->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
 
     ui->statusButton->setStyleSheet(Style::get(":/ui/statusButton/statusButton.css"));
 

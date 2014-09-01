@@ -1482,7 +1482,7 @@ QSplitter:handle{
                 <number>0</number>
                </property>
                <item>
-                <widget class="EditableLabelWidget" name="nameLabel">
+                <widget class="CroppingLabel" name="nameLabel">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -1920,7 +1920,7 @@ QSplitter:handle{
                 </widget>
                </item>
                <item>
-                <widget class="EditableLabelWidget" name="statusLabel">
+                <widget class="CroppingLabel" name="statusLabel">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                    <horstretch>1</horstretch>
@@ -2092,8 +2092,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>335</width>
-             <height>379</height>
+             <width>263</width>
+             <height>373</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -3228,7 +3228,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>716</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
@@ -3244,15 +3244,15 @@ QSplitter:handle{
  </widget>
  <customwidgets>
   <customwidget>
-   <class>EditableLabelWidget</class>
-   <extends>QLabel</extends>
-   <header>widget/tool/editablelabelwidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>AdjustingScrollArea</class>
    <extends>QScrollArea</extends>
    <header>widget/adjustingscrollarea.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CroppingLabel</class>
+   <extends>QLabel</extends>
+   <header>widget/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>
