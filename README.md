@@ -32,7 +32,7 @@ This client runs on Windows, Linux and Mac natively.<br/>
 <h4>Acquiring dependencies</h4>
 Compiling qTox requires several dependencies, however these are easily installable
 with your system's package manager. The step-by-step instructions assume Debian-style apt, but
-it should be easy enough to get the packes with yum or pacman.
+it should be easy enough to get equivalent packages with yum or pacman.
 
 First, we need Qt 5.2 with a C++11 compatible compiler:
 ```bash
@@ -40,7 +40,7 @@ sudo apt-get install build-essential qt5-qmake qt5-default
 ```
 
 toxcore and toxav, the client-agnostic network code for Tox, has several dependencies 
-of its own (see <a href="https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix">its installation guide for more details</a>):
+of its own (see <a href="https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix">its installation guide</a> for more details):
 ```bash
 sudo apt-get install libtool autotools-dev automake checkinstall check git yasm libopus-dev libvpx-dev
 ```
@@ -72,7 +72,7 @@ form natively, and .rpm form with <a href="http://joeyh.name/code/alien/">alien<
 
 After installing the required dependencies, run `bootstrap.sh` and then run the
 `buildPackages.sh` script, found in the tools folder. It will automatically get the
-necessary packages for building .debs, so be prepared to type your password for sudo.
+packages necessary for building .debs, so be prepared to type your password for sudo.
 
 <h3>OSX Easy Install</h3>
 
