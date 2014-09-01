@@ -15,11 +15,36 @@
 */
 
 #include "croppinglabel.h"
+#include <QResizeEvent>
 
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
+    , blockPaintEvents(false)
+    , editable(false)
+    , elideMode(Qt::ElideRight)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    textEdit = new QLineEdit(this);
+    textEdit->hide();
+
+    installEventFilter(this);
+    textEdit->installEventFilter(this);
+}
+
+void CroppingLabel::setEditable(bool editable)
+{
+    this->editable = editable;
+
+    if (editable)
+        setCursor(Qt::PointingHandCursor);
+    else
+        unsetCursor();
+}
+
+void CroppingLabel::setEdlideMode(Qt::TextElideMode elide)
+{
+    elideMode = elide;
 }
 
 void CroppingLabel::setText(const QString& text)
@@ -31,6 +56,8 @@ void CroppingLabel::setText(const QString& text)
 void CroppingLabel::resizeEvent(QResizeEvent* ev)
 {
     setElidedText();
+    textEdit->resize(ev->size());
+
     QLabel::resizeEvent(ev);
 }
 
@@ -44,13 +71,63 @@ QSize CroppingLabel::minimumSizeHint() const
     return QSize(fontMetrics().width("..."), QLabel::minimumSizeHint().height());
 }
 
+void CroppingLabel::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (editable)
+    {
+        blockPaintEvents = true;
+        textEdit->show();
+        textEdit->setFocus();
+    }
+
+    QLabel::mouseReleaseEvent(e);
+}
+
+bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
+{
+    // catch paint events if needed
+    if (obj == this)
+    {
+        if (e->type() == QEvent::Paint && blockPaintEvents)
+            return true;
+    }
+
+    // events fired by the QLineEdit
+    if (obj == textEdit)
+    {
+        if (e->type() == QEvent::KeyPress)
+        {
+            QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
+            if (keyEvent->key() == Qt::Key_Return)
+                hideTextEdit(true);
+
+            if (keyEvent->key() == Qt::Key_Escape)
+                hideTextEdit(false);
+        }
+
+        if (e->type() == QEvent::FocusOut)
+            hideTextEdit(true);
+    }
+
+    return false;
+}
+
 void CroppingLabel::setElidedText()
 {
-    QString elidedText = fontMetrics().elidedText(origText, Qt::ElideRight, width());
+    QString elidedText = fontMetrics().elidedText(origText, elideMode, width());
     if (elidedText != origText)
         setToolTip(origText);
     else
         setToolTip(QString());
 
     QLabel::setText(elidedText);
+}
+
+void CroppingLabel::hideTextEdit(bool acceptText)
+{
+    if (acceptText)
+        setText(textEdit->text());
+
+    textEdit->hide();
+    blockPaintEvents = false;
 }

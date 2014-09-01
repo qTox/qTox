@@ -18,6 +18,7 @@
 #define CROPPINGLABEL_H
 
 #include <QLabel>
+#include <QLineEdit>
 
 class CroppingLabel : public QLabel
 {
@@ -25,16 +26,28 @@ class CroppingLabel : public QLabel
 public:
     explicit CroppingLabel(QWidget *parent = 0);
 
+    void setEditable(bool editable);
+    void setEdlideMode(Qt::TextElideMode elide);
+
     virtual void setText(const QString& text);
     virtual void resizeEvent(QResizeEvent *ev);
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;
+    virtual void mouseReleaseEvent(QMouseEvent *e);
+    virtual bool eventFilter(QObject *obj, QEvent *e);
 
 protected:
     void setElidedText();
+    void acceptText();
+    void rejectText();
+    void hideTextEdit(bool acceptText);
 
 private:
     QString origText;
+    QLineEdit* textEdit;
+    bool blockPaintEvents;
+    bool editable;
+    Qt::TextElideMode elideMode;
 };
 
 #endif // CROPPINGLABEL_H
