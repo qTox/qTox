@@ -27,11 +27,12 @@ class GroupWidget : public GenericChatroomWidget
 public:
     GroupWidget(int GroupId, QString Name);
     void onUserListChanged();
-    void mouseReleaseEvent (QMouseEvent* event);
     void contextMenuEvent(QContextMenuEvent * event);
     void setAsInactiveChatroom();
     void setAsActiveChatroom();
     void updateStatusLight();
+    void setChatForm(Ui::MainWindow &);
+    void resetEventFlags();
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);

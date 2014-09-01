@@ -30,11 +30,12 @@ struct FriendWidget : public GenericChatroomWidget
     Q_OBJECT
 public:
     FriendWidget(int FriendId, QString id);
-    void mouseReleaseEvent (QMouseEvent* event);
     void contextMenuEvent(QContextMenuEvent * event);
     void setAsActiveChatroom();
     void setAsInactiveChatroom();
     void updateStatusLight();
+    void setChatForm(Ui::MainWindow &);
+    void resetEventFlags();
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
