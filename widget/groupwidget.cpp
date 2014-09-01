@@ -94,46 +94,6 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
     }
 }
 
-void GroupWidget::mousePressEvent(QMouseEvent *event)
-{
-    if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
-    {
-        if (isActiveWidget)
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(250,250,250,255));
-            this->setPalette(pal);
-        }
-        else
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(85,85,85,255));
-            this->setPalette(pal);
-        }
-    }
-}
-
-void GroupWidget::enterEvent(QEvent*)
-{
-    if (isActiveWidget != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, QColor(75,75,75,255));
-        lastColor = this->palette().background().color();
-        this->setPalette(pal);
-    }
-}
-
-void GroupWidget::leaveEvent(QEvent*)
-{
-    if (isActiveWidget != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, lastColor);
-        this->setPalette(pal);
-    }
-}
-
 void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
@@ -179,4 +139,9 @@ void GroupWidget::setAsInactiveChatroom()
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
     avatar.setPixmap(QPixmap(":img/group.png"));
+}
+
+void GroupWidget::updateStatusLight()
+{
+
 }

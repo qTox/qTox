@@ -14,37 +14,37 @@
     See the COPYING file for more details.
 */
 
-#ifndef FRIENDWIDGET_H
-#define FRIENDWIDGET_H
+#ifndef GENERICCHATROOMWIDGET_H
+#define GENERICCHATROOMWIDGET_H
 
 #include <QWidget>
-#include <QLabel>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 
-#include "genericchatroomwidget.h"
-#include "croppinglabel.h"
-
-struct FriendWidget : public GenericChatroomWidget
+class GenericChatroomWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FriendWidget(int FriendId, QString id);
-    void mouseReleaseEvent (QMouseEvent* event);
-    void contextMenuEvent(QContextMenuEvent * event);
-    void setAsActiveChatroom();
-    void setAsInactiveChatroom();
-    void updateStatusLight();
+    GenericChatroomWidget(QWidget *parent = 0);
+    void mousePressEvent(QMouseEvent *event);
+    void leaveEvent(QEvent *);
+    void enterEvent(QEvent *);
+
+    virtual void setAsActiveChatroom(){;}
+    virtual void setAsInactiveChatroom(){;}
+    virtual void updateStatusLight(){;}
+    int isActive();
 
 signals:
-    void friendWidgetClicked(FriendWidget* widget);
-    void removeFriend(int friendId);
-    void copyFriendIdToClipboard(int friendId);
+    void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
-public:
-    int friendId;
-    QLabel avatar, statusPic;
-    CroppingLabel name, statusMessage;
+public slots:
+
+protected:
+    int isActiveWidget;
+    QColor lastColor;
+    QHBoxLayout layout;
+    QVBoxLayout textLayout;
 };
 
-#endif // FRIENDWIDGET_H
+#endif // GENERICCHATROOMWIDGET_H
