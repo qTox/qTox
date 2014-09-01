@@ -71,10 +71,6 @@ HEADERS  += widget/form/addfriendform.h \
     widget/form/settingsform.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
-    widget/tool/copyableelidelabel.h \
-    widget/tool/editablelabelwidget.h \
-    widget/tool/elidelabel.h \
-    widget/tool/esclineedit.h \
     widget/tool/friendrequestdialog.h \
     widget/filetransfertwidget.h \
     widget/friendwidget.h \
@@ -91,7 +87,6 @@ HEADERS  += widget/form/addfriendform.h \
     widget/selfcamview.h \
     widget/camera.h \
     widget/netcamview.h \
-    widget/tool/clickablelabel.h \
     smileypack.h \
     widget/emoticonswidget.h \
     style.h \
@@ -106,10 +101,6 @@ SOURCES += \
     widget/form/settingsform.cpp \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
-    widget/tool/copyableelidelabel.cpp \
-    widget/tool/editablelabelwidget.cpp \
-    widget/tool/elidelabel.cpp \
-    widget/tool/esclineedit.cpp \
     widget/tool/friendrequestdialog.cpp \
     widget/filetransfertwidget.cpp \
     widget/friendwidget.cpp \
@@ -127,7 +118,6 @@ SOURCES += \
     widget/selfcamview.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
-    widget/tool/clickablelabel.cpp \
     smileypack.cpp \
     widget/emoticonswidget.cpp \
     style.cpp \

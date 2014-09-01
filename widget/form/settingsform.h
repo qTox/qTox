@@ -27,7 +27,6 @@
 #include <QPushButton>
 #include <QTextEdit>
 #include <QComboBox>
-#include "widget/tool/clickablelabel.h"
 #include "ui_mainwindow.h"
 #include "widget/selfcamview.h"
 
@@ -54,7 +53,7 @@ private slots:
 private:
     QLabel headLabel, nameLabel, statusTextLabel, smileyPackLabel;
     QTextEdit id;
-    ClickableLabel idLabel;
+    QLabel idLabel;
     QPushButton videoTest;
     QCheckBox enableIPv6, useTranslations, makeToxPortable;
     QVBoxLayout layout, headLayout;
