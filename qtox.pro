@@ -36,7 +36,11 @@ TRANSLATIONS = translations/de.ts \
 
 RESOURCES += res.qrc
 
-INCLUDEPATH += libs/include
+contains(JENKINS,YES) {
+	INCLUDEPATH += ./libs/include/
+} else {
+	INCLUDEPATH += libs/include
+}
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
@@ -51,6 +55,10 @@ win32 {
         LIBS += -L$$PWD/libs/lib/ -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -Wl,-Bdynamic -lopus -lvpx -lopenal -lopencv_core -lopencv_highgui
     } else {
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
+    }
+
+    contains(JENKINS, YES) {
+        LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a -lopencv_core -lopencv_highgui -lopenal
     }
 }
 
