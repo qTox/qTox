@@ -35,8 +35,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class GroupWidget;
-struct FriendWidget;
+class GenericChatroomWidget;
 class Group;
 struct Friend;
 
@@ -95,14 +94,13 @@ private slots:
     void onFriendUsernameChanged(int friendId, const QString& username);
     void onFriendStatusMessageLoaded(int friendId, const QString& message);
     void onFriendUsernameLoaded(int friendId, const QString& username);
-    void onFriendWidgetClicked(FriendWidget* widget);
+    void onChatroomWidgetClicked(GenericChatroomWidget *);
     void onFriendMessageReceived(int friendId, const QString& message);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, const uint8_t *publicKey);
     void onGroupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
-    void onGroupWidgetClicked(GroupWidget* widget);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
@@ -142,8 +140,7 @@ private:
     SettingsForm settingsForm;
     FilesForm filesForm;
     static Widget* instance;
-    FriendWidget* activeFriendWidget;
-    GroupWidget* activeGroupWidget;
+    GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
     SelfCamView* camview;
     Camera* camera;

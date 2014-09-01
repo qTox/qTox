@@ -43,8 +43,7 @@ Widget *Widget::instance{nullptr};
 Widget::Widget(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      activeFriendWidget{nullptr},
-      activeGroupWidget{nullptr}
+      activeChatroomWidget{nullptr}
 {
     ui->setupUi(this);
 
@@ -326,16 +325,14 @@ void Widget::onTransferClicked()
 {
     hideMainForms();
     filesForm.show(*ui);
-    activeFriendWidget = nullptr;
-    activeGroupWidget = nullptr;
+    activeChatroomWidget = nullptr;
 }
 
 void Widget::onSettingsClicked()
 {
     hideMainForms();
     settingsForm.show(*ui);
-    activeFriendWidget = nullptr;
-    activeGroupWidget = nullptr;
+    activeChatroomWidget = nullptr;
 }
 
 void Widget::hideMainForms()
@@ -346,17 +343,9 @@ void Widget::hideMainForms()
     while ((item = ui->mainContent->layout()->takeAt(0)) != 0)
         item->widget()->hide();
     
-    if (activeFriendWidget != nullptr)
+    if (activeChatroomWidget != nullptr)
     {
-        Friend* f = FriendList::findFriend(activeFriendWidget->friendId);
-        if (f != nullptr)
-            activeFriendWidget->setAsInactiveChatroom();
-    }
-    if (activeGroupWidget != nullptr)
-    {
-        Group* g = GroupList::findGroup(activeGroupWidget->groupId);
-        if (g != nullptr)
-            activeGroupWidget->setAsInactiveChatroom();
+        activeChatroomWidget->setAsInactiveChatroom();
     }
 }
 
@@ -414,7 +403,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->widget);
-    connect(newfriend->widget, SIGNAL(friendWidgetClicked(FriendWidget*)), this, SLOT(onFriendWidgetClicked(FriendWidget*)));
+    connect(newfriend->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
     connect(newfriend->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
@@ -495,26 +484,18 @@ void Widget::onFriendUsernameLoaded(int friendId, const QString& username)
     f->setName(username);
 }
 
-void Widget::onFriendWidgetClicked(FriendWidget *widget)
+void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 {
-    Friend* f = FriendList::findFriend(widget->friendId);
-    if (!f)
-        return;
-
     hideMainForms();
-    f->chatForm->show(*ui);
-    if (activeFriendWidget != nullptr)
+    widget->setChatForm(*ui);
+    if (activeChatroomWidget != nullptr)
     {
-        activeFriendWidget->setAsInactiveChatroom();
+        activeChatroomWidget->setAsInactiveChatroom();
     }
-    activeFriendWidget = widget;
+    activeChatroomWidget = widget;
     widget->setAsActiveChatroom();
-    activeGroupWidget = nullptr;
-
-    if (f->hasNewEvents != 0)
-        f->hasNewEvents = 0;
-
-    f->widget->updateStatusLight();
+    widget->resetEventFlags();
+    widget->updateStatusLight();
 }
 
 void Widget::onFriendMessageReceived(int friendId, const QString& message)
@@ -525,10 +506,9 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
 
     f->chatForm->addFriendMessage(message);
 
-    if (activeFriendWidget != nullptr)
+    if (activeChatroomWidget != nullptr)
     {
-        Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
-        if ((f->friendId != f2->friendId) || isWindowMinimized || !isActiveWindow())
+        if ((static_cast<GenericChatroomWidget*>(f->widget) != activeChatroomWidget) || isWindowMinimized || !isActiveWindow())
         {
             f->hasNewEvents = 1;
             newMessageAlert();
@@ -575,8 +555,8 @@ void Widget::removeFriend(int friendId)
 {
     Friend* f = FriendList::findFriend(friendId);
     f->widget->setAsInactiveChatroom();
-    if (f->widget == activeFriendWidget)
-        activeFriendWidget = nullptr;
+    if (static_cast<GenericChatroomWidget*>(f->widget) == activeChatroomWidget)
+        activeChatroomWidget = nullptr;
     FriendList::removeFriend(friendId);
     core->removeFriend(friendId);
     delete f;
@@ -612,27 +592,15 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
 
     g->chatForm->addGroupMessage(message, friendgroupnumber);
 
-    if (((activeGroupWidget && g->groupId != activeGroupWidget->groupId)) || isWindowMinimized || !isActiveWindow())
+    if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isWindowMinimized || !isActiveWindow())
     {
+        g->hasNewMessages = 1;
         if (message.contains(core->getUsername(), Qt::CaseInsensitive))
         {
             newMessageAlert();
-            g->hasNewMessages = 1;
             g->userWasMentioned = 1;
-            if (Settings::getInstance().getUseNativeDecoration())
-                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-            else
-                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
         }
-        else
-            if (g->hasNewMessages == 0)
-            {
-                g->hasNewMessages = 1;
-                if (Settings::getInstance().getUseNativeDecoration())
-                    g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-                else
-                    g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
-            }
+        g->widget->updateStatusLight();
     }
 }
 
@@ -654,39 +622,12 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 
-void Widget::onGroupWidgetClicked(GroupWidget* widget)
-{
-    Group* g = GroupList::findGroup(widget->groupId);
-    if (!g)
-        return;
-
-    hideMainForms();
-    g->chatForm->show(*ui);
-    if (activeGroupWidget != nullptr)
-    {
-        activeGroupWidget->setAsInactiveChatroom();
-    }
-    activeGroupWidget = widget;
-    widget->setAsActiveChatroom();
-    activeFriendWidget = nullptr;
-
-    if (g->hasNewMessages != 0)
-    {
-        g->hasNewMessages = 0;
-        g->userWasMentioned = 0;
-        if (Settings::getInstance().getUseNativeDecoration())
-            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-        else
-            g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
-    }
-}
-
 void Widget::removeGroup(int groupId)
 {
     Group* g = GroupList::findGroup(groupId);
     g->widget->setAsInactiveChatroom();
-    if (g->widget == activeGroupWidget)
-        activeGroupWidget = nullptr;
+    if (static_cast<GenericChatroomWidget*>(g->widget) == activeChatroomWidget)
+        activeChatroomWidget = nullptr;
     GroupList::removeGroup(groupId);
     core->removeGroup(groupId);
     delete g;
@@ -712,10 +653,9 @@ Group *Widget::createGroup(int groupId)
     Group* newgroup = GroupList::addGroup(groupId, groupName);
     QLayout* layout = contactListWidget->getGroupLayout();
     layout->addWidget(newgroup->widget);
-    if (!Settings::getInstance().getUseNativeDecoration())
-        newgroup->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+    newgroup->widget->updateStatusLight();
 
-    connect(newgroup->widget, SIGNAL(groupWidgetClicked(GroupWidget*)), this, SLOT(onGroupWidgetClicked(GroupWidget*)));
+    connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
     return newgroup;
@@ -735,15 +675,11 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
 {
     if (!f)
         return false;
-    if (activeFriendWidget != nullptr)
-    {
-        Friend* f2 = FriendList::findFriend(activeFriendWidget->friendId);
-        if (f->friendId != f2->friendId)
-            return false;
-    }
+
+    if (activeChatroomWidget == static_cast<GenericChatroomWidget*>(f->widget))
+        return true;
     else
         return false;
-    return true;
 }
 
 bool Widget::event(QEvent * e)
@@ -764,21 +700,10 @@ bool Widget::event(QEvent * e)
             this->style()->polish(this);
         }
         isWindowMinimized = 0;
-        if (activeFriendWidget != nullptr)
+        if (activeChatroomWidget != nullptr)
         {
-            Friend* f = FriendList::findFriend(activeFriendWidget->friendId);
-            f->hasNewEvents = 0;
-            f->widget->updateStatusLight();
-        }
-        else if (activeGroupWidget != nullptr)
-        {
-            Group* g = GroupList::findGroup(activeGroupWidget->groupId);
-            g->hasNewMessages = 0;
-            g->userWasMentioned = 0;
-            if (Settings::getInstance().getUseNativeDecoration())
-                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-            else
-                g->widget->statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+            activeChatroomWidget->resetEventFlags();
+            activeChatroomWidget->updateStatusLight();
         }
     }
     else if (e->type() == QEvent::WindowDeactivate && !Settings::getInstance().getUseNativeDecoration())

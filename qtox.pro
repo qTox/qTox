@@ -100,7 +100,8 @@ HEADERS  += widget/form/addfriendform.h \
     style.h \
     widget/adjustingscrollarea.h \
     widget/croppinglabel.h \
-    widget/friendlistwidget.h
+    widget/friendlistwidget.h \
+    widget/genericchatroomwidget.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -132,4 +133,5 @@ SOURCES += \
     widget/adjustingscrollarea.cpp \
     widget/croppinglabel.cpp \
     widget/friendlistwidget.cpp \
-    coreav.cpp
+    coreav.cpp \
+    widget/genericchatroomwidget.cpp
