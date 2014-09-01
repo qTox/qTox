@@ -76,11 +76,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     updateGeometry();
 }
 
-void FriendWidget::mouseReleaseEvent (QMouseEvent*)
-{
-    emit friendWidgetClicked(this);
-}
-
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
@@ -181,4 +176,16 @@ void FriendWidget::updateStatusLight()
         statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     else if (status == Status::Offline && f->hasNewEvents == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.png"));
+}
+
+void FriendWidget::setChatForm(Ui::MainWindow &ui)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    f->chatForm->show(ui);
+}
+
+void FriendWidget::resetEventFlags()
+{
+    Friend* f = FriendList::findFriend(friendId);
+    f->hasNewEvents = 0;
 }

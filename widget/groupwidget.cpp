@@ -17,9 +17,13 @@
 #include "groupwidget.h"
 #include "grouplist.h"
 #include "group.h"
+#include "settings.h"
+#include "widget/form/groupchatform.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
+
+#include "ui_mainwindow.h"
 
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
@@ -70,11 +74,6 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     layout.addSpacing(5);
 
     isActiveWidget = 0;
-}
-
-void GroupWidget::mouseReleaseEvent (QMouseEvent*)
-{
-    emit groupWidgetClicked(this);
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -143,5 +142,37 @@ void GroupWidget::setAsInactiveChatroom()
 
 void GroupWidget::updateStatusLight()
 {
+    Group *g = GroupList::findGroup(groupId);
 
+    if (Settings::getInstance().getUseNativeDecoration())
+    {
+        if (g->hasNewMessages == 0)
+        {
+            statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+        } else {
+            if (g->userWasMentioned == 0) statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+            else statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+        }
+    } else {
+        if (g->hasNewMessages == 0)
+        {
+            statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+        } else {
+            if (g->userWasMentioned == 0) statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
+            else statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
+        }
+    }
+}
+
+void GroupWidget::setChatForm(Ui::MainWindow &ui)
+{
+    Group* g = GroupList::findGroup(groupId);
+    g->chatForm->show(ui);
+}
+
+void GroupWidget::resetEventFlags()
+{
+    Group* g = GroupList::findGroup(groupId);
+    g->hasNewMessages = 0;
+    g->userWasMentioned = 0;
 }

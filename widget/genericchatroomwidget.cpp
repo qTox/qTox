@@ -66,3 +66,8 @@ void GenericChatroomWidget::enterEvent(QEvent *)
         this->setPalette(pal);
     }
 }
+
+void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)
+{
+    emit chatroomWidgetClicked(this);
+}

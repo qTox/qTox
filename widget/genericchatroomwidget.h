@@ -21,18 +21,26 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
+namespace Ui {
+    class MainWindow;
+}
+
 class GenericChatroomWidget : public QWidget
 {
     Q_OBJECT
 public:
     GenericChatroomWidget(QWidget *parent = 0);
     void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent (QMouseEvent* event);
     void leaveEvent(QEvent *);
     void enterEvent(QEvent *);
 
     virtual void setAsActiveChatroom(){;}
     virtual void setAsInactiveChatroom(){;}
     virtual void updateStatusLight(){;}
+    virtual void setChatForm(Ui::MainWindow &){;}
+    virtual void resetEventFlags(){;}
+
     int isActive();
 
 signals:
