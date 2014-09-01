@@ -57,7 +57,7 @@ AddFriendForm::~AddFriendForm()
     main->deleteLater();
 }
 
-void AddFriendForm::show(Ui::Widget &ui)
+void AddFriendForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);

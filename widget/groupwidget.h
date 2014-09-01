@@ -33,7 +33,8 @@ public:
     void contextMenuEvent(QContextMenuEvent * event);
     void enterEvent(QEvent* event);
     void leaveEvent(QEvent* event);
-
+    void setAsInactiveChatroom();
+    void setAsActiveChatroom();
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
@@ -44,9 +45,6 @@ public:
     QLabel avatar, name, nusers, statusPic;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
-    void setAsInactiveChatroom();
-    void setAsActiveChatroom();
-    void setNewFixedWidth(int newWidth);
 
 private:
     QColor lastColor;

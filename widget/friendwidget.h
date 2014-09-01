@@ -22,6 +22,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
+#include "croppinglabel.h"
+
 struct FriendWidget : public QWidget
 {
     Q_OBJECT
@@ -34,7 +36,8 @@ public:
     void leaveEvent(QEvent* event);
     void setAsActiveChatroom();
     void setAsInactiveChatroom();
-    void setNewFixedWidth(int newWidth);
+    int isActive();
+    void updateStatusLight();
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
@@ -43,7 +46,8 @@ signals:
 
 public:
     int friendId;
-    QLabel avatar, name, statusMessage, statusPic;
+    QLabel avatar, statusPic;
+    CroppingLabel name, statusMessage;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
 

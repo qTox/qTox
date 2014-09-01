@@ -1,9 +1,9 @@
 /*
-    Copyright (C) 2013 by Maxim Biro <nurupo.contributions@gmail.com>
+    Copyright (C) 2014 by Project Tox <https://tox.im>
 
-    This file is part of Tox Qt GUI.
+    This file is part of qTox, a Qt-based graphical interface for Tox.
 
-    This program is free software: you can redistribute it and/or modify
+    This program is libre software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
@@ -55,6 +55,11 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QString &path)
     }
 
     return smileyPacks;
+}
+
+bool SmileyPack::isValid(const QString &filename)
+{
+    return QFile(filename).exists();
 }
 
 bool SmileyPack::load(const QString& filename)
@@ -158,7 +163,7 @@ QIcon SmileyPack::getAsIcon(const QString &key)
 void SmileyPack::cacheSmiley(const QString &name)
 {
     QSize size(16, 16); // TODO: adapt to text size
-    QString filename = path % '/' % name;
+    QString filename = QDir(path).filePath(name);
     QImage img(filename);
 
     if (!img.isNull())

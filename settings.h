@@ -112,16 +112,31 @@ public:
     bool isTypingNotificationEnabled() const;
     void setTypingNotification(bool enabled);
 
-private:
-    Settings();
-    Settings(Settings &settings) = delete;
-    Settings& operator=(const Settings&) = delete;
+    bool getUseNativeStyle() const;
+    void setUseNativeStyle(bool value);
 
+    bool getUseNativeDecoration() const;
+    void setUseNativeDecoration(bool value);
+
+    QByteArray getWindowGeometry() const;
+    void setWindowGeometry(const QByteArray &value);
+
+    QByteArray getWindowState() const;
+    void setWindowState(const QByteArray &value);
+
+    QByteArray getSplitterState() const;
+    void setSplitterState(const QByteArray &value);
+
+public:
+    QList<QString> friendAddresses;
     void save();
     void save(QString path);
     void load();
 
-
+private:
+    Settings();
+    Settings(Settings &settings) = delete;
+    Settings& operator=(const Settings&) = delete;
 
     static const QString FILENAME;
 
@@ -147,6 +162,11 @@ private:
     QString emojiFontFamily;
     int     emojiFontPointSize;
     bool minimizeOnClose;
+    bool useNativeStyle;
+    bool useNativeDecoration;
+    QByteArray windowGeometry;
+    QByteArray windowState;
+    QByteArray splitterState;
 
     // ChatView
     int firstColumnHandlePos;

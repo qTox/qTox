@@ -18,6 +18,7 @@
 #include "widget.h"
 #include "core.h"
 #include "math.h"
+#include "style.h"
 #include <QFileDialog>
 #include <QPixmap>
 #include <QPainter>
@@ -36,10 +37,7 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     QFont prettysmall;
     prettysmall.setPixelSize(10);
     this->setObjectName("default");
-    QFile f0(":/ui/fileTransferWidget/fileTransferWidget.css");
-    f0.open(QFile::ReadOnly | QFile::Text);
-    QTextStream fileTransfertWidgetStylesheet(&f0);
-    this->setStyleSheet(fileTransfertWidgetStylesheet.readAll());
+    this->setStyleSheet(Style::get(":/ui/fileTransferWidget/fileTransferWidget.css"));
     QPalette greybg;
     greybg.setColor(QPalette::Window, QColor(209,209,209));
     greybg.setColor(QPalette::Base, QColor(150,150,150));
@@ -71,20 +69,9 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     buttonWidget->setAutoFillBackground(true);
     buttonWidget->setLayout(buttonLayout);
 
-    QFile f1(":/ui/stopFileButton/style.css");
-    f1.open(QFile::ReadOnly | QFile::Text);
-    QTextStream stopFileButtonStylesheetStream(&f1);
-    stopFileButtonStylesheet = stopFileButtonStylesheetStream.readAll();
-
-    QFile f2(":/ui/pauseFileButton/style.css");
-    f2.open(QFile::ReadOnly | QFile::Text);
-    QTextStream pauseFileButtonStylesheetStream(&f2);
-    pauseFileButtonStylesheet = pauseFileButtonStylesheetStream.readAll();
-
-    QFile f3(":/ui/acceptFileButton/style.css");
-    f3.open(QFile::ReadOnly | QFile::Text);
-    QTextStream acceptFileButtonStylesheetStream(&f3);
-    acceptFileButtonStylesheet = acceptFileButtonStylesheetStream.readAll();
+    stopFileButtonStylesheet = Style::get(":/ui/stopFileButton/style.css");
+    pauseFileButtonStylesheet = Style::get(":/ui/pauseFileButton/style.css");
+    acceptFileButtonStylesheet = Style::get(":/ui/acceptFileButton/style.css");
 
     topright->setStyleSheet(stopFileButtonStylesheet);
     if (File.direction == ToxFile::SENDING)
@@ -151,13 +138,13 @@ FileTransfertWidget::FileTransfertWidget(ToxFile File)
     buttonLayout->setSpacing(0);
 }
 
-QString FileTransfertWidget::getHumanReadableSize(int size)
+QString FileTransfertWidget::getHumanReadableSize(unsigned long long size)
 {
     static const char* suffix[] = {"B","kiB","MiB","GiB","TiB"};
     int exp = 0;
     if (size)
         exp = std::min( (int) (log(size) / log(1024)), (int) (sizeof(suffix) / sizeof(suffix[0]) - 1));
-    return QString().setNum(size / pow(1024, exp),'g',3).append(suffix[exp]);
+    return QString().setNum(size / pow(1024, exp),'f',2).append(suffix[exp]);
 }
 
 void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction)
@@ -174,7 +161,7 @@ void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t 
         qWarning() << "FileTransfertWidget::onFileTransferInfo: Negative transfer speed !";
         diff = 0;
     }
-    int rawspeed = diff / timediff;
+    long rawspeed = diff / timediff;
     speed->setText(getHumanReadableSize(rawspeed)+"/s");
     size->setText(getHumanReadableSize(Filesize));
     if (!rawspeed)
@@ -184,10 +171,15 @@ void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t 
     etaTime = etaTime.addSecs(etaSecs);
     eta->setText(etaTime.toString("mm:ss"));
     if (!Filesize)
+    {
         progress->setValue(0);
+        qDebug() << QString("FT: received %1 bytes of an empty file, stop sending sequential devices, zetok!").arg(BytesSent);
+    }
     else
+    {
         progress->setValue(BytesSent*100/Filesize);
-    qDebug() << QString("FT: received %1/%2 bytes, progress is %3%").arg(BytesSent).arg(Filesize).arg(BytesSent*100/Filesize);
+        qDebug() << QString("FT: received %1/%2 bytes, progress is %3%").arg(BytesSent).arg(Filesize).arg(BytesSent*100/Filesize);
+    }
     lastUpdate = newtime;
     lastBytesSent = BytesSent;
 }
@@ -286,7 +278,7 @@ void FileTransfertWidget::acceptRecvRequest()
     QString path;
     while (true)
     {
-        path = QFileDialog::getSaveFileName(this,tr("Save a file","Title of the file saving dialog"),QDir::currentPath()+'/'+filename->text());
+        path = QFileDialog::getSaveFileName(this, tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename->text()));
         if (path.isEmpty())
             return;
         else

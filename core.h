@@ -17,10 +17,16 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "audiobuffer.h"
-
 #include <tox/tox.h>
 #include <tox/toxav.h>
+
+#if defined(__APPLE__) && defined(__MACH__)
+ #include <OpenAL/al.h>
+ #include <OpenAL/alc.h>
+#else
+ #include <AL/al.h>
+ #include <AL/alc.h>
+#endif
 
 #include <cstdint>
 #include <QDateTime>
@@ -30,16 +36,12 @@
 #include <QFile>
 #include <QList>
 #include <QByteArray>
-#include <QFuture>
-#include <QBuffer>
-#include <QAudioOutput>
-#include <QAudioInput>
 
 #define TOXAV_MAX_CALLS 16
 #define GROUPCHAT_MAX_SIZE 32
 #define TOX_SAVE_INTERVAL 30*1000
-#define TOX_FILE_INTERVAL 20
-#define TOX_BOOTSTRAP_INTERVAL 10*1000
+#define TOX_FILE_INTERVAL 0
+#define TOX_BOOTSTRAP_INTERVAL 5*1000
 #define TOXAV_RINGING_TIME 15
 
 // TODO: Put that in the settings
@@ -76,7 +78,7 @@ struct ToxFile
     ToxFile()=default;
     ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePath, FileDirection Direction)
         : fileNum(FileNum), friendId(FriendId), fileName{FileName}, filePath{FilePath}, file{new QFile(filePath)},
-        bytesSent{0}, filesize{0}, status{STOPPED}, direction{Direction} {}
+        bytesSent{0}, filesize{0}, status{STOPPED}, direction{Direction}, sendTimer{nullptr} {}
     ~ToxFile(){}
     void setFilePath(QString path) {filePath=path; file->setFileName(path);}
     bool open(bool write) {return write?file->open(QIODevice::ReadWrite):file->open(QIODevice::ReadOnly);}
@@ -90,22 +92,20 @@ struct ToxFile
     long long filesize;
     FileStatus status;
     FileDirection direction;
-    QFuture<void> sendFuture;
+    QTimer* sendTimer;
 };
 
 struct ToxCall
 {
 public:
-    AudioBuffer audioBuffer;
-    QAudioOutput* audioOutput;
-    QAudioInput* audioInput;
-    QIODevice* audioInputDevice;
     ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer, *sendVideoTimer;
     int callId;
     int friendId;
     bool videoEnabled;
     bool active;
+    bool muteMic;
+    ALuint alSource;
 };
 
 class Core : public QObject
@@ -118,6 +118,7 @@ public:
     int getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
     QList<QString> getGroupPeerNames(int groupId) const;
+    QString getFriendAddress(int friendNumber) const;
     int joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key) const;
     void quitGroupChat(int groupId) const;
     void dispatchVideoFrame(vpx_image img) const;
@@ -164,6 +165,8 @@ public slots:
     void hangupCall(int callId);
     void startCall(int friendId, bool video=false);
     void cancelCall(int callId, int friendId);
+
+    void micMuteToggle(int callId);
 
 signals:
     void connected();
@@ -230,7 +233,7 @@ signals:
     void avEnding(int friendId, int callIndex);
     void avRequestTimeout(int friendId, int callIndex);
     void avPeerTimeout(int friendId, int callIndex);
-    void avMediaChange(int friendId, int callIndex);
+    void avMediaChange(int friendId, int callIndex, bool videoEnabled);
 
     void videoFrameReceived(vpx_image* frame);
 
@@ -262,12 +265,13 @@ private:
     static void onAvEnding(void* toxav, int32_t call_index, void* core);
     static void onAvRequestTimeout(void* toxav, int32_t call_index, void* core);
     static void onAvPeerTimeout(void* toxav, int32_t call_index, void* core);
-    static void onAvMediaChange(void* toxav, int32_t call_index, void* core);
+    static void onAvMediaChange(void *toxav, int32_t call_index, void* core);
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
-    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int length, void *user_data); // Callback
+    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int samples, void *user_data); // Callback
     static void sendCallAudio(int callId, ToxAv* toxav);
+    static void playAudioBuffer(int callId, int16_t *data, int samples, unsigned channels, int sampleRate);
     static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
@@ -276,8 +280,8 @@ private:
 
     void loadConfiguration();
     void loadFriends();
-    static void sendAllFileData(Core* core, ToxFile* file);
 
+    static void sendAllFileData(Core* core, ToxFile* file);
     static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);
@@ -299,6 +303,11 @@ private:
     static const int videobufsize;
     static uint8_t* videobuf;
     static int videoBusyness; // Used to know when to drop frames
+
+    static ALCdevice* alOutDev, *alInDev;
+    static ALCcontext* alContext;
+public:
+    static ALuint alMainSource;
 };
 
 #endif // CORE_HPP

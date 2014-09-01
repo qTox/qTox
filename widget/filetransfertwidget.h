@@ -49,7 +49,7 @@ private slots:
     void pauseResumeSend();
 
 private:
-    QString getHumanReadableSize(int size);
+    QString getHumanReadableSize(unsigned long long size);
 
 private:
     QLabel *pic, *filename, *size, *speed, *eta;

@@ -14,29 +14,31 @@
     See the COPYING file for more details.
 */
 
-#ifndef VIDEOSURFACE_H
-#define VIDEOSURFACE_H
+#ifndef FRIENDLISTWIDGET_H
+#define FRIENDLISTWIDGET_H
 
-#include <QAbstractVideoSurface>
-#include <QVideoSurfaceFormat>
-#include "vpx/vpx_image.h"
+#include <QWidget>
+#include <QGridLayout>
+#include "core.h"
 
-class VideoSurface : public QAbstractVideoSurface
+class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    VideoSurface();
-    bool start(const QVideoSurfaceFormat &format);
-    bool present(const QVideoFrame &frame);
-    QList<QVideoFrame::PixelFormat> supportedPixelFormats(QAbstractVideoBuffer::HandleType handleType) const;
+    explicit FriendListWidget(QWidget *parent = 0);
+
+    QLayout* getGroupLayout();
+    QLayout* getFriendLayout(Status s);
+    void moveWidget(QWidget *w, Status s);
 
 signals:
-    // Slots MUST be called with a direct or blocking connection, or img may die before they return !
-    void videoFrameReady(vpx_image img);
+
+public slots:
 
 private:
-    QVideoSurfaceFormat mVideoFormat;
-    vpx_image_t input;
+    QHash<int, QLayout*> layouts;
+    QLayout *groupLayout;
+    QGridLayout *mainLayout;
 };
 
-#endif // VIDEOSURFACE_H
+#endif // FRIENDLISTWIDGET_H

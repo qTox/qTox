@@ -14,29 +14,22 @@
     See the COPYING file for more details.
 */
 
-#ifndef AUDIOBUFFER_H
-#define AUDIOBUFFER_H
+#include "style.h"
+#include "settings.h"
 
-#include <QIODevice>
-#include <QByteArray>
-#include <QMutex>
+#include <QFile>
+#include <QDebug>
 
-class AudioBuffer : public QIODevice
+QString Style::get(const QString &filename)
 {
-    Q_OBJECT
-public:
-    explicit AudioBuffer();
-    ~AudioBuffer();
+    if (!Settings::getInstance().getUseNativeStyle())
+    {
+        QFile file(filename);
+        if (file.open(QFile::ReadOnly | QFile::Text))
+            return file.readAll();
+        else
+            qWarning() << "Style " << filename << " not found";
+    }
 
-    qint64 readData(char *data, qint64 maxlen);
-    qint64 writeData(const char *data, qint64 len);
-    qint64 bytesAvailable() const;
-    qint64 bufferSize() const;
-    void clear();
-
-private:
-    QByteArray buffer;
-    mutable QMutex bufferMutex;
-};
-
-#endif // AUDIOBUFFER_H
+    return QString();
+}

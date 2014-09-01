@@ -20,12 +20,13 @@
 #    See the COPYING file for more details.
 
 
-QT       += core gui network multimedia multimediawidgets xml
+QT       += core gui network xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET    = qtox
 TEMPLATE  = app
-FORMS    += widget.ui
+FORMS    += \
+    mainwindow.ui
 CONFIG   += c++11
 
 TRANSLATIONS = translations/de.ts \
@@ -35,15 +36,24 @@ TRANSLATIONS = translations/de.ts \
 
 RESOURCES += res.qrc
 
-target.path = /usr/local/bin
-INSTALLS += target
-
 INCLUDEPATH += libs/include
+
+# Rules for Windows, Mac OSX, and Linux
 win32 {
-    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
+    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libopenal32.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
+} macx {
+    LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
 } else {
-    LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx
+    # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
+    contains(STATICPKG, YES) {
+        target.path = /usr/bin
+        INSTALLS += target
+        LIBS += -L$$PWD/libs/lib/ -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -Wl,-Bdynamic -lopus -lvpx -lopenal -lopencv_core -lopencv_highgui
+    } else {
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
+    }
 }
+
 
 #### Static linux build
 #LIBS += -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lvpx -lopus \
@@ -78,14 +88,16 @@ HEADERS  += widget/form/addfriendform.h \
     friendlist.h \
     cdata.h \
     cstring.h \
-    audiobuffer.h \
     widget/selfcamview.h \
-    widget/videosurface.h \
     widget/camera.h \
     widget/netcamview.h \
     widget/tool/clickablelabel.h \
     smileypack.h \
-    widget/emoticonswidget.h
+    widget/emoticonswidget.h \
+    style.h \
+    widget/adjustingscrollarea.h \
+    widget/croppinglabel.h \
+    widget/friendlistwidget.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -112,11 +124,14 @@ SOURCES += \
     settings.cpp \
     cdata.cpp \
     cstring.cpp \
-    audiobuffer.cpp \
     widget/selfcamview.cpp \
-    widget/videosurface.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
     widget/tool/clickablelabel.cpp \
     smileypack.cpp \
-    widget/emoticonswidget.cpp
+    widget/emoticonswidget.cpp \
+    style.cpp \
+    widget/adjustingscrollarea.cpp \
+    widget/croppinglabel.cpp \
+    widget/friendlistwidget.cpp \
+    coreav.cpp

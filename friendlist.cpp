@@ -17,6 +17,7 @@
 #include "friend.h"
 #include "friendlist.h"
 #include <QMenu>
+#include <QDebug>
 
 QList<Friend*> FriendList::friendList;
 

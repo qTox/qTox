@@ -1,9 +1,9 @@
 /*
-    Copyright (C) 2013 by Maxim Biro <nurupo.contributions@gmail.com>
+    Copyright (C) 2014 by Project Tox <https://tox.im>
 
-    This file is part of Tox Qt GUI.
+    This file is part of qTox, a Qt-based graphical interface for Tox.
 
-    This program is free software: you can redistribute it and/or modify
+    This program is libre software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
@@ -22,13 +22,16 @@
 #include <QString>
 #include <QStringList>
 
+#define SMILEYPACK_DEFAULT_PATH "./smileys"
+
 //maps emoticons to smileys
 class SmileyPack : public QObject
 {
     Q_OBJECT
 public:
     static SmileyPack& getInstance();
-    static QList<QPair<QString, QString>> listSmileyPacks(const QString& path = "./smileys");
+    static QList<QPair<QString, QString>> listSmileyPacks(const QString& path = SMILEYPACK_DEFAULT_PATH);
+    static bool isValid(const QString& filename);
 
     bool load(const QString &filename);
     QString smileyfied(QString msg);

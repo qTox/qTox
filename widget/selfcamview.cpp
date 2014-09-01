@@ -15,14 +15,12 @@
 */
 
 #include "selfcamview.h"
-#include <QActionGroup>
-#include <QMessageBox>
 #include <QCloseEvent>
 #include <QShowEvent>
-#include <QVideoFrame>
 
-#include "videosurface.h"
 #include "widget.h"
+
+using namespace cv;
 
 SelfCamView::SelfCamView(Camera* Cam, QWidget* parent)
     : QWidget(parent), displayLabel{new QLabel},
