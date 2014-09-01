@@ -10,8 +10,10 @@ INSTALL_DIR=libs
 # just for convenience
 BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 
+SODIUM_VER=0.7.0
+
 # directory names of cloned repositories
-SODIUM_DIR=libsodium-0.5.0
+SODIUM_DIR=libsodium-$SODIUM_VER
 TOX_CORE_DIR=libtoxcore-latest
 
 # this boolean describes whether the installation of
@@ -97,21 +99,21 @@ rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 
 
 ############### install step ###############
-# clone current master of libsodium and switch to version 0.5.0
+# clone current master of libsodium and switch to version $SODIUM_VER
 # afterwards install libsodium to INSTALL_DIR
 # skip the installation if TOX_ONLY is true
 if [[ $TOX_ONLY = "false" ]]; then
     git clone git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR}
     pushd ${BASE_DIR}/${SODIUM_DIR}
-    git checkout tags/0.5.0
+    git checkout tags/$SODIUM_VER
     ./autogen.sh
-    
+
     if [[ $GLOBAL = "false" ]]; then
         ./configure --prefix=${BASE_DIR}/
     else
         ./configure
     fi
-    
+
     make -j2 check
     
     if [[ $GLOBAL = "false" ]]; then
