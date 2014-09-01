@@ -76,11 +76,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     updateGeometry();
 }
 
-void FriendWidget::mouseReleaseEvent (QMouseEvent*)
-{
-    emit friendWidgetClicked(this);
-}
-
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
@@ -122,47 +117,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     }
 }
 
-void FriendWidget::mousePressEvent(QMouseEvent *event)
-{
-    if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
-    {
-        if (isActiveWidget)
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(250,250,250,255));
-            this->setPalette(pal);
-        }
-        else
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(85,85,85,255));
-            this->setPalette(pal);
-        }
-    }
-}
-
-void FriendWidget::enterEvent(QEvent*)
-{
-    if (isActiveWidget != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, QColor(75,75,75,255));
-        lastColor = this->palette().background().color();
-        this->setPalette(pal);
-    }
-}
-
-void FriendWidget::leaveEvent(QEvent*)
-{
-    if (isActiveWidget != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, lastColor);
-        this->setPalette(pal);
-    }
-}
-
-
 void FriendWidget::setAsActiveChatroom()
 {
     isActiveWidget = 1;
@@ -201,11 +155,6 @@ void FriendWidget::setAsInactiveChatroom()
     avatar.setPixmap(QPixmap(":img/contact.png"));
 }
 
-int FriendWidget::isActive()
-{
-    return isActiveWidget;
-}
-
 void FriendWidget::updateStatusLight()
 {
     Friend* f = FriendList::findFriend(friendId);
@@ -227,4 +176,16 @@ void FriendWidget::updateStatusLight()
         statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     else if (status == Status::Offline && f->hasNewEvents == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.png"));
+}
+
+void FriendWidget::setChatForm(Ui::MainWindow &ui)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    f->chatForm->show(ui);
+}
+
+void FriendWidget::resetEventFlags()
+{
+    Friend* f = FriendList::findFriend(friendId);
+    f->hasNewEvents = 0;
 }
