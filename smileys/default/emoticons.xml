@@ -76,4 +76,10 @@
     <string>D:</string>
   </emoticon>
   
+  <emoticon file="laugh_closed_eyes">
+    <string>😆</string>
+    <string>xD</string>
+    <string>XD</string>
+  </emoticon>
+  
 </messaging-emoticon-map>

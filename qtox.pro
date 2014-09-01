@@ -36,7 +36,11 @@ TRANSLATIONS = translations/de.ts \
 
 RESOURCES += res.qrc
 
-INCLUDEPATH += libs/include
+contains(JENKINS,YES) {
+	INCLUDEPATH += ./libs/include/
+} else {
+	INCLUDEPATH += libs/include
+}
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
@@ -51,6 +55,10 @@ win32 {
         LIBS += -L$$PWD/libs/lib/ -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -Wl,-Bdynamic -lopus -lvpx -lopenal -lopencv_core -lopencv_highgui
     } else {
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
+    }
+
+    contains(JENKINS, YES) {
+        LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a -lopencv_core -lopencv_highgui -lopenal
     }
 }
 
@@ -71,10 +79,6 @@ HEADERS  += widget/form/addfriendform.h \
     widget/form/settingsform.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
-    widget/tool/copyableelidelabel.h \
-    widget/tool/editablelabelwidget.h \
-    widget/tool/elidelabel.h \
-    widget/tool/esclineedit.h \
     widget/tool/friendrequestdialog.h \
     widget/filetransfertwidget.h \
     widget/friendwidget.h \
@@ -91,7 +95,6 @@ HEADERS  += widget/form/addfriendform.h \
     widget/selfcamview.h \
     widget/camera.h \
     widget/netcamview.h \
-    widget/tool/clickablelabel.h \
     smileypack.h \
     widget/emoticonswidget.h \
     style.h \
@@ -106,10 +109,6 @@ SOURCES += \
     widget/form/settingsform.cpp \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
-    widget/tool/copyableelidelabel.cpp \
-    widget/tool/editablelabelwidget.cpp \
-    widget/tool/elidelabel.cpp \
-    widget/tool/esclineedit.cpp \
     widget/tool/friendrequestdialog.cpp \
     widget/filetransfertwidget.cpp \
     widget/friendwidget.cpp \
@@ -127,7 +126,6 @@ SOURCES += \
     widget/selfcamview.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
-    widget/tool/clickablelabel.cpp \
     smileypack.cpp \
     widget/emoticonswidget.cpp \
     style.cpp \
