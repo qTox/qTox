@@ -154,6 +154,9 @@ Widget::Widget(QWidget *parent)
     camera = new Camera;
     camview = new SelfCamView(camera);
 
+    // Disable some widgets until we're connected to the DHT
+    ui->statusButton->setEnabled(false);
+
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
@@ -267,11 +270,13 @@ Camera* Widget::getCamera()
 
 void Widget::onConnected()
 {
+    ui->statusButton->setEnabled(true);
     emit statusSet(Status::Online);
 }
 
 void Widget::onDisconnected()
 {
+    ui->statusButton->setEnabled(false);
     emit statusSet(Status::Offline);
 }
 
