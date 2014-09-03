@@ -13,26 +13,28 @@
 ###Qt
 
 Download the Qt online installer for Windows from [qt-project.org](http://qt-project.org/downloads).
-While installation you have to assemble your Qt toolchain. Take the most recent version of Qt compiled with MinGW. 
-Select "Tools" to install the MinGW compiler package itself alongside Qt. By doing this you don't have to bother with installing one manually.
-The following steps assumes that Qt is installed at "C:\Qt". If you decided to choose another location, replace corresponding parts.
+While installation you have to assemble your Qt toolchain. Take the most recent version of Qt compiled with MinGW.
+Although the installer provides its own bundled MinGW compiler Toolchain its recommend installing it separately because Qt is missing MSYS which is needed to compile and install OpenCV and OpenAL. Thus you can - if needed - deselect the tab "Tools".
+The following steps assume that Qt is installed at "C:\Qt". If you decided to choose another location, replace corresponding parts.
 
 ###MinGW
 
-If you installed MinGW alongside Qt you can skip this step.
-
 Download the MinGW installer for Windows from [sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/).
-Make sure to install MSYS (a minimalistic set of Unix tools for Windows) and TODO.
+Make sure to install MSYS (a set of Unix tools for Windows).
+The following steps assume that MinGW is installed at "C:\MinGW". If you decided to choose another location, replace corresponding parts.
 
-###System Path
+###Setting up Path
 
-For some tasks it might be useful to use the Windows terminal. Thus you should add Qt/MinGW binaries to the system path to make them globally accessible. 
-Open Control Panel -> System -> Advanced Settings -> .... TODO
+Add MinGW/MSYS binaries to the system path to make them globally accessible. 
+Open Control Panel -> System and Security -> System -> Advanced system settings -> Environment Variables...
+In the second box search for the PATH variable and press Edit...
+The input box "Variable value:" should already contain some directories. Each directory is separated with a semicolon.
+Extend the input box by adding ";C:\MinGW\bin;C:\MinGW\msys\1.0\bin". The very first semicolon must only be added if it is missing.
 
 ###Cloning the Repository
 
-Clone the repository (https://github.com/tux3/qTox.git) with your prefered Git client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task.
-The following steps assumes that you cloned the repository at "C:\qTox". If you decided to choose another location, replace corresponding parts.
+Clone the repository (https://github.com/tux3/qTox.git) with your preferred  Git client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task.
+The following steps assume that you cloned the repository at "C:\qTox". If you decided to choose another location, replace corresponding parts.
 
 ###Tox Core
 
@@ -42,17 +44,17 @@ If you prefer to compile Tox Core on your own follow the instructions at https:/
 
 ###OpenCV
 
-Unfortunately there are no prebuild packages for OpenCV compiled with MinGW. Thus you have to create your own.
-First of all download and install the most recent version of CMake from [cmake.org](http://www.cmake.org/cmake/resources/software.html).
-Afterwards download the source archive of OpenCV from [sourceforge.net](http://sourceforge.net/projects/opencvlibrary/) and extract its content to "C:\qTox\libs".
-Create a new directory named "opencv-build" in "C:\qTox\libs". Now you should have the two directories "opencv-x.y.z" where x.y.z is the version of OpenCV and "opencv-build" inside your "C:\qTox\libs" directory.
-Run CMake Gui and TODO CHECK FOR MSYS MAKE FILES.
+Unfortunately there are no prebuild packages for OpenCV compiled with MinGW. Thus, you have to create your own.
+First of all download and install the most recent version of CMake from
+[cmake.org](http://www.cmake.org/cmake/resources/software.html).
+Afterwards download the source archive of OpenCV from [http://opencv.org](http://opencv.org/downloads.html). It's recommended to download the Linux/Mac package because the Windows package is bloated with useless binaries. The Linux/Mac package only contains the sources and works perfectly on Windows.
+Extract the content of the source archive to "C:\qTox\libs". Furthermore, create a new directory named "opencv-build" in "C:\qTox\libs". 
+Now you should have the two directories "opencv-x.y.z" where x.y.z is the version of OpenCV and "opencv-build" inside your "C:\qTox\libs" directory.
+Run CMake (cmake-gui) and set up the input boxes "Where is the source code:" and "Where to build the binaries" with "C:\qTox\libs\opencv-x.y.z" and "C:\qTox\libs\opencv-build". Press configure and choose "MSYS Makefiles" in the drop down menu and "Use default native compilers". Press "Finish" to start configuration. TODO
 
 ###OpenAL Soft
 
-Unlike OpenCV, prebuild packages of OpenAL Soft compiled with MinGW are provided at [http://kcat.strangesoft.net](http://kcat.strangesoft.net/openal.html#download).
-Download the most recent version and extract its content to "C:\qTox\libs". Copy the directory "AL" located at "C:\qTox\libs\openal-soft-x.y.z-bin" to "C:\qTox\libs\include" where x.y.z is the version of OpenAL.
-Copy the file "soft_oal.dll" located at "C:\qTox\libs\openal-soft-x.y.z-bin\bin\Win32\soft_oal.dll" to "C:\qTox\libs\lib".
+
 
 ##Linux
 Most of the dependencies should be available through your package manger.
