@@ -56,7 +56,7 @@ Copy the file "soft_oal.dll" located at "C:\qTox\libs\openal-soft-x.y.z-bin\bin\
 
 ## Linux
 
-## Git
+### Git
 
 In order to clone the qTox repository you need Git.
 
