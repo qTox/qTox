@@ -54,3 +54,86 @@ Unlike OpenCV, prebuild packages of OpenAL Soft compiled with MinGW are provided
 Download the most recent version and extract its content to "C:\qTox\libs". Copy the directory "AL" located at "C:\qTox\libs\openal-soft-x.y.z-bin" to "C:\qTox\libs\include" where x.y.z is the version of OpenAL.
 Copy the file "soft_oal.dll" located at "C:\qTox\libs\openal-soft-x.y.z-bin\bin\Win32\soft_oal.dll" to "C:\qTox\libs\lib".
 
+## Linux
+
+## Git
+
+In order to clone the qTox repository you need Git.
+
+Debian:
+```bash
+sudo apt-get install git
+```
+
+Ubuntu:
+```bash
+sudo apt-get install git
+```
+
+Arch Linux:
+```bash
+sudo pacman -S git
+```
+
+Fedora:
+```bash
+yum install git
+```
+
+### GCC and Qt
+
+Debian:
+```bash
+sudo apt-get install build-essential qt5-qmake qt5-default
+```
+
+Ubuntu:
+```bash
+sudo apt-get install build-essential qt5-qmake qt5-default
+```
+
+Arch Linux:
+```bash
+sudo pacman -S base-devel qt5
+```
+
+Fedora:
+```bash
+yum groupinstall "Development Tools"
+yum install qt-devel qt-doc qt-creator
+```
+
+### Cloning the Repository
+
+Open a new Terminal and change to a directory of your choice. To clone the repository use:
+```bash
+git clone https://github.com/tux3/qTox.git qTox
+```
+
+The following steps assumes that you cloned the repository at "/home/user/qTox". If you decided to choose another location, replace corresponding parts.
+
+### Tox Core
+
+First of all install the dependencies of Tox Core.
+
+Debian:
+```bash
+sudo apt-get install libtool autotools-dev automake checkinstall check yasm libopus-dev libvpx-dev
+```
+
+Ubuntu:
+```bash
+sudo apt-get install libtool autotools-dev automake checkinstall check yasm libopus-dev libvpx-dev
+```
+
+Arch Linux: (Arch Linux provides the package "tox-git" in AUR)
+```bash
+sudo pacman -S yasm opus vpx
+```
+
+Fedora:
+```bash
+yum install libtool autoconf automake check check-devel
+```
+Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
+The script will automatically download and install Tox Core and libsodium to "/home/user/qTox/libs"
