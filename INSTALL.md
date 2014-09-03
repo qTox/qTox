@@ -140,5 +140,6 @@ yum install libtool autoconf automake check check-devel
 Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
 The script will automatically download and install Tox Core and libsodium to "/home/user/qTox/libs":
 ```bash
+cd /home/user/qTox
 ./bootstrap.sh # use -h or --help for more information
 ```
