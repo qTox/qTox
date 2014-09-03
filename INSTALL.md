@@ -90,27 +90,27 @@ git clone https://github.com/tux3/qTox.git qTox
 
 The following steps assumes that you cloned the repository at "/home/user/qTox". If you decided to choose another location, replace corresponding parts.
 
-### GCC and Qt
+### GCC, Qt, OpenCV and OpanAL Soft
 
 Debian:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default
+sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopencv-dev
 ```
 
 Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default
+sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopencv-dev
 ```
 
 Arch Linux:
 ```bash
-sudo pacman -S base-devel qt5
+sudo pacman -S base-devel qt5 opencv openal
 ```
 
 Fedora:
 ```bash
 yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator
+yum install qt-devel qt-doc qt-creator opencv-devel openal-soft-devel
 ```
 
 ### Tox Core
@@ -141,26 +141,4 @@ Now you can either follow the instructions at https://github.com/irungentoo/toxc
 The script will automatically download and install Tox Core and libsodium to "/home/user/qTox/libs":
 ```bash
 ./bootstrap.sh # use -h or --help for more information
-```
-
-### OpenCV and OpanAL Soft
-
-Debian:
-```bash
-sudo apt-get install libopenal-dev libopencv-dev
-```
-
-Ubuntu:
-```bash
-sudo apt-get install libopenal-dev libopencv-dev
-```
-
-Arch Linux:
-```bash
-sudo pacman -S opencv openal
-```
-
-Fedora:
-```bash
-yum install opencv-devel openal-soft-devel
 ```
