@@ -44,7 +44,7 @@ If you prefer to compile Tox Core on your own follow the instructions at https:/
 
 Unfortunately there are no prebuild packages for OpenCV compiled with MinGW. Thus you have to create your own.
 First of all download and install the most recent version of CMake from [cmake.org](http://www.cmake.org/cmake/resources/software.html).
-Afterwards download the sources of OpenCV from [sourceforge.net](http://sourceforge.net/projects/opencvlibrary/) and extract its content to "C:\qTox\libs".
+Afterwards download the source archive of OpenCV from [sourceforge.net](http://sourceforge.net/projects/opencvlibrary/) and extract its content to "C:\qTox\libs".
 Create a new directory named "opencv-build" in "C:\qTox\libs". Now you should have the two directories "opencv-x.y.z" where x.y.z is the version of OpenCV and "opencv-build" inside your "C:\qTox\libs" directory.
 Run CMake Gui and TODO CHECK FOR MSYS MAKE FILES.
 
