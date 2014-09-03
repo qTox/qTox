@@ -8,7 +8,7 @@
 | OpenCV       | >= 2.4.9    | core, highgui                   |
 | OpenAL Soft  | >= 1.16.0   |                                 |
 
-##Windows
+## Windows
 
 ### Qt
 
@@ -37,5 +37,20 @@ The following steps assumes that you cloned the repository at "C:\qTox". If you 
 ### Tox Core
 
 [jenkins.libtoxcore.so](http://jenkins.libtoxcore.so/job/libtoxcore-win32-i686/lastSuccessfulBuild/artifact/libtoxcore-win32-i686.zip) 
-provides a prebuild package of Tox Core. Download this package and extract its content to "C:\qTox\libs". You may have to create the folder "libs".
+provides a prebuild package of Tox Core. Download this package and extract its content to "C:\qTox\libs". You may have to create the directory "libs".
+If you prefer to compile Tox Core on your own follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#windows
+
+### OpenCV
+
+Unfortunately there are no prebuild packages for OpenCV compiled with MinGW. Thus you have to create your own.
+First of all download and install the most recent version of CMake from [cmake.org](http://www.cmake.org/cmake/resources/software.html).
+Afterwards download the sources of OpenCV from [sourceforge.net](http://sourceforge.net/projects/opencvlibrary/) and extract its content to "C:\qTox\libs".
+Create a new directory named "opencv-build" in "C:\qTox\libs". Now you should have the two directories "opencv-x.y.z" where x.y.z is the version of OpenCV and "opencv-build" inside your "C:\qTox\libs" directory.
+Run CMake Gui and TODO CHECK FOR MSYS MAKE FILES.
+
+### OpenAL Soft
+
+Unlike OpenCV, prebuild packages of OpenAL Soft compiled with MinGW are provided at [http://kcat.strangesoft.net](http://kcat.strangesoft.net/openal.html#download).
+Download the most recent version and extract its content to "C:\qTox\libs". Copy the directory "AL" located at "C:\qTox\libs\openal-soft-x.y.z-bin" to "C:\qTox\libs\include" where x.y.z is the version of OpenAL.
+Copy the file "soft_oal.dll" located at "C:\qTox\libs\openal-soft-x.y.z-bin\bin\Win32\soft_oal.dll" to "C:\qTox\libs\lib".
 
