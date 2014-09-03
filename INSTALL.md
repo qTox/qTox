@@ -55,6 +55,7 @@ Download the most recent version and extract its content to "C:\qTox\libs". Copy
 Copy the file "soft_oal.dll" located at "C:\qTox\libs\openal-soft-x.y.z-bin\bin\Win32\soft_oal.dll" to "C:\qTox\libs\lib".
 
 ## Linux
+Most of the dependencies should be available through your package manger.
 
 ### Git
 
@@ -80,6 +81,15 @@ Fedora:
 yum install git
 ```
 
+### Cloning the Repository
+
+Open a new Terminal and change to a directory of your choice. To clone the repository use:
+```bash
+git clone https://github.com/tux3/qTox.git qTox
+```
+
+The following steps assumes that you cloned the repository at "/home/user/qTox". If you decided to choose another location, replace corresponding parts.
+
 ### GCC and Qt
 
 Debian:
@@ -102,15 +112,6 @@ Fedora:
 yum groupinstall "Development Tools"
 yum install qt-devel qt-doc qt-creator
 ```
-
-### Cloning the Repository
-
-Open a new Terminal and change to a directory of your choice. To clone the repository use:
-```bash
-git clone https://github.com/tux3/qTox.git qTox
-```
-
-The following steps assumes that you cloned the repository at "/home/user/qTox". If you decided to choose another location, replace corresponding parts.
 
 ### Tox Core
 
@@ -135,5 +136,31 @@ Fedora:
 ```bash
 yum install libtool autoconf automake check check-devel
 ```
+
 Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
-The script will automatically download and install Tox Core and libsodium to "/home/user/qTox/libs"
+The script will automatically download and install Tox Core and libsodium to "/home/user/qTox/libs":
+```bash
+./bootstrap.sh # use -h or --help for more information
+```
+
+### OpenCV and OpanAL Soft
+
+Debian:
+```bash
+sudo apt-get install libopenal-dev libopencv-dev
+```
+
+Ubuntu:
+```bash
+sudo apt-get install libopenal-dev libopencv-dev
+```
+
+Arch Linux:
+```bash
+sudo pacman -S opencv openal
+```
+
+Fedora:
+```bash
+yum install opencv-devel openal-soft-devel
+```
