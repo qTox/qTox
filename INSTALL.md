@@ -59,8 +59,7 @@ Run CMake (cmake-gui) and set up the input boxes "Where is the source code:" and
 ##Linux
 Most of the dependencies should be available through your package manger.
 
-###Git
-
+###Cloning the Repository
 In order to clone the qTox repository you need Git.
 
 Debian:
@@ -83,10 +82,9 @@ Fedora:
 yum install git
 ```
 
-###Cloning the Repository
-
-Open a new Terminal and change to a directory of your choice. To clone the repository use:
+Afterwards open a new Terminal, change to a directory of your choice and clone the repository:
 ```bash
+cd /home/user/qTox
 git clone https://github.com/tux3/qTox.git qTox
 ```
 
