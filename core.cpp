@@ -882,7 +882,8 @@ void Core::saveConfiguration()
         return;
     }
 
-    qDebug() << "Core: writing tox_save";
+        qDebug() << "Core: Saving";
+
     uint32_t fileSize = tox_size(tox);
     if (fileSize > 0 && fileSize <= INT32_MAX) {
         uint8_t *data = new uint8_t[fileSize];
@@ -892,7 +893,6 @@ void Core::saveConfiguration()
         delete[] data;
     }
 
-    qDebug() << "Core: writing settings";
     Settings::getInstance().save();
 }
 
