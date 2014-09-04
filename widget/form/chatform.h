@@ -27,6 +27,7 @@
 #include <QTime>
 #include <QPoint>
 
+#include "genericchatform.h"
 #include "widget/tool/chattextedit.h"
 #include "ui_mainwindow.h"
 #include "core.h"
@@ -37,21 +38,18 @@
 
 struct Friend;
 
-class ChatForm : public QObject
+class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
     ChatForm(Friend* chatFriend);
     ~ChatForm();
-    void show(Ui::MainWindow &ui);
-    void setName(QString newName);
     void setStatusMessage(QString newMessage);
     void addFriendMessage(QString message);
     void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
     void addMessage(QLabel* author, QLabel* message, QLabel* date);
 
 signals:
-    void sendMessage(int, QString);
     void sendFile(int32_t friendId, QString, QString, long long);
     void startCall(int friendId);
     void startVideoCall(int friendId, bool video);
@@ -78,31 +76,19 @@ public slots:
 private slots:
     void onSendTriggered();
     void onAttachClicked();
-    void onSliderRangeChanged();
     void onCallTriggered();
     void onVideoCallTriggered();
     void onAnswerCallTriggered();
     void onHangupCallTriggered();
     void onCancelCallTriggered();
-    void onChatContextMenuRequested(QPoint pos);
-    void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
 
 private:
     Friend* f;
-    QHBoxLayout *headLayout, *mainFootLayout;
-    QVBoxLayout *headTextLayout, *mainLayout, *footButtonsSmall, *volMicLayout;
-    QGridLayout *mainChatLayout;
-    QLabel *avatar, *name, *statusMessage;
-    ChatTextEdit *msgEdit;
-    QPushButton *sendButton, *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
-    QScrollArea *chatArea;
-    QWidget *main, *head, *chatAreaWidget;
-    QString previousName;
+    QLabel *statusMessageLabel;
     NetCamView* netcam;
-    int curRow;
-    bool lockSliderToBottom, audioInputFlag;
+    bool audioInputFlag;
     int callId;
 };
 

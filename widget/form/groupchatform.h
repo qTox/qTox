@@ -26,6 +26,7 @@
 #include <QScrollArea>
 #include <QTime>
 
+#include "genericchatform.h"
 #include "widget/tool/chattextedit.h"
 #include "ui_mainwindow.h"
 
@@ -34,41 +35,23 @@
 
 class Group;
 
-class GroupChatForm : public QObject
+class GroupChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
     GroupChatForm(Group* chatGroup);
     ~GroupChatForm();
-    void show(Ui::MainWindow &ui);
-    void setName(QString newName);
     void addGroupMessage(QString message, int peerId);
     void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
     void addMessage(QLabel* author, QLabel* message, QLabel* date);
     void onUserListChanged();
 
-signals:
-    void sendMessage(int, QString);
-
 private slots:
     void onSendTriggered();
-    void onSliderRangeChanged();
-    void onChatContextMenuRequested(QPoint pos);
-    void onSaveLogClicked();
 
 private:
     Group* group;
-    QHBoxLayout *headLayout, *mainFootLayout;
-    QVBoxLayout *headTextLayout, *mainLayout;
-    QGridLayout *mainChatLayout;
-    QLabel *avatar, *name, *nusers, *namesList;
-    ChatTextEdit *msgEdit;
-    QPushButton *sendButton;
-    QScrollArea *chatArea;
-    QWidget *main, *head, *chatAreaWidget;
-    QString previousName;
-    int curRow;
-    bool lockSliderToBottom;
+    QLabel *nusers, *namesList;
 };
 
 #endif // GROUPCHATFORM_H

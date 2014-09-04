@@ -29,25 +29,25 @@
 #include <QFileDialog>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
-    : group(chatGroup), curRow{0}, lockSliderToBottom{true}
+    : group(chatGroup)
 {
-    main = new QWidget(), head = new QWidget(), chatAreaWidget = new QWidget();
-    headLayout = new QHBoxLayout(), mainFootLayout = new QHBoxLayout();
-    headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout();
-    mainChatLayout = new QGridLayout();
-    avatar = new QLabel(), name = new QLabel(), nusers = new QLabel(), namesList = new QLabel();
-    msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton();
-    chatArea = new QScrollArea();
-    QFont bold;
-    bold.setBold(true);
+    nusers = new QLabel();
+    namesList = new QLabel();
+
+    fileButton->setEnabled(false);
+    callButton->setVisible(false);
+    videoButton->setVisible(false);
+    volButton->setVisible(false);
+    micButton->setVisible(false);
+
     QFont small;
     small.setPixelSize(10);
-    name->setText(group->widget->name.text());
-    name->setFont(bold);
+
+    nameLabel->setText(group->widget->name.text());
     nusers->setFont(small);
     nusers->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
-    avatar->setPixmap(QPixmap(":/img/group.png"));
+    avatarLabel->setPixmap(QPixmap(":/img/group_dark.png"));
+
     QString names;
     for (QString& s : group->peers)
         names.append(s+", ");
@@ -55,53 +55,16 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     namesList->setText(names);
     namesList->setFont(small);
 
-    chatAreaWidget->setLayout(mainChatLayout);
-
-    chatArea->setStyleSheet(Style::get(":/ui/chatArea/chatArea.css"));
-    chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    chatArea->setWidgetResizable(true);
-    chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
-    chatArea->setFrameStyle(QFrame::NoFrame);
-
-    mainChatLayout->setColumnStretch(1,1);
-    mainChatLayout->setSpacing(10);
-
     msgEdit->setObjectName("group");
-    msgEdit->setStyleSheet(Style::get(":/ui/msgEdit/msgEdit.css"));
-    msgEdit->setFixedHeight(50);
-    msgEdit->setFrameStyle(QFrame::NoFrame);
 
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setHorizontalSpacing(10);
 
-    sendButton->setStyleSheet(Style::get(":/ui/sendButton/sendButton.css"));
-    sendButton->setFixedSize(50, 50);
-
-    main->setLayout(mainLayout);
-    mainLayout->addWidget(chatArea);
-    mainLayout->addLayout(mainFootLayout);
-    mainLayout->setMargin(0);
-
-    mainFootLayout->addWidget(msgEdit);
-    mainFootLayout->addWidget(sendButton);
-
-    head->setLayout(headLayout);
-    headLayout->addWidget(avatar);
-    headLayout->addLayout(headTextLayout);
-    headLayout->addStretch();
-    headLayout->setMargin(0);
-
-    headTextLayout->addStretch();
-    headTextLayout->addWidget(name);
     headTextLayout->addWidget(nusers);
     headTextLayout->addWidget(namesList);
     headTextLayout->setMargin(0);
     headTextLayout->setSpacing(0);
     headTextLayout->addStretch();
-
-    chatArea->setWidget(chatAreaWidget);
-
-    sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
@@ -111,21 +74,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
 GroupChatForm::~GroupChatForm()
 {
-    delete head;
-    delete main;
-}
 
-void GroupChatForm::show(Ui::MainWindow &ui)
-{
-    ui.mainContent->layout()->addWidget(main);
-    ui.mainHead->layout()->addWidget(head);
-    main->show();
-    head->show();
-}
-
-void GroupChatForm::setName(QString newName)
-{
-    name->setText(newName);
 }
 
 void GroupChatForm::onSendTriggered()
@@ -203,13 +152,6 @@ void GroupChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     connect(date, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
 }
 
-void GroupChatForm::onSliderRangeChanged()
-{
-    QScrollBar* scroll = chatArea->verticalScrollBar();
-    if (lockSliderToBottom)
-         scroll->setValue(scroll->maximum());
-}
-
 void GroupChatForm::onUserListChanged()
 {
     nusers->setText(tr("%1 users in chat").arg(group->nPeers));
@@ -218,45 +160,4 @@ void GroupChatForm::onUserListChanged()
         names.append(s+", ");
     names.chop(2);
     namesList->setText(names);
-}
-
-void GroupChatForm::onChatContextMenuRequested(QPoint pos)
-{
-    QWidget* sender = (QWidget*)QObject::sender();
-    pos = sender->mapToGlobal(pos);
-    QMenu menu;
-    menu.addAction("Save chat log", this, SLOT(onSaveLogClicked()));
-    menu.exec(pos);
-}
-
-void GroupChatForm::onSaveLogClicked()
-{
-    QString path = QFileDialog::getSaveFileName(0,tr("Save chat log"));
-    if (path.isEmpty())
-        return;
-
-    QFile file(path);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
-
-    QString log;
-    QList<QLabel*> labels = chatAreaWidget->findChildren<QLabel*>();
-    int i=0;
-    for (QLabel* label : labels)
-    {
-        log += label->text();
-        if (i==2)
-        {
-            i=0;
-            log += '\n';
-        }
-        else
-        {
-            log += '\t';
-            i++;
-        }
-    }
-
-    file.write(log.toUtf8());
-    file.close();
 }

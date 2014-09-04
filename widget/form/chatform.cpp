@@ -32,124 +32,16 @@
 #include <QMessageBox>
 
 ChatForm::ChatForm(Friend* chatFriend)
-    : f(chatFriend), curRow{0}, lockSliderToBottom{true}
+    : f(chatFriend)
 {
-    main = new QWidget(), head = new QWidget(), chatAreaWidget = new QWidget();
-    name = new QLabel(), avatar = new QLabel(), statusMessage = new QLabel();
-    headLayout = new QHBoxLayout(), mainFootLayout = new QHBoxLayout();
-    headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout(),
-        footButtonsSmall = new QVBoxLayout(), volMicLayout = new QVBoxLayout();
-    mainChatLayout = new QGridLayout();
-    msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(),
-        callButton = new QPushButton(), videoButton = new QPushButton(),
-        volButton = new QPushButton(), micButton = new QPushButton();
-    chatArea = new QScrollArea();
+    nameLabel->setText(f->getName());
+    avatarLabel->setPixmap(QPixmap(":/img/contact_dark.png"));
+
+    statusMessageLabel = new QLabel();
     netcam = new NetCamView();
-    audioInputFlag = false;
 
-    QFont bold;
-    bold.setBold(true);
-    name->setText(chatFriend->widget->name.text());
-    name->setFont(bold);
-    statusMessage->setText(chatFriend->widget->statusMessage.text());
-
-    // No real avatar support in toxcore, better draw a pretty picture
-    //avatar->setPixmap(*chatFriend->widget->avatar.pixmap());
-    avatar->setPixmap(QPixmap(":/img/contact_dark.png"));
-
-    chatAreaWidget->setLayout(mainChatLayout);
-    chatAreaWidget->setStyleSheet(Style::get(":/ui/chatArea/chatArea.css"));
-
-    chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    chatArea->setWidgetResizable(true);
-    chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
-    chatArea->setFrameStyle(QFrame::NoFrame);
-
-    mainChatLayout->setColumnStretch(1,1);
-    mainChatLayout->setSpacing(5);
-
-    footButtonsSmall->setSpacing(2);
-
-    msgEdit->setStyleSheet(Style::get(":/ui/msgEdit/msgEdit.css"));
-    msgEdit->setFixedHeight(50);
-    msgEdit->setFrameStyle(QFrame::NoFrame);
-
-    sendButton->setStyleSheet(Style::get(":/ui/sendButton/sendButton.css"));
-    fileButton->setStyleSheet(Style::get(":/ui/fileButton/fileButton.css"));
-    emoteButton->setStyleSheet(Style::get(":/ui/emoteButton/emoteButton.css"));
-
-    callButton->setObjectName("green");
-    callButton->setStyleSheet(Style::get(":/ui/callButton/callButton.css"));
-
-    videoButton->setObjectName("green");
-    videoButton->setStyleSheet(Style::get(":/ui/videoButton/videoButton.css"));
-
-    QString volButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/volButton/volButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream volButtonStylesheetStream(&f);
-        volButtonStylesheet = volButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    volButton->setObjectName("green");
-    volButton->setStyleSheet(volButtonStylesheet);
-
-    QString micButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/micButton/micButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream micButtonStylesheetStream(&f);
-        micButtonStylesheet = micButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    micButton->setObjectName("green");
-    micButton->setStyleSheet(micButtonStylesheet);
-
-    main->setLayout(mainLayout);
-    mainLayout->addWidget(chatArea);
-    mainLayout->addLayout(mainFootLayout);
-    mainLayout->setMargin(0);
-
-    footButtonsSmall->addWidget(emoteButton);
-    footButtonsSmall->addWidget(fileButton);
-
-    mainFootLayout->addWidget(msgEdit);
-    mainFootLayout->addLayout(footButtonsSmall);
-    mainFootLayout->addSpacing(5);
-    mainFootLayout->addWidget(sendButton);
-    mainFootLayout->setSpacing(0);
-
-    head->setLayout(headLayout);
-    headLayout->addWidget(avatar);
-    headLayout->addLayout(headTextLayout);
-    headLayout->addStretch();
-    headLayout->addLayout(volMicLayout);
-    headLayout->addWidget(callButton);
-    headLayout->addWidget(videoButton);
-
-    volMicLayout->addWidget(micButton);
-    volMicLayout->addWidget(volButton);
-
+    headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
-    headTextLayout->addWidget(name);
-    headTextLayout->addWidget(statusMessage);
-    headTextLayout->addStretch();
-
-    chatArea->setWidget(chatAreaWidget);
-
-    //Fix for incorrect layouts on OS X as per
-    //https://bugreports.qt-project.org/browse/QTBUG-14591
-    sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    //    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    //    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    //    msgEdit->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-    //    chatArea->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
@@ -166,29 +58,13 @@ ChatForm::ChatForm(Friend* chatFriend)
 
 ChatForm::~ChatForm()
 {
-    delete main;
-    delete head;
     delete netcam;
-}
-
-void ChatForm::show(Ui::MainWindow &ui)
-{
-    ui.mainContent->layout()->addWidget(main);
-    ui.mainHead->layout()->addWidget(head);
-    main->show();
-    head->show();
-}
-
-void ChatForm::setName(QString newName)
-{
-    name->setText(newName);
-    name->setToolTip(newName); // for overlength names
 }
 
 void ChatForm::setStatusMessage(QString newMessage)
 {
-    statusMessage->setText(newMessage);
-    statusMessage->setToolTip(newMessage); // for overlength messsages
+    statusMessageLabel->setText(newMessage);
+    statusMessageLabel->setToolTip(newMessage); // for overlength messsages
 }
 
 void ChatForm::onSendTriggered()
@@ -204,7 +80,7 @@ void ChatForm::onSendTriggered()
 
 void ChatForm::addFriendMessage(QString message)
 {
-    QLabel *msgAuthor = new QLabel(name->text());
+    QLabel *msgAuthor = new QLabel(nameLabel->text());
     QLabel *msgText = new QLabel(message);
     QLabel *msgDate = new QLabel(QTime::currentTime().toString("hh:mm"));
 
@@ -297,13 +173,6 @@ void ChatForm::onAttachClicked()
     QFileInfo fi(path);
 
     emit sendFile(f->friendId, fi.fileName(), path, filesize);
-}
-
-void ChatForm::onSliderRangeChanged()
-{
-    QScrollBar* scroll = chatArea->verticalScrollBar();
-    if (lockSliderToBottom)
-        scroll->setValue(scroll->maximum());
 }
 
 void ChatForm::startFileSend(ToxFile file)
@@ -659,47 +528,6 @@ void ChatForm::onCancelCallTriggered()
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
     netcam->hide();
     emit cancelCall(callId, f->friendId);
-}
-
-void ChatForm::onChatContextMenuRequested(QPoint pos)
-{
-    QWidget* sender = (QWidget*)QObject::sender();
-    pos = sender->mapToGlobal(pos);
-    QMenu menu;
-    menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
-    menu.exec(pos);
-}
-
-void ChatForm::onSaveLogClicked()
-{
-    QString path = QFileDialog::getSaveFileName(0,tr("Save chat log"));
-    if (path.isEmpty())
-        return;
-
-    QFile file(path);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
-
-    QString log;
-    QList<QLabel*> labels = chatAreaWidget->findChildren<QLabel*>();
-    int i=0;
-    for (QLabel* label : labels)
-    {
-        log += label->text();
-        if (i==2)
-        {
-            i=0;
-            log += '\n';
-        }
-        else
-        {
-            log += '\t';
-            i++;
-        }
-    }
-
-    file.write(log.toUtf8());
-    file.close();
 }
 
 void ChatForm::onEmoteButtonClicked()
