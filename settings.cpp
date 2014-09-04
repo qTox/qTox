@@ -48,13 +48,19 @@ Settings& Settings::getInstance()
 
 void Settings::load()
 {
-    if (loaded) {
+    if (loaded)
         return;
-    }
 
     QFile portableSettings(FILENAME);
     if (portableSettings.exists())
-        makeToxPortable=true;
+    {
+        QSettings ps(FILENAME, QSettings::IniFormat);
+        ps.beginGroup("General");
+            makeToxPortable = ps.value("makeToxPortable", false).toBool();
+        ps.endGroup();
+    }
+    else
+        makeToxPortable = false;
 
     QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
 
