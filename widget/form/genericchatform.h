@@ -54,6 +54,8 @@ protected slots:
     void onChatContextMenuRequested(QPoint pos);
     void onSliderRangeChanged();
     void onSaveLogClicked();
+    void onEmoteButtonClicked();
+    void onEmoteInsertRequested(QString str);
 
 protected:
     QLabel *nameLabel, *avatarLabel;

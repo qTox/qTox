@@ -81,8 +81,6 @@ private slots:
     void onAnswerCallTriggered();
     void onHangupCallTriggered();
     void onCancelCallTriggered();
-    void onEmoteButtonClicked();
-    void onEmoteInsertRequested(QString str);
 
 private:
     Friend* f;

@@ -19,6 +19,8 @@
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QTextStream>
+#include "smileypack.h"
+#include "widget/emoticonswidget.h"
 #include "style.h"
 
 GenericChatForm::GenericChatForm(QObject *parent) :
@@ -134,8 +136,6 @@ GenericChatForm::GenericChatForm(QObject *parent) :
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(nameLabel);
-//    headTextLayout->addWidget(statusMessage);
-//    headTextLayout->addStretch();
 
     chatArea->setWidget(chatAreaWidget);
 
@@ -145,17 +145,7 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
-    //    connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
-    //    connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
-    //    connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
-    //    connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
-    //    connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
-    //    connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
-    //    connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
-    //    connect(chatArea->verticalScrollBar(), &QScrollBar::rangeChanged, this, &ChatForm::onSliderRangeChanged);
-    //    connect(chatArea, &QScrollArea::customContextMenuRequested, this, &ChatForm::onChatContextMenuRequested);
-    //    connect(emoteButton,  &QPushButton::clicked, this, &ChatForm::onEmoteButtonClicked);
-    //    connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
+    connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
 }
 
 void GenericChatForm::setName(const QString &newName)
@@ -229,4 +219,31 @@ GenericChatForm::~GenericChatForm()
 {
     delete mainWidget;
     delete headWidget;
+}
+
+void GenericChatForm::onEmoteButtonClicked()
+{
+    // don't show the smiley selection widget if there are no smileys available
+    if (SmileyPack::getInstance().getEmoticons().empty())
+        return;
+
+    EmoticonsWidget widget;
+    connect(&widget, SIGNAL(insertEmoticon(QString)), this, SLOT(onEmoteInsertRequested(QString)));
+
+    QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
+    if (sender)
+    {
+        QPoint pos = -QPoint(widget.sizeHint().width() / 2, widget.sizeHint().height()) - QPoint(0, 10);
+        widget.exec(sender->mapToGlobal(pos));
+    }
+}
+
+void GenericChatForm::onEmoteInsertRequested(QString str)
+{
+    // insert the emoticon
+    QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
+    if (sender)
+        msgEdit->insertPlainText(str);
+
+    msgEdit->setFocus(); // refocus so that we can continue typing
 }

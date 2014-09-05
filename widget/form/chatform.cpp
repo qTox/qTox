@@ -52,7 +52,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(chatArea->verticalScrollBar(), &QScrollBar::rangeChanged, this, &ChatForm::onSliderRangeChanged);
     connect(chatArea, &QScrollArea::customContextMenuRequested, this, &ChatForm::onChatContextMenuRequested);
-    connect(emoteButton,  &QPushButton::clicked, this, &ChatForm::onEmoteButtonClicked);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
 }
 
@@ -528,33 +527,6 @@ void ChatForm::onCancelCallTriggered()
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
     netcam->hide();
     emit cancelCall(callId, f->friendId);
-}
-
-void ChatForm::onEmoteButtonClicked()
-{
-    // don't show the smiley selection widget if there are no smileys available
-    if (SmileyPack::getInstance().getEmoticons().empty())
-        return;
-
-    EmoticonsWidget widget;
-    connect(&widget, &EmoticonsWidget::insertEmoticon, this, &ChatForm::onEmoteInsertRequested);
-
-    QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
-    if (sender)
-    {
-        QPoint pos = -QPoint(widget.sizeHint().width() / 2, widget.sizeHint().height()) - QPoint(0, 10);
-        widget.exec(sender->mapToGlobal(pos));
-    }
-}
-
-void ChatForm::onEmoteInsertRequested(QString str)
-{
-    // insert the emoticon
-    QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
-    if (sender)
-        msgEdit->insertPlainText(str);
-
-    msgEdit->setFocus(); // refocus so that we can continue typing
 }
 
 void ChatForm::onMicMuteToggle()
