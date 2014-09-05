@@ -14,14 +14,31 @@
     See the COPYING file for more details.
 */
 
-#include "clickablelabel.h"
+#ifndef FRIENDLISTWIDGET_H
+#define FRIENDLISTWIDGET_H
 
-ClickableLabel::ClickableLabel(QWidget *parent) :
-    QLabel(parent)
-{
-}
+#include <QWidget>
+#include <QGridLayout>
+#include "core.h"
 
-void ClickableLabel::mousePressEvent(QMouseEvent*)
+class FriendListWidget : public QWidget
 {
-    emit clicked();
-}
+    Q_OBJECT
+public:
+    explicit FriendListWidget(QWidget *parent = 0);
+
+    QLayout* getGroupLayout();
+    QLayout* getFriendLayout(Status s);
+    void moveWidget(QWidget *w, Status s);
+
+signals:
+
+public slots:
+
+private:
+    QHash<int, QLayout*> layouts;
+    QLayout *groupLayout;
+    QGridLayout *mainLayout;
+};
+
+#endif // FRIENDLISTWIDGET_H

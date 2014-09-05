@@ -36,7 +36,7 @@ public:
     int friendId;
     QString userId;
     ChatForm* chatForm;
-    int hasNewMessages;
+    int hasNewEvents;
     Status friendStatus;
     QPixmap avatar;
 };

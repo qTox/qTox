@@ -18,7 +18,7 @@
 #define WIDGET_H
 
 #include <QThread>
-#include <QWidget>
+#include <QMainWindow>
 #include <QString>
 #include <QHBoxLayout>
 #include <QMenu>
@@ -27,19 +27,19 @@
 #include "widget/form/settingsform.h"
 #include "widget/form/filesform.h"
 #include "camera.h"
+#include "friendlistwidget.h"
 
 #define PIXELS_TO_ACT 7
 
 namespace Ui {
-class Widget;
+class MainWindow;
 }
 
-class GroupWidget;
-struct FriendWidget;
+class GenericChatroomWidget;
 class Group;
 struct Friend;
 
-class Widget : public QWidget
+class Widget : public QMainWindow
 {
     Q_OBJECT
 
@@ -57,10 +57,10 @@ public:
     void showTestCamview();
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
-    void updateFriendStatusLights(int friendId);
-    int useNativeTheme;
+    bool getIsWindowMinimized();
     ~Widget();
-    void updateFriendListWidth();
+
+    virtual void closeEvent(QCloseEvent *event);
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -69,9 +69,6 @@ signals:
     void statusSelected(Status status);
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
-
-protected:
-    void resizeEvent(QResizeEvent *);
 
 private slots:
     void maximizeBtnClicked();
@@ -97,19 +94,17 @@ private slots:
     void onFriendUsernameChanged(int friendId, const QString& username);
     void onFriendStatusMessageLoaded(int friendId, const QString& message);
     void onFriendUsernameLoaded(int friendId, const QString& username);
-    void onFriendWidgetClicked(FriendWidget* widget);
+    void onChatroomWidgetClicked(GenericChatroomWidget *);
     void onFriendMessageReceived(int friendId, const QString& message);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, const uint8_t *publicKey);
     void onGroupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
-    void onGroupWidgetClicked(GroupWidget* widget);
     void removeFriend(int friendId);
     void clearFriends();
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
-    void splitterMoved(int pos, int index);
     void setStatusOnline();
     void setStatusAway();
     void setStatusBusy();
@@ -123,7 +118,7 @@ private:
     void removeFriend(Friend* f);
 
 private:
-    Ui::Widget *ui;
+    Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
     TitleMode m_titleMode;
@@ -147,9 +142,8 @@ private:
     SettingsForm settingsForm;
     FilesForm filesForm;
     static Widget* instance;
-    FriendWidget* activeFriendWidget;
-    GroupWidget* activeGroupWidget;
-    int isFriendWidgetActive, isGroupWidgetActive;
+    GenericChatroomWidget* activeChatroomWidget;
+    FriendListWidget* contactListWidget;
     SelfCamView* camview;
     Camera* camera;
     bool notify(QObject *receiver, QEvent *event);

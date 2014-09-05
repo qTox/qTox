@@ -35,6 +35,7 @@ AddFriendForm::AddFriendForm() : dns(this)
     toxIdLabel.setText(tr("Tox ID","Tox ID of the person you're sending a friend request to"));
     messageLabel.setText(tr("Message","The message you send in friend requests"));
     sendButton.setText(tr("Send friend request"));
+    message.setPlaceholderText(tr("Tox me maybe?","Default message in friend requests if the field is left blank. Write something appropriate!"));
 
     main->setLayout(&layout);
     layout.addWidget(&toxIdLabel);
@@ -56,7 +57,7 @@ AddFriendForm::~AddFriendForm()
     main->deleteLater();
 }
 
-void AddFriendForm::show(Ui::Widget &ui)
+void AddFriendForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
@@ -81,7 +82,7 @@ void AddFriendForm::showWarning(const QString &message) const
 QString AddFriendForm::getMessage() const
 {
     const QString msg = message.toPlainText();
-    return !msg.isEmpty() ? msg : tr("Tox me maybe?","Default message in friend requests if the field is left blank. Write something appropriate!");
+    return !msg.isEmpty() ? msg : message.placeholderText();
 }
 
 void AddFriendForm::onSendTriggered()

@@ -17,9 +17,12 @@
 #include "settingsform.h"
 #include "widget/widget.h"
 #include "settings.h"
+#include "smileypack.h"
 #include <QFont>
 #include <QClipboard>
 #include <QApplication>
+#include <QFileDialog>
+#include <QDir>
 
 SettingsForm::SettingsForm()
     : QObject()
@@ -55,6 +58,12 @@ SettingsForm::SettingsForm()
     useTranslations.setChecked(Settings::getInstance().getUseTranslations());
     makeToxPortable.setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
     makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
+    makeToxPortable.setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
+
+    smileyPackLabel.setText(tr("Smiley Pack", "Text on smiley pack label"));
+    for (auto entry : SmileyPack::listSmileyPacks())
+        smileyPackBrowser.addItem(entry.first, entry.second);
+    smileyPackBrowser.setCurrentIndex(smileyPackBrowser.findData(Settings::getInstance().getSmileyPack()));
 
     main->setLayout(&layout);
     layout.addWidget(&idLabel);
@@ -73,7 +82,9 @@ SettingsForm::SettingsForm()
     layout.addWidget(&enableIPv6);
     layout.addWidget(&useTranslations);
     layout.addWidget(&makeToxPortable);
-    //layout.addStretch();
+    layout.addWidget(&smileyPackLabel);
+    layout.addWidget(&smileyPackBrowser);
+    layout.addStretch();
 
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
@@ -87,6 +98,7 @@ SettingsForm::SettingsForm()
     connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
     connect(&makeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
     connect(&idLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
+    connect(&smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
 }
 
 SettingsForm::~SettingsForm()
@@ -116,7 +128,7 @@ void SettingsForm::setFriendAddress(const QString& friendAddress)
     id.setText(friendAddress);
 }
 
-void SettingsForm::show(Ui::Widget &ui)
+void SettingsForm::show(Ui::MainWindow &ui)
 {
     profiles.clear();
     for (QString profile : searchProfiles())
@@ -197,4 +209,10 @@ void SettingsForm::onUseTranslationUpdated()
 void SettingsForm::onMakeToxPortableUpdated()
 {
     Settings::getInstance().setMakeToxPortable(makeToxPortable.isChecked());
+}
+
+void SettingsForm::onSmileyBrowserIndexChanged(int index)
+{
+    QString filename = smileyPackBrowser.itemData(index).toString();
+    Settings::getInstance().setSmileyPack(filename);
 }

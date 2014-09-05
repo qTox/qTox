@@ -22,19 +22,20 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
-struct FriendWidget : public QWidget
+#include "genericchatroomwidget.h"
+#include "croppinglabel.h"
+
+struct FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
     FriendWidget(int FriendId, QString id);
-    void mouseReleaseEvent (QMouseEvent* event);
-    void mousePressEvent(QMouseEvent *event);
     void contextMenuEvent(QContextMenuEvent * event);
-    void enterEvent(QEvent* event);
-    void leaveEvent(QEvent* event);
     void setAsActiveChatroom();
     void setAsInactiveChatroom();
-    void setNewFixedWidth(int newWidth);
+    void updateStatusLight();
+    void setChatForm(Ui::MainWindow &);
+    void resetEventFlags();
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
@@ -43,13 +44,8 @@ signals:
 
 public:
     int friendId;
-    QLabel avatar, name, statusMessage, statusPic;
-    QHBoxLayout layout;
-    QVBoxLayout textLayout;
-
-private:
-    QColor lastColor;
-    int isActiveWidget;
+    QLabel avatar, statusPic;
+    CroppingLabel name, statusMessage;
 };
 
 #endif // FRIENDWIDGET_H

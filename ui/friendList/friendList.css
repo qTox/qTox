@@ -1,34 +1,34 @@
 QScrollArea {
-    background: #414141!important;
+    background: #414141;
 }
 
 QScrollBar:vertical  {
-    background: #414141!important;
-    width: 14px!important;
-    margin-top: 2px!important;
-    margin-bottom: 2px!important;
+    background: transparent;
+    width: 14px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 QScrollBar:handle:vertical  {
-    background: #1c1c1c!important;
-    min-height: 20px!important;
-    border-radius: 3px!important;
-    margin-left: 3px!important;
-    margin-right: 1px!important;
+    background: rgba(18, 18, 18, 204);
+    min-height: 20px;
+    border-radius: 3px;
+    margin-left: 3px;
+    margin-right: 1px;
 }
 
 QScrollBar:handle:vertical:hover  {
-    background: #2d2d2d!important;
+    background: rgba(35, 35, 35, 204);
 }
 
 QScrollBar:handle:vertical:pressed  {
-    background: #171717!important;
+    background: rgba(13, 13, 13, 204);
 }
 
-QScrollBar:add-line:vertical {height: 0px!important;subcontrol-position: bottom!important;subcontrol-origin: margin!important;}
+QScrollBar:add-line:vertical {height: 0px;subcontrol-position: bottom;subcontrol-origin: margin;}
 
-QScrollBar:sub-line:vertical {height: 0px!important;subcontrol-position: top!important;subcontrol-origin: margin!important;}
+QScrollBar:sub-line:vertical {height: 0px;subcontrol-position: top;subcontrol-origin: margin;}
  
 QScrollBar:add-page:vertical, QScrollBar::sub-page:vertical  {
-    background: none!important;
+    background: none;
 }

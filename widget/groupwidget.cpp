@@ -17,22 +17,26 @@
 #include "groupwidget.h"
 #include "grouplist.h"
 #include "group.h"
+#include "settings.h"
+#include "widget/form/groupchatform.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
 
+#include "ui_mainwindow.h"
+
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
-    this->setMouseTracking(true);
-    this->setAutoFillBackground(true);
-    this->setLayout(&layout);
-    this->setFixedWidth(225);
-    this->setFixedHeight(55);
+    setMouseTracking(true);
+    setAutoFillBackground(true);
+    setLayout(&layout);
+    setFixedHeight(55);
     layout.setSpacing(0);
     layout.setMargin(0);
     textLayout.setSpacing(0);
     textLayout.setMargin(0);
+    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     avatar.setPixmap(QPixmap(":img/group.png"));
     statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
@@ -72,16 +76,6 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     isActiveWidget = 0;
 }
 
-void GroupWidget::setNewFixedWidth(int newWidth)
-{
-    this->setFixedWidth(newWidth);
-}
-
-void GroupWidget::mouseReleaseEvent (QMouseEvent*)
-{
-    emit groupWidgetClicked(this);
-}
-
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
@@ -96,46 +90,6 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
         hide();
         emit removeGroup(groupId);
         return;
-    }
-}
-
-void GroupWidget::mousePressEvent(QMouseEvent *event)
-{
-    if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
-    {
-        if (isActiveWidget)
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(250,250,250,255));
-            this->setPalette(pal);
-        }
-        else
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(85,85,85,255));
-            this->setPalette(pal);
-        }
-    }
-}
-
-void GroupWidget::enterEvent(QEvent*)
-{
-    if (isActiveWidget != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, QColor(75,75,75,255));
-        lastColor = this->palette().background().color();
-        this->setPalette(pal);
-    }
-}
-
-void GroupWidget::leaveEvent(QEvent*)
-{
-    if (isActiveWidget != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, lastColor);
-        this->setPalette(pal);
     }
 }
 
@@ -184,4 +138,41 @@ void GroupWidget::setAsInactiveChatroom()
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
     avatar.setPixmap(QPixmap(":img/group.png"));
+}
+
+void GroupWidget::updateStatusLight()
+{
+    Group *g = GroupList::findGroup(groupId);
+
+    if (Settings::getInstance().getUseNativeDecoration())
+    {
+        if (g->hasNewMessages == 0)
+        {
+            statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+        } else {
+            if (g->userWasMentioned == 0) statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+            else statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+        }
+    } else {
+        if (g->hasNewMessages == 0)
+        {
+            statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+        } else {
+            if (g->userWasMentioned == 0) statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
+            else statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
+        }
+    }
+}
+
+void GroupWidget::setChatForm(Ui::MainWindow &ui)
+{
+    Group* g = GroupList::findGroup(groupId);
+    g->chatForm->show(ui);
+}
+
+void GroupWidget::resetEventFlags()
+{
+    Group* g = GroupList::findGroup(groupId);
+    g->hasNewMessages = 0;
+    g->userWasMentioned = 0;
 }

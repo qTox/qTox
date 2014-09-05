@@ -14,29 +14,17 @@
     See the COPYING file for more details.
 */
 
-#ifndef AUDIOBUFFER_H
-#define AUDIOBUFFER_H
+#ifndef STYLE_H
+#define STYLE_H
 
-#include <QIODevice>
-#include <QByteArray>
-#include <QMutex>
+#include <QString>
 
-class AudioBuffer : public QIODevice
+class Style
 {
-    Q_OBJECT
 public:
-    explicit AudioBuffer();
-    ~AudioBuffer();
-
-    qint64 readData(char *data, qint64 maxlen);
-    qint64 writeData(const char *data, qint64 len);
-    qint64 bytesAvailable() const;
-    qint64 bufferSize() const;
-    void clear();
-
+    static QString get(const QString& filename);
 private:
-    QByteArray buffer;
-    mutable QMutex bufferMutex;
+    Style();
 };
 
-#endif // AUDIOBUFFER_H
+#endif // STYLE_H

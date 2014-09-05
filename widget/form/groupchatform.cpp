@@ -20,6 +20,7 @@
 #include "widget/widget.h"
 #include "friend.h"
 #include "friendlist.h"
+#include "style.h"
 #include <QFont>
 #include <QTime>
 #include <QScrollBar>
@@ -55,16 +56,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     namesList->setFont(small);
 
     chatAreaWidget->setLayout(mainChatLayout);
-    QString chatAreaStylesheet = "";
-    try
-    {
-        QFile f(":/ui/chatArea/chatArea.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream chatAreaStylesheetStream(&f);
-        chatAreaStylesheet = chatAreaStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    chatArea->setStyleSheet(chatAreaStylesheet);
+
+    chatArea->setStyleSheet(Style::get(":/ui/chatArea/chatArea.css"));
     chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     chatArea->setWidgetResizable(true);
     chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -73,35 +66,15 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setSpacing(10);
 
-
-    QString msgEditStylesheet = "";
-    try
-    {
-        QFile f(":/ui/msgEdit/msgEdit.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream msgEditStylesheetStream(&f);
-        msgEditStylesheet = msgEditStylesheetStream.readAll();
-    }
-    catch (int e) {}
     msgEdit->setObjectName("group");
-    msgEdit->setStyleSheet(msgEditStylesheet);
+    msgEdit->setStyleSheet(Style::get(":/ui/msgEdit/msgEdit.css"));
     msgEdit->setFixedHeight(50);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setHorizontalSpacing(10);
 
-    QString sendButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/sendButton/sendButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream sendButtonStylesheetStream(&f);
-        sendButtonStylesheet = sendButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    sendButton->setStyleSheet(sendButtonStylesheet);
-
+    sendButton->setStyleSheet(Style::get(":/ui/sendButton/sendButton.css"));
     sendButton->setFixedSize(50, 50);
 
     main->setLayout(mainLayout);
@@ -142,7 +115,7 @@ GroupChatForm::~GroupChatForm()
     delete main;
 }
 
-void GroupChatForm::show(Ui::Widget &ui)
+void GroupChatForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);

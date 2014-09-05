@@ -16,14 +16,20 @@
 
 #include "chatform.h"
 #include "friend.h"
+#include "smileypack.h"
 #include "widget/friendwidget.h"
 #include "widget/widget.h"
 #include "widget/filetransfertwidget.h"
+#include "widget/emoticonswidget.h"
+#include "style.h"
 #include <QFont>
 #include <QTime>
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QMenu>
+#include <QWidgetAction>
+#include <QGridLayout>
+#include <QMessageBox>
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend), curRow{0}, lockSliderToBottom{true}
@@ -31,12 +37,16 @@ ChatForm::ChatForm(Friend* chatFriend)
     main = new QWidget(), head = new QWidget(), chatAreaWidget = new QWidget();
     name = new QLabel(), avatar = new QLabel(), statusMessage = new QLabel();
     headLayout = new QHBoxLayout(), mainFootLayout = new QHBoxLayout();
-    headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout(), footButtonsSmall = new QVBoxLayout();
+    headTextLayout = new QVBoxLayout(), mainLayout = new QVBoxLayout(),
+        footButtonsSmall = new QVBoxLayout(), volMicLayout = new QVBoxLayout();
     mainChatLayout = new QGridLayout();
     msgEdit = new ChatTextEdit();
-    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(), callButton = new QPushButton(), videoButton = new QPushButton();
+    sendButton = new QPushButton(), fileButton = new QPushButton(), emoteButton = new QPushButton(),
+        callButton = new QPushButton(), videoButton = new QPushButton(),
+        volButton = new QPushButton(), micButton = new QPushButton();
     chatArea = new QScrollArea();
     netcam = new NetCamView();
+    audioInputFlag = false;
 
     QFont bold;
     bold.setBold(true);
@@ -49,16 +59,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"));
 
     chatAreaWidget->setLayout(mainChatLayout);
-    QString chatAreaStylesheet = "";
-    try
-    {
-        QFile f(":/ui/chatArea/chatArea.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream chatAreaStylesheetStream(&f);
-        chatAreaStylesheet = chatAreaStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    chatArea->setStyleSheet(chatAreaStylesheet);
+    chatAreaWidget->setStyleSheet(Style::get(":/ui/chatArea/chatArea.css"));
+
     chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     chatArea->setWidgetResizable(true);
     chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -69,76 +71,43 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     footButtonsSmall->setSpacing(2);
 
-    QString msgEditStylesheet = "";
-    try
-    {
-        QFile f(":/ui/msgEdit/msgEdit.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream msgEditStylesheetStream(&f);
-        msgEditStylesheet = msgEditStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    msgEdit->setStyleSheet(msgEditStylesheet);
+    msgEdit->setStyleSheet(Style::get(":/ui/msgEdit/msgEdit.css"));
     msgEdit->setFixedHeight(50);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
-    QString sendButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/sendButton/sendButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream sendButtonStylesheetStream(&f);
-        sendButtonStylesheet = sendButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    sendButton->setStyleSheet(sendButtonStylesheet);
+    sendButton->setStyleSheet(Style::get(":/ui/sendButton/sendButton.css"));
+    fileButton->setStyleSheet(Style::get(":/ui/fileButton/fileButton.css"));
+    emoteButton->setStyleSheet(Style::get(":/ui/emoteButton/emoteButton.css"));
 
-    QString fileButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/fileButton/fileButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream fileButtonStylesheetStream(&f);
-        fileButtonStylesheet = fileButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    fileButton->setStyleSheet(fileButtonStylesheet);
-
-
-    QString emoteButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/emoteButton/emoteButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream emoteButtonStylesheetStream(&f);
-        emoteButtonStylesheet = emoteButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-    emoteButton->setStyleSheet(emoteButtonStylesheet);
-
-    QString callButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/callButton/callButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream callButtonStylesheetStream(&f);
-        callButtonStylesheet = callButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
     callButton->setObjectName("green");
-    callButton->setStyleSheet(callButtonStylesheet);
+    callButton->setStyleSheet(Style::get(":/ui/callButton/callButton.css"));
 
-    QString videoButtonStylesheet = "";
+    videoButton->setObjectName("green");
+    videoButton->setStyleSheet(Style::get(":/ui/videoButton/videoButton.css"));
+
+    QString volButtonStylesheet = "";
     try
     {
-        QFile f(":/ui/videoButton/videoButton.css");
+        QFile f(":/ui/volButton/volButton.css");
         f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream videoButtonStylesheetStream(&f);
-        videoButtonStylesheet = videoButtonStylesheetStream.readAll();
+        QTextStream volButtonStylesheetStream(&f);
+        volButtonStylesheet = volButtonStylesheetStream.readAll();
     }
     catch (int e) {}
-    videoButton->setObjectName("green");
-    videoButton->setStyleSheet(videoButtonStylesheet);
+    volButton->setObjectName("green");
+    volButton->setStyleSheet(volButtonStylesheet);
+
+    QString micButtonStylesheet = "";
+    try
+    {
+        QFile f(":/ui/micButton/micButton.css");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream micButtonStylesheetStream(&f);
+        micButtonStylesheet = micButtonStylesheetStream.readAll();
+    }
+    catch (int e) {}
+    micButton->setObjectName("green");
+    micButton->setStyleSheet(micButtonStylesheet);
 
     main->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
@@ -158,8 +127,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     headLayout->addWidget(avatar);
     headLayout->addLayout(headTextLayout);
     headLayout->addStretch();
+    headLayout->addLayout(volMicLayout);
     headLayout->addWidget(callButton);
     headLayout->addWidget(videoButton);
+
+    volMicLayout->addWidget(micButton);
+    volMicLayout->addWidget(volButton);
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(name);
@@ -173,20 +146,22 @@ ChatForm::ChatForm(Friend* chatFriend)
     sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-//    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-//    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-//    msgEdit->setAttribute(Qt::WA_LayoutUsesWidgetRect);
-//    chatArea->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    //    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    //    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    //    msgEdit->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    //    chatArea->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
-    connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
-    connect(fileButton, SIGNAL(clicked()), this, SLOT(onAttachClicked()));
-    connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
-    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
-    connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
-    connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
-    connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
+    connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
+    connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
+    connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
+    connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
+    connect(chatArea->verticalScrollBar(), &QScrollBar::rangeChanged, this, &ChatForm::onSliderRangeChanged);
+    connect(chatArea, &QScrollArea::customContextMenuRequested, this, &ChatForm::onChatContextMenuRequested);
+    connect(emoteButton,  &QPushButton::clicked, this, &ChatForm::onEmoteButtonClicked);
+    connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
 }
 
 ChatForm::~ChatForm()
@@ -196,7 +171,7 @@ ChatForm::~ChatForm()
     delete netcam;
 }
 
-void ChatForm::show(Ui::Widget &ui)
+void ChatForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
@@ -243,8 +218,6 @@ void ChatForm::addMessage(QString author, QString message, QString date)
 
 void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
 {
-    QPalette greentext;
-    greentext.setColor(QPalette::WindowText, QColor(61,204,61));
     QScrollBar* scroll = chatArea->verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
     author->setAlignment(Qt::AlignTop | Qt::AlignRight);
@@ -272,8 +245,24 @@ void ChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
     }
     else if (curRow)// onSaveLogClicked expects 0 or 3 QLabel per line
         author->setText("");
-    if (message->text()[0] == '>')
-        message->setPalette(greentext);
+
+    QColor greentext(61,204,61);
+    QString fontTemplate = "<font color='%1'>%2</font>";
+
+    QString finalMessage;
+    QStringList messageLines = message->text().split("\n");
+    for (QString& s : messageLines)
+    {
+        if (QRegExp("^[ ]*>.*").exactMatch(s))
+            finalMessage += fontTemplate.arg(greentext.name(), s.replace(" ", "&nbsp;"));
+        else
+            finalMessage += s.replace(" ", "&nbsp;");
+        finalMessage += "<br>";
+    }
+    message->setText(finalMessage.left(finalMessage.length()-4));
+    message->setText(SmileyPack::getInstance().smileyfied(message->text()));
+    message->setTextFormat(Qt::RichText);
+
     mainChatLayout->addWidget(author, curRow, 0);
     mainChatLayout->addWidget(message, curRow, 1);
     mainChatLayout->addWidget(date, curRow, 3);
@@ -297,6 +286,12 @@ void ChatForm::onAttachClicked()
     QFile file(path);
     if (!file.exists() || !file.open(QIODevice::ReadOnly))
         return;
+    if (file.isSequential())
+    {
+        QMessageBox::critical(0, "Bad Idea", "You're trying to send a special (sequential) file, that's not going to work!");
+        return;
+        file.close();
+    }
     long long filesize = file.size();
     file.close();
     QFileInfo fi(path);
@@ -308,13 +303,14 @@ void ChatForm::onSliderRangeChanged()
 {
     QScrollBar* scroll = chatArea->verticalScrollBar();
     if (lockSliderToBottom)
-         scroll->setValue(scroll->maximum());
+        scroll->setValue(scroll->maximum());
 }
 
 void ChatForm::startFileSend(ToxFile file)
 {
     if (file.friendId != f->friendId)
         return;
+
     QLabel *author = new QLabel(Widget::getInstance()->getUsername());
     QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
     QScrollBar* scroll = chatArea->verticalScrollBar();
@@ -351,6 +347,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 {
     if (file.friendId != f->friendId)
         return;
+
     QLabel *author = new QLabel(f->getName());
     QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
     QScrollBar* scroll = chatArea->verticalScrollBar();
@@ -378,12 +375,21 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransfertWidget::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransfertWidget::onFileTransferCancelled);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
+
+    Widget* w = Widget::getInstance();
+    if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
+    {
+        w->newMessageAlert();
+        f->hasNewEvents=true;
+        f->widget->updateStatusLight();
+    }
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
+
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
@@ -405,11 +411,11 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     }
 
     Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f))
+    if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
     {
         w->newMessageAlert();
-        f->hasNewMessages=true;
-        w->updateFriendStatusLights(f->friendId);
+        f->hasNewEvents=true;
+        f->widget->updateStatusLight();
     }
 }
 
@@ -417,6 +423,8 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = true;
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
@@ -443,6 +451,10 @@ void ChatForm::onAvCancel(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -458,6 +470,10 @@ void ChatForm::onAvEnd(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -473,6 +489,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
+
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
@@ -498,6 +515,7 @@ void ChatForm::onAvStarting(int FriendId, int, bool video)
 {
     if (FriendId != f->friendId)
         return;
+
     callButton->disconnect();
     videoButton->disconnect();
     if (video)
@@ -523,6 +541,10 @@ void ChatForm::onAvEnding(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -540,6 +562,10 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -557,6 +583,10 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 {
     if (FriendId != f->friendId)
         return;
+
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -570,25 +600,43 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
     netcam->hide();
 }
 
+void ChatForm::onAvMediaChange(int, int, bool video)
+{
+    if (video)
+    {
+        netcam->show();
+    }
+    else
+    {
+        netcam->hide();
+    }
+}
+
 void ChatForm::onAnswerCallTriggered()
 {
+    audioInputFlag = true;
     emit answerCall(callId);
 }
 
 void ChatForm::onHangupCallTriggered()
 {
+    audioInputFlag = false;
     emit hangupCall(callId);
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
 }
 
 void ChatForm::onCallTriggered()
 {
-    callButton->disconnect();
-    videoButton->disconnect();
-    emit startCall(f->friendId);
+  audioInputFlag = true;
+  callButton->disconnect();
+  videoButton->disconnect();
+  emit startCall(f->friendId);
 }
 
 void ChatForm::onVideoCallTriggered()
 {
+    audioInputFlag = true;
     callButton->disconnect();
     videoButton->disconnect();
     emit startVideoCall(f->friendId, true);
@@ -596,6 +644,9 @@ void ChatForm::onVideoCallTriggered()
 
 void ChatForm::onCancelCallTriggered()
 {
+    audioInputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -649,4 +700,49 @@ void ChatForm::onSaveLogClicked()
 
     file.write(log.toUtf8());
     file.close();
+}
+
+void ChatForm::onEmoteButtonClicked()
+{
+    // don't show the smiley selection widget if there are no smileys available
+    if (SmileyPack::getInstance().getEmoticons().empty())
+        return;
+
+    EmoticonsWidget widget;
+    connect(&widget, &EmoticonsWidget::insertEmoticon, this, &ChatForm::onEmoteInsertRequested);
+
+    QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
+    if (sender)
+    {
+        QPoint pos = -QPoint(widget.sizeHint().width() / 2, widget.sizeHint().height()) - QPoint(0, 10);
+        widget.exec(sender->mapToGlobal(pos));
+    }
+}
+
+void ChatForm::onEmoteInsertRequested(QString str)
+{
+    // insert the emoticon
+    QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
+    if (sender)
+        msgEdit->insertPlainText(str);
+
+    msgEdit->setFocus(); // refocus so that we can continue typing
+}
+
+void ChatForm::onMicMuteToggle()
+{
+    if (audioInputFlag == true)
+    {
+        emit micMuteToggle(callId);
+        if (micButton->objectName() == "red")
+        {
+            micButton->setObjectName("green");
+            micButton->style()->polish(micButton);
+        }
+        else
+        {
+            micButton->setObjectName("red");
+            micButton->style()->polish(micButton);
+        }
+    }
 }

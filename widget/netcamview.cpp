@@ -89,8 +89,8 @@ QImage NetCamView::convert(vpx_image& frame)
     QImage img(w, h, QImage::Format_RGB32);
 
     uint8_t* yData = frame.planes[VPX_PLANE_Y];
-    uint8_t* uData = frame.planes[VPX_PLANE_U];
-    uint8_t* vData = frame.planes[VPX_PLANE_V];
+    uint8_t* uData = frame.planes[VPX_PLANE_V];
+    uint8_t* vData = frame.planes[VPX_PLANE_U];
     for (int i = 0; i< h; i++)
     {
         uint32_t* scanline = (uint32_t*)img.scanLine(i);

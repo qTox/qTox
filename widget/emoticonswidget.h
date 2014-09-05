@@ -14,29 +14,32 @@
     See the COPYING file for more details.
 */
 
-#ifndef VIDEOSURFACE_H
-#define VIDEOSURFACE_H
+#ifndef EMOTICONSWIDGET_H
+#define EMOTICONSWIDGET_H
 
-#include <QAbstractVideoSurface>
-#include <QVideoSurfaceFormat>
-#include "vpx/vpx_image.h"
+#include <QMenu>
+#include <QStackedWidget>
+#include <QVBoxLayout>
 
-class VideoSurface : public QAbstractVideoSurface
+class EmoticonsWidget : public QMenu
 {
     Q_OBJECT
 public:
-    VideoSurface();
-    bool start(const QVideoSurfaceFormat &format);
-    bool present(const QVideoFrame &frame);
-    QList<QVideoFrame::PixelFormat> supportedPixelFormats(QAbstractVideoBuffer::HandleType handleType) const;
+    explicit EmoticonsWidget(QWidget *parent = 0);
 
 signals:
-    // Slots MUST be called with a direct or blocking connection, or img may die before they return !
-    void videoFrameReady(vpx_image img);
+    void insertEmoticon(QString str);
+
+private slots:
+    void onSmileyClicked();
+    void onPageButtonClicked();
 
 private:
-    QVideoSurfaceFormat mVideoFormat;
-    vpx_image_t input;
+    QStackedWidget stack;
+    QVBoxLayout layout;
+
+public:
+    virtual QSize sizeHint() const;
 };
 
-#endif // VIDEOSURFACE_H
+#endif // EMOTICONSWIDGET_H

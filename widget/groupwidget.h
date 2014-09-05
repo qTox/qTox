@@ -19,21 +19,20 @@
 
 #include <QWidget>
 #include <QLabel>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include "genericchatroomwidget.h"
 
-class GroupWidget : public QWidget
+class GroupWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
     GroupWidget(int GroupId, QString Name);
     void onUserListChanged();
-    void mouseReleaseEvent (QMouseEvent* event);
-    void mousePressEvent(QMouseEvent *event);
     void contextMenuEvent(QContextMenuEvent * event);
-    void enterEvent(QEvent* event);
-    void leaveEvent(QEvent* event);
-
+    void setAsInactiveChatroom();
+    void setAsActiveChatroom();
+    void updateStatusLight();
+    void setChatForm(Ui::MainWindow &);
+    void resetEventFlags();
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
@@ -42,15 +41,6 @@ signals:
 public:
     int groupId;
     QLabel avatar, name, nusers, statusPic;
-    QHBoxLayout layout;
-    QVBoxLayout textLayout;
-    void setAsInactiveChatroom();
-    void setAsActiveChatroom();
-    void setNewFixedWidth(int newWidth);
-
-private:
-    QColor lastColor;
-    int isActiveWidget;
 };
 
 #endif // GROUPWIDGET_H

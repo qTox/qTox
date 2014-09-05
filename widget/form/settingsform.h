@@ -31,9 +31,9 @@
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QMessageBox>
-#include "widget/tool/clickablelabel.h"
-#include "ui_widget.h"
+#include "ui_mainwindow.h"
 #include "widget/selfcamview.h"
+#include "widget/croppinglabel.h"
 #include "core.h"
 
 class SettingsForm : public QObject
@@ -43,7 +43,7 @@ public:
     SettingsForm();
     ~SettingsForm();
 
-    void show(Ui::Widget& ui);
+    void show(Ui::MainWindow &ui);
     static QList<QString> searchProfiles();
 
 public slots:
@@ -58,12 +58,13 @@ private slots:
     void onEnableIPv6Updated();
     void onUseTranslationUpdated();
     void onMakeToxPortableUpdated();
+    void onSmileyBrowserIndexChanged(int index);
     void copyIdClicked();
 
 private:
-    QLabel headLabel;/*, nameLabel, statusTextLabel;*/
+    QLabel headLabel, smileyPackLabel;
     QTextEdit id;
-    ClickableLabel idLabel;
+    CroppingLabel idLabel;
     QLabel profilesLabel;
     QComboBox profiles;
     QPushButton loadConf, exportConf, delConf, importConf, videoTest;
@@ -71,10 +72,8 @@ private:
     QCheckBox enableIPv6, useTranslations, makeToxPortable;
     QVBoxLayout layout, headLayout;
     QWidget *main, *head, *hboxcont1, *hboxcont2;
+	QComboBox smileyPackBrowser;
     QString getSelectedSavePath();
-
-public:
-    //QLineEdit name, statusText;
 };
 
 #endif // SETTINGSFORM_H

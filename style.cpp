@@ -14,23 +14,22 @@
     See the COPYING file for more details.
 */
 
-#ifndef CLICKABLELABEL_H
-#define CLICKABLELABEL_H
+#include "style.h"
+#include "settings.h"
 
-#include <QLabel>
+#include <QFile>
+#include <QDebug>
 
-class ClickableLabel : public QLabel
+QString Style::get(const QString &filename)
 {
-    Q_OBJECT
-public:
-    explicit ClickableLabel(QWidget *parent = 0);
+    if (!Settings::getInstance().getUseNativeStyle())
+    {
+        QFile file(filename);
+        if (file.open(QFile::ReadOnly | QFile::Text))
+            return file.readAll();
+        else
+            qWarning() << "Style " << filename << " not found";
+    }
 
-signals:
-    void clicked();
-
-protected:
-    void mousePressEvent ( QMouseEvent * event );
-
-};
-
-#endif // CLICKABLELABEL_H
+    return QString();
+}

@@ -15,6 +15,8 @@
 */
 
 #include "settings.h"
+#include "smileypack.h"
+#include "widget/widget.h"
 
 #include <QApplication>
 #include <QDir>
@@ -22,6 +24,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDebug>
+#include <QList>
 
 const QString Settings::FILENAME = "settings.ini";
 bool Settings::makeToxPortable{false};
@@ -53,7 +56,7 @@ void Settings::load()
     if (portableSettings.exists())
         makeToxPortable=true;
 
-    QString filePath = getSettingsDirPath() + '/' + FILENAME;
+    QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
 
     //if no settings file exist -- use the default one
     QFile file(filePath);
@@ -77,6 +80,16 @@ void Settings::load()
         s.endArray();
     s.endGroup();
 
+    friendAddresses.clear();
+    s.beginGroup("Friends");
+        int size = s.beginReadArray("fullAddresses");
+        for (int i = 0; i < size; i ++) {
+            s.setArrayIndex(i);
+            friendAddresses.append(s.value("addr").toString());
+        }
+        s.endArray();
+    s.endGroup();
+
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
         useTranslations = s.value("useTranslations", true).toBool();
@@ -93,7 +106,7 @@ void Settings::load()
 
     s.beginGroup("GUI");
         enableSmoothAnimation = s.value("smoothAnimation", true).toBool();
-        smileyPack = s.value("smileyPack").toByteArray();
+        smileyPack = s.value("smileyPack", QString()).toString();
         customEmojiFont = s.value("customEmojiFont", true).toBool();
         emojiFontFamily = s.value("emojiFontFamily", "DejaVu Sans").toString();
         emojiFontPointSize = s.value("emojiFontPointSize", QApplication::font().pointSize()).toInt();
@@ -101,18 +114,30 @@ void Settings::load()
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
+        useNativeStyle = s.value("nativeStyle", false).toBool();
+        useNativeDecoration = s.value("nativeDecoration", true).toBool();
+    s.endGroup();
+
+    s.beginGroup("State");
+        windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
+        windowState = s.value("windowState", QByteArray()).toByteArray();
+        splitterState = s.value("splitterState", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Privacy");
         typingNotification = s.value("typingNotification", false).toBool();
     s.endGroup();
 
+    // try to set a smiley pack if none is selected
+    if (!SmileyPack::isValid(smileyPack) && !SmileyPack::listSmileyPacks().isEmpty())
+        smileyPack = SmileyPack::listSmileyPacks()[0].second;
+
     loaded = true;
 }
 
 void Settings::save()
 {
-    QString filePath = getSettingsDirPath() + '/' + FILENAME;
+    QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
     save(filePath);
 }
 
@@ -130,6 +155,15 @@ void Settings::save(QString path)
             s.setValue("userId", dhtServerList[i].userId);
             s.setValue("address", dhtServerList[i].address);
             s.setValue("port", dhtServerList[i].port);
+        }
+        s.endArray();
+    s.endGroup();
+
+    s.beginGroup("Friends");
+        s.beginWriteArray("fullAddresses", friendAddresses.size());
+        for (int i = 0; i < friendAddresses.size(); i ++) {
+            s.setArrayIndex(i);
+            s.setValue("addr", friendAddresses[i]);
         }
         s.endArray();
     s.endGroup();
@@ -158,6 +192,14 @@ void Settings::save(QString path)
         s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
+        s.setValue("nativeStyle", useNativeStyle);
+        s.setValue("nativeDecoration", useNativeDecoration);
+    s.endGroup();
+
+    s.beginGroup("State");
+        s.setValue("windowGeometry", windowGeometry);
+        s.setValue("windowState", windowState);
+        s.setValue("splitterState", splitterState);
     s.endGroup();
 
     s.beginGroup("Privacy");
@@ -174,7 +216,7 @@ QString Settings::getSettingsDirPath()
 #ifdef Q_OS_WIN
     return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
 #else
-    return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + '/' + "tox" + '/';
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + "tox");
 #endif
 }
 
@@ -208,6 +250,8 @@ void Settings::setMakeToxPortable(bool newValue)
 {
     makeToxPortable = newValue;
     save(FILENAME); // Commit to the portable file that we don't want to use it
+    if (!newValue) // Update the new file right now if not already done
+        save();
 }
 
 QString Settings::getCurrentProfile() const
@@ -270,12 +314,12 @@ void Settings::setAnimationEnabled(bool newValue)
     enableSmoothAnimation = newValue;
 }
 
-QByteArray Settings::getSmileyPack() const
+QString Settings::getSmileyPack() const
 {
     return smileyPack;
 }
 
-void Settings::setSmileyPack(const QByteArray &value)
+void Settings::setSmileyPack(const QString &value)
 {
     smileyPack = value;
     emit smileyPackChanged();
@@ -343,6 +387,56 @@ void Settings::setEmojiFontFamily(const QString &value)
 {
     emojiFontFamily = value;
     emit emojiFontChanged();
+}
+
+bool Settings::getUseNativeStyle() const
+{
+    return useNativeStyle;
+}
+
+void Settings::setUseNativeStyle(bool value)
+{
+    useNativeStyle = value;
+}
+
+bool Settings::getUseNativeDecoration() const
+{
+    return useNativeDecoration;
+}
+
+void Settings::setUseNativeDecoration(bool value)
+{
+    useNativeDecoration = value;
+}
+
+QByteArray Settings::getWindowGeometry() const
+{
+    return windowGeometry;
+}
+
+void Settings::setWindowGeometry(const QByteArray &value)
+{
+    windowGeometry = value;
+}
+
+QByteArray Settings::getWindowState() const
+{
+    return windowState;
+}
+
+void Settings::setWindowState(const QByteArray &value)
+{
+    windowState = value;
+}
+
+QByteArray Settings::getSplitterState() const
+{
+    return splitterState;
+}
+
+void Settings::setSplitterState(const QByteArray &value)
+{
+    splitterState = value;
 }
 
 bool Settings::isMinimizeOnCloseEnabled() const

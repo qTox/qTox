@@ -19,22 +19,24 @@
 #include "grouplist.h"
 #include "groupwidget.h"
 #include "widget.h"
+#include "friendlist.h"
+#include "friend.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
 {
-    this->setMouseTracking(true);
-    this->setAutoFillBackground(true);
-    this->setFixedWidth(225);
-    this->setFixedHeight(55);
-    this->setLayout(&layout);
+    setMouseTracking(true);
+    setAutoFillBackground(true);
+    setFixedHeight(55);
+    setLayout(&layout);
     layout.setSpacing(0);
     layout.setMargin(0);
     layout.setStretchFactor(this, 100);
     textLayout.setSpacing(0);
     textLayout.setMargin(0);
+    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     avatar.setPixmap(QPixmap(":img/contact.png"));
     name.setText(id);
@@ -62,22 +64,16 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     layout.addWidget(&avatar);
     layout.addSpacing(5);
     layout.addLayout(&textLayout);
-    layout.addStretch();
     layout.addSpacing(5);
     layout.addWidget(&statusPic);
     layout.addSpacing(5);
 
     isActiveWidget = 0;
-}
 
-void FriendWidget::setNewFixedWidth(int newWidth)
-{
-    this->setFixedWidth(newWidth);
-}
-
-void FriendWidget::mouseReleaseEvent (QMouseEvent*)
-{
-    emit friendWidgetClicked(this);
+    layout.invalidate();
+    layout.update();
+    layout.activate();
+    updateGeometry();
 }
 
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -121,47 +117,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     }
 }
 
-void FriendWidget::mousePressEvent(QMouseEvent *event)
-{
-    if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
-    {
-        if (isActiveWidget)
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(250,250,250,255));
-            this->setPalette(pal);
-        }
-        else
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(85,85,85,255));
-            this->setPalette(pal);
-        }
-    }
-}
-
-void FriendWidget::enterEvent(QEvent*)
-{
-    if (isActiveWidget != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, QColor(75,75,75,255));
-        lastColor = this->palette().background().color();
-        this->setPalette(pal);
-    }
-}
-
-void FriendWidget::leaveEvent(QEvent*)
-{
-    if (isActiveWidget != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, lastColor);
-        this->setPalette(pal);
-    }
-}
-
-
 void FriendWidget::setAsActiveChatroom()
 {
     isActiveWidget = 1;
@@ -198,4 +153,39 @@ void FriendWidget::setAsInactiveChatroom()
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
     avatar.setPixmap(QPixmap(":img/contact.png"));
+}
+
+void FriendWidget::updateStatusLight()
+{
+    Friend* f = FriendList::findFriend(friendId);
+    Status status = f->friendStatus;
+
+    if (status == Status::Online && f->hasNewEvents == 0)
+        statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+    else if (status == Status::Online && f->hasNewEvents == 1)
+        statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+    else if (status == Status::Away && f->hasNewEvents == 0)
+        statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
+    else if (status == Status::Away && f->hasNewEvents == 1)
+        statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
+    else if (status == Status::Busy && f->hasNewEvents == 0)
+        statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
+    else if (status == Status::Busy && f->hasNewEvents == 1)
+        statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
+    else if (status == Status::Offline && f->hasNewEvents == 0)
+        statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
+    else if (status == Status::Offline && f->hasNewEvents == 1)
+        statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.png"));
+}
+
+void FriendWidget::setChatForm(Ui::MainWindow &ui)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    f->chatForm->show(ui);
+}
+
+void FriendWidget::resetEventFlags()
+{
+    Friend* f = FriendList::findFriend(friendId);
+    f->hasNewEvents = 0;
 }
