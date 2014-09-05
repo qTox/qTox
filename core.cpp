@@ -909,7 +909,7 @@ void Core::saveConfiguration()
         Settings::getInstance().setCurrentProfile(profile);
     }
     
-    QString path = dir + profile + TOX_EXT;
+    QString path = dir + '/' + profile + TOX_EXT;
     QFileInfo info(path);
     if (!info.exists()) // fall back to old school 'data'
     {   //path = dir + '/' + CONFIG_FILE_NAME;
