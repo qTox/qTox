@@ -161,7 +161,7 @@ void Core::start()
         return;
     }
 
-	qsrand(time(nullptr));
+    qsrand(time(nullptr));
 
     // where do we find the data file?
     QString path;
@@ -943,7 +943,6 @@ void Core::saveConfiguration(const QString& path)
         delete[] data;
     }
 
-    qDebug() << "Core: writing settings";
     Settings::getInstance().save();
 }
 

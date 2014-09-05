@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Config (Update me if needed !)
-VERSION_UPSTREAM="0.01pre-alpha"
+VERSION_UPSTREAM="1.0"
 VERSION_PACKAGE="1"
 PACKAGENAME="qtox"
 UPSTREAM_URL="https://github.com/tux3/qTox/archive/master.tar.gz"

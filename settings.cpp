@@ -30,7 +30,7 @@ const QString Settings::FILENAME = "settings.ini";
 bool Settings::makeToxPortable{false};
 
 Settings::Settings() :
-    loaded(false)
+    loaded(false), useCustomDhtList{false}
 {
     load();
 }
@@ -54,7 +54,14 @@ void Settings::load()
 
     QFile portableSettings(FILENAME);
     if (portableSettings.exists())
-        makeToxPortable=true;
+    {
+        QSettings ps(FILENAME, QSettings::IniFormat);
+        ps.beginGroup("General");
+            makeToxPortable = ps.value("makeToxPortable", false).toBool();
+        ps.endGroup();
+    }
+    else
+        makeToxPortable = false;
 
     QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
 
@@ -65,19 +72,28 @@ void Settings::load()
         filePath = ":/conf/" + FILENAME;
     }
 
+    qDebug() << "Settings: Loading from "<<filePath;
+
     QSettings s(filePath, QSettings::IniFormat);
     s.beginGroup("DHT Server");
-        int serverListSize = s.beginReadArray("dhtServerList");
-        for (int i = 0; i < serverListSize; i ++) {
-            s.setArrayIndex(i);
-            DhtServer server;
-            server.name = s.value("name").toString();
-            server.userId = s.value("userId").toString();
-            server.address = s.value("address").toString();
-            server.port = s.value("port").toInt();
-            dhtServerList << server;
+        if (s.value("useCustomList").toBool())
+        {
+            useCustomDhtList = true;
+            qDebug() << "Using custom bootstrap nodes list";
+            int serverListSize = s.beginReadArray("dhtServerList");
+            for (int i = 0; i < serverListSize; i ++) {
+                s.setArrayIndex(i);
+                DhtServer server;
+                server.name = s.value("name").toString();
+                server.userId = s.value("userId").toString();
+                server.address = s.value("address").toString();
+                server.port = s.value("port").toInt();
+                dhtServerList << server;
+            }
+            s.endArray();
         }
-        s.endArray();
+        else
+            useCustomDhtList=false;
     s.endGroup();
 
     friendAddresses.clear();
@@ -132,6 +148,26 @@ void Settings::load()
     if (!SmileyPack::isValid(smileyPack) && !SmileyPack::listSmileyPacks().isEmpty())
         smileyPack = SmileyPack::listSmileyPacks()[0].second;
 
+    // Read the embedded DHT bootsrap nodes list if needed
+    if (dhtServerList.isEmpty())
+    {
+        qDebug() << "Using embeded bootstrap nodes list";
+        QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
+        rcs.beginGroup("DHT Server");
+            int serverListSize = rcs.beginReadArray("dhtServerList");
+            for (int i = 0; i < serverListSize; i ++) {
+                rcs.setArrayIndex(i);
+                DhtServer server;
+                server.name = rcs.value("name").toString();
+                server.userId = rcs.value("userId").toString();
+                server.address = rcs.value("address").toString();
+                server.port = rcs.value("port").toInt();
+                dhtServerList << server;
+            }
+            rcs.endArray();
+        rcs.endGroup();
+    }
+
     loaded = true;
 }
 
@@ -143,11 +179,14 @@ void Settings::save()
 
 void Settings::save(QString path)
 {
+    qDebug() << "Settings: Saving in "<<path;
+
     QSettings s(path, QSettings::IniFormat);
 
     s.clear();
 
     s.beginGroup("DHT Server");
+        s.setValue("useCustomList", useCustomDhtList);
         s.beginWriteArray("dhtServerList", dhtServerList.size());
         for (int i = 0; i < dhtServerList.size(); i ++) {
             s.setArrayIndex(i);
