@@ -33,9 +33,6 @@
 #include "core.h"
 #include "widget/netcamview.h"
 
-// Spacing in px inserted when the author of the last message changes
-#define AUTHOR_CHANGE_SPACING 5
-
 struct Friend;
 
 class ChatForm : public GenericChatForm
@@ -45,9 +42,6 @@ public:
     ChatForm(Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(QString newMessage);
-    void addFriendMessage(QString message);
-    void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
-    void addMessage(QLabel* author, QLabel* message, QLabel* date);
 
 signals:
     void sendFile(int32_t friendId, QString, QString, long long);

@@ -30,6 +30,9 @@
 
 #include "widget/tool/chattextedit.h"
 
+// Spacing in px inserted when the author of the last message changes
+#define AUTHOR_CHANGE_SPACING 5
+
 namespace Ui {
     class MainWindow;
 }

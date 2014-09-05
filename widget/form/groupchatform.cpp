@@ -88,68 +88,13 @@ void GroupChatForm::onSendTriggered()
 
 void GroupChatForm::addGroupMessage(QString message, int peerId)
 {
-    QLabel *msgAuthor;
+    QString msgAuthor;
     if (group->peers.contains(peerId))
-        msgAuthor = new QLabel(group->peers[peerId]);
+        msgAuthor = group->peers[peerId];
     else
-        msgAuthor = new QLabel(tr("<Unknown>"));
+        msgAuthor = tr("<Unknown>");
 
-    QLabel *msgText = new QLabel(message);
-    QLabel *msgDate = new QLabel(QTime::currentTime().toString("hh:mm"));
-
-    addMessage(msgAuthor, msgText, msgDate);
-}
-
-void GroupChatForm::addMessage(QString author, QString message, QString date)
-{
-    addMessage(new QLabel(author), new QLabel(message), new QLabel(date));
-}
-
-void GroupChatForm::addMessage(QLabel* author, QLabel* message, QLabel* date)
-{
-    QPalette greentext;
-    greentext.setColor(QPalette::WindowText, QColor(61,204,61));
-    QScrollBar* scroll = chatArea->verticalScrollBar();
-    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
-    author->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-    date->setAlignment(Qt::AlignTop);
-    message->setWordWrap(true);
-    message->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    author->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    date->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    if (author->text() == Widget::getInstance()->getUsername())
-    {
-        QPalette pal;
-        pal.setColor(QPalette::WindowText, Qt::gray);
-        author->setPalette(pal);
-        message->setPalette(pal);
-    }
-    if (previousName.isEmpty() || previousName != author->text())
-    {
-        if (curRow)
-        {
-            mainChatLayout->setRowStretch(curRow, 0);
-            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
-        }
-        previousName = author->text();
-        curRow++;
-    }
-    else if (curRow)// onSaveLogClicked expects 0 or 3 QLabel per line
-        author->setText("");
-    if (message->text()[0] == '>')
-        message->setPalette(greentext);
-    mainChatLayout->addWidget(author, curRow, 0);
-    mainChatLayout->addWidget(message, curRow, 1);
-    mainChatLayout->addWidget(date, curRow, 3);
-    mainChatLayout->setRowStretch(curRow+1, 1);
-    mainChatLayout->setRowStretch(curRow, 0);
-    curRow++;
-    author->setContextMenuPolicy(Qt::CustomContextMenu);
-    message->setContextMenuPolicy(Qt::CustomContextMenu);
-    date->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(author, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
-    connect(message, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
-    connect(date, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    addMessage(msgAuthor, message);
 }
 
 void GroupChatForm::onUserListChanged()

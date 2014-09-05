@@ -22,6 +22,7 @@
 #include "smileypack.h"
 #include "widget/emoticonswidget.h"
 #include "style.h"
+#include "widget/widget.h"
 
 GenericChatForm::GenericChatForm(QObject *parent) :
     QObject(parent)
@@ -212,7 +213,67 @@ void GenericChatForm::onSaveLogClicked()
 
 void GenericChatForm::addMessage(QString author, QString message, QString date)
 {
-    //
+    QLabel *authorLabel = new QLabel(author);
+    QLabel *messageLabel = new QLabel(message);
+    QLabel *dateLabel = new QLabel(date);
+
+    QScrollBar* scroll = chatArea->verticalScrollBar();
+    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
+    authorLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
+    dateLabel->setAlignment(Qt::AlignTop);
+    messageLabel->setWordWrap(true);
+    messageLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    authorLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    dateLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    if (author == Widget::getInstance()->getUsername())
+    {
+        QPalette pal;
+        pal.setColor(QPalette::WindowText, QColor(100,100,100));
+        authorLabel->setPalette(pal);
+        messageLabel->setPalette(pal);
+    }
+    if (previousName.isEmpty() || previousName != author)
+    {
+        if (curRow)
+        {
+            mainChatLayout->setRowStretch(curRow, 0);
+            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
+        }
+        previousName = author;
+        curRow++;
+    }
+    else if (curRow)// onSaveLogClicked expects 0 or 3 QLabel per line
+        authorLabel->setText("");
+
+    QColor greentext(61,204,61);
+    QString fontTemplate = "<font color='%1'>%2</font>";
+
+    QString finalMessage;
+    QStringList messageLines = message.split("\n");
+    for (QString& s : messageLines)
+    {
+        if (QRegExp("^[ ]*>.*").exactMatch(s))
+            finalMessage += fontTemplate.arg(greentext.name(), s.replace(" ", "&nbsp;"));
+        else
+            finalMessage += s.replace(" ", "&nbsp;");
+        finalMessage += "<br>";
+    }
+    messageLabel->setText(finalMessage.left(finalMessage.length()-4));
+    messageLabel->setText(SmileyPack::getInstance().smileyfied(messageLabel->text()));
+    messageLabel->setTextFormat(Qt::RichText);
+
+    mainChatLayout->addWidget(authorLabel, curRow, 0);
+    mainChatLayout->addWidget(messageLabel, curRow, 1);
+    mainChatLayout->addWidget(dateLabel, curRow, 3);
+    mainChatLayout->setRowStretch(curRow+1, 1);
+    mainChatLayout->setRowStretch(curRow, 0);
+    curRow++;
+    authorLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+    messageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+    dateLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(authorLabel, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(messageLabel, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(dateLabel, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
 }
 
 GenericChatForm::~GenericChatForm()

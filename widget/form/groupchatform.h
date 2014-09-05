@@ -30,9 +30,6 @@
 #include "widget/tool/chattextedit.h"
 #include "ui_mainwindow.h"
 
-// Spacing in px inserted when the author of the last message changes
-#define AUTHOR_CHANGE_SPACING 5
-
 class Group;
 
 class GroupChatForm : public GenericChatForm
@@ -42,8 +39,6 @@ public:
     GroupChatForm(Group* chatGroup);
     ~GroupChatForm();
     void addGroupMessage(QString message, int peerId);
-    void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
-    void addMessage(QLabel* author, QLabel* message, QLabel* date);
     void onUserListChanged();
 
 private slots:
