@@ -23,11 +23,15 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>
+#include <QBuffer>
+
+uint FileTransfertWidget::Idconter = 0;
 
 FileTransfertWidget::FileTransfertWidget(ToxFile File)
     : lastUpdate{QDateTime::currentDateTime()}, lastBytesSent{0},
       fileNum{File.fileNum}, friendId{File.friendId}, direction{File.direction}
 {
+    id = Idconter++;
     pic=new QLabel(), filename=new QLabel(), size=new QLabel(), speed=new QLabel(), eta=new QLabel();
     topright = new QPushButton(), bottomright = new QPushButton();
     progress = new QProgressBar();
@@ -182,6 +186,7 @@ void FileTransfertWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t 
     }
     lastUpdate = newtime;
     lastBytesSent = BytesSent;
+    emit stateUpdated();
 }
 
 void FileTransfertWidget::onFileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection Direction)
@@ -206,6 +211,8 @@ void FileTransfertWidget::onFileTransferCancelled(int FriendId, int FileNum, Tox
     //Toggle window visibility to fix draw order bug
     this->hide();
     this->show();
+
+    emit stateUpdated();
 }
 
 void FileTransfertWidget::onFileTransferFinished(ToxFile File)
@@ -245,17 +252,21 @@ void FileTransfertWidget::onFileTransferFinished(ToxFile File)
             previewFile.close();
         }
     }
+
+    emit stateUpdated();
 }
 
 void FileTransfertWidget::cancelTransfer()
 {
     Widget::getInstance()->getCore()->cancelFileSend(friendId, fileNum);
+    emit stateUpdated();
 }
 
 void FileTransfertWidget::rejectRecvRequest()
 {
     Widget::getInstance()->getCore()->rejectFileRecvRequest(friendId, fileNum);
     onFileTransferCancelled(friendId, fileNum, direction);
+    emit stateUpdated();
 }
 
 // for whatever the fuck reason, QFileInfo::isWritable() always fails for files that don't exist
@@ -299,16 +310,20 @@ void FileTransfertWidget::acceptRecvRequest()
     bottomright->disconnect();
     connect(bottomright, SIGNAL(clicked()), this, SLOT(pauseResumeRecv()));
     Widget::getInstance()->getCore()->acceptFileRecvRequest(friendId, fileNum, path);
+
+    emit stateUpdated();
 }
 
 void FileTransfertWidget::pauseResumeRecv()
 {
     Widget::getInstance()->getCore()->pauseResumeFileRecv(friendId, fileNum);
+    emit stateUpdated();
 }
 
 void FileTransfertWidget::pauseResumeSend()
 {
     Widget::getInstance()->getCore()->pauseResumeFileSend(friendId, fileNum);
+    emit stateUpdated();
 }
 
 void FileTransfertWidget::paintEvent(QPaintEvent *)
@@ -317,4 +332,56 @@ void FileTransfertWidget::paintEvent(QPaintEvent *)
     opt.init(this);
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    emit stateUpdated();
+}
+
+QString FileTransfertWidget::getHtmlImage()
+{
+    qDebug() << "QString FileTransfertWidget::getHtmlImage()";
+    auto QImage2base64 = [](const QImage &img)
+    {
+        QByteArray ba;
+        QBuffer buffer(&ba);
+        buffer.open(QIODevice::WriteOnly);
+        img.save(&buffer, "PNG"); // writes image into ba in PNG format
+        return ba.toBase64();
+    };
+
+    auto renderButton = [](QPushButton *pb)
+    {
+        QImage bitmap(pb->size(), QImage::Format_ARGB32);
+        bitmap.fill(Qt::transparent);
+        QPainter painter(&bitmap);
+
+        pb->render(&painter, QPoint(), QRegion(), QWidget::DrawChildren);
+        return bitmap;
+    };
+
+    //    QImage rightUp = renderButton(topright);
+    //    QImage rightDown = renderButton(bottomright);
+    QImage rightUp(":ui/stopFileButton/default.png");
+    QImage rightDown(":ui/acceptFileButton/default.png");
+
+    QString res;
+    QString widgetId = QString::number(getId());
+    QString strUp = "<img src=\"data:ftrans." + widgetId + ".top/png;base64," + QImage2base64(rightUp) + "\">";
+    QString strDown = "<img src=\"data:ftrans." + widgetId + ".bottom/png;base64," + QImage2base64(rightDown) + "\">";
+
+    res  = "<table widht=100% cellspacing=\"2\">\n";
+    res += "<tr>\n<td width=100%>\n";
+    res += "<div class=quote></div>\n";
+    res += "</td>\n<td>\n";
+    if (topright->isVisible() && bottomright->isVisible())
+        res += "<table cellspacing=\"0\"><tr valign=top><td>" + strUp + "</td></tr><tr valign=bottom><td>" + strDown + "</td></tr></table>\n";
+    res += "</td>\n</tr>\n";
+    res += "</table>\n";
+    return res;
+}
+
+void FileTransfertWidget::pressFromHtml(QString code)
+{
+    if (code == "top")
+        topright->clicked();
+    else if (code == "bottom")
+        bottomright->clicked();
 }

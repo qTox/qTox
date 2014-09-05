@@ -1,0 +1,37 @@
+div.name_me {
+  color: #646464;
+  font-weight: bold;
+  padding-right: 3px;
+}
+
+div.message_me {
+  color: #646464;
+  padding-right: 3px;
+  padding-left: 3px;
+}
+
+div.date_me {
+  color: #646464;
+  padding-left: 3px;
+}
+
+div.quote {
+  background-color: #6bc260;
+}
+
+div.name {
+  color: #000000;
+  font-weight: bold;
+  padding-right: 3px;
+}
+
+div.message {
+  color: #000000;
+  padding-right: 3px;
+  padding-left: 3px;
+}
+
+div.date {
+  color: #000000;
+  padding-left: 3px;
+}

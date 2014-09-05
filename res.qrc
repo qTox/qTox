@@ -42,6 +42,7 @@
         <file>ui/callButton/callButtonYellowHover.png</file>
         <file>ui/callButton/callButtonYellowPressed.png</file>
         <file>ui/chatArea/chatArea.css</file>
+        <file>ui/chatArea/innerStyle.css</file>
         <file>ui/chatArea/scrollBarDownArrow.png</file>
         <file>ui/chatArea/scrollBarDownArrowHover.png</file>
         <file>ui/chatArea/scrollBarDownArrowPressed.png</file>
@@ -57,6 +58,7 @@
         <file>ui/fileButton/fileButton.png</file>
         <file>ui/fileButton/fileButtonHover.png</file>
         <file>ui/fileButton/fileButtonPressed.png</file>
+        <file>ui/fileButton/fileButtonDisabled.png</file>
         <file>ui/msgEdit/msgEdit.css</file>
         <file>ui/pauseFileButton/default.png</file>
         <file>ui/pauseFileButton/hover.png</file>
@@ -124,6 +126,5 @@
         <file>ui/micButton/micButtonPressed.png</file>
         <file>ui/micButton/micButton.css</file>
         <file>ui/volButton/volButton.css</file>
-        <file>ui/fileButton/fileButtonDisabled.png</file>
     </qresource>
 </RCC>

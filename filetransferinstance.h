@@ -13,11 +13,10 @@
 
     See the COPYING file for more details.
 */
+#ifndef FILETRANSFERINSTANCE_H
+#define FILETRANSFERINSTANCE_H
 
-#ifndef FILETRANSFERTWIDGET_H
-#define FILETRANSFERTWIDGET_H
-
-#include <QWidget>
+#include <QObject>
 #include <QLabel>
 #include <QPushButton>
 #include <QProgressBar>
@@ -29,12 +28,11 @@
 
 struct ToxFile;
 
-class FileTransfertWidget : public QWidget
+class FileTransferInstance : public QObject
 {
     Q_OBJECT
-
 public:
-    FileTransfertWidget(ToxFile File);
+    explicit FileTransferInstance(ToxFile File);
     QString getHtmlImage();
     uint getId(){return id;}
 
@@ -42,7 +40,6 @@ public slots:
     void onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction);
     void onFileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection Direction);
     void onFileTransferFinished(ToxFile File);
-
     void pressFromHtml(QString);
 
 signals:
@@ -59,16 +56,14 @@ private:
     QString getHumanReadableSize(unsigned long long size);
 
 private:
+    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};
+
     static uint Idconter;
     uint id;
 
-
-    QLabel *pic, *filename, *size, *speed, *eta;
-    QPushButton *topright, *bottomright;
-    QProgressBar *progress;
-    QHBoxLayout *mainLayout, *textLayout;
-    QVBoxLayout *infoLayout, *buttonLayout;
-    QWidget* buttonWidget;
+    TransfState state;
+    QImage pic;
+    QString filename, size, speed, eta;
     QDateTime lastUpdate;
     long long lastBytesSent;
     int fileNum;
@@ -76,7 +71,6 @@ private:
     QString savePath;
     ToxFile::FileDirection direction;
     QString stopFileButtonStylesheet, pauseFileButtonStylesheet, acceptFileButtonStylesheet;
-    void paintEvent(QPaintEvent *);
 };
 
-#endif // FILETRANSFERTWIDGET_H
+#endif // FILETRANSFERINSTANCE_H

@@ -28,7 +28,9 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+#include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
+#include "widget/tool/genericchataction.h"
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5
@@ -46,7 +48,7 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
+    void addMessage(QString author, QString message, QDateTime datetime=QDateTime::currentDateTime());
 
 signals:
     void sendMessage(int, QString);
@@ -59,6 +61,7 @@ protected slots:
     void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
+    void updateChatContent();
 
 protected:
     QLabel *nameLabel, *avatarLabel;
@@ -70,11 +73,14 @@ protected:
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
     QString previousName;
+    ChatAreaWidget *newChatForm;
     int curRow;
     bool lockSliderToBottom;
 
+    QList<ChatAction*> messages;
+
 private:
-    QString toHtmlChars(const QString &str);
+    QString getHtmledMessages();
 };
 
 #endif // GENERICCHATFORM_H

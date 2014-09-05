@@ -22,6 +22,7 @@
 #include "widget/netcamview.h"
 
 struct Friend;
+class FileTransferInstance;
 
 class ChatForm : public GenericChatForm
 {
@@ -63,6 +64,7 @@ private slots:
     void onAnswerCallTriggered();
     void onHangupCallTriggered();
     void onCancelCallTriggered();
+    void onFileTansBtnClicked(QString widgetName, QString buttonName);
 
 private:
     Friend* f;
@@ -70,6 +72,8 @@ private:
     NetCamView* netcam;
     bool audioInputFlag;
     int callId;
+
+    QHash<uint, FileTransferInstance*> ftransWidgets;
 };
 
 #endif // CHATFORM_H

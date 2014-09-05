@@ -23,6 +23,7 @@
 #include "widget/emoticonswidget.h"
 #include "style.h"
 #include "widget/widget.h"
+#include "settings.h"
 
 GenericChatForm::GenericChatForm(QObject *parent) :
     QObject(parent)
@@ -39,6 +40,10 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     QVBoxLayout *mainLayout = new QVBoxLayout();
     QVBoxLayout *footButtonsSmall = new QVBoxLayout(), *volMicLayout = new QVBoxLayout();
     mainChatLayout = new QGridLayout();
+
+    newChatForm = new ChatAreaWidget();
+    newChatForm->document()->setDefaultStyleSheet(Style::get(":ui/chatArea/innerStyle.css"));
+    newChatForm->setStyleSheet(Style::get(":/ui/chatArea/chatArea.css"));
 
     msgEdit = new ChatTextEdit();
 
@@ -112,6 +117,7 @@ GenericChatForm::GenericChatForm(QObject *parent) :
 
     mainWidget->setLayout(mainLayout);
     mainLayout->addWidget(chatArea);
+    mainLayout->addWidget(newChatForm);
     mainLayout->addLayout(mainFootLayout);
     mainLayout->setMargin(0);
 
@@ -147,8 +153,8 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
-    connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
-    connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
+    connect(newChatForm, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(newChatForm->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
 }
 
 void GenericChatForm::setName(const QString &newName)
@@ -176,14 +182,14 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 
 void GenericChatForm::onSliderRangeChanged()
 {
-    QScrollBar* scroll = chatArea->verticalScrollBar();
+    QScrollBar* scroll = newChatForm->verticalScrollBar();
     if (lockSliderToBottom)
          scroll->setValue(scroll->maximum());
 }
 
 void GenericChatForm::onSaveLogClicked()
 {
-    QString path = QFileDialog::getSaveFileName(0,tr("Save chat log"));
+    QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"));
     if (path.isEmpty())
         return;
 
@@ -192,96 +198,28 @@ void GenericChatForm::onSaveLogClicked()
         return;
 
     QString log;
-    QList<QLabel*> labels = chatAreaWidget->findChildren<QLabel*>();
-    int i=0;
-    for (QLabel* label : labels)
-    {
-        log += label->text();
-        if (i==2)
-        {
-            i=0;
-            log += '\n';
-        }
-        else
-        {
-            log += '\t';
-            i++;
-        }
-    }
+    log = newChatForm->toPlainText();
 
     file.write(log.toUtf8());
     file.close();
 }
 
-void GenericChatForm::addMessage(QString author, QString message, QString date)
+void GenericChatForm::addMessage(QString author, QString message, QDateTime datetime)
 {
-    QLabel *authorLabel = new QLabel(author);
-    QLabel *messageLabel = new QLabel();
-    QLabel *dateLabel = new QLabel(date);
-
-    QScrollBar* scroll = chatArea->verticalScrollBar();
-    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
-    authorLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
-    dateLabel->setAlignment(Qt::AlignTop);
-    messageLabel->setWordWrap(true);
-    messageLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    authorLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    dateLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    if (author == Widget::getInstance()->getUsername())
-    {
-        QPalette pal;
-        pal.setColor(QPalette::WindowText, QColor(100,100,100));
-        authorLabel->setPalette(pal);
-        messageLabel->setPalette(pal);
-    }
-    if (previousName.isEmpty() || previousName != author)
-    {
-        if (curRow)
-        {
-            mainChatLayout->setRowStretch(curRow, 0);
-            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
-        }
-        previousName = author;
-        curRow++;
-    }
-    else if (curRow)// onSaveLogClicked expects 0 or 3 QLabel per line
-        authorLabel->setText("");
-
-    QColor greentext(61,204,61);
-    QString fontTemplate = "<font color='%1'>%2</font>";
-
-    QString finalMessage;
-    QStringList messageLines = message.split("\n");
-    for (QString& s : messageLines)
-    {
-        if (QRegExp("^[ ]*>.*").exactMatch(s))
-            finalMessage += fontTemplate.arg(greentext.name(), toHtmlChars(s));
-        else
-            finalMessage += toHtmlChars(s);
-        finalMessage += "<br>";
-    }
-    messageLabel->setText(finalMessage.left(finalMessage.length()-4));
-    messageLabel->setText(SmileyPack::getInstance().smileyfied(messageLabel->text()));
-    messageLabel->setTextFormat(Qt::RichText);
-
-    mainChatLayout->addWidget(authorLabel, curRow, 0);
-    mainChatLayout->addWidget(messageLabel, curRow, 1);
-    mainChatLayout->addWidget(dateLabel, curRow, 3);
-    mainChatLayout->setRowStretch(curRow+1, 1);
-    mainChatLayout->setRowStretch(curRow, 0);
-    curRow++;
-    authorLabel->setContextMenuPolicy(Qt::CustomContextMenu);
-    messageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
-    dateLabel->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(authorLabel, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
-    connect(messageLabel, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
-    connect(dateLabel, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
+    if (previousName == author)
+        messages.append(new MessageAction("", message, date));
+    else messages.append(new MessageAction(author , message, date));
+    previousName = author;
+    updateChatContent();
 }
 
 GenericChatForm::~GenericChatForm()
 {
     delete mainWidget;
     delete headWidget;
+    for (ChatAction *it : messages)
+        delete it;
 }
 
 void GenericChatForm::onEmoteButtonClicked()
@@ -311,13 +249,22 @@ void GenericChatForm::onEmoteInsertRequested(QString str)
     msgEdit->setFocus(); // refocus so that we can continue typing
 }
 
-QString GenericChatForm::toHtmlChars(const QString &str)
+QString GenericChatForm::getHtmledMessages()
 {
-    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {" ","&nbsp;"}, {">","&gt;"}, {"<","&lt;"}};
-    QString res = str;
+    QString res("<table width=100%>\n");
 
-    for (auto &it : replaceList)
-        res = res.replace(it.first,it.second);
-
+    for (ChatAction *it : messages)
+    {
+        res += it->getHtml();
+    }
+    res += "</table>";
     return res;
+}
+
+void GenericChatForm::updateChatContent()
+{
+    QScrollBar* scroll = newChatForm->verticalScrollBar();
+    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
+
+    newChatForm->setHtml(getHtmledMessages());
 }
