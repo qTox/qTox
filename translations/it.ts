@@ -76,38 +76,17 @@
     </message>
 </context>
 <context>
-    <name>Camera</name>
-    <message>
-        <location filename="../widget/camera.cpp" line="161"/>
-        <source>Camera eror</source>
-        <translation>Errore webcam</translation>
-    </message>
-    <message>
-        <location filename="../widget/camera.cpp" line="162"/>
-        <source>Camera format %1 not supported, can&apos;t use the camera</source>
-        <translation>Formato webcam %1 non supportato, impossibile usare la webcam</translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="283"/>
+        <location filename="../widget/form/chatform.cpp" line="282"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="620"/>
-        <location filename="../widget/form/chatform.cpp" line="626"/>
+        <location filename="../widget/form/chatform.cpp" line="669"/>
+        <location filename="../widget/form/chatform.cpp" line="675"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
-    </message>
-</context>
-<context>
-    <name>CopyableElideLabel</name>
-    <message>
-        <location filename="../widget/tool/copyableelidelabel.cpp" line="29"/>
-        <source>Copy</source>
-        <translation>Copia</translation>
     </message>
 </context>
 <context>
@@ -189,19 +168,19 @@
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="86"/>
+        <location filename="../widget/friendwidget.cpp" line="83"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Copia Tox ID del contatto</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="87"/>
+        <location filename="../widget/friendwidget.cpp" line="84"/>
         <source>Invite in group</source>
         <comment>Menu to invite a friend in a groupchat</comment>
         <translation>Invita nel gruppo</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="97"/>
+        <location filename="../widget/friendwidget.cpp" line="94"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Rimuovi contatto</translation>
@@ -234,19 +213,19 @@
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="54"/>
-        <location filename="../widget/groupwidget.cpp" line="141"/>
+        <location filename="../widget/groupwidget.cpp" line="58"/>
+        <location filename="../widget/groupwidget.cpp" line="100"/>
         <source>%1 users in chat</source>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="56"/>
-        <location filename="../widget/groupwidget.cpp" line="143"/>
+        <location filename="../widget/groupwidget.cpp" line="60"/>
+        <location filename="../widget/groupwidget.cpp" line="102"/>
         <source>0 users in chat</source>
         <translation>0 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="84"/>
+        <location filename="../widget/groupwidget.cpp" line="83"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Esci dal gruppo</translation>
@@ -303,7 +282,7 @@
 <context>
     <name>SelfCamView</name>
     <message>
-        <location filename="../widget/selfcamview.cpp" line="32"/>
+        <location filename="../widget/selfcamview.cpp" line="30"/>
         <source>Tox video test</source>
         <comment>Title of the window to test the video/webcam</comment>
         <translation>qTox video test</translation>
@@ -371,67 +350,23 @@
         <comment>Text on smiley pack label</comment>
         <translation>Emoticons</translation>
     </message>
-    <message>
-        <source>Select smiley pack</source>
-        <translation type="obsolete">Scegli pacchetto emoticons</translation>
-    </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <source>Tox</source>
-        <translation type="obsolete">Tox</translation>
-    </message>
-    <message>
-        <source>Your name</source>
-        <translation type="obsolete">Tox User</translation>
-    </message>
-    <message>
-        <source>Your status</source>
-        <translation type="obsolete">Toxin on qTox</translation>
-    </message>
-    <message>
-        <source>Add friends</source>
-        <translation type="obsolete">Aggiungi contatto</translation>
-    </message>
-    <message>
-        <source>Create a group chat</source>
-        <translation type="obsolete">Crea un gruppo</translation>
-    </message>
-    <message>
-        <source>View completed file transfers</source>
-        <translation type="obsolete">Visualizza i trasferimenti completati</translation>
-    </message>
-    <message>
-        <source>(button inactive currently)</source>
-        <translation type="obsolete">(bottone attualmente inattivo)</translation>
-    </message>
-    <message>
-        <source>Change your settings</source>
-        <translation type="obsolete">Cambia le impostazioni</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Chiudi</translation>
-    </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <translation type="obsolete">Ctrl+Q</translation>
-    </message>
-    <message>
-        <location filename="../widget/widget.cpp" line="128"/>
+        <location filename="../widget/widget.cpp" line="129"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="130"/>
+        <location filename="../widget/widget.cpp" line="131"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Assente</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="132"/>
+        <location filename="../widget/widget.cpp" line="133"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupato</translation>
