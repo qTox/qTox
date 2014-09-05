@@ -46,7 +46,7 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    virtual void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
+    void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
 
 signals:
     void sendMessage(int, QString);
@@ -72,6 +72,9 @@ protected:
     QString previousName;
     int curRow;
     bool lockSliderToBottom;
+
+private:
+    QString toHtmlChars(const QString &str);
 };
 
 #endif // GENERICCHATFORM_H

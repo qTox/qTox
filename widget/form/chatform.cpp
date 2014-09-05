@@ -16,19 +16,11 @@
 
 #include "chatform.h"
 #include "friend.h"
-#include "smileypack.h"
 #include "widget/friendwidget.h"
 #include "widget/widget.h"
 #include "widget/filetransfertwidget.h"
-#include "widget/emoticonswidget.h"
-#include "style.h"
-#include <QFont>
-#include <QTime>
 #include <QScrollBar>
 #include <QFileDialog>
-#include <QMenu>
-#include <QWidgetAction>
-#include <QGridLayout>
 #include <QMessageBox>
 
 ChatForm::ChatForm(Friend* chatFriend)
@@ -50,8 +42,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
-    connect(chatArea->verticalScrollBar(), &QScrollBar::rangeChanged, this, &ChatForm::onSliderRangeChanged);
-    connect(chatArea, &QScrollArea::customContextMenuRequested, this, &ChatForm::onChatContextMenuRequested);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
 }
 

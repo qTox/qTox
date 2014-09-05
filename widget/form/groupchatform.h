@@ -17,15 +17,6 @@
 #ifndef GROUPCHATFORM_H
 #define GROUPCHATFORM_H
 
-#include <QLabel>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QGridLayout>
-#include <QTextEdit>
-#include <QScrollArea>
-#include <QTime>
-
 #include "genericchatform.h"
 #include "widget/tool/chattextedit.h"
 #include "ui_mainwindow.h"
@@ -46,7 +37,7 @@ private slots:
 
 private:
     Group* group;
-    QLabel *nusers, *namesList;
+    QLabel *nusersLabel, *namesList;
 };
 
 #endif // GROUPCHATFORM_H

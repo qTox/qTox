@@ -147,6 +147,8 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
+    connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
 }
 
 void GenericChatForm::setName(const QString &newName)
@@ -214,7 +216,7 @@ void GenericChatForm::onSaveLogClicked()
 void GenericChatForm::addMessage(QString author, QString message, QString date)
 {
     QLabel *authorLabel = new QLabel(author);
-    QLabel *messageLabel = new QLabel(message);
+    QLabel *messageLabel = new QLabel();
     QLabel *dateLabel = new QLabel(date);
 
     QScrollBar* scroll = chatArea->verticalScrollBar();
@@ -253,9 +255,9 @@ void GenericChatForm::addMessage(QString author, QString message, QString date)
     for (QString& s : messageLines)
     {
         if (QRegExp("^[ ]*>.*").exactMatch(s))
-            finalMessage += fontTemplate.arg(greentext.name(), s.replace(" ", "&nbsp;"));
+            finalMessage += fontTemplate.arg(greentext.name(), toHtmlChars(s));
         else
-            finalMessage += s.replace(" ", "&nbsp;");
+            finalMessage += toHtmlChars(s);
         finalMessage += "<br>";
     }
     messageLabel->setText(finalMessage.left(finalMessage.length()-4));
@@ -307,4 +309,15 @@ void GenericChatForm::onEmoteInsertRequested(QString str)
         msgEdit->insertPlainText(str);
 
     msgEdit->setFocus(); // refocus so that we can continue typing
+}
+
+QString GenericChatForm::toHtmlChars(const QString &str)
+{
+    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {" ","&nbsp;"}, {">","&gt;"}, {"<","&lt;"}};
+    QString res = str;
+
+    for (auto &it : replaceList)
+        res = res.replace(it.first,it.second);
+
+    return res;
 }

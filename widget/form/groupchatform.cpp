@@ -18,20 +18,11 @@
 #include "group.h"
 #include "widget/groupwidget.h"
 #include "widget/widget.h"
-#include "friend.h"
-#include "friendlist.h"
-#include "style.h"
-#include <QFont>
-#include <QTime>
-#include <QScrollBar>
-#include <QMenu>
-#include <QFile>
-#include <QFileDialog>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup)
 {
-    nusers = new QLabel();
+    nusersLabel = new QLabel();
     namesList = new QLabel();
 
     fileButton->setEnabled(false);
@@ -44,8 +35,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     small.setPixelSize(10);
 
     nameLabel->setText(group->widget->name.text());
-    nusers->setFont(small);
-    nusers->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
+    nusersLabel->setFont(small);
+    nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
     avatarLabel->setPixmap(QPixmap(":/img/group_dark.png"));
 
     QString names;
@@ -60,7 +51,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     mainChatLayout->setColumnStretch(1,1);
     mainChatLayout->setHorizontalSpacing(10);
 
-    headTextLayout->addWidget(nusers);
+    headTextLayout->addWidget(nusersLabel);
     headTextLayout->addWidget(namesList);
     headTextLayout->setMargin(0);
     headTextLayout->setSpacing(0);
@@ -68,8 +59,6 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
-    connect(chatArea->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
-    connect(chatArea, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
 }
 
 GroupChatForm::~GroupChatForm()
@@ -99,7 +88,7 @@ void GroupChatForm::addGroupMessage(QString message, int peerId)
 
 void GroupChatForm::onUserListChanged()
 {
-    nusers->setText(tr("%1 users in chat").arg(group->nPeers));
+    nusersLabel->setText(tr("%1 users in chat").arg(group->nPeers));
     QString names;
     for (QString& s : group->peers)
         names.append(s+", ");

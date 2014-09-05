@@ -17,19 +17,7 @@
 #ifndef CHATFORM_H
 #define CHATFORM_H
 
-#include <QLabel>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QGridLayout>
-#include <QTextEdit>
-#include <QScrollArea>
-#include <QTime>
-#include <QPoint>
-
 #include "genericchatform.h"
-#include "widget/tool/chattextedit.h"
-#include "ui_mainwindow.h"
 #include "core.h"
 #include "widget/netcamview.h"
 
