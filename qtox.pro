@@ -102,7 +102,7 @@ HEADERS  += widget/form/addfriendform.h \
     widget/friendlistwidget.h \
     widget/genericchatroomwidget.h \
     widget/form/genericchatform.h \
-    widget/tool/genericchataction.h \
+    widget/tool/chataction.h \
     widget/chatareawidget.h \
     filetransferinstance.h
 
@@ -138,6 +138,6 @@ SOURCES += \
     coreav.cpp \
     widget/genericchatroomwidget.cpp \
     widget/form/genericchatform.cpp \
-    widget/tool/genericchataction.cpp \
+    widget/tool/chataction.cpp \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp

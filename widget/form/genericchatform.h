@@ -30,7 +30,7 @@
 
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
-#include "widget/tool/genericchataction.h"
+#include "widget/tool/chataction.h"
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5

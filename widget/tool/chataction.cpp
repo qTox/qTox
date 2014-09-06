@@ -14,7 +14,7 @@
     See the COPYING file for more details.
 */
 
-#include "genericchataction.h"
+#include "chataction.h"
 #include "smileypack.h"
 #include <QStringList>
 #include <QBuffer>
