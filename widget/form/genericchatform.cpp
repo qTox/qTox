@@ -137,7 +137,6 @@ GenericChatForm::GenericChatForm(QObject *parent) :
 
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(newChatForm, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
-    connect(newChatForm->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
 }
 
 void GenericChatForm::setName(const QString &newName)
@@ -161,13 +160,6 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
     QMenu menu;
     menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
     menu.exec(pos);
-}
-
-void GenericChatForm::onSliderRangeChanged()
-{
-    QScrollBar* scroll = newChatForm->verticalScrollBar();
-    if (lockSliderToBottom)
-         scroll->setValue(scroll->maximum());
 }
 
 void GenericChatForm::onSaveLogClicked()
@@ -250,4 +242,8 @@ void GenericChatForm::updateChatContent()
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
 
     newChatForm->setHtml(getHtmledMessages());
+    if (lockSliderToBottom)
+        sliderPosition = scroll->maximum();
+
+    scroll->setValue(sliderPosition);
 }

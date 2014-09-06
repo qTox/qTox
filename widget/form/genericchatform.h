@@ -57,7 +57,6 @@ public slots:
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
-    void onSliderRangeChanged();
     void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
@@ -74,6 +73,7 @@ protected:
     ChatAreaWidget *newChatForm;
     int curRow;
     bool lockSliderToBottom;
+    int sliderPosition;
 
     QList<ChatAction*> messages;
 
