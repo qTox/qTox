@@ -48,9 +48,6 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     msgEdit->setObjectName("group");
 
-    mainChatLayout->setColumnStretch(1,1);
-    mainChatLayout->setHorizontalSpacing(10);
-
     headTextLayout->addWidget(nusersLabel);
     headTextLayout->addWidget(namesList);
     headTextLayout->setMargin(0);

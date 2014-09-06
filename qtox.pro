@@ -57,7 +57,7 @@ win32 {
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
     }
 
-    contains(JENKINS, YES) {
+    contains(JENKINS, YES) {
         LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a -lopencv_core -lopencv_highgui -lopenal
     }
 }
@@ -80,7 +80,6 @@ HEADERS  += widget/form/addfriendform.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
     widget/tool/friendrequestdialog.h \
-    widget/filetransfertwidget.h \
     widget/friendwidget.h \
     widget/groupwidget.h \
     widget/widget.h \
@@ -115,7 +114,6 @@ SOURCES += \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
     widget/tool/friendrequestdialog.cpp \
-    widget/filetransfertwidget.cpp \
     widget/friendwidget.cpp \
     widget/groupwidget.cpp \
     widget/widget.cpp \

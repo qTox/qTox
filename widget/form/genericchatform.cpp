@@ -31,7 +31,7 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     lockSliderToBottom = true;
     curRow = 0;
 
-    mainWidget = new QWidget(); headWidget = new QWidget(); chatAreaWidget = new QWidget();
+    mainWidget = new QWidget(); headWidget = new QWidget();
 
     nameLabel = new QLabel();
     avatarLabel = new QLabel();
@@ -39,7 +39,6 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     headTextLayout = new QVBoxLayout();
     QVBoxLayout *mainLayout = new QVBoxLayout();
     QVBoxLayout *footButtonsSmall = new QVBoxLayout(), *volMicLayout = new QVBoxLayout();
-    mainChatLayout = new QGridLayout();
 
     newChatForm = new ChatAreaWidget();
     newChatForm->document()->setDefaultStyleSheet(Style::get(":ui/chatArea/innerStyle.css"));
@@ -56,22 +55,9 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     volButton = new QPushButton();
     micButton = new QPushButton();
 
-    chatArea = new QScrollArea();
-
     QFont bold;
     bold.setBold(true);
     nameLabel->setFont(bold);
-
-    chatAreaWidget->setLayout(mainChatLayout);
-    chatAreaWidget->setStyleSheet(Style::get(":/ui/chatArea/chatArea.css"));
-
-    chatArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    chatArea->setWidgetResizable(true);
-    chatArea->setContextMenuPolicy(Qt::CustomContextMenu);
-    chatArea->setFrameStyle(QFrame::NoFrame);
-
-    mainChatLayout->setColumnStretch(1,1);
-    mainChatLayout->setSpacing(5);
 
     footButtonsSmall->setSpacing(2);
 
@@ -116,7 +102,6 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     micButton->setStyleSheet(micButtonStylesheet);
 
     mainWidget->setLayout(mainLayout);
-    mainLayout->addWidget(chatArea);
     mainLayout->addWidget(newChatForm);
     mainLayout->addLayout(mainFootLayout);
     mainLayout->setMargin(0);
@@ -143,8 +128,6 @@ GenericChatForm::GenericChatForm(QObject *parent) :
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(nameLabel);
-
-    chatArea->setWidget(chatAreaWidget);
 
     //Fix for incorrect layouts on OS X as per
     //https://bugreports.qt-project.org/browse/QTBUG-14591

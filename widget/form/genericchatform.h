@@ -65,10 +65,8 @@ protected slots:
 
 protected:
     QLabel *nameLabel, *avatarLabel;
-    QWidget *mainWidget, *headWidget, *chatAreaWidget;
-    QScrollArea *chatArea;
+    QWidget *mainWidget, *headWidget;
     QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
-    QGridLayout *mainChatLayout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;

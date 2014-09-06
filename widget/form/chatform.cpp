@@ -17,8 +17,8 @@
 #include "chatform.h"
 #include "friend.h"
 #include "widget/friendwidget.h"
+#include "filetransferinstance.h"
 #include "widget/widget.h"
-#include "widget/filetransfertwidget.h"
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -44,6 +44,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(newChatForm, SIGNAL(onFileTranfertInterract(QString,QString)), this, SLOT(onFileTansBtnClicked(QString,QString)));
+    connect(newChatForm->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
 }
 
 ChatForm::~ChatForm()
