@@ -217,7 +217,11 @@ QString FileTransferInstance::getHtmlImage()
     if (state == tsPending || state == tsProcessing || state == tsPaused)
     {
         QImage rightUp(":ui/stopFileButton/default.png");
-        QImage rightDown(":ui/acceptFileButton/default.png");
+        QImage rightDown;
+        if (state == tsProcessing)
+            rightDown = QImage(":ui/pauseFileButton/default.png");
+        else
+            rightDown = QImage(":ui/acceptFileButton/default.png");
 
         QString widgetId = QString::number(getId());
         QString strUp = "<img src=\"data:ftrans." + widgetId + ".top/png;base64," + QImage2base64(rightUp) + "\">";
@@ -225,7 +229,8 @@ QString FileTransferInstance::getHtmlImage()
 
         res  = "<table widht=100% cellspacing=\"2\">\n";
         res += "<tr>\n<td width=100%>\n";
-        res += "<div class=quote><p>PROCESSING</p><p>" + filename + "</p><p>" + size + "</p></div>\n";
+        res += "<div class=green><p>" + filename + "</p><p>" + getHumanReadableSize(lastBytesSent) + "/" + size;
+        res += "&nbsp;(" + speed + ")</p></div>\n";
         res += "</td>\n<td>\n";
         res += "<table cellspacing=\"0\"><tr valign=top><td>" + strUp + "</td></tr><tr valign=bottom><td>" + strDown + "</td></tr></table>\n";
         res += "</td>\n</tr>\n";
@@ -234,14 +239,14 @@ QString FileTransferInstance::getHtmlImage()
     {
         res  = "<table widht=100% cellspacing=\"2\">\n";
         res += "<tr>\n<td width=100%>\n";
-        res += "<div class=quote><p>CANCELED</p><p>" + filename + "</p><p>" + size + "</p></div>\n";
+        res += "<div class=red><p>" + filename + "</p><p>" + size + "</p></div>\n";
         res += "</td>\n</tr>\n";
         res += "</table>\n";
     } else if (state == tsFinished)
     {
         res  = "<table widht=100% cellspacing=\"2\">\n";
         res += "<tr>\n<td width=100%>\n";
-        res += "<div class=quote><p>FINISHED</p><p>" + filename + "</p><p>" + size + "</p></div>\n";
+        res += "<div class=green><p>" + filename + "</p><p>" + size + "</p></div>\n";
         res += "</td>\n</tr>\n";
         res += "</table>\n";
     }

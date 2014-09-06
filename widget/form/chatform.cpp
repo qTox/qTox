@@ -95,34 +95,8 @@ void ChatForm::startFileSend(ToxFile file)
     if (file.friendId != f->friendId)
         return;
 
-//    QLabel *author = new QLabel(Widget::getInstance()->getUsername());
-//    QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
-//    QScrollBar* scroll = chatArea->verticalScrollBar();
-//    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
-//    author->setAlignment(Qt::AlignTop | Qt::AlignRight);
-//    date->setAlignment(Qt::AlignTop);
-//    QPalette pal;
-//    pal.setColor(QPalette::WindowText, Qt::gray);
-//    author->setPalette(pal);
-//    if (previousName.isEmpty() || previousName != author->text())
-//    {
-//        if (curRow)
-//        {
-//            mainChatLayout->setRowStretch(curRow, 0);
-//            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
-//            curRow++;
-//        }
-//        mainChatLayout->addWidget(author, curRow, 0);
-//    }
-
     FileTransferInstance* fileTrans = new FileTransferInstance(file);
     ftransWidgets.insert(fileTrans->getId(), fileTrans);
-//    previousName = author->text();
-//    mainChatLayout->addWidget(fileTrans, curRow, 1);
-//    mainChatLayout->addWidget(date, curRow, 3);
-//    mainChatLayout->setRowStretch(curRow+1, 1);
-//    mainChatLayout->setRowStretch(curRow, 0);
-//    curRow++;
 
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
@@ -138,30 +112,8 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     if (file.friendId != f->friendId)
         return;
 
-//    QLabel *author = new QLabel(f->getName());
-//    QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
-//    QScrollBar* scroll = chatArea->verticalScrollBar();
-//    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
-//    author->setAlignment(Qt::AlignTop | Qt::AlignRight);
-//    date->setAlignment(Qt::AlignTop);
-//    if (previousName.isEmpty() || previousName != author->text())
-//    {
-//        if (curRow)
-//        {
-//            mainChatLayout->setRowStretch(curRow, 0);
-//            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
-//            curRow++;
-//        }
-//        mainChatLayout->addWidget(author, curRow, 0);
-//    }
     FileTransferInstance* fileTrans = new FileTransferInstance(file);
     ftransWidgets.insert(fileTrans->getId(), fileTrans);
-//    previousName = author->text();
-//    mainChatLayout->addWidget(fileTrans, curRow, 1);
-//    mainChatLayout->addWidget(date, curRow, 3);
-//    mainChatLayout->setRowStretch(curRow+1, 1);
-//    mainChatLayout->setRowStretch(curRow, 0);
-//    curRow++;
 
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);

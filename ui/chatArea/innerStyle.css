@@ -35,3 +35,21 @@ div.date {
   color: #000000;
   padding-left: 3px;
 }
+
+div.green {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 12px;
+  color: #ffffff;
+  background-color: #6bc260;
+  font-size: 10px;
+}
+
+div.red {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 12px;
+  color: #ffffff;
+  background-color: rgb(200,78,78);
+  font-size: 10px;
+}
