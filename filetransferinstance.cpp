@@ -107,14 +107,13 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
 
     if (File.direction == ToxFile::RECEIVING)
     {
-        QPixmap preview;
+        QImage preview;
         QFile previewFile(File.filePath);
         if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= 1024*1024*25) // Don't preview big (>25MiB) images
         {
             if (preview.loadFromData(previewFile.readAll()))
             {
-                preview = preview.scaledToHeight(40);
-//                pic->setPixmap(preview);
+                pic = preview.scaledToHeight(40);
             }
             previewFile.close();
         }
@@ -303,7 +302,7 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
 
     QString content;
     content += "<p>" + filename + "</p>";
-    content += "<p>" + getHumanReadableSize(lastBytesSent) + " / " + size; + "&nbsp;(" + speed + ")</p>\n";
+    content += "<p>" + getHumanReadableSize(lastBytesSent) + " / " + size + "&nbsp;(" + speed + " ETA: " + eta + ")</p>\n";
 
     return wrapIntoForm(content, type, imgAstr, imgBstr);
 }
