@@ -44,7 +44,7 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
         File.file->seek(0);
         if (preview.loadFromData(File.file->readAll()))
         {
-            pic = preview.scaledToHeight(40);
+            pic = preview.scaledToHeight(50);
         }
         File.file->seek(0);
     }
@@ -113,7 +113,7 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
         {
             if (preview.loadFromData(previewFile.readAll()))
             {
-                pic = preview.scaledToHeight(40);
+                pic = preview.scaledToHeight(50);
             }
             previewFile.close();
         }
@@ -280,7 +280,7 @@ QString FileTransferInstance::drawButtonlessForm(const QString &type)
     return wrapIntoForm(content, type, imgAStr, imgBStr);
 }
 
-QString FileTransferInstance::insertMiniature()
+QString FileTransferInstance::insertMiniature(const QString &type)
 {
     if (pic == QImage())
         return QString();
@@ -288,9 +288,9 @@ QString FileTransferInstance::insertMiniature()
     QString widgetId = QString::number(getId());
 
     QString res;
-    res  = "<td>\n";
+    res  = "<td><div class=" + type + ">\n";
     res += "<img src=\"data:mini." + widgetId + "/png;base64," + QImage2base64(pic) + "\">";
-    res += "</td>\n";
+    res += "</div></td>\n";
     return res;
 }
 
@@ -311,19 +311,16 @@ QString FileTransferInstance::wrapIntoForm(const QString& content, const QString
 {
     QString res;
 
-    res =  "<table widht=100% cellspacing=\"1\">\n";
+    res =  "<table widht=100% cellspacing=\"0\">\n";
     res += "<tr valign=middle>\n";
-    res += "<td>\n";
-    res += "<div class=button>" + imgAstr + "</div>\n";
-    res += "</td>\n";
-    res += insertMiniature();
+    res += insertMiniature(type);
     res += "<td width=100%>\n";
     res += "<div class=" + type + ">";
     res += content;
     res += "</div>\n";
     res += "</td>\n";
     res += "<td>\n";
-    res += "<div class=button>" + imgBstr + "</div>\n";
+    res += "<div class=button>" + imgAstr + "<br>" + imgBstr+ "</div>\n";
     res += "</td>\n";
     res += "</tr>\n";
     res += "</table>\n";
