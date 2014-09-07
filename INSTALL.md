@@ -61,7 +61,7 @@ make install
 After OpenCV was successfully installed to "C:\qTox\libs\opencv-build\install" copy the dlls "libopencv_core249.dll", "libopencv_highgui249.dll" and "libopencv_imgproc249.dll" located at "C:\qTox\libs\opencv-build\install\x86\mingw\bin" to "C:\qTox\libs\lib". Afterwards copy the content of the directory "C:\qTox\libs\opencv-build\install\include" to "C:\qTox\libs\include". Finally, you have to patch the file "C:\qTox\libs\include\opencv2\opencv.hpp" because it includes all modules of OpenCV regardless of your configuration. Open this file with your preferred text editor and remove all includes except of "opencv2/core/core_c.h", "opencv2/core/core.hpp", "opencv2/imgproc/imgproc_c.h", "opencv2/imgproc/imgproc.hpp", "opencv2/highgui/highgui_c.h" and "opencv2/highgui/highgui.hpp". OpenCV is now ready to use. Feel free to delete the directories "opencv-2.4.9" and "opencv-build", but you don't need to.
 
 ###OpenAL Soft
-As for OpenCV there are no prebuild packages of OpenAL Softe compiled with MinGW, but the installation process is very similar to OpenCV. Download the most recent source archive of OpenAL Soft from [http://kcat.strangesoft.net](http://kcat.strangesoft.net/openal.html#download). Extract its content to "C:\qTox\libs". Besides the source folder itself you'll find the file "pax_global_header". It is not required and can be deleted. Create the directory "openal-build" next to source folder. Now you should have the two directories "openal-soft-x.y.z" where x.y.z is the version of OpenAL and "openal-build" inside your "C:\qTox\libs" directory. Run CMake (cmake-gui) and setup the source and build location. Run the initial configuration and use "MSYS Makefiles" with "Use default native compilers". The only thing you need to configure is "CMAKE_INSTALL_PREFIX" which does not point to "C:\qTox\libs\openal-build\install" by default. Configure the project and generate the Makefiles. Compile and install OpenAL soft with:
+As for OpenCV there are no prebuild packages of OpenAL Softe compiled with MinGW, but the installation process is very similar to OpenCV. Download the most recent source archive of OpenAL Soft from [http://kcat.strangesoft.net](http://kcat.strangesoft.net/openal.html#download). Extract its content to "C:\qTox\libs". Besides the source folder itself you'll find the file "pax_global_header". It is not required and can be deleted. Create the directory "openal-build" next to source folder. Now you should have the two directories "openal-soft-x.y.z" where x.y.z is the version of OpenAL and "openal-build" inside your "C:\qTox\libs" directory. Run CMake (cmake-gui) and setup the source and build location. Run the initial configuration and use "MSYS Makefiles" with "Use default native compilers". The only thing you need to configure is "CMAKE_INSTALL_PREFIX" which does not point to "C:\qTox\libs\openal-build\install" by default. Configure the project and generate the Makefiles. Compile and install OpenAL Soft with:
 ```bash
 make
 make install
@@ -86,7 +86,7 @@ sudo apt-get install git
 
 Arch Linux:
 ```bash
-sudo pacman -S git
+sudo pacman -S --needed git
 ```
 
 Fedora:
@@ -116,7 +116,7 @@ sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopen
 
 Arch Linux:
 ```bash
-sudo pacman -S base-devel qt5 opencv openal
+sudo pacman -S --needed base-devel qt5 opencv openal
 ```
 
 Fedora:
@@ -141,7 +141,7 @@ sudo apt-get install libtool autotools-dev automake checkinstall check yasm libo
 
 Arch Linux: (Arch Linux provides the package "tox-git" in AUR)
 ```bash
-sudo pacman -S yasm opus vpx
+sudo pacman -S --needed yasm opus vpx
 ```
 
 Fedora:
