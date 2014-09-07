@@ -142,6 +142,7 @@ private:
 
     bool loaded;
 
+    bool useCustomDhtList;
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     bool dontShowDhtDialog;
