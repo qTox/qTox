@@ -54,6 +54,10 @@ private slots:
 
 private:
     QString getHumanReadableSize(unsigned long long size);
+    QString QImage2base64(const QImage &img);
+    QString drawButtonlessForm(const QString &type);
+    QString draw2ButtonsForm(const QString &type, const QImage &imgA, const QImage &imgB);
+    QString insertMiniature();
 
 private:
     enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};

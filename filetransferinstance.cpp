@@ -201,19 +201,18 @@ void FileTransferInstance::pauseResumeSend()
     emit stateUpdated();
 }
 
+QString FileTransferInstance::QImage2base64(const QImage &img)
+{
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    img.save(&buffer, "PNG"); // writes image into ba in PNG format
+    return ba.toBase64();
+}
+
 QString FileTransferInstance::getHtmlImage()
 {
     qDebug() << "QString FileTransferInstance::getHtmlImage()";
-    auto QImage2base64 = [](const QImage &img)
-    {
-        QByteArray ba;
-        QBuffer buffer(&ba);
-        buffer.open(QIODevice::WriteOnly);
-        img.save(&buffer, "PNG"); // writes image into ba in PNG format
-        return ba.toBase64();
-    };
-
-    QString widgetId = QString::number(getId());
 
     QString res;
     if (state == tsPending || state == tsProcessing || state == tsPaused)
@@ -225,58 +224,13 @@ QString FileTransferInstance::getHtmlImage()
         else
             rightDown = QImage(":ui/acceptFileButton/default.png");
 
-        QString strUp = "<img src=\"data:ftrans." + widgetId + ".top/png;base64," + QImage2base64(rightUp) + "\">";
-        QString strDown = "<img src=\"data:ftrans." + widgetId + ".bottom/png;base64," + QImage2base64(rightDown) + "\">";
-
-        res =  "<table widht=100% cellspacing=\"2\">\n";
-        res += "<tr valign=middle>\n";
-        res += "<td>\n";
-        res += "<div class=button>" + strUp + "</div>\n";
-        res += "</td>\n";
-        if (pic != QImage())
-        {
-            res += "<td>\n";
-            res += "<img src=\"data:mini." + widgetId + "/png;base64," + QImage2base64(pic) + "\">";
-            res += "</td>\n";
-        }
-        res += "<td width=100%>\n";
-        res += "<div class=green>";
-        res += "<p>" + filename + "</p>";
-        res += "<p>" + getHumanReadableSize(lastBytesSent) + " / " + size; + "&nbsp;(" + speed + ")</p>\n";
-        res += "</div>\n";
-        res += "</td>\n";
-        res += "<td>\n";
-        res += "<div class=button>" + strDown + "</div>\n";
-        res += "</td>\n";
-        res += "</tr>\n";
-        res += "</table>\n";
-
+        res = draw2ButtonsForm("green", rightUp, rightDown);
     } else if (state == tsCanceled)
     {
-        res  = "<table widht=100% cellspacing=\"2\">\n<tr>\n";
-        if (pic != QImage())
-        {
-            res += "<td>\n";
-            res += "<img src=\"data:mini." + widgetId + "/png;base64," + QImage2base64(pic) + "\">";
-            res += "</td>\n";
-        }
-        res += "<td width=100%>\n";
-        res += "<div class=red><p>" + filename + "</p><p>" + size + "</p></div>\n";
-        res += "</td>\n</tr>\n";
-        res += "</table>\n";
+        res = drawButtonlessForm("red");
     } else if (state == tsFinished)
     {
-        res  = "<table widht=100% cellspacing=\"2\">\n<tr>\n";
-        if (pic != QImage())
-        {
-            res += "<td>\n";
-            res += "<img src=\"data:mini." + widgetId + "/png;base64," + QImage2base64(pic) + "\">";
-            res += "</td>\n";
-        }
-        res += "<td width=100%>\n";
-        res += "<div class=green><p>" + filename + "</p><p>" + size + "</p></div>\n";
-        res += "</td>\n</tr>\n";
-        res += "</table>\n";
+        res = drawButtonlessForm("green");
     }
 
     return res;
@@ -289,14 +243,14 @@ void FileTransferInstance::pressFromHtml(QString code)
 
     if (direction == ToxFile::SENDING)
     {
-        if (code == "top")
+        if (code == "btnA")
             cancelTransfer();
-        else if (code == "bottom")
+        else if (code == "btnB")
             pauseResumeSend();
     } else {
-        if (code == "top")
+        if (code == "btnA")
             rejectRecvRequest();
-        else if (code == "bottom")
+        else if (code == "btnB")
         {
             if (state == tsPending)
                 acceptRecvRequest();
@@ -304,4 +258,61 @@ void FileTransferInstance::pressFromHtml(QString code)
                 pauseResumeRecv();
         }
     }
+}
+
+QString FileTransferInstance::drawButtonlessForm(const QString &type)
+{
+    QString res;
+
+    res  = "<table widht=100% cellspacing=\"1\">\n<tr>\n";
+    res += insertMiniature();
+    res += "<td width=100%>\n";
+    res += "<div class=" + type + "><p>" + filename + "</p><p>" + size + "</p></div>\n";
+    res += "</td>\n</tr>\n";
+    res += "</table>\n";
+
+    return res;
+}
+
+QString FileTransferInstance::insertMiniature()
+{
+    if (pic == QImage())
+        return QString();
+
+    QString widgetId = QString::number(getId());
+
+    QString res;
+    res  = "<td>\n";
+    res += "<img src=\"data:mini." + widgetId + "/png;base64," + QImage2base64(pic) + "\">";
+    res += "</td>\n";
+    return res;
+}
+
+QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage &imgA, const QImage &imgB)
+{
+    QString res;
+
+    QString widgetId = QString::number(getId());
+    QString imgAstr = "<img src=\"data:ftrans." + widgetId + ".btnA/png;base64," + QImage2base64(imgA) + "\">";
+    QString imgBstr = "<img src=\"data:ftrans." + widgetId + ".btnB/png;base64," + QImage2base64(imgB) + "\">";
+
+    res =  "<table widht=100% cellspacing=\"1\">\n";
+    res += "<tr valign=middle>\n";
+    res += "<td>\n";
+    res += "<div class=button>" + imgAstr + "</div>\n";
+    res += "</td>\n";
+    res += insertMiniature();
+    res += "<td width=100%>\n";
+    res += "<div class=" + type + ">";
+    res += "<p>" + filename + "</p>";
+    res += "<p>" + getHumanReadableSize(lastBytesSent) + " / " + size; + "&nbsp;(" + speed + ")</p>\n";
+    res += "</div>\n";
+    res += "</td>\n";
+    res += "<td>\n";
+    res += "<div class=button>" + imgBstr + "</div>\n";
+    res += "</td>\n";
+    res += "</tr>\n";
+    res += "</table>\n";
+
+    return res;
 }
