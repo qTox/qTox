@@ -47,19 +47,19 @@ If you prefer to compile Tox Core on your own follow the instructions at https:/
 Unfortunately there are no prebuild packages for OpenCV compiled with MinGW. Thus, you have to create your own.
 First of all download and install the most recent version of CMake from
 [cmake.org](http://www.cmake.org/cmake/resources/software.html).
-Afterwards download the source archive of OpenCV from [http://opencv.org](http://opencv.org/downloads.html). It's recommended to download the Linux/Mac package because the Windows package is bloated with useless binaries. The Linux/Mac package only contains the sources and works perfectly on Windows.
+Afterwards download the most recent, stable source archive of OpenCV from [http://opencv.org](http://opencv.org/downloads.html). It's recommended to download the Linux/Mac package because the Windows package is bloated with useless binaries. The Linux/Mac package only contains the sources and works perfectly on Windows.
 Extract the content of the source archive to "C:\qTox\libs". Furthermore, create a new directory named "opencv-build" in "C:\qTox\libs".
 Now you should have the two directories "opencv-x.y.z" where x.y.z is the version of OpenCV and "opencv-build" inside your "C:\qTox\libs" directory.
 
 Run CMake (cmake-gui) and set up the input boxes "Where is the source code:" and "Where to build the binaries" with "C:\qTox\libs\opencv-x.y.z" and "C:\qTox\libs\opencv-build". Press configure and choose "MSYS Makefiles" in the drop down menu and "Use default native compilers". To start initial configuration press Finish. Given that qTox only needs some components of OpenCV it's recommended to disable not required modules. Furthermore, this will decrease compilation time of OpenCV dramatically. Each module begins with "BUILD_opencv_" and can be disabled by deselecting its entry. Use the "Search" input box for convenience. Disable all modules except of "core", "highgui" and "imgproc" (highgui depends on imgproc and will automatically be disabled if imgproc is disabled). For maximum performance search for "CMAKE_BUILD_TYPE" and select "Release". Finally, make sure "CMAKE_INSTALL_PREFIX" points to "C:\qTox\libs\opencv-build\install" (should be by default). To update the configuration press Configure again. Afterwards press Generate to create the Makefiles.
 
-Open a new command prompt within "C:\qTox\libs\opencv-build" (HINT: Use shift + right click on the directory within Windows explorer and use "Open command window here"). Compile and install OpenCV with the following command. It's not recommended to use -j for multicore compilation, because it freezes the terminal from time to time.
+Open a new command prompt within "C:\qTox\libs\opencv-build" (HINT: Use shift + right click -> "Open command window here" on the directory within Windows Explorer). Compile and install OpenCV with the following command. It's not recommended to use -j for multicore compilation, because it freezes the terminal from time to time.
 ```bash
 make
 make install
 ```
 
-After OpenCV was successfully installed to "C:\qTox\libs\opencv-build\install" copy the dlls "libopencv_core249.dll", "libopencv_highgui249.dll" and "libopencv_imgproc249.dll" located at "C:\qTox\libs\opencv-build\install\x86\mingw\bin" to "C:\qTox\libs\lib". Afterwards copy the content of the directory "C:\qTox\libs\opencv-build\install\include" to "C:\qTox\libs\include". Finally, you have to patch the file "C:\qTox\libs\include\opencv2\opencv.hpp" because it includes all modules of OpenCV regardless of your configuration.
+After OpenCV was successfully installed to "C:\qTox\libs\opencv-build\install" copy the dlls "libopencv_core249.dll", "libopencv_highgui249.dll" and "libopencv_imgproc249.dll" located at "C:\qTox\libs\opencv-build\install\x86\mingw\bin" to "C:\qTox\libs\lib". Afterwards copy the content of the directory "C:\qTox\libs\opencv-build\install\include" to "C:\qTox\libs\include". Finally, you have to patch the file "C:\qTox\libs\include\opencv2\opencv.hpp" because it includes all modules of OpenCV regardless of your configuration. Open this file with your preferred text editor and remove all includes except of "opencv2/core/core_c.h", "opencv2/core/core.hpp", "opencv2/imgproc/imgproc_c.h", "opencv2/imgproc/imgproc.hpp", "opencv2/highgui/highgui_c.h" and "opencv2/highgui/highgui.hpp". OpenCV is now ready. Feel free to delete the directories "opencv-x.y.z" and "opencv-build", but you don't need to.
 
 ###OpenAL Soft
 
