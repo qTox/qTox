@@ -246,7 +246,7 @@
     <message>
         <location filename="../mainwindow.ui" line="2000"/>
         <source>Your status</source>
-        <translation>Toxin on qTox</translation>
+        <translation>Toxing on qTox</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2566"/>
