@@ -43,7 +43,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
-    connect(newChatForm, SIGNAL(onFileTranfertInterract(QString,QString)), this, SLOT(onFileTansBtnClicked(QString,QString)));
+    connect(chatWidget, SIGNAL(onFileTranfertInterract(QString,QString)), this, SLOT(onFileTansBtnClicked(QString,QString)));
 }
 
 ChatForm::~ChatForm()
@@ -101,10 +101,14 @@ void ChatForm::startFileSend(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
-    connect(fileTrans, SIGNAL(stateUpdated()), this, SLOT(updateChatContent()));
+    connect(fileTrans, SIGNAL(stateUpdated()), chatWidget, SLOT(updateChatContent()));
 
-    messages.append(new FileTransferAction(fileTrans, Widget::getInstance()->getUsername(), QTime::currentTime().toString("hh:mm")));
-    updateChatContent();
+    QString name = Widget::getInstance()->getUsername();
+    if (name == previousName)
+        name = "";
+    previousName = Widget::getInstance()->getUsername();
+
+    chatWidget->insertMessage(new FileTransferAction(fileTrans, name, QTime::currentTime().toString("hh:mm"), true));
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -118,7 +122,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
-    connect(fileTrans, SIGNAL(stateUpdated()), this, SLOT(updateChatContent()));
+    connect(fileTrans, SIGNAL(stateUpdated()), chatWidget, SLOT(updateChatContent()));
 
     Widget* w = Widget::getInstance();
     if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
@@ -128,8 +132,12 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         f->widget->updateStatusLight();
     }
 
-    messages.append(new FileTransferAction(fileTrans, f->getName(), QTime::currentTime().toString("hh:mm")));
-    updateChatContent();
+    QString name = f->getName();
+    if (name == previousName)
+        name = "";
+    previousName = f->getName();
+
+    chatWidget->insertMessage(new FileTransferAction(fileTrans, name, QTime::currentTime().toString("hh:mm"), false));
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
@@ -435,6 +443,4 @@ void ChatForm::onFileTansBtnClicked(QString widgetName, QString buttonName)
         it.value()->pressFromHtml(buttonName);
     else
         qDebug() << "no filetransferwidget: " << id;
-
-//    QMessageBox::information(nullptr, message, message);
 }

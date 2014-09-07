@@ -17,6 +17,7 @@
 #include "chatareawidget.h"
 #include <QAbstractTextDocumentLayout>
 #include <QMessageBox>
+#include <QScrollBar>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextEdit(parent)
@@ -24,6 +25,12 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
     setContextMenuPolicy(Qt::CustomContextMenu);
+}
+
+ChatAreaWidget::~ChatAreaWidget()
+{
+    for (ChatAction *it : messages)
+        delete it;
 }
 
 void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
@@ -41,16 +48,58 @@ void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
             QTextFormat format = cursor.charFormat();
             if (format.isImageFormat())
             {
-                QString image = format.toImageFormat().name();
-                if (QRegExp("^data:ftrans.*").exactMatch(image))
+                QString imageName = format.toImageFormat().name();
+                if (QRegExp("^data:ftrans.*").exactMatch(imageName))
                 {
-                    image = image.right(image.length() - 12);
-                    int endpos = image.indexOf("/png;base64");
-                    image = image.left(endpos);
-                    int middlepos = image.indexOf(".");
-                    emit onFileTranfertInterract(image.left(middlepos),image.right(image.length() - middlepos - 1));
+                    QString data = imageName.right(imageName.length() - 12);
+                    int endpos = data.indexOf("/png;base64");
+                    data = data.left(endpos);
+                    int middlepos = data.indexOf(".");
+                    QString widgetID = data.left(middlepos);
+                    QString widgetBtn = data.right(data.length() - middlepos - 1);
+                    emit onFileTranfertInterract(widgetID, widgetBtn);
                 }
             }
         }
     }
+}
+
+QString ChatAreaWidget::getHtmledMessages()
+{
+    QString res("<table width=100%>\n");
+
+    for (ChatAction *it : messages)
+    {
+        res += it->getHtml();
+    }
+    res += "</table>";
+    return res;
+}
+
+void ChatAreaWidget::insertMessage(ChatAction *msgAction)
+{
+    if (msgAction == nullptr)
+        return;
+
+    messages.append(msgAction);
+    updateChatContent();
+}
+
+void ChatAreaWidget::updateChatContent()
+{
+    QScrollBar* scroll = verticalScrollBar();
+    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
+
+    setHtml(getHtmledMessages());
+    if (lockSliderToBottom)
+        sliderPosition = scroll->maximum();
+
+    scroll->setValue(sliderPosition);
+}
+
+void ChatAreaWidget::clearMessages()
+{
+    for (ChatAction *it : messages)
+        delete it;
+    updateChatContent();
 }

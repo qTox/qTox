@@ -18,12 +18,17 @@
 #define CHATAREAWIDGET_H
 
 #include <QTextEdit>
+#include <QList>
+#include "widget/tool/chataction.h"
 
 class ChatAreaWidget : public QTextEdit
 {
     Q_OBJECT
 public:
     explicit ChatAreaWidget(QWidget *parent = 0);
+    virtual ~ChatAreaWidget();
+    void insertMessage(ChatAction *msgAction);
+    void clearMessages();
 
 signals:
     void onFileTranfertInterract(QString widgetName, QString buttonName);
@@ -32,7 +37,13 @@ protected:
     void mouseReleaseEvent(QMouseEvent * event);
 
 public slots:
+    void updateChatContent();
 
+private:
+    QString getHtmledMessages();
+    QList<ChatAction*> messages;
+    bool lockSliderToBottom;
+    int sliderPosition;
 };
 
 #endif // CHATAREAWIDGET_H

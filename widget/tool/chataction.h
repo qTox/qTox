@@ -23,6 +23,7 @@
 class ChatAction
 {
 public:
+    ChatAction(const bool &me) : isMe(me) {;}
     virtual ~ChatAction(){;}
     virtual QString getHtml() = 0;
 
@@ -34,12 +35,15 @@ protected:
     virtual QString wrapDate(const QString &date);
     virtual QString wrapMessage(const QString &message);
     virtual QString wrapWholeLine(const QString &line);
+
+private:
+    bool isMe;
 };
 
 class MessageAction : public ChatAction
 {
 public:
-    MessageAction(const QString &author, const QString &message, const QString &date);
+    MessageAction(const QString &author, const QString &message, const QString &date, const bool &me);
     virtual ~MessageAction(){;}
     virtual QString getHtml();
 
@@ -50,7 +54,7 @@ private:
 class FileTransferAction : public ChatAction
 {
 public:
-    FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date);
+    FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me);
     virtual ~FileTransferAction();
     virtual QString getHtml();
     virtual QString wrapMessage(const QString &message);

@@ -4,21 +4,6 @@ div.name_me {
   padding-right: 3px;
 }
 
-div.message_me {
-  color: #646464;
-  padding-right: 3px;
-  padding-left: 3px;
-}
-
-div.date_me {
-  color: #646464;
-  padding-left: 3px;
-}
-
-div.quote {
-  background-color: #6bc260;
-}
-
 div.name {
   color: #000000;
   font-weight: bold;
@@ -36,12 +21,37 @@ div.date {
   padding-left: 3px;
 }
 
+div.quote {
+  background-color: #6bc260;
+}
+
 div.green {
   margin-top: 12px;
   margin-bottom: 12px;
   margin-left: 12px;
+  margin-right: 12px;
   color: #ffffff;
   background-color: #6bc260;
+  font-size: 10px;
+}
+
+div.silver {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+  color: #000000;
+  background-color: #d1d1d1;
+  font-size: 10px;
+}
+
+div.red {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+  color: #ffffff;
+  background-color: rgb(200,78,78);
   font-size: 10px;
 }
 
@@ -50,13 +60,4 @@ div.button {
   margin-bottom: 0px;
   margin-left: 0px;
   color: #ffffff;
-}
-
-div.red {
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 12px;
-  color: #ffffff;
-  background-color: rgb(200,78,78);
-  font-size: 10px;
 }

@@ -41,8 +41,10 @@ QString ChatAction::QImage2base64(const QImage &img)
 
 QString ChatAction::wrapName(const QString &name)
 {
-    QString res = "<td><div class=name>" + name + "</div></td>\n";
-    return res;
+    if (isMe)
+        return QString("<td><div class=name_me>" + name + "</div></td>\n");
+    else
+        return QString("<td><div class=name>" + name + "</div></td>\n");
 }
 
 QString ChatAction::wrapDate(const QString &date)
@@ -63,7 +65,8 @@ QString ChatAction::wrapWholeLine(const QString &line)
     return res;
 }
 
-MessageAction::MessageAction(const QString &author, const QString &message, const QString &date)
+MessageAction::MessageAction(const QString &author, const QString &message, const QString &date, const bool &me) :
+    ChatAction(me)
 {
     QString message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
 
@@ -86,7 +89,8 @@ QString MessageAction::getHtml()
     return content;
 }
 
-FileTransferAction::FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date) :
+FileTransferAction::FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me) :
+    ChatAction(me),
     sender(author),
     timestamp(date)
 {

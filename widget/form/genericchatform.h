@@ -18,19 +18,15 @@
 #define GENERICCHATFORM_H
 
 #include <QObject>
-#include <QLabel>
 #include <QPoint>
-#include <QScrollArea>
 #include <QTime>
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
-#include <QGridLayout>
 
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
-#include "widget/tool/chataction.h"
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5
@@ -60,7 +56,6 @@ protected slots:
     void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
-    void updateChatContent();
 
 protected:
     QLabel *nameLabel, *avatarLabel;
@@ -70,15 +65,8 @@ protected:
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
     QString previousName;
-    ChatAreaWidget *newChatForm;
+    ChatAreaWidget *chatWidget;
     int curRow;
-    bool lockSliderToBottom;
-    int sliderPosition;
-
-    QList<ChatAction*> messages;
-
-private:
-    QString getHtmledMessages();
 };
 
 #endif // GENERICCHATFORM_H

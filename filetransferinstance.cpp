@@ -225,7 +225,7 @@ QString FileTransferInstance::getHtmlImage()
         else
             rightBtnImg = QImage(":/ui/fileTransferInstance/acceptFileButton.png");
 
-        res = draw2ButtonsForm("green", leftBtnImg, rightBtnImg);
+        res = draw2ButtonsForm("silver", leftBtnImg, rightBtnImg);
     } else if (state == tsCanceled)
     {
         res = drawButtonlessForm("red");
