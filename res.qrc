@@ -126,5 +126,13 @@
         <file>ui/micButton/micButtonPressed.png</file>
         <file>ui/micButton/micButton.css</file>
         <file>ui/volButton/volButton.css</file>
+        <file>ui/fileTransferInstance/acceptFileButton.png</file>
+        <file>ui/fileTransferInstance/pauseFileButton.png</file>
+        <file>ui/fileTransferInstance/resumeFileButton.png</file>
+        <file>ui/fileTransferInstance/stopFileButton.png</file>
+        <file>ui/fileTransferInstance/emptyLGreenFileButton.png</file>
+        <file>ui/fileTransferInstance/emptyLRedFileButton.png</file>
+        <file>ui/fileTransferInstance/emptyRGreenFileButton.png</file>
+        <file>ui/fileTransferInstance/emptyRRedFileButton.png</file>
     </qresource>
 </RCC>

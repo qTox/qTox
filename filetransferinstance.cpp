@@ -217,14 +217,16 @@ QString FileTransferInstance::getHtmlImage()
     QString res;
     if (state == tsPending || state == tsProcessing || state == tsPaused)
     {
-        QImage rightUp(":ui/stopFileButton/default.png");
-        QImage rightDown;
+        QImage leftBtnImg(":/ui/fileTransferInstance/stopFileButton.png");
+        QImage rightBtnImg;
         if (state == tsProcessing)
-            rightDown = QImage(":ui/pauseFileButton/default.png");
+            rightBtnImg = QImage(":/ui/fileTransferInstance/pauseFileButton.png");
+        else if (state == tsPaused)
+            rightBtnImg = QImage(":/ui/fileTransferInstance/resumeFileButton.png");
         else
-            rightDown = QImage(":ui/acceptFileButton/default.png");
+            rightBtnImg = QImage(":/ui/fileTransferInstance/acceptFileButton.png");
 
-        res = draw2ButtonsForm("green", rightUp, rightDown);
+        res = draw2ButtonsForm("green", leftBtnImg, rightBtnImg);
     } else if (state == tsCanceled)
     {
         res = drawButtonlessForm("red");
@@ -262,16 +264,21 @@ void FileTransferInstance::pressFromHtml(QString code)
 
 QString FileTransferInstance::drawButtonlessForm(const QString &type)
 {
-    QString res;
+    QString imgAStr;
+    QString imgBStr;
 
-    res  = "<table widht=100% cellspacing=\"1\">\n<tr>\n";
-    res += insertMiniature();
-    res += "<td width=100%>\n";
-    res += "<div class=" + type + "><p>" + filename + "</p><p>" + size + "</p></div>\n";
-    res += "</td>\n</tr>\n";
-    res += "</table>\n";
+    if (type == "red")
+    {
+        imgAStr = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLRedFileButton.png")) + "\">";
+        imgBStr = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyRRedFileButton.png")) + "\">";
+    } else {
+        imgAStr = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLGreenFileButton.png")) + "\">";
+        imgBStr = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyRGreenFileButton.png")) + "\">";
+    }
 
-    return res;
+    QString content = "<p>" + filename + "</p><p>" + size + "</p>";
+
+    return wrapIntoForm(content, type, imgAStr, imgBStr);
 }
 
 QString FileTransferInstance::insertMiniature()
@@ -290,11 +297,20 @@ QString FileTransferInstance::insertMiniature()
 
 QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage &imgA, const QImage &imgB)
 {
-    QString res;
-
     QString widgetId = QString::number(getId());
     QString imgAstr = "<img src=\"data:ftrans." + widgetId + ".btnA/png;base64," + QImage2base64(imgA) + "\">";
     QString imgBstr = "<img src=\"data:ftrans." + widgetId + ".btnB/png;base64," + QImage2base64(imgB) + "\">";
+
+    QString content;
+    content += "<p>" + filename + "</p>";
+    content += "<p>" + getHumanReadableSize(lastBytesSent) + " / " + size; + "&nbsp;(" + speed + ")</p>\n";
+
+    return wrapIntoForm(content, type, imgAstr, imgBstr);
+}
+
+QString FileTransferInstance::wrapIntoForm(const QString& content, const QString &type, const QString &imgAstr, const QString &imgBstr)
+{
+    QString res;
 
     res =  "<table widht=100% cellspacing=\"1\">\n";
     res += "<tr valign=middle>\n";
@@ -304,8 +320,7 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
     res += insertMiniature();
     res += "<td width=100%>\n";
     res += "<div class=" + type + ">";
-    res += "<p>" + filename + "</p>";
-    res += "<p>" + getHumanReadableSize(lastBytesSent) + " / " + size; + "&nbsp;(" + speed + ")</p>\n";
+    res += content;
     res += "</div>\n";
     res += "</td>\n";
     res += "<td>\n";

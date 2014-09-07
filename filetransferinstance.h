@@ -58,6 +58,7 @@ private:
     QString drawButtonlessForm(const QString &type);
     QString draw2ButtonsForm(const QString &type, const QImage &imgA, const QImage &imgB);
     QString insertMiniature();
+    QString wrapIntoForm(const QString &content, const QString &type, const QString &imgAstr, const QString &imgBstr);
 
 private:
     enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};
