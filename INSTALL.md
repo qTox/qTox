@@ -155,3 +155,12 @@ The script will automatically download and install Tox Core and libsodium to "/h
 cd /home/user/qTox
 ./bootstrap.sh # use -h or --help for more information
 ```
+
+##Building packages
+
+qTox now has the experimental and probably-dodgy ability to package itself (in .deb
+form natively, and .rpm form with <a href="http://joeyh.name/code/alien/">alien</a>).
+
+After installing the required dependencies, run `bootstrap.sh` and then run the
+`buildPackages.sh` script, found in the tools folder. It will automatically get the
+packages necessary for building .debs, so be prepared to type your password for sudo.
