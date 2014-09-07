@@ -64,7 +64,7 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
     if (FileNum != fileNum || FriendId != friendId || Direction != direction)
             return;
 
-//    state = tsProcessing;
+    state = tsProcessing;
     QDateTime newtime = QDateTime::currentDateTime();
     int timediff = lastUpdate.secsTo(newtime);
     if (timediff <= 0)
@@ -211,7 +211,7 @@ QString FileTransferInstance::QImage2base64(const QImage &img)
 
 QString FileTransferInstance::getHtmlImage()
 {
-    qDebug() << "QString FileTransferInstance::getHtmlImage()";
+    qDebug() << "QString FileTransferInstance::getHtmlImage() " << state;
 
     QString res;
     if (state == tsPending || state == tsProcessing || state == tsPaused)
