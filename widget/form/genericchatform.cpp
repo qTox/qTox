@@ -30,7 +30,7 @@ GenericChatForm::GenericChatForm(QObject *parent) :
 
     mainWidget = new QWidget(); headWidget = new QWidget();
 
-    nameLabel = new QLabel();
+    nameLabel = new CroppingLabel();
     avatarLabel = new QLabel();
     QHBoxLayout *headLayout = new QHBoxLayout(), *mainFootLayout = new QHBoxLayout();
     headTextLayout = new QVBoxLayout();
@@ -115,7 +115,6 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     headWidget->setLayout(headLayout);
     headLayout->addWidget(avatarLabel);
     headLayout->addLayout(headTextLayout);
-    headLayout->addStretch();
     headLayout->addLayout(volMicLayout);
     headLayout->addWidget(callButton);
     headLayout->addWidget(videoButton);

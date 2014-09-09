@@ -68,7 +68,7 @@ private slots:
 
 private:
     Friend* f;
-    QLabel *statusMessageLabel;
+    CroppingLabel *statusMessageLabel;
     NetCamView* netcam;
     bool audioInputFlag;
     int callId;
