@@ -25,6 +25,7 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
     setContextMenuPolicy(Qt::CustomContextMenu);
+    setUndoRedoEnabled(false);
 }
 
 ChatAreaWidget::~ChatAreaWidget()
@@ -82,7 +83,11 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
         return;
 
     messages.append(msgAction);
-    updateChatContent();
+    //updateChatContent();
+
+    moveCursor(QTextCursor::End);
+    moveCursor(QTextCursor::PreviousCell);
+    insertHtml(msgAction->getHtml());
 }
 
 void ChatAreaWidget::updateChatContent()
@@ -90,7 +95,9 @@ void ChatAreaWidget::updateChatContent()
     QScrollBar* scroll = verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
 
+    setUpdatesEnabled(false);
     setHtml(getHtmledMessages());
+    setUpdatesEnabled(true);
     if (lockSliderToBottom)
         sliderPosition = scroll->maximum();
 
