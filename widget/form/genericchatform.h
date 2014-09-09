@@ -25,6 +25,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
+#include "widget/croppinglabel.h"
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
 
@@ -58,7 +59,8 @@ protected slots:
     void onEmoteInsertRequested(QString str);
 
 protected:
-    QLabel *nameLabel, *avatarLabel;
+    CroppingLabel *nameLabel;
+    QLabel *avatarLabel;
     QWidget *mainWidget, *headWidget;
     QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
     QVBoxLayout *headTextLayout;

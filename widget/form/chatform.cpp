@@ -29,7 +29,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     nameLabel->setText(f->getName());
     avatarLabel->setPixmap(QPixmap(":/img/contact_dark.png"));
 
-    statusMessageLabel = new QLabel();
+    statusMessageLabel = new CroppingLabel();
     netcam = new NetCamView();
 
     headTextLayout->addWidget(statusMessageLabel);

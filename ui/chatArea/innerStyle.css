@@ -19,6 +19,7 @@ div.message {
 div.date {
   color: #000000;
   padding-left: 3px;
+  white-space: nowrap;
 }
 
 div.quote {
