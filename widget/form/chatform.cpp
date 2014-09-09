@@ -17,8 +17,8 @@
 #include "chatform.h"
 #include "friend.h"
 #include "widget/friendwidget.h"
+#include "filetransferinstance.h"
 #include "widget/widget.h"
-#include "widget/filetransfertwidget.h"
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -43,6 +43,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
+    connect(chatWidget, SIGNAL(onFileTranfertInterract(QString,QString)), this, SLOT(onFileTansBtnClicked(QString,QString)));
 }
 
 ChatForm::~ChatForm()
@@ -94,36 +95,20 @@ void ChatForm::startFileSend(ToxFile file)
     if (file.friendId != f->friendId)
         return;
 
-    QLabel *author = new QLabel(Widget::getInstance()->getUsername());
-    QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
-    QScrollBar* scroll = chatArea->verticalScrollBar();
-    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
-    author->setAlignment(Qt::AlignTop | Qt::AlignRight);
-    date->setAlignment(Qt::AlignTop);
-    QPalette pal;
-    pal.setColor(QPalette::WindowText, Qt::gray);
-    author->setPalette(pal);
-    if (previousName.isEmpty() || previousName != author->text())
-    {
-        if (curRow)
-        {
-            mainChatLayout->setRowStretch(curRow, 0);
-            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
-            curRow++;
-        }
-        mainChatLayout->addWidget(author, curRow, 0);
-    }
-    FileTransfertWidget* fileTrans = new FileTransfertWidget(file);
-    previousName = author->text();
-    mainChatLayout->addWidget(fileTrans, curRow, 1);
-    mainChatLayout->addWidget(date, curRow, 3);
-    mainChatLayout->setRowStretch(curRow+1, 1);
-    mainChatLayout->setRowStretch(curRow, 0);
-    curRow++;
+    FileTransferInstance* fileTrans = new FileTransferInstance(file);
+    ftransWidgets.insert(fileTrans->getId(), fileTrans);
 
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransfertWidget::onFileTransferInfo);
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransfertWidget::onFileTransferCancelled);
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
+    connect(fileTrans, SIGNAL(stateUpdated()), chatWidget, SLOT(updateChatContent()));
+
+    QString name = Widget::getInstance()->getUsername();
+    if (name == previousName)
+        name = "";
+    previousName = Widget::getInstance()->getUsername();
+
+    chatWidget->insertMessage(new FileTransferAction(fileTrans, name, QTime::currentTime().toString("hh:mm"), true));
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -131,33 +116,13 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     if (file.friendId != f->friendId)
         return;
 
-    QLabel *author = new QLabel(f->getName());
-    QLabel *date = new QLabel(QTime::currentTime().toString("hh:mm"));
-    QScrollBar* scroll = chatArea->verticalScrollBar();
-    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
-    author->setAlignment(Qt::AlignTop | Qt::AlignRight);
-    date->setAlignment(Qt::AlignTop);
-    if (previousName.isEmpty() || previousName != author->text())
-    {
-        if (curRow)
-        {
-            mainChatLayout->setRowStretch(curRow, 0);
-            mainChatLayout->addItem(new QSpacerItem(0,AUTHOR_CHANGE_SPACING),curRow,0,1,3);
-            curRow++;
-        }
-        mainChatLayout->addWidget(author, curRow, 0);
-    }
-    FileTransfertWidget* fileTrans = new FileTransfertWidget(file);
-    previousName = author->text();
-    mainChatLayout->addWidget(fileTrans, curRow, 1);
-    mainChatLayout->addWidget(date, curRow, 3);
-    mainChatLayout->setRowStretch(curRow+1, 1);
-    mainChatLayout->setRowStretch(curRow, 0);
-    curRow++;
+    FileTransferInstance* fileTrans = new FileTransferInstance(file);
+    ftransWidgets.insert(fileTrans->getId(), fileTrans);
 
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransfertWidget::onFileTransferInfo);
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransfertWidget::onFileTransferCancelled);
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransfertWidget::onFileTransferFinished);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
+    connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
+    connect(fileTrans, SIGNAL(stateUpdated()), chatWidget, SLOT(updateChatContent()));
 
     Widget* w = Widget::getInstance();
     if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
@@ -166,6 +131,13 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         f->hasNewEvents=true;
         f->widget->updateStatusLight();
     }
+
+    QString name = f->getName();
+    if (name == previousName)
+        name = "";
+    previousName = f->getName();
+
+    chatWidget->insertMessage(new FileTransferAction(fileTrans, name, QTime::currentTime().toString("hh:mm"), false));
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
@@ -460,4 +432,15 @@ void ChatForm::onMicMuteToggle()
             micButton->style()->polish(micButton);
         }
     }
+}
+
+void ChatForm::onFileTansBtnClicked(QString widgetName, QString buttonName)
+{
+    uint id = widgetName.toUInt();
+
+    auto it = ftransWidgets.find(id);
+    if (it != ftransWidgets.end())
+        it.value()->pressFromHtml(buttonName);
+    else
+        qDebug() << "no filetransferwidget: " << id;
 }

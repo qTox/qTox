@@ -18,16 +18,14 @@
 #define GENERICCHATFORM_H
 
 #include <QObject>
-#include <QLabel>
 #include <QPoint>
-#include <QScrollArea>
 #include <QTime>
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
-#include <QGridLayout>
 
+#include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
 
 // Spacing in px inserted when the author of the last message changes
@@ -46,7 +44,7 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    void addMessage(QString author, QString message, QString date=QTime::currentTime().toString("hh:mm"));
+    void addMessage(QString author, QString message, QDateTime datetime=QDateTime::currentDateTime());
 
 signals:
     void sendMessage(int, QString);
@@ -55,26 +53,20 @@ public slots:
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
-    void onSliderRangeChanged();
     void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
 
 protected:
     QLabel *nameLabel, *avatarLabel;
-    QWidget *mainWidget, *headWidget, *chatAreaWidget;
-    QScrollArea *chatArea;
+    QWidget *mainWidget, *headWidget;
     QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
-    QGridLayout *mainChatLayout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
     QString previousName;
+    ChatAreaWidget *chatWidget;
     int curRow;
-    bool lockSliderToBottom;
-
-private:
-    QString toHtmlChars(const QString &str);
 };
 
 #endif // GENERICCHATFORM_H
