@@ -72,29 +72,11 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     videoButton->setObjectName("green");
     videoButton->setStyleSheet(Style::get(":/ui/videoButton/videoButton.css"));
 
-    QString volButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/volButton/volButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream volButtonStylesheetStream(&f);
-        volButtonStylesheet = volButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-
+    QString volButtonStylesheet = Style::get(":/ui/volButton/volButton.css");
     volButton->setObjectName("green");
     volButton->setStyleSheet(volButtonStylesheet);
 
-    QString micButtonStylesheet = "";
-    try
-    {
-        QFile f(":/ui/micButton/micButton.css");
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream micButtonStylesheetStream(&f);
-        micButtonStylesheet = micButtonStylesheetStream.readAll();
-    }
-    catch (int e) {}
-
+    QString micButtonStylesheet = Style::get(":/ui/micButton/micButton.css");
     micButton->setObjectName("green");
     micButton->setStyleSheet(micButtonStylesheet);
 
