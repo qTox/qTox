@@ -17,6 +17,11 @@ QPushButton:pressed
    background-image: url(":/ui/fileButton/fileButtonPressed.png");
 }
 
+QPushButton[enabled="false"]
+{
+   background-image: url(":/ui/fileButton/fileButtonDisabled.png");
+}
+
 QPushButton:focus {
     outline: none;
 }

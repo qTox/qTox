@@ -14,30 +14,36 @@
     See the COPYING file for more details.
 */
 
-#ifndef GROUPCHATFORM_H
-#define GROUPCHATFORM_H
+#ifndef CHATAREAWIDGET_H
+#define CHATAREAWIDGET_H
 
-#include "genericchatform.h"
-#include "widget/tool/chattextedit.h"
-#include "ui_mainwindow.h"
+#include <QTextEdit>
+#include <QList>
+#include "widget/tool/chataction.h"
 
-class Group;
-
-class GroupChatForm : public GenericChatForm
+class ChatAreaWidget : public QTextEdit
 {
     Q_OBJECT
 public:
-    GroupChatForm(Group* chatGroup);
-    ~GroupChatForm();
-    void addGroupMessage(QString message, int peerId);
-    void onUserListChanged();
+    explicit ChatAreaWidget(QWidget *parent = 0);
+    virtual ~ChatAreaWidget();
+    void insertMessage(ChatAction *msgAction);
+    void clearMessages();
 
-private slots:
-    void onSendTriggered();
+signals:
+    void onFileTranfertInterract(QString widgetName, QString buttonName);
+
+protected:
+    void mouseReleaseEvent(QMouseEvent * event);
+
+public slots:
+    void updateChatContent();
 
 private:
-    Group* group;
-    QLabel *nusersLabel, *namesList;
+    QString getHtmledMessages();
+    QList<ChatAction*> messages;
+    bool lockSliderToBottom;
+    int sliderPosition;
 };
 
-#endif // GROUPCHATFORM_H
+#endif // CHATAREAWIDGET_H

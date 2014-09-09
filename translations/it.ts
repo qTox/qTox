@@ -78,33 +78,27 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="282"/>
+        <location filename="../widget/form/chatform.cpp" line="73"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
-    <message>
-        <location filename="../widget/form/chatform.cpp" line="669"/>
-        <location filename="../widget/form/chatform.cpp" line="675"/>
-        <source>Save chat log</source>
-        <translation>Salva il log della chat</translation>
-    </message>
 </context>
 <context>
-    <name>FileTransfertWidget</name>
+    <name>FileTransferInstance</name>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="281"/>
+        <location filename="../filetransferinstance.cpp" line="162"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Salva file</translation>
     </message>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="292"/>
+        <location filename="../filetransferinstance.cpp" line="173"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../widget/filetransfertwidget.cpp" line="292"/>
+        <location filename="../filetransferinstance.cpp" line="173"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Non hai sufficienti permessi per scrivere in questa locazione. Scegli un&apos;altra posizione, o annulla il salvataggio.</translation>
@@ -187,27 +181,31 @@
     </message>
 </context>
 <context>
+    <name>GenericChatForm</name>
+    <message>
+        <location filename="../widget/form/genericchatform.cpp" line="158"/>
+        <location filename="../widget/form/genericchatform.cpp" line="164"/>
+        <source>Save chat log</source>
+        <translation>Salva il log della chat</translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="49"/>
+        <location filename="../widget/form/groupchatform.cpp" line="39"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="146"/>
+        <location filename="../widget/form/groupchatform.cpp" line="81"/>
         <source>&lt;Unknown&gt;</source>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="215"/>
+        <location filename="../widget/form/groupchatform.cpp" line="88"/>
         <source>%1 users in chat</source>
         <translation>%1 utenti in chat</translation>
-    </message>
-    <message>
-        <location filename="../widget/form/groupchatform.cpp" line="234"/>
-        <source>Save chat log</source>
-        <translation>Salva il log della chat</translation>
     </message>
 </context>
 <context>

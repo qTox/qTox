@@ -13,11 +13,10 @@
 
     See the COPYING file for more details.
 */
+#ifndef FILETRANSFERINSTANCE_H
+#define FILETRANSFERINSTANCE_H
 
-#ifndef FILETRANSFERTWIDGET_H
-#define FILETRANSFERTWIDGET_H
-
-#include <QWidget>
+#include <QObject>
 #include <QLabel>
 #include <QPushButton>
 #include <QProgressBar>
@@ -29,17 +28,22 @@
 
 struct ToxFile;
 
-class FileTransfertWidget : public QWidget
+class FileTransferInstance : public QObject
 {
     Q_OBJECT
-
 public:
-    FileTransfertWidget(ToxFile File);
+    explicit FileTransferInstance(ToxFile File);
+    QString getHtmlImage();
+    uint getId(){return id;}
 
 public slots:
     void onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction);
     void onFileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection Direction);
     void onFileTransferFinished(ToxFile File);
+    void pressFromHtml(QString);
+
+signals:
+    void stateUpdated();
 
 private slots:
     void cancelTransfer();
@@ -50,14 +54,21 @@ private slots:
 
 private:
     QString getHumanReadableSize(unsigned long long size);
+    QString QImage2base64(const QImage &img);
+    QString drawButtonlessForm(const QString &type);
+    QString draw2ButtonsForm(const QString &type, const QImage &imgA, const QImage &imgB);
+    QString insertMiniature(const QString &type);
+    QString wrapIntoForm(const QString &content, const QString &type, const QString &imgAstr, const QString &imgBstr);
 
 private:
-    QLabel *pic, *filename, *size, *speed, *eta;
-    QPushButton *topright, *bottomright;
-    QProgressBar *progress;
-    QHBoxLayout *mainLayout, *textLayout;
-    QVBoxLayout *infoLayout, *buttonLayout;
-    QWidget* buttonWidget;
+    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};
+
+    static uint Idconter;
+    uint id;
+
+    TransfState state;
+    QImage pic;
+    QString filename, size, speed, eta;
     QDateTime lastUpdate;
     long long lastBytesSent;
     int fileNum;
@@ -65,7 +76,6 @@ private:
     QString savePath;
     ToxFile::FileDirection direction;
     QString stopFileButtonStylesheet, pauseFileButtonStylesheet, acceptFileButtonStylesheet;
-    void paintEvent(QPaintEvent *);
 };
 
-#endif // FILETRANSFERTWIDGET_H
+#endif // FILETRANSFERINSTANCE_H

@@ -509,7 +509,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message)
     if (!f)
         return;
 
-    f->chatForm->addFriendMessage(message);
+    f->chatForm->addMessage(f->getName(), message);
 
     if (activeChatroomWidget != nullptr)
     {
