@@ -183,7 +183,7 @@ private:
 
 signals:
     //void dataChanged();
-    void dhtServerListChanged();
+    void dhtServerListChanged(bool reset = false);
     void logStorageOptsChanged();
     void smileyPackChanged();
     void emojiFontChanged();

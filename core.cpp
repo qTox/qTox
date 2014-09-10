@@ -687,6 +687,8 @@ void Core::acceptFileRecvRequest(int friendId, int fileNum, QString path)
 
 void Core::removeFriend(int friendId)
 {
+    if (!tox)
+        return;
     if (tox_del_friend(tox, friendId) == -1) {
         emit failedToRemoveFriend(friendId);
     } else {
@@ -789,13 +791,20 @@ void Core::onFileTransferFinished(ToxFile file)
           emit fileDownloadFinished(file.filePath);
 }
 
-void Core::bootstrapDht()
+void Core::bootstrapDht(bool reset)
 {
     const Settings& s = Settings::getInstance();
     QList<Settings::DhtServer> dhtServerList = s.getDhtServerList();
 
     int listSize = dhtServerList.size();
     static int j = qrand() % listSize, n=0;
+
+    if (reset)
+    {
+         n = 0;
+         bootstrapTimer->setInterval(TOX_BOOTSTRAP_INTERVAL);
+         return;
+    }
 
     // We couldn't connect after trying 6 different nodes, let's try something else
     if (n>3)
@@ -811,7 +820,7 @@ void Core::bootstrapDht()
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
-            qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
+            dhtServer.port, CUserId(dhtServer.userId).data()) == 1)
             qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
                         +QString(", port ")+QString().setNum(dhtServer.port);
         else
@@ -826,14 +835,17 @@ void Core::bootstrapDht()
 
 void Core::process()
 {
-    tox_do(tox);
+    if (tox)
+    {
+        tox_do(tox);
 #ifdef DEBUG
-    //we want to see the debug messages immediately
-    fflush(stdout);
+        //we want to see the debug messages immediately
+        fflush(stdout);
 #endif
-    checkConnection();
-    //int toxInterval = tox_do_interval(tox);
-    //qDebug() << QString("Tox interval %1").arg(toxInterval);
+        checkConnection();
+        //int toxInterval = tox_do_interval(tox);
+        //qDebug() << QString("Tox interval %1").arg(toxInterval);
+    }
     toxTimer->start(50);
 }
 
@@ -957,11 +969,14 @@ void Core::switchConfiguration(QString profile)
     
     if (tox) {
         toxav_kill(toxav);
+        toxav = nullptr;
         tox_kill(tox);
+        tox = nullptr;
     }
     emit clearFriends();
     
     get_tox();
+    bootstrapDht(true); // reset this func
 
     Settings::getInstance().setCurrentProfile(profile); 
     loadConfiguration(Settings::getSettingsDirPath() + QDir::separator() + profile + TOX_EXT);

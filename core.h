@@ -140,7 +140,7 @@ public:
 public slots:
     void start();
     void process();
-    void bootstrapDht();
+    void bootstrapDht(bool reset = false);
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
