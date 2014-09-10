@@ -19,6 +19,7 @@
 #include "widget/friendwidget.h"
 #include "filetransferinstance.h"
 #include "widget/widget.h"
+#include "widget/tool/chataction.h"
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -101,7 +102,6 @@ void ChatForm::startFileSend(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
-    connect(fileTrans, SIGNAL(stateUpdated()), chatWidget, SLOT(updateChatContent()));
 
     QString name = Widget::getInstance()->getUsername();
     if (name == previousName)
@@ -122,7 +122,6 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
     connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
-    connect(fileTrans, SIGNAL(stateUpdated()), chatWidget, SLOT(updateChatContent()));
 
     Widget* w = Widget::getInstance();
     if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())

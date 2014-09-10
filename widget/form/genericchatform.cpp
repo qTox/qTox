@@ -22,6 +22,7 @@
 #include "style.h"
 #include "widget/widget.h"
 #include "settings.h"
+#include "widget/tool/chataction.h"
 
 GenericChatForm::GenericChatForm(QObject *parent) :
     QObject(parent)

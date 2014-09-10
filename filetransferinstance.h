@@ -23,6 +23,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDateTime>
+#include <QTextCursor>
 
 #include "core.h"
 
@@ -35,6 +36,7 @@ public:
     explicit FileTransferInstance(ToxFile File);
     QString getHtmlImage();
     uint getId(){return id;}
+    void setTextCursor(QTextCursor cursor);
 
 public slots:
     void onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction);

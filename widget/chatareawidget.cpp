@@ -15,9 +15,11 @@
 */
 
 #include "chatareawidget.h"
+#include "widget/tool/chataction.h"
 #include <QAbstractTextDocumentLayout>
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QDebug>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextEdit(parent)
@@ -30,8 +32,9 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
 
 ChatAreaWidget::~ChatAreaWidget()
 {
-    for (ChatAction *it : messages)
-        delete it;
+    for (ChatAction* action : messages)
+        delete action;
+    messages.clear();
 }
 
 void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
@@ -65,50 +68,18 @@ void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
     }
 }
 
-QString ChatAreaWidget::getHtmledMessages()
-{
-    QString res("<table width=100%>\n");
-
-    for (ChatAction *it : messages)
-    {
-        res += it->getHtml();
-    }
-    res += "</table>";
-    return res;
-}
-
 void ChatAreaWidget::insertMessage(ChatAction* msgAction)
 {
     if (msgAction == nullptr)
         return;
 
-    messages.append(msgAction);
-    //updateChatContent();
-
     moveCursor(QTextCursor::End);
     moveCursor(QTextCursor::PreviousCell);
+    QTextCursor cur = textCursor();
+    cur.clearSelection();
+    cur.setKeepPositionOnInsert(true);
     insertHtml(msgAction->getHtml());
+    msgAction->setTextCursor(cur);
 
-    //delete msgAction;
-}
-
-void ChatAreaWidget::updateChatContent()
-{
-    QScrollBar* scroll = verticalScrollBar();
-    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
-
-    setUpdatesEnabled(false);
-    setHtml(getHtmledMessages());
-    setUpdatesEnabled(true);
-    if (lockSliderToBottom)
-        sliderPosition = scroll->maximum();
-
-    scroll->setValue(sliderPosition);
-}
-
-void ChatAreaWidget::clearMessages()
-{
-    for (ChatAction *it : messages)
-        delete it;
-    updateChatContent();
+    messages.append(msgAction);
 }

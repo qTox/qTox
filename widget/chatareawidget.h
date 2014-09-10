@@ -19,7 +19,9 @@
 
 #include <QTextEdit>
 #include <QList>
-#include "widget/tool/chataction.h"
+#include <QMap>
+
+class ChatAction;
 
 class ChatAreaWidget : public QTextEdit
 {
@@ -28,7 +30,6 @@ public:
     explicit ChatAreaWidget(QWidget *parent = 0);
     virtual ~ChatAreaWidget();
     void insertMessage(ChatAction *msgAction);
-    void clearMessages();
 
 signals:
     void onFileTranfertInterract(QString widgetName, QString buttonName);
@@ -36,11 +37,7 @@ signals:
 protected:
     void mouseReleaseEvent(QMouseEvent * event);
 
-public slots:
-    void updateChatContent();
-
 private:
-    QString getHtmledMessages();
     QList<ChatAction*> messages;
     bool lockSliderToBottom;
     int sliderPosition;

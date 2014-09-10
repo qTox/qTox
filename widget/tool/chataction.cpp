@@ -18,6 +18,8 @@
 #include "smileypack.h"
 #include <QStringList>
 #include <QBuffer>
+#include <QDebug>
+#include "filetransferinstance.h"
 
 QString ChatAction::toHtmlChars(const QString &str)
 {
@@ -84,6 +86,17 @@ MessageAction::MessageAction(const QString &author, const QString &message, cons
     content = wrapWholeLine(wrapName(author) + wrapMessage(message_) + wrapDate(date));
 }
 
+void MessageAction::setTextCursor(QTextCursor cursor)
+{
+    // When this function is called, we're supposed to only update ourselve when needed
+    // Nobody should ask us to do anything with our content, we're on our own
+    // Except we never udpate on our own, so we can safely free our resources
+
+    (void) cursor;
+    content.clear();
+    content.squeeze();
+}
+
 QString MessageAction::getHtml()
 {
     return content;
@@ -95,11 +108,12 @@ FileTransferAction::FileTransferAction(FileTransferInstance *widget, const QStri
     timestamp(date)
 {
     w = widget;
+
+    connect(w, &FileTransferInstance::stateUpdated, this, &FileTransferAction::updateHtml);
 }
 
 FileTransferAction::~FileTransferAction()
 {
-
 }
 
 QString FileTransferAction::getHtml()
@@ -109,7 +123,7 @@ QString FileTransferAction::getHtml()
         widgetHtml = w->getHtmlImage();
     else
         widgetHtml = "<div class=quote>EMPTY CONTENT</div>";
-    QString res = wrapWholeLine(wrapName(sender) + wrapMessage(widgetHtml) + wrapDate(timestamp));;
+    QString res = wrapWholeLine(wrapName(sender) + wrapMessage(widgetHtml) + wrapDate(timestamp));
     return res;
 }
 
@@ -117,4 +131,27 @@ QString FileTransferAction::wrapMessage(const QString &message)
 {
     QString res = "<td width=100%>" + message + "</td>\n";
     return res;
+}
+void FileTransferAction::setTextCursor(QTextCursor cursor)
+{
+    cur = cursor;
+    cur.setKeepPositionOnInsert(true);
+    int end=cur.selectionEnd();
+    cur.setPosition(cur.position());
+    cur.setPosition(end, QTextCursor::KeepAnchor);
+}
+
+void FileTransferAction::updateHtml()
+{
+    if (cur.isNull())
+        return;
+
+    int pos = cur.selectionStart();
+    cur.removeSelectedText();
+    cur.setKeepPositionOnInsert(false);
+    cur.insertHtml(getHtml());
+    cur.setKeepPositionOnInsert(true);
+    int end = cur.position();
+    cur.setPosition(pos);
+    cur.setPosition(end, QTextCursor::KeepAnchor);
 }
