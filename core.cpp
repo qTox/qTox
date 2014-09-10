@@ -859,7 +859,7 @@ QString Core::sanitize(QString name)
 }
 
 void Core::loadConfiguration(QString path)
-{ // also loadFriends/clearFriends is borked as fuck
+{
     // setting the profile is now the responsibility of the caller
     QFile conf(path);
     qDebug() << "Core::loadConfiguration: reading from " << path;
@@ -959,6 +959,7 @@ void Core::switchConfiguration(QString profile)
         toxav_kill(toxav);
         tox_kill(tox);
     }
+    emit clearFriends();
     
     get_tox();
 
@@ -970,7 +971,6 @@ void Core::loadFriends()
 {
     const uint32_t friendCount = tox_count_friendlist(tox);
     if (friendCount > 0) {
-        emit clearFriends();
         // assuming there are not that many friends to fill up the whole stack
         int32_t *ids = new int32_t[friendCount];
         tox_get_friendlist(tox, ids, friendCount);
