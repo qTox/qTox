@@ -118,8 +118,10 @@ void SettingsForm::onEnableIPv6Updated()
 
 void SettingsForm::copyIdClicked()
 {
-    id.selectAll();;
-    QApplication::clipboard()->setText(id.toPlainText());
+    id.selectAll();
+    QString txt = id.toPlainText();
+    txt.replace('\n',"");
+    QApplication::clipboard()->setText(txt);
 }
 
 void SettingsForm::onUseTranslationUpdated()
