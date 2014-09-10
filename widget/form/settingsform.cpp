@@ -31,6 +31,7 @@ SettingsForm::SettingsForm()
     QFont bold, small;
     bold.setBold(true);
     small.setPixelSize(13);
+    small.setKerning(false);
     headLabel.setText(tr("User Settings","\"Headline\" of the window"));
     headLabel.setFont(bold);
 
@@ -42,7 +43,7 @@ SettingsForm::SettingsForm()
     id.setReadOnly(true);
     id.setFrameStyle(QFrame::NoFrame);
     id.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    id.setFixedHeight(id.document()->size().height());
+    id.setFixedHeight(id.document()->size().height()*2);
 
     videoTest.setText(tr("Test video","Text on a button to test the video/webcam"));
     enableIPv6.setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
@@ -90,7 +91,9 @@ SettingsForm::~SettingsForm()
 
 void SettingsForm::setFriendAddress(const QString& friendAddress)
 {
-    id.setText(friendAddress);
+    QString txt{friendAddress};
+    txt.insert(38,'\n');
+    id.setText(txt);
 }
 
 void SettingsForm::show(Ui::MainWindow &ui)
