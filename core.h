@@ -127,9 +127,7 @@ public:
 
     void saveConfiguration();
     void saveConfiguration(const QString& path);
-    void loadConfiguration(QString path);
-    
-    static QString sanitize(QString name);
+    void switchConfiguration(QString profile);
     
     QString getIDString();
     
@@ -286,6 +284,11 @@ private:
 
     void checkConnection();
     void onBootstrapTimer();
+    
+    void loadConfiguration(QString path);
+    static QString sanitize(QString name);
+    
+    void get_tox();
 
     void loadFriends();
 

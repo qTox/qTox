@@ -113,7 +113,7 @@ Core::~Core()
         alcCaptureCloseDevice(alInDev);
 }
 
-void Core::start()
+void Core::get_tox()
 {
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be disabled in options.
     bool enableIPv6 = Settings::getInstance().getEnableIPv6();
@@ -160,13 +160,18 @@ void Core::start()
         emit failedToStart();
         return;
     }
+}
+
+void Core::start()
+{
+    get_tox();
 
     qsrand(time(nullptr));
 
     // where do we find the data file?
     QString path;
     {   // read data from whose profile?
-        path = Settings::getSettingsDirPath() + '/' + Settings::getInstance().getCurrentProfile() + TOX_EXT;
+        path = Settings::getSettingsDirPath() + QDir::separator() + Settings::getInstance().getCurrentProfile() + TOX_EXT;
         
 #if 1 // deprecation attempt
         // if the last profile doesn't exist, fall back to old "data"
@@ -174,7 +179,7 @@ void Core::start()
         QFile file(path);
         if (!file.exists())
         {
-            path = Settings::getSettingsDirPath() + '/' + CONFIG_FILE_NAME;
+            path = Settings::getSettingsDirPath() + QDir::separator() + CONFIG_FILE_NAME;
         }
 #endif
     }
@@ -909,10 +914,10 @@ void Core::saveConfiguration()
         Settings::getInstance().setCurrentProfile(profile);
     }
     
-    QString path = dir + '/' + profile + TOX_EXT;
+    QString path = dir + QDir::separator() + profile + TOX_EXT;
     QFileInfo info(path);
     if (!info.exists()) // fall back to old school 'data'
-    {   //path = dir + '/' + CONFIG_FILE_NAME;
+    {   //path = dir + QDir::separator() + CONFIG_FILE_NAME;
         qDebug() << path << " does not exist";
     }
     
@@ -944,6 +949,21 @@ void Core::saveConfiguration(const QString& path)
     }
 
     Settings::getInstance().save();
+}
+
+void Core::switchConfiguration(QString profile)
+{
+    saveConfiguration();
+    
+    if (tox) {
+        toxav_kill(toxav);
+        tox_kill(tox);
+    }
+    
+    get_tox();
+
+    Settings::getInstance().setCurrentProfile(profile); 
+    loadConfiguration(Settings::getSettingsDirPath() + QDir::separator() + profile + TOX_EXT);
 }
 
 void Core::loadFriends()

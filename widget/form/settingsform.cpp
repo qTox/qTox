@@ -120,7 +120,7 @@ QList<QString> SettingsForm::searchProfiles()
 
 QString SettingsForm::getSelectedSavePath()
 {
-    return Settings::getSettingsDirPath() + profiles.currentText() + Widget::getInstance()->getCore()->TOX_EXT;
+    return Settings::getSettingsDirPath() + QDir::separator() + profiles.currentText() + Widget::getInstance()->getCore()->TOX_EXT;
 }
 
 void SettingsForm::setFriendAddress(const QString& friendAddress)
@@ -143,15 +143,13 @@ void SettingsForm::show(Ui::MainWindow &ui)
 
 void SettingsForm::onLoadClicked()
 {
-    Widget::getInstance()->getCore()->saveConfiguration();
-    Settings::getInstance().setCurrentProfile(profiles.currentText());
-    Widget::getInstance()->getCore()->loadConfiguration(getSelectedSavePath());
+    Widget::getInstance()->getCore()->switchConfiguration(profiles.currentText());
 }
 
 void SettingsForm::onExportClicked()
 {
     QString current = getSelectedSavePath();
-    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"), QDir::homePath() + '/' + profiles.currentText() + Widget::getInstance()->getCore()->TOX_EXT, tr("Tox save file (*.tox)", "save dialog filter"));
+    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"), QDir::homePath() + QDir::separator() + profiles.currentText() + Widget::getInstance()->getCore()->TOX_EXT, tr("Tox save file (*.tox)", "save dialog filter"));
     QFile::copy(getSelectedSavePath(), path);
 }
 
@@ -181,8 +179,8 @@ void SettingsForm::onImportClicked()
     QString profilePath = Settings::getSettingsDirPath() + profile + Widget::getInstance()->getCore()->TOX_EXT;
     Settings::getInstance().setCurrentProfile(profile);
     QFile::copy(path, profilePath);
-    Widget::getInstance()->getCore()->loadConfiguration(profilePath);
     profiles.addItem(profile);
+    Widget::getInstance()->getCore()->switchConfiguration(profile);
 }
 
 void SettingsForm::onTestVideoClicked()
