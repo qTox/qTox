@@ -28,7 +28,6 @@
 #include <QFile>
 #include <QSaveFile>
 #include <QStandardPaths>
-#include <QtEndian>
 #include <QThread>
 #include <QtConcurrent/QtConcurrent>
 
