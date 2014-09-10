@@ -17,12 +17,12 @@
 #ifndef CHATAREAWIDGET_H
 #define CHATAREAWIDGET_H
 
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QList>
 
 class ChatAction;
 
-class ChatAreaWidget : public QTextEdit
+class ChatAreaWidget : public QTextBrowser
 {
     Q_OBJECT
 public:
@@ -35,6 +35,9 @@ signals:
 
 protected:
     void mouseReleaseEvent(QMouseEvent * event);
+
+public slots:
+    void onAnchorClicked(const QUrl& url);
 
 private:
     QList<ChatAction*> messages;

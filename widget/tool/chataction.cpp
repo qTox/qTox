@@ -22,7 +22,7 @@
 
 QString ChatAction::toHtmlChars(const QString &str)
 {
-    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {" ","&nbsp;"}, {">","&gt;"}, {"<","&lt;"}};
+    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}};
     QString res = str;
 
     for (auto &it : replaceList)
@@ -71,6 +71,24 @@ MessageAction::MessageAction(const QString &author, const QString &message, cons
 {
     QString message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
 
+    // detect urls
+    QRegExp exp("(www\\.|http[s]?:\\/\\/|ftp:\\/\\/)\\S+");
+    int offset = 0;
+    while ((offset = exp.indexIn(message_, offset)) != -1)
+    {
+        QString url = exp.cap();
+
+        // add scheme if not specified
+        if (exp.cap(1) == "www.")
+            url.prepend("http://");
+
+        QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
+        message_.replace(offset, exp.cap().length(), htmledUrl);
+
+        offset += htmledUrl.length();
+    }
+
+    // detect text quotes
     QStringList messageLines = message_.split("\n");
     message_ = "";
     for (QString& s : messageLines)

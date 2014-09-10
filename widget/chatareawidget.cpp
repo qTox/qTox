@@ -19,14 +19,21 @@
 #include <QAbstractTextDocumentLayout>
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QDesktopServices>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
-    QTextEdit(parent)
+    QTextBrowser(parent)
 {
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
     setContextMenuPolicy(Qt::CustomContextMenu);
     setUndoRedoEnabled(false);
+
+    setOpenExternalLinks(false);
+    setOpenLinks(false);
+    setAcceptRichText(false);
+
+    connect(this, &ChatAreaWidget::anchorClicked, this, &ChatAreaWidget::onAnchorClicked);
 }
 
 ChatAreaWidget::~ChatAreaWidget()
@@ -67,7 +74,12 @@ void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
     }
 }
 
-void ChatAreaWidget::insertMessage(ChatAction* msgAction)
+void ChatAreaWidget::onAnchorClicked(const QUrl &url)
+{
+    QDesktopServices::openUrl(url);
+}
+
+void ChatAreaWidget::insertMessage(ChatAction *msgAction)
 {
     if (msgAction == nullptr)
         return;
