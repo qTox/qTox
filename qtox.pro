@@ -107,7 +107,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/form/genericchatform.h \
     widget/tool/chataction.h \
     widget/chatareawidget.h \
-    filetransferinstance.h
+    filetransferinstance.h \
+    widget/settingsdialog.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -143,4 +144,5 @@ SOURCES += \
     widget/form/genericchatform.cpp \
     widget/tool/chataction.cpp \
     widget/chatareawidget.cpp \
-    filetransferinstance.cpp
+    filetransferinstance.cpp \
+    widget/settingsdialog.cpp
