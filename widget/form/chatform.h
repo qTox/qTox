@@ -55,6 +55,7 @@ public slots:
     void onAvPeerTimeout(int FriendId, int CallId);
     void onAvMediaChange(int FriendId, int CallId, bool video);
     void onMicMuteToggle();
+    void focusInput();
 
 private slots:
     void onSendTriggered();

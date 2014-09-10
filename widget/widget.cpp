@@ -411,6 +411,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
+    connect(newfriend->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newfriend->chatForm, SLOT(focusInput()));
     connect(newfriend->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
     connect(newfriend->chatForm, SIGNAL(sendFile(int32_t, QString, QString, long long)), core, SLOT(sendFile(int32_t, QString, QString, long long)));
     connect(newfriend->chatForm, SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
