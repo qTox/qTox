@@ -18,7 +18,6 @@
 #include "smileypack.h"
 #include <QStringList>
 #include <QBuffer>
-#include <QDebug>
 #include "filetransferinstance.h"
 
 QString ChatAction::toHtmlChars(const QString &str)
@@ -154,4 +153,15 @@ void FileTransferAction::updateHtml()
     int end = cur.position();
     cur.setPosition(pos);
     cur.setPosition(end, QTextCursor::KeepAnchor);
+
+    // Free our ressources if we'll never need to update again
+    if (w->getState() == FileTransferInstance::TransfState::tsCanceled
+            || w->getState() == FileTransferInstance::TransfState::tsFinished)
+    {
+        sender.clear();
+        sender.squeeze();
+        timestamp.clear();
+        timestamp.squeeze();
+        cur = QTextCursor();
+    }
 }

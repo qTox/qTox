@@ -19,7 +19,6 @@
 
 #include <QTextEdit>
 #include <QList>
-#include <QMap>
 
 class ChatAction;
 

@@ -19,7 +19,6 @@
 #include <QAbstractTextDocumentLayout>
 #include <QMessageBox>
 #include <QScrollBar>
-#include <QDebug>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextEdit(parent)

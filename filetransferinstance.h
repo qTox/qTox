@@ -33,10 +33,14 @@ class FileTransferInstance : public QObject
 {
     Q_OBJECT
 public:
+    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};
+
+public:
     explicit FileTransferInstance(ToxFile File);
     QString getHtmlImage();
     uint getId(){return id;}
     void setTextCursor(QTextCursor cursor);
+    TransfState getState() {return state;}
 
 public slots:
     void onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction);
@@ -63,8 +67,6 @@ private:
     QString wrapIntoForm(const QString &content, const QString &type, const QString &imgAstr, const QString &imgBstr);
 
 private:
-    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};
-
     static uint Idconter;
     uint id;
 
