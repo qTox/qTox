@@ -780,8 +780,9 @@ void Core::bootstrapDht()
     while (i < (2 - (n>3)))
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
+        quint16 bitswappedPort = quint16(0|((dhtServer.port&0xff)<<8)|((dhtServer.port&0xff00)>>8));
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
-            qToBigEndian(dhtServer.port), CUserId(dhtServer.userId).data()) == 1)
+            qToBigEndian(bitswappedPort), CUserId(dhtServer.userId).data()) == 1)
             qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
                         +QString(", port ")+QString().setNum(dhtServer.port);
         else
