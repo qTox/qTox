@@ -21,7 +21,7 @@ TOX_CORE_DIR=libtoxcore-latest
 # the default value is 'false' and will be set to 'true'
 # if this script gets the parameter -t or --tox
 TOX_ONLY=false
-GLOBAL=false
+GLOBAL=true
 KEEP=false
 
 if [ -z "$BASE_DIR" ]; then
