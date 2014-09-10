@@ -89,7 +89,7 @@ void ChatAreaWidget::insertMessage(ChatAction* msgAction)
     moveCursor(QTextCursor::PreviousCell);
     insertHtml(msgAction->getHtml());
 
-    delete msgAction;
+    //delete msgAction;
 }
 
 void ChatAreaWidget::updateChatContent()
