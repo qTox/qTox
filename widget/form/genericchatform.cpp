@@ -201,3 +201,8 @@ void GenericChatForm::onEmoteInsertRequested(QString str)
 
     msgEdit->setFocus(); // refocus so that we can continue typing
 }
+
+void GenericChatForm::focusInput()
+{
+    msgEdit->setFocus();
+}

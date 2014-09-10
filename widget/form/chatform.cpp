@@ -443,8 +443,3 @@ void ChatForm::onFileTansBtnClicked(QString widgetName, QString buttonName)
     else
         qDebug() << "no filetransferwidget: " << id;
 }
-
-void ChatForm::focusInput()
-{
-    msgEdit->setFocus();
-}
