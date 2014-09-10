@@ -44,21 +44,24 @@ contains(JENKINS,YES) {
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
-    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libopenal32.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
-} macx {
-    LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
+    LIBS += -L$$PWD/libs/lib -llibopencv_core249 -llibopencv_highgui249 -llibopencv_imgproc249 -lOpenAL32
+    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
 } else {
-    # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
-    contains(STATICPKG, YES) {
-        target.path = /usr/bin
-        INSTALLS += target
-        LIBS += -L$$PWD/libs/lib/ -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -Wl,-Bdynamic -lopus -lvpx -lopenal -lopencv_core -lopencv_highgui
+    macx {
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
     } else {
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
-    }
+        # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
+        contains(STATICPKG, YES) {
+            target.path = /usr/bin
+            INSTALLS += target
+            LIBS += -L$$PWD/libs/lib/ -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -Wl,-Bdynamic -lopus -lvpx -lopenal -lopencv_core -lopencv_highgui
+        } else {
+            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
+        }
 
-    contains(JENKINS, YES) {
-        LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a -lopencv_core -lopencv_highgui -lopenal
+        contains(JENKINS, YES) {
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a -lopencv_core -lopencv_highgui -lopenal
+        }
     }
 }
 
@@ -80,7 +83,6 @@ HEADERS  += widget/form/addfriendform.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
     widget/tool/friendrequestdialog.h \
-    widget/filetransfertwidget.h \
     widget/friendwidget.h \
     widget/groupwidget.h \
     widget/widget.h \
@@ -101,7 +103,11 @@ HEADERS  += widget/form/addfriendform.h \
     widget/adjustingscrollarea.h \
     widget/croppinglabel.h \
     widget/friendlistwidget.h \
-    widget/genericchatroomwidget.h
+    widget/genericchatroomwidget.h \
+    widget/form/genericchatform.h \
+    widget/tool/chataction.h \
+    widget/chatareawidget.h \
+    filetransferinstance.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -111,7 +117,6 @@ SOURCES += \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
     widget/tool/friendrequestdialog.cpp \
-    widget/filetransfertwidget.cpp \
     widget/friendwidget.cpp \
     widget/groupwidget.cpp \
     widget/widget.cpp \
@@ -134,4 +139,8 @@ SOURCES += \
     widget/croppinglabel.cpp \
     widget/friendlistwidget.cpp \
     coreav.cpp \
-    widget/genericchatroomwidget.cpp
+    widget/genericchatroomwidget.cpp \
+    widget/form/genericchatform.cpp \
+    widget/tool/chataction.cpp \
+    widget/chatareawidget.cpp \
+    filetransferinstance.cpp
