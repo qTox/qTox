@@ -19,6 +19,7 @@
 
 #include <QTextBrowser>
 #include <QList>
+#include <QTextTable>
 
 class ChatAction;
 
@@ -36,13 +37,18 @@ signals:
 protected:
     void mouseReleaseEvent(QMouseEvent * event);
 
-public slots:
+private slots:
     void onAnchorClicked(const QUrl& url);
+    void onSliderRangeChanged();
 
 private:
+    void checkSlider();
+
     QList<ChatAction*> messages;
     bool lockSliderToBottom;
     int sliderPosition;
+    QTextTable *chatTextTable;
+    QTextBlockFormat nameFormat, dateFormat;
 };
 
 #endif // CHATAREAWIDGET_H

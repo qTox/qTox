@@ -6,7 +6,6 @@
         <file alias="DejaVuSans.ttf">res/DejaVuSans.ttf</file>
     </qresource>
     <qresource prefix="/">
-        <file>audio/notification.wav</file>
         <file>img/icon.png</file>
         <file>img/contact.png</file>
         <file>img/contact_dark.png</file>
@@ -134,5 +133,6 @@
         <file>ui/fileTransferInstance/emptyLRedFileButton.png</file>
         <file>ui/fileTransferInstance/emptyRGreenFileButton.png</file>
         <file>ui/fileTransferInstance/emptyRRedFileButton.png</file>
+        <file>audio/notification.pcm</file>
     </qresource>
 </RCC>

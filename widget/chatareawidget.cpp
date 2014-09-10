@@ -33,7 +33,24 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     setOpenLinks(false);
     setAcceptRichText(false);
 
+    chatTextTable = textCursor().insertTable(1,3);
+
+    QTextTableFormat tableFormat;
+    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::VariableLength,0),
+                                           QTextLength(QTextLength::PercentageLength,100),
+                                           QTextLength(QTextLength::VariableLength,0)});
+    tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
+    chatTextTable->setFormat(tableFormat);
+    chatTextTable->format().setCellSpacing(2);
+    chatTextTable->format().setWidth(QTextLength(QTextLength::PercentageLength,100));
+
+    nameFormat.setAlignment(Qt::AlignRight);
+    nameFormat.setNonBreakableLines(true);
+    dateFormat.setAlignment(Qt::AlignLeft);
+    dateFormat.setNonBreakableLines(true);
+
     connect(this, &ChatAreaWidget::anchorClicked, this, &ChatAreaWidget::onAnchorClicked);
+    connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
 }
 
 ChatAreaWidget::~ChatAreaWidget()
@@ -84,13 +101,33 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     if (msgAction == nullptr)
         return;
 
-    moveCursor(QTextCursor::End);
-    moveCursor(QTextCursor::PreviousCell);
-    QTextCursor cur = textCursor();
+    checkSlider();
+
+    int row = chatTextTable->rows() - 1;
+    chatTextTable->cellAt(row,0).firstCursorPosition().setBlockFormat(nameFormat);
+    chatTextTable->cellAt(row,2).firstCursorPosition().setBlockFormat(dateFormat);
+    QTextCursor cur = chatTextTable->cellAt(row,1).firstCursorPosition();
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
-    insertHtml(msgAction->getHtml());
+    chatTextTable->cellAt(row,0).firstCursorPosition().insertHtml(msgAction->getName());
+    chatTextTable->cellAt(row,1).firstCursorPosition().insertHtml(msgAction->getMessage());
+    chatTextTable->cellAt(row,2).firstCursorPosition().insertHtml(msgAction->getDate());
+    chatTextTable->appendRows(1);
+
     msgAction->setTextCursor(cur);
 
     messages.append(msgAction);
+}
+
+void ChatAreaWidget::onSliderRangeChanged()
+{
+    QScrollBar* scroll = verticalScrollBar();
+    if (lockSliderToBottom)
+        scroll->setValue(scroll->maximum());
+}
+
+void ChatAreaWidget::checkSlider()
+{
+    QScrollBar* scroll = verticalScrollBar();
+    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
 }
