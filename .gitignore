@@ -1,2 +1,8 @@
 *.pro.user*
 libs
+*.o
+moc_*
+ui_*
+qrc_*
+Makefile
+qtox

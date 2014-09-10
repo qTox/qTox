@@ -147,6 +147,10 @@ fi
 
 popd
 
+if [[ $GLOBAL = "true" ]]; then
+    sudo ldconfig
+fi
+
 ############### cleanup step ###############
 # remove cloned repositories
 if [[ $KEEP = "false" ]]; then
