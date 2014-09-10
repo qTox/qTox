@@ -21,6 +21,7 @@ ChatTextEdit::ChatTextEdit(QWidget *parent) :
     QTextEdit(parent)
 {
     setPlaceholderText("Type your message here...");
+    setAcceptRichText(false);
 }
 
 void ChatTextEdit::keyPressEvent(QKeyEvent * event)
