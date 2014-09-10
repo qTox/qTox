@@ -17,11 +17,11 @@
 #ifndef CHATAREAWIDGET_H
 #define CHATAREAWIDGET_H
 
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QList>
 #include "widget/tool/chataction.h"
 
-class ChatAreaWidget : public QTextEdit
+class ChatAreaWidget : public QTextBrowser
 {
     Q_OBJECT
 public:
@@ -38,6 +38,7 @@ protected:
 
 public slots:
     void updateChatContent();
+    void onAnchorClicked(const QUrl& url);
 
 private:
     QString getHtmledMessages();
