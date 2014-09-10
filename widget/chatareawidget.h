@@ -19,6 +19,7 @@
 
 #include <QTextBrowser>
 #include <QList>
+#include <QTextTable>
 
 class ChatAction;
 
@@ -46,6 +47,8 @@ private:
     QList<ChatAction*> messages;
     bool lockSliderToBottom;
     int sliderPosition;
+    QTextTable *chatTextTable;
+    QTextBlockFormat nameFormat, dateFormat;
 };
 
 #endif // CHATAREAWIDGET_H

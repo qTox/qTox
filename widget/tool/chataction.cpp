@@ -40,34 +40,42 @@ QString ChatAction::QImage2base64(const QImage &img)
     return ba.toBase64();
 }
 
-QString ChatAction::wrapName(const QString &name)
+QString ChatAction::getName()
 {
     if (isMe)
-        return QString("<td><div class=name_me>" + name + "</div></td>\n");
+        return QString("<div class=name_me>" + toHtmlChars(name) + "</div>");
     else
-        return QString("<td><div class=name>" + name + "</div></td>\n");
+        return QString("<div class=name>" + toHtmlChars(name) + "</div>");
 }
 
-QString ChatAction::wrapDate(const QString &date)
+QString ChatAction::getDate()
 {
-    QString res = "<td align=right><div class=date>" + date + "</div></td>\n";
-    return res;
-}
-
-QString ChatAction::wrapMessage(const QString &message)
-{
-    QString res = "<td width=100%><div class=message>" + message + "</div></td>\n";
-    return res;
-}
-
-QString ChatAction::wrapWholeLine(const QString &line)
-{
-    QString res = "<tr>\n" + line + "</tr>\n";
+    QString res = "<div class=date>" + date + "</div>";
     return res;
 }
 
 MessageAction::MessageAction(const QString &author, const QString &message, const QString &date, const bool &me) :
-    ChatAction(me)
+    ChatAction(me, author, date),
+    message(message)
+{
+}
+
+void MessageAction::setTextCursor(QTextCursor cursor)
+{
+    // When this function is called, we're supposed to only update ourselve when needed
+    // Nobody should ask us to do anything with our content, we're on our own
+    // Except we never udpate on our own, so we can safely free our resources
+
+    (void) cursor;
+    message.clear();
+    message.squeeze();
+    name.clear();
+    name.squeeze();
+    date.clear();
+    date.squeeze();
+}
+
+QString MessageAction::getMessage()
 {
     QString message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
 
@@ -100,29 +108,11 @@ MessageAction::MessageAction(const QString &author, const QString &message, cons
     }
     message_ = message_.left(message_.length()-4);
 
-    content = wrapWholeLine(wrapName(author) + wrapMessage(message_) + wrapDate(date));
-}
-
-void MessageAction::setTextCursor(QTextCursor cursor)
-{
-    // When this function is called, we're supposed to only update ourselve when needed
-    // Nobody should ask us to do anything with our content, we're on our own
-    // Except we never udpate on our own, so we can safely free our resources
-
-    (void) cursor;
-    content.clear();
-    content.squeeze();
-}
-
-QString MessageAction::getHtml()
-{
-    return content;
+    return QString("<div class=message>" + message_ + "</div>");
 }
 
 FileTransferAction::FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me) :
-    ChatAction(me),
-    sender(author),
-    timestamp(date)
+    ChatAction(me, author, date)
 {
     w = widget;
 
@@ -133,22 +123,16 @@ FileTransferAction::~FileTransferAction()
 {
 }
 
-QString FileTransferAction::getHtml()
+QString FileTransferAction::getMessage()
 {
     QString widgetHtml;
     if (w != nullptr)
         widgetHtml = w->getHtmlImage();
     else
         widgetHtml = "<div class=quote>EMPTY CONTENT</div>";
-    QString res = wrapWholeLine(wrapName(sender) + wrapMessage(widgetHtml) + wrapDate(timestamp));
-    return res;
+    return widgetHtml;
 }
 
-QString FileTransferAction::wrapMessage(const QString &message)
-{
-    QString res = "<td width=100%>" + message + "</td>\n";
-    return res;
-}
 void FileTransferAction::setTextCursor(QTextCursor cursor)
 {
     cur = cursor;
@@ -166,7 +150,7 @@ void FileTransferAction::updateHtml()
     int pos = cur.selectionStart();
     cur.removeSelectedText();
     cur.setKeepPositionOnInsert(false);
-    cur.insertHtml(getHtml());
+    cur.insertHtml(getMessage());
     cur.setKeepPositionOnInsert(true);
     int end = cur.position();
     cur.setPosition(pos);
@@ -176,10 +160,10 @@ void FileTransferAction::updateHtml()
     if (w->getState() == FileTransferInstance::TransfState::tsCanceled
             || w->getState() == FileTransferInstance::TransfState::tsFinished)
     {
-        sender.clear();
-        sender.squeeze();
-        timestamp.clear();
-        timestamp.squeeze();
+        name.clear();
+        name.squeeze();
+        date.clear();
+        date.squeeze();
         cur = QTextCursor();
     }
 }
