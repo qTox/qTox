@@ -77,7 +77,7 @@ QString ChatAreaWidget::getHtmledMessages()
     return res;
 }
 
-void ChatAreaWidget::insertMessage(ChatAction *msgAction)
+void ChatAreaWidget::insertMessage(ChatAction* msgAction)
 {
     if (msgAction == nullptr)
         return;
@@ -88,6 +88,8 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     moveCursor(QTextCursor::End);
     moveCursor(QTextCursor::PreviousCell);
     insertHtml(msgAction->getHtml());
+
+    delete msgAction;
 }
 
 void ChatAreaWidget::updateChatContent()
