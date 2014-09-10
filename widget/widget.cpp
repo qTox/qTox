@@ -533,7 +533,7 @@ void Widget::newMessageAlert()
 {
     QApplication::alert(this);
 
-    static QFile sndFile(":audio/notification.wav");
+    static QFile sndFile(":audio/notification.pcm");
     static QByteArray sndData;
     if (sndData.isEmpty())
     {
@@ -544,7 +544,7 @@ void Widget::newMessageAlert()
 
     ALuint buffer;
     alGenBuffers(1, &buffer);
-    alBufferData(buffer, AL_FORMAT_STEREO16, sndData.data(), sndData.size(), 44100);
+    alBufferData(buffer, AL_FORMAT_MONO16, sndData.data(), sndData.size(), 44100);
     alSourcei(core->alMainSource, AL_BUFFER, buffer);
     alSourcePlay(core->alMainSource);
 }
