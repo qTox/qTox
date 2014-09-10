@@ -36,10 +36,13 @@ signals:
 protected:
     void mouseReleaseEvent(QMouseEvent * event);
 
-public slots:
+private slots:
     void onAnchorClicked(const QUrl& url);
+    void onSliderRangeChanged();
 
 private:
+    void checkSlider();
+
     QList<ChatAction*> messages;
     bool lockSliderToBottom;
     int sliderPosition;

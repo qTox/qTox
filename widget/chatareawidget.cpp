@@ -34,6 +34,7 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     setAcceptRichText(false);
 
     connect(this, &ChatAreaWidget::anchorClicked, this, &ChatAreaWidget::onAnchorClicked);
+    connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
 }
 
 ChatAreaWidget::~ChatAreaWidget()
@@ -84,6 +85,8 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     if (msgAction == nullptr)
         return;
 
+    checkSlider();
+
     moveCursor(QTextCursor::End);
     moveCursor(QTextCursor::PreviousCell);
     QTextCursor cur = textCursor();
@@ -93,4 +96,17 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     msgAction->setTextCursor(cur);
 
     messages.append(msgAction);
+}
+
+void ChatAreaWidget::onSliderRangeChanged()
+{
+    QScrollBar* scroll = verticalScrollBar();
+    if (lockSliderToBottom)
+        scroll->setValue(scroll->maximum());
+}
+
+void ChatAreaWidget::checkSlider()
+{
+    QScrollBar* scroll = verticalScrollBar();
+    lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
 }
