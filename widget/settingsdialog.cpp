@@ -1,5 +1,6 @@
 #include "settingsdialog.h"
 #include "settings.h"
+#include "widget.h"
 
 #include <QListWidget>
 #include <QListWidgetItem>
@@ -70,8 +71,9 @@ Privacy::Privacy(QWidget *parent) :
 
 
 
-SettingsDialog::SettingsDialog(QWidget *parent) :
-    QDialog(parent)
+SettingsDialog::SettingsDialog(Widget *parent) :
+    QDialog(parent),
+    widget(parent)
 {
     createPages();
     createButtons();

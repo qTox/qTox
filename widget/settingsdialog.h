@@ -1,8 +1,10 @@
-#ifndef CONFIGDIALOG_H
-#define CONFIGDIALOG_H
+#ifndef SETTINGSDIALOG_H
+#define SETTINGSDIALOG_H
 
 #include <QWidget>
 #include <QDialog>
+
+class Widget;
 
 class QListWidget;
 class QListWidgetItem;
@@ -10,7 +12,6 @@ class QStackedWidget;
 class QPushButton;
 class QCheckBox;
 class QLineEdit;
-
 
 // =======================================
 // settings pages
@@ -49,7 +50,7 @@ class SettingsDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit SettingsDialog(QWidget *parent = 0);
+    explicit SettingsDialog(Widget *parent);
 
     void readConfig();
     void writeConfig();
@@ -65,6 +66,8 @@ private:
     void createButtons();
     void createConnections();
 
+    Widget* widget;
+
     // pages
     General*  generalPage;
     Identity* identityPage;
@@ -78,4 +81,4 @@ private:
     QPushButton* applyButton;
 };
 
-#endif // CONFIGDIALOG_H
+#endif // SETTINGSDIALOG_H
