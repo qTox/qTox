@@ -404,7 +404,8 @@ void Widget::setStatusMessage(const QString &statusMessage)
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-    qDebug() << "Adding friend with id "+userId;
+
+    qDebug() << "Widget: Adding friend with id "+userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->widget);

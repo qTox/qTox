@@ -701,6 +701,14 @@ void Core::setUsername(const QString& username)
     }
 }
 
+QString Core::getSelfId()
+{
+    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
+    tox_get_address(tox, friendAddress);
+
+    return CFriendAddress::toString(friendAddress);
+}
+
 QString Core::getStatusMessage()
 {
     int size = tox_get_self_status_message_size(tox);

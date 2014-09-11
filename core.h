@@ -127,6 +127,7 @@ public:
     
     QString getUsername();
     QString getStatusMessage();
+    QString getSelfId();
 
     void increaseVideoBusyness();
     void decreaseVideoBusyness();

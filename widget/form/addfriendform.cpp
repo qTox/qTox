@@ -19,6 +19,8 @@
 #include <QFont>
 #include <QMessageBox>
 #include <tox/tox.h>
+#include "widget/widget.h"
+#include "core.h"
 
 #define TOX_ID_LENGTH 2*TOX_FRIEND_ADDRESS_SIZE
 
@@ -74,6 +76,7 @@ bool AddFriendForm::isToxId(const QString &value) const
 void AddFriendForm::showWarning(const QString &message) const
 {
     QMessageBox warning(main);
+    warning.setWindowTitle("Tox");
     warning.setText(message);
     warning.setIcon(QMessageBox::Warning);
     warning.exec();
@@ -92,7 +95,10 @@ void AddFriendForm::onSendTriggered()
     if (id.isEmpty()) {
         showWarning(tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
     } else if (isToxId(id)) {
-        emit friendRequested(id, getMessage());
+        if (id.toUpper() == Widget::getInstance()->getCore()->getSelfId().toUpper())
+            showWarning(tr("You can't add yourself as a friend !","When trying to add your own Tox ID as friend"));
+        else
+            emit friendRequested(id, getMessage());
         this->toxId.setText("");
         this->message.setText("");
     } else {
