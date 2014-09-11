@@ -1,6 +1,8 @@
 #include "settingsdialog.h"
 #include "settings.h"
 #include "widget.h"
+#include "camera.h"
+#include "selfcamview.h"
 
 #include <QListWidget>
 #include <QListWidgetItem>
@@ -84,6 +86,8 @@ AudioVideo::AudioVideo(QWidget *parent) :
 {
     QGroupBox *group = new QGroupBox(tr("Video Settings"), this);
 
+    camera = new Camera();
+    camView = new SelfCamView(camera);
     testVideo = new QPushButton(tr("Test video","Text on a button to test the video/webcam"));
     connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
 
@@ -97,9 +101,15 @@ AudioVideo::AudioVideo(QWidget *parent) :
     setLayout(mainLayout);
 }
 
+AudioVideo::~AudioVideo()
+{
+    delete camView;
+    delete camera;
+}
+
 void AudioVideo::onTestVideoPressed()
 {
-    Widget::getInstance()->showTestCamview();
+    camView->show();
 }
 
 

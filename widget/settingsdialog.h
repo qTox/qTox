@@ -5,6 +5,8 @@
 #include <QDialog>
 
 class Widget;
+class SelfCamView;
+class Camera;
 
 class QListWidget;
 class QListWidgetItem;
@@ -47,8 +49,11 @@ class AudioVideo : public QWidget
     Q_OBJECT
 public:
     AudioVideo(QWidget* parent = 0);
+    ~AudioVideo();
 
     QPushButton* testVideo;
+    Camera* camera;
+    SelfCamView* camView;
 
 public slots:
     void onTestVideoPressed();
