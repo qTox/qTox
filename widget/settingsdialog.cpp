@@ -27,13 +27,13 @@ General::General(QWidget *parent) :
     makeToxPortable->setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
     makeToxPortable->setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
 
-    QVBoxLayout *vLayout = new QVBoxLayout(this);
+    QVBoxLayout *vLayout = new QVBoxLayout();
     vLayout->addWidget(enableIPv6);
     vLayout->addWidget(useTranslations);
     vLayout->addWidget(makeToxPortable);
     group->setLayout(vLayout);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout();
     mainLayout->addWidget(group);
     mainLayout->addStretch(1);
     setLayout(mainLayout);
@@ -46,17 +46,17 @@ Identity::Identity(QWidget *parent) :
 
     QLabel* nameLabel = new QLabel(tr("Name","Username/nick"), this);
     userName = new QLineEdit(this);
-    QLabel* statusLabel = new QLabel(tr("Status","Status message"));
+    QLabel* statusLabel = new QLabel(tr("Status","Status message"), this);
     statusMessage = new QLineEdit(this);
 
-    QVBoxLayout *vLayout = new QVBoxLayout(this);
+    QVBoxLayout *vLayout = new QVBoxLayout();
     vLayout->addWidget(nameLabel);
     vLayout->addWidget(userName);
     vLayout->addWidget(statusLabel);
     vLayout->addWidget(statusMessage);
     group->setLayout(vLayout);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout();
     mainLayout->addWidget(group);
     mainLayout->addStretch(1);
     setLayout(mainLayout);
@@ -82,17 +82,17 @@ SettingsDialog::SettingsDialog(Widget *parent) :
     setWindowTitle(tr("Settings Dialog"));
     setMinimumSize(600, 500);
 
-    QHBoxLayout *buttonsLayout = new QHBoxLayout;
+    QHBoxLayout *buttonsLayout = new QHBoxLayout();
     buttonsLayout->addStretch(1);
     buttonsLayout->addWidget(okButton);
     buttonsLayout->addWidget(cancelButton);
     buttonsLayout->addWidget(applyButton);
 
-    QHBoxLayout *hLayout = new QHBoxLayout;
+    QHBoxLayout *hLayout = new QHBoxLayout();
     hLayout->addWidget(contentsWidget);
     hLayout->addWidget(pagesWidget, 1);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout();
     mainLayout->addLayout(hLayout);
     mainLayout->addLayout(buttonsLayout);
     setLayout(mainLayout);
