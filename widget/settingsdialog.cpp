@@ -45,15 +45,15 @@ Identity::Identity(QWidget *parent) :
     QGroupBox *group = new QGroupBox(tr("Public Information"), this);
 
     QLabel* nameLabel = new QLabel(tr("Name","Username/nick"), this);
-    name = new QLineEdit(this);
+    userName = new QLineEdit(this);
     QLabel* statusLabel = new QLabel(tr("Status","Status message"));
-    status = new QLineEdit(this);
+    statusMessage = new QLineEdit(this);
 
     QVBoxLayout *vLayout = new QVBoxLayout(this);
     vLayout->addWidget(nameLabel);
-    vLayout->addWidget(name);
+    vLayout->addWidget(userName);
     vLayout->addWidget(statusLabel);
-    vLayout->addWidget(status);
+    vLayout->addWidget(statusMessage);
     group->setLayout(vLayout);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -191,8 +191,8 @@ void SettingsDialog::readConfig()
     generalPage->useTranslations->setChecked(settings.getUseTranslations());
     generalPage->makeToxPortable->setChecked(settings.getMakeToxPortable());
 
-    identityPage->name->setText(core->getUsername());
-    identityPage->status->setText(core->getStatusMessage());
+    identityPage->userName->setText(core->getUsername());
+    identityPage->statusMessage->setText(core->getStatusMessage());
 }
 
 void SettingsDialog::writeConfig()
@@ -204,12 +204,14 @@ void SettingsDialog::writeConfig()
     settings.setUseTranslations(generalPage->useTranslations->isChecked());
     settings.setMakeToxPortable(generalPage->makeToxPortable->isChecked());
 
-    if (core->getUsername() != identityPage->name->text()) {
-        core->setUsername(identityPage->name->text());
+    QString userName = identityPage->userName->text();
+    if (core->getUsername() != userName) {
+        core->setUsername(userName);
     }
 
-    if (core->getStatusMessage() != identityPage->status->text()) {
-        core->setStatusMessage(identityPage->status->text());
+    QString statusMessage = identityPage->statusMessage->text();
+    if (core->getStatusMessage() != statusMessage) {
+        core->setStatusMessage(statusMessage);
     }
 
     settings.save();

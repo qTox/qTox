@@ -31,8 +31,8 @@ class Identity : public QWidget
 public:
     Identity(QWidget* parent = 0);
 
-    QLineEdit* name;
-    QLineEdit* status;
+    QLineEdit* userName;
+    QLineEdit* statusMessage;
 };
 
 class Privacy : public QWidget
