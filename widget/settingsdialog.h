@@ -7,6 +7,10 @@
 class Widget;
 class SelfCamView;
 class Camera;
+class General;
+class Identity;
+class Privacy;
+class AudioVideo;
 
 class QListWidget;
 class QListWidgetItem;
@@ -14,52 +18,6 @@ class QStackedWidget;
 class QPushButton;
 class QCheckBox;
 class QLineEdit;
-
-// =======================================
-// settings pages
-//========================================
-class General : public QWidget
-{
-public:
-    General(QWidget *parent = 0);
-
-    QCheckBox* enableIPv6;
-    QCheckBox* useTranslations;
-    QCheckBox* makeToxPortable;
-};
-
-class Identity : public QWidget
-{
-public:
-    Identity(QWidget* parent = 0);
-
-    QLineEdit* userName;
-    QLineEdit* statusMessage;
-    QLineEdit* toxID;
-};
-
-class Privacy : public QWidget
-{
-public:
-    Privacy(QWidget* parent = 0);
-};
-
-class AudioVideo : public QWidget
-{
-    Q_OBJECT
-public:
-    AudioVideo(QWidget* parent = 0);
-    ~AudioVideo();
-
-    QPushButton* testVideo;
-    Camera* camera;
-    SelfCamView* camView;
-
-public slots:
-    void onTestVideoPressed();
-};
-
-
 
 // =======================================
 // settings dialog

@@ -18,99 +18,132 @@
 // =======================================
 // settings pages
 //========================================
-General::General(QWidget *parent) :
-    QWidget(parent)
+class General : public QWidget
 {
-    QGroupBox *group = new QGroupBox(tr("General Settings"), this);
+public:
+    General(QWidget *parent = 0) :
+        QWidget(parent)
+    {
+        QGroupBox *group = new QGroupBox(tr("General Settings"), this);
 
-    enableIPv6 = new QCheckBox(this);
-    enableIPv6->setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
-    useTranslations = new QCheckBox(this);
-    useTranslations->setText(tr("Use translations","Text on a checkbox to enable translations"));
-    makeToxPortable = new QCheckBox(this);
-    makeToxPortable->setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
-    makeToxPortable->setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
+        enableIPv6 = new QCheckBox(this);
+        enableIPv6->setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
+        useTranslations = new QCheckBox(this);
+        useTranslations->setText(tr("Use translations","Text on a checkbox to enable translations"));
+        makeToxPortable = new QCheckBox(this);
+        makeToxPortable->setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
+        makeToxPortable->setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
 
-    QVBoxLayout *vLayout = new QVBoxLayout();
-    vLayout->addWidget(enableIPv6);
-    vLayout->addWidget(useTranslations);
-    vLayout->addWidget(makeToxPortable);
-    group->setLayout(vLayout);
+        QVBoxLayout *vLayout = new QVBoxLayout();
+        vLayout->addWidget(enableIPv6);
+        vLayout->addWidget(useTranslations);
+        vLayout->addWidget(makeToxPortable);
+        group->setLayout(vLayout);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->addWidget(group);
-    mainLayout->addStretch(1);
-    setLayout(mainLayout);
-}
+        QVBoxLayout *mainLayout = new QVBoxLayout();
+        mainLayout->addWidget(group);
+        mainLayout->addStretch(1);
+        setLayout(mainLayout);
+    }
 
-Identity::Identity(QWidget *parent) :
-    QWidget(parent)
+    QCheckBox* enableIPv6;
+    QCheckBox* useTranslations;
+    QCheckBox* makeToxPortable;
+};
+
+class Identity : public QWidget
 {
-    // public
-    QGroupBox *publicGroup = new QGroupBox(tr("Public Information"), this);
-    QLabel* userNameLabel = new QLabel(tr("Name","Username/nick"), this);
-    userName = new QLineEdit(this);
-    QLabel* statusMessageLabel = new QLabel(tr("Status","Status message"), this);
-    statusMessage = new QLineEdit(this);
-    QVBoxLayout *vLayout = new QVBoxLayout();
-    vLayout->addWidget(userNameLabel);
-    vLayout->addWidget(userName);
-    vLayout->addWidget(statusMessageLabel);
-    vLayout->addWidget(statusMessage);
-    publicGroup->setLayout(vLayout);
+public:
+    Identity(QWidget* parent = 0) :
+        QWidget(parent)
+    {
+        // public
+        QGroupBox *publicGroup = new QGroupBox(tr("Public Information"), this);
+        QLabel* userNameLabel = new QLabel(tr("Name","Username/nick"), this);
+        userName = new QLineEdit(this);
+        QLabel* statusMessageLabel = new QLabel(tr("Status","Status message"), this);
+        statusMessage = new QLineEdit(this);
+        QVBoxLayout *vLayout = new QVBoxLayout();
+        vLayout->addWidget(userNameLabel);
+        vLayout->addWidget(userName);
+        vLayout->addWidget(statusMessageLabel);
+        vLayout->addWidget(statusMessage);
+        publicGroup->setLayout(vLayout);
 
-    // tox
-    QGroupBox* toxGroup = new QGroupBox(tr("Tox ID"), this);
-    QLabel* toxIdLabel = new QLabel(tr("Your Tox ID"), this);
-    toxID = new QLineEdit(this);
-    toxID->setReadOnly(true);
-    QVBoxLayout* toxLayout = new QVBoxLayout();
-    toxLayout->addWidget(toxIdLabel);
-    toxLayout->addWidget(toxID);
-    toxGroup->setLayout(toxLayout);
+        // tox
+        QGroupBox* toxGroup = new QGroupBox(tr("Tox ID"), this);
+        QLabel* toxIdLabel = new QLabel(tr("Your Tox ID"), this);
+        toxID = new QLineEdit(this);
+        toxID->setReadOnly(true);
+        QVBoxLayout* toxLayout = new QVBoxLayout();
+        toxLayout->addWidget(toxIdLabel);
+        toxLayout->addWidget(toxID);
+        toxGroup->setLayout(toxLayout);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->setSpacing(30);
-    mainLayout->addWidget(publicGroup);
-    mainLayout->addWidget(toxGroup);
-    mainLayout->addStretch(1);
-    setLayout(mainLayout);
-}
+        QVBoxLayout *mainLayout = new QVBoxLayout();
+        mainLayout->setSpacing(30);
+        mainLayout->addWidget(publicGroup);
+        mainLayout->addWidget(toxGroup);
+        mainLayout->addStretch(1);
+        setLayout(mainLayout);
+    }
 
-Privacy::Privacy(QWidget *parent) :
-    QWidget(parent)
-{}
+    QLineEdit* userName;
+    QLineEdit* statusMessage;
+    QLineEdit* toxID;
+};
 
-AudioVideo::AudioVideo(QWidget *parent) :
-    QWidget(parent)
+class Privacy : public QWidget
 {
-    QGroupBox *group = new QGroupBox(tr("Video Settings"), this);
+public:
+    Privacy(QWidget* parent = 0) :
+        QWidget(parent)
+    {}
+};
 
-    camera = new Camera();
-    camView = new SelfCamView(camera);
-    testVideo = new QPushButton(tr("Test video","Text on a button to test the video/webcam"));
-    connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
-
-    QVBoxLayout *vLayout = new QVBoxLayout();
-    vLayout->addWidget(testVideo);
-    group->setLayout(vLayout);
-
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->addWidget(group);
-    mainLayout->addStretch(1);
-    setLayout(mainLayout);
-}
-
-AudioVideo::~AudioVideo()
+class AudioVideo : public QWidget
 {
-    delete camView;
-    delete camera;
-}
+    Q_OBJECT
+public:
+    AudioVideo(QWidget* parent = 0) :
+        QWidget(parent)
+    {
+        QGroupBox *group = new QGroupBox(tr("Video Settings"), this);
 
-void AudioVideo::onTestVideoPressed()
-{
-    camView->show();
-}
+        camera = new Camera();
+        camView = new SelfCamView(camera);
+        testVideo = new QPushButton(tr("Test video","Text on a button to test the video/webcam"));
+        connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
+
+        QVBoxLayout *vLayout = new QVBoxLayout();
+        vLayout->addWidget(testVideo);
+        group->setLayout(vLayout);
+
+        QVBoxLayout *mainLayout = new QVBoxLayout();
+        mainLayout->addWidget(group);
+        mainLayout->addStretch(1);
+        setLayout(mainLayout);
+    }
+
+    ~AudioVideo()
+    {
+        delete camView;
+        delete camera;
+    }
+
+    QPushButton* testVideo;
+    Camera* camera;
+    SelfCamView* camView;
+
+public slots:
+    void onTestVideoPressed()
+    {
+        camView->show();
+    }
+};
+
+// allows Q_OBJECT macro inside cpp
+#include "settingsdialog.moc"
 
 
 
