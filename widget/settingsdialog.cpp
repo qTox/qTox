@@ -92,8 +92,6 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(hLayout);
-    mainLayout->addStretch(1);
-    mainLayout->addSpacing(12);
     mainLayout->addLayout(buttonsLayout);
     setLayout(mainLayout);
 }
@@ -110,7 +108,6 @@ void SettingsDialog::createPages()
     contentsWidget->setMovement(QListView::Static);
     contentsWidget->setMaximumWidth(90);
     contentsWidget->setMinimumWidth(90);
-    contentsWidget->setMinimumHeight(300);
     contentsWidget->setSpacing(7);
 
     pagesWidget = new QStackedWidget;
