@@ -18,11 +18,11 @@
 #define CHATFORM_H
 
 #include "genericchatform.h"
-#include "core.h"
-#include "widget/netcamview.h"
+#include "corestructs.h"
 
 struct Friend;
 class FileTransferInstance;
+class NetCamView;
 
 class ChatForm : public GenericChatForm
 {

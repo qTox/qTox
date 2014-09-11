@@ -15,15 +15,12 @@
 */
 
 #include "filetransferinstance.h"
-#include "widget/widget.h"
 #include "core.h"
-#include "math.h"
-#include "style.h"
+#include <math.h>
 #include <QFileDialog>
-#include <QPixmap>
-#include <QPainter>
 #include <QMessageBox>
 #include <QBuffer>
+#include <QDebug>
 
 uint FileTransferInstance::Idconter = 0;
 
@@ -93,7 +90,7 @@ void FileTransferInstance::onFileTransferCancelled(int FriendId, int FileNum, To
 {
     if (FileNum != fileNum || FriendId != friendId || Direction != direction)
             return;
-    disconnect(Widget::getInstance()->getCore(),0,this,0);
+    disconnect(Core::getInstance(),0,this,0);
     state = tsCanceled;
 
     emit stateUpdated();
@@ -103,7 +100,7 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
 {
     if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
             return;
-    disconnect(Widget::getInstance()->getCore(),0,this,0);
+    disconnect(Core::getInstance(),0,this,0);
 
     if (File.direction == ToxFile::RECEIVING)
     {
@@ -126,14 +123,14 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
 
 void FileTransferInstance::cancelTransfer()
 {
-    Widget::getInstance()->getCore()->cancelFileSend(friendId, fileNum);
+    Core::getInstance()->cancelFileSend(friendId, fileNum);
     state = tsCanceled;
     emit stateUpdated();
 }
 
 void FileTransferInstance::rejectRecvRequest()
 {
-    Widget::getInstance()->getCore()->rejectFileRecvRequest(friendId, fileNum);
+    Core::getInstance()->rejectFileRecvRequest(friendId, fileNum);
     onFileTransferCancelled(friendId, fileNum, direction);
     state = tsCanceled;
     emit stateUpdated();
@@ -159,7 +156,7 @@ void FileTransferInstance::acceptRecvRequest()
     QString path;
     while (true)
     {
-        path = QFileDialog::getSaveFileName(Widget::getInstance(), tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename));
+        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename));
         if (path.isEmpty())
             return;
         else
@@ -170,13 +167,13 @@ void FileTransferInstance::acceptRecvRequest()
             if (isFileWritable(path))
                 break;
             else
-                QMessageBox::warning(Widget::getInstance(), tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+                QMessageBox::warning(0, tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
         }
     }
 
     savePath = path;
 
-    Widget::getInstance()->getCore()->acceptFileRecvRequest(friendId, fileNum, path);
+    Core::getInstance()->acceptFileRecvRequest(friendId, fileNum, path);
     state = tsProcessing;
 
     emit stateUpdated();
@@ -184,7 +181,7 @@ void FileTransferInstance::acceptRecvRequest()
 
 void FileTransferInstance::pauseResumeRecv()
 {
-    Widget::getInstance()->getCore()->pauseResumeFileRecv(friendId, fileNum);
+    Core::getInstance()->pauseResumeFileRecv(friendId, fileNum);
     if (state == tsProcessing)
         state = tsPaused;
     else state = tsProcessing;
@@ -193,7 +190,7 @@ void FileTransferInstance::pauseResumeRecv()
 
 void FileTransferInstance::pauseResumeSend()
 {
-    Widget::getInstance()->getCore()->pauseResumeFileSend(friendId, fileNum);
+    Core::getInstance()->pauseResumeFileSend(friendId, fileNum);
     if (state == tsProcessing)
         state = tsPaused;
     else state = tsProcessing;

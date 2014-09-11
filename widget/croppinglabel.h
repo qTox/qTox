@@ -18,7 +18,8 @@
 #define CROPPINGLABEL_H
 
 #include <QLabel>
-#include <QLineEdit>
+
+class QLineEdit;
 
 class CroppingLabel : public QLabel
 {

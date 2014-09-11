@@ -17,15 +17,15 @@
 #ifndef GROUP_H
 #define GROUP_H
 
-#include <QList>
 #include <QMap>
-#include <QTimer>
+#include <QObject>
 
 #define RETRY_PEER_INFO_INTERVAL 500
 
 struct Friend;
 class GroupWidget;
 class GroupChatForm;
+class QTimer;
 
 class Group : public QObject
 {
@@ -47,7 +47,7 @@ public:
     GroupWidget* widget;
     GroupChatForm* chatForm;
     bool hasPeerInfo;
-    QTimer peerInfoTimer;
+    QTimer* peerInfoTimer;
     int hasNewMessages, userWasMentioned;
 };
 

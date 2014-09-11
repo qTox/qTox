@@ -17,16 +17,15 @@
 #ifndef FRIENDLIST_H
 #define FRIENDLIST_H
 
-#include <QString>
-#include <QList>
-
+template <class T> class QList;
 struct Friend;
+class QString;
 
 class FriendList
 {
 public:
     FriendList();
-    static Friend* addFriend(int friendId, QString userId);
+    static Friend* addFriend(int friendId, const QString& userId);
     static Friend* findFriend(int friendId);
     static void removeFriend(int friendId);
 

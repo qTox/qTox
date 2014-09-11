@@ -18,6 +18,7 @@
 #include "widget/widget.h"
 #include "settings.h"
 #include "smileypack.h"
+#include "ui_mainwindow.h"
 #include <QFont>
 #include <QClipboard>
 #include <QApplication>

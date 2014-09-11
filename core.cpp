@@ -20,6 +20,8 @@
 #include "settings.h"
 #include "widget/widget.h"
 
+#include <tox/tox.h>
+
 #include <ctime>
 #include <functional>
 
@@ -29,7 +31,9 @@
 #include <QSaveFile>
 #include <QStandardPaths>
 #include <QThread>
-#include <QtConcurrent/QtConcurrent>
+#include <QTimer>
+#include <QCoreApplication>
+#include <QDateTime>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
@@ -109,6 +113,11 @@ Core::~Core()
         alcCloseDevice(alOutDev);
     if (alInDev)
         alcCaptureCloseDevice(alInDev);
+}
+
+Core* Core::getInstance()
+{
+    return Widget::getInstance()->getCore();
 }
 
 void Core::start()

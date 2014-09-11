@@ -31,6 +31,7 @@ class Camera
 {
 public:
     Camera();
+    static Camera* getInstance(); ///< Returns the global widget's Camera instance
     void suscribe(); ///< Call this once before trying to get frames
     void unsuscribe(); ///< Call this once when you don't need frames anymore
     cv::Mat getLastFrame(); ///< Get the last captured frame

@@ -17,17 +17,11 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include <QThread>
 #include <QMainWindow>
-#include <QString>
-#include <QHBoxLayout>
-#include <QMenu>
-#include "core.h"
 #include "widget/form/addfriendform.h"
 #include "widget/form/settingsform.h"
 #include "widget/form/filesform.h"
-#include "camera.h"
-#include "friendlistwidget.h"
+#include "corestructs.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -38,6 +32,12 @@ class MainWindow;
 class GenericChatroomWidget;
 class Group;
 struct Friend;
+class QSplitter;
+class SelfCamView;
+class QMenu;
+class Core;
+class Camera;
+class FriendListWidget;
 
 class Widget : public QMainWindow
 {

@@ -18,9 +18,10 @@
 #include "group.h"
 #include "grouplist.h"
 #include "groupwidget.h"
-#include "widget.h"
 #include "friendlist.h"
 #include "friend.h"
+#include "core.h"
+#include "widget/form/chatform.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 
@@ -112,7 +113,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         else if (groupActions.contains(selectedItem))
         {
             Group* group = groupActions[selectedItem];
-            Widget::getInstance()->getCore()->groupInviteFriend(friendId, group->groupId);
+            Core::getInstance()->groupInviteFriend(friendId, group->groupId);
         }
     }
 }

@@ -19,7 +19,7 @@
 
 QList<Group*> GroupList::groupList;
 
-Group* GroupList::addGroup(int groupId, QString name)
+Group* GroupList::addGroup(int groupId, const QString& name)
 {
     Group* newGroup = new Group(groupId, name);
     groupList.append(newGroup);

@@ -18,14 +18,13 @@
 #define NETCAMVIEW_H
 
 #include <QWidget>
-#include <QHBoxLayout>
-#include <QTimer>
-#include <QLabel>
-#include <vpx/vpx_image.h>
 
 class QCloseEvent;
 class QShowEvent;
 class QPainter;
+class QLabel;
+class QHBoxLayout;
+class vpx_image;
 
 class NetCamView : public QWidget
 {

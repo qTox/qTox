@@ -17,7 +17,9 @@
 #include "groupchatform.h"
 #include "group.h"
 #include "widget/groupwidget.h"
-#include "widget/widget.h"
+#include "widget/tool/chattextedit.h"
+#include "widget/croppinglabel.h"
+#include <QPushButton>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup)

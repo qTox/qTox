@@ -14,15 +14,21 @@
     See the COPYING file for more details.
 */
 
+#include <QDebug>
+#include <QScrollBar>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QPushButton>
 #include "chatform.h"
 #include "friend.h"
 #include "widget/friendwidget.h"
 #include "filetransferinstance.h"
-#include "widget/widget.h"
 #include "widget/tool/chataction.h"
-#include <QScrollBar>
-#include <QFileDialog>
-#include <QMessageBox>
+#include "widget/netcamview.h"
+#include "widget/chatareawidget.h"
+#include "widget/tool/chattextedit.h"
+#include "core.h"
+#include "widget/widget.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -36,15 +42,15 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
 
-    connect(Widget::getInstance()->getCore(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
-    connect(Widget::getInstance()->getCore(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
+    connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
+    connect(Core::getInstance(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
-    connect(chatWidget, SIGNAL(onFileTranfertInterract(QString,QString)), this, SLOT(onFileTansBtnClicked(QString,QString)));
+    connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
 }
 
 ChatForm::~ChatForm()
@@ -99,9 +105,9 @@ void ChatForm::startFileSend(ToxFile file)
     FileTransferInstance* fileTrans = new FileTransferInstance(file);
     ftransWidgets.insert(fileTrans->getId(), fileTrans);
 
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
+    connect(Core::getInstance(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
+    connect(Core::getInstance(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
+    connect(Core::getInstance(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
 
     QString name = Widget::getInstance()->getUsername();
     if (name == previousName)
@@ -119,9 +125,9 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     FileTransferInstance* fileTrans = new FileTransferInstance(file);
     ftransWidgets.insert(fileTrans->getId(), fileTrans);
 
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
-    connect(Widget::getInstance()->getCore(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
+    connect(Core::getInstance(), &Core::fileTransferInfo, fileTrans, &FileTransferInstance::onFileTransferInfo);
+    connect(Core::getInstance(), &Core::fileTransferCancelled, fileTrans, &FileTransferInstance::onFileTransferCancelled);
+    connect(Core::getInstance(), &Core::fileTransferFinished, fileTrans, &FileTransferInstance::onFileTransferFinished);
 
     Widget* w = Widget::getInstance();
     if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())

@@ -19,18 +19,18 @@
 #include "widget/form/groupchatform.h"
 #include "friendlist.h"
 #include "friend.h"
-#include "widget/widget.h"
 #include "core.h"
 #include <QDebug>
+#include <QTimer>
 
 Group::Group(int GroupId, QString Name)
-    : groupId(GroupId), nPeers{0}, hasPeerInfo{false}
+    : groupId(GroupId), nPeers{0}, hasPeerInfo{false}, peerInfoTimer{new QTimer}
 {
     widget = new GroupWidget(groupId, Name);
     chatForm = new GroupChatForm(this);
-    connect(&peerInfoTimer, SIGNAL(timeout()), this, SLOT(queryPeerInfo()));
-    peerInfoTimer.setInterval(500);
-    peerInfoTimer.setSingleShot(false);
+    connect(peerInfoTimer, SIGNAL(timeout()), this, SLOT(queryPeerInfo()));
+    peerInfoTimer->setInterval(500);
+    peerInfoTimer->setSingleShot(false);
     //peerInfoTimer.start();
 
     //in groupchats, we only notify on messages containing your name
@@ -42,11 +42,12 @@ Group::~Group()
 {
     delete chatForm;
     delete widget;
+    delete peerInfoTimer;
 }
 
 void Group::queryPeerInfo()
 {
-    const Core* core = Widget::getInstance()->getCore();
+    const Core* core = Core::getInstance();
     int nPeersResult = core->getGroupNumberPeers(groupId);
     if (nPeersResult == -1)
     {
@@ -86,7 +87,7 @@ void Group::queryPeerInfo()
     {
         qDebug() << "Group::queryPeerInfo: Successfully loaded names";
         hasPeerInfo = true;
-        peerInfoTimer.stop();
+        peerInfoTimer->stop();
     }
 }
 

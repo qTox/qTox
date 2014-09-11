@@ -16,8 +16,8 @@
 
 #include "settings.h"
 #include "smileypack.h"
-#include "widget/widget.h"
 
+#include <QFont>
 #include <QApplication>
 #include <QDir>
 #include <QFile>

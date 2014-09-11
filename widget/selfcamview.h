@@ -18,14 +18,14 @@
 #define SELFCAMVIEW_H
 
 #include <QWidget>
-#include <QHBoxLayout>
-#include <QTimer>
-#include <QLabel>
-#include "camera.h"
 
 class QCloseEvent;
 class QShowEvent;
 class QPainter;
+class Camera;
+class QLabel;
+class QHBoxLayout;
+class QTimer;
 
 class SelfCamView : public QWidget
 {
@@ -33,7 +33,6 @@ class SelfCamView : public QWidget
 
 public:
     SelfCamView(Camera* Cam, QWidget *parent=0);
-    ~SelfCamView();
 
 private slots:
     void updateDisplay();
@@ -47,7 +46,7 @@ private:
     QLabel *displayLabel;
     QHBoxLayout* mainLayout;
     Camera* cam;
-    QTimer updateDisplayTimer;
+    QTimer* updateDisplayTimer;
 };
 
 #endif // SELFCAMVIEW_H

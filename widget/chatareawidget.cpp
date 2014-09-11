@@ -16,10 +16,10 @@
 
 #include "chatareawidget.h"
 #include "widget/tool/chataction.h"
-#include <QAbstractTextDocumentLayout>
-#include <QMessageBox>
 #include <QScrollBar>
 #include <QDesktopServices>
+#include <QTextTable>
+#include <QAbstractTextDocumentLayout>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextBrowser(parent)

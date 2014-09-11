@@ -17,15 +17,10 @@
 #define FILETRANSFERINSTANCE_H
 
 #include <QObject>
-#include <QLabel>
-#include <QPushButton>
-#include <QProgressBar>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QDateTime>
-#include <QTextCursor>
+#include <QImage>
 
-#include "core.h"
+#include "corestructs.h"
 
 struct ToxFile;
 
@@ -39,7 +34,6 @@ public:
     explicit FileTransferInstance(ToxFile File);
     QString getHtmlImage();
     uint getId(){return id;}
-    void setTextCursor(QTextCursor cursor);
     TransfState getState() {return state;}
 
 public slots:

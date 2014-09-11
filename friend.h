@@ -18,9 +18,10 @@
 #define FRIEND_H
 
 #include <QString>
-#include "widget/form/chatform.h"
+#include "corestructs.h"
 
 struct FriendWidget;
+class ChatForm;
 
 struct Friend
 {
@@ -38,7 +39,6 @@ public:
     ChatForm* chatForm;
     int hasNewEvents;
     Status friendStatus;
-    QPixmap avatar;
 };
 
 #endif // FRIEND_H

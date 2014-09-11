@@ -18,8 +18,7 @@
 #define SETTINGS_HPP
 
 #include <QHash>
-#include <QMainWindow>
-#include <QSplitter>
+#include <QObject>
 
 class Settings : public QObject
 {

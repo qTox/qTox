@@ -17,102 +17,24 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include <tox/tox.h>
-#include <tox/toxav.h>
-
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/al.h>
- #include <AL/alc.h>
-#endif
-
 #include <cstdint>
-#include <QDateTime>
 #include <QObject>
-#include <QTimer>
-#include <QString>
-#include <QFile>
-#include <QList>
-#include <QByteArray>
 
-#define TOXAV_MAX_CALLS 16
-#define GROUPCHAT_MAX_SIZE 32
-#define TOX_SAVE_INTERVAL 30*1000
-#define TOX_FILE_INTERVAL 0
-#define TOX_BOOTSTRAP_INTERVAL 5*1000
-#define TOXAV_RINGING_TIME 15
+#include "corestructs.h"
+#include "coreav.h"
+#include "coredefines.h"
 
-// TODO: Put that in the settings
-#define TOXAV_MAX_VIDEO_WIDTH 1600
-#define TOXAV_MAX_VIDEO_HEIGHT 1200
-
+template <typename T> class QList;
 class Camera;
-
-enum class Status : int {Online = 0, Away, Busy, Offline};
-
-struct DhtServer
-{
-    QString name;
-    QString userId;
-    QString address;
-    int port;
-};
-
-struct ToxFile
-{
-    enum FileStatus
-    {
-        STOPPED,
-        PAUSED,
-        TRANSMITTING
-    };
-
-    enum FileDirection : bool
-    {
-        SENDING,
-        RECEIVING
-    };
-
-    ToxFile()=default;
-    ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePath, FileDirection Direction)
-        : fileNum(FileNum), friendId(FriendId), fileName{FileName}, filePath{FilePath}, file{new QFile(filePath)},
-        bytesSent{0}, filesize{0}, status{STOPPED}, direction{Direction}, sendTimer{nullptr} {}
-    ~ToxFile(){}
-    void setFilePath(QString path) {filePath=path; file->setFileName(path);}
-    bool open(bool write) {return write?file->open(QIODevice::ReadWrite):file->open(QIODevice::ReadOnly);}
-
-    int fileNum;
-    int friendId;
-    QByteArray fileName;
-    QString filePath;
-    QFile* file;
-    long long bytesSent;
-    long long filesize;
-    FileStatus status;
-    FileDirection direction;
-    QTimer* sendTimer;
-};
-
-struct ToxCall
-{
-public:
-    ToxAvCSettings codecSettings;
-    QTimer *sendAudioTimer, *sendVideoTimer;
-    int callId;
-    int friendId;
-    bool videoEnabled;
-    bool active;
-    bool muteMic;
-    ALuint alSource;
-};
+class QTimer;
+class QString;
 
 class Core : public QObject
 {
     Q_OBJECT
 public:
     explicit Core(Camera* cam, QThread* coreThread);
+    static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
 
     int getGroupNumberPeers(int groupId) const;
@@ -298,7 +220,7 @@ private:
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
-    static ToxCall calls[TOXAV_MAX_CALLS];
+    static ToxCall calls[];
 
     static const QString CONFIG_FILE_NAME;
     static const int videobufsize;

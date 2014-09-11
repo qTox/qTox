@@ -16,6 +16,7 @@
 
 #include "widget.h"
 #include "ui_mainwindow.h"
+#include "core.h"
 #include "settings.h"
 #include "friend.h"
 #include "friendlist.h"
@@ -26,17 +27,19 @@
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
 #include "style.h"
+#include "selfcamview.h"
+#include "widget/friendlistwidget.h"
+#include "camera.h"
+#include "widget/form/chatform.h"
 #include <QMessageBox>
 #include <QDebug>
-#include <QTextStream>
 #include <QFile>
 #include <QString>
 #include <QPainter>
 #include <QMouseEvent>
-#include <QDesktopWidget>
-#include <QCursor>
-#include <QSettings>
 #include <QClipboard>
+#include <QThread>
+#include <tox/tox.h>
 
 Widget *Widget::instance{nullptr};
 

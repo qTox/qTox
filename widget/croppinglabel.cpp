@@ -16,6 +16,7 @@
 
 #include "croppinglabel.h"
 #include <QResizeEvent>
+#include <QLineEdit>
 
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)

@@ -18,7 +18,8 @@
 #define CSTRING_H
 
 #include <cstdint>
-#include <QString>
+
+class QString;
 
 class CString
 {

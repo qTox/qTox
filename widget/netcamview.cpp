@@ -16,9 +16,8 @@
 
 #include "netcamview.h"
 #include "core.h"
-#include "widget.h"
-#include <QApplication>
-#include <QtConcurrent/QtConcurrent>
+#include <QLabel>
+#include <QHBoxLayout>
 
 static inline void fromYCbCrToRGB(
         uint8_t Y, uint8_t Cb, uint8_t Cr,
@@ -70,7 +69,7 @@ void NetCamView::updateDisplay(vpx_image* frame)
     if (!frame->w || !frame->h)
         return;
 
-    Core* core = Widget::getInstance()->getCore();
+    Core* core = Core::getInstance();
 
     core->increaseVideoBusyness();
 

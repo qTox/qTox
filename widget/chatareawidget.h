@@ -19,9 +19,9 @@
 
 #include <QTextBrowser>
 #include <QList>
-#include <QTextTable>
 
 class ChatAction;
+class QTextTable;
 
 class ChatAreaWidget : public QTextBrowser
 {
