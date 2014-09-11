@@ -51,6 +51,7 @@ signals:
     void sendMessage(int, QString);
 
 public slots:
+    void focusInput();
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
