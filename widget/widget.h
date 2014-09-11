@@ -28,6 +28,7 @@
 #include "widget/form/filesform.h"
 #include "camera.h"
 #include "friendlistwidget.h"
+#include "settingsdialog.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -138,6 +139,7 @@ private:
     QThread* coreThread;
     AddFriendForm friendForm;
     SettingsForm settingsForm;
+    SettingsDialog settingsDialog;
     FilesForm filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
