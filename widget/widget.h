@@ -139,7 +139,7 @@ private:
     QThread* coreThread;
     AddFriendForm friendForm;
     SettingsForm settingsForm;
-    SettingsDialog settingsDialog;
+    SettingsDialog* settingsDialog;
     FilesForm filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;

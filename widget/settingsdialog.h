@@ -7,21 +7,31 @@
 class QListWidget;
 class QListWidgetItem;
 class QStackedWidget;
+class QPushButton;
+class QCheckBox;
+class QLineEdit;
 
 
 // =======================================
 // settings pages
 //========================================
-class GeneralPage : public QWidget
+class General : public QWidget
 {
 public:
-    GeneralPage(QWidget *parent = 0);
+    General(QWidget *parent = 0);
+
+    QCheckBox* enableIPv6;
+    QCheckBox* useTranslations;
+    QCheckBox* makeToxPortable;
 };
 
 class Identity : public QWidget
 {
 public:
     Identity(QWidget* parent = 0);
+
+    QLineEdit* name;
+    QLineEdit* status;
 };
 
 class Privacy : public QWidget
@@ -41,16 +51,31 @@ class SettingsDialog : public QDialog
 public:
     explicit SettingsDialog(QWidget *parent = 0);
 
-public slots:
-     void changePage(QListWidgetItem *current, QListWidgetItem *previous);
-
-private:
-    void createIcons();
     void readConfig();
     void writeConfig();
 
+public slots:
+    void changePage(QListWidgetItem *current, QListWidgetItem *previous);
+    void okPressed();
+    void cancelPressed();
+    void applyPressed();
+
+private:
+    void createPages();
+    void createButtons();
+    void createConnections();
+
+    // pages
+    General*  generalPage;
+    Identity* identityPage;
+    Privacy*  privacyPage;
     QListWidget *contentsWidget;
     QStackedWidget *pagesWidget;
+
+    // buttons
+    QPushButton* okButton;
+    QPushButton* cancelButton;
+    QPushButton* applyButton;
 };
 
 #endif // CONFIGDIALOG_H

@@ -43,7 +43,6 @@ Widget *Widget::instance{nullptr};
 Widget::Widget(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      settingsDialog(this),
       activeChatroomWidget{nullptr}
 {
     ui->setupUi(this);
@@ -155,7 +154,8 @@ Widget::Widget(QWidget *parent)
     camera = new Camera;
     camview = new SelfCamView(camera);
 
-    settingsDialog.setModal(true);
+    settingsDialog = new SettingsDialog(this);
+    settingsDialog->setModal(true);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -341,7 +341,8 @@ void Widget::onSettingsClicked()
     hideMainForms();
     settingsForm.show(*ui);
     activeChatroomWidget = nullptr;
-    settingsDialog.show();
+    settingsDialog->readConfig();
+    settingsDialog->show();
 }
 
 void Widget::hideMainForms()
