@@ -43,6 +43,7 @@ private:
     void createPages();
     void createButtons();
     void createConnections();
+    void createLayout();
 
     Widget* widget;
 

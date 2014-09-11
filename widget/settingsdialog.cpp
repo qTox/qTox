@@ -175,24 +175,8 @@ SettingsDialog::SettingsDialog(Widget *parent) :
     createPages();
     createButtons();
     createConnections();
-
+    createLayout();
     setWindowTitle(tr("Settings Dialog"));
-    setMinimumSize(800, 500);
-
-    QHBoxLayout *buttonsLayout = new QHBoxLayout();
-    buttonsLayout->addStretch(1);
-    buttonsLayout->addWidget(okButton);
-    buttonsLayout->addWidget(cancelButton);
-    buttonsLayout->addWidget(applyButton);
-
-    QHBoxLayout *hLayout = new QHBoxLayout();
-    hLayout->addWidget(contentsWidget);
-    hLayout->addWidget(pagesWidget, 1);
-
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->addLayout(hLayout);
-    mainLayout->addLayout(buttonsLayout);
-    setLayout(mainLayout);
 }
 
 void SettingsDialog::createPages()
@@ -262,6 +246,26 @@ void SettingsDialog::createConnections()
         this,
         SLOT(changePage(QListWidgetItem*,QListWidgetItem*))
     );
+}
+
+void SettingsDialog::createLayout()
+{
+    setMinimumSize(800, 500);
+
+    QHBoxLayout *buttonsLayout = new QHBoxLayout();
+    buttonsLayout->addStretch(1);
+    buttonsLayout->addWidget(okButton);
+    buttonsLayout->addWidget(cancelButton);
+    buttonsLayout->addWidget(applyButton);
+
+    QHBoxLayout *hLayout = new QHBoxLayout();
+    hLayout->addWidget(contentsWidget);
+    hLayout->addWidget(pagesWidget, 1);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+    mainLayout->addLayout(hLayout);
+    mainLayout->addLayout(buttonsLayout);
+    setLayout(mainLayout);
 }
 
 void SettingsDialog::changePage(QListWidgetItem *current, QListWidgetItem *previous)
