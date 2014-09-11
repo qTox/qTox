@@ -7,10 +7,10 @@
 class Widget;
 class SelfCamView;
 class Camera;
-class General;
-class Identity;
-class Privacy;
-class AudioVideo;
+class GeneralPage;
+class IdentityPage;
+class PrivacyPage;
+class AVPage;
 
 class QListWidget;
 class QListWidgetItem;
@@ -45,10 +45,10 @@ private:
     Widget* widget;
 
     // pages
-    General*    generalPage;
-    Identity*   identityPage;
-    Privacy*    privacyPage;
-    AudioVideo* audioVideoPage;
+    GeneralPage*    generalPage;
+    IdentityPage*   identityPage;
+    PrivacyPage*    privacyPage;
+    AVPage*         avPage;
     QListWidget*    contentsWidget;
     QStackedWidget* pagesWidget;
 

@@ -18,10 +18,10 @@
 // =======================================
 // settings pages
 //========================================
-class General : public QWidget
+class GeneralPage : public QWidget
 {
 public:
-    General(QWidget *parent = 0) :
+    GeneralPage(QWidget *parent = 0) :
         QWidget(parent)
     {
         QGroupBox *group = new QGroupBox(tr("General Settings"), this);
@@ -51,10 +51,10 @@ public:
     QCheckBox* makeToxPortable;
 };
 
-class Identity : public QWidget
+class IdentityPage : public QWidget
 {
 public:
-    Identity(QWidget* parent = 0) :
+    IdentityPage(QWidget* parent = 0) :
         QWidget(parent)
     {
         // public
@@ -93,19 +93,19 @@ public:
     QLineEdit* toxID;
 };
 
-class Privacy : public QWidget
+class PrivacyPage : public QWidget
 {
 public:
-    Privacy(QWidget* parent = 0) :
+    PrivacyPage(QWidget* parent = 0) :
         QWidget(parent)
     {}
 };
 
-class AudioVideo : public QWidget
+class AVPage : public QWidget
 {
     Q_OBJECT
 public:
-    AudioVideo(QWidget* parent = 0) :
+    AVPage(QWidget* parent = 0) :
         QWidget(parent)
     {
         QGroupBox *group = new QGroupBox(tr("Video Settings"), this);
@@ -125,7 +125,7 @@ public:
         setLayout(mainLayout);
     }
 
-    ~AudioVideo()
+    ~AVPage()
     {
         delete camView;
         delete camera;
@@ -179,10 +179,10 @@ SettingsDialog::SettingsDialog(Widget *parent) :
 
 void SettingsDialog::createPages()
 {
-    generalPage    = new General(this);
-    identityPage   = new Identity(this);
-    privacyPage    = new Privacy(this);
-    audioVideoPage = new AudioVideo(this);
+    generalPage  = new GeneralPage(this);
+    identityPage = new IdentityPage(this);
+    privacyPage  = new PrivacyPage(this);
+    avPage       = new AVPage(this);
 
     contentsWidget = new QListWidget;
     contentsWidget->setViewMode(QListView::IconMode);
@@ -197,7 +197,7 @@ void SettingsDialog::createPages()
     pagesWidget->addWidget(generalPage);
     pagesWidget->addWidget(identityPage);
     pagesWidget->addWidget(privacyPage);
-    pagesWidget->addWidget(audioVideoPage);
+    pagesWidget->addWidget(avPage);
 
     QListWidgetItem *generalButton = new QListWidgetItem(contentsWidget);
     generalButton->setIcon(QIcon(":/img/settings/general.png"));
