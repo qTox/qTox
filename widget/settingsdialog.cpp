@@ -185,20 +185,32 @@ void SettingsDialog::applyPressed()
 void SettingsDialog::readConfig()
 {
     Settings& settings = Settings::getInstance();
+    Core* core = widget->getCore();
 
     generalPage->enableIPv6->setChecked(settings.getEnableIPv6());
     generalPage->useTranslations->setChecked(settings.getUseTranslations());
     generalPage->makeToxPortable->setChecked(settings.getMakeToxPortable());
 
-    identityPage->name->setText("test name");
-    identityPage->status->setText("test status");
+    identityPage->name->setText(core->getUsername());
+    identityPage->status->setText(core->getStatusMessage());
 }
 
 void SettingsDialog::writeConfig()
 {
     Settings& settings = Settings::getInstance();
+    Core* core = widget->getCore();
+
     settings.setEnableIPv6(generalPage->enableIPv6->isChecked());
     settings.setUseTranslations(generalPage->useTranslations->isChecked());
     settings.setMakeToxPortable(generalPage->makeToxPortable->isChecked());
+
+    if (core->getUsername() != identityPage->name->text()) {
+        core->setUsername(identityPage->name->text());
+    }
+
+    if (core->getStatusMessage() != identityPage->status->text()) {
+        core->setStatusMessage(identityPage->status->text());
+    }
+
     settings.save();
 }
