@@ -45,6 +45,8 @@ Widget::Widget(QWidget *parent)
       ui(new Ui::MainWindow),
       activeChatroomWidget{nullptr}
 {
+    camera = new Camera();
+
     ui->setupUi(this);
 
     ui->statusbar->hide();

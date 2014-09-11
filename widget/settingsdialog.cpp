@@ -105,13 +105,12 @@ class AVPage : public QWidget
 {
     Q_OBJECT
 public:
-    AVPage(QWidget* parent = 0) :
+    AVPage(SettingsDialog* parent = 0) :
         QWidget(parent)
     {
         QGroupBox *group = new QGroupBox(tr("Video Settings"), this);
 
-        camera = new Camera();
-        camView = new SelfCamView(camera);
+        camView = new SelfCamView(parent->getWidget()->getCamera());
         camView->hide(); // hide by default
         testVideo = new QPushButton("enable video");
         connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
@@ -130,7 +129,6 @@ public:
     ~AVPage()
     {
         delete camView;
-        delete camera;
     }
 
     void showTestVideo()
@@ -146,7 +144,6 @@ public:
     }
 
     QPushButton* testVideo;
-    Camera* camera;
     SelfCamView* camView;
 
 public slots:
@@ -326,6 +323,11 @@ void SettingsDialog::writeConfig()
     }
 
     settings.save();
+}
+
+Widget* SettingsDialog::getWidget()
+{
+    return widget;
 }
 
 void SettingsDialog::closeEvent(QCloseEvent* e){

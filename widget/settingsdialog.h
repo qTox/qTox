@@ -30,7 +30,7 @@ public:
 
     void readConfig();
     void writeConfig();
-
+    Widget* getWidget();
     void closeEvent(QCloseEvent *);
 
 public slots:
