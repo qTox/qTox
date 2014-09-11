@@ -393,6 +393,14 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         tox_file_send_control(tox, file->friendId, 1, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
         removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
+    else if (receive_send == 0 && control_type == TOX_FILECONTROL_ACCEPT)
+    {
+        emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, false);
+    }
+    else if ((receive_send == 0 || receive_send == 1) && control_type == TOX_FILECONTROL_PAUSE)
+    {
+        emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, true);
+    }
     else
     {
         qDebug() << QString("Core: File control callback, receive_send=%1, control_type=%2")

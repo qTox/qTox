@@ -30,6 +30,7 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
 {
     id = Idconter++;
     state = tsPending;
+    remotePaused = false;
 
     filename = File.fileName;
     size = getHumanReadableSize(File.filesize);
@@ -61,7 +62,7 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
     if (FileNum != fileNum || FriendId != friendId || Direction != direction)
             return;
 
-    state = tsProcessing;
+//    state = tsProcessing;
     QDateTime newtime = QDateTime::currentDateTime();
     int timediff = lastUpdate.secsTo(newtime);
     if (timediff <= 0)
@@ -117,6 +118,37 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
     }
 
     state = tsFinished;
+
+    emit stateUpdated();
+}
+
+void FileTransferInstance::onFileTransferAccepted(ToxFile File)
+{
+    if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
+            return;
+
+    remotePaused = false;
+    state = tsProcessing;
+
+    emit stateUpdated();
+}
+
+void FileTransferInstance::onFileTransferRemotePausedUnpaused(ToxFile File, bool paused)
+{
+    if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
+            return;
+
+    remotePaused = paused;
+
+    emit stateUpdated();
+}
+
+void FileTransferInstance::onFileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection Direction)
+{
+    if (FileNum != fileNum || FriendId != friendId || Direction != direction)
+            return;
+
+    state = tsPaused;
 
     emit stateUpdated();
 }
@@ -181,19 +213,33 @@ void FileTransferInstance::acceptRecvRequest()
 
 void FileTransferInstance::pauseResumeRecv()
 {
+    if (!(state == tsProcessing || state == tsPaused))
+        return;
+
+    if (remotePaused)
+        return;
+
     Core::getInstance()->pauseResumeFileRecv(friendId, fileNum);
-    if (state == tsProcessing)
-        state = tsPaused;
-    else state = tsProcessing;
+//    if (state == tsProcessing)
+//        state = tsPaused;
+//    else state = tsProcessing;
+
     emit stateUpdated();
 }
 
 void FileTransferInstance::pauseResumeSend()
 {
+    if (!(state == tsProcessing || state == tsPaused))
+        return;
+
+    if (remotePaused)
+        return;
+
     Core::getInstance()->pauseResumeFileSend(friendId, fileNum);
-    if (state == tsProcessing)
-        state = tsPaused;
-    else state = tsProcessing;
+//    if (state == tsProcessing)
+//        state = tsPaused;
+//    else state = tsProcessing;
+
     emit stateUpdated();
 }
 
@@ -220,7 +266,15 @@ QString FileTransferInstance::getHtmlImage()
         else if (state == tsPaused)
             rightBtnImg = QImage(":/ui/fileTransferInstance/resumeFileButton.png");
         else
-            rightBtnImg = QImage(":/ui/fileTransferInstance/acceptFileButton.png");
+        {
+            if (direction == ToxFile::SENDING)
+                rightBtnImg = QImage(":/ui/fileTransferInstance/pauseGreyFileButton.png");
+            else
+                rightBtnImg = QImage(":/ui/fileTransferInstance/acceptFileButton.png");
+        }
+
+        if (remotePaused)
+            rightBtnImg = QImage(":/ui/fileTransferInstance/pauseGreyFileButton.png");
 
         res = draw2ButtonsForm("silver", leftBtnImg, rightBtnImg);
     } else if (state == tsCanceled)

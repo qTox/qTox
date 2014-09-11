@@ -127,6 +127,7 @@
         <file>ui/volButton/volButton.css</file>
         <file>ui/fileTransferInstance/acceptFileButton.png</file>
         <file>ui/fileTransferInstance/pauseFileButton.png</file>
+        <file>ui/fileTransferInstance/pauseGreyFileButton.png</file>
         <file>ui/fileTransferInstance/resumeFileButton.png</file>
         <file>ui/fileTransferInstance/stopFileButton.png</file>
         <file>ui/fileTransferInstance/emptyLGreenFileButton.png</file>

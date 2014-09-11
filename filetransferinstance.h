@@ -40,6 +40,9 @@ public slots:
     void onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection Direction);
     void onFileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection Direction);
     void onFileTransferFinished(ToxFile File);
+    void onFileTransferAccepted(ToxFile File);
+    void onFileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection Direction);
+    void onFileTransferRemotePausedUnpaused(ToxFile File, bool paused);
     void pressFromHtml(QString);
 
 signals:
@@ -65,6 +68,7 @@ private:
     uint id;
 
     TransfState state;
+    bool remotePaused;
     QImage pic;
     QString filename, size, speed, eta;
     QDateTime lastUpdate;

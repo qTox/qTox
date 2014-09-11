@@ -146,6 +146,7 @@ signals:
     void fileDownloadFinished(const QString& path);
     void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
     void fileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction);
+    void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
 
     void avInvite(int friendId, int callIndex, bool video);
     void avStart(int friendId, int callIndex, bool video);
