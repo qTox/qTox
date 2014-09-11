@@ -44,6 +44,13 @@
 #define TOX_BOOTSTRAP_INTERVAL 5*1000
 #define TOXAV_RINGING_TIME 15
 
+// tox id
+#define TOX_ID_LENGTH 2*TOX_FRIEND_ADDRESS_SIZE
+#define TOX_ID_NO_SPAM_LENGTH (sizeof(uint32_t))
+#define TOX_ID_CHECKSUM_LENGTH (sizeof(uint16_t))
+#define TOX_ID_PUBLIC_KEY_LENGTH (TOX_ID_LENGTH - (TOX_ID_NO_SPAM_LENGTH + TOX_ID_CHECKSUM_LENGTH))
+
+
 // TODO: Put that in the settings
 #define TOXAV_MAX_VIDEO_WIDTH 1600
 #define TOXAV_MAX_VIDEO_HEIGHT 1200
@@ -51,6 +58,28 @@
 class Camera;
 
 enum class Status : int {Online = 0, Away, Busy, Offline};
+
+struct ToxID
+{
+    QString publicKey;
+    QString noSpam;
+    QString checkSum;
+
+    QString toString() const
+    {
+        return publicKey + noSpam + checkSum;
+    }
+
+    ToxID static fromString(QString id)
+    {
+        ToxID toxID;
+        toxID.publicKey = id.left(TOX_ID_PUBLIC_KEY_LENGTH);
+        toxID.noSpam   = id.mid(TOX_ID_LENGTH, TOX_ID_NO_SPAM_LENGTH);
+        toxID.checkSum = id.right(TOX_ID_CHECKSUM_LENGTH);
+        return toxID;
+    }
+
+};
 
 struct DhtServer
 {
@@ -125,6 +154,7 @@ public:
 
     void saveConfiguration();
     
+    ToxID   getToxID();
     QString getUsername();
     QString getStatusMessage();
 

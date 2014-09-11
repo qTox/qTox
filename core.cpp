@@ -678,6 +678,13 @@ void Core::removeGroup(int groupId)
     tox_del_groupchat(tox, groupId);
 }
 
+ToxID Core::getToxID()
+{
+    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
+    tox_get_address(tox, friendAddress);
+    return ToxID::fromString(CFriendAddress::toString(friendAddress));
+}
+
 QString Core::getUsername()
 {
     int size = tox_get_self_name_size(tox);
