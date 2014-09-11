@@ -42,6 +42,18 @@ public:
     Privacy(QWidget* parent = 0);
 };
 
+class AudioVideo : public QWidget
+{
+    Q_OBJECT
+public:
+    AudioVideo(QWidget* parent = 0);
+
+    QPushButton* testVideo;
+
+public slots:
+    void onTestVideoPressed();
+};
+
 
 
 // =======================================
@@ -70,11 +82,12 @@ private:
     Widget* widget;
 
     // pages
-    General*  generalPage;
-    Identity* identityPage;
-    Privacy*  privacyPage;
-    QListWidget *contentsWidget;
-    QStackedWidget *pagesWidget;
+    General*    generalPage;
+    Identity*   identityPage;
+    Privacy*    privacyPage;
+    AudioVideo* audioVideoPage;
+    QListWidget*    contentsWidget;
+    QStackedWidget* pagesWidget;
 
     // buttons
     QPushButton* okButton;

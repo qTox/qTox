@@ -12,6 +12,10 @@
 #include <QCheckBox>
 #include <QLineEdit>
 
+
+// =======================================
+// settings pages
+//========================================
 General::General(QWidget *parent) :
     QWidget(parent)
 {
@@ -19,10 +23,8 @@ General::General(QWidget *parent) :
 
     enableIPv6 = new QCheckBox(this);
     enableIPv6->setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
-
     useTranslations = new QCheckBox(this);
     useTranslations->setText(tr("Use translations","Text on a checkbox to enable translations"));
-
     makeToxPortable = new QCheckBox(this);
     makeToxPortable->setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
     makeToxPortable->setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
@@ -75,13 +77,36 @@ Identity::Identity(QWidget *parent) :
 
 Privacy::Privacy(QWidget *parent) :
     QWidget(parent)
-{
+{}
 
+AudioVideo::AudioVideo(QWidget *parent) :
+    QWidget(parent)
+{
+    QGroupBox *group = new QGroupBox(tr("Video Settings"), this);
+
+    testVideo = new QPushButton(tr("Test video","Text on a button to test the video/webcam"));
+    connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
+
+    QVBoxLayout *vLayout = new QVBoxLayout();
+    vLayout->addWidget(testVideo);
+    group->setLayout(vLayout);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+    mainLayout->addWidget(group);
+    mainLayout->addStretch(1);
+    setLayout(mainLayout);
+}
+
+void AudioVideo::onTestVideoPressed()
+{
+    Widget::getInstance()->showTestCamview();
 }
 
 
 
-
+// =======================================
+// settings dialog
+//========================================
 SettingsDialog::SettingsDialog(Widget *parent) :
     QDialog(parent),
     widget(parent)
@@ -111,9 +136,10 @@ SettingsDialog::SettingsDialog(Widget *parent) :
 
 void SettingsDialog::createPages()
 {
-    generalPage  = new General(this);
-    identityPage = new Identity(this);
-    privacyPage  = new Privacy(this);
+    generalPage    = new General(this);
+    identityPage   = new Identity(this);
+    privacyPage    = new Privacy(this);
+    audioVideoPage = new AudioVideo(this);
 
     contentsWidget = new QListWidget;
     contentsWidget->setViewMode(QListView::IconMode);
@@ -128,6 +154,7 @@ void SettingsDialog::createPages()
     pagesWidget->addWidget(generalPage);
     pagesWidget->addWidget(identityPage);
     pagesWidget->addWidget(privacyPage);
+    pagesWidget->addWidget(audioVideoPage);
 
     QListWidgetItem *generalButton = new QListWidgetItem(contentsWidget);
     generalButton->setIcon(QIcon(":/img/settings/general.png"));
