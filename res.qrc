@@ -137,5 +137,6 @@
         <file>img/settings/general.png</file>
         <file>img/settings/identity.png</file>
         <file>img/settings/privacy.png</file>
+        <file>img/settings/av.png</file>
     </qresource>
 </RCC>

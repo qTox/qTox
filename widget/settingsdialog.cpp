@@ -80,7 +80,7 @@ SettingsDialog::SettingsDialog(Widget *parent) :
     createConnections();
 
     setWindowTitle(tr("Settings Dialog"));
-    setMinimumSize(600, 400);
+    setMinimumSize(600, 500);
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout;
     buttonsLayout->addStretch(1);
@@ -108,9 +108,10 @@ void SettingsDialog::createPages()
     contentsWidget->setViewMode(QListView::IconMode);
     contentsWidget->setIconSize(QSize(64, 64));
     contentsWidget->setMovement(QListView::Static);
-    contentsWidget->setMaximumWidth(90);
-    contentsWidget->setMinimumWidth(90);
-    contentsWidget->setSpacing(7);
+    contentsWidget->setMaximumWidth(100);
+    contentsWidget->setMinimumWidth(100);
+    contentsWidget->setSpacing(9);
+    contentsWidget->setFlow(QListView::TopToBottom);
 
     pagesWidget = new QStackedWidget;
     pagesWidget->addWidget(generalPage);
@@ -134,6 +135,12 @@ void SettingsDialog::createPages()
     privacy->setText(tr("Privacy"));
     privacy->setTextAlignment(Qt::AlignHCenter);
     privacy->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+    QListWidgetItem *av = new QListWidgetItem(contentsWidget);
+    av->setIcon(QIcon(":/img/settings/av.png"));
+    av->setText(tr("Audio/Video"));
+    av->setTextAlignment(Qt::AlignHCenter);
+    av->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
     contentsWidget->setCurrentRow(0);
 }
