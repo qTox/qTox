@@ -42,22 +42,33 @@ General::General(QWidget *parent) :
 Identity::Identity(QWidget *parent) :
     QWidget(parent)
 {
-    QGroupBox *group = new QGroupBox(tr("Public Information"), this);
-
-    QLabel* nameLabel = new QLabel(tr("Name","Username/nick"), this);
+    // public
+    QGroupBox *publicGroup = new QGroupBox(tr("Public Information"), this);
+    QLabel* userNameLabel = new QLabel(tr("Name","Username/nick"), this);
     userName = new QLineEdit(this);
-    QLabel* statusLabel = new QLabel(tr("Status","Status message"), this);
+    QLabel* statusMessageLabel = new QLabel(tr("Status","Status message"), this);
     statusMessage = new QLineEdit(this);
-
     QVBoxLayout *vLayout = new QVBoxLayout();
-    vLayout->addWidget(nameLabel);
+    vLayout->addWidget(userNameLabel);
     vLayout->addWidget(userName);
-    vLayout->addWidget(statusLabel);
+    vLayout->addWidget(statusMessageLabel);
     vLayout->addWidget(statusMessage);
-    group->setLayout(vLayout);
+    publicGroup->setLayout(vLayout);
+
+    // tox
+    QGroupBox* toxGroup = new QGroupBox(tr("Tox ID"), this);
+    QLabel* toxIdLabel = new QLabel(tr("Your Tox ID"), this);
+    toxID = new QLineEdit(this);
+    toxID->setReadOnly(true);
+    QVBoxLayout* toxLayout = new QVBoxLayout();
+    toxLayout->addWidget(toxIdLabel);
+    toxLayout->addWidget(toxID);
+    toxGroup->setLayout(toxLayout);
 
     QVBoxLayout *mainLayout = new QVBoxLayout();
-    mainLayout->addWidget(group);
+    mainLayout->setSpacing(30);
+    mainLayout->addWidget(publicGroup);
+    mainLayout->addWidget(toxGroup);
     mainLayout->addStretch(1);
     setLayout(mainLayout);
 }
@@ -80,7 +91,7 @@ SettingsDialog::SettingsDialog(Widget *parent) :
     createConnections();
 
     setWindowTitle(tr("Settings Dialog"));
-    setMinimumSize(600, 500);
+    setMinimumSize(800, 500);
 
     QHBoxLayout *buttonsLayout = new QHBoxLayout();
     buttonsLayout->addStretch(1);
@@ -200,6 +211,7 @@ void SettingsDialog::readConfig()
 
     identityPage->userName->setText(core->getUsername());
     identityPage->statusMessage->setText(core->getStatusMessage());
+    identityPage->toxID->setText(core->getToxID().toString());
 }
 
 void SettingsDialog::writeConfig()

@@ -33,6 +33,7 @@ public:
 
     QLineEdit* userName;
     QLineEdit* statusMessage;
+    QLineEdit* toxID;
 };
 
 class Privacy : public QWidget
