@@ -112,11 +112,13 @@ public:
 
         camera = new Camera();
         camView = new SelfCamView(camera);
-        testVideo = new QPushButton(tr("Test video","Text on a button to test the video/webcam"));
+        camView->hide(); // hide by default
+        testVideo = new QPushButton("enable video");
         connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
 
         QVBoxLayout *vLayout = new QVBoxLayout();
         vLayout->addWidget(testVideo);
+        vLayout->addWidget(camView);
         group->setLayout(vLayout);
 
         QVBoxLayout *mainLayout = new QVBoxLayout();
@@ -131,6 +133,18 @@ public:
         delete camera;
     }
 
+    void showTestVideo()
+    {
+        testVideo->setText("disable video");
+        camView->show();
+    }
+
+    void closeTestVideo()
+    {
+        testVideo->setText("enable video");
+        camView->close();
+    }
+
     QPushButton* testVideo;
     Camera* camera;
     SelfCamView* camView;
@@ -138,7 +152,11 @@ public:
 public slots:
     void onTestVideoPressed()
     {
-        camView->show();
+        if (camView->isVisible()) {
+            closeTestVideo();
+        } else {
+            showTestVideo();
+        }
     }
 };
 
@@ -304,4 +322,9 @@ void SettingsDialog::writeConfig()
     }
 
     settings.save();
+}
+
+void SettingsDialog::closeEvent(QCloseEvent* e){
+    avPage->closeTestVideo();
+    QDialog::closeEvent(e);
 }

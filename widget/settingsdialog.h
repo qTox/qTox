@@ -31,6 +31,8 @@ public:
     void readConfig();
     void writeConfig();
 
+    void closeEvent(QCloseEvent *);
+
 public slots:
     void changePage(QListWidgetItem *current, QListWidgetItem *previous);
     void okPressed();
