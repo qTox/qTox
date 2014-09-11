@@ -117,11 +117,11 @@ void SettingsDialog::createPages()
 
     contentsWidget = new QListWidget;
     contentsWidget->setViewMode(QListView::IconMode);
-    contentsWidget->setIconSize(QSize(64, 64));
+    contentsWidget->setIconSize(QSize(100, 73));
     contentsWidget->setMovement(QListView::Static);
-    contentsWidget->setMaximumWidth(100);
-    contentsWidget->setMinimumWidth(100);
-    contentsWidget->setSpacing(9);
+    contentsWidget->setMaximumWidth(110);
+    contentsWidget->setMinimumWidth(110);
+    contentsWidget->setSpacing(0);
     contentsWidget->setFlow(QListView::TopToBottom);
 
     pagesWidget = new QStackedWidget;
