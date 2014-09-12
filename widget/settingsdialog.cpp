@@ -131,7 +131,7 @@ public:
 
         camView = new SelfCamView(parent->getWidget()->getCamera());
         camView->hide(); // hide by default
-        testVideo = new QPushButton("enable video");
+        testVideo = new QPushButton("Show video preview");
         connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
 
         QVBoxLayout *vLayout = new QVBoxLayout();
@@ -152,13 +152,13 @@ public:
 
     void showTestVideo()
     {
-        testVideo->setText("disable video");
+        testVideo->setText("Hide video preview");
         camView->show();
     }
 
     void closeTestVideo()
     {
-        testVideo->setText("enable video");
+        testVideo->setText("Show video preview");
         camView->close();
     }
 
