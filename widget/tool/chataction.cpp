@@ -43,9 +43,9 @@ QString ChatAction::QImage2base64(const QImage &img)
 QString ChatAction::getName()
 {
     if (isMe)
-        return QString("<div class=name_me>" + toHtmlChars(name) + "</div>");
+        return QString("<table width=100% cellspacing=0><tr><td align=right><div class=name_me>" + toHtmlChars(name) + "</div></td></tr></table>");
     else
-        return QString("<div class=name>" + toHtmlChars(name) + "</div>");
+        return QString("<table width=100% cellspacing=0><tr><td align=right><div class=name>" + toHtmlChars(name) + "</div></td></tr></table>");
 }
 
 QString ChatAction::getDate()
