@@ -49,9 +49,14 @@
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="99"/>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>You can&apos;t add yourself as a friend !</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Нельзя добавить самого себя в друзья!</translation>
+        <translation type="vanished">Нельзя добавить самого себя в друзья!</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="116"/>
@@ -423,9 +428,13 @@
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="195"/>
         <source>Settings Dialog</source>
-        <translation>Диалог настроек</translation>
+        <translation type="vanished">Диалог настроек</translation>
+    </message>
+    <message>
+        <location filename="../widget/settingsdialog.cpp" line="195"/>
+        <source>qTox – Settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="222"/>
