@@ -308,10 +308,30 @@ void SettingsDialog::writeConfig()
     Settings& settings = Settings::getInstance();
     Core* core = widget->getCore();
 
-    settings.setEnableIPv6(generalPage->enableIPv6->isChecked());
-    settings.setUseTranslations(generalPage->useTranslations->isChecked());
-    settings.setMakeToxPortable(generalPage->makeToxPortable->isChecked());
 
+    // only save settings if something changed
+    bool saveSettings = false;
+    if (settings.getEnableIPv6() != generalPage->enableIPv6->isChecked()) {
+        settings.setEnableIPv6(generalPage->enableIPv6->isChecked());
+        saveSettings = true;
+    }
+
+    if (settings.getUseTranslations() != generalPage->useTranslations->isChecked()) {
+        settings.setUseTranslations(generalPage->useTranslations->isChecked());
+        saveSettings = true;
+    }
+
+    if (settings.getMakeToxPortable() != generalPage->makeToxPortable->isChecked()) {
+        settings.setMakeToxPortable(generalPage->makeToxPortable->isChecked());
+        saveSettings = true;
+    }
+
+    if (saveSettings) {
+        settings.save();
+    }
+
+
+    // changing core settings will automatically save them
     QString userName = identityPage->userName->text();
     if (core->getUsername() != userName) {
         core->setUsername(userName);
@@ -321,8 +341,6 @@ void SettingsDialog::writeConfig()
     if (core->getStatusMessage() != statusMessage) {
         core->setStatusMessage(statusMessage);
     }
-
-    settings.save();
 }
 
 Widget* SettingsDialog::getWidget()
