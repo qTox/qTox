@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "selfcamview.h"
 #include "core.h"
+#include "smileypack.h"
 
 #include <QListWidget>
 #include <QListWidgetItem>
@@ -14,6 +15,7 @@
 #include <QGroupBox>
 #include <QCheckBox>
 #include <QLineEdit>
+#include <QComboBox>
 
 
 // =======================================
@@ -41,8 +43,23 @@ public:
         vLayout->addWidget(makeToxPortable);
         group->setLayout(vLayout);
 
+        // theme
+        QGroupBox* themeGroup = new QGroupBox(tr("Theme"));
+        QLabel* smileyLabel = new QLabel(tr("Smiley Pack"));
+        smileyPack = new QComboBox(this);
+
+        auto smileyPacks = SmileyPack::listSmileyPacks();
+        for(auto pack : smileyPacks)
+            smileyPack->addItem(QString("%1 (%2)").arg(pack.first).arg(pack.second), pack.second);
+
+        QVBoxLayout* themeLayout = new QVBoxLayout();
+        themeLayout->addWidget(smileyLabel);
+        themeLayout->addWidget(smileyPack);
+        themeGroup->setLayout(themeLayout);
+
         QVBoxLayout *mainLayout = new QVBoxLayout();
         mainLayout->addWidget(group);
+        mainLayout->addWidget(themeGroup);
         mainLayout->addStretch(1);
         setLayout(mainLayout);
     }
@@ -50,6 +67,7 @@ public:
     QCheckBox* enableIPv6;
     QCheckBox* useTranslations;
     QCheckBox* makeToxPortable;
+    QComboBox* smileyPack;
 };
 
 class IdentityPage : public QWidget
@@ -324,6 +342,11 @@ void SettingsDialog::writeConfig()
 
     if (settings.getMakeToxPortable() != generalPage->makeToxPortable->isChecked()) {
         settings.setMakeToxPortable(generalPage->makeToxPortable->isChecked());
+        saveSettings = true;
+    }
+
+    if (settings.getSmileyPack() != generalPage->smileyPack->currentData().toString()) {
+        settings.setSmileyPack(generalPage->smileyPack->currentData().toString());
         saveSettings = true;
     }
 
