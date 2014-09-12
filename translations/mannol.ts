@@ -148,7 +148,7 @@
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayy ! You have mothafucking friend request you little bitch !</translation>
     </message>
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="33"/>
