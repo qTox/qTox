@@ -111,7 +111,7 @@ public:
     {
         QGroupBox *group = new QGroupBox(tr("Video Settings"), this);
 
-        camView = new SelfCamView(Camera::getInstance());
+        camView = new SelfCamView(parent->getWidget()->getCamera());
         camView->hide(); // hide by default
         testVideo = new QPushButton("enable video");
         connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
