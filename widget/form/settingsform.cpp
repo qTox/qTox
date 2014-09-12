@@ -141,6 +141,8 @@ void SettingsForm::show(Ui::MainWindow &ui)
     {
         profiles.addItem(profile);
     }
+    if (QString current = Settings::getInstance().getCurrentProfile())
+        profiles.setCurrentText(current);
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
     main->show();

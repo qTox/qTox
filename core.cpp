@@ -888,7 +888,15 @@ void Core::checkConnection()
 
 QString Core::sanitize(QString name)
 {
-    // do things
+    // these are pretty much Windows banned filename characters
+    QList<QChar> banned = {'/', '\\', ':', '<', '>', '"', '|', '?', '*'};
+    for (QChar c : banned)
+        name.replace(c, '_');
+    // also remove leading and trailing periods
+    if (name[0] == '.')
+        name[0] = '_';
+    if (name.endsWith('.'))
+        name[name.length()-1] = '_';
     return name;
 }
 
