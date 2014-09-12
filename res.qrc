@@ -135,5 +135,9 @@
         <file>ui/fileTransferInstance/emptyRGreenFileButton.png</file>
         <file>ui/fileTransferInstance/emptyRRedFileButton.png</file>
         <file>audio/notification.pcm</file>
+        <file>img/settings/general.png</file>
+        <file>img/settings/identity.png</file>
+        <file>img/settings/privacy.png</file>
+        <file>img/settings/av.png</file>
     </qresource>
 </RCC>

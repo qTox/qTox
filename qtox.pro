@@ -79,7 +79,6 @@ win32 {
 HEADERS  += widget/form/addfriendform.h \
     widget/form/chatform.h \
     widget/form/groupchatform.h \
-    widget/form/settingsform.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
     widget/tool/friendrequestdialog.h \
@@ -110,13 +109,13 @@ HEADERS  += widget/form/addfriendform.h \
     filetransferinstance.h \
     corestructs.h \
     coredefines.h \
-    coreav.h
+    coreav.h \
+    widget/settingsdialog.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
     widget/form/chatform.cpp \
     widget/form/groupchatform.cpp \
-    widget/form/settingsform.cpp \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
     widget/tool/friendrequestdialog.cpp \
@@ -147,4 +146,5 @@ SOURCES += \
     widget/tool/chataction.cpp \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp \
-    corestructs.cpp
+    corestructs.cpp \
+    widget/settingsdialog.cpp
