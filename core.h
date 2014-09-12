@@ -45,10 +45,10 @@
 #define TOXAV_RINGING_TIME 15
 
 // tox id
-#define TOX_ID_LENGTH 2*TOX_FRIEND_ADDRESS_SIZE
-#define TOX_ID_NO_SPAM_LENGTH (sizeof(uint32_t))
-#define TOX_ID_CHECKSUM_LENGTH (sizeof(uint16_t))
-#define TOX_ID_PUBLIC_KEY_LENGTH (TOX_ID_LENGTH - (TOX_ID_NO_SPAM_LENGTH + TOX_ID_CHECKSUM_LENGTH))
+#define TOX_ID_PUBLIC_KEY_LENGTH (2 * TOX_CLIENT_ID_SIZE)
+#define TOX_ID_NO_SPAM_LENGTH (2 * sizeof(uint32_t))
+#define TOX_ID_CHECKSUM_LENGTH (2 * sizeof(uint16_t))
+#define TOX_ID_LENGTH (TOX_ID_PUBLIC_KEY_LENGTH + TOX_ID_NO_SPAM_LENGTH + TOX_ID_CHECKSUM_LENGTH)
 
 
 // TODO: Put that in the settings
@@ -74,7 +74,7 @@ struct ToxID
     {
         ToxID toxID;
         toxID.publicKey = id.left(TOX_ID_PUBLIC_KEY_LENGTH);
-        toxID.noSpam   = id.mid(TOX_ID_LENGTH, TOX_ID_NO_SPAM_LENGTH);
+        toxID.noSpam   = id.mid(TOX_ID_PUBLIC_KEY_LENGTH, TOX_ID_NO_SPAM_LENGTH);
         toxID.checkSum = id.right(TOX_ID_CHECKSUM_LENGTH);
         return toxID;
     }
