@@ -15,7 +15,7 @@
 */
 
 #include "camera.h"
-#include <QMessageBox>
+#include "widget.h"
 
 using namespace cv;
 
@@ -113,4 +113,9 @@ vpx_image Camera::getLastVPXImage()
         }
     }
     return img;
+}
+
+Camera* Camera::getInstance()
+{
+    return Widget::getInstance()->getCamera();
 }

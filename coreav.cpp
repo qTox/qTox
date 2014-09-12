@@ -15,7 +15,9 @@
 */
 
 #include "core.h"
-#include "widget/widget.h"
+#include "widget/camera.h"
+#include <QDebug>
+#include <QTimer>
 
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
@@ -55,7 +57,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     if (calls[callId].videoEnabled)
     {
         calls[callId].sendVideoTimer->start();
-        Widget::getInstance()->getCamera()->suscribe();
+        Camera::getInstance()->suscribe();
     }
 }
 
@@ -71,12 +73,12 @@ void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
     {
         calls[callId].videoEnabled = false;
         calls[callId].sendVideoTimer->stop();
-        Widget::getInstance()->getCamera()->unsuscribe();
+        Camera::getInstance()->unsuscribe();
         emit ((Core*)core)->avMediaChange(friendId, callId, false);
     }
     else
     {
-        Widget::getInstance()->getCamera()->suscribe();
+        Camera::getInstance()->suscribe();
         calls[callId].videoEnabled = true;
         calls[callId].sendVideoTimer->start();
         emit ((Core*)core)->avMediaChange(friendId, callId, true);
@@ -159,7 +161,7 @@ void Core::cleanupCall(int callId)
     calls[callId].sendAudioTimer->stop();
     calls[callId].sendVideoTimer->stop();
     if (calls[callId].videoEnabled)
-        Widget::getInstance()->getCamera()->unsuscribe();
+        Camera::getInstance()->unsuscribe();
     alcCaptureStop(alInDev);
 }
 
@@ -224,7 +226,7 @@ void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_da
     if (videoBusyness >= 1)
         qWarning() << "Core: playCallVideo: Busy, dropping current frame";
     else
-        emit Widget::getInstance()->getCore()->videoFrameReceived(img);
+        emit Core::getInstance()->videoFrameReceived(img);
     vpx_img_free(img);
 }
 

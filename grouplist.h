@@ -17,17 +17,16 @@
 #ifndef GROUPLIST_H
 #define GROUPLIST_H
 
-#include <QString>
-#include <QList>
-#include <QMap>
-
+template <typename T>
+class QList;
 class Group;
+class QString;
 
 class GroupList
 {
 public:
     GroupList();
-    static Group* addGroup(int groupId, QString name);
+    static Group* addGroup(int groupId, const QString& name);
     static Group* findGroup(int groupId);
     static void removeGroup(int groupId);
 

@@ -22,6 +22,9 @@
 #include "style.h"
 #include "widget/widget.h"
 #include "settings.h"
+#include "widget/tool/chataction.h"
+#include "widget/chatareawidget.h"
+#include "widget/tool/chattextedit.h"
 
 GenericChatForm::GenericChatForm(QObject *parent) :
     QObject(parent)
@@ -199,4 +202,9 @@ void GenericChatForm::onEmoteInsertRequested(QString str)
         msgEdit->insertPlainText(str);
 
     msgEdit->setFocus(); // refocus so that we can continue typing
+}
+
+void GenericChatForm::focusInput()
+{
+    msgEdit->setFocus();
 }

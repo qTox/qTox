@@ -15,23 +15,49 @@
 */
 
 #include "chatareawidget.h"
-#include <QAbstractTextDocumentLayout>
-#include <QMessageBox>
+#include "widget/tool/chataction.h"
 #include <QScrollBar>
+#include <QDesktopServices>
+#include <QTextTable>
+#include <QAbstractTextDocumentLayout>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
-    QTextEdit(parent)
+    QTextBrowser(parent)
 {
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
     setContextMenuPolicy(Qt::CustomContextMenu);
     setUndoRedoEnabled(false);
+
+    setOpenExternalLinks(false);
+    setOpenLinks(false);
+    setAcceptRichText(false);
+
+    chatTextTable = textCursor().insertTable(1,3);
+
+    QTextTableFormat tableFormat;
+    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::VariableLength,0),
+                                           QTextLength(QTextLength::PercentageLength,100),
+                                           QTextLength(QTextLength::VariableLength,0)});
+    tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
+    chatTextTable->setFormat(tableFormat);
+    chatTextTable->format().setCellSpacing(2);
+    chatTextTable->format().setWidth(QTextLength(QTextLength::PercentageLength,100));
+
+    nameFormat.setAlignment(Qt::AlignRight);
+    nameFormat.setNonBreakableLines(true);
+    dateFormat.setAlignment(Qt::AlignLeft);
+    dateFormat.setNonBreakableLines(true);
+
+    connect(this, &ChatAreaWidget::anchorClicked, this, &ChatAreaWidget::onAnchorClicked);
+    connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
 }
 
 ChatAreaWidget::~ChatAreaWidget()
 {
-    for (ChatAction *it : messages)
-        delete it;
+    for (ChatAction* action : messages)
+        delete action;
+    messages.clear();
 }
 
 void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
@@ -65,16 +91,9 @@ void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
     }
 }
 
-QString ChatAreaWidget::getHtmledMessages()
+void ChatAreaWidget::onAnchorClicked(const QUrl &url)
 {
-    QString res("<table width=100%>\n");
-
-    for (ChatAction *it : messages)
-    {
-        res += it->getHtml();
-    }
-    res += "</table>";
-    return res;
+    QDesktopServices::openUrl(url);
 }
 
 void ChatAreaWidget::insertMessage(ChatAction *msgAction)
@@ -82,31 +101,33 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     if (msgAction == nullptr)
         return;
 
-    messages.append(msgAction);
-    //updateChatContent();
+    checkSlider();
 
-    moveCursor(QTextCursor::End);
-    moveCursor(QTextCursor::PreviousCell);
-    insertHtml(msgAction->getHtml());
+    int row = chatTextTable->rows() - 1;
+    chatTextTable->cellAt(row,0).firstCursorPosition().setBlockFormat(nameFormat);
+    chatTextTable->cellAt(row,2).firstCursorPosition().setBlockFormat(dateFormat);
+    QTextCursor cur = chatTextTable->cellAt(row,1).firstCursorPosition();
+    cur.clearSelection();
+    cur.setKeepPositionOnInsert(true);
+    chatTextTable->cellAt(row,0).firstCursorPosition().insertHtml(msgAction->getName());
+    chatTextTable->cellAt(row,1).firstCursorPosition().insertHtml(msgAction->getMessage());
+    chatTextTable->cellAt(row,2).firstCursorPosition().insertHtml(msgAction->getDate());
+    chatTextTable->appendRows(1);
+
+    msgAction->setTextCursor(cur);
+
+    messages.append(msgAction);
 }
 
-void ChatAreaWidget::updateChatContent()
+void ChatAreaWidget::onSliderRangeChanged()
+{
+    QScrollBar* scroll = verticalScrollBar();
+    if (lockSliderToBottom)
+        scroll->setValue(scroll->maximum());
+}
+
+void ChatAreaWidget::checkSlider()
 {
     QScrollBar* scroll = verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
-
-    setUpdatesEnabled(false);
-    setHtml(getHtmledMessages());
-    setUpdatesEnabled(true);
-    if (lockSliderToBottom)
-        sliderPosition = scroll->maximum();
-
-    scroll->setValue(sliderPosition);
-}
-
-void ChatAreaWidget::clearMessages()
-{
-    for (ChatAction *it : messages)
-        delete it;
-    updateChatContent();
 }

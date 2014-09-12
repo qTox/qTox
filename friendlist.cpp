@@ -21,7 +21,7 @@
 
 QList<Friend*> FriendList::friendList;
 
-Friend* FriendList::addFriend(int friendId, QString userId)
+Friend* FriendList::addFriend(int friendId, const QString& userId)
 {
     for (Friend* f : friendList)
         if (f->friendId == friendId)

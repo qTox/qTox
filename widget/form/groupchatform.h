@@ -18,9 +18,8 @@
 #define GROUPCHATFORM_H
 
 #include "genericchatform.h"
-#include "widget/tool/chattextedit.h"
-#include "ui_mainwindow.h"
 
+namespace Ui {class MainWindow;}
 class Group;
 
 class GroupChatForm : public GenericChatForm

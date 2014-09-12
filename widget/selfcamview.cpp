@@ -15,46 +15,45 @@
 */
 
 #include "selfcamview.h"
+#include "camera.h"
 #include <QCloseEvent>
 #include <QShowEvent>
-
-#include "widget.h"
+#include <QTimer>
+#include <QLabel>
+#include <QHBoxLayout>
+#include <opencv2/opencv.hpp>
 
 using namespace cv;
 
 SelfCamView::SelfCamView(Camera* Cam, QWidget* parent)
     : QWidget(parent), displayLabel{new QLabel},
-      mainLayout{new QHBoxLayout()}, cam(Cam)
+      mainLayout{new QHBoxLayout()}, cam(Cam), updateDisplayTimer{new QTimer}
 {
     setLayout(mainLayout);
     setWindowTitle(SelfCamView::tr("Tox video test","Title of the window to test the video/webcam"));
     setMinimumSize(320,240);
 
-    updateDisplayTimer.setInterval(5);
-    updateDisplayTimer.setSingleShot(false);
+    updateDisplayTimer->setInterval(5);
+    updateDisplayTimer->setSingleShot(false);
 
     displayLabel->setScaledContents(true);
 
     mainLayout->addWidget(displayLabel);
 
-    connect(&updateDisplayTimer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
-}
-
-SelfCamView::~SelfCamView()
-{
+    connect(updateDisplayTimer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
 }
 
 void SelfCamView::closeEvent(QCloseEvent* event)
 {
     cam->unsuscribe();
-    updateDisplayTimer.stop();
+    updateDisplayTimer->stop();
     event->accept();
 }
 
 void SelfCamView::showEvent(QShowEvent* event)
 {
     cam->suscribe();
-    updateDisplayTimer.start();
+    updateDisplayTimer->start();
     event->accept();
 }
 

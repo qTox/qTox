@@ -19,8 +19,14 @@
 
 #include <QFileInfo>
 #include <QFile>
-#include <QtXml>
-#include <QDebug>
+#include <QIcon>
+#include <QPixmap>
+#include <QDir>
+#include <QCoreApplication>
+#include <QDomDocument>
+#include <QDomElement>
+#include <QBuffer>
+#include <QStringBuilder>
 
 SmileyPack::SmileyPack()
 {

@@ -18,9 +18,8 @@
 #define CDATA_H
 
 #include <cstdint>
-#include <QString>
-#include "tox/tox.h"
 
+class QString;
 class CData
 {
 public:
@@ -48,7 +47,7 @@ public:
     static QString toString(const uint8_t *cUserId);
 
 private:
-    static const uint16_t SIZE = TOX_CLIENT_ID_SIZE;
+    static const uint16_t SIZE;
 
 };
 
@@ -60,7 +59,7 @@ public:
     static QString toString(const uint8_t* cFriendAddress);
 
 private:
-    static const uint16_t SIZE = TOX_FRIEND_ADDRESS_SIZE;
+    static const uint16_t SIZE;
 
 };
 

@@ -16,6 +16,7 @@
 
 #include "widget.h"
 #include "ui_mainwindow.h"
+#include "core.h"
 #include "settings.h"
 #include "friend.h"
 #include "friendlist.h"
@@ -26,17 +27,19 @@
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
 #include "style.h"
+#include "selfcamview.h"
+#include "widget/friendlistwidget.h"
+#include "camera.h"
+#include "widget/form/chatform.h"
 #include <QMessageBox>
 #include <QDebug>
-#include <QTextStream>
 #include <QFile>
 #include <QString>
 #include <QPainter>
 #include <QMouseEvent>
-#include <QDesktopWidget>
-#include <QCursor>
-#include <QSettings>
 #include <QClipboard>
+#include <QThread>
+#include <tox/tox.h>
 
 Widget *Widget::instance{nullptr};
 
@@ -382,13 +385,15 @@ void Widget::setStatusMessage(const QString &statusMessage)
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-    qDebug() << "Adding friend with id "+userId;
+
+    qDebug() << "Widget: Adding friend with id "+userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->widget);
     connect(newfriend->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
+    connect(newfriend->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newfriend->chatForm, SLOT(focusInput()));
     connect(newfriend->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
     connect(newfriend->chatForm, SIGNAL(sendFile(int32_t, QString, QString, long long)), core, SLOT(sendFile(int32_t, QString, QString, long long)));
     connect(newfriend->chatForm, SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
@@ -510,7 +515,7 @@ void Widget::newMessageAlert()
 {
     QApplication::alert(this);
 
-    static QFile sndFile(":audio/notification.wav");
+    static QFile sndFile(":audio/notification.pcm");
     static QByteArray sndData;
     if (sndData.isEmpty())
     {
@@ -521,7 +526,7 @@ void Widget::newMessageAlert()
 
     ALuint buffer;
     alGenBuffers(1, &buffer);
-    alBufferData(buffer, AL_FORMAT_STEREO16, sndData.data(), sndData.size(), 44100);
+    alBufferData(buffer, AL_FORMAT_MONO16, sndData.data(), sndData.size(), 44100);
     alSourcei(core->alMainSource, AL_BUFFER, buffer);
     alSourcePlay(core->alMainSource);
 }
@@ -608,7 +613,12 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
 
     TOX_CHAT_CHANGE change = static_cast<TOX_CHAT_CHANGE>(Change);
     if (change == TOX_CHAT_CHANGE_PEER_ADD)
-        g->addPeer(peernumber,"<Unknown>");
+    {
+        QString name = core->getGroupPeerName(groupnumber, peernumber);
+        if (name.isEmpty())
+            name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
+        g->addPeer(peernumber,name);
+    }
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
         g->removePeer(peernumber);
     else if (change == TOX_CHAT_CHANGE_PEER_NAME)
@@ -650,6 +660,7 @@ Group *Widget::createGroup(int groupId)
 
     connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
+    connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->chatForm, SLOT(focusInput()));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
     return newgroup;
 }

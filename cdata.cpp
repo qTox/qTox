@@ -15,6 +15,8 @@
 */
 
 #include "cdata.h"
+#include <QString>
+#include <tox/tox.h>
 
 // CData
 
@@ -54,6 +56,8 @@ uint16_t CData::fromString(const QString& data, uint8_t* cData)
 
 // CUserId
 
+const uint16_t CUserId::SIZE{TOX_CLIENT_ID_SIZE};
+
 CUserId::CUserId(const QString &userId) :
     CData(userId, SIZE)
 {
@@ -67,6 +71,8 @@ QString CUserId::toString(const uint8_t* cUserId)
 
 
 // CFriendAddress
+
+const uint16_t CFriendAddress::SIZE{TOX_FRIEND_ADDRESS_SIZE};
 
 CFriendAddress::CFriendAddress(const QString &friendAddress) :
     CData(friendAddress, SIZE)

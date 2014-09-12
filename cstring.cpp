@@ -15,6 +15,7 @@
 */
 
 #include "cstring.h"
+#include <QString>
 
 CString::CString(const QString& string)
 {

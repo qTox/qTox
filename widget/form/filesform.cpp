@@ -15,6 +15,11 @@
 */
 
 #include "filesform.h"
+#include "ui_mainwindow.h"
+#include <QFileInfo>
+#include <QUrl>
+#include <QDebug>
+#include <QDesktopServices>
 
 FilesForm::FilesForm()
     : QObject()

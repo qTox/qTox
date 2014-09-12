@@ -17,17 +17,14 @@
 #ifndef FILESFORM_H
 #define FILESFORM_H
 
-#include "ui_mainwindow.h"
-
-#include <QListWidget>
+#include <QListWidgetItem>
 #include <QTabWidget>
 #include <QString>
-#include <QDesktopServices>
 #include <QLabel>
 #include <QVBoxLayout>
-#include <QUrl>
-#include <QDebug>
-#include <QFileInfo>
+
+namespace Ui {class MainWindow;}
+class QListWidget;
 
 class FilesForm : public QObject
 {

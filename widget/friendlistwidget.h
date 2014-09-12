@@ -18,8 +18,11 @@
 #define FRIENDLISTWIDGET_H
 
 #include <QWidget>
-#include <QGridLayout>
-#include "core.h"
+#include <QHash>
+#include "corestructs.h"
+
+class QLayout;
+class QGridLayout;
 
 class FriendListWidget : public QWidget
 {

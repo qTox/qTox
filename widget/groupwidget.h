@@ -17,7 +17,6 @@
 #ifndef GROUPWIDGET_H
 #define GROUPWIDGET_H
 
-#include <QWidget>
 #include <QLabel>
 #include "genericchatroomwidget.h"
 

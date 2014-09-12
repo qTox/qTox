@@ -131,17 +131,17 @@ First of all install the dependencies of Tox Core.
 
 Debian:
 ```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check yasm libopus-dev libvpx-dev
+sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev
 ```
 
 Ubuntu:
 ```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check yasm libopus-dev libvpx-dev
+sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev
 ```
 
 Arch Linux: (Arch Linux provides the package "tox-git" in AUR)
 ```bash
-sudo pacman -S --needed yasm opus vpx
+sudo pacman -S --needed opus vpx
 ```
 
 Fedora:

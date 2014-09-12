@@ -19,18 +19,17 @@
 
 #include <QObject>
 #include <QPoint>
-#include <QTime>
-#include <QLabel>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-
-#include "widget/croppinglabel.h"
-#include "widget/chatareawidget.h"
-#include "widget/tool/chattextedit.h"
+#include <QDateTime>
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5
+
+class QLabel;
+class QVBoxLayout;
+class QPushButton;
+class CroppingLabel;
+class ChatTextEdit;
+class ChatAreaWidget;
 
 namespace Ui {
     class MainWindow;
@@ -51,6 +50,7 @@ signals:
     void sendMessage(int, QString);
 
 public slots:
+    void focusInput();
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);

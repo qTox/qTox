@@ -20,6 +20,8 @@
 #include "settings.h"
 #include "widget/widget.h"
 
+#include <tox/tox.h>
+
 #include <ctime>
 #include <functional>
 
@@ -28,9 +30,10 @@
 #include <QFile>
 #include <QSaveFile>
 #include <QStandardPaths>
-#include <QtEndian>
 #include <QThread>
-#include <QtConcurrent/QtConcurrent>
+#include <QTimer>
+#include <QCoreApplication>
+#include <QDateTime>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 const QString Core::TOX_EXT = ".tox";
@@ -111,6 +114,11 @@ Core::~Core()
         alcCloseDevice(alOutDev);
     if (alInDev)
         alcCaptureCloseDevice(alInDev);
+}
+
+Core* Core::getInstance()
+{
+    return Widget::getInstance()->getCore();
 }
 
 void Core::get_tox()
@@ -405,6 +413,14 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         // confirm receive is complete
         tox_file_send_control(tox, file->friendId, 1, file->fileNum, TOX_FILECONTROL_FINISHED, nullptr, 0);
         removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
+    }
+    else if (receive_send == 0 && control_type == TOX_FILECONTROL_ACCEPT)
+    {
+        emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, false);
+    }
+    else if ((receive_send == 0 || receive_send == 1) && control_type == TOX_FILECONTROL_PAUSE)
+    {
+        emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, true);
     }
     else
     {
@@ -702,15 +718,6 @@ void Core::removeGroup(int groupId)
     tox_del_groupchat(tox, groupId);
 }
 
-QString Core::getIDString()
-{
-    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
-    tox_get_address(tox, friendAddress);
-    return CFriendAddress::toString(friendAddress).left(12);
-    // 12 is the smallest multiple of four such that
-    // 16^n > 10^10 (which is roughly the planet's population)
-}
-
 QString Core::getUsername()
 {
     int size = tox_get_self_name_size(tox);
@@ -732,6 +739,21 @@ void Core::setUsername(const QString& username)
         emit usernameSet(username);
         saveConfiguration();
     }
+}
+
+QString Core::getSelfId()
+{
+    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
+    tox_get_address(tox, friendAddress);
+
+    return CFriendAddress::toString(friendAddress);
+}
+
+QString Core::getIDString()
+{
+    return getSelfId().left(12);
+    // 12 is the smallest multiple of four such that
+    // 16^n > 10^10 (which is roughly the planet's population)
 }
 
 QString Core::getStatusMessage()

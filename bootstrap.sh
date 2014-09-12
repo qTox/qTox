@@ -21,7 +21,7 @@ TOX_CORE_DIR=libtoxcore-latest
 # the default value is 'false' and will be set to 'true'
 # if this script gets the parameter -t or --tox
 TOX_ONLY=false
-GLOBAL=false
+GLOBAL=true
 KEEP=false
 
 if [ -z "$BASE_DIR" ]; then
@@ -49,8 +49,8 @@ while [ $# -ge 1 ] ; do
     if [ ${1} = "-t" -o ${1} = "--tox" ] ; then
         TOX_ONLY=true
         shift
-    elif [ ${1} = "-g" -o ${1} = "--global" ] ; then
-        GLOBAL=true
+    elif [ ${1} = "-l" -o ${1} = "--local" ] ; then
+        GLOBAL=false
         shift
     elif [ ${1} = "-k" -o ${1} = "--keep" ]; then
         KEEP=true
@@ -71,8 +71,8 @@ while [ $# -ge 1 ] ; do
         echo "    -h|--help  : displays this help"
         echo "    -t|--tox   : only install/update libtoxcore"
         echo "                 requires an already installed libsodium"
-        echo "    -g|--global: installs libtox* and libsodium globally"
-        echo "                 (also disables local configure prefixes)"
+        echo "    -l|--local : installs libtox* and libsodium in the current directory,"
+        echo "                 as opposed to the system directories"
         echo "    -k|--keep  : does not delete the build directories afterwards"
         echo ""
         echo "example usages:"
@@ -146,6 +146,10 @@ else
 fi
 
 popd
+
+if [[ $GLOBAL = "true" ]]; then
+    sudo ldconfig
+fi
 
 ############### cleanup step ###############
 # remove cloned repositories

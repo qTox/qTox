@@ -17,6 +17,7 @@
 #include "friend.h"
 #include "friendlist.h"
 #include "widget/friendwidget.h"
+#include "widget/form/chatform.h"
 
 Friend::Friend(int FriendId, QString UserId)
     : friendId(FriendId), userId(UserId)

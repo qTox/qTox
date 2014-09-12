@@ -17,14 +17,14 @@
 #ifndef ADDFRIENDFORM_H
 #define ADDFRIENDFORM_H
 
-#include "ui_mainwindow.h"
-
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPushButton>
 #include <QDnsLookup>
+
+namespace Ui {class MainWindow;}
 
 class AddFriendForm : public QObject
 {
@@ -42,8 +42,8 @@ signals:
     void friendRequested(const QString& friendAddress, const QString& message);
 
 private slots:
-     void onSendTriggered();
-     void handleDnsLookup();
+    void onSendTriggered();
+    void handleDnsLookup();
 
 private:
     QLabel headLabel, toxIdLabel, messageLabel;

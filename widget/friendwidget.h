@@ -17,10 +17,7 @@
 #ifndef FRIENDWIDGET_H
 #define FRIENDWIDGET_H
 
-#include <QWidget>
 #include <QLabel>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 
 #include "genericchatroomwidget.h"
 #include "croppinglabel.h"

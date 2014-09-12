@@ -15,6 +15,7 @@
 */
 #include "friendlistwidget.h"
 #include <QDebug>
+#include <QGridLayout>
 
 FriendListWidget::FriendListWidget(QWidget *parent) :
     QWidget(parent)

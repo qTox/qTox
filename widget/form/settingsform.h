@@ -20,21 +20,16 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include <QString>
 #include <QObject>
-#include <QSpacerItem>
 #include <QCheckBox>
 #include <QPushButton>
 #include <QTextEdit>
 #include <QComboBox>
-#include <QDir>
-#include <QFileInfo>
 #include <QFileDialog>
-#include <QMessageBox>
-#include "ui_mainwindow.h"
-#include "widget/selfcamview.h"
 #include "widget/croppinglabel.h"
-#include "core.h"
+
+namespace Ui {class MainWindow;}
+class QString;
 
 class SettingsForm : public QObject
 {

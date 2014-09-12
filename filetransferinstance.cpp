@@ -15,15 +15,12 @@
 */
 
 #include "filetransferinstance.h"
-#include "widget/widget.h"
 #include "core.h"
-#include "math.h"
-#include "style.h"
+#include <math.h>
 #include <QFileDialog>
-#include <QPixmap>
-#include <QPainter>
 #include <QMessageBox>
 #include <QBuffer>
+#include <QDebug>
 
 uint FileTransferInstance::Idconter = 0;
 
@@ -33,6 +30,7 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
 {
     id = Idconter++;
     state = tsPending;
+    remotePaused = false;
 
     filename = File.fileName;
     size = getHumanReadableSize(File.filesize);
@@ -64,7 +62,7 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
     if (FileNum != fileNum || FriendId != friendId || Direction != direction)
             return;
 
-    state = tsProcessing;
+//    state = tsProcessing;
     QDateTime newtime = QDateTime::currentDateTime();
     int timediff = lastUpdate.secsTo(newtime);
     if (timediff <= 0)
@@ -93,7 +91,7 @@ void FileTransferInstance::onFileTransferCancelled(int FriendId, int FileNum, To
 {
     if (FileNum != fileNum || FriendId != friendId || Direction != direction)
             return;
-    disconnect(Widget::getInstance()->getCore(),0,this,0);
+    disconnect(Core::getInstance(),0,this,0);
     state = tsCanceled;
 
     emit stateUpdated();
@@ -103,7 +101,7 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
 {
     if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
             return;
-    disconnect(Widget::getInstance()->getCore(),0,this,0);
+    disconnect(Core::getInstance(),0,this,0);
 
     if (File.direction == ToxFile::RECEIVING)
     {
@@ -124,16 +122,47 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
     emit stateUpdated();
 }
 
+void FileTransferInstance::onFileTransferAccepted(ToxFile File)
+{
+    if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
+            return;
+
+    remotePaused = false;
+    state = tsProcessing;
+
+    emit stateUpdated();
+}
+
+void FileTransferInstance::onFileTransferRemotePausedUnpaused(ToxFile File, bool paused)
+{
+    if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
+            return;
+
+    remotePaused = paused;
+
+    emit stateUpdated();
+}
+
+void FileTransferInstance::onFileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection Direction)
+{
+    if (FileNum != fileNum || FriendId != friendId || Direction != direction)
+            return;
+
+    state = tsPaused;
+
+    emit stateUpdated();
+}
+
 void FileTransferInstance::cancelTransfer()
 {
-    Widget::getInstance()->getCore()->cancelFileSend(friendId, fileNum);
+    Core::getInstance()->cancelFileSend(friendId, fileNum);
     state = tsCanceled;
     emit stateUpdated();
 }
 
 void FileTransferInstance::rejectRecvRequest()
 {
-    Widget::getInstance()->getCore()->rejectFileRecvRequest(friendId, fileNum);
+    Core::getInstance()->rejectFileRecvRequest(friendId, fileNum);
     onFileTransferCancelled(friendId, fileNum, direction);
     state = tsCanceled;
     emit stateUpdated();
@@ -159,7 +188,7 @@ void FileTransferInstance::acceptRecvRequest()
     QString path;
     while (true)
     {
-        path = QFileDialog::getSaveFileName(Widget::getInstance(), tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename));
+        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename));
         if (path.isEmpty())
             return;
         else
@@ -170,13 +199,13 @@ void FileTransferInstance::acceptRecvRequest()
             if (isFileWritable(path))
                 break;
             else
-                QMessageBox::warning(Widget::getInstance(), tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+                QMessageBox::warning(0, tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
         }
     }
 
     savePath = path;
 
-    Widget::getInstance()->getCore()->acceptFileRecvRequest(friendId, fileNum, path);
+    Core::getInstance()->acceptFileRecvRequest(friendId, fileNum, path);
     state = tsProcessing;
 
     emit stateUpdated();
@@ -184,19 +213,33 @@ void FileTransferInstance::acceptRecvRequest()
 
 void FileTransferInstance::pauseResumeRecv()
 {
-    Widget::getInstance()->getCore()->pauseResumeFileRecv(friendId, fileNum);
-    if (state == tsProcessing)
-        state = tsPaused;
-    else state = tsProcessing;
+    if (!(state == tsProcessing || state == tsPaused))
+        return;
+
+    if (remotePaused)
+        return;
+
+    Core::getInstance()->pauseResumeFileRecv(friendId, fileNum);
+//    if (state == tsProcessing)
+//        state = tsPaused;
+//    else state = tsProcessing;
+
     emit stateUpdated();
 }
 
 void FileTransferInstance::pauseResumeSend()
 {
-    Widget::getInstance()->getCore()->pauseResumeFileSend(friendId, fileNum);
-    if (state == tsProcessing)
-        state = tsPaused;
-    else state = tsProcessing;
+    if (!(state == tsProcessing || state == tsPaused))
+        return;
+
+    if (remotePaused)
+        return;
+
+    Core::getInstance()->pauseResumeFileSend(friendId, fileNum);
+//    if (state == tsProcessing)
+//        state = tsPaused;
+//    else state = tsProcessing;
+
     emit stateUpdated();
 }
 
@@ -223,7 +266,15 @@ QString FileTransferInstance::getHtmlImage()
         else if (state == tsPaused)
             rightBtnImg = QImage(":/ui/fileTransferInstance/resumeFileButton.png");
         else
-            rightBtnImg = QImage(":/ui/fileTransferInstance/acceptFileButton.png");
+        {
+            if (direction == ToxFile::SENDING)
+                rightBtnImg = QImage(":/ui/fileTransferInstance/pauseGreyFileButton.png");
+            else
+                rightBtnImg = QImage(":/ui/fileTransferInstance/acceptFileButton.png");
+        }
+
+        if (remotePaused)
+            rightBtnImg = QImage(":/ui/fileTransferInstance/pauseGreyFileButton.png");
 
         res = draw2ButtonsForm("silver", leftBtnImg, rightBtnImg);
     } else if (state == tsCanceled)

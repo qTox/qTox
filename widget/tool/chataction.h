@@ -18,26 +18,28 @@
 #define CHATACTION_H
 
 #include <QString>
-#include "filetransferinstance.h"
+#include <QTextCursor>
 
-class ChatAction
+class FileTransferInstance;
+
+class ChatAction : public QObject
 {
 public:
-    ChatAction(const bool &me) : isMe(me) {;}
+    ChatAction(const bool &me, const QString &author, const QString &date) : isMe(me), name(author), date(date) {;}
     virtual ~ChatAction(){;}
-    virtual QString getHtml() = 0;
+    virtual void setTextCursor(QTextCursor cursor){(void)cursor;} ///< Call once, and then you MUST let the object update itself
+
+    virtual QString getName();
+    virtual QString getMessage() = 0;
+    virtual QString getDate();
 
 protected:
     QString toHtmlChars(const QString &str);
     QString QImage2base64(const QImage &img);
 
-    virtual QString wrapName(const QString &name);
-    virtual QString wrapDate(const QString &date);
-    virtual QString wrapMessage(const QString &message);
-    virtual QString wrapWholeLine(const QString &line);
-
-private:
+protected:
     bool isMe;
+    QString name, date;
 };
 
 class MessageAction : public ChatAction
@@ -45,23 +47,28 @@ class MessageAction : public ChatAction
 public:
     MessageAction(const QString &author, const QString &message, const QString &date, const bool &me);
     virtual ~MessageAction(){;}
-    virtual QString getHtml();
+    virtual QString getMessage();
+    virtual void setTextCursor(QTextCursor cursor) final;
 
 private:
-    QString content;
+    QString message;
 };
 
 class FileTransferAction : public ChatAction
 {
+    Q_OBJECT
 public:
     FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me);
     virtual ~FileTransferAction();
-    virtual QString getHtml();
-    virtual QString wrapMessage(const QString &message);
+    virtual QString getMessage();
+    virtual void setTextCursor(QTextCursor cursor) final;
+
+private slots:
+    void updateHtml();
 
 private:
     FileTransferInstance *w;
-    QString sender, timestamp;
+    QTextCursor cur;
 };
 
 #endif // CHATACTION_H

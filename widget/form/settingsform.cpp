@@ -18,11 +18,14 @@
 #include "widget/widget.h"
 #include "settings.h"
 #include "smileypack.h"
+#include "ui_mainwindow.h"
 #include <QFont>
 #include <QClipboard>
 #include <QApplication>
 #include <QFileDialog>
 #include <QDir>
+#include <QMessageBox>
+#include "core.h"
 
 SettingsForm::SettingsForm()
     : QObject()
@@ -32,6 +35,7 @@ SettingsForm::SettingsForm()
     QFont bold, small;
     bold.setBold(true);
     small.setPixelSize(13);
+    small.setKerning(false);
     headLabel.setText(tr("User Settings","\"Headline\" of the window"));
     headLabel.setFont(bold);
     
@@ -41,7 +45,7 @@ SettingsForm::SettingsForm()
     id.setReadOnly(true);
     id.setFrameStyle(QFrame::NoFrame);
     id.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    id.setFixedHeight(id.document()->size().height());
+    id.setFixedHeight(id.document()->size().height()*2);
     
     profilesLabel.setText(tr("Available profiles:", "Labels the profile selection box"));
     loadConf.setText(tr("Load profile", "button to load selected profile"));
@@ -120,12 +124,14 @@ QList<QString> SettingsForm::searchProfiles()
 
 QString SettingsForm::getSelectedSavePath()
 {
-    return Settings::getSettingsDirPath() + QDir::separator() + profiles.currentText() + Widget::getInstance()->getCore()->TOX_EXT;
+    return Settings::getSettingsDirPath() + QDir::separator() + profiles.currentText() + Core::getInstance()->TOX_EXT;
 }
 
 void SettingsForm::setFriendAddress(const QString& friendAddress)
 {
-    id.setText(friendAddress);
+    QString txt{friendAddress};
+    txt.insert(38,'\n');
+    id.setText(txt);
 }
 
 void SettingsForm::show(Ui::MainWindow &ui)
@@ -143,13 +149,13 @@ void SettingsForm::show(Ui::MainWindow &ui)
 
 void SettingsForm::onLoadClicked()
 {
-    Widget::getInstance()->getCore()->switchConfiguration(profiles.currentText());
+    Core::getInstance()->switchConfiguration(profiles.currentText());
 }
 
 void SettingsForm::onExportClicked()
 {
     QString current = getSelectedSavePath();
-    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"), QDir::homePath() + QDir::separator() + profiles.currentText() + Widget::getInstance()->getCore()->TOX_EXT, tr("Tox save file (*.tox)", "save dialog filter"));
+    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"), QDir::homePath() + QDir::separator() + profiles.currentText() + Core::getInstance()->TOX_EXT, tr("Tox save file (*.tox)", "save dialog filter"));
     QFile::copy(getSelectedSavePath(), path);
 }
 
@@ -176,11 +182,11 @@ void SettingsForm::onImportClicked()
     QString path = QFileDialog::getOpenFileName(0, tr("Import profile", "import dialog title"), QDir::homePath(), tr("Tox save file (*.tox)", "import dialog filter"));
     QFileInfo info(path);
     QString profile = info.completeBaseName();
-    QString profilePath = Settings::getSettingsDirPath() + profile + Widget::getInstance()->getCore()->TOX_EXT;
+    QString profilePath = Settings::getSettingsDirPath() + profile + Core::getInstance()->TOX_EXT;
     Settings::getInstance().setCurrentProfile(profile);
     QFile::copy(path, profilePath);
     profiles.addItem(profile);
-    Widget::getInstance()->getCore()->switchConfiguration(profile);
+    Core::getInstance()->switchConfiguration(profile);
 }
 
 void SettingsForm::onTestVideoClicked()
@@ -195,8 +201,10 @@ void SettingsForm::onEnableIPv6Updated()
 
 void SettingsForm::copyIdClicked()
 {
-    id.selectAll();;
-    QApplication::clipboard()->setText(id.toPlainText());
+    id.selectAll();
+    QString txt = id.toPlainText();
+    txt.replace('\n',"");
+    QApplication::clipboard()->setText(txt);
 }
 
 void SettingsForm::onUseTranslationUpdated()
