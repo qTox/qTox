@@ -49,7 +49,7 @@ public:
     
     QString getUsername();
     QString getStatusMessage();
-    QString getSelfId();
+    ToxID getSelfId();
 
     void increaseVideoBusyness();
     void decreaseVideoBusyness();

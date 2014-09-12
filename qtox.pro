@@ -109,7 +109,8 @@ HEADERS  += widget/form/addfriendform.h \
     filetransferinstance.h \
     corestructs.h \
     coredefines.h \
-    coreav.h
+    coreav.h \
+    widget/settingsdialog.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -145,4 +146,5 @@ SOURCES += \
     widget/tool/chataction.cpp \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp \
-    corestructs.cpp
+    corestructs.cpp \
+    widget/settingsdialog.cpp
