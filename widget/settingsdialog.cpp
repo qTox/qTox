@@ -192,7 +192,7 @@ SettingsDialog::SettingsDialog(Widget *parent) :
     createButtons();
     createConnections();
     createLayout();
-    setWindowTitle(tr("Settings Dialog"));
+    setWindowTitle(tr("qTox – Settings"));
 }
 
 void SettingsDialog::createPages()
