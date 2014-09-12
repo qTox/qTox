@@ -20,6 +20,7 @@
 #include <QDesktopServices>
 #include <QTextTable>
 #include <QAbstractTextDocumentLayout>
+#include <QCoreApplication>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextBrowser(parent)
@@ -104,15 +105,13 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     checkSlider();
 
     int row = chatTextTable->rows() - 1;
-//    chatTextTable->cellAt(row,0).firstCursorPosition().setBlockFormat(nameFormat);
-//    chatTextTable->cellAt(row,2).firstCursorPosition().setBlockFormat(dateFormat);
     QTextCursor cur = chatTextTable->cellAt(row,1).firstCursorPosition();
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
+    chatTextTable->appendRows(1);
     chatTextTable->cellAt(row,0).firstCursorPosition().insertHtml(msgAction->getName());
     chatTextTable->cellAt(row,1).firstCursorPosition().insertHtml(msgAction->getMessage());
-    chatTextTable->cellAt(row,2).firstCursorPosition().insertHtml(msgAction->getDate());
-    chatTextTable->appendRows(1);
+    chatTextTable->cellAt(row,2).firstCursorPosition().insertText(msgAction->getDate());
 
     msgAction->setTextCursor(cur);
 
