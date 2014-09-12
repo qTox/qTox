@@ -37,6 +37,7 @@ class QMenu;
 class Core;
 class Camera;
 class FriendListWidget;
+class SettingsDialog;
 
 class Widget : public QMainWindow
 {
@@ -134,6 +135,7 @@ private:
     QThread* coreThread;
     AddFriendForm friendForm;
     FilesForm filesForm;
+    SettingsDialog* settingsDialog;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;

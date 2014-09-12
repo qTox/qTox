@@ -31,6 +31,7 @@
 #include "widget/friendlistwidget.h"
 #include "camera.h"
 #include "widget/form/chatform.h"
+#include "widget/settingsdialog.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -155,6 +156,7 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->style()->polish(ui->statusButton);
 
     camera = new Camera;
+    settingsDialog = new SettingsDialog(this);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -333,7 +335,8 @@ void Widget::onTransferClicked()
 
 void Widget::onSettingsClicked()
 {
-
+    settingsDialog->readConfig();
+    settingsDialog->show();
 }
 
 void Widget::hideMainForms()
