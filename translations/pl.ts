@@ -13,13 +13,13 @@
         <location filename="../widget/settingsdialog.cpp" line="163"/>
         <source>Show video preview</source>
         <comment>On a button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż podgląd wideo</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="157"/>
         <source>Hide video preview</source>
         <comment>On a button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj podgląd wideo</translation>
     </message>
 </context>
 <context>
