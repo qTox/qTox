@@ -17,7 +17,7 @@
 #include "widget.h"
 #include "ui_mainwindow.h"
 #include "core.h"
-#include "settings.h"
+#include "misc/settings.h"
 #include "friend.h"
 #include "friendlist.h"
 #include "widget/tool/friendrequestdialog.h"
@@ -26,12 +26,11 @@
 #include "group.h"
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
-#include "style.h"
+#include "misc/style.h"
 #include "selfcamview.h"
 #include "widget/friendlistwidget.h"
 #include "camera.h"
 #include "widget/form/chatform.h"
-#include "widget/settingsdialog.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -156,7 +155,6 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->style()->polish(ui->statusButton);
 
     camera = new Camera;
-    settingsDialog = new SettingsDialog(this);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -335,8 +333,9 @@ void Widget::onTransferClicked()
 
 void Widget::onSettingsClicked()
 {
-    settingsDialog->readConfig();
-    settingsDialog->show();
+    hideMainForms();
+    settingsWidget.show(*ui);
+    activeChatroomWidget = nullptr;
 }
 
 void Widget::hideMainForms()

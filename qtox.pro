@@ -81,6 +81,7 @@ win32 {
 HEADERS  += widget/form/addfriendform.h \
     widget/form/chatform.h \
     widget/form/groupchatform.h \
+    widget/form/settingswidget.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
     widget/tool/friendrequestdialog.h \
@@ -90,17 +91,17 @@ HEADERS  += widget/form/addfriendform.h \
     friend.h \
     group.h \
     grouplist.h \
-    settings.h \
+    misc/settings.h \
     core.h \
     friendlist.h \
-    cdata.h \
-    cstring.h \
+    misc/cdata.h \
+    misc/cstring.h \
     widget/selfcamview.h \
     widget/camera.h \
     widget/netcamview.h \
-    smileypack.h \
+    misc/smileypack.h \
     widget/emoticonswidget.h \
-    style.h \
+    misc/style.h \
     widget/adjustingscrollarea.h \
     widget/croppinglabel.h \
     widget/friendlistwidget.h \
@@ -111,13 +112,13 @@ HEADERS  += widget/form/addfriendform.h \
     filetransferinstance.h \
     corestructs.h \
     coredefines.h \
-    coreav.h \
-    widget/settingsdialog.h
+    coreav.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
     widget/form/chatform.cpp \
     widget/form/groupchatform.cpp \
+    widget/form/settingswidget.cpp \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
     widget/tool/friendrequestdialog.cpp \
@@ -130,15 +131,15 @@ SOURCES += \
     group.cpp \
     grouplist.cpp \
     main.cpp \
-    settings.cpp \
-    cdata.cpp \
-    cstring.cpp \
+    misc/settings.cpp \
+    misc/cdata.cpp \
+    misc/cstring.cpp \
     widget/selfcamview.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
-    smileypack.cpp \
+    misc/smileypack.cpp \
     widget/emoticonswidget.cpp \
-    style.cpp \
+    misc/style.cpp \
     widget/adjustingscrollarea.cpp \
     widget/croppinglabel.cpp \
     widget/friendlistwidget.cpp \
@@ -148,5 +149,4 @@ SOURCES += \
     widget/tool/chataction.cpp \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp \
-    corestructs.cpp \
-    widget/settingsdialog.cpp
+    corestructs.cpp
