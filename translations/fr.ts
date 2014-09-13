@@ -6,20 +6,20 @@
     <message>
         <location filename="../widget/settingsdialog.cpp" line="132"/>
         <source>Video Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Options vidéo</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="136"/>
         <location filename="../widget/settingsdialog.cpp" line="163"/>
         <source>Show video preview</source>
         <comment>On a button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Montrer l&apos;aperçu vidéo</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="157"/>
         <source>Hide video preview</source>
         <comment>On a button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cacher l&apos;aperçu vidéo</translation>
     </message>
 </context>
 <context>
@@ -62,13 +62,13 @@
         <location filename="../widget/form/addfriendform.cpp" line="99"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vous ne pouvez pas vous ajouter vous même en temps qu&apos;ami!</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="116"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cette addresse n&apos;existe pas</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="120"/>
@@ -138,19 +138,19 @@
         <location filename="../filetransferinstance.cpp" line="191"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished">Sauvegarder un fichier</translation>
+        <translation>Sauvegarder un fichier</translation>
     </message>
     <message>
         <location filename="../filetransferinstance.cpp" line="202"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire ici</translation>
     </message>
     <message>
         <location filename="../filetransferinstance.cpp" line="202"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vous n&apos;avez pas la permission d&apos;écrire ici. Choisissez un audre endroit, ou annulez.</translation>
     </message>
 </context>
 <context>
@@ -167,17 +167,17 @@
         <location filename="../widget/form/filesform.cpp" line="30"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Transfers</translation>
     </message>
     <message>
         <location filename="../widget/form/filesform.cpp" line="38"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargements</translation>
     </message>
     <message>
         <location filename="../widget/form/filesform.cpp" line="39"/>
         <source>Uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>Envois</translation>
     </message>
 </context>
 <context>
@@ -242,41 +242,41 @@
     <message>
         <location filename="../widget/settingsdialog.cpp" line="31"/>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Options Générales</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="34"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
-        <translation type="unfinished">Activer IPv6 (recommandé)</translation>
+        <translation>Activer IPv6 (recommandé)</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="36"/>
         <source>Use translations</source>
         <comment>Text on a checkbox to enable translations</comment>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser les traductions</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="38"/>
         <source>Make Tox portable</source>
         <comment>Text on a checkbox to make qTox a portable application</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rendre Tox portable</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="39"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <comment>describes makeToxPortable checkbox</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde les options dans le dossier courant au lieu du dossier de configuration habituel</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="48"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Thème</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="49"/>
         <source>Smiley Pack</source>
-        <translation type="unfinished"></translation>
+        <translation>Pack de smileys</translation>
     </message>
 </context>
 <context>
@@ -285,7 +285,7 @@
         <location filename="../widget/form/genericchatform.cpp" line="142"/>
         <location filename="../widget/form/genericchatform.cpp" line="148"/>
         <source>Save chat log</source>
-        <translation type="unfinished">Sauvegarder l&apos;historique de conversation</translation>
+        <translation>Sauvegarder l&apos;historique de conversation</translation>
     </message>
 </context>
 <context>
@@ -337,29 +337,29 @@
     <message>
         <location filename="../widget/settingsdialog.cpp" line="82"/>
         <source>Public Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informations Publiques</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="83"/>
         <source>Name</source>
         <comment>Username/nick</comment>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="85"/>
         <source>Status</source>
         <comment>Status message</comment>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="95"/>
         <source>Tox ID</source>
-        <translation type="unfinished">ID Tox</translation>
+        <translation>ID Tox</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="96"/>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Votre ID Tox</translation>
     </message>
 </context>
 <context>
@@ -367,47 +367,47 @@
     <message>
         <location filename="../mainwindow.ui" line="20"/>
         <source>qTox</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1918"/>
         <source>Your name</source>
-        <translation type="unfinished">Votre nom</translation>
+        <translation>Votre nom</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2000"/>
         <source>Your status</source>
-        <translation type="unfinished">Votre status</translation>
+        <translation>Votre status</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2566"/>
         <source>Add friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter des amis</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2592"/>
         <source>Create a group chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Creer un groupe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2624"/>
         <source>View completed file transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Voir les transfers de fichiers terminés</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2656"/>
         <source>Change your settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer les options</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3238"/>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3241"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+Q</translation>
+        <translation>Ctrl+Q</translation>
     </message>
 </context>
 <context>
@@ -424,42 +424,42 @@
     <message>
         <location filename="../widget/settingsdialog.cpp" line="197"/>
         <source>qTox – Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox — Options</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="224"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>General</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="230"/>
         <source>Identity</source>
-        <translation type="unfinished"></translation>
+        <translation>Identité</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="236"/>
         <source>Privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Vie Privée</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="242"/>
         <source>Audio/Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio/Vidéo</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="251"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="252"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="253"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Appliquer</translation>
     </message>
 </context>
 <context>
@@ -516,25 +516,25 @@
         <location filename="../widget/widget.cpp" line="133"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished">Connecté</translation>
+        <translation>Connecté</translation>
     </message>
     <message>
         <location filename="../widget/widget.cpp" line="135"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished">Indisponnible</translation>
+        <translation>Indisponnible</translation>
     </message>
     <message>
         <location filename="../widget/widget.cpp" line="137"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished">Occupé</translation>
+        <translation>Occupé</translation>
     </message>
     <message>
         <location filename="../widget/widget.cpp" line="605"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation type="unfinished">&lt;Inconnu&gt;</translation>
+        <translation>&lt;Inconnu&gt;</translation>
     </message>
 </context>
 </TS>
