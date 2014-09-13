@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pl_PL">
+<TS version="2.1" language="pl_PL">
 <context>
     <name>AVPage</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="130"/>
+        <location filename="../widget/settingsdialog.cpp" line="132"/>
         <source>Video Settings</source>
         <translation>Ustawienia wideo</translation>
+    </message>
+    <message>
+        <location filename="../widget/settingsdialog.cpp" line="136"/>
+        <location filename="../widget/settingsdialog.cpp" line="163"/>
+        <source>Show video preview</source>
+        <comment>On a button</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/settingsdialog.cpp" line="157"/>
+        <source>Hide video preview</source>
+        <comment>On a button</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -199,41 +212,41 @@
 <context>
     <name>GeneralPage</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="30"/>
+        <location filename="../widget/settingsdialog.cpp" line="31"/>
         <source>General Settings</source>
         <translation>Główne ustawienia</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="33"/>
+        <location filename="../widget/settingsdialog.cpp" line="34"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
         <translation>Użyj IPv6 (rekomendowane)</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="35"/>
+        <location filename="../widget/settingsdialog.cpp" line="36"/>
         <source>Use translations</source>
         <comment>Text on a checkbox to enable translations</comment>
         <translation>Użyj tłumaczenia</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="37"/>
+        <location filename="../widget/settingsdialog.cpp" line="38"/>
         <source>Make Tox portable</source>
         <comment>Text on a checkbox to make qTox a portable application</comment>
         <translation>Zrób Tox przenośnym</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="38"/>
+        <location filename="../widget/settingsdialog.cpp" line="39"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <comment>describes makeToxPortable checkbox</comment>
         <translation>Zamiast domyślnego katalogu użyj obecnego do zapisania ustawień</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="47"/>
+        <location filename="../widget/settingsdialog.cpp" line="48"/>
         <source>Theme</source>
         <translation>Motyw</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="48"/>
+        <location filename="../widget/settingsdialog.cpp" line="49"/>
         <source>Smiley Pack</source>
         <translatorcomment>needs better translation</translatorcomment>
         <translation>Paczka uśmiechów</translation>
@@ -291,29 +304,29 @@
 <context>
     <name>IdentityPage</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="80"/>
+        <location filename="../widget/settingsdialog.cpp" line="82"/>
         <source>Public Information</source>
         <translation>Informacja publiczna</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="81"/>
+        <location filename="../widget/settingsdialog.cpp" line="83"/>
         <source>Name</source>
         <comment>Username/nick</comment>
         <translation>Nick</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="83"/>
+        <location filename="../widget/settingsdialog.cpp" line="85"/>
         <source>Status</source>
         <comment>Status message</comment>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="93"/>
+        <location filename="../widget/settingsdialog.cpp" line="95"/>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="94"/>
+        <location filename="../widget/settingsdialog.cpp" line="96"/>
         <source>Your Tox ID</source>
         <translation>Twój Tox ID</translation>
     </message>
@@ -379,42 +392,42 @@
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="195"/>
+        <location filename="../widget/settingsdialog.cpp" line="197"/>
         <source>qTox – Settings</source>
         <translation>qTox – Ustawienia</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="222"/>
+        <location filename="../widget/settingsdialog.cpp" line="224"/>
         <source>General</source>
         <translation>Główne</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="228"/>
+        <location filename="../widget/settingsdialog.cpp" line="230"/>
         <source>Identity</source>
         <translation>Tożsamość</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="234"/>
+        <location filename="../widget/settingsdialog.cpp" line="236"/>
         <source>Privacy</source>
         <translation>Prywatność</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="240"/>
+        <location filename="../widget/settingsdialog.cpp" line="242"/>
         <source>Audio/Video</source>
         <translation>Audio/Wideo</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="249"/>
+        <location filename="../widget/settingsdialog.cpp" line="251"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="250"/>
+        <location filename="../widget/settingsdialog.cpp" line="252"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="251"/>
+        <location filename="../widget/settingsdialog.cpp" line="253"/>
         <source>Apply</source>
         <translation>Zastosuj</translation>
     </message>

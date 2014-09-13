@@ -23,6 +23,7 @@
 //========================================
 class GeneralPage : public QWidget
 {
+    Q_OBJECT
 public:
     GeneralPage(QWidget *parent = 0) :
         QWidget(parent)
@@ -72,6 +73,7 @@ public:
 
 class IdentityPage : public QWidget
 {
+    Q_OBJECT
 public:
     IdentityPage(QWidget* parent = 0) :
         QWidget(parent)
@@ -131,7 +133,7 @@ public:
 
         camView = new SelfCamView(parent->getWidget()->getCamera());
         camView->hide(); // hide by default
-        testVideo = new QPushButton("Show video preview");
+        testVideo = new QPushButton(tr("Show video preview","On a button"));
         connect(testVideo, SIGNAL(clicked()), this, SLOT(onTestVideoPressed()));
 
         QVBoxLayout *vLayout = new QVBoxLayout();
@@ -152,13 +154,13 @@ public:
 
     void showTestVideo()
     {
-        testVideo->setText("Hide video preview");
+        testVideo->setText(tr("Hide video preview","On a button"));
         camView->show();
     }
 
     void closeTestVideo()
     {
-        testVideo->setText("Show video preview");
+        testVideo->setText(tr("Show video preview","On a button"));
         camView->close();
     }
 
