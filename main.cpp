@@ -15,7 +15,7 @@
 */
 
 #include "widget/widget.h"
-#include "settings.h"
+#include "misc/settings.h"
 #include <QApplication>
 #include <QFontDatabase>
 #include <QTranslator>

@@ -17,7 +17,7 @@
 #include "widget.h"
 #include "ui_mainwindow.h"
 #include "core.h"
-#include "settings.h"
+#include "misc/settings.h"
 #include "friend.h"
 #include "friendlist.h"
 #include "widget/tool/friendrequestdialog.h"
@@ -26,7 +26,7 @@
 #include "group.h"
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
-#include "style.h"
+#include "misc/style.h"
 #include "selfcamview.h"
 #include "widget/friendlistwidget.h"
 #include "camera.h"
@@ -179,7 +179,7 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::statusSet, this, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
-    connect(core, &Core::friendAddressGenerated, &settingsForm, &SettingsForm::setFriendAddress);
+    //connect(core, &Core::friendAddressGenerated, &settingsWidget, &SettingsWidget::setFriendAddress);
     connect(core, SIGNAL(fileDownloadFinished(const QString&)), &filesForm, SLOT(onFileDownloadComplete(const QString&)));
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
@@ -210,8 +210,6 @@ Widget::Widget(QWidget *parent)
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
-    connect(&settingsForm.name, SIGNAL(editingFinished()), this, SLOT(onUsernameChanged()));
-    connect(&settingsForm.statusText, SIGNAL(editingFinished()), this, SLOT(onStatusMessageChanged()));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
 
     coreThread->start();
@@ -339,7 +337,7 @@ void Widget::onTransferClicked()
 void Widget::onSettingsClicked()
 {
     hideMainForms();
-    settingsForm.show(*ui);
+    settingsWidget.show(*ui);
     activeChatroomWidget = nullptr;
 }
 
@@ -357,20 +355,10 @@ void Widget::hideMainForms()
     }
 }
 
-void Widget::onUsernameChanged()
-{
-    const QString newUsername = settingsForm.name.text();
-    ui->nameLabel->setText(newUsername);
-    ui->nameLabel->setToolTip(newUsername); // for overlength names
-    settingsForm.name.setText(newUsername);
-    core->setUsername(newUsername);
-}
-
 void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
 {
     ui->nameLabel->setText(oldUsername); // restore old username until Core tells us to set it
     ui->nameLabel->setToolTip(oldUsername); // for overlength names
-    settingsForm.name.setText(oldUsername);
     core->setUsername(newUsername);
 }
 
@@ -378,23 +366,12 @@ void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     ui->nameLabel->setToolTip(username); // for overlength names
-    settingsForm.name.setText(username);
-}
-
-void Widget::onStatusMessageChanged()
-{
-    const QString newStatusMessage = settingsForm.statusText.text();
-    ui->statusLabel->setText(newStatusMessage);
-    ui->statusLabel->setToolTip(newStatusMessage); // for overlength messsages
-    settingsForm.statusText.setText(newStatusMessage);
-    core->setStatusMessage(newStatusMessage);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
 {
     ui->statusLabel->setText(oldStatusMessage); // restore old status message until Core tells us to set it
     ui->statusLabel->setToolTip(oldStatusMessage); // for overlength messsages
-    settingsForm.statusText.setText(oldStatusMessage);
     core->setStatusMessage(newStatusMessage);
 }
 
@@ -402,7 +379,6 @@ void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
     ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
-    settingsForm.statusText.setText(statusMessage);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)

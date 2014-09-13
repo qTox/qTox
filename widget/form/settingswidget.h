@@ -14,8 +14,8 @@
     See the COPYING file for more details.
 */
 
-#ifndef SETTINGSFORM_H
-#define SETTINGSFORM_H
+#ifndef SETTINGSWIDGET_H
+#define SETTINGSWIDGET_H
 
 #include <QVBoxLayout>
 #include <QLabel>
@@ -31,37 +31,32 @@
 namespace Ui {class MainWindow;}
 class QString;
 
-class SettingsForm : public QObject
+class SettingsWidget : public QObject
 {
     Q_OBJECT
 public:
-    SettingsForm();
-    ~SettingsForm();
+    SettingsWidget();
+    ~SettingsWidget();
 
     void show(Ui::MainWindow &ui);
 
 public slots:
-    void setFriendAddress(const QString& friendAddress);
+    //void setFriendAddress(const QString& friendAddress);
 
 private slots:
-    void onTestVideoClicked();
-    void onEnableIPv6Updated();
-    void onUseTranslationUpdated();
-    void onMakeToxPortableUpdated();
-    void onSmileyBrowserIndexChanged(int index);
-    void copyIdClicked();
 
 private:
-    QLabel headLabel, nameLabel, statusTextLabel, smileyPackLabel;
-    QTextEdit id;
-    CroppingLabel idLabel;
-    QPushButton videoTest;
-    QCheckBox enableIPv6, useTranslations, makeToxPortable;
-    QVBoxLayout layout, headLayout;
     QWidget *main, *head;
-    QComboBox smileyPackBrowser;
+    // the code pertaining to the icons is mostly copied from ui_mainwindow.h
+    QHBoxLayout *iconsLayout;
+    QPushButton *generalButton;
+    QPushButton *identityButton;
+    QPushButton *privacyButton;
+    QPushButton *avButton;
+    
+    // now the actual pages and stuff
+    // ...
 public:
-    QLineEdit name, statusText;
 };
 
 #endif // SETTINGSFORM_H

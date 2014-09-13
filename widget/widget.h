@@ -19,7 +19,7 @@
 
 #include <QMainWindow>
 #include "widget/form/addfriendform.h"
-#include "widget/form/settingsform.h"
+#include "widget/form/settingswidget.h"
 #include "widget/form/filesform.h"
 #include "corestructs.h"
 
@@ -83,8 +83,6 @@ private slots:
     void onFailedToStartCore();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
     void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
-    void onUsernameChanged();
-    void onStatusMessageChanged();
     void setUsername(const QString& username);
     void setStatusMessage(const QString &statusMessage);
     void addFriend(int friendId, const QString& userId);
@@ -137,7 +135,7 @@ private:
     Core* core;
     QThread* coreThread;
     AddFriendForm friendForm;
-    SettingsForm settingsForm;
+    SettingsWidget settingsWidget;
     FilesForm filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;

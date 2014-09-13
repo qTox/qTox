@@ -15,7 +15,7 @@
 */
 
 #include "chataction.h"
-#include "smileypack.h"
+#include "misc/smileypack.h"
 #include <QStringList>
 #include <QBuffer>
 #include "filetransferinstance.h"
