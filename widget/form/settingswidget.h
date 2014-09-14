@@ -17,21 +17,15 @@
 #ifndef SETTINGSWIDGET_H
 #define SETTINGSWIDGET_H
 
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QObject>
-#include <QCheckBox>
+#include <QHBoxLayout>
 #include <QPushButton>
-#include <QTextEdit>
-#include <QComboBox>
-
+#include <QObject>
 #include "widget/croppinglabel.h"
 
 namespace Ui {class MainWindow;}
 class QString;
 
-class SettingsWidget : public QObject
+class SettingsWidget : public QWidget
 {
     Q_OBJECT
 public:
@@ -46,7 +40,9 @@ public slots:
 private slots:
 
 private:
-    QWidget *main, *head;
+    QWidget *_main, *main, *head, *foot;
+    // _main consists of main+foot
+    QVBoxLayout *_mainLayout;
     // the code pertaining to the icons is mostly copied from ui_mainwindow.h
     QHBoxLayout *iconsLayout;
     QPushButton *generalButton;
@@ -56,6 +52,10 @@ private:
     
     // now the actual pages and stuff
     // ...
+
+
+
+    void prepButtons(); // just so I can move the crap to the bottom of the file
 public:
 };
 
