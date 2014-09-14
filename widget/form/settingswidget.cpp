@@ -19,9 +19,35 @@
 #include "ui_mainwindow.h"
 
 SettingsWidget::SettingsWidget()
-    : QObject()
+    : QWidget()
 {
+    _main = new QWidget();
     main = new QWidget();
+    head = new QWidget();
+    foot = new QWidget();
+    prepButtons();    
+    foot->setLayout(iconsLayout);
+    _mainLayout = new QVBoxLayout(_main);
+    _mainLayout->addWidget(main);
+    _mainLayout->addWidget(foot);
+    // something something foot size
+    _main->setLayout(_mainLayout);
+}
+
+SettingsWidget::~SettingsWidget()
+{
+}
+
+void SettingsWidget::show(Ui::MainWindow& ui)
+{
+    ui.mainContent->layout()->addWidget(_main);
+    ui.mainHead->layout()->addWidget(head);
+    _main->show();
+    head->show();
+}
+
+void SettingsWidget::prepButtons()
+{
     // this crap is copied from ui_mainwindow.h... there's no easy way around
     // just straight up copying it like this... oh well
     // the layout/icons obviously need to be improved, but it's a working model,
@@ -29,11 +55,9 @@ SettingsWidget::SettingsWidget()
     QSizePolicy sizePolicy3(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
     sizePolicy3.setHorizontalStretch(0);
     sizePolicy3.setVerticalStretch(0);
-    head = new QWidget();
-    head->setObjectName(QStringLiteral("head"));
-    head->setEnabled(true);
-    sizePolicy3.setHeightForWidth(head->sizePolicy().hasHeightForWidth());
-    head->setSizePolicy(sizePolicy3);
+    foot->setObjectName(QStringLiteral("foot"));
+    foot->setEnabled(true);
+    foot->setSizePolicy(sizePolicy3);
     QPalette palette5;
     QBrush brush(QColor(255, 255, 255, 255));
     brush.setStyle(Qt::SolidPattern);
@@ -96,14 +120,15 @@ SettingsWidget::SettingsWidget()
     palette5.setBrush(QPalette::Disabled, QPalette::AlternateBase, brush1);
     palette5.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush7);
     palette5.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush6);
-    head->setPalette(palette5);
-    head->setAutoFillBackground(true);
-    iconsLayout = new QHBoxLayout(head);
+    foot->setPalette(palette5);
+    foot->setAutoFillBackground(true);
+    
+    iconsLayout = new QHBoxLayout(foot);
     iconsLayout->setSpacing(0);
     iconsLayout->setObjectName(QStringLiteral("iconsLayout"));
     iconsLayout->setContentsMargins(0, 0, 0, 0);
 
-    generalButton = new QPushButton(head);
+    generalButton = new QPushButton(foot);
     generalButton->setObjectName(QStringLiteral("generalButton"));
     generalButton->setMinimumSize(QSize(55, 35));
     generalButton->setMaximumSize(QSize(55, 35));
@@ -114,7 +139,7 @@ SettingsWidget::SettingsWidget()
     generalButton->setFlat(true);
     iconsLayout->addWidget(generalButton);
     
-    identityButton = new QPushButton(head);
+    identityButton = new QPushButton(foot);
     identityButton->setObjectName(QStringLiteral("identityButton"));
     identityButton->setMinimumSize(QSize(55, 35));
     identityButton->setMaximumSize(QSize(55, 35));
@@ -125,7 +150,7 @@ SettingsWidget::SettingsWidget()
     identityButton->setFlat(true);
     iconsLayout->addWidget(identityButton);
     
-    privacyButton = new QPushButton(head);
+    privacyButton = new QPushButton(foot);
     privacyButton->setObjectName(QStringLiteral("privacyButton"));
     privacyButton->setMinimumSize(QSize(55, 35));
     privacyButton->setMaximumSize(QSize(55, 35));
@@ -136,7 +161,7 @@ SettingsWidget::SettingsWidget()
     privacyButton->setFlat(true);
     iconsLayout->addWidget(privacyButton);
     
-    avButton = new QPushButton(head);
+    avButton = new QPushButton(foot);
     avButton->setObjectName(QStringLiteral("avButton"));
     avButton->setMinimumSize(QSize(55, 35));
     avButton->setMaximumSize(QSize(55, 35));
@@ -146,19 +171,4 @@ SettingsWidget::SettingsWidget()
     avButton->setIcon(icon4);
     avButton->setFlat(true);
     iconsLayout->addWidget(avButton);
-    
-    head->setLayout(iconsLayout);
-
-}
-
-SettingsWidget::~SettingsWidget()
-{
-}
-
-void SettingsWidget::show(Ui::MainWindow& ui)
-{
-    ui.mainContent->layout()->addWidget(main);
-    ui.mainHead->layout()->addWidget(head);
-    main->show();
-    head->show();
 }
