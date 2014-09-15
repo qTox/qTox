@@ -17,21 +17,41 @@
 #include "settingswidget.h"
 #include "widget/widget.h"
 #include "ui_mainwindow.h"
+#include "widget/form/settings/generalform.h"
+#include "widget/form/settings/identityform.h"
+#include "widget/form/settings/privacyform.h"
+#include "widget/form/settings/avform.h"
 
 SettingsWidget::SettingsWidget()
     : QWidget()
 {
-    _main = new QWidget();
+    generalForm  = new GeneralForm();
+    identityForm = new IdentityForm();
+    privacyForm  = new PrivacyForm();
+    avForm       = new AVForm();
+
     main = new QWidget();
+    body = new QWidget();
     head = new QWidget();
     foot = new QWidget();
+    
+    head->setLayout(new QVBoxLayout());
+    body->setLayout(new QVBoxLayout());
+    
     prepButtons();    
     foot->setLayout(iconsLayout);
-    _mainLayout = new QVBoxLayout(_main);
-    _mainLayout->addWidget(main);
-    _mainLayout->addWidget(foot);
+    mainLayout = new QVBoxLayout(main);
+    mainLayout->addWidget(body);
+    mainLayout->addWidget(foot);
     // something something foot size
-    _main->setLayout(_mainLayout);
+    main->setLayout(mainLayout);
+    
+    connect(generalButton,  &QPushButton::clicked, this, &SettingsWidget::onGeneralClicked);
+    connect(identityButton, &QPushButton::clicked, this, &SettingsWidget::onIdentityClicked);
+    connect(privacyButton,  &QPushButton::clicked, this, &SettingsWidget::onPrivacyClicked);
+    connect(avButton,  &QPushButton::clicked, this, &SettingsWidget::onAVClicked);
+    
+    active = generalForm;
 }
 
 SettingsWidget::~SettingsWidget()
@@ -40,10 +60,48 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::show(Ui::MainWindow& ui)
 {
-    ui.mainContent->layout()->addWidget(_main);
+    active->show(*this);
+    ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
-    _main->show();
+    main->show();
     head->show();
+}
+
+void SettingsWidget::onGeneralClicked()
+{
+    hideSettingsForms();
+    active = generalForm;
+    generalForm->show(*this);
+}
+
+void SettingsWidget::onIdentityClicked()
+{
+    hideSettingsForms();
+    active = identityForm;
+    identityForm->show(*this);
+}
+
+void SettingsWidget::onPrivacyClicked()
+{
+    hideSettingsForms();
+    active = privacyForm;
+    privacyForm->show(*this);
+}
+
+void SettingsWidget::onAVClicked()
+{
+    hideSettingsForms();
+    active = avForm;
+    avForm->show(*this);
+}
+
+void SettingsWidget::hideSettingsForms()
+{
+    QLayoutItem *item;
+    while ((item = head->layout()->takeAt(0)) != 0)
+        item->widget()->hide();
+    while ((item = body->layout()->takeAt(0)) != 0)
+        item->widget()->hide();
 }
 
 void SettingsWidget::prepButtons()
