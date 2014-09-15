@@ -19,11 +19,12 @@
 
 #include <QHBoxLayout>
 #include <QPushButton>
-#include <QObject>
-#include "widget/croppinglabel.h"
-
-namespace Ui {class MainWindow;}
-class QString;
+class GenericForm;
+class GeneralForm;
+class IdentityForm;
+class PrivacyForm;
+class AVForm;
+namespace Ui {class MainWindow;};
 
 class SettingsWidget : public QWidget
 {
@@ -33,30 +34,38 @@ public:
     ~SettingsWidget();
 
     void show(Ui::MainWindow &ui);
+    
+    QWidget *head, *body; // keep the others private
 
 public slots:
     //void setFriendAddress(const QString& friendAddress);
 
 private slots:
+    void onGeneralClicked();
+    void onIdentityClicked();
+    void onPrivacyClicked();
+    void onAVClicked();
 
 private:
-    QWidget *_main, *main, *head, *foot;
-    // _main consists of main+foot
-    QVBoxLayout *_mainLayout;
+    QWidget *main, *foot;
+    // main consists of body+foot for Ui::MainWindow
+    QVBoxLayout *mainLayout;
+    
+    GenericForm* active;
+    GeneralForm* generalForm;
+    IdentityForm* identityForm;
+    PrivacyForm* privacyForm;
+    AVForm* avForm;
+    void hideSettingsForms();
+    
+    
     // the code pertaining to the icons is mostly copied from ui_mainwindow.h
     QHBoxLayout *iconsLayout;
     QPushButton *generalButton;
     QPushButton *identityButton;
     QPushButton *privacyButton;
     QPushButton *avButton;
-    
-    // now the actual pages and stuff
-    // ...
-
-
-
     void prepButtons(); // just so I can move the crap to the bottom of the file
-public:
 };
 
-#endif // SETTINGSFORM_H
+#endif // SETTINGSWIDGET_H

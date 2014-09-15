@@ -80,6 +80,11 @@ HEADERS  += widget/form/addfriendform.h \
     widget/form/chatform.h \
     widget/form/groupchatform.h \
     widget/form/settingswidget.h \
+    widget/form/settings/genericsettings.h \
+    widget/form/settings/generalform.h \
+    widget/form/settings/identityform.h \
+    widget/form/settings/privacyform.h \
+    widget/form/settings/avform.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
     widget/tool/friendrequestdialog.h \
@@ -117,6 +122,10 @@ SOURCES += \
     widget/form/chatform.cpp \
     widget/form/groupchatform.cpp \
     widget/form/settingswidget.cpp \
+    widget/form/settings/generalform.cpp \
+    widget/form/settings/identityform.cpp \
+    widget/form/settings/privacyform.cpp \
+    widget/form/settings/avform.cpp \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
     widget/tool/friendrequestdialog.cpp \
