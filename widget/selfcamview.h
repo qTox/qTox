@@ -42,6 +42,9 @@ private:
     void showEvent(QShowEvent*);
     void paint(QPainter *painter);
 
+protected:
+    void resizeEvent(QResizeEvent *e);
+
 private:
     QLabel *displayLabel;
     QHBoxLayout* mainLayout;

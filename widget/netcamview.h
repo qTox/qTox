@@ -24,6 +24,7 @@ class QShowEvent;
 class QPainter;
 class QLabel;
 class QHBoxLayout;
+class QImage;
 class vpx_image;
 
 class NetCamView : public QWidget
@@ -39,10 +40,14 @@ public slots:
 private:
     static QImage convert(vpx_image& frame);
 
+protected:
+    void resizeEvent(QResizeEvent *e);
+
 private:
     QLabel *displayLabel;
     QImage lastFrame;
     QHBoxLayout* mainLayout;
+    QImage img;
 };
 
 #endif // NETCAMVIEW_H

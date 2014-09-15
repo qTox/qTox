@@ -59,7 +59,7 @@ NetCamView::NetCamView(QWidget* parent)
     setWindowTitle("Tox video");
     setMinimumSize(320,240);
 
-    displayLabel->setScaledContents(true);
+    displayLabel->setAlignment(Qt::AlignCenter);
 
     mainLayout->addWidget(displayLabel);
 }
@@ -73,10 +73,10 @@ void NetCamView::updateDisplay(vpx_image* frame)
 
     core->increaseVideoBusyness();
 
-    QImage img = convert(*frame);
+    img = convert(*frame);
 
     vpx_img_free(frame);
-    displayLabel->setPixmap(QPixmap::fromImage(img));
+    displayLabel->setPixmap(QPixmap::fromImage(img).scaled(displayLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     core->decreaseVideoBusyness();
 }
@@ -107,4 +107,10 @@ QImage NetCamView::convert(vpx_image& frame)
     }
 
     return img;
+}
+
+void NetCamView::resizeEvent(QResizeEvent *e)
+{
+    Q_UNUSED(e)
+    displayLabel->setPixmap(QPixmap::fromImage(img).scaled(displayLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }

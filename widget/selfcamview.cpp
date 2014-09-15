@@ -36,7 +36,7 @@ SelfCamView::SelfCamView(Camera* Cam, QWidget* parent)
     updateDisplayTimer->setInterval(5);
     updateDisplayTimer->setSingleShot(false);
 
-    displayLabel->setScaledContents(true);
+    displayLabel->setAlignment(Qt::AlignCenter);
 
     mainLayout->addWidget(displayLabel);
 
@@ -59,6 +59,11 @@ void SelfCamView::showEvent(QShowEvent* event)
 
 void SelfCamView::updateDisplay()
 {
-    displayLabel->setPixmap(QPixmap::fromImage(cam->getLastImage()));
+    displayLabel->setPixmap(QPixmap::fromImage(cam->getLastImage()).scaled(displayLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
+void SelfCamView::resizeEvent(QResizeEvent *e)
+{
+    Q_UNUSED(e)
+    updateDisplay();
+}
