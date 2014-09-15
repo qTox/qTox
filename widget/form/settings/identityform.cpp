@@ -22,7 +22,7 @@
 IdentityForm::IdentityForm()
 {
     prep();
-    icon.addFile(":/img/settings/identity.png");
+    icon.setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
     label.setText(tr("Your identity"));
     toxGroup = new QGroupBox(tr("Tox ID"));
     QLabel* toxIdLabel = new QLabel(tr("Your Tox ID"));

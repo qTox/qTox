@@ -19,6 +19,7 @@
 
 #include <QObject>
 #include <QVBoxLayout>
+#include <QLabel>
 #include "widget/form/settingswidget.h"
 
 class GenericForm : public QObject
@@ -36,8 +37,7 @@ public:
 protected:
     QVBoxLayout layout;
     QHBoxLayout headLayout;
-    QIcon icon;
-    QLabel label;
+    QLabel label, icon;
     QWidget head, body;
     void prep() // call in subclass constructor
     {

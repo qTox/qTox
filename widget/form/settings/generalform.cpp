@@ -20,7 +20,7 @@
 GeneralForm::GeneralForm()
 {
     prep();
-    icon.addFile(":/img/settings/general.png");
+    icon.setPixmap(QPixmap(":/img/settings/general.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
     label.setText(tr("General settings"));
     group = new QGroupBox(tr("General Settings"));
     enableIPv6 = new QCheckBox();
