@@ -110,7 +110,7 @@ void SettingsWidget::prepButtons()
     // just straight up copying it like this... oh well
     // the layout/icons obviously need to be improved, but it's a working model,
     // not a pretty one
-    QSizePolicy sizePolicy3(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+    QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
     sizePolicy3.setHorizontalStretch(0);
     sizePolicy3.setVerticalStretch(0);
     foot->setObjectName(QStringLiteral("foot"));

@@ -19,6 +19,8 @@
 AVForm::AVForm()
 {
     prep();
+    icon.addFile(":/img/settings/av.png");
+    label.setText(tr("Audio/Video settings"));
 }
 
 AVForm::~AVForm()

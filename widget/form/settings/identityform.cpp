@@ -22,6 +22,8 @@
 IdentityForm::IdentityForm()
 {
     prep();
+    icon.addFile(":/img/settings/identity.png");
+    label.setText(tr("Your identity"));
     toxGroup = new QGroupBox(tr("Tox ID"));
     QLabel* toxIdLabel = new QLabel(tr("Your Tox ID"));
     QLineEdit* toxID = new QLineEdit();

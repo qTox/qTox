@@ -20,6 +20,8 @@
 GeneralForm::GeneralForm()
 {
     prep();
+    icon.addFile(":/img/settings/general.png");
+    label.setText(tr("General settings"));
     group = new QGroupBox(tr("General Settings"));
     enableIPv6 = new QCheckBox();
     enableIPv6->setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));

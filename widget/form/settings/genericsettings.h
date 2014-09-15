@@ -34,13 +34,19 @@ public:
     }
 
 protected:
-    QVBoxLayout layout, headLayout;
+    QVBoxLayout layout;
+    QHBoxLayout headLayout;
+    QIcon icon;
+    QLabel label;
     QWidget head, body;
     void prep() // call in subclass constructor
     {
         head.setLayout(&headLayout);
+        headLayout.addWidget(&icon);
+        headLayout.addWidget(&label);
         body.setLayout(&layout);
     }
+
 };
 
 #endif
