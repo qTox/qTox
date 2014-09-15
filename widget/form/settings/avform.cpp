@@ -19,7 +19,7 @@
 AVForm::AVForm()
 {
     prep();
-    icon.addFile(":/img/settings/av.png");
+    icon.setPixmap(QPixmap(":/img/settings/av.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
     label.setText(tr("Audio/Video settings"));
 }
 

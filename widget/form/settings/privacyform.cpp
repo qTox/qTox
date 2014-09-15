@@ -20,7 +20,7 @@
 PrivacyForm::PrivacyForm()
 {
     prep();
-    icon.addFile(":/img/settings/privacy.png");
+    icon.setPixmap(QPixmap(":/img/settings/privacy.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
     label.setText(tr("Privacy settings"));
 }
 
