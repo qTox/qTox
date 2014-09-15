@@ -20,6 +20,8 @@
 PrivacyForm::PrivacyForm()
 {
     prep();
+    icon.addFile(":/img/settings/privacy.png");
+    label.setText(tr("Privacy settings"));
 }
 
 PrivacyForm::~PrivacyForm()
