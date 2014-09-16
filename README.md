@@ -11,7 +11,7 @@ However, it is not a fork.
 - Group chats
 - File transfers, with previewing of images
 - Audio calls
-- Video calls (alpha)
+- Video calls
 - Tox DNS
 - Translations in various languages
 

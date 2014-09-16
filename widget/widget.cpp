@@ -155,7 +155,6 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->style()->polish(ui->statusButton);
 
     camera = new Camera;
-    camview = new SelfCamView(camera);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -226,7 +225,6 @@ Widget::~Widget()
     if (!coreThread->isFinished())
         coreThread->terminate();
     delete core;
-    delete camview;
 
     hideMainForms();
 
@@ -651,11 +649,6 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->chatForm, SLOT(focusInput()));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
     return newgroup;
-}
-
-void Widget::showTestCamview()
-{
-    camview->show();
 }
 
 void Widget::onEmptyGroupCreated(int groupId)

@@ -54,7 +54,6 @@ public:
     QThread* getCoreThread();
     Camera* getCamera();
     static Widget* getInstance();
-    void showTestCamview();
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
@@ -140,7 +139,6 @@ private:
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
-    SelfCamView* camview;
     Camera* camera;
     bool notify(QObject *receiver, QEvent *event);
     bool eventFilter(QObject *, QEvent *event);

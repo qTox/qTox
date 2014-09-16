@@ -22,8 +22,8 @@ div.date {
   white-space: nowrap;
 }
 
-div.quote {
-  background-color: #6bc260;
+span.quote {
+  color: #6bc260;
 }
 
 div.green {

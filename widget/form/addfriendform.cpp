@@ -95,8 +95,8 @@ void AddFriendForm::onSendTriggered()
     if (id.isEmpty()) {
         showWarning(tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
     } else if (isToxId(id)) {
-        if (id.toUpper() == Core::getInstance()->getSelfId().toUpper())
-            showWarning(tr("You can't add yourself as a friend !","When trying to add your own Tox ID as friend"));
+        if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
+            showWarning(tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
         else
             emit friendRequested(id, getMessage());
         this->toxId.setText("");

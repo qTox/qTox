@@ -40,24 +40,38 @@ SmileyPack& SmileyPack::getInstance()
     return smileyPack;
 }
 
-QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QString &path)
+QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &paths)
 {
     QList<QPair<QString, QString> > smileyPacks;
 
-    QDir dir(path);
-    foreach (const QString& subdirectory, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
+    for (QString path : paths)
     {
-        dir.cd(subdirectory);
+        if (path.leftRef(1) == "~")
+            path.replace(0, 1, QDir::homePath());
 
-        QFileInfoList entries = dir.entryInfoList(QStringList() << "emoticons.xml", QDir::Files);
-        if (entries.size() > 0) // does it contain a file called emoticons.xml?
+        QDir dir(path);
+        if (!dir.exists())
+            continue;
+
+        for (const QString& subdirectory : dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
         {
-            QString packageName = dir.dirName();
-            QString relPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(entries[0].absoluteFilePath());
-            smileyPacks << QPair<QString, QString>(packageName, relPath);
-        }
+            dir.cd(subdirectory);
 
-        dir.cdUp();
+            QFileInfoList entries = dir.entryInfoList(QStringList() << "emoticons.xml", QDir::Files);
+            if (entries.size() > 0) // does it contain a file called emoticons.xml?
+            {
+                QString packageName = dir.dirName();
+                QString absPath = entries[0].absoluteFilePath();
+                QString relPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(absPath);
+
+                if (relPath.leftRef(2) == "..")
+                    smileyPacks << QPair<QString, QString>(packageName, absPath);
+                else
+                    smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories
+            }
+
+            dir.cdUp();
+        }
     }
 
     return smileyPacks;

@@ -20,6 +20,7 @@
 #include <QDesktopServices>
 #include <QTextTable>
 #include <QAbstractTextDocumentLayout>
+#include <QCoreApplication>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextBrowser(parent)
@@ -44,10 +45,10 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     chatTextTable->format().setCellSpacing(2);
     chatTextTable->format().setWidth(QTextLength(QTextLength::PercentageLength,100));
 
-    nameFormat.setAlignment(Qt::AlignRight);
-    nameFormat.setNonBreakableLines(true);
-    dateFormat.setAlignment(Qt::AlignLeft);
-    dateFormat.setNonBreakableLines(true);
+//    nameFormat.setAlignment(Qt::AlignRight);
+//    nameFormat.setNonBreakableLines(true);
+//    dateFormat.setAlignment(Qt::AlignLeft);
+//    dateFormat.setNonBreakableLines(true);
 
     connect(this, &ChatAreaWidget::anchorClicked, this, &ChatAreaWidget::onAnchorClicked);
     connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
@@ -104,15 +105,13 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     checkSlider();
 
     int row = chatTextTable->rows() - 1;
-    chatTextTable->cellAt(row,0).firstCursorPosition().setBlockFormat(nameFormat);
-    chatTextTable->cellAt(row,2).firstCursorPosition().setBlockFormat(dateFormat);
     QTextCursor cur = chatTextTable->cellAt(row,1).firstCursorPosition();
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
+    chatTextTable->appendRows(1);
     chatTextTable->cellAt(row,0).firstCursorPosition().insertHtml(msgAction->getName());
     chatTextTable->cellAt(row,1).firstCursorPosition().insertHtml(msgAction->getMessage());
-    chatTextTable->cellAt(row,2).firstCursorPosition().insertHtml(msgAction->getDate());
-    chatTextTable->appendRows(1);
+    chatTextTable->cellAt(row,2).firstCursorPosition().insertText(msgAction->getDate());
 
     msgAction->setTextCursor(cur);
 
