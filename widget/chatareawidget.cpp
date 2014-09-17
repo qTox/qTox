@@ -21,6 +21,7 @@
 #include <QTextTable>
 #include <QAbstractTextDocumentLayout>
 #include <QCoreApplication>
+#include <QDebug>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextBrowser(parent)
@@ -64,12 +65,14 @@ ChatAreaWidget::~ChatAreaWidget()
 void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
 {
     QTextEdit::mouseReleaseEvent(event);
-    int pos = this->document()->documentLayout()->hitTest(event->pos(), Qt::ExactHit);
+    QPointF documentHitPost(event->pos().x() + horizontalScrollBar()->value(), event->pos().y() + verticalScrollBar()->value());
+    int pos = this->document()->documentLayout()->hitTest(documentHitPost, Qt::ExactHit);
     if (pos > 0)
     {
         QTextCursor cursor(document());
-            cursor.setPosition(pos);
-        if( ! cursor.atEnd() )
+        cursor.setPosition(pos);
+
+        if(!cursor.atEnd())
         {
             cursor.setPosition(pos+1);
 
@@ -85,6 +88,7 @@ void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
                     int middlepos = data.indexOf(".");
                     QString widgetID = data.left(middlepos);
                     QString widgetBtn = data.right(data.length() - middlepos - 1);
+                    qDebug() << "ChatAreaWidget::mouseReleaseEvent:" << widgetID << widgetBtn;
                     emit onFileTranfertInterract(widgetID, widgetBtn);
                 }
             }
