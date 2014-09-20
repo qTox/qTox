@@ -46,7 +46,7 @@ contains(JENKINS,YES) {
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
-    LIBS += -L$$PWD/libs/lib -llibopencv_core249 -llibopencv_highgui249 -llibopencv_imgproc249 -lOpenAL32
+    LIBS += -L$$PWD/libs/lib -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249 -lOpenAL32
     LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
 } else {
     macx {
