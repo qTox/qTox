@@ -34,6 +34,7 @@
 #include <QTimer>
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QList>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
@@ -473,10 +474,13 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
 
 void Core::sendMessage(int friendId, const QString& message)
 {
-    CString cMessage(message);
+    QList<CString> cMessages = splitMessage(message);
 
-    int messageId = tox_send_message(tox, friendId, cMessage.data(), cMessage.size());
-    emit messageSentResult(friendId, message, messageId);
+    for (auto &cMsg :cMessages)
+    {
+        int messageId = tox_send_message(tox, friendId, cMsg.data(), cMsg.size());
+        emit messageSentResult(friendId, message, messageId);
+    }
 }
 
 void Core::sendAction(int friendId, const QString &action)
@@ -495,9 +499,12 @@ void Core::sendTyping(int friendId, bool typing)
 
 void Core::sendGroupMessage(int groupId, const QString& message)
 {
-    CString cMessage(message);
+    QList<CString> cMessages = splitMessage(message);
 
-    tox_group_message_send(tox, groupId, cMessage.data(), cMessage.size());
+    for (auto &cMsg :cMessages)
+    {
+        tox_group_message_send(tox, groupId, cMsg.data(), cMsg.size());
+    }
 }
 
 void Core::sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize)
@@ -1158,4 +1165,33 @@ QString Core::getFriendAddress(int friendNumber) const
             return addr;
 
     return id;
+}
+
+QList<CString> Core::splitMessage(const QString &message)
+{
+    QList<CString> splittedMsgs;
+    QByteArray ba_message(message.toUtf8());
+
+    while (ba_message.size() > TOX_MAX_MESSAGE_LENGTH)
+    {
+        int splitPos = ba_message.lastIndexOf(' ', TOX_MAX_MESSAGE_LENGTH - 1);
+        if (splitPos <= 0)
+        {
+            splitPos = TOX_MAX_MESSAGE_LENGTH;
+            if (ba_message[splitPos] & 0x80)
+            {
+                do {
+                    splitPos--;
+                } while (!(ba_message[splitPos] & 0x40));
+            }
+            splitPos--;
+        }
+
+        splittedMsgs.push_back(CString(ba_message.left(splitPos + 1)));
+        ba_message = ba_message.mid(splitPos + 1);
+    }
+
+    splittedMsgs.push_back(CString(ba_message));
+
+    return splittedMsgs;
 }
