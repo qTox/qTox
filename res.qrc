@@ -140,6 +140,7 @@
         <file>img/settings/privacy.png</file>
         <file>img/settings/av.png</file>
         <file>translations/pl.qm</file>
+        <file>translations/fi.qm</file>
         <file>translations/mannol.qm</file>
     </qresource>
 </RCC>
