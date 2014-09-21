@@ -28,6 +28,7 @@ template <typename T> class QList;
 class Camera;
 class QTimer;
 class QString;
+class CString;
 
 class Core : public QObject
 {
@@ -209,6 +210,8 @@ private:
     static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);
+
+    QList<CString> splitMessage(const QString &message);
 
 private slots:
      void onFileTransferFinished(ToxFile file);
