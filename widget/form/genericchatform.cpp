@@ -22,7 +22,8 @@
 #include "style.h"
 #include "widget/widget.h"
 #include "settings.h"
-#include "widget/tool/chataction.h"
+#include "widget/tool/chatactions/messageaction.h"
+#include "widget/tool/chatactions/systemmessageaction.h"
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
 
@@ -207,4 +208,12 @@ void GenericChatForm::onEmoteInsertRequested(QString str)
 void GenericChatForm::focusInput()
 {
     msgEdit->setFocus();
+}
+
+void GenericChatForm::addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime)
+{
+    previousName = "";
+    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
+
+    chatWidget->insertMessage(new SystemMessageAction(message, type, date));
 }

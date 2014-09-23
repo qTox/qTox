@@ -23,7 +23,7 @@
 #include "friend.h"
 #include "widget/friendwidget.h"
 #include "filetransferinstance.h"
-#include "widget/tool/chataction.h"
+#include "widget/tool/chatactions/filetransferaction.h"
 #include "widget/netcamview.h"
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
@@ -51,6 +51,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
+    connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
 }
 
 ChatForm::~ChatForm()
@@ -454,4 +455,12 @@ void ChatForm::onFileTansBtnClicked(QString widgetName, QString buttonName)
         it.value()->pressFromHtml(buttonName);
     else
         qDebug() << "no filetransferwidget: " << id;
+}
+
+void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
+{
+    if (FriendId != f->friendId)
+        return;
+
+    addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red");
 }

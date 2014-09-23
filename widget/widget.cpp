@@ -197,6 +197,9 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
 
+    connect(core, SIGNAL(messageSentResult(int,QString,int)), this, SLOT(onMessageSendResult(int,QString,int)));
+    connect(core, SIGNAL(groupSentResult(int,QString,int)), this, SLOT(onGroupSendResult(int,QString,int)));
+
     connect(this, &Widget::statusSet, core, &Core::setStatus);
     connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
     connect(this, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
@@ -1059,4 +1062,26 @@ bool Widget::eventFilter(QObject *, QEvent *event)
 bool Widget::getIsWindowMinimized()
 {
     return static_cast<bool>(isWindowMinimized);
+}
+
+void Widget::onMessageSendResult(int friendId, const QString& message, int messageId)
+{
+    Q_UNUSED(message)
+    Friend* f = FriendList::findFriend(friendId);
+    if (!f)
+        return;
+
+    if (!messageId)
+        f->chatForm->addSystemInfoMessage("Message failed to send", "red");
+}
+
+void Widget::onGroupSendResult(int groupId, const QString& message, int result)
+{
+    Q_UNUSED(message)
+    Group* g = GroupList::findGroup(groupId);
+    if (!g)
+        return;
+
+    if (result == -1)
+        g->chatForm->addSystemInfoMessage("Message failed to send", "red");
 }
