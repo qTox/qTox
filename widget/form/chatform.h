@@ -65,6 +65,7 @@ private slots:
     void onHangupCallTriggered();
     void onCancelCallTriggered();
     void onFileTansBtnClicked(QString widgetName, QString buttonName);
+    void onFileSendFailed(int FriendId, const QString &fname);
 
 private:
     Friend* f;

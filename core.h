@@ -150,6 +150,8 @@ signals:
     void fileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
 
+    void fileSendFailed(int FriendId, const QString& fname);
+
     void avInvite(int friendId, int callIndex, bool video);
     void avStart(int friendId, int callIndex, bool video);
     void avCancel(int friendId, int callIndex);

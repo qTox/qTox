@@ -517,6 +517,7 @@ void Core::sendFile(int32_t friendId, QString Filename, QString FilePath, long l
     if (fileNum == -1)
     {
         qWarning() << "Core::sendFile: Can't create the Tox file sender";
+        emit fileSendFailed(friendId, Filename);
         return;
     }
     qDebug() << QString("Core::sendFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
