@@ -15,7 +15,7 @@
 */
 
 #include "chatareawidget.h"
-#include "widget/tool/chataction.h"
+#include "widget/tool/chatactions/chataction.h"
 #include <QScrollBar>
 #include <QDesktopServices>
 #include <QTextTable>

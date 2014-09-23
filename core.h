@@ -125,6 +125,7 @@ signals:
     void statusSet(Status status);
 
     void messageSentResult(int friendId, const QString& message, int messageId);
+    void groupSentResult(int groupId, const QString& message, int result);
     void actionSentResult(int friendId, const QString& action, int success);
 
     void failedToAddFriend(const QString& userId);

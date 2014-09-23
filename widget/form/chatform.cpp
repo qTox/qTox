@@ -23,7 +23,7 @@
 #include "friend.h"
 #include "widget/friendwidget.h"
 #include "filetransferinstance.h"
-#include "widget/tool/chataction.h"
+#include "widget/tool/chatactions/filetransferaction.h"
 #include "widget/netcamview.h"
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"

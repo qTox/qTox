@@ -104,6 +104,8 @@ private slots:
     void setStatusOnline();
     void setStatusAway();
     void setStatusBusy();
+    void onMessageSendResult(int friendId, const QString& message, int messageId);
+    void onGroupSendResult(int groupId, const QString& message, int result);
 
 protected slots:
     void moveWindow(QMouseEvent *e);

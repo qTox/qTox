@@ -107,13 +107,16 @@ HEADERS  += widget/form/addfriendform.h \
     widget/friendlistwidget.h \
     widget/genericchatroomwidget.h \
     widget/form/genericchatform.h \
-    widget/tool/chataction.h \
+    widget/tool/chatactions/chataction.h \
     widget/chatareawidget.h \
     filetransferinstance.h \
     corestructs.h \
     coredefines.h \
     coreav.h \
-    widget/settingsdialog.h
+    widget/settingsdialog.h \
+    widget/tool/chatactions/messageaction.h \
+    widget/tool/chatactions/filetransferaction.h \
+    widget/tool/chatactions/systemmessageaction.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -146,8 +149,11 @@ SOURCES += \
     coreav.cpp \
     widget/genericchatroomwidget.cpp \
     widget/form/genericchatform.cpp \
-    widget/tool/chataction.cpp \
+    widget/tool/chatactions/chataction.cpp \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp \
     corestructs.cpp \
-    widget/settingsdialog.cpp
+    widget/settingsdialog.cpp \
+    widget/tool/chatactions/messageaction.cpp \
+    widget/tool/chatactions/filetransferaction.cpp \
+    widget/tool/chatactions/systemmessageaction.cpp

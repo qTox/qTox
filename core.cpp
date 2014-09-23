@@ -479,7 +479,8 @@ void Core::sendMessage(int friendId, const QString& message)
     for (auto &cMsg :cMessages)
     {
         int messageId = tox_send_message(tox, friendId, cMsg.data(), cMsg.size());
-        emit messageSentResult(friendId, message, messageId);
+        if (messageId == 0)
+            emit messageSentResult(friendId, message, messageId);
     }
 }
 
@@ -503,7 +504,9 @@ void Core::sendGroupMessage(int groupId, const QString& message)
 
     for (auto &cMsg :cMessages)
     {
-        tox_group_message_send(tox, groupId, cMsg.data(), cMsg.size());
+        int ret = tox_group_message_send(tox, groupId, cMsg.data(), cMsg.size());
+        if (ret == -1)
+            emit groupSentResult(groupId, message, ret);
     }
 }
 
