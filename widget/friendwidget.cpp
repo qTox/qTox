@@ -200,5 +200,6 @@ void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
         return;
 
     isDefaultAvatar = false;
-    avatar.setPixmap(pic);
+    QPixmap scaled = pic.scaled(40,40,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    avatar.setPixmap(scaled);
 }
