@@ -48,6 +48,7 @@ public:
     int friendId;
     QLabel avatar, statusPic;
     CroppingLabel name, statusMessage;
+    bool isDefaultAvatar;
 };
 
 #endif // FRIENDWIDGET_H

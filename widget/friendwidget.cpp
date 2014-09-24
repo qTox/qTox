@@ -26,7 +26,7 @@
 #include <QMenu>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
-    : friendId(FriendId)
+    : friendId(FriendId), isDefaultAvatar{true}
 {
     setMouseTracking(true);
     setAutoFillBackground(true);
@@ -134,7 +134,8 @@ void FriendWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap(":img/contact_dark.png"));
+    if (isDefaultAvatar)
+       avatar.setPixmap(QPixmap(":img/contact_dark.png"));
 }
 
 void FriendWidget::setAsInactiveChatroom()
@@ -153,7 +154,9 @@ void FriendWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap(":img/contact.png"));
+
+    if (isDefaultAvatar)
+        avatar.setPixmap(QPixmap(":img/contact.png"));
 }
 
 void FriendWidget::updateStatusLight()
@@ -196,5 +199,6 @@ void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
     if (FriendId != friendId)
         return;
 
+    isDefaultAvatar = false;
     avatar.setPixmap(pic);
 }
