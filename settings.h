@@ -58,8 +58,8 @@ public:
     bool getEncryptLogs() const;
     void setEncryptLogs(bool newValue);
 
-    QPixmap getSavedAvatar();
-    void saveAvatar(QPixmap& pic);
+    QPixmap getSavedAvatar(const QString& ownerId);
+    void saveAvatar(QPixmap& pic, const QString& ownerId);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it

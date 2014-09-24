@@ -210,7 +210,7 @@ void Core::start()
     tox_get_address(tox, friendAddress);
     emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
 
-    QPixmap pic = Settings::getInstance().getSavedAvatar();
+    QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
     if (!pic.isNull() && !pic.size().isEmpty())
     {
         QByteArray data;
@@ -471,6 +471,7 @@ void Core::onAvatarDataCallback(Tox*, int32_t friendnumber, uint8_t,
     else
     {
         qDebug() << "Core: Got avatar data from "<<friendnumber<<", size:"<<pic.size();
+        Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendnumber));
         emit static_cast<Core*>(core)->friendAvatarChanged(friendnumber, pic);
     }
 }
@@ -783,7 +784,7 @@ void Core::setAvatar(uint8_t format, const QByteArray& data)
 
     QPixmap pic;
     pic.loadFromData(data);
-    Settings::getInstance().saveAvatar(pic);
+    Settings::getInstance().saveAvatar(pic, getSelfId().toString());
     emit selfAvatarChanged(pic);
 }
 

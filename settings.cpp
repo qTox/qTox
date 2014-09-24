@@ -258,17 +258,17 @@ QString Settings::getSettingsDirPath()
 #endif
 }
 
-QPixmap Settings::getSavedAvatar()
+QPixmap Settings::getSavedAvatar(const QString &ownerId)
 {
-    QString filePath = QDir(getSettingsDirPath()).filePath(AVATAR_FILENAME);
+    QString filePath = QDir(getSettingsDirPath()).filePath("avatar_"+ownerId);
     QPixmap pic;
     pic.load(filePath);
     return pic;
 }
 
-void Settings::saveAvatar(QPixmap& pic)
+void Settings::saveAvatar(QPixmap& pic, const QString& ownerId)
 {
-    QString filePath = QDir(getSettingsDirPath()).filePath(AVATAR_FILENAME);
+    QString filePath = QDir(getSettingsDirPath()).filePath("avatar_"+ownerId);
     pic.save(filePath, "png");
 }
 
