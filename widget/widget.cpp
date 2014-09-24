@@ -320,7 +320,7 @@ void Widget::onAvatarClicked()
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 {
-    QPixmap scaled = pic.scaledToWidth(40, Qt::SmoothTransformation);
+    QPixmap scaled = pic.scaled(40,40, Qt::KeepAspectRatio,Qt::SmoothTransformation);
     ui->profilePicture->setPixmap(scaled);
 }
 
