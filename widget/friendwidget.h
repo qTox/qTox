@@ -22,6 +22,8 @@
 #include "genericchatroomwidget.h"
 #include "croppinglabel.h"
 
+class QPixmap;
+
 struct FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
@@ -38,6 +40,9 @@ signals:
     void friendWidgetClicked(FriendWidget* widget);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
+
+public slots:
+    void onAvatarChange(int FriendId, const QPixmap& pic);
 
 public:
     int friendId;

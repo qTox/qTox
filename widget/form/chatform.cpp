@@ -464,3 +464,11 @@ void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
 
     addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red");
 }
+
+void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
+{
+    if (FriendId != f->friendId)
+        return;
+
+    avatarLabel->setPixmap(pic);
+}

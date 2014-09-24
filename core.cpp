@@ -216,9 +216,10 @@ void Core::start()
         QByteArray data;
         QBuffer buffer(&data);
         buffer.open(QIODevice::WriteOnly);
-        pic.save(&buffer);
+        pic.save(&buffer, "PNG");
         buffer.close();
-        tox_set_avatar(tox, TOX_AVATARFORMAT_PNG, (uint8_t*)data.constData(), data.size());
+        if (tox_set_avatar(tox, TOX_AVATARFORMAT_PNG, (uint8_t*)data.constData(), data.size()) != 0)
+            qWarning() << "Core:start: Error setting avatar, size:"<<data.size();
         emit selfAvatarChanged(pic);
     }
     else
@@ -279,6 +280,10 @@ void Core::onUserStatusChanged(Tox*/* tox*/, int friendId, uint8_t userstatus, v
             status = Status::Online;
             break;
     }
+
+    if (status == Status::Online || status == Status::Away)
+        tox_request_avatar_data(static_cast<Core*>(core)->tox, friendId);
+
     emit static_cast<Core*>(core)->friendStatusChanged(friendId, status);
 }
 
@@ -449,16 +454,25 @@ void Core::onFileDataCallback(Tox*, int32_t friendnumber, uint8_t filenumber, co
                                             file->filesize, file->bytesSent, ToxFile::RECEIVING);
 }
 
-void Core::onAvatarInfoCallback(Tox* tox, int32_t friendnumber, uint8_t format,
-                                uint8_t *hash, void *userdata)
+void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
+                                uint8_t *, void *)
 {
-    qDebug() << "Core: Got avatar info from "<<friendnumber;
+    qDebug() << "Core: Got avatar info from "<<friendnumber
+             <<": format "<<format;
 }
 
-void Core::onAvatarDataCallback(Tox* tox, int32_t friendnumber, uint8_t format,
-                        uint8_t *hash, uint8_t *data, uint32_t datalen, void *userdata)
+void Core::onAvatarDataCallback(Tox*, int32_t friendnumber, uint8_t,
+                        uint8_t *, uint8_t *data, uint32_t datalen, void *core)
 {
-    qDebug() << "Core: Got avatar data from "<<friendnumber;
+    QPixmap pic;
+    pic.loadFromData((uchar*)data, datalen);
+    if (pic.isNull())
+        qDebug() << "Core: Got invalid avatar data from "<<friendnumber;
+    else
+    {
+        qDebug() << "Core: Got avatar data from "<<friendnumber<<", size:"<<pic.size();
+        emit static_cast<Core*>(core)->friendAvatarChanged(friendnumber, pic);
+    }
 }
 
 void Core::acceptFriendRequest(const QString& userId)

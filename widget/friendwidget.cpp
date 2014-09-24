@@ -190,3 +190,11 @@ void FriendWidget::resetEventFlags()
     Friend* f = FriendList::findFriend(friendId);
     f->hasNewEvents = 0;
 }
+
+void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
+{
+    if (FriendId != friendId)
+        return;
+
+    avatar.setPixmap(pic);
+}

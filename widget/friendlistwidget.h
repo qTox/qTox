@@ -23,6 +23,7 @@
 
 class QLayout;
 class QGridLayout;
+class QPixmap;
 
 class FriendListWidget : public QWidget
 {

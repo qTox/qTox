@@ -14,6 +14,7 @@ However, it is not a fork.
 - Video calls
 - Tox DNS
 - Translations in various languages
+- Avatars
 
 <h2>Downloads</h2>
 

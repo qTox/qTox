@@ -23,6 +23,7 @@
 struct Friend;
 class FileTransferInstance;
 class NetCamView;
+class QPixmap;
 
 class ChatForm : public GenericChatForm
 {
@@ -55,6 +56,7 @@ public slots:
     void onAvPeerTimeout(int FriendId, int CallId);
     void onAvMediaChange(int FriendId, int CallId, bool video);
     void onMicMuteToggle();
+    void onAvatarChange(int FriendId, const QPixmap& pic);
 
 private slots:
     void onSendTriggered();
