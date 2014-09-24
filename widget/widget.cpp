@@ -302,7 +302,7 @@ void Widget::onAvatarClicked()
 
     if (bytes.size() >= TOX_MAX_AVATAR_DATA_LENGTH)
     {
-        pic = pic.scaledToWidth(64, Qt::SmoothTransformation);
+        pic = pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         bytes.clear();
         buffer.open(QIODevice::WriteOnly);
         pic.save(&buffer, "PNG");
