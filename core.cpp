@@ -455,10 +455,12 @@ void Core::onFileDataCallback(Tox*, int32_t friendnumber, uint8_t filenumber, co
 }
 
 void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
-                                uint8_t *, void *)
+                                uint8_t *, void* core)
 {
     qDebug() << "Core: Got avatar info from "<<friendnumber
              <<": format "<<format;
+
+    tox_request_avatar_data(static_cast<Core*>(core)->tox, friendnumber);
 }
 
 void Core::onAvatarDataCallback(Tox*, int32_t friendnumber, uint8_t,
@@ -786,6 +788,11 @@ void Core::setAvatar(uint8_t format, const QByteArray& data)
     pic.loadFromData(data);
     Settings::getInstance().saveAvatar(pic, getSelfId().toString());
     emit selfAvatarChanged(pic);
+
+    // Broadcast our new avatar!
+    const uint32_t friendCount = tox_count_friendlist(tox);;
+    for (unsigned i=0; i<friendCount; i++)
+        tox_send_avatar_info(tox, i);
 }
 
 ToxID Core::getSelfId()
