@@ -1471,6 +1471,9 @@ QSplitter:handle{
                <property name="pixmap">
                 <pixmap resource="res.qrc">:/img/contact.png</pixmap>
                </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
                <property name="wordWrap">
                 <bool>true</bool>
                </property>
