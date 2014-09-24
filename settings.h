@@ -19,6 +19,7 @@
 
 #include <QHash>
 #include <QObject>
+#include <QPixmap>
 
 class Settings : public QObject
 {
@@ -56,6 +57,9 @@ public:
 
     bool getEncryptLogs() const;
     void setEncryptLogs(bool newValue);
+
+    QPixmap getSavedAvatar();
+    void saveAvatar(QPixmap& pic);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -138,6 +142,7 @@ private:
     Settings& operator=(const Settings&) = delete;
 
     static const QString FILENAME;
+    static const QString AVATAR_FILENAME;
 
     bool loaded;
 

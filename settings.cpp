@@ -27,6 +27,7 @@
 #include <QList>
 
 const QString Settings::FILENAME = "settings.ini";
+const QString Settings::AVATAR_FILENAME = "avatar.dat";
 bool Settings::makeToxPortable{false};
 
 Settings::Settings() :
@@ -255,6 +256,20 @@ QString Settings::getSettingsDirPath()
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + "tox");
 #endif
+}
+
+QPixmap Settings::getSavedAvatar()
+{
+    QString filePath = QDir(getSettingsDirPath()).filePath(AVATAR_FILENAME);
+    QPixmap pic;
+    pic.load(filePath);
+    return pic;
+}
+
+void Settings::saveAvatar(QPixmap& pic)
+{
+    QString filePath = QDir(getSettingsDirPath()).filePath(AVATAR_FILENAME);
+    pic.save(filePath, "png");
 }
 
 const QList<Settings::DhtServer>& Settings::getDhtServerList() const

@@ -36,10 +36,12 @@
 #include <QDebug>
 #include <QFile>
 #include <QString>
+#include <QBuffer>
 #include <QPainter>
 #include <QMouseEvent>
 #include <QClipboard>
 #include <QThread>
+#include <QFileDialog>
 #include <tox/tox.h>
 
 Widget *Widget::instance{nullptr};
@@ -180,6 +182,7 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::statusSet, this, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
+    connect(core, &Core::selfAvatarChanged, this, &Widget::onSelfAvatarLoaded);
     connect(core, SIGNAL(fileDownloadFinished(const QString&)), &filesForm, SLOT(onFileDownloadComplete(const QString&)));
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
@@ -210,6 +213,7 @@ Widget::Widget(QWidget *parent)
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
+    connect(ui->profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
@@ -269,6 +273,53 @@ QString Widget::getUsername()
 Camera* Widget::getCamera()
 {
     return camera;
+}
+
+void Widget::onAvatarClicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, "Choose a profile picture");
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    if (!file.isOpen())
+    {
+        QMessageBox::critical(this, "Error", "Unable to open this file");
+        return;
+    }
+
+    QPixmap pic;
+    if (!pic.loadFromData(file.readAll()))
+    {
+        QMessageBox::critical(this, "Error", "Unable to read this image");
+        return;
+    }
+
+    QByteArray bytes;
+    QBuffer buffer(&bytes);
+    buffer.open(QIODevice::WriteOnly);
+    pic.save(&buffer, "PNG");
+    buffer.close();
+
+    if (bytes.size() >= TOX_MAX_AVATAR_DATA_LENGTH)
+    {
+        pic = pic.scaledToWidth(64, Qt::SmoothTransformation);
+        bytes.clear();
+        buffer.open(QIODevice::WriteOnly);
+        pic.save(&buffer, "PNG");
+        buffer.close();
+    }
+
+    if (bytes.size() >= TOX_MAX_AVATAR_DATA_LENGTH)
+    {
+        QMessageBox::critical(this, "Error", "This image is too big");
+        return;
+    }
+
+    core->setAvatar(TOX_AVATARFORMAT_PNG, bytes);
+}
+
+void Widget::onSelfAvatarLoaded(const QPixmap& pic)
+{
+    ui->profilePicture->setPixmap(pic);
 }
 
 void Widget::onConnected()

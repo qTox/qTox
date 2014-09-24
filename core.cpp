@@ -35,6 +35,7 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QList>
+#include <QBuffer>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
@@ -187,6 +188,8 @@ void Core::start()
     tox_callback_file_send_request(tox, onFileSendRequestCallback, this);
     tox_callback_file_control(tox, onFileControlCallback, this);
     tox_callback_file_data(tox, onFileDataCallback, this);
+    tox_callback_avatar_info(tox, onAvatarInfoCallback, this);
+    tox_callback_avatar_data(tox, onAvatarDataCallback, this);
 
     toxav_register_callstate_callback(toxav, onAvInvite, av_OnInvite, this);
     toxav_register_callstate_callback(toxav, onAvStart, av_OnStart, this);
@@ -205,8 +208,21 @@ void Core::start()
 
     uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
     tox_get_address(tox, friendAddress);
-
     emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
+
+    QPixmap pic = Settings::getInstance().getSavedAvatar();
+    if (!pic.isNull() && !pic.size().isEmpty())
+    {
+        QByteArray data;
+        QBuffer buffer(&data);
+        buffer.open(QIODevice::WriteOnly);
+        pic.save(&buffer);
+        buffer.close();
+        tox_set_avatar(tox, TOX_AVATARFORMAT_PNG, (uint8_t*)data.constData(), data.size());
+        emit selfAvatarChanged(pic);
+    }
+    else
+        qDebug() << "Core: Error loading self avatar";
 
     bootstrapDht();
 
@@ -431,6 +447,18 @@ void Core::onFileDataCallback(Tox*, int32_t friendnumber, uint8_t filenumber, co
     //qDebug() << QString("Core::onFileDataCallback: received %1/%2 bytes").arg(file->bytesSent).arg(file->filesize);
     emit static_cast<Core*>(core)->fileTransferInfo(file->friendId, file->fileNum,
                                             file->filesize, file->bytesSent, ToxFile::RECEIVING);
+}
+
+void Core::onAvatarInfoCallback(Tox* tox, int32_t friendnumber, uint8_t format,
+                                uint8_t *hash, void *userdata)
+{
+    qDebug() << "Core: Got avatar info from "<<friendnumber;
+}
+
+void Core::onAvatarDataCallback(Tox* tox, int32_t friendnumber, uint8_t format,
+                        uint8_t *hash, uint8_t *data, uint32_t datalen, void *userdata)
+{
+    qDebug() << "Core: Got avatar data from "<<friendnumber;
 }
 
 void Core::acceptFriendRequest(const QString& userId)
@@ -727,6 +755,22 @@ void Core::setUsername(const QString& username)
         saveConfiguration();
         emit usernameSet(username);
     }
+}
+
+void Core::setAvatar(uint8_t format, const QByteArray& data)
+{
+    if (tox_set_avatar(tox, format, (uint8_t*)data.constData(), data.size()) != 0)
+    {
+        qWarning() << "Core: Failed to set self avatar";
+        return;
+    }
+    else
+        qDebug() << "Core: Set avatar, format:"<<format<<", size:"<<data.size();
+
+    QPixmap pic;
+    pic.loadFromData(data);
+    Settings::getInstance().saveAvatar(pic);
+    emit selfAvatarChanged(pic);
 }
 
 ToxID Core::getSelfId()

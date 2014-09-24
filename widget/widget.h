@@ -80,6 +80,8 @@ private slots:
     void onTransferClicked();
     void onSettingsClicked();
     void onFailedToStartCore();
+    void onAvatarClicked();
+    void onSelfAvatarLoaded(const QPixmap &pic);
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
     void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
     void setUsername(const QString& username);

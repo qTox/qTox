@@ -71,6 +71,7 @@ public slots:
     void setStatus(Status status);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
+    void setAvatar(uint8_t format, const QByteArray& data);
 
     void sendMessage(int friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
@@ -123,6 +124,7 @@ signals:
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
+    void selfAvatarChanged(const QPixmap& pic);
 
     void messageSentResult(int friendId, const QString& message, int messageId);
     void groupSentResult(int groupId, const QString& message, int result);
@@ -182,6 +184,8 @@ private:
     static void onFileControlCallback(Tox *tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
                                       uint8_t control_type, const uint8_t *data, uint16_t length, void *core);
     static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, const uint8_t *data, uint16_t length, void *userdata);
+    static void onAvatarInfoCallback(Tox* tox, int32_t friendnumber, uint8_t format, uint8_t *hash, void *userdata);
+    static void onAvatarDataCallback(Tox* tox, int32_t friendnumber, uint8_t format, uint8_t *hash, uint8_t *data, uint32_t datalen, void *userdata);
 
     static void onAvInvite(void* toxav, int32_t call_index, void* core);
     static void onAvStart(void* toxav, int32_t call_index, void* core);

@@ -1452,7 +1452,7 @@ QSplitter:handle{
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="profilePicture">
+              <widget class="ClickableLabel" name="profilePicture">
                <property name="minimumSize">
                 <size>
                  <width>40</width>
@@ -2093,7 +2093,7 @@ QSplitter:handle{
              <x>0</x>
              <y>0</y>
              <width>263</width>
-             <height>373</height>
+             <height>378</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -3228,7 +3228,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>716</width>
-     <height>23</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>
@@ -3253,6 +3253,11 @@ QSplitter:handle{
    <class>CroppingLabel</class>
    <extends>QLabel</extends>
    <header>widget/croppinglabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>widget/tool/clickablelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

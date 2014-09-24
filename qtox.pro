@@ -116,7 +116,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/settingsdialog.h \
     widget/tool/chatactions/messageaction.h \
     widget/tool/chatactions/filetransferaction.h \
-    widget/tool/chatactions/systemmessageaction.h
+    widget/tool/chatactions/systemmessageaction.h \
+    widget/tool/clickablelabel.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
