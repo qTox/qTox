@@ -17,7 +17,7 @@
 #ifndef GENERICCHATFORM_H
 #define GENERICCHATFORM_H
 
-#include <QObject>
+#include <QWidget>
 #include <QPoint>
 #include <QDateTime>
 
@@ -35,12 +35,11 @@ namespace Ui {
     class MainWindow;
 }
 
-class GenericChatForm : public QObject
+class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericChatForm(QObject *parent = 0);
-    virtual ~GenericChatForm();
+    GenericChatForm(QWidget *parent = 0);
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
@@ -62,7 +61,7 @@ protected slots:
 protected:
     CroppingLabel *nameLabel;
     QLabel *avatarLabel;
-    QWidget *mainWidget, *headWidget;
+    QWidget *headWidget;
     QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;

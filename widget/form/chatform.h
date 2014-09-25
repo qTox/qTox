@@ -69,6 +69,11 @@ private slots:
     void onFileTansBtnClicked(QString widgetName, QString buttonName);
     void onFileSendFailed(int FriendId, const QString &fname);
 
+protected:
+    // drag & drop
+    void dragEnterEvent(QDragEnterEvent* ev);
+    void dropEvent(QDropEvent* ev);
+
 private:
     Friend* f;
     CroppingLabel *statusMessageLabel;

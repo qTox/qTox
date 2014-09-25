@@ -24,6 +24,9 @@
 #include "widget/form/chatform.h"
 #include <QContextMenuEvent>
 #include <QMenu>
+#include <QDrag>
+#include <QMimeData>
+#include <QApplication>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId), isDefaultAvatar{true}
@@ -202,4 +205,29 @@ void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
     isDefaultAvatar = false;
     QPixmap scaled = pic.scaled(40,40,Qt::KeepAspectRatio,Qt::SmoothTransformation);
     avatar.setPixmap(scaled);
+}
+
+void FriendWidget::mousePressEvent(QMouseEvent *ev)
+{
+    if (ev->button() == Qt::LeftButton)
+        dragStartPos = ev->pos();
+}
+
+void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
+{
+    if (!(ev->buttons() & Qt::LeftButton))
+        return;
+
+    if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
+    {
+        QDrag* drag = new QDrag(this);
+        QMimeData* mdata = new QMimeData;
+        mdata->setData("friend", QString::number(friendId).toLatin1());
+
+        drag->setMimeData(mdata);
+        if (avatar.pixmap())
+            drag->setPixmap(*avatar.pixmap());
+
+        drag->exec(Qt::CopyAction | Qt::MoveAction);
+    }
 }

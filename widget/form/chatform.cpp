@@ -19,6 +19,9 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QMimeData>
+#include <QFileInfo>
+#include <QDragEnterEvent>
 #include "chatform.h"
 #include "friend.h"
 #include "widget/friendwidget.h"
@@ -52,6 +55,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
+
+    setAcceptDrops(true);
 }
 
 ChatForm::~ChatForm()
@@ -471,4 +476,24 @@ void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
         return;
 
     avatarLabel->setPixmap(pic);
+}
+
+void ChatForm::dragEnterEvent(QDragEnterEvent *ev)
+{
+    if (ev->mimeData()->hasUrls())
+        ev->acceptProposedAction();
+}
+
+void ChatForm::dropEvent(QDropEvent *ev)
+{
+    if (ev->mimeData()->hasUrls())
+    {
+        for (QUrl url : ev->mimeData()->urls())
+        {
+            QFileInfo info(url.path());
+
+            if (info.exists())
+                Core::getInstance()->sendFile(f->friendId, info.fileName(), info.absoluteFilePath(), info.size());
+        }
+    }
 }
