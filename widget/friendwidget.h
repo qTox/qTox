@@ -44,11 +44,16 @@ signals:
 public slots:
     void onAvatarChange(int FriendId, const QPixmap& pic);
 
+protected:
+    void mousePressEvent(QMouseEvent* ev);
+    void mouseMoveEvent(QMouseEvent* ev);
+
 public:
     int friendId;
     QLabel avatar, statusPic;
     CroppingLabel name, statusMessage;
     bool isDefaultAvatar;
+    QPoint dragStartPos;
 };
 
 #endif // FRIENDWIDGET_H

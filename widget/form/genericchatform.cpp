@@ -27,12 +27,12 @@
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
 
-GenericChatForm::GenericChatForm(QObject *parent) :
-    QObject(parent)
+GenericChatForm::GenericChatForm(QWidget *parent) :
+    QWidget(parent)
 {
     curRow = 0;
 
-    mainWidget = new QWidget(); headWidget = new QWidget();
+    headWidget = new QWidget();
 
     nameLabel = new CroppingLabel();
     avatarLabel = new QLabel();
@@ -84,7 +84,7 @@ GenericChatForm::GenericChatForm(QObject *parent) :
     micButton->setObjectName("green");
     micButton->setStyleSheet(micButtonStylesheet);
 
-    mainWidget->setLayout(mainLayout);
+    setLayout(mainLayout);
     mainLayout->addWidget(chatWidget);
     mainLayout->addLayout(mainFootLayout);
     mainLayout->setMargin(0);
@@ -129,10 +129,10 @@ void GenericChatForm::setName(const QString &newName)
 
 void GenericChatForm::show(Ui::MainWindow &ui)
 {
-    ui.mainContent->layout()->addWidget(mainWidget);
+    ui.mainContent->layout()->addWidget(this);
     ui.mainHead->layout()->addWidget(headWidget);
-    mainWidget->show();
     headWidget->show();
+    QWidget::show();
 }
 
 void GenericChatForm::onChatContextMenuRequested(QPoint pos)
@@ -170,12 +170,6 @@ void GenericChatForm::addMessage(QString author, QString message, QDateTime date
         chatWidget->insertMessage(new MessageAction("", message, date, isMe));
     else chatWidget->insertMessage(new MessageAction(author , message, date, isMe));
     previousName = author;
-}
-
-GenericChatForm::~GenericChatForm()
-{
-    delete mainWidget;
-    delete headWidget;
 }
 
 void GenericChatForm::onEmoteButtonClicked()

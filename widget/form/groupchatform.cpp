@@ -19,7 +19,10 @@
 #include "widget/groupwidget.h"
 #include "widget/tool/chattextedit.h"
 #include "widget/croppinglabel.h"
+#include "core.h"
 #include <QPushButton>
+#include <QMimeData>
+#include <QDragEnterEvent>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup)
@@ -58,11 +61,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
-}
 
-GroupChatForm::~GroupChatForm()
-{
-
+    setAcceptDrops(true);
 }
 
 void GroupChatForm::onSendTriggered()
@@ -94,3 +94,19 @@ void GroupChatForm::onUserListChanged()
     names.chop(2);
     namesList->setText(names);
 }
+
+void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
+{
+    if (ev->mimeData()->hasFormat("friend"))
+        ev->acceptProposedAction();
+}
+
+void GroupChatForm::dropEvent(QDropEvent *ev)
+{
+    if (ev->mimeData()->hasFormat("friend"))
+    {
+        int friendId = ev->mimeData()->data("friend").toInt();
+        Core::getInstance()->groupInviteFriend(friendId, group->groupId);
+    }
+}
+
