@@ -300,7 +300,7 @@ void Widget::onAvatarClicked()
     pic.save(&buffer, "PNG");
     buffer.close();
 
-    if (bytes.size() >= TOX_MAX_AVATAR_DATA_LENGTH)
+    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
     {
         pic = pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         bytes.clear();
@@ -309,13 +309,13 @@ void Widget::onAvatarClicked()
         buffer.close();
     }
 
-    if (bytes.size() >= TOX_MAX_AVATAR_DATA_LENGTH)
+    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
     {
         QMessageBox::critical(this, "Error", "This image is too big");
         return;
     }
 
-    core->setAvatar(TOX_AVATARFORMAT_PNG, bytes);
+    core->setAvatar(TOX_AVATAR_FORMAT_PNG, bytes);
 }
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
