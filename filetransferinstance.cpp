@@ -21,6 +21,7 @@
 #include <QMessageBox>
 #include <QBuffer>
 #include <QDebug>
+#include <QPainter>
 
 uint FileTransferInstance::Idconter = 0;
 
@@ -76,6 +77,7 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
     long rawspeed = diff / timediff;
     speed = getHumanReadableSize(rawspeed)+"/s";
     size = getHumanReadableSize(Filesize);
+    totalBytes = Filesize;
     if (!rawspeed)
         return;
     int etaSecs = (Filesize - BytesSent) / rawspeed;
@@ -352,8 +354,16 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
     QString imgBstr = "<img src=\"data:ftrans." + widgetId + ".btnB/png;base64," + QImage2base64(imgB) + "\">";
 
     QString content;
-    content += "<p>" + filename + "</p>";
-    content += "<p>" + getHumanReadableSize(lastBytesSent) + " / " + size + "&nbsp;(" + speed + " ETA: " + eta + ")</p>\n";
+    QString progrBar = "<img src=\"data:progressbar." + widgetId + "/png;base64," + QImage2base64(drawProgressBarImg(double(lastBytesSent)/totalBytes, 250, 9)) + "\">";
+
+    content  = "<p>" + filename + "</p>";
+    content += "<table cellspacing=\"0\"><tr>";
+    content += "<td>" + size + "</td>";
+    content += "<td align=center>" + speed + "</td>";
+    content += "<td align=right>ETA: " + eta + "</td>";
+    content += "</tr><tr><td colspan=3>";
+    content += progrBar;
+    content += "</td></tr></table>";
 
     return wrapIntoForm(content, type, imgAstr, imgBstr);
 }
@@ -362,10 +372,10 @@ QString FileTransferInstance::wrapIntoForm(const QString& content, const QString
 {
     QString res;
 
-    res =  "<table widht=100% cellspacing=\"0\">\n";
+    res =  "<table cellspacing=\"0\">\n";
     res += "<tr valign=middle>\n";
     res += insertMiniature(type);
-    res += "<td width=100%>\n";
+    res += "<td width=280>\n";
     res += "<div class=" + type + ">";
     res += content;
     res += "</div>\n";
@@ -377,4 +387,20 @@ QString FileTransferInstance::wrapIntoForm(const QString& content, const QString
     res += "</table>\n";
 
     return res;
+}
+
+QImage FileTransferInstance::drawProgressBarImg(const double &part, int w, int h)
+{
+    QImage progressBar(w, h, QImage::Format_Mono);
+
+    QPainter qPainter(&progressBar);
+    qPainter.setBrush(Qt::NoBrush);
+    qPainter.setPen(Qt::black);
+    qPainter.drawRect(0, 0, w - 1, h - 1);
+
+    qPainter.setBrush(Qt::SolidPattern);
+    qPainter.setPen(Qt::black);
+    qPainter.drawRect(1, 0, (w - 2) * (part), h - 1);
+
+    return progressBar;
 }

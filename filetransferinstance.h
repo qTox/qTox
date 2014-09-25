@@ -62,6 +62,7 @@ private:
     QString draw2ButtonsForm(const QString &type, const QImage &imgA, const QImage &imgB);
     QString insertMiniature(const QString &type);
     QString wrapIntoForm(const QString &content, const QString &type, const QString &imgAstr, const QString &imgBstr);
+    QImage drawProgressBarImg(const double &part, int w, int h);
 
 private:
     static uint Idconter;
@@ -72,7 +73,7 @@ private:
     QImage pic;
     QString filename, size, speed, eta;
     QDateTime lastUpdate;
-    long long lastBytesSent;
+    long long lastBytesSent, totalBytes;
     int fileNum;
     int friendId;
     QString savePath;
