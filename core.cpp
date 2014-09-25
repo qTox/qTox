@@ -218,7 +218,7 @@ void Core::start()
         buffer.open(QIODevice::WriteOnly);
         pic.save(&buffer, "PNG");
         buffer.close();
-        if (tox_set_avatar(tox, TOX_AVATARFORMAT_PNG, (uint8_t*)data.constData(), data.size()) != 0)
+        if (tox_set_avatar(tox, TOX_AVATAR_FORMAT_PNG, (uint8_t*)data.constData(), data.size()) != 0)
             qWarning() << "Core:start: Error setting avatar, size:"<<data.size();
         emit selfAvatarChanged(pic);
     }
