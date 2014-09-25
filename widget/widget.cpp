@@ -278,19 +278,21 @@ Camera* Widget::getCamera()
 
 void Widget::onAvatarClicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, "Choose a profile picture");
+    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath(), "*.png");
+    if (filename == "")
+        return;
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
     if (!file.isOpen())
     {
-        QMessageBox::critical(this, "Error", "Unable to open this file");
+        QMessageBox::critical(this, tr("Error"), tr("Unable to open this file"));
         return;
     }
 
     QPixmap pic;
     if (!pic.loadFromData(file.readAll()))
     {
-        QMessageBox::critical(this, "Error", "Unable to read this image");
+        QMessageBox::critical(this, tr("Error"), tr("Unable to read this image"));
         return;
     }
 
@@ -311,7 +313,7 @@ void Widget::onAvatarClicked()
 
     if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
     {
-        QMessageBox::critical(this, "Error", "This image is too big");
+        QMessageBox::critical(this, tr("Error"), tr("This image is too big"));
         return;
     }
 
