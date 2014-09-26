@@ -460,7 +460,7 @@ void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
     qDebug() << "Core: Got avatar info from "<<friendnumber
              <<": format "<<format;
 
-    if (format == TOX_AVATARFORMAT_NONE)
+    if (format == TOX_AVATAR_FORMAT_NONE)
         emit static_cast<Core*>(core)->friendAvatarRemoved(friendnumber);
     else
         tox_request_avatar_data(static_cast<Core*>(core)->tox, friendnumber);
