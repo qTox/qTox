@@ -475,7 +475,8 @@ void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
     if (FriendId != f->friendId)
         return;
 
-    avatarLabel->setPixmap(pic);
+    QPixmap scaled = pic.scaled(40,40,Qt::KeepAspectRatio,Qt::SmoothTransformation);
+    avatarLabel->setPixmap(scaled);
 }
 
 void ChatForm::dragEnterEvent(QDragEnterEvent *ev)
