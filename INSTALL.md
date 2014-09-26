@@ -69,7 +69,7 @@ make install
 Copy the dll "OpenAL32.dll" located at "C:\qTox\libs\openal-build\install\bin" to "C:\qTox\libs\lib". Finally, copy the directory "AL" located at "C:\qTox\libs\openal-build\install\include" to "C:\qTox\libs\include". Unlike OpenCV you don't need to patch any files. Feel free to delete the directories "openal-soft-x.y.z" and "openal-build", but you don't need to.
 
 ##Linux
-Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` which will attempt to automatically download dependencies.
+Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning, which will attempt to automatically download dependencies followed by compilation.
 
 ###Cloning the Repository
 In order to clone the qTox repository you need Git.
@@ -156,9 +156,15 @@ cd /home/user/qTox
 ./bootstrap.sh # use -h or --help for more information
 ```
 
+After all the dependencies are thus reeady to go, compiling should be as simple as 
+```bash
+qmake
+make
+```
+
 ###Building packages
 
-qTox now has the experimental and probably-dodgy ability to package itself (in .deb
+Alternately, qTox now has the experimental and probably-dodgy ability to package itself (in .deb
 form natively, and .rpm form with <a href="http://joeyh.name/code/alien/">alien</a>).
 
 After installing the required dependencies, run `bootstrap.sh` and then run the
@@ -180,7 +186,7 @@ This guide is intended for people who wish to use an existing or new ProjectTox-
 
 Installation on OSX, isn't quite straight forward, here is a quick guide on how to install;
 
-Note that qTox now requires OpenCV and OpenAL for audio and video.
+Note that qTox now requires OpenCV and OpenAL for video and audio.
 
 The first thing you need to do is install ProjectTox-Core with a/v support. Refer to the INSTALL guide in the PrjectTox-Core github repo.
 
@@ -220,5 +226,6 @@ make
 in the qTox directory, or if you are using the bundled tox core installation, you can use 
 ```bash
 ./bootstrap.sh
+make
 ```
 Assuming all went well you should now have a qTox.app file within the directory. Double click and it should open!
