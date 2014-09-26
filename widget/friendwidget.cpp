@@ -207,6 +207,15 @@ void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
     avatar.setPixmap(scaled);
 }
 
+void FriendWidget::onAvatarRemoved(int FriendId)
+{
+    if (FriendId != friendId)
+        return;
+
+    isDefaultAvatar = true;
+    avatar.setPixmap(QPixmap(":img/contact.png"));
+}
+
 void FriendWidget::mousePressEvent(QMouseEvent *ev)
 {
     if (ev->button() == Qt::LeftButton)

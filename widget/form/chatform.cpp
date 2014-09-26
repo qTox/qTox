@@ -498,3 +498,11 @@ void ChatForm::dropEvent(QDropEvent *ev)
         }
     }
 }
+
+void ChatForm::onAvatarRemoved(int FriendId)
+{
+    if (FriendId != f->friendId)
+        return;
+
+    avatarLabel->setPixmap(QPixmap(":/img/contact_dark.png"));
+}

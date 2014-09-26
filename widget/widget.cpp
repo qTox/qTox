@@ -468,6 +468,8 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::avMediaChange, newfriend->chatForm, &ChatForm::onAvMediaChange);
     connect(core, &Core::friendAvatarChanged, newfriend->chatForm, &ChatForm::onAvatarChange);
     connect(core, &Core::friendAvatarChanged, newfriend->widget, &FriendWidget::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, newfriend->chatForm, &ChatForm::onAvatarRemoved);
+    connect(core, &Core::friendAvatarRemoved, newfriend->widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
     QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);

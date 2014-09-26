@@ -107,6 +107,7 @@ signals:
     void friendUsernameChanged(int friendId, const QString& username);
     void friendTypingChanged(int friendId, bool isTyping);
     void friendAvatarChanged(int friendId, const QPixmap& pic);
+    void friendAvatarRemoved(int friendId);
 
     void friendStatusMessageLoaded(int friendId, const QString& message);
     void friendUsernameLoaded(int friendId, const QString& username);

@@ -57,6 +57,7 @@ public slots:
     void onAvMediaChange(int FriendId, int CallId, bool video);
     void onMicMuteToggle();
     void onAvatarChange(int FriendId, const QPixmap& pic);
+    void onAvatarRemoved(int FriendId);
 
 private slots:
     void onSendTriggered();
