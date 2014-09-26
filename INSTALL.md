@@ -156,7 +156,7 @@ cd /home/user/qTox
 ./bootstrap.sh # use -h or --help for more information
 ```
 
-##Building packages
+###Building packages
 
 qTox now has the experimental and probably-dodgy ability to package itself (in .deb
 form natively, and .rpm form with <a href="http://joeyh.name/code/alien/">alien</a>).
@@ -179,6 +179,8 @@ brew install --HEAD ReDetection/qtox/qtox
 This guide is intended for people who wish to use an existing or new ProjectTox-Core installation separate to the bundled installation with qTox, if you do not wish to use a separate installation you can skip to the section titled 'Final Steps'.
 
 Installation on OSX, isn't quite straight forward, here is a quick guide on how to install;
+
+Note that qTox now requires OpenCV and OpenAL for audio and video.
 
 The first thing you need to do is install ProjectTox-Core with a/v support. Refer to the INSTALL guide in the PrjectTox-Core github repo.
 
