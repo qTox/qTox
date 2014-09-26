@@ -105,7 +105,7 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="80"/>
+        <location filename="../widget/form/chatform.cpp" line="86"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
@@ -113,19 +113,19 @@
 <context>
     <name>FileTransferInstance</name>
     <message>
-        <location filename="../filetransferinstance.cpp" line="191"/>
+        <location filename="../filetransferinstance.cpp" line="193"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Salva file</translation>
     </message>
     <message>
-        <location filename="../filetransferinstance.cpp" line="202"/>
+        <location filename="../filetransferinstance.cpp" line="204"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../filetransferinstance.cpp" line="202"/>
+        <location filename="../filetransferinstance.cpp" line="204"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Non hai sufficienti permessi per scrivere in questa locazione. Scegli un&apos;altra posizione, o annulla il salvataggio.</translation>
@@ -189,19 +189,19 @@
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="84"/>
+        <location filename="../widget/friendwidget.cpp" line="87"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Copia Tox ID del contatto</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="85"/>
+        <location filename="../widget/friendwidget.cpp" line="88"/>
         <source>Invite in group</source>
         <comment>Menu to invite a friend in a groupchat</comment>
         <translation>Invita nel gruppo</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="95"/>
+        <location filename="../widget/friendwidget.cpp" line="98"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Rimuovi contatto</translation>
@@ -252,8 +252,8 @@
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../widget/form/genericchatform.cpp" line="142"/>
-        <location filename="../widget/form/genericchatform.cpp" line="148"/>
+        <location filename="../widget/form/genericchatform.cpp" line="143"/>
+        <location filename="../widget/form/genericchatform.cpp" line="149"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -261,7 +261,7 @@
 <context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="41"/>
+        <location filename="../widget/form/groupchatform.cpp" line="44"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 utenti in chat</translation>
@@ -336,42 +336,42 @@
         <translation>qTox</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1918"/>
+        <location filename="../mainwindow.ui" line="1921"/>
         <source>Your name</source>
         <translation>qTox User</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2000"/>
+        <location filename="../mainwindow.ui" line="2003"/>
         <source>Your status</source>
         <translation>Toxing on qTox</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2566"/>
+        <location filename="../mainwindow.ui" line="2569"/>
         <source>Add friends</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2592"/>
+        <location filename="../mainwindow.ui" line="2595"/>
         <source>Create a group chat</source>
         <translation>Crea un gruppo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2624"/>
+        <location filename="../mainwindow.ui" line="2627"/>
         <source>View completed file transfers</source>
         <translation>Visualizza i trasferimenti completati</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2656"/>
+        <location filename="../mainwindow.ui" line="2659"/>
         <source>Change your settings</source>
         <translation>Cambia le impostazioni</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3238"/>
+        <location filename="../mainwindow.ui" line="3241"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3241"/>
+        <location filename="../mainwindow.ui" line="3244"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -431,25 +431,52 @@
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../widget/widget.cpp" line="133"/>
+        <location filename="../widget/widget.cpp" line="135"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="135"/>
+        <location filename="../widget/widget.cpp" line="137"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Assente</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="137"/>
+        <location filename="../widget/widget.cpp" line="139"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="605"/>
+        <location filename="../widget/widget.cpp" line="281"/>
+        <source>Choose a profile picture</source>
+        <translation>Scegli un&apos;immagine per il profilo</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="288"/>
+        <location filename="../widget/widget.cpp" line="295"/>
+        <location filename="../widget/widget.cpp" line="316"/>
+        <source>Error</source>
+        <translation>Errore</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="288"/>
+        <source>Unable to open this file</source>
+        <translation>Impossibile aprire il file</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="295"/>
+        <source>Unable to read this image</source>
+        <translation>Impossibile leggere l&apos;immagine</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="316"/>
+        <source>This image is too big</source>
+        <translation>L&apos;immagine è troppo grande</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="672"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
