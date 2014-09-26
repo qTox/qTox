@@ -34,6 +34,7 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     setOpenExternalLinks(false);
     setOpenLinks(false);
     setAcceptRichText(false);
+    setFrameStyle(QFrame::NoFrame);
 
     chatTextTable = textCursor().insertTable(1,3);
 
