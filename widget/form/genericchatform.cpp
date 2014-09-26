@@ -26,6 +26,7 @@
 #include "widget/tool/chatactions/systemmessageaction.h"
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
+#include "widget/maskablepixmapwidget.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent) :
     QWidget(parent)
@@ -35,7 +36,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headWidget = new QWidget();
 
     nameLabel = new CroppingLabel();
-    avatarLabel = new QLabel();
+    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask_circle.png");
     QHBoxLayout *headLayout = new QHBoxLayout(), *mainFootLayout = new QHBoxLayout();
     headTextLayout = new QVBoxLayout();
     QVBoxLayout *mainLayout = new QVBoxLayout();
@@ -99,7 +100,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     mainFootLayout->setSpacing(0);
 
     headWidget->setLayout(headLayout);
-    headLayout->addWidget(avatarLabel);
+    headLayout->addWidget(avatar);
     headLayout->addLayout(headTextLayout);
     headLayout->addLayout(volMicLayout);
     headLayout->addWidget(callButton);

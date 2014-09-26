@@ -22,6 +22,7 @@
 #include <QMimeData>
 #include <QFileInfo>
 #include <QDragEnterEvent>
+#include <QBitmap>
 #include "chatform.h"
 #include "friend.h"
 #include "widget/friendwidget.h"
@@ -32,12 +33,13 @@
 #include "widget/tool/chattextedit.h"
 #include "core.h"
 #include "widget/widget.h"
+#include "widget/maskablepixmapwidget.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
 {
     nameLabel->setText(f->getName());
-    avatarLabel->setPixmap(QPixmap(":/img/contact_dark.png"));
+    avatar->setPixmap(QPixmap(":/img/contact_dark.png"));
 
     statusMessageLabel = new CroppingLabel();
     netcam = new NetCamView();
@@ -475,8 +477,7 @@ void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
     if (FriendId != f->friendId)
         return;
 
-    QPixmap scaled = pic.scaled(40,40,Qt::KeepAspectRatio,Qt::SmoothTransformation);
-    avatarLabel->setPixmap(scaled);
+    avatar->setPixmap(pic);
 }
 
 void ChatForm::dragEnterEvent(QDragEnterEvent *ev)

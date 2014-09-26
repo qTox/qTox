@@ -19,6 +19,7 @@
 #include "widget/groupwidget.h"
 #include "widget/tool/chattextedit.h"
 #include "widget/croppinglabel.h"
+#include "widget/maskablepixmapwidget.h"
 #include "core.h"
 #include <QPushButton>
 #include <QMimeData>
@@ -42,7 +43,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     nameLabel->setText(group->widget->name.text());
     nusersLabel->setFont(small);
     nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
-    avatarLabel->setPixmap(QPixmap(":/img/group_dark.png"));
+    avatar->setPixmap(QPixmap(":/img/group_dark.png"));
 
     QString names;
     for (QString& s : group->peers)

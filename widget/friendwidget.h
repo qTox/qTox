@@ -23,6 +23,7 @@
 #include "croppinglabel.h"
 
 class QPixmap;
+class MaskablePixmapWidget;
 
 struct FriendWidget : public GenericChatroomWidget
 {
@@ -50,7 +51,8 @@ protected:
 
 public:
     int friendId;
-    QLabel avatar, statusPic;
+    MaskablePixmapWidget* avatar;
+    QLabel statusPic;
     CroppingLabel name, statusMessage;
     bool isDefaultAvatar;
     QPoint dragStartPos;

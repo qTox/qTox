@@ -32,6 +32,7 @@
 #include "camera.h"
 #include "widget/form/chatform.h"
 #include "widget/settingsdialog.h"
+#include "widget/maskablepixmapwidget.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -110,6 +111,10 @@ Widget::Widget(QWidget *parent)
     }
 
     isWindowMinimized = 0;
+
+    profilePicture = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
+    profilePicture->setPixmap(QPixmap(":/img/avatar.png"));
+    ui->horizontalLayout_3->insertWidget(0,profilePicture);
 
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
@@ -214,7 +219,7 @@ Widget::Widget(QWidget *parent)
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
-    connect(ui->profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
+    connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
@@ -322,8 +327,7 @@ void Widget::onAvatarClicked()
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 {
-    QPixmap scaled = pic.scaled(40,40, Qt::KeepAspectRatio,Qt::SmoothTransformation);
-    ui->profilePicture->setPixmap(scaled);
+    profilePicture->setPixmap(pic);
 }
 
 void Widget::onConnected()

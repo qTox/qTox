@@ -38,6 +38,7 @@ class Core;
 class Camera;
 class FriendListWidget;
 class SettingsDialog;
+class MaskablePixmapWidget;
 
 class Widget : public QMainWindow
 {
@@ -144,6 +145,7 @@ private:
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
     Camera* camera;
+    MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
     bool eventFilter(QObject *, QEvent *event);
 };

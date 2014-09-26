@@ -30,6 +30,7 @@ class QPushButton;
 class CroppingLabel;
 class ChatTextEdit;
 class ChatAreaWidget;
+class MaskablePixmapWidget;
 
 namespace Ui {
     class MainWindow;
@@ -60,7 +61,7 @@ protected slots:
 
 protected:
     CroppingLabel *nameLabel;
-    QLabel *avatarLabel;
+    MaskablePixmapWidget *avatar;
     QWidget *headWidget;
     QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
     QVBoxLayout *headTextLayout;
