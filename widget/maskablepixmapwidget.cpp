@@ -17,8 +17,9 @@
 #include "maskablepixmapwidget.h"
 #include <QPainter>
 
-MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName)
+MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName, QColor background)
     : QWidget(parent)
+    , backgroundColor(background)
 {
     setFixedSize(size);
     mask = QPixmap(maskName).scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -43,7 +44,7 @@ void MaskablePixmapWidget::paintEvent(QPaintEvent *)
 
     QPainter painter(&tmp);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    painter.fillRect(0,0,width(),height(),Qt::white);
+    painter.fillRect(0,0,width(),height(),backgroundColor);
     painter.drawPixmap(offset,pixmap);
     painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
     painter.drawPixmap(0,0,mask);
