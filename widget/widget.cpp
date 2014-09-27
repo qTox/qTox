@@ -477,7 +477,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::friendAvatarRemoved, newfriend->widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
-    QPixmap avatar = Settings::getInstance().getSavedAvatar(userId.left(64)); // just to be safe
+    QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);
     if (!avatar.isNull())
     {
         qWarning() << "Widget: loadded avatar for id" << userId;

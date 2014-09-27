@@ -260,12 +260,14 @@ QString Settings::getSettingsDirPath()
 QPixmap Settings::getSavedAvatar(const QString &ownerId)
 {
     QDir dir(getSettingsDirPath());
-    QString filePath = dir.filePath("avatars/"+ownerId+".png");
+    QString filePath = dir.filePath("avatars/"+ownerId.left(64)+".png");
     QFileInfo info(filePath);
     QPixmap pic;
     if (!info.exists())
     {
-        QString filePath = dir.filePath("avatar_"+ownerId);
+        QString filePath = dir.filePath("avatar_"+ownerId.left(64));
+        if (!QFileInfo(filePath).exists()) // try without truncation, for old self avatars
+            QString filePath = dir.filePath("avatar_"+ownerId);
         pic.load(filePath);
         saveAvatar(pic, ownerId);
         QFile::remove(filePath);
@@ -279,7 +281,8 @@ void Settings::saveAvatar(QPixmap& pic, const QString& ownerId)
 {
     QDir dir(getSettingsDirPath());
     dir.mkdir("avatars/"); // remove this in a week or two hopefully
-    QString filePath = dir.filePath("avatars/"+ownerId+".png");
+    // ignore nospam (good idea, and also the addFriend funcs which call getAvatar don't have it)
+    QString filePath = dir.filePath("avatars/"+ownerId.left(64)+".png");
     pic.save(filePath, "png");
 }
 
