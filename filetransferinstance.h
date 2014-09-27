@@ -71,7 +71,7 @@ private:
     TransfState state;
     bool remotePaused;
     QImage pic;
-    QString filename, size, speed, eta;
+    QString filename, filenameShort, size, speed, eta;
     QDateTime lastUpdate;
     long long lastBytesSent, totalBytes;
     int fileNum;
