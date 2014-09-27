@@ -26,7 +26,7 @@ public:
     FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me);
     virtual ~FileTransferAction();
     virtual QString getMessage();
-    virtual void setTextCursor(QTextCursor cursor) final;
+    virtual void setup(QTextCursor cursor, QTextEdit* textEdit) override;
 
 private slots:
     void updateHtml();
@@ -34,6 +34,7 @@ private slots:
 private:
     FileTransferInstance *w;
     QTextCursor cur;
+    QTextEdit* edit;
 };
 
 #endif // FILETRANSFERACTION_H

@@ -17,8 +17,12 @@
 #include "filetransferaction.h"
 #include "filetransferinstance.h"
 
-FileTransferAction::FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me) :
-    ChatAction(me, author, date)
+#include <QTextEdit>
+#include <QScrollBar>
+
+FileTransferAction::FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me)
+  : ChatAction(me, author, date)
+  , edit(nullptr)
 {
     w = widget;
 
@@ -39,20 +43,26 @@ QString FileTransferAction::getMessage()
     return widgetHtml;
 }
 
-void FileTransferAction::setTextCursor(QTextCursor cursor)
+void FileTransferAction::setup(QTextCursor cursor, QTextEdit *textEdit)
 {
     cur = cursor;
     cur.setKeepPositionOnInsert(true);
     int end=cur.selectionEnd();
     cur.setPosition(cur.position());
     cur.setPosition(end, QTextCursor::KeepAnchor);
+
+    edit = textEdit;
 }
 
 void FileTransferAction::updateHtml()
 {
-    if (cur.isNull())
+    if (cur.isNull() || !edit)
         return;
 
+    // save old slider value
+    int vSliderVal = edit->verticalScrollBar()->value();
+
+    // update content
     int pos = cur.selectionStart();
     cur.removeSelectedText();
     cur.setKeepPositionOnInsert(false);
@@ -61,6 +71,9 @@ void FileTransferAction::updateHtml()
     int end = cur.position();
     cur.setPosition(pos);
     cur.setPosition(end, QTextCursor::KeepAnchor);
+
+    // restore old slider value
+    edit->verticalScrollBar()->setValue(vSliderVal);
 
     // Free our ressources if we'll never need to update again
     if (w->getState() == FileTransferInstance::TransfState::tsCanceled
