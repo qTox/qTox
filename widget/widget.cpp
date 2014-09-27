@@ -113,7 +113,7 @@ Widget::Widget(QWidget *parent)
     isWindowMinimized = 0;
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
-    profilePicture->setPixmap(QPixmap(":/img/avatar.png"));
+    profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
     ui->horizontalLayout_3->insertWidget(0,profilePicture);
 
     ui->mainContent->setLayout(new QVBoxLayout());
