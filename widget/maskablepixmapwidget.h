@@ -25,6 +25,7 @@ class MaskablePixmapWidget : public QWidget
 public:
     MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName, QColor background = Qt::white);
 
+    void setClickable(bool clickable);
     void setPixmap(const QPixmap &pmap);
     QPixmap getPixmap() const;
 
@@ -41,6 +42,7 @@ private:
     QSize size;
     QString maskName;
     QColor backgroundColor;
+    bool clickable;
 };
 
 #endif // MASKABLEPIXMAPWIDGET_H

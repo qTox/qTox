@@ -20,9 +20,20 @@
 MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName, QColor background)
     : QWidget(parent)
     , backgroundColor(background)
+    , clickable(false)
 {
     setFixedSize(size);
     mask = QPixmap(maskName).scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+}
+
+void MaskablePixmapWidget::setClickable(bool clickable)
+{
+    this->clickable = clickable;
+
+    if (clickable)
+        setCursor(Qt::PointingHandCursor);
+    else
+        unsetCursor();
 }
 
 void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
@@ -56,5 +67,6 @@ void MaskablePixmapWidget::paintEvent(QPaintEvent *)
 
 void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)
 {
-    emit clicked();
+    if(clickable)
+        emit clicked();
 }
