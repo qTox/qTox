@@ -116,7 +116,7 @@ if [[ $TOX_ONLY = "false" ]]; then
 
     make -j2 check
     
-    if [[ $GLOBAL = "false" || $EUID -e 0 ]]; then
+    if [[ $GLOBAL = "false" || $EUID -eq 0 ]]; then
         make install
     else
         sudo make install
@@ -139,7 +139,7 @@ fi
 
 make -j2
 
-if [[ $GLOBAL = "false" || $EUID -e 0 ]]; then
+if [[ $GLOBAL = "false" || $EUID -eq 0 ]]; then
     make install
 else
     sudo make install
