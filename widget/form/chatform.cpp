@@ -505,5 +505,5 @@ void ChatForm::onAvatarRemoved(int FriendId)
     if (FriendId != f->friendId)
         return;
 
-    avatarLabel->setPixmap(QPixmap(":/img/contact_dark.png"));
+    avatar->setPixmap(QPixmap(":/img/contact_dark.png"));
 }
