@@ -444,7 +444,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-    qDebug() << "Widget: Adding friend with id "+userId;
+    qDebug() << "Widget: Adding friend with id" << userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->widget);
@@ -480,6 +480,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     QPixmap avatar = Settings::getInstance().getSavedAvatar(userId.left(64)); // just to be safe
     if (!avatar.isNull())
     {
+        qWarning() << "Widget: loadded avatar for id" << userId;
         newfriend->chatForm->onAvatarChange(friendId, avatar);
         newfriend->widget->onAvatarChange(friendId, avatar);
     }

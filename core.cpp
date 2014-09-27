@@ -223,9 +223,9 @@ void Core::start()
     }
     else
     {
-        QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
-        qDebug() << "self avatar missing, trying by id";
+        qDebug() << "Core: self avatar missing, trying by id";
         // this will leave a avatars/<selfid>.png duplicate of avatar.png, but whatever
+        QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
         if (!pic.isNull() && !pic.size().isEmpty())
         {
             QByteArray data;
