@@ -28,7 +28,7 @@ QString SystemMessageAction::getMessage()
     return QString("<table width=100%><tr><td align=center><div class=" + type + ">" + message + "</td><tr></div></table>");
 }
 
-void SystemMessageAction::setTextCursor(QTextCursor cursor)
+void SystemMessageAction::setup(QTextCursor cursor, QTextEdit *)
 {
     // When this function is called, we're supposed to only update ourselve when needed
     // Nobody should ask us to do anything with our content, we're on our own

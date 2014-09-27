@@ -117,7 +117,7 @@ HEADERS  += widget/form/addfriendform.h \
     widget/tool/chatactions/messageaction.h \
     widget/tool/chatactions/filetransferaction.h \
     widget/tool/chatactions/systemmessageaction.h \
-    widget/tool/clickablelabel.h
+    widget/maskablepixmapwidget.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -157,4 +157,5 @@ SOURCES += \
     widget/settingsdialog.cpp \
     widget/tool/chatactions/messageaction.cpp \
     widget/tool/chatactions/filetransferaction.cpp \
-    widget/tool/chatactions/systemmessageaction.cpp
+    widget/tool/chatactions/systemmessageaction.cpp \
+    widget/maskablepixmapwidget.cpp

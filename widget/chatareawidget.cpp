@@ -34,6 +34,7 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     setOpenExternalLinks(false);
     setOpenLinks(false);
     setAcceptRichText(false);
+    setFrameStyle(QFrame::NoFrame);
 
     chatTextTable = textCursor().insertTable(1,3);
 
@@ -117,7 +118,7 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     chatTextTable->cellAt(row,1).firstCursorPosition().insertHtml(msgAction->getMessage());
     chatTextTable->cellAt(row,2).firstCursorPosition().insertText(msgAction->getDate());
 
-    msgAction->setTextCursor(cur);
+    msgAction->setup(cur, this);
 
     messages.append(msgAction);
 }

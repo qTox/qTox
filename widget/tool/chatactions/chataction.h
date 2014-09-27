@@ -21,13 +21,14 @@
 #include <QTextCursor>
 
 class FileTransferInstance;
+class QTextEdit;
 
 class ChatAction : public QObject
 {
 public:
     ChatAction(const bool &me, const QString &author, const QString &date) : isMe(me), name(author), date(date) {;}
     virtual ~ChatAction(){;}
-    virtual void setTextCursor(QTextCursor cursor){(void)cursor;} ///< Call once, and then you MUST let the object update itself
+    virtual void setup(QTextCursor cursor, QTextEdit* textEdit) = 0; ///< Call once, and then you MUST let the object update itself
 
     virtual QString getName();
     virtual QString getMessage() = 0;
