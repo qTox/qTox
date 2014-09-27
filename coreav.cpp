@@ -273,7 +273,9 @@ void Core::decreaseVideoBusyness()
 
 void Core::micMuteToggle(int callId)
 {
-    calls[callId].muteMic = !calls[callId].muteMic;
+    if (calls[callId].active) {
+        calls[callId].muteMic = !calls[callId].muteMic;
+    }
 }
 
 void Core::onAvCancel(void* _toxav, int32_t callId, void* core)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>716</width>
-    <height>543</height>
+    <width>714</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -1452,32 +1452,20 @@ QSplitter:handle{
               <number>0</number>
              </property>
              <item>
-              <widget class="ClickableLabel" name="profilePicture">
-               <property name="minimumSize">
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
-                 <height>40</height>
+                 <width>5</width>
+                 <height>20</height>
                 </size>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>40</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="res.qrc">:/img/contact.png</pixmap>
-               </property>
-               <property name="scaledContents">
-                <bool>false</bool>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-              </widget>
+              </spacer>
              </item>
              <item>
               <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
@@ -2095,8 +2083,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>263</width>
-             <height>378</height>
+             <width>262</width>
+             <height>375</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -3230,8 +3218,8 @@ QSplitter:handle{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>716</width>
-     <height>19</height>
+     <width>714</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -3256,11 +3244,6 @@ QSplitter:handle{
    <class>CroppingLabel</class>
    <extends>QLabel</extends>
    <header>widget/croppinglabel.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>widget/tool/clickablelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

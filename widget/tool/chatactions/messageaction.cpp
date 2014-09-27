@@ -23,7 +23,7 @@ MessageAction::MessageAction(const QString &author, const QString &message, cons
 {
 }
 
-void MessageAction::setTextCursor(QTextCursor cursor)
+void MessageAction::setup(QTextCursor cursor, QTextEdit *)
 {
     // When this function is called, we're supposed to only update ourselve when needed
     // Nobody should ask us to do anything with our content, we're on our own

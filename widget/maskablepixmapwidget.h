@@ -14,27 +14,35 @@
     See the COPYING file for more details.
 */
 
-#ifndef FILETRANSFERACTION_H
-#define FILETRANSFERACTION_H
+#ifndef MASKABLEPIXMAPWIDGET_H
+#define MASKABLEPIXMAPWIDGET_H
 
-#include "widget/tool/chatactions/chataction.h"
+#include <QWidget>
 
-class FileTransferAction : public ChatAction
+class MaskablePixmapWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me);
-    virtual ~FileTransferAction();
-    virtual QString getMessage();
-    virtual void setup(QTextCursor cursor, QTextEdit* textEdit) override;
+    MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName, QColor background = Qt::white);
 
-private slots:
-    void updateHtml();
+    void setClickable(bool clickable);
+    void setPixmap(const QPixmap &pmap);
+    QPixmap getPixmap() const;
+
+signals:
+    void clicked();
+
+protected:
+    virtual void paintEvent(QPaintEvent *);
+    virtual void mousePressEvent(QMouseEvent *);
 
 private:
-    FileTransferInstance *w;
-    QTextCursor cur;
-    QTextEdit* edit;
+    QPixmap pixmap;
+    QPixmap mask;
+    QSize size;
+    QString maskName;
+    QColor backgroundColor;
+    bool clickable;
 };
 
-#endif // FILETRANSFERACTION_H
+#endif // MASKABLEPIXMAPWIDGET_H
