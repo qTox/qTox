@@ -267,7 +267,7 @@ QPixmap Settings::getSavedAvatar(const QString &ownerId)
     {
         QString filePath = dir.filePath("avatar_"+ownerId.left(64));
         if (!QFileInfo(filePath).exists()) // try without truncation, for old self avatars
-            QString filePath = dir.filePath("avatar_"+ownerId);
+            filePath = dir.filePath("avatar_"+ownerId);
         pic.load(filePath);
         saveAvatar(pic, ownerId);
         QFile::remove(filePath);
