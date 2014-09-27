@@ -210,7 +210,8 @@ void Core::start()
     tox_get_address(tox, friendAddress);
     emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
 
-    QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
+    QPixmap pic;
+    pic.load(QDir(Settings::getInstance().getSettingsDirPath()).filePath("avatar.png"));
     if (!pic.isNull() && !pic.size().isEmpty())
     {
         QByteArray data;
@@ -218,12 +219,25 @@ void Core::start()
         buffer.open(QIODevice::WriteOnly);
         pic.save(&buffer, "PNG");
         buffer.close();
-        if (tox_set_avatar(tox, TOX_AVATAR_FORMAT_PNG, (uint8_t*)data.constData(), data.size()) != 0)
-            qWarning() << "Core:start: Error setting avatar, size:"<<data.size();
-        emit selfAvatarChanged(pic);
+        setAvatar(TOX_AVATAR_FORMAT_PNG, data);
     }
     else
-        qDebug() << "Core: Error loading self avatar";
+    {
+        QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
+        qDebug() << "self avatar missing, trying by id";
+        // this will leave a avatars/<selfid>.png duplicate of avatar.png, but whatever
+        if (!pic.isNull() && !pic.size().isEmpty())
+        {
+            QByteArray data;
+            QBuffer buffer(&data);
+            buffer.open(QIODevice::WriteOnly);
+            pic.save(&buffer, "PNG");
+            buffer.close();
+            setAvatar(TOX_AVATAR_FORMAT_PNG, data);
+        }
+        else
+            qDebug() << "Core: Error loading self avatar";
+    }
 
     bootstrapDht();
 
@@ -476,7 +490,8 @@ void Core::onAvatarDataCallback(Tox*, int32_t friendnumber, uint8_t,
     else
     {
         qDebug() << "Core: Got avatar data from "<<friendnumber<<", size:"<<pic.size();
-        Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendnumber));
+        Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendnumber).left(64));
+        // ignore nospam (good idea, and also the addFriend funcs which call getAvatar don't have it)
         emit static_cast<Core*>(core)->friendAvatarChanged(friendnumber, pic);
     }
 }
@@ -789,13 +804,10 @@ void Core::setAvatar(uint8_t format, const QByteArray& data)
 
     QPixmap pic;
     pic.loadFromData(data);
-    Settings::getInstance().saveAvatar(pic, getSelfId().toString());
+    QString path = QDir(Settings::getInstance().getSettingsDirPath()).filePath("avatar.png");
+    pic.save(path, "png");
     emit selfAvatarChanged(pic);
-
-    // Broadcast our new avatar!
-    const uint32_t friendCount = tox_count_friendlist(tox);;
-    for (unsigned i=0; i<friendCount; i++)
-        tox_send_avatar_info(tox, i);
+    // according to tox.h, we need not broadcast ourselves, that's done in tox_set_avatar
 }
 
 ToxID Core::getSelfId()

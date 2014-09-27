@@ -142,7 +142,6 @@ private:
     Settings& operator=(const Settings&) = delete;
 
     static const QString FILENAME;
-    static const QString AVATAR_FILENAME;
 
     bool loaded;
 

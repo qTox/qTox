@@ -27,7 +27,6 @@
 #include <QList>
 
 const QString Settings::FILENAME = "settings.ini";
-const QString Settings::AVATAR_FILENAME = "avatar.dat";
 bool Settings::makeToxPortable{false};
 
 Settings::Settings() :
@@ -260,15 +259,27 @@ QString Settings::getSettingsDirPath()
 
 QPixmap Settings::getSavedAvatar(const QString &ownerId)
 {
-    QString filePath = QDir(getSettingsDirPath()).filePath("avatar_"+ownerId);
+    QDir dir(getSettingsDirPath());
+    QString filePath = dir.filePath("avatars/"+ownerId+".png");
+    QFileInfo info(filePath);
     QPixmap pic;
-    pic.load(filePath);
+    if (!info.exists())
+    {
+        QString filePath = dir.filePath("avatar_"+ownerId);
+        pic.load(filePath);
+        saveAvatar(pic, ownerId);
+        QFile::remove(filePath);
+    }
+    else
+        pic.load(filePath);
     return pic;
 }
 
 void Settings::saveAvatar(QPixmap& pic, const QString& ownerId)
 {
-    QString filePath = QDir(getSettingsDirPath()).filePath("avatar_"+ownerId);
+    QDir dir(getSettingsDirPath());
+    dir.mkdir("avatars/"); // remove this in a week or two hopefully
+    QString filePath = dir.filePath("avatars/"+ownerId+".png");
     pic.save(filePath, "png");
 }
 
