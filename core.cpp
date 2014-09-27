@@ -218,9 +218,7 @@ void Core::start()
         buffer.open(QIODevice::WriteOnly);
         pic.save(&buffer, "PNG");
         buffer.close();
-        if (tox_set_avatar(tox, TOX_AVATAR_FORMAT_PNG, (uint8_t*)data.constData(), data.size()) != 0)
-            qWarning() << "Core:start: Error setting avatar, size:"<<data.size();
-        emit selfAvatarChanged(pic);
+        setAvatar(TOX_AVATAR_FORMAT_PNG, data);
     }
     else
         qDebug() << "Core: Error loading self avatar";
@@ -791,8 +789,9 @@ void Core::setAvatar(uint8_t format, const QByteArray& data)
     pic.loadFromData(data);
     Settings::getInstance().saveAvatar(pic, getSelfId().toString());
     emit selfAvatarChanged(pic);
-
+    
     // Broadcast our new avatar!
+    // according to tox.h, we need not broadcast this ourselves, but initial testing indicated elsewise
     const uint32_t friendCount = tox_count_friendlist(tox);;
     for (unsigned i=0; i<friendCount; i++)
         tox_send_avatar_info(tox, i);
