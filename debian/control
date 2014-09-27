@@ -3,7 +3,7 @@ Maintainer: John Smith <barrdetwix@gmail.com>
 Section: misc
 Priority: optional
 Standards-Version: 3.9.5
-Build-Depends: debhelper (>= 9), cdbs, qt5-qmake, libopenal-dev, libopencv-dev, libopus-dev, qtbase5-dev
+Build-Depends: debhelper (>= 9), cdbs, qt5-qmake, libopenal-dev, libopencv-dev, libopus-dev, qtbase5-dev, sudo, autoconf
 
 Package: qtox
 Architecture: any
