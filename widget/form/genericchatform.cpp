@@ -36,7 +36,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headWidget = new QWidget();
 
     nameLabel = new CroppingLabel();
-    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask_circle.png");
+    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     QHBoxLayout *headLayout = new QHBoxLayout(), *mainFootLayout = new QHBoxLayout();
     headTextLayout = new QVBoxLayout();
     QVBoxLayout *mainLayout = new QVBoxLayout();

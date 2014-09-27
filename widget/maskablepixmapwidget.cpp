@@ -42,7 +42,8 @@ void MaskablePixmapWidget::paintEvent(QPaintEvent *)
     QPoint offset((width() - pixmap.size().width())/2,(height() - pixmap.size().height())/2); // centering the pixmap
 
     QPainter painter(&tmp);
-    painter.setCompositionMode(QPainter::CompositionMode_Source);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    painter.fillRect(0,0,width(),height(),Qt::white);
     painter.drawPixmap(offset,pixmap);
     painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
     painter.drawPixmap(0,0,mask);
