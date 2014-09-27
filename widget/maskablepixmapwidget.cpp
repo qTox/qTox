@@ -38,7 +38,7 @@ void MaskablePixmapWidget::setClickable(bool clickable)
 
 void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
 {
-    pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 }
 
 QPixmap MaskablePixmapWidget::getPixmap() const
