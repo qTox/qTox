@@ -56,9 +56,9 @@ done
 if [[ $OPT_APT = "true" ]]; then
     echo "Installing missing tools (if any)..."
     if [[ $EUID -ne 0 && $OPT_SUDO = "true" ]]; then
-        sudo apt-get install wget debhelper cdbs devscripts alien tar gzip build-essential sudo autoconf libtool pkg-config -y
+        sudo apt-get install wget debhelper cdbs devscripts alien tar gzip build-essential sudo autoconf libtool pkg-config libvpx-dev -y
     else
-             apt-get install wget debhelper cdbs devscripts alien tar gzip build-essential sudo autoconf libtool pkg-config -y
+             apt-get install wget debhelper cdbs devscripts alien tar gzip build-essential sudo autoconf libtool pkg-config libvpx-dev -y
     fi
 fi
 
