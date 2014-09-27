@@ -16,20 +16,17 @@
 
 #include "maskablepixmapwidget.h"
 #include <QPainter>
-#include <QPaintEvent>
 
 MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName)
     : QWidget(parent)
 {
-    setMinimumSize(size);
-    setMaximumSize(size);
-
-    mask = QPixmap(maskName).scaled(maximumSize(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    setFixedSize(size);
+    mask = QPixmap(maskName).scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 }
 
 void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
 {
-    pixmap = pmap.scaled(maximumSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 }
 
 QPixmap MaskablePixmapWidget::getPixmap() const
@@ -37,20 +34,20 @@ QPixmap MaskablePixmapWidget::getPixmap() const
     return pixmap;
 }
 
-void MaskablePixmapWidget::paintEvent(QPaintEvent *ev)
+void MaskablePixmapWidget::paintEvent(QPaintEvent *)
 {
-    QPixmap tmp(ev->rect().size());
+    QPixmap tmp(width(), height());
     tmp.fill(Qt::transparent);
 
-    QPoint offset((ev->rect().size().width()-pixmap.size().width())/2,(ev->rect().size().height()-pixmap.size().height())/2);
+    QPoint offset((width() - pixmap.size().width())/2,(height() - pixmap.size().height())/2); // centering the pixmap
 
     QPainter painter(&tmp);
     painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.drawPixmap(offset,pixmap);
     painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
     painter.drawPixmap(0,0,mask);
-
     painter.end();
+
     painter.begin(this);
     painter.drawPixmap(0,0,tmp);
 }

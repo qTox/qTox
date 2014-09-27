@@ -32,7 +32,7 @@ signals:
     void clicked();
 
 protected:
-    virtual void paintEvent(QPaintEvent *ev);
+    virtual void paintEvent(QPaintEvent *);
     virtual void mousePressEvent(QMouseEvent *);
 
 private:
