@@ -39,9 +39,9 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     chatTextTable = textCursor().insertTable(1,3);
 
     QTextTableFormat tableFormat;
-    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::VariableLength,0),
+    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::FixedLength,100),
                                            QTextLength(QTextLength::PercentageLength,100),
-                                           QTextLength(QTextLength::VariableLength,0)});
+                                           QTextLength(QTextLength::FixedLength,40)});
     tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
     chatTextTable->setFormat(tableFormat);
     chatTextTable->format().setCellSpacing(2);

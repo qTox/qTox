@@ -34,6 +34,12 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     remotePaused = false;
 
     filename = File.fileName;
+
+    QFont font("sans");
+    font.setPixelSize(10);
+    QFontMetrics fm(font);
+    filenameShort = fm.elidedText(filename, Qt::ElideRight, 250);
+
     size = getHumanReadableSize(File.filesize);
     speed = "0B/s";
     eta = "00:00";
@@ -41,9 +47,12 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     {
         QImage preview;
         File.file->seek(0);
-        if (preview.loadFromData(File.file->readAll()))
+        if (File.file->size() <= 1024*1024*25)
         {
-            pic = preview.scaledToHeight(50);
+            if (preview.loadFromData(File.file->readAll()))
+            {
+                pic = preview.scaledToHeight(50);
+            }
         }
         File.file->seek(0);
     }
@@ -328,7 +337,7 @@ QString FileTransferInstance::drawButtonlessForm(const QString &type)
         imgBStr = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyRGreenFileButton.png")) + "\">";
     }
 
-    QString content = "<p>" + filename + "</p><p>" + size + "</p>";
+    QString content = "<p>" + filenameShort + "</p><p>" + size + "</p>";
 
     return wrapIntoForm(content, type, imgAStr, imgBStr);
 }
@@ -356,7 +365,7 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
     QString content;
     QString progrBar = "<img src=\"data:progressbar." + widgetId + "/png;base64," + QImage2base64(drawProgressBarImg(double(lastBytesSent)/totalBytes, 250, 9)) + "\">";
 
-    content  = "<p>" + filename + "</p>";
+    content  = "<p>" + filenameShort + "</p>";
     content += "<table cellspacing=\"0\"><tr>";
     content += "<td>" + size + "</td>";
     content += "<td align=center>" + speed + "</td>";
