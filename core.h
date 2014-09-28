@@ -206,8 +206,7 @@ private:
     static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
-    void checkConnection();
-    void onBootstrapTimer();
+    bool checkConnection();
 
     void loadConfiguration();
     void loadFriends();
@@ -236,6 +235,7 @@ private:
     static const int videobufsize;
     static uint8_t* videobuf;
     static int videoBusyness; // Used to know when to drop frames
+    int TOX_DO_INTERVAL;
 
     static ALCdevice* alOutDev, *alInDev;
     static ALCcontext* alContext;
