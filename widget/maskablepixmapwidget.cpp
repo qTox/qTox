@@ -23,7 +23,11 @@ MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString 
     , clickable(false)
 {
     setFixedSize(size);
-    mask = QPixmap(maskName).scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    QPixmap pmapMask = QPixmap(maskName);
+
+    if (!pmapMask.isNull())
+        mask = QPixmap(maskName).scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 }
 
 void MaskablePixmapWidget::setClickable(bool clickable)
