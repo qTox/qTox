@@ -235,7 +235,6 @@ private:
     static const int videobufsize;
     static uint8_t* videobuf;
     static int videoBusyness; // Used to know when to drop frames
-    int TOX_DO_INTERVAL;
 
     static ALCdevice* alOutDev, *alInDev;
     static ALCcontext* alContext;

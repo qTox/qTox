@@ -216,8 +216,6 @@ void Core::start()
     }
     else
         qDebug() << "Core: Error loading self avatar";
-
-    TOX_DO_INTERVAL = tox_do_interval(tox);
     
     process(); // starts its own timer
 }
@@ -227,15 +225,23 @@ void Core::process()
     if (!tox)
         return;
 
+    static int retries = 0;
     tox_do(tox);
+
 #ifdef DEBUG
     //we want to see the debug messages immediately
     fflush(stdout);
 #endif
-    if (!checkConnection())
-        bootstrapDht();
 
-    toxTimer->start(TOX_DO_INTERVAL);
+    if (checkConnection())
+        retries = 0;
+    else if (retries < 2)
+    {
+        retries++;
+        bootstrapDht();
+    }
+
+    toxTimer->start(tox_do_interval(tox));
 }
 
 bool Core::checkConnection()
@@ -266,7 +272,7 @@ void Core::bootstrapDht()
     qDebug() << "Core: Bootstraping to the DHT ...";
 
     int i=0;
-    while (i < 3)
+    while (i < 2)
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
