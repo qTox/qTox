@@ -198,8 +198,6 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
-    connect(core, &Core::friendUsernameLoaded, this, &Widget::onFriendUsernameLoaded);
-    connect(core, &Core::friendStatusMessageLoaded, this, &Widget::onFriendStatusMessageLoaded);
     connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
@@ -517,24 +515,6 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
 }
 
 void Widget::onFriendUsernameChanged(int friendId, const QString& username)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->setName(username);
-}
-
-void Widget::onFriendStatusMessageLoaded(int friendId, const QString& message)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->setStatusMessage(message);
-}
-
-void Widget::onFriendUsernameLoaded(int friendId, const QString& username)
 {
     Friend* f = FriendList::findFriend(friendId);
     if (!f)

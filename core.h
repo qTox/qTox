@@ -109,9 +109,6 @@ signals:
     void friendAvatarChanged(int friendId, const QPixmap& pic);
     void friendAvatarRemoved(int friendId);
 
-    void friendStatusMessageLoaded(int friendId, const QString& message);
-    void friendUsernameLoaded(int friendId, const QString& username);
-
     void friendAddressGenerated(const QString& friendAddress);
 
     void friendRemoved(int friendId);
