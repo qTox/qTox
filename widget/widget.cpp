@@ -511,7 +511,9 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     if (!f)
         return;
 
-    f->setStatusMessage(message);
+    QString str = message; str.replace('\n', ' ');
+    str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
+    f->setStatusMessage(str);
 }
 
 void Widget::onFriendUsernameChanged(int friendId, const QString& username)
@@ -520,7 +522,9 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     if (!f)
         return;
 
-    f->setName(username);
+    QString str = username; str.replace('\n', ' ');
+    str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
+    f->setName(str);
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
