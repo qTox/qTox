@@ -284,7 +284,7 @@ Camera* Widget::getCamera()
 
 void Widget::onAvatarClicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath(), "*.png");
+    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath());
     if (filename == "")
         return;
     QFile file(filename);
