@@ -279,10 +279,10 @@ void Core::onAction(Tox*/* tox*/, int friendId, const uint8_t *cMessage, uint16_
     emit static_cast<Core*>(core)->actionReceived(friendId, CString::toString(cMessage, cMessageSize));
 }
 
-void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key, void *core)
+void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key, uint16_t length,void *core)
 {
     qDebug() << QString("Core: Group invite by %1").arg(friendnumber);
-    emit static_cast<Core*>(core)->groupInviteReceived(friendnumber, group_public_key);
+    emit static_cast<Core*>(core)->groupInviteReceived(friendnumber, group_public_key,length);
 }
 
 void Core::onGroupMessage(Tox*, int groupnumber, int friendgroupnumber, const uint8_t * message, uint16_t length, void *core)
@@ -1005,10 +1005,10 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
     return names;
 }
 
-int Core::joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key) const
+int Core::joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key,uint16_t length) const
 {
     qDebug() << QString("Trying to join groupchat invite by friend %1").arg(friendnumber);
-    return tox_join_groupchat(tox, friendnumber, friend_group_public_key);
+    return tox_join_groupchat(tox, friendnumber, friend_group_public_key,length);
 }
 
 void Core::quitGroupChat(int groupId) const
