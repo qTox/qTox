@@ -169,7 +169,7 @@ void GenericChatForm::addMessage(QString author, QString message, QDateTime date
 
     if (previousName == author)
         chatWidget->insertMessage(new MessageAction("", message, date, isMe));
-    else chatWidget->insertMessage(new MessageAction(author , message, date, isMe));
+    else chatWidget->insertMessage(new MessageAction(getElidedName(author) , message, date, isMe));
     previousName = author;
 }
 
@@ -211,4 +211,13 @@ void GenericChatForm::addSystemInfoMessage(const QString &message, const QString
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
 
     chatWidget->insertMessage(new SystemMessageAction(message, type, date));
+}
+
+QString GenericChatForm::getElidedName(const QString& name)
+{
+    QFont font;
+    font.setBold(true);
+    QFontMetrics fm(font);
+
+    return fm.elidedText(name, Qt::ElideRight, chatWidget->nameColWidth());
 }

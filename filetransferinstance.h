@@ -72,6 +72,7 @@ private:
     bool remotePaused;
     QImage pic;
     QString filename, size, speed, eta;
+    QString filenameElided;
     QDateTime lastUpdate;
     long long lastBytesSent, totalBytes;
     int fileNum;

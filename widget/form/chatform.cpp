@@ -125,7 +125,7 @@ void ChatForm::startFileSend(ToxFile file)
         name = "";
     previousName = Widget::getInstance()->getUsername();
 
-    chatWidget->insertMessage(new FileTransferAction(fileTrans, name, QTime::currentTime().toString("hh:mm"), true));
+    chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), true));
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -156,7 +156,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         name = "";
     previousName = f->getName();
 
-    chatWidget->insertMessage(new FileTransferAction(fileTrans, name, QTime::currentTime().toString("hh:mm"), false));
+    chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), false));
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)

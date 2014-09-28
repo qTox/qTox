@@ -60,6 +60,8 @@ protected slots:
     void onEmoteInsertRequested(QString str);
 
 protected:
+    QString getElidedName(const QString& name);
+
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;

@@ -39,13 +39,11 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     chatTextTable = textCursor().insertTable(1,3);
 
     QTextTableFormat tableFormat;
-    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::VariableLength,0),
-                                           QTextLength(QTextLength::PercentageLength,100),
-                                           QTextLength(QTextLength::VariableLength,0)});
     tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
+    tableFormat.setCellSpacing(2);
+    tableFormat.setWidth(QTextLength(QTextLength::PercentageLength,100));
     chatTextTable->setFormat(tableFormat);
-    chatTextTable->format().setCellSpacing(2);
-    chatTextTable->format().setWidth(QTextLength(QTextLength::PercentageLength,100));
+    setNameColWidth(100);
 
 //    nameFormat.setAlignment(Qt::AlignRight);
 //    nameFormat.setNonBreakableLines(true);
@@ -134,4 +132,15 @@ void ChatAreaWidget::checkSlider()
 {
     QScrollBar* scroll = verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
+}
+
+void ChatAreaWidget::setNameColWidth(int w)
+{
+    nameWidth = w;
+
+    QTextTableFormat tableFormat = chatTextTable->format();
+    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::FixedLength, 100),
+                                           QTextLength(QTextLength::PercentageLength, 100),
+                                           QTextLength(QTextLength::FixedLength, 40)});
+    chatTextTable->setFormat(tableFormat);
 }
