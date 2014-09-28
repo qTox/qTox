@@ -42,7 +42,7 @@ public:
     QString getGroupPeerName(int groupId, int peerId) const;
     QList<QString> getGroupPeerNames(int groupId) const;
     QString getFriendAddress(int friendNumber) const;
-    int joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key) const;
+    int joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key,uint16_t length) const;
     void quitGroupChat(int groupId) const;
     void dispatchVideoFrame(vpx_image img) const;
 
@@ -119,7 +119,7 @@ signals:
     void friendLastSeenChanged(int friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(int friendnumber, const uint8_t *group_public_key);
+    void groupInviteReceived(int friendnumber, const uint8_t *group_public_key,uint16_t length);
     void groupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
 
@@ -178,7 +178,7 @@ private:
     static void onUserStatusChanged(Tox* tox, int friendId, uint8_t userstatus, void* core);
     static void onConnectionStatusChanged(Tox* tox, int friendId, uint8_t status, void* core);
     static void onAction(Tox* tox, int friendId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
-    static void onGroupInvite(Tox *tox, int friendnumber, const uint8_t *group_public_key, void *userdata);
+    static void onGroupInvite(Tox *tox, int friendnumber, const uint8_t *group_public_key, uint16_t length,void *userdata);
     static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber, const uint8_t * message, uint16_t length, void *userdata);
     static void onGroupNamelistChange(Tox *tox, int groupnumber, int peernumber, uint8_t change, void *userdata);
     static void onFileSendRequestCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,

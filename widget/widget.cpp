@@ -633,9 +633,9 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, const uint8_t* publicKey)
+void Widget::onGroupInviteReceived(int32_t friendId, const uint8_t* publicKey,uint16_t length)
 {
-    int groupId = core->joinGroupchat(friendId, publicKey);
+    int groupId = core->joinGroupchat(friendId, publicKey,length);
     if (groupId == -1)
     {
         qWarning() << "Widget::onGroupInviteReceived: Unable to accept invitation";
