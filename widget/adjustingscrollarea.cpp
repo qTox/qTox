@@ -21,14 +21,19 @@
 #include <QScrollBar>
 #include <QDebug>
 
-AdjustingScrollArea::AdjustingScrollArea(QWidget *parent) :
-    QScrollArea(parent)
+AdjustingScrollArea::AdjustingScrollArea(QWidget *parent)
+    : QScrollArea(parent)
 {
 
 }
 
 void AdjustingScrollArea::resizeEvent(QResizeEvent *ev)
 {
+    int scrollBarWidth = verticalScrollBar()->isVisible() ? verticalScrollBar()->sizeHint().width() : 0;
+
+    if (layoutDirection() == Qt::RightToLeft)
+        setViewportMargins(-scrollBarWidth, 0, 0, 0);
+
     updateGeometry();
     QScrollArea::resizeEvent(ev);
 }
@@ -42,4 +47,17 @@ QSize AdjustingScrollArea::sizeHint() const
     }
 
     return QScrollArea::sizeHint();
+}
+
+bool AdjustingScrollArea::eventFilter(QObject *obj, QEvent *ev)
+{
+    if (ev->type() == QEvent::Paint)
+    {
+        // workaround: sometimes a child widget gets drawn on top of the scrollbar
+        // so we trigger a repaint afterwards
+        verticalScrollBar()->update();
+        horizontalScrollBar()->update();
+    }
+
+    return QObject::eventFilter(obj, ev);
 }

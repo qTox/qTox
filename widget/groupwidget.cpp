@@ -19,6 +19,7 @@
 #include "group.h"
 #include "settings.h"
 #include "widget/form/groupchatform.h"
+#include "widget/maskablepixmapwidget.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -38,7 +39,8 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     textLayout.setMargin(0);
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
-    avatar.setPixmap(QPixmap(":img/group.png"));
+    avatar = new MaskablePixmapWidget(this, QSize(40,40), QString(), Qt::transparent);
+    avatar->setPixmap(QPixmap(":img/group.png"));
     statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     name.setText(Name);
     QFont small;
@@ -65,7 +67,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     textLayout.addStretch();
 
     layout.addSpacing(20);
-    layout.addWidget(&avatar);
+    layout.addWidget(avatar);
     layout.addSpacing(5);
     layout.addLayout(&textLayout);
     layout.addStretch();
@@ -118,7 +120,7 @@ void GroupWidget::setAsActiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, Qt::white);
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap(":img/group_dark.png"));
+    avatar->setPixmap(QPixmap(":img/group_dark.png"));
 }
 
 void GroupWidget::setAsInactiveChatroom()
@@ -137,7 +139,7 @@ void GroupWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar.setPixmap(QPixmap(":img/group.png"));
+    avatar->setPixmap(QPixmap(":img/group.png"));
 }
 
 void GroupWidget::updateStatusLight()

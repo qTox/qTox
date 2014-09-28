@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>714</width>
-    <height>541</height>
+    <width>712</width>
+    <height>539</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -2083,8 +2083,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>262</width>
-             <height>375</height>
+             <width>261</width>
+             <height>373</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -2587,7 +2587,7 @@ QSplitter:handle{
              </property>
              <property name="icon">
               <iconset resource="res.qrc">
-               <normaloff>:/img/group.png</normaloff>:/img/group.png</iconset>
+               <normaloff>:/img/group_2x.png</normaloff>:/img/group_2x.png</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -3218,7 +3218,7 @@ QSplitter:handle{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>714</width>
+     <width>712</width>
      <height>25</height>
     </rect>
    </property>

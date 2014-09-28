@@ -20,6 +20,8 @@
 #include <QLabel>
 #include "genericchatroomwidget.h"
 
+class MaskablePixmapWidget;
+
 class GroupWidget : public GenericChatroomWidget
 {
     Q_OBJECT
@@ -39,7 +41,8 @@ signals:
 
 public:
     int groupId;
-    QLabel avatar, name, nusers, statusPic;
+    QLabel name, nusers, statusPic;
+    MaskablePixmapWidget* avatar;
 };
 
 #endif // GROUPWIDGET_H

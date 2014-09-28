@@ -143,5 +143,6 @@
         <file>translations/fi.qm</file>
         <file>translations/mannol.qm</file>
         <file>img/avatar_mask.png</file>
+        <file>img/group_2x.png</file>
     </qresource>
 </RCC>
