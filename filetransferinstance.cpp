@@ -23,6 +23,8 @@
 #include <QDebug>
 #include <QPainter>
 
+#define CONTENT_WIDTH 250
+
 uint FileTransferInstance::Idconter = 0;
 
 FileTransferInstance::FileTransferInstance(ToxFile File)
@@ -34,6 +36,11 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     remotePaused = false;
 
     filename = File.fileName;
+    QFont font;
+    font.setPixelSize(10);
+    QFontMetrics fm(font);
+    filenameElided = fm.elidedText(filename, Qt::ElideRight, CONTENT_WIDTH);
+
     size = getHumanReadableSize(File.filesize);
     speed = "0B/s";
     eta = "00:00";
@@ -328,7 +335,7 @@ QString FileTransferInstance::drawButtonlessForm(const QString &type)
         imgBStr = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyRGreenFileButton.png")) + "\">";
     }
 
-    QString content = "<p>" + filename + "</p><p>" + size + "</p>";
+    QString content = "<p>" + filenameElided + "</p><p>" + size + "</p>";
 
     return wrapIntoForm(content, type, imgAStr, imgBStr);
 }
@@ -354,9 +361,9 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
     QString imgBstr = "<img src=\"data:ftrans." + widgetId + ".btnB/png;base64," + QImage2base64(imgB) + "\">";
 
     QString content;
-    QString progrBar = "<img src=\"data:progressbar." + widgetId + "/png;base64," + QImage2base64(drawProgressBarImg(double(lastBytesSent)/totalBytes, 250, 9)) + "\">";
+    QString progrBar = "<img src=\"data:progressbar." + widgetId + "/png;base64," + QImage2base64(drawProgressBarImg(double(lastBytesSent)/totalBytes, CONTENT_WIDTH, 9)) + "\">";
 
-    content  = "<p>" + filename + "</p>";
+    content  = "<p>" + filenameElided + "</p>";
     content += "<table cellspacing=\"0\"><tr>";
     content += "<td>" + size + "</td>";
     content += "<td align=center>" + speed + "</td>";
@@ -375,7 +382,7 @@ QString FileTransferInstance::wrapIntoForm(const QString& content, const QString
     res =  "<table cellspacing=\"0\">\n";
     res += "<tr valign=middle>\n";
     res += insertMiniature(type);
-    res += "<td width=280>\n";
+    res += "<td width=" + QString::number(CONTENT_WIDTH + 30) + ">\n";
     res += "<div class=" + type + ">";
     res += content;
     res += "</div>\n";
