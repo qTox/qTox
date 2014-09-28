@@ -1014,7 +1014,7 @@ void Core::loadFriends()
                 if (nameSize > 0) {
                     uint8_t *name = new uint8_t[nameSize];
                     if (tox_get_name(tox, ids[i], name) == nameSize) {
-                        emit friendUsernameLoaded(ids[i], CString::toString(name, nameSize));
+                        emit friendUsernameChanged(ids[i], CString::toString(name, nameSize));
                     }
                     delete[] name;
                 }
@@ -1023,7 +1023,7 @@ void Core::loadFriends()
                 if (statusMessageSize > 0) {
                     uint8_t *statusMessage = new uint8_t[statusMessageSize];
                     if (tox_get_status_message(tox, ids[i], statusMessage, statusMessageSize) == statusMessageSize) {
-                        emit friendStatusMessageLoaded(ids[i], CString::toString(statusMessage, statusMessageSize));
+                        emit friendStatusMessageChanged(ids[i], CString::toString(statusMessage, statusMessageSize));
                     }
                     delete[] statusMessage;
                 }

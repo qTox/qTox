@@ -198,8 +198,6 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
-    connect(core, &Core::friendUsernameLoaded, this, &Widget::onFriendUsernameLoaded);
-    connect(core, &Core::friendStatusMessageLoaded, this, &Widget::onFriendStatusMessageLoaded);
     connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
@@ -513,7 +511,9 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     if (!f)
         return;
 
-    f->setStatusMessage(message);
+    QString str = message; str.replace('\n', ' ');
+    str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
+    f->setStatusMessage(str);
 }
 
 void Widget::onFriendUsernameChanged(int friendId, const QString& username)
@@ -522,25 +522,9 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     if (!f)
         return;
 
-    f->setName(username);
-}
-
-void Widget::onFriendStatusMessageLoaded(int friendId, const QString& message)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->setStatusMessage(message);
-}
-
-void Widget::onFriendUsernameLoaded(int friendId, const QString& username)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->setName(username);
+    QString str = username; str.replace('\n', ' ');
+    str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
+    f->setName(str);
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
