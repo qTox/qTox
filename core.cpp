@@ -328,7 +328,7 @@ void Core::onFileSendRequestCallback(Tox*, int32_t friendnumber, uint8_t filenum
     emit static_cast<Core*>(core)->fileReceiveRequested(fileRecvQueue.last());
 }
 void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
-                                      uint8_t control_type, const uint8_t*, uint16_t, void *core)
+                                      uint8_t control_type, const uint8_t* data, uint16_t, void *core)
 {
     ToxFile* file{nullptr};
     if (receive_send == 1)
@@ -420,6 +420,21 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
     else if ((receive_send == 0 || receive_send == 1) && control_type == TOX_FILECONTROL_PAUSE)
     {
         emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, true);
+    }
+    else if (receive_send == 1 && control_type == TOX_FILECONTROL_RESUME_BROKEN)
+    {
+        qDebug() << "Core::onFileControlCallback: TOX_FILECONTROL_RESUME_BROKEN";
+        uint64_t resumePos = *(uint64_t*)data;
+
+        if (resumePos >= file->filesize)
+        {
+            qWarning() << "Core::onFileControlCallback: invalid resume position";
+            tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0); // don't sure about it
+            return;
+        }
+
+        file->bytesSent = resumePos;
+        tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_ACCEPT, nullptr, 0);
     }
     else
     {
