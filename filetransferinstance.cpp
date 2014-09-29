@@ -24,6 +24,7 @@
 #include <QPainter>
 
 #define CONTENT_WIDTH 250
+#define MAX_PREVIEW_SIZE 25*1024*1024
 
 uint FileTransferInstance::Idconter = 0;
 
@@ -44,13 +45,17 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     size = getHumanReadableSize(File.filesize);
     speed = "0B/s";
     eta = "00:00";
+
     if (File.direction == ToxFile::SENDING)
     {
-        QImage preview;
-        File.file->seek(0);
-        if (preview.loadFromData(File.file->readAll()))
+        if (File.file->size() <= MAX_PREVIEW_SIZE)
         {
-            pic = preview.scaledToHeight(50);
+            QImage preview;
+            File.file->seek(0);
+            if (preview.loadFromData(File.file->readAll()))
+            {
+                pic = preview.scaledToHeight(50);
+            }
         }
         File.file->seek(0);
     }
@@ -116,7 +121,7 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
     {
         QImage preview;
         QFile previewFile(File.filePath);
-        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= 1024*1024*25) // Don't preview big (>25MiB) images
+        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= MAX_PREVIEW_SIZE) // Don't preview big (>25MiB) images
         {
             if (preview.loadFromData(previewFile.readAll()))
             {
@@ -286,6 +291,12 @@ QString FileTransferInstance::getHtmlImage()
             rightBtnImg = QImage(":/ui/fileTransferInstance/pauseGreyFileButton.png");
 
         res = draw2ButtonsForm("silver", leftBtnImg, rightBtnImg);
+    } else if (state == tsBroken)
+    {
+        QImage leftBtnImg(":/ui/fileTransferInstance/stopFileButton.png");
+        QImage rightBtnImg(":/ui/fileTransferInstance/pauseGreyFileButton.png");
+
+        res = draw2ButtonsForm("red", leftBtnImg, rightBtnImg);
     } else if (state == tsCanceled)
     {
         res = drawButtonlessForm("red");
@@ -410,4 +421,17 @@ QImage FileTransferInstance::drawProgressBarImg(const double &part, int w, int h
     qPainter.drawRect(1, 0, (w - 2) * (part), h - 1);
 
     return progressBar;
+}
+
+void FileTransferInstance::onFileTransferBrokenUnbroken(ToxFile File, bool broken)
+{
+    if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
+        return;
+
+    if (broken)
+        state = tsBroken;
+    else
+        state = tsProcessing;
+
+    emit stateUpdated();
 }

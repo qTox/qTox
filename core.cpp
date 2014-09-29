@@ -291,6 +291,33 @@ void Core::onConnectionStatusChanged(Tox*/* tox*/, int friendId, uint8_t status,
     emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
     if (friendStatus == Status::Offline) {
         static_cast<Core*>(core)->checkLastOnline(friendId);
+
+        for (ToxFile& f : fileSendQueue)
+        {
+            if (f.friendId == friendId && f.status == ToxFile::TRANSMITTING)
+            {
+                f.status = ToxFile::BROKEN;
+                emit static_cast<Core*>(core)->fileTransferBrokenUnbroken(f, true);
+            }
+        }
+        for (ToxFile& f : fileRecvQueue)
+        {
+            if (f.friendId == friendId && f.status == ToxFile::TRANSMITTING)
+            {
+                f.status = ToxFile::BROKEN;
+                emit static_cast<Core*>(core)->fileTransferBrokenUnbroken(f, true);
+            }
+        }
+    } else {
+        for (ToxFile& f : fileRecvQueue)
+        {
+            if (f.friendId == friendId && f.status == ToxFile::BROKEN)
+            {
+                qDebug() << QString("Core::onConnectionStatusChanged: %1: resuming broken filetransfer from position: %2").arg(f.file->fileName()).arg(f.bytesSent);
+                tox_file_send_control(static_cast<Core*>(core)->tox, friendId, 1, f.fileNum, TOX_FILECONTROL_RESUME_BROKEN, reinterpret_cast<const uint8_t*>(&f.bytesSent), sizeof(uint64_t));
+                emit static_cast<Core*>(core)->fileTransferBrokenUnbroken(f, false);
+            }
+        }
     }
 }
 
@@ -328,7 +355,7 @@ void Core::onFileSendRequestCallback(Tox*, int32_t friendnumber, uint8_t filenum
     emit static_cast<Core*>(core)->fileReceiveRequested(fileRecvQueue.last());
 }
 void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
-                                      uint8_t control_type, const uint8_t*, uint16_t, void *core)
+                                      uint8_t control_type, const uint8_t* data, uint16_t length, void *core)
 {
     ToxFile* file{nullptr};
     if (receive_send == 1)
@@ -415,11 +442,38 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
     }
     else if (receive_send == 0 && control_type == TOX_FILECONTROL_ACCEPT)
     {
+        if (file->status == ToxFile::BROKEN)
+        {
+            emit static_cast<Core*>(core)->fileTransferBrokenUnbroken(*file, false);
+            file->status = ToxFile::TRANSMITTING;
+        }
         emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, false);
     }
     else if ((receive_send == 0 || receive_send == 1) && control_type == TOX_FILECONTROL_PAUSE)
     {
         emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, true);
+    }
+    else if (receive_send == 1 && control_type == TOX_FILECONTROL_RESUME_BROKEN)
+    {
+        if (length != sizeof(uint64_t))
+            return;
+
+        qDebug() << "Core::onFileControlCallback: TOX_FILECONTROL_RESUME_BROKEN";
+
+        uint64_t resumePos = *reinterpret_cast<const uint64_t*>(data);
+
+        if (resumePos >= file->filesize)
+        {
+            qWarning() << "Core::onFileControlCallback: invalid resume position";
+            tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0); // don't sure about it
+            return;
+        }
+
+        file->status = ToxFile::TRANSMITTING;
+        emit static_cast<Core*>(core)->fileTransferBrokenUnbroken(*file, false);
+
+        file->bytesSent = resumePos;
+        tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_ACCEPT, nullptr, 0);
     }
     else
     {
@@ -640,7 +694,7 @@ void Core::pauseResumeFileRecv(int friendId, int fileNum)
         tox_file_send_control(tox, file->friendId, 1, file->fileNum, TOX_FILECONTROL_ACCEPT, nullptr, 0);
     }
     else
-        qWarning() << "Core::pauseResumeFileRecv: File is stopped";
+        qWarning() << "Core::pauseResumeFileRecv: File is stopped or broken";
 }
 
 void Core::cancelFileSend(int friendId, int fileNum)

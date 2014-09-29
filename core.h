@@ -150,6 +150,7 @@ signals:
     void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
     void fileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
+    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
 
     void fileSendFailed(int FriendId, const QString& fname);
 
