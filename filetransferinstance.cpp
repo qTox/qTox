@@ -24,6 +24,7 @@
 #include <QPainter>
 
 #define CONTENT_WIDTH 250
+#define MAX_PREVIEW_SIZE 25*1024*1024
 
 uint FileTransferInstance::Idconter = 0;
 
@@ -44,13 +45,17 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     size = getHumanReadableSize(File.filesize);
     speed = "0B/s";
     eta = "00:00";
+
     if (File.direction == ToxFile::SENDING)
     {
-        QImage preview;
-        File.file->seek(0);
-        if (preview.loadFromData(File.file->readAll()))
+        if (File.file->size() <= MAX_PREVIEW_SIZE)
         {
-            pic = preview.scaledToHeight(50);
+            QImage preview;
+            File.file->seek(0);
+            if (preview.loadFromData(File.file->readAll()))
+            {
+                pic = preview.scaledToHeight(50);
+            }
         }
         File.file->seek(0);
     }
@@ -116,7 +121,7 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
     {
         QImage preview;
         QFile previewFile(File.filePath);
-        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= 1024*1024*25) // Don't preview big (>25MiB) images
+        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= MAX_PREVIEW_SIZE) // Don't preview big (>25MiB) images
         {
             if (preview.loadFromData(previewFile.readAll()))
             {
