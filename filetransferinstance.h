@@ -28,7 +28,7 @@ class FileTransferInstance : public QObject
 {
     Q_OBJECT
 public:
-    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};
+    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled, tsBroken};
 
 public:
     explicit FileTransferInstance(ToxFile File);

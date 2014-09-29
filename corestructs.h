@@ -50,7 +50,8 @@ struct ToxFile
     {
         STOPPED,
         PAUSED,
-        TRANSMITTING
+        TRANSMITTING,
+        BROKEN
     };
 
     enum FileDirection : bool
