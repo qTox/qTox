@@ -563,20 +563,13 @@ void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
     Core* core = static_cast<Core*>(_core);
 
     if (format == TOX_AVATAR_FORMAT_NONE)
-    {
-        qDebug() << "Core: Got null avatar info from" << friendnumber;
         emit core->friendAvatarRemoved(friendnumber);
-    }
     else
     {
         QByteArray oldHash = Settings::getInstance().getAvatarHash(core->getFriendAddress(friendnumber));
-        if (QByteArray((char*)hash, TOX_HASH_LENGTH) != oldHash) // comparison failed miserably if I didn't convert hash to QByteArray
-        {
-            qDebug() << "Core: got different avatar hash from" << friendnumber;
+        if (QByteArray((char*)hash, TOX_HASH_LENGTH) != oldHash) 
+        // comparison failed miserably if I didn't convert hash to QByteArray
             tox_request_avatar_data(core->tox, friendnumber);
-        } 
-        else
-            qDebug() << "Core: Got old avatar info from" << friendnumber;
     }
 }
 
@@ -585,11 +578,8 @@ void Core::onAvatarDataCallback(Tox*, int32_t friendnumber, uint8_t,
 {
     QPixmap pic;
     pic.loadFromData((uchar*)data, datalen);
-    if (pic.isNull())
-        qDebug() << "Core: Got null avatar from "<<friendnumber;
-    else
+    if (!pic.isNull())
     {
-        qDebug() << "Core: Got avatar data from "<<friendnumber<<", size:"<<pic.size();
         Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendnumber));
         Settings::getInstance().saveAvatarHash(QByteArray((char*)hash, TOX_HASH_LENGTH), static_cast<Core*>(core)->getFriendAddress(friendnumber));
         emit static_cast<Core*>(core)->friendAvatarChanged(friendnumber, pic);
