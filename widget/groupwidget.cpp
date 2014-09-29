@@ -17,7 +17,7 @@
 #include "groupwidget.h"
 #include "grouplist.h"
 #include "group.h"
-#include "settings.h"
+#include "misc/settings.h"
 #include "widget/form/groupchatform.h"
 #include "widget/maskablepixmapwidget.h"
 #include <QPalette>

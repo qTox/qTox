@@ -15,7 +15,7 @@
 */
 
 #include "messageaction.h"
-#include "smileypack.h"
+#include "misc/smileypack.h"
 
 MessageAction::MessageAction(const QString &author, const QString &message, const QString &date, const bool &me) :
     ChatAction(me, author, date),

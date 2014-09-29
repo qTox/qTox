@@ -28,7 +28,7 @@ class FileTransferInstance : public QObject
 {
     Q_OBJECT
 public:
-    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};
+    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled, tsBroken};
 
 public:
     explicit FileTransferInstance(ToxFile File);
@@ -43,6 +43,7 @@ public slots:
     void onFileTransferAccepted(ToxFile File);
     void onFileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection Direction);
     void onFileTransferRemotePausedUnpaused(ToxFile File, bool paused);
+    void onFileTransferBrokenUnbroken(ToxFile File, bool broken);
     void pressFromHtml(QString);
 
 signals:
@@ -73,7 +74,7 @@ private:
     QImage pic;
     QString filename, size, speed, eta;
     QString filenameElided;
-    QDateTime lastUpdate;
+    QDateTime started;
     long long lastBytesSent, totalBytes;
     int fileNum;
     int friendId;

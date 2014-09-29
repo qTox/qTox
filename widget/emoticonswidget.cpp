@@ -15,8 +15,8 @@
 */
 
 #include "emoticonswidget.h"
-#include "smileypack.h"
-#include "style.h"
+#include "misc/smileypack.h"
+#include "misc/style.h"
 
 #include <QPushButton>
 #include <QRadioButton>

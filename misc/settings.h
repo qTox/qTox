@@ -61,6 +61,9 @@ public:
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
 
+    QByteArray getAvatarHash(const QString& ownerId);
+    void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
+
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
     // for some general purpose widgets, such as MainWindows or Splitters,

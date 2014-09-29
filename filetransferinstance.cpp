@@ -24,11 +24,12 @@
 #include <QPainter>
 
 #define CONTENT_WIDTH 250
+#define MAX_PREVIEW_SIZE 25*1024*1024
 
 uint FileTransferInstance::Idconter = 0;
 
 FileTransferInstance::FileTransferInstance(ToxFile File)
-    : lastUpdate{QDateTime::currentDateTime()}, lastBytesSent{0},
+    : lastBytesSent{0},
       fileNum{File.fileNum}, friendId{File.friendId}, direction{File.direction}
 {
     id = Idconter++;
@@ -44,13 +45,17 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     size = getHumanReadableSize(File.filesize);
     speed = "0B/s";
     eta = "00:00";
+
     if (File.direction == ToxFile::SENDING)
     {
-        QImage preview;
-        File.file->seek(0);
-        if (preview.loadFromData(File.file->readAll()))
+        if (File.file->size() <= MAX_PREVIEW_SIZE)
         {
-            pic = preview.scaledToHeight(50);
+            QImage preview;
+            File.file->seek(0);
+            if (preview.loadFromData(File.file->readAll()))
+            {
+                pic = preview.scaledToHeight(50);
+            }
         }
         File.file->seek(0);
     }
@@ -72,16 +77,16 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
 
 //    state = tsProcessing;
     QDateTime newtime = QDateTime::currentDateTime();
-    int timediff = lastUpdate.secsTo(newtime);
+    int timediff = started.secsTo(newtime);
     if (timediff <= 0)
         return;
-    qint64 diff = BytesSent - lastBytesSent;
-    if (diff < 0)
+    qint64 totalbytes = BytesSent + lastBytesSent; // bytes sent so far
+    if (totalbytes < 0)
     {
         qWarning() << "FileTransferInstance::onFileTransferInfo: Negative transfer speed !";
-        diff = 0;
+        totalbytes = 0;
     }
-    long rawspeed = diff / timediff;
+    long rawspeed = totalbytes / timediff;
     speed = getHumanReadableSize(rawspeed)+"/s";
     size = getHumanReadableSize(Filesize);
     totalBytes = Filesize;
@@ -91,8 +96,7 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
     QTime etaTime(0,0);
     etaTime = etaTime.addSecs(etaSecs);
     eta = etaTime.toString("mm:ss");
-    lastUpdate = newtime;
-    lastBytesSent = BytesSent;
+    lastBytesSent = totalbytes;
     emit stateUpdated();
 }
 
@@ -116,7 +120,7 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
     {
         QImage preview;
         QFile previewFile(File.filePath);
-        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= 1024*1024*25) // Don't preview big (>25MiB) images
+        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= MAX_PREVIEW_SIZE) // Don't preview big (>25MiB) images
         {
             if (preview.loadFromData(previewFile.readAll()))
             {
@@ -197,7 +201,7 @@ void FileTransferInstance::acceptRecvRequest()
     QString path;
     while (true)
     {
-        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename));
+        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(filename));
         if (path.isEmpty())
             return;
         else
@@ -216,6 +220,8 @@ void FileTransferInstance::acceptRecvRequest()
 
     Core::getInstance()->acceptFileRecvRequest(friendId, fileNum, path);
     state = tsProcessing;
+
+    started = QDateTime::currentDateTime();
 
     emit stateUpdated();
 }
@@ -286,6 +292,12 @@ QString FileTransferInstance::getHtmlImage()
             rightBtnImg = QImage(":/ui/fileTransferInstance/pauseGreyFileButton.png");
 
         res = draw2ButtonsForm("silver", leftBtnImg, rightBtnImg);
+    } else if (state == tsBroken)
+    {
+        QImage leftBtnImg(":/ui/fileTransferInstance/stopFileButton.png");
+        QImage rightBtnImg(":/ui/fileTransferInstance/pauseGreyFileButton.png");
+
+        res = draw2ButtonsForm("red", leftBtnImg, rightBtnImg);
     } else if (state == tsCanceled)
     {
         res = drawButtonlessForm("red");
@@ -410,4 +422,17 @@ QImage FileTransferInstance::drawProgressBarImg(const double &part, int w, int h
     qPainter.drawRect(1, 0, (w - 2) * (part), h - 1);
 
     return progressBar;
+}
+
+void FileTransferInstance::onFileTransferBrokenUnbroken(ToxFile File, bool broken)
+{
+    if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
+        return;
+
+    if (broken)
+        state = tsBroken;
+    else
+        state = tsProcessing;
+
+    emit stateUpdated();
 }

@@ -210,7 +210,7 @@ void FriendWidget::onAvatarRemoved(int FriendId)
         return;
 
     isDefaultAvatar = true;
-    avatar->setPixmap(QPixmap(":img/contact.png"));
+    avatar->setPixmap(QPixmap(":img/contact_dark.png"));
 }
 
 void FriendWidget::mousePressEvent(QMouseEvent *ev)

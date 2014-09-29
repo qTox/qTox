@@ -35,7 +35,8 @@ TRANSLATIONS = translations/de.ts \
                translations/ru.ts \
                translations/pl.ts \
                translations/fi.ts \
-               translations/mannol.ts
+               translations/mannol.ts \
+               translations/uk.ts
 
 RESOURCES += res.qrc
 
@@ -91,17 +92,17 @@ HEADERS  += widget/form/addfriendform.h \
     friend.h \
     group.h \
     grouplist.h \
-    settings.h \
+    misc/settings.h \
     core.h \
     friendlist.h \
-    cdata.h \
-    cstring.h \
+    misc/cdata.h \
+    misc/cstring.h \
     widget/selfcamview.h \
     widget/camera.h \
     widget/netcamview.h \
-    smileypack.h \
+    misc/smileypack.h \
     widget/emoticonswidget.h \
-    style.h \
+    misc/style.h \
     widget/adjustingscrollarea.h \
     widget/croppinglabel.h \
     widget/friendlistwidget.h \
@@ -135,15 +136,15 @@ SOURCES += \
     group.cpp \
     grouplist.cpp \
     main.cpp \
-    settings.cpp \
-    cdata.cpp \
-    cstring.cpp \
+    misc/settings.cpp \
+    misc/cdata.cpp \
+    misc/cstring.cpp \
     widget/selfcamview.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
-    smileypack.cpp \
+    misc/smileypack.cpp \
     widget/emoticonswidget.cpp \
-    style.cpp \
+    misc/style.cpp \
     widget/adjustingscrollarea.cpp \
     widget/croppinglabel.cpp \
     widget/friendlistwidget.cpp \
