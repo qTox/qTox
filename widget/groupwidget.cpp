@@ -39,8 +39,8 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     textLayout.setMargin(0);
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
-    avatar = new MaskablePixmapWidget(this, QSize(40,40), QString(), Qt::transparent);
-    avatar->setPixmap(QPixmap(":img/group.png"));
+    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
+    avatar->setPixmap(QPixmap(":img/group_dark.png"));
     statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     name.setText(Name);
     QFont small;
@@ -139,7 +139,7 @@ void GroupWidget::setAsInactiveChatroom()
     QPalette pal3;
     pal3.setColor(QPalette::Background, QColor(65,65,65,255));
     this->setPalette(pal3);
-    avatar->setPixmap(QPixmap(":img/group.png"));
+    avatar->setPixmap(QPixmap(":img/group_dark.png"));
 }
 
 void GroupWidget::updateStatusLight()

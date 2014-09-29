@@ -17,10 +17,11 @@
 #include "maskablepixmapwidget.h"
 #include <QPainter>
 
-MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName, QColor background)
+MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName, bool autopickBackground)
     : QWidget(parent)
-    , backgroundColor(background)
+    , backgroundColor(Qt::white)
     , clickable(false)
+    , autoBackground(autopickBackground)
 {
     setFixedSize(size);
 
@@ -28,6 +29,47 @@ MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString 
 
     if (!pmapMask.isNull())
         mask = QPixmap(maskName).scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+}
+
+void MaskablePixmapWidget::autopickBackground()
+{
+    QImage pic = pixmap.toImage();
+
+    if (pic.isNull())
+        return;
+
+    qreal r = 0.0f;
+    qreal g = 0.0f;
+    qreal b = 0.0f;
+    float weight = 1.0f;
+
+    for (int x=0;x<pic.width();++x)
+    {
+        for (int y=0;y<pic.height();++y)
+        {
+            QRgb color = pic.pixel(x,y);
+            r += qRed(color) / 255.0f;
+            g += qGreen(color) / 255.0f;
+            b += qBlue(color) / 255.0f;
+
+            weight += qAlpha(color) / 255.0f;
+        }
+    }
+
+    r /= weight;
+    g /= weight;
+    b /= weight;
+
+    QColor color = QColor::fromRgbF(r,g,b);
+    backgroundColor =  QColor::fromRgb(0xFFFFFF ^ color.rgb());
+
+    update();
+}
+
+void MaskablePixmapWidget::setBackground(QColor color)
+{
+    backgroundColor = color;
+    update();
 }
 
 void MaskablePixmapWidget::setClickable(bool clickable)
@@ -42,8 +84,15 @@ void MaskablePixmapWidget::setClickable(bool clickable)
 
 void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
 {
-    pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-    update();
+    if (!pmap.isNull())
+    {
+        pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+
+        if (autoBackground)
+            autopickBackground();
+
+        update();
+    }
 }
 
 QPixmap MaskablePixmapWidget::getPixmap() const
