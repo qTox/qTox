@@ -280,10 +280,33 @@ QPixmap Settings::getSavedAvatar(const QString &ownerId)
 void Settings::saveAvatar(QPixmap& pic, const QString& ownerId)
 {
     QDir dir(getSettingsDirPath());
-    dir.mkdir("avatars/"); // remove this in a week or two hopefully
+    dir.mkdir("avatars/");
     // ignore nospam (good idea, and also the addFriend funcs which call getAvatar don't have it)
     QString filePath = dir.filePath("avatars/"+ownerId.left(64)+".png");
     pic.save(filePath, "png");
+}
+
+void Settings::saveAvatarHash(const QByteArray& hash, const QString& ownerId)
+{
+    QDir dir(getSettingsDirPath());
+    dir.mkdir("avatars/");
+    QFile file(dir.filePath("avatars/"+ownerId.left(64)+".hash"));
+    if (!file.open(QIODevice::WriteOnly))
+        return;
+    file.write(hash);
+    file.close();
+}
+
+QByteArray Settings::getAvatarHash(const QString& ownerId)
+{
+    QDir dir(getSettingsDirPath());
+    dir.mkdir("avatars/");
+    QFile file(dir.filePath("avatars/"+ownerId.left(64)+".hash"));
+    if (!file.open(QIODevice::ReadOnly))
+        return QByteArray();
+    QByteArray out = file.readAll();
+    file.close();
+    return out;
 }
 
 const QList<Settings::DhtServer>& Settings::getDhtServerList() const

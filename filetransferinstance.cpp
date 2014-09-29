@@ -29,7 +29,7 @@
 uint FileTransferInstance::Idconter = 0;
 
 FileTransferInstance::FileTransferInstance(ToxFile File)
-    : lastUpdate{QDateTime::currentDateTime()}, lastBytesSent{0},
+    : lastBytesSent{0},
       fileNum{File.fileNum}, friendId{File.friendId}, direction{File.direction}
 {
     id = Idconter++;
@@ -77,16 +77,16 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
 
 //    state = tsProcessing;
     QDateTime newtime = QDateTime::currentDateTime();
-    int timediff = lastUpdate.secsTo(newtime);
+    int timediff = started.secsTo(newtime);
     if (timediff <= 0)
         return;
-    qint64 diff = BytesSent - lastBytesSent;
-    if (diff < 0)
+    qint64 totalbytes = BytesSent + lastBytesSent; // bytes sent so far
+    if (totalbytes < 0)
     {
         qWarning() << "FileTransferInstance::onFileTransferInfo: Negative transfer speed !";
-        diff = 0;
+        totalbytes = 0;
     }
-    long rawspeed = diff / timediff;
+    long rawspeed = totalbytes / timediff;
     speed = getHumanReadableSize(rawspeed)+"/s";
     size = getHumanReadableSize(Filesize);
     totalBytes = Filesize;
@@ -96,8 +96,7 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
     QTime etaTime(0,0);
     etaTime = etaTime.addSecs(etaSecs);
     eta = etaTime.toString("mm:ss");
-    lastUpdate = newtime;
-    lastBytesSent = BytesSent;
+    lastBytesSent = totalbytes;
     emit stateUpdated();
 }
 
@@ -202,7 +201,7 @@ void FileTransferInstance::acceptRecvRequest()
     QString path;
     while (true)
     {
-        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename));
+        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(filename));
         if (path.isEmpty())
             return;
         else
@@ -221,6 +220,8 @@ void FileTransferInstance::acceptRecvRequest()
 
     Core::getInstance()->acceptFileRecvRequest(friendId, fileNum, path);
     state = tsProcessing;
+
+    started = QDateTime::currentDateTime();
 
     emit stateUpdated();
 }
