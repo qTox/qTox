@@ -35,7 +35,8 @@ TRANSLATIONS = translations/de.ts \
                translations/ru.ts \
                translations/pl.ts \
                translations/fi.ts \
-               translations/mannol.ts
+               translations/mannol.ts \
+               translations/uk.ts
 
 RESOURCES += res.qrc
 
