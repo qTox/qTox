@@ -15,9 +15,9 @@
 */
 
 #include "core.h"
-#include "cdata.h"
-#include "cstring.h"
-#include "settings.h"
+#include "misc/cdata.h"
+#include "misc/cstring.h"
+#include "misc/settings.h"
 #include "widget/widget.h"
 
 #include <tox/tox.h>

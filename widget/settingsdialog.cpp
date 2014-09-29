@@ -1,10 +1,10 @@
 #include "settingsdialog.h"
-#include "settings.h"
+#include "misc/settings.h"
 #include "widget.h"
 #include "camera.h"
 #include "selfcamview.h"
 #include "core.h"
-#include "smileypack.h"
+#include "misc/smileypack.h"
 
 #include <QListWidget>
 #include <QListWidgetItem>
