@@ -291,6 +291,12 @@ QString FileTransferInstance::getHtmlImage()
             rightBtnImg = QImage(":/ui/fileTransferInstance/pauseGreyFileButton.png");
 
         res = draw2ButtonsForm("silver", leftBtnImg, rightBtnImg);
+    } else if (state == tsBroken)
+    {
+        QImage leftBtnImg(":/ui/fileTransferInstance/stopFileButton.png");
+        QImage rightBtnImg(":/ui/fileTransferInstance/pauseGreyFileButton.png");
+
+        res = draw2ButtonsForm("red", leftBtnImg, rightBtnImg);
     } else if (state == tsCanceled)
     {
         res = drawButtonlessForm("red");
@@ -415,4 +421,17 @@ QImage FileTransferInstance::drawProgressBarImg(const double &part, int w, int h
     qPainter.drawRect(1, 0, (w - 2) * (part), h - 1);
 
     return progressBar;
+}
+
+void FileTransferInstance::onFileTransferBrokenUnbroken(ToxFile File, bool broken)
+{
+    if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
+        return;
+
+    if (broken)
+        state = tsBroken;
+    else
+        state = tsProcessing;
+
+    emit stateUpdated();
 }

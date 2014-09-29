@@ -43,6 +43,7 @@ public slots:
     void onFileTransferAccepted(ToxFile File);
     void onFileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection Direction);
     void onFileTransferRemotePausedUnpaused(ToxFile File, bool paused);
+    void onFileTransferBrokenUnbroken(ToxFile File, bool broken);
     void pressFromHtml(QString);
 
 signals:
