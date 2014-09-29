@@ -207,8 +207,7 @@ private:
     static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
-    void checkConnection();
-    void onBootstrapTimer();
+    bool checkConnection();
 
     void loadConfiguration();
     void loadFriends();

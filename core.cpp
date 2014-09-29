@@ -49,15 +49,9 @@ Core::Core(Camera* cam, QThread *coreThread) :
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
-    //saveTimer = new QTimer(this);
-    //saveTimer->start(TOX_SAVE_INTERVAL);
-    bootstrapTimer = new QTimer(this);
-    bootstrapTimer->start(TOX_BOOTSTRAP_INTERVAL);
     connect(toxTimer, &QTimer::timeout, this, &Core::process);
-    //connect(saveTimer, &QTimer::timeout, this, &Core::saveConfiguration); //Disable save timer in favor of saving on events
     //connect(fileTimer, &QTimer::timeout, this, &Core::fileHeartbeat);
-    connect(bootstrapTimer, &QTimer::timeout, this, &Core::onBootstrapTimer);
-    connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::bootstrapDht);
+    connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::process);
     connect(this, SIGNAL(fileTransferFinished(ToxFile)), this, SLOT(onFileTransferFinished(ToxFile)));
 
     for (int i=0; i<TOXAV_MAX_CALLS;i++)
@@ -222,18 +216,75 @@ void Core::start()
     }
     else
         qDebug() << "Core: Error loading self avatar";
+    
+    process(); // starts its own timer
+}
 
-    bootstrapDht();
+void Core::process()
+{
+    if (!tox)
+        return;
+
+    static int retries = 0;
+    tox_do(tox);
+
+#ifdef DEBUG
+    //we want to see the debug messages immediately
+    fflush(stdout);
+#endif
+
+    if (checkConnection())
+        retries = 0;
+    else if (retries < 2)
+    {
+        retries++;
+        bootstrapDht();
+    }
 
     toxTimer->start(tox_do_interval(tox));
 }
 
-void Core::onBootstrapTimer()
+bool Core::checkConnection()
 {
-    if (!tox)
-        return;
-    if(!tox_isconnected(tox))
-        bootstrapDht();
+    static bool isConnected = false;
+    bool toxConnected = tox_isconnected(tox);
+
+    if (toxConnected && !isConnected) {
+        qDebug() << "Core: Connected to DHT";
+        emit connected();
+        isConnected = true;
+    } else if (!toxConnected && isConnected) {
+        qDebug() << "Core: Disconnected to DHT";
+        emit disconnected();
+        isConnected = false;
+    }
+    return isConnected;
+}
+
+void Core::bootstrapDht()
+{
+    const Settings& s = Settings::getInstance();
+    QList<Settings::DhtServer> dhtServerList = s.getDhtServerList();
+
+    int listSize = dhtServerList.size();
+    static int j = qrand() % listSize;
+
+    qDebug() << "Core: Bootstraping to the DHT ...";
+
+    int i=0;
+    while (i < 2)
+    {
+        const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
+        if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
+            dhtServer.port, CUserId(dhtServer.userId).data()) == 1)
+            qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
+                        +QString(", port ")+QString().setNum(dhtServer.port);
+        else
+            qDebug() << "Core: Error bootstraping from "+dhtServer.name;
+
+        j++;
+        i++;
+    }
 }
 
 void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cUserId, const uint8_t* cMessage, uint16_t cMessageSize, void* core)
@@ -512,20 +563,13 @@ void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
     Core* core = static_cast<Core*>(_core);
 
     if (format == TOX_AVATAR_FORMAT_NONE)
-    {
-        qDebug() << "Core: Got null avatar info from" << friendnumber;
         emit core->friendAvatarRemoved(friendnumber);
-    }
     else
     {
         QByteArray oldHash = Settings::getInstance().getAvatarHash(core->getFriendAddress(friendnumber));
-        if (QByteArray((char*)hash, TOX_HASH_LENGTH) != oldHash) // comparison failed miserably if I didn't convert hash to QByteArray
-        {
-            qDebug() << "Core: got different avatar hash from" << friendnumber;
+        if (QByteArray((char*)hash, TOX_HASH_LENGTH) != oldHash) 
+        // comparison failed miserably if I didn't convert hash to QByteArray
             tox_request_avatar_data(core->tox, friendnumber);
-        } 
-        else
-            qDebug() << "Core: Got old avatar info from" << friendnumber;
     }
 }
 
@@ -534,11 +578,8 @@ void Core::onAvatarDataCallback(Tox*, int32_t friendnumber, uint8_t,
 {
     QPixmap pic;
     pic.loadFromData((uchar*)data, datalen);
-    if (pic.isNull())
-        qDebug() << "Core: Got null avatar from "<<friendnumber;
-    else
+    if (!pic.isNull())
     {
-        qDebug() << "Core: Got avatar data from "<<friendnumber<<", size:"<<pic.size();
         Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendnumber));
         Settings::getInstance().saveAvatarHash(QByteArray((char*)hash, TOX_HASH_LENGTH), static_cast<Core*>(core)->getFriendAddress(friendnumber));
         emit static_cast<Core*>(core)->friendAvatarChanged(friendnumber, pic);
@@ -925,69 +966,6 @@ void Core::onFileTransferFinished(ToxFile file)
           emit fileUploadFinished(file.filePath);
      else
           emit fileDownloadFinished(file.filePath);
-}
-
-void Core::bootstrapDht()
-{
-    const Settings& s = Settings::getInstance();
-    QList<Settings::DhtServer> dhtServerList = s.getDhtServerList();
-
-    int listSize = dhtServerList.size();
-    static int j = qrand() % listSize, n=0;
-
-    // We couldn't connect after trying 6 different nodes, let's try something else
-    if (n>3)
-    {
-        qDebug() << "Core: We're having trouble connecting to the DHT, slowing down";
-        bootstrapTimer->setInterval(TOX_BOOTSTRAP_INTERVAL*(n-1));
-    }
-    else
-        qDebug() << "Core: Connecting to the DHT ...";
-
-    int i=0;
-    while (i < (2 - (n>3)))
-    {
-        const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
-        if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
-            dhtServer.port, CUserId(dhtServer.userId).data()) == 1)
-            qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
-                        +QString(", port ")+QString().setNum(dhtServer.port);
-        else
-            qDebug() << "Core: Error bootstraping from "+dhtServer.name;
-
-        tox_do(tox);
-        j++;
-        i++;
-        n++;
-    }
-}
-
-void Core::process()
-{
-    tox_do(tox);
-#ifdef DEBUG
-    //we want to see the debug messages immediately
-    fflush(stdout);
-#endif
-    checkConnection();
-    //int toxInterval = tox_do_interval(tox);
-    //qDebug() << QString("Tox interval %1").arg(toxInterval);
-    toxTimer->start(50);
-}
-
-void Core::checkConnection()
-{
-    static bool isConnected = false;
-
-    if (tox_isconnected(tox) && !isConnected) {
-        qDebug() << "Core: Connected to DHT";
-        emit connected();
-        isConnected = true;
-    } else if (!tox_isconnected(tox) && isConnected) {
-        qDebug() << "Core: Disconnected to DHT";
-        emit disconnected();
-        isConnected = false;
-    }
 }
 
 void Core::loadConfiguration()

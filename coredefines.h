@@ -3,9 +3,7 @@
 
 #define TOXAV_MAX_CALLS 16
 #define GROUPCHAT_MAX_SIZE 32
-#define TOX_SAVE_INTERVAL 30*1000
 #define TOX_FILE_INTERVAL 0
-#define TOX_BOOTSTRAP_INTERVAL 5*1000
 #define TOXAV_RINGING_TIME 15
 
 // TODO: Put that in the settings
