@@ -244,9 +244,8 @@ void Core::process()
 
     if (checkConnection())
         tolerance = CORE_DISCONNECT_TOLERANCE;
-    else if (--tolerance)
+    else if (!(--tolerance))
     {
-        tolerance = CORE_DISCONNECT_TOLERANCE;
         bootstrapDht();
     }
 
@@ -285,7 +284,7 @@ void Core::bootstrapDht()
     qDebug() << "Core: Bootstraping to the DHT ...";
 
     int i=0;
-    while (i < 3)
+    while (i < 4)
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
