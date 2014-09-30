@@ -22,20 +22,21 @@ AVForm::AVForm(Camera* cam)
     icon.setPixmap(QPixmap(":/img/settings/av.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
     label.setText(tr("Audio/Video settings"));
     
-    QGroupBox *group = new QGroupBox(tr("Video Settings"));
+    videoGroup = new QGroupBox(tr("Video Settings"));
 
     camView = new SelfCamView(cam);
     camView->hide(); // hide by default
     testVideo = new QPushButton(tr("Show video preview","On a button"));
-    connect(testVideo, &QPushButton::clicked, this, &AVForm::onTestVideoPressed);
 
     videoLayout = new QVBoxLayout();
     videoLayout->addWidget(testVideo);
     videoLayout->addWidget(camView);
-    //videoGroup->setLayout(videoLayout); // strangely enough, this causes a segfault....
+    videoGroup->setLayout(videoLayout);
 
-    layout.addWidget(group);
+    layout.addWidget(videoGroup);
     layout.addStretch(1);
+    
+        connect(testVideo, &QPushButton::clicked, this, &AVForm::onTestVideoPressed);
 }
 
 AVForm::~AVForm()
