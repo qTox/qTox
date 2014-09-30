@@ -41,7 +41,7 @@ SettingsWidget::SettingsWidget(Camera* cam)
     
     prepButtons();    
     foot->setLayout(iconsLayout);
-    mainLayout = new QVBoxLayout(main);
+    mainLayout = new QVBoxLayout();
     mainLayout->addWidget(body);
     mainLayout->addWidget(foot);
     // something something foot size
