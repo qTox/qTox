@@ -15,14 +15,49 @@
 */
 
 #include "avform.h"
+#include "widget/camera.h"
 
-AVForm::AVForm()
+AVForm::AVForm(Camera* cam)
 {
-    prep();
     icon.setPixmap(QPixmap(":/img/settings/av.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
     label.setText(tr("Audio/Video settings"));
+    
+    QGroupBox *group = new QGroupBox(tr("Video Settings"));
+
+    camView = new SelfCamView(cam);
+    camView->hide(); // hide by default
+    testVideo = new QPushButton(tr("Show video preview","On a button"));
+    connect(testVideo, &QPushButton::clicked, this, &AVForm::onTestVideoPressed);
+
+    videoLayout = new QVBoxLayout();
+    videoLayout->addWidget(testVideo);
+    videoLayout->addWidget(camView);
+    //videoGroup->setLayout(videoLayout); // strangely enough, this causes a segfault....
+
+    layout.addWidget(group);
+    layout.addStretch(1);
 }
 
 AVForm::~AVForm()
 {
+}
+
+void AVForm::showTestVideo()
+{
+    testVideo->setText(tr("Hide video preview","On a button"));
+    camView->show();
+}
+
+void AVForm::closeTestVideo()
+{
+    testVideo->setText(tr("Show video preview","On a button"));
+    camView->close();
+}
+
+void AVForm::onTestVideoPressed()
+{
+    if (camView->isVisible())
+        closeTestVideo();
+    else
+        showTestVideo();
 }

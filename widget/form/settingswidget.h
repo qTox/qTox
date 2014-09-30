@@ -19,6 +19,7 @@
 
 #include <QHBoxLayout>
 #include <QPushButton>
+class Camera;
 class GenericForm;
 class GeneralForm;
 class IdentityForm;
@@ -30,12 +31,17 @@ class SettingsWidget : public QWidget
 {
     Q_OBJECT
 public:
-    SettingsWidget();
+    SettingsWidget(Camera* cam);
     ~SettingsWidget();
 
     void show(Ui::MainWindow &ui);
     
     QWidget *head, *body; // keep the others private
+    GenericForm* active;
+    GeneralForm* generalForm;
+    IdentityForm* identityForm;
+    PrivacyForm* privacyForm;
+    AVForm* avForm;
 
 public slots:
     //void setFriendAddress(const QString& friendAddress);
@@ -51,14 +57,8 @@ private:
     // main consists of body+foot for Ui::MainWindow
     QVBoxLayout *mainLayout;
     
-    GenericForm* active;
-    GeneralForm* generalForm;
-    IdentityForm* identityForm;
-    PrivacyForm* privacyForm;
-    AVForm* avForm;
     void hideSettingsForms();
-    
-    
+
     // the code pertaining to the icons is mostly copied from ui_mainwindow.h
     QHBoxLayout *iconsLayout;
     QPushButton *generalButton;

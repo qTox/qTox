@@ -18,10 +18,8 @@
 #define GENERALFORM_H
 
 #include "genericsettings.h"
-#include <QGroupBox>
+#include <QComboBox>
 #include <QCheckBox>
-#include <QLabel>
-
 
 class GeneralForm : public GenericForm
 {
@@ -30,12 +28,16 @@ public:
     GeneralForm();
     ~GeneralForm();
 
+private slots:
+    void onEnableIPv6Updated();
+    void onUseTranslationUpdated();
+    void onMakeToxPortableUpdated();
+    void onSmileyBrowserIndexChanged(int index);
+
 private:
-    QGroupBox *group;
-    QCheckBox* enableIPv6;
-    QCheckBox* useTranslations;
-    QCheckBox* makeToxPortable;
-    QLabel label;
+    QCheckBox enableIPv6, useTranslations, makeToxPortable;
+    QLabel label, smileyPackLabel;
+    QComboBox smileyPackBrowser;
 };
 
 #endif

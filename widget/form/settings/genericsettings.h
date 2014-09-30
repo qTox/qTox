@@ -26,6 +26,15 @@ class GenericForm : public QObject
 {
     Q_OBJECT
 public:
+    GenericForm()
+    {
+        head.setLayout(&headLayout);
+        headLayout.addWidget(&icon);
+        headLayout.addWidget(&label);
+        body.setLayout(&layout);
+    }
+    ~GenericForm() {};
+
     virtual void show(SettingsWidget& sw)
     {
         sw.body->layout()->addWidget(&body);
@@ -39,14 +48,6 @@ protected:
     QHBoxLayout headLayout;
     QLabel label, icon;
     QWidget head, body;
-    void prep() // call in subclass constructor
-    {
-        head.setLayout(&headLayout);
-        headLayout.addWidget(&icon);
-        headLayout.addWidget(&label);
-        body.setLayout(&layout);
-    }
-
 };
 
 #endif

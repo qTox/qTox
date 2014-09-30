@@ -156,6 +156,8 @@ Widget::Widget(QWidget *parent)
 
     camera = new Camera;
 
+    settingsWidget = new SettingsWidget(camera);
+
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
 
@@ -206,6 +208,8 @@ Widget::Widget(QWidget *parent)
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
+    connect(settingsWidget->identityForm, &IdentityForm::userNameChanged,      core, &Core::setUsername);
+    connect(settingsWidget->identityForm, &IdentityForm::statusMessageChanged, core, &Core::setStatusMessage);
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
@@ -219,12 +223,12 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
     core->saveConfiguration();
-    instance = nullptr;
     coreThread->exit();
     coreThread->wait(500); // In case of deadlock (can happen with QtAudio/PA bugs)
     if (!coreThread->isFinished())
         coreThread->terminate();
     delete core;
+    delete settingsWidget;
 
     hideMainForms();
 
@@ -235,6 +239,7 @@ Widget::~Widget()
         delete g;
     GroupList::groupList.clear();
     delete ui;
+    instance = nullptr;
 }
 
 Widget* Widget::getInstance()
@@ -335,7 +340,7 @@ void Widget::onTransferClicked()
 void Widget::onSettingsClicked()
 {
     hideMainForms();
-    settingsWidget.show(*ui);
+    settingsWidget->show(*ui);
     activeChatroomWidget = nullptr;
 }
 
@@ -364,6 +369,7 @@ void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     ui->nameLabel->setToolTip(username); // for overlength names
+    settingsWidget->identityForm->userName->setText(username);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
@@ -377,11 +383,11 @@ void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
     ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
+    settingsWidget->identityForm->statusMessage->setText(statusMessage);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-
     qDebug() << "Widget: Adding friend with id "+userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);

@@ -17,18 +17,19 @@
 #include "settingswidget.h"
 #include "widget/widget.h"
 #include "ui_mainwindow.h"
+#include "widget/camera.h"
 #include "widget/form/settings/generalform.h"
 #include "widget/form/settings/identityform.h"
 #include "widget/form/settings/privacyform.h"
 #include "widget/form/settings/avform.h"
 
-SettingsWidget::SettingsWidget()
+SettingsWidget::SettingsWidget(Camera* cam)
     : QWidget()
 {
     generalForm  = new GeneralForm();
     identityForm = new IdentityForm();
     privacyForm  = new PrivacyForm();
-    avForm       = new AVForm();
+    avForm       = new AVForm(cam);
 
     main = new QWidget();
     body = new QWidget();

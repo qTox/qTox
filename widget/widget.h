@@ -20,6 +20,7 @@
 #include <QMainWindow>
 #include "widget/form/addfriendform.h"
 #include "widget/form/settingswidget.h"
+#include "widget/form/settings/identityform.h"
 #include "widget/form/filesform.h"
 #include "corestructs.h"
 
@@ -134,7 +135,7 @@ private:
     Core* core;
     QThread* coreThread;
     AddFriendForm friendForm;
-    SettingsWidget settingsWidget;
+    SettingsWidget* settingsWidget;
     FilesForm filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;

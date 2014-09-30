@@ -16,33 +16,63 @@
 
 #include "generalform.h"
 #include "widget/form/settingswidget.h"
+#include "widget/widget.h"
+#include "misc/settings.h"
+#include "misc/smileypack.h"
 
 GeneralForm::GeneralForm()
 {
-    prep();
     icon.setPixmap(QPixmap(":/img/settings/general.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
-    label.setText(tr("General settings"));
-    group = new QGroupBox(tr("General Settings"));
-    enableIPv6 = new QCheckBox();
-    enableIPv6->setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
-    useTranslations = new QCheckBox();
-    useTranslations->setText(tr("Use translations","Text on a checkbox to enable translations"));
-    makeToxPortable = new QCheckBox();
-    makeToxPortable->setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
-    makeToxPortable->setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
-
-    QVBoxLayout *vLayout = new QVBoxLayout();
-    vLayout->addWidget(enableIPv6);
-    vLayout->addWidget(useTranslations);
-    vLayout->addWidget(makeToxPortable);
-    group->setLayout(vLayout);
-    
     label.setText(tr("General Settings"));
     
+    enableIPv6.setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
+    enableIPv6.setChecked(Settings::getInstance().getEnableIPv6());
+    useTranslations.setText(tr("Use translations","Text on a checkbox to enable translations"));
+    useTranslations.setChecked(Settings::getInstance().getUseTranslations());
+    makeToxPortable.setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
+    makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
+    makeToxPortable.setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
+
+    smileyPackLabel.setText(tr("Smiley Pack", "Text on smiley pack label"));
+    for (auto entry : SmileyPack::listSmileyPacks())
+        smileyPackBrowser.addItem(entry.first, entry.second);
+    smileyPackBrowser.setCurrentIndex(smileyPackBrowser.findData(Settings::getInstance().getSmileyPack()));
+    
     headLayout.addWidget(&label);
-    layout.addWidget(group);
+    layout.addWidget(&enableIPv6);
+    layout.addWidget(&useTranslations);
+    layout.addWidget(&makeToxPortable);
+    layout.addWidget(&smileyPackLabel);
+    layout.addWidget(&smileyPackBrowser);
+    layout.addStretch();
+    
+    connect(&enableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
+    connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
+    connect(&makeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
+    connect(&smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
 }
 
 GeneralForm::~GeneralForm()
 {
+}
+
+void GeneralForm::onEnableIPv6Updated()
+{
+    Settings::getInstance().setEnableIPv6(enableIPv6.isChecked());
+}
+
+void GeneralForm::onUseTranslationUpdated()
+{
+    Settings::getInstance().setUseTranslations(useTranslations.isChecked());
+}
+
+void GeneralForm::onMakeToxPortableUpdated()
+{
+    Settings::getInstance().setMakeToxPortable(makeToxPortable.isChecked());
+}
+
+void GeneralForm::onSmileyBrowserIndexChanged(int index)
+{
+    QString filename = smileyPackBrowser.itemData(index).toString();
+    Settings::getInstance().setSmileyPack(filename);
 }

@@ -18,16 +18,30 @@
 #define AVFORM_H
 
 #include "genericsettings.h"
+#include "widget/selfcamview.h"
+#include <QGroupBox>
+#include <QVBoxLayout>
+#include <QPushButton>
+class Camera;
 
 class AVForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AVForm();
+    AVForm(Camera* cam);
     ~AVForm();
 
+private slots:
+    void onTestVideoPressed();
 private:
+    QGroupBox* videoGroup;
+    QVBoxLayout* videoLayout;
+    QPushButton* testVideo;
+    SelfCamView* camView;
     
+    void showTestVideo();
+    void closeTestVideo();
+       
 };
 
 #endif

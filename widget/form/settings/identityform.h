@@ -19,6 +19,20 @@
 
 #include "genericsettings.h"
 #include <QGroupBox>
+#include <QTextEdit>
+#include <QLineEdit>
+class CroppingLabel;
+
+class ClickableTE : public QTextEdit
+{
+    Q_OBJECT
+public:
+    
+signals:
+    void clicked();
+protected:
+    void mouseReleaseEvent(QMouseEvent*) {emit clicked();}    
+};
 
 class IdentityForm : public GenericForm
 {
@@ -27,8 +41,25 @@ public:
     IdentityForm();
     ~IdentityForm();
 
+    QLineEdit* userName, * statusMessage;
+
+    void show(SettingsWidget& sw);
+
+signals:
+    void userNameChanged(QString);
+    void statusMessageChanged(QString);
+
+private slots:
+    void copyIdClicked();
+    void onUserNameEdited();
+    void onStatusMessageEdited();
+
 private:
-    QGroupBox* toxGroup;
+    QGroupBox* toxGroup, * publicGroup;
+    ClickableTE* toxId;
+    QLabel* userNameLabel, * statusMessageLabel;
+    CroppingLabel* toxIdLabel;
+    QVBoxLayout* vLayout, * toxLayout;
 };
 
 #endif
