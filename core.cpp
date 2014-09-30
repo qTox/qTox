@@ -225,9 +225,9 @@ void Core::start()
  * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
  * So I set the tolerance here at 25, and initial DCs should be very rare now.
  * This should be able to go to 50 or 100 without affecting legitimate disconnects'
- * downtime, but lets be conservative for now.
+ * downtime, but lets be conservative for now. Edit: now 40.
  */
-#define CORE_DISCONNECT_TOLERANCE 25
+#define CORE_DISCONNECT_TOLERANCE 40
 
 void Core::process()
 {
@@ -284,7 +284,7 @@ void Core::bootstrapDht()
     qDebug() << "Core: Bootstraping to the DHT ...";
 
     int i=0;
-    while (i < 4)
+    while (i < 2) // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
