@@ -164,7 +164,7 @@ SOURCES += \
     widget/tool/chatactions/chataction.cpp \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp \
-    corestructs.cpp
+    corestructs.cpp \
     widget/tool/chatactions/messageaction.cpp \
     widget/tool/chatactions/filetransferaction.cpp \
     widget/tool/chatactions/systemmessageaction.cpp \
