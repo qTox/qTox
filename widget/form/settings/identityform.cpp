@@ -23,11 +23,8 @@
 #include <QApplication>
 #include <QClipboard>
 
-IdentityForm::IdentityForm()
+IdentityForm::IdentityForm() : GenericForm(":/img/settings/identity.png", tr("Your Identity"))
 {
-    icon.setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
-    label.setText(tr("Your identity"));
-
     // public
     publicGroup = new QGroupBox(tr("Public Information"));
     userNameLabel = new QLabel(tr("Name","Username/nick"));

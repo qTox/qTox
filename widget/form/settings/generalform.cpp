@@ -20,11 +20,8 @@
 #include "misc/settings.h"
 #include "misc/smileypack.h"
 
-GeneralForm::GeneralForm()
-{
-    icon.setPixmap(QPixmap(":/img/settings/general.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
-    label.setText(tr("General Settings"));
-    
+GeneralForm::GeneralForm() : GenericForm(":/img/settings/general.png", tr("General Settings"))
+{    
     enableIPv6.setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
     enableIPv6.setChecked(Settings::getInstance().getEnableIPv6());
     useTranslations.setText(tr("Use translations","Text on a checkbox to enable translations"));

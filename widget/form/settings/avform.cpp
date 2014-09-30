@@ -17,11 +17,8 @@
 #include "avform.h"
 #include "widget/camera.h"
 
-AVForm::AVForm(Camera* cam)
+AVForm::AVForm(Camera* cam) : GenericForm(":/img/settings/av.png", tr("Audio/Video Settings"))
 {
-    icon.setPixmap(QPixmap(":/img/settings/av.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
-    label.setText(tr("Audio/Video settings"));
-    
     videoGroup = new QGroupBox(tr("Video Settings"));
 
     camView = new SelfCamView(cam);
@@ -36,7 +33,7 @@ AVForm::AVForm(Camera* cam)
     layout.addWidget(videoGroup);
     layout.addStretch(1);
     
-        connect(testVideo, &QPushButton::clicked, this, &AVForm::onTestVideoPressed);
+    connect(testVideo, &QPushButton::clicked, this, &AVForm::onTestVideoPressed);
 }
 
 AVForm::~AVForm()

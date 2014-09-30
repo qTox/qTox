@@ -26,12 +26,15 @@ class GenericForm : public QObject
 {
     Q_OBJECT
 public:
-    GenericForm()
+    GenericForm(QString iconname, QString labeltxt)
     {
         head.setLayout(&headLayout);
         headLayout.addWidget(&icon);
         headLayout.addWidget(&label);
         body.setLayout(&layout);
+        
+        icon.setPixmap(QPixmap(iconname).scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
+        label.setText(labeltxt);
     }
     ~GenericForm() {};
 
