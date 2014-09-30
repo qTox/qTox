@@ -35,22 +35,10 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
     , isDefaultAvatar{true}
 {
-    setMouseTracking(true);
-    setAutoFillBackground(true);
-    setFixedHeight(55);
-    setLayout(&layout);
-    layout.setSpacing(0);
-    layout.setMargin(0);
-    layout.setStretchFactor(this, 100);
-    textLayout.setSpacing(0);
-    textLayout.setMargin(0);
-    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
-
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
 
     name.setText(id);
-    //statusPic.setAlignment(Qt::AlignHCenter);
     statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
 
     // status text
@@ -65,11 +53,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     name.setPalette(pal2);
     name.setFont(Style::getFont(Style::Big));
 
-    // background
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, Style::getColor(Style::MediumGrey));
-    setPalette(pal3);
-
     textLayout.addStretch();
     textLayout.addWidget(&name);
     textLayout.addWidget(&statusMessage);
@@ -82,11 +65,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     layout.addSpacing(10);
     layout.addWidget(&statusPic);
     layout.addSpacing(10);
-
-    layout.invalidate();
-    layout.update();
     layout.activate();
-    updateGeometry();
 }
 
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)

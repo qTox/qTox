@@ -19,7 +19,14 @@
 
 #include <QFile>
 #include <QDebug>
-#include <QVector>
+
+// helper function
+QFont appFont(int pixelSize, int weight) {
+    auto font = QFont();
+    font.setPixelSize(pixelSize);
+    font.setWeight(weight);
+    return font;
+}
 
 QString Style::getStylesheet(const QString &filename)
 {
@@ -49,13 +56,6 @@ QColor Style::getColor(Style::ColorPalette entry)
     };
 
     return palette[entry];
-}
-
-QFont appFont(int pixelSize, int weight) {
-    auto font = QFont();
-    font.setPixelSize(pixelSize);
-    font.setWeight(weight);
-    return font;
 }
 
 QFont Style::getFont(Style::Font font)

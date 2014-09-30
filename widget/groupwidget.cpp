@@ -30,16 +30,6 @@
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
-    setMouseTracking(true);
-    setAutoFillBackground(true);
-    setLayout(&layout);
-    setFixedHeight(55);
-    layout.setSpacing(0);
-    layout.setMargin(0);
-    textLayout.setSpacing(0);
-    textLayout.setMargin(0);
-    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
-
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
 
@@ -57,11 +47,6 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     pal.setColor(QPalette::WindowText, Style::getColor(Style::LightGrey));
     nusers.setPalette(pal);
     nusers.setFont(Style::getFont(Style::Medium));
-
-    // background
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, Style::getColor(Style::MediumGrey));
-    this->setPalette(pal3);
 
     Group* g = GroupList::findGroup(groupId);
     if (g)
@@ -82,6 +67,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     layout.addSpacing(10);
     layout.addWidget(&statusPic);
     layout.addSpacing(10);
+    layout.activate();
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -154,16 +140,20 @@ void GroupWidget::updateStatusLight()
         {
             statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
         } else {
-            if (g->userWasMentioned == 0) statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-            else statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+            if (g->userWasMentioned == 0)
+                statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+            else
+                statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
         }
     } else {
         if (g->hasNewMessages == 0)
         {
             statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
         } else {
-            if (g->userWasMentioned == 0) statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
-            else statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
+            if (g->userWasMentioned == 0)
+                statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
+            else
+                statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
         }
     }
 }

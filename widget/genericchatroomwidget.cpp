@@ -22,49 +22,43 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     : QWidget(parent)
     , isActiveWidget(false)
 {
+    setMouseTracking(true);
+    setFixedHeight(55);
+
+    setLayout(&layout);
+    layout.setSpacing(0);
+    layout.setMargin(0);
+    textLayout.setSpacing(0);
+    textLayout.setMargin(0);
+    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
+
+    setStyleSheet(QString("background-color: %1").arg(Style::getColor(Style::MediumGrey).name()));
 }
 
 bool GenericChatroomWidget::isActive()
 {
     return isActiveWidget;
 }
-
 void GenericChatroomWidget::setActive(bool active)
 {
     isActiveWidget = active;
 
     if (active)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, Style::getColor(Style::White));
-        setPalette(pal);
-    }
+        setStyleSheet(QString("background-color: %1").arg(Style::getColor(Style::White).name()));
     else
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, Style::getColor(Style::MediumGrey));
-        setPalette(pal);
-    }
+        setStyleSheet(QString("background-color: %1").arg(Style::getColor(Style::MediumGrey).name()));
 }
 
 void GenericChatroomWidget::leaveEvent(QEvent *)
 {
     if (!isActive())
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, Style::getColor(Style::MediumGrey));
-        setPalette(pal);
-    }
+        setStyleSheet(QString("background-color: %1").arg(Style::getColor(Style::MediumGrey).name()));
 }
 
 void GenericChatroomWidget::enterEvent(QEvent *)
 {
     if (!isActive())
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, Style::getColor(Style::MediumGrey).lighter(120));
-        setPalette(pal);
-    }
+        setStyleSheet(QString("background-color: %1").arg(Style::getColor(Style::MediumGrey).lighter(120).name()));
 }
 
 void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)
