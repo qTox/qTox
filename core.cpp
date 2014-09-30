@@ -220,12 +220,21 @@ void Core::start()
     process(); // starts its own timer
 }
 
+/* Using the now commented out statements in checkConnection(), I watched how
+ * many ticks disconnects-after-initial-connect lasted. Out of roughly 15 trials,
+ * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
+ * So I set the tolerance here at 25, and initial DCs should be very rare now.
+ * This should be able to go to 50 or 100 without affecting legitimate disconnects'
+ * downtime, but lets be conservative for now.
+ */
+#define CORE_DISCONNECT_TOLERANCE 25
+
 void Core::process()
 {
     if (!tox)
         return;
 
-    static int retries = 0;
+    static int tolerance = CORE_DISCONNECT_TOLERANCE;
     tox_do(tox);
 
 #ifdef DEBUG
@@ -234,10 +243,10 @@ void Core::process()
 #endif
 
     if (checkConnection())
-        retries = 0;
-    else if (retries < 2)
+        tolerance = CORE_DISCONNECT_TOLERANCE;
+    else if (--tolerance)
     {
-        retries++;
+        tolerance = CORE_DISCONNECT_TOLERANCE;
         bootstrapDht();
     }
 
@@ -247,17 +256,21 @@ void Core::process()
 bool Core::checkConnection()
 {
     static bool isConnected = false;
+    //static int count = 0;
     bool toxConnected = tox_isconnected(tox);
 
     if (toxConnected && !isConnected) {
         qDebug() << "Core: Connected to DHT";
         emit connected();
         isConnected = true;
+        //if (count) qDebug() << "Core: disconnect count:" << count;
+        //count = 0;
     } else if (!toxConnected && isConnected) {
         qDebug() << "Core: Disconnected to DHT";
         emit disconnected();
         isConnected = false;
-    }
+        //count++;
+    } //else if (!toxConnected) count++;
     return isConnected;
 }
 
@@ -272,7 +285,7 @@ void Core::bootstrapDht()
     qDebug() << "Core: Bootstraping to the DHT ...";
 
     int i=0;
-    while (i < 2)
+    while (i < 3)
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
@@ -563,13 +576,23 @@ void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
     Core* core = static_cast<Core*>(_core);
 
     if (format == TOX_AVATAR_FORMAT_NONE)
+    {
+        qDebug() << "Core: Got null avatar info from" << core->getFriendUsername(friendnumber);
         emit core->friendAvatarRemoved(friendnumber);
+        QFile::remove(QDir(Settings::getInstance().getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".png"));
+        QFile::remove(QDir(Settings::getInstance().getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".hash"));
+    }
     else
     {
         QByteArray oldHash = Settings::getInstance().getAvatarHash(core->getFriendAddress(friendnumber));
         if (QByteArray((char*)hash, TOX_HASH_LENGTH) != oldHash) 
         // comparison failed miserably if I didn't convert hash to QByteArray
+        {
+            qDebug() << "Core: Got new avatar info from" << core->getFriendUsername(friendnumber);
             tox_request_avatar_data(core->tox, friendnumber);
+        }
+        else
+            qDebug() << "Core: Got same avatar info from" << core->getFriendUsername(friendnumber);
     }
 }
 
@@ -580,6 +603,7 @@ void Core::onAvatarDataCallback(Tox*, int32_t friendnumber, uint8_t,
     pic.loadFromData((uchar*)data, datalen);
     if (!pic.isNull())
     {
+        qDebug() << "Core: Got avatar data from" << static_cast<Core*>(core)->getFriendUsername(friendnumber);
         Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendnumber));
         Settings::getInstance().saveAvatarHash(QByteArray((char*)hash, TOX_HASH_LENGTH), static_cast<Core*>(core)->getFriendAddress(friendnumber));
         emit static_cast<Core*>(core)->friendAvatarChanged(friendnumber, pic);
@@ -1281,6 +1305,13 @@ QString Core::getFriendAddress(int friendNumber) const
             return addr;
 
     return id;
+}
+
+QString Core::getFriendUsername(int friendnumber) const
+{
+    uint8_t name[TOX_MAX_NAME_LENGTH];
+    tox_get_name(tox, friendnumber, name);
+    return CString::toString(name, tox_get_name_size(tox, friendnumber));
 }
 
 QList<CString> Core::splitMessage(const QString &message)
