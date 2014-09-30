@@ -35,6 +35,7 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     id = Idconter++;
     state = tsPending;
     remotePaused = false;
+    lastUpdateTime = QDateTime::currentDateTime();
 
     filename = File.fileName;
     QFont font;
@@ -76,17 +77,16 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
             return;
 
 //    state = tsProcessing;
-    QDateTime newtime = QDateTime::currentDateTime();
-    int timediff = started.secsTo(newtime);
+    QDateTime now = QDateTime::currentDateTime();
+    if (lastUpdateTime.secsTo(now) < 1) //update every 1s
+        return;
+
+    int timediff = startTime.secsTo(now);
     if (timediff <= 0)
         return;
-    qint64 totalbytes = BytesSent + lastBytesSent; // bytes sent so far
-    if (totalbytes < 0)
-    {
-        qWarning() << "FileTransferInstance::onFileTransferInfo: Negative transfer speed !";
-        totalbytes = 0;
-    }
-    long rawspeed = totalbytes / timediff;
+
+    long rawspeed = BytesSent / timediff;
+
     speed = getHumanReadableSize(rawspeed)+"/s";
     size = getHumanReadableSize(Filesize);
     totalBytes = Filesize;
@@ -96,7 +96,8 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
     QTime etaTime(0,0);
     etaTime = etaTime.addSecs(etaSecs);
     eta = etaTime.toString("mm:ss");
-    lastBytesSent = totalbytes;
+    lastBytesSent = BytesSent;
+    lastUpdateTime = now;
     emit stateUpdated();
 }
 
@@ -142,6 +143,7 @@ void FileTransferInstance::onFileTransferAccepted(ToxFile File)
 
     remotePaused = false;
     state = tsProcessing;
+    startTime = QDateTime::currentDateTime();
 
     emit stateUpdated();
 }
@@ -221,7 +223,7 @@ void FileTransferInstance::acceptRecvRequest()
     Core::getInstance()->acceptFileRecvRequest(friendId, fileNum, path);
     state = tsProcessing;
 
-    started = QDateTime::currentDateTime();
+    startTime = QDateTime::currentDateTime();
 
     emit stateUpdated();
 }
