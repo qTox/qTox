@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=qTox
+GenericName=Tox client
+Comment=qTox is a powerful Tox client that follows the Tox design guidelines.
+TryExec=qtox
+Exec=qtox
+Icon=qtox
+Categories=InstantMessaging;;AudioVideo;Network;
+Terminal=false
+MimeType=x-scheme-handler/tox;
