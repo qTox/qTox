@@ -30,7 +30,6 @@ class GenericChatroomWidget : public QWidget
     Q_OBJECT
 public:
     GenericChatroomWidget(QWidget *parent = 0);
-    void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent (QMouseEvent* event);
     void leaveEvent(QEvent *);
     void enterEvent(QEvent *);
@@ -41,15 +40,18 @@ public:
     virtual void setChatForm(Ui::MainWindow &){;}
     virtual void resetEventFlags(){;}
 
-    int isActive();
+    bool isActive();
+    void setActive(bool active);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
 public slots:
 
+private:
+    bool isActiveWidget;
+
 protected:
-    int isActiveWidget;
     QColor lastColor;
     QHBoxLayout layout;
     QVBoxLayout textLayout;

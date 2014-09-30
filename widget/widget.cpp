@@ -68,17 +68,17 @@ Widget::Widget(QWidget *parent)
         this->layout()->setContentsMargins(0, 0, 0, 0);
 
         ui->friendList->setObjectName("friendList");
-        ui->friendList->setStyleSheet(Style::get(":ui/friendList/friendList.css"));
+        ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
     }
     else
     {
         this->setObjectName("activeWindow");
-        this->setStyleSheet(Style::get(":ui/window/window.css"));
+        this->setStyleSheet(Style::getStylesheet(":ui/window/window.css"));
         ui->statusPanel->setStyleSheet(QString(""));
         ui->friendList->setStyleSheet(QString(""));
 
         ui->friendList->setObjectName("friendList");
-        ui->friendList->setStyleSheet(Style::get(":ui/friendList/friendList.css"));
+        ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
 
         ui->tbMenu->setIcon(QIcon(":ui/window/applicationIcon.png"));
         ui->pbMin->setObjectName("minimizeButton");
@@ -116,6 +116,7 @@ Widget::Widget(QWidget *parent)
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
     profilePicture->setClickable(true);
     ui->horizontalLayout_3->insertWidget(0,profilePicture);
+    ui->horizontalLayout_3->insertSpacing(1, 7);
 
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
@@ -129,13 +130,16 @@ Widget::Widget(QWidget *parent)
     ui->nameLabel->setEditable(true);
     ui->statusLabel->setEditable(true);
 
+    ui->statusLabel->setFont(Style::getFont(Style::Medium));
+    ui->nameLabel->setFont(Style::getFont(Style::ExtraBig));
+
     // delay setting username and message until Core inits
     //ui->nameLabel->setText(core->getUsername());
     ui->nameLabel->setStyleSheet("QLabel { color : white; font-size: 11pt; font-weight:bold;}");
     //ui->statusLabel->setText(core->getStatusMessage());
     ui->statusLabel->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
 
-    ui->statusButton->setStyleSheet(Style::get(":/ui/statusButton/statusButton.css"));
+    ui->statusButton->setStyleSheet(Style::getStylesheet(":/ui/statusButton/statusButton.css"));
 
     QMenu *statusButtonMenu = new QMenu(ui->statusButton);
     QAction* setStatusOnline = statusButtonMenu->addAction(Widget::tr("Online","Button to set your status to 'Online'"));

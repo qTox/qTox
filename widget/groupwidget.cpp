@@ -20,6 +20,7 @@
 #include "misc/settings.h"
 #include "widget/form/groupchatform.h"
 #include "widget/maskablepixmapwidget.h"
+#include "style.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -40,21 +41,28 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
-    avatar->setPixmap(QPixmap(":img/group_dark.png"));
+    avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
+
     statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-    name.setText(Name);
-    QFont small;
-    small.setPixelSize(10);
-    nusers.setFont(small);
-    QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::gray);
-    nusers.setPalette(pal);
+
+    // name
     QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::white);
+    pal2.setColor(QPalette::WindowText, Style::getColor(Style::White));
     name.setPalette(pal2);
+    name.setText(Name);
+    name.setFont(Style::getFont(Style::Big));
+
+    // status
+    QPalette pal;
+    pal.setColor(QPalette::WindowText, Style::getColor(Style::LightGrey));
+    nusers.setPalette(pal);
+    nusers.setFont(Style::getFont(Style::Medium));
+
+    // background
     QPalette pal3;
-    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
+    pal3.setColor(QPalette::Background, Style::getColor(Style::MediumGrey));
     this->setPalette(pal3);
+
     Group* g = GroupList::findGroup(groupId);
     if (g)
         nusers.setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
@@ -68,14 +76,12 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
 
     layout.addSpacing(20);
     layout.addWidget(avatar);
-    layout.addSpacing(5);
+    layout.addSpacing(10);
     layout.addLayout(&textLayout);
     layout.addStretch();
-    layout.addSpacing(5);
+    layout.addSpacing(10);
     layout.addWidget(&statusPic);
-    layout.addSpacing(5);
-
-    isActiveWidget = 0;
+    layout.addSpacing(10);
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -106,40 +112,36 @@ void GroupWidget::onUserListChanged()
 
 void GroupWidget::setAsActiveChatroom()
 {
-    isActiveWidget = 1;
+    setActive(true);
 
-    QFont small;
-    small.setPixelSize(10);
-    nusers.setFont(small);
+    // status
     QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::darkGray);
+    pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
     nusers.setPalette(pal);
+
+    // name
     QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::black);
+    pal2.setColor(QPalette::WindowText, Style::getColor(Style::DarkGrey));
     name.setPalette(pal2);
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, Qt::white);
-    this->setPalette(pal3);
-    avatar->setPixmap(QPixmap(":img/group_dark.png"));
+
+    avatar->setPixmap(QPixmap(":img/group_dark.png"), Qt::transparent);
 }
 
 void GroupWidget::setAsInactiveChatroom()
 {
-    isActiveWidget = 0;
+    setActive(false);
 
-    QFont small;
-    small.setPixelSize(10);
-    nusers.setFont(small);
+    // status
     QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::gray);
+    pal.setColor(QPalette::WindowText, Style::getColor(Style::LightGrey));
     nusers.setPalette(pal);
+
+    // name
     QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::white);
+    pal2.setColor(QPalette::WindowText, Style::getColor(Style::White));
     name.setPalette(pal2);
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
-    this->setPalette(pal3);
-    avatar->setPixmap(QPixmap(":img/group_dark.png"));
+
+    avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
 }
 
 void GroupWidget::updateStatusLight()

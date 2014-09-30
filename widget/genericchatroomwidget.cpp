@@ -15,55 +15,55 @@
 */
 
 #include "genericchatroomwidget.h"
+#include "style.h"
 #include <QMouseEvent>
 
-GenericChatroomWidget::GenericChatroomWidget(QWidget *parent) :
-    QWidget(parent)
+GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
+    : QWidget(parent)
+    , isActiveWidget(false)
 {
 }
 
-int GenericChatroomWidget::isActive()
+bool GenericChatroomWidget::isActive()
 {
     return isActiveWidget;
 }
 
-void GenericChatroomWidget::mousePressEvent(QMouseEvent *event)
+void GenericChatroomWidget::setActive(bool active)
 {
-    if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
+    isActiveWidget = active;
+
+    if (active)
     {
-        if (isActive())
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(250,250,250,255));
-            this->setPalette(pal);
-        }
-        else
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(85,85,85,255));
-            this->setPalette(pal);
-        }
+        QPalette pal;
+        pal.setColor(QPalette::Background, Style::getColor(Style::White));
+        setPalette(pal);
+    }
+    else
+    {
+        QPalette pal;
+        pal.setColor(QPalette::Background, Style::getColor(Style::MediumGrey));
+        setPalette(pal);
     }
 }
 
 void GenericChatroomWidget::leaveEvent(QEvent *)
 {
-    if (isActive() != 1)
+    if (!isActive())
     {
         QPalette pal;
-        pal.setColor(QPalette::Background, lastColor);
-        this->setPalette(pal);
+        pal.setColor(QPalette::Background, Style::getColor(Style::MediumGrey));
+        setPalette(pal);
     }
 }
 
 void GenericChatroomWidget::enterEvent(QEvent *)
 {
-    if (isActive() != 1)
+    if (!isActive())
     {
         QPalette pal;
-        pal.setColor(QPalette::Background, QColor(75,75,75,255));
-        lastColor = this->palette().background().color();
-        this->setPalette(pal);
+        pal.setColor(QPalette::Background, Style::getColor(Style::MediumGrey).lighter(120));
+        setPalette(pal);
     }
 }
 

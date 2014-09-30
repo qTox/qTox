@@ -19,8 +19,9 @@
 
 #include <QFile>
 #include <QDebug>
+#include <QVector>
 
-QString Style::get(const QString &filename)
+QString Style::getStylesheet(const QString &filename)
 {
     if (!Settings::getInstance().getUseNativeStyle())
     {
@@ -28,8 +29,46 @@ QString Style::get(const QString &filename)
         if (file.open(QFile::ReadOnly | QFile::Text))
             return file.readAll();
         else
-            qWarning() << "Style " << filename << " not found";
+            qWarning() << "Stylesheet " << filename << " not found";
     }
 
     return QString();
+}
+
+QColor Style::getColor(Style::ColorPalette entry)
+{
+    static QColor palette[] = {
+        QColor("#6bc260"),
+        QColor("#cebf44"),
+        QColor("#c84e4e"),
+        QColor("#000000"),
+        QColor("#1c1c1c"),
+        QColor("#414141"),
+        QColor("#d1d1d1"),
+        QColor("#ffffff"),
+    };
+
+    return palette[entry];
+}
+
+QFont appFont(int pixelSize, int weight) {
+    auto font = QFont();
+    font.setPixelSize(pixelSize);
+    font.setWeight(weight);
+    return font;
+}
+
+QFont Style::getFont(Style::Font font)
+{
+    static QFont fonts[] = {
+        appFont(14, QFont::Bold),
+        appFont(12, QFont::Normal),
+        appFont(12, QFont::Bold),
+        appFont(11, QFont::Normal),
+        appFont(11, QFont::Bold),
+        appFont(10, QFont::Normal),
+        appFont(10, QFont::Light),
+    };
+
+    return fonts[font];
 }

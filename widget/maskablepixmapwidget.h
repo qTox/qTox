@@ -23,11 +23,12 @@ class MaskablePixmapWidget : public QWidget
 {
     Q_OBJECT
 public:
-    MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName = QString(), bool autopickBackground = true);
+    MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName = QString());
 
     void autopickBackground();
     void setBackground(QColor color);
     void setClickable(bool clickable);
+    void setPixmap(const QPixmap &pmap, QColor background);
     void setPixmap(const QPixmap &pmap);
     QPixmap getPixmap() const;
 
@@ -45,7 +46,6 @@ private:
     QString maskName;
     QColor backgroundColor;
     bool clickable;
-    bool autoBackground;
 };
 
 #endif // MASKABLEPIXMAPWIDGET_H

@@ -17,11 +17,10 @@
 #include "maskablepixmapwidget.h"
 #include <QPainter>
 
-MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName, bool autopickBackground)
+MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName)
     : QWidget(parent)
     , backgroundColor(Qt::white)
     , clickable(false)
-    , autoBackground(autopickBackground)
 {
     setFixedSize(size);
 
@@ -38,29 +37,30 @@ void MaskablePixmapWidget::autopickBackground()
     if (pic.isNull())
         return;
 
-    qreal r = 0.0f;
-    qreal g = 0.0f;
-    qreal b = 0.0f;
-    float weight = 1.0f;
+    int r = 0;
+    int g = 0;
+    int b = 0;
+    int weight = 0;
 
     for (int x=0;x<pic.width();++x)
     {
         for (int y=0;y<pic.height();++y)
         {
             QRgb color = pic.pixel(x,y);
-            r += qRed(color) / 255.0f;
-            g += qGreen(color) / 255.0f;
-            b += qBlue(color) / 255.0f;
+            r += qRed(color);
+            g += qGreen(color);
+            b += qBlue(color);
 
-            weight += qAlpha(color) / 255.0f;
+            weight += qAlpha(color);
         }
     }
 
+    weight = qMax(1, weight / 255);
     r /= weight;
     g /= weight;
     b /= weight;
 
-    QColor color = QColor::fromRgbF(r,g,b);
+    QColor color = QColor::fromRgb(r,g,b);
     backgroundColor =  QColor::fromRgb(0xFFFFFF ^ color.rgb());
 
     update();
@@ -82,14 +82,23 @@ void MaskablePixmapWidget::setClickable(bool clickable)
         unsetCursor();
 }
 
+void MaskablePixmapWidget::setPixmap(const QPixmap &pmap, QColor background)
+{
+    if (!pmap.isNull())
+    {
+        pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        backgroundColor = background;
+
+        update();
+    }
+}
+
 void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
 {
     if (!pmap.isNull())
     {
         pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-
-        if (autoBackground)
-            autopickBackground();
+        autopickBackground();
 
         update();
     }

@@ -21,6 +21,7 @@
 #include "widget/croppinglabel.h"
 #include "widget/maskablepixmapwidget.h"
 #include "core.h"
+#include "style.h"
 #include <QPushButton>
 #include <QMimeData>
 #include <QDragEnterEvent>
@@ -41,9 +42,13 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     small.setPixelSize(10);
 
     nameLabel->setText(group->widget->name.text());
-    nusersLabel->setFont(small);
+
+    nusersLabel->setFont(Style::getFont(Style::Medium));
     nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
-    avatar->setPixmap(QPixmap(":/img/group_dark.png"));
+    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
+    nusersLabel->setPalette(pal);
+
+    avatar->setPixmap(QPixmap(":/img/group_dark.png"), Qt::transparent);
 
     QString names;
     for (QString& s : group->peers)
