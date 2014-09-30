@@ -61,6 +61,7 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::show(Ui::MainWindow& ui)
 {
+    hideSettingsForms();
     active->show(*this);
     ui.mainContent->layout()->addWidget(main);
     ui.mainHead->layout()->addWidget(head);
