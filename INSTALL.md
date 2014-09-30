@@ -1,3 +1,10 @@
+#Install Instructions
+- [Dependencies](#dependencies)
+- [Windows](#windows)
+- [Linux](#linux)
+- [OS X](#osx)
+
+<a name="dependencies" />
 ##Dependencies
 
 | Name         | Version     | Modules                         |
@@ -8,6 +15,7 @@
 | OpenCV       | >= 2.4.9    | core, highgui                   |
 | OpenAL Soft  | >= 1.16.0   |                                 |
 
+<a name="windows" />
 ##Windows
 
 ###Qt
@@ -68,6 +76,7 @@ make install
 ```
 Copy the dll "OpenAL32.dll" located at "C:\qTox\libs\openal-build\install\bin" to "C:\qTox\libs\lib". Finally, copy the directory "AL" located at "C:\qTox\libs\openal-build\install\include" to "C:\qTox\libs\include". Unlike OpenCV you don't need to patch any files. Feel free to delete the directories "openal-soft-x.y.z" and "openal-build", but you don't need to.
 
+<a name="linux" />
 ##Linux
 Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning, which will attempt to automatically download dependencies followed by compilation.
 
@@ -171,6 +180,7 @@ After installing the required dependencies, run `bootstrap.sh` and then run the
 `buildPackages.sh` script, found in the tools folder. It will automatically get the
 packages necessary for building .debs, so be prepared to type your password for sudo.
 
+<a name="osx" />
 ##OS X
 
 ###OSX Easy Install
