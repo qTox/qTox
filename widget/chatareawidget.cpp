@@ -15,12 +15,13 @@
 */
 
 #include "chatareawidget.h"
-#include "widget/tool/chataction.h"
+#include "widget/tool/chatactions/chataction.h"
 #include <QScrollBar>
 #include <QDesktopServices>
 #include <QTextTable>
 #include <QAbstractTextDocumentLayout>
 #include <QCoreApplication>
+#include <QDebug>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextBrowser(parent)
@@ -33,17 +34,16 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     setOpenExternalLinks(false);
     setOpenLinks(false);
     setAcceptRichText(false);
+    setFrameStyle(QFrame::NoFrame);
 
     chatTextTable = textCursor().insertTable(1,3);
 
     QTextTableFormat tableFormat;
-    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::VariableLength,0),
-                                           QTextLength(QTextLength::PercentageLength,100),
-                                           QTextLength(QTextLength::VariableLength,0)});
     tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
+    tableFormat.setCellSpacing(2);
+    tableFormat.setWidth(QTextLength(QTextLength::PercentageLength,100));
     chatTextTable->setFormat(tableFormat);
-    chatTextTable->format().setCellSpacing(2);
-    chatTextTable->format().setWidth(QTextLength(QTextLength::PercentageLength,100));
+    setNameColWidth(100);
 
 //    nameFormat.setAlignment(Qt::AlignRight);
 //    nameFormat.setNonBreakableLines(true);
@@ -64,12 +64,14 @@ ChatAreaWidget::~ChatAreaWidget()
 void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
 {
     QTextEdit::mouseReleaseEvent(event);
-    int pos = this->document()->documentLayout()->hitTest(event->pos(), Qt::ExactHit);
+    QPointF documentHitPost(event->pos().x() + horizontalScrollBar()->value(), event->pos().y() + verticalScrollBar()->value());
+    int pos = this->document()->documentLayout()->hitTest(documentHitPost, Qt::ExactHit);
     if (pos > 0)
     {
         QTextCursor cursor(document());
-            cursor.setPosition(pos);
-        if( ! cursor.atEnd() )
+        cursor.setPosition(pos);
+
+        if(!cursor.atEnd())
         {
             cursor.setPosition(pos+1);
 
@@ -85,6 +87,7 @@ void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
                     int middlepos = data.indexOf(".");
                     QString widgetID = data.left(middlepos);
                     QString widgetBtn = data.right(data.length() - middlepos - 1);
+                    qDebug() << "ChatAreaWidget::mouseReleaseEvent:" << widgetID << widgetBtn;
                     emit onFileTranfertInterract(widgetID, widgetBtn);
                 }
             }
@@ -113,7 +116,7 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     chatTextTable->cellAt(row,1).firstCursorPosition().insertHtml(msgAction->getMessage());
     chatTextTable->cellAt(row,2).firstCursorPosition().insertText(msgAction->getDate());
 
-    msgAction->setTextCursor(cur);
+    msgAction->setup(cur, this);
 
     messages.append(msgAction);
 }
@@ -129,4 +132,15 @@ void ChatAreaWidget::checkSlider()
 {
     QScrollBar* scroll = verticalScrollBar();
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
+}
+
+void ChatAreaWidget::setNameColWidth(int w)
+{
+    nameWidth = w;
+
+    QTextTableFormat tableFormat = chatTextTable->format();
+    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::FixedLength, 100),
+                                           QTextLength(QTextLength::PercentageLength, 100),
+                                           QTextLength(QTextLength::FixedLength, 40)});
+    chatTextTable->setFormat(tableFormat);
 }

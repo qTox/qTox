@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pl_PL">
+<TS version="2.1" language="uk_UA">
 <context>
     <name>AVPage</name>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="132"/>
         <source>Video Settings</source>
-        <translation>Ustawienia wideo</translation>
+        <translation>Параметри відео</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="136"/>
         <location filename="../widget/settingsdialog.cpp" line="163"/>
         <source>Show video preview</source>
         <comment>On a button</comment>
-        <translation>Pokaż podgląd wideo</translation>
+        <translation>Показати вікно попереднього перегляду</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="157"/>
         <source>Hide video preview</source>
         <comment>On a button</comment>
-        <translation>Ukryj podgląd wideo</translation>
+        <translation>Приховати вікно попереднього перегляду</translation>
     </message>
 </context>
 <context>
@@ -27,7 +27,7 @@
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="34"/>
         <source>Add Friends</source>
-        <translation>Dodaj znajomych</translation>
+        <translation>Додати друзів</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="37"/>
@@ -39,96 +39,96 @@
         <location filename="../widget/form/addfriendform.cpp" line="38"/>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
-        <translation>Wiadomość</translation>
+        <translation>Повідомлення</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="39"/>
         <source>Send friend request</source>
-        <translation>Wyślij zapytanie do znajomego</translation>
+        <translation>Надіслати запит на дружбу</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="40"/>
         <source>Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Może Tox ze mną?</translation>
+        <translation>Може поспілкуємось?</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="96"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Proszę wpisać poprawny Tox ID</translation>
+        <translation>Заповніть коректним Tox ID</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="99"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Nie możesz dodać siebie jako znajomego!</translation>
+        <translation>Ви не можете додати самого себе до друзів!</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="116"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Ten adres nie istnieje</translation>
+        <translation>Цієї адреси не існує</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="120"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Błąd podczas sprawdzania DNS</translation>
+        <translation>Помилка під час перегляду DNS</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="126"/>
         <source>Unexpected number of text records</source>
         <comment>Error with the DNS</comment>
-        <translation>Nieoczekiwana liczba wpisów tekstowych</translation>
+        <translation>Неочікуване число текстових записів</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="132"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
-        <translation>Nieoczekiwana liczba wartości we wpisie tekstowym</translation>
+        <translation>Неочікуване число значень в текстових записах</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="139"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>DNS nie zawiera żadnego Tox ID</translation>
+        <translation>Відповідь DNS не містить жодного Tox ID</translation>
     </message>
     <message>
         <location filename="../widget/form/addfriendform.cpp" line="145"/>
         <location filename="../widget/form/addfriendform.cpp" line="151"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>DNS nie zawiera poprawnego Tox ID</translation>
+        <translation>Відповідь DNS не містить жодного коректного Tox ID</translation>
     </message>
 </context>
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="80"/>
+        <location filename="../widget/form/chatform.cpp" line="88"/>
         <source>Send a file</source>
-        <translation>Wyślij plik</translation>
+        <translation>Надіслати файл</translation>
     </message>
 </context>
 <context>
     <name>FileTransferInstance</name>
     <message>
-        <location filename="../filetransferinstance.cpp" line="191"/>
+        <location filename="../filetransferinstance.cpp" line="205"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation>Zapisz plik</translation>
+        <translation>Зберегти файл</translation>
     </message>
     <message>
-        <location filename="../filetransferinstance.cpp" line="202"/>
+        <location filename="../filetransferinstance.cpp" line="216"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Nie można zapisać w lokacji</translation>
+        <translation>Немає прав на запис</translation>
     </message>
     <message>
-        <location filename="../filetransferinstance.cpp" line="202"/>
+        <location filename="../filetransferinstance.cpp" line="216"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Nie masz uprawnienia by zapisać w tej lokacji. Wybierz inną lub anuluj zapis.</translation>
+        <translation>Ви не маєте прав на запис за цим розташуванням. Оберіть інше місце призначення, або скасуйте передачу.</translation>
     </message>
 </context>
 <context>
@@ -137,17 +137,17 @@
         <location filename="../widget/form/filesform.cpp" line="30"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Przesłane pliki</translation>
+        <translation>Передані файли</translation>
     </message>
     <message>
         <location filename="../widget/form/filesform.cpp" line="38"/>
         <source>Downloads</source>
-        <translation>Pobrane</translation>
+        <translation>Завантажені</translation>
     </message>
     <message>
         <location filename="../widget/form/filesform.cpp" line="39"/>
         <source>Uploads</source>
-        <translation>Wysłane</translation>
+        <translation>Вивантажені</translation>
     </message>
 </context>
 <context>
@@ -156,57 +156,55 @@
         <location filename="../widget/tool/friendrequestdialog.cpp" line="30"/>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translatorcomment>no idea how it shoule be translated</translatorcomment>
-        <translation>Zapytanie znajomego</translation>
+        <translation>Запит на дружбу</translation>
     </message>
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Ktoś chce być twoim znajomym</translation>
+        <translation>Дехто хоче долучитися до переліку друзів з вами</translation>
     </message>
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="33"/>
         <source>User ID:</source>
-        <translation>ID użytkownika:</translation>
+        <translation>ID користувача:</translation>
     </message>
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="37"/>
         <source>Friend request message:</source>
-        <translatorcomment>better wording needed?</translatorcomment>
-        <translation>Wiadomość w zapytaniu do znajomej/go:</translation>
+        <translation>Повідомлення запиту:</translation>
     </message>
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="44"/>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation>Zaakceptuj</translation>
+        <translation>Прийняти</translation>
     </message>
     <message>
         <location filename="../widget/tool/friendrequestdialog.cpp" line="45"/>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation>Odrzuć</translation>
+        <translation>Відхилити</translation>
     </message>
 </context>
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="84"/>
+        <location filename="../widget/friendwidget.cpp" line="90"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
-        <translation>Kopiuj ID znajomej/go</translation>
+        <translation>Копіювати дружній ID</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="85"/>
+        <location filename="../widget/friendwidget.cpp" line="91"/>
         <source>Invite in group</source>
         <comment>Menu to invite a friend in a groupchat</comment>
-        <translation>Zaproś do grupy</translation>
+        <translation>Запросити до групи</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="95"/>
+        <location filename="../widget/friendwidget.cpp" line="101"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Usuń znajomego</translation>
+        <translation>Вилучити з друзів</translation>
     </message>
 </context>
 <context>
@@ -214,91 +212,90 @@
     <message>
         <location filename="../widget/settingsdialog.cpp" line="31"/>
         <source>General Settings</source>
-        <translation>Główne ustawienia</translation>
+        <translation>Основні параметри</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="34"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
-        <translation>Użyj IPv6 (rekomendowane)</translation>
+        <translation>Дозволити IPv6 (рекомендовано)</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="36"/>
         <source>Use translations</source>
         <comment>Text on a checkbox to enable translations</comment>
-        <translation>Użyj tłumaczenia</translation>
+        <translation>Використовувати мову системи</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="38"/>
         <source>Make Tox portable</source>
         <comment>Text on a checkbox to make qTox a portable application</comment>
-        <translation>Zrób Tox przenośnym</translation>
+        <translation>Портативний запуск</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="39"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <comment>describes makeToxPortable checkbox</comment>
-        <translation>Zamiast domyślnego katalogu użyj obecnego do zapisania ustawień</translation>
+        <translation>Зберігати налаштування в робочий теці</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="48"/>
         <source>Theme</source>
-        <translation>Motyw</translation>
+        <translation>Графічна тема</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="49"/>
         <source>Smiley Pack</source>
-        <translatorcomment>needs better translation</translatorcomment>
-        <translation>Paczka uśmiechów</translation>
+        <translation>Графічний пакунок емоційних картинок</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../widget/form/genericchatform.cpp" line="142"/>
-        <location filename="../widget/form/genericchatform.cpp" line="148"/>
+        <location filename="../widget/form/genericchatform.cpp" line="144"/>
+        <location filename="../widget/form/genericchatform.cpp" line="150"/>
         <source>Save chat log</source>
-        <translation>Zapisz historię rozmowy</translation>
+        <translation>Зберегти чат</translation>
     </message>
 </context>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="41"/>
+        <location filename="../widget/form/groupchatform.cpp" line="45"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>%1 użytkowników w czacie</translation>
+        <translation>Користувачів у чаті: %1</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="83"/>
+        <location filename="../widget/form/groupchatform.cpp" line="84"/>
         <source>&lt;Unknown&gt;</source>
-        <translation>&lt;Nieznany/a&gt;</translation>
+        <translation>&lt;Невідомо&gt;</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="90"/>
+        <location filename="../widget/form/groupchatform.cpp" line="91"/>
         <source>%1 users in chat</source>
-        <translation>%1 użytkowników w czacie</translation>
+        <translation>Користувачів у чаті: %1</translation>
     </message>
 </context>
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="58"/>
-        <location filename="../widget/groupwidget.cpp" line="100"/>
-        <source>%1 users in chat</source>
-        <translation>%1 użytkowników w czacie</translation>
-    </message>
-    <message>
         <location filename="../widget/groupwidget.cpp" line="60"/>
         <location filename="../widget/groupwidget.cpp" line="102"/>
-        <source>0 users in chat</source>
-        <translation>0 użytkowników w czacie</translation>
+        <source>%1 users in chat</source>
+        <translation>Користувачів у чаті: %1</translation>
     </message>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="83"/>
+        <location filename="../widget/groupwidget.cpp" line="62"/>
+        <location filename="../widget/groupwidget.cpp" line="104"/>
+        <source>0 users in chat</source>
+        <translation>Немає користувачів</translation>
+    </message>
+    <message>
+        <location filename="../widget/groupwidget.cpp" line="85"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
-        <translation>Opuść grupę</translation>
+        <translation>Вийти з групи</translation>
     </message>
 </context>
 <context>
@@ -306,19 +303,19 @@
     <message>
         <location filename="../widget/settingsdialog.cpp" line="82"/>
         <source>Public Information</source>
-        <translation>Informacja publiczna</translation>
+        <translation>Публічна інформація</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="83"/>
         <source>Name</source>
         <comment>Username/nick</comment>
-        <translation>Nick</translation>
+        <translation>Ім&apos;я</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="85"/>
         <source>Status</source>
         <comment>Status message</comment>
-        <translation>Status</translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="95"/>
@@ -328,7 +325,7 @@
     <message>
         <location filename="../widget/settingsdialog.cpp" line="96"/>
         <source>Your Tox ID</source>
-        <translation>Twój Tox ID</translation>
+        <translation>Ваш Tox ID</translation>
     </message>
 </context>
 <context>
@@ -339,43 +336,42 @@
         <translation>qTox</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1918"/>
+        <location filename="../mainwindow.ui" line="1909"/>
         <source>Your name</source>
-        <translation>Twój nick</translation>
+        <translation>Ваше ім&apos;я</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2000"/>
+        <location filename="../mainwindow.ui" line="1991"/>
         <source>Your status</source>
-        <translation>Twój status</translation>
+        <translation>Ваш статус</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2566"/>
+        <location filename="../mainwindow.ui" line="2557"/>
         <source>Add friends</source>
-        <translation>Dodaj znajomych</translation>
+        <translation>Додати друзів</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2592"/>
+        <location filename="../mainwindow.ui" line="2583"/>
         <source>Create a group chat</source>
-        <translation>Utwórz czat grupowy</translation>
+        <translation>Створити груповий чат</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2624"/>
+        <location filename="../mainwindow.ui" line="2615"/>
         <source>View completed file transfers</source>
-        <translation>Zobacz zakończone transfery plików</translation>
+        <translation>Переглянути завершені передачі файлів</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2656"/>
+        <location filename="../mainwindow.ui" line="2647"/>
         <source>Change your settings</source>
-        <translatorcomment>translated as &quot;change settings&quot;;  seems to be simpler this way</translatorcomment>
-        <translation>Zmień ustawienia</translation>
+        <translation>Змінити параметри</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3238"/>
+        <location filename="../mainwindow.ui" line="3229"/>
         <source>Close</source>
-        <translation>Zamknij</translation>
+        <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3241"/>
+        <location filename="../mainwindow.ui" line="3232"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
@@ -386,7 +382,7 @@
         <location filename="../widget/selfcamview.cpp" line="33"/>
         <source>Tox video test</source>
         <comment>Title of the window to test the video/webcam</comment>
-        <translation>Tox test wideo</translation>
+        <translation>Перевірка відео tox</translation>
     </message>
 </context>
 <context>
@@ -394,69 +390,96 @@
     <message>
         <location filename="../widget/settingsdialog.cpp" line="197"/>
         <source>qTox – Settings</source>
-        <translation>qTox – Ustawienia</translation>
+        <translation>qTox - Параметри</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="224"/>
         <source>General</source>
-        <translation>Główne</translation>
+        <translation>Основні</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="230"/>
         <source>Identity</source>
-        <translation>Tożsamość</translation>
+        <translation>Ідентифікація</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="236"/>
         <source>Privacy</source>
-        <translation>Prywatność</translation>
+        <translation>Приватність</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="242"/>
         <source>Audio/Video</source>
-        <translation>Audio/Wideo</translation>
+        <translation>Аудіо/Відео</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="251"/>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>Гаразд</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="252"/>
         <source>Cancel</source>
-        <translation>Anuluj</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../widget/settingsdialog.cpp" line="253"/>
         <source>Apply</source>
-        <translation>Zastosuj</translation>
+        <translation>Застосувати</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../widget/widget.cpp" line="133"/>
+        <location filename="../widget/widget.cpp" line="141"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>Online</translation>
+        <translation>В мережі</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="135"/>
+        <location filename="../widget/widget.cpp" line="143"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Nieobecny/a</translation>
+        <translation>Відійшов</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="137"/>
+        <location filename="../widget/widget.cpp" line="145"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Zajęty/a</translation>
+        <translation>Зайнятий</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="605"/>
+        <location filename="../widget/widget.cpp" line="285"/>
+        <source>Choose a profile picture</source>
+        <translation>Оберіть зображення для профілю</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="292"/>
+        <location filename="../widget/widget.cpp" line="299"/>
+        <location filename="../widget/widget.cpp" line="320"/>
+        <source>Error</source>
+        <translation>Помилка</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="292"/>
+        <source>Unable to open this file</source>
+        <translation>Неможливо відкрити цей файл</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="299"/>
+        <source>Unable to read this image</source>
+        <translation>Неможливо прочитати це зображення</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="320"/>
+        <source>This image is too big</source>
+        <translation>Зображення завелике</translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="664"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Nieznany/a&gt;</translation>
+        <translation>&lt;Невідомо&gt;</translation>
     </message>
 </context>
 </TS>

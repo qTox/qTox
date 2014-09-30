@@ -14,20 +14,24 @@
     See the COPYING file for more details.
 */
 
-#ifndef ADJUSTINGSCROLLAREA_H
-#define ADJUSTINGSCROLLAREA_H
+#ifndef SYSTEMMESSAGEACTION_H
+#define SYSTEMMESSAGEACTION_H
 
-#include <QScrollArea>
+#include "widget/tool/chatactions/chataction.h"
 
-class AdjustingScrollArea : public QScrollArea
+class SystemMessageAction : public ChatAction
 {
-    Q_OBJECT
 public:
-    explicit AdjustingScrollArea(QWidget *parent = 0);
+    SystemMessageAction(const QString &message, const QString& type, const QString &date);
+    virtual ~SystemMessageAction(){;}
+    virtual void setup(QTextCursor cursor, QTextEdit*) override;
 
-    virtual void resizeEvent(QResizeEvent *ev) override;
-    virtual QSize sizeHint() const override;
-    virtual bool eventFilter(QObject *obj, QEvent *ev) override;
+    virtual QString getName() {return QString();}
+    virtual QString getMessage();
+
+private:
+    QString message;
+    QString type;
 };
 
-#endif // ADJUSTINGSCROLLAREA_H
+#endif // SYSTEMMESSAGEACTION_H

@@ -34,7 +34,9 @@ TRANSLATIONS = translations/de.ts \
                translations/it.ts \
                translations/ru.ts \
                translations/pl.ts \
-               translations/mannol.ts
+               translations/fi.ts \
+               translations/mannol.ts \
+               translations/uk.ts
 
 RESOURCES += res.qrc
 
@@ -46,7 +48,7 @@ contains(JENKINS,YES) {
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
-    LIBS += -L$$PWD/libs/lib -llibopencv_core249 -llibopencv_highgui249 -llibopencv_imgproc249 -lOpenAL32
+    LIBS += -L$$PWD/libs/lib -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249 -lOpenAL32
     LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
 } else {
     macx {
@@ -112,12 +114,16 @@ HEADERS  += widget/form/addfriendform.h \
     widget/friendlistwidget.h \
     widget/genericchatroomwidget.h \
     widget/form/genericchatform.h \
-    widget/tool/chataction.h \
+    widget/tool/chatactions/chataction.h \
     widget/chatareawidget.h \
     filetransferinstance.h \
     corestructs.h \
     coredefines.h \
-    coreav.h
+    coreav.h \
+    widget/tool/chatactions/messageaction.h \
+    widget/tool/chatactions/filetransferaction.h \
+    widget/tool/chatactions/systemmessageaction.h \
+    widget/maskablepixmapwidget.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -155,7 +161,11 @@ SOURCES += \
     coreav.cpp \
     widget/genericchatroomwidget.cpp \
     widget/form/genericchatform.cpp \
-    widget/tool/chataction.cpp \
+    widget/tool/chatactions/chataction.cpp \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp \
     corestructs.cpp
+    widget/tool/chatactions/messageaction.cpp \
+    widget/tool/chatactions/filetransferaction.cpp \
+    widget/tool/chatactions/systemmessageaction.cpp \
+    widget/maskablepixmapwidget.cpp

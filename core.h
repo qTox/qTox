@@ -28,6 +28,7 @@ template <typename T> class QList;
 class Camera;
 class QTimer;
 class QString;
+class CString;
 
 class Core : public QObject
 {
@@ -41,6 +42,7 @@ public:
     QString getGroupPeerName(int groupId, int peerId) const;
     QList<QString> getGroupPeerNames(int groupId) const;
     QString getFriendAddress(int friendNumber) const;
+    QString getFriendUsername(int friendNumber) const;
     int joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key,uint16_t length) const;
     void quitGroupChat(int groupId) const;
     void dispatchVideoFrame(vpx_image img) const;
@@ -70,6 +72,7 @@ public slots:
     void setStatus(Status status);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
+    void setAvatar(uint8_t format, const QByteArray& data);
 
     void sendMessage(int friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
@@ -104,9 +107,8 @@ signals:
     void friendStatusMessageChanged(int friendId, const QString& message);
     void friendUsernameChanged(int friendId, const QString& username);
     void friendTypingChanged(int friendId, bool isTyping);
-
-    void friendStatusMessageLoaded(int friendId, const QString& message);
-    void friendUsernameLoaded(int friendId, const QString& username);
+    void friendAvatarChanged(int friendId, const QPixmap& pic);
+    void friendAvatarRemoved(int friendId);
 
     void friendAddressGenerated(const QString& friendAddress);
 
@@ -122,8 +124,10 @@ signals:
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
+    void selfAvatarChanged(const QPixmap& pic);
 
     void messageSentResult(int friendId, const QString& message, int messageId);
+    void groupSentResult(int groupId, const QString& message, int result);
     void actionSentResult(int friendId, const QString& action, int success);
 
     void failedToAddFriend(const QString& userId);
@@ -147,6 +151,9 @@ signals:
     void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
     void fileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
+    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
+
+    void fileSendFailed(int FriendId, const QString& fname);
 
     void avInvite(int friendId, int callIndex, bool video);
     void avStart(int friendId, int callIndex, bool video);
@@ -178,6 +185,8 @@ private:
     static void onFileControlCallback(Tox *tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
                                       uint8_t control_type, const uint8_t *data, uint16_t length, void *core);
     static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, const uint8_t *data, uint16_t length, void *userdata);
+    static void onAvatarInfoCallback(Tox* tox, int32_t friendnumber, uint8_t format, uint8_t *hash, void *userdata);
+    static void onAvatarDataCallback(Tox* tox, int32_t friendnumber, uint8_t format, uint8_t *hash, uint8_t *data, uint32_t datalen, void *userdata);
 
     static void onAvInvite(void* toxav, int32_t call_index, void* core);
     static void onAvStart(void* toxav, int32_t call_index, void* core);
@@ -199,8 +208,7 @@ private:
     static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
-    void checkConnection();
-    void onBootstrapTimer();
+    bool checkConnection();
 
     void loadConfiguration();
     void loadFriends();
@@ -209,6 +217,8 @@ private:
     static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);
+
+    QList<CString> splitMessage(const QString &message);
 
 private slots:
      void onFileTransferFinished(ToxFile file);

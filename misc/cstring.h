@@ -20,11 +20,14 @@
 #include <cstdint>
 
 class QString;
+class QByteArray;
 
 class CString
 {
 public:
     explicit CString(const QString& string);
+    explicit CString(const QByteArray& ba_string);
+    explicit CString(const CString& cstr);
     ~CString();
 
     uint8_t* data();

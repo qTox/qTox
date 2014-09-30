@@ -66,6 +66,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
         {
             QRadioButton* pageButton = new QRadioButton;
             pageButton->setProperty("pageIndex", i);
+            pageButton->setCursor(Qt::PointingHandCursor);
             pageButton->setChecked(i == 0);
             buttonLayout->addWidget(pageButton);
 
@@ -80,6 +81,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
         button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]));
         button->setToolTip(set.join(" "));
         button->setProperty("sequence", set[0]);
+        button->setCursor(Qt::PointingHandCursor);
         button->setFlat(true);
 
         connect(button, &QPushButton::clicked, this, &EmoticonsWidget::onSmileyClicked);

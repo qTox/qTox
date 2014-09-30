@@ -14,20 +14,35 @@
     See the COPYING file for more details.
 */
 
-#ifndef ADJUSTINGSCROLLAREA_H
-#define ADJUSTINGSCROLLAREA_H
+#ifndef MASKABLEPIXMAPWIDGET_H
+#define MASKABLEPIXMAPWIDGET_H
 
-#include <QScrollArea>
+#include <QWidget>
 
-class AdjustingScrollArea : public QScrollArea
+class MaskablePixmapWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AdjustingScrollArea(QWidget *parent = 0);
+    MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName, QColor background = Qt::white);
 
-    virtual void resizeEvent(QResizeEvent *ev) override;
-    virtual QSize sizeHint() const override;
-    virtual bool eventFilter(QObject *obj, QEvent *ev) override;
+    void setClickable(bool clickable);
+    void setPixmap(const QPixmap &pmap);
+    QPixmap getPixmap() const;
+
+signals:
+    void clicked();
+
+protected:
+    virtual void paintEvent(QPaintEvent *);
+    virtual void mousePressEvent(QMouseEvent *);
+
+private:
+    QPixmap pixmap;
+    QPixmap mask;
+    QSize size;
+    QString maskName;
+    QColor backgroundColor;
+    bool clickable;
 };
 
-#endif // ADJUSTINGSCROLLAREA_H
+#endif // MASKABLEPIXMAPWIDGET_H

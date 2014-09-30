@@ -14,20 +14,27 @@
     See the COPYING file for more details.
 */
 
-#ifndef ADJUSTINGSCROLLAREA_H
-#define ADJUSTINGSCROLLAREA_H
+#ifndef FILETRANSFERACTION_H
+#define FILETRANSFERACTION_H
 
-#include <QScrollArea>
+#include "widget/tool/chatactions/chataction.h"
 
-class AdjustingScrollArea : public QScrollArea
+class FileTransferAction : public ChatAction
 {
     Q_OBJECT
 public:
-    explicit AdjustingScrollArea(QWidget *parent = 0);
+    FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me);
+    virtual ~FileTransferAction();
+    virtual QString getMessage();
+    virtual void setup(QTextCursor cursor, QTextEdit* textEdit) override;
 
-    virtual void resizeEvent(QResizeEvent *ev) override;
-    virtual QSize sizeHint() const override;
-    virtual bool eventFilter(QObject *obj, QEvent *ev) override;
+private slots:
+    void updateHtml();
+
+private:
+    FileTransferInstance *w;
+    QTextCursor cur;
+    QTextEdit* edit;
 };
 
-#endif // ADJUSTINGSCROLLAREA_H
+#endif // FILETRANSFERACTION_H

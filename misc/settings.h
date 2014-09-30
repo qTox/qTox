@@ -19,6 +19,7 @@
 
 #include <QHash>
 #include <QObject>
+#include <QPixmap>
 
 class Settings : public QObject
 {
@@ -56,6 +57,12 @@ public:
 
     bool getEncryptLogs() const;
     void setEncryptLogs(bool newValue);
+
+    QPixmap getSavedAvatar(const QString& ownerId);
+    void saveAvatar(QPixmap& pic, const QString& ownerId);
+
+    QByteArray getAvatarHash(const QString& ownerId);
+    void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it

@@ -31,14 +31,17 @@
 #include "widget/friendlistwidget.h"
 #include "camera.h"
 #include "widget/form/chatform.h"
+#include "widget/maskablepixmapwidget.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
 #include <QString>
+#include <QBuffer>
 #include <QPainter>
 #include <QMouseEvent>
 #include <QClipboard>
 #include <QThread>
+#include <QFileDialog>
 #include <tox/tox.h>
 
 Widget *Widget::instance{nullptr};
@@ -108,6 +111,11 @@ Widget::Widget(QWidget *parent)
 
     isWindowMinimized = 0;
 
+    profilePicture = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
+    profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
+    profilePicture->setClickable(true);
+    ui->horizontalLayout_3->insertWidget(0,profilePicture);
+
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
@@ -155,7 +163,6 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->style()->polish(ui->statusButton);
 
     camera = new Camera;
-
     settingsWidget = new SettingsWidget(camera);
 
     // Disable some widgets until we're connected to the DHT
@@ -166,6 +173,7 @@ Widget::Widget(QWidget *parent)
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
+    qRegisterMetaType<QPixmap>("QPixmap");
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
@@ -180,7 +188,7 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::statusSet, this, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
-    //connect(core, &Core::friendAddressGenerated, &settingsWidget, &SettingsWidget::setFriendAddress);
+    connect(core, &Core::selfAvatarChanged, this, &Widget::onSelfAvatarLoaded);
     connect(core, SIGNAL(fileDownloadFinished(const QString&)), &filesForm, SLOT(onFileDownloadComplete(const QString&)));
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
@@ -189,14 +197,15 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
-    connect(core, &Core::friendUsernameLoaded, this, &Widget::onFriendUsernameLoaded);
-    connect(core, &Core::friendStatusMessageLoaded, this, &Widget::onFriendStatusMessageLoaded);
     connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
+
+    connect(core, SIGNAL(messageSentResult(int,QString,int)), this, SLOT(onMessageSendResult(int,QString,int)));
+    connect(core, SIGNAL(groupSentResult(int,QString,int)), this, SLOT(onGroupSendResult(int,QString,int)));
 
     connect(this, &Widget::statusSet, core, &Core::setStatus);
     connect(this, &Widget::friendRequested, core, &Core::requestFriendship);
@@ -208,6 +217,7 @@ Widget::Widget(QWidget *parent)
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onUsernameChanged(QString,QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
+    connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(settingsWidget->identityForm, &IdentityForm::userNameChanged,      core, &Core::setUsername);
     connect(settingsWidget->identityForm, &IdentityForm::statusMessageChanged, core, &Core::setStatusMessage);
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
@@ -270,6 +280,55 @@ QString Widget::getUsername()
 Camera* Widget::getCamera()
 {
     return camera;
+}
+
+void Widget::onAvatarClicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath());
+    if (filename == "")
+        return;
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    if (!file.isOpen())
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to open this file"));
+        return;
+    }
+
+    QPixmap pic;
+    if (!pic.loadFromData(file.readAll()))
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to read this image"));
+        return;
+    }
+
+    QByteArray bytes;
+    QBuffer buffer(&bytes);
+    buffer.open(QIODevice::WriteOnly);
+    pic.save(&buffer, "PNG");
+    buffer.close();
+
+    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
+    {
+        pic = pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        bytes.clear();
+        buffer.open(QIODevice::WriteOnly);
+        pic.save(&buffer, "PNG");
+        buffer.close();
+    }
+
+    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
+    {
+        QMessageBox::critical(this, tr("Error"), tr("This image is too big"));
+        return;
+    }
+
+    core->setAvatar(TOX_AVATAR_FORMAT_PNG, bytes);
+}
+
+void Widget::onSelfAvatarLoaded(const QPixmap& pic)
+{
+    profilePicture->setPixmap(pic);
 }
 
 void Widget::onConnected()
@@ -388,7 +447,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-    qDebug() << "Widget: Adding friend with id "+userId;
+    qDebug() << "Widget: Adding friend with id" << userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->widget);
@@ -415,6 +474,19 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::avRequestTimeout, newfriend->chatForm, &ChatForm::onAvRequestTimeout);
     connect(core, &Core::avPeerTimeout, newfriend->chatForm, &ChatForm::onAvPeerTimeout);
     connect(core, &Core::avMediaChange, newfriend->chatForm, &ChatForm::onAvMediaChange);
+    connect(core, &Core::friendAvatarChanged, newfriend->chatForm, &ChatForm::onAvatarChange);
+    connect(core, &Core::friendAvatarChanged, newfriend->widget, &FriendWidget::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, newfriend->chatForm, &ChatForm::onAvatarRemoved);
+    connect(core, &Core::friendAvatarRemoved, newfriend->widget, &FriendWidget::onAvatarRemoved);
+
+    // Try to get the avatar from the cache
+    QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);
+    if (!avatar.isNull())
+    {
+        qWarning() << "Widget: loadded avatar for id" << userId;
+        newfriend->chatForm->onAvatarChange(friendId, avatar);
+        newfriend->widget->onAvatarChange(friendId, avatar);
+    }
 }
 
 void Widget::addFriendFailed(const QString&)
@@ -444,7 +516,9 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     if (!f)
         return;
 
-    f->setStatusMessage(message);
+    QString str = message; str.replace('\n', ' ');
+    str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
+    f->setStatusMessage(str);
 }
 
 void Widget::onFriendUsernameChanged(int friendId, const QString& username)
@@ -453,25 +527,9 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     if (!f)
         return;
 
-    f->setName(username);
-}
-
-void Widget::onFriendStatusMessageLoaded(int friendId, const QString& message)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->setStatusMessage(message);
-}
-
-void Widget::onFriendUsernameLoaded(int friendId, const QString& username)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->setName(username);
+    QString str = username; str.replace('\n', ' ');
+    str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
+    f->setName(str);
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
@@ -1065,4 +1123,26 @@ bool Widget::eventFilter(QObject *, QEvent *event)
 bool Widget::getIsWindowMinimized()
 {
     return static_cast<bool>(isWindowMinimized);
+}
+
+void Widget::onMessageSendResult(int friendId, const QString& message, int messageId)
+{
+    Q_UNUSED(message)
+    Friend* f = FriendList::findFriend(friendId);
+    if (!f)
+        return;
+
+    if (!messageId)
+        f->chatForm->addSystemInfoMessage("Message failed to send", "red");
+}
+
+void Widget::onGroupSendResult(int groupId, const QString& message, int result)
+{
+    Q_UNUSED(message)
+    Group* g = GroupList::findGroup(groupId);
+    if (!g)
+        return;
+
+    if (result == -1)
+        g->chatForm->addSystemInfoMessage("Message failed to send", "red");
 }

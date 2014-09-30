@@ -39,6 +39,7 @@ class QMenu;
 class Core;
 class Camera;
 class FriendListWidget;
+class MaskablePixmapWidget;
 
 class Widget : public QMainWindow
 {
@@ -81,6 +82,8 @@ private slots:
     void onTransferClicked();
     void onSettingsClicked();
     void onFailedToStartCore();
+    void onAvatarClicked();
+    void onSelfAvatarLoaded(const QPixmap &pic);
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
     void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
     void setUsername(const QString& username);
@@ -90,8 +93,6 @@ private slots:
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
-    void onFriendStatusMessageLoaded(int friendId, const QString& message);
-    void onFriendUsernameLoaded(int friendId, const QString& username);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
     void onFriendMessageReceived(int friendId, const QString& message);
     void onFriendRequestReceived(const QString& userId, const QString& message);
@@ -105,6 +106,8 @@ private slots:
     void setStatusOnline();
     void setStatusAway();
     void setStatusBusy();
+    void onMessageSendResult(int friendId, const QString& message, int messageId);
+    void onGroupSendResult(int groupId, const QString& message, int result);
 
 protected slots:
     void moveWindow(QMouseEvent *e);
@@ -141,6 +144,7 @@ private:
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
     Camera* camera;
+    MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
     bool eventFilter(QObject *, QEvent *event);
 };

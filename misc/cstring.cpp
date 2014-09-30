@@ -17,10 +17,23 @@
 #include "cstring.h"
 #include <QString>
 
-CString::CString(const QString& string)
+CString::CString(const QString& string) :
+    CString(string.toUtf8())
 {
-    cString = new uint8_t[string.length() * MAX_SIZE_OF_UTF8_ENCODED_CHARACTER]();
-    cStringSize = fromString(string, cString);
+}
+
+CString::CString(const QByteArray& ba_string)
+{
+    cString = new uint8_t[ba_string.size()]();
+    cStringSize = ba_string.size();
+    memcpy(cString, reinterpret_cast<const uint8_t*>(ba_string.data()), cStringSize);
+}
+
+CString::CString(const CString &cstr)
+{
+    cStringSize = cstr.cStringSize;
+    cString = new uint8_t[cStringSize]();
+    memcpy(cString, cstr.cString, cStringSize);
 }
 
 CString::~CString()

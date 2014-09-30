@@ -103,7 +103,7 @@ rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 # afterwards install libsodium to INSTALL_DIR
 # skip the installation if TOX_ONLY is true
 if [[ $TOX_ONLY = "false" ]]; then
-    git clone git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR}
+    git clone git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR} --depth 1
     pushd ${BASE_DIR}/${SODIUM_DIR}
     git checkout tags/$SODIUM_VER
     ./autogen.sh
@@ -116,7 +116,7 @@ if [[ $TOX_ONLY = "false" ]]; then
 
     make -j2 check
     
-    if [[ $GLOBAL = "false" ]]; then
+    if [[ $GLOBAL = "false" || $EUID -eq 0 ]]; then
         make install
     else
         sudo make install
@@ -128,7 +128,7 @@ fi
 # clone current master of libtoxcore
 # make sure to compile with libsodium we just installed to INSTALL_DIR
 # afterwards install libtoxcore to INSTALL_DIR
-git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR}
+git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
 pushd ${BASE_DIR}/${TOX_CORE_DIR}
 ./autogen.sh
 if [[ $GLOBAL = "false" ]]; then
@@ -139,7 +139,7 @@ fi
 
 make -j2
 
-if [[ $GLOBAL = "false" ]]; then
+if [[ $GLOBAL = "false" || $EUID -eq 0 ]]; then
     make install
 else
     sudo make install
