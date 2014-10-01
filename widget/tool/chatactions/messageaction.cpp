@@ -71,5 +71,8 @@ QString MessageAction::getMessage()
     }
     message_ = message_.left(message_.length()-4);
 
-    return QString("<div class=message>" + message_ + "</div>");
+    if (isMe)
+        return QString("<div class=message_me>" + message_ + "</div>");
+    else
+        return QString("<div class=message>" + message_ + "</div>");
 }

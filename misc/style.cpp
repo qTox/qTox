@@ -27,28 +27,29 @@
 // helper functions
 QFont appFont(int pixelSize, int weight)
 {
-    auto font = QFont();
+    QFont font;
     font.setPixelSize(pixelSize);
     font.setWeight(weight);
     return font;
 }
 
-QString cssifyWeight(int weight)
+QString qssifyWeight(int weight)
 {
     QString weightStr = "normal";
     if (weight == QFont::Bold)
         weightStr = "bold";
     if (weight == QFont::Light)
-        weightStr = "lighter";
+        weightStr = "light";
 
     return QString("%1").arg(weightStr);
 }
 
-QString cssifyFont(QFont font)
+QString qssifyFont(QFont font)
 {
-    return QString("%1px %2")
+    return QString("%1px %2 \"%3\"")
             .arg(font.pixelSize())
-            .arg(font.weight());
+            .arg(qssifyWeight(font.weight()))
+            .arg(font.family());
 }
 
 QString Style::getStylesheet(const QString &filename)
@@ -112,13 +113,13 @@ QString Style::resolve(QString qss)
         {"@white", getColor(White).name()},
 
         // fonts
-        {"@extraBig", cssifyFont(getFont(ExtraBig))},
-        {"@big", cssifyFont(getFont(Big))},
-        {"@bigBold", cssifyFont(getFont(BigBold))},
-        {"@medium", cssifyFont(getFont(Medium))},
-        {"@mediumBold", cssifyFont(getFont(MediumBold))},
-        {"@small", cssifyFont(getFont(Small))},
-        {"@smallLight", cssifyFont(getFont(SmallLight))},
+        {"@extraBig", qssifyFont(getFont(ExtraBig))},
+        {"@big", qssifyFont(getFont(Big))},
+        {"@bigBold", qssifyFont(getFont(BigBold))},
+        {"@medium", qssifyFont(getFont(Medium))},
+        {"@mediumBold", qssifyFont(getFont(MediumBold))},
+        {"@small", qssifyFont(getFont(Small))},
+        {"@smallLight", qssifyFont(getFont(SmallLight))},
     };
 
     for (const QString& key : dict.keys())

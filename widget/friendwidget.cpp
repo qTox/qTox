@@ -24,7 +24,7 @@
 #include "widget/form/chatform.h"
 #include "widget/maskablepixmapwidget.h"
 #include "widget/croppinglabel.h"
-#include "style.h"
+#include "misc/style.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QDrag>

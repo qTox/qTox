@@ -21,7 +21,7 @@
 #include "widget/croppinglabel.h"
 #include "widget/maskablepixmapwidget.h"
 #include "core.h"
-#include "style.h"
+#include "misc/style.h"
 #include <QPushButton>
 #include <QMimeData>
 #include <QDragEnterEvent>

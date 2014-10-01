@@ -35,7 +35,7 @@
 #include "widget/widget.h"
 #include "widget/maskablepixmapwidget.h"
 #include "widget/croppinglabel.h"
-#include "style.h"
+#include "misc/style.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)

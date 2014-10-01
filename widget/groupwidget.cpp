@@ -20,7 +20,7 @@
 #include "misc/settings.h"
 #include "widget/form/groupchatform.h"
 #include "widget/maskablepixmapwidget.h"
-#include "style.h"
+#include "misc/style.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>

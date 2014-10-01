@@ -35,6 +35,6 @@ QRadioButton::indicator::checked
 
 QMenu
 {
-     background-color: #414141; /* sets background of the menu */
+     background-color: @mediumGrey; /* sets background of the menu */
      border: 0px solid;
 }

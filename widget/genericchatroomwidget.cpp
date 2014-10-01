@@ -15,7 +15,7 @@
 */
 
 #include "genericchatroomwidget.h"
-#include "style.h"
+#include "misc/style.h"
 #include "widget/maskablepixmapwidget.h"
 #include "croppinglabel.h"
 #include <QMouseEvent>
