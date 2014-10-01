@@ -21,6 +21,7 @@
 #include <QFont>
 
 class QString;
+class QWidget;
 
 class Style
 {
@@ -53,6 +54,7 @@ public:
     static QColor getColor(ColorPalette entry);
     static QFont getFont(Font font);
     static QString resolve(QString qss);
+    static void repolish(QWidget* w);
 
 private:
     Style();
