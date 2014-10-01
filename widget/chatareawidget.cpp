@@ -23,8 +23,9 @@
 #include <QCoreApplication>
 #include <QDebug>
 
-ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
-    QTextBrowser(parent)
+ChatAreaWidget::ChatAreaWidget(QWidget *parent)
+    : QTextBrowser(parent)
+    , nameWidth(75)
 {
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
@@ -39,7 +40,7 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     QTextTableFormat tableFormat;
     tableFormat.setCellSpacing(15);
     tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::VariableLength,0),
+    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::FixedLength,nameWidth),
                                            QTextLength(QTextLength::PercentageLength,100),
                                            QTextLength(QTextLength::VariableLength,0)});
 
@@ -49,7 +50,6 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     nameFormat.setNonBreakableLines(true);
     dateFormat.setAlignment(Qt::AlignLeft);
     dateFormat.setNonBreakableLines(true);
-
 
     connect(this, &ChatAreaWidget::anchorClicked, this, &ChatAreaWidget::onAnchorClicked);
     connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));

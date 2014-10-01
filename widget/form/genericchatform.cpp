@@ -173,7 +173,9 @@ void GenericChatForm::addMessage(QString author, QString message, QDateTime date
 
     if (previousName == author)
         chatWidget->insertMessage(new MessageAction("", message, date, isMe));
-    else chatWidget->insertMessage(new MessageAction(getElidedName(author) , message, date, isMe));
+    else
+        chatWidget->insertMessage(new MessageAction(getElidedName(author) , message, date, isMe));
+
     previousName = author;
 }
 
