@@ -33,6 +33,7 @@ public:
         Black,
         DarkGrey,
         MediumGrey,
+        MediumGreyLight,
         LightGrey,
         White,
     };
@@ -51,6 +52,8 @@ public:
     static QString getStylesheet(const QString& filename);
     static QColor getColor(ColorPalette entry);
     static QFont getFont(Font font);
+    static QString resolve(QString qss);
+
 private:
     Style();
 };

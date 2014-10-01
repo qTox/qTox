@@ -19,6 +19,8 @@
 
 #include <QFile>
 #include <QDebug>
+#include <QMap>
+#include <QRegularExpression>
 
 // helper function
 QFont appFont(int pixelSize, int weight) {
@@ -51,6 +53,7 @@ QColor Style::getColor(Style::ColorPalette entry)
         QColor("#000000"),
         QColor("#1c1c1c"),
         QColor("#414141"),
+        QColor("#414141").lighter(120),
         QColor("#d1d1d1"),
         QColor("#ffffff"),
     };
@@ -71,4 +74,27 @@ QFont Style::getFont(Style::Font font)
     };
 
     return fonts[font];
+}
+
+QString Style::resolve(QString qss)
+{
+    static QMap<QString, QString> dict = {
+        {"@green", getColor(Green).name()},
+        {"@yellow", getColor(Yellow).name()},
+        {"@red", getColor(Red).name()},
+        {"@black", getColor(Black).name()},
+        {"@darkGrey", getColor(DarkGrey).name()},
+        {"@mediumGrey", getColor(MediumGrey).name()},
+        {"@mediumGreyLight", getColor(MediumGreyLight).name()},
+        {"@lightGrey", getColor(LightGrey).name()},
+        {"@white", getColor(White).name()},
+    };
+
+    for (const QString& key : dict.keys())
+    {
+        qDebug() << key;
+        qss.replace(QRegularExpression(QString("%1\\b").arg(key)), dict[key]);
+    }
+
+    return qss;
 }
