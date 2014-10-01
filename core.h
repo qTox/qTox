@@ -210,7 +210,7 @@ private:
 
     bool checkConnection();
 
-    void loadConfiguration();
+    bool loadConfiguration(); // Returns false for a critical error, true otherwise
     void loadFriends();
 
     static void sendAllFileData(Core* core, ToxFile* file);

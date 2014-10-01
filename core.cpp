@@ -36,6 +36,7 @@
 #include <QDateTime>
 #include <QList>
 #include <QBuffer>
+#include <QMessageBox>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
@@ -166,7 +167,13 @@ void Core::start()
 
     qsrand(time(nullptr));
 
-    loadConfiguration();
+    if (!loadConfiguration())
+    {
+        emit failedToStart();
+        tox_kill(tox);
+        tox = nullptr;
+        return;
+    }
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
@@ -991,7 +998,7 @@ void Core::onFileTransferFinished(ToxFile file)
           emit fileDownloadFinished(file.filePath);
 }
 
-void Core::loadConfiguration()
+bool Core::loadConfiguration()
 {
     QString path = QDir(Settings::getSettingsDirPath()).filePath(CONFIG_FILE_NAME);
 
@@ -999,18 +1006,34 @@ void Core::loadConfiguration()
 
     if (!configurationFile.exists()) {
         qWarning() << "The Tox configuration file was not found";
-        return;
+        return true;
     }
 
     if (!configurationFile.open(QIODevice::ReadOnly)) {
         qCritical() << "File " << path << " cannot be opened";
-        return;
+        return true;
     }
 
     qint64 fileSize = configurationFile.size();
     if (fileSize > 0) {
         QByteArray data = configurationFile.readAll();
-        tox_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size());
+        int error = tox_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size());
+        if (error < 0)
+        {
+            qWarning() << "Core: tox_load failed with error "<<error;
+        }
+        else if (error == 1) // Encrypted data save
+        {
+            qWarning() << "Core: Can not open encrypted tox save";
+            if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted profile"),
+                tr("Your tox profile seems to be encrypted, qTox can't open it\nDo you want to erase this profile ?"),
+                QMessageBox::Ok | QMessageBox::Cancel))
+            {
+                qWarning() << "Core: Couldn't open encrypted save, giving up";
+                configurationFile.close();
+                return false;
+            }
+        }
     }
 
     configurationFile.close();
@@ -1025,6 +1048,7 @@ void Core::loadConfiguration()
         emit statusMessageSet(msg);
 
     loadFriends();
+    return true;
 }
 
 void Core::saveConfiguration()
