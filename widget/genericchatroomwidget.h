@@ -17,7 +17,7 @@
 #ifndef GENERICCHATROOMWIDGET_H
 #define GENERICCHATROOMWIDGET_H
 
-#include <QWidget>
+#include <QFrame>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -29,7 +29,7 @@ namespace Ui {
     class MainWindow;
 }
 
-class GenericChatroomWidget : public QWidget
+class GenericChatroomWidget : public QFrame
 {
     Q_OBJECT
 public:

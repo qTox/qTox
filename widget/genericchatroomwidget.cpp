@@ -22,10 +22,9 @@
 #include <QStyle>
 
 GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
-    : QWidget(parent)
+    : QFrame(parent)
 {
     setFixedHeight(55);
-    setAutoFillBackground(true);
 
     setLayout(&layout);
     layout.setSpacing(0);
