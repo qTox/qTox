@@ -27,6 +27,10 @@ int main(int argc, char *argv[])
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
 
+    // Windows platform plugins DLL hell fix
+    QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
+    a.addLibraryPath("platforms");
+
     // Load translations
     QTranslator translator;
     if (Settings::getInstance().getUseTranslations())
