@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9), cdbs, qt5-qmake, libopenal-dev (>= 1:1.15.1), l
 
 Package: qtox
 Architecture: any
-Depends: libc6 (>= 2.17), libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libopenal1 (>= 1.14), libopencv-core2.4, libopencv-highgui2.4, libopus0 (>= 1.0), libqt5core5a (>= 5.2), libqt5gui5 (>= 5.2), libqt5network5 (>= 5.0), libqt5widgets5 (>= 5.2), libqt5xml5 (>= 5.0), libstdc++6 (>= 4.9), libvpx1 (>= 1.0.0)
+Depends: libc6 (>= 2.13-38+deb7u4), libgcc1 (>= 1:4.1.1), libgl1-mesa-glx | libgl1, libopenal1 (>= 1.14), libopencv-core2.3, libopencv-highgui2.3, libopus0 (>= 0.9.14+20120615-1+nmu1), libqt5core5a (>= 5.2), libqt5gui5 (>= 5.2), libqt5network5 (>= 5.0), libqt5widgets5 (>= 5.2), libqt5xml5 (>= 5.0), libstdc++6 (>= 4.7.2-5), libvpx1 (>= 1.0.0)
 Description: Tox client
  qTox is a powerful Tox client that follows the Tox design guidelines.
  Tox is a decentralized and encrypted replacement for Skype, supporting
