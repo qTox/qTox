@@ -20,7 +20,7 @@
 #    See the COPYING file for more details.
 
 
-QT       += core gui network xml
+QT       += core gui network xml sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET    = qtox
@@ -132,6 +132,7 @@ HEADERS  += widget/form/addfriendform.h \
     widget/tool/chatactions/filetransferaction.h \
     widget/tool/chatactions/systemmessageaction.h \
     widget/tool/chatactions/actionaction.h \
+    historykeeper.h \
     widget/maskablepixmapwidget.h
 
 SOURCES += \
@@ -178,4 +179,5 @@ SOURCES += \
     widget/tool/chatactions/filetransferaction.cpp \
     widget/tool/chatactions/systemmessageaction.cpp \
     widget/tool/chatactions/actionaction.cpp \
+    historykeeper.cpp \
     widget/maskablepixmapwidget.cpp

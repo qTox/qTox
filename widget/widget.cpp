@@ -42,6 +42,7 @@
 #include <QClipboard>
 #include <QThread>
 #include <QFileDialog>
+#include "historykeeper.h"
 #include <tox/tox.h>
 
 Widget *Widget::instance{nullptr};
@@ -498,6 +499,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         return;
 
     f->chatForm->addMessage(f->getName(), message, isAction);
+    HistoryKeeper::getInstance()->addChatEntry(f->userId, message, f->userId);
 
     if (activeChatroomWidget != nullptr)
     {

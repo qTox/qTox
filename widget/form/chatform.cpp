@@ -36,6 +36,7 @@
 #include "widget/maskablepixmapwidget.h"
 #include "widget/croppinglabel.h"
 #include "misc/style.h"
+#include "historykeeper.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -98,6 +99,8 @@ void ChatForm::onSendTriggered()
         emit sendMessage(f->friendId, msg);
     }
     msgEdit->clear();
+
+    HistoryKeeper::getInstance()->addChatEntry(f->userId, msg, Core::getInstance()->getSelfId().publicKey);
 }
 
 void ChatForm::onAttachClicked()
