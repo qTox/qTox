@@ -10,9 +10,21 @@ try:
 except ImportError:
     pass
 
+platform=''
+if (len(sys.argv) >= 3):
+	platform=sys.argv[2]
+
 versionNumber = str(time.time())
-version = 'qtox-'+versionNumber
-title = 'qTox '+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+if (platform != ''):
+	version = 'qtox-'+platform+'-'+versionNumber
+else:
+	version = 'qtox-'+versionNumber
+if (platform == 'windows'):
+	title = 'qTox Windows '+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+elif (platform == 'linux'):
+	title = 'qTox Linux '+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+else:
+	title = 'qTox '+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 user = "tux3"
 password = ""
 if password == "":
@@ -25,8 +37,9 @@ if not (user and password):
 
 g = login(user, password)
 repo = g.repository('tux3', 'qTox')
-release = repo.create_release(version,'master',title,'This is an automated release of qTox, published by qTox\'s continous integration server.',True,False)
+release = repo.create_release(version,'master',title,'This is an automated release of qTox, published by qTox\'s continous integration server.',False,False)
 
 if (len(sys.argv) >= 2):
 	file = open(sys.argv[1], 'r')
 	release.upload_asset('application/octet-stream',sys.argv[1],file)
+
