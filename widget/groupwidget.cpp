@@ -30,44 +30,15 @@
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
-    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
-
     statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-
-    // name
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText, Style::getColor(Style::White));
-    name.setPalette(pal2);
-    name.setText(Name);
-    name.setFont(Style::getFont(Style::Big));
-
-    // status
-    QPalette pal;
-    pal.setColor(QPalette::WindowText, Style::getColor(Style::LightGrey));
-    nusers.setPalette(pal);
-    nusers.setFont(Style::getFont(Style::Medium));
+    nameLabel->setText(Name);
 
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        nusers.setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
+        statusMessageLabel->setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
     else
-        nusers.setText(GroupWidget::tr("0 users in chat"));
-
-    textLayout.addStretch();
-    textLayout.addWidget(&name);
-    textLayout.addWidget(&nusers);
-    textLayout.addStretch();
-
-    layout.addSpacing(20);
-    layout.addWidget(avatar);
-    layout.addSpacing(10);
-    layout.addLayout(&textLayout);
-    layout.addStretch();
-    layout.addSpacing(10);
-    layout.addWidget(&statusPic);
-    layout.addSpacing(10);
-    layout.activate();
+        statusMessageLabel->setText(GroupWidget::tr("0 users in chat"));
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -91,42 +62,20 @@ void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        nusers.setText(tr("%1 users in chat").arg(g->nPeers));
+        statusMessageLabel->setText(tr("%1 users in chat").arg(g->nPeers));
     else
-        nusers.setText(tr("0 users in chat"));
+        statusMessageLabel->setText(tr("0 users in chat"));
 }
 
 void GroupWidget::setAsActiveChatroom()
 {
     setActive(true);
-
-    // status
-    QPalette pal;
-    pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
-    nusers.setPalette(pal);
-
-    // name
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText, Style::getColor(Style::DarkGrey));
-    name.setPalette(pal2);
-
     avatar->setPixmap(QPixmap(":img/group_dark.png"), Qt::transparent);
 }
 
 void GroupWidget::setAsInactiveChatroom()
 {
     setActive(false);
-
-    // status
-    QPalette pal;
-    pal.setColor(QPalette::WindowText, Style::getColor(Style::LightGrey));
-    nusers.setPalette(pal);
-
-    // name
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText, Style::getColor(Style::White));
-    name.setPalette(pal2);
-
     avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
 }
 
