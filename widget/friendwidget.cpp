@@ -23,6 +23,8 @@
 #include "core.h"
 #include "widget/form/chatform.h"
 #include "widget/maskablepixmapwidget.h"
+#include "widget/croppinglabel.h"
+#include "misc/style.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QDrag>
@@ -31,56 +33,12 @@
 #include <QBitmap>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
-    : friendId(FriendId), isDefaultAvatar{true}
+    : friendId(FriendId)
+    , isDefaultAvatar{true}
 {
-    setMouseTracking(true);
-    setAutoFillBackground(true);
-    setFixedHeight(55);
-    setLayout(&layout);
-    layout.setSpacing(0);
-    layout.setMargin(0);
-    layout.setStretchFactor(this, 100);
-    textLayout.setSpacing(0);
-    textLayout.setMargin(0);
-    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
-
-    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
-    avatar->setPixmap(QPixmap(":img/contact_dark.png"));
-    name.setText(id);
-    //statusPic.setAlignment(Qt::AlignHCenter);
+    avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
     statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
-    QFont small;
-    small.setPixelSize(10);
-    statusMessage.setFont(small);
-    QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::gray);
-    statusMessage.setPalette(pal);
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::white);
-    name.setPalette(pal2);
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
-    this->setPalette(pal3);
-
-    textLayout.addStretch();
-    textLayout.addWidget(&name);
-    textLayout.addWidget(&statusMessage);
-    textLayout.addStretch();
-
-    layout.addSpacing(20);
-    layout.addWidget(avatar);
-    layout.addSpacing(5);
-    layout.addLayout(&textLayout);
-    layout.addSpacing(5);
-    layout.addWidget(&statusPic);
-    layout.addSpacing(5);
-
-    isActiveWidget = 0;
-
-    layout.invalidate();
-    layout.update();
-    layout.activate();
-    updateGeometry();
+    nameLabel->setText(id);
 }
 
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -92,7 +50,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QMap<QAction*, Group*> groupActions;
     for (Group* group : GroupList::groupList)
     {
-        QAction* groupAction = inviteMenu->addAction(group->widget->name.text());
+        QAction* groupAction = inviteMenu->addAction(group->widget->getName());
         groupActions[groupAction] =  group;
     }
     if (groupActions.isEmpty())
@@ -126,38 +84,18 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 
 void FriendWidget::setAsActiveChatroom()
 {
-    isActiveWidget = 1;
+    setActive(true);
 
-    QFont small;
-    small.setPixelSize(10);
-    statusMessage.setFont(small);
-    QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::darkGray);
-    statusMessage.setPalette(pal);
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::black);
-    name.setPalette(pal2);
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, Qt::white);
-    this->setPalette(pal3);
+    if (isDefaultAvatar)
+        avatar->setPixmap(QPixmap(":img/contact_dark.png"), Qt::transparent);
 }
 
 void FriendWidget::setAsInactiveChatroom()
 {
-    isActiveWidget = 0;
+    setActive(false);
 
-    QFont small;
-    small.setPixelSize(10);
-    statusMessage.setFont(small);
-    QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::gray);
-    statusMessage.setPalette(pal);
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::white);
-    name.setPalette(pal2);
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
-    this->setPalette(pal3);
+    if (isDefaultAvatar)
+        avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
 }
 
 void FriendWidget::updateStatusLight()
@@ -202,6 +140,7 @@ void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
 
     isDefaultAvatar = false;
     avatar->setPixmap(pic);
+    avatar->autopickBackground();
 }
 
 void FriendWidget::onAvatarRemoved(int FriendId)
@@ -210,7 +149,7 @@ void FriendWidget::onAvatarRemoved(int FriendId)
         return;
 
     isDefaultAvatar = true;
-    avatar->setPixmap(QPixmap(":img/contact_dark.png"));
+    avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
 }
 
 void FriendWidget::mousePressEvent(QMouseEvent *ev)

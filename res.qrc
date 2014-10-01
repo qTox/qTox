@@ -145,5 +145,6 @@
         <file>translations/uk.qm</file>
         <file>img/avatar_mask.png</file>
         <file>img/group_2x.png</file>
+        <file>ui/chatroomWidgets/genericChatroomWidget.css</file>
     </qresource>
 </RCC>

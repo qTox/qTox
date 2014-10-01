@@ -23,8 +23,9 @@
 #include <QCoreApplication>
 #include <QDebug>
 
-ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
-    QTextBrowser(parent)
+ChatAreaWidget::ChatAreaWidget(QWidget *parent)
+    : QTextBrowser(parent)
+    , nameWidth(75)
 {
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
@@ -36,19 +37,19 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent) :
     setAcceptRichText(false);
     setFrameStyle(QFrame::NoFrame);
 
-    chatTextTable = textCursor().insertTable(1,3);
-
     QTextTableFormat tableFormat;
+    tableFormat.setCellSpacing(15);
     tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-    tableFormat.setCellSpacing(2);
-    tableFormat.setWidth(QTextLength(QTextLength::PercentageLength,100));
-    chatTextTable->setFormat(tableFormat);
-    setNameColWidth(100);
+    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::FixedLength,nameWidth),
+                                           QTextLength(QTextLength::PercentageLength,100),
+                                           QTextLength(QTextLength::VariableLength,0)});
 
-//    nameFormat.setAlignment(Qt::AlignRight);
-//    nameFormat.setNonBreakableLines(true);
-//    dateFormat.setAlignment(Qt::AlignLeft);
-//    dateFormat.setNonBreakableLines(true);
+    chatTextTable = textCursor().insertTable(1,3,tableFormat);
+
+    nameFormat.setAlignment(Qt::AlignRight);
+    nameFormat.setNonBreakableLines(true);
+    dateFormat.setAlignment(Qt::AlignLeft);
+    dateFormat.setNonBreakableLines(true);
 
     connect(this, &ChatAreaWidget::anchorClicked, this, &ChatAreaWidget::onAnchorClicked);
     connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(onSliderRangeChanged()));
@@ -112,9 +113,11 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
     chatTextTable->appendRows(1);
+    chatTextTable->cellAt(row,0).firstCursorPosition().setBlockFormat(nameFormat);
     chatTextTable->cellAt(row,0).firstCursorPosition().insertHtml(msgAction->getName());
     chatTextTable->cellAt(row,1).firstCursorPosition().insertHtml(msgAction->getMessage());
-    chatTextTable->cellAt(row,2).firstCursorPosition().insertText(msgAction->getDate());
+    chatTextTable->cellAt(row,2).firstCursorPosition().setBlockFormat(dateFormat);
+    chatTextTable->cellAt(row,2).firstCursorPosition().insertHtml(msgAction->getDate());
 
     msgAction->setup(cur, this);
 

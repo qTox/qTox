@@ -20,6 +20,7 @@
 #include "misc/settings.h"
 #include "widget/form/groupchatform.h"
 #include "widget/maskablepixmapwidget.h"
+#include "misc/style.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -29,53 +30,15 @@
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
-    setMouseTracking(true);
-    setAutoFillBackground(true);
-    setLayout(&layout);
-    setFixedHeight(55);
-    layout.setSpacing(0);
-    layout.setMargin(0);
-    textLayout.setSpacing(0);
-    textLayout.setMargin(0);
-    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
-
-    avatar = new MaskablePixmapWidget(this, QSize(40,40), QString(), Qt::transparent);
-    avatar->setPixmap(QPixmap(":img/group.png"));
+    avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
     statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-    name.setText(Name);
-    QFont small;
-    small.setPixelSize(10);
-    nusers.setFont(small);
-    QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::gray);
-    nusers.setPalette(pal);
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::white);
-    name.setPalette(pal2);
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
-    this->setPalette(pal3);
+    nameLabel->setText(Name);
+
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        nusers.setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
+        statusMessageLabel->setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
     else
-        nusers.setText(GroupWidget::tr("0 users in chat"));
-
-    textLayout.addStretch();
-    textLayout.addWidget(&name);
-    textLayout.addWidget(&nusers);
-    textLayout.addStretch();
-
-    layout.addSpacing(20);
-    layout.addWidget(avatar);
-    layout.addSpacing(5);
-    layout.addLayout(&textLayout);
-    layout.addStretch();
-    layout.addSpacing(5);
-    layout.addWidget(&statusPic);
-    layout.addSpacing(5);
-
-    isActiveWidget = 0;
+        statusMessageLabel->setText(GroupWidget::tr("0 users in chat"));
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -86,60 +49,28 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 
     QAction* selectedItem = menu.exec(pos);
     if (selectedItem == quitGroup)
-    {
-        hide();
-        show(); //Toggle visibility to work around bug of repaintEvent() not being fired on parent widget when this is hidden
-        hide();
         emit removeGroup(groupId);
-        return;
-    }
 }
 
 void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        nusers.setText(tr("%1 users in chat").arg(g->nPeers));
+        statusMessageLabel->setText(tr("%1 users in chat").arg(g->nPeers));
     else
-        nusers.setText(tr("0 users in chat"));
+        statusMessageLabel->setText(tr("0 users in chat"));
 }
 
 void GroupWidget::setAsActiveChatroom()
 {
-    isActiveWidget = 1;
-
-    QFont small;
-    small.setPixelSize(10);
-    nusers.setFont(small);
-    QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::darkGray);
-    nusers.setPalette(pal);
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::black);
-    name.setPalette(pal2);
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, Qt::white);
-    this->setPalette(pal3);
-    avatar->setPixmap(QPixmap(":img/group_dark.png"));
+    setActive(true);
+    avatar->setPixmap(QPixmap(":img/group_dark.png"), Qt::transparent);
 }
 
 void GroupWidget::setAsInactiveChatroom()
 {
-    isActiveWidget = 0;
-
-    QFont small;
-    small.setPixelSize(10);
-    nusers.setFont(small);
-    QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::gray);
-    nusers.setPalette(pal);
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText,Qt::white);
-    name.setPalette(pal2);
-    QPalette pal3;
-    pal3.setColor(QPalette::Background, QColor(65,65,65,255));
-    this->setPalette(pal3);
-    avatar->setPixmap(QPixmap(":img/group.png"));
+    setActive(false);
+    avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
 }
 
 void GroupWidget::updateStatusLight()
@@ -152,16 +83,20 @@ void GroupWidget::updateStatusLight()
         {
             statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
         } else {
-            if (g->userWasMentioned == 0) statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-            else statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+            if (g->userWasMentioned == 0)
+                statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+            else
+                statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
         }
     } else {
         if (g->hasNewMessages == 0)
         {
             statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
         } else {
-            if (g->userWasMentioned == 0) statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
-            else statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
+            if (g->userWasMentioned == 0)
+                statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
+            else
+                statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
         }
     }
 }

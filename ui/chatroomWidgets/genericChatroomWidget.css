@@ -1,0 +1,38 @@
+GenericChatroomWidget 
+{ 
+  background-color: @mediumGrey;
+}
+
+GenericChatroomWidget[active="true"]
+{
+  background-color: @white;
+}
+
+GenericChatroomWidget[active="false"]:hover 
+{ 
+  background-color: @mediumGreyLight; 
+} 
+
+GenericChatroomWidget[active="true"] > QLabel#status 
+{
+  font: @medium;
+  color: @mediumGrey;
+}
+
+GenericChatroomWidget[active="false"] > QLabel#status 
+{
+  font: @medium;
+  color: @lightGrey;
+}
+
+GenericChatroomWidget[active="true"] > QLabel#name
+{
+  font: @big;
+  color: @darkGrey;
+}
+
+GenericChatroomWidget[active="false"] > QLabel#name
+{
+  font: @big;
+  color: @white;
+}
