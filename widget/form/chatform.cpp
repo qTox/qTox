@@ -86,9 +86,18 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
     QString name = Widget::getInstance()->getUsername();
+    if (msg.startsWith("/me "))
+    {
+        msg = msg.right(msg.length() - 4);
+        addMessage(name, msg, true);
+        emit sendAction(f->friendId, msg);
+    }
+    else
+    {
+        addMessage(name, msg, false);
+        emit sendMessage(f->friendId, msg);
+    }
     msgEdit->clear();
-    addMessage(name, msg);
-    emit sendMessage(f->friendId, msg);
 }
 
 void ChatForm::onAttachClicked()
