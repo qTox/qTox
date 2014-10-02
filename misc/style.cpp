@@ -46,7 +46,7 @@ QString qssifyWeight(int weight)
 
 QString qssifyFont(QFont font)
 {
-    return QString("%1px %2 \"%3\"")
+    return QString("%1 %2 \"%3\"")
             .arg(font.pixelSize())
             .arg(qssifyWeight(font.weight()))
             .arg(font.family());
