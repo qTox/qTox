@@ -9,6 +9,11 @@ div.message {
   font: @big;
 }
 
+div.action {
+  color: @blue;
+  font: @big;
+}
+
 div.date {
   color: @black;
   font: @big;

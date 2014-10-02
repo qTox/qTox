@@ -545,13 +545,13 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
     widget->updateStatusLight();
 }
 
-void Widget::onFriendMessageReceived(int friendId, const QString& message)
+void Widget::onFriendMessageReceived(int friendId, const QString& message, bool isAction)
 {
     Friend* f = FriendList::findFriend(friendId);
     if (!f)
         return;
 
-    f->chatForm->addMessage(f->getName(), message);
+    f->chatForm->addMessage(f->getName(), message, isAction);
 
     if (activeChatroomWidget != nullptr)
     {

@@ -93,7 +93,7 @@ private slots:
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
-    void onFriendMessageReceived(int friendId, const QString& message);
+    void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, const uint8_t *publicKey,uint16_t length);

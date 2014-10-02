@@ -44,7 +44,7 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    void addMessage(QString author, QString message, QDateTime datetime=QDateTime::currentDateTime());
+    void addMessage(QString author, QString message, bool isAction = false, QDateTime datetime=QDateTime::currentDateTime());
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime=QDateTime::currentDateTime());
 
 signals:

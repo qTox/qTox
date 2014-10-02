@@ -24,6 +24,7 @@
 #include "misc/settings.h"
 #include "widget/tool/chatactions/messageaction.h"
 #include "widget/tool/chatactions/systemmessageaction.h"
+#include "widget/tool/chatactions/actionaction.h"
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
 #include "widget/maskablepixmapwidget.h"
@@ -166,15 +167,17 @@ void GenericChatForm::onSaveLogClicked()
     file.close();
 }
 
-void GenericChatForm::addMessage(QString author, QString message, QDateTime datetime)
+void GenericChatForm::addMessage(QString author, QString message, bool isAction, QDateTime datetime)
 {
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
     bool isMe = (author == Widget::getInstance()->getUsername());
 
-    if (previousName == author)
+    if (isAction)
+        chatWidget->insertMessage(new ActionAction (getElidedName(author), message, date, isMe));
+    else if (previousName == author)
         chatWidget->insertMessage(new MessageAction("", message, date, isMe));
     else
-        chatWidget->insertMessage(new MessageAction(getElidedName(author) , message, date, isMe));
+        chatWidget->insertMessage(new MessageAction(getElidedName(author), message, date, isMe));
 
     previousName = author;
 }
