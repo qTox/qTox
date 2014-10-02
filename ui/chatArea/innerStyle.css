@@ -10,7 +10,7 @@ div.message {
 }
 
 div.action {
-  color: @blue;
+  color: #1818FF;
   font: @big;
 }
 

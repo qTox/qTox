@@ -49,6 +49,7 @@ public:
 
 signals:
     void sendMessage(int, QString);
+    void sendAction(int, QString);
 
 public slots:
     void focusInput();
