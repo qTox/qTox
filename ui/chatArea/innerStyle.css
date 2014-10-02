@@ -1,6 +1,7 @@
 div.name {
   color: @black;
-  font: @big;
+  font: @bigBold;
+  font-weight: bold; /* @bigBold doesn't actually work */
 }
 
 div.message {
@@ -19,12 +20,12 @@ div.name_me {
 }
 
 div.message_me {
-  color: @mediumGrey;
+  color: @black;
   font: @big;
 }
 
 div.date_me {
-  color: @mediumGrey;
+  color: @black;
   font: @big;
 }
 
