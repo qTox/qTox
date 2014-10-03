@@ -391,10 +391,33 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
 
 QString FileTransferInstance::wrapIntoForm(const QString& content, const QString &type, const QString &imgAstr, const QString &imgBstr)
 {
-    QString res;
+    QString w = QString::number(QImage(":/ui/fileTransferInstance/emptyLRedFileButton.png").size().width());
+    QString imgLeftA, imgLeftB;
 
+    if (type == "green")
+    {
+        imgLeftA = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLGreenFileButton.png").mirrored(true,false)) + "\">";
+        imgLeftB = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLGreenFileButton.png").mirrored(true,true)) + "\">";
+    }
+
+    if (type == "silver")
+    {
+        imgLeftA = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/sliverRTEdge.png").mirrored(true,false)) + "\">";
+        imgLeftB = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/sliverRTEdge.png").mirrored(true,true)) + "\">";
+    }
+
+    if (type == "red")
+    {
+        imgLeftA = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLRedFileButton.png").mirrored(true,false)) + "\">";
+        imgLeftB = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLRedFileButton.png").mirrored(true,true)) + "\">";
+    }
+
+    QString res;
     res =  "<table cellspacing=\"0\">\n";
     res += "<tr valign=middle>\n";
+    res += "<td width=" + w + ">\n";
+    res += "<div class=button>" + imgLeftA + "<br>" + imgLeftB + "</div>\n";
+    res += "</td>\n";
     res += insertMiniature(type);
     res += "<td width=" + QString::number(CONTENT_WIDTH + 30) + ">\n";
     res += "<div class=" + type + ">";
@@ -402,7 +425,7 @@ QString FileTransferInstance::wrapIntoForm(const QString& content, const QString
     res += "</div>\n";
     res += "</td>\n";
     res += "<td>\n";
-    res += "<div class=button>" + imgAstr + "<br>" + imgBstr+ "</div>\n";
+    res += "<div class=button>" + imgAstr + "<br>" + imgBstr + "</div>\n";
     res += "</td>\n";
     res += "</tr>\n";
     res += "</table>\n";
