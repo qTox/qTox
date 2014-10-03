@@ -33,22 +33,11 @@ QFont appFont(int pixelSize, int weight)
     return font;
 }
 
-QString qssifyWeight(int weight)
-{
-    QString weightStr = "normal";
-    if (weight == QFont::Bold)
-        weightStr = "bold";
-    if (weight == QFont::Light)
-        weightStr = "light";
-
-    return QString("%1").arg(weightStr);
-}
-
 QString qssifyFont(QFont font)
 {
-    return QString("%1 %2 \"%3\"")
+    return QString("%1 %2px \"%3\"")
+            .arg(font.weight()*10)
             .arg(font.pixelSize())
-            .arg(qssifyWeight(font.weight()))
             .arg(font.family());
 }
 
@@ -68,6 +57,8 @@ QString Style::getStylesheet(const QString &filename)
 
 QColor Style::getColor(Style::ColorPalette entry)
 {
+    // colors as defined in
+    // https://github.com/ItsDuke/Tox-UI/blob/master/UI%20GUIDELINES.md
     static QColor palette[] = {
         QColor("#6bc260"),
         QColor("#cebf44"),
@@ -85,14 +76,16 @@ QColor Style::getColor(Style::ColorPalette entry)
 
 QFont Style::getFont(Style::Font font)
 {
+    // fonts as defined in
+    // https://github.com/ItsDuke/Tox-UI/blob/master/UI%20GUIDELINES.md
     static QFont fonts[] = {
+        appFont(15, QFont::Bold),
+        appFont(14, QFont::Normal),
         appFont(14, QFont::Bold),
+        appFont(13, QFont::Normal),
+        appFont(13, QFont::Bold),
         appFont(12, QFont::Normal),
-        appFont(12, QFont::Bold),
-        appFont(11, QFont::Normal),
-        appFont(11, QFont::Bold),
-        appFont(10, QFont::Normal),
-        appFont(10, QFont::Light),
+        appFont(12, QFont::Light),
     };
 
     return fonts[font];

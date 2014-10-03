@@ -1,7 +1,6 @@
 div.name {
   color: @black;
   font: @bigBold;
-  font-weight: bold; /* @bigBold doesn't actually work */
 }
 
 div.message {
