@@ -77,27 +77,16 @@ void GroupWidget::updateStatusLight()
 {
     Group *g = GroupList::findGroup(groupId);
 
-    if (Settings::getInstance().getUseNativeDecoration())
+    if (g->hasNewMessages == 0)
     {
-        if (g->hasNewMessages == 0)
-        {
-            statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-        } else {
-            if (g->userWasMentioned == 0)
-                statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-            else
-                statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-        }
-    } else {
-        if (g->hasNewMessages == 0)
-        {
-            statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
-        } else {
-            if (g->userWasMentioned == 0)
-                statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
-            else
-                statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
-        }
+        statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+    }
+    else
+    {
+        if (g->userWasMentioned == 0)
+            statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
+        else
+            statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
     }
 }
 

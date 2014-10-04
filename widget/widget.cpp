@@ -62,55 +62,8 @@ Widget::Widget(QWidget *parent)
     restoreState(Settings::getInstance().getWindowState());
     ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
 
-    if (Settings::getInstance().getUseNativeDecoration())
-    {
-        ui->titleBar->hide();
-        this->layout()->setContentsMargins(0, 0, 0, 0);
-
-        ui->friendList->setObjectName("friendList");
-        ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
-    }
-    else
-    {
-        this->setObjectName("activeWindow");
-        this->setStyleSheet(Style::getStylesheet(":ui/window/window.css"));
-        ui->statusPanel->setStyleSheet(QString(""));
-        ui->friendList->setStyleSheet(QString(""));
-
-        ui->friendList->setObjectName("friendList");
-        ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
-
-        ui->tbMenu->setIcon(QIcon(":ui/window/applicationIcon.png"));
-        ui->pbMin->setObjectName("minimizeButton");
-        ui->pbMax->setObjectName("maximizeButton");
-        ui->pbClose->setObjectName("closeButton");
-
-        setWindowFlags(Qt::CustomizeWindowHint);
-        setWindowFlags(Qt::FramelessWindowHint);
-
-        addAction(ui->actionClose);
-
-        connect(ui->pbMin, SIGNAL(clicked()), this, SLOT(minimizeBtnClicked()));
-        connect(ui->pbMax, SIGNAL(clicked()), this, SLOT(maximizeBtnClicked()));
-        connect(ui->pbClose, SIGNAL(clicked()), this, SLOT(close()));
-
-        m_titleMode = FullTitle;
-        moveWidget = false;
-        inResizeZone = false;
-        allowToResize = false;
-        resizeVerSup = false;
-        resizeHorEsq = false;
-        resizeDiagSupEsq = false;
-        resizeDiagSupDer = false;
-
-        if (isMaximized())
-        {
-            showMaximized();
-            ui->pbMax->setObjectName("restoreButton");
-        }
-    }
-
-    isWindowMinimized = 0;
+    layout()->setContentsMargins(0, 0, 0, 0);
+    ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
@@ -224,8 +177,6 @@ Widget::~Widget()
     if (!coreThread->isFinished())
         coreThread->terminate();
     delete core;
-
-    hideMainForms();
 
     for (Friend* f : FriendList::friendList)
         delete f;
@@ -390,7 +341,7 @@ void Widget::hideMainForms()
         item->widget()->hide();
     while ((item = ui->mainContent->layout()->takeAt(0)) != 0)
         item->widget()->hide();
-    
+
     if (activeChatroomWidget != nullptr)
     {
         activeChatroomWidget->setAsInactiveChatroom();
@@ -485,8 +436,8 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     f->widget->updateStatusLight();
 
     // Workaround widget style after returning to list
-    if (f->widget->isActive())
-        f->widget->setAsActiveChatroom();
+//    if (f->widget->isActive())
+//        f->widget->setAsActiveChatroom();
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -535,7 +486,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
 
     if (activeChatroomWidget != nullptr)
     {
-        if ((static_cast<GenericChatroomWidget*>(f->widget) != activeChatroomWidget) || isWindowMinimized || !isActiveWindow())
+        if ((static_cast<GenericChatroomWidget*>(f->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
         {
             f->hasNewEvents = 1;
             newMessageAlert();
@@ -619,7 +570,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, cons
 
     g->chatForm->addGroupMessage(message, friendgroupnumber);
 
-    if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isWindowMinimized || !isActiveWindow())
+    if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
         g->hasNewMessages = 1;
         if (message.contains(core->getUsername(), Qt::CaseInsensitive))
@@ -712,366 +663,16 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
 
 bool Widget::event(QEvent * e)
 {
-
-    if( e->type() == QEvent::WindowStateChange )
+    if (e->type() == QEvent::WindowActivate)
     {
-        if(windowState().testFlag(Qt::WindowMinimized) == true)
-        {
-            isWindowMinimized = 1;
-        }
-    }
-    else if (e->type() == QEvent::WindowActivate)
-    {
-        if (!Settings::getInstance().getUseNativeDecoration())
-        {
-            this->setObjectName("activeWindow");
-            this->style()->polish(this);
-        }
-        isWindowMinimized = 0;
         if (activeChatroomWidget != nullptr)
         {
             activeChatroomWidget->resetEventFlags();
             activeChatroomWidget->updateStatusLight();
         }
     }
-    else if (e->type() == QEvent::WindowDeactivate && !Settings::getInstance().getUseNativeDecoration())
-    {
-        this->setObjectName("inactiveWindow");
-        this->style()->polish(this);
-    }
-    else if (e->type() == QEvent::MouseMove && !Settings::getInstance().getUseNativeDecoration())
-    {
-        QMouseEvent *k = (QMouseEvent *)e;
-        int xMouse = k->pos().x();
-        int yMouse = k->pos().y();
-        int wWidth = this->geometry().width();
-        int wHeight = this->geometry().height();
-
-        if (moveWidget)
-        {
-            inResizeZone = false;
-            moveWindow(k);
-        }
-        else if (allowToResize)
-            resizeWindow(k);
-        else if (xMouse >= wWidth - PIXELS_TO_ACT or allowToResize)
-        {
-            inResizeZone = true;
-
-            if (yMouse >= wHeight - PIXELS_TO_ACT)
-            {
-                setCursor(Qt::SizeFDiagCursor);
-                resizeWindow(k);
-            }
-            else if (yMouse <= PIXELS_TO_ACT)
-            {
-                setCursor(Qt::SizeBDiagCursor);
-                resizeWindow(k);
-            }
-
-        }
-        else
-        {
-            inResizeZone = false;
-            setCursor(Qt::ArrowCursor);
-        }
-
-        e->accept();
-    }
 
     return QWidget::event(e);
-}
-
-void Widget::mousePressEvent(QMouseEvent *e)
-{
-    if (!Settings::getInstance().getUseNativeDecoration())
-    {
-        if (e->button() == Qt::LeftButton)
-        {
-            if (inResizeZone)
-            {
-                allowToResize = true;
-
-                if (e->pos().y() <= PIXELS_TO_ACT)
-                {
-                    if (e->pos().x() <= PIXELS_TO_ACT)
-                        resizeDiagSupEsq = true;
-                    else if (e->pos().x() >= geometry().width() - PIXELS_TO_ACT)
-                        resizeDiagSupDer = true;
-                    else
-                        resizeVerSup = true;
-                }
-                else if (e->pos().x() <= PIXELS_TO_ACT)
-                    resizeHorEsq = true;
-            }
-            else if (e->pos().x() >= PIXELS_TO_ACT and e->pos().x() < ui->titleBar->geometry().width()
-                     and e->pos().y() >= PIXELS_TO_ACT and e->pos().y() < ui->titleBar->geometry().height())
-            {
-                moveWidget = true;
-                dragPosition = e->globalPos() - frameGeometry().topLeft();
-            }
-        }
-
-        e->accept();
-    }
-}
-
-void Widget::mouseReleaseEvent(QMouseEvent *e)
-{
-    if (!Settings::getInstance().getUseNativeDecoration())
-    {
-        moveWidget = false;
-        allowToResize = false;
-        resizeVerSup = false;
-        resizeHorEsq = false;
-        resizeDiagSupEsq = false;
-        resizeDiagSupDer = false;
-
-        e->accept();
-    }
-}
-
-void Widget::mouseDoubleClickEvent(QMouseEvent *e)
-{
-    if (!Settings::getInstance().getUseNativeDecoration())
-    {
-        if (e->pos().x() < ui->tbMenu->geometry().right() and e->pos().y() < ui->tbMenu->geometry().bottom()
-                and e->pos().x() >=  ui->tbMenu->geometry().x() and e->pos().y() >= ui->tbMenu->geometry().y()
-                and ui->tbMenu->isVisible())
-            close();
-        else if (e->pos().x() < ui->titleBar->geometry().width()
-                 and e->pos().y() < ui->titleBar->geometry().height()
-                 and m_titleMode != FullScreenMode)
-            maximizeBtnClicked();
-        e->accept();
-    }
-}
-
-void Widget::paintEvent (QPaintEvent *)
-{
-    QStyleOption opt;
-    opt.init (this);
-    QPainter p(this);
-    style()->drawPrimitive (QStyle::PE_Widget, &opt, &p, this);
-}
-
-void Widget::moveWindow(QMouseEvent *e)
-{
-    if (!Settings::getInstance().getUseNativeDecoration())
-    {
-        if (e->buttons() & Qt::LeftButton)
-        {
-            move(e->globalPos() - dragPosition);
-            e->accept();
-        }
-    }
-}
-
-void Widget::resizeWindow(QMouseEvent *e)
-{
-    if (!Settings::getInstance().getUseNativeDecoration())
-    {
-        if (allowToResize)
-        {
-            int xMouse = e->pos().x();
-            int yMouse = e->pos().y();
-            int wWidth = geometry().width();
-            int wHeight = geometry().height();
-
-            if (cursor().shape() == Qt::SizeVerCursor)
-            {
-                if (resizeVerSup)
-                {
-                    int newY = geometry().y() + yMouse;
-                    int newHeight = wHeight - yMouse;
-
-                    if (newHeight > minimumSizeHint().height())
-                    {
-                        resize(wWidth, newHeight);
-                        move(geometry().x(), newY);
-                    }
-                }
-                else
-                    resize(wWidth, yMouse+1);
-            }
-            else if (cursor().shape() == Qt::SizeHorCursor)
-            {
-                if (resizeHorEsq)
-                {
-                    int newX = geometry().x() + xMouse;
-                    int newWidth = wWidth - xMouse;
-
-                    if (newWidth > minimumSizeHint().width())
-                    {
-                        resize(newWidth, wHeight);
-                        move(newX, geometry().y());
-                    }
-                }
-                else
-                    resize(xMouse, wHeight);
-            }
-            else if (cursor().shape() == Qt::SizeBDiagCursor)
-            {
-                int newX = 0;
-                int newWidth = 0;
-                int newY = 0;
-                int newHeight = 0;
-
-                if (resizeDiagSupDer)
-                {
-                    newX = geometry().x();
-                    newWidth = xMouse;
-                    newY = geometry().y() + yMouse;
-                    newHeight = wHeight - yMouse;
-                }
-                else
-                {
-                    newX = geometry().x() + xMouse;
-                    newWidth = wWidth - xMouse;
-                    newY = geometry().y();
-                    newHeight = yMouse;
-                }
-
-                if (newWidth >= minimumSizeHint().width() and newHeight >= minimumSizeHint().height())
-                {
-                    resize(newWidth, newHeight);
-                    move(newX, newY);
-                }
-                else if (newWidth >= minimumSizeHint().width())
-                {
-                    resize(newWidth, wHeight);
-                    move(newX, geometry().y());
-                }
-                else if (newHeight >= minimumSizeHint().height())
-                {
-                    resize(wWidth, newHeight);
-                    move(geometry().x(), newY);
-                }
-            }
-            else if (cursor().shape() == Qt::SizeFDiagCursor)
-            {
-                if (resizeDiagSupEsq)
-                {
-                    int newX = geometry().x() + xMouse;
-                    int newWidth = wWidth - xMouse;
-                    int newY = geometry().y() + yMouse;
-                    int newHeight = wHeight - yMouse;
-
-                    if (newWidth >= minimumSizeHint().width() and newHeight >= minimumSizeHint().height())
-                    {
-                        resize(newWidth, newHeight);
-                        move(newX, newY);
-                    }
-                    else if (newWidth >= minimumSizeHint().width())
-                    {
-                        resize(newWidth, wHeight);
-                        move(newX, geometry().y());
-                    }
-                    else if (newHeight >= minimumSizeHint().height())
-                    {
-                        resize(wWidth, newHeight);
-                        move(geometry().x(), newY);
-                    }
-                }
-                else
-                    resize(xMouse+1, yMouse+1);
-            }
-
-            e->accept();
-        }
-    }
-}
-
-void Widget::setCentralWidget(QWidget *widget, const QString &widgetName)
-{
-    connect(widget, SIGNAL(cancelled()), this, SLOT(close()));
-
-    centralLayout->addWidget(widget);
-    //ui->centralWidget->setLayout(centralLayout);
-    ui->LTitle->setText(widgetName);
-}
-
-void Widget::setTitlebarMode(const TitleMode &flag)
-{
-    m_titleMode = flag;
-
-    switch (m_titleMode)
-    {
-    case CleanTitle:
-        ui->tbMenu->setHidden(true);
-        ui->pbMin->setHidden(true);
-        ui->pbMax->setHidden(true);
-        ui->pbClose->setHidden(true);
-        break;
-    case OnlyCloseButton:
-        ui->tbMenu->setHidden(true);
-        ui->pbMin->setHidden(true);
-        ui->pbMax->setHidden(true);
-        break;
-    case MenuOff:
-        ui->tbMenu->setHidden(true);
-        break;
-    case MaxMinOff:
-        ui->pbMin->setHidden(true);
-        ui->pbMax->setHidden(true);
-        break;
-    case FullScreenMode:
-        ui->pbMax->setHidden(true);
-        showMaximized();
-        break;
-    case MaximizeModeOff:
-        ui->pbMax->setHidden(true);
-        break;
-    case MinimizeModeOff:
-        ui->pbMin->setHidden(true);
-        break;
-    case FullTitle:
-        ui->tbMenu->setVisible(true);
-        ui->pbMin->setVisible(true);
-        ui->pbMax->setVisible(true);
-        ui->pbClose->setVisible(true);
-        break;
-        break;
-    default:
-        ui->tbMenu->setVisible(true);
-        ui->pbMin->setVisible(true);
-        ui->pbMax->setVisible(true);
-        ui->pbClose->setVisible(true);
-        break;
-    }
-    ui->LTitle->setVisible(true);
-}
-
-void Widget::setTitlebarMenu(QMenu *menu, const QString &icon)
-{
-    ui->tbMenu->setMenu(menu);
-    ui->tbMenu->setIcon(QIcon(icon));
-}
-
-void Widget::maximizeBtnClicked()
-{
-    if (isFullScreen() or isMaximized())
-    {
-        ui->pbMax->setIcon(QIcon(":/ui/images/app_max.png"));
-        setWindowState(windowState() & ~Qt::WindowFullScreen & ~Qt::WindowMaximized);
-    }
-    else
-    {
-        ui->pbMax->setIcon(QIcon(":/ui/images/app_rest.png"));
-        setWindowState(windowState() | Qt::WindowFullScreen | Qt::WindowMaximized);
-    }
-}
-
-void Widget::minimizeBtnClicked()
-{
-    if (isMinimized())
-    {
-        setWindowState(windowState() & ~Qt::WindowMinimized);
-    }
-    else
-    {
-        setWindowState(windowState() | Qt::WindowMinimized);
-    }
 }
 
 void Widget::setStatusOnline()
@@ -1087,21 +688,6 @@ void Widget::setStatusAway()
 void Widget::setStatusBusy()
 {
     core->setStatus(Status::Busy);
-}
-
-bool Widget::eventFilter(QObject *, QEvent *event)
-{
-    if (event->type() == QEvent::Wheel)
-    {
-        QWheelEvent * whlEvnt =  static_cast< QWheelEvent * >( event );
-        whlEvnt->angleDelta().setX(0);
-    }
-    return false;
-}
-
-bool Widget::getIsWindowMinimized()
-{
-    return static_cast<bool>(isWindowMinimized);
 }
 
 void Widget::onMessageSendResult(int friendId, const QString& message, int messageId)

@@ -130,7 +130,6 @@ void Settings::load()
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
-        useNativeDecoration = s.value("nativeDecoration", true).toBool();
     s.endGroup();
 
     s.beginGroup("State");
@@ -230,7 +229,6 @@ void Settings::save(QString path)
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("nativeStyle", useNativeStyle);
-        s.setValue("nativeDecoration", useNativeDecoration);
     s.endGroup();
 
     s.beginGroup("State");
@@ -476,16 +474,6 @@ bool Settings::getUseNativeStyle() const
 void Settings::setUseNativeStyle(bool value)
 {
     useNativeStyle = value;
-}
-
-bool Settings::getUseNativeDecoration() const
-{
-    return useNativeDecoration;
-}
-
-void Settings::setUseNativeDecoration(bool value)
-{
-    useNativeDecoration = value;
 }
 
 QByteArray Settings::getWindowGeometry() const
