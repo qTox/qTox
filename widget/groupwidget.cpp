@@ -79,14 +79,14 @@ void GroupWidget::updateStatusLight()
 
     if (g->hasNewMessages == 0)
     {
-        statusPic.setPixmap(QPixmap(":img/status/dot_groupchat.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     }
     else
     {
         if (g->userWasMentioned == 0)
-            statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_newmessages.png"));
+            statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
         else
-            statusPic.setPixmap(QPixmap(":img/status/dot_groupchat_notification.png"));
+            statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
     }
 }
 
