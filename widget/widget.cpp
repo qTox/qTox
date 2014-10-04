@@ -130,16 +130,7 @@ Widget::Widget(QWidget *parent)
     ui->nameLabel->setEditable(true);
     ui->statusLabel->setEditable(true);
 
-    ui->statusLabel->setFont(Style::getFont(Style::Medium));
-    ui->nameLabel->setFont(Style::getFont(Style::ExtraBig));
-
-    // delay setting username and message until Core inits
-    //ui->nameLabel->setText(core->getUsername());
-    ui->nameLabel->setStyleSheet("QLabel { color : white; font-size: 11pt; font-weight:bold;}");
-    //ui->statusLabel->setText(core->getStatusMessage());
-    ui->statusLabel->setStyleSheet("QLabel { color : white; font-size: 8pt;}");
-
-    ui->statusButton->setStyleSheet(Style::getStylesheet(":/ui/statusButton/statusButton.css"));
+    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 
     QMenu *statusButtonMenu = new QMenu(ui->statusButton);
     QAction* setStatusOnline = statusButtonMenu->addAction(Widget::tr("Online","Button to set your status to 'Online'"));
@@ -150,22 +141,12 @@ Widget::Widget(QWidget *parent)
     setStatusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
     ui->statusButton->setMenu(statusButtonMenu);
 
-    ui->titleBar->setMouseTracking(true);
-    ui->LTitle->setMouseTracking(true);
-    ui->tbMenu->setMouseTracking(true);
-    ui->pbMin->setMouseTracking(true);
-    ui->pbMax->setMouseTracking(true);
-    ui->pbClose->setMouseTracking(true);
-    ui->statusHead->setMouseTracking(true);
-
-    //ui->friendList->viewport()->installEventFilter(this);
-
     // disable proportional scaling
     ui->mainSplitter->setStretchFactor(0,0);
     ui->mainSplitter->setStretchFactor(1,1);
 
-    ui->statusButton->setObjectName("offline");
-    ui->statusButton->style()->polish(ui->statusButton);
+    ui->statusButton->setProperty("status", "offline");
+    Style::repolish(ui->statusButton);
 
     camera = new Camera;
     settingsDialog = new SettingsDialog(this);
@@ -359,26 +340,23 @@ void Widget::onStatusSet(Status status)
 {
     //We have to use stylesheets here, there's no way to
     //prevent the button icon from moving when pressed otherwise
-    if (status == Status::Online)
+    switch (status)
     {
-        ui->statusButton->setObjectName("online");
-        ui->statusButton->style()->polish(ui->statusButton);
+    case Status::Online:
+        ui->statusButton->setProperty("status" ,"online");
+        break;
+    case Status::Away:
+        ui->statusButton->setProperty("status" ,"away");
+        break;
+    case Status::Busy:
+        ui->statusButton->setProperty("status" ,"busy");
+        break;
+    case Status::Offline:
+        ui->statusButton->setProperty("status" ,"offline");
+        break;
     }
-    else if (status == Status::Away)
-    {
-        ui->statusButton->setObjectName("away");
-        ui->statusButton->style()->polish(ui->statusButton);
-    }
-    else if (status == Status::Busy)
-    {
-        ui->statusButton->setObjectName("busy");
-        ui->statusButton->style()->polish(ui->statusButton);
-    }
-    else if (status == Status::Offline)
-    {
-        ui->statusButton->setObjectName("offline");
-        ui->statusButton->style()->polish(ui->statusButton);
-    }
+
+    Style::repolish(ui->statusButton);
 }
 
 void Widget::onAddClicked()

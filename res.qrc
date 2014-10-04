@@ -147,5 +147,6 @@
         <file>img/group_2x.png</file>
         <file>ui/chatroomWidgets/genericChatroomWidget.css</file>
         <file>ui/fileTransferInstance/sliverRTEdge.png</file>
+        <file>ui/window/statusPanel.css</file>
     </qresource>
 </RCC>

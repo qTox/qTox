@@ -79,7 +79,7 @@ QFont Style::getFont(Style::Font font)
     // fonts as defined in
     // https://github.com/ItsDuke/Tox-UI/blob/master/UI%20GUIDELINES.md
     static QFont fonts[] = {
-        appFont(15, QFont::Bold),
+        appFont(16, QFont::Bold),
         appFont(14, QFont::Normal),
         appFont(14, QFont::Bold),
         appFont(13, QFont::Normal),
