@@ -77,6 +77,7 @@ private slots:
     void onTransferClicked();
     void onSettingsClicked();
     void onFailedToStartCore();
+    void onBadProxyCore();
     void onAvatarClicked();
     void onSelfAvatarLoaded(const QPixmap &pic);
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);

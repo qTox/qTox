@@ -66,7 +66,7 @@ SettingsWidget::SettingsWidget(Camera* cam, QWidget* parent)
     tabBar->setIconSize(QSize(20, 20));
     tabBar->setShape(QTabBar::RoundedSouth);
 
-    connect(tabBar, SIGNAL(currentChanged(int)), this, SLOT(onTabChanged(int)));
+    connect(tabBar, &QTabBar::currentChanged, this, &SettingsWidget::onTabChanged);
 }
 
 SettingsWidget::~SettingsWidget()

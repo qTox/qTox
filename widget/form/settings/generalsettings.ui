@@ -76,6 +76,52 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="proxyGroup">
+     <property name="title">
+      <string>Proxy settings</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayoutProxy">
+      <item>
+       <widget class="QCheckBox" name="cbUDPDisabled">
+        <property name="text">
+         <string extracomment="Text on checkbox to disable UDP">Disable UDP (not recommended)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutProxyLabel">
+        <item>
+         <widget class="QLabel" name="proxyAddrLabel">
+          <property name="text">
+           <string extracomment="Text on proxy addr label">Proxy address</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="proxyPortLabel">
+          <property name="text">
+           <string extracomment="Text on proxy port label">Proxy port</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutProxyBoxes">
+        <item>
+         <widget class="QLineEdit" name="proxyAddr">
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="proxyPort">
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

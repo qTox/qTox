@@ -138,6 +138,7 @@ signals:
     void failedToSetTyping(bool typing);
 
     void failedToStart();
+    void badProxy();
 
     void fileSendStarted(ToxFile file);
     void fileReceiveRequested(ToxFile file);
