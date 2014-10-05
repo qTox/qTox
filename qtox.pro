@@ -84,6 +84,12 @@ win32 {
 HEADERS  += widget/form/addfriendform.h \
     widget/form/chatform.h \
     widget/form/groupchatform.h \
+    widget/form/settingswidget.h \
+    widget/form/settings/genericsettings.h \
+    widget/form/settings/generalform.h \
+    widget/form/settings/identityform.h \
+    widget/form/settings/privacyform.h \
+    widget/form/settings/avform.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
     widget/tool/friendrequestdialog.h \
@@ -115,7 +121,6 @@ HEADERS  += widget/form/addfriendform.h \
     corestructs.h \
     coredefines.h \
     coreav.h \
-    widget/settingsdialog.h \
     widget/tool/chatactions/messageaction.h \
     widget/tool/chatactions/filetransferaction.h \
     widget/tool/chatactions/systemmessageaction.h \
@@ -126,6 +131,11 @@ SOURCES += \
     widget/form/addfriendform.cpp \
     widget/form/chatform.cpp \
     widget/form/groupchatform.cpp \
+    widget/form/settingswidget.cpp \
+    widget/form/settings/generalform.cpp \
+    widget/form/settings/identityform.cpp \
+    widget/form/settings/privacyform.cpp \
+    widget/form/settings/avform.cpp \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
     widget/tool/friendrequestdialog.cpp \
@@ -157,7 +167,6 @@ SOURCES += \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp \
     corestructs.cpp \
-    widget/settingsdialog.cpp \
     widget/tool/chatactions/messageaction.cpp \
     widget/tool/chatactions/filetransferaction.cpp \
     widget/tool/chatactions/systemmessageaction.cpp \
