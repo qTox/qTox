@@ -1,7 +1,6 @@
 div.name {
   color: @black;
   font: @bigBold;
-  font-weight: bold; /* @bigBold doesn't actually work */
 }
 
 div.message {
@@ -41,7 +40,7 @@ span.quote {
 div.green {
   margin-top: 12px;
   margin-bottom: 12px;
-  margin-left: 12px;
+  margin-left: 0px;
   margin-right: 12px;
   color: @white;
   background-color: @green;
@@ -51,7 +50,7 @@ div.green {
 div.silver {
   margin-top: 12px;
   margin-bottom: 12px;
-  margin-left: 12px;
+  margin-left: 0px;
   margin-right: 12px;
   color: @black;
   background-color: @lightGrey;
@@ -61,7 +60,7 @@ div.silver {
 div.red {
   margin-top: 12px;
   margin-bottom: 12px;
-  margin-left: 12px;
+  margin-left: 0px;
   margin-right: 12px;
   color: @white;
   background-color: @red;

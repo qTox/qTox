@@ -1,0 +1,70 @@
+#statusPanel 
+{
+  background-color: @darkGrey;
+}
+
+#statusPanel > #statusHead > #nameLabel {
+  font: @extraBig;
+  color: @white;
+}
+
+#statusPanel > #statusHead > #statusLabel {
+  font: @smallLight;
+  color: @lightGrey;
+}
+
+#statusPanel > #statusHead > #statusButton
+{
+    background: none;
+    background-color: @mediumGrey;
+    border: none;
+    border-radius: 6px;
+    width: 20px;
+    height: 40px;
+}
+
+#statusPanel > #statusHead > #statusButton[status="online"]
+{
+  image: url(":ui/statusButton/dot_online.png") center center;
+}
+
+#statusPanel > #statusHead > #statusButton[status="away"]
+{
+  image: url(":ui/statusButton/dot_idle.png") center center;
+}
+
+#statusPanel > #statusHead > #statusButton[status="busy"]
+{
+  image: url(":ui/statusButton/dot_busy.png") center center;
+}
+
+#statusPanel > #statusHead > #statusButton[status="offline"]
+{
+  image: url(":ui/statusButton/dot_away.png") center center;
+}
+
+/*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
+#statusPanel > #statusHead > #statusButton:hover 
+{
+  background-color: @mediumGreyLight;
+}
+
+#statusPanel > #statusHead > #statusButton:pressed 
+{
+  background-color: @mediumGrey;
+}
+
+#statusPanel > #statusHead > #statusButton:focus {
+  outline: none;
+}
+
+#statusPanel > #statusHead > #statusButton::menu-indicator {image: none;}
+
+#statusPanel > #statusHead > #statusButton::menu-indicator:pressed, #statusPanel > #statusHead > #statusButton::menu-indicator:open 
+{
+  image: url(":ui/statusButton/menu_indicator.png");
+  subcontrol-origin: padding;
+  subcontrol-position: bottom center;
+  position: relative;
+  bottom: 2px;
+}

@@ -121,9 +121,6 @@ public:
     bool getUseNativeStyle() const;
     void setUseNativeStyle(bool value);
 
-    bool getUseNativeDecoration() const;
-    void setUseNativeDecoration(bool value);
-
     QByteArray getWindowGeometry() const;
     void setWindowGeometry(const QByteArray &value);
 
@@ -170,7 +167,6 @@ private:
     int     emojiFontPointSize;
     bool minimizeOnClose;
     bool useNativeStyle;
-    bool useNativeDecoration;
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;

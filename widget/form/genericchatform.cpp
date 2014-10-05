@@ -228,9 +228,8 @@ void GenericChatForm::addSystemInfoMessage(const QString &message, const QString
 
 QString GenericChatForm::getElidedName(const QString& name)
 {
-    QFont font;
-    font.setBold(true);
-    QFontMetrics fm(font);
+    // update this whenever you change the font in innerStyle.css
+    QFontMetrics fm(Style::getFont(Style::BigBold));
 
     return fm.elidedText(name, Qt::ElideRight, chatWidget->nameColWidth());
 }

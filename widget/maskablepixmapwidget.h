@@ -42,6 +42,7 @@ protected:
 private:
     QPixmap pixmap;
     QPixmap mask;
+    QPixmap renderTarget;
     QSize size;
     QString maskName;
     QColor backgroundColor;

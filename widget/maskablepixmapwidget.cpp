@@ -19,6 +19,7 @@
 
 MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName)
     : QWidget(parent)
+    , renderTarget(size)
     , backgroundColor(Qt::white)
     , clickable(false)
 {
@@ -106,17 +107,16 @@ void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
 
 QPixmap MaskablePixmapWidget::getPixmap() const
 {
-    return pixmap;
+    return renderTarget;
 }
 
 void MaskablePixmapWidget::paintEvent(QPaintEvent *)
 {
-    QPixmap tmp(width(), height());
-    tmp.fill(Qt::transparent);
+    renderTarget.fill(Qt::transparent);
 
     QPoint offset((width() - pixmap.size().width())/2,(height() - pixmap.size().height())/2); // centering the pixmap
 
-    QPainter painter(&tmp);
+    QPainter painter(&renderTarget);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter.fillRect(0,0,width(),height(),backgroundColor);
     painter.drawPixmap(offset,pixmap);
@@ -125,7 +125,7 @@ void MaskablePixmapWidget::paintEvent(QPaintEvent *)
     painter.end();
 
     painter.begin(this);
-    painter.drawPixmap(0,0,tmp);
+    painter.drawPixmap(0,0,renderTarget);
 }
 
 void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)
