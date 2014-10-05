@@ -434,10 +434,6 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     f->friendStatus = status;
     f->widget->updateStatusLight();
-
-    // Workaround widget style after returning to list
-//    if (f->widget->isActive())
-//        f->widget->setAsActiveChatroom();
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
