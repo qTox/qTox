@@ -22,19 +22,35 @@
 #include "widget/form/settings/identityform.h"
 #include "widget/form/settings/privacyform.h"
 #include "widget/form/settings/avform.h"
-#include <QTabWidget>
+#include <QTabBar>
+#include <QStackedWidget>
 
 SettingsWidget::SettingsWidget(Camera* cam, QWidget* parent)
     : QWidget(parent)
 {
-    body = new QWidget();
-    head = new QWidget();
-
+    body = new QWidget(this);
     QVBoxLayout *bodyLayout = new QVBoxLayout();
     body->setLayout(bodyLayout);
 
-    settingsTabs = new QTabWidget();
-    bodyLayout->addWidget(settingsTabs);
+    head = new QWidget(this);
+    QHBoxLayout *headLayout = new QHBoxLayout();
+    head->setLayout(headLayout);
+
+    imgLabel = new QLabel();
+    headLayout->addWidget(imgLabel);
+
+    nameLabel = new QLabel();
+    QFont bold;
+    bold.setBold(true);
+    nameLabel->setFont(bold);
+    headLayout->addWidget(nameLabel);
+    headLayout->addStretch(1);
+
+    settingsWidgets = new QStackedWidget;
+    bodyLayout->addWidget(settingsWidgets);
+
+    tabBar = new QTabBar;
+    bodyLayout->addWidget(tabBar);
 
     GeneralForm *gfrm = new GeneralForm;
     ifrm = new IdentityForm;
@@ -44,10 +60,13 @@ SettingsWidget::SettingsWidget(Camera* cam, QWidget* parent)
     GenericForm *cfgForms[] = {gfrm, ifrm, pfrm, avfrm};
     for (auto cfgForm : cfgForms)
     {
-        settingsTabs->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
+        tabBar->addTab(cfgForm->getFormIcon(), "");
+        settingsWidgets->addWidget(cfgForm);
     }
+    tabBar->setIconSize(QSize(20, 20));
+    tabBar->setShape(QTabBar::RoundedSouth);
 
-    connect(settingsTabs, SIGNAL(currentChanged(int)), this, SLOT(onTabChanged(int)));
+    connect(tabBar, SIGNAL(currentChanged(int)), this, SLOT(onTabChanged(int)));
 }
 
 SettingsWidget::~SettingsWidget()
@@ -60,9 +79,14 @@ void SettingsWidget::show(Ui::MainWindow& ui)
     ui.mainHead->layout()->addWidget(head);
     body->show();
     head->show();
+    onTabChanged(tabBar->currentIndex());
 }
 
 void SettingsWidget::onTabChanged(int index)
 {
-    static_cast<GenericForm*>(this->settingsTabs->widget(index))->updateContent();
+    this->settingsWidgets->setCurrentIndex(index);
+    GenericForm *currentWidget = static_cast<GenericForm*>(this->settingsWidgets->widget(index));
+    currentWidget->updateContent();
+    nameLabel->setText(currentWidget->getFormName());
+    imgLabel->setPixmap(currentWidget->getFormIcon().scaledToHeight(40, Qt::SmoothTransformation));
 }

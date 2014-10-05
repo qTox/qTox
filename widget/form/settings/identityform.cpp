@@ -37,11 +37,11 @@ IdentityForm::IdentityForm() :
     small.setPixelSize(13);
     small.setKerning(false);
 
-    toxId->setTextInteractionFlags(Qt::TextSelectableByMouse);
+//    toxId->setTextInteractionFlags(Qt::TextSelectableByMouse);
     toxId->setReadOnly(true);
-    toxId->setFrameStyle(QFrame::NoFrame);
-    toxId->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    toxId->setFixedHeight(toxId->document()->size().height()*2);
+//    toxId->setFrameStyle(QFrame::NoFrame);
+//    toxId->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    toxId->setFixedHeight(toxId->document()->size().height()*2);
     toxId->setFont(small);
     
     bodyUI->toxGroup->layout()->addWidget(toxId);
@@ -59,7 +59,7 @@ IdentityForm::~IdentityForm()
 void IdentityForm::copyIdClicked()
 {
     toxId->selectAll();
-    QString txt = toxId->toPlainText();
+    QString txt = toxId->text();
     txt.replace('\n',"");
     QApplication::clipboard()->setText(txt);
 }

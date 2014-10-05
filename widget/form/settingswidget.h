@@ -25,7 +25,9 @@ class GeneralForm;
 class IdentityForm;
 class PrivacyForm;
 class AVForm;
-class QTabWidget;
+class QTabBar;
+class QStackedWidget;
+class QLabel;
 
 namespace Ui {class MainWindow;}
 
@@ -45,7 +47,9 @@ private slots:
 private:
     QWidget *head, *body; // keep the others private
     IdentityForm *ifrm;
-    QTabWidget *settingsTabs;
+    QStackedWidget *settingsWidgets;
+    QTabBar *tabBar;
+    QLabel *nameLabel, *imgLabel;
 };
 
 #endif // SETTINGSWIDGET_H
