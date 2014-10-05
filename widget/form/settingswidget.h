@@ -25,6 +25,7 @@ class GeneralForm;
 class IdentityForm;
 class PrivacyForm;
 class AVForm;
+class QTabWidget;
 
 namespace Ui {class MainWindow;}
 
@@ -38,9 +39,13 @@ public:
     void show(Ui::MainWindow &ui);
     IdentityForm *getIdentityForm() {return ifrm;}
 
+private slots:
+    void onTabChanged(int);
+
 private:
     QWidget *head, *body; // keep the others private
     IdentityForm *ifrm;
+    QTabWidget *settingsTabs;
 };
 
 #endif // SETTINGSWIDGET_H

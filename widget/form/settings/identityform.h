@@ -50,7 +50,7 @@ public:
     void setUserName(const QString &name);
     void setStatusMessage(const QString &msg);
 
-    void show(SettingsWidget& sw);
+    virtual void updateContent();
 
 signals:
     void userNameChanged(QString);

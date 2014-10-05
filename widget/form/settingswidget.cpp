@@ -33,7 +33,7 @@ SettingsWidget::SettingsWidget(Camera* cam, QWidget* parent)
     QVBoxLayout *bodyLayout = new QVBoxLayout();
     body->setLayout(bodyLayout);
 
-    QTabWidget *settingsTabs = new QTabWidget();
+    settingsTabs = new QTabWidget();
     bodyLayout->addWidget(settingsTabs);
 
     GeneralForm *gfrm = new GeneralForm;
@@ -46,6 +46,8 @@ SettingsWidget::SettingsWidget(Camera* cam, QWidget* parent)
     {
         settingsTabs->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
     }
+
+    connect(settingsTabs, SIGNAL(currentChanged(int)), this, SLOT(onTabChanged(int)));
 }
 
 SettingsWidget::~SettingsWidget()
@@ -58,4 +60,9 @@ void SettingsWidget::show(Ui::MainWindow& ui)
     ui.mainHead->layout()->addWidget(head);
     body->show();
     head->show();
+}
+
+void SettingsWidget::onTabChanged(int index)
+{
+    static_cast<GenericForm*>(this->settingsTabs->widget(index))->updateContent();
 }

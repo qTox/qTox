@@ -14,6 +14,7 @@
     See the COPYING file for more details.
 */
 
+#include "core.h"
 #include "ui_identitysettings.h"
 #include "identityform.h"
 #include "widget/form/settingswidget.h"
@@ -65,20 +66,17 @@ void IdentityForm::copyIdClicked()
 
 void IdentityForm::onUserNameEdited()
 {
-    emit userNameChanged(bodyUI->userName->text());
+    Core::getInstance()->setUsername(bodyUI->userName->text());
 }
 
 void IdentityForm::onStatusMessageEdited()
 {
-    emit statusMessageChanged(bodyUI->statusMessage->text());
+    Core::getInstance()->setStatusMessage(bodyUI->statusMessage->text());
 }
 
-void IdentityForm::show(SettingsWidget& sw)
+void IdentityForm::updateContent()
 {
-    bodyUI->userName->setText(Core::getInstance()->getUsername());
-    bodyUI->statusMessage->setText(Core::getInstance()->getStatusMessage());
     toxId->setText(Core::getInstance()->getSelfId().toString());
-    GenericForm::show(sw);
 }
 
 void IdentityForm::setUserName(const QString &name)

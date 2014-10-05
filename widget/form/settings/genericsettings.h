@@ -27,14 +27,7 @@ public:
     GenericForm(const QString &name, const QPixmap &icon) : formName(name), formIcon(icon) {;}
     ~GenericForm() {;}
 
-    virtual void show(SettingsWidget& sw)
-    {
-//        sw.body->layout()->addWidget(&body);
-//        body.show();
-//        sw.head->layout()->addWidget(&head);
-//        head.show();
-    }
-
+    virtual void updateContent() {;}
     QString getFormName() {return formName;}
     QPixmap getFormIcon() {return formIcon;}
 
