@@ -86,6 +86,9 @@
         <property name="text">
          <string extracomment="Text on checkbox to disable UDP">Disable UDP (not recommended)</string>
         </property>
+        <property name="toolTip">
+         <string extracomment="force tcp checkbox tooltip">This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</string>
+        </property>
        </widget>
       </item>
       <item>
