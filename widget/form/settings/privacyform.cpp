@@ -17,10 +17,9 @@
 #include "privacyform.h"
 #include "widget/form/settingswidget.h"
 
-PrivacyForm::PrivacyForm()
+PrivacyForm::PrivacyForm() :
+    GenericForm(tr("Privacy settings"), QPixmap(":/img/settings/privacy.png"))
 {
-    icon.setPixmap(QPixmap(":/img/settings/privacy.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
-    label.setText(tr("Privacy settings"));
 }
 
 PrivacyForm::~PrivacyForm()

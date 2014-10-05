@@ -21,9 +21,15 @@
 #include <QGroupBox>
 #include <QTextEdit>
 #include <QLineEdit>
+#include <QLabel>
+
 class CroppingLabel;
 
-class ClickableTE : public QTextEdit
+namespace Ui {
+class IdentitySettings;
+}
+
+class ClickableTE : public QLineEdit
 {
     Q_OBJECT
 public:
@@ -41,9 +47,10 @@ public:
     IdentityForm();
     ~IdentityForm();
 
-    QLineEdit* userName, * statusMessage;
+    void setUserName(const QString &name);
+    void setStatusMessage(const QString &msg);
 
-    void show(SettingsWidget& sw);
+    virtual void updateContent();
 
 signals:
     void userNameChanged(QString);
@@ -55,11 +62,9 @@ private slots:
     void onStatusMessageEdited();
 
 private:
-    QGroupBox* toxGroup, * publicGroup;
+    Ui::IdentitySettings* bodyUI;
+
     ClickableTE* toxId;
-    QLabel* userNameLabel, * statusMessageLabel;
-    CroppingLabel* toxIdLabel;
-    QVBoxLayout* vLayout, * toxLayout;
 };
 
 #endif

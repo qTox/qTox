@@ -22,6 +22,11 @@
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QPushButton>
+
+namespace Ui {
+class AVSettings;
+}
+
 class Camera;
 
 class AVForm : public GenericForm
@@ -33,10 +38,10 @@ public:
 
 private slots:
     void onTestVideoPressed();
+
 private:
-    QGroupBox* videoGroup;
-    QVBoxLayout* videoLayout;
-    QPushButton* testVideo;
+    Ui::AVSettings *bodyUI;
+
     SelfCamView* camView;
     
     void showTestVideo();

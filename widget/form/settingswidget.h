@@ -25,47 +25,31 @@ class GeneralForm;
 class IdentityForm;
 class PrivacyForm;
 class AVForm;
-namespace Ui {class MainWindow;};
+class QTabBar;
+class QStackedWidget;
+class QLabel;
+
+namespace Ui {class MainWindow;}
 
 class SettingsWidget : public QWidget
 {
     Q_OBJECT
 public:
-    SettingsWidget(Camera* cam);
+    SettingsWidget(Camera* cam, QWidget* parent = nullptr);
     ~SettingsWidget();
 
     void show(Ui::MainWindow &ui);
-    
-    QWidget *head, *body; // keep the others private
-    GenericForm* active;
-    GeneralForm* generalForm;
-    IdentityForm* identityForm;
-    PrivacyForm* privacyForm;
-    AVForm* avForm;
-
-public slots:
-    //void setFriendAddress(const QString& friendAddress);
+    IdentityForm *getIdentityForm() {return ifrm;}
 
 private slots:
-    void onGeneralClicked();
-    void onIdentityClicked();
-    void onPrivacyClicked();
-    void onAVClicked();
+    void onTabChanged(int);
 
 private:
-    QWidget *main, *foot;
-    // main consists of body+foot for Ui::MainWindow
-    QVBoxLayout *mainLayout;
-    
-    void hideSettingsForms();
-
-    // the code pertaining to the icons is mostly copied from ui_mainwindow.h
-    QHBoxLayout *iconsLayout;
-    QPushButton *generalButton;
-    QPushButton *identityButton;
-    QPushButton *privacyButton;
-    QPushButton *avButton;
-    void prepButtons(); // just so I can move the crap to the bottom of the file
+    QWidget *head, *body; // keep the others private
+    IdentityForm *ifrm;
+    QStackedWidget *settingsWidgets;
+    QTabBar *tabBar;
+    QLabel *nameLabel, *imgLabel;
 };
 
 #endif // SETTINGSWIDGET_H

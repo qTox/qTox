@@ -26,7 +26,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET    = qtox
 TEMPLATE  = app
 FORMS    += \
-    mainwindow.ui
+    mainwindow.ui \
+    widget/form/settings/generalsettings.ui \
+    widget/form/settings/avsettings.ui \
+    widget/form/settings/identitysettings.ui
 CONFIG   += c++11
 
 TRANSLATIONS = translations/de.ts \
