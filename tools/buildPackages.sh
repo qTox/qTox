@@ -88,7 +88,8 @@ mv qTox-master $VERNAME
 # Build packages
 cd $VERNAME
 ./bootstrap.sh
-debuild -us -uc
+debuild -us -uc -aamd64
+debuild -us -uc -ai386
 cd ..
 
 # alien warns that it should probably be run as root...

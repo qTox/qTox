@@ -20,6 +20,8 @@ However, it is not a fork.
 
 This client runs on Windows, Linux and Mac natively.<br/>
 
+You can find the latest versions of qTox <a href="https://github.com/tux3/qTox/releases">here</a>, or from the Tox Project's servers :
+
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a><br/>
 <a href="https://jenkins.libtoxcore.so/job/ToxGUI%20OS%20X/lastSuccessfulBuild/artifact/qtox.dmg">Mac download </a><br/>
 <a href="https://jenkins.libtoxcore.so/job/qTox-linux-amd64/">Linux download</a> (click "Last successful artifacts")<br/>

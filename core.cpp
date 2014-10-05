@@ -36,6 +36,7 @@
 #include <QDateTime>
 #include <QList>
 #include <QBuffer>
+#include <QMessageBox>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 QList<ToxFile> Core::fileSendQueue;
@@ -166,7 +167,13 @@ void Core::start()
 
     qsrand(time(nullptr));
 
-    loadConfiguration();
+    if (!loadConfiguration())
+    {
+        emit failedToStart();
+        tox_kill(tox);
+        tox = nullptr;
+        return;
+    }
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
@@ -225,9 +232,9 @@ void Core::start()
  * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
  * So I set the tolerance here at 25, and initial DCs should be very rare now.
  * This should be able to go to 50 or 100 without affecting legitimate disconnects'
- * downtime, but lets be conservative for now.
+ * downtime, but lets be conservative for now. Edit: now 40.
  */
-#define CORE_DISCONNECT_TOLERANCE 25
+#define CORE_DISCONNECT_TOLERANCE 40
 
 void Core::process()
 {
@@ -284,7 +291,7 @@ void Core::bootstrapDht()
     qDebug() << "Core: Bootstraping to the DHT ...";
 
     int i=0;
-    while (i < 4)
+    while (i < 2) // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
@@ -306,7 +313,7 @@ void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cUserId, const uint8_t* 
 
 void Core::onFriendMessage(Tox*/* tox*/, int friendId, const uint8_t* cMessage, uint16_t cMessageSize, void* core)
 {
-    emit static_cast<Core*>(core)->friendMessageReceived(friendId, CString::toString(cMessage, cMessageSize));
+    emit static_cast<Core*>(core)->friendMessageReceived(friendId, CString::toString(cMessage, cMessageSize), false);
 }
 
 void Core::onFriendNameChange(Tox*/* tox*/, int friendId, const uint8_t* cName, uint16_t cNameSize, void* core)
@@ -386,7 +393,7 @@ void Core::onConnectionStatusChanged(Tox*/* tox*/, int friendId, uint8_t status,
 
 void Core::onAction(Tox*/* tox*/, int friendId, const uint8_t *cMessage, uint16_t cMessageSize, void *core)
 {
-    emit static_cast<Core*>(core)->actionReceived(friendId, CString::toString(cMessage, cMessageSize));
+    emit static_cast<Core*>(core)->friendMessageReceived(friendId, CString::toString(cMessage, cMessageSize), true);
 }
 
 void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key, uint16_t length,void *core)
@@ -991,7 +998,7 @@ void Core::onFileTransferFinished(ToxFile file)
           emit fileDownloadFinished(file.filePath);
 }
 
-void Core::loadConfiguration()
+bool Core::loadConfiguration()
 {
     QString path = QDir(Settings::getSettingsDirPath()).filePath(CONFIG_FILE_NAME);
 
@@ -999,18 +1006,34 @@ void Core::loadConfiguration()
 
     if (!configurationFile.exists()) {
         qWarning() << "The Tox configuration file was not found";
-        return;
+        return true;
     }
 
     if (!configurationFile.open(QIODevice::ReadOnly)) {
         qCritical() << "File " << path << " cannot be opened";
-        return;
+        return true;
     }
 
     qint64 fileSize = configurationFile.size();
     if (fileSize > 0) {
         QByteArray data = configurationFile.readAll();
-        tox_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size());
+        int error = tox_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size());
+        if (error < 0)
+        {
+            qWarning() << "Core: tox_load failed with error "<<error;
+        }
+        else if (error == 1) // Encrypted data save
+        {
+            qWarning() << "Core: Can not open encrypted tox save";
+            if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted profile"),
+                tr("Your tox profile seems to be encrypted, qTox can't open it\nDo you want to erase this profile ?"),
+                QMessageBox::Ok | QMessageBox::Cancel))
+            {
+                qWarning() << "Core: Couldn't open encrypted save, giving up";
+                configurationFile.close();
+                return false;
+            }
+        }
     }
 
     configurationFile.close();
@@ -1025,6 +1048,7 @@ void Core::loadConfiguration()
         emit statusMessageSet(msg);
 
     loadFriends();
+    return true;
 }
 
 void Core::saveConfiguration()

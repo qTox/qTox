@@ -24,6 +24,7 @@
 #include "misc/settings.h"
 #include "widget/tool/chatactions/messageaction.h"
 #include "widget/tool/chatactions/systemmessageaction.h"
+#include "widget/tool/chatactions/actionaction.h"
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
 #include "widget/maskablepixmapwidget.h"
@@ -36,6 +37,10 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headWidget = new QWidget();
 
     nameLabel = new CroppingLabel();
+    nameLabel->setFont(Style::getFont(Style::MediumBold));
+    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::DarkGrey));
+    nameLabel->setPalette(pal);
+
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     QHBoxLayout *headLayout = new QHBoxLayout(), *mainFootLayout = new QHBoxLayout();
     headTextLayout = new QVBoxLayout();
@@ -43,8 +48,8 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     QVBoxLayout *footButtonsSmall = new QVBoxLayout(), *volMicLayout = new QVBoxLayout();
 
     chatWidget = new ChatAreaWidget();
-    chatWidget->document()->setDefaultStyleSheet(Style::get(":ui/chatArea/innerStyle.css"));
-    chatWidget->setStyleSheet(Style::get(":/ui/chatArea/chatArea.css"));
+    chatWidget->document()->setDefaultStyleSheet(Style::getStylesheet(":ui/chatArea/innerStyle.css"));
+    chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
 
     msgEdit = new ChatTextEdit();
 
@@ -63,25 +68,25 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     footButtonsSmall->setSpacing(2);
 
-    msgEdit->setStyleSheet(Style::get(":/ui/msgEdit/msgEdit.css"));
+    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css"));
     msgEdit->setFixedHeight(50);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
-    sendButton->setStyleSheet(Style::get(":/ui/sendButton/sendButton.css"));
-    fileButton->setStyleSheet(Style::get(":/ui/fileButton/fileButton.css"));
-    emoteButton->setStyleSheet(Style::get(":/ui/emoteButton/emoteButton.css"));
+    sendButton->setStyleSheet(Style::getStylesheet(":/ui/sendButton/sendButton.css"));
+    fileButton->setStyleSheet(Style::getStylesheet(":/ui/fileButton/fileButton.css"));
+    emoteButton->setStyleSheet(Style::getStylesheet(":/ui/emoteButton/emoteButton.css"));
 
     callButton->setObjectName("green");
-    callButton->setStyleSheet(Style::get(":/ui/callButton/callButton.css"));
+    callButton->setStyleSheet(Style::getStylesheet(":/ui/callButton/callButton.css"));
 
     videoButton->setObjectName("green");
-    videoButton->setStyleSheet(Style::get(":/ui/videoButton/videoButton.css"));
+    videoButton->setStyleSheet(Style::getStylesheet(":/ui/videoButton/videoButton.css"));
 
-    QString volButtonStylesheet = Style::get(":/ui/volButton/volButton.css");
+    QString volButtonStylesheet = Style::getStylesheet(":/ui/volButton/volButton.css");
     volButton->setObjectName("green");
     volButton->setStyleSheet(volButtonStylesheet);
 
-    QString micButtonStylesheet = Style::get(":/ui/micButton/micButton.css");
+    QString micButtonStylesheet = Style::getStylesheet(":/ui/micButton/micButton.css");
     micButton->setObjectName("green");
     micButton->setStyleSheet(micButtonStylesheet);
 
@@ -162,14 +167,22 @@ void GenericChatForm::onSaveLogClicked()
     file.close();
 }
 
-void GenericChatForm::addMessage(QString author, QString message, QDateTime datetime)
+void GenericChatForm::addMessage(QString author, QString message, bool isAction, QDateTime datetime)
 {
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
     bool isMe = (author == Widget::getInstance()->getUsername());
 
-    if (previousName == author)
+    if (isAction)
+    {
+        chatWidget->insertMessage(new ActionAction (getElidedName(author), message, date, isMe));
+        previousName = ""; // next msg has a name regardless
+        return;
+    }
+    else if (previousName == author)
         chatWidget->insertMessage(new MessageAction("", message, date, isMe));
-    else chatWidget->insertMessage(new MessageAction(getElidedName(author) , message, date, isMe));
+    else
+        chatWidget->insertMessage(new MessageAction(getElidedName(author), message, date, isMe));
+
     previousName = author;
 }
 
@@ -215,9 +228,8 @@ void GenericChatForm::addSystemInfoMessage(const QString &message, const QString
 
 QString GenericChatForm::getElidedName(const QString& name)
 {
-    QFont font;
-    font.setBold(true);
-    QFontMetrics fm(font);
+    // update this whenever you change the font in innerStyle.css
+    QFontMetrics fm(Style::getFont(Style::BigBold));
 
     return fm.elidedText(name, Qt::ElideRight, chatWidget->nameColWidth());
 }

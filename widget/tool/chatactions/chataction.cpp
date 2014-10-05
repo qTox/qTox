@@ -41,13 +41,15 @@ QString ChatAction::QImage2base64(const QImage &img)
 QString ChatAction::getName()
 {
     if (isMe)
-        return QString("<div class=name_me>" + toHtmlChars(name) + "</div>");
+        return QString("<div class=%1>%2</div>").arg("name_me").arg(toHtmlChars(name));
     else
-        return QString("<div class=name>" + toHtmlChars(name) + "</div>");
+        return QString("<div class=%1>%2</div>").arg("name").arg(toHtmlChars(name));
 }
 
 QString ChatAction::getDate()
 {
-    QString res = date;
-    return res;
+    if (isMe)
+        return QString("<div class=date_me>" + toHtmlChars(date) + "</div>");
+    else
+        return QString("<div class=date>" + toHtmlChars(date) + "</div>");
 }

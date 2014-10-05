@@ -74,7 +74,7 @@ private:
     QImage pic;
     QString filename, size, speed, eta;
     QString filenameElided;
-    QDateTime started;
+    QDateTime startTime, lastUpdateTime;
     long long lastBytesSent, totalBytes;
     int fileNum;
     int friendId;

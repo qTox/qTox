@@ -17,12 +17,45 @@
 #ifndef STYLE_H
 #define STYLE_H
 
+#include <QColor>
+#include <QFont>
+
 class QString;
+class QWidget;
 
 class Style
 {
 public:
-    static QString get(const QString& filename);
+    enum ColorPalette
+    {
+        Green,
+        Yellow,
+        Red,
+        Black,
+        DarkGrey,
+        MediumGrey,
+        MediumGreyLight,
+        LightGrey,
+        White,
+    };
+
+    enum Font
+    {
+        ExtraBig,   // 14px, bold
+        Big,        // 12px
+        BigBold,    // 12px, bold
+        Medium,     // 11px
+        MediumBold, // 11px, bold
+        Small,      // 10px
+        SmallLight  // 10px, light
+    };
+
+    static QString getStylesheet(const QString& filename);
+    static QColor getColor(ColorPalette entry);
+    static QFont getFont(Font font);
+    static QString resolve(QString qss);
+    static void repolish(QWidget* w);
+
 private:
     Style();
 };

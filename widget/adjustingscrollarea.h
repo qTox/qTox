@@ -27,7 +27,6 @@ public:
 
     virtual void resizeEvent(QResizeEvent *ev) override;
     virtual QSize sizeHint() const override;
-    virtual bool eventFilter(QObject *obj, QEvent *ev) override;
 };
 
 #endif // ADJUSTINGSCROLLAREA_H

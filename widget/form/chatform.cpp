@@ -34,18 +34,26 @@
 #include "core.h"
 #include "widget/widget.h"
 #include "widget/maskablepixmapwidget.h"
+#include "widget/croppinglabel.h"
+#include "misc/style.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
 {
     nameLabel->setText(f->getName());
-    avatar->setPixmap(QPixmap(":/img/contact_dark.png"));
+
+    avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 
     statusMessageLabel = new CroppingLabel();
+    statusMessageLabel->setFont(Style::getFont(Style::Medium));
+    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
+    statusMessageLabel->setPalette(pal);
+
     netcam = new NetCamView();
 
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
+    headTextLayout->setSpacing(0);
 
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Core::getInstance(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
@@ -78,9 +86,18 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
     QString name = Widget::getInstance()->getUsername();
+    if (msg.startsWith("/me "))
+    {
+        msg = msg.right(msg.length() - 4);
+        addMessage(name, msg, true);
+        emit sendAction(f->friendId, msg);
+    }
+    else
+    {
+        addMessage(name, msg, false);
+        emit sendMessage(f->friendId, msg);
+    }
     msgEdit->clear();
-    addMessage(name, msg);
-    emit sendMessage(f->friendId, msg);
 }
 
 void ChatForm::onAttachClicked()
@@ -146,7 +163,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Core::getInstance(), SIGNAL(fileTransferBrokenUnbroken(ToxFile, bool)), fileTrans, SLOT(onFileTransferBrokenUnbroken(ToxFile, bool)));
 
     Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
+    if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
     {
         w->newMessageAlert();
         f->hasNewEvents=true;
@@ -187,7 +204,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     }
 
     Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
+    if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
     {
         w->newMessageAlert();
         f->hasNewEvents=true;
@@ -507,5 +524,5 @@ void ChatForm::onAvatarRemoved(int FriendId)
     if (FriendId != f->friendId)
         return;
 
-    avatar->setPixmap(QPixmap(":/img/contact_dark.png"));
+    avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 }

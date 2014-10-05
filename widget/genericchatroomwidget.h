@@ -17,23 +17,24 @@
 #ifndef GENERICCHATROOMWIDGET_H
 #define GENERICCHATROOMWIDGET_H
 
-#include <QWidget>
+#include <QFrame>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QLabel>
+
+class CroppingLabel;
+class MaskablePixmapWidget;
 
 namespace Ui {
     class MainWindow;
 }
 
-class GenericChatroomWidget : public QWidget
+class GenericChatroomWidget : public QFrame
 {
     Q_OBJECT
 public:
     GenericChatroomWidget(QWidget *parent = 0);
-    void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent (QMouseEvent* event);
-    void leaveEvent(QEvent *);
-    void enterEvent(QEvent *);
 
     virtual void setAsActiveChatroom(){;}
     virtual void setAsInactiveChatroom(){;}
@@ -41,7 +42,14 @@ public:
     virtual void setChatForm(Ui::MainWindow &){;}
     virtual void resetEventFlags(){;}
 
-    int isActive();
+    bool isActive();
+    void setActive(bool active);
+
+    void setName(const QString& name);
+    void setStatusMsg(const QString& status);
+
+    QString getName() const;
+    QString getStatusMsg() const;
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
@@ -49,10 +57,12 @@ signals:
 public slots:
 
 protected:
-    int isActiveWidget;
     QColor lastColor;
     QHBoxLayout layout;
     QVBoxLayout textLayout;
+    MaskablePixmapWidget* avatar;
+    QLabel statusPic;
+    CroppingLabel *nameLabel, *statusMessageLabel;
 };
 
 #endif // GENERICCHATROOMWIDGET_H

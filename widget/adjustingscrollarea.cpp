@@ -48,16 +48,3 @@ QSize AdjustingScrollArea::sizeHint() const
 
     return QScrollArea::sizeHint();
 }
-
-bool AdjustingScrollArea::eventFilter(QObject *obj, QEvent *ev)
-{
-    if (ev->type() == QEvent::Paint)
-    {
-        // workaround: sometimes a child widget gets drawn on top of the scrollbar
-        // so we trigger a repaint afterwards
-        verticalScrollBar()->update();
-        horizontalScrollBar()->update();
-    }
-
-    return QObject::eventFilter(obj, ev);
-}

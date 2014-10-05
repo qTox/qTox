@@ -99,7 +99,7 @@ signals:
     void disconnected();
 
     void friendRequestReceived(const QString& userId, const QString& message);
-    void friendMessageReceived(int friendId, const QString& message);
+    void friendMessageReceived(int friendId, const QString& message, bool isAction);
 
     void friendAdded(int friendId, const QString& userId);
 
@@ -136,8 +136,6 @@ signals:
     void failedToSetStatusMessage(const QString& message);
     void failedToSetStatus(Status status);
     void failedToSetTyping(bool typing);
-
-    void actionReceived(int friendId, const QString& acionMessage);
 
     void failedToStart();
 
@@ -210,7 +208,7 @@ private:
 
     bool checkConnection();
 
-    void loadConfiguration();
+    bool loadConfiguration(); // Returns false for a critical error, true otherwise
     void loadFriends();
 
     static void sendAllFileData(Core* core, ToxFile* file);

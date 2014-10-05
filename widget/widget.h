@@ -47,9 +47,6 @@ class Widget : public QMainWindow
 
 public:
     explicit Widget(QWidget *parent = 0);
-    enum TitleMode { CleanTitle = 0, OnlyCloseButton, MenuOff, MaxMinOff, FullScreenMode, MaximizeModeOff, MinimizeModeOff, FullTitle };
-    void setTitlebarMode(const TitleMode &flag);
-    void setTitlebarMenu(QMenu *menu, const QString &icon = "");
     void setCentralWidget(QWidget *widget, const QString &widgetName);
     QString getUsername();
     Core* getCore();
@@ -72,8 +69,6 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
 
 private slots:
-    void maximizeBtnClicked();
-    void minimizeBtnClicked();
     void onConnected();
     void onDisconnected();
     void onStatusSet(Status status);
@@ -94,7 +89,7 @@ private slots:
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
-    void onFriendMessageReceived(int friendId, const QString& message);
+    void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, const uint8_t *publicKey,uint16_t length);
@@ -109,32 +104,15 @@ private slots:
     void onMessageSendResult(int friendId, const QString& message, int messageId);
     void onGroupSendResult(int groupId, const QString& message, int result);
 
-protected slots:
-    void moveWindow(QMouseEvent *e);
-
 private:
     void hideMainForms();
+    virtual bool event(QEvent * e);
     Group* createGroup(int groupId);
 
 private:
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
-    TitleMode m_titleMode;
-    bool moveWidget;
-    bool inResizeZone;
-    bool allowToResize;
-    bool resizeVerSup;
-    bool resizeHorEsq;
-    bool resizeDiagSupEsq;
-    bool resizeDiagSupDer;
-    void mousePressEvent(QMouseEvent *e);
-    void mouseReleaseEvent(QMouseEvent *e);
-    void mouseDoubleClickEvent(QMouseEvent *e);
-    void paintEvent (QPaintEvent *);
-    void resizeWindow(QMouseEvent *e);
-    bool event(QEvent *event);
-    int isWindowMinimized;
     Core* core;
     QThread* coreThread;
     AddFriendForm friendForm;
@@ -146,7 +124,6 @@ private:
     Camera* camera;
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
-    bool eventFilter(QObject *, QEvent *event);
 };
 
 #endif // WIDGET_H

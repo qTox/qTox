@@ -51,8 +51,9 @@ contains(JENKINS,YES) {
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
-    LIBS += -L$$PWD/libs/lib -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249 -lOpenAL32
-    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
+    LIBS += -liphlpapi -L$$PWD/libs/lib -ltoxav -ltoxcore -lvpx -lpthread
+    LIBS += -L$$PWD/libs/lib -lopencv_core248 -lopencv_highgui248 -lopencv_imgproc248 -lOpenAL32 -lopus
+    LIBS += -lz -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32
 } else {
     macx {
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
@@ -126,6 +127,7 @@ HEADERS  += widget/form/addfriendform.h \
     widget/tool/chatactions/messageaction.h \
     widget/tool/chatactions/filetransferaction.h \
     widget/tool/chatactions/systemmessageaction.h \
+    widget/tool/chatactions/actionaction.h \
     widget/maskablepixmapwidget.h
 
 SOURCES += \
@@ -171,4 +173,5 @@ SOURCES += \
     widget/tool/chatactions/messageaction.cpp \
     widget/tool/chatactions/filetransferaction.cpp \
     widget/tool/chatactions/systemmessageaction.cpp \
+    widget/tool/chatactions/actionaction.cpp \
     widget/maskablepixmapwidget.cpp
