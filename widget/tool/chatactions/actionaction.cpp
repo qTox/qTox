@@ -40,7 +40,7 @@ void ActionAction::setup(QTextCursor cursor, QTextEdit *)
 
 QString ActionAction::getName()
 {
-    return QString("<div class=action>-*-</div>");
+    return QString("<div class=action>*</div>");
 }
 
 QString ActionAction::getMessage()
