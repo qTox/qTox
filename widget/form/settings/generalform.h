@@ -21,6 +21,10 @@
 #include <QComboBox>
 #include <QCheckBox>
 
+namespace Ui {
+class GeneralSettings;
+}
+
 class GeneralForm : public GenericForm
 {
     Q_OBJECT
@@ -35,9 +39,7 @@ private slots:
     void onSmileyBrowserIndexChanged(int index);
 
 private:
-    QCheckBox enableIPv6, useTranslations, makeToxPortable;
-    QLabel label, smileyPackLabel;
-    QComboBox smileyPackBrowser;
+    Ui::GeneralSettings *bodyUI;
 };
 
 #endif

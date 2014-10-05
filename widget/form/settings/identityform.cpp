@@ -14,6 +14,7 @@
     See the COPYING file for more details.
 */
 
+#include "ui_identitysettings.h"
 #include "identityform.h"
 #include "widget/form/settingswidget.h"
 #include "widget/croppinglabel.h"
@@ -23,34 +24,18 @@
 #include <QApplication>
 #include <QClipboard>
 
-IdentityForm::IdentityForm()
+IdentityForm::IdentityForm() :
+    GenericForm(tr("Your identity"), QPixmap(":/img/settings/identity.png"))
 {
-    icon.setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
-    label.setText(tr("Your identity"));
+    bodyUI = new Ui::IdentitySettings;
+    bodyUI->setupUi(this);
 
-    // public
-    publicGroup = new QGroupBox(tr("Public Information"));
-    userNameLabel = new QLabel(tr("Name","Username/nick"));
-    userName = new QLineEdit();
-    
-    statusMessageLabel = new QLabel(tr("Status","Status message"));
-    statusMessage = new QLineEdit();
-    
-    vLayout = new QVBoxLayout();
-    vLayout->addWidget(userNameLabel);
-    vLayout->addWidget(userName);
-    vLayout->addWidget(statusMessageLabel);
-    vLayout->addWidget(statusMessage);
-    publicGroup->setLayout(vLayout);
-    
     // tox
-    toxGroup = new QGroupBox(tr("Tox ID"));
-    toxIdLabel = new CroppingLabel();
-    toxIdLabel->setText(tr("Your Tox ID (click to copy)"));
     toxId = new ClickableTE();
     QFont small;
     small.setPixelSize(13);
     small.setKerning(false);
+
     toxId->setTextInteractionFlags(Qt::TextSelectableByMouse);
     toxId->setReadOnly(true);
     toxId->setFrameStyle(QFrame::NoFrame);
@@ -58,20 +43,12 @@ IdentityForm::IdentityForm()
     toxId->setFixedHeight(toxId->document()->size().height()*2);
     toxId->setFont(small);
     
-    QVBoxLayout* toxLayout = new QVBoxLayout();
-    toxLayout->addWidget(toxIdLabel);
-    toxLayout->addWidget(toxId);
-    toxGroup->setLayout(toxLayout);
+    bodyUI->toxGroup->layout()->addWidget(toxId);
     
-    layout.setSpacing(30);
-    layout.addWidget(publicGroup);
-    layout.addWidget(toxGroup);
-    layout.addStretch(1);
-    
-    connect(toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
+    connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
-    connect(statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
+    connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
+    connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
 }
 
 IdentityForm::~IdentityForm()
@@ -88,18 +65,28 @@ void IdentityForm::copyIdClicked()
 
 void IdentityForm::onUserNameEdited()
 {
-    emit userNameChanged(userName->text());
+    emit userNameChanged(bodyUI->userName->text());
 }
 
 void IdentityForm::onStatusMessageEdited()
 {
-    emit statusMessageChanged(statusMessage->text());
+    emit statusMessageChanged(bodyUI->statusMessage->text());
 }
 
 void IdentityForm::show(SettingsWidget& sw)
 {
-    userName->setText(Core::getInstance()->getUsername());
-    statusMessage->setText(Core::getInstance()->getStatusMessage());
+    bodyUI->userName->setText(Core::getInstance()->getUsername());
+    bodyUI->statusMessage->setText(Core::getInstance()->getStatusMessage());
     toxId->setText(Core::getInstance()->getSelfId().toString());
     GenericForm::show(sw);
+}
+
+void IdentityForm::setUserName(const QString &name)
+{
+    bodyUI->userName->setText(name);
+}
+
+void IdentityForm::setStatusMessage(const QString &msg)
+{
+    bodyUI->statusMessage->setText(msg);
 }

@@ -14,65 +14,57 @@
     See the COPYING file for more details.
 */
 
+#include "ui_generalsettings.h"
 #include "generalform.h"
 #include "widget/form/settingswidget.h"
 #include "widget/widget.h"
 #include "misc/settings.h"
 #include "misc/smileypack.h"
 
-GeneralForm::GeneralForm()
+GeneralForm::GeneralForm() :
+    GenericForm(tr("General Settings"), QPixmap(":/img/settings/general.png"))
 {
-    icon.setPixmap(QPixmap(":/img/settings/general.png").scaledToHeight(headLayout.sizeHint().height(), Qt::SmoothTransformation));
-    label.setText(tr("General Settings"));
-    
-    enableIPv6.setText(tr("Enable IPv6 (recommended)","Text on a checkbox to enable IPv6"));
-    enableIPv6.setChecked(Settings::getInstance().getEnableIPv6());
-    useTranslations.setText(tr("Use translations","Text on a checkbox to enable translations"));
-    useTranslations.setChecked(Settings::getInstance().getUseTranslations());
-    makeToxPortable.setText(tr("Make Tox portable","Text on a checkbox to make qTox a portable application"));
-    makeToxPortable.setChecked(Settings::getInstance().getMakeToxPortable());
-    makeToxPortable.setToolTip(tr("Save settings to the working directory instead of the usual conf dir","describes makeToxPortable checkbox"));
+    bodyUI = new Ui::GeneralSettings;
+    bodyUI->setupUi(this);
 
-    smileyPackLabel.setText(tr("Smiley Pack", "Text on smiley pack label"));
+    bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
+    bodyUI->cbUseTranslations->setChecked(Settings::getInstance().getUseTranslations());
+    bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
+
     for (auto entry : SmileyPack::listSmileyPacks())
-        smileyPackBrowser.addItem(entry.first, entry.second);
-    smileyPackBrowser.setCurrentIndex(smileyPackBrowser.findData(Settings::getInstance().getSmileyPack()));
+    {
+        bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
+    }
+    bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
     
-    headLayout.addWidget(&label);
-    layout.addWidget(&enableIPv6);
-    layout.addWidget(&useTranslations);
-    layout.addWidget(&makeToxPortable);
-    layout.addWidget(&smileyPackLabel);
-    layout.addWidget(&smileyPackBrowser);
-    layout.addStretch();
-    
-    connect(&enableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
-    connect(&useTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
-    connect(&makeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
-    connect(&smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
+    connect(bodyUI->cbEnableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
+    connect(bodyUI->cbUseTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
+    connect(bodyUI->cbMakeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
+    connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
 }
 
 GeneralForm::~GeneralForm()
 {
+    delete bodyUI;
 }
 
 void GeneralForm::onEnableIPv6Updated()
 {
-    Settings::getInstance().setEnableIPv6(enableIPv6.isChecked());
+    Settings::getInstance().setEnableIPv6(bodyUI->cbEnableIPv6->isChecked());
 }
 
 void GeneralForm::onUseTranslationUpdated()
 {
-    Settings::getInstance().setUseTranslations(useTranslations.isChecked());
+    Settings::getInstance().setUseTranslations(bodyUI->cbUseTranslations->isChecked());
 }
 
 void GeneralForm::onMakeToxPortableUpdated()
 {
-    Settings::getInstance().setMakeToxPortable(makeToxPortable.isChecked());
+    Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
 }
 
 void GeneralForm::onSmileyBrowserIndexChanged(int index)
 {
-    QString filename = smileyPackBrowser.itemData(index).toString();
+    QString filename = bodyUI->smileyPackBrowser->itemData(index).toString();
     Settings::getInstance().setSmileyPack(filename);
 }

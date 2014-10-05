@@ -17,37 +17,30 @@
 #ifndef GENERICFORM_H
 #define GENERICFORM_H
 
-#include <QObject>
-#include <QVBoxLayout>
-#include <QLabel>
+#include <QWidget>
 #include "widget/form/settingswidget.h"
 
-class GenericForm : public QObject
+class GenericForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericForm()
-    {
-        head.setLayout(&headLayout);
-        headLayout.addWidget(&icon);
-        headLayout.addWidget(&label);
-        body.setLayout(&layout);
-    }
-    ~GenericForm() {};
+    GenericForm(const QString &name, const QPixmap &icon) : formName(name), formIcon(icon) {;}
+    ~GenericForm() {;}
 
     virtual void show(SettingsWidget& sw)
     {
-        sw.body->layout()->addWidget(&body);
-        body.show();
-        sw.head->layout()->addWidget(&head);
-        head.show();
+//        sw.body->layout()->addWidget(&body);
+//        body.show();
+//        sw.head->layout()->addWidget(&head);
+//        head.show();
     }
 
+    QString getFormName() {return formName;}
+    QPixmap getFormIcon() {return formIcon;}
+
 protected:
-    QVBoxLayout layout;
-    QHBoxLayout headLayout;
-    QLabel label, icon;
-    QWidget head, body;
+    QString formName;
+    QPixmap formIcon;
 };
 
 #endif
