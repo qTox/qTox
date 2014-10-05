@@ -121,6 +121,9 @@ void Core::start()
 {
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be disabled in options.
     bool enableIPv6 = Settings::getInstance().getEnableIPv6();
+    bool forceTCP = Settings::getInstance().getForceTCP();
+    QString proxyAddr = Settings::getInstance().getProxyAddr();
+    int proxyPort = Settings::getInstance().getProxyPort();
     if (enableIPv6)
         qDebug() << "Core starting with IPv6 enabled";
     else
@@ -128,10 +131,28 @@ void Core::start()
 
     Tox_Options toxOptions;
     toxOptions.ipv6enabled = enableIPv6;
-    toxOptions.udp_disabled = 0;
-    toxOptions.proxy_enabled = false;
-    toxOptions.proxy_address[0] = 0;
-    toxOptions.proxy_port = 0;
+    toxOptions.udp_disabled = forceTCP;
+    if (proxyAddr.length() > 255)
+    {
+        qWarning() << "Core: proxy address" << proxyAddr << "is too long";
+        toxOptions.proxy_enabled = false;
+        toxOptions.proxy_address[0] = 0;
+        toxOptions.proxy_port = 0;
+    }
+    else if (proxyAddr != "" && proxyPort > 0)
+    {
+        qDebug() << "Core: using proxy" << proxyAddr << ":" << proxyPort;
+        toxOptions.proxy_enabled = true;
+        uint16_t sz = CString::fromString(proxyAddr, (unsigned char*)toxOptions.proxy_address);
+        toxOptions.proxy_address[sz] = 0;
+        toxOptions.proxy_port = proxyPort;
+    }
+    else
+    {
+        toxOptions.proxy_enabled = false;
+        toxOptions.proxy_address[0] = 0;
+        toxOptions.proxy_port = 0;
+    }
 
     tox = tox_new(&toxOptions);
     if (tox == nullptr)
@@ -142,12 +163,28 @@ void Core::start()
             tox = tox_new(&toxOptions);
             if (tox == nullptr)
             {
-                qCritical() << "Tox core failed to start";
-                emit failedToStart();
+                if (toxOptions.proxy_enabled)
+                {
+                    //QMessageBox::critical(Widget::getInstance(), tr("Proxy failure", "popup title"), 
+                    //tr("toxcore failed to start with your proxy settings. qTox cannot run; please modify your "
+                       //"settings and restart.", "popup text"));
+                    qCritical() << "Core: bad proxy! no toxcore!";
+                    emit badProxy();
+                } 
+                else
+                {
+                    qCritical() << "Tox core failed to start";
+                    emit failedToStart();
+                }
                 return;
-            }
+            } 
             else
                 qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery may not work properly.";
+        }
+        else if (toxOptions.proxy_enabled)
+        {
+            emit badProxy();
+            return;
         }
         else
         {
@@ -919,8 +956,6 @@ void Core::setAvatar(uint8_t format, const QByteArray& data)
         qWarning() << "Core: Failed to set self avatar";
         return;
     }
-    else
-        qDebug() << "Core: Set avatar, format:"<<format<<", size:"<<data.size();
 
     QPixmap pic;
     pic.loadFromData(data);
@@ -1053,6 +1088,8 @@ bool Core::loadConfiguration()
 
 void Core::saveConfiguration()
 {
+    Settings::getInstance().save();
+    
     if (!tox)
     {
         qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
@@ -1085,8 +1122,6 @@ void Core::saveConfiguration()
         configurationFile.commit();
         delete[] data;
     }
-
-    Settings::getInstance().save();
 }
 
 void Core::loadFriends()
