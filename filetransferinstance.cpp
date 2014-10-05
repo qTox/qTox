@@ -16,6 +16,7 @@
 
 #include "filetransferinstance.h"
 #include "core.h"
+#include "misc/style.h"
 #include <math.h>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -38,9 +39,10 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     lastUpdateTime = QDateTime::currentDateTime();
 
     filename = File.fileName;
-    QFont font;
-    font.setPixelSize(10);
-    QFontMetrics fm(font);
+
+    // update this whenever you change the font in innerStyle.css
+    QFontMetrics fm(Style::getFont(Style::Small));
+
     filenameElided = fm.elidedText(filename, Qt::ElideRight, CONTENT_WIDTH);
 
     size = getHumanReadableSize(File.filesize);
