@@ -24,16 +24,14 @@
 #include <QTimer>
 
 Group::Group(int GroupId, QString Name)
-    : groupId(GroupId), nPeers{0}, hasPeerInfo{false}, peerInfoTimer{new QTimer}
+    : groupId(GroupId), nPeers{0}
 {
     widget = new GroupWidget(groupId, Name);
     chatForm = new GroupChatForm(this);
-    connect(peerInfoTimer, SIGNAL(timeout()), this, SLOT(queryPeerInfo()));
-    peerInfoTimer->setInterval(500);
-    peerInfoTimer->setSingleShot(false);
-    //peerInfoTimer.start();
 
-    //in groupchats, we only notify on messages containing your name
+    //in groupchats, we only notify on messages containing your name <-- dumb
+    // sound notifications should be on all messages, but system popup notification
+    // on naming is appropriate
     hasNewMessages = 0;
     userWasMentioned = 0;
 }
@@ -42,53 +40,6 @@ Group::~Group()
 {
     delete chatForm;
     delete widget;
-    delete peerInfoTimer;
-}
-
-void Group::queryPeerInfo()
-{
-    const Core* core = Core::getInstance();
-    int nPeersResult = core->getGroupNumberPeers(groupId);
-    if (nPeersResult == -1)
-    {
-        qDebug() << "Group::queryPeerInfo: Can't get number of peers";
-        return;
-    }
-    nPeers = nPeersResult;
-    widget->onUserListChanged();
-    chatForm->onUserListChanged();
-
-    if (nPeersResult == 0)
-        return;
-
-    bool namesOk = true;
-    QList<QString> names = core->getGroupPeerNames(groupId);
-    if (names.isEmpty())
-    {
-        qDebug() << "Group::queryPeerInfo: Can't get names of peers";
-        return;
-    }
-    for (int i=0; i<names.size(); i++)
-    {
-        QString name = names[i];
-        if (name.isEmpty())
-        {
-            name = "<Unknown>";
-            namesOk = false;
-        }
-        peers[i] = name;
-    }
-    nPeers = names.size();
-
-    widget->onUserListChanged();
-    chatForm->onUserListChanged();
-
-    if (namesOk)
-    {
-        qDebug() << "Group::queryPeerInfo: Successfully loaded names";
-        hasPeerInfo = true;
-        peerInfoTimer->stop();
-    }
 }
 
 void Group::addPeer(int peerId, QString name)

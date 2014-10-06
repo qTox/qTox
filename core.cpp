@@ -402,9 +402,10 @@ void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key
     emit static_cast<Core*>(core)->groupInviteReceived(friendnumber, group_public_key,length);
 }
 
-void Core::onGroupMessage(Tox*, int groupnumber, int friendgroupnumber, const uint8_t * message, uint16_t length, void *core)
+void Core::onGroupMessage(Tox*, int groupnumber, int peernumber, const uint8_t * message, uint16_t length, void *_core)
 {
-    emit static_cast<Core*>(core)->groupMessageReceived(groupnumber, friendgroupnumber, CString::toString(message, length));
+    Core* core = static_cast<Core*>(_core);
+    emit core->groupMessageReceived(groupnumber, CString::toString(message, length), core->getGroupPeerName(groupnumber, peernumber));
 }
 
 void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t change, void *core)

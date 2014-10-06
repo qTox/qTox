@@ -80,17 +80,6 @@ void GroupChatForm::onSendTriggered()
     emit sendMessage(group->groupId, msg);
 }
 
-void GroupChatForm::addGroupMessage(QString message, int peerId)
-{
-    QString msgAuthor;
-    if (group->peers.contains(peerId))
-        msgAuthor = group->peers[peerId];
-    else
-        msgAuthor = tr("<Unknown>");
-
-    addMessage(msgAuthor, message);
-}
-
 void GroupChatForm::onUserListChanged()
 {
     nusersLabel->setText(tr("%1 users in chat").arg(group->nPeers));

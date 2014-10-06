@@ -28,7 +28,6 @@ class GroupChatForm : public GenericChatForm
 public:
     GroupChatForm(Group* chatGroup);
 
-    void addGroupMessage(QString message, int peerId);
     void onUserListChanged();
 
 private slots:
