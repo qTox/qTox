@@ -23,6 +23,7 @@
 #include <QRegularExpression>
 #include <QWidget>
 #include <QStyle>
+#include <QFontInfo>
 
 // helper functions
 QFont appFont(int pixelSize, int weight)
@@ -78,14 +79,17 @@ QFont Style::getFont(Style::Font font)
 {
     // fonts as defined in
     // https://github.com/ItsDuke/Tox-UI/blob/master/UI%20GUIDELINES.md
+
+    static int defSize = QFontInfo(QFont()).pixelSize();
+
     static QFont fonts[] = {
-        appFont(16, QFont::Bold),
-        appFont(14, QFont::Normal),
-        appFont(14, QFont::Bold),
-        appFont(13, QFont::Normal),
-        appFont(13, QFont::Bold),
-        appFont(12, QFont::Normal),
-        appFont(12, QFont::Light),
+        appFont(defSize + 2, QFont::Bold),
+        appFont(defSize    , QFont::Normal),
+        appFont(defSize    , QFont::Bold),
+        appFont(defSize - 1, QFont::Normal),
+        appFont(defSize - 1, QFont::Bold),
+        appFont(defSize - 2, QFont::Normal),
+        appFont(defSize - 2, QFont::Light),
     };
 
     return fonts[font];

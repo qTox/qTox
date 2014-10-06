@@ -41,13 +41,13 @@ public:
 
     enum Font
     {
-        ExtraBig,   // 14px, bold
-        Big,        // 12px
-        BigBold,    // 12px, bold
-        Medium,     // 11px
-        MediumBold, // 11px, bold
-        Small,      // 10px
-        SmallLight  // 10px, light
+        ExtraBig,   // [SystemDefault + 2]px, bold
+        Big,        // [SystemDefault    ]px
+        BigBold,    // [SystemDefault    ]px, bold
+        Medium,     // [SystemDefault - 1]px
+        MediumBold, // [SystemDefault - 1]px, bold
+        Small,      // [SystemDefault - 2]px
+        SmallLight  // [SystemDefault - 2]px, light
     };
 
     static QString getStylesheet(const QString& filename);

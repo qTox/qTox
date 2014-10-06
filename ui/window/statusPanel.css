@@ -9,7 +9,7 @@
 }
 
 #statusPanel > #statusHead > #statusLabel {
-  font: @smallLight;
+  font: @medium;
   color: @lightGrey;
 }
 
