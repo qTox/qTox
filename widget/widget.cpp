@@ -212,7 +212,7 @@ void Widget::closeEvent(QCloseEvent *event)
 
 QString Widget::getUsername()
 {
-    return ui->nameLabel->text();
+    return core->getUsername();
 }
 
 Camera* Widget::getCamera()
@@ -574,21 +574,21 @@ void Widget::onGroupInviteReceived(int32_t friendId, const uint8_t* publicKey,ui
     }
 }
 
-void Widget::onGroupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message)
+void Widget::onGroupMessageReceived(int groupnumber, const QString& message, const QString& author)
 {
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
         return;
 
-    g->chatForm->addGroupMessage(message, friendgroupnumber);
+    g->chatForm->addMessage(author, message);
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
         g->hasNewMessages = 1;
+        newMessageAlert(); // sound alert on any message, not just naming user
         if (message.contains(core->getUsername(), Qt::CaseInsensitive))
         {
-            newMessageAlert();
-            g->userWasMentioned = 1;
+            g->userWasMentioned = 1; // useful for highlighting line or desktop notifications
         }
         g->widget->updateStatusLight();
     }

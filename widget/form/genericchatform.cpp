@@ -172,6 +172,12 @@ void GenericChatForm::addMessage(QString author, QString message, bool isAction,
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
     bool isMe = (author == Widget::getInstance()->getUsername());
 
+    if (!isAction && message.startsWith("/me "))
+    { // always render actions regardless of what core thinks
+        isAction = true;
+        message = message.right(message.length()-4);
+    }
+
     if (isAction)
     {
         chatWidget->insertMessage(new ActionAction (getElidedName(author), message, date, isMe));
