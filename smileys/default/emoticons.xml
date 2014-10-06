@@ -82,4 +82,7 @@
     <string>XD</string>
   </emoticon>
   
+  <emoticon file="Kappa.png">
+    <string>:Kappa:</string>
+  </emoticon>
 </messaging-emoticon-map>
