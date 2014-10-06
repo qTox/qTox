@@ -1,36 +1,36 @@
 div.name {
   color: @black;
-  font: @bigBold;
+  font: @mediumBold;
 }
 
 div.message {
   color: @black;
-  font: @big;
+  font: @medium;
 }
 
 div.action {
   color: #1818FF;
-  font: @big;
+  font: @medium;
 }
 
 div.date {
   color: @black;
-  font: @big;
+  font: @medium;
 }
 
 div.name_me {
   color: @mediumGrey;
-  font: @big;
+  font: @medium;
 }
 
 div.message_me {
   color: @black;
-  font: @big;
+  font: @medium;
 }
 
 div.date_me {
   color: @black;
-  font: @big;
+  font: @medium;
 }
 
 span.quote {
