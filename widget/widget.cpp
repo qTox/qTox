@@ -124,6 +124,7 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
     connect(core, &Core::failedToStart, this, &Widget::onFailedToStartCore);
+    connect(core, &Core::badProxy, this, &Widget::onBadProxyCore);
     connect(core, &Core::statusSet, this, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, this, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, this, &Widget::setStatusMessage);
@@ -283,10 +284,20 @@ void Widget::onDisconnected()
 void Widget::onFailedToStartCore()
 {
     QMessageBox critical(this);
-    critical.setText("Toxcore failed to start, the application will terminate after you close this message.");
+    critical.setText(tr("Toxcore failed to start, the application will terminate after you close this message."));
     critical.setIcon(QMessageBox::Critical);
     critical.exec();
     qApp->quit();
+}
+
+void Widget::onBadProxyCore()
+{
+    QMessageBox critical(this);
+    critical.setText(tr("toxcore failed to start with your proxy settings. qTox cannot run; please modify your "
+               "settings and restart.", "popup text"));
+    critical.setIcon(QMessageBox::Critical);
+    critical.exec();
+    onSettingsClicked();
 }
 
 void Widget::onStatusSet(Status status)

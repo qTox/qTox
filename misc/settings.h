@@ -52,6 +52,15 @@ public:
     bool getUseTranslations() const;
     void setUseTranslations(bool newValue);
 
+    bool getForceTCP() const;
+    void setForceTCP(bool newValue);
+    
+    QString getProxyAddr() const;
+    void setProxyAddr(const QString& newValue);
+
+    int getProxyPort() const;
+    void setProxyPort(int newValue);
+
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
 
@@ -153,6 +162,10 @@ private:
     bool enableIPv6;
     bool useTranslations;
     static bool makeToxPortable;
+    
+    bool forceTCP;
+    QString proxyAddr;
+    int proxyPort;
 
     bool enableLogging;
     bool encryptLogs;

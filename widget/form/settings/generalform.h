@@ -37,6 +37,9 @@ private slots:
     void onUseTranslationUpdated();
     void onMakeToxPortableUpdated();
     void onSmileyBrowserIndexChanged(int index);
+    void onUDPUpdated();
+    void onProxyAddrEdited();
+    void onProxyPortEdited();
 
 private:
     Ui::GeneralSettings *bodyUI;

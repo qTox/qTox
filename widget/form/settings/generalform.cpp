@@ -20,6 +20,7 @@
 #include "widget/widget.h"
 #include "misc/settings.h"
 #include "misc/smileypack.h"
+#include <QMessageBox>
 
 GeneralForm::GeneralForm() :
     GenericForm(tr("General Settings"), QPixmap(":/img/settings/general.png"))
@@ -37,10 +38,20 @@ GeneralForm::GeneralForm() :
     }
     bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
     
-    connect(bodyUI->cbEnableIPv6, SIGNAL(stateChanged(int)), this, SLOT(onEnableIPv6Updated()));
-    connect(bodyUI->cbUseTranslations, SIGNAL(stateChanged(int)), this, SLOT(onUseTranslationUpdated()));
-    connect(bodyUI->cbMakeToxPortable, SIGNAL(stateChanged(int)), this, SLOT(onMakeToxPortableUpdated()));
+    bodyUI->cbUDPDisabled->setChecked(Settings::getInstance().getForceTCP());
+    bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
+    int port = Settings::getInstance().getProxyPort();
+    if (port != -1)
+        bodyUI->proxyPort->setText(QString::number(port));
+    
+    connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
+    connect(bodyUI->cbUseTranslations, &QCheckBox::stateChanged, this, &GeneralForm::onUseTranslationUpdated);
+    connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
+    // new syntax can't handle overloaded signals... (at least not in a pretty way)
+    connect(bodyUI->cbUDPDisabled, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
+    connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
+    connect(bodyUI->proxyPort, &QLineEdit::editingFinished, this, &GeneralForm::onProxyPortEdited);
 }
 
 GeneralForm::~GeneralForm()
@@ -67,4 +78,29 @@ void GeneralForm::onSmileyBrowserIndexChanged(int index)
 {
     QString filename = bodyUI->smileyPackBrowser->itemData(index).toString();
     Settings::getInstance().setSmileyPack(filename);
+}
+
+void GeneralForm::onUDPUpdated()
+{
+    Settings::getInstance().setForceTCP(bodyUI->cbUDPDisabled->isChecked());
+}
+
+void GeneralForm::onProxyAddrEdited()
+{
+    Settings::getInstance().setProxyAddr(bodyUI->proxyAddr->text());
+}
+
+void GeneralForm::onProxyPortEdited()
+{
+    QString text = bodyUI->proxyPort->text();
+    if (text != "")
+    {
+        int port = text.toInt();
+        if (port < 1)
+            QMessageBox::warning(bodyUI->proxyPort, tr("Bad port", "title of bad port popup"), tr("The port you entered is invalid; please enter another.", "text of bad port popup"));
+        else
+            Settings::getInstance().setProxyPort(port);
+    }
+    else
+        Settings::getInstance().setProxyPort(-1);
 }

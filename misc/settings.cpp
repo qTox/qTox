@@ -140,6 +140,9 @@ void Settings::load()
 
     s.beginGroup("Privacy");
         typingNotification = s.value("typingNotification", false).toBool();
+        forceTCP = s.value("forceTCP", false).toBool();
+        proxyAddr = s.value("proxyAddr", "").toString();
+        proxyPort = s.value("proxyPort", 0).toInt();
     s.endGroup();
 
     // try to set a smiley pack if none is selected
@@ -239,6 +242,9 @@ void Settings::save(QString path)
 
     s.beginGroup("Privacy");
         s.setValue("typingNotification", typingNotification);
+        s.setValue("forceTCP", forceTCP);
+        s.setValue("proxyAddr", proxyAddr);
+        s.setValue("proxyPort", proxyPort);
     s.endGroup();
 }
 
@@ -349,6 +355,36 @@ bool Settings::getUseTranslations() const
 void Settings::setUseTranslations(bool newValue)
 {
     useTranslations = newValue;
+}
+
+bool Settings::getForceTCP() const
+{
+    return forceTCP;
+}
+
+void Settings::setForceTCP(bool newValue)
+{
+    forceTCP = newValue;
+}
+
+QString Settings::getProxyAddr() const
+{
+    return proxyAddr;
+}
+
+void Settings::setProxyAddr(const QString& newValue)
+{
+    proxyAddr = newValue;
+}
+
+int Settings::getProxyPort() const
+{
+    return proxyPort;
+}
+
+void Settings::setProxyPort(int newValue)
+{
+    proxyPort = newValue;
 }
 
 bool Settings::getEnableLogging() const
