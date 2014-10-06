@@ -31,7 +31,6 @@
 #include "widget/friendlistwidget.h"
 #include "camera.h"
 #include "widget/form/chatform.h"
-#include "widget/settingsdialog.h"
 #include "widget/maskablepixmapwidget.h"
 #include <QMessageBox>
 #include <QDebug>
@@ -102,7 +101,7 @@ Widget::Widget(QWidget *parent)
     Style::repolish(ui->statusButton);
 
     camera = new Camera;
-    settingsDialog = new SettingsDialog(this);
+    settingsWidget = new SettingsWidget(camera);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -159,6 +158,8 @@ Widget::Widget(QWidget *parent)
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
+//    connect(settingsWidget->getIdentityForm(), &IdentityForm::userNameChanged, Core::getInstance(), &Core::setUsername);
+//    connect(settingsWidget->getIdentityForm(), &IdentityForm::statusMessageChanged, Core::getInstance(), &Core::setStatusMessage);
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -171,12 +172,12 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
     core->saveConfiguration();
-    instance = nullptr;
     coreThread->exit();
     coreThread->wait(500); // In case of deadlock (can happen with QtAudio/PA bugs)
     if (!coreThread->isFinished())
         coreThread->terminate();
     delete core;
+    delete settingsWidget;
 
     for (Friend* f : FriendList::friendList)
         delete f;
@@ -185,6 +186,7 @@ Widget::~Widget()
         delete g;
     GroupList::groupList.clear();
     delete ui;
+    instance = nullptr;
 }
 
 Widget* Widget::getInstance()
@@ -330,8 +332,9 @@ void Widget::onTransferClicked()
 
 void Widget::onSettingsClicked()
 {
-    settingsDialog->readConfig();
-    settingsDialog->show();
+    hideMainForms();
+    settingsWidget->show(*ui);
+    activeChatroomWidget = nullptr;
 }
 
 void Widget::hideMainForms()
@@ -359,6 +362,7 @@ void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     ui->nameLabel->setToolTip(username); // for overlength names
+    settingsWidget->getIdentityForm()->setUserName(username);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
@@ -372,6 +376,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
     ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
+    settingsWidget->getIdentityForm()->setStatusMessage(statusMessage);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)

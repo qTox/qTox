@@ -19,6 +19,8 @@
 
 #include <QMainWindow>
 #include "widget/form/addfriendform.h"
+#include "widget/form/settingswidget.h"
+#include "widget/form/settings/identityform.h"
 #include "widget/form/filesform.h"
 #include "corestructs.h"
 
@@ -37,7 +39,6 @@ class QMenu;
 class Core;
 class Camera;
 class FriendListWidget;
-class SettingsDialog;
 class MaskablePixmapWidget;
 
 class Widget : public QMainWindow
@@ -115,8 +116,8 @@ private:
     Core* core;
     QThread* coreThread;
     AddFriendForm friendForm;
+    SettingsWidget* settingsWidget;
     FilesForm filesForm;
-    SettingsDialog* settingsDialog;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
