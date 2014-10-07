@@ -55,7 +55,6 @@ int main(int argc, char *argv[])
     }
 
     Widget* w = Widget::getInstance();
-    //w->show();
 
     QSystemTrayIcon *icon = new QSystemTrayIcon(w);
 
