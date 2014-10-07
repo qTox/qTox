@@ -16,6 +16,7 @@
 
 #include "camera.h"
 #include "widget.h"
+#include <QDebug>
 
 using namespace cv;
 
@@ -50,21 +51,12 @@ Mat Camera::getLastFrame()
 {
     Mat frame;
     cam >> frame;
-    return frame;
-}
 
-QImage Camera::getLastImage()
-{
-    Mat3b src = getLastFrame();
-    QImage dest(src.cols, src.rows, QImage::Format_ARGB32);
-    for (int y = 0; y < src.rows; ++y)
-    {
-            const cv::Vec3b *srcrow = src[y];
-            QRgb *destrow = (QRgb*)dest.scanLine(y);
-            for (int x = 0; x < src.cols; ++x)
-                    destrow[x] = qRgba(srcrow[x][2], srcrow[x][1], srcrow[x][0], 255);
-    }
-    return dest;
+    Mat out;
+    if (!frame.empty())
+        cv::cvtColor(frame, out, CV_BGR2RGB);
+
+    return out;
 }
 
 vpx_image Camera::getLastVPXImage()
@@ -113,6 +105,69 @@ vpx_image Camera::getLastVPXImage()
         }
     }
     return img;
+}
+
+QList<Camera::VideoMode> Camera::getVideoModes()
+{
+    // probe resolutions
+    QList<QSize> resolutions = {
+        QSize( 160, 120), // QQVGA
+        QSize( 320, 240), // HVGA
+        QSize(1024, 768), // XGA
+        QSize( 432, 240), // WQVGA
+        QSize( 640, 360), // nHD
+    };
+
+    QList<VideoMode> modes;
+
+    for (QSize res : resolutions)
+    {
+        cam.set(CV_CAP_PROP_FRAME_WIDTH, res.width());
+        cam.set(CV_CAP_PROP_FRAME_HEIGHT, res.height());
+
+        double w = cam.get(CV_CAP_PROP_FRAME_WIDTH);
+        double h = cam.get(CV_CAP_PROP_FRAME_HEIGHT);
+
+        if (w == res.width() && h == res.height())
+        {
+            modes.append({res, 60}); // assume 60fps for now
+        }
+    }
+
+    return modes;
+}
+
+Camera::VideoMode Camera::getBestVideoMode()
+{
+    int bestScore = 0;
+    VideoMode bestMode;
+
+    for (VideoMode mode : getVideoModes())
+    {
+        int score = mode.res.width() * mode.res.height();
+
+        if (score > bestScore)
+        {
+            bestScore = score;
+            bestMode = mode;
+        }
+    }
+
+    return bestMode;
+}
+
+void Camera::setVideoMode(Camera::VideoMode mode)
+{
+    if (cam.isOpened())
+    {
+        cam.set(CV_CAP_PROP_FRAME_WIDTH, mode.res.width());
+        cam.set(CV_CAP_PROP_FRAME_HEIGHT, mode.res.height());
+    }
+}
+
+Camera::VideoMode Camera::getVideoMode()
+{
+    return VideoMode{QSize(cam.get(CV_CAP_PROP_FRAME_WIDTH), cam.get(CV_CAP_PROP_FRAME_HEIGHT)), 60};
 }
 
 Camera* Camera::getInstance()

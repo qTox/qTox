@@ -37,16 +37,12 @@ public:
     ~AVForm();
 
 private slots:
-    void onTestVideoPressed();
 
 private:
     Ui::AVSettings *bodyUI;
 
     SelfCamView* camView;
-    
-    void showTestVideo();
-    void closeTestVideo();
-       
+
 };
 
 #endif

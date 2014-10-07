@@ -18,6 +18,7 @@
 #define CAMERA_H
 
 #include <QImage>
+#include <QList>
 #include "vpx/vpx_image.h"
 #include "opencv2/opencv.hpp"
 
@@ -30,13 +31,23 @@
 class Camera
 {
 public:
+    struct VideoMode {
+        QSize res;
+        double fps;
+    };
+
     Camera();
     static Camera* getInstance(); ///< Returns the global widget's Camera instance
     void suscribe(); ///< Call this once before trying to get frames
     void unsuscribe(); ///< Call this once when you don't need frames anymore
     cv::Mat getLastFrame(); ///< Get the last captured frame
-    QImage getLastImage(); ///< Convert the last frame to a QImage (can be expensive !)
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
+
+    QList<VideoMode> getVideoModes();
+    VideoMode getBestVideoMode();
+
+    void setVideoMode(VideoMode mode);
+    VideoMode getVideoMode();
 
 private:
     int refcount; ///< Number of users suscribed to the camera

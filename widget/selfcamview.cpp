@@ -16,54 +16,145 @@
 
 #include "selfcamview.h"
 #include "camera.h"
-#include <QCloseEvent>
-#include <QShowEvent>
 #include <QTimer>
-#include <QLabel>
-#include <QHBoxLayout>
 #include <opencv2/opencv.hpp>
-
-using namespace cv;
+#include <QOpenGLBuffer>
+#include <QOpenGLShaderProgram>
+#include <QDebug>
 
 SelfCamView::SelfCamView(Camera* Cam, QWidget* parent)
-    : QWidget(parent), displayLabel{new QLabel},
-      mainLayout{new QHBoxLayout()}, cam(Cam), updateDisplayTimer{new QTimer}
+    : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
+    , camera(Cam)
+    , pbo(nullptr)
+    , program(nullptr)
+    , textureId(0)
+    , pboAllocSize(0)
 {
-    setLayout(mainLayout);
-    setWindowTitle(SelfCamView::tr("Tox video test","Title of the window to test the video/webcam"));
-    setMinimumSize(320,240);
+    camera->suscribe();
+    camera->setVideoMode(camera->getBestVideoMode());
 
-    updateDisplayTimer->setInterval(5);
-    updateDisplayTimer->setSingleShot(false);
-
-    displayLabel->setAlignment(Qt::AlignCenter);
-
-    mainLayout->addWidget(displayLabel);
-
-    connect(updateDisplayTimer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
+    setFixedSize(camera->getBestVideoMode().res);
 }
 
-void SelfCamView::closeEvent(QCloseEvent* event)
+SelfCamView::~SelfCamView()
 {
-    cam->unsuscribe();
-    updateDisplayTimer->stop();
-    event->accept();
+    if (pbo)
+        delete pbo;
+
+    if (textureId != 0)
+        glDeleteTextures(1, &textureId);
 }
 
-void SelfCamView::showEvent(QShowEvent* event)
+void SelfCamView::initializeGL()
 {
-    cam->suscribe();
-    updateDisplayTimer->start();
-    event->accept();
+    updateTimer = new QTimer(this);
+    updateTimer->setSingleShot(false);
+    updateTimer->setInterval(1000.0 / camera->getVideoMode().fps);
+
+    connect(updateTimer, &QTimer::timeout, this, &SelfCamView::update);
+    updateTimer->start();
 }
 
-void SelfCamView::updateDisplay()
+void SelfCamView::paintGL()
 {
-    displayLabel->setPixmap(QPixmap::fromImage(cam->getLastImage()).scaled(displayLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    cv::Mat3b frame = camera->getLastFrame();
+    int frameBytes = frame.total() * frame.channels();
+
+    if (!pbo)
+    {
+        qDebug() << "Creating pbo, program";
+
+        // pbo
+        pbo = new QOpenGLBuffer(QOpenGLBuffer::PixelUnpackBuffer);
+        pbo->setUsagePattern(QOpenGLBuffer::StreamDraw);
+        pbo->create();
+
+        // shaders
+        program = new QOpenGLShaderProgram;
+        program->addShaderFromSourceCode(QOpenGLShader::Vertex,
+                                         "attribute vec4 vertices;"
+                                         "varying vec2 coords;"
+                                         "void main() {"
+                                         "    gl_Position = vec4(vertices.xy,0.0,1.0);"
+                                         "    coords = vertices.xy*vec2(0.5,0.5)+vec2(0.5,0.5);"
+                                         "}");
+        program->addShaderFromSourceCode(QOpenGLShader::Fragment,
+                                         "uniform sampler2D texture0;"
+                                         "varying vec2 coords;"
+                                         "void main() {"
+                                         "    gl_FragColor = texture2D(texture0,coords*vec2(1.0, -1.0));"
+                                         "}");
+
+        program->bindAttributeLocation("vertices", 0);
+        program->link();
+
+        // a texture used to render the pbo (has the match the pixelformat of the source)
+        GLuint texture[1];
+        glGenTextures(1,texture);
+        glBindTexture(GL_TEXTURE_2D,texture[0]);
+        glTexImage2D(GL_TEXTURE_2D,0, GL_RGB, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+        textureId = texture[0];
+    }
+
+    if (pboAllocSize != frameBytes)
+    {
+        qDebug() << "Resize pbo " << frameBytes << "bytes (was" << pboAllocSize << ")";
+
+        pbo->bind();
+        pbo->allocate(frameBytes);
+        pbo->release();
+
+        pboAllocSize = frameBytes;
+    }
+
+    // transfer data
+    pbo->bind();
+
+    void* ptr = pbo->map(QOpenGLBuffer::WriteOnly);
+    if (ptr)
+        memcpy(ptr, frame.data, frameBytes);
+    pbo->unmap();
+
+    //transfer pbo data to texture
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexSubImage2D(GL_TEXTURE_2D,0,0,0, frame.cols, frame.rows, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    // render pbo
+    float values[] = {
+        -1, -1,
+        1, -1,
+        -1, 1,
+        1, 1
+    };
+
+    program->setAttributeArray(0, GL_FLOAT, values, 2);
+
+
+    glClearColor(0, 0, 0, 1);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glViewport(0, 0, width(), height());
+
+    program->bind();
+    program->enableAttributeArray(0);
+
+    glBindTexture(GL_TEXTURE_2D, textureId);
+
+    //draw fullscreen quad
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    program->disableAttributeArray(0);
+    program->release();
+
+    pbo->release();
 }
 
-void SelfCamView::resizeEvent(QResizeEvent *e)
+void SelfCamView::update()
 {
-    Q_UNUSED(e)
-    updateDisplay();
+    QGLWidget::update();
 }
+
+

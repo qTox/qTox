@@ -26,32 +26,16 @@ AVForm::AVForm(Camera* cam) :
 
     camView = new SelfCamView(cam, this);
     bodyUI->videoGroup->layout()->addWidget(camView);
-    camView->hide(); // hide by default
 
-    connect(bodyUI->testVideoBtn, &QPushButton::clicked, this, &AVForm::onTestVideoPressed);
+    auto modes = cam->getVideoModes();
+    for (Camera::VideoMode m : modes)
+    {
+        bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(m.res.width())
+                                                                 ,QString::number(m.res.height())));
+    }
 }
 
 AVForm::~AVForm()
 {
     delete bodyUI;
-}
-
-void AVForm::showTestVideo()
-{
-    bodyUI->testVideoBtn->setText(tr("Hide video preview","On a button"));
-    camView->show();
-}
-
-void AVForm::closeTestVideo()
-{
-    bodyUI->testVideoBtn->setText(tr("Show video preview","On a button"));
-    camView->close();
-}
-
-void AVForm::onTestVideoPressed()
-{
-    if (camView->isVisible())
-        closeTestVideo();
-    else
-        showTestVideo();
 }
