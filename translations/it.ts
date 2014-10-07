@@ -130,12 +130,12 @@
 <context>
     <name>Core</name>
     <message>
-        <location filename="../core.cpp" line="1064"/>
+        <location filename="../core.cpp" line="1068"/>
         <source>Encrypted profile</source>
         <translation>Profilo criptato</translation>
     </message>
     <message>
-        <location filename="../core.cpp" line="1065"/>
+        <location filename="../core.cpp" line="1069"/>
         <source>Your tox profile seems to be encrypted, qTox can&apos;t open it
 Do you want to erase this profile ?</source>
         <translation>Il tuo profilo Tox sembra essere criptato, qTox non può aprirlo\nVuoi eliminare questo profilo?</translation>
@@ -245,18 +245,6 @@ Do you want to erase this profile ?</source>
         <source>General Settings</source>
         <translation>Impostazioni Generali</translation>
     </message>
-    <message>
-        <location filename="../widget/form/settings/generalform.cpp" line="100"/>
-        <source>Bad port</source>
-        <comment>title of bad port popup</comment>
-        <translation>Numero porta errato</translation>
-    </message>
-    <message>
-        <location filename="../widget/form/settings/generalform.cpp" line="100"/>
-        <source>The port you entered is invalid; please enter another.</source>
-        <comment>text of bad port popup</comment>
-        <translation>Il numero della porta che hai inserito è invalido; per favore inseriscine un altro.</translation>
-    </message>
 </context>
 <context>
     <name>GeneralSettings</name>
@@ -271,67 +259,72 @@ Do you want to erase this profile ?</source>
         <translation>Impostazioni Generali</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="35"/>
+        <location filename="../widget/form/settings/generalsettings.ui" line="74"/>
+        <source>Connection Settings</source>
+        <translation>Impostazioni Connessione</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="80"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Abilita IPv6 (consigliato)</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="42"/>
+        <location filename="../widget/form/settings/generalsettings.ui" line="35"/>
         <source>Use translations</source>
         <extracomment>Text on a checkbox to enable translations</extracomment>
         <translation>Abilita traduzioni</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="49"/>
+        <location filename="../widget/form/settings/generalsettings.ui" line="42"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
         <translation>Slava le impostazioni nella directory di lavoro corrente, invece della directory di default</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="52"/>
+        <location filename="../widget/form/settings/generalsettings.ui" line="45"/>
         <source>Make Tox portable</source>
         <translation>Rendi qTox portabile</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="62"/>
+        <location filename="../widget/form/settings/generalsettings.ui" line="55"/>
         <source>Theme</source>
-        <translation>Impostazioni tema</translation>
+        <translation>Impostazioni Tema</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="68"/>
+        <location filename="../widget/form/settings/generalsettings.ui" line="61"/>
         <source>Smiley Pack</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>Emoticons</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="81"/>
-        <source>Proxy settings</source>
-        <translation>Impostazioni proxy</translation>
+        <location filename="../widget/form/settings/generalsettings.ui" line="97"/>
+        <source>Use proxy (SOCKS5)</source>
+        <translation>Usa proxy (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="87"/>
+        <location filename="../widget/form/settings/generalsettings.ui" line="106"/>
+        <source>Address</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation>IP</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="116"/>
+        <source>Port</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation>Porta</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="90"/>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Disabilita connessioni UDP (non raccomandato)</translation>
     </message>
     <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="90"/>
+        <location filename="../widget/form/settings/generalsettings.ui" line="87"/>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Questo permette di usare qTox con Tor; tuttavia aggiunge carico alla rete Tox, quindi usalo solo se necessario.</translation>
-    </message>
-    <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="99"/>
-        <source>Proxy address</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>IP</translation>
-    </message>
-    <message>
-        <location filename="../widget/form/settings/generalsettings.ui" line="106"/>
-        <source>Proxy port</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>Porta</translation>
     </message>
 </context>
 <context>
