@@ -1,0 +1,36 @@
+QCheckBox
+{
+    color: black;
+}
+
+QLabel
+{
+    color: black;
+}
+
+QGroupBox::title
+{
+    color: black;
+    background-color: white;
+}
+
+QWidget
+{
+    color: black;
+    background-color: white;
+}
+
+QComboBox
+{
+    background-color: white;
+}
+
+QComboBox:on QComboBox:off QComboBox:drop-down
+{
+    background: rgba(18, 18, 18, 204);
+}
+
+QComboBox:active
+{
+    background: white;
+}
