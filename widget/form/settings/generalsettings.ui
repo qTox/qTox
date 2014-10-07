@@ -30,13 +30,6 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QCheckBox" name="cbEnableIPv6">
-        <property name="text">
-         <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="cbUseTranslations">
         <property name="text">
          <string extracomment="Text on a checkbox to enable translations">Use translations</string>
@@ -76,11 +69,18 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="proxyGroup">
+    <widget class="QGroupBox" name="connectionGroup">
      <property name="title">
-      <string>Proxy settings</string>
+      <string>Connection Settings</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayoutProxy">
+      <item>
+       <widget class="QCheckBox" name="cbEnableIPv6">
+        <property name="text">
+         <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QCheckBox" name="cbUDPDisabled">
         <property name="toolTip">
