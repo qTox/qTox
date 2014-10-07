@@ -110,6 +110,10 @@ void Settings::load()
         enableIPv6 = s.value("enableIPv6", true).toBool();
         useTranslations = s.value("useTranslations", true).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
+        forceTCP = s.value("forceTCP", false).toBool();
+        useProxy = s.value("useProxy", false).toBool();
+        proxyAddr = s.value("proxyAddr", "").toString();
+        proxyPort = s.value("proxyPort", 0).toInt();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -140,10 +144,6 @@ void Settings::load()
 
     s.beginGroup("Privacy");
         typingNotification = s.value("typingNotification", false).toBool();
-        forceTCP = s.value("forceTCP", false).toBool();
-        useProxy = s.value("useProxy", false).toBool();
-        proxyAddr = s.value("proxyAddr", "").toString();
-        proxyPort = s.value("proxyPort", 0).toInt();
     s.endGroup();
 
     // try to set a smiley pack if none is selected
@@ -213,6 +213,10 @@ void Settings::save(QString path)
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("useTranslations",useTranslations);
         s.setValue("makeToxPortable",makeToxPortable);
+        s.setValue("useProxy", useProxy);
+        s.setValue("forceTCP", forceTCP);
+        s.setValue("proxyAddr", proxyAddr);
+        s.setValue("proxyPort", proxyPort);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -243,10 +247,6 @@ void Settings::save(QString path)
 
     s.beginGroup("Privacy");
         s.setValue("typingNotification", typingNotification);
-        s.setValue("useProxy", useProxy);
-        s.setValue("forceTCP", forceTCP);
-        s.setValue("proxyAddr", proxyAddr);
-        s.setValue("proxyPort", proxyPort);
     s.endGroup();
 }
 
