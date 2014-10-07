@@ -128,7 +128,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/tool/chatactions/filetransferaction.h \
     widget/tool/chatactions/systemmessageaction.h \
     widget/tool/chatactions/actionaction.h \
-    widget/maskablepixmapwidget.h
+    widget/maskablepixmapwidget.h \
+    videosource.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \

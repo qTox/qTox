@@ -38,9 +38,17 @@ public:
 
 private slots:
 
+    void on_ContrastSlider_sliderMoved(int position);
+    void on_SaturationSlider_sliderMoved(int position);
+    void on_BrightnessSlider_sliderMoved(int position);
+    void on_HueSlider_sliderMoved(int position);
+
+    void on_videoModescomboBox_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::AVSettings *bodyUI;
 
+    Camera* cam;
     SelfCamView* camView;
 
 };

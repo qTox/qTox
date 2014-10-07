@@ -22,18 +22,20 @@
 #include <QOpenGLShaderProgram>
 #include <QDebug>
 
-SelfCamView::SelfCamView(Camera* Cam, QWidget* parent)
+SelfCamView::SelfCamView(VideoSource *Source, QWidget* parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
-    , camera(Cam)
+    , source(Source)
     , pbo(nullptr)
     , program(nullptr)
     , textureId(0)
     , pboAllocSize(0)
 {
-    camera->suscribe();
-    camera->setVideoMode(camera->getBestVideoMode());
+    source->subscribe();
 
-    setFixedSize(camera->getBestVideoMode().res);
+    qDebug()<<"NEW:"<<source->resolution();
+    setFixedSize(source->resolution());
+
+
 }
 
 SelfCamView::~SelfCamView()
@@ -43,13 +45,15 @@ SelfCamView::~SelfCamView()
 
     if (textureId != 0)
         glDeleteTextures(1, &textureId);
+
+    source->unsubscribe();
 }
 
 void SelfCamView::initializeGL()
 {
     updateTimer = new QTimer(this);
     updateTimer->setSingleShot(false);
-    updateTimer->setInterval(1000.0 / camera->getVideoMode().fps);
+    updateTimer->setInterval(1000.0 / source->fps());
 
     connect(updateTimer, &QTimer::timeout, this, &SelfCamView::update);
     updateTimer->start();
@@ -57,8 +61,9 @@ void SelfCamView::initializeGL()
 
 void SelfCamView::paintGL()
 {
-    cv::Mat3b frame = camera->getLastFrame();
-    int frameBytes = frame.total() * frame.channels();
+    source->lock();
+    void* frame = source->getData();
+    int frameBytes = source->getDataSize();
 
     if (!pbo)
     {
@@ -87,20 +92,25 @@ void SelfCamView::paintGL()
 
         program->bindAttributeLocation("vertices", 0);
         program->link();
+    }
+
+    if (res != source->resolution())
+    {
+        qDebug() << "Change resolution " << res << " to " << source->resolution();
+        res = source->resolution();
 
         // a texture used to render the pbo (has the match the pixelformat of the source)
-        GLuint texture[1];
-        glGenTextures(1,texture);
-        glBindTexture(GL_TEXTURE_2D,texture[0]);
-        glTexImage2D(GL_TEXTURE_2D,0, GL_RGB, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+        glGenTextures(1,&textureId);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        glTexImage2D(GL_TEXTURE_2D,0, GL_RGB, res.width(), res.height(), 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-        textureId = texture[0];
+        setFixedSize(res);
     }
 
     if (pboAllocSize != frameBytes)
     {
-        qDebug() << "Resize pbo " << frameBytes << "bytes (was" << pboAllocSize << ")";
+        qDebug() << "Resize pbo " << frameBytes << "bytes (was" << pboAllocSize << ") res " << source->resolution();
 
         pbo->bind();
         pbo->allocate(frameBytes);
@@ -114,12 +124,12 @@ void SelfCamView::paintGL()
 
     void* ptr = pbo->map(QOpenGLBuffer::WriteOnly);
     if (ptr)
-        memcpy(ptr, frame.data, frameBytes);
+        memcpy(ptr, frame, frameBytes);
     pbo->unmap();
 
     //transfer pbo data to texture
     glBindTexture(GL_TEXTURE_2D, textureId);
-    glTexSubImage2D(GL_TEXTURE_2D,0,0,0, frame.cols, frame.rows, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glTexSubImage2D(GL_TEXTURE_2D,0,0,0, res.width(), res.height(), GL_RGB, GL_UNSIGNED_BYTE, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     // render pbo
@@ -150,6 +160,8 @@ void SelfCamView::paintGL()
     program->release();
 
     pbo->release();
+
+    source->unlock();
 }
 
 void SelfCamView::update()

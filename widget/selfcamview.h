@@ -19,17 +19,17 @@
 
 #include <QGLWidget>
 
-class Camera;
 class QOpenGLBuffer;
 class QOpenGLShaderProgram;
 class QTimer;
+class VideoSource;
 
 class SelfCamView : public QGLWidget
 {
     Q_OBJECT
 
 public:
-    SelfCamView(Camera* Cam, QWidget *parent=0);
+    SelfCamView(VideoSource* source, QWidget* parent=0);
     ~SelfCamView();
 
     // QGLWidget interface
@@ -40,12 +40,13 @@ protected:
     void update();
 
 private:
-    Camera* camera;
+    VideoSource* source;
     QOpenGLBuffer* pbo;
     QOpenGLShaderProgram* program;
     QTimer* updateTimer;
     GLuint textureId;
     int pboAllocSize;
+    QSize res;
 };
 
 #endif // SELFCAMVIEW_H

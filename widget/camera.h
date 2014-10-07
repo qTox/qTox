@@ -19,8 +19,10 @@
 
 #include <QImage>
 #include <QList>
+#include <QMutex>
 #include "vpx/vpx_image.h"
 #include "opencv2/opencv.hpp"
+#include "videosource.h"
 
 /**
  * This class is a wrapper to share a camera's captured video frames
@@ -28,7 +30,7 @@
  * the camera only when needed, and giving access to the last frames
  **/
 
-class Camera
+class Camera : public VideoSource
 {
 public:
     struct VideoMode {
@@ -36,10 +38,17 @@ public:
         double fps;
     };
 
+    enum Prop {
+        BRIGHTNESS,
+        SATURATION,
+        CONTRAST,
+        HUE,
+    };
+
     Camera();
     static Camera* getInstance(); ///< Returns the global widget's Camera instance
-    void suscribe(); ///< Call this once before trying to get frames
-    void unsuscribe(); ///< Call this once when you don't need frames anymore
+    virtual void subscribe(); ///< Call this once before trying to get frames
+    virtual void unsubscribe(); ///< Call this once when you don't need frames anymore
     cv::Mat getLastFrame(); ///< Get the last captured frame
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
 
@@ -49,9 +58,23 @@ public:
     void setVideoMode(VideoMode mode);
     VideoMode getVideoMode();
 
+    void setProp(Prop prop, double val);
+    double getProp(Prop prop);
+
 private:
     int refcount; ///< Number of users suscribed to the camera
     cv::VideoCapture cam; ///< OpenCV camera capture opbject
+    cv::Mat3b currFrame;
+    QMutex mutex;
+
+    // VideoSource interface
+public:
+    virtual void *getData();
+    virtual int getDataSize();
+    virtual void lock();
+    virtual void unlock();
+    virtual QSize resolution();
+    virtual double fps();
 };
 
 #endif // CAMERA_H

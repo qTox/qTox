@@ -25,7 +25,7 @@ Camera::Camera()
 {
 }
 
-void Camera::suscribe()
+void Camera::subscribe()
 {
     if (refcount <= 0)
     {
@@ -36,13 +36,13 @@ void Camera::suscribe()
         refcount++;
 }
 
-void Camera::unsuscribe()
+void Camera::unsubscribe()
 {
     refcount--;
 
     if (refcount <= 0)
     {
-        cam.release();
+        //cam.release();
         refcount = 0;
     }
 }
@@ -128,6 +128,8 @@ QList<Camera::VideoMode> Camera::getVideoModes()
         double w = cam.get(CV_CAP_PROP_FRAME_WIDTH);
         double h = cam.get(CV_CAP_PROP_FRAME_HEIGHT);
 
+        qDebug() << "PROBING:" << res << " got " << w << h;
+
         if (w == res.width() && h == res.height())
         {
             modes.append({res, 60}); // assume 60fps for now
@@ -162,12 +164,82 @@ void Camera::setVideoMode(Camera::VideoMode mode)
     {
         cam.set(CV_CAP_PROP_FRAME_WIDTH, mode.res.width());
         cam.set(CV_CAP_PROP_FRAME_HEIGHT, mode.res.height());
+        //cam.set(CV_CAP_PROP_SATURATION, 0.5);
+
     }
 }
 
 Camera::VideoMode Camera::getVideoMode()
 {
     return VideoMode{QSize(cam.get(CV_CAP_PROP_FRAME_WIDTH), cam.get(CV_CAP_PROP_FRAME_HEIGHT)), 60};
+}
+
+void Camera::setProp(Camera::Prop prop, double val)
+{
+    switch (prop)
+    {
+    case BRIGHTNESS:
+        cam.set(CV_CAP_PROP_BRIGHTNESS, val);
+        break;
+    case SATURATION:
+        cam.set(CV_CAP_PROP_SATURATION, val);
+        break;
+    case CONTRAST:
+        cam.set(CV_CAP_PROP_CONTRAST, val);
+        break;
+    case HUE:
+        cam.set(CV_CAP_PROP_HUE, val);
+        break;
+    }
+}
+
+double Camera::getProp(Camera::Prop prop)
+{
+    switch (prop)
+    {
+    case BRIGHTNESS:
+        return cam.get(CV_CAP_PROP_BRIGHTNESS);
+    case SATURATION:
+        return cam.get(CV_CAP_PROP_SATURATION);
+    case CONTRAST:
+        return cam.get(CV_CAP_PROP_CONTRAST);
+    case HUE:
+        return cam.get(CV_CAP_PROP_HUE);
+    }
+
+    return 0.0;
+}
+
+void *Camera::getData()
+{
+    return currFrame.data;
+}
+
+int Camera::getDataSize()
+{
+    return currFrame.total() * currFrame.channels();
+}
+
+void Camera::lock()
+{
+    mutex.lock();
+    currFrame = getLastFrame();
+    //getLastFrame().copyTo(currFrame);
+}
+
+void Camera::unlock()
+{
+    mutex.unlock();
+}
+
+QSize Camera::resolution()
+{
+    return getVideoMode().res;
+}
+
+double Camera::fps()
+{
+    return getVideoMode().fps;
 }
 
 Camera* Camera::getInstance()

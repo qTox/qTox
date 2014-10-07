@@ -18,13 +18,16 @@
 #include "widget/camera.h"
 #include "ui_avsettings.h"
 
-AVForm::AVForm(Camera* cam) :
-    GenericForm(tr("Audio/Video settings"), QPixmap(":/img/settings/av.png"))
+AVForm::AVForm(Camera* Cam) :
+    GenericForm(tr("Audio/Video settings"), QPixmap(":/img/settings/av.png")), cam(Cam)
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
+    cam->subscribe();
+    cam->setVideoMode(cam->getBestVideoMode());
     camView = new SelfCamView(cam, this);
+
     bodyUI->videoGroup->layout()->addWidget(camView);
 
     auto modes = cam->getVideoModes();
@@ -33,9 +36,43 @@ AVForm::AVForm(Camera* cam) :
         bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(m.res.width())
                                                                  ,QString::number(m.res.height())));
     }
+
+    bodyUI->ContrastSlider->setValue(cam->getProp(Camera::CONTRAST)*100);
+    bodyUI->BrightnessSlider->setValue(cam->getProp(Camera::BRIGHTNESS)*100);
+    bodyUI->SaturationSlider->setValue(cam->getProp(Camera::SATURATION)*100);
+    bodyUI->HueSlider->setValue(cam->getProp(Camera::HUE)*100);
 }
 
 AVForm::~AVForm()
 {
     delete bodyUI;
+}
+
+void AVForm::on_ContrastSlider_sliderMoved(int position)
+{
+    cam->setProp(Camera::CONTRAST, position / 100.0);
+}
+
+void AVForm::on_SaturationSlider_sliderMoved(int position)
+{
+    cam->setProp(Camera::SATURATION, position / 100.0);
+}
+
+void AVForm::on_BrightnessSlider_sliderMoved(int position)
+{
+    cam->setProp(Camera::BRIGHTNESS, position / 100.0);
+}
+
+void AVForm::on_HueSlider_sliderMoved(int position)
+{
+    cam->setProp(Camera::HUE, position / 100.0);
+}
+
+void AVForm::on_videoModescomboBox_currentIndexChanged(const QString &arg1)
+{
+    QStringList resStr = arg1.split("x");
+    int w = resStr[0].toInt();
+    int h = resStr[0].toInt();
+
+    cam->setVideoMode(Camera::VideoMode{QSize(w,h),60});
 }
