@@ -74,6 +74,8 @@ Widget::Widget(QWidget *parent)
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
+    ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
+    ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
 
     contactListWidget = new FriendListWidget();
     ui->friendList->setWidget(contactListWidget);

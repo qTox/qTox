@@ -136,5 +136,7 @@
         <file>ui/chatroomWidgets/genericChatroomWidget.css</file>
         <file>ui/fileTransferInstance/sliverRTEdge.png</file>
         <file>ui/window/statusPanel.css</file>
+        <file>ui/settings/mainContent.css</file>
+        <file>ui/settings/mainHead.css</file>
     </qresource>
 </RCC>
