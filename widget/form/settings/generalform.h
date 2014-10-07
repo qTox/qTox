@@ -43,6 +43,7 @@ private slots:
 
 private:
     Ui::GeneralSettings *bodyUI;
+    void reloadSmiles();
 };
 
 #endif
