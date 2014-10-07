@@ -141,6 +141,7 @@ void Settings::load()
     s.beginGroup("Privacy");
         typingNotification = s.value("typingNotification", false).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
+        useProxy = s.value("useProxy", false).toBool();
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
     s.endGroup();
@@ -242,6 +243,7 @@ void Settings::save(QString path)
 
     s.beginGroup("Privacy");
         s.setValue("typingNotification", typingNotification);
+        s.setValue("useProxy", useProxy);
         s.setValue("forceTCP", forceTCP);
         s.setValue("proxyAddr", proxyAddr);
         s.setValue("proxyPort", proxyPort);
@@ -365,6 +367,15 @@ bool Settings::getForceTCP() const
 void Settings::setForceTCP(bool newValue)
 {
     forceTCP = newValue;
+}
+
+bool Settings::getUseProxy() const
+{
+    return useProxy;
+}
+void Settings::setUseProxy(bool newValue)
+{
+    useProxy = newValue;
 }
 
 QString Settings::getProxyAddr() const

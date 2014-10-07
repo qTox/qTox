@@ -58,6 +58,9 @@ public:
     QString getProxyAddr() const;
     void setProxyAddr(const QString& newValue);
 
+    bool getUseProxy() const;
+    void setUseProxy(bool newValue);
+
     int getProxyPort() const;
     void setProxyPort(int newValue);
 
@@ -164,6 +167,8 @@ private:
     static bool makeToxPortable;
     
     bool forceTCP;
+
+    bool useProxy;
     QString proxyAddr;
     int proxyPort;
 

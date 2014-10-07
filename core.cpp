@@ -122,8 +122,9 @@ void Core::start()
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be disabled in options.
     bool enableIPv6 = Settings::getInstance().getEnableIPv6();
     bool forceTCP = Settings::getInstance().getForceTCP();
-    QString proxyAddr = Settings::getInstance().getProxyAddr();
-    int proxyPort = Settings::getInstance().getProxyPort();
+
+    bool useProxy = Settings::getInstance().getUseProxy();
+
     if (enableIPv6)
         qDebug() << "Core starting with IPv6 enabled";
     else
@@ -132,26 +133,29 @@ void Core::start()
     Tox_Options toxOptions;
     toxOptions.ipv6enabled = enableIPv6;
     toxOptions.udp_disabled = forceTCP;
-    if (proxyAddr.length() > 255)
+
+    // No proxy by default
+    toxOptions.proxy_enabled = false;
+    toxOptions.proxy_address[0] = 0;
+    toxOptions.proxy_port = 0;
+
+    if (useProxy)
     {
-        qWarning() << "Core: proxy address" << proxyAddr << "is too long";
-        toxOptions.proxy_enabled = false;
-        toxOptions.proxy_address[0] = 0;
-        toxOptions.proxy_port = 0;
-    }
-    else if (proxyAddr != "" && proxyPort > 0)
-    {
-        qDebug() << "Core: using proxy" << proxyAddr << ":" << proxyPort;
-        toxOptions.proxy_enabled = true;
-        uint16_t sz = CString::fromString(proxyAddr, (unsigned char*)toxOptions.proxy_address);
-        toxOptions.proxy_address[sz] = 0;
-        toxOptions.proxy_port = proxyPort;
-    }
-    else
-    {
-        toxOptions.proxy_enabled = false;
-        toxOptions.proxy_address[0] = 0;
-        toxOptions.proxy_port = 0;
+        QString proxyAddr = Settings::getInstance().getProxyAddr();
+        int proxyPort = Settings::getInstance().getProxyPort();
+
+        if (proxyAddr.length() > 255)
+        {
+            qWarning() << "Core: proxy address" << proxyAddr << "is too long";
+        }
+        else if (proxyAddr != "" && proxyPort > 0)
+        {
+            qDebug() << "Core: using proxy" << proxyAddr << ":" << proxyPort;
+            toxOptions.proxy_enabled = true;
+            uint16_t sz = CString::fromString(proxyAddr, (unsigned char*)toxOptions.proxy_address);
+            toxOptions.proxy_address[sz] = 0;
+            toxOptions.proxy_port = proxyPort;
+        }
     }
 
     tox = tox_new(&toxOptions);
