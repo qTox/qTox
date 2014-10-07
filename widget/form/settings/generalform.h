@@ -39,7 +39,8 @@ private slots:
     void onSmileyBrowserIndexChanged(int index);
     void onUDPUpdated();
     void onProxyAddrEdited();
-    void onProxyPortEdited();
+    void onProxyPortEdited(int port);
+    void onUseProxyUpdated();
 
 private:
     Ui::GeneralSettings *bodyUI;

@@ -15,13 +15,13 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
-    <number>15</number>
+    <number>6</number>
    </property>
    <property name="topMargin">
-    <number>15</number>
+    <number>6</number>
    </property>
    <property name="rightMargin">
-    <number>15</number>
+    <number>6</number>
    </property>
    <item>
     <widget class="QGroupBox" name="generalGroup">
@@ -29,13 +29,6 @@
       <string>General Settings</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QCheckBox" name="cbEnableIPv6">
-        <property name="text">
-         <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QCheckBox" name="cbUseTranslations">
         <property name="text">
@@ -76,47 +69,62 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="proxyGroup">
+    <widget class="QGroupBox" name="connectionGroup">
      <property name="title">
-      <string>Proxy settings</string>
+      <string>Connection Settings</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayoutProxy">
       <item>
-       <widget class="QCheckBox" name="cbUDPDisabled">
+       <widget class="QCheckBox" name="cbEnableIPv6">
         <property name="text">
-         <string extracomment="Text on checkbox to disable UDP">Disable UDP (not recommended)</string>
-        </property>
-        <property name="toolTip">
-         <string extracomment="force tcp checkbox tooltip">This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</string>
+         <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayoutProxyLabel">
+       <widget class="QCheckBox" name="cbUDPDisabled">
+        <property name="toolTip">
+         <string extracomment="force tcp checkbox tooltip">This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</string>
+        </property>
+        <property name="text">
+         <string extracomment="Text on checkbox to disable UDP">Disable UDP (not recommended)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="cbUseProxy">
+        <property name="text">
+         <string>Use proxy (SOCKS5)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="proxyLayout">
         <item>
          <widget class="QLabel" name="proxyAddrLabel">
           <property name="text">
-           <string extracomment="Text on proxy addr label">Proxy address</string>
+           <string extracomment="Text on proxy addr label">Address</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="proxyAddr"/>
         </item>
         <item>
          <widget class="QLabel" name="proxyPortLabel">
           <property name="text">
-           <string extracomment="Text on proxy port label">Proxy port</string>
+           <string extracomment="Text on proxy port label">Port</string>
           </property>
          </widget>
         </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayoutProxyBoxes">
         <item>
-         <widget class="QLineEdit" name="proxyAddr">
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="proxyPort">
+         <widget class="QSpinBox" name="proxyPort">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>65535</number>
+          </property>
          </widget>
         </item>
        </layout>

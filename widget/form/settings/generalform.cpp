@@ -42,7 +42,10 @@ GeneralForm::GeneralForm() :
     bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
     int port = Settings::getInstance().getProxyPort();
     if (port != -1)
-        bodyUI->proxyPort->setText(QString::number(port));
+        bodyUI->proxyPort->setValue(port);
+
+    bodyUI->cbUseProxy->setChecked(Settings::getInstance().getUseProxy());
+    onUseProxyUpdated();
     
     connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
     connect(bodyUI->cbUseTranslations, &QCheckBox::stateChanged, this, &GeneralForm::onUseTranslationUpdated);
@@ -51,7 +54,8 @@ GeneralForm::GeneralForm() :
     // new syntax can't handle overloaded signals... (at least not in a pretty way)
     connect(bodyUI->cbUDPDisabled, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
     connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
-    connect(bodyUI->proxyPort, &QLineEdit::editingFinished, this, &GeneralForm::onProxyPortEdited);
+    connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
+    connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);
 }
 
 GeneralForm::~GeneralForm()
@@ -90,17 +94,21 @@ void GeneralForm::onProxyAddrEdited()
     Settings::getInstance().setProxyAddr(bodyUI->proxyAddr->text());
 }
 
-void GeneralForm::onProxyPortEdited()
+void GeneralForm::onProxyPortEdited(int port)
 {
-    QString text = bodyUI->proxyPort->text();
-    if (text != "")
+    if (port > 0)
     {
-        int port = text.toInt();
-        if (port < 1)
-            QMessageBox::warning(bodyUI->proxyPort, tr("Bad port", "title of bad port popup"), tr("The port you entered is invalid; please enter another.", "text of bad port popup"));
-        else
-            Settings::getInstance().setProxyPort(port);
-    }
-    else
+        Settings::getInstance().setProxyPort(port);
+    } else {
         Settings::getInstance().setProxyPort(-1);
+    }
+}
+
+void GeneralForm::onUseProxyUpdated()
+{
+    bool state = bodyUI->cbUseProxy->isChecked();
+
+    bodyUI->proxyAddr->setEnabled(state);
+    bodyUI->proxyPort->setEnabled(state);
+    Settings::getInstance().setUseProxy(state);
 }
