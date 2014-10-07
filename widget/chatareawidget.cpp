@@ -25,8 +25,8 @@
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent)
     : QTextBrowser(parent)
-    , nameWidth(75)
     , tableFrmt(nullptr)
+    , nameWidth(75)
 {
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
@@ -104,7 +104,7 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     checkSlider();
 
     QTextTable *chatTextTable = getMsgTable();
-    QTextCursor cur = chatTextTable->cellAt(0, 1).firstCursorPosition();
+    QTextCursor cur = chatTextTable->cellAt(0, 2).firstCursorPosition();
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
     chatTextTable->cellAt(0, 0).firstCursorPosition().setBlockFormat(nameFormat);
@@ -145,7 +145,9 @@ QTextTable *ChatAreaWidget::getMsgTable()
                                               QTextLength(QTextLength::VariableLength,0)});
     }
 
-    QTextTable *chatTextTable = textCursor().insertTable(1, 5, *tableFrmt);
+    QTextCursor tc = textCursor();
+    tc.movePosition(QTextCursor::End);
+    QTextTable *chatTextTable = tc.insertTable(1, 5, *tableFrmt);
 
     return chatTextTable;
 }
