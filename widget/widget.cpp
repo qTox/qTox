@@ -283,6 +283,14 @@ void Widget::onDisconnected()
     emit statusSet(Status::Offline);
 }
 
+void Widget::onIconClick()
+{
+    if(this->isHidden() == true)
+        this->show();
+    else
+        this->hide();
+}
+
 void Widget::onFailedToStartCore()
 {
     QMessageBox critical(this);

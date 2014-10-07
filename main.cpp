@@ -18,7 +18,9 @@
 #include "misc/settings.h"
 #include <QApplication>
 #include <QFontDatabase>
+#include <QMessageBox>
 #include <QTranslator>
+#include <QSystemTrayIcon>
 #include <QDebug>
 
 int main(int argc, char *argv[])
@@ -46,8 +48,23 @@ int main(int argc, char *argv[])
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
 
+    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+        QMessageBox::critical(0, QObject::tr("Systray"),
+                              QObject::tr("No system tray detected"));
+        return 1;
+    }
+
     Widget* w = Widget::getInstance();
-    w->show();
+    //w->show();
+
+    QSystemTrayIcon *icon = new QSystemTrayIcon(w);
+
+    QObject::connect(icon,
+                     SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                     w,
+                     SLOT(onIconClick()));
+    icon->setIcon(w->windowIcon());
+    icon->show();
 
     int errorcode = a.exec();
 

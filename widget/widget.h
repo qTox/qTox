@@ -104,6 +104,8 @@ private slots:
     void setStatusBusy();
     void onMessageSendResult(int friendId, const QString& message, int messageId);
     void onGroupSendResult(int groupId, const QString& message, int result);
+    void onIconClick();
+
 
 private:
     void hideMainForms();
