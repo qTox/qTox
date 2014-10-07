@@ -2,24 +2,58 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
-    <name>AVPage</name>
+    <name>AVForm</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="132"/>
-        <source>Video Settings</source>
-        <translation>Options vidéo</translation>
+        <location filename="../widget/form/settings/avform.cpp" line="22"/>
+        <source>Audio/Video settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="136"/>
-        <location filename="../widget/settingsdialog.cpp" line="163"/>
-        <source>Show video preview</source>
-        <comment>On a button</comment>
-        <translation>Montrer l&apos;aperçu vidéo</translation>
-    </message>
-    <message>
-        <location filename="../widget/settingsdialog.cpp" line="157"/>
+        <location filename="../widget/form/settings/avform.cpp" line="41"/>
         <source>Hide video preview</source>
         <comment>On a button</comment>
-        <translation>Cacher l&apos;aperçu vidéo</translation>
+        <translation type="unfinished">Cacher l&apos;aperçu vidéo</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/avform.cpp" line="47"/>
+        <source>Show video preview</source>
+        <comment>On a button</comment>
+        <translation type="unfinished">Montrer l&apos;aperçu vidéo</translation>
+    </message>
+</context>
+<context>
+    <name>AVPage</name>
+    <message>
+        <source>Video Settings</source>
+        <translation type="vanished">Options vidéo</translation>
+    </message>
+    <message>
+        <source>Show video preview</source>
+        <comment>On a button</comment>
+        <translation type="vanished">Montrer l&apos;aperçu vidéo</translation>
+    </message>
+    <message>
+        <source>Hide video preview</source>
+        <comment>On a button</comment>
+        <translation type="vanished">Cacher l&apos;aperçu vidéo</translation>
+    </message>
+</context>
+<context>
+    <name>AVSettings</name>
+    <message>
+        <location filename="../widget/form/settings/avsettings.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/avsettings.ui" line="20"/>
+        <source>Video settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/avsettings.ui" line="26"/>
+        <source>Show video preview</source>
+        <translation type="unfinished">Montrer l&apos;aperçu vidéo</translation>
     </message>
 </context>
 <context>
@@ -116,7 +150,7 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../widget/form/chatform.cpp" line="80"/>
+        <location filename="../widget/form/chatform.cpp" line="105"/>
         <source>Send a file</source>
         <translation>Envoyer un fichier</translation>
     </message>
@@ -133,21 +167,35 @@
     </message>
 </context>
 <context>
+    <name>Core</name>
+    <message>
+        <location filename="../core.cpp" line="1068"/>
+        <source>Encrypted profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core.cpp" line="1069"/>
+        <source>Your tox profile seems to be encrypted, qTox can&apos;t open it
+Do you want to erase this profile ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileTransferInstance</name>
     <message>
-        <location filename="../filetransferinstance.cpp" line="191"/>
+        <location filename="../filetransferinstance.cpp" line="208"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Sauvegarder un fichier</translation>
     </message>
     <message>
-        <location filename="../filetransferinstance.cpp" line="202"/>
+        <location filename="../filetransferinstance.cpp" line="219"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Impossible d&apos;écrire ici</translation>
     </message>
     <message>
-        <location filename="../filetransferinstance.cpp" line="202"/>
+        <location filename="../filetransferinstance.cpp" line="219"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Vous n&apos;avez pas la permission d&apos;écrire ici. Choisissez un audre endroit, ou annulez.</translation>
@@ -219,71 +267,153 @@
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="84"/>
+        <location filename="../widget/friendwidget.cpp" line="48"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Copier l&apos;ID ami</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="85"/>
+        <location filename="../widget/friendwidget.cpp" line="49"/>
         <source>Invite in group</source>
         <comment>Menu to invite a friend in a groupchat</comment>
         <translation>Inviter dans un groupe</translation>
     </message>
     <message>
-        <location filename="../widget/friendwidget.cpp" line="95"/>
+        <location filename="../widget/friendwidget.cpp" line="59"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Supprimer ami</translation>
     </message>
 </context>
 <context>
+    <name>GeneralForm</name>
+    <message>
+        <location filename="../widget/form/settings/generalform.cpp" line="26"/>
+        <source>General Settings</source>
+        <translation type="unfinished">Options Générales</translation>
+    </message>
+</context>
+<context>
     <name>GeneralPage</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="31"/>
         <source>General Settings</source>
-        <translation>Options Générales</translation>
+        <translation type="vanished">Options Générales</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="34"/>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
-        <translation>Activer IPv6 (recommandé)</translation>
+        <translation type="vanished">Activer IPv6 (recommandé)</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="36"/>
         <source>Use translations</source>
         <comment>Text on a checkbox to enable translations</comment>
-        <translation>Utiliser les traductions</translation>
+        <translation type="vanished">Utiliser les traductions</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="38"/>
         <source>Make Tox portable</source>
         <comment>Text on a checkbox to make qTox a portable application</comment>
-        <translation>Rendre Tox portable</translation>
+        <translation type="vanished">Rendre Tox portable</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="39"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <comment>describes makeToxPortable checkbox</comment>
-        <translation>Sauvegarde les options dans le dossier courant au lieu du dossier de configuration habituel</translation>
+        <translation type="vanished">Sauvegarde les options dans le dossier courant au lieu du dossier de configuration habituel</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="48"/>
         <source>Theme</source>
-        <translation>Thème</translation>
+        <translation type="vanished">Thème</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="49"/>
         <source>Smiley Pack</source>
-        <translation>Pack de smileys</translation>
+        <translation type="vanished">Pack de smileys</translation>
+    </message>
+</context>
+<context>
+    <name>GeneralSettings</name>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="29"/>
+        <source>General Settings</source>
+        <translation type="unfinished">Options Générales</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="35"/>
+        <source>Use translations</source>
+        <extracomment>Text on a checkbox to enable translations</extracomment>
+        <translation type="unfinished">Utiliser les traductions</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="42"/>
+        <source>Save settings to the working directory instead of the usual conf dir</source>
+        <extracomment>describes makeToxPortable checkbox</extracomment>
+        <translation type="unfinished">Sauvegarde les options dans le dossier courant au lieu du dossier de configuration habituel</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="45"/>
+        <source>Make Tox portable</source>
+        <translation type="unfinished">Rendre Tox portable</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="55"/>
+        <source>Theme</source>
+        <translation type="unfinished">Thème</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="61"/>
+        <source>Smiley Pack</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Pack de smileys</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="74"/>
+        <source>Connection Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="80"/>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">Activer IPv6 (recommandé)</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="87"/>
+        <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="90"/>
+        <source>Disable UDP (not recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="97"/>
+        <source>Use proxy (SOCKS5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="106"/>
+        <source>Address</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/generalsettings.ui" line="116"/>
+        <source>Port</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../widget/form/genericchatform.cpp" line="142"/>
-        <location filename="../widget/form/genericchatform.cpp" line="148"/>
+        <location filename="../widget/form/genericchatform.cpp" line="149"/>
+        <location filename="../widget/form/genericchatform.cpp" line="155"/>
         <source>Save chat log</source>
         <translation>Sauvegarder l&apos;historique de conversation</translation>
     </message>
@@ -291,18 +421,17 @@
 <context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="41"/>
+        <location filename="../widget/form/groupchatform.cpp" line="47"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 personnes</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="83"/>
         <source>&lt;Unknown&gt;</source>
-        <translation>&lt;Inconnu&gt;</translation>
+        <translation type="vanished">&lt;Inconnu&gt;</translation>
     </message>
     <message>
-        <location filename="../widget/form/groupchatform.cpp" line="90"/>
+        <location filename="../widget/form/groupchatform.cpp" line="85"/>
         <source>%1 users in chat</source>
         <translation>%1 personnes</translation>
     </message>
@@ -314,52 +443,88 @@
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="58"/>
-        <location filename="../widget/groupwidget.cpp" line="100"/>
+        <location filename="../widget/groupwidget.cpp" line="39"/>
+        <location filename="../widget/groupwidget.cpp" line="59"/>
         <source>%1 users in chat</source>
         <translation>%1 personnes</translation>
     </message>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="60"/>
-        <location filename="../widget/groupwidget.cpp" line="102"/>
+        <location filename="../widget/groupwidget.cpp" line="41"/>
+        <location filename="../widget/groupwidget.cpp" line="61"/>
         <source>0 users in chat</source>
         <translation>0 personnes</translation>
     </message>
     <message>
-        <location filename="../widget/groupwidget.cpp" line="83"/>
+        <location filename="../widget/groupwidget.cpp" line="48"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Quitter le groupe</translation>
     </message>
 </context>
 <context>
+    <name>IdentityForm</name>
+    <message>
+        <location filename="../widget/form/settings/identityform.cpp" line="29"/>
+        <source>Your identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>IdentityPage</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="82"/>
         <source>Public Information</source>
-        <translation>Informations Publiques</translation>
+        <translation type="vanished">Informations Publiques</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="83"/>
         <source>Name</source>
         <comment>Username/nick</comment>
-        <translation>Nom</translation>
+        <translation type="vanished">Nom</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="85"/>
         <source>Status</source>
         <comment>Status message</comment>
-        <translation>Status</translation>
+        <translation type="vanished">Status</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="95"/>
         <source>Tox ID</source>
-        <translation>ID Tox</translation>
+        <translation type="vanished">ID Tox</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="96"/>
         <source>Your Tox ID</source>
-        <translation>Votre ID Tox</translation>
+        <translation type="vanished">Votre ID Tox</translation>
+    </message>
+</context>
+<context>
+    <name>IdentitySettings</name>
+    <message>
+        <location filename="../widget/form/settings/identitysettings.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/identitysettings.ui" line="20"/>
+        <source>Public Information</source>
+        <translation type="unfinished">Informations Publiques</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/identitysettings.ui" line="26"/>
+        <source>Name</source>
+        <translation type="unfinished">Nom</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/identitysettings.ui" line="36"/>
+        <source>Status</source>
+        <translation type="unfinished">Status</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/identitysettings.ui" line="49"/>
+        <source>Tox ID</source>
+        <translation type="unfinished">ID Tox</translation>
+    </message>
+    <message>
+        <location filename="../widget/form/settings/identitysettings.ui" line="55"/>
+        <source>Your Tox ID (click to copy)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -370,44 +535,52 @@
         <translation>qTox</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1918"/>
+        <location filename="../mainwindow.ui" line="859"/>
         <source>Your name</source>
         <translation>Votre nom</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2000"/>
+        <location filename="../mainwindow.ui" line="941"/>
         <source>Your status</source>
         <translation>Votre status</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2566"/>
+        <location filename="../mainwindow.ui" line="1089"/>
         <source>Add friends</source>
         <translation>Ajouter des amis</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2592"/>
+        <location filename="../mainwindow.ui" line="1115"/>
         <source>Create a group chat</source>
         <translation>Creer un groupe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2624"/>
+        <location filename="../mainwindow.ui" line="1147"/>
         <source>View completed file transfers</source>
         <translation>Voir les transfers de fichiers terminés</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2656"/>
+        <location filename="../mainwindow.ui" line="1179"/>
         <source>Change your settings</source>
         <translation>Changer les options</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3238"/>
+        <location filename="../mainwindow.ui" line="1761"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3241"/>
+        <location filename="../mainwindow.ui" line="1764"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyForm</name>
+    <message>
+        <location filename="../widget/form/settings/privacyform.cpp" line="21"/>
+        <source>Privacy settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -422,44 +595,36 @@
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="197"/>
         <source>qTox – Settings</source>
-        <translation>qTox — Options</translation>
+        <translation type="vanished">qTox — Options</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="224"/>
         <source>General</source>
-        <translation>General</translation>
+        <translation type="vanished">General</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="230"/>
         <source>Identity</source>
-        <translation>Identité</translation>
+        <translation type="vanished">Identité</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="236"/>
         <source>Privacy</source>
-        <translation>Vie Privée</translation>
+        <translation type="vanished">Vie Privée</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="242"/>
         <source>Audio/Video</source>
-        <translation>Audio/Vidéo</translation>
+        <translation type="vanished">Audio/Vidéo</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="251"/>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation type="vanished">Ok</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="252"/>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="vanished">Annuler</translation>
     </message>
     <message>
-        <location filename="../widget/settingsdialog.cpp" line="253"/>
         <source>Apply</source>
-        <translation>Appliquer</translation>
+        <translation type="vanished">Appliquer</translation>
     </message>
 </context>
 <context>
@@ -513,25 +678,63 @@
         <translation type="vanished">Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="133"/>
+        <location filename="../widget/widget.cpp" line="88"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Connecté</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="135"/>
+        <location filename="../widget/widget.cpp" line="90"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Indisponnible</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="137"/>
+        <location filename="../widget/widget.cpp" line="92"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupé</translation>
     </message>
     <message>
-        <location filename="../widget/widget.cpp" line="605"/>
+        <location filename="../widget/widget.cpp" line="225"/>
+        <source>Choose a profile picture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="232"/>
+        <location filename="../widget/widget.cpp" line="239"/>
+        <location filename="../widget/widget.cpp" line="260"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="232"/>
+        <source>Unable to open this file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="239"/>
+        <source>Unable to read this image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="260"/>
+        <source>This image is too big</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="287"/>
+        <source>Toxcore failed to start, the application will terminate after you close this message.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="296"/>
+        <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widget/widget.cpp" line="611"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Inconnu&gt;</translation>
