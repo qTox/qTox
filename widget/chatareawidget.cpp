@@ -26,6 +26,7 @@
 ChatAreaWidget::ChatAreaWidget(QWidget *parent)
     : QTextBrowser(parent)
     , nameWidth(75)
+    , tableFrmt(nullptr)
 {
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
@@ -36,15 +37,6 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent)
     setOpenLinks(false);
     setAcceptRichText(false);
     setFrameStyle(QFrame::NoFrame);
-
-    QTextTableFormat tableFormat;
-    tableFormat.setCellSpacing(5);
-    tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::FixedLength,nameWidth),
-                                           QTextLength(QTextLength::PercentageLength,100),
-                                           QTextLength(QTextLength::VariableLength,0)});
-
-    chatTextTable = textCursor().insertTable(1,3,tableFormat);
 
     nameFormat.setAlignment(Qt::AlignRight);
     nameFormat.setNonBreakableLines(true);
@@ -60,6 +52,9 @@ ChatAreaWidget::~ChatAreaWidget()
     for (ChatAction* action : messages)
         delete action;
     messages.clear();
+
+    if (tableFrmt)
+        delete tableFrmt;
 }
 
 void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
@@ -108,16 +103,15 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
 
     checkSlider();
 
-    int row = chatTextTable->rows() - 1;
-    QTextCursor cur = chatTextTable->cellAt(row,1).firstCursorPosition();
+    QTextTable *chatTextTable = getMsgTable();
+    QTextCursor cur = chatTextTable->cellAt(0, 1).firstCursorPosition();
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
-    chatTextTable->appendRows(1);
-    chatTextTable->cellAt(row,0).firstCursorPosition().setBlockFormat(nameFormat);
-    chatTextTable->cellAt(row,0).firstCursorPosition().insertHtml(msgAction->getName());
-    chatTextTable->cellAt(row,1).firstCursorPosition().insertHtml(msgAction->getMessage());
-    chatTextTable->cellAt(row,2).firstCursorPosition().setBlockFormat(dateFormat);
-    chatTextTable->cellAt(row,2).firstCursorPosition().insertHtml(msgAction->getDate());
+    chatTextTable->cellAt(0, 0).firstCursorPosition().setBlockFormat(nameFormat);
+    chatTextTable->cellAt(0, 0).firstCursorPosition().insertHtml(msgAction->getName());
+    chatTextTable->cellAt(0, 2).firstCursorPosition().insertHtml(msgAction->getMessage());
+    chatTextTable->cellAt(0, 4).firstCursorPosition().setBlockFormat(dateFormat);
+    chatTextTable->cellAt(0, 4).firstCursorPosition().insertHtml(msgAction->getDate());
 
     msgAction->setup(cur, this);
 
@@ -137,13 +131,32 @@ void ChatAreaWidget::checkSlider()
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
 }
 
+QTextTable *ChatAreaWidget::getMsgTable()
+{
+    if (tableFrmt == nullptr)
+    {
+        tableFrmt = new QTextTableFormat();
+        tableFrmt->setCellSpacing(2);
+        tableFrmt->setBorderStyle(QTextFrameFormat::BorderStyle_None);
+        tableFrmt->setColumnWidthConstraints({QTextLength(QTextLength::FixedLength,nameWidth),
+                                              QTextLength(QTextLength::FixedLength,2),
+                                              QTextLength(QTextLength::PercentageLength,100),
+                                              QTextLength(QTextLength::FixedLength,2),
+                                              QTextLength(QTextLength::VariableLength,0)});
+    }
+
+    QTextTable *chatTextTable = textCursor().insertTable(1, 5, *tableFrmt);
+
+    return chatTextTable;
+}
+
 void ChatAreaWidget::setNameColWidth(int w)
 {
-    nameWidth = w;
+    if (tableFrmt != nullptr)
+    {
+        delete tableFrmt;
+        tableFrmt = nullptr;
+    }
 
-    QTextTableFormat tableFormat = chatTextTable->format();
-    tableFormat.setColumnWidthConstraints({QTextLength(QTextLength::FixedLength, 100),
-                                           QTextLength(QTextLength::PercentageLength, 100),
-                                           QTextLength(QTextLength::FixedLength, 40)});
-    chatTextTable->setFormat(tableFormat);
+    nameWidth = w;
 }

@@ -46,12 +46,13 @@ private slots:
 
 private:
     void checkSlider();
+    QTextTable* getMsgTable();
 
+    QTextTableFormat* tableFrmt;
     QList<ChatAction*> messages;
     bool lockSliderToBottom;
     int sliderPosition;
     int nameWidth;
-    QTextTable *chatTextTable;
     QTextBlockFormat nameFormat, dateFormat;
 };
 
