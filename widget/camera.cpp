@@ -78,6 +78,7 @@ cv::Mat Camera::getLastFrame()
 
 vpx_image Camera::getLastVPXImage()
 {
+    mutex.lock();
     cv::Mat3b frame = getLastFrame();
     vpx_image img;
     int w = frame.size().width, h = frame.size().height;
@@ -121,6 +122,7 @@ vpx_image Camera::getLastVPXImage()
             }
         }
     }
+    mutex.unlock();
     return img;
 }
 
