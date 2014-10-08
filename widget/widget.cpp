@@ -145,6 +145,7 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
+    connect(core, &Core::avInvite, this, &Widget::playRingtone);
 
     connect(core, SIGNAL(messageSentResult(int,QString,int)), this, SLOT(onMessageSendResult(int,QString,int)));
     connect(core, SIGNAL(groupSentResult(int,QString,int)), this, SLOT(onGroupSendResult(int,QString,int)));
@@ -531,6 +532,26 @@ void Widget::newMessageAlert()
     ALuint buffer;
     alGenBuffers(1, &buffer);
     alBufferData(buffer, AL_FORMAT_MONO16, sndData.data(), sndData.size(), 44100);
+    alSourcei(core->alMainSource, AL_BUFFER, buffer);
+    alSourcePlay(core->alMainSource);
+}
+
+void Widget::playRingtone()
+{
+    QApplication::alert(this);
+
+    static QFile sndFile1(":audio/ToxicIncomingCall.pcm"); // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
+    static QByteArray sndData1;
+    if (sndData1.isEmpty())
+    {
+        sndFile1.open(QIODevice::ReadOnly);
+        sndData1 = sndFile1.readAll();
+        sndFile1.close();
+    }
+
+    ALuint buffer;
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, AL_FORMAT_MONO16, sndData1.data(), sndData1.size(), 44100);
     alSourcei(core->alMainSource, AL_BUFFER, buffer);
     alSourcePlay(core->alMainSource);
 }
