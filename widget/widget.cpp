@@ -100,8 +100,7 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->setProperty("status", "offline");
     Style::repolish(ui->statusButton);
 
-    camera = new Camera;
-    settingsWidget = new SettingsWidget(camera);
+    settingsWidget = new SettingsWidget();
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -117,7 +116,7 @@ Widget::Widget(QWidget *parent)
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
     coreThread = new QThread(this);
-    core = new Core(camera, coreThread);
+    core = new Core(Camera::getInstance(), coreThread);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
 
@@ -213,11 +212,6 @@ void Widget::closeEvent(QCloseEvent *event)
 QString Widget::getUsername()
 {
     return core->getUsername();
-}
-
-Camera* Widget::getCamera()
-{
-    return camera;
 }
 
 void Widget::onAvatarClicked()

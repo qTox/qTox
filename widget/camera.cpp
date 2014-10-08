@@ -16,13 +16,35 @@
 
 #include "camera.h"
 #include "widget.h"
+#include <QtConcurrent/QtConcurrentRun>
 #include <QDebug>
+#include <QThread>
+#include <QTimer>
 
-using namespace cv;
+Camera* Camera::instance = nullptr;
 
 Camera::Camera()
-    : refcount{0}
+    : refcount(0)
+    , workerThread(nullptr)
+    , worker(nullptr)
 {
+    qDebug() << "New Worker";
+    worker = new SelfCamWorker(0);
+    workerThread = new QThread();
+
+    worker->moveToThread(workerThread);
+
+    connect(workerThread, &QThread::started, worker, &SelfCamWorker::onStart);
+    connect(workerThread, &QThread::finished, worker, &SelfCamWorker::deleteLater);
+    connect(workerThread, &QThread::deleteLater, worker, &SelfCamWorker::deleteLater);
+    connect(worker, &SelfCamWorker::newFrameAvailable, this, &Camera::onNewFrameAvailable);
+    workerThread->start();
+}
+
+Camera::~Camera()
+{
+    workerThread->exit();
+    workerThread->deleteLater();
 }
 
 void Camera::subscribe()
@@ -30,7 +52,11 @@ void Camera::subscribe()
     if (refcount <= 0)
     {
         refcount = 1;
-        cam.open(0);
+
+        //mode.res.setWidth(cam.get(CV_CAP_PROP_FRAME_WIDTH));
+        //mode.res.setHeight(cam.get(CV_CAP_PROP_FRAME_HEIGHT));
+
+        worker->resume();
     }
     else
         refcount++;
@@ -42,26 +68,22 @@ void Camera::unsubscribe()
 
     if (refcount <= 0)
     {
-        //cam.release();
+        worker->suspend();
         refcount = 0;
     }
 }
 
-Mat Camera::getLastFrame()
+cv::Mat Camera::getLastFrame()
 {
-    Mat frame;
+    cv::Mat frame;
     cam >> frame;
 
-    Mat out;
-    if (!frame.empty())
-        cv::cvtColor(frame, out, CV_BGR2RGB);
-
-    return out;
+    return frame;
 }
 
 vpx_image Camera::getLastVPXImage()
 {
-    Mat3b frame = getLastFrame();
+    cv::Mat3b frame = getLastFrame();
     vpx_image img;
     int w = frame.size().width, h = frame.size().height;
     vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched
@@ -122,6 +144,7 @@ QList<Camera::VideoMode> Camera::getVideoModes()
 
     for (QSize res : resolutions)
     {
+        mutex.lock();
         cam.set(CV_CAP_PROP_FRAME_WIDTH, res.width());
         cam.set(CV_CAP_PROP_FRAME_HEIGHT, res.height());
 
@@ -134,6 +157,7 @@ QList<Camera::VideoMode> Camera::getVideoModes()
         {
             modes.append({res, 60}); // assume 60fps for now
         }
+        mutex.unlock();
     }
 
     return modes;
@@ -162,10 +186,14 @@ void Camera::setVideoMode(Camera::VideoMode mode)
 {
     if (cam.isOpened())
     {
+        mutex.lock();
         cam.set(CV_CAP_PROP_FRAME_WIDTH, mode.res.width());
         cam.set(CV_CAP_PROP_FRAME_HEIGHT, mode.res.height());
-        //cam.set(CV_CAP_PROP_SATURATION, 0.5);
 
+        mode.res.setWidth(cam.get(CV_CAP_PROP_FRAME_WIDTH));
+        mode.res.setHeight(cam.get(CV_CAP_PROP_FRAME_HEIGHT));
+        mutex.unlock();
+        qDebug() << "VIDEO MODE" << mode.res;
     }
 }
 
@@ -210,6 +238,11 @@ double Camera::getProp(Camera::Prop prop)
     return 0.0;
 }
 
+void Camera::onNewFrameAvailable()
+{
+    emit frameAvailable();
+}
+
 void *Camera::getData()
 {
     return currFrame.data;
@@ -223,8 +256,12 @@ int Camera::getDataSize()
 void Camera::lock()
 {
     mutex.lock();
-    currFrame = getLastFrame();
-    //getLastFrame().copyTo(currFrame);
+
+    mode.res.setWidth(currFrame.cols);
+    mode.res.setHeight(currFrame.rows);
+
+    if (worker->hasFrame())
+        currFrame = worker->deqeueFrame();
 }
 
 void Camera::unlock()
@@ -234,15 +271,94 @@ void Camera::unlock()
 
 QSize Camera::resolution()
 {
-    return getVideoMode().res;
-}
-
-double Camera::fps()
-{
-    return getVideoMode().fps;
+    return QSize(currFrame.cols, currFrame.rows);
 }
 
 Camera* Camera::getInstance()
 {
-    return Widget::getInstance()->getCamera();
+    if (!instance)
+        instance = new Camera();
+
+    return instance;
+}
+
+// ====================
+// WORKER
+// ====================
+
+SelfCamWorker::SelfCamWorker(int index)
+    : clock(nullptr)
+    , camIndex(index)
+{
+}
+
+void SelfCamWorker::onStart()
+{
+    clock = new QTimer(this);
+    clock->setSingleShot(false);
+    clock->setInterval(1);
+
+    connect(clock, &QTimer::timeout, this, &SelfCamWorker::doWork);
+    clock->start();
+
+    cam.open(camIndex);
+}
+
+void SelfCamWorker::_suspend()
+{
+    qDebug() << "Suspend";
+    if (cam.isOpened())
+        cam.release();
+}
+
+void SelfCamWorker::_resume()
+{
+    qDebug() << "Resume";
+    if (!cam.isOpened())
+        cam.open(camIndex);
+}
+
+void SelfCamWorker::doWork()
+{
+    if (!cam.isOpened())
+        return;
+
+    cam >> frame;
+//qDebug() << "Decoding frame";
+    mutex.lock();
+    while (qeue.size() > 3)
+        qeue.dequeue();
+
+    qeue.enqueue(frame);
+    mutex.unlock();
+
+    emit newFrameAvailable();
+}
+
+bool SelfCamWorker::hasFrame()
+{
+    mutex.lock();
+    bool b = !qeue.empty();
+    mutex.unlock();
+
+    return b;
+}
+
+cv::Mat3b SelfCamWorker::deqeueFrame()
+{
+    mutex.lock();
+    cv::Mat3b f = qeue.dequeue();
+    mutex.unlock();
+
+    return f;
+}
+
+void SelfCamWorker::suspend()
+{
+    QMetaObject::invokeMethod(this, "_suspend");
+}
+
+void SelfCamWorker::resume()
+{
+    QMetaObject::invokeMethod(this, "_resume");
 }

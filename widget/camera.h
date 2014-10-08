@@ -19,6 +19,7 @@
 
 #include <QImage>
 #include <QList>
+#include <QQueue>
 #include <QMutex>
 #include "vpx/vpx_image.h"
 #include "opencv2/opencv.hpp"
@@ -30,8 +31,40 @@
  * the camera only when needed, and giving access to the last frames
  **/
 
+class SelfCamWorker : public QObject
+{
+    Q_OBJECT
+public:
+    SelfCamWorker(int index);
+    void doWork();
+    bool hasFrame();
+    cv::Mat3b deqeueFrame();
+
+    void suspend();
+    void resume();
+
+public slots:
+    void onStart();
+
+signals:
+    void newFrameAvailable();
+
+private slots:
+    void _suspend();
+    void _resume();
+
+private:
+    QMutex mutex;
+    QQueue<cv::Mat3b> qeue;
+    QTimer* clock;
+    cv::VideoCapture cam;
+    cv::Mat3b frame;
+    int camIndex;
+};
+
 class Camera : public VideoSource
 {
+    Q_OBJECT
 public:
     struct VideoMode {
         QSize res;
@@ -45,10 +78,10 @@ public:
         HUE,
     };
 
-    Camera();
+    ~Camera();
+
     static Camera* getInstance(); ///< Returns the global widget's Camera instance
-    virtual void subscribe(); ///< Call this once before trying to get frames
-    virtual void unsubscribe(); ///< Call this once when you don't need frames anymore
+
     cv::Mat getLastFrame(); ///< Get the last captured frame
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
 
@@ -61,20 +94,33 @@ public:
     void setProp(Prop prop, double val);
     double getProp(Prop prop);
 
-private:
-    int refcount; ///< Number of users suscribed to the camera
-    cv::VideoCapture cam; ///< OpenCV camera capture opbject
-    cv::Mat3b currFrame;
-    QMutex mutex;
-
     // VideoSource interface
-public:
     virtual void *getData();
     virtual int getDataSize();
     virtual void lock();
     virtual void unlock();
     virtual QSize resolution();
-    virtual double fps();
+    virtual void subscribe();
+    virtual void unsubscribe();
+
+protected:
+    Camera();
+
+private:
+    int refcount; ///< Number of users suscribed to the camera
+    cv::VideoCapture cam; ///< OpenCV camera capture opbject
+    cv::Mat3b currFrame;
+    QMutex mutex;
+    VideoMode mode;
+
+    QThread* workerThread;
+    SelfCamWorker* worker;
+
+    static Camera* instance;
+
+private slots:
+    void onNewFrameAvailable();
+
 };
 
 #endif // CAMERA_H

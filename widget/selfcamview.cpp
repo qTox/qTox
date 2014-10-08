@@ -29,13 +29,11 @@ SelfCamView::SelfCamView(VideoSource *Source, QWidget* parent)
     , program(nullptr)
     , textureId(0)
     , pboAllocSize(0)
+    , useNewFrame(false)
+    , hasSubscribed(false)
 {
-    source->subscribe();
-
-    qDebug()<<"NEW:"<<source->resolution();
+    qDebug()<<"NEW VideoSurface:"<<source->resolution();
     setFixedSize(source->resolution());
-
-
 }
 
 SelfCamView::~SelfCamView()
@@ -49,21 +47,38 @@ SelfCamView::~SelfCamView()
     source->unsubscribe();
 }
 
+void SelfCamView::hideEvent(QHideEvent *ev)
+{
+    if (hasSubscribed)
+    {
+        source->unsubscribe();
+        hasSubscribed = false;
+        disconnect(source, &VideoSource::frameAvailable, this, &SelfCamView::updateGL);
+    }
+
+    QGLWidget::hideEvent(ev);
+}
+
+void SelfCamView::showEvent(QShowEvent *ev)
+{
+    if (!hasSubscribed)
+    {
+        source->subscribe();
+        hasSubscribed = true;
+        connect(source, &VideoSource::frameAvailable, this, &SelfCamView::updateGL);
+    }
+
+    QGLWidget::showEvent(ev);
+}
+
 void SelfCamView::initializeGL()
 {
-    updateTimer = new QTimer(this);
-    updateTimer->setSingleShot(false);
-    updateTimer->setInterval(1000.0 / source->fps());
 
-    connect(updateTimer, &QTimer::timeout, this, &SelfCamView::update);
-    updateTimer->start();
 }
 
 void SelfCamView::paintGL()
 {
-    source->lock();
-    void* frame = source->getData();
-    int frameBytes = source->getDataSize();
+    //qDebug() << "PainterThread" << QThread::currentThreadId();
 
     if (!pbo)
     {
@@ -87,7 +102,8 @@ void SelfCamView::paintGL()
                                          "uniform sampler2D texture0;"
                                          "varying vec2 coords;"
                                          "void main() {"
-                                         "    gl_FragColor = texture2D(texture0,coords*vec2(1.0, -1.0));"
+                                         "    vec4 color = texture2D(texture0,coords*vec2(1.0, -1.0));"
+                                         "    gl_FragColor = vec4(color.b, color.g, color.r, 1);"
                                          "}");
 
         program->bindAttributeLocation("vertices", 0);
@@ -108,29 +124,41 @@ void SelfCamView::paintGL()
         setFixedSize(res);
     }
 
-    if (pboAllocSize != frameBytes)
+
+    if (useNewFrame)
     {
-        qDebug() << "Resize pbo " << frameBytes << "bytes (was" << pboAllocSize << ") res " << source->resolution();
+        source->lock();
+        void* frame = source->getData();
+        int frameBytes = source->getDataSize();
 
+        if (pboAllocSize != frameBytes && frameBytes > 0)
+        {
+            qDebug() << "Resize pbo " << frameBytes << "bytes (was" << pboAllocSize << ") res " << source->resolution();
+
+            pbo->bind();
+            pbo->allocate(frameBytes);
+            pbo->release();
+
+            pboAllocSize = frameBytes;
+        }
+
+        // transfer data
         pbo->bind();
-        pbo->allocate(frameBytes);
+
+        void* ptr = pbo->map(QOpenGLBuffer::WriteOnly);
+        if (ptr && frame)
+            memcpy(ptr, frame, frameBytes);
+        pbo->unmap();
+
+        source->unlock();
+
+        //transfer pbo data to texture
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        glTexSubImage2D(GL_TEXTURE_2D,0,0,0, res.width(), res.height(), GL_RGB, GL_UNSIGNED_BYTE, 0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+
         pbo->release();
-
-        pboAllocSize = frameBytes;
     }
-
-    // transfer data
-    pbo->bind();
-
-    void* ptr = pbo->map(QOpenGLBuffer::WriteOnly);
-    if (ptr)
-        memcpy(ptr, frame, frameBytes);
-    pbo->unmap();
-
-    //transfer pbo data to texture
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    glTexSubImage2D(GL_TEXTURE_2D,0,0,0, res.width(), res.height(), GL_RGB, GL_UNSIGNED_BYTE, 0);
-    glBindTexture(GL_TEXTURE_2D, 0);
 
     // render pbo
     float values[] = {
@@ -155,18 +183,20 @@ void SelfCamView::paintGL()
 
     //draw fullscreen quad
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     program->disableAttributeArray(0);
     program->release();
 
-    pbo->release();
+    //glFlush();
 
-    source->unlock();
+    useNewFrame = false;
 }
 
-void SelfCamView::update()
+void SelfCamView::updateGL()
 {
-    QGLWidget::update();
+    useNewFrame = true;
+    QGLWidget::updateGL();
 }
 
 

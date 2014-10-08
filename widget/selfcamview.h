@@ -32,10 +32,14 @@ public:
     SelfCamView(VideoSource* source, QWidget* parent=0);
     ~SelfCamView();
 
+    virtual void hideEvent(QHideEvent* ev);
+    virtual void showEvent(QShowEvent* ev);
+
     // QGLWidget interface
 protected:
     virtual void initializeGL();
     virtual void paintGL();
+    virtual void updateGL();
 
     void update();
 
@@ -43,10 +47,12 @@ private:
     VideoSource* source;
     QOpenGLBuffer* pbo;
     QOpenGLShaderProgram* program;
-    QTimer* updateTimer;
     GLuint textureId;
     int pboAllocSize;
     QSize res;
+    bool useNewFrame;
+    bool hasSubscribed;
+
 };
 
 #endif // SELFCAMVIEW_H

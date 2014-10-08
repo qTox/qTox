@@ -122,7 +122,6 @@ private:
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
-    Camera* camera;
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
 };
