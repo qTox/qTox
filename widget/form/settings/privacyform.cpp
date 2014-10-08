@@ -15,13 +15,44 @@
 */
 
 #include "privacyform.h"
+#include "ui_privacysettings.h"
 #include "widget/form/settingswidget.h"
+#include "misc/settings.h"
 
 PrivacyForm::PrivacyForm() :
     GenericForm(tr("Privacy settings"), QPixmap(":/img/settings/privacy.png"))
 {
+    bodyUI = new Ui::PrivacySettings;
+    bodyUI->setupUi(this);
 }
 
 PrivacyForm::~PrivacyForm()
 {
+    delete bodyUI;
+}
+
+void PrivacyForm::onEnableLoggingUpdated()
+{
+    Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
+    bodyUI->cbEncryptHistory->setEnabled(bodyUI->cbKeepHistory->isChecked());
+}
+
+void PrivacyForm::onTypingNotificationEnabledUpdated()
+{
+    Settings::getInstance().setTypingNotification(bodyUI->cbTypingNotification->isChecked());
+}
+
+void PrivacyForm::onEncryptLogsUpdated()
+{
+    Settings::getInstance().setEncryptLogs(bodyUI->cbEncryptHistory->isChecked());
+}
+
+void PrivacyForm::onEncryptToxUpdated()
+{
+    //
+}
+
+void PrivacyForm::onPasswordSet()
+{
+    //
 }

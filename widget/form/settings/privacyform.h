@@ -19,6 +19,10 @@
 
 #include "genericsettings.h"
 
+namespace Ui {
+class PrivacySettings;
+}
+
 class PrivacyForm : public GenericForm
 {
     Q_OBJECT
@@ -26,8 +30,16 @@ public:
     PrivacyForm();
     ~PrivacyForm();
 
+private slots:
+    void onEnableLoggingUpdated();
+    void onTypingNotificationEnabledUpdated();
+
+    void onEncryptLogsUpdated();
+    void onEncryptToxUpdated();
+    void onPasswordSet();
+
 private:
-    
+    Ui::PrivacySettings* bodyUI;
 };
 
 #endif

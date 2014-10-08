@@ -29,7 +29,8 @@ FORMS    += \
     mainwindow.ui \
     widget/form/settings/generalsettings.ui \
     widget/form/settings/avsettings.ui \
-    widget/form/settings/identitysettings.ui
+    widget/form/settings/identitysettings.ui \
+    widget/form/settings/privacysettings.ui
 CONFIG   += c++11
 
 TRANSLATIONS = translations/de.ts \
