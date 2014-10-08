@@ -11,7 +11,11 @@ QLabel
 QGroupBox::title
 {
     color: black;
-    background-color: white;
+}
+
+QGroupBox
+{
+    background-color: white;    
 }
 
 QWidget

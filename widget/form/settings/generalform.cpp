@@ -21,6 +21,7 @@
 #include "misc/settings.h"
 #include "misc/smileypack.h"
 #include <QMessageBox>
+#include <QStyleFactory>
 
 GeneralForm::GeneralForm() :
     GenericForm(tr("General Settings"), QPixmap(":/img/settings/general.png"))
@@ -38,7 +39,14 @@ GeneralForm::GeneralForm() :
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
     }
     bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
-
+    
+    bodyUI->styleBrowser->addItems(QStyleFactory::keys());
+    bodyUI->styleBrowser->addItem("None");
+    if(QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
+        bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
+    else
+        bodyUI->styleBrowser->setCurrentText("None");
+    
     bodyUI->cbUDPDisabled->setChecked(Settings::getInstance().getForceTCP());
     bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
     int port = Settings::getInstance().getProxyPort();
@@ -58,6 +66,7 @@ GeneralForm::GeneralForm() :
     connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);
+    connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
 }
 
 GeneralForm::~GeneralForm()
@@ -83,6 +92,12 @@ void GeneralForm::onMakeToxPortableUpdated()
 void GeneralForm::onSetAutostartInTray()
 {
     Settings::getInstance().setAutostartInTray(bodyUI->startInTray->isChecked());
+}
+
+void GeneralForm::onStyleSelected(QString style)
+{
+    Settings::getInstance().setStyle(style);
+    this->setStyle(QStyleFactory::create(style));
 }
 
 void GeneralForm::onSmileyBrowserIndexChanged(int index)
