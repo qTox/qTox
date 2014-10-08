@@ -138,5 +138,6 @@
         <file>ui/window/statusPanel.css</file>
         <file>ui/settings/mainContent.css</file>
         <file>ui/settings/mainHead.css</file>
+        <file>translations/pirate.qm</file>
     </qresource>
 </RCC>
