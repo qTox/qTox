@@ -129,7 +129,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/tool/chatactions/systemmessageaction.h \
     widget/tool/chatactions/actionaction.h \
     widget/maskablepixmapwidget.h \
-    videosource.h
+    videosource.h \
+    cameraworker.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -175,4 +176,5 @@ SOURCES += \
     widget/tool/chatactions/filetransferaction.cpp \
     widget/tool/chatactions/systemmessageaction.cpp \
     widget/tool/chatactions/actionaction.cpp \
-    widget/maskablepixmapwidget.cpp
+    widget/maskablepixmapwidget.cpp \
+    cameraworker.cpp

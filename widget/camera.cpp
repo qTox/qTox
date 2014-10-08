@@ -16,10 +16,9 @@
 
 #include "camera.h"
 #include "widget.h"
-#include <QtConcurrent/QtConcurrentRun>
+#include "cameraworker.h"
 #include <QDebug>
 #include <QThread>
-#include <QTimer>
 
 Camera* Camera::instance = nullptr;
 
@@ -28,18 +27,17 @@ Camera::Camera()
     , workerThread(nullptr)
     , worker(nullptr)
 {
-    qDebug() << "New Worker";
-    worker = new SelfCamWorker(0);
+    worker = new CameraWorker(0);
     workerThread = new QThread();
 
     worker->moveToThread(workerThread);
 
-    connect(workerThread, &QThread::started, worker, &SelfCamWorker::onStart);
-    connect(workerThread, &QThread::finished, worker, &SelfCamWorker::deleteLater);
-    connect(workerThread, &QThread::deleteLater, worker, &SelfCamWorker::deleteLater);
-    connect(worker, &SelfCamWorker::started, this, &Camera::onWorkerStarted);
-    connect(worker, &SelfCamWorker::newFrameAvailable, this, &Camera::onNewFrameAvailable);
-    connect(worker, &SelfCamWorker::resProbingFinished, this, &Camera::onResProbingFinished);
+    connect(workerThread, &QThread::started, worker, &CameraWorker::onStart);
+    connect(workerThread, &QThread::finished, worker, &CameraWorker::deleteLater);
+    connect(workerThread, &QThread::deleteLater, worker, &CameraWorker::deleteLater);
+    connect(worker, &CameraWorker::started, this, &Camera::onWorkerStarted);
+    connect(worker, &CameraWorker::newFrameAvailable, this, &Camera::onNewFrameAvailable);
+    connect(worker, &CameraWorker::resProbingFinished, this, &Camera::onResProbingFinished);
     workerThread->start();
 }
 
@@ -222,7 +220,7 @@ void Camera::lock()
     mutex.lock();
 
     if (worker->hasFrame())
-        currFrame = worker->deqeueFrame();
+        currFrame = worker->dequeueFrame();
 }
 
 void Camera::unlock()
@@ -241,193 +239,4 @@ Camera* Camera::getInstance()
         instance = new Camera();
 
     return instance;
-}
-
-// ====================
-// WORKER
-// ====================
-
-SelfCamWorker::SelfCamWorker(int index)
-    : clock(nullptr)
-    , camIndex(index)
-    , refCount(0)
-{
-}
-
-void SelfCamWorker::onStart()
-{
-    clock = new QTimer(this);
-    clock->setSingleShot(false);
-    clock->setInterval(5);
-
-    connect(clock, &QTimer::timeout, this, &SelfCamWorker::doWork);
-
-    emit started();
-}
-
-void SelfCamWorker::_suspend()
-{
-    qDebug() << "Suspend";
-    clock->stop();
-    unsubscribe();
-}
-
-void SelfCamWorker::_resume()
-{
-    qDebug() << "Resume";
-    subscribe();
-    clock->start();
-}
-
-void SelfCamWorker::_setProp(int prop, double val)
-{
-    props[prop] = val;
-
-    if (cam.isOpened())
-        cam.set(prop, val);
-}
-
-double SelfCamWorker::_getProp(int prop)
-{
-    if (!props.contains(prop))
-    {
-        subscribe();
-        props[prop] = cam.get(prop);
-        unsubscribe();
-        qDebug() << "ASKED " << prop << " VAL " << props[prop];
-    }
-
-    return props.value(prop);
-}
-
-void SelfCamWorker::probeResolutions()
-{
-    if (resolutions.isEmpty())
-    {
-        subscribe();
-
-        // probe resolutions (TODO: add more)
-        QList<QSize> propbeRes = {
-            QSize( 160, 120), // QQVGA
-            QSize( 320, 240), // HVGA
-            QSize(1024, 768), // XGA
-            QSize( 432, 240), // WQVGA
-            QSize( 640, 360), // nHD
-        };
-
-        for (QSize res : propbeRes)
-        {
-            cam.set(CV_CAP_PROP_FRAME_WIDTH, res.width());
-            cam.set(CV_CAP_PROP_FRAME_HEIGHT, res.height());
-
-            double w = cam.get(CV_CAP_PROP_FRAME_WIDTH);
-            double h = cam.get(CV_CAP_PROP_FRAME_HEIGHT);
-
-            //qDebug() << "PROBING:" << res << " got " << w << h;
-
-            if (!resolutions.contains(QSize(w,h)))
-                resolutions.append(QSize(w,h));
-        }
-
-        unsubscribe();
-    }
-
-    qDebug() << resolutions;
-
-    emit resProbingFinished(resolutions);
-}
-
-void SelfCamWorker::applyProps()
-{
-    if (!cam.isOpened())
-        return;
-
-    for(int prop : props.keys())
-        cam.set(prop, props.value(prop));
-}
-
-void SelfCamWorker::subscribe()
-{
-    if (refCount == 0)
-    {
-        if (!cam.isOpened())
-        {
-            cam.open(camIndex);
-            applyProps(); // restore props
-        }
-    }
-
-    refCount++;
-}
-
-void SelfCamWorker::unsubscribe()
-{
-    refCount--;
-
-    if(refCount <= 0)
-    {
-        cam.release();
-    }
-}
-
-void SelfCamWorker::doWork()
-{
-    if (!cam.isOpened())
-        return;
-
-    if (qeue.size() > 3)
-    {
-        qeue.dequeue();
-        return;
-    }
-
-    cam >> frame;
-//qDebug() << "Decoding frame";
-    mutex.lock();
-
-    qeue.enqueue(frame);
-    mutex.unlock();
-
-    emit newFrameAvailable();
-}
-
-bool SelfCamWorker::hasFrame()
-{
-    mutex.lock();
-    bool b = !qeue.empty();
-    mutex.unlock();
-
-    return b;
-}
-
-cv::Mat3b SelfCamWorker::deqeueFrame()
-{
-    mutex.lock();
-    cv::Mat3b f = qeue.dequeue();
-    mutex.unlock();
-
-    return f;
-}
-
-void SelfCamWorker::suspend()
-{
-    QMetaObject::invokeMethod(this, "_suspend");
-}
-
-void SelfCamWorker::resume()
-{
-    QMetaObject::invokeMethod(this, "_resume");
-}
-
-void SelfCamWorker::setProp(int prop, double val)
-{
-    QMetaObject::invokeMethod(this, "_setProp", Q_ARG(int, prop), Q_ARG(double, val));
-}
-
-double SelfCamWorker::getProp(int prop)
-{
-    double ret = 0.0;
-    QMetaObject::invokeMethod(this, "_getProp", Qt::BlockingQueuedConnection, Q_RETURN_ARG(double, ret), Q_ARG(int, prop));
-
-    return ret;
 }

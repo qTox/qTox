@@ -26,57 +26,13 @@
 #include "opencv2/opencv.hpp"
 #include "videosource.h"
 
+class CameraWorker;
+
 /**
  * This class is a wrapper to share a camera's captured video frames
  * It allows objects to suscribe and unsuscribe to the stream, starting
  * the camera only when needed, and giving access to the last frames
  **/
-
-class SelfCamWorker : public QObject
-{
-    Q_OBJECT
-public:
-    SelfCamWorker(int index);
-    void doWork();
-    bool hasFrame();
-    cv::Mat3b deqeueFrame();
-
-    void suspend();
-    void resume();
-    void setProp(int prop, double val);
-    double getProp(int prop); // blocking call!
-    void probeResolutions();
-
-public slots:
-    void onStart();
-
-signals:
-    void started();
-    void newFrameAvailable();
-    void resProbingFinished(QList<QSize> res);
-
-private slots:
-    void _suspend();
-    void _resume();
-    void _setProp(int prop, double val);
-    double _getProp(int prop);
-
-private:
-    void applyProps();
-    void subscribe();
-    void unsubscribe();
-
-private:
-    QMutex mutex;
-    QQueue<cv::Mat3b> qeue;
-    QTimer* clock;
-    cv::VideoCapture cam;
-    cv::Mat3b frame;
-    int camIndex;
-    QMap<int, double> props;
-    QList<QSize> resolutions;
-    int refCount;
-};
 
 class Camera : public VideoSource
 {
@@ -123,7 +79,7 @@ private:
     QMutex mutex;
 
     QThread* workerThread;
-    SelfCamWorker* worker;
+    CameraWorker* worker;
 
     QList<QSize> resolutions;
 

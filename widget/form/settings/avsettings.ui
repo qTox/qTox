@@ -17,7 +17,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Volume Settings</string>
+      <string>Volume Settings (Stubs)</string>
      </property>
      <layout class="QFormLayout" name="formLayout_2">
       <item row="0" column="0">
