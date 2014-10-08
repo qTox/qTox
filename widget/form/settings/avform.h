@@ -35,8 +35,7 @@ class AVForm : public GenericForm
 public:
     AVForm();
     ~AVForm();
-
-    virtual void show();
+    virtual void present();
 
 private slots:
 

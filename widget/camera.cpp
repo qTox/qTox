@@ -37,8 +37,15 @@ Camera::Camera()
     connect(workerThread, &QThread::started, worker, &SelfCamWorker::onStart);
     connect(workerThread, &QThread::finished, worker, &SelfCamWorker::deleteLater);
     connect(workerThread, &QThread::deleteLater, worker, &SelfCamWorker::deleteLater);
+    connect(worker, &SelfCamWorker::started, this, &Camera::onWorkerStarted);
     connect(worker, &SelfCamWorker::newFrameAvailable, this, &Camera::onNewFrameAvailable);
+    connect(worker, &SelfCamWorker::resProbingFinished, this, &Camera::onResProbingFinished);
     workerThread->start();
+}
+
+void Camera::onWorkerStarted()
+{
+    worker->probeResolutions();
 }
 
 Camera::~Camera()
@@ -50,16 +57,9 @@ Camera::~Camera()
 void Camera::subscribe()
 {
     if (refcount <= 0)
-    {
-        refcount = 1;
-
-        //mode.res.setWidth(cam.get(CV_CAP_PROP_FRAME_WIDTH));
-        //mode.res.setHeight(cam.get(CV_CAP_PROP_FRAME_HEIGHT));
-
         worker->resume();
-    }
-    else
-        refcount++;
+
+    refcount++;
 }
 
 void Camera::unsubscribe()
@@ -75,10 +75,7 @@ void Camera::unsubscribe()
 
 cv::Mat Camera::getLastFrame()
 {
-    cv::Mat frame;
-    cam >> frame;
-
-    return frame;
+    return currFrame;
 }
 
 vpx_image Camera::getLastVPXImage()
@@ -129,77 +126,39 @@ vpx_image Camera::getLastVPXImage()
     return img;
 }
 
-QList<Camera::VideoMode> Camera::getVideoModes()
+QList<QSize> Camera::getSupportedResolutions()
 {
-    // probe resolutions
-    QList<QSize> resolutions = {
-        QSize( 160, 120), // QQVGA
-        QSize( 320, 240), // HVGA
-        QSize(1024, 768), // XGA
-        QSize( 432, 240), // WQVGA
-        QSize( 640, 360), // nHD
-    };
-
-    QList<VideoMode> modes;
-
-    for (QSize res : resolutions)
-    {
-        mutex.lock();
-        cam.set(CV_CAP_PROP_FRAME_WIDTH, res.width());
-        cam.set(CV_CAP_PROP_FRAME_HEIGHT, res.height());
-
-        double w = cam.get(CV_CAP_PROP_FRAME_WIDTH);
-        double h = cam.get(CV_CAP_PROP_FRAME_HEIGHT);
-
-        qDebug() << "PROBING:" << res << " got " << w << h;
-
-        if (w == res.width() && h == res.height())
-        {
-            modes.append({res, 60}); // assume 60fps for now
-        }
-        mutex.unlock();
-    }
-
-    return modes;
+    return resolutions;
 }
 
-Camera::VideoMode Camera::getBestVideoMode()
+QSize Camera::getBestVideoMode()
 {
     int bestScore = 0;
-    VideoMode bestMode;
+    QSize bestRes;
 
-    for (VideoMode mode : getVideoModes())
+    for (QSize res : getSupportedResolutions())
     {
-        int score = mode.res.width() * mode.res.height();
+        int score = res.width() * res.height();
 
         if (score > bestScore)
         {
             bestScore = score;
-            bestMode = mode;
+            bestRes = res;
         }
     }
 
-    return bestMode;
+    return bestRes;
 }
 
-void Camera::setVideoMode(Camera::VideoMode mode)
+void Camera::setResolution(QSize res)
 {
-    if (cam.isOpened())
-    {
-        mutex.lock();
-        cam.set(CV_CAP_PROP_FRAME_WIDTH, mode.res.width());
-        cam.set(CV_CAP_PROP_FRAME_HEIGHT, mode.res.height());
-
-        mode.res.setWidth(cam.get(CV_CAP_PROP_FRAME_WIDTH));
-        mode.res.setHeight(cam.get(CV_CAP_PROP_FRAME_HEIGHT));
-        mutex.unlock();
-        qDebug() << "VIDEO MODE" << mode.res;
-    }
+    worker->setProp(CV_CAP_PROP_FRAME_WIDTH, res.width());
+    worker->setProp(CV_CAP_PROP_FRAME_HEIGHT, res.height());
 }
 
-Camera::VideoMode Camera::getVideoMode()
+QSize Camera::getResolution()
 {
-    return VideoMode{QSize(cam.get(CV_CAP_PROP_FRAME_WIDTH), cam.get(CV_CAP_PROP_FRAME_HEIGHT)), 60};
+    return QSize(worker->getProp(CV_CAP_PROP_FRAME_WIDTH), worker->getProp(CV_CAP_PROP_FRAME_HEIGHT));
 }
 
 void Camera::setProp(Camera::Prop prop, double val)
@@ -207,16 +166,16 @@ void Camera::setProp(Camera::Prop prop, double val)
     switch (prop)
     {
     case BRIGHTNESS:
-        cam.set(CV_CAP_PROP_BRIGHTNESS, val);
+        worker->setProp(CV_CAP_PROP_BRIGHTNESS, val);
         break;
     case SATURATION:
-        cam.set(CV_CAP_PROP_SATURATION, val);
+        worker->setProp(CV_CAP_PROP_SATURATION, val);
         break;
     case CONTRAST:
-        cam.set(CV_CAP_PROP_CONTRAST, val);
+        worker->setProp(CV_CAP_PROP_CONTRAST, val);
         break;
     case HUE:
-        cam.set(CV_CAP_PROP_HUE, val);
+        worker->setProp(CV_CAP_PROP_HUE, val);
         break;
     }
 }
@@ -226,13 +185,13 @@ double Camera::getProp(Camera::Prop prop)
     switch (prop)
     {
     case BRIGHTNESS:
-        return cam.get(CV_CAP_PROP_BRIGHTNESS);
+        return worker->getProp(CV_CAP_PROP_BRIGHTNESS);
     case SATURATION:
-        return cam.get(CV_CAP_PROP_SATURATION);
+        return worker->getProp(CV_CAP_PROP_SATURATION);
     case CONTRAST:
-        return cam.get(CV_CAP_PROP_CONTRAST);
+        return worker->getProp(CV_CAP_PROP_CONTRAST);
     case HUE:
-        return cam.get(CV_CAP_PROP_HUE);
+        return worker->getProp(CV_CAP_PROP_HUE);
     }
 
     return 0.0;
@@ -241,6 +200,11 @@ double Camera::getProp(Camera::Prop prop)
 void Camera::onNewFrameAvailable()
 {
     emit frameAvailable();
+}
+
+void Camera::onResProbingFinished(QList<QSize> res)
+{
+    resolutions = res;
 }
 
 void *Camera::getData()
@@ -256,9 +220,6 @@ int Camera::getDataSize()
 void Camera::lock()
 {
     mutex.lock();
-
-    mode.res.setWidth(currFrame.cols);
-    mode.res.setHeight(currFrame.rows);
 
     if (worker->hasFrame())
         currFrame = worker->deqeueFrame();
@@ -289,6 +250,7 @@ Camera* Camera::getInstance()
 SelfCamWorker::SelfCamWorker(int index)
     : clock(nullptr)
     , camIndex(index)
+    , refCount(0)
 {
 }
 
@@ -296,26 +258,115 @@ void SelfCamWorker::onStart()
 {
     clock = new QTimer(this);
     clock->setSingleShot(false);
-    clock->setInterval(1);
+    clock->setInterval(5);
 
     connect(clock, &QTimer::timeout, this, &SelfCamWorker::doWork);
-    clock->start();
 
-    cam.open(camIndex);
+    emit started();
 }
 
 void SelfCamWorker::_suspend()
 {
     qDebug() << "Suspend";
-    if (cam.isOpened())
-        cam.release();
+    clock->stop();
+    unsubscribe();
 }
 
 void SelfCamWorker::_resume()
 {
     qDebug() << "Resume";
+    subscribe();
+    clock->start();
+}
+
+void SelfCamWorker::_setProp(int prop, double val)
+{
+    props[prop] = val;
+
+    if (cam.isOpened())
+        cam.set(prop, val);
+}
+
+double SelfCamWorker::_getProp(int prop)
+{
+    if (!props.contains(prop))
+    {
+        subscribe();
+        props[prop] = cam.get(prop);
+        unsubscribe();
+        qDebug() << "ASKED " << prop << " VAL " << props[prop];
+    }
+
+    return props.value(prop);
+}
+
+void SelfCamWorker::probeResolutions()
+{
+    if (resolutions.isEmpty())
+    {
+        subscribe();
+
+        // probe resolutions (TODO: add more)
+        QList<QSize> propbeRes = {
+            QSize( 160, 120), // QQVGA
+            QSize( 320, 240), // HVGA
+            QSize(1024, 768), // XGA
+            QSize( 432, 240), // WQVGA
+            QSize( 640, 360), // nHD
+        };
+
+        for (QSize res : propbeRes)
+        {
+            _setProp(CV_CAP_PROP_FRAME_WIDTH, res.width());
+            _setProp(CV_CAP_PROP_FRAME_HEIGHT, res.height());
+
+            double w = _getProp(CV_CAP_PROP_FRAME_WIDTH);
+            double h = _getProp(CV_CAP_PROP_FRAME_HEIGHT);
+
+            qDebug() << "PROBING:" << res << " got " << w << h;
+
+            resolutions.append(QSize(w,h));
+        }
+
+        unsubscribe();
+    }
+
+    qDebug() << resolutions;
+
+    emit resProbingFinished(resolutions);
+}
+
+void SelfCamWorker::applyProps()
+{
     if (!cam.isOpened())
-        cam.open(camIndex);
+        return;
+
+    for(int prop : props.keys())
+        cam.set(prop, props.value(prop));
+}
+
+void SelfCamWorker::subscribe()
+{
+    if (refCount == 0)
+    {
+        if (!cam.isOpened())
+        {
+            cam.open(camIndex);
+            applyProps(); // restore props
+        }
+    }
+
+    refCount++;
+}
+
+void SelfCamWorker::unsubscribe()
+{
+    refCount--;
+
+    if(refCount <= 0)
+    {
+        cam.release();
+    }
 }
 
 void SelfCamWorker::doWork()
@@ -323,11 +374,15 @@ void SelfCamWorker::doWork()
     if (!cam.isOpened())
         return;
 
+    if (qeue.size() > 3)
+    {
+        qeue.dequeue();
+        return;
+    }
+
     cam >> frame;
 //qDebug() << "Decoding frame";
     mutex.lock();
-    while (qeue.size() > 3)
-        qeue.dequeue();
 
     qeue.enqueue(frame);
     mutex.unlock();
@@ -361,4 +416,17 @@ void SelfCamWorker::suspend()
 void SelfCamWorker::resume()
 {
     QMetaObject::invokeMethod(this, "_resume");
+}
+
+void SelfCamWorker::setProp(int prop, double val)
+{
+    QMetaObject::invokeMethod(this, "_setProp", Q_ARG(int, prop), Q_ARG(double, val));
+}
+
+double SelfCamWorker::getProp(int prop)
+{
+    double ret = 0.0;
+    QMetaObject::invokeMethod(this, "_getProp", Qt::BlockingQueuedConnection, Q_RETURN_ARG(double, ret), Q_ARG(int, prop));
+
+    return ret;
 }

@@ -28,29 +28,24 @@ AVForm::AVForm() :
     camView = new SelfCamView(Camera::getInstance(), this);
 
     bodyUI->CamViewLayout->addWidget(camView);
-
-    auto modes = Camera::getInstance()->getVideoModes();
-    for (Camera::VideoMode m : modes)
-    {
-        bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(m.res.width())
-                                                                 ,QString::number(m.res.height())));
-    }
-
-    bodyUI->ContrastSlider->setValue(Camera::getInstance()->getProp(Camera::CONTRAST)*100);
-    bodyUI->BrightnessSlider->setValue(Camera::getInstance()->getProp(Camera::BRIGHTNESS)*100);
-    bodyUI->SaturationSlider->setValue(Camera::getInstance()->getProp(Camera::SATURATION)*100);
-    bodyUI->HueSlider->setValue(Camera::getInstance()->getProp(Camera::HUE)*100);
 }
 
 AVForm::~AVForm()
 {
     delete bodyUI;
 }
-#include <QDebug>
-void AVForm::show()
+
+void AVForm::present()
 {
-    qDebug() << "SHADADASDJASLKDJAKLD";
-    camView->show();
+    bodyUI->videoModescomboBox->clear();
+    QList<QSize> res = Camera::getInstance()->getSupportedResolutions();
+    for (QSize r : res)
+        bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())));
+
+    bodyUI->ContrastSlider->setValue(Camera::getInstance()->getProp(Camera::CONTRAST)*100);
+    bodyUI->BrightnessSlider->setValue(Camera::getInstance()->getProp(Camera::BRIGHTNESS)*100);
+    bodyUI->SaturationSlider->setValue(Camera::getInstance()->getProp(Camera::SATURATION)*100);
+    bodyUI->HueSlider->setValue(Camera::getInstance()->getProp(Camera::HUE)*100);
 }
 
 void AVForm::on_ContrastSlider_sliderMoved(int position)
@@ -79,5 +74,5 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(const QString &arg1)
     int w = resStr[0].toInt();
     int h = resStr[0].toInt();
 
-    Camera::getInstance()->setVideoMode(Camera::VideoMode{QSize(w,h),60});
+    Camera::getInstance()->setResolution(QSize(w,h));
 }

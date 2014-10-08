@@ -21,6 +21,7 @@
 #include <QList>
 #include <QQueue>
 #include <QMutex>
+#include <QMap>
 #include "vpx/vpx_image.h"
 #include "opencv2/opencv.hpp"
 #include "videosource.h"
@@ -42,16 +43,28 @@ public:
 
     void suspend();
     void resume();
+    void setProp(int prop, double val);
+    double getProp(int prop); // blocking call!
+    void probeResolutions();
 
 public slots:
     void onStart();
 
 signals:
+    void started();
     void newFrameAvailable();
+    void resProbingFinished(QList<QSize> res);
 
 private slots:
     void _suspend();
     void _resume();
+    void _setProp(int prop, double val);
+    double _getProp(int prop);
+
+private:
+    void applyProps();
+    void subscribe();
+    void unsubscribe();
 
 private:
     QMutex mutex;
@@ -60,17 +73,15 @@ private:
     cv::VideoCapture cam;
     cv::Mat3b frame;
     int camIndex;
+    QMap<int, double> props;
+    QList<QSize> resolutions;
+    int refCount;
 };
 
 class Camera : public VideoSource
 {
     Q_OBJECT
 public:
-    struct VideoMode {
-        QSize res;
-        double fps;
-    };
-
     enum Prop {
         BRIGHTNESS,
         SATURATION,
@@ -85,11 +96,11 @@ public:
     cv::Mat getLastFrame(); ///< Get the last captured frame
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
 
-    QList<VideoMode> getVideoModes();
-    VideoMode getBestVideoMode();
+    QList<QSize> getSupportedResolutions();
+    QSize getBestVideoMode();
 
-    void setVideoMode(VideoMode mode);
-    VideoMode getVideoMode();
+    void setResolution(QSize res);
+    QSize getResolution();
 
     void setProp(Prop prop, double val);
     double getProp(Prop prop);
@@ -108,18 +119,20 @@ protected:
 
 private:
     int refcount; ///< Number of users suscribed to the camera
-    cv::VideoCapture cam; ///< OpenCV camera capture opbject
     cv::Mat3b currFrame;
     QMutex mutex;
-    VideoMode mode;
 
     QThread* workerThread;
     SelfCamWorker* worker;
 
+    QList<QSize> resolutions;
+
     static Camera* instance;
 
 private slots:
+    void onWorkerStarted();
     void onNewFrameAvailable();
+    void onResProbingFinished(QList<QSize> res);
 
 };
 
