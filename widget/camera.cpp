@@ -71,23 +71,17 @@ void Camera::unsubscribe()
     }
 }
 
-cv::Mat Camera::getLastFrame()
-{
-    return currFrame;
-}
-
 vpx_image Camera::getLastVPXImage()
 {
-    mutex.lock();
-    cv::Mat3b frame = getLastFrame();
+    lock();
     vpx_image img;
-    int w = frame.size().width, h = frame.size().height;
+    int w = currFrame.size().width, h = currFrame.size().height;
     vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched
 
     size_t i=0, j=0;
     for( int line = 0; line < h; ++line )
     {
-        const cv::Vec3b *srcrow = frame[line];
+        const cv::Vec3b *srcrow = currFrame[line];
         if( !(line % 2) )
         {
             for( int x = 0; x < w; x += 2 )
@@ -122,7 +116,7 @@ vpx_image Camera::getLastVPXImage()
             }
         }
     }
-    mutex.unlock();
+    unlock();
     return img;
 }
 

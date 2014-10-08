@@ -46,8 +46,6 @@ public:
     ~Camera();
 
     static Camera* getInstance(); ///< Returns the global widget's Camera instance
-
-    cv::Mat getLastFrame(); ///< Get the last captured frame
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
 
     QList<QSize> getSupportedResolutions();
