@@ -36,6 +36,7 @@ private slots:
     void onEnableIPv6Updated();
     void onUseTranslationUpdated();
     void onMakeToxPortableUpdated();
+    void onSetAutostartInTray();
     void onSmileyBrowserIndexChanged(int index);
     void onUDPUpdated();
     void onProxyAddrEdited();

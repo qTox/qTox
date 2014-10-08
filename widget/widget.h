@@ -105,6 +105,7 @@ private slots:
     void onMessageSendResult(int friendId, const QString& message, int messageId);
     void onGroupSendResult(int groupId, const QString& message, int result);
     void playRingtone();
+    void onIconClick();
 
 private:
     void hideMainForms();

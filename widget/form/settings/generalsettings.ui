@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>527</width>
-    <height>367</height>
+    <height>369</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,6 +43,13 @@
         </property>
         <property name="text">
          <string>Make Tox portable</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="startInTray">
+        <property name="text">
+         <string>Start in tray</string>
         </property>
        </widget>
       </item>
