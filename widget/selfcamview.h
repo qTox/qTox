@@ -50,7 +50,7 @@ private:
     GLuint textureId;
     int pboAllocSize;
     QSize res;
-    bool useNewFrame;
+    bool uploadFrame;
     bool hasSubscribed;
 
 };

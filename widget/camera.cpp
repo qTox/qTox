@@ -317,15 +317,16 @@ void SelfCamWorker::probeResolutions()
 
         for (QSize res : propbeRes)
         {
-            _setProp(CV_CAP_PROP_FRAME_WIDTH, res.width());
-            _setProp(CV_CAP_PROP_FRAME_HEIGHT, res.height());
+            cam.set(CV_CAP_PROP_FRAME_WIDTH, res.width());
+            cam.set(CV_CAP_PROP_FRAME_HEIGHT, res.height());
 
-            double w = _getProp(CV_CAP_PROP_FRAME_WIDTH);
-            double h = _getProp(CV_CAP_PROP_FRAME_HEIGHT);
+            double w = cam.get(CV_CAP_PROP_FRAME_WIDTH);
+            double h = cam.get(CV_CAP_PROP_FRAME_HEIGHT);
 
-            qDebug() << "PROBING:" << res << " got " << w << h;
+            //qDebug() << "PROBING:" << res << " got " << w << h;
 
-            resolutions.append(QSize(w,h));
+            if (!resolutions.contains(QSize(w,h)))
+                resolutions.append(QSize(w,h));
         }
 
         unsubscribe();

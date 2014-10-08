@@ -29,7 +29,7 @@ SelfCamView::SelfCamView(VideoSource *Source, QWidget* parent)
     , program(nullptr)
     , textureId(0)
     , pboAllocSize(0)
-    , useNewFrame(false)
+    , uploadFrame(false)
     , hasSubscribed(false)
 {
     qDebug()<<"NEW VideoSurface:"<<source->resolution();
@@ -78,8 +78,6 @@ void SelfCamView::initializeGL()
 
 void SelfCamView::paintGL()
 {
-    //qDebug() << "PainterThread" << QThread::currentThreadId();
-
     if (!pbo)
     {
         qDebug() << "Creating pbo, program";
@@ -125,7 +123,7 @@ void SelfCamView::paintGL()
     }
 
 
-    if (useNewFrame)
+    if (uploadFrame)
     {
         source->lock();
         void* frame = source->getData();
@@ -158,6 +156,8 @@ void SelfCamView::paintGL()
         glBindTexture(GL_TEXTURE_2D, 0);
 
         pbo->release();
+
+        uploadFrame = false;
     }
 
     // render pbo
@@ -187,15 +187,11 @@ void SelfCamView::paintGL()
 
     program->disableAttributeArray(0);
     program->release();
-
-    //glFlush();
-
-    useNewFrame = false;
 }
 
 void SelfCamView::updateGL()
 {
-    useNewFrame = true;
+    uploadFrame = true;
     QGLWidget::updateGL();
 }
 
