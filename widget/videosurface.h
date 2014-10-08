@@ -24,13 +24,13 @@ class QOpenGLShaderProgram;
 class QTimer;
 class VideoSource;
 
-class SelfCamView : public QGLWidget
+class VideoSurface : public QGLWidget
 {
     Q_OBJECT
 
 public:
-    SelfCamView(VideoSource* source, QWidget* parent=0);
-    ~SelfCamView();
+    VideoSurface(VideoSource* source, QWidget* parent=0);
+    ~VideoSurface();
 
     virtual void hideEvent(QHideEvent* ev);
     virtual void showEvent(QShowEvent* ev);

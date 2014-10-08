@@ -27,7 +27,6 @@
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
 #include "misc/style.h"
-#include "selfcamview.h"
 #include "widget/friendlistwidget.h"
 #include "camera.h"
 #include "widget/form/chatform.h"

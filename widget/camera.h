@@ -19,9 +19,7 @@
 
 #include <QImage>
 #include <QList>
-#include <QQueue>
 #include <QMutex>
-#include <QMap>
 #include "vpx/vpx_image.h"
 #include "opencv2/opencv.hpp"
 #include "videosource.h"

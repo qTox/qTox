@@ -14,7 +14,7 @@
     See the COPYING file for more details.
 */
 
-#include "selfcamview.h"
+#include "videosurface.h"
 #include "camera.h"
 #include <QTimer>
 #include <opencv2/opencv.hpp>
@@ -22,7 +22,7 @@
 #include <QOpenGLShaderProgram>
 #include <QDebug>
 
-SelfCamView::SelfCamView(VideoSource *Source, QWidget* parent)
+VideoSurface::VideoSurface(VideoSource *Source, QWidget* parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
     , source(Source)
     , pbo(nullptr)
@@ -32,11 +32,10 @@ SelfCamView::SelfCamView(VideoSource *Source, QWidget* parent)
     , uploadFrame(false)
     , hasSubscribed(false)
 {
-    qDebug()<<"NEW VideoSurface:"<<source->resolution();
     setFixedSize(source->resolution());
 }
 
-SelfCamView::~SelfCamView()
+VideoSurface::~VideoSurface()
 {
     if (pbo)
         delete pbo;
@@ -47,36 +46,36 @@ SelfCamView::~SelfCamView()
     source->unsubscribe();
 }
 
-void SelfCamView::hideEvent(QHideEvent *ev)
+void VideoSurface::hideEvent(QHideEvent *ev)
 {
     if (hasSubscribed)
     {
         source->unsubscribe();
         hasSubscribed = false;
-        disconnect(source, &VideoSource::frameAvailable, this, &SelfCamView::updateGL);
+        disconnect(source, &VideoSource::frameAvailable, this, &VideoSurface::updateGL);
     }
 
     QGLWidget::hideEvent(ev);
 }
 
-void SelfCamView::showEvent(QShowEvent *ev)
+void VideoSurface::showEvent(QShowEvent *ev)
 {
     if (!hasSubscribed)
     {
         source->subscribe();
         hasSubscribed = true;
-        connect(source, &VideoSource::frameAvailable, this, &SelfCamView::updateGL);
+        connect(source, &VideoSource::frameAvailable, this, &VideoSurface::updateGL);
     }
 
     QGLWidget::showEvent(ev);
 }
 
-void SelfCamView::initializeGL()
+void VideoSurface::initializeGL()
 {
 
 }
 
-void SelfCamView::paintGL()
+void VideoSurface::paintGL()
 {
     if (!pbo)
     {
@@ -189,7 +188,7 @@ void SelfCamView::paintGL()
     program->release();
 }
 
-void SelfCamView::updateGL()
+void VideoSurface::updateGL()
 {
     uploadFrame = true;
     QGLWidget::updateGL();

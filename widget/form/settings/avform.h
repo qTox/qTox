@@ -18,7 +18,7 @@
 #define AVFORM_H
 
 #include "genericsettings.h"
-#include "widget/selfcamview.h"
+#include "widget/videosurface.h"
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -47,7 +47,7 @@ private slots:
 
 private:
     Ui::AVSettings *bodyUI;
-    SelfCamView* camView;
+    VideoSurface* camView;
 };
 
 #endif

@@ -25,7 +25,7 @@ AVForm::AVForm() :
     bodyUI->setupUi(this);
 
     //cam->setVideoMode(cam->getBestVideoMode());
-    camView = new SelfCamView(Camera::getInstance(), this);
+    camView = new VideoSurface(Camera::getInstance(), this);
 
     bodyUI->CamViewLayout->addWidget(camView);
 }

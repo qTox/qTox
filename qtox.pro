@@ -107,7 +107,6 @@ HEADERS  += widget/form/addfriendform.h \
     friendlist.h \
     misc/cdata.h \
     misc/cstring.h \
-    widget/selfcamview.h \
     widget/camera.h \
     widget/netcamview.h \
     misc/smileypack.h \
@@ -130,7 +129,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/tool/chatactions/actionaction.h \
     widget/maskablepixmapwidget.h \
     videosource.h \
-    cameraworker.h
+    cameraworker.h \
+    widget/videosurface.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -156,7 +156,6 @@ SOURCES += \
     misc/settings.cpp \
     misc/cdata.cpp \
     misc/cstring.cpp \
-    widget/selfcamview.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
     misc/smileypack.cpp \
@@ -177,4 +176,5 @@ SOURCES += \
     widget/tool/chatactions/systemmessageaction.cpp \
     widget/tool/chatactions/actionaction.cpp \
     widget/maskablepixmapwidget.cpp \
-    cameraworker.cpp
+    cameraworker.cpp \
+    widget/videosurface.cpp
