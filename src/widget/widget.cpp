@@ -44,6 +44,7 @@
 #include <QInputDialog>
 #include <QTimer>
 #include <tox/tox.h>
+#include <QStyleFactory>
 
 Widget *Widget::instance{nullptr};
 
@@ -75,7 +76,16 @@ Widget::Widget(QWidget *parent)
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
-    ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
+    
+
+    if(QStyleFactory::keys().contains(Settings::getInstance().getStyle())
+            && Settings::getInstance().getStyle() != "None")
+    {
+        ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
+        ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
+    }
+    
+    ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));    
     ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
 
     contactListWidget = new FriendListWidget();

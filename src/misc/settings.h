@@ -51,6 +51,9 @@ public:
 
     bool getAutostartInTray() const;
     void setAutostartInTray(bool newValue);
+    
+    QString getStyle() const;
+    void setStyle(const QString& newValue);
 
     QString getCurrentProfile() const;
     void setCurrentProfile(QString profile);
@@ -202,7 +205,8 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
-
+    QString style;
+    
     // ChatView
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
