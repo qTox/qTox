@@ -36,6 +36,7 @@ TRANSLATIONS = translations/de.ts \
                translations/fr.ts \
                translations/it.ts \
                translations/ru.ts \
+               translations/pirate.ts \
                translations/pl.ts \
                translations/fi.ts \
                translations/mannol.ts \
