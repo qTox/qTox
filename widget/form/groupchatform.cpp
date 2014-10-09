@@ -19,7 +19,12 @@
 #include "widget/groupwidget.h"
 #include "widget/tool/chattextedit.h"
 #include "widget/croppinglabel.h"
+#include "widget/maskablepixmapwidget.h"
+#include "core.h"
+#include "misc/style.h"
 #include <QPushButton>
+#include <QMimeData>
+#include <QDragEnterEvent>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup)
@@ -36,10 +41,14 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     QFont small;
     small.setPixelSize(10);
 
-    nameLabel->setText(group->widget->name.text());
-    nusersLabel->setFont(small);
+    nameLabel->setText(group->widget->getName());
+
+    nusersLabel->setFont(Style::getFont(Style::Medium));
     nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
-    avatarLabel->setPixmap(QPixmap(":/img/group_dark.png"));
+    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
+    nusersLabel->setPalette(pal);
+
+    avatar->setPixmap(QPixmap(":/img/group_dark.png"), Qt::transparent);
 
     QString names;
     for (QString& s : group->peers)
@@ -58,11 +67,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
-}
 
-GroupChatForm::~GroupChatForm()
-{
-
+    setAcceptDrops(true);
 }
 
 void GroupChatForm::onSendTriggered()
@@ -74,17 +80,6 @@ void GroupChatForm::onSendTriggered()
     emit sendMessage(group->groupId, msg);
 }
 
-void GroupChatForm::addGroupMessage(QString message, int peerId)
-{
-    QString msgAuthor;
-    if (group->peers.contains(peerId))
-        msgAuthor = group->peers[peerId];
-    else
-        msgAuthor = tr("<Unknown>");
-
-    addMessage(msgAuthor, message);
-}
-
 void GroupChatForm::onUserListChanged()
 {
     nusersLabel->setText(tr("%1 users in chat").arg(group->nPeers));
@@ -94,3 +89,19 @@ void GroupChatForm::onUserListChanged()
     names.chop(2);
     namesList->setText(names);
 }
+
+void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
+{
+    if (ev->mimeData()->hasFormat("friend"))
+        ev->acceptProposedAction();
+}
+
+void GroupChatForm::dropEvent(QDropEvent *ev)
+{
+    if (ev->mimeData()->hasFormat("friend"))
+    {
+        int friendId = ev->mimeData()->data("friend").toInt();
+        Core::getInstance()->groupInviteFriend(friendId, group->groupId);
+    }
+}
+

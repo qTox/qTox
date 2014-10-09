@@ -20,7 +20,9 @@
 #include <QLabel>
 
 #include "genericchatroomwidget.h"
-#include "croppinglabel.h"
+
+class QPixmap;
+class MaskablePixmapWidget;
 
 struct FriendWidget : public GenericChatroomWidget
 {
@@ -39,10 +41,18 @@ signals:
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
 
+public slots:
+    void onAvatarChange(int FriendId, const QPixmap& pic);
+    void onAvatarRemoved(int FriendId);
+
+protected:
+    void mousePressEvent(QMouseEvent* ev);
+    void mouseMoveEvent(QMouseEvent* ev);
+
 public:
     int friendId;
-    QLabel avatar, statusPic;
-    CroppingLabel name, statusMessage;
+    bool isDefaultAvatar;
+    QPoint dragStartPos;
 };
 
 #endif // FRIENDWIDGET_H

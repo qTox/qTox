@@ -19,7 +19,8 @@
 
 #include <QMainWindow>
 #include "widget/form/addfriendform.h"
-#include "widget/form/settingsform.h"
+#include "widget/form/settingswidget.h"
+#include "widget/form/settings/identityform.h"
 #include "widget/form/filesform.h"
 #include "corestructs.h"
 
@@ -38,6 +39,7 @@ class QMenu;
 class Core;
 class Camera;
 class FriendListWidget;
+class MaskablePixmapWidget;
 
 class Widget : public QMainWindow
 {
@@ -45,16 +47,12 @@ class Widget : public QMainWindow
 
 public:
     explicit Widget(QWidget *parent = 0);
-    enum TitleMode { CleanTitle = 0, OnlyCloseButton, MenuOff, MaxMinOff, FullScreenMode, MaximizeModeOff, MinimizeModeOff, FullTitle };
-    void setTitlebarMode(const TitleMode &flag);
-    void setTitlebarMenu(QMenu *menu, const QString &icon = "");
     void setCentralWidget(QWidget *widget, const QString &widgetName);
     QString getUsername();
     Core* getCore();
     QThread* getCoreThread();
     Camera* getCamera();
     static Widget* getInstance();
-    void showTestCamview();
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
@@ -71,8 +69,6 @@ signals:
     void statusMessageChanged(const QString& statusMessage);
 
 private slots:
-    void maximizeBtnClicked();
-    void minimizeBtnClicked();
     void onConnected();
     void onDisconnected();
     void onStatusSet(Status status);
@@ -81,10 +77,11 @@ private slots:
     void onTransferClicked();
     void onSettingsClicked();
     void onFailedToStartCore();
+    void onBadProxyCore();
+    void onAvatarClicked();
+    void onSelfAvatarLoaded(const QPixmap &pic);
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
     void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
-    //void onUsernameChanged();
-    //void onStatusMessageChanged();
     void setUsername(const QString& username);
     void setStatusMessage(const QString &statusMessage);
     void addFriend(int friendId, const QString& userId);
@@ -92,14 +89,12 @@ private slots:
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
-    void onFriendStatusMessageLoaded(int friendId, const QString& message);
-    void onFriendUsernameLoaded(int friendId, const QString& username);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
-    void onFriendMessageReceived(int friendId, const QString& message);
+    void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void onEmptyGroupCreated(int groupId);
-    void onGroupInviteReceived(int32_t friendId, const uint8_t *publicKey);
-    void onGroupMessageReceived(int groupnumber, int friendgroupnumber, const QString& message);
+    void onGroupInviteReceived(int32_t friendId, const uint8_t *publicKey,uint16_t length);
+    void onGroupMessageReceived(int groupnumber, const QString& message, const QString& author);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void removeFriend(int friendId);
     void clearFriends();
@@ -108,12 +103,13 @@ private slots:
     void setStatusOnline();
     void setStatusAway();
     void setStatusBusy();
-
-protected slots:
-    void moveWindow(QMouseEvent *e);
+    void onMessageSendResult(int friendId, const QString& message, int messageId);
+    void onGroupSendResult(int groupId, const QString& message, int result);
+    void playRingtone();
 
 private:
     void hideMainForms();
+    virtual bool event(QEvent * e);
     Group* createGroup(int groupId);
     void removeFriend(Friend* f);
 
@@ -121,33 +117,17 @@ private:
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
-    TitleMode m_titleMode;
-    bool moveWidget;
-    bool inResizeZone;
-    bool allowToResize;
-    bool resizeVerSup;
-    bool resizeHorEsq;
-    bool resizeDiagSupEsq;
-    bool resizeDiagSupDer;
-    void mousePressEvent(QMouseEvent *e);
-    void mouseReleaseEvent(QMouseEvent *e);
-    void mouseDoubleClickEvent(QMouseEvent *e);
-    void paintEvent (QPaintEvent *);
-    void resizeWindow(QMouseEvent *e);
-    bool event(QEvent *event);
-    int isWindowMinimized;
     Core* core;
     QThread* coreThread;
     AddFriendForm friendForm;
-    SettingsForm settingsForm;
+    SettingsWidget* settingsWidget;
     FilesForm filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
-    SelfCamView* camview;
     Camera* camera;
+    MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
-    bool eventFilter(QObject *, QEvent *event);
 };
 
 #endif // WIDGET_H

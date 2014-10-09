@@ -11,13 +11,16 @@ However, it is not a fork.
 - Group chats
 - File transfers, with previewing of images
 - Audio calls
-- Video calls (alpha)
+- Video calls
 - Tox DNS
 - Translations in various languages
+- Avatars
 
 <h2>Downloads</h2>
 
 This client runs on Windows, Linux and Mac natively.<br/>
+
+You can find the latest versions of qTox <a href="https://github.com/tux3/qTox/releases">here</a>, or from the Tox Project's servers :
 
 <a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a><br/>
 <a href="https://jenkins.libtoxcore.so/job/ToxGUI%20OS%20X/lastSuccessfulBuild/artifact/qtox.dmg">Mac download </a><br/>
@@ -25,7 +28,7 @@ This client runs on Windows, Linux and Mac natively.<br/>
 
 <h3>Screenshots</h3>
 <h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
-<img src="https://i.imgur.com/7Jg5tQa.png">/
+<img src="https://wiki.tox.im/images/5/5d/ToxGUI_tux3.png">
 
 ##Documentation:
 

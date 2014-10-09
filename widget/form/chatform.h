@@ -23,6 +23,7 @@
 struct Friend;
 class FileTransferInstance;
 class NetCamView;
+class QPixmap;
 
 class ChatForm : public GenericChatForm
 {
@@ -55,6 +56,8 @@ public slots:
     void onAvPeerTimeout(int FriendId, int CallId);
     void onAvMediaChange(int FriendId, int CallId, bool video);
     void onMicMuteToggle();
+    void onAvatarChange(int FriendId, const QPixmap& pic);
+    void onAvatarRemoved(int FriendId);
 
 private slots:
     void onSendTriggered();
@@ -65,6 +68,12 @@ private slots:
     void onHangupCallTriggered();
     void onCancelCallTriggered();
     void onFileTansBtnClicked(QString widgetName, QString buttonName);
+    void onFileSendFailed(int FriendId, const QString &fname);
+
+protected:
+    // drag & drop
+    void dragEnterEvent(QDragEnterEvent* ev);
+    void dropEvent(QDropEvent* ev);
 
 private:
     Friend* f;

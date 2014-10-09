@@ -84,18 +84,6 @@
         <file>ui/videoButton/videoButtonYellowPressed.png</file>
         <file>img/group_dark.png</file>
         <file>ui/window/applicationIcon.png</file>
-        <file>ui/window/closeButton.png</file>
-        <file>ui/window/closeButtonHover.png</file>
-        <file>ui/window/closeButtonPressed.png</file>
-        <file>ui/window/maximizeButton.png</file>
-        <file>ui/window/maximizeButtonHover.png</file>
-        <file>ui/window/maximizeButtonPressed.png</file>
-        <file>ui/window/minimizeButton.png</file>
-        <file>ui/window/minimizeButtonHover.png</file>
-        <file>ui/window/minimizeButtonPressed.png</file>
-        <file>ui/window/restoreButton.png</file>
-        <file>ui/window/restoreButtonHover.png</file>
-        <file>ui/window/restoreButtonPressed.png</file>
         <file>ui/friendList/friendList.css</file>
         <file>ui/window/window.css</file>
         <file>img/status/dot_busy.png</file>
@@ -135,5 +123,22 @@
         <file>ui/fileTransferInstance/emptyRGreenFileButton.png</file>
         <file>ui/fileTransferInstance/emptyRRedFileButton.png</file>
         <file>audio/notification.pcm</file>
+        <file>audio/ToxicIncomingCall.pcm</file>
+        <file>img/settings/general.png</file>
+        <file>img/settings/identity.png</file>
+        <file>img/settings/privacy.png</file>
+        <file>img/settings/av.png</file>
+        <file>translations/pl.qm</file>
+        <file>translations/fi.qm</file>
+        <file>translations/mannol.qm</file>
+        <file>translations/uk.qm</file>
+        <file>img/avatar_mask.png</file>
+        <file>img/group_2x.png</file>
+        <file>ui/chatroomWidgets/genericChatroomWidget.css</file>
+        <file>ui/fileTransferInstance/sliverRTEdge.png</file>
+        <file>ui/window/statusPanel.css</file>
+        <file>ui/settings/mainContent.css</file>
+        <file>ui/settings/mainHead.css</file>
+        <file>translations/pirate.qm</file>
     </qresource>
 </RCC>

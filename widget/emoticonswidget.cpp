@@ -15,8 +15,8 @@
 */
 
 #include "emoticonswidget.h"
-#include "smileypack.h"
-#include "style.h"
+#include "misc/smileypack.h"
+#include "misc/style.h"
 
 #include <QPushButton>
 #include <QRadioButton>
@@ -27,7 +27,7 @@
 EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     QMenu(parent)
 {
-    setStyleSheet(Style::get(":/ui/emoticonWidget/emoticonWidget.css"));
+    setStyleSheet(Style::getStylesheet(":/ui/emoticonWidget/emoticonWidget.css"));
     setLayout(&layout);
     layout.addWidget(&stack);
 
@@ -66,6 +66,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
         {
             QRadioButton* pageButton = new QRadioButton;
             pageButton->setProperty("pageIndex", i);
+            pageButton->setCursor(Qt::PointingHandCursor);
             pageButton->setChecked(i == 0);
             buttonLayout->addWidget(pageButton);
 
@@ -80,6 +81,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
         button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]));
         button->setToolTip(set.join(" "));
         button->setProperty("sequence", set[0]);
+        button->setCursor(Qt::PointingHandCursor);
         button->setFlat(true);
 
         connect(button, &QPushButton::clicked, this, &EmoticonsWidget::onSmileyClicked);

@@ -21,14 +21,19 @@
 #include <QScrollBar>
 #include <QDebug>
 
-AdjustingScrollArea::AdjustingScrollArea(QWidget *parent) :
-    QScrollArea(parent)
+AdjustingScrollArea::AdjustingScrollArea(QWidget *parent)
+    : QScrollArea(parent)
 {
 
 }
 
 void AdjustingScrollArea::resizeEvent(QResizeEvent *ev)
 {
+    int scrollBarWidth = verticalScrollBar()->isVisible() ? verticalScrollBar()->sizeHint().width() : 0;
+
+    if (layoutDirection() == Qt::RightToLeft)
+        setViewportMargins(-scrollBarWidth, 0, 0, 0);
+
     updateGeometry();
     QScrollArea::resizeEvent(ev);
 }

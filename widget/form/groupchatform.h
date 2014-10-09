@@ -27,12 +27,16 @@ class GroupChatForm : public GenericChatForm
     Q_OBJECT
 public:
     GroupChatForm(Group* chatGroup);
-    ~GroupChatForm();
-    void addGroupMessage(QString message, int peerId);
+
     void onUserListChanged();
 
 private slots:
     void onSendTriggered();
+
+protected:
+    // drag & drop
+    void dragEnterEvent(QDragEnterEvent* ev);
+    void dropEvent(QDropEvent* ev);
 
 private:
     Group* group;

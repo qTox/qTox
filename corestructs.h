@@ -10,6 +10,32 @@ class QTimer;
 
 enum class Status : int {Online = 0, Away, Busy, Offline};
 
+#define TOX_ID_PUBLIC_KEY_LENGTH 64
+#define TOX_ID_NO_SPAM_LENGTH    8
+#define TOX_ID_CHECKSUM_LENGTH   4
+
+struct ToxID
+{
+    QString publicKey;
+    QString noSpam;
+    QString checkSum;
+
+    QString toString() const
+    {
+        return publicKey + noSpam + checkSum;
+    }
+
+    ToxID static fromString(QString id)
+    {
+        ToxID toxID;
+        toxID.publicKey = id.left(TOX_ID_PUBLIC_KEY_LENGTH);
+        toxID.noSpam    = id.mid(TOX_ID_PUBLIC_KEY_LENGTH, TOX_ID_NO_SPAM_LENGTH);
+        toxID.checkSum  = id.right(TOX_ID_CHECKSUM_LENGTH);
+        return toxID;
+    }
+
+};
+
 struct DhtServer
 {
     QString name;
@@ -24,7 +50,8 @@ struct ToxFile
     {
         STOPPED,
         PAUSED,
-        TRANSMITTING
+        TRANSMITTING,
+        BROKEN
     };
 
     enum FileDirection : bool

@@ -39,7 +39,6 @@ signals:
 
 public:
     int groupId;
-    QLabel avatar, name, nusers, statusPic;
 };
 
 #endif // GROUPWIDGET_H

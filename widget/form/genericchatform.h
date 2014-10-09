@@ -17,7 +17,7 @@
 #ifndef GENERICCHATFORM_H
 #define GENERICCHATFORM_H
 
-#include <QObject>
+#include <QWidget>
 #include <QPoint>
 #include <QDateTime>
 
@@ -30,24 +30,26 @@ class QPushButton;
 class CroppingLabel;
 class ChatTextEdit;
 class ChatAreaWidget;
+class MaskablePixmapWidget;
 
 namespace Ui {
     class MainWindow;
 }
 
-class GenericChatForm : public QObject
+class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericChatForm(QObject *parent = 0);
-    virtual ~GenericChatForm();
+    GenericChatForm(QWidget *parent = 0);
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    void addMessage(QString author, QString message, QDateTime datetime=QDateTime::currentDateTime());
+    void addMessage(QString author, QString message, bool isAction = false, QDateTime datetime=QDateTime::currentDateTime());
+    void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime=QDateTime::currentDateTime());
 
 signals:
     void sendMessage(int, QString);
+    void sendAction(int, QString);
 
 public slots:
     void focusInput();
@@ -59,9 +61,11 @@ protected slots:
     void onEmoteInsertRequested(QString str);
 
 protected:
+    QString getElidedName(const QString& name);
+
     CroppingLabel *nameLabel;
-    QLabel *avatarLabel;
-    QWidget *mainWidget, *headWidget;
+    MaskablePixmapWidget *avatar;
+    QWidget *headWidget;
     QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;

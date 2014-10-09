@@ -1,64 +1,75 @@
-div.name_me {
-  color: #646464;
-  font-weight: bold;
-  padding-right: 3px;
-}
-
 div.name {
-  color: #000000;
-  font-weight: bold;
-  padding-right: 3px;
+  color: @black;
+  font: @bigBold;
 }
 
 div.message {
-  color: #000000;
-  padding-right: 3px;
-  padding-left: 3px;
+  color: @black;
+  font: @big;
+}
+
+div.action {
+  color: #1818FF;
+  font: @big;
 }
 
 div.date {
-  color: #000000;
-  padding-left: 3px;
-  white-space: nowrap;
+  color: @black;
+  font: @big;
 }
 
-div.quote {
-  background-color: #6bc260;
+div.name_me {
+  color: @mediumGrey;
+  font: @big;
+}
+
+div.message_me {
+  color: @black;
+  font: @big;
+}
+
+div.date_me {
+  color: @black;
+  font: @big;
+}
+
+span.quote {
+  color: #6bc260;
 }
 
 div.green {
   margin-top: 12px;
   margin-bottom: 12px;
-  margin-left: 12px;
+  margin-left: 0px;
   margin-right: 12px;
-  color: #ffffff;
-  background-color: #6bc260;
-  font-size: 10px;
+  color: @white;
+  background-color: @green;
+  font: @small;
 }
 
 div.silver {
   margin-top: 12px;
   margin-bottom: 12px;
-  margin-left: 12px;
+  margin-left: 0px;
   margin-right: 12px;
-  color: #000000;
-  background-color: #d1d1d1;
-  font-size: 10px;
+  color: @black;
+  background-color: @lightGrey;
+  font: @small;
 }
 
 div.red {
   margin-top: 12px;
   margin-bottom: 12px;
-  margin-left: 12px;
+  margin-left: 0px;
   margin-right: 12px;
-  color: #ffffff;
-  background-color: rgb(200,78,78);
-  font-size: 10px;
+  color: @white;
+  background-color: @red;
+  font: @small;
 }
 
 div.button {
   margin-top: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
-  color: #ffffff;
+  color: @white;
 }

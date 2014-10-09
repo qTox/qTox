@@ -26,13 +26,21 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET    = qtox
 TEMPLATE  = app
 FORMS    += \
-    mainwindow.ui
+    mainwindow.ui \
+    widget/form/settings/generalsettings.ui \
+    widget/form/settings/avsettings.ui \
+    widget/form/settings/identitysettings.ui
 CONFIG   += c++11
 
 TRANSLATIONS = translations/de.ts \
                translations/fr.ts \
                translations/it.ts \
-               translations/ru.ts
+               translations/ru.ts \
+               translations/pirate.ts \
+               translations/pl.ts \
+               translations/fi.ts \
+               translations/mannol.ts \
+               translations/uk.ts
 
 RESOURCES += res.qrc
 
@@ -44,8 +52,9 @@ contains(JENKINS,YES) {
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
-    LIBS += -L$$PWD/libs/lib -llibopencv_core249 -llibopencv_highgui249 -llibopencv_imgproc249 -lOpenAL32
-    LIBS += $$PWD/libs/lib/libtoxav.a $$PWD/libs/lib/libopus.a $$PWD/libs/lib/libvpx.a $$PWD/libs/lib/libtoxcore.a -lws2_32 $$PWD/libs/lib/libsodium.a -lpthread -liphlpapi
+    LIBS += -liphlpapi -L$$PWD/libs/lib -ltoxav -ltoxcore -lvpx -lpthread
+    LIBS += -L$$PWD/libs/lib -lopencv_core248 -lopencv_highgui248 -lopencv_imgproc248 -lOpenAL32 -lopus
+    LIBS += -lz -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32
 } else {
     macx {
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
@@ -54,7 +63,10 @@ win32 {
         contains(STATICPKG, YES) {
             target.path = /usr/bin
             INSTALLS += target
-            LIBS += -L$$PWD/libs/lib/ -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -Wl,-Bdynamic -lopus -lvpx -lopenal -lopencv_core -lopencv_highgui
+            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
+	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
+	    LIBS += -Wl,-Bdynamic -ltbb -lv4l1 -lv4l2 -lgnutls -lrtmp -lgnutls -lavformat -lavcodec -lavutil -lavfilter -lswscale -lusb-1.0
+
         } else {
             LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
         }
@@ -79,7 +91,12 @@ win32 {
 HEADERS  += widget/form/addfriendform.h \
     widget/form/chatform.h \
     widget/form/groupchatform.h \
-    widget/form/settingsform.h \
+    widget/form/settingswidget.h \
+    widget/form/settings/genericsettings.h \
+    widget/form/settings/generalform.h \
+    widget/form/settings/identityform.h \
+    widget/form/settings/privacyform.h \
+    widget/form/settings/avform.h \
     widget/form/filesform.h \
     widget/tool/chattextedit.h \
     widget/tool/friendrequestdialog.h \
@@ -89,34 +106,43 @@ HEADERS  += widget/form/addfriendform.h \
     friend.h \
     group.h \
     grouplist.h \
-    settings.h \
+    misc/settings.h \
     core.h \
     friendlist.h \
-    cdata.h \
-    cstring.h \
+    misc/cdata.h \
+    misc/cstring.h \
     widget/selfcamview.h \
     widget/camera.h \
     widget/netcamview.h \
-    smileypack.h \
+    misc/smileypack.h \
     widget/emoticonswidget.h \
-    style.h \
+    misc/style.h \
     widget/adjustingscrollarea.h \
     widget/croppinglabel.h \
     widget/friendlistwidget.h \
     widget/genericchatroomwidget.h \
     widget/form/genericchatform.h \
-    widget/tool/chataction.h \
+    widget/tool/chatactions/chataction.h \
     widget/chatareawidget.h \
     filetransferinstance.h \
     corestructs.h \
     coredefines.h \
-    coreav.h
+    coreav.h \
+    widget/tool/chatactions/messageaction.h \
+    widget/tool/chatactions/filetransferaction.h \
+    widget/tool/chatactions/systemmessageaction.h \
+    widget/tool/chatactions/actionaction.h \
+    widget/maskablepixmapwidget.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
     widget/form/chatform.cpp \
     widget/form/groupchatform.cpp \
-    widget/form/settingsform.cpp \
+    widget/form/settingswidget.cpp \
+    widget/form/settings/generalform.cpp \
+    widget/form/settings/identityform.cpp \
+    widget/form/settings/privacyform.cpp \
+    widget/form/settings/avform.cpp \
     widget/form/filesform.cpp \
     widget/tool/chattextedit.cpp \
     widget/tool/friendrequestdialog.cpp \
@@ -129,22 +155,27 @@ SOURCES += \
     group.cpp \
     grouplist.cpp \
     main.cpp \
-    settings.cpp \
-    cdata.cpp \
-    cstring.cpp \
+    misc/settings.cpp \
+    misc/cdata.cpp \
+    misc/cstring.cpp \
     widget/selfcamview.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
-    smileypack.cpp \
+    misc/smileypack.cpp \
     widget/emoticonswidget.cpp \
-    style.cpp \
+    misc/style.cpp \
     widget/adjustingscrollarea.cpp \
     widget/croppinglabel.cpp \
     widget/friendlistwidget.cpp \
     coreav.cpp \
     widget/genericchatroomwidget.cpp \
     widget/form/genericchatform.cpp \
-    widget/tool/chataction.cpp \
+    widget/tool/chatactions/chataction.cpp \
     widget/chatareawidget.cpp \
     filetransferinstance.cpp \
-    corestructs.cpp
+    corestructs.cpp \
+    widget/tool/chatactions/messageaction.cpp \
+    widget/tool/chatactions/filetransferaction.cpp \
+    widget/tool/chatactions/systemmessageaction.cpp \
+    widget/tool/chatactions/actionaction.cpp \
+    widget/maskablepixmapwidget.cpp

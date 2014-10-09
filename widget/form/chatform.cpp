@@ -19,28 +19,41 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QMimeData>
+#include <QFileInfo>
+#include <QDragEnterEvent>
+#include <QBitmap>
 #include "chatform.h"
 #include "friend.h"
 #include "widget/friendwidget.h"
 #include "filetransferinstance.h"
-#include "widget/tool/chataction.h"
+#include "widget/tool/chatactions/filetransferaction.h"
 #include "widget/netcamview.h"
 #include "widget/chatareawidget.h"
 #include "widget/tool/chattextedit.h"
 #include "core.h"
 #include "widget/widget.h"
+#include "widget/maskablepixmapwidget.h"
+#include "widget/croppinglabel.h"
+#include "misc/style.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
 {
     nameLabel->setText(f->getName());
-    avatarLabel->setPixmap(QPixmap(":/img/contact_dark.png"));
+
+    avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 
     statusMessageLabel = new CroppingLabel();
+    statusMessageLabel->setFont(Style::getFont(Style::Medium));
+    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
+    statusMessageLabel->setPalette(pal);
+
     netcam = new NetCamView();
 
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
+    headTextLayout->setSpacing(0);
 
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Core::getInstance(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
@@ -51,6 +64,9 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
+    connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
+
+    setAcceptDrops(true);
 }
 
 ChatForm::~ChatForm()
@@ -70,9 +86,18 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
     QString name = Widget::getInstance()->getUsername();
+    if (msg.startsWith("/me "))
+    {
+        msg = msg.right(msg.length() - 4);
+        addMessage(name, msg, true);
+        emit sendAction(f->friendId, msg);
+    }
+    else
+    {
+        addMessage(name, msg, false);
+        emit sendMessage(f->friendId, msg);
+    }
     msgEdit->clear();
-    addMessage(name, msg);
-    emit sendMessage(f->friendId, msg);
 }
 
 void ChatForm::onAttachClicked()
@@ -111,13 +136,14 @@ void ChatForm::startFileSend(ToxFile file)
     connect(Core::getInstance(), SIGNAL(fileTransferAccepted(ToxFile)), fileTrans, SLOT(onFileTransferAccepted(ToxFile)));
     connect(Core::getInstance(), SIGNAL(fileTransferPaused(int,int,ToxFile::FileDirection)), fileTrans, SLOT(onFileTransferPaused(int,int,ToxFile::FileDirection)));
     connect(Core::getInstance(), SIGNAL(fileTransferRemotePausedUnpaused(ToxFile,bool)), fileTrans, SLOT(onFileTransferRemotePausedUnpaused(ToxFile,bool)));
+    connect(Core::getInstance(), SIGNAL(fileTransferBrokenUnbroken(ToxFile, bool)), fileTrans, SLOT(onFileTransferBrokenUnbroken(ToxFile, bool)));
 
     QString name = Widget::getInstance()->getUsername();
     if (name == previousName)
         name = "";
     previousName = Widget::getInstance()->getUsername();
 
-    chatWidget->insertMessage(new FileTransferAction(fileTrans, name, QTime::currentTime().toString("hh:mm"), true));
+    chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), true));
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -134,9 +160,10 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     connect(Core::getInstance(), SIGNAL(fileTransferAccepted(ToxFile)), fileTrans, SLOT(onFileTransferAccepted(ToxFile)));
     connect(Core::getInstance(), SIGNAL(fileTransferPaused(int,int,ToxFile::FileDirection)), fileTrans, SLOT(onFileTransferPaused(int,int,ToxFile::FileDirection)));
     connect(Core::getInstance(), SIGNAL(fileTransferRemotePausedUnpaused(ToxFile,bool)), fileTrans, SLOT(onFileTransferRemotePausedUnpaused(ToxFile,bool)));
+    connect(Core::getInstance(), SIGNAL(fileTransferBrokenUnbroken(ToxFile, bool)), fileTrans, SLOT(onFileTransferBrokenUnbroken(ToxFile, bool)));
 
     Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
+    if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
     {
         w->newMessageAlert();
         f->hasNewEvents=true;
@@ -148,7 +175,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         name = "";
     previousName = f->getName();
 
-    chatWidget->insertMessage(new FileTransferAction(fileTrans, name, QTime::currentTime().toString("hh:mm"), false));
+    chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), false));
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
@@ -177,7 +204,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     }
 
     Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f)|| w->getIsWindowMinimized() || !w->isActiveWindow())
+    if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
     {
         w->newMessageAlert();
         f->hasNewEvents=true;
@@ -454,4 +481,48 @@ void ChatForm::onFileTansBtnClicked(QString widgetName, QString buttonName)
         it.value()->pressFromHtml(buttonName);
     else
         qDebug() << "no filetransferwidget: " << id;
+}
+
+void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
+{
+    if (FriendId != f->friendId)
+        return;
+
+    addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red");
+}
+
+void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
+{
+    if (FriendId != f->friendId)
+        return;
+
+    avatar->setPixmap(pic);
+}
+
+void ChatForm::dragEnterEvent(QDragEnterEvent *ev)
+{
+    if (ev->mimeData()->hasUrls())
+        ev->acceptProposedAction();
+}
+
+void ChatForm::dropEvent(QDropEvent *ev)
+{
+    if (ev->mimeData()->hasUrls())
+    {
+        for (QUrl url : ev->mimeData()->urls())
+        {
+            QFileInfo info(url.path());
+
+            if (info.exists())
+                Core::getInstance()->sendFile(f->friendId, info.fileName(), info.absoluteFilePath(), info.size());
+        }
+    }
+}
+
+void ChatForm::onAvatarRemoved(int FriendId)
+{
+    if (FriendId != f->friendId)
+        return;
+
+    avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 }

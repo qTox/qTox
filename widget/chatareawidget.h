@@ -31,6 +31,9 @@ public:
     virtual ~ChatAreaWidget();
     void insertMessage(ChatAction *msgAction);
 
+    int nameColWidth() {return nameWidth;}
+    void setNameColWidth(int w);
+
 signals:
     void onFileTranfertInterract(QString widgetName, QString buttonName);
 
@@ -43,11 +46,13 @@ private slots:
 
 private:
     void checkSlider();
+    QTextTable* getMsgTable();
 
+    QTextTableFormat* tableFrmt;
     QList<ChatAction*> messages;
     bool lockSliderToBottom;
     int sliderPosition;
-    QTextTable *chatTextTable;
+    int nameWidth;
     QTextBlockFormat nameFormat, dateFormat;
 };
 

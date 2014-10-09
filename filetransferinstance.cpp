@@ -16,33 +16,49 @@
 
 #include "filetransferinstance.h"
 #include "core.h"
+#include "misc/style.h"
 #include <math.h>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QBuffer>
 #include <QDebug>
+#include <QPainter>
+
+#define CONTENT_WIDTH 250
+#define MAX_PREVIEW_SIZE 25*1024*1024
 
 uint FileTransferInstance::Idconter = 0;
 
 FileTransferInstance::FileTransferInstance(ToxFile File)
-    : lastUpdate{QDateTime::currentDateTime()}, lastBytesSent{0},
+    : lastBytesSent{0},
       fileNum{File.fileNum}, friendId{File.friendId}, direction{File.direction}
 {
     id = Idconter++;
     state = tsPending;
     remotePaused = false;
+    lastUpdateTime = QDateTime::currentDateTime();
 
     filename = File.fileName;
+
+    // update this whenever you change the font in innerStyle.css
+    QFontMetrics fm(Style::getFont(Style::Small));
+
+    filenameElided = fm.elidedText(filename, Qt::ElideRight, CONTENT_WIDTH);
+
     size = getHumanReadableSize(File.filesize);
     speed = "0B/s";
     eta = "00:00";
+
     if (File.direction == ToxFile::SENDING)
     {
-        QImage preview;
-        File.file->seek(0);
-        if (preview.loadFromData(File.file->readAll()))
+        if (File.file->size() <= MAX_PREVIEW_SIZE)
         {
-            pic = preview.scaledToHeight(50);
+            QImage preview;
+            File.file->seek(0);
+            if (preview.loadFromData(File.file->readAll()))
+            {
+                pic = preview.scaledToHeight(50);
+            }
         }
         File.file->seek(0);
     }
@@ -63,27 +79,27 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
             return;
 
 //    state = tsProcessing;
-    QDateTime newtime = QDateTime::currentDateTime();
-    int timediff = lastUpdate.secsTo(newtime);
+    QDateTime now = QDateTime::currentDateTime();
+    if (lastUpdateTime.secsTo(now) < 1) //update every 1s
+        return;
+
+    int timediff = startTime.secsTo(now);
     if (timediff <= 0)
         return;
-    qint64 diff = BytesSent - lastBytesSent;
-    if (diff < 0)
-    {
-        qWarning() << "FileTransferInstance::onFileTransferInfo: Negative transfer speed !";
-        diff = 0;
-    }
-    long rawspeed = diff / timediff;
+
+    long rawspeed = BytesSent / timediff;
+
     speed = getHumanReadableSize(rawspeed)+"/s";
     size = getHumanReadableSize(Filesize);
+    totalBytes = Filesize;
     if (!rawspeed)
         return;
     int etaSecs = (Filesize - BytesSent) / rawspeed;
     QTime etaTime(0,0);
     etaTime = etaTime.addSecs(etaSecs);
     eta = etaTime.toString("mm:ss");
-    lastUpdate = newtime;
     lastBytesSent = BytesSent;
+    lastUpdateTime = now;
     emit stateUpdated();
 }
 
@@ -107,7 +123,7 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
     {
         QImage preview;
         QFile previewFile(File.filePath);
-        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= 1024*1024*25) // Don't preview big (>25MiB) images
+        if (previewFile.open(QIODevice::ReadOnly) && previewFile.size() <= MAX_PREVIEW_SIZE) // Don't preview big (>25MiB) images
         {
             if (preview.loadFromData(previewFile.readAll()))
             {
@@ -129,6 +145,7 @@ void FileTransferInstance::onFileTransferAccepted(ToxFile File)
 
     remotePaused = false;
     state = tsProcessing;
+    startTime = QDateTime::currentDateTime();
 
     emit stateUpdated();
 }
@@ -188,7 +205,7 @@ void FileTransferInstance::acceptRecvRequest()
     QString path;
     while (true)
     {
-        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::current().filePath(filename));
+        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(filename));
         if (path.isEmpty())
             return;
         else
@@ -207,6 +224,8 @@ void FileTransferInstance::acceptRecvRequest()
 
     Core::getInstance()->acceptFileRecvRequest(friendId, fileNum, path);
     state = tsProcessing;
+
+    startTime = QDateTime::currentDateTime();
 
     emit stateUpdated();
 }
@@ -277,6 +296,12 @@ QString FileTransferInstance::getHtmlImage()
             rightBtnImg = QImage(":/ui/fileTransferInstance/pauseGreyFileButton.png");
 
         res = draw2ButtonsForm("silver", leftBtnImg, rightBtnImg);
+    } else if (state == tsBroken)
+    {
+        QImage leftBtnImg(":/ui/fileTransferInstance/stopFileButton.png");
+        QImage rightBtnImg(":/ui/fileTransferInstance/pauseGreyFileButton.png");
+
+        res = draw2ButtonsForm("red", leftBtnImg, rightBtnImg);
     } else if (state == tsCanceled)
     {
         res = drawButtonlessForm("red");
@@ -326,7 +351,7 @@ QString FileTransferInstance::drawButtonlessForm(const QString &type)
         imgBStr = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyRGreenFileButton.png")) + "\">";
     }
 
-    QString content = "<p>" + filename + "</p><p>" + size + "</p>";
+    QString content = "<p>" + filenameElided + "</p><p>" + size + "</p>";
 
     return wrapIntoForm(content, type, imgAStr, imgBStr);
 }
@@ -352,29 +377,89 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
     QString imgBstr = "<img src=\"data:ftrans." + widgetId + ".btnB/png;base64," + QImage2base64(imgB) + "\">";
 
     QString content;
-    content += "<p>" + filename + "</p>";
-    content += "<p>" + getHumanReadableSize(lastBytesSent) + " / " + size + "&nbsp;(" + speed + " ETA: " + eta + ")</p>\n";
+    QString progrBar = "<img src=\"data:progressbar." + widgetId + "/png;base64," + QImage2base64(drawProgressBarImg(double(lastBytesSent)/totalBytes, CONTENT_WIDTH, 9)) + "\">";
+
+    content  = "<p>" + filenameElided + "</p>";
+    content += "<table cellspacing=\"0\"><tr>";
+    content += "<td>" + size + "</td>";
+    content += "<td align=center>" + speed + "</td>";
+    content += "<td align=right>ETA: " + eta + "</td>";
+    content += "</tr><tr><td colspan=3>";
+    content += progrBar;
+    content += "</td></tr></table>";
 
     return wrapIntoForm(content, type, imgAstr, imgBstr);
 }
 
 QString FileTransferInstance::wrapIntoForm(const QString& content, const QString &type, const QString &imgAstr, const QString &imgBstr)
 {
-    QString res;
+    QString w = QString::number(QImage(":/ui/fileTransferInstance/emptyLRedFileButton.png").size().width());
+    QString imgLeftA, imgLeftB;
 
-    res =  "<table widht=100% cellspacing=\"0\">\n";
+    if (type == "green")
+    {
+        imgLeftA = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLGreenFileButton.png").mirrored(true,false)) + "\">";
+        imgLeftB = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLGreenFileButton.png").mirrored(true,true)) + "\">";
+    }
+
+    if (type == "silver")
+    {
+        imgLeftA = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/sliverRTEdge.png").mirrored(true,false)) + "\">";
+        imgLeftB = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/sliverRTEdge.png").mirrored(true,true)) + "\">";
+    }
+
+    if (type == "red")
+    {
+        imgLeftA = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLRedFileButton.png").mirrored(true,false)) + "\">";
+        imgLeftB = "<img src=\"data:placeholder/png;base64," + QImage2base64(QImage(":/ui/fileTransferInstance/emptyLRedFileButton.png").mirrored(true,true)) + "\">";
+    }
+
+    QString res;
+    res =  "<table cellspacing=\"0\">\n";
     res += "<tr valign=middle>\n";
+    res += "<td width=" + w + ">\n";
+    res += "<div class=button>" + imgLeftA + "<br>" + imgLeftB + "</div>\n";
+    res += "</td>\n";
     res += insertMiniature(type);
-    res += "<td width=100%>\n";
+    res += "<td width=" + QString::number(CONTENT_WIDTH + 30) + ">\n";
     res += "<div class=" + type + ">";
     res += content;
     res += "</div>\n";
     res += "</td>\n";
     res += "<td>\n";
-    res += "<div class=button>" + imgAstr + "<br>" + imgBstr+ "</div>\n";
+    res += "<div class=button>" + imgAstr + "<br>" + imgBstr + "</div>\n";
     res += "</td>\n";
     res += "</tr>\n";
     res += "</table>\n";
 
     return res;
+}
+
+QImage FileTransferInstance::drawProgressBarImg(const double &part, int w, int h)
+{
+    QImage progressBar(w, h, QImage::Format_Mono);
+
+    QPainter qPainter(&progressBar);
+    qPainter.setBrush(Qt::NoBrush);
+    qPainter.setPen(Qt::black);
+    qPainter.drawRect(0, 0, w - 1, h - 1);
+
+    qPainter.setBrush(Qt::SolidPattern);
+    qPainter.setPen(Qt::black);
+    qPainter.drawRect(1, 0, (w - 2) * (part), h - 1);
+
+    return progressBar;
+}
+
+void FileTransferInstance::onFileTransferBrokenUnbroken(ToxFile File, bool broken)
+{
+    if (File.fileNum != fileNum || File.friendId != friendId || File.direction != direction)
+        return;
+
+    if (broken)
+        state = tsBroken;
+    else
+        state = tsProcessing;
+
+    emit stateUpdated();
 }

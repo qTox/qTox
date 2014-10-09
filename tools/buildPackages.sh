@@ -56,9 +56,19 @@ done
 if [[ $OPT_APT = "true" ]]; then
     echo "Installing missing tools (if any)..."
     if [[ $EUID -ne 0 && $OPT_SUDO = "true" ]]; then
-        sudo apt-get install wget debhelper cdbs devscripts alien tar gzip build-essential
+        sudo apt-get install wget debhelper cdbs devscripts alien tar gzip build-essential sudo autoconf libtool pkg-config libvpx-dev -y
     else
-             apt-get install wget debhelper cdbs devscripts alien tar gzip build-essential
+             apt-get install wget debhelper cdbs devscripts alien tar gzip build-essential sudo autoconf libtool pkg-config libvpx-dev -y
+    fi
+fi
+
+# Get the requried dependencies if needed
+if [[ $OPT_APT = "true" ]]; then
+    echo "Installing missing dependencies (if any)..."
+    if [[ $EUID -ne 0 && $OPT_SUDO = "true" ]]; then
+        sudo apt-get install qt5-qmake libopenal-dev libopencv-dev libopus-dev -y
+    else
+             apt-get install qt5-qmake libopenal-dev libopencv-dev libopus-dev -y
     fi
 fi
 
@@ -77,7 +87,9 @@ mv qTox-master $VERNAME
 
 # Build packages
 cd $VERNAME
-debuild -us -uc
+./bootstrap.sh --local
+debuild -us -uc -aamd64
+debuild -us -uc -ai386
 cd ..
 
 # alien warns that it should probably be run as root...

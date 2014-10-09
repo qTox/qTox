@@ -25,7 +25,6 @@
 struct Friend;
 class GroupWidget;
 class GroupChatForm;
-class QTimer;
 
 class Group : public QObject
 {
@@ -37,17 +36,12 @@ public:
     void removePeer(int peerId);
     void updatePeer(int peerId, QString newName);
 
-private slots:
-    void queryPeerInfo();
-
 public:
     int groupId;
     QMap<int,QString> peers;
     int nPeers;
     GroupWidget* widget;
     GroupChatForm* chatForm;
-    bool hasPeerInfo;
-    QTimer* peerInfoTimer;
     int hasNewMessages, userWasMentioned;
 };
 

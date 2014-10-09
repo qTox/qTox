@@ -25,12 +25,8 @@ class AdjustingScrollArea : public QScrollArea
 public:
     explicit AdjustingScrollArea(QWidget *parent = 0);
 
-    virtual void resizeEvent(QResizeEvent *ev);
+    virtual void resizeEvent(QResizeEvent *ev) override;
     virtual QSize sizeHint() const override;
-signals:
-
-public slots:
-
 };
 
 #endif // ADJUSTINGSCROLLAREA_H

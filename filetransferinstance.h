@@ -28,7 +28,7 @@ class FileTransferInstance : public QObject
 {
     Q_OBJECT
 public:
-    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled};
+    enum TransfState {tsPending, tsProcessing, tsPaused, tsFinished, tsCanceled, tsBroken};
 
 public:
     explicit FileTransferInstance(ToxFile File);
@@ -43,6 +43,7 @@ public slots:
     void onFileTransferAccepted(ToxFile File);
     void onFileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection Direction);
     void onFileTransferRemotePausedUnpaused(ToxFile File, bool paused);
+    void onFileTransferBrokenUnbroken(ToxFile File, bool broken);
     void pressFromHtml(QString);
 
 signals:
@@ -62,6 +63,7 @@ private:
     QString draw2ButtonsForm(const QString &type, const QImage &imgA, const QImage &imgB);
     QString insertMiniature(const QString &type);
     QString wrapIntoForm(const QString &content, const QString &type, const QString &imgAstr, const QString &imgBstr);
+    QImage drawProgressBarImg(const double &part, int w, int h);
 
 private:
     static uint Idconter;
@@ -71,8 +73,9 @@ private:
     bool remotePaused;
     QImage pic;
     QString filename, size, speed, eta;
-    QDateTime lastUpdate;
-    long long lastBytesSent;
+    QString filenameElided;
+    QDateTime startTime, lastUpdateTime;
+    long long lastBytesSent, totalBytes;
     int fileNum;
     int friendId;
     QString savePath;

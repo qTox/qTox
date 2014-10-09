@@ -15,56 +15,82 @@
 */
 
 #include "genericchatroomwidget.h"
+#include "misc/style.h"
+#include "widget/maskablepixmapwidget.h"
+#include "croppinglabel.h"
 #include <QMouseEvent>
+#include <QStyle>
 
-GenericChatroomWidget::GenericChatroomWidget(QWidget *parent) :
-    QWidget(parent)
+GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
+    : QFrame(parent)
 {
+    setFixedHeight(55);
+
+    setLayout(&layout);
+    layout.setSpacing(0);
+    layout.setMargin(0);
+    textLayout.setSpacing(0);
+    textLayout.setMargin(0);
+    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
+
+    // avatar
+    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
+
+    // status text
+    statusMessageLabel = new CroppingLabel(this);
+    statusMessageLabel->setObjectName("status");
+
+    // name text
+    nameLabel = new CroppingLabel(this);
+    nameLabel->setObjectName("name");
+
+    textLayout.addStretch();
+    textLayout.addWidget(nameLabel);
+    textLayout.addWidget(statusMessageLabel);
+    textLayout.addStretch();
+
+    layout.addSpacing(20);
+    layout.addWidget(avatar);
+    layout.addSpacing(10);
+    layout.addLayout(&textLayout);
+    layout.addSpacing(10);
+    layout.addWidget(&statusPic);
+    layout.addSpacing(10);
+    layout.activate();
+
+    setProperty("active", false);
+    setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/genericChatroomWidget.css"));
 }
 
-int GenericChatroomWidget::isActive()
+bool GenericChatroomWidget::isActive()
 {
-    return isActiveWidget;
+    return property("active").toBool();
 }
 
-void GenericChatroomWidget::mousePressEvent(QMouseEvent *event)
+void GenericChatroomWidget::setActive(bool active)
 {
-    if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
-    {
-        if (isActive())
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(250,250,250,255));
-            this->setPalette(pal);
-        }
-        else
-        {
-            QPalette pal;
-            pal.setColor(QPalette::Background, QColor(85,85,85,255));
-            this->setPalette(pal);
-        }
-    }
+    setProperty("active", active);
+    Style::repolish(this);
 }
 
-void GenericChatroomWidget::leaveEvent(QEvent *)
+void GenericChatroomWidget::setName(const QString &name)
 {
-    if (isActive() != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, lastColor);
-        this->setPalette(pal);
-    }
+    nameLabel->setText(name);
 }
 
-void GenericChatroomWidget::enterEvent(QEvent *)
+void GenericChatroomWidget::setStatusMsg(const QString &status)
 {
-    if (isActive() != 1)
-    {
-        QPalette pal;
-        pal.setColor(QPalette::Background, QColor(75,75,75,255));
-        lastColor = this->palette().background().color();
-        this->setPalette(pal);
-    }
+    statusMessageLabel->setText(status);
+}
+
+QString GenericChatroomWidget::getName() const
+{
+    return nameLabel->text();
+}
+
+QString GenericChatroomWidget::getStatusMsg() const
+{
+    return statusMessageLabel->text();
 }
 
 void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)

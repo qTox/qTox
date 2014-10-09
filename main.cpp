@@ -15,7 +15,7 @@
 */
 
 #include "widget/widget.h"
-#include "settings.h"
+#include "misc/settings.h"
 #include <QApplication>
 #include <QFontDatabase>
 #include <QTranslator>
@@ -26,6 +26,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
+
+    // Windows platform plugins DLL hell fix
+    QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
+    a.addLibraryPath("platforms");
 
     // Load translations
     QTranslator translator;
