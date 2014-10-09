@@ -39,15 +39,16 @@
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
+    , audioInputFlag(false)
+    , callId(0)
 {
     nameLabel->setText(f->getName());
 
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 
     statusMessageLabel = new CroppingLabel();
+    statusMessageLabel->setObjectName("statusLabel");
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
-    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
-    statusMessageLabel->setPalette(pal);
 
     netcam = new NetCamView();
 
@@ -466,15 +467,11 @@ void ChatForm::onMicMuteToggle()
     {
         emit micMuteToggle(callId);
         if (micButton->objectName() == "red")
-        {
             micButton->setObjectName("green");
-            micButton->style()->polish(micButton);
-        }
         else
-        {
             micButton->setObjectName("red");
-            micButton->style()->polish(micButton);
-        }
+
+        Style::repolish(micButton);
     }
 }
 

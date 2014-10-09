@@ -1,0 +1,14 @@
+#nameLabel {
+  color: @black;
+  font: @mediumBold;
+}
+
+#statusLabel {
+  color: @mediumGrey;
+  font: @medium;
+}
+
+#peersLabel {
+  color: @mediumGrey;
+  font: @medium;
+}
