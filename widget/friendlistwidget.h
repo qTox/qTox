@@ -38,7 +38,6 @@ public:
 signals:
 
 public slots:
-    void clear();
 
 private:
     QHash<int, QLayout*> layouts;

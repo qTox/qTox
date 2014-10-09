@@ -633,8 +633,8 @@ void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
     {
         qDebug() << "Core: Got null avatar info from" << core->getFriendUsername(friendnumber);
         emit core->friendAvatarRemoved(friendnumber);
-        QFile::remove(QDir(Settings::getInstance().getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".png"));
-        QFile::remove(QDir(Settings::getInstance().getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".hash"));
+        QFile::remove(QDir(Settings::getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".png"));
+        QFile::remove(QDir(Settings::getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".hash"));
     }
     else
     {
@@ -1183,13 +1183,14 @@ void Core::switchConfiguration(QString profile)
     
     toxTimer->stop();
     
+    Widget::getInstance()->clearContactsList(); // we need this to block, so no signals for us
+    
     if (tox) {
         toxav_kill(toxav);
         toxav = nullptr;
         tox_kill(tox);
         tox = nullptr;
     }
-    emit clearFriends();
     
     make_tox();
 
@@ -1210,6 +1211,7 @@ void Core::switchConfiguration(QString profile)
 void Core::loadFriends()
 {
     const uint32_t friendCount = tox_count_friendlist(tox);
+    qDebug() << "Core: loading" << friendCount << "friends. profile:" << Settings::getInstance().getCurrentProfile();
     if (friendCount > 0) {
         // assuming there are not that many friends to fill up the whole stack
         int32_t *ids = new int32_t[friendCount];
@@ -1218,7 +1220,7 @@ void Core::loadFriends()
         for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i) {
             if (tox_get_client_id(tox, ids[i], clientId) == 0) {
                 emit friendAdded(ids[i], CUserId::toString(clientId));
-
+                qDebug() << "Core: just added friend" << CUserId::toString(clientId);
                 const int nameSize = tox_get_name_size(tox, ids[i]);
                 if (nameSize > 0) {
                     uint8_t *name = new uint8_t[nameSize];

@@ -75,7 +75,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="profilesComboBox" />
+         <widget class="QComboBox" name="profiles" />
         </item>
        </layout>
       </item>

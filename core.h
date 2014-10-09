@@ -40,6 +40,7 @@ public:
     
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
+    static QString sanitize(QString name);
 
     int getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
@@ -109,7 +110,6 @@ signals:
     void friendMessageReceived(int friendId, const QString& message, bool isAction);
 
     void friendAdded(int friendId, const QString& userId);
-    void clearFriends();
 
     void friendStatusChanged(int friendId, Status status);
     void friendStatusMessageChanged(int friendId, const QString& message);
@@ -218,7 +218,6 @@ private:
     bool checkConnection();
 
     bool loadConfiguration(QString path); // Returns false for a critical error, true otherwise
-    static QString sanitize(QString name);
     void make_tox();
     void loadFriends();
 

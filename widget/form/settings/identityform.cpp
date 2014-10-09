@@ -18,12 +18,17 @@
 #include "ui_identitysettings.h"
 #include "identityform.h"
 #include "widget/form/settingswidget.h"
+#include "misc/settings.h"
 #include "widget/croppinglabel.h"
+#include "widget/widget.h"
 #include "core.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QApplication>
 #include <QClipboard>
+#include <QInputDialog>
+#include <QFileDialog>
+#include <QMessageBox>
 
 IdentityForm::IdentityForm() :
     GenericForm(tr("Your identity"), QPixmap(":/img/settings/identity.png"))
@@ -50,6 +55,11 @@ IdentityForm::IdentityForm() :
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
     connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
+    connect(bodyUI->loadButton, &QPushButton::clicked, this, &IdentityForm::onLoadClicked);
+    connect(bodyUI->renameButton, &QPushButton::clicked, this, &IdentityForm::onRenameClicked);
+    connect(bodyUI->exportButton, &QPushButton::clicked, this, &IdentityForm::onExportClicked);
+    connect(bodyUI->deleteButton, &QPushButton::clicked, this, &IdentityForm::onDeleteClicked);
+    connect(bodyUI->importButton, &QPushButton::clicked, this, &IdentityForm::onImportClicked);
 }
 
 IdentityForm::~IdentityForm()
@@ -77,6 +87,12 @@ void IdentityForm::onStatusMessageEdited()
 void IdentityForm::updateContent()
 {
     toxId->setText(Core::getInstance()->getSelfId().toString());
+    bodyUI->profiles->clear();
+    for (QString profile : Widget::searchProfiles())
+        bodyUI->profiles->addItem(profile);
+    QString current = Settings::getInstance().getCurrentProfile();
+    if (current != "")
+        bodyUI->profiles->setCurrentText(current);
 }
 
 void IdentityForm::setUserName(const QString &name)
@@ -87,4 +103,62 @@ void IdentityForm::setUserName(const QString &name)
 void IdentityForm::setStatusMessage(const QString &msg)
 {
     bodyUI->statusMessage->setText(msg);
+}
+
+void IdentityForm::onLoadClicked()
+{
+    Core::getInstance()->switchConfiguration(bodyUI->profiles->currentText());
+}
+
+void IdentityForm::onRenameClicked()
+{
+    QString cur = bodyUI->profiles->currentText();
+    QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
+    QString name = QInputDialog::getText(this, title, title+":");
+    if (name != "")
+    {
+        name = Core::sanitize(name);
+        QDir dir(Settings::getSettingsDirPath());
+        QFile::copy(dir.filePath(cur+Core::TOX_EXT), dir.filePath(name+Core::TOX_EXT));
+        bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
+    }
+}
+
+void IdentityForm::onExportClicked()
+{
+    QString current = bodyUI->profiles->currentText() + Core::TOX_EXT;
+    QString path = QFileDialog::getSaveFileName(this, tr("Export profile", "save dialog title"),
+                    QDir::home().filePath(current), 
+                    tr("Tox save file (*.tox)", "save dialog filter"));
+    QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path);
+}
+
+void IdentityForm::onDeleteClicked()
+{
+    if (Settings::getInstance().getCurrentProfile() == bodyUI->profiles->currentText())
+    {
+        QMessageBox::warning(this, tr("Profile currently loaded","current profile deletion warning title"), tr("This profile is currently in use. Please load a different profile before deleting this one.","current profile deletion warning text"));
+    }
+    else
+    {        
+        QMessageBox::StandardButton resp = QMessageBox::question(this,
+            tr("Deletion imminent!","deletion confirmation title"), tr("Are you sure you want to delete this profile?","deletion confirmation text"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        if (resp == QMessageBox::Yes)
+        {
+            QFile::remove(QDir(Settings::getSettingsDirPath()).filePath(bodyUI->profiles->currentText()+Core::TOX_EXT));
+            bodyUI->profiles->removeItem(bodyUI->profiles->currentIndex());
+            bodyUI->profiles->setCurrentText(Settings::getInstance().getCurrentProfile());
+        }
+    }
+}
+
+void IdentityForm::onImportClicked()
+{
+    QString path = QFileDialog::getOpenFileName(this, tr("Import profile", "import dialog title"), QDir::homePath(), tr("Tox save file (*.tox)", "import dialog filter"));
+    QFileInfo info(path);
+    QString profile = info.completeBaseName();
+    QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
+    QFile::copy(path, profilePath);
+    bodyUI->profiles->addItem(profile);
+    Core::getInstance()->switchConfiguration(profile);
 }

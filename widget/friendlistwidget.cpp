@@ -66,22 +66,3 @@ void FriendListWidget::moveWidget(QWidget *w, Status s)
     mainLayout->removeWidget(w);
     getFriendLayout(s)->addWidget(w);
 }
-
-void clearLayout(QLayout *layout)
-{
-    QLayoutItem *item;
-    while((item = layout->takeAt(0)))
-    {
-        if (item->layout()) {
-            clearLayout(item->layout());
-            delete item->layout();
-        }
-        delete item->widget();
-        delete item;
-    }
-}
-
-void FriendListWidget::clear()
-{
-    clearLayout(mainLayout);
-}

@@ -137,7 +137,6 @@ Widget::Widget(QWidget *parent)
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
-    connect(core, &Core::clearFriends, contactListWidget, &FriendListWidget::clear);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
@@ -637,6 +636,14 @@ void Widget::removeFriend(int friendId)
     removeFriend(FriendList::findFriend(friendId));
 }
 
+void Widget::clearContactsList()
+{
+    for (Friend* f : FriendList::friendList)
+        removeFriend(f);
+    for (Group* g : GroupList::groupList)
+        removeGroup(g);
+}
+
 void Widget::copyFriendIdToClipboard(int friendId)
 {
     Friend* f = FriendList::findFriend(friendId);
@@ -700,17 +707,21 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 
-void Widget::removeGroup(int groupId)
+void Widget::removeGroup(Group* g)
 {
-    Group* g = GroupList::findGroup(groupId);
     g->widget->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(g->widget) == activeChatroomWidget)
         activeChatroomWidget = nullptr;
-    GroupList::removeGroup(groupId);
-    core->removeGroup(groupId);
+    GroupList::removeGroup(g->groupId);
+    core->removeGroup(g->groupId);
     delete g;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
+}
+
+void Widget::removeGroup(int groupId)
+{
+    removeGroup(GroupList::findGroup(groupId));
 }
 
 Core *Widget::getCore()
