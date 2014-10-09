@@ -123,6 +123,8 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
+    menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
+
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
 }
@@ -145,8 +147,6 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 {
     QWidget* sender = (QWidget*)QObject::sender();
     pos = sender->mapToGlobal(pos);
-    QMenu menu;
-    menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
     menu.exec(pos);
 }
 

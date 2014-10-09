@@ -20,6 +20,7 @@
 #include <QWidget>
 #include <QPoint>
 #include <QDateTime>
+#include <QMenu>
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5
@@ -63,6 +64,7 @@ protected slots:
 protected:
     QString getElidedName(const QString& name);
 
+    QMenu menu;
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;

@@ -36,10 +36,8 @@ HistoryKeeper *HistoryKeeper::getInstance()
         if (Settings::getInstance().getEnableLogging())
         {
             path = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.sqlite");
+            // path = "/tmp/qtox_history.sqlite"; // just for testing purpose
         }
-
-        path = "/tmp/qtox_history.sqlite"; // just for testing purpose
-        encrypted = false;
 
         historyInstance = new HistoryKeeper(path, encrypted);
     }

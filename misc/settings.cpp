@@ -144,6 +144,8 @@ void Settings::load()
 
     s.beginGroup("Privacy");
         typingNotification = s.value("typingNotification", false).toBool();
+        enableLogging = s.value("enableLogging", false).toBool();
+        encryptLogs = s.value("encryptLogs", false).toBool();
     s.endGroup();
 
     // try to set a smiley pack if none is selected
@@ -247,6 +249,8 @@ void Settings::save(QString path)
 
     s.beginGroup("Privacy");
         s.setValue("typingNotification", typingNotification);
+        s.setValue("enableLogging", enableLogging);
+        s.setValue("encryptLogs", encryptLogs);
     s.endGroup();
 }
 

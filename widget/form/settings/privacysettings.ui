@@ -26,8 +26,11 @@
    </item>
    <item>
     <widget class="QCheckBox" name="cbKeepHistory">
+     <property name="toolTip">
+      <string extracomment="History keeping still under developing. Log format changin is possible."/>
+     </property>
      <property name="text">
-      <string>Keep History</string>
+      <string>Keep History (unstable)</string>
      </property>
     </widget>
    </item>
@@ -72,7 +75,7 @@
         <item>
          <widget class="QPushButton" name="pswdBtn">
           <property name="text">
-           <string>Set master password</string>
+           <string>Set profile password</string>
           </property>
          </widget>
         </item>

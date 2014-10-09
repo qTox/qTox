@@ -18,12 +18,23 @@
 #include "ui_privacysettings.h"
 #include "widget/form/settingswidget.h"
 #include "misc/settings.h"
+#include "historykeeper.h"
 
 PrivacyForm::PrivacyForm() :
     GenericForm(tr("Privacy settings"), QPixmap(":/img/settings/privacy.png"))
 {
     bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);
+
+    bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());
+    bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
+    bodyUI->cbEncryptHistory->setChecked(Settings::getInstance().getEncryptLogs());
+
+    connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
+    connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
+    connect(bodyUI->cbEncryptHistory, SIGNAL(stateChanged(int)), this, SLOT(onEncryptLogsUpdated()));
+    connect(bodyUI->cbEnctyptTox, SIGNAL(stateChanged(int)), this, SLOT(onEncryptToxUpdated()));
+    connect(bodyUI->pswdBtn, SIGNAL(clicked()), this, SLOT(onPasswordSet()));
 }
 
 PrivacyForm::~PrivacyForm()
@@ -35,6 +46,7 @@ void PrivacyForm::onEnableLoggingUpdated()
 {
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     bodyUI->cbEncryptHistory->setEnabled(bodyUI->cbKeepHistory->isChecked());
+    HistoryKeeper::getInstance()->resetInstance();
 }
 
 void PrivacyForm::onTypingNotificationEnabledUpdated()
