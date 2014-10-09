@@ -126,8 +126,8 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L + Qt::SHIFT), this, SLOT(onClearChatAreaRequest()));
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this, SLOT(onRemoveHistoryRequest()));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this, SLOT(onClearChatAreaRequest()));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L + Qt::SHIFT), this, SLOT(onRemoveHistoryRequest()));
 }
 
 void GenericChatForm::setName(const QString &newName)
