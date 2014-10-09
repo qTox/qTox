@@ -121,8 +121,9 @@ void IdentityForm::onRenameClicked()
     {
         name = Core::sanitize(name);
         QDir dir(Settings::getSettingsDirPath());
-        QFile::copy(dir.filePath(cur+Core::TOX_EXT), dir.filePath(name+Core::TOX_EXT));
+        QFile::rename(dir.filePath(cur+Core::TOX_EXT), dir.filePath(name+Core::TOX_EXT));
         bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
+        Settings::getInstance().setCurrentProfile(name);
     }
 }
 

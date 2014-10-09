@@ -223,6 +223,7 @@ QString Widget::detectProfile()
     QFile file(path);
     if (profile == "" || !file.exists())
     {
+        Settings::getInstance().setCurrentProfile("");
 #if 1 // deprecation attempt
         // if the last profile doesn't exist, fall back to old "data"
         path = dir.filePath(Core::CONFIG_FILE_NAME);
