@@ -279,9 +279,9 @@ void Core::start()
  * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
  * So I set the tolerance here at 25, and initial DCs should be very rare now.
  * This should be able to go to 50 or 100 without affecting legitimate disconnects'
- * downtime, but lets be conservative for now. Edit: now 40.
+ * downtime, but lets be conservative for now. Edit: now ~~40~~ 30.
  */
-#define CORE_DISCONNECT_TOLERANCE 40
+#define CORE_DISCONNECT_TOLERANCE 30
 
 void Core::process()
 {
@@ -936,6 +936,8 @@ void Core::removeFriend(int friendId)
 
 void Core::removeGroup(int groupId)
 {
+    if (!tox)
+        return;
     tox_del_groupchat(tox, groupId);
 }
 
@@ -1183,35 +1185,24 @@ void Core::switchConfiguration(QString profile)
     
     toxTimer->stop();
     
-    Widget::getInstance()->clearContactsList(); // we need this to block, so no signals for us
-    
     if (tox) {
         toxav_kill(toxav);
         toxav = nullptr;
         tox_kill(tox);
         tox = nullptr;
     }
+    emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
+    Widget::getInstance()->clearContactsList(); // we need this to block, so no signals for us
     
-    make_tox();
-
+    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
     Settings::getInstance().setCurrentProfile(profile); 
-    if (!loadConfiguration(Settings::getSettingsDirPath() + QDir::separator() + profile + TOX_EXT))
-	{
-        emit failedToStart();
-        toxav_kill(toxav);
-        toxav = nullptr;
-        tox_kill(tox);
-        tox = nullptr;
-        return;
-    }
     
-    process(); // restarts toxTimer
+    start();
 }
 
 void Core::loadFriends()
 {
     const uint32_t friendCount = tox_count_friendlist(tox);
-    qDebug() << "Core: loading" << friendCount << "friends. profile:" << Settings::getInstance().getCurrentProfile();
     if (friendCount > 0) {
         // assuming there are not that many friends to fill up the whole stack
         int32_t *ids = new int32_t[friendCount];
@@ -1220,7 +1211,7 @@ void Core::loadFriends()
         for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i) {
             if (tox_get_client_id(tox, ids[i], clientId) == 0) {
                 emit friendAdded(ids[i], CUserId::toString(clientId));
-                qDebug() << "Core: just added friend" << CUserId::toString(clientId);
+
                 const int nameSize = tox_get_name_size(tox, ids[i]);
                 if (nameSize > 0) {
                     uint8_t *name = new uint8_t[nameSize];

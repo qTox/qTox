@@ -44,7 +44,7 @@ IdentityForm::IdentityForm() :
 
 //    toxId->setTextInteractionFlags(Qt::TextSelectableByMouse);
     toxId->setReadOnly(true);
-//    toxId->setFrameStyle(QFrame::NoFrame);
+    toxId->setFrame(false);
 //    toxId->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //    toxId->setFixedHeight(toxId->document()->size().height()*2);
     toxId->setFont(small);
@@ -72,6 +72,7 @@ void IdentityForm::copyIdClicked()
     QString txt = toxId->text();
     txt.replace('\n',"");
     QApplication::clipboard()->setText(txt);
+    toxId->setCursorPosition(0);
 }
 
 void IdentityForm::onUserNameEdited()
@@ -87,6 +88,7 @@ void IdentityForm::onStatusMessageEdited()
 void IdentityForm::updateContent()
 {
     toxId->setText(Core::getInstance()->getSelfId().toString());
+    toxId->setCursorPosition(0);
     bodyUI->profiles->clear();
     for (QString profile : Widget::searchProfiles())
         bodyUI->profiles->addItem(profile);
