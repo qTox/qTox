@@ -60,6 +60,71 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="profilesGroup">
+     <property name="title">
+      <string>Profiles</string>
+     </property>
+     <layout class="QVBoxLayout" name="profilesVLayout">
+      <item>
+       <layout class="QHBoxLayout" name="profilesComboLayout">
+        <item>
+         <widget class="QLabel" name="profilesLabel">
+          <property name="text">
+           <string>Available profiles:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="profilesComboBox" />
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="profilesButtonsLayout">
+        <item>
+         <widget class="QPushButton" name="loadButton">
+          <property name="text">
+           <string comment="load profile button">Load</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="renameButton">
+          <property name="text">
+           <string comment="rename profile button">Rename</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exportButton">
+          <property name="text">
+           <string comment="export profile button">Export</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="deleteButton">
+          <property name="text">
+           <string comment="delete profile button">Delete</string>
+          </property>
+          <property name="toolTip">
+           <string comment="delete profile button tooltip">This is useful to remain safe on public computers</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="importButton">
+        <property name="text">
+         <string comment="import profile button">Import a profile</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
