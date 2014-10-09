@@ -42,6 +42,7 @@
 #include <QClipboard>
 #include <QThread>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <tox/tox.h>
 
 Widget *Widget::instance{nullptr};
@@ -118,9 +119,9 @@ Widget::Widget(QWidget *parent)
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
-    // QString path = detectProfiles();
+    QString profilePath = detectProfile();
     coreThread = new QThread(this);
-    core = new Core(camera, coreThread/*, profile*/);
+    core = new Core(camera, coreThread, profilePath);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
 
@@ -213,6 +214,59 @@ void Widget::closeEvent(QCloseEvent *event)
     Settings::getInstance().setWindowState(saveState());
     Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
     QWidget::closeEvent(event);
+}
+
+QString Widget::detectProfile()
+{
+    QDir dir(Settings::getSettingsDirPath());
+    QString path, profile = Settings::getInstance().getCurrentProfile();
+    path = dir.filePath(profile + Core::TOX_EXT);
+    QFile file(path);
+    if (profile == "" || !file.exists())
+    {
+#if 1 // deprecation attempt
+        // if the last profile doesn't exist, fall back to old "data"
+        path = dir.filePath(Core::CONFIG_FILE_NAME);
+        QFile file(path);
+        if (file.exists())
+            return path;
+        else
+#endif
+            return dir.filePath(askProfiles() + Core::TOX_EXT);
+    }
+    else
+        return path;
+}
+
+QList<QString> Widget::searchProfiles()
+{
+    QList<QString> out;
+    QDir dir(Settings::getSettingsDirPath());
+	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+	dir.setNameFilters(QStringList("*.tox"));
+	for(QFileInfo file : dir.entryInfoList())
+		out += file.completeBaseName();
+	return out;
+}
+
+QString Widget::askProfiles()
+{
+    QList<QString> profiles = searchProfiles();
+    bool ok;
+    QString profile = QInputDialog::getItem(this, 
+                                            tr("Choose a profile"),
+                                            tr("Please choose which identity to use"),
+                                            profiles,
+                                            0, // which slot to start on
+                                            false, // if the user can enter their own input
+                                            &ok);
+    if (!ok) // user cancelled
+    {
+        qApp->quit();
+        return "";
+    }
+    else
+        return profile;
 }
 
 QString Widget::getUsername()

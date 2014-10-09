@@ -43,8 +43,8 @@ const QString Core::TOX_EXT = ".tox";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 
-Core::Core(Camera* cam, QThread *coreThread) :
-    tox(nullptr), camera(cam)
+Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
+    tox(nullptr), camera(cam), loadPath(loadPath)
 {
     videobuf = new uint8_t[videobufsize];
     videoBusyness=0;
@@ -213,28 +213,14 @@ void Core::start()
 
     qsrand(time(nullptr));
 
-    // where do we find the data file?
-    QString path;
-    {   // read data from whose profile?
-        path = Settings::getSettingsDirPath() + QDir::separator() + Settings::getInstance().getCurrentProfile() + TOX_EXT;
-        
-#if 1 // deprecation attempt
-        // if the last profile doesn't exist, fall back to old "data"
-        //! or maybe, should we give an option to choose other existing profiles?
-        QFile file(path);
-        if (!file.exists())
-        {
-            path = Settings::getSettingsDirPath() + QDir::separator() + CONFIG_FILE_NAME;
-        }
-#endif
-    }
-    if (!loadConfiguration(path))
+    if (!loadConfiguration(loadPath)) // loadPath is meaningless after this
 	{
         emit failedToStart();
         tox_kill(tox);
         tox = nullptr;
         return;
     }
+    loadPath = "";
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
@@ -1156,10 +1142,10 @@ void Core::saveConfiguration()
     
     QString path = dir + QDir::separator() + profile + TOX_EXT;
     QFileInfo info(path);
-    if (!info.exists()) // fall back to old school 'data'
-    {   //path = dir + QDir::separator() + CONFIG_FILE_NAME;
-        qDebug() << path << " does not exist";
-    }
+//    if (!info.exists()) // fall back to old school 'data'
+//    {   //path = dir + QDir::separator() + CONFIG_FILE_NAME;
+//        qDebug() << "Core:" << path << " does not exist";
+//    }
     
     saveConfiguration(path);
 }
