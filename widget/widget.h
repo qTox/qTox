@@ -98,7 +98,6 @@ private slots:
     void onGroupMessageReceived(int groupnumber, const QString& message, const QString& author);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void removeFriend(int friendId);
-    void clearFriends();
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
     void setStatusOnline();

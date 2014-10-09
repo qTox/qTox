@@ -137,7 +137,7 @@ Widget::Widget(QWidget *parent)
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
-    connect(core, &Core::clearFriends, this, &Widget::clearFriends);
+    connect(core, &Core::clearFriends, contactListWidget, &FriendListWidget::clear);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
@@ -635,12 +635,6 @@ void Widget::removeFriend(Friend* f)
 void Widget::removeFriend(int friendId)
 {
     removeFriend(FriendList::findFriend(friendId));
-}
-
-void Widget::clearFriends()
-{ // used for dynamic profile loading
-    for (Friend* f : FriendList::friendList)
-        removeFriend(f);
 }
 
 void Widget::copyFriendIdToClipboard(int friendId)
