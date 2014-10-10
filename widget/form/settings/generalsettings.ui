@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>527</width>
-    <height>369</height>
+    <height>397</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,6 +50,20 @@
        <widget class="QCheckBox" name="startInTray">
         <property name="text">
          <string>Start in tray</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="statusChangesCheckbox">
+        <property name="text">
+         <string>Show status changes</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="signInNotificationsCheckbox">
+        <property name="text">
+         <string>Notify me when contacts sign in</string>
         </property>
        </widget>
       </item>

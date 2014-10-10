@@ -135,6 +135,8 @@ void Settings::load()
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
+        statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
+        signInNotificationEnabled = s.value("signInNotificationEnabled", false).toBool();
     s.endGroup();
 
     s.beginGroup("State");
@@ -239,6 +241,8 @@ void Settings::save(QString path)
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("nativeStyle", useNativeStyle);
+        s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+        s.setValue("signInNotificationEnabled", signInNotificationEnabled);
     s.endGroup();
 
     s.beginGroup("State");
@@ -359,6 +363,26 @@ bool Settings::getAutostartInTray() const
 void Settings::setAutostartInTray(bool newValue)
 {
     autostartInTray = newValue;
+}
+
+bool Settings::getSignInNotificationEnabled() const
+{
+    return signInNotificationEnabled;
+}
+
+void Settings::setSignInNotificationEnabled(bool newValue)
+{
+    signInNotificationEnabled = newValue;
+}
+
+bool Settings::getStatusChangeNotificationEnabled() const
+{
+    return statusChangeNotificationEnabled;
+}
+
+void Settings::setStatusChangeNotificationEnabled(bool newValue)
+{
+    statusChangeNotificationEnabled = newValue;
 }
 
 bool Settings::getUseTranslations() const
