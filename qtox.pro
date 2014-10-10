@@ -30,7 +30,8 @@ FORMS    += \
     widget/form/settings/generalsettings.ui \
     widget/form/settings/avsettings.ui \
     widget/form/settings/identitysettings.ui \
-    widget/form/settings/privacysettings.ui
+    widget/form/settings/privacysettings.ui \
+    widget/form/loadhistorydialog.ui
 CONFIG   += c++11
 
 TRANSLATIONS = translations/de.ts \
@@ -134,7 +135,8 @@ HEADERS  += widget/form/addfriendform.h \
     widget/tool/chatactions/systemmessageaction.h \
     widget/tool/chatactions/actionaction.h \
     historykeeper.h \
-    widget/maskablepixmapwidget.h
+    widget/maskablepixmapwidget.h \
+    widget/form/loadhistorydialog.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -181,4 +183,5 @@ SOURCES += \
     widget/tool/chatactions/systemmessageaction.cpp \
     widget/tool/chatactions/actionaction.cpp \
     historykeeper.cpp \
-    widget/maskablepixmapwidget.cpp
+    widget/maskablepixmapwidget.cpp \
+    widget/form/loadhistorydialog.cpp

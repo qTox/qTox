@@ -37,6 +37,7 @@
 #include "widget/croppinglabel.h"
 #include "misc/style.h"
 #include "historykeeper.h"
+#include "loadhistorydialog.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -55,6 +56,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
     headTextLayout->setSpacing(0);
+
+    menu.addAction(tr("Load History..."), this, SLOT(onLoadHistory()));
 
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(Core::getInstance(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
@@ -528,4 +531,19 @@ void ChatForm::onAvatarRemoved(int FriendId)
         return;
 
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
+}
+
+void ChatForm::onLoadHistory()
+{
+    LoadHistoryDialog dlg;
+
+    if (dlg.exec())
+    {
+        QDateTime fromTime = dlg.getFromDate();
+        QDateTime toTime = dlg.getToDate();
+
+        auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, Core::getInstance()->getSelfId().publicKey,
+                                                                 f->userId, fromTime, toTime);
+        // do smth with messages
+    }
 }
