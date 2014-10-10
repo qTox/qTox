@@ -39,7 +39,9 @@ public:
 
     void addChatEntry(const QString& chat, const QString& message, const QString& sender);
     void addGroupChatEntry(const QString& chat, const QString& message, const QString& sender);
-    QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to = QDateTime::currentDateTimeUtc());
+    QList<HistMessage> getChatHistory(ChatType ct, const QString &profile, const QString &chat,
+                                      const QDateTime &time_from, const QDateTime &time_to = QDateTime::currentDateTimeUtc());
+    void syncToDisk();
 
 private:
 
@@ -51,12 +53,15 @@ private:
     void updateAliases();
     QPair<int, ChatType> getChatID(const QString &id_str, ChatType ct);
     int getAliasID(const QString &id_str);
+    int getCurrentProfileID();
     QString wrapMessage(const QString &str);
     QString unWrapMessage(const QString &str);
+    bool dumpDBtoFile(const QString &fname);
 
     QSqlDatabase db;
     QMap<QString, int> aliases;
     QMap<QString, QPair<int, ChatType>> chats;
+    bool isEncrypted;
 };
 
 #endif // HISTORYKEEPER_H

@@ -16,6 +16,7 @@
 
 #include "historykeeper.h"
 #include "misc/settings.h"
+#include "core.h"
 
 #include <QSqlError>
 #include <QFile>
@@ -23,6 +24,7 @@
 #include <QSqlQuery>
 #include <QVariant>
 #include <QDebug>
+#include <QTemporaryFile>
 
 static HistoryKeeper *historyInstance = nullptr;
 
@@ -45,12 +47,15 @@ HistoryKeeper *HistoryKeeper::getInstance()
     return historyInstance;
 }
 
-HistoryKeeper::HistoryKeeper(const QString &path, bool encr)
+HistoryKeeper::HistoryKeeper(const QString &path, bool encr) :
+    isEncrypted(encr)
 {
-    Q_UNUSED(encr)
-
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(path);
+    if (isEncrypted)
+        db.setDatabaseName(":memory:");
+    else
+        db.setDatabaseName(path);
+
     if (!db.open())
     {
         qWarning() << QString("Can't open file: %1, history will not be saved!").arg(path);
@@ -59,7 +64,7 @@ HistoryKeeper::HistoryKeeper(const QString &path, bool encr)
     }
 
     db.exec(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL, ") +
-            QString("chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, message TEXT NOT NULL);"));
+            QString("profile_id INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, message TEXT NOT NULL);"));
     db.exec(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
     db.exec(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
 
@@ -76,12 +81,18 @@ void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, co
 {
     int chat_id = getChatID(chat, ctSingle).first;
     int sender_id = getAliasID(sender);
+    int profile_id = getCurrentProfileID();
 
-    db.exec(QString("INSERT INTO history (chat_id, sender, message) VALUES (%1, %2, '%3');").arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
+    db.exec(QString("INSERT INTO history (profile_id, chat_id, sender, message) VALUES (%1, %2, %3, '%4');")
+            .arg(profile_id).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
 }
 
-QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to)
+QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::ChatType ct, const QString &profile,
+                                                                const QString &chat, const QDateTime &time_from,
+                                                                const QDateTime &time_to)
 {
+    Q_UNUSED(profile)
+
     QList<HistMessage> res;
 
     QString timeStr_from = time_from.toString("yyyy-MM-dd hh:mm:ss");
@@ -95,7 +106,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
         dbAnswer = db.exec(QString("SELECT timestamp, user_id, message FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
                            QString("AND timestamp BETWEEN '%1' AND '%2' AND chat_id = %3;").arg(timeStr_from).arg(timeStr_to).arg(chat_id));
     } else {
-        //
+        // no groupchats yet
     }
 
     while (dbAnswer.next())
@@ -192,4 +203,39 @@ void HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &messag
     Q_UNUSED(chat)
     Q_UNUSED(message)
     Q_UNUSED(sender)
+    // no groupchats yet
+}
+
+void HistoryKeeper::syncToDisk()
+{
+    if (!isEncrypted)
+        return;
+
+    QTemporaryFile tmpDump;
+    if (tmpDump.open())
+    {
+        QString fname = tmpDump.fileName();
+        if (!dumpDBtoFile(fname))
+        {
+            // warning
+            return;
+        }
+
+        // encryption there
+    } else
+    {
+        // warning
+    }
+}
+
+bool HistoryKeeper::dumpDBtoFile(const QString &fname)
+{
+    Q_UNUSED(fname)
+    return false;
+}
+
+int HistoryKeeper::getCurrentProfileID()
+{
+    // for many profiles
+    return getAliasID(Core::getInstance()->getSelfId().publicKey);
 }
