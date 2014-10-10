@@ -230,9 +230,17 @@ QString Widget::detectProfile()
         QFile file(path);
         if (file.exists())
             return path;
+        else if (QFile(path = dir.filePath("tox_save")).exists()) // also import tox_save if no data
+            return path;
         else
 #endif
-            return dir.filePath(askProfiles() + Core::TOX_EXT);
+        {
+            profile = askProfiles();
+            if (profile != "")
+                return dir.filePath(profile + Core::TOX_EXT);
+            else
+                return "";
+        }
     }
     else
         return path;
@@ -250,8 +258,9 @@ QList<QString> Widget::searchProfiles()
 }
 
 QString Widget::askProfiles()
-{
+{   // TODO: allow user to create new Tox ID, even if a profile already exists
     QList<QString> profiles = searchProfiles();
+    if (profiles.empty()) return "";
     bool ok;
     QString profile = QInputDialog::getItem(this, 
                                             tr("Choose a profile"),

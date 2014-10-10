@@ -213,14 +213,17 @@ void Core::start()
 
     qsrand(time(nullptr));
 
-    if (!loadConfiguration(loadPath)) // loadPath is meaningless after this
-	{
-        emit failedToStart();
-        tox_kill(tox);
-        tox = nullptr;
-        return;
+    if (loadPath != "")
+    {
+        if (!loadConfiguration(loadPath)) // loadPath is meaningless after this
+	    {
+            emit failedToStart();
+            tox_kill(tox);
+            tox = nullptr;
+            return;
+        }
+        loadPath = "";
     }
-    loadPath = "";
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
