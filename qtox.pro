@@ -20,7 +20,7 @@
 #    See the COPYING file for more details.
 
 
-QT       += core gui network xml
+QT       += core gui network xml opengl
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET    = qtox
@@ -68,7 +68,7 @@ win32 {
 	    LIBS += -Wl,-Bdynamic -ltbb -lv4l1 -lv4l2 -lgnutls -lrtmp -lgnutls -lavformat -lavcodec -lavutil -lavfilter -lswscale -lusb-1.0
 
         } else {
-            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
+            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
         }
 
         contains(JENKINS, YES) {
@@ -111,7 +111,6 @@ HEADERS  += widget/form/addfriendform.h \
     friendlist.h \
     misc/cdata.h \
     misc/cstring.h \
-    widget/selfcamview.h \
     widget/camera.h \
     widget/netcamview.h \
     misc/smileypack.h \
@@ -132,7 +131,10 @@ HEADERS  += widget/form/addfriendform.h \
     widget/tool/chatactions/filetransferaction.h \
     widget/tool/chatactions/systemmessageaction.h \
     widget/tool/chatactions/actionaction.h \
-    widget/maskablepixmapwidget.h
+    widget/maskablepixmapwidget.h \
+    videosource.h \
+    cameraworker.h \
+    widget/videosurface.h
 
 SOURCES += \
     widget/form/addfriendform.cpp \
@@ -158,7 +160,6 @@ SOURCES += \
     misc/settings.cpp \
     misc/cdata.cpp \
     misc/cstring.cpp \
-    widget/selfcamview.cpp \
     widget/camera.cpp \
     widget/netcamview.cpp \
     misc/smileypack.cpp \
@@ -178,4 +179,6 @@ SOURCES += \
     widget/tool/chatactions/filetransferaction.cpp \
     widget/tool/chatactions/systemmessageaction.cpp \
     widget/tool/chatactions/actionaction.cpp \
-    widget/maskablepixmapwidget.cpp
+    widget/maskablepixmapwidget.cpp \
+    cameraworker.cpp \
+    widget/videosurface.cpp

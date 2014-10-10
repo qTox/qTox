@@ -85,7 +85,7 @@ void IdentityForm::onStatusMessageEdited()
     Core::getInstance()->setStatusMessage(bodyUI->statusMessage->text());
 }
 
-void IdentityForm::updateContent()
+void IdentityForm::present()
 {
     toxId->setText(Core::getInstance()->getSelfId().toString());
     toxId->setCursorPosition(0);

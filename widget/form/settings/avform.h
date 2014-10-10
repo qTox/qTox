@@ -18,7 +18,7 @@
 #define AVFORM_H
 
 #include "genericsettings.h"
-#include "widget/selfcamview.h"
+#include "widget/videosurface.h"
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -33,20 +33,21 @@ class AVForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AVForm(Camera* cam);
+    AVForm();
     ~AVForm();
+    virtual void present();
 
 private slots:
-    void onTestVideoPressed();
+
+    void on_ContrastSlider_sliderMoved(int position);
+    void on_SaturationSlider_sliderMoved(int position);
+    void on_BrightnessSlider_sliderMoved(int position);
+    void on_HueSlider_sliderMoved(int position);
+    void on_videoModescomboBox_currentIndexChanged(const QString &arg1);
 
 private:
     Ui::AVSettings *bodyUI;
-
-    SelfCamView* camView;
-    
-    void showTestVideo();
-    void closeTestVideo();
-       
+    VideoSurface* camView;
 };
 
 #endif

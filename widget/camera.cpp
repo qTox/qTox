@@ -16,68 +16,72 @@
 
 #include "camera.h"
 #include "widget.h"
+#include "cameraworker.h"
+#include <QDebug>
+#include <QThread>
 
-using namespace cv;
+Camera* Camera::instance = nullptr;
 
 Camera::Camera()
-    : refcount{0}
+    : refcount(0)
+    , workerThread(nullptr)
+    , worker(nullptr)
 {
+    worker = new CameraWorker(0);
+    workerThread = new QThread();
+
+    worker->moveToThread(workerThread);
+
+    connect(workerThread, &QThread::started, worker, &CameraWorker::onStart);
+    connect(workerThread, &QThread::finished, worker, &CameraWorker::deleteLater);
+    connect(workerThread, &QThread::deleteLater, worker, &CameraWorker::deleteLater);
+    connect(worker, &CameraWorker::started, this, &Camera::onWorkerStarted);
+    connect(worker, &CameraWorker::newFrameAvailable, this, &Camera::onNewFrameAvailable);
+    connect(worker, &CameraWorker::resProbingFinished, this, &Camera::onResProbingFinished);
+    workerThread->start();
 }
 
-void Camera::suscribe()
+void Camera::onWorkerStarted()
+{
+    worker->probeResolutions();
+}
+
+Camera::~Camera()
+{
+    workerThread->exit();
+    workerThread->deleteLater();
+}
+
+void Camera::subscribe()
 {
     if (refcount <= 0)
-    {
-        refcount = 1;
-        cam.open(0);
-    }
-    else
-        refcount++;
+        worker->resume();
+
+    refcount++;
 }
 
-void Camera::unsuscribe()
+void Camera::unsubscribe()
 {
     refcount--;
 
     if (refcount <= 0)
     {
-        cam.release();
+        worker->suspend();
         refcount = 0;
     }
 }
 
-Mat Camera::getLastFrame()
-{
-    Mat frame;
-    cam >> frame;
-    return frame;
-}
-
-QImage Camera::getLastImage()
-{
-    Mat3b src = getLastFrame();
-    QImage dest(src.cols, src.rows, QImage::Format_ARGB32);
-    for (int y = 0; y < src.rows; ++y)
-    {
-            const cv::Vec3b *srcrow = src[y];
-            QRgb *destrow = (QRgb*)dest.scanLine(y);
-            for (int x = 0; x < src.cols; ++x)
-                    destrow[x] = qRgba(srcrow[x][2], srcrow[x][1], srcrow[x][0], 255);
-    }
-    return dest;
-}
-
 vpx_image Camera::getLastVPXImage()
 {
-    Mat3b frame = getLastFrame();
+    lock();
     vpx_image img;
-    int w = frame.size().width, h = frame.size().height;
+    int w = currFrame.size().width, h = currFrame.size().height;
     vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched
 
     size_t i=0, j=0;
     for( int line = 0; line < h; ++line )
     {
-        const cv::Vec3b *srcrow = frame[line];
+        const cv::Vec3b *srcrow = currFrame[line];
         if( !(line % 2) )
         {
             for( int x = 0; x < w; x += 2 )
@@ -112,10 +116,123 @@ vpx_image Camera::getLastVPXImage()
             }
         }
     }
+    unlock();
     return img;
+}
+
+QList<QSize> Camera::getSupportedResolutions()
+{
+    return resolutions;
+}
+
+QSize Camera::getBestVideoMode()
+{
+    int bestScore = 0;
+    QSize bestRes;
+
+    for (QSize res : getSupportedResolutions())
+    {
+        int score = res.width() * res.height();
+
+        if (score > bestScore)
+        {
+            bestScore = score;
+            bestRes = res;
+        }
+    }
+
+    return bestRes;
+}
+
+void Camera::setResolution(QSize res)
+{
+    worker->setProp(CV_CAP_PROP_FRAME_WIDTH, res.width());
+    worker->setProp(CV_CAP_PROP_FRAME_HEIGHT, res.height());
+}
+
+QSize Camera::getResolution()
+{
+    return QSize(worker->getProp(CV_CAP_PROP_FRAME_WIDTH), worker->getProp(CV_CAP_PROP_FRAME_HEIGHT));
+}
+
+void Camera::setProp(Camera::Prop prop, double val)
+{
+    switch (prop)
+    {
+    case BRIGHTNESS:
+        worker->setProp(CV_CAP_PROP_BRIGHTNESS, val);
+        break;
+    case SATURATION:
+        worker->setProp(CV_CAP_PROP_SATURATION, val);
+        break;
+    case CONTRAST:
+        worker->setProp(CV_CAP_PROP_CONTRAST, val);
+        break;
+    case HUE:
+        worker->setProp(CV_CAP_PROP_HUE, val);
+        break;
+    }
+}
+
+double Camera::getProp(Camera::Prop prop)
+{
+    switch (prop)
+    {
+    case BRIGHTNESS:
+        return worker->getProp(CV_CAP_PROP_BRIGHTNESS);
+    case SATURATION:
+        return worker->getProp(CV_CAP_PROP_SATURATION);
+    case CONTRAST:
+        return worker->getProp(CV_CAP_PROP_CONTRAST);
+    case HUE:
+        return worker->getProp(CV_CAP_PROP_HUE);
+    }
+
+    return 0.0;
+}
+
+void Camera::onNewFrameAvailable()
+{
+    emit frameAvailable();
+}
+
+void Camera::onResProbingFinished(QList<QSize> res)
+{
+    resolutions = res;
+}
+
+void *Camera::getData()
+{
+    return currFrame.data;
+}
+
+int Camera::getDataSize()
+{
+    return currFrame.total() * currFrame.channels();
+}
+
+void Camera::lock()
+{
+    mutex.lock();
+
+    if (worker->hasFrame())
+        currFrame = worker->dequeueFrame();
+}
+
+void Camera::unlock()
+{
+    mutex.unlock();
+}
+
+QSize Camera::resolution()
+{
+    return QSize(currFrame.cols, currFrame.rows);
 }
 
 Camera* Camera::getInstance()
 {
-    return Widget::getInstance()->getCamera();
+    if (!instance)
+        instance = new Camera();
+
+    return instance;
 }

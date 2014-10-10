@@ -25,7 +25,7 @@
 #include <QTabBar>
 #include <QStackedWidget>
 
-SettingsWidget::SettingsWidget(Camera* cam, QWidget* parent)
+SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent)
 {
     body = new QWidget(this);
@@ -55,7 +55,7 @@ SettingsWidget::SettingsWidget(Camera* cam, QWidget* parent)
     GeneralForm *gfrm = new GeneralForm;
     ifrm = new IdentityForm;
     PrivacyForm *pfrm = new PrivacyForm;
-    AVForm *avfrm = new AVForm(cam);
+    AVForm *avfrm = new AVForm;
 
     GenericForm *cfgForms[] = {gfrm, ifrm, pfrm, avfrm};
     for (auto cfgForm : cfgForms)
@@ -85,8 +85,8 @@ void SettingsWidget::show(Ui::MainWindow& ui)
 void SettingsWidget::onTabChanged(int index)
 {
     this->settingsWidgets->setCurrentIndex(index);
-    GenericForm *currentWidget = static_cast<GenericForm*>(this->settingsWidgets->widget(index));
-    currentWidget->updateContent();
+    GenericForm* currentWidget = static_cast<GenericForm*>(this->settingsWidgets->widget(index));
+    currentWidget->present();
     nameLabel->setText(currentWidget->getFormName());
     imgLabel->setPixmap(currentWidget->getFormIcon().scaledToHeight(40, Qt::SmoothTransformation));
 }

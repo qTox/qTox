@@ -1,8 +1,8 @@
 /*
     Copyright (C) 2013 by Maxim Biro <nurupo.contributions@gmail.com>
-    
+
     This file is part of Tox Qt GUI.
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -10,7 +10,7 @@
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    
+
     See the COPYING file for more details.
 */
 
@@ -110,6 +110,7 @@ void Settings::load()
         enableIPv6 = s.value("enableIPv6", true).toBool();
         useTranslations = s.value("useTranslations", true).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
+        autostartInTray = s.value("autostartInTray", false).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         useProxy = s.value("useProxy", false).toBool();
         proxyAddr = s.value("proxyAddr", "").toString();
@@ -214,6 +215,7 @@ void Settings::save(QString path)
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("useTranslations",useTranslations);
         s.setValue("makeToxPortable",makeToxPortable);
+        s.setValue("autostartInTray",autostartInTray);
         s.setValue("useProxy", useProxy);
         s.setValue("forceTCP", forceTCP);
         s.setValue("proxyAddr", proxyAddr);
@@ -351,14 +353,14 @@ void Settings::setMakeToxPortable(bool newValue)
         save();
 }
 
-QString Settings::getCurrentProfile() const
+bool Settings::getAutostartInTray() const
 {
-    return currentProfile;
+    return autostartInTray;
 }
 
-void Settings::setCurrentProfile(QString profile)
+void Settings::setAutostartInTray(bool newValue)
 {
-    currentProfile = profile;
+    autostartInTray = newValue;
 }
 
 bool Settings::getUseTranslations() const
@@ -408,6 +410,16 @@ int Settings::getProxyPort() const
 void Settings::setProxyPort(int newValue)
 {
     proxyPort = newValue;
+}
+
+QString Settings::getCurrentProfile() const
+{
+    return currentProfile;
+}
+
+void Settings::setCurrentProfile(QString profile)
+{
+    currentProfile = profile;
 }
 
 bool Settings::getEnableLogging() const

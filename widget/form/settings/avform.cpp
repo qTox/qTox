@@ -18,17 +18,16 @@
 #include "widget/camera.h"
 #include "ui_avsettings.h"
 
-AVForm::AVForm(Camera* cam) :
+AVForm::AVForm() :
     GenericForm(tr("Audio/Video settings"), QPixmap(":/img/settings/av.png"))
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
-    camView = new SelfCamView(cam, this);
-    bodyUI->videoGroup->layout()->addWidget(camView);
-    camView->hide(); // hide by default
+    //cam->setVideoMode(cam->getBestVideoMode());
+    camView = new VideoSurface(Camera::getInstance(), this);
 
-    connect(bodyUI->testVideoBtn, &QPushButton::clicked, this, &AVForm::onTestVideoPressed);
+    bodyUI->CamViewLayout->addWidget(camView);
 }
 
 AVForm::~AVForm()
@@ -36,22 +35,44 @@ AVForm::~AVForm()
     delete bodyUI;
 }
 
-void AVForm::showTestVideo()
+void AVForm::present()
 {
-    bodyUI->testVideoBtn->setText(tr("Hide video preview","On a button"));
-    camView->show();
+    bodyUI->videoModescomboBox->clear();
+    QList<QSize> res = Camera::getInstance()->getSupportedResolutions();
+    for (QSize r : res)
+        bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())));
+
+    bodyUI->ContrastSlider->setValue(Camera::getInstance()->getProp(Camera::CONTRAST)*100);
+    bodyUI->BrightnessSlider->setValue(Camera::getInstance()->getProp(Camera::BRIGHTNESS)*100);
+    bodyUI->SaturationSlider->setValue(Camera::getInstance()->getProp(Camera::SATURATION)*100);
+    bodyUI->HueSlider->setValue(Camera::getInstance()->getProp(Camera::HUE)*100);
 }
 
-void AVForm::closeTestVideo()
+void AVForm::on_ContrastSlider_sliderMoved(int position)
 {
-    bodyUI->testVideoBtn->setText(tr("Show video preview","On a button"));
-    camView->close();
+    Camera::getInstance()->setProp(Camera::CONTRAST, position / 100.0);
 }
 
-void AVForm::onTestVideoPressed()
+void AVForm::on_SaturationSlider_sliderMoved(int position)
 {
-    if (camView->isVisible())
-        closeTestVideo();
-    else
-        showTestVideo();
+    Camera::getInstance()->setProp(Camera::SATURATION, position / 100.0);
+}
+
+void AVForm::on_BrightnessSlider_sliderMoved(int position)
+{
+    Camera::getInstance()->setProp(Camera::BRIGHTNESS, position / 100.0);
+}
+
+void AVForm::on_HueSlider_sliderMoved(int position)
+{
+    Camera::getInstance()->setProp(Camera::HUE, position / 100.0);
+}
+
+void AVForm::on_videoModescomboBox_currentIndexChanged(const QString &arg1)
+{
+    QStringList resStr = arg1.split("x");
+    int w = resStr[0].toInt();
+    int h = resStr[0].toInt();
+
+    Camera::getInstance()->setResolution(QSize(w,h));
 }

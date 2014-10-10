@@ -1,8 +1,8 @@
 /*
     Copyright (C) 2013 by Maxim Biro <nurupo.contributions@gmail.com>
-    
+
     This file is part of Tox Qt GUI.
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -10,7 +10,7 @@
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    
+
     See the COPYING file for more details.
 */
 
@@ -49,6 +49,9 @@ public:
     bool getMakeToxPortable() const;
     void setMakeToxPortable(bool newValue);
 
+    bool getAutostartInTray() const;
+    void setAutostartInTray(bool newValue);
+
     QString getCurrentProfile() const;
     void setCurrentProfile(QString profile);
 
@@ -57,7 +60,7 @@ public:
 
     bool getForceTCP() const;
     void setForceTCP(bool newValue);
-    
+
     QString getProxyAddr() const;
     void setProxyAddr(const QString& newValue);
 
@@ -168,7 +171,8 @@ private:
     bool enableIPv6;
     bool useTranslations;
     static bool makeToxPortable;
-    
+    bool autostartInTray;
+
     bool forceTCP;
 
     bool useProxy;
