@@ -31,13 +31,14 @@ GeneralForm::GeneralForm() :
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     bodyUI->cbUseTranslations->setChecked(Settings::getInstance().getUseTranslations());
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
+    bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
 
     for (auto entry : SmileyPack::listSmileyPacks())
     {
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
     }
     bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
-    
+
     bodyUI->cbUDPDisabled->setChecked(Settings::getInstance().getForceTCP());
     bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
     int port = Settings::getInstance().getProxyPort();
@@ -46,10 +47,11 @@ GeneralForm::GeneralForm() :
 
     bodyUI->cbUseProxy->setChecked(Settings::getInstance().getUseProxy());
     onUseProxyUpdated();
-    
+
     connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
     connect(bodyUI->cbUseTranslations, &QCheckBox::stateChanged, this, &GeneralForm::onUseTranslationUpdated);
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
+    connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     // new syntax can't handle overloaded signals... (at least not in a pretty way)
     connect(bodyUI->cbUDPDisabled, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
@@ -76,6 +78,11 @@ void GeneralForm::onUseTranslationUpdated()
 void GeneralForm::onMakeToxPortableUpdated()
 {
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
+}
+
+void GeneralForm::onSetAutostartInTray()
+{
+    Settings::getInstance().setAutostartInTray(bodyUI->startInTray->isChecked());
 }
 
 void GeneralForm::onSmileyBrowserIndexChanged(int index)

@@ -344,6 +344,14 @@ void Widget::onTransferClicked()
     activeChatroomWidget = nullptr;
 }
 
+void Widget::onIconClick()
+{
+    if(this->isHidden() == true)
+        this->show();
+    else
+        this->hide();
+}
+
 void Widget::onSettingsClicked()
 {
     hideMainForms();
