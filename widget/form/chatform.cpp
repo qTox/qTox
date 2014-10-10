@@ -90,6 +90,7 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
     QString name = Widget::getInstance()->getUsername();
+    HistoryKeeper::getInstance()->addChatEntry(f->userId, msg, Core::getInstance()->getSelfId().publicKey);
     if (msg.startsWith("/me "))
     {
         msg = msg.right(msg.length() - 4);
@@ -102,8 +103,6 @@ void ChatForm::onSendTriggered()
         emit sendMessage(f->friendId, msg);
     }
     msgEdit->clear();
-
-    HistoryKeeper::getInstance()->addChatEntry(f->userId, msg, Core::getInstance()->getSelfId().publicKey);
 }
 
 void ChatForm::onAttachClicked()
@@ -540,10 +539,52 @@ void ChatForm::onLoadHistory()
     if (dlg.exec())
     {
         QDateTime fromTime = dlg.getFromDate();
-        QDateTime toTime = dlg.getToDate();
+        QDateTime toTime = QDateTime::currentDateTime();
+
+        if (fromTime > toTime)
+            return;
+
+        if (earliestMessage)
+        {
+            if (*earliestMessage < fromTime)
+                return;
+            if (*earliestMessage < toTime)
+                toTime = *earliestMessage;
+        }
+
+        fromTime = fromTime.toUTC();
+        toTime = toTime.toUTC();
 
         auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, Core::getInstance()->getSelfId().publicKey,
                                                                  f->userId, fromTime, toTime);
-        // do smth with messages
+
+        QString storedPrevName = previousName;
+        previousName = "";
+        QList<ChatAction*> historyMessages;
+
+        for (const auto &it : msgs)
+        {
+            bool isAction = false;
+            QString name = f->getName();
+            if (it.sender == Core::getInstance()->getSelfId().publicKey)
+                name = Core::getInstance()->getUsername();
+
+            ChatAction *ca = genMessageActionAction(name, it.message, isAction, it.timestamp.toLocalTime());
+            historyMessages.append(ca);
+        }
+        previousName = storedPrevName;
+
+        for (ChatAction *ca : chatWidget->getMesages())
+            historyMessages.append(ca);
+
+        int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
+        chatWidget->getMesages().clear();
+        chatWidget->clear();
+
+        for (ChatAction *ca : historyMessages)
+            chatWidget->insertMessage(ca);
+
+        savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
+        chatWidget->verticalScrollBar()->setValue(savedSliderPos);
     }
 }

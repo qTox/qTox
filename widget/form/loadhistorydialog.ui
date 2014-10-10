@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
+    <width>347</width>
     <height>264</height>
    </rect>
   </property>
@@ -15,40 +15,18 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <layout class="QVBoxLayout" name="fromLayout">
-       <item>
-        <widget class="QLabel" name="fromLabel">
-         <property name="text">
-          <string>From Date</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCalendarWidget" name="fromDate">
-         <property name="gridVisible">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="toLayout">
-       <item>
-        <widget class="QLabel" name="toLabel">
-         <property name="text">
-          <string>To Date</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCalendarWidget" name="toDate"/>
-       </item>
-      </layout>
-     </item>
-    </layout>
+    <widget class="QLabel" name="fromLabel">
+     <property name="text">
+      <string>From Date</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCalendarWidget" name="fromDate">
+     <property name="gridVisible">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

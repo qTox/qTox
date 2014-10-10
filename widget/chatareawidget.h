@@ -30,6 +30,8 @@ public:
     explicit ChatAreaWidget(QWidget *parent = 0);
     virtual ~ChatAreaWidget();
     void insertMessage(ChatAction *msgAction);
+    QList<ChatAction*>& getMesages() {return messages;}
+    void rerenderContent();
 
     int nameColWidth() {return nameWidth;}
     void setNameColWidth(int w);

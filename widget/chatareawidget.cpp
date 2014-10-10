@@ -147,6 +147,7 @@ QTextTable *ChatAreaWidget::getMsgTable()
 
     QTextCursor tc = textCursor();
     tc.movePosition(QTextCursor::End);
+
     QTextTable *chatTextTable = tc.insertTable(1, 5, *tableFrmt);
 
     return chatTextTable;
@@ -182,4 +183,9 @@ void ChatAreaWidget::clearChatArea()
     {
         insertMessage(message);
     }
+}
+
+void ChatAreaWidget::rerenderContent()
+{
+
 }

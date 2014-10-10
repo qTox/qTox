@@ -35,12 +35,12 @@ void SystemMessageAction::setup(QTextCursor cursor, QTextEdit *)
     // Except we never udpate on our own, so we can safely free our resources
 
     (void) cursor;
-    message.clear();
-    message.squeeze();
-    name.clear();
-    name.squeeze();
-    date.clear();
-    date.squeeze();
-    type.clear();
-    type.squeeze();
+//    message.clear();
+//    message.squeeze();
+//    name.clear();
+//    name.squeeze();
+//    date.clear();
+//    date.squeeze();
+//    type.clear();
+//    type.squeeze();
 }

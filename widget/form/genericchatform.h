@@ -32,6 +32,7 @@ class CroppingLabel;
 class ChatTextEdit;
 class ChatAreaWidget;
 class MaskablePixmapWidget;
+class ChatAction;
 
 namespace Ui {
     class MainWindow;
@@ -45,7 +46,8 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    void addMessage(QString author, QString message, bool isAction = false, QDateTime datetime=QDateTime::currentDateTime());
+    void addMessage(const QString &author, const QString &message, bool isAction = false,
+                    const QDateTime &datetime=QDateTime::currentDateTime());
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime=QDateTime::currentDateTime());
 
 signals:
@@ -60,10 +62,14 @@ protected slots:
     void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
-    void clearChatArea();
+    void clearChatArea(bool);
 
 protected:
     QString getElidedName(const QString& name);
+    ChatAction* genMessageActionAction(const QString &author, QString message, bool isAction = false,
+                                       const QDateTime &datetime=QDateTime::currentDateTime());
+    ChatAction* genSystemInfoAction(const QString &message, const QString &type,
+                                    const QDateTime &datetime=QDateTime::currentDateTime());
 
     QMenu menu;
     CroppingLabel *nameLabel;
@@ -76,6 +82,7 @@ protected:
     QString previousName;
     ChatAreaWidget *chatWidget;
     int curRow;
+    QDateTime *earliestMessage;
 };
 
 #endif // GENERICCHATFORM_H

@@ -79,11 +79,11 @@ void FileTransferAction::updateHtml()
     if (w->getState() == FileTransferInstance::TransfState::tsCanceled
             || w->getState() == FileTransferInstance::TransfState::tsFinished)
     {
-        name.clear();
-        name.squeeze();
-        date.clear();
-        date.squeeze();
-        cur = QTextCursor();
+//        name.clear();
+//        name.squeeze();
+//        date.clear();
+//        date.squeeze();
+//        cur = QTextCursor();
     }
 }
 

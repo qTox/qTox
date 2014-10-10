@@ -33,7 +33,6 @@ public:
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();
-    QDateTime getToDate();
 
 private:
     Ui::LoadHistoryDialog *ui;

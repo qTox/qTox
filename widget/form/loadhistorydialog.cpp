@@ -34,9 +34,3 @@ QDateTime LoadHistoryDialog::getFromDate()
     QDateTime res(ui->fromDate->selectedDate());
     return res;
 }
-
-QDateTime LoadHistoryDialog::getToDate()
-{
-    QDateTime res(ui->toDate->selectedDate().addDays(1));
-    return res;
-}
