@@ -86,3 +86,14 @@ void FileTransferAction::updateHtml()
         cur = QTextCursor();
     }
 }
+
+bool FileTransferAction::isInteractive()
+{
+    if (w->getState() == FileTransferInstance::TransfState::tsCanceled
+            || w->getState() == FileTransferInstance::TransfState::tsFinished)
+    {
+        return false;
+    }
+
+    return true;
+}

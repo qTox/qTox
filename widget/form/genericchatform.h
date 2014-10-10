@@ -60,6 +60,7 @@ protected slots:
     void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
+    void clearChatArea();
 
 protected:
     QString getElidedName(const QString& name);

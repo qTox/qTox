@@ -34,6 +34,9 @@ public:
     int nameColWidth() {return nameWidth;}
     void setNameColWidth(int w);
 
+public slots:
+    void clearChatArea();
+
 signals:
     void onFileTranfertInterract(QString widgetName, QString buttonName);
 

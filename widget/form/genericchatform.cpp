@@ -124,6 +124,8 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
+    menu.addAction(tr("Clear displayed messages"), this, SLOT(clearChatArea()));
+    menu.addSeparator();
 
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
@@ -238,4 +240,11 @@ QString GenericChatForm::getElidedName(const QString& name)
     QFontMetrics fm(Style::getFont(Style::BigBold));
 
     return fm.elidedText(name, Qt::ElideRight, chatWidget->nameColWidth());
+}
+
+void GenericChatForm::clearChatArea()
+{
+    chatWidget->clearChatArea();
+    previousName = "";
+    addSystemInfoMessage(tr("Cleared"), "green");
 }
