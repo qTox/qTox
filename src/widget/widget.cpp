@@ -153,7 +153,7 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
-    connect(core, &Core::friendSignedIn, this, &Widget::onFriendBecameOnline);    
+    connect(core, &Core::friendSignedIn, this, &Widget::onFriendSignIn);    
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
     connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
@@ -557,7 +557,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
         f->chatForm->addSystemInfoMessage(f->getName() + " has changed status to " + fStatus, "white");
 }
 
-void Widget::onFriendBecameOnline(int friendId, Status status)
+void Widget::onFriendSignIn(int friendId, Status status)
 {
     Friend* f = FriendList::findFriend(friendId);
     if (!f)
