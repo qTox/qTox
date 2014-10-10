@@ -34,7 +34,7 @@ class GenericChatroomWidget;
 class Group;
 struct Friend;
 class QSplitter;
-class SelfCamView;
+class VideoSurface;
 class QMenu;
 class Core;
 class Camera;
@@ -124,7 +124,6 @@ private:
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
-    Camera* camera;
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
 };
