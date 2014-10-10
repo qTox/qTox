@@ -50,7 +50,7 @@ public:
     void setUserName(const QString &name);
     void setStatusMessage(const QString &msg);
 
-    virtual void updateContent();
+    virtual void present();
 
 signals:
     void userNameChanged(QString);

@@ -20,7 +20,7 @@
 #    See the COPYING file for more details.
 
 
-QT       += core gui network xml
+QT       += core gui network xml opengl
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET    = qtox
@@ -36,6 +36,7 @@ TRANSLATIONS = translations/de.ts \
                translations/fr.ts \
                translations/it.ts \
                translations/ru.ts \
+               translations/pirate.ts \
                translations/pl.ts \
                translations/fi.ts \
                translations/mannol.ts \
@@ -67,7 +68,7 @@ win32 {
 	    LIBS += -Wl,-Bdynamic -ltbb -lv4l1 -lv4l2 -lgnutls -lrtmp -lgnutls -lavformat -lavcodec -lavutil -lavfilter -lswscale -lusb-1.0
 
         } else {
-            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui
+            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
         }
 
         contains(JENKINS, YES) {
@@ -110,7 +111,6 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/friendlist.h \
     src/misc/cdata.h \
     src/misc/cstring.h \
-    src/widget/selfcamview.h \
     src/widget/camera.h \
     src/widget/netcamview.h \
     src/misc/smileypack.h \
@@ -131,7 +131,10 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/tool/chatactions/filetransferaction.h \
     src/widget/tool/chatactions/systemmessageaction.h \
     src/widget/tool/chatactions/actionaction.h \
-    src/widget/maskablepixmapwidget.h
+    src/widget/maskablepixmapwidget.h \
+    src/videosource.h \
+    src/cameraworker.h \
+    src/widget/videosurface.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -157,7 +160,6 @@ SOURCES += \
     src/misc/settings.cpp \
     src/misc/cdata.cpp \
     src/misc/cstring.cpp \
-    src/widget/selfcamview.cpp \
     src/widget/camera.cpp \
     src/widget/netcamview.cpp \
     src/misc/smileypack.cpp \
@@ -177,4 +179,6 @@ SOURCES += \
     src/widget/tool/chatactions/filetransferaction.cpp \
     src/widget/tool/chatactions/systemmessageaction.cpp \
     src/widget/tool/chatactions/actionaction.cpp \
-    src/widget/maskablepixmapwidget.cpp
+    src/widget/maskablepixmapwidget.cpp \
+    src/cameraworker.cpp \
+    src/widget/videosurface.cpp

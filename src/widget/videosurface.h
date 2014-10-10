@@ -17,39 +17,42 @@
 #ifndef SELFCAMVIEW_H
 #define SELFCAMVIEW_H
 
-#include <QWidget>
+#include <QGLWidget>
 
-class QCloseEvent;
-class QShowEvent;
-class QPainter;
-class Camera;
-class QLabel;
-class QHBoxLayout;
+class QOpenGLBuffer;
+class QOpenGLShaderProgram;
 class QTimer;
+class VideoSource;
 
-class SelfCamView : public QWidget
+class VideoSurface : public QGLWidget
 {
     Q_OBJECT
 
 public:
-    SelfCamView(Camera* Cam, QWidget *parent=0);
+    VideoSurface(VideoSource* source, QWidget* parent=0);
+    ~VideoSurface();
 
-private slots:
-    void updateDisplay();
+    virtual void hideEvent(QHideEvent* ev);
+    virtual void showEvent(QShowEvent* ev);
 
-private:
-    void closeEvent(QCloseEvent*);
-    void showEvent(QShowEvent*);
-    void paint(QPainter *painter);
-
+    // QGLWidget interface
 protected:
-    void resizeEvent(QResizeEvent *e);
+    virtual void initializeGL();
+    virtual void paintGL();
+    virtual void updateGL();
+
+    void update();
 
 private:
-    QLabel *displayLabel;
-    QHBoxLayout* mainLayout;
-    Camera* cam;
-    QTimer* updateDisplayTimer;
+    VideoSource* source;
+    QOpenGLBuffer* pbo;
+    QOpenGLShaderProgram* program;
+    GLuint textureId;
+    int pboAllocSize;
+    QSize res;
+    bool uploadFrame;
+    bool hasSubscribed;
+
 };
 
 #endif // SELFCAMVIEW_H

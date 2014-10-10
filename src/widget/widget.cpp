@@ -27,7 +27,6 @@
 #include "groupwidget.h"
 #include "form/groupchatform.h"
 #include "src/misc/style.h"
-#include "selfcamview.h"
 #include "friendlistwidget.h"
 #include "camera.h"
 #include "form/chatform.h"
@@ -102,8 +101,7 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->setProperty("status", "offline");
     Style::repolish(ui->statusButton);
 
-    camera = new Camera;
-    settingsWidget = new SettingsWidget(camera);
+    settingsWidget = new SettingsWidget();
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -119,7 +117,7 @@ Widget::Widget(QWidget *parent)
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
     coreThread = new QThread(this);
-    core = new Core(camera, coreThread);
+    core = new Core(Camera::getInstance(), coreThread);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
 
@@ -145,6 +143,7 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
+    connect(core, &Core::avInvite, this, &Widget::playRingtone);
 
     connect(core, SIGNAL(messageSentResult(int,QString,int)), this, SLOT(onMessageSendResult(int,QString,int)));
     connect(core, SIGNAL(groupSentResult(int,QString,int)), this, SLOT(onGroupSendResult(int,QString,int)));
@@ -215,11 +214,6 @@ void Widget::closeEvent(QCloseEvent *event)
 QString Widget::getUsername()
 {
     return core->getUsername();
-}
-
-Camera* Widget::getCamera()
-{
-    return camera;
 }
 
 void Widget::onAvatarClicked()
@@ -341,6 +335,14 @@ void Widget::onTransferClicked()
     hideMainForms();
     filesForm.show(*ui);
     activeChatroomWidget = nullptr;
+}
+
+void Widget::onIconClick()
+{
+    if(this->isHidden() == true)
+        this->show();
+    else
+        this->hide();
 }
 
 void Widget::onSettingsClicked()
@@ -531,6 +533,26 @@ void Widget::newMessageAlert()
     ALuint buffer;
     alGenBuffers(1, &buffer);
     alBufferData(buffer, AL_FORMAT_MONO16, sndData.data(), sndData.size(), 44100);
+    alSourcei(core->alMainSource, AL_BUFFER, buffer);
+    alSourcePlay(core->alMainSource);
+}
+
+void Widget::playRingtone()
+{
+    QApplication::alert(this);
+
+    static QFile sndFile1(":audio/ToxicIncomingCall.pcm"); // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
+    static QByteArray sndData1;
+    if (sndData1.isEmpty())
+    {
+        sndFile1.open(QIODevice::ReadOnly);
+        sndData1 = sndFile1.readAll();
+        sndFile1.close();
+    }
+
+    ALuint buffer;
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, AL_FORMAT_MONO16, sndData1.data(), sndData1.size(), 44100);
     alSourcei(core->alMainSource, AL_BUFFER, buffer);
     alSourcePlay(core->alMainSource);
 }

@@ -57,7 +57,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     if (calls[callId].videoEnabled)
     {
         calls[callId].sendVideoTimer->start();
-        Camera::getInstance()->suscribe();
+        Camera::getInstance()->subscribe();
     }
 }
 
@@ -73,12 +73,12 @@ void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
     {
         calls[callId].videoEnabled = false;
         calls[callId].sendVideoTimer->stop();
-        Camera::getInstance()->unsuscribe();
+        Camera::getInstance()->unsubscribe();
         emit ((Core*)core)->avMediaChange(friendId, callId, false);
     }
     else
     {
-        Camera::getInstance()->suscribe();
+        Camera::getInstance()->subscribe();
         calls[callId].videoEnabled = true;
         calls[callId].sendVideoTimer->start();
         emit ((Core*)core)->avMediaChange(friendId, callId, true);
@@ -161,7 +161,7 @@ void Core::cleanupCall(int callId)
     calls[callId].sendAudioTimer->stop();
     calls[callId].sendVideoTimer->stop();
     if (calls[callId].videoEnabled)
-        Camera::getInstance()->unsuscribe();
+        Camera::getInstance()->unsubscribe();
     alcCaptureStop(alInDev);
 }
 

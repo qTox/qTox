@@ -18,8 +18,13 @@
 #define CAMERA_H
 
 #include <QImage>
+#include <QList>
+#include <QMutex>
 #include "vpx/vpx_image.h"
 #include "opencv2/opencv.hpp"
+#include "src/videosource.h"
+
+class CameraWorker;
 
 /**
  * This class is a wrapper to share a camera's captured video frames
@@ -27,20 +32,60 @@
  * the camera only when needed, and giving access to the last frames
  **/
 
-class Camera
+class Camera : public VideoSource
 {
+    Q_OBJECT
 public:
-    Camera();
+    enum Prop {
+        BRIGHTNESS,
+        SATURATION,
+        CONTRAST,
+        HUE,
+    };
+
+    ~Camera();
+
     static Camera* getInstance(); ///< Returns the global widget's Camera instance
-    void suscribe(); ///< Call this once before trying to get frames
-    void unsuscribe(); ///< Call this once when you don't need frames anymore
-    cv::Mat getLastFrame(); ///< Get the last captured frame
-    QImage getLastImage(); ///< Convert the last frame to a QImage (can be expensive !)
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
+
+    QList<QSize> getSupportedResolutions();
+    QSize getBestVideoMode();
+
+    void setResolution(QSize res);
+    QSize getResolution();
+
+    void setProp(Prop prop, double val);
+    double getProp(Prop prop);
+
+    // VideoSource interface
+    virtual void *getData();
+    virtual int getDataSize();
+    virtual void lock();
+    virtual void unlock();
+    virtual QSize resolution();
+    virtual void subscribe();
+    virtual void unsubscribe();
+
+protected:
+    Camera();
 
 private:
     int refcount; ///< Number of users suscribed to the camera
-    cv::VideoCapture cam; ///< OpenCV camera capture opbject
+    cv::Mat3b currFrame;
+    QMutex mutex;
+
+    QThread* workerThread;
+    CameraWorker* worker;
+
+    QList<QSize> resolutions;
+
+    static Camera* instance;
+
+private slots:
+    void onWorkerStarted();
+    void onNewFrameAvailable();
+    void onResProbingFinished(QList<QSize> res);
+
 };
 
 #endif // CAMERA_H
