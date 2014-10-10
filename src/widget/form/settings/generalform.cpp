@@ -33,6 +33,8 @@ GeneralForm::GeneralForm() :
     bodyUI->cbUseTranslations->setChecked(Settings::getInstance().getUseTranslations());
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
+    bodyUI->statusChangesCheckbox->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
+    bodyUI->signInNotificationsCheckbox->setChecked(Settings::getInstance().getSignInNotificationEnabled());
 
     for (auto entry : SmileyPack::listSmileyPacks())
     {
@@ -40,7 +42,7 @@ GeneralForm::GeneralForm() :
     }
     bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
     reloadSmiles();
-   
+
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
     bodyUI->styleBrowser->addItem("None");
     if(QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
@@ -61,6 +63,8 @@ GeneralForm::GeneralForm() :
     connect(bodyUI->cbUseTranslations, &QCheckBox::stateChanged, this, &GeneralForm::onUseTranslationUpdated);
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
+    connect(bodyUI->statusChangesCheckbox, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
+    connect(bodyUI->signInNotificationsCheckbox, &QCheckBox::stateChanged, this, &GeneralForm::onSetSignInNotifications);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     // new syntax can't handle overloaded signals... (at least not in a pretty way)
     connect(bodyUI->cbUDPDisabled, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
@@ -99,6 +103,16 @@ void GeneralForm::onStyleSelected(QString style)
 {
     Settings::getInstance().setStyle(style);
     this->setStyle(QStyleFactory::create(style));
+}
+
+void GeneralForm::onSetStatusChange()
+{
+    Settings::getInstance().setStatusChangeNotificationEnabled(bodyUI->statusChangesCheckbox->isChecked());
+}
+
+void GeneralForm::onSetSignInNotifications()
+{
+    Settings::getInstance().setSignInNotificationEnabled(bodyUI->signInNotificationsCheckbox->isChecked());
 }
 
 void GeneralForm::onSmileyBrowserIndexChanged(int index)

@@ -138,6 +138,8 @@ void Settings::load()
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
         style = s.value("style", "None").toString();
+        statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
+        signInNotificationEnabled = s.value("signInNotificationEnabled", false).toBool();
     s.endGroup();
 
     s.beginGroup("State");
@@ -245,6 +247,8 @@ void Settings::save(QString path)
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("nativeStyle", useNativeStyle);
         s.setValue("style",style);
+        s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+        s.setValue("signInNotificationEnabled", signInNotificationEnabled);
     s.endGroup();
 
     s.beginGroup("State");
@@ -375,6 +379,26 @@ void Settings::setStyle(const QString& newStyle)
 void Settings::setAutostartInTray(bool newValue)
 {
     autostartInTray = newValue;
+}
+
+bool Settings::getSignInNotificationEnabled() const
+{
+    return signInNotificationEnabled;
+}
+
+void Settings::setSignInNotificationEnabled(bool newValue)
+{
+    signInNotificationEnabled = newValue;
+}
+
+bool Settings::getStatusChangeNotificationEnabled() const
+{
+    return statusChangeNotificationEnabled;
+}
+
+void Settings::setStatusChangeNotificationEnabled(bool newValue)
+{
+    statusChangeNotificationEnabled = newValue;
 }
 
 bool Settings::getUseTranslations() const
