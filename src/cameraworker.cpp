@@ -30,7 +30,7 @@ void CameraWorker::onStart()
 {
     clock = new QTimer(this);
     clock->setSingleShot(false);
-    clock->setInterval(5);
+    clock->setInterval(1000/60);
 
     connect(clock, &QTimer::timeout, this, &CameraWorker::doWork);
 
@@ -39,14 +39,14 @@ void CameraWorker::onStart()
 
 void CameraWorker::_suspend()
 {
-    qDebug() << "Suspend";
+    qDebug() << "CameraWorker: Suspend";
     clock->stop();
     unsubscribe();
 }
 
 void CameraWorker::_resume()
 {
-    qDebug() << "Resume";
+    qDebug() << "CameraWorker: Resume";
     subscribe();
     clock->start();
 }
@@ -66,7 +66,6 @@ double CameraWorker::_getProp(int prop)
         subscribe();
         props[prop] = cam.get(prop);
         unsubscribe();
-        qDebug() << "ASKED " << prop << " VAL " << props[prop];
     }
 
     return props.value(prop);
