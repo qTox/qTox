@@ -130,11 +130,8 @@ void GeneralForm::reloadSmiles()
     
     for(int i = 0; i < emoticons.size(); i++)
     {
-        foreach (QString icon, emoticons.at(i)) {
-        {
-            smiles.push_front(icon);            
-        }
-        }
+        foreach (QString icon, emoticons.at(i))
+            smiles.push_front(icon);
     }
     
     int pixSize = 30;
