@@ -228,7 +228,7 @@ void GenericChatForm::clearChatArea(bool notinform)
     previousName = "";
 
     if (!notinform)
-        addSystemInfoMessage(tr("Cleared"), "green");
+        addSystemInfoMessage(tr("Cleared"), "white");
 
     if (earliestMessage)
     {

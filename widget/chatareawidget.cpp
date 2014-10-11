@@ -184,8 +184,3 @@ void ChatAreaWidget::clearChatArea()
         insertMessage(message);
     }
 }
-
-void ChatAreaWidget::rerenderContent()
-{
-
-}

@@ -63,8 +63,31 @@ HistoryKeeper::HistoryKeeper(const QString &path, bool encr) :
         db.open();
     }
 
+    /*
+     DB format
+     chats:
+      * name -> id map
+       id      -- auto-incrementing number
+       name    -- chat's name (for user to user conversation it is opposite user public key)
+       ctype   -- chat type, reserved for group chats
+
+     alisases:
+      * user_id -> id map
+       id      -- auto-incrementing number
+       name    -- user's public key
+
+     history:
+       id           -- auto-incrementing number
+       timestamp
+       profile_id   -- profile ID (resolves from aliases table)
+       chat_id      -- current chat ID (resolves from chats table)
+       sender       -- sender's ID (resolves from aliases table)
+       mtype        -- type of message (message, action, etc) (UNUSED now)
+       message
+    */
+
     db.exec(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL, ") +
-            QString("profile_id INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, message TEXT NOT NULL);"));
+            QString("profile_id INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, mtype INTEGER NOT NULL, message TEXT NOT NULL);"));
     db.exec(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
     db.exec(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
 
@@ -83,7 +106,7 @@ void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, co
     int sender_id = getAliasID(sender);
     int profile_id = getCurrentProfileID();
 
-    db.exec(QString("INSERT INTO history (profile_id, chat_id, sender, message) VALUES (%1, %2, %3, '%4');")
+    db.exec(QString("INSERT INTO history (profile_id, chat_id, sender, mtype, message) VALUES (%1, %2, %3, 0, '%4');")
             .arg(profile_id).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
 }
 
@@ -221,7 +244,7 @@ void HistoryKeeper::syncToDisk()
             return;
         }
 
-        // encryption there
+        // encryption here
     } else
     {
         // warning

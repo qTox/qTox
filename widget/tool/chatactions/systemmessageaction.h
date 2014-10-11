@@ -24,7 +24,7 @@ class SystemMessageAction : public ChatAction
 public:
     SystemMessageAction(const QString &message, const QString& type, const QString &date);
     virtual ~SystemMessageAction(){;}
-    virtual void setup(QTextCursor cursor, QTextEdit*) override;
+    virtual void setup(QTextCursor, QTextEdit*) override {;}
 
     virtual QString getName() {return QString();}
     virtual QString getMessage();
