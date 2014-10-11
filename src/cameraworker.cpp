@@ -124,6 +124,7 @@ void CameraWorker::subscribe()
     {
         if (!cam.isOpened())
         {
+            queue.clear();
             cam.open(camIndex);
             applyProps(); // restore props
         }
@@ -148,15 +149,16 @@ void CameraWorker::doWork()
         return;
 
     if (queue.size() > 3)
+        return;
+
+    if (!cam.read(frame))
     {
-        queue.dequeue();
+        cam.release();
+        qDebug() << "CameraWorker: received empty frame -> closing";
         return;
     }
 
-    cam >> frame;
-//qDebug() << "Decoding frame";
     mutex.lock();
-
     queue.enqueue(frame);
     mutex.unlock();
 
@@ -174,6 +176,9 @@ bool CameraWorker::hasFrame()
 
 cv::Mat3b CameraWorker::dequeueFrame()
 {
+    if (queue.isEmpty())
+        return cv::Mat3b();
+
     mutex.lock();
     cv::Mat3b f = queue.dequeue();
     mutex.unlock();
