@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>527</width>
-    <height>397</height>
+    <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,7 +80,7 @@
            <string>:)</string>
           </property>
           <property name="text">
-           <string>:)</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -90,7 +90,7 @@
            <string>;)</string>
           </property>
           <property name="text">
-           <string>;)</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -100,7 +100,7 @@
            <string>:p</string>
           </property>
           <property name="text">
-           <string>:p</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -110,7 +110,7 @@
            <string>:O</string>
           </property>
           <property name="text">
-           <string>:O</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -120,7 +120,7 @@
            <string>:'(</string>
           </property>
           <property name="text">
-           <string>:'(</string>
+           <string/>
           </property>
          </widget>
         </item>
