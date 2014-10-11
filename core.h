@@ -96,6 +96,7 @@ public slots:
 
     void setPassword(QString& password);
     bool encryptFile(const QString& path);
+    QByteArray encryptData(const QByteArray& data);
 
 signals:
     void connected();

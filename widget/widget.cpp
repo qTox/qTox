@@ -219,7 +219,7 @@ QString Widget::getUsername()
 void Widget::onAvatarClicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath());
-    if (filename == "")
+    if (filename.isEmpty())
         return;
     QFile file(filename);
     file.open(QIODevice::ReadOnly);

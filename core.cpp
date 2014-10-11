@@ -1415,15 +1415,46 @@ QList<CString> Core::splitMessage(const QString &message)
 
 void Core::setPassword(QString& password)
 {
+    if (password.isEmpty())
+    {
+        clearPassword();
+        return;
+    }
     if (!pwhash)
         pwhash = new uint8_t[TOX_HASH_LENGTH];
+
     CString str(password);
     tox_hash(pwhash, str.data(), str.size());
     password.clear();
 }
 
+void Core::clearPassword()
+{
+    if (pwhash)
+    {
+        delete[] pwhash;
+        pwhash = nullptr;
+    }
+        
+}
+
+QByteArray Core::encryptData(const QByteArray& data)
+{
+    if (!pwhash)
+        return;
+    uint8_t encrypted[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
+    if (tox_pass_encrypt(data.data(), data.size(), pwhash, TOX_HASH_LENGTH, encrypted) == -1)
+    {
+        qWarning() << "Core::encryptData: encryption failed";
+        return QByteArray();
+    }
+    return QByteArray(reinterpret_cast<char*>encrypted, data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH]);
+}
+
 bool Core::encryptFile(const QString& path)
 {
+    if (!pwhash)
+        return false;
     QFile file(path);
     if (!file.exists()) {
         qWarning() << "Core::encryptFile: file" << path << "DNE";
@@ -1436,19 +1467,15 @@ bool Core::encryptFile(const QString& path)
     QByteArray data = file.readAll();
     file.close();
 
-    uint8_t[] out = new uint8_t[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
-    if (tox_pass_encrypt(data.data(), data.size(), pwhash, TOX_HASH_LENGTH, out)
-                        == -1)
-    {
-        qWarning() << "Core::encryptFile:" << "encryption of" << path << "failed";
+    data = encryptData(data);
+    if (data.isEmpty())
         return false;
-    }
 
     if (!file.open(QIODevice::WriteOnly)) {
         qCritical() << "Core::encryptFile:" << path << " cannot be opened for writing";
         return false;
     }
-    file.write(reinterpret_cast<char*>out, data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
+    file.write(data.data(), data.size());
     file.close();
     return true;
 }
