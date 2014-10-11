@@ -118,6 +118,11 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
     messages.append(msgAction);
 }
 
+int ChatAreaWidget::getNumberOfMessages()
+{
+    return messages.size();
+}
+
 void ChatAreaWidget::onSliderRangeChanged()
 {
     QScrollBar* scroll = verticalScrollBar();

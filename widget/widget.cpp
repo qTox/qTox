@@ -466,9 +466,9 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     default:
         fStatus = "online"; break;
     }
-
+        
     //won't print the message if there were no messages before    
-    if(f->chatForm->actions().size() != 0
+    if(f->chatForm->getNumberOfMessages() != 0
             && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
         f->chatForm->addSystemInfoMessage(f->getName() + " has changed status to " + fStatus, "white");
 }
@@ -484,10 +484,6 @@ void Widget::onFriendSignIn(int friendId, Status status)
     f->friendStatus = status;
     f->widget->updateStatusLight();
     
-    //won't print the message if there were no messages before
-    if(f->chatForm->actions().size() != 0
-            && Settings::getInstance().getSignInNotificationEnabled() == true)
-        f->chatForm->addSystemInfoMessage(f->getName() + " has became online", "white");
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
