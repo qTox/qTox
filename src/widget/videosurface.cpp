@@ -22,17 +22,24 @@
 #include <QOpenGLShaderProgram>
 #include <QDebug>
 
-VideoSurface::VideoSurface(VideoSource *Source, QWidget* parent)
+VideoSurface::VideoSurface(QWidget* parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
-    , source(Source)
+    , source(nullptr)
     , pbo(nullptr)
     , program(nullptr)
     , textureId(0)
     , pboAllocSize(0)
     , uploadFrame(false)
     , hasSubscribed(false)
+    , lastWidth(0)
 {
-    setFixedSize(source->resolution());
+
+}
+
+VideoSurface::VideoSurface(VideoSource *Source, QWidget* parent)
+    : VideoSurface(parent)
+{
+    source = Source;
 }
 
 VideoSurface::~VideoSurface()
@@ -43,12 +50,18 @@ VideoSurface::~VideoSurface()
     if (textureId != 0)
         glDeleteTextures(1, &textureId);
 
-    source->unsubscribe();
+    if (source && hasSubscribed)
+        source->unsubscribe();
+}
+
+void VideoSurface::setSource(VideoSource *src)
+{
+    source = src;
 }
 
 void VideoSurface::hideEvent(QHideEvent *ev)
 {
-    if (hasSubscribed)
+    if (source && hasSubscribed)
     {
         source->unsubscribe();
         hasSubscribed = false;
@@ -60,7 +73,7 @@ void VideoSurface::hideEvent(QHideEvent *ev)
 
 void VideoSurface::showEvent(QShowEvent *ev)
 {
-    if (!hasSubscribed)
+    if (source && !hasSubscribed)
     {
         source->subscribe();
         hasSubscribed = true;
@@ -70,6 +83,11 @@ void VideoSurface::showEvent(QShowEvent *ev)
     QGLWidget::showEvent(ev);
 }
 
+QSize VideoSurface::sizeHint() const
+{
+    return QGLWidget::sizeHint();
+}
+
 void VideoSurface::initializeGL()
 {
 
@@ -77,9 +95,12 @@ void VideoSurface::initializeGL()
 
 void VideoSurface::paintGL()
 {
+    if (!source)
+        return;
+
     if (!pbo)
     {
-        qDebug() << "Creating pbo, program";
+        qDebug() << "VideoSurface: Init";
 
         // pbo
         pbo = new QOpenGLBuffer(QOpenGLBuffer::PixelUnpackBuffer);
@@ -95,6 +116,8 @@ void VideoSurface::paintGL()
                                          "    gl_Position = vec4(vertices.xy,0.0,1.0);"
                                          "    coords = vertices.xy*vec2(0.5,0.5)+vec2(0.5,0.5);"
                                          "}");
+
+        // brg frag-shader
         program->addShaderFromSourceCode(QOpenGLShader::Fragment,
                                          "uniform sampler2D texture0;"
                                          "varying vec2 coords;"
@@ -109,7 +132,7 @@ void VideoSurface::paintGL()
 
     if (res != source->resolution())
     {
-        qDebug() << "Change resolution " << res << " to " << source->resolution();
+        qDebug() << "VideoSurface: Change resolution from " << res << " to " << source->resolution();
         res = source->resolution();
 
         // a texture used to render the pbo (has the match the pixelformat of the source)
@@ -118,7 +141,7 @@ void VideoSurface::paintGL()
         glTexImage2D(GL_TEXTURE_2D,0, GL_RGB, res.width(), res.height(), 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-        setFixedSize(res);
+        updateGeometry();
     }
 
 
@@ -130,7 +153,7 @@ void VideoSurface::paintGL()
 
         if (pboAllocSize != frameBytes && frameBytes > 0)
         {
-            qDebug() << "Resize pbo " << frameBytes << "bytes (was" << pboAllocSize << ") res " << source->resolution();
+            qDebug() << "VideoSurface: Resize pbo " << frameBytes << "bytes (before" << pboAllocSize << ")";
 
             pbo->bind();
             pbo->allocate(frameBytes);
@@ -169,11 +192,21 @@ void VideoSurface::paintGL()
 
     program->setAttributeArray(0, GL_FLOAT, values, 2);
 
-
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glViewport(0, 0, width(), height());
+    // keep aspect ratio
+    float aspectRatio = float(res.width()) / float(res.height());
+    if (width() < float(height()) * aspectRatio)
+    {
+        float h = float(width()) / aspectRatio;
+        glViewport(0, (height() - h)*0.5f, width(), h);
+    }
+    else
+    {
+        float w = float(height()) * float(aspectRatio);
+        glViewport((width() - w)*0.5f, 0, w, height());
+    }
 
     program->bind();
     program->enableAttributeArray(0);
@@ -193,5 +226,6 @@ void VideoSurface::updateGL()
     uploadFrame = true;
     QGLWidget::updateGL();
 }
+
 
 

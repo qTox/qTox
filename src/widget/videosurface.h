@@ -29,11 +29,14 @@ class VideoSurface : public QGLWidget
     Q_OBJECT
 
 public:
+    VideoSurface(QWidget* parent=0);
     VideoSurface(VideoSource* source, QWidget* parent=0);
     ~VideoSurface();
 
+    void setSource(VideoSource* src);
     virtual void hideEvent(QHideEvent* ev);
     virtual void showEvent(QShowEvent* ev);
+    virtual QSize sizeHint() const;
 
     // QGLWidget interface
 protected:
@@ -52,7 +55,7 @@ private:
     QSize res;
     bool uploadFrame;
     bool hasSubscribed;
-
+    mutable int lastWidth;
 };
 
 #endif // SELFCAMVIEW_H
