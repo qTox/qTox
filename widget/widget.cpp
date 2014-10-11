@@ -27,7 +27,6 @@
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
 #include "misc/style.h"
-#include "selfcamview.h"
 #include "widget/friendlistwidget.h"
 #include "camera.h"
 #include "widget/form/chatform.h"
@@ -103,8 +102,7 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->setProperty("status", "offline");
     Style::repolish(ui->statusButton);
 
-    camera = new Camera;
-    settingsWidget = new SettingsWidget(camera);
+    settingsWidget = new SettingsWidget();
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -120,7 +118,7 @@ Widget::Widget(QWidget *parent)
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
     coreThread = new QThread(this);
-    core = new Core(camera, coreThread);
+    core = new Core(Camera::getInstance(), coreThread);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
 
@@ -217,11 +215,6 @@ void Widget::closeEvent(QCloseEvent *event)
 QString Widget::getUsername()
 {
     return core->getUsername();
-}
-
-Camera* Widget::getCamera()
-{
-    return camera;
 }
 
 void Widget::onAvatarClicked()
@@ -343,6 +336,14 @@ void Widget::onTransferClicked()
     hideMainForms();
     filesForm.show(*ui);
     activeChatroomWidget = nullptr;
+}
+
+void Widget::onIconClick()
+{
+    if(this->isHidden() == true)
+        this->show();
+    else
+        this->hide();
 }
 
 void Widget::onSettingsClicked()

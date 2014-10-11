@@ -27,7 +27,7 @@ public:
     GenericForm(const QString &name, const QPixmap &icon) : formName(name), formIcon(icon) {;}
     ~GenericForm() {;}
 
-    virtual void updateContent() {;}
+    virtual void present() {}
     QString getFormName() {return formName;}
     QPixmap getFormIcon() {return formIcon;}
 

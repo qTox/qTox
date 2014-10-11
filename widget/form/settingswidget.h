@@ -35,7 +35,7 @@ class SettingsWidget : public QWidget
 {
     Q_OBJECT
 public:
-    SettingsWidget(Camera* cam, QWidget* parent = nullptr);
+    SettingsWidget(QWidget* parent = nullptr);
     ~SettingsWidget();
 
     void show(Ui::MainWindow &ui);

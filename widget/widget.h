@@ -34,7 +34,7 @@ class GenericChatroomWidget;
 class Group;
 struct Friend;
 class QSplitter;
-class SelfCamView;
+class VideoSurface;
 class QMenu;
 class Core;
 class Camera;
@@ -105,6 +105,7 @@ private slots:
     void onMessageSendResult(int friendId, const QString& message, int messageId);
     void onGroupSendResult(int groupId, const QString& message, int result);
     void playRingtone();
+    void onIconClick();
 
 private:
     void hideMainForms();
@@ -123,7 +124,6 @@ private:
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
-    Camera* camera;
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
 };
