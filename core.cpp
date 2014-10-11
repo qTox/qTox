@@ -21,6 +21,7 @@
 #include "widget/widget.h"
 
 #include <tox/tox.h>
+#include <tox/toxencryptsave.h>
 
 #include <ctime>
 #include <functional>
@@ -110,6 +111,12 @@ Core::~Core()
         alcCloseDevice(alOutDev);
     if (alInDev)
         alcCaptureCloseDevice(alInDev);
+
+    if (pwhash)
+    {
+        delete[] pwhash;
+        pwhash = nullptr;
+    }
 }
 
 Core* Core::getInstance()
@@ -1117,7 +1124,7 @@ void Core::saveConfiguration()
         return;
     }
 
-        qDebug() << "Core: Saving";
+    qDebug() << "Core: Saving";
 
     uint32_t fileSize = tox_size(tox);
     if (fileSize > 0 && fileSize <= INT32_MAX) {
@@ -1404,4 +1411,44 @@ QList<CString> Core::splitMessage(const QString &message)
     splittedMsgs.push_back(CString(ba_message));
 
     return splittedMsgs;
+}
+
+void Core::setPassword(QString& password)
+{
+    if (!pwhash)
+        pwhash = new uint8_t[TOX_HASH_LENGTH];
+    CString str(password);
+    tox_hash(pwhash, str.data(), str.size());
+    password.clear();
+}
+
+bool Core::encryptFile(const QString& path)
+{
+    QFile file(path);
+    if (!file.exists()) {
+        qWarning() << "Core::encryptFile: file" << path << "DNE";
+        return false;
+    }
+    if (!file.open(QIODevice::ReadOnly)) {
+        qCritical() << "Core::encryptFile:" << path << " cannot be opened";
+        return false;
+    }
+    QByteArray data = file.readAll();
+    file.close();
+
+    uint8_t[] out = new uint8_t[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
+    if (tox_pass_encrypt(data.data(), data.size(), pwhash, TOX_HASH_LENGTH, out)
+                        == -1)
+    {
+        qWarning() << "Core::encryptFile:" << "encryption of" << path << "failed";
+        return false;
+    }
+
+    if (!file.open(QIODevice::WriteOnly)) {
+        qCritical() << "Core::encryptFile:" << path << " cannot be opened for writing";
+        return false;
+    }
+    file.write(reinterpret_cast<char*>out, data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
+    file.close();
+    return true;
 }

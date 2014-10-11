@@ -10,7 +10,7 @@ INSTALL_DIR=libs
 # just for convenience
 BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 
-SODIUM_VER=0.7.0
+SODIUM_VER=1.0.0
 
 # directory names of cloned repositories
 SODIUM_DIR=libsodium-$SODIUM_VER

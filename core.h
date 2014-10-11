@@ -94,6 +94,9 @@ public slots:
 
     void micMuteToggle(int callId);
 
+    void setPassword(QString& password);
+    bool encryptFile(const QString& path);
+
 signals:
     void connected();
     void disconnected();
@@ -231,6 +234,7 @@ private:
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
+    uint8_t* pwhash = nullptr; // use the pw's hash as the "pw"
 
     static const QString CONFIG_FILE_NAME;
     static const int videobufsize;
