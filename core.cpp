@@ -1458,13 +1458,13 @@ QByteArray Core::encryptData(const QByteArray& data)
 {
     if (!pwhash)
         return QByteArray();
-    uint8_t encrypted[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
-    if (tox_pass_encrypt(data.data(), data.size(), pwhash, TOX_HASH_LENGTH, encrypted) == -1)
+    uint8_t encrypted[data.size() + tox_pass_encryption_extra_length()];
+    if (tox_pass_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwhash, TOX_HASH_LENGTH, encrypted) == -1)
     {
         qWarning() << "Core::encryptData: encryption failed";
         return QByteArray();
     }
-    return QByteArray(reinterpret_cast<char*>encrypted, data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH]);
+    return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + tox_pass_encryption_extra_length());
 }
 
 bool Core::encryptFile(const QString& path)
