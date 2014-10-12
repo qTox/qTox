@@ -430,6 +430,16 @@ void Settings::setEncryptLogs(bool newValue)
     encryptLogs = newValue;
 }
 
+bool Settings::getEncryptTox() const
+{
+    return encryptTox;
+}
+
+void Settings::setEncryptTox(bool newValue)
+{
+    encryptTox = newValue;
+}
+
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)
 {
     widgetSettings[uniqueName] = data;

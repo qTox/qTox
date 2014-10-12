@@ -95,6 +95,7 @@ public slots:
     void micMuteToggle(int callId);
 
     void setPassword(QString& password);
+    void clearPassword();
     bool encryptFile(const QString& path);
     QByteArray encryptData(const QByteArray& data);
 

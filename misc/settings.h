@@ -73,6 +73,9 @@ public:
     bool getEncryptLogs() const;
     void setEncryptLogs(bool newValue);
 
+    bool getEncryptTox() const;
+    void setEncryptTox(bool newValue);
+
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
 
@@ -178,6 +181,7 @@ private:
 
     bool enableLogging;
     bool encryptLogs;
+    bool encryptTox;
 
     QHash<QString, QByteArray> widgetSettings;
 

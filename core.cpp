@@ -1126,10 +1126,27 @@ void Core::saveConfiguration()
 
     qDebug() << "Core: Saving";
 
-    uint32_t fileSize = tox_size(tox);
+    uint32_t fileSize;
+    if (Settings::getInstance().getEncryptTox())
+        fileSize = tox_encrypted_size(tox);
+    else
+        fileSize = tox_size(tox);
+
     if (fileSize > 0 && fileSize <= INT32_MAX) {
         uint8_t *data = new uint8_t[fileSize];
-        tox_save(tox, data);
+
+        if (Settings::getInstance().getEncryptTox())
+        {
+            int ret = tox_encrypted_save(tox, data, pwhash, TOX_HASH_LENGTH);
+            if (ret == -1)
+            {
+                qCritical() << "Core::saveConfiguration: encryption of save file failed!!!";
+                return;
+            }
+        }
+        else
+            tox_save(tox, data);
+
         configurationFile.write(reinterpret_cast<char *>(data), fileSize);
         configurationFile.commit();
         delete[] data;
@@ -1435,13 +1452,12 @@ void Core::clearPassword()
         delete[] pwhash;
         pwhash = nullptr;
     }
-        
 }
 
 QByteArray Core::encryptData(const QByteArray& data)
 {
     if (!pwhash)
-        return;
+        return QByteArray();
     uint8_t encrypted[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
     if (tox_pass_encrypt(data.data(), data.size(), pwhash, TOX_HASH_LENGTH, encrypted) == -1)
     {
