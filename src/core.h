@@ -98,6 +98,8 @@ public slots:
     void clearPassword();
     bool encryptFile(const QString& path);
     QByteArray encryptData(const QByteArray& data);
+    QByteArray decryptData(const QByteArray& data);
+    QByteArray decryptFile(const QString& path);
 
 signals:
     void connected();

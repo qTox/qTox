@@ -1071,14 +1071,25 @@ bool Core::loadConfiguration()
         }
         else if (error == 1) // Encrypted data save
         {
-            qWarning() << "Core: Can not open encrypted tox save";
-            if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted profile"),
-                tr("Your tox profile seems to be encrypted, qTox can't open it\nDo you want to erase this profile ?"),
-                QMessageBox::Ok | QMessageBox::Cancel))
+            if (!pwhash)
             {
-                qWarning() << "Core: Couldn't open encrypted save, giving up";
-                configurationFile.close();
-                return false;
+                qWarning() << "Core: Can not open encrypted tox save";
+                if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted profile"),
+                    tr("Your tox profile seems to be encrypted, qTox can't open it\nDo you want to erase this profile ?"),
+                    QMessageBox::Ok | QMessageBox::Cancel))
+                {
+                    qWarning() << "Core: Couldn't open encrypted save, giving up";
+                    configurationFile.close();
+                    return false;
+                }
+            }
+            else
+            { /*
+                while (error != 0)
+                {
+                    error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwhash, TOX_HASH_LENGTH);
+                    // something something QInputDialog new password
+                } */
             }
         }
     }
@@ -1467,6 +1478,20 @@ QByteArray Core::encryptData(const QByteArray& data)
     return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + tox_pass_encryption_extra_length());
 }
 
+QByteArray Core::decryptData(const QByteArray& data)
+{
+    if (!pwhash)
+        return QByteArray();
+    int sz = data.size() - tox_pass_encryption_extra_length();
+    uint8_t decrypted[sz];
+    if (tox_pass_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwhash, TOX_HASH_LENGTH, decrypted) != sz)
+    {
+        qWarning() << "Core::decryptData: decryption failed";
+        return QByteArray();
+    }
+    return QByteArray(reinterpret_cast<char*>(decrypted), sz);
+}
+
 bool Core::encryptFile(const QString& path)
 {
     if (!pwhash)
@@ -1494,4 +1519,23 @@ bool Core::encryptFile(const QString& path)
     file.write(data.data(), data.size());
     file.close();
     return true;
+}
+
+QByteArray Core::decryptFile(const QString& path)
+{
+    if (!pwhash)
+        return QByteArray();
+    QFile file(path);
+    if (!file.exists()) {
+        qWarning() << "Core::decryptFile: file" << path << "DNE";
+        return QByteArray();
+    }
+    if (!file.open(QIODevice::ReadOnly)) {
+        qCritical() << "Core::decryptFile:" << path << " cannot be opened";
+        return QByteArray();
+    }
+    QByteArray data = file.readAll();
+    file.close();
+
+    return decryptData(data);
 }
