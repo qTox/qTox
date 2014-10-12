@@ -44,7 +44,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QCheckBox" name="cbEnctyptTox">
+       <widget class="QCheckBox" name="cbEncryptTox">
         <property name="text">
          <string>Encrypt Tox datafile</string>
         </property>

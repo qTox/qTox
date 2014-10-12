@@ -33,7 +33,7 @@ PrivacyForm::PrivacyForm() :
     connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
     connect(bodyUI->cbEncryptHistory, SIGNAL(stateChanged(int)), this, SLOT(onEncryptLogsUpdated()));
-    connect(bodyUI->cbEnctyptTox, SIGNAL(stateChanged(int)), this, SLOT(onEncryptToxUpdated()));
+    connect(bodyUI->cbEncryptTox, SIGNAL(stateChanged(int)), this, SLOT(onEncryptToxUpdated()));
     connect(bodyUI->pswdBtn, SIGNAL(clicked()), this, SLOT(onPasswordSet()));
 }
 
