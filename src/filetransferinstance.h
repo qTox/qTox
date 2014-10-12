@@ -78,6 +78,7 @@ private:
     long long lastBytesSent, totalBytes;
     int fileNum;
     int friendId;
+    int contentPrefWidth;
     QString savePath;
     ToxFile::FileDirection direction;
     QString stopFileButtonStylesheet, pauseFileButtonStylesheet, acceptFileButtonStylesheet;
