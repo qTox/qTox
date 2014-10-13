@@ -41,6 +41,7 @@
 #include <QClipboard>
 #include <QThread>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <tox/tox.h>
 
 Widget *Widget::instance{nullptr};
@@ -116,8 +117,9 @@ Widget::Widget(QWidget *parent)
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
 
+    QString profilePath = detectProfile();
     coreThread = new QThread(this);
-    core = new Core(Camera::getInstance(), coreThread);
+    core = new Core(Camera::getInstance(), coreThread, profilePath);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
 
@@ -209,6 +211,69 @@ void Widget::closeEvent(QCloseEvent *event)
     Settings::getInstance().setWindowState(saveState());
     Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
     QWidget::closeEvent(event);
+}
+
+QString Widget::detectProfile()
+{
+    QDir dir(Settings::getSettingsDirPath());
+    QString path, profile = Settings::getInstance().getCurrentProfile();
+    path = dir.filePath(profile + Core::TOX_EXT);
+    QFile file(path);
+    if (profile == "" || !file.exists())
+    {
+        Settings::getInstance().setCurrentProfile("");
+#if 1 // deprecation attempt
+        // if the last profile doesn't exist, fall back to old "data"
+        path = dir.filePath(Core::CONFIG_FILE_NAME);
+        QFile file(path);
+        if (file.exists())
+            return path;
+        else if (QFile(path = dir.filePath("tox_save")).exists()) // also import tox_save if no data
+            return path;
+        else
+#endif
+        {
+            profile = askProfiles();
+            if (profile != "")
+                return dir.filePath(profile + Core::TOX_EXT);
+            else
+                return "";
+        }
+    }
+    else
+        return path;
+}
+
+QList<QString> Widget::searchProfiles()
+{
+    QList<QString> out;
+    QDir dir(Settings::getSettingsDirPath());
+	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+	dir.setNameFilters(QStringList("*.tox"));
+	for(QFileInfo file : dir.entryInfoList())
+		out += file.completeBaseName();
+	return out;
+}
+
+QString Widget::askProfiles()
+{   // TODO: allow user to create new Tox ID, even if a profile already exists
+    QList<QString> profiles = searchProfiles();
+    if (profiles.empty()) return "";
+    bool ok;
+    QString profile = QInputDialog::getItem(this, 
+                                            tr("Choose a profile"),
+                                            tr("Please choose which identity to use"),
+                                            profiles,
+                                            0, // which slot to start on
+                                            false, // if the user can enter their own input
+                                            &ok);
+    if (!ok) // user cancelled
+    {
+        qApp->quit();
+        return "";
+    }
+    else
+        return profile;
 }
 
 QString Widget::getUsername()
@@ -565,17 +630,29 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
         emit friendRequestAccepted(userId);
 }
 
-void Widget::removeFriend(int friendId)
+void Widget::removeFriend(Friend* f)
 {
-    Friend* f = FriendList::findFriend(friendId);
     f->widget->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(f->widget) == activeChatroomWidget)
         activeChatroomWidget = nullptr;
-    FriendList::removeFriend(friendId);
-    core->removeFriend(friendId);
+    FriendList::removeFriend(f->friendId);
+    core->removeFriend(f->friendId);
     delete f;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
+}
+
+void Widget::removeFriend(int friendId)
+{
+    removeFriend(FriendList::findFriend(friendId));
+}
+
+void Widget::clearContactsList()
+{
+    for (Friend* f : FriendList::friendList)
+        removeFriend(f);
+    for (Group* g : GroupList::groupList)
+        removeGroup(g);
 }
 
 void Widget::copyFriendIdToClipboard(int friendId)
@@ -641,17 +718,21 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 
-void Widget::removeGroup(int groupId)
+void Widget::removeGroup(Group* g)
 {
-    Group* g = GroupList::findGroup(groupId);
     g->widget->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(g->widget) == activeChatroomWidget)
         activeChatroomWidget = nullptr;
-    GroupList::removeGroup(groupId);
-    core->removeGroup(groupId);
+    GroupList::removeGroup(g->groupId);
+    core->removeGroup(g->groupId);
     delete g;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
+}
+
+void Widget::removeGroup(int groupId)
+{
+    removeGroup(GroupList::findGroup(groupId));
 }
 
 Core *Widget::getCore()

@@ -34,9 +34,13 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    explicit Core(Camera* cam, QThread* coreThread);
+    explicit Core(Camera* cam, QThread* coreThread, QString initialLoadPath);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
+    
+    static const QString TOX_EXT;
+    static const QString CONFIG_FILE_NAME;
+    static QString sanitize(QString name);
 
     int getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
@@ -48,6 +52,10 @@ public:
     void dispatchVideoFrame(vpx_image img) const;
 
     void saveConfiguration();
+    void saveConfiguration(const QString& path);
+    void switchConfiguration(QString profile);
+    
+    QString getIDString();
     
     QString getUsername();
     QString getStatusMessage();
@@ -209,7 +217,8 @@ private:
 
     bool checkConnection();
 
-    bool loadConfiguration(); // Returns false for a critical error, true otherwise
+    bool loadConfiguration(QString path); // Returns false for a critical error, true otherwise
+    void make_tox();
     void loadFriends();
 
     static void sendAllFileData(Core* core, ToxFile* file);
@@ -225,14 +234,14 @@ private slots:
 private:
     Tox* tox;
     ToxAv* toxav;
-    QTimer *toxTimer, *fileTimer, *bootstrapTimer; //, *saveTimer;
+    QTimer *toxTimer, *fileTimer; //, *saveTimer;
     Camera* camera;
+    QString loadPath; // meaningless after start() is called
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
 
-    static const QString CONFIG_FILE_NAME;
     static const int videobufsize;
     static uint8_t* videobuf;
     static int videoBusyness; // Used to know when to drop frames

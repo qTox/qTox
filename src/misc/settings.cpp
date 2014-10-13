@@ -115,6 +115,7 @@ void Settings::load()
         useProxy = s.value("useProxy", false).toBool();
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
+		currentProfile = s.value("currentProfile", "").toString();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -219,6 +220,7 @@ void Settings::save(QString path)
         s.setValue("forceTCP", forceTCP);
         s.setValue("proxyAddr", proxyAddr);
         s.setValue("proxyPort", proxyPort);
+        s.setValue("currentProfile", currentProfile);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -408,6 +410,16 @@ int Settings::getProxyPort() const
 void Settings::setProxyPort(int newValue)
 {
     proxyPort = newValue;
+}
+
+QString Settings::getCurrentProfile() const
+{
+    return currentProfile;
+}
+
+void Settings::setCurrentProfile(QString profile)
+{
+    currentProfile = profile;
 }
 
 bool Settings::getEnableLogging() const
