@@ -126,14 +126,11 @@ void GeneralForm::reloadSmiles()
 {
     QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
     QStringList smiles;
-    smiles << ":)" << ";)" << ":p" << ":O" << ":'("; //just in case...
-    
-    for(int i = 0; i < emoticons.size(); i++)
-    {
-        foreach (QString icon, emoticons.at(i))
-            smiles.push_front(icon);
-    }
-    
+    smiles << ":)" << ";)" << ":p" << ":O" << ":["; //just in case...
+
+    for(int i = 0; i < emoticons.size(); i++)  
+        smiles.push_front(emoticons.at(i).first());
+        
     int pixSize = 30;
     bodyUI->smile1->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[0]).pixmap(pixSize, pixSize));
     bodyUI->smile2->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[1]).pixmap(pixSize, pixSize));
