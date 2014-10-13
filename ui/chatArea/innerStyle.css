@@ -41,7 +41,7 @@ div.green {
   margin-top: 12px;
   margin-bottom: 12px;
   margin-left: 0px;
-  margin-right: 12px;
+  margin-right: 0px;
   color: @white;
   background-color: @green;
   font: @small;
@@ -51,7 +51,7 @@ div.silver {
   margin-top: 12px;
   margin-bottom: 12px;
   margin-left: 0px;
-  margin-right: 12px;
+  margin-right: 0px;
   color: @black;
   background-color: @lightGrey;
   font: @small;
@@ -61,7 +61,7 @@ div.red {
   margin-top: 12px;
   margin-bottom: 12px;
   margin-left: 0px;
-  margin-right: 12px;
+  margin-right: 0px;
   color: @white;
   background-color: @red;
   font: @small;
