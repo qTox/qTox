@@ -52,6 +52,9 @@ public:
     bool getAutostartInTray() const;
     void setAutostartInTray(bool newValue);
 
+    QString getCurrentProfile() const;
+    void setCurrentProfile(QString profile);
+
     bool getUseTranslations() const;
     void setUseTranslations(bool newValue);
 
@@ -178,6 +181,8 @@ private:
     bool useProxy;
     QString proxyAddr;
     int proxyPort;
+
+    QString currentProfile;
 
     bool enableLogging;
     bool encryptLogs;

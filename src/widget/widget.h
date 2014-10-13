@@ -56,6 +56,8 @@ public:
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
+    static QList<QString> searchProfiles();
+    void clearContactsList();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
@@ -111,8 +113,11 @@ private:
     void hideMainForms();
     virtual bool event(QEvent * e);
     Group* createGroup(int groupId);
+    void removeFriend(Friend* f);
+    void removeGroup(Group* g);
+    QString askProfiles();
+    QString detectProfile();
 
-private:
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;

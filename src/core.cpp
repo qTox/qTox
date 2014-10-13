@@ -40,11 +40,12 @@
 #include <QMessageBox>
 
 const QString Core::CONFIG_FILE_NAME = "data";
+const QString Core::TOX_EXT = ".tox";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 
-Core::Core(Camera* cam, QThread *coreThread) :
-    tox(nullptr), camera(cam)
+Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
+    tox(nullptr), camera(cam), loadPath(loadPath)
 {
     videobuf = new uint8_t[videobufsize];
     videoBusyness=0;
@@ -124,12 +125,11 @@ Core* Core::getInstance()
     return Widget::getInstance()->getCore();
 }
 
-void Core::start()
+void Core::make_tox()
 {
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be disabled in options.
     bool enableIPv6 = Settings::getInstance().getEnableIPv6();
     bool forceTCP = Settings::getInstance().getForceTCP();
-
     bool useProxy = Settings::getInstance().getUseProxy();
 
     if (enableIPv6)
@@ -188,7 +188,7 @@ void Core::start()
                     emit failedToStart();
                 }
                 return;
-            } 
+            }
             else
                 qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery may not work properly.";
         }
@@ -212,15 +212,24 @@ void Core::start()
         emit failedToStart();
         return;
     }
+}
+
+void Core::start()
+{
+    make_tox();
 
     qsrand(time(nullptr));
 
-    if (!loadConfiguration())
+    if (loadPath != "")
     {
-        emit failedToStart();
-        tox_kill(tox);
-        tox = nullptr;
-        return;
+        if (!loadConfiguration(loadPath)) // loadPath is meaningless after this
+	    {
+            emit failedToStart();
+            tox_kill(tox);
+            tox = nullptr;
+            return;
+        }
+        loadPath = "";
     }
 
     tox_callback_friend_request(tox, onFriendRequest, this);
@@ -280,9 +289,9 @@ void Core::start()
  * 5 disconnected; 4 were DCd for less than 20 ticks, while the 5th was ~50 ticks.
  * So I set the tolerance here at 25, and initial DCs should be very rare now.
  * This should be able to go to 50 or 100 without affecting legitimate disconnects'
- * downtime, but lets be conservative for now. Edit: now 40.
+ * downtime, but lets be conservative for now. Edit: now ~~40~~ 30.
  */
-#define CORE_DISCONNECT_TOLERANCE 40
+#define CORE_DISCONNECT_TOLERANCE 30
 
 void Core::process()
 {
@@ -634,8 +643,8 @@ void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
     {
         qDebug() << "Core: Got null avatar info from" << core->getFriendUsername(friendnumber);
         emit core->friendAvatarRemoved(friendnumber);
-        QFile::remove(QDir(Settings::getInstance().getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".png"));
-        QFile::remove(QDir(Settings::getInstance().getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".hash"));
+        QFile::remove(QDir(Settings::getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".png"));
+        QFile::remove(QDir(Settings::getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".hash"));
     }
     else
     {
@@ -925,6 +934,8 @@ void Core::acceptFileRecvRequest(int friendId, int fileNum, QString path)
 
 void Core::removeFriend(int friendId)
 {
+    if (!tox)
+        return;
     if (tox_del_friend(tox, friendId) == -1) {
         emit failedToRemoveFriend(friendId);
     } else {
@@ -935,6 +946,8 @@ void Core::removeFriend(int friendId)
 
 void Core::removeGroup(int groupId)
 {
+    if (!tox)
+        return;
     tox_del_groupchat(tox, groupId);
 }
 
@@ -956,8 +969,8 @@ void Core::setUsername(const QString& username)
     if (tox_set_name(tox, cUsername.data(), cUsername.size()) == -1) {
         emit failedToSetUsername(username);
     } else {
-        saveConfiguration();
         emit usernameSet(username);
+        saveConfiguration();
     }
 }
 
@@ -986,6 +999,13 @@ ToxID Core::getSelfId()
     uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
     tox_get_address(tox, friendAddress);
     return ToxID::fromString(CFriendAddress::toString(friendAddress));
+}
+
+QString Core::getIDString()
+{
+    return getSelfId().toString().left(12);
+    // 12 is the smallest multiple of four such that
+    // 16^n > 10^10 (which is roughly the planet's population)
 }
 
 QString Core::getStatusMessage()
@@ -1045,11 +1065,25 @@ void Core::onFileTransferFinished(ToxFile file)
           emit fileDownloadFinished(file.filePath);
 }
 
-bool Core::loadConfiguration()
+QString Core::sanitize(QString name)
 {
-    QString path = QDir(Settings::getSettingsDirPath()).filePath(CONFIG_FILE_NAME);
+    // these are pretty much Windows banned filename characters
+    QList<QChar> banned = {'/', '\\', ':', '<', '>', '"', '|', '?', '*'};
+    for (QChar c : banned)
+        name.replace(c, '_');
+    // also remove leading and trailing periods
+    if (name[0] == '.')
+        name[0] = '_';
+    if (name.endsWith('.'))
+        name[name.length()-1] = '_';
+    return name;
+}
 
+bool Core::loadConfiguration(QString path)
+{
+    // setting the profile is now the responsibility of the caller
     QFile configurationFile(path);
+    qDebug() << "Core::loadConfiguration: reading from " << path;
 
     if (!configurationFile.exists()) {
         qWarning() << "The Tox configuration file was not found";
@@ -1111,31 +1145,51 @@ bool Core::loadConfiguration()
 
 void Core::saveConfiguration()
 {
-    Settings::getInstance().save();
+    QString dir = Settings::getSettingsDirPath();
+    QDir directory(dir);
+    if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
+        qCritical() << "Error while creating directory " << dir;
+        return;
+    }
     
+    QString profile = Settings::getInstance().getCurrentProfile();
+    //qDebug() << "saveConf read profile: " << profile;
+    if (profile == "")
+    { // no profile active; this should only happen on startup, if at all
+        profile = sanitize(getUsername());
+        if (profile == "") // happens on creation of a new Tox ID
+            profile = getIDString();
+        //qDebug() << "saveConf: read sanitized user as " << profile;
+        Settings::getInstance().setCurrentProfile(profile);
+    }
+    
+    QString path = dir + QDir::separator() + profile + TOX_EXT;
+    QFileInfo info(path);
+//    if (!info.exists()) // fall back to old school 'data'
+//    {   //path = dir + QDir::separator() + CONFIG_FILE_NAME;
+//        qDebug() << "Core:" << path << " does not exist";
+//    }
+    
+    saveConfiguration(path);
+}
+
+void Core::saveConfiguration(const QString& path)
+{
     if (!tox)
     {
         qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
         return;
     }
 
-    QString path = Settings::getSettingsDirPath();
+    Settings::getInstance().save();
 
-    QDir directory(path);
-
-    if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
-        qCritical() << "Error while creating directory " << path;
-        return;
-    }
-
-    path = directory.filePath(CONFIG_FILE_NAME);
     QSaveFile configurationFile(path);
     if (!configurationFile.open(QIODevice::WriteOnly)) {
         qCritical() << "File " << path << " cannot be opened";
         return;
     }
 
-    qDebug() << "Core: Saving";
+    qDebug() << "Core: writing tox_save to " << path;
 
     uint32_t fileSize;
     if (Settings::getInstance().getEncryptTox())
@@ -1162,6 +1216,27 @@ void Core::saveConfiguration()
         configurationFile.commit();
         delete[] data;
     }
+}
+
+void Core::switchConfiguration(QString profile)
+{
+    saveConfiguration();
+    
+    toxTimer->stop();
+    
+    if (tox) {
+        toxav_kill(toxav);
+        toxav = nullptr;
+        tox_kill(tox);
+        tox = nullptr;
+    }
+    emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
+    Widget::getInstance()->clearContactsList(); // we need this to block, so no signals for us
+    
+    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
+    Settings::getInstance().setCurrentProfile(profile); 
+    
+    start();
 }
 
 void Core::loadFriends()
