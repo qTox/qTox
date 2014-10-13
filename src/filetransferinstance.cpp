@@ -423,10 +423,13 @@ QString FileTransferInstance::wrapIntoForm(const QString& content, const QString
     res += "<div class=button>" + imgLeftA + "<br>" + imgLeftB + "</div>\n";
     res += "</td>\n";
     res += insertMiniature(type);
-    res += "<td width=" + QString::number(contentPrefWidth + 25) + ">\n";
+    res += "<td width=" + QString::number(contentPrefWidth) + ">\n";
     res += "<div class=" + type + ">";
     res += content;
     res += "</div>\n";
+    res += "</td>\n";
+    res += "<td width=3>\n";
+    res += "<div class=" + type + "></div>\n";
     res += "</td>\n";
     res += "<td>\n";
     res += "<div class=button>" + imgAstr + "<br>" + imgBstr + "</div>\n";
