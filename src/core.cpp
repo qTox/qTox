@@ -46,6 +46,8 @@ QList<ToxFile> Core::fileRecvQueue;
 Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     tox(nullptr), camera(cam), loadPath(loadPath)
 {
+    qDebug() << "Core: loading Tox from" << loadPath;
+
     videobuf = new uint8_t[videobufsize];
     videoBusyness=0;
 
@@ -1184,6 +1186,13 @@ void Core::saveConfiguration(const QString& path)
 
 void Core::switchConfiguration(QString profile)
 {
+    if (profile.isEmpty())
+    {
+        qWarning() << "Core: got null profile to switch to, not switching";
+        return;
+    }
+    else
+        qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
     saveConfiguration();
     
     toxTimer->stop();
