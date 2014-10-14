@@ -19,6 +19,7 @@
 #include "src/cameraworker.h"
 #include <QDebug>
 #include <QThread>
+#include <QMutexLocker>
 
 Camera* Camera::instance = nullptr;
 
@@ -70,52 +71,58 @@ void Camera::unsubscribe()
     }
 }
 
+VideoFrame::ColorFormat Camera::getColorFormat()
+{
+    return VideoFrame::BGR;
+}
+
 vpx_image Camera::getLastVPXImage()
 {
-    lock();
+    QMutexLocker lock(&mutex);
+
     vpx_image img;
-    int w = currFrame.size().width, h = currFrame.size().height;
-    vpx_img_alloc(&img, VPX_IMG_FMT_I420, w, h, 1); // I420 == YUV420P, same as YV12 with U and V switched
 
-    size_t i=0, j=0;
-    for( int line = 0; line < h; ++line )
+    if (currFrame.isNull())
     {
-        const cv::Vec3b *srcrow = currFrame[line];
-        if( !(line % 2) )
+        img.w = 0;
+        img.h = 0;
+        return img;
+    }
+
+    int w = currFrame.resolution.width();
+    int h = currFrame.resolution.height();
+
+    // I420 "It comprises an NxM Y plane followed by (N/2)x(M/2) V and U planes."
+    // http://fourcc.org/yuv.php#IYUV
+    vpx_img_alloc(&img, VPX_IMG_FMT_VPXI420, w, h, 1);
+
+    for (int x = 0; x < w; x += 2)
+    {
+        for (int y = 0; y < h; y += 2)
         {
-            for( int x = 0; x < w; x += 2 )
+            QRgb p1 = currFrame.getPixel(x, y);
+            QRgb p2 = currFrame.getPixel(x + 1, y);
+            QRgb p3 = currFrame.getPixel(x, y + 1);
+            QRgb p4 = currFrame.getPixel(x + 1, y + 1);
+
+            img.planes[VPX_PLANE_Y][x + y * w] = ((66 * qRed(p1) + 129 * qGreen(p1) + 25 * qBlue(p1)) >> 8) + 16;
+            img.planes[VPX_PLANE_Y][x + 1 + y * w] = ((66 * qRed(p2) + 129 * qGreen(p2) + 25 * qBlue(p2)) >> 8) + 16;
+            img.planes[VPX_PLANE_Y][x + (y + 1) * w] = ((66 * qRed(p3) + 129 * qGreen(p3) + 25 * qBlue(p3)) >> 8) + 16;
+            img.planes[VPX_PLANE_Y][x + 1 + (y + 1) * w] = ((66 * qRed(p4) + 129 * qGreen(p4) + 25 * qBlue(p4)) >> 8) + 16;
+
+            if (!(x % 2) && !(y % 2))
             {
-                uint8_t r = srcrow[x][2];
-                uint8_t g = srcrow[x][1];
-                uint8_t b = srcrow[x][0];
+                // TODO: consider p1 to p4?
 
-                img.planes[VPX_PLANE_Y][i] = ((66*r + 129*g + 25*b) >> 8) + 16;
-                img.planes[VPX_PLANE_V][j] = ((-38*r + -74*g + 112*b) >> 8) + 128;
-                img.planes[VPX_PLANE_U][j] = ((112*r + -94*g + -18*b) >> 8) + 128;
-                i++;
-                j++;
+                int i = x / 2;
+                int j = y / 2;
 
-                r = srcrow[x+1][2];
-                g = srcrow[x+1][1];
-                b = srcrow[x+1][0];
-                img.planes[VPX_PLANE_Y][i] = ((66*r + 129*g + 25*b) >> 8) + 16;
-                i++;
-            }
-        }
-        else
-        {
-            for( int x = 0; x < w; x += 1 )
-            {
-                uint8_t r = srcrow[x][2];
-                uint8_t g = srcrow[x][1];
-                uint8_t b = srcrow[x][0];
-
-                img.planes[VPX_PLANE_Y][i] = ((66*r + 129*g + 25*b) >> 8) + 16;
-                i++;
+                img.planes[VPX_PLANE_U][i + j * w / 2] = ((112 * qRed(p1) + -94 * qGreen(p1) + -18 * qBlue(p1)) >> 8) + 128;
+                img.planes[VPX_PLANE_V][i + j * w / 2] = ((-38 * qRed(p1) + -74 * qGreen(p1) + 112 * qBlue(p1)) >> 8) + 128;
             }
         }
     }
-    unlock();
+
     return img;
 }
 
@@ -190,42 +197,18 @@ double Camera::getProp(Camera::Prop prop)
     return 0.0;
 }
 
-void Camera::onNewFrameAvailable()
+void Camera::onNewFrameAvailable(const VideoFrame frame)
 {
-    emit frameAvailable();
+    emit frameAvailable(frame);
+
+    mutex.lock();
+    currFrame = frame;
+    mutex.unlock();
 }
 
 void Camera::onResProbingFinished(QList<QSize> res)
 {
     resolutions = res;
-}
-
-void *Camera::getData()
-{
-    return currFrame.data;
-}
-
-int Camera::getDataSize()
-{
-    return currFrame.total() * currFrame.channels();
-}
-
-void Camera::lock()
-{
-    mutex.lock();
-
-    if (worker->hasFrame())
-        currFrame = worker->dequeueFrame();
-}
-
-void Camera::unlock()
-{
-    mutex.unlock();
-}
-
-QSize Camera::resolution()
-{
-    return QSize(currFrame.cols, currFrame.rows);
 }
 
 Camera* Camera::getInstance()

@@ -24,6 +24,7 @@ CameraWorker::CameraWorker(int index)
     , camIndex(index)
     , refCount(0)
 {
+    qRegisterMetaType<VideoFrame>();
 }
 
 void CameraWorker::onStart()
@@ -147,42 +148,15 @@ void CameraWorker::doWork()
     if (!cam.isOpened())
         return;
 
-    if (queue.size() > 3)
-        return;
-
     if (!cam.read(frame))
     {
-        cam.release();
-        qDebug() << "CameraWorker: received empty frame -> closing";
+        qDebug() << "CameraWorker: Cannot read frame";
         return;
     }
 
-    mutex.lock();
-    queue.enqueue(frame);
-    mutex.unlock();
+    QByteArray frameData(reinterpret_cast<char*>(frame.data), frame.total() * frame.channels());
 
-    emit newFrameAvailable();
-}
-
-bool CameraWorker::hasFrame()
-{
-    mutex.lock();
-    bool b = !queue.empty();
-    mutex.unlock();
-
-    return b;
-}
-
-cv::Mat3b CameraWorker::dequeueFrame()
-{
-    if (queue.isEmpty())
-        return cv::Mat3b();
-
-    mutex.lock();
-    cv::Mat3b f = queue.dequeue();
-    mutex.unlock();
-
-    return f;
+    emit newFrameAvailable(VideoFrame{frameData, QSize(frame.cols, frame.rows), VideoFrame::BGR});
 }
 
 void CameraWorker::suspend()

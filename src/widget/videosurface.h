@@ -18,11 +18,11 @@
 #define SELFCAMVIEW_H
 
 #include <QGLWidget>
+#include <QMutex>
+#include "videosource.h"
 
 class QOpenGLBuffer;
 class QOpenGLShaderProgram;
-class QTimer;
-class VideoSource;
 
 class VideoSurface : public QGLWidget
 {
@@ -42,20 +42,26 @@ public:
 protected:
     virtual void initializeGL();
     virtual void paintGL();
-    virtual void updateGL();
 
-    void update();
+    void subscribe();
+    void unsubscribe();
+
+
+private slots:
+    void onNewFrameAvailable(const VideoFrame newFrame);
 
 private:
     VideoSource* source;
-    QOpenGLBuffer* pbo;
-    QOpenGLShaderProgram* program;
+    QOpenGLBuffer* pbo[2];
+    QOpenGLShaderProgram* bgrProgramm;
     GLuint textureId;
     int pboAllocSize;
     QSize res;
-    bool uploadFrame;
     bool hasSubscribed;
-    mutable int lastWidth;
+
+    QMutex mutex;
+    VideoFrame frame;
+    int pboIndex;
 };
 
 #endif // SELFCAMVIEW_H

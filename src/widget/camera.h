@@ -58,20 +58,16 @@ public:
     double getProp(Prop prop);
 
     // VideoSource interface
-    virtual void *getData();
-    virtual int getDataSize();
-    virtual void lock();
-    virtual void unlock();
-    virtual QSize resolution();
     virtual void subscribe();
     virtual void unsubscribe();
+    virtual VideoFrame::ColorFormat getColorFormat();
 
 protected:
     Camera();
 
 private:
     int refcount; ///< Number of users suscribed to the camera
-    cv::Mat3b currFrame;
+    VideoFrame currFrame;
     QMutex mutex;
 
     QThread* workerThread;
@@ -83,7 +79,7 @@ private:
 
 private slots:
     void onWorkerStarted();
-    void onNewFrameAvailable();
+    void onNewFrameAvailable(const VideoFrame frame);
     void onResProbingFinished(QList<QSize> res);
 
 };

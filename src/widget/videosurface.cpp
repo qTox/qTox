@@ -21,19 +21,19 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLShaderProgram>
 #include <QDebug>
+#include <QElapsedTimer>
 
 VideoSurface::VideoSurface(QWidget* parent)
-    : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
+    : QGLWidget(QGLFormat(QGL::SampleBuffers | QGL::SingleBuffer), parent)
     , source(nullptr)
-    , pbo(nullptr)
-    , program(nullptr)
+    , pbo{nullptr, nullptr}
+    , bgrProgramm(nullptr)
     , textureId(0)
     , pboAllocSize(0)
-    , uploadFrame(false)
     , hasSubscribed(false)
-    , lastWidth(0)
+    , pboIndex(0)
 {
-
+    setAutoBufferSwap(false);
 }
 
 VideoSurface::VideoSurface(VideoSource *Source, QWidget* parent)
@@ -44,8 +44,11 @@ VideoSurface::VideoSurface(VideoSource *Source, QWidget* parent)
 
 VideoSurface::~VideoSurface()
 {
-    if (pbo)
-        delete pbo;
+    if (pbo[0])
+    {
+        delete pbo[0];
+        delete pbo[1];
+    }
 
     if (textureId != 0)
         glDeleteTextures(1, &textureId);
@@ -61,25 +64,13 @@ void VideoSurface::setSource(VideoSource *src)
 
 void VideoSurface::hideEvent(QHideEvent *ev)
 {
-    if (source && hasSubscribed)
-    {
-        source->unsubscribe();
-        hasSubscribed = false;
-        disconnect(source, &VideoSource::frameAvailable, this, &VideoSurface::updateGL);
-    }
-
+    unsubscribe();
     QGLWidget::hideEvent(ev);
 }
 
 void VideoSurface::showEvent(QShowEvent *ev)
 {
-    if (source && !hasSubscribed)
-    {
-        source->subscribe();
-        hasSubscribed = true;
-        connect(source, &VideoSource::frameAvailable, this, &VideoSurface::updateGL);
-    }
-
+    subscribe();
     QGLWidget::showEvent(ev);
 }
 
@@ -90,7 +81,38 @@ QSize VideoSurface::sizeHint() const
 
 void VideoSurface::initializeGL()
 {
+    qDebug() << "VideoSurface: Init";
 
+    // pbo
+    pbo[0] = new QOpenGLBuffer(QOpenGLBuffer::PixelUnpackBuffer);
+    pbo[0]->setUsagePattern(QOpenGLBuffer::StreamDraw);
+    pbo[0]->create();
+
+    pbo[1] = new QOpenGLBuffer(QOpenGLBuffer::PixelUnpackBuffer);
+    pbo[1]->setUsagePattern(QOpenGLBuffer::StreamDraw);
+    pbo[1]->create();
+
+    // shaders
+    bgrProgramm = new QOpenGLShaderProgram;
+    bgrProgramm->addShaderFromSourceCode(QOpenGLShader::Vertex,
+                                     "attribute vec4 vertices;"
+                                     "varying vec2 coords;"
+                                     "void main() {"
+                                     "    gl_Position = vec4(vertices.xy,0.0,1.0);"
+                                     "    coords = vertices.xy*vec2(0.5,0.5)+vec2(0.5,0.5);"
+                                     "}");
+
+    // brg frag-shader
+    bgrProgramm->addShaderFromSourceCode(QOpenGLShader::Fragment,
+                                     "uniform sampler2D texture0;"
+                                     "varying vec2 coords;"
+                                     "void main() {"
+                                     "    vec4 color = texture2D(texture0,coords*vec2(1.0, -1.0));"
+                                     "    gl_FragColor = vec4(color.b, color.g, color.r, 1);"
+                                     "}");
+
+    bgrProgramm->bindAttributeLocation("vertices", 0);
+    bgrProgramm->link();
 }
 
 void VideoSurface::paintGL()
@@ -98,42 +120,13 @@ void VideoSurface::paintGL()
     if (!source)
         return;
 
-    if (!pbo)
+    mutex.lock();
+    VideoFrame currFrame = frame;
+    mutex.unlock();
+
+    if (res != currFrame.resolution)
     {
-        qDebug() << "VideoSurface: Init";
-
-        // pbo
-        pbo = new QOpenGLBuffer(QOpenGLBuffer::PixelUnpackBuffer);
-        pbo->setUsagePattern(QOpenGLBuffer::StreamDraw);
-        pbo->create();
-
-        // shaders
-        program = new QOpenGLShaderProgram;
-        program->addShaderFromSourceCode(QOpenGLShader::Vertex,
-                                         "attribute vec4 vertices;"
-                                         "varying vec2 coords;"
-                                         "void main() {"
-                                         "    gl_Position = vec4(vertices.xy,0.0,1.0);"
-                                         "    coords = vertices.xy*vec2(0.5,0.5)+vec2(0.5,0.5);"
-                                         "}");
-
-        // brg frag-shader
-        program->addShaderFromSourceCode(QOpenGLShader::Fragment,
-                                         "uniform sampler2D texture0;"
-                                         "varying vec2 coords;"
-                                         "void main() {"
-                                         "    vec4 color = texture2D(texture0,coords*vec2(1.0, -1.0));"
-                                         "    gl_FragColor = vec4(color.b, color.g, color.r, 1);"
-                                         "}");
-
-        program->bindAttributeLocation("vertices", 0);
-        program->link();
-    }
-
-    if (res != source->resolution())
-    {
-        qDebug() << "VideoSurface: Change resolution from " << res << " to " << source->resolution();
-        res = source->resolution();
+        res = currFrame.resolution;
 
         // a texture used to render the pbo (has the match the pixelformat of the source)
         glGenTextures(1,&textureId);
@@ -145,53 +138,58 @@ void VideoSurface::paintGL()
     }
 
 
-    if (uploadFrame)
+    if (!currFrame.isNull())
     {
-        source->lock();
-        void* frame = source->getData();
-        int frameBytes = source->getDataSize();
+        QElapsedTimer timer;
+        timer.start();
 
-        if (pboAllocSize != frameBytes && frameBytes > 0)
+        pboIndex = (pboIndex + 1) % 2;
+        int nextPboIndex = (pboIndex + 1) % 2;
+
+        if (pboAllocSize != currFrame.data.size())
         {
-            qDebug() << "VideoSurface: Resize pbo " << frameBytes << "bytes (before" << pboAllocSize << ")";
+            qDebug() << "VideoSurface: Resize pbo " << currFrame.data.size() << "bytes (before" << pboAllocSize << ")";
 
-            pbo->bind();
-            pbo->allocate(frameBytes);
-            pbo->release();
+            pbo[0]->bind();
+            pbo[0]->allocate(currFrame.data.size());
+            pbo[0]->release();
 
-            pboAllocSize = frameBytes;
+            pbo[1]->bind();
+            pbo[1]->allocate(currFrame.data.size());
+            pbo[1]->release();
+
+            pboAllocSize = currFrame.data.size();
         }
 
-        // transfer data
-        pbo->bind();
 
-        void* ptr = pbo->map(QOpenGLBuffer::WriteOnly);
-        if (ptr && frame)
-            memcpy(ptr, frame, frameBytes);
-        pbo->unmap();
-
-        source->unlock();
-
-        //transfer pbo data to texture
+        pbo[pboIndex]->bind();
         glBindTexture(GL_TEXTURE_2D, textureId);
         glTexSubImage2D(GL_TEXTURE_2D,0,0,0, res.width(), res.height(), GL_RGB, GL_UNSIGNED_BYTE, 0);
-        glBindTexture(GL_TEXTURE_2D, 0);
+        pbo[pboIndex]->unmap();
+        pbo[pboIndex]->release();
 
-        pbo->release();
+        // transfer data
+        pbo[nextPboIndex]->bind();
+        void* ptr = pbo[nextPboIndex]->map(QOpenGLBuffer::WriteOnly);
+        if (ptr)
+            memcpy(ptr, currFrame.data.data(), currFrame.data.size());
+        pbo[nextPboIndex]->unmap();
+        pbo[nextPboIndex]->release();
 
-        uploadFrame = false;
+        mutex.lock();
+        frame.setNull();
+        mutex.unlock();
     }
 
     // render pbo
-    float values[] = {
+    static float values[] = {
         -1, -1,
         1, -1,
         -1, 1,
         1, 1
     };
 
-    program->setAttributeArray(0, GL_FLOAT, values, 2);
-
+    // background
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -208,23 +206,46 @@ void VideoSurface::paintGL()
         glViewport((width() - w)*0.5f, 0, w, height());
     }
 
-    program->bind();
-    program->enableAttributeArray(0);
-
+    bgrProgramm->bind();
+    bgrProgramm->setAttributeArray(0, GL_FLOAT, values, 2);
+    bgrProgramm->enableAttributeArray(0);
     glBindTexture(GL_TEXTURE_2D, textureId);
 
     //draw fullscreen quad
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glBindTexture(GL_TEXTURE_2D, 0);
 
-    program->disableAttributeArray(0);
-    program->release();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    bgrProgramm->disableAttributeArray(0);
+    bgrProgramm->release();
 }
 
-void VideoSurface::updateGL()
+void VideoSurface::subscribe()
 {
-    uploadFrame = true;
-    QGLWidget::updateGL();
+    if (source && !hasSubscribed)
+    {
+        source->subscribe();
+        hasSubscribed = true;
+        connect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
+    }
+}
+
+void VideoSurface::unsubscribe()
+{
+    if (source && hasSubscribed)
+    {
+        source->unsubscribe();
+        hasSubscribed = false;
+        disconnect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
+    }
+}
+
+void VideoSurface::onNewFrameAvailable(const VideoFrame newFrame)
+{
+    mutex.lock();
+    frame = newFrame;
+    mutex.unlock();
+
+    updateGL();
 }
 
 

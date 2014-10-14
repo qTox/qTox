@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>387</height>
+    <width>382</width>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,7 +54,7 @@
    <item>
     <widget class="QGroupBox" name="videoGroup">
      <property name="title">
-      <string>Video settings</string>
+      <string>Video Settings</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -90,7 +90,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Modes</string>
+           <string>Resolution</string>
           </property>
          </widget>
         </item>
