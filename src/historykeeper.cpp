@@ -116,20 +116,20 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
                                                                 const QString &chat, const QDateTime &time_from,
                                                                 const QDateTime &time_to)
 {
-    Q_UNUSED(profile)
-
     QList<HistMessage> res;
 
     qint64 time64_from = time_from.toMSecsSinceEpoch();
     qint64 time64_to = time_to.toMSecsSinceEpoch();
 
     int chat_id = getChatID(chat, ct).first;
+    int profile_id = getAliasID(profile);
 
     QSqlQuery dbAnswer;
     if (ct == ctSingle)
     {
         dbAnswer = db.exec(QString("SELECT timestamp, user_id, message, mtype FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
-                           QString("AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;").arg(time64_from).arg(time64_to).arg(chat_id));
+                           QString("AND timestamp BETWEEN %1 AND %2 AND chat_id = %3 AND profile_id = %4;")
+                           .arg(time64_from).arg(time64_to).arg(chat_id).arg(profile_id));
     } else {
         // no groupchats yet
     }
