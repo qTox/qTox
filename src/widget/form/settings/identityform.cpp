@@ -132,7 +132,8 @@ void IdentityForm::onExportClicked()
     QString path = QFileDialog::getSaveFileName(this, tr("Export profile", "save dialog title"),
                     QDir::home().filePath(current), 
                     tr("Tox save file (*.tox)", "save dialog filter"));
-    QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path);
+    if (!path.isEmpty())
+        QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path);
 }
 
 void IdentityForm::onDeleteClicked()
@@ -157,6 +158,8 @@ void IdentityForm::onDeleteClicked()
 void IdentityForm::onImportClicked()
 {
     QString path = QFileDialog::getOpenFileName(this, tr("Import profile", "import dialog title"), QDir::homePath(), tr("Tox save file (*.tox)", "import dialog filter"));
+    if (path.isEmpty())
+        return;
     QFileInfo info(path);
     QString profile = info.completeBaseName();
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);

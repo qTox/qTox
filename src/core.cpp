@@ -46,6 +46,8 @@ QList<ToxFile> Core::fileRecvQueue;
 Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     tox(nullptr), camera(cam), loadPath(loadPath)
 {
+    qDebug() << "Core: loading Tox from" << loadPath;
+
     videobuf = new uint8_t[videobufsize];
     videoBusyness=0;
 
@@ -583,7 +585,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
 
         uint64_t resumePos = *reinterpret_cast<const uint64_t*>(data);
 
-        if (resumePos >= file->filesize)
+        if (resumePos >= (unsigned)file->filesize)
         {
             qWarning() << "Core::onFileControlCallback: invalid resume position";
             tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0); // don't sure about it
@@ -1184,6 +1186,13 @@ void Core::saveConfiguration(const QString& path)
 
 void Core::switchConfiguration(QString profile)
 {
+    if (profile.isEmpty())
+    {
+        qWarning() << "Core: got null profile to switch to, not switching";
+        return;
+    }
+    else
+        qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
     saveConfiguration();
     
     toxTimer->stop();
