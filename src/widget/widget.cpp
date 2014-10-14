@@ -499,8 +499,9 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     if (!f)
         return;
 
-    f->chatForm->addMessage(f->getName(), message, isAction);
-    HistoryKeeper::getInstance()->addChatEntry(f->userId, message, f->userId);
+    QDateTime timestamp = QDateTime::currentDateTime();
+    f->chatForm->addMessage(f->getName(), message, isAction, timestamp);
+    HistoryKeeper::getInstance()->addChatEntry(f->userId, message, f->userId, timestamp);
 
     if (activeChatroomWidget != nullptr)
     {
@@ -606,7 +607,7 @@ void Widget::onGroupMessageReceived(int groupnumber, const QString& message, con
     if (!g)
         return;
 
-    g->chatForm->addMessage(author, message);
+    g->chatForm->addMessage(author, message, false, QDateTime::currentDateTime());
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
@@ -736,7 +737,7 @@ void Widget::onMessageSendResult(int friendId, const QString& message, int messa
         return;
 
     if (!messageId)
-        f->chatForm->addSystemInfoMessage("Message failed to send", "red");
+        f->chatForm->addSystemInfoMessage("Message failed to send", "red", QDateTime::currentDateTime());
 }
 
 void Widget::onGroupSendResult(int groupId, const QString& message, int result)
@@ -747,5 +748,5 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         return;
 
     if (result == -1)
-        g->chatForm->addSystemInfoMessage("Message failed to send", "red");
+        g->chatForm->addSystemInfoMessage("Message failed to send", "red", QDateTime::currentDateTime());
 }

@@ -228,7 +228,7 @@ void GenericChatForm::clearChatArea(bool notinform)
     previousName = "";
 
     if (!notinform)
-        addSystemInfoMessage(tr("Cleared"), "white");
+        addSystemInfoMessage(tr("Cleared"), "white", QDateTime::currentDateTime());
 
     if (earliestMessage)
     {
@@ -237,8 +237,7 @@ void GenericChatForm::clearChatArea(bool notinform)
     }
 }
 
-ChatAction* GenericChatForm::genMessageActionAction(const QString &author, QString message,
-                                                    bool isAction, const QDateTime &datetime)
+ChatAction* GenericChatForm::genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime)
 {
     if (earliestMessage == nullptr)
     {

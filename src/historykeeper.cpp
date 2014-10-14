@@ -86,7 +86,7 @@ HistoryKeeper::HistoryKeeper(const QString &path, bool encr) :
        message
     */
 
-    db.exec(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL, ") +
+    db.exec(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
             QString("profile_id INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, mtype INTEGER NOT NULL, message TEXT NOT NULL);"));
     db.exec(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
     db.exec(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
@@ -100,14 +100,14 @@ HistoryKeeper::~HistoryKeeper()
     db.close();
 }
 
-void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender)
+void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt)
 {
     int chat_id = getChatID(chat, ctSingle).first;
     int sender_id = getAliasID(sender);
     int profile_id = getCurrentProfileID();
 
-    db.exec(QString("INSERT INTO history (profile_id, chat_id, sender, mtype, message) VALUES (%1, %2, %3, 0, '%4');")
-            .arg(profile_id).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
+    db.exec(QString("INSERT INTO history (profile_id, timestamp, chat_id, sender, mtype, message) VALUES (%1, %2, %3, %4, 0, '%5');")
+            .arg(profile_id).arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
 }
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::ChatType ct, const QString &profile,
@@ -118,8 +118,8 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
 
     QList<HistMessage> res;
 
-    QString timeStr_from = time_from.toString("yyyy-MM-dd hh:mm:ss");
-    QString timeStr_to = time_to.toString("yyyy-MM-dd hh:mm:ss");
+    qint64 time64_from = time_from.toMSecsSinceEpoch();
+    qint64 time64_to = time_to.toMSecsSinceEpoch();
 
     int chat_id = getChatID(chat, ct).first;
 
@@ -127,7 +127,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     if (ct == ctSingle)
     {
         dbAnswer = db.exec(QString("SELECT timestamp, user_id, message FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
-                           QString("AND timestamp BETWEEN '%1' AND '%2' AND chat_id = %3;").arg(timeStr_from).arg(timeStr_to).arg(chat_id));
+                           QString("AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;").arg(time64_from).arg(time64_to).arg(chat_id));
     } else {
         // no groupchats yet
     }
@@ -136,8 +136,8 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     {
         QString sender = dbAnswer.value(1).toString();
         QString message = unWrapMessage(dbAnswer.value(2).toString());
-        QDateTime time = dbAnswer.value(0).toDateTime();
-        time.setTimeSpec(Qt::UTC);
+        qint64 timeInt = dbAnswer.value(0).toLongLong();
+        QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
 
         res.push_back({sender,message,time});
     }
@@ -221,11 +221,12 @@ void HistoryKeeper::resetInstance()
     historyInstance = nullptr;
 }
 
-void HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &message, const QString &sender)
+void HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &message, const QString &sender, const QDateTime &dt)
 {
     Q_UNUSED(chat)
     Q_UNUSED(message)
     Q_UNUSED(sender)
+    Q_UNUSED(dt)
     // no groupchats yet
 }
 

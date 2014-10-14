@@ -46,9 +46,8 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    void addMessage(const QString &author, const QString &message, bool isAction = false,
-                    const QDateTime &datetime=QDateTime::currentDateTime());
-    void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime=QDateTime::currentDateTime());
+    void addMessage(const QString &author, const QString &message, bool isAction, const QDateTime &datetime);
+    void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
 
 signals:
     void sendMessage(int, QString);
@@ -66,10 +65,8 @@ protected slots:
 
 protected:
     QString getElidedName(const QString& name);
-    ChatAction* genMessageActionAction(const QString &author, QString message, bool isAction = false,
-                                       const QDateTime &datetime=QDateTime::currentDateTime());
-    ChatAction* genSystemInfoAction(const QString &message, const QString &type,
-                                    const QDateTime &datetime=QDateTime::currentDateTime());
+    ChatAction* genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime);
+    ChatAction* genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);
 
     QMenu menu;
     CroppingLabel *nameLabel;

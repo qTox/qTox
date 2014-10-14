@@ -90,16 +90,17 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
     QString name = Widget::getInstance()->getUsername();
-    HistoryKeeper::getInstance()->addChatEntry(f->userId, msg, Core::getInstance()->getSelfId().publicKey);
+    QDateTime timestamp = QDateTime::currentDateTime();
+    HistoryKeeper::getInstance()->addChatEntry(f->userId, msg, Core::getInstance()->getSelfId().publicKey, timestamp);
     if (msg.startsWith("/me "))
     {
         msg = msg.right(msg.length() - 4);
-        addMessage(name, msg, true);
+        addMessage(name, msg, true, timestamp);
         emit sendAction(f->friendId, msg);
     }
     else
     {
-        addMessage(name, msg, false);
+        addMessage(name, msg, false, timestamp);
         emit sendMessage(f->friendId, msg);
     }
     msgEdit->clear();
@@ -493,7 +494,7 @@ void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
     if (FriendId != f->friendId)
         return;
 
-    addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red");
+    addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red", QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
@@ -549,11 +550,11 @@ void ChatForm::onLoadHistory()
             if (*earliestMessage < fromTime)
                 return;
             if (*earliestMessage < toTime)
+            {
                 toTime = *earliestMessage;
+                toTime = toTime.addMSecs(-1);
+            }
         }
-
-        fromTime = fromTime.toUTC();
-        toTime = toTime.toUTC();
 
         auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, Core::getInstance()->getSelfId().publicKey,
                                                                  f->userId, fromTime, toTime);
@@ -578,8 +579,11 @@ void ChatForm::onLoadHistory()
             historyMessages.append(ca);
 
         int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
+
         chatWidget->getMesages().clear();
         chatWidget->clear();
+        if (earliestMessage != nullptr)
+            *earliestMessage = fromTime;
 
         for (ChatAction *ca : historyMessages)
             chatWidget->insertMessage(ca);

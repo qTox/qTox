@@ -37,10 +37,10 @@ public:
     static void resetInstance();
     virtual ~HistoryKeeper();
 
-    void addChatEntry(const QString& chat, const QString& message, const QString& sender);
-    void addGroupChatEntry(const QString& chat, const QString& message, const QString& sender);
+    void addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
+    void addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &profile, const QString &chat,
-                                      const QDateTime &time_from, const QDateTime &time_to = QDateTime::currentDateTimeUtc());
+                                      const QDateTime &time_from, const QDateTime &time_to);
     void syncToDisk();
 
 private:
