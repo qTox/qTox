@@ -45,7 +45,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
+    QAction* copyId = menu.addAction(tr("Copy friend Public Key","Menu to copy the Public Key of that friend"));
     QMenu* inviteMenu = menu.addMenu(tr("Invite in group","Menu to invite a friend in a groupchat"));
     QMap<QAction*, Group*> groupActions;
     for (Group* group : GroupList::groupList)
