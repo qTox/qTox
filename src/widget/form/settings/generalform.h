@@ -42,6 +42,8 @@ private slots:
     void onProxyAddrEdited();
     void onProxyPortEdited(int port);
     void onUseProxyUpdated();
+    void onSetStatusChange();
+    void onSetSignInNotifications();
 
 private:
     Ui::GeneralSettings *bodyUI;

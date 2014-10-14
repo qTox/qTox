@@ -135,9 +135,9 @@ Widget::Widget(QWidget *parent)
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
-    connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
+    connect(core, &Core::friendSignedIn, this, &Widget::onFriendSignIn);    
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
     connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
@@ -519,6 +519,36 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     f->friendStatus = status;
     f->widget->updateStatusLight();
+    
+    QString fStatus = ""; 
+    switch(f->friendStatus){
+    case Status::Away:
+        fStatus = "away"; break;
+    case Status::Busy:
+        fStatus = "busy"; break;
+    case Status::Offline:
+        fStatus = "offline"; break;
+    default:
+        fStatus = "online"; break;
+    }
+        
+    //won't print the message if there were no messages before    
+    if(f->chatForm->getNumberOfMessages() != 0
+            && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
+        f->chatForm->addSystemInfoMessage(f->getName() + " has changed status to " + fStatus, "white");
+}
+
+void Widget::onFriendSignIn(int friendId, Status status)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    if (!f)
+        return;
+
+    contactListWidget->moveWidget(f->widget, status);
+
+    f->friendStatus = status;
+    f->widget->updateStatusLight();
+    
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)

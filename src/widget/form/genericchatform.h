@@ -46,7 +46,8 @@ public:
     virtual void show(Ui::MainWindow &ui);
     void addMessage(QString author, QString message, bool isAction = false, QDateTime datetime=QDateTime::currentDateTime());
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime=QDateTime::currentDateTime());
-
+    int getNumberOfMessages();
+    
 signals:
     void sendMessage(int, QString);
     void sendAction(int, QString);
