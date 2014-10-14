@@ -100,14 +100,16 @@ HistoryKeeper::~HistoryKeeper()
     db.close();
 }
 
-void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt)
+void HistoryKeeper::addChatEntry(const QString& chat, MessageType mt, const QString& message,
+                                 const QString& sender, const QDateTime &dt)
 {
     int chat_id = getChatID(chat, ctSingle).first;
     int sender_id = getAliasID(sender);
     int profile_id = getCurrentProfileID();
 
-    db.exec(QString("INSERT INTO history (profile_id, timestamp, chat_id, sender, mtype, message) VALUES (%1, %2, %3, %4, 0, '%5');")
-            .arg(profile_id).arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
+    db.exec(QString("INSERT INTO history (profile_id, timestamp, chat_id, sender, mtype, message)") +
+            QString("VALUES (%1, %2, %3, %4, %5, '%6');")
+            .arg(profile_id).arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(mt).arg(wrapMessage(message)));
 }
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::ChatType ct, const QString &profile,
@@ -126,7 +128,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     QSqlQuery dbAnswer;
     if (ct == ctSingle)
     {
-        dbAnswer = db.exec(QString("SELECT timestamp, user_id, message FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
+        dbAnswer = db.exec(QString("SELECT timestamp, user_id, message, mtype FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
                            QString("AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;").arg(time64_from).arg(time64_to).arg(chat_id));
     } else {
         // no groupchats yet
@@ -138,8 +140,9 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
         QString message = unWrapMessage(dbAnswer.value(2).toString());
         qint64 timeInt = dbAnswer.value(0).toLongLong();
         QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
+        MessageType mt = convertToMessageType(dbAnswer.value(3).toInt());
 
-        res.push_back({sender,message,time});
+        res.push_back({sender,message,time, mt});
     }
 
     return res;
@@ -168,7 +171,7 @@ void HistoryKeeper::updateChatsID()
     {
         QString name = dbAnswer.value(1).toString();
         int id = dbAnswer.value(0).toInt();
-        ChatType ctype = static_cast<ChatType>(dbAnswer.value(2).toInt());
+        ChatType ctype = convertToChatType(dbAnswer.value(2).toInt());
 
         chats[name] = {id, ctype};
     }
@@ -262,4 +265,20 @@ int HistoryKeeper::getCurrentProfileID()
 {
     // for many profiles
     return getAliasID(Core::getInstance()->getSelfId().publicKey);
+}
+
+HistoryKeeper::MessageType HistoryKeeper::convertToMessageType(int mt)
+{
+    if (mt < 0 || mt > 1)
+        return mtMessage;
+
+    return static_cast<MessageType>(mt);
+}
+
+HistoryKeeper::ChatType HistoryKeeper::convertToChatType(int ct)
+{
+    if (ct < 0 || ct > 1)
+        return ctSingle;
+
+    return static_cast<ChatType>(ct);
 }

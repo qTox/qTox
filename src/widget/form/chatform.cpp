@@ -91,16 +91,19 @@ void ChatForm::onSendTriggered()
         return;
     QString name = Widget::getInstance()->getUsername();
     QDateTime timestamp = QDateTime::currentDateTime();
-    HistoryKeeper::getInstance()->addChatEntry(f->userId, msg, Core::getInstance()->getSelfId().publicKey, timestamp);
     if (msg.startsWith("/me "))
     {
         msg = msg.right(msg.length() - 4);
         addMessage(name, msg, true, timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->userId, HistoryKeeper::mtAction, msg,
+                                                   Core::getInstance()->getSelfId().publicKey, timestamp);
         emit sendAction(f->friendId, msg);
     }
     else
     {
         addMessage(name, msg, false, timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->userId, HistoryKeeper::mtMessage, msg,
+                                                   Core::getInstance()->getSelfId().publicKey, timestamp);
         emit sendMessage(f->friendId, msg);
     }
     msgEdit->clear();
@@ -565,7 +568,7 @@ void ChatForm::onLoadHistory()
 
         for (const auto &it : msgs)
         {
-            bool isAction = false;
+            bool isAction = (it.mt == HistoryKeeper::mtAction);
             QString name = f->getName();
             if (it.sender == Core::getInstance()->getSelfId().publicKey)
                 name = Core::getInstance()->getUsername();

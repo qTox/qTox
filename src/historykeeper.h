@@ -25,19 +25,22 @@
 class HistoryKeeper
 {
 public:
+    enum ChatType {ctSingle = 0, ctGroup};
+    enum MessageType {mtMessage = 0, mtAction};
+
     struct HistMessage
     {
         QString sender;
         QString message;
         QDateTime timestamp;
+        MessageType mt;
     };
-    enum ChatType {ctSingle = 0, ctGroup};
 
     static HistoryKeeper* getInstance();
     static void resetInstance();
     virtual ~HistoryKeeper();
 
-    void addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
+    void addChatEntry(const QString& chat, MessageType mt, const QString& message, const QString& sender, const QDateTime &dt);
     void addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &profile, const QString &chat,
                                       const QDateTime &time_from, const QDateTime &time_to);
@@ -57,6 +60,9 @@ private:
     QString wrapMessage(const QString &str);
     QString unWrapMessage(const QString &str);
     bool dumpDBtoFile(const QString &fname);
+
+    MessageType convertToMessageType(int);
+    ChatType convertToChatType(int);
 
     QSqlDatabase db;
     QMap<QString, int> aliases;

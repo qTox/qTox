@@ -501,7 +501,8 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
 
     QDateTime timestamp = QDateTime::currentDateTime();
     f->chatForm->addMessage(f->getName(), message, isAction, timestamp);
-    HistoryKeeper::getInstance()->addChatEntry(f->userId, message, f->userId, timestamp);
+    HistoryKeeper::MessageType mt = isAction ? HistoryKeeper::mtAction : HistoryKeeper::mtMessage;
+    HistoryKeeper::getInstance()->addChatEntry(f->userId, mt, message, f->userId, timestamp);
 
     if (activeChatroomWidget != nullptr)
     {
