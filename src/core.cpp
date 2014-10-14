@@ -585,7 +585,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
 
         uint64_t resumePos = *reinterpret_cast<const uint64_t*>(data);
 
-        if (resumePos >= file->filesize)
+        if (resumePos >= (unsigned)file->filesize)
         {
             qWarning() << "Core::onFileControlCallback: invalid resume position";
             tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0); // don't sure about it
