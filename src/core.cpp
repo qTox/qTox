@@ -115,11 +115,7 @@ Core::~Core()
     if (alInDev)
         alcCaptureCloseDevice(alInDev);
 
-    if (pwhash)
-    {
-        delete[] pwhash;
-        pwhash = nullptr;
-    }
+    clearPassword();
 }
 
 Core* Core::getInstance()
@@ -1124,7 +1120,9 @@ bool Core::loadConfiguration(QString path)
                 while (error != 0)
                 {
                     error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwhash, TOX_HASH_LENGTH);
-                    // something something QInputDialog new password
+                    emit blockingGetPassword();
+                    if (!pwhash)
+                        // we need a way to start core without any profile
                 } */
             }
         }
@@ -1155,22 +1153,18 @@ void Core::saveConfiguration()
     }
     
     QString profile = Settings::getInstance().getCurrentProfile();
-    //qDebug() << "saveConf read profile: " << profile;
+
     if (profile == "")
     { // no profile active; this should only happen on startup, if at all
         profile = sanitize(getUsername());
+
         if (profile == "") // happens on creation of a new Tox ID
             profile = getIDString();
-        //qDebug() << "saveConf: read sanitized user as " << profile;
+
         Settings::getInstance().setCurrentProfile(profile);
     }
     
-    QString path = dir + QDir::separator() + profile + TOX_EXT;
-    QFileInfo info(path);
-//    if (!info.exists()) // fall back to old school 'data'
-//    {   //path = dir + QDir::separator() + CONFIG_FILE_NAME;
-//        qDebug() << "Core:" << path << " does not exist";
-//    }
+    QString path = directory.filePath(profile + TOX_EXT);
     
     saveConfiguration(path);
 }
@@ -1204,6 +1198,10 @@ void Core::saveConfiguration(const QString& path)
 
         if (Settings::getInstance().getEncryptTox())
         {
+            if (!pwhash)
+                emit blockingGetPassword();
+            //if (!pwhash)
+                // revert to unsaved...? or maybe we shouldn't even try to get a pw from here ^
             int ret = tox_encrypted_save(tox, data, pwhash, TOX_HASH_LENGTH);
             if (ret == -1)
             {
@@ -1229,8 +1227,9 @@ void Core::switchConfiguration(const QString& profile)
     }
     else
         qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
-    saveConfiguration();
     
+    saveConfiguration();
+    clearPassword();
     toxTimer->stop();
     
     if (tox) {

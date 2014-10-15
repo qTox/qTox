@@ -57,7 +57,6 @@ public:
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
     static QList<QString> searchProfiles();
-    void clearContactsList();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
@@ -109,6 +108,8 @@ private slots:
     void onGroupSendResult(int groupId, const QString& message, int result);
     void playRingtone();
     void onIconClick();
+    void clearContactsList();
+    void getPassword();
 
 private:
     void hideMainForms();
