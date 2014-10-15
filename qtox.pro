@@ -139,7 +139,10 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/cameraworker.h \
     src/widget/videosurface.h \
     src/widget/form/loadhistorydialog.h \
-    src/historykeeper.h
+    src/historykeeper.h \
+    src/misc/db/genericddinterface.h \
+    src/misc/db/plaindb.h \
+    src/misc/db/encrypteddb.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -188,4 +191,7 @@ SOURCES += \
     src/cameraworker.cpp \
     src/widget/videosurface.cpp \
     src/widget/form/loadhistorydialog.cpp \
-    src/historykeeper.cpp
+    src/historykeeper.cpp \
+    src/misc/db/genericddinterface.cpp \
+    src/misc/db/plaindb.cpp \
+    src/misc/db/encrypteddb.cpp
