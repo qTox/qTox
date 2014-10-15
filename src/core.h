@@ -64,6 +64,8 @@ public:
     void increaseVideoBusyness();
     void decreaseVideoBusyness();
 
+    bool anyActiveCalls();
+
 public slots:
     void start();
     void process();
