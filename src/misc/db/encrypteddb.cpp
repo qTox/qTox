@@ -17,16 +17,16 @@
 #include "encrypteddb.h"
 #include "src/misc/settings.h"
 
-#include <QDir>
 #include <QSqlQuery>
+#include <QDebug>
 
 EncryptedDb::EncryptedDb(const QString &fname, const QString &key) :
-    key(key), encrFile(fname), PlainDb(":memory:")
+    PlainDb(":memory:"), key(key), encrFile(fname)
 {
     QList<QString> sqlCommands = decryptFile();
     for (const QString &cmd : sqlCommands)
     {
-        PlainDb::exec(true, cmd);
+        PlainDb::exec(cmd);
     }
 }
 
@@ -35,13 +35,13 @@ EncryptedDb::~EncryptedDb()
     // save to file if necessary
 }
 
-QSqlQuery EncryptedDb::exec(bool keep, const QString &query)
+QSqlQuery EncryptedDb::exec(const QString &query)
 {
-    QSqlQuery ret = PlainDb::exec(keep, query);
-    if (keep)
+    QSqlQuery retQSqlQuery = PlainDb::exec(query);
+    if (query.startsWith("INSERT", Qt::CaseInsensitive))
         appendToEncrypted(query);
 
-    return ret;
+    return retQSqlQuery;
 }
 
 bool EncryptedDb::save()
@@ -56,5 +56,5 @@ QList<QString> EncryptedDb::decryptFile()
 
 void EncryptedDb::appendToEncrypted(const QString &sql)
 {
-    Q_UNUSED(sql)
+    qDebug() << sql;
 }

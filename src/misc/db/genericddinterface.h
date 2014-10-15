@@ -25,7 +25,7 @@ class GenericDdInterface
 public:
     virtual ~GenericDdInterface();
 
-    virtual QSqlQuery exec(bool keep, const QString &query) = 0;
+    virtual QSqlQuery exec(const QString &query) = 0;
     virtual bool save() = 0;
 };
 

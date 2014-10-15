@@ -19,8 +19,9 @@
 
 #include <QMap>
 #include <QList>
-#include <QSqlDatabase>
 #include <QDateTime>
+
+class GenericDdInterface;
 
 class HistoryKeeper
 {
@@ -42,12 +43,11 @@ public:
     void addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &profile, const QString &chat,
                                       const QDateTime &time_from, const QDateTime &time_to);
-    void syncToDisk();
 
 private:
 
-    HistoryKeeper(const QString &path, bool encr = false);
-    HistoryKeeper(HistoryKeeper &settings) = delete;
+    HistoryKeeper(GenericDdInterface *db_);
+    HistoryKeeper(HistoryKeeper &hk) = delete;
     HistoryKeeper& operator=(const HistoryKeeper&) = delete;
 
     void updateChatsID();
@@ -57,11 +57,10 @@ private:
     int getCurrentProfileID();
     QString wrapMessage(const QString &str);
     QString unWrapMessage(const QString &str);
-    bool dumpDBtoFile(const QString &fname);
 
     ChatType convertToChatType(int);
 
-    QSqlDatabase db;
+    GenericDdInterface *db;
     QMap<QString, int> aliases;
     QMap<QString, QPair<int, ChatType>> chats;
     bool isEncrypted;

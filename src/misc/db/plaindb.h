@@ -27,7 +27,7 @@ public:
     PlainDb(const QString &db_name);
     virtual ~PlainDb();
 
-    virtual QSqlQuery exec(bool keep, const QString &query);
+    virtual QSqlQuery exec(const QString &query);
     virtual bool save();
 
 private:

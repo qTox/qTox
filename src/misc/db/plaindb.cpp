@@ -37,9 +37,8 @@ PlainDb::~PlainDb()
     db.close();
 }
 
-QSqlQuery PlainDb::exec(bool keep, const QString &query)
+QSqlQuery PlainDb::exec(const QString &query)
 {
-    Q_UNUSED(keep)
     return db.exec(query);
 }
 

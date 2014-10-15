@@ -26,6 +26,9 @@
 #include <QDebug>
 #include <QTemporaryFile>
 
+#include "misc/db/plaindb.h"
+#include "misc/db/encrypteddb.h"
+
 static HistoryKeeper *historyInstance = nullptr;
 
 HistoryKeeper *HistoryKeeper::getInstance()
@@ -33,36 +36,35 @@ HistoryKeeper *HistoryKeeper::getInstance()
     if (historyInstance == nullptr)
     {
         QString path(":memory:");
-        bool encrypted = Settings::getInstance().getEncryptLogs();
+        GenericDdInterface *dbIntf;
 
         if (Settings::getInstance().getEnableLogging())
         {
-            path = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.sqlite");
-            // path = "/tmp/qtox_history.sqlite"; // just for testing purpose
+            bool encrypted = Settings::getInstance().getEncryptLogs();
+
+            if (encrypted)
+            {
+                QString key = "plainKey"; // FIXME: ask user about it
+                path = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.encrypted");
+                dbIntf = new EncryptedDb(path, key);
+
+                historyInstance = new HistoryKeeper(dbIntf);
+                return historyInstance;
+            } else {
+                path = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.sqlite");
+            }
         }
 
-        historyInstance = new HistoryKeeper(path, encrypted);
+        dbIntf = new PlainDb(path);
+        historyInstance = new HistoryKeeper(dbIntf);
     }
 
     return historyInstance;
 }
 
-HistoryKeeper::HistoryKeeper(const QString &path, bool encr) :
-    isEncrypted(encr)
+HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
+    db(db_)
 {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    if (isEncrypted)
-        db.setDatabaseName(":memory:");
-    else
-        db.setDatabaseName(path);
-
-    if (!db.open())
-    {
-        qWarning() << QString("Can't open file: %1, history will not be saved!").arg(path);
-        db.setDatabaseName(":memory:");
-        db.open();
-    }
-
     /*
      DB format
      chats:
@@ -85,10 +87,10 @@ HistoryKeeper::HistoryKeeper(const QString &path, bool encr) :
        message
     */
 
-    db.exec(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
-            QString("profile_id INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, message TEXT NOT NULL);"));
-    db.exec(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
-    db.exec(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
+    db->exec(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
+             QString("profile_id INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, message TEXT NOT NULL);"));
+    db->exec(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
+    db->exec(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
 
     updateChatsID();
     updateAliases();
@@ -96,7 +98,7 @@ HistoryKeeper::HistoryKeeper(const QString &path, bool encr) :
 
 HistoryKeeper::~HistoryKeeper()
 {
-    db.close();
+    delete db;
 }
 
 void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt)
@@ -105,9 +107,9 @@ void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, co
     int sender_id = getAliasID(sender);
     int profile_id = getCurrentProfileID();
 
-    db.exec(QString("INSERT INTO history (profile_id, timestamp, chat_id, sender, message)") +
-            QString("VALUES (%1, %2, %3, %4, '%5');")
-            .arg(profile_id).arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
+    db->exec(QString("INSERT INTO history (profile_id, timestamp, chat_id, sender, message)") +
+             QString("VALUES (%1, %2, %3, %4, '%5');")
+             .arg(profile_id).arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
 }
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::ChatType ct, const QString &profile,
@@ -125,9 +127,9 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     QSqlQuery dbAnswer;
     if (ct == ctSingle)
     {
-        dbAnswer = db.exec(QString("SELECT timestamp, user_id, message FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
-                           QString("AND timestamp BETWEEN %1 AND %2 AND chat_id = %3 AND profile_id = %4;")
-                           .arg(time64_from).arg(time64_to).arg(chat_id).arg(profile_id));
+        dbAnswer = db->exec(QString("SELECT timestamp, user_id, message FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
+                            QString("AND timestamp BETWEEN %1 AND %2 AND chat_id = %3 AND profile_id = %4;")
+                            .arg(time64_from).arg(time64_to).arg(chat_id).arg(profile_id));
     } else {
         // no groupchats yet
     }
@@ -161,7 +163,7 @@ QString HistoryKeeper::unWrapMessage(const QString &str)
 
 void HistoryKeeper::updateChatsID()
 {
-    auto dbAnswer = db.exec(QString("SELECT * FROM chats;"));
+    auto dbAnswer = db->exec(QString("SELECT * FROM chats;"));
 
     chats.clear();
     while (dbAnswer.next())
@@ -176,7 +178,7 @@ void HistoryKeeper::updateChatsID()
 
 void HistoryKeeper::updateAliases()
 {
-    auto dbAnswer = db.exec(QString("SELECT * FROM aliases;"));
+    auto dbAnswer = db->exec(QString("SELECT * FROM aliases;"));
 
     aliases.clear();
     while (dbAnswer.next())
@@ -194,7 +196,7 @@ QPair<int, HistoryKeeper::ChatType> HistoryKeeper::getChatID(const QString &id_s
     if (it != chats.end())
         return it.value();
 
-    db.exec(QString("INSERT INTO chats (name, ctype) VALUES ('%1', '%2');").arg(id_str).arg(ct));
+    db->exec(QString("INSERT INTO chats (name, ctype) VALUES ('%1', '%2');").arg(id_str).arg(ct));
     updateChatsID();
 
     return getChatID(id_str, ct);
@@ -206,7 +208,7 @@ int HistoryKeeper::getAliasID(const QString &id_str)
     if (it != aliases.end())
         return it.value();
 
-    db.exec(QString("INSERT INTO aliases (user_id) VALUES ('%1');").arg(id_str));
+    db->exec(QString("INSERT INTO aliases (user_id) VALUES ('%1');").arg(id_str));
     updateAliases();
 
     return getAliasID(id_str);
@@ -228,34 +230,6 @@ void HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &messag
     Q_UNUSED(sender)
     Q_UNUSED(dt)
     // no groupchats yet
-}
-
-void HistoryKeeper::syncToDisk()
-{
-    if (!isEncrypted)
-        return;
-
-    QTemporaryFile tmpDump;
-    if (tmpDump.open())
-    {
-        QString fname = tmpDump.fileName();
-        if (!dumpDBtoFile(fname))
-        {
-            // warning
-            return;
-        }
-
-        // encryption here
-    } else
-    {
-        // warning
-    }
-}
-
-bool HistoryKeeper::dumpDBtoFile(const QString &fname)
-{
-    Q_UNUSED(fname)
-    return false;
 }
 
 int HistoryKeeper::getCurrentProfileID()

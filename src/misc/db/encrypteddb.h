@@ -20,6 +20,7 @@
 #include "plaindb.h"
 
 #include <QList>
+#include <QFile>
 
 class EncryptedDb : public PlainDb
 {
@@ -27,18 +28,17 @@ public:
     EncryptedDb(const QString& fname, const QString &key);
     virtual ~EncryptedDb();
 
-    virtual QSqlQuery exec(bool keep, const QString &query);
+    virtual QSqlQuery exec(const QString &query);
     virtual bool save();
 
 private:
-    QString getFileName(){return encrFile;}
     QString getKey(){return key;}
 
     QList<QString> decryptFile();
     void appendToEncrypted(const QString &sql);
 
     QString key;
-    QString encrFile;
+    QFile encrFile;
 };
 
 #endif // ENCRYPTEDDB_H
