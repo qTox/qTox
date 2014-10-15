@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
-    <height>379</height>
+    <width>380</width>
+    <height>377</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -184,7 +184,7 @@
   <customwidget>
    <class>VideoSurface</class>
    <extends>QWidget</extends>
-   <header>widget/videosurface.h</header>
+   <header>src/widget/videosurface.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

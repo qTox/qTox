@@ -218,6 +218,8 @@ void VideoSurface::paintGL()
     case VideoFrame::BGR:
         programm = bgrProgramm;
         break;
+    default:
+        break;
     }
 
     if (programm)
