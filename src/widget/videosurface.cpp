@@ -27,7 +27,6 @@ VideoSurface::VideoSurface(QWidget* parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers | QGL::SingleBuffer), parent)
     , source(nullptr)
     , pbo{nullptr, nullptr}
-    , bgrProgramm(nullptr)
     , textureId(0)
     , pboAllocSize(0)
     , hasSubscribed(false)
@@ -36,10 +35,10 @@ VideoSurface::VideoSurface(QWidget* parent)
     setAutoBufferSwap(false);
 }
 
-VideoSurface::VideoSurface(VideoSource *Source, QWidget* parent)
+VideoSurface::VideoSurface(VideoSource *source, QWidget* parent)
     : VideoSurface(parent)
 {
-    source = Source;
+    setSource(source);
 }
 
 VideoSurface::~VideoSurface()
@@ -53,30 +52,17 @@ VideoSurface::~VideoSurface()
     if (textureId != 0)
         glDeleteTextures(1, &textureId);
 
-    if (source && hasSubscribed)
-        source->unsubscribe();
+    unsubscribe();
 }
 
 void VideoSurface::setSource(VideoSource *src)
 {
-    source = src;
-}
+    if (source == src)
+        return;
 
-void VideoSurface::hideEvent(QHideEvent *ev)
-{
     unsubscribe();
-    QGLWidget::hideEvent(ev);
-}
-
-void VideoSurface::showEvent(QShowEvent *ev)
-{
+    source = src;
     subscribe();
-    QGLWidget::showEvent(ev);
-}
-
-QSize VideoSurface::sizeHint() const
-{
-    return QGLWidget::sizeHint();
 }
 
 void VideoSurface::initializeGL()
@@ -113,13 +99,33 @@ void VideoSurface::initializeGL()
 
     bgrProgramm->bindAttributeLocation("vertices", 0);
     bgrProgramm->link();
+
+    // shaders
+    yuvProgramm = new QOpenGLShaderProgram;
+    yuvProgramm->addShaderFromSourceCode(QOpenGLShader::Vertex,
+                                     "attribute vec4 vertices;"
+                                     "varying vec2 coords;"
+                                     "void main() {"
+                                     "    gl_Position = vec4(vertices.xy,0.0,1.0);"
+                                     "    coords = vertices.xy*vec2(0.5,0.5)+vec2(0.5,0.5);"
+                                     "}");
+
+    // brg frag-shader
+    yuvProgramm->addShaderFromSourceCode(QOpenGLShader::Fragment,
+                                     "uniform sampler2D texture0;"
+                                     "varying vec2 coords;"
+                                     "void main() {"
+                                     "      vec3 yuv = texture2D(texture0,coords*vec2(1.0, -1.0)) - vec3(0,0.5,0.5);"
+                                     "      vec3 rgb = mat3(1,1,1,0,-0.21482,2.12798,1.28033,-0.38059,0) * yuv;"
+                                     "      gl_FragColor = vec4(rgb,1);"
+                                     "}");
+
+    yuvProgramm->bindAttributeLocation("vertices", 0);
+    yuvProgramm->link();
 }
 
 void VideoSurface::paintGL()
 {
-    if (!source)
-        return;
-
     mutex.lock();
     VideoFrame currFrame = frame;
     mutex.unlock();
@@ -140,25 +146,22 @@ void VideoSurface::paintGL()
 
     if (!currFrame.isNull())
     {
-        QElapsedTimer timer;
-        timer.start();
-
         pboIndex = (pboIndex + 1) % 2;
         int nextPboIndex = (pboIndex + 1) % 2;
 
-        if (pboAllocSize != currFrame.data.size())
+        if (pboAllocSize != currFrame.frameData.size())
         {
-            qDebug() << "VideoSurface: Resize pbo " << currFrame.data.size() << "bytes (before" << pboAllocSize << ")";
+            qDebug() << "VideoSurface: Resize pbo " << currFrame.frameData.size() << "bytes (before" << pboAllocSize << ")";
 
             pbo[0]->bind();
-            pbo[0]->allocate(currFrame.data.size());
+            pbo[0]->allocate(currFrame.frameData.size());
             pbo[0]->release();
 
             pbo[1]->bind();
-            pbo[1]->allocate(currFrame.data.size());
+            pbo[1]->allocate(currFrame.frameData.size());
             pbo[1]->release();
 
-            pboAllocSize = currFrame.data.size();
+            pboAllocSize = currFrame.frameData.size();
         }
 
 
@@ -172,7 +175,7 @@ void VideoSurface::paintGL()
         pbo[nextPboIndex]->bind();
         void* ptr = pbo[nextPboIndex]->map(QOpenGLBuffer::WriteOnly);
         if (ptr)
-            memcpy(ptr, currFrame.data.data(), currFrame.data.size());
+            memcpy(ptr, currFrame.frameData.data(), currFrame.frameData.size());
         pbo[nextPboIndex]->unmap();
         pbo[nextPboIndex]->release();
 
@@ -206,17 +209,36 @@ void VideoSurface::paintGL()
         glViewport((width() - w)*0.5f, 0, w, height());
     }
 
-    bgrProgramm->bind();
-    bgrProgramm->setAttributeArray(0, GL_FLOAT, values, 2);
-    bgrProgramm->enableAttributeArray(0);
+    QOpenGLShaderProgram* programm = nullptr;
+    switch (frame.format)
+    {
+    case VideoFrame::YUV:
+        programm = yuvProgramm;
+        break;
+    case VideoFrame::BGR:
+        programm = bgrProgramm;
+        break;
+    }
+
+    if (programm)
+    {
+        programm->bind();
+        programm->setAttributeArray(0, GL_FLOAT, values, 2);
+        programm->enableAttributeArray(0);
+    }
+
     glBindTexture(GL_TEXTURE_2D, textureId);
 
     //draw fullscreen quad
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     glBindTexture(GL_TEXTURE_2D, 0);
-    bgrProgramm->disableAttributeArray(0);
-    bgrProgramm->release();
+
+    if (programm)
+    {
+        programm->disableAttributeArray(0);
+        programm->release();
+    }
 }
 
 void VideoSurface::subscribe()

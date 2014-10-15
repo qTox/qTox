@@ -14,30 +14,23 @@
     See the COPYING file for more details.
 */
 
-#include "netcamview.h"
-<<<<<<< HEAD:src/widget/netcamview.cpp
-#include "src/core.h"
-=======
-#include "core.h"
-#include "widget/videosurface.h"
->>>>>>> NetVideoSource, YUV shader, fixes:widget/netcamview.cpp
-#include <QLabel>
-#include <QHBoxLayout>
+#ifndef NETVIDEOSOURCE_H
+#define NETVIDEOSOURCE_H
 
-NetCamView::NetCamView(QWidget* parent)
-    : QWidget(parent)
-    , mainLayout{new QHBoxLayout()}
+#include "videosource.h"
+
+class vpx_image;
+
+class NetVideoSource : public VideoSource
 {
-    setLayout(mainLayout);
-    setWindowTitle("Tox video");
-    setMinimumSize(320,240);
+public:
+    NetVideoSource();
 
-    videoSurface = new VideoSurface(this);
+    void pushFrame(VideoFrame frame);
+    void pushVPXFrame(vpx_image* image);
 
-    mainLayout->addWidget(videoSurface);
-}
+    virtual void subscribe() {}
+    virtual void unsubscribe() {}
+};
 
-void NetCamView::setSource(VideoSource *s)
-{
-    videoSurface->setSource(s);
-}
+#endif // NETVIDEOSOURCE_H

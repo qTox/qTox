@@ -231,10 +231,8 @@ void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_da
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    if (videoBusyness >= 1)
-        qWarning() << "Core: playCallVideo: Busy, dropping current frame";
-    else
-        emit Core::getInstance()->videoFrameReceived(img);
+    calls[callId].videoSource.pushVPXFrame(img);
+
     vpx_img_free(img);
 }
 
@@ -550,3 +548,9 @@ void Core::playAudioBuffer(int callId, int16_t *data, int samples, unsigned chan
         qDebug() << "Core: Starting audio source of call " << callId;
     }
 }
+
+VideoSource *Core::getVideoSourceFromCall(int callNumber)
+{
+    return &calls[callNumber].videoSource;
+}
+

@@ -134,7 +134,9 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/maskablepixmapwidget.h \
     src/videosource.h \
     src/cameraworker.h \
-    src/widget/videosurface.h
+    src/widget/videosurface.h \
+    src/netvideosource.h \
+    src/videosource.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -181,4 +183,5 @@ SOURCES += \
     src/widget/tool/chatactions/actionaction.cpp \
     src/widget/maskablepixmapwidget.cpp \
     src/cameraworker.cpp \
-    src/widget/videosurface.cpp
+    src/widget/videosurface.cpp \
+    src/netvideosource.cpp

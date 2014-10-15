@@ -140,6 +140,7 @@ void CameraWorker::unsubscribe()
     if(refCount <= 0)
     {
         cam.release();
+        refCount = 0;
     }
 }
 

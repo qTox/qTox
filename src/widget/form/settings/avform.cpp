@@ -23,8 +23,6 @@ AVForm::AVForm() :
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
-
-    bodyUI->CamVideoSurface->setSource(Camera::getInstance());
 }
 
 AVForm::~AVForm()
@@ -34,6 +32,8 @@ AVForm::~AVForm()
 
 void AVForm::present()
 {
+    bodyUI->CamVideoSurface->setSource(Camera::getInstance());
+
     bodyUI->videoModescomboBox->clear();
     QList<QSize> res = Camera::getInstance()->getSupportedResolutions();
     for (QSize r : res)
@@ -72,4 +72,9 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(const QString &arg1)
     int h = resStr[0].toInt();
 
     Camera::getInstance()->setResolution(QSize(w,h));
+}
+
+void AVForm::hideEvent(QHideEvent *)
+{
+    bodyUI->CamVideoSurface->setSource(nullptr);
 }

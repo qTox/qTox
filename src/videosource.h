@@ -9,30 +9,34 @@ struct VideoFrame
 {
     enum ColorFormat
     {
+        NONE,
         BGR,
         YUV,
     };
 
-    QByteArray data;
+    QByteArray frameData;
     QSize resolution;
     ColorFormat format;
 
+    VideoFrame() : format(NONE) {}
+    VideoFrame(QByteArray d, QSize r, ColorFormat f) : frameData(d), resolution(r), format(f) {}
+
     void setNull()
     {
-        data = QByteArray();
+        frameData = QByteArray();
     }
 
     bool isNull()
     {
-        return data.isEmpty();
+        return frameData.isEmpty();
     }
 
     // assumes format is BGR
     QRgb getPixel(int x, int y)
     {
-        char b = data.data()[resolution.width() * 3 * y + x * 3 + 0];
-        char g = data.data()[resolution.width() * 3 * y + x * 3 + 1];
-        char r = data.data()[resolution.width() * 3 * y + x * 3 + 2];
+        char b = frameData.data()[resolution.width() * 3 * y + x * 3 + 0];
+        char g = frameData.data()[resolution.width() * 3 * y + x * 3 + 1];
+        char r = frameData.data()[resolution.width() * 3 * y + x * 3 + 2];
 
         return qRgb(r, g, b);
     }
@@ -47,7 +51,6 @@ class VideoSource : public QObject
 public:
     virtual void subscribe() = 0;
     virtual void unsubscribe() = 0;
-    virtual VideoFrame::ColorFormat getColorFormat() = 0;
 
 signals:
     void frameAvailable(const VideoFrame frame);

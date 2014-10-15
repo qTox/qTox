@@ -19,7 +19,7 @@
 
 #include <QGLWidget>
 #include <QMutex>
-#include "videosource.h"
+#include "src/videosource.h"
 
 class QOpenGLBuffer;
 class QOpenGLShaderProgram;
@@ -33,10 +33,7 @@ public:
     VideoSurface(VideoSource* source, QWidget* parent=0);
     ~VideoSurface();
 
-    void setSource(VideoSource* src);
-    virtual void hideEvent(QHideEvent* ev);
-    virtual void showEvent(QShowEvent* ev);
-    virtual QSize sizeHint() const;
+    void setSource(VideoSource* src); //NULL is a valid option
 
     // QGLWidget interface
 protected:
@@ -46,7 +43,6 @@ protected:
     void subscribe();
     void unsubscribe();
 
-
 private slots:
     void onNewFrameAvailable(const VideoFrame newFrame);
 
@@ -54,6 +50,7 @@ private:
     VideoSource* source;
     QOpenGLBuffer* pbo[2];
     QOpenGLShaderProgram* bgrProgramm;
+    QOpenGLShaderProgram* yuvProgramm;
     GLuint textureId;
     int pboAllocSize;
     QSize res;

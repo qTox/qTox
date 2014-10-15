@@ -71,11 +71,6 @@ void Camera::unsubscribe()
     }
 }
 
-VideoFrame::ColorFormat Camera::getColorFormat()
-{
-    return VideoFrame::BGR;
-}
-
 vpx_image Camera::getLastVPXImage()
 {
     QMutexLocker lock(&mutex);

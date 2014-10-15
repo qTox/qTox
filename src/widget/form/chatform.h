@@ -50,7 +50,7 @@ public slots:
     void onAvCancel(int FriendId, int CallId);
     void onAvEnd(int FriendId, int CallId);
     void onAvRinging(int FriendId, int CallId, bool video);
-    void onAvStarting(int FriendId, int CallId, bool video);
+    void onAvStarting(int FriendId, int callId, bool video);
     void onAvEnding(int FriendId, int CallId);
     void onAvRequestTimeout(int FriendId, int CallId);
     void onAvPeerTimeout(int FriendId, int CallId);

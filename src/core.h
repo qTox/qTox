@@ -29,6 +29,7 @@ class Camera;
 class QTimer;
 class QString;
 class CString;
+class VideoSource;
 
 class Core : public QObject
 {
@@ -60,6 +61,7 @@ public:
     QString getStatusMessage();
     ToxID getSelfId();
 
+    VideoSource* getVideoSourceFromCall(int callNumber);
     void increaseVideoBusyness();
     void decreaseVideoBusyness();
 

@@ -60,7 +60,6 @@ public:
     // VideoSource interface
     virtual void subscribe();
     virtual void unsubscribe();
-    virtual VideoFrame::ColorFormat getColorFormat();
 
 protected:
     Camera();
