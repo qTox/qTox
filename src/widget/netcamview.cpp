@@ -15,12 +15,8 @@
 */
 
 #include "netcamview.h"
-<<<<<<< HEAD:src/widget/netcamview.cpp
 #include "src/core.h"
-=======
-#include "core.h"
-#include "widget/videosurface.h"
->>>>>>> NetVideoSource, YUV shader, fixes:widget/netcamview.cpp
+#include "src/widget/videosurface.h"
 #include <QLabel>
 #include <QHBoxLayout>
 
