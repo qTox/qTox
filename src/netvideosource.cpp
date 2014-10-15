@@ -45,6 +45,7 @@ void NetVideoSource::pushVPXFrame(vpx_image *image)
     uint8_t* uData = image->planes[VPX_PLANE_V];
     uint8_t* vData = image->planes[VPX_PLANE_U];
 
+    // convert from planar to packed
     for (int x = 0; x < dw; x += 1)
     {
         for (int y = 0; y < dh; y += 1)

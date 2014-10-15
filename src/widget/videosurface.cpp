@@ -110,7 +110,7 @@ void VideoSurface::initializeGL()
                                      "    coords = vertices.xy*vec2(0.5,0.5)+vec2(0.5,0.5);"
                                      "}");
 
-    // brg frag-shader
+    // yuv frag-shader
     yuvProgramm->addShaderFromSourceCode(QOpenGLShader::Fragment,
                                      "uniform sampler2D texture0;"
                                      "varying vec2 coords;"
