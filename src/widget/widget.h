@@ -54,7 +54,6 @@ public:
     QThread* getCoreThread();
     Camera* getCamera();
     static Widget* getInstance();
-    void init();
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
@@ -115,6 +114,7 @@ private slots:
     void onUserAway();
 
 private:
+    void init();
     void hideMainForms();
     virtual bool event(QEvent * e);
     Group* createGroup(int groupId);

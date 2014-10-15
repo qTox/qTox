@@ -118,8 +118,6 @@ void Widget::init()
     ui->statusButton->setProperty("status", "offline");
     Style::repolish(ui->statusButton);
 
-    settingsWidget = new SettingsWidget();
-
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
 
@@ -184,8 +182,6 @@ void Widget::init()
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
-//    connect(settingsWidget->getIdentityForm(), &IdentityForm::userNameChanged, Core::getInstance(), &Core::setUsername);
-//    connect(settingsWidget->getIdentityForm(), &IdentityForm::statusMessageChanged, Core::getInstance(), &Core::setStatusMessage);
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -193,6 +189,7 @@ void Widget::init()
 
     coreThread->start();
 
+    settingsWidget = new SettingsWidget();
     friendForm.show(*ui);
 }
 
