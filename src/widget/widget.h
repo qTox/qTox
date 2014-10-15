@@ -54,6 +54,7 @@ public:
     QThread* getCoreThread();
     Camera* getCamera();
     static Widget* getInstance();
+    void init();
     void newMessageAlert();
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();

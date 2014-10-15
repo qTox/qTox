@@ -53,6 +53,11 @@ Widget::Widget(QWidget *parent)
       ui(new Ui::MainWindow),
       activeChatroomWidget{nullptr}
 {
+
+}
+
+void Widget::init()
+{
     ui->setupUi(this);
 
     ui->statusbar->hide();
@@ -214,7 +219,10 @@ Widget::~Widget()
 Widget* Widget::getInstance()
 {
     if (!instance)
+    {
         instance = new Widget();
+        instance->init();
+    }
     return instance;
 }
 
@@ -465,7 +473,6 @@ void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     ui->nameLabel->setToolTip(username); // for overlength names
-    settingsWidget->getIdentityForm()->setUserName(username);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
@@ -479,7 +486,6 @@ void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
     ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
-    settingsWidget->getIdentityForm()->setStatusMessage(statusMessage);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)
