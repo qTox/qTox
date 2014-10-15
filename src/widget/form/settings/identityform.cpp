@@ -114,7 +114,8 @@ void IdentityForm::onLoadClicked()
             QMessageBox::warning(this, tr("Call active", "popup title"),
                 tr("You can't switch profiles while a call is active!", "popup text"));
         else
-            Core::getInstance()->switchConfiguration(bodyUI->profiles->currentText());
+            emit Widget::getInstance()->changeProfile(bodyUI->profiles->currentText());
+            // I think by directly calling the function, I may have been causing thread issues
     }
 }
 
