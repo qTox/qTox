@@ -47,6 +47,8 @@ QList<ToxFile> Core::fileRecvQueue;
 Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     tox(nullptr), camera(cam), loadPath(loadPath)
 {
+    qDebug() << "Core: loading Tox from" << loadPath;
+
     videobuf = new uint8_t[videobufsize];
     videoBusyness=0;
 
@@ -590,7 +592,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
 
         uint64_t resumePos = *reinterpret_cast<const uint64_t*>(data);
 
-        if (resumePos >= file->filesize)
+        if (resumePos >= (unsigned)file->filesize)
         {
             qWarning() << "Core::onFileControlCallback: invalid resume position";
             tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0); // don't sure about it
@@ -1218,8 +1220,15 @@ void Core::saveConfiguration(const QString& path)
     }
 }
 
-void Core::switchConfiguration(QString profile)
+void Core::switchConfiguration(const QString& profile)
 {
+    if (profile.isEmpty())
+    {
+        qWarning() << "Core: got null profile to switch to, not switching";
+        return;
+    }
+    else
+        qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
     saveConfiguration();
     
     toxTimer->stop();
@@ -1231,7 +1240,7 @@ void Core::switchConfiguration(QString profile)
         tox = nullptr;
     }
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
-    Widget::getInstance()->clearContactsList(); // we need this to block, so no signals for us
+    emit blockingClearContacts(); // we need this to block, but signals are required for thread safety
     
     loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
     Settings::getInstance().setCurrentProfile(profile); 

@@ -53,7 +53,6 @@ public:
 
     void saveConfiguration();
     void saveConfiguration(const QString& path);
-    void switchConfiguration(QString profile);
     
     QString getIDString();
     
@@ -64,10 +63,13 @@ public:
     void increaseVideoBusyness();
     void decreaseVideoBusyness();
 
+    bool anyActiveCalls();
+
 public slots:
     void start();
     void process();
     void bootstrapDht();
+    void switchConfiguration(const QString& profile);
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
@@ -112,6 +114,7 @@ public slots:
 signals:
     void connected();
     void disconnected();
+    void blockingClearContacts();
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);

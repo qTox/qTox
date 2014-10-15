@@ -108,7 +108,15 @@ void IdentityForm::setStatusMessage(const QString &msg)
 
 void IdentityForm::onLoadClicked()
 {
-    Core::getInstance()->switchConfiguration(bodyUI->profiles->currentText());
+    if (bodyUI->profiles->currentText() != Settings::getInstance().getCurrentProfile())
+    {
+        if (Core::getInstance()->anyActiveCalls())
+            QMessageBox::warning(this, tr("Call active", "popup title"),
+                tr("You can't switch profiles while a call is active!", "popup text"));
+        else
+            emit Widget::getInstance()->changeProfile(bodyUI->profiles->currentText());
+            // I think by directly calling the function, I may have been causing thread issues
+    }
 }
 
 void IdentityForm::onRenameClicked()
@@ -132,7 +140,8 @@ void IdentityForm::onExportClicked()
     QString path = QFileDialog::getSaveFileName(this, tr("Export profile", "save dialog title"),
                     QDir::home().filePath(current), 
                     tr("Tox save file (*.tox)", "save dialog filter"));
-    QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path);
+    if (!path.isEmpty())
+        QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path);
 }
 
 void IdentityForm::onDeleteClicked()
@@ -157,6 +166,8 @@ void IdentityForm::onDeleteClicked()
 void IdentityForm::onImportClicked()
 {
     QString path = QFileDialog::getOpenFileName(this, tr("Import profile", "import dialog title"), QDir::homePath(), tr("Tox save file (*.tox)", "import dialog filter"));
+    if (path.isEmpty())
+        return;
     QFileInfo info(path);
     QString profile = info.completeBaseName();
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
