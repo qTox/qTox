@@ -38,6 +38,7 @@ GeneralForm::GeneralForm() :
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
     }
     bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
+    reloadSmiles();
 
     bodyUI->cbUDPDisabled->setChecked(Settings::getInstance().getForceTCP());
     bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
@@ -89,6 +90,7 @@ void GeneralForm::onSmileyBrowserIndexChanged(int index)
 {
     QString filename = bodyUI->smileyPackBrowser->itemData(index).toString();
     Settings::getInstance().setSmileyPack(filename);
+    reloadSmiles();
 }
 
 void GeneralForm::onUDPUpdated()
@@ -118,4 +120,27 @@ void GeneralForm::onUseProxyUpdated()
     bodyUI->proxyAddr->setEnabled(state);
     bodyUI->proxyPort->setEnabled(state);
     Settings::getInstance().setUseProxy(state);
+}
+
+void GeneralForm::reloadSmiles()
+{
+    QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
+    QStringList smiles;
+    smiles << ":)" << ";)" << ":p" << ":O" << ":["; //just in case...
+
+    for(int i = 0; i < emoticons.size(); i++)  
+        smiles.push_front(emoticons.at(i).first());
+        
+    int pixSize = 30;
+    bodyUI->smile1->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[0]).pixmap(pixSize, pixSize));
+    bodyUI->smile2->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[1]).pixmap(pixSize, pixSize));
+    bodyUI->smile3->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[2]).pixmap(pixSize, pixSize));
+    bodyUI->smile4->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[3]).pixmap(pixSize, pixSize));
+    bodyUI->smile5->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[4]).pixmap(pixSize, pixSize));
+    
+    bodyUI->smile1->setToolTip(smiles[0]);    
+    bodyUI->smile2->setToolTip(smiles[1]);
+    bodyUI->smile3->setToolTip(smiles[2]);
+    bodyUI->smile4->setToolTip(smiles[3]);
+    bodyUI->smile5->setToolTip(smiles[4]);
 }
