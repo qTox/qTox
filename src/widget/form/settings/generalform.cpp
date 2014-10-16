@@ -26,11 +26,11 @@
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General Settings"), QPixmap(":/img/settings/general.png"))
 {
+    parent = myParent;    
+    
     bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
     
-    parent = myParent;    
-
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     bodyUI->cbUseTranslations->setChecked(Settings::getInstance().getUseTranslations());
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
@@ -104,7 +104,7 @@ void GeneralForm::onStyleSelected(QString style)
 {
     Settings::getInstance().setStyle(style);
     this->setStyle(QStyleFactory::create(style));
-    parent->setStyle(style);
+    parent->setBodyHeadStyle(style);
 }
 
 void GeneralForm::onSetStatusChange()
