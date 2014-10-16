@@ -294,6 +294,11 @@ QString Widget::askProfiles()
         return profile;
 }
 
+void Widget::setIdleTimer(int minutes)
+{
+    idleTimer->start(minutes * 1000*60);
+}
+
 QString Widget::getUsername()
 {
     return core->getUsername();

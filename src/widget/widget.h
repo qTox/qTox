@@ -59,6 +59,7 @@ public:
     bool getIsWindowMinimized();
     static QList<QString> searchProfiles();
     void clearContactsList();
+    void setIdleTimer(int minutes);    
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
