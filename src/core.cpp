@@ -1184,7 +1184,7 @@ void Core::saveConfiguration(const QString& path)
     }
 }
 
-void Core::switchConfiguration(QString profile)
+void Core::switchConfiguration(const QString& profile)
 {
     if (profile.isEmpty())
     {
@@ -1204,7 +1204,7 @@ void Core::switchConfiguration(QString profile)
         tox = nullptr;
     }
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
-    Widget::getInstance()->clearContactsList(); // we need this to block, so no signals for us
+    emit blockingClearContacts(); // we need this to block, but signals are required for thread safety
     
     loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
     Settings::getInstance().setCurrentProfile(profile); 

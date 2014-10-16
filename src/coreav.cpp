@@ -28,6 +28,14 @@ ALCdevice* Core::alOutDev, *Core::alInDev;
 ALCcontext* Core::alContext;
 ALuint Core::alMainSource;
 
+bool Core::anyActiveCalls()
+{
+    for (auto& call : calls)
+        if (call.active)
+            return true;
+    return false;
+}
+
 void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled)
 {
     qDebug() << QString("Core: preparing call %1").arg(callId);

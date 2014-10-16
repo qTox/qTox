@@ -108,7 +108,15 @@ void IdentityForm::setStatusMessage(const QString &msg)
 
 void IdentityForm::onLoadClicked()
 {
-    Core::getInstance()->switchConfiguration(bodyUI->profiles->currentText());
+    if (bodyUI->profiles->currentText() != Settings::getInstance().getCurrentProfile())
+    {
+        if (Core::getInstance()->anyActiveCalls())
+            QMessageBox::warning(this, tr("Call active", "popup title"),
+                tr("You can't switch profiles while a call is active!", "popup text"));
+        else
+            emit Widget::getInstance()->changeProfile(bodyUI->profiles->currentText());
+            // I think by directly calling the function, I may have been causing thread issues
+    }
 }
 
 void IdentityForm::onRenameClicked()
