@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>527</width>
-    <height>421</height>
+    <height>397</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -125,6 +125,16 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="styleLabel">
+        <property name="text">
+         <string>Style</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="styleBrowser"/>
       </item>
      </layout>
     </widget>
