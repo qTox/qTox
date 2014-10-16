@@ -32,6 +32,9 @@ FORMS    += \
     src/widget/form/settings/identitysettings.ui
 CONFIG   += c++11
 
+MOC_DIR = .moc
+OBJECTS_DIR = .obj
+
 TRANSLATIONS = translations/de.ts \
                translations/fr.ts \
                translations/it.ts \
