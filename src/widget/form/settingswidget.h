@@ -19,6 +19,8 @@
 
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QStyleFactory>
+
 class Camera;
 class GenericForm;
 class GeneralForm;
@@ -40,6 +42,7 @@ public:
 
     void show(Ui::MainWindow &ui);
     IdentityForm *getIdentityForm() {return ifrm;}
+    void setStyle(QString style);
 
 private slots:
     void onTabChanged(int);

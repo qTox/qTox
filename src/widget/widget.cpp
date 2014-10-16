@@ -113,7 +113,7 @@ Widget::Widget(QWidget *parent)
     ui->statusButton->setProperty("status", "offline");
     Style::repolish(ui->statusButton);
 
-    settingsWidget = new SettingsWidget();
+    settingsWidget = new SettingsWidget(this);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);

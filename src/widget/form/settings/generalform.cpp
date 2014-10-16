@@ -23,11 +23,13 @@
 #include <QMessageBox>
 #include <QStyleFactory>
 
-GeneralForm::GeneralForm() :
+GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General Settings"), QPixmap(":/img/settings/general.png"))
 {
     bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
+    
+    parent = myParent;    
 
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     bodyUI->cbUseTranslations->setChecked(Settings::getInstance().getUseTranslations());
@@ -44,6 +46,7 @@ GeneralForm::GeneralForm() :
 
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
     bodyUI->styleBrowser->addItem("None");
+        
     if(QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
         bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
     else
@@ -101,6 +104,7 @@ void GeneralForm::onStyleSelected(QString style)
 {
     Settings::getInstance().setStyle(style);
     this->setStyle(QStyleFactory::create(style));
+    parent->setStyle(style);
 }
 
 void GeneralForm::onSetStatusChange()
