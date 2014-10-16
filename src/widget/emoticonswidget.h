@@ -34,12 +34,16 @@ private slots:
     void onSmileyClicked();
     void onPageButtonClicked();
 
+protected:
+    virtual void mouseReleaseEvent(QMouseEvent *ev);
+
 private:
     QStackedWidget stack;
     QVBoxLayout layout;
 
 public:
     virtual QSize sizeHint() const;
+
 };
 
 #endif // EMOTICONSWIDGET_H
