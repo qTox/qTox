@@ -55,6 +55,9 @@ public:
     QString getStyle() const;
     void setStyle(const QString& newValue);
 
+    QString getCurrentProfile() const;
+    void setCurrentProfile(QString profile);
+
     bool getUseTranslations() const;
     void setUseTranslations(bool newValue);
 
@@ -75,6 +78,9 @@ public:
 
     bool getEncryptLogs() const;
     void setEncryptLogs(bool newValue);
+
+    int getAutoAwayTime() const;
+    void setAutoAwayTime(int newValue);
 
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
@@ -179,8 +185,12 @@ private:
     QString proxyAddr;
     int proxyPort;
 
+    QString currentProfile;
+
     bool enableLogging;
     bool encryptLogs;
+
+    int autoAwayTime;
 
     QHash<QString, QByteArray> widgetSettings;
 

@@ -34,7 +34,6 @@ Camera::Camera()
 
     connect(workerThread, &QThread::started, worker, &CameraWorker::onStart);
     connect(workerThread, &QThread::finished, worker, &CameraWorker::deleteLater);
-    connect(workerThread, &QThread::deleteLater, worker, &CameraWorker::deleteLater);
     connect(worker, &CameraWorker::started, this, &Camera::onWorkerStarted);
     connect(worker, &CameraWorker::newFrameAvailable, this, &Camera::onNewFrameAvailable);
     connect(worker, &CameraWorker::resProbingFinished, this, &Camera::onResProbingFinished);

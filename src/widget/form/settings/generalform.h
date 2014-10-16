@@ -18,8 +18,6 @@
 #define GENERALFORM_H
 
 #include "genericsettings.h"
-#include <QComboBox>
-#include <QCheckBox>
 
 namespace Ui {
 class GeneralSettings;
@@ -29,7 +27,7 @@ class GeneralForm : public GenericForm
 {
     Q_OBJECT
 public:
-    GeneralForm();
+    GeneralForm(SettingsWidget *parent);
     ~GeneralForm();
 
 private slots:
@@ -46,6 +44,8 @@ private slots:
 
 private:
     Ui::GeneralSettings *bodyUI;
+    void reloadSmiles();
+    SettingsWidget *parent;
 };
 
 #endif

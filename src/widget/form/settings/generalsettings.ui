@@ -73,6 +73,60 @@
        <widget class="QComboBox" name="smileyPackBrowser"/>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="smile1">
+          <property name="toolTip">
+           <string>:)</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="smile2">
+          <property name="toolTip">
+           <string>;)</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="smile3">
+          <property name="toolTip">
+           <string>:p</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="smile4">
+          <property name="toolTip">
+           <string>:O</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="smile5">
+          <property name="toolTip">
+           <string>:'(</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
        <widget class="QLabel" name="styleLabel">
         <property name="text">
          <string>Style</string>
