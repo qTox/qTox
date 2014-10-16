@@ -32,13 +32,20 @@ public:
     virtual bool save();
 
 private:
-    QString getKey(){return key;}
+    QByteArray encrypt(QByteArray data);
+    QByteArray decrypt(QByteArray data);
 
     QList<QString> decryptFile();
     void appendToEncrypted(const QString &sql);
 
-    QString key;
+    u_int8_t *encrkey;
     QFile encrFile;
+    QByteArray passwd;
+
+    qint64 plainChunkSize;
+    qint64 encryptedChunkSize;
+    qint64 chunkPosition;
+    QByteArray buffer;
 };
 
 #endif // ENCRYPTEDDB_H
