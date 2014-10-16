@@ -410,7 +410,7 @@ void Core::onUserStatusChanged(Tox*/* tox*/, int friendId, uint8_t userstatus, v
 void Core::onConnectionStatusChanged(Tox*/* tox*/, int friendId, uint8_t status, void* core)
 {
     Status friendStatus = status ? Status::Online : Status::Offline;
-    emit static_cast<Core*>(core)->friendSignedIn(friendId, friendStatus);
+    emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
     if (friendStatus == Status::Offline) {
         static_cast<Core*>(core)->checkLastOnline(friendId);
 

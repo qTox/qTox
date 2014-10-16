@@ -56,14 +56,7 @@
       <item>
        <widget class="QCheckBox" name="statusChangesCheckbox">
         <property name="text">
-         <string>Show status changes</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="signInNotificationsCheckbox">
-        <property name="text">
-         <string>Notify me when contacts sign in</string>
+         <string>Show contacts' status changes</string>
         </property>
        </widget>
       </item>

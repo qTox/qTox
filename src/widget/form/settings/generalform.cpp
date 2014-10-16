@@ -34,7 +34,6 @@ GeneralForm::GeneralForm() :
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
     bodyUI->statusChangesCheckbox->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
-    bodyUI->signInNotificationsCheckbox->setChecked(Settings::getInstance().getSignInNotificationEnabled());
 
     for (auto entry : SmileyPack::listSmileyPacks())
     {
@@ -64,7 +63,6 @@ GeneralForm::GeneralForm() :
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->statusChangesCheckbox, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
-    connect(bodyUI->signInNotificationsCheckbox, &QCheckBox::stateChanged, this, &GeneralForm::onSetSignInNotifications);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     // new syntax can't handle overloaded signals... (at least not in a pretty way)
     connect(bodyUI->cbUDPDisabled, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
@@ -108,11 +106,6 @@ void GeneralForm::onStyleSelected(QString style)
 void GeneralForm::onSetStatusChange()
 {
     Settings::getInstance().setStatusChangeNotificationEnabled(bodyUI->statusChangesCheckbox->isChecked());
-}
-
-void GeneralForm::onSetSignInNotifications()
-{
-    Settings::getInstance().setSignInNotificationEnabled(bodyUI->signInNotificationsCheckbox->isChecked());
 }
 
 void GeneralForm::onSmileyBrowserIndexChanged(int index)

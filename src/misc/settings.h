@@ -137,10 +137,7 @@ public:
 
     bool isMinimizeOnCloseEnabled() const;
     void setMinimizeOnClose(bool newValue);
-    
-    bool getSignInNotificationEnabled() const;
-    void setSignInNotificationEnabled(bool newValue);
-    
+
     bool getStatusChangeNotificationEnabled() const;
     void setStatusChangeNotificationEnabled(bool newValue);
 
@@ -218,7 +215,6 @@ private:
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
     QString timestampFormat;
-    bool signInNotificationEnabled;  
     bool statusChangeNotificationEnabled;
 
     // Privacy

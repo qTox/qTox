@@ -44,7 +44,6 @@ private slots:
     void onUseProxyUpdated();
     void onStyleSelected(QString style);    
     void onSetStatusChange();
-    void onSetSignInNotifications();
 
 private:
     Ui::GeneralSettings *bodyUI;

@@ -115,7 +115,6 @@ signals:
     void friendAdded(int friendId, const QString& userId);
 
     void friendStatusChanged(int friendId, Status status);
-    void friendSignedIn(int friendId, Status friendStatus);
     void friendStatusMessageChanged(int friendId, const QString& message);
     void friendUsernameChanged(int friendId, const QString& username);
     void friendTypingChanged(int friendId, bool isTyping);

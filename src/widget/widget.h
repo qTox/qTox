@@ -90,8 +90,7 @@ private slots:
     void setStatusMessage(const QString &statusMessage);
     void addFriend(int friendId, const QString& userId);
     void addFriendFailed(const QString& userId);
-    void onFriendStatusChanged(int friendId, Status status);
-    void onFriendSignIn(int friendId, Status status);    
+    void onFriendStatusChanged(int friendId, Status status); 
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
     void onChatroomWidgetClicked(GenericChatroomWidget *);

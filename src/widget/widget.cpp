@@ -153,7 +153,6 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
-    connect(core, &Core::friendSignedIn, this, &Widget::onFriendSignIn);    
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
     connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
@@ -542,32 +541,19 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     QString fStatus = ""; 
     switch(f->friendStatus){
     case Status::Away:
-        fStatus = "away"; break;
+        fStatus = tr("away", "contact status"); break;
     case Status::Busy:
-        fStatus = "busy"; break;
+        fStatus = tr("busy", "contact status"); break;
     case Status::Offline:
-        fStatus = "offline"; break;
+        fStatus = tr("offline", "contact status"); break;
     default:
-        fStatus = "online"; break;
+        fStatus = tr("online", "contact status"); break;
     }
         
     //won't print the message if there were no messages before    
     if(f->chatForm->getNumberOfMessages() != 0
             && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
-        f->chatForm->addSystemInfoMessage(f->getName() + " has changed status to " + fStatus, "white");
-}
-
-void Widget::onFriendSignIn(int friendId, Status status)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    contactListWidget->moveWidget(f->widget, status);
-
-    f->friendStatus = status;
-    f->widget->updateStatusLight();
-    
+        f->chatForm->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getName()).arg(fStatus), "white");
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
