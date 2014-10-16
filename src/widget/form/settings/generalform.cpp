@@ -112,7 +112,9 @@ void GeneralForm::onStyleSelected(QString style)
 
 void GeneralForm::onAutoAwayChanged()
 {
-    Settings::getInstance().setAutoAwayTime(bodyUI->autoAwaySpinBox->value());
+    int minutes = bodyUI->autoAwaySpinBox->value();
+    Settings::getInstance().setAutoAwayTime(minutes);
+    Widget::getInstance()->setIdleTimer(minutes);
 }
 
 void GeneralForm::onSetStatusChange()
