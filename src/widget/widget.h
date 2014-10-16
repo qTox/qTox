@@ -40,6 +40,7 @@ class Core;
 class Camera;
 class FriendListWidget;
 class MaskablePixmapWidget;
+class QTimer;
 
 class Widget : public QMainWindow
 {
@@ -109,6 +110,7 @@ private slots:
     void onGroupSendResult(int groupId, const QString& message, int result);
     void playRingtone();
     void onIconClick();
+    void onUserAway();
 
 private:
     void hideMainForms();
@@ -132,6 +134,8 @@ private:
     FriendListWidget* contactListWidget;
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
+    bool autoAwayActive = false;
+    QTimer* idleTimer;
 };
 
 #endif // WIDGET_H
