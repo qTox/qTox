@@ -137,6 +137,7 @@ void Settings::load()
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
+        style = s.value("style", "None").toString();
     s.endGroup();
 
     s.beginGroup("State");
@@ -243,6 +244,7 @@ void Settings::save(QString path)
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("nativeStyle", useNativeStyle);
+        s.setValue("style",style);
     s.endGroup();
 
     s.beginGroup("State");
@@ -358,6 +360,16 @@ void Settings::setMakeToxPortable(bool newValue)
 bool Settings::getAutostartInTray() const
 {
     return autostartInTray;
+}
+
+QString Settings::getStyle() const
+{
+    return style;
+}
+
+void Settings::setStyle(const QString& newStyle) 
+{
+    style = newStyle;
 }
 
 void Settings::setAutostartInTray(bool newValue)
