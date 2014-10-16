@@ -41,6 +41,7 @@ private slots:
     void onProxyPortEdited(int port);
     void onUseProxyUpdated();
     void onStyleSelected(QString style);    
+    void onSetStatusChange();
 
 private:
     Ui::GeneralSettings *bodyUI;

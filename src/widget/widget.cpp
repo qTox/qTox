@@ -151,7 +151,6 @@ Widget::Widget(QWidget *parent)
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
-    connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
@@ -538,6 +537,23 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     f->friendStatus = status;
     f->widget->updateStatusLight();
+    
+    QString fStatus = ""; 
+    switch(f->friendStatus){
+    case Status::Away:
+        fStatus = tr("away", "contact status"); break;
+    case Status::Busy:
+        fStatus = tr("busy", "contact status"); break;
+    case Status::Offline:
+        fStatus = tr("offline", "contact status"); break;
+    default:
+        fStatus = tr("online", "contact status"); break;
+    }
+        
+    //won't print the message if there were no messages before    
+    if(f->chatForm->getNumberOfMessages() != 0
+            && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
+        f->chatForm->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getName()).arg(fStatus), "white");
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)

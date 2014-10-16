@@ -53,6 +53,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="statusChangesCheckbox">
+        <property name="text">
+         <string>Show contacts' status changes</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
