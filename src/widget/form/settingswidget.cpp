@@ -73,10 +73,10 @@ SettingsWidget::~SettingsWidget()
 {
 }
 
-void SettingsWidget::setStyle(QString style)
+void SettingsWidget::setBodyHeadStyle(QString style)
 {
+    head->setStyle(QStyleFactory::create(style));    
     body->setStyle(QStyleFactory::create(style));
-    head->setStyle(QStyleFactory::create(style));
 }
 
 void SettingsWidget::show(Ui::MainWindow& ui)

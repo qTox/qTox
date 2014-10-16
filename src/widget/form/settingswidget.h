@@ -42,7 +42,7 @@ public:
 
     void show(Ui::MainWindow &ui);
     IdentityForm *getIdentityForm() {return ifrm;}
-    void setStyle(QString style);
+    void setBodyHeadStyle(QString style);
 
 private slots:
     void onTabChanged(int);
