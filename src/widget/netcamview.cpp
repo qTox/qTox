@@ -22,7 +22,7 @@
 
 NetCamView::NetCamView(QWidget* parent)
     : QWidget(parent)
-    , mainLayout{new QHBoxLayout()}
+    , mainLayout(new QHBoxLayout())
 {
     setLayout(mainLayout);
     setWindowTitle("Tox video");
@@ -33,7 +33,27 @@ NetCamView::NetCamView(QWidget* parent)
     mainLayout->addWidget(videoSurface);
 }
 
+void NetCamView::show(VideoSource *source, const QString &title)
+{
+    setSource(source);
+    setTitle(title);
+
+    QWidget::show();
+}
+
+void NetCamView::hide()
+{
+    setSource(nullptr);
+
+    QWidget::hide();
+}
+
 void NetCamView::setSource(VideoSource *s)
 {
     videoSurface->setSource(s);
+}
+
+void NetCamView::setTitle(const QString &title)
+{
+    setWindowTitle(title);
 }

@@ -31,8 +31,11 @@ class NetCamView : public QWidget
 public:
     NetCamView(QWidget *parent=0);
 
-public slots:
+    virtual void show(VideoSource* source, const QString& title);
+    virtual void hide();
+
     void setSource(VideoSource* s);
+    void setTitle(const QString& title);
 
 private:
     QHBoxLayout* mainLayout;

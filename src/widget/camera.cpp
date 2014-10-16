@@ -84,36 +84,30 @@ vpx_image Camera::getLastVPXImage()
         return img;
     }
 
-    int w = currFrame.resolution.width();
-    int h = currFrame.resolution.height();
+    const int w = currFrame.resolution.width();
+    const int h = currFrame.resolution.height();
 
     // I420 "It comprises an NxM Y plane followed by (N/2)x(M/2) V and U planes."
     // http://fourcc.org/yuv.php#IYUV
     vpx_img_alloc(&img, VPX_IMG_FMT_VPXI420, w, h, 1);
 
-    for (int x = 0; x < w; x += 2)
+    for (int y = 0; y < h; ++y)
     {
-        for (int y = 0; y < h; y += 2)
+        for (int x = 0; x < w; ++x)
         {
-            QRgb p1 = currFrame.getPixel(x, y);
-            QRgb p2 = currFrame.getPixel(x + 1, y);
-            QRgb p3 = currFrame.getPixel(x, y + 1);
-            QRgb p4 = currFrame.getPixel(x + 1, y + 1);
+            u_int8_t b = currFrame.frameData.data()[(x + y * w) * 3 + 0];
+            u_int8_t g = currFrame.frameData.data()[(x + y * w) * 3 + 1];
+            u_int8_t r = currFrame.frameData.data()[(x + y * w) * 3 + 2];
 
-            img.planes[VPX_PLANE_Y][x + y * w] = ((66 * qRed(p1) + 129 * qGreen(p1) + 25 * qBlue(p1)) >> 8) + 16;
-            img.planes[VPX_PLANE_Y][x + 1 + y * w] = ((66 * qRed(p2) + 129 * qGreen(p2) + 25 * qBlue(p2)) >> 8) + 16;
-            img.planes[VPX_PLANE_Y][x + (y + 1) * w] = ((66 * qRed(p3) + 129 * qGreen(p3) + 25 * qBlue(p3)) >> 8) + 16;
-            img.planes[VPX_PLANE_Y][x + 1 + (y + 1) * w] = ((66 * qRed(p4) + 129 * qGreen(p4) + 25 * qBlue(p4)) >> 8) + 16;
+            img.planes[VPX_PLANE_Y][x + y * img.stride[VPX_PLANE_Y]] = ((66 * r + 129 * g + 25 * b) >> 8) + 16;
 
             if (!(x % 2) && !(y % 2))
             {
-                // TODO: consider p1 to p4?
+                const int i = x / 2;
+                const int j = y / 2;
 
-                int i = x / 2;
-                int j = y / 2;
-
-                img.planes[VPX_PLANE_U][i + j * w / 2] = ((112 * qRed(p1) + -94 * qGreen(p1) + -18 * qBlue(p1)) >> 8) + 128;
-                img.planes[VPX_PLANE_V][i + j * w / 2] = ((-38 * qRed(p1) + -74 * qGreen(p1) + 112 * qBlue(p1)) >> 8) + 128;
+                img.planes[VPX_PLANE_U][i + j * img.stride[VPX_PLANE_U]] = ((112 * r + -94 * g + -18 * b) >> 8) + 128;
+                img.planes[VPX_PLANE_V][i + j * img.stride[VPX_PLANE_V]] = ((-38 * r + -74 * g + 112 * b) >> 8) + 128;
             }
         }
     }

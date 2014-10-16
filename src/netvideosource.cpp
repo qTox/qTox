@@ -30,25 +30,25 @@ void NetVideoSource::pushFrame(VideoFrame frame)
 
 void NetVideoSource::pushVPXFrame(vpx_image *image)
 {
-    int dw = image->d_w;
-    int dh = image->d_h;
+    const int dw = image->d_w;
+    const int dh = image->d_h;
 
-    int bpl = image->stride[VPX_PLANE_Y];
-    int cxbpl = image->stride[VPX_PLANE_V];
+    const int bpl = image->stride[VPX_PLANE_Y];
+    const int cxbpl = image->stride[VPX_PLANE_V];
 
     VideoFrame frame;
     frame.frameData.resize(dw * dh * 3); //YUV 24bit
     frame.resolution = QSize(dw, dh);
     frame.format = VideoFrame::YUV;
 
-    uint8_t* yData = image->planes[VPX_PLANE_Y];
-    uint8_t* uData = image->planes[VPX_PLANE_V];
-    uint8_t* vData = image->planes[VPX_PLANE_U];
+    const uint8_t* yData = image->planes[VPX_PLANE_Y];
+    const uint8_t* uData = image->planes[VPX_PLANE_V];
+    const uint8_t* vData = image->planes[VPX_PLANE_U];
 
     // convert from planar to packed
-    for (int x = 0; x < dw; x += 1)
+    for (int y = 0; y < dh; ++y)
     {
-        for (int y = 0; y < dh; y += 1)
+        for (int x = 0; x < dw; ++x)
         {
             uint8_t Y = yData[x + y * bpl];
             uint8_t U = uData[x/2 + y/2*cxbpl];
@@ -57,7 +57,6 @@ void NetVideoSource::pushVPXFrame(vpx_image *image)
             frame.frameData.data()[dw * 3 * y + x * 3 + 0] = Y;
             frame.frameData.data()[dw * 3 * y + x * 3 + 1] = U;
             frame.frameData.data()[dw * 3 * y + x * 3 + 2] = V;
-
         }
     }
 

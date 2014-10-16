@@ -228,7 +228,8 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
         videoButton->setObjectName("red");
         videoButton->style()->polish(videoButton);
         connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
-        netcam->show();
+
+        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getName());
     }
     else
     {
@@ -256,7 +257,7 @@ void ChatForm::onAvCancel(int FriendId, int)
     videoButton->style()->polish(videoButton);
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
-    netcam->setSource(nullptr);
+
     netcam->hide();
 }
 
@@ -276,7 +277,7 @@ void ChatForm::onAvEnd(int FriendId, int)
     videoButton->style()->polish(videoButton);
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
-    netcam->setSource(nullptr);
+
     netcam->hide();
 }
 
@@ -306,7 +307,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
     }
 }
 
-void ChatForm::onAvStarting(int FriendId, int callId, bool video)
+void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
@@ -320,8 +321,8 @@ void ChatForm::onAvStarting(int FriendId, int callId, bool video)
         videoButton->setObjectName("red");
         videoButton->style()->polish(videoButton);
         connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
-        netcam->setSource(Core::getInstance()->getVideoSourceFromCall(callId));
-        netcam->show();
+
+        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getName());
     }
     else
     {
@@ -351,6 +352,7 @@ void ChatForm::onAvEnding(int FriendId, int)
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+
     netcam->hide();
 }
 
@@ -372,7 +374,7 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
-    netcam->setSource(nullptr);
+
     netcam->hide();
 }
 
@@ -394,19 +396,20 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
-    netcam->setSource(nullptr);
+
     netcam->hide();
 }
 
-void ChatForm::onAvMediaChange(int, int, bool video)
+void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 {
+    Q_UNUSED(FriendId)
+
     if (video)
     {
-        netcam->show();
+        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getName());
     }
     else
     {
-        netcam->setSource(nullptr);
         netcam->hide();
     }
 }
@@ -456,7 +459,7 @@ void ChatForm::onCancelCallTriggered()
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
-    netcam->setSource(nullptr);
+
     netcam->hide();
     emit cancelCall(callId, f->friendId);
 }
