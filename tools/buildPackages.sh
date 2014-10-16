@@ -87,7 +87,7 @@ mv qTox-master $VERNAME
 
 # Build packages
 cd $VERNAME
-./bootstrap.sh --local
+./bootstrap.sh --local -t
 debuild -us -uc -aamd64
 debuild -us -uc -ai386
 cd ..
