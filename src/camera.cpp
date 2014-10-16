@@ -15,7 +15,6 @@
 */
 
 #include "camera.h"
-#include "widget.h"
 #include "src/cameraworker.h"
 #include <QDebug>
 #include <QThread>

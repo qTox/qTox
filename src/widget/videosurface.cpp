@@ -15,7 +15,7 @@
 */
 
 #include "videosurface.h"
-#include "camera.h"
+#include "src/camera.h"
 #include <QTimer>
 #include <opencv2/opencv.hpp>
 #include <QOpenGLBuffer>

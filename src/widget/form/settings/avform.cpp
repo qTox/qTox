@@ -15,7 +15,7 @@
 */
 
 #include "avform.h"
-#include "src/widget/camera.h"
+#include "src/camera.h"
 #include "ui_avsettings.h"
 
 AVForm::AVForm() :

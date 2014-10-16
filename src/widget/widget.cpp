@@ -28,7 +28,7 @@
 #include "form/groupchatform.h"
 #include "src/misc/style.h"
 #include "friendlistwidget.h"
-#include "camera.h"
+#include "src/camera.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
 #include <QMessageBox>
