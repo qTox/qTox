@@ -21,9 +21,12 @@
 #include "form/groupchatform.h"
 #include "maskablepixmapwidget.h"
 #include "src/misc/style.h"
+#include "src/core.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QMimeData>
+#include <QDragEnterEvent>
 
 #include "ui_mainwindow.h"
 
@@ -39,6 +42,8 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
         statusMessageLabel->setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
     else
         statusMessageLabel->setText(GroupWidget::tr("0 users in chat"));
+
+    setAcceptDrops(true);
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -101,4 +106,19 @@ void GroupWidget::resetEventFlags()
     Group* g = GroupList::findGroup(groupId);
     g->hasNewMessages = 0;
     g->userWasMentioned = 0;
+}
+
+void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
+{
+    if (ev->mimeData()->hasFormat("friend"))
+        ev->acceptProposedAction();
+}
+
+void GroupWidget::dropEvent(QDropEvent *ev)
+{
+    if (ev->mimeData()->hasFormat("friend"))
+    {
+        int friendId = ev->mimeData()->data("friend").toInt();
+        Core::getInstance()->groupInviteFriend(friendId, groupId);
+    }
 }

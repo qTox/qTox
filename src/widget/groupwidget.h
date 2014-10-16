@@ -37,6 +37,11 @@ signals:
     void groupWidgetClicked(GroupWidget* widget);
     void removeGroup(int groupId);
 
+protected:
+    // drag & drop
+    void dragEnterEvent(QDragEnterEvent* ev);
+    void dropEvent(QDropEvent* ev);
+
 public:
     int groupId;
 };
