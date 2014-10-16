@@ -17,6 +17,7 @@
 #include "genericchatform.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
+#include <QShortcut>
 #include "src/misc/smileypack.h"
 #include "src/widget/emoticonswidget.h"
 #include "src/misc/style.h"
@@ -125,6 +126,8 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this, SLOT(onClearChatAreaRequest()));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L + Qt::SHIFT), this, SLOT(onRemoveHistoryRequest()));
 }
 
 void GenericChatForm::setName(const QString &newName)
@@ -165,6 +168,19 @@ void GenericChatForm::onSaveLogClicked()
 
     file.write(log.toUtf8());
     file.close();
+}
+
+void GenericChatForm::onRemoveHistoryRequest()
+{
+    chatWidget->clear();
+    chatWidget->clearMessages();
+    addSystemInfoMessage("Chat log cleared", "white");
+}
+
+void GenericChatForm::onClearChatAreaRequest()
+{
+    chatWidget->clear();
+    addSystemInfoMessage("Chat log cleared", "white");
 }
 
 void GenericChatForm::addMessage(QString author, QString message, bool isAction, QDateTime datetime)

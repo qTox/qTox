@@ -33,6 +33,7 @@ public:
 
     int nameColWidth() {return nameWidth;}
     void setNameColWidth(int w);
+    void clearMessages();
 
 signals:
     void onFileTranfertInterract(QString widgetName, QString buttonName);

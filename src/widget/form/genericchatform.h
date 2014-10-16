@@ -59,6 +59,10 @@ protected slots:
     void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
+    
+private slots:
+    void onRemoveHistoryRequest();
+    void onClearChatAreaRequest();
 
 protected:
     QString getElidedName(const QString& name);

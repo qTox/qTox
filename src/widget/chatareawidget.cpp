@@ -162,3 +162,8 @@ void ChatAreaWidget::setNameColWidth(int w)
 
     nameWidth = w;
 }
+
+void ChatAreaWidget::clearMessages()
+{
+    messages.clear();
+}
