@@ -115,7 +115,8 @@ void Settings::load()
         useProxy = s.value("useProxy", false).toBool();
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
-		currentProfile = s.value("currentProfile", "").toString();
+        currentProfile = s.value("currentProfile", "").toString();
+    	autoAwayTime = s.value("autoAwayTime", 10).toInt();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -221,6 +222,7 @@ void Settings::save(QString path)
         s.setValue("proxyAddr", proxyAddr);
         s.setValue("proxyPort", proxyPort);
         s.setValue("currentProfile", currentProfile);
+        s.setValue("autoAwayTime", autoAwayTime);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -440,6 +442,18 @@ bool Settings::getEncryptLogs() const
 void Settings::setEncryptLogs(bool newValue)
 {
     encryptLogs = newValue;
+}
+
+int Settings::getAutoAwayTime() const
+{
+    return autoAwayTime;
+}
+
+void Settings::setAutoAwayTime(int newValue)
+{
+    if (newValue < 0)
+        newValue = 10;
+    autoAwayTime = newValue;
 }
 
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)
