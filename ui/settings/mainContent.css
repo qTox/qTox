@@ -1,7 +1,6 @@
 QWidget
 {
     color: black;
-    background-color: white;
     font: @big;
 }
 
@@ -27,12 +26,22 @@ QComboBox
     background-color: white;
 }
 
-QComboBox:on QComboBox:off QComboBox:drop-down
+QLineEdit
 {
-    background: rgba(18, 18, 18, 204);
+    background-color: white;
 }
 
-QComboBox:active
+QTabWidget
 {
-    background: white;
+    background-color: white;
+}
+
+QTabBar
+{
+    background-color: white;
+}
+
+QScrollArea
+{
+    background-color: white;
 }
