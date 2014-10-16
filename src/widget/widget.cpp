@@ -296,7 +296,7 @@ QString Widget::askProfiles()
 
 void Widget::setIdleTimer(int minutes)
 {
-    idleTimer->start(mins * 1000*60);
+    idleTimer->start(minutes * 1000*60);
 }
 
 QString Widget::getUsername()
