@@ -52,6 +52,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     else
         bodyUI->styleBrowser->setCurrentText("None");
     
+    bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
+    
     bodyUI->cbUDPDisabled->setChecked(Settings::getInstance().getForceTCP());
     bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
     int port = Settings::getInstance().getProxyPort();
@@ -73,6 +75,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);
     connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
+    connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
 }
 
 GeneralForm::~GeneralForm()
@@ -105,6 +108,11 @@ void GeneralForm::onStyleSelected(QString style)
     Settings::getInstance().setStyle(style);
     this->setStyle(QStyleFactory::create(style));
     parent->setStyle(style);
+}
+
+void GeneralForm::onAutoAwayChanged()
+{
+    Settings::getInstance().setAutoAwayTime(bodyUI->autoAwaySpinBox->value());
 }
 
 void GeneralForm::onSetStatusChange()
