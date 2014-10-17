@@ -83,6 +83,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="toolTip">
+           <string>Set to 0 to disable</string>
+          </property>
+          <property name="showGroupSeparator" stdset="0">
+           <bool>true</bool>
+          </property>
           <property name="suffix">
            <string> minutes</string>
           </property>
@@ -90,7 +96,7 @@
            <number>0</number>
           </property>
           <property name="maximum">
-           <number>600</number>
+           <number>2147483647</number>
           </property>
          </widget>
         </item>
