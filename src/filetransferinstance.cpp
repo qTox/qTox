@@ -46,7 +46,7 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
 
     filenameElided = fm.elidedText(filename, Qt::ElideRight, MAX_CONTENT_WIDTH);
     size = getHumanReadableSize(File.filesize);
-    contentPrefWidth = std::max(fm.width(filenameElided), fm.width(size));
+    contentPrefWidth = std::max(fm.boundingRect(filenameElided).width(), fm.width(size));
 
     speed = "0B/s";
     eta = "00:00";
