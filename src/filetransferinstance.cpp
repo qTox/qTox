@@ -274,7 +274,7 @@ QString FileTransferInstance::QImage2base64(const QImage &img)
 
 QString FileTransferInstance::getHtmlImage()
 {
-    qDebug() << "QString FileTransferInstance::getHtmlImage() " << state;
+    //qDebug() << "QString FileTransferInstance::getHtmlImage() " << state;
 
     QString res;
     if (state == tsPending || state == tsProcessing || state == tsPaused)
