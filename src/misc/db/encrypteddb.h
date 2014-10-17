@@ -35,7 +35,7 @@ private:
     QByteArray encrypt(QByteArray data);
     QByteArray decrypt(QByteArray data);
 
-    QList<QString> decryptFile();
+    bool pullFileContent();
     void appendToEncrypted(const QString &sql);
 
     u_int8_t *encrkey;

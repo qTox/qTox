@@ -37,22 +37,25 @@ EncryptedDb::EncryptedDb(const QString &fname, const QString &key) :
     plainChunkSize = 1024;
     encryptedChunkSize = plainChunkSize + tox_pass_encryption_extra_length();
 
-    encrFile.open(QIODevice::ReadOnly);
-
-    QList<QString> sqlCommands = decryptFile();
-    for (const QString &cmd : sqlCommands)
+    QByteArray fileContent;
+    if (pullFileContent())
     {
-        // check line here
-        QSqlQuery r = PlainDb::exec(cmd);
-        qDebug() << r.lastError();
+        chunkPosition = encrFile.size() / encryptedChunkSize;
+
+        encrFile.seek(0);
+        fileContent = encrFile.readAll();
+
+        /*
+        if (encrFile.size() > 0)
+        {
+            encrFile.copy(fname + "~");
+        }
+        */
+    } else {
+        qWarning() << "corrupted history log file will be wiped!";
+        chunkPosition = 0;
     }
 
-    chunkPosition = encrFile.size() / encryptedChunkSize;
-//    encrFile.seek(chunkPosition * encryptedChunkSize);
-//    buffer = encrFile.read(encrFile.size() % encryptedChunkSize);
-
-    encrFile.seek(0);
-    QByteArray fileContent = encrFile.readAll();
     encrFile.close();
     encrFile.open(QIODevice::WriteOnly);
     encrFile.write(fileContent);
@@ -78,28 +81,59 @@ bool EncryptedDb::save()
     return true;
 }
 
-QList<QString> EncryptedDb::decryptFile()
+bool EncryptedDb::pullFileContent()
 {
+    encrFile.open(QIODevice::ReadOnly);
     QByteArray fileContent;
 
     while (!encrFile.atEnd())
     {
         QByteArray encrChunk = encrFile.read(encryptedChunkSize);
         buffer = decrypt(encrChunk);
-        fileContent += buffer;
+        if (buffer.size() > 0)
+        {
+            fileContent += buffer;
+        } else {
+            qWarning() << "Encrypted history log is corrupted: can't decrypt";
+            buffer = QByteArray();
+            return false;
+        }
     }
 
     QList<QByteArray> splittedBA = fileContent.split('\n');
-    QList<QString> res;
+    QList<QString> sqlCmds;
+
     for (auto ba_line : splittedBA)
     {
         QString line = QByteArray::fromBase64(ba_line);
-        //check line correctness here
-        res.append(line);
-//        res.append(ba_line);
+        if (line.size() == 0)
+            continue;
+
+        bool isGoodLine = false;
+        if (line.startsWith("CREATE", Qt::CaseInsensitive) || line.startsWith("INSERT", Qt::CaseInsensitive))
+        {
+            if (line.endsWith(");"))
+            {
+                sqlCmds.append(line);
+                isGoodLine = true;
+            }
+        }
+
+        if (!isGoodLine)
+        {
+            qWarning() << "Encrypted history log is corrupted: errors in content";
+            buffer = QByteArray();
+            return false;
+        }
     }
 
-    return res;
+    for (auto line : sqlCmds)
+    {
+        QSqlQuery r = PlainDb::exec(line);
+        qDebug() << r.lastError();
+    }
+
+    return true;
 }
 
 void EncryptedDb::appendToEncrypted(const QString &sql)
@@ -114,14 +148,23 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
     {
         QByteArray filledChunk = buffer.left(plainChunkSize);
         encrFile.seek(chunkPosition * encryptedChunkSize);
-        encrFile.write(encrypt(filledChunk));
+
+        QByteArray encr = encrypt(filledChunk);
+        if (encr.size() > 0)
+        {
+            encrFile.write(encr);
+        }
         buffer = buffer.right(buffer.size() - plainChunkSize);
         chunkPosition++;
     }
     encrFile.seek(chunkPosition * encryptedChunkSize);
 
-    encrFile.write(encrypt(buffer));
-    encrFile.flush();
+    QByteArray encr = encrypt(buffer);
+    if (encr.size() > 0)
+    {
+        encrFile.write(encrypt(buffer));
+        encrFile.flush();
+    }
 
     qDebug() << sql;
 }
@@ -132,10 +175,16 @@ QByteArray EncryptedDb::encrypt(QByteArray data)
     int plainSize = data.size();
 
     uint8_t *out = new u_int8_t[encrSize];
-//    int state = tox_pass_key_encrypt(reinterpret_cast<uint8_t*>(data.data()), plainSize, encrkey, out);
+    //int state = tox_pass_key_encrypt(reinterpret_cast<uint8_t*>(data.data()), plainSize, encrkey, out);
     int state = tox_pass_encrypt(reinterpret_cast<uint8_t*>(data.data()), plainSize,
                                  reinterpret_cast<uint8_t*>(passwd.data()), passwd.size(), out);
-    qDebug() << state;
+
+    if (state == -1)
+    {
+        qWarning() << "encryption failed!";
+        delete out;
+        return QByteArray();
+    }
 
     QByteArray ret = QByteArray::fromRawData(reinterpret_cast<const char*>(out), encrSize);
     return ret;
@@ -147,10 +196,16 @@ QByteArray EncryptedDb::decrypt(QByteArray data)
     int plainSize = data.size() - tox_pass_encryption_extra_length();
 
     uint8_t *out = new u_int8_t[plainSize];
-//    int state = tox_pass_key_decrypt(reinterpret_cast<uint8_t*>(data.data()), encrSize, encrkey, out);
-    int state = tox_pass_decrypt(reinterpret_cast<uint8_t*>(data.data()), encrSize,
-                                 reinterpret_cast<uint8_t*>(passwd.data()), passwd.size(), out);
-    qDebug() << state << encrSize << plainSize;
+    //int decrSize = tox_pass_key_decrypt(reinterpret_cast<uint8_t*>(data.data()), encrSize, encrkey, out);
+    int decrSize = tox_pass_decrypt(reinterpret_cast<uint8_t*>(data.data()), encrSize,
+                                    reinterpret_cast<uint8_t*>(passwd.data()), passwd.size(), out);
+
+    if (decrSize != plainSize)
+    {
+        qWarning() << "decryption failed!";
+        delete out;
+        return QByteArray();
+    }
 
     QByteArray ret = QByteArray::fromRawData(reinterpret_cast<const char*>(out), plainSize);
     return ret;
