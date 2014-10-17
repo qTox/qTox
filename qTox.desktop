@@ -9,4 +9,4 @@ Exec=qtox
 Icon=qtox
 Categories=InstantMessaging;;AudioVideo;Network;
 Terminal=false
-MimeType=x-scheme-handler/tox;
+MimeType=x-scheme-handler/tox;application/x-tox;

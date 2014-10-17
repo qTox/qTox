@@ -34,6 +34,7 @@ public:
 
     int nameColWidth() {return nameWidth;}
     void setNameColWidth(int w);
+    int getNumberOfMessages();
 
 public slots:
     void clearChatArea();

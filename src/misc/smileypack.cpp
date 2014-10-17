@@ -127,12 +127,21 @@ bool SmileyPack::load(const QString& filename)
         {
             QString emoticon = stringElement.text();
             filenameTable.insert(emoticon, file);
-            emoticonSet.push_back(emoticon);
+            
             cacheSmiley(file); // preload all smileys
-
+            
+            QPixmap pm;
+            pm.loadFromData(getCachedSmiley(emoticon), "PNG");
+            
+            if(pm.size().width() > 0) 
+                emoticonSet.push_back(emoticon);
+            
             stringElement = stringElement.nextSibling().toElement();
+            
         }
-        emoticons.push_back(emoticonSet);
+        
+        if(emoticonSet.size() > 0)
+            emoticons.push_back(emoticonSet);
     }
 
     // success!
@@ -176,7 +185,6 @@ QIcon SmileyPack::getAsIcon(const QString &key)
 {
     QPixmap pm;
     pm.loadFromData(getCachedSmiley(key), "PNG");
-
     return QIcon(pm);
 }
 

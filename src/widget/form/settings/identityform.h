@@ -60,6 +60,11 @@ private slots:
     void copyIdClicked();
     void onUserNameEdited();
     void onStatusMessageEdited();
+    void onLoadClicked();
+    void onRenameClicked();
+    void onExportClicked();
+    void onDeleteClicked();
+    void onImportClicked();
 
 private:
     Ui::IdentitySettings* bodyUI;

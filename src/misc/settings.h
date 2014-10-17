@@ -51,6 +51,12 @@ public:
 
     bool getAutostartInTray() const;
     void setAutostartInTray(bool newValue);
+    
+    QString getStyle() const;
+    void setStyle(const QString& newValue);
+
+    QString getCurrentProfile() const;
+    void setCurrentProfile(QString profile);
 
     bool getUseTranslations() const;
     void setUseTranslations(bool newValue);
@@ -72,6 +78,9 @@ public:
 
     bool getEncryptLogs() const;
     void setEncryptLogs(bool newValue);
+
+    int getAutoAwayTime() const;
+    void setAutoAwayTime(int newValue);
 
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
@@ -129,10 +138,14 @@ public:
     bool isMinimizeOnCloseEnabled() const;
     void setMinimizeOnClose(bool newValue);
 
+    bool getStatusChangeNotificationEnabled() const;
+    void setStatusChangeNotificationEnabled(bool newValue);
+
     // Privacy
     bool isTypingNotificationEnabled() const;
     void setTypingNotification(bool enabled);
 
+    // State
     bool getUseNativeStyle() const;
     void setUseNativeStyle(bool value);
 
@@ -176,8 +189,12 @@ private:
     QString proxyAddr;
     int proxyPort;
 
+    QString currentProfile;
+
     bool enableLogging;
     bool encryptLogs;
+
+    int autoAwayTime;
 
     QHash<QString, QByteArray> widgetSettings;
 
@@ -192,11 +209,13 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
-
+    QString style;
+    
     // ChatView
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
     QString timestampFormat;
+    bool statusChangeNotificationEnabled;
 
     // Privacy
     bool typingNotification;
