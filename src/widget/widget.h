@@ -114,6 +114,7 @@ private slots:
     void onUserAway();
 
 private:
+    void init();
     void hideMainForms();
     virtual bool event(QEvent * e);
     Group* createGroup(int groupId);

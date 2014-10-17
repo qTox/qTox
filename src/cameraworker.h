@@ -25,6 +25,7 @@
 #include <QSize>
 
 #include "opencv2/opencv.hpp"
+#include "videosource.h"
 
 class QTimer;
 
@@ -34,8 +35,6 @@ class CameraWorker : public QObject
 public:
     CameraWorker(int index);
     void doWork();
-    bool hasFrame();
-    cv::Mat3b dequeueFrame();
 
     void suspend();
     void resume();
@@ -48,7 +47,7 @@ public slots:
 
 signals:
     void started();
-    void newFrameAvailable();
+    void newFrameAvailable(const VideoFrame frame);
     void resProbingFinished(QList<QSize> res);
 
 private slots:

@@ -14,36 +14,23 @@
     See the COPYING file for more details.
 */
 
-#ifndef EMOTICONSWIDGET_H
-#define EMOTICONSWIDGET_H
+#ifndef NETVIDEOSOURCE_H
+#define NETVIDEOSOURCE_H
 
-#include <QMenu>
-#include <QStackedWidget>
-#include <QVBoxLayout>
+#include "videosource.h"
 
-class EmoticonsWidget : public QMenu
+class vpx_image;
+
+class NetVideoSource : public VideoSource
 {
-    Q_OBJECT
 public:
-    explicit EmoticonsWidget(QWidget *parent = 0);
+    NetVideoSource();
 
-signals:
-    void insertEmoticon(QString str);
+    void pushFrame(VideoFrame frame);
+    void pushVPXFrame(vpx_image* image);
 
-private slots:
-    void onSmileyClicked();
-    void onPageButtonClicked();
-
-protected:
-    virtual void mouseReleaseEvent(QMouseEvent *ev);
-
-private:
-    QStackedWidget stack;
-    QVBoxLayout layout;
-
-public:
-    virtual QSize sizeHint() const;
-
+    virtual void subscribe() {}
+    virtual void unsubscribe() {}
 };
 
-#endif // EMOTICONSWIDGET_H
+#endif // NETVIDEOSOURCE_H

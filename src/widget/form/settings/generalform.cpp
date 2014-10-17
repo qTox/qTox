@@ -24,7 +24,7 @@
 #include <QStyleFactory>
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
-    GenericForm(tr("General Settings"), QPixmap(":/img/settings/general.png"))
+    GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
 {
     parent = myParent;    
     

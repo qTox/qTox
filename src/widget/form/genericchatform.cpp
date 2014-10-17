@@ -37,9 +37,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headWidget = new QWidget();
 
     nameLabel = new CroppingLabel();
-    nameLabel->setFont(Style::getFont(Style::MediumBold));
-    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::DarkGrey));
-    nameLabel->setPalette(pal);
+    nameLabel->setObjectName("nameLabel");
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     QHBoxLayout *headLayout = new QHBoxLayout(), *mainFootLayout = new QHBoxLayout();
@@ -48,8 +46,6 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     QVBoxLayout *footButtonsSmall = new QVBoxLayout(), *volMicLayout = new QVBoxLayout();
 
     chatWidget = new ChatAreaWidget();
-    chatWidget->document()->setDefaultStyleSheet(Style::getStylesheet(":ui/chatArea/innerStyle.css"));
-    chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
 
     msgEdit = new ChatTextEdit();
 
@@ -61,10 +57,6 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     videoButton = new QPushButton();
     volButton = new QPushButton();
     micButton = new QPushButton();
-
-    QFont bold;
-    bold.setBold(true);
-    nameLabel->setFont(bold);
 
     footButtonsSmall->setSpacing(2);
 
@@ -125,6 +117,10 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+
+    chatWidget->document()->setDefaultStyleSheet(Style::getStylesheet(":ui/chatArea/innerStyle.css"));
+    chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
+    headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
 }
 
 int GenericChatForm::getNumberOfMessages()

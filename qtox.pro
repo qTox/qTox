@@ -111,7 +111,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/friendlist.h \
     src/misc/cdata.h \
     src/misc/cstring.h \
-    src/widget/camera.h \
+    src/camera.h \
     src/widget/netcamview.h \
     src/misc/smileypack.h \
     src/widget/emoticonswidget.h \
@@ -160,7 +160,7 @@ SOURCES += \
     src/misc/settings.cpp \
     src/misc/cdata.cpp \
     src/misc/cstring.cpp \
-    src/widget/camera.cpp \
+    src/camera.cpp \
     src/widget/netcamview.cpp \
     src/misc/smileypack.cpp \
     src/widget/emoticonswidget.cpp \
@@ -181,4 +181,5 @@ SOURCES += \
     src/widget/tool/chatactions/actionaction.cpp \
     src/widget/maskablepixmapwidget.cpp \
     src/cameraworker.cpp \
-    src/widget/videosurface.cpp
+    src/widget/videosurface.cpp \
+    src/netvideosource.cpp

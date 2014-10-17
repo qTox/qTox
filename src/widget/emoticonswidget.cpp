@@ -23,6 +23,7 @@
 #include <QFile>
 #include <QLayout>
 #include <QGridLayout>
+#include <QMouseEvent>
 
 EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     QMenu(parent)
@@ -43,7 +44,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
 
     const QList<QStringList>& emoticons = SmileyPack::getInstance().getEmoticons();
     int itemCount = emoticons.size();
-    int pageCount = (itemCount / itemsPerPage) + 1;
+    int pageCount = ceil(float(itemCount) / float(itemsPerPage));
     int currPage = 0;
     int currItem = 0;
     int row = 0;
@@ -114,7 +115,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
 void EmoticonsWidget::onSmileyClicked()
 {
     // hide the QMenu
-    QMenu::hide();
+    hide();
 
     // emit insert emoticon
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
@@ -135,4 +136,10 @@ void EmoticonsWidget::onPageButtonClicked()
 QSize EmoticonsWidget::sizeHint() const
 {
     return layout.sizeHint();
+}
+
+void EmoticonsWidget::mouseReleaseEvent(QMouseEvent *ev)
+{
+    if (!rect().contains(ev->pos()))
+        hide();
 }

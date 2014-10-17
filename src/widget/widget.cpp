@@ -28,7 +28,7 @@
 #include "form/groupchatform.h"
 #include "src/misc/style.h"
 #include "friendlistwidget.h"
-#include "camera.h"
+#include "src/camera.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
 #include <QMessageBox>
@@ -52,6 +52,11 @@ Widget::Widget(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       activeChatroomWidget{nullptr}
+{
+
+}
+
+void Widget::init()
 {
     ui->setupUi(this);
 
@@ -112,8 +117,6 @@ Widget::Widget(QWidget *parent)
 
     ui->statusButton->setProperty("status", "offline");
     Style::repolish(ui->statusButton);
-
-    settingsWidget = new SettingsWidget();
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -179,8 +182,6 @@ Widget::Widget(QWidget *parent)
     connect(ui->statusLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onStatusMessageChanged(QString,QString)));
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
-//    connect(settingsWidget->getIdentityForm(), &IdentityForm::userNameChanged, Core::getInstance(), &Core::setUsername);
-//    connect(settingsWidget->getIdentityForm(), &IdentityForm::statusMessageChanged, Core::getInstance(), &Core::setStatusMessage);
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
@@ -188,6 +189,7 @@ Widget::Widget(QWidget *parent)
 
     coreThread->start();
 
+    settingsWidget = new SettingsWidget();
     friendForm.show(*ui);
 }
 
@@ -214,7 +216,10 @@ Widget::~Widget()
 Widget* Widget::getInstance()
 {
     if (!instance)
+    {
         instance = new Widget();
+        instance->init();
+    }
     return instance;
 }
 
@@ -465,7 +470,6 @@ void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     ui->nameLabel->setToolTip(username); // for overlength names
-    settingsWidget->getIdentityForm()->setUserName(username);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
@@ -479,7 +483,6 @@ void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
     ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
-    settingsWidget->getIdentityForm()->setStatusMessage(statusMessage);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)

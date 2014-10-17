@@ -24,13 +24,14 @@ CameraWorker::CameraWorker(int index)
     , camIndex(index)
     , refCount(0)
 {
+    qRegisterMetaType<VideoFrame>();
 }
 
 void CameraWorker::onStart()
 {
     clock = new QTimer(this);
     clock->setSingleShot(false);
-    clock->setInterval(5);
+    clock->setInterval(1000/60);
 
     connect(clock, &QTimer::timeout, this, &CameraWorker::doWork);
 
@@ -39,14 +40,14 @@ void CameraWorker::onStart()
 
 void CameraWorker::_suspend()
 {
-    qDebug() << "Suspend";
+    qDebug() << "CameraWorker: Suspend";
     clock->stop();
     unsubscribe();
 }
 
 void CameraWorker::_resume()
 {
-    qDebug() << "Resume";
+    qDebug() << "CameraWorker: Resume";
     subscribe();
     clock->start();
 }
@@ -66,7 +67,6 @@ double CameraWorker::_getProp(int prop)
         subscribe();
         props[prop] = cam.get(prop);
         unsubscribe();
-        qDebug() << "ASKED " << prop << " VAL " << props[prop];
     }
 
     return props.value(prop);
@@ -124,6 +124,7 @@ void CameraWorker::subscribe()
     {
         if (!cam.isOpened())
         {
+            queue.clear();
             cam.open(camIndex);
             applyProps(); // restore props
         }
@@ -139,6 +140,7 @@ void CameraWorker::unsubscribe()
     if(refCount <= 0)
     {
         cam.release();
+        refCount = 0;
     }
 }
 
@@ -147,38 +149,15 @@ void CameraWorker::doWork()
     if (!cam.isOpened())
         return;
 
-    if (queue.size() > 3)
+    if (!cam.read(frame))
     {
-        queue.dequeue();
+        qDebug() << "CameraWorker: Cannot read frame";
         return;
     }
 
-    cam >> frame;
-//qDebug() << "Decoding frame";
-    mutex.lock();
+    QByteArray frameData(reinterpret_cast<char*>(frame.data), frame.total() * frame.channels());
 
-    queue.enqueue(frame);
-    mutex.unlock();
-
-    emit newFrameAvailable();
-}
-
-bool CameraWorker::hasFrame()
-{
-    mutex.lock();
-    bool b = !queue.empty();
-    mutex.unlock();
-
-    return b;
-}
-
-cv::Mat3b CameraWorker::dequeueFrame()
-{
-    mutex.lock();
-    cv::Mat3b f = queue.dequeue();
-    mutex.unlock();
-
-    return f;
+    emit newFrameAvailable(VideoFrame{frameData, QSize(frame.cols, frame.rows), VideoFrame::BGR});
 }
 
 void CameraWorker::suspend()

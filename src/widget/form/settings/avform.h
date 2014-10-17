@@ -45,6 +45,8 @@ private slots:
     void on_HueSlider_sliderMoved(int position);
     void on_videoModescomboBox_currentIndexChanged(const QString &arg1);
 
+    virtual void hideEvent(QHideEvent*);
+
 private:
     Ui::AVSettings *bodyUI;
     VideoSurface* camView;
