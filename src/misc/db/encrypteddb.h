@@ -32,7 +32,7 @@ public:
     virtual bool save();
 
 private:
-    QList<QString> decryptFile();
+    bool pullFileContent();
     void appendToEncrypted(const QString &sql);
 
     QFile encrFile;
