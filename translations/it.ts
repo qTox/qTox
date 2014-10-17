@@ -269,7 +269,7 @@ Do you want to erase this profile ?</source>
 <context>
     <name>GeneralForm</name>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="26"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="27"/>
         <source>General Settings</source>
         <translation>Impostazioni Generali</translation>
     </message>
@@ -287,12 +287,12 @@ Do you want to erase this profile ?</source>
         <translation>Impostazioni Generali</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="81"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="188"/>
         <source>Connection Settings</source>
         <translation>Impostazioni Connessione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="87"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="194"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Abilita IPv6 (consigliato)</translation>
@@ -320,41 +320,91 @@ Do you want to erase this profile ?</source>
         <translation>Avvia minimizzato</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="62"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="59"/>
+        <source>Show contacts&apos; status changes</source>
+        <translation>Mostra quando i contatti cambiano stato</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="68"/>
+        <source>Provided in minutes</source>
+        <translation>Espresso in minuti</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="74"/>
+        <source>Auto away after:</source>
+        <translation>Imposta assenza dopo:</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="87"/>
+        <source> minutes</source>
+        <translation> minuti</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="105"/>
         <source>Theme</source>
         <translation>Impostazioni Tema</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="68"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="111"/>
         <source>Smiley Pack</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>Emoticons</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="104"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="123"/>
+        <source>:)</source>
+        <translation>:)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="133"/>
+        <source>;)</source>
+        <translation>;)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="143"/>
+        <source>:p</source>
+        <translation>:p</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="153"/>
+        <source>:O</source>
+        <translation>:O</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="163"/>
+        <source>:&apos;(</source>
+        <translation>:&apos;(</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="175"/>
+        <source>Style</source>
+        <translation>Stile</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="211"/>
         <source>Use proxy (SOCKS5)</source>
         <translation>Usa proxy (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="113"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="220"/>
         <source>Address</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>IP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="123"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="230"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Porta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="97"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="204"/>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Disabilita connessioni UDP (non raccomandato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="94"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="201"/>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Questo permette di usare qTox con Tor; tuttavia aggiunge carico alla rete Tox, quindi usalo solo se necessario.</translation>
@@ -363,8 +413,8 @@ Do you want to erase this profile ?</source>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="149"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="155"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="154"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="160"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
@@ -412,55 +462,67 @@ Do you want to erase this profile ?</source>
         <translation>Il tuo profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="117"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="114"/>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation>Chiamata in corso</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="115"/>
+        <source>You can&apos;t switch profiles while a call is active!</source>
+        <comment>popup text</comment>
+        <translation>Non puoi cambiare profilo durante una chiamata!</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="125"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
         <translation>Rinomina &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="132"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="140"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
         <translation>Esporta profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="134"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="142"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
         <translation>Tox save file (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="143"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="151"/>
         <source>Profile currently loaded</source>
         <comment>current profile deletion warning title</comment>
         <translation>Profilo attualmente in uso</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="143"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="151"/>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
         <translation>Questo profilo è attualmente in uso. Per favore carica un profilo differente prima di eliminare questo.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="148"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
         <translation>Eliminazione imminente!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="148"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Sei sicuro di voler eliminare questo profilo?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="160"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="168"/>
         <source>Import profile</source>
         <comment>import dialog title</comment>
         <translation>Importa profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="160"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="168"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
         <translation>Tox save file (*.tox)</translation>
@@ -604,73 +666,103 @@ Do you want to erase this profile ?</source>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="90"/>
+        <location filename="../src/widget/widget.cpp" line="101"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="92"/>
+        <location filename="../src/widget/widget.cpp" line="103"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="94"/>
+        <location filename="../src/widget/widget.cpp" line="105"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="264"/>
+        <location filename="../src/widget/widget.cpp" line="282"/>
         <source>Choose a profile</source>
         <translation>Scegli un profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="265"/>
+        <location filename="../src/widget/widget.cpp" line="283"/>
         <source>Please choose which identity to use</source>
         <translation>Per favore scegli quale identità usare</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="286"/>
+        <location filename="../src/widget/widget.cpp" line="309"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="293"/>
-        <location filename="../src/widget/widget.cpp" line="300"/>
-        <location filename="../src/widget/widget.cpp" line="321"/>
+        <location filename="../src/widget/widget.cpp" line="316"/>
+        <location filename="../src/widget/widget.cpp" line="323"/>
+        <location filename="../src/widget/widget.cpp" line="344"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="293"/>
+        <location filename="../src/widget/widget.cpp" line="316"/>
         <source>Unable to open this file</source>
         <translation>Impossibile aprire il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="300"/>
+        <location filename="../src/widget/widget.cpp" line="323"/>
         <source>Unable to read this image</source>
         <translation>Impossibile leggere l&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="321"/>
+        <location filename="../src/widget/widget.cpp" line="344"/>
         <source>This image is too big</source>
         <translation>L&apos;immagine è troppo grande</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="348"/>
+        <location filename="../src/widget/widget.cpp" line="371"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="357"/>
+        <location filename="../src/widget/widget.cpp" line="380"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="712"/>
+        <location filename="../src/widget/widget.cpp" line="549"/>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation>assente</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="551"/>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation>occupato</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="553"/>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation>offline</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="555"/>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation>online</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="561"/>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation>%1 è ora %2</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="752"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
