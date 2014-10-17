@@ -31,7 +31,7 @@
 #include <QMessageBox>
 
 IdentityForm::IdentityForm() :
-    GenericForm(tr("Your identity"), QPixmap(":/img/settings/identity.png"))
+    GenericForm(tr("Identity"), QPixmap(":/img/settings/identity.png"))
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);

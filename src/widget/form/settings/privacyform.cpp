@@ -18,7 +18,7 @@
 #include "src/widget/form/settingswidget.h"
 
 PrivacyForm::PrivacyForm() :
-    GenericForm(tr("Privacy settings"), QPixmap(":/img/settings/privacy.png"))
+    GenericForm(tr("Privacy"), QPixmap(":/img/settings/privacy.png"))
 {
 }
 
