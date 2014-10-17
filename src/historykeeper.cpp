@@ -44,9 +44,8 @@ HistoryKeeper *HistoryKeeper::getInstance()
 
             if (encrypted)
             {
-                QString key = "plainKey"; // FIXME: ask user about it
                 path = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.encrypted");
-                dbIntf = new EncryptedDb(path, key);
+                dbIntf = new EncryptedDb(path);
 
                 historyInstance = new HistoryKeeper(dbIntf);
                 return historyInstance;
