@@ -16,6 +16,7 @@
 
 #include "encrypteddb.h"
 #include "src/misc/settings.h"
+#include "src/core.h"
 
 #include <tox/toxencryptsave.h>
 
@@ -23,17 +24,9 @@
 #include <QDebug>
 #include <QSqlError>
 
-EncryptedDb::EncryptedDb(const QString &fname, const QString &key) :
+EncryptedDb::EncryptedDb(const QString &fname) :
     PlainDb(":memory:"), encrFile(fname)
 {
-    encrkey = new u_int8_t[tox_pass_key_length()];
-    QByteArray key_ba;
-    key_ba.append(key);
-//    tox_derive_key_from_pass(reinterpret_cast<uint8_t*>(key_ba.data()), key_ba.size(), encrkey);
-    passwd = "test";
-
-    qDebug() << QByteArray::fromRawData(reinterpret_cast<char *>(encrkey), tox_pass_key_length()).toBase64();
-
     plainChunkSize = 1024;
     encryptedChunkSize = plainChunkSize + tox_pass_encryption_extra_length();
 
@@ -60,8 +53,7 @@ EncryptedDb::EncryptedDb(const QString &fname, const QString &key) :
 
 EncryptedDb::~EncryptedDb()
 {
-    encrFile.close();
-    delete encrkey;
+    encrFile.close(); // what if program is killed without being able to clean up?
 }
 
 QSqlQuery EncryptedDb::exec(const QString &query)
@@ -85,7 +77,7 @@ QList<QString> EncryptedDb::decryptFile()
     while (!encrFile.atEnd())
     {
         QByteArray encrChunk = encrFile.read(encryptedChunkSize);
-        buffer = decrypt(encrChunk);
+        buffer = Core::getInstance()->decryptData(encrChunk);
         fileContent += buffer;
     }
 
@@ -114,44 +106,14 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
     {
         QByteArray filledChunk = buffer.left(plainChunkSize);
         encrFile.seek(chunkPosition * encryptedChunkSize);
-        encrFile.write(encrypt(filledChunk));
+        encrFile.write(Core::getInstance()->encryptData(filledChunk));
         buffer = buffer.right(buffer.size() - plainChunkSize);
         chunkPosition++;
     }
     encrFile.seek(chunkPosition * encryptedChunkSize);
 
-    encrFile.write(encrypt(buffer));
+    encrFile.write(Core::getInstance()->encryptData(buffer));
     encrFile.flush();
 
     qDebug() << sql;
-}
-
-QByteArray EncryptedDb::encrypt(QByteArray data)
-{
-    int encrSize = data.size() + tox_pass_encryption_extra_length();
-    int plainSize = data.size();
-
-    uint8_t *out = new u_int8_t[encrSize];
-//    int state = tox_pass_key_encrypt(reinterpret_cast<uint8_t*>(data.data()), plainSize, encrkey, out);
-    int state = tox_pass_encrypt(reinterpret_cast<uint8_t*>(data.data()), plainSize,
-                                 reinterpret_cast<uint8_t*>(passwd.data()), passwd.size(), out);
-    qDebug() << state;
-
-    QByteArray ret = QByteArray::fromRawData(reinterpret_cast<const char*>(out), encrSize);
-    return ret;
-}
-
-QByteArray EncryptedDb::decrypt(QByteArray data)
-{
-    int encrSize = data.size();
-    int plainSize = data.size() - tox_pass_encryption_extra_length();
-
-    uint8_t *out = new u_int8_t[plainSize];
-//    int state = tox_pass_key_decrypt(reinterpret_cast<uint8_t*>(data.data()), encrSize, encrkey, out);
-    int state = tox_pass_decrypt(reinterpret_cast<uint8_t*>(data.data()), encrSize,
-                                 reinterpret_cast<uint8_t*>(passwd.data()), passwd.size(), out);
-    qDebug() << state << encrSize << plainSize;
-
-    QByteArray ret = QByteArray::fromRawData(reinterpret_cast<const char*>(out), plainSize);
-    return ret;
 }

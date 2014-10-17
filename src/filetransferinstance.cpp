@@ -24,7 +24,7 @@
 #include <QDebug>
 #include <QPainter>
 
-#define CONTENT_WIDTH 250
+#define MAX_CONTENT_WIDTH 250
 #define MAX_PREVIEW_SIZE 25*1024*1024
 
 uint FileTransferInstance::Idconter = 0;
@@ -43,9 +43,10 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
     // update this whenever you change the font in innerStyle.css
     QFontMetrics fm(Style::getFont(Style::Small));
 
-    filenameElided = fm.elidedText(filename, Qt::ElideRight, CONTENT_WIDTH);
-
+    filenameElided = fm.elidedText(filename, Qt::ElideRight, MAX_CONTENT_WIDTH);
     size = getHumanReadableSize(File.filesize);
+    contentPrefWidth = std::max(fm.width(filenameElided), fm.width(size));
+
     speed = "0B/s";
     eta = "00:00";
 
@@ -57,7 +58,7 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
             File.file->seek(0);
             if (preview.loadFromData(File.file->readAll()))
             {
-                pic = preview.scaledToHeight(50);
+                pic = preview.scaled(100, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation);
             }
         }
         File.file->seek(0);
@@ -127,7 +128,7 @@ void FileTransferInstance::onFileTransferFinished(ToxFile File)
         {
             if (preview.loadFromData(previewFile.readAll()))
             {
-                pic = preview.scaledToHeight(50);
+                pic = preview.scaled(100, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation);
             }
             previewFile.close();
         }
@@ -377,7 +378,8 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
     QString imgBstr = "<img src=\"data:ftrans." + widgetId + ".btnB/png;base64," + QImage2base64(imgB) + "\">";
 
     QString content;
-    QString progrBar = "<img src=\"data:progressbar." + widgetId + "/png;base64," + QImage2base64(drawProgressBarImg(double(lastBytesSent)/totalBytes, CONTENT_WIDTH, 9)) + "\">";
+    QString progrBar = "<img src=\"data:progressbar." + widgetId + "/png;base64," +
+            QImage2base64(drawProgressBarImg(double(lastBytesSent)/totalBytes, MAX_CONTENT_WIDTH, 9)) + "\">";
 
     content  = "<p>" + filenameElided + "</p>";
     content += "<table cellspacing=\"0\"><tr>";
@@ -421,10 +423,13 @@ QString FileTransferInstance::wrapIntoForm(const QString& content, const QString
     res += "<div class=button>" + imgLeftA + "<br>" + imgLeftB + "</div>\n";
     res += "</td>\n";
     res += insertMiniature(type);
-    res += "<td width=" + QString::number(CONTENT_WIDTH + 30) + ">\n";
+    res += "<td width=" + QString::number(contentPrefWidth) + ">\n";
     res += "<div class=" + type + ">";
     res += content;
     res += "</div>\n";
+    res += "</td>\n";
+    res += "<td width=3>\n";
+    res += "<div class=" + type + "></div>\n";
     res += "</td>\n";
     res += "<td>\n";
     res += "<div class=button>" + imgAstr + "<br>" + imgBstr + "</div>\n";

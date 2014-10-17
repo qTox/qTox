@@ -132,6 +132,11 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
 }
 
+int GenericChatForm::getNumberOfMessages()
+{
+    return chatWidget->getNumberOfMessages();
+}
+
 void GenericChatForm::setName(const QString &newName)
 {
     nameLabel->setText(newName);

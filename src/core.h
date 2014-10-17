@@ -34,9 +34,13 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    explicit Core(Camera* cam, QThread* coreThread);
+    explicit Core(Camera* cam, QThread* coreThread, QString initialLoadPath);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
+    
+    static const QString TOX_EXT;
+    static const QString CONFIG_FILE_NAME;
+    static QString sanitize(QString name);
 
     int getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
@@ -48,6 +52,9 @@ public:
     void dispatchVideoFrame(vpx_image img) const;
 
     void saveConfiguration();
+    void saveConfiguration(const QString& path);
+    
+    QString getIDString();
     
     QString getUsername();
     QString getStatusMessage();
@@ -56,10 +63,13 @@ public:
     void increaseVideoBusyness();
     void decreaseVideoBusyness();
 
+    bool anyActiveCalls();
+
 public slots:
     void start();
     void process();
     void bootstrapDht();
+    void switchConfiguration(const QString& profile);
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
@@ -94,9 +104,16 @@ public slots:
 
     void micMuteToggle(int callId);
 
+    void setPassword(QString& password);
+    void clearPassword();
+    QByteArray encryptData(const QByteArray& data);
+    QByteArray decryptData(const QByteArray& data);
+
 signals:
     void connected();
     void disconnected();
+    void blockingClearContacts();
+    void blockingGetPassword();
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);
@@ -209,7 +226,8 @@ private:
 
     bool checkConnection();
 
-    bool loadConfiguration(); // Returns false for a critical error, true otherwise
+    bool loadConfiguration(QString path); // Returns false for a critical error, true otherwise
+    void make_tox();
     void loadFriends();
 
     static void sendAllFileData(Core* core, ToxFile* file);
@@ -225,14 +243,15 @@ private slots:
 private:
     Tox* tox;
     ToxAv* toxav;
-    QTimer *toxTimer, *fileTimer, *bootstrapTimer; //, *saveTimer;
+    QTimer *toxTimer, *fileTimer; //, *saveTimer;
     Camera* camera;
+    QString loadPath; // meaningless after start() is called
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
+    uint8_t* pwsaltedkey = nullptr; // use the pw's hash as the "pw"
 
-    static const QString CONFIG_FILE_NAME;
     static const int videobufsize;
     static uint8_t* videobuf;
     static int videoBusyness; // Used to know when to drop frames

@@ -25,22 +25,17 @@
 class EncryptedDb : public PlainDb
 {
 public:
-    EncryptedDb(const QString& fname, const QString &key);
+    EncryptedDb(const QString& fname);
     virtual ~EncryptedDb();
 
     virtual QSqlQuery exec(const QString &query);
     virtual bool save();
 
 private:
-    QByteArray encrypt(QByteArray data);
-    QByteArray decrypt(QByteArray data);
-
     QList<QString> decryptFile();
     void appendToEncrypted(const QString &sql);
 
-    u_int8_t *encrkey;
     QFile encrFile;
-    QByteArray passwd;
 
     qint64 plainChunkSize;
     qint64 encryptedChunkSize;

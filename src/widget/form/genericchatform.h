@@ -48,6 +48,7 @@ public:
     virtual void show(Ui::MainWindow &ui);
     void addMessage(const QString &author, const QString &message, bool isAction, const QDateTime &datetime);
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
+    int getNumberOfMessages();
 
 signals:
     void sendMessage(int, QString);
