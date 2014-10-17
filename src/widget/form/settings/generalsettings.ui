@@ -71,7 +71,7 @@
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="text">
-           <string>Auto away after:</string>
+           <string>Auto away after (0 to disable):</string>
           </property>
          </widget>
         </item>
@@ -87,7 +87,7 @@
            <string> minutes</string>
           </property>
           <property name="minimum">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="maximum">
            <number>600</number>
@@ -106,14 +106,25 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="smileyPackLabel">
-        <property name="text">
-         <string extracomment="Text on smiley pack label">Smiley Pack</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="smileyPackBrowser"/>
+       <layout class="QHBoxLayout" name="smileyHLayout">
+        <item>
+         <widget class="QLabel" name="smileyPackLabel">
+          <property name="text">
+           <string extracomment="Text on smiley pack label">Smiley Pack:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="smileyPackBrowser">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -170,14 +181,25 @@
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="styleLabel">
-        <property name="text">
-         <string>Style</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="styleBrowser"/>
+       <layout class="QHBoxLayout" name="styleHLayout">
+        <item>
+         <widget class="QLabel" name="styleLabel">
+          <property name="text">
+           <string>Style:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="styleBrowser">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

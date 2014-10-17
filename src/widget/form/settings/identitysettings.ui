@@ -75,7 +75,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="profiles" />
+         <widget class="QComboBox" name="profiles">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
