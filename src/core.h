@@ -104,10 +104,18 @@ public slots:
 
     void micMuteToggle(int callId);
 
+    void setPassword(QString& password);
+    void clearPassword();
+    bool encryptFile(const QString& path);
+    QByteArray encryptData(const QByteArray& data);
+    QByteArray decryptData(const QByteArray& data);
+    QByteArray decryptFile(const QString& path);
+
 signals:
     void connected();
     void disconnected();
     void blockingClearContacts();
+    void blockingGetPassword();
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);
@@ -244,6 +252,7 @@ private:
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
+    uint8_t* pwhash = nullptr; // use the pw's hash as the "pw"
 
     static const int videobufsize;
     static uint8_t* videobuf;

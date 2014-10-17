@@ -21,6 +21,7 @@
 #include "widget/widget.h"
 
 #include <tox/tox.h>
+#include <tox/toxencryptsave.h>
 
 #include <ctime>
 #include <functional>
@@ -113,6 +114,8 @@ Core::~Core()
         alcCloseDevice(alOutDev);
     if (alInDev)
         alcCaptureCloseDevice(alInDev);
+
+    clearPassword();
 }
 
 Core* Core::getInstance()
@@ -1100,14 +1103,27 @@ bool Core::loadConfiguration(QString path)
         }
         else if (error == 1) // Encrypted data save
         {
-            qWarning() << "Core: Can not open encrypted tox save";
-            if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted profile"),
-                tr("Your tox profile seems to be encrypted, qTox can't open it\nDo you want to erase this profile ?"),
-                QMessageBox::Ok | QMessageBox::Cancel))
+            if (!pwhash)
             {
-                qWarning() << "Core: Couldn't open encrypted save, giving up";
-                configurationFile.close();
-                return false;
+                qWarning() << "Core: Can not open encrypted tox save";
+                if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted profile"),
+                    tr("Your tox profile seems to be encrypted, qTox can't open it\nDo you want to erase this profile ?"),
+                    QMessageBox::Ok | QMessageBox::Cancel))
+                {
+                    qWarning() << "Core: Couldn't open encrypted save, giving up";
+                    configurationFile.close();
+                    return false;
+                }
+            }
+            else
+            { /*
+                while (error != 0)
+                {
+                    error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwhash, TOX_HASH_LENGTH);
+                    emit blockingGetPassword();
+                    if (!pwhash)
+                        // we need a way to start core without any profile
+                } */
             }
         }
     }
@@ -1137,22 +1153,18 @@ void Core::saveConfiguration()
     }
     
     QString profile = Settings::getInstance().getCurrentProfile();
-    //qDebug() << "saveConf read profile: " << profile;
+
     if (profile == "")
     { // no profile active; this should only happen on startup, if at all
         profile = sanitize(getUsername());
+
         if (profile == "") // happens on creation of a new Tox ID
             profile = getIDString();
-        //qDebug() << "saveConf: read sanitized user as " << profile;
+
         Settings::getInstance().setCurrentProfile(profile);
     }
     
-    QString path = dir + QDir::separator() + profile + TOX_EXT;
-    QFileInfo info(path);
-//    if (!info.exists()) // fall back to old school 'data'
-//    {   //path = dir + QDir::separator() + CONFIG_FILE_NAME;
-//        qDebug() << "Core:" << path << " does not exist";
-//    }
+    QString path = directory.filePath(profile + TOX_EXT);
     
     saveConfiguration(path);
 }
@@ -1174,10 +1186,32 @@ void Core::saveConfiguration(const QString& path)
     }
 
     qDebug() << "Core: writing tox_save to " << path;
-    uint32_t fileSize = tox_size(tox);
+
+    uint32_t fileSize;
+    if (Settings::getInstance().getEncryptTox())
+        fileSize = tox_encrypted_size(tox);
+    else
+        fileSize = tox_size(tox);
+
     if (fileSize > 0 && fileSize <= INT32_MAX) {
         uint8_t *data = new uint8_t[fileSize];
-        tox_save(tox, data);
+
+        if (Settings::getInstance().getEncryptTox())
+        {
+            if (!pwhash)
+                emit blockingGetPassword();
+            //if (!pwhash)
+                // revert to unsaved...? or maybe we shouldn't even try to get a pw from here ^
+            int ret = tox_encrypted_save(tox, data, pwhash, TOX_HASH_LENGTH);
+            if (ret == -1)
+            {
+                qCritical() << "Core::saveConfiguration: encryption of save file failed!!!";
+                return;
+            }
+        }
+        else
+            tox_save(tox, data);
+
         configurationFile.write(reinterpret_cast<char *>(data), fileSize);
         configurationFile.commit();
         delete[] data;
@@ -1193,8 +1227,9 @@ void Core::switchConfiguration(const QString& profile)
     }
     else
         qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
-    saveConfiguration();
     
+    saveConfiguration();
+    clearPassword();
     toxTimer->stop();
     
     if (tox) {
@@ -1487,4 +1522,103 @@ QList<CString> Core::splitMessage(const QString &message)
     splittedMsgs.push_back(CString(ba_message));
 
     return splittedMsgs;
+}
+
+void Core::setPassword(QString& password)
+{
+    if (password.isEmpty())
+    {
+        clearPassword();
+        return;
+    }
+    if (!pwhash)
+        pwhash = new uint8_t[TOX_HASH_LENGTH];
+
+    CString str(password);
+    tox_hash(pwhash, str.data(), str.size());
+    password.clear();
+}
+
+void Core::clearPassword()
+{
+    if (pwhash)
+    {
+        delete[] pwhash;
+        pwhash = nullptr;
+    }
+}
+
+QByteArray Core::encryptData(const QByteArray& data)
+{
+    if (!pwhash)
+        return QByteArray();
+    uint8_t encrypted[data.size() + tox_pass_encryption_extra_length()];
+    if (tox_pass_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwhash, TOX_HASH_LENGTH, encrypted) == -1)
+    {
+        qWarning() << "Core::encryptData: encryption failed";
+        return QByteArray();
+    }
+    return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + tox_pass_encryption_extra_length());
+}
+
+QByteArray Core::decryptData(const QByteArray& data)
+{
+    if (!pwhash)
+        return QByteArray();
+    int sz = data.size() - tox_pass_encryption_extra_length();
+    uint8_t decrypted[sz];
+    if (tox_pass_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwhash, TOX_HASH_LENGTH, decrypted) != sz)
+    {
+        qWarning() << "Core::decryptData: decryption failed";
+        return QByteArray();
+    }
+    return QByteArray(reinterpret_cast<char*>(decrypted), sz);
+}
+
+bool Core::encryptFile(const QString& path)
+{
+    if (!pwhash)
+        return false;
+    QFile file(path);
+    if (!file.exists()) {
+        qWarning() << "Core::encryptFile: file" << path << "DNE";
+        return false;
+    }
+    if (!file.open(QIODevice::ReadOnly)) {
+        qCritical() << "Core::encryptFile:" << path << " cannot be opened";
+        return false;
+    }
+    QByteArray data = file.readAll();
+    file.close();
+
+    data = encryptData(data);
+    if (data.isEmpty())
+        return false;
+
+    if (!file.open(QIODevice::WriteOnly)) {
+        qCritical() << "Core::encryptFile:" << path << " cannot be opened for writing";
+        return false;
+    }
+    file.write(data.data(), data.size());
+    file.close();
+    return true;
+}
+
+QByteArray Core::decryptFile(const QString& path)
+{
+    if (!pwhash)
+        return QByteArray();
+    QFile file(path);
+    if (!file.exists()) {
+        qWarning() << "Core::decryptFile: file" << path << "DNE";
+        return QByteArray();
+    }
+    if (!file.open(QIODevice::ReadOnly)) {
+        qCritical() << "Core::decryptFile:" << path << " cannot be opened";
+        return QByteArray();
+    }
+    QByteArray data = file.readAll();
+    file.close();
+
+    return decryptData(data);
 }
