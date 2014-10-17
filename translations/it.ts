@@ -287,12 +287,28 @@ Do you want to erase this profile ?</source>
         <translation>Impostazioni Generali</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="74"/>
+        <source>Auto away after (0 to disable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="113"/>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="188"/>
+        <source>Style:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="210"/>
         <source>Connection Settings</source>
         <translation>Impostazioni Connessione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="194"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="216"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Abilita IPv6 (consigliato)</translation>
@@ -330,9 +346,8 @@ Do you want to erase this profile ?</source>
         <translation>Espresso in minuti</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="74"/>
         <source>Auto away after:</source>
-        <translation>Imposta assenza dopo:</translation>
+        <translation type="vanished">Imposta assenza dopo:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="87"/>
@@ -345,66 +360,64 @@ Do you want to erase this profile ?</source>
         <translation>Impostazioni Tema</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="111"/>
         <source>Smiley Pack</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Emoticons</translation>
+        <translation type="vanished">Emoticons</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="123"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="134"/>
         <source>:)</source>
         <translation>:)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="133"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="144"/>
         <source>;)</source>
         <translation>;)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="143"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="154"/>
         <source>:p</source>
         <translation>:p</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="153"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="164"/>
         <source>:O</source>
         <translation>:O</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="163"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="174"/>
         <source>:&apos;(</source>
         <translation>:&apos;(</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="175"/>
         <source>Style</source>
-        <translation>Stile</translation>
+        <translation type="vanished">Stile</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="211"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="233"/>
         <source>Use proxy (SOCKS5)</source>
         <translation>Usa proxy (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="220"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="242"/>
         <source>Address</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>IP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="230"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Porta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="204"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="226"/>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Disabilita connessioni UDP (non raccomandato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="201"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Questo permette di usare qTox con Tor; tuttavia aggiunge carico alla rete Tox, quindi usalo solo se necessario.</translation>
@@ -527,6 +540,18 @@ Do you want to erase this profile ?</source>
         <comment>import dialog filter</comment>
         <translation>Tox save file (*.tox)</translation>
     </message>
+    <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="176"/>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="176"/>
+        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>IdentitySettings</name>
@@ -571,37 +596,37 @@ Do you want to erase this profile ?</source>
         <translation>Profili disponibili:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="87"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="94"/>
         <source>Load</source>
         <comment>load profile button</comment>
         <translation>Carica</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="94"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="101"/>
         <source>Rename</source>
         <comment>rename profile button</comment>
         <translation>Rinomina</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="101"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="108"/>
         <source>Export</source>
         <comment>export profile button</comment>
         <translation>Esporta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="108"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="115"/>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Elimina</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="111"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="118"/>
         <source>This is useful to remain safe on public computers</source>
         <comment>delete profile button tooltip</comment>
         <translation>Utile per preservare la tua sicurezza su computer pubblici</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="120"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="127"/>
         <source>Import a profile</source>
         <comment>import profile button</comment>
         <translation>Importa un profilo</translation>
