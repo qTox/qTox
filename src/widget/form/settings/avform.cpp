@@ -19,7 +19,7 @@
 #include "ui_avsettings.h"
 
 AVForm::AVForm() :
-    GenericForm(tr("Audio/Video settings"), QPixmap(":/img/settings/av.png"))
+    GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png"))
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
