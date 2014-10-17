@@ -168,10 +168,17 @@ void IdentityForm::onImportClicked()
     QString path = QFileDialog::getOpenFileName(this, tr("Import profile", "import dialog title"), QDir::homePath(), tr("Tox save file (*.tox)", "import dialog filter"));
     if (path.isEmpty())
         return;
+
     QFileInfo info(path);
+
+    if (info.suffix() != "tox")
+    {
+        QMessageBox::warning(this, tr("Ignoring non-Tox file", "popup title"), tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
+        return;
+    }
+
     QString profile = info.completeBaseName();
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
     QFile::copy(path, profilePath);
     bodyUI->profiles->addItem(profile);
-    Core::getInstance()->switchConfiguration(profile);
 }

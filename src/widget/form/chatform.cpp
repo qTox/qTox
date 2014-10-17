@@ -102,24 +102,26 @@ void ChatForm::onSendTriggered()
 
 void ChatForm::onAttachClicked()
 {
-    QString path = QFileDialog::getOpenFileName(0,tr("Send a file"));
-    if (path.isEmpty())
+    QStringList paths = QFileDialog::getOpenFileNames(0,tr("Send a file"));
+    if (paths.isEmpty())
         return;
-
-    QFile file(path);
-    if (!file.exists() || !file.open(QIODevice::ReadOnly))
-        return;
-    if (file.isSequential())
+    for (QString path : paths)
     {
-        QMessageBox::critical(0, "Bad Idea", "You're trying to send a special (sequential) file, that's not going to work!");
-        return;
+        QFile file(path);
+        if (!file.exists() || !file.open(QIODevice::ReadOnly))
+            continue;
+        if (file.isSequential())
+        {
+            QMessageBox::critical(0, "Bad Idea", "You're trying to send a special (sequential) file, that's not going to work!");
+            file.close();
+            continue;
+        }
+        long long filesize = file.size();
         file.close();
-    }
-    long long filesize = file.size();
-    file.close();
-    QFileInfo fi(path);
+        QFileInfo fi(path);
 
-    emit sendFile(f->friendId, fi.fileName(), path, filesize);
+        emit sendFile(f->friendId, fi.fileName(), path, filesize);
+    }
 }
 
 void ChatForm::startFileSend(ToxFile file)
