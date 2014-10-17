@@ -41,6 +41,7 @@ class Camera;
 class FriendListWidget;
 class MaskablePixmapWidget;
 class QTimer;
+class QTranslator;
 
 class Widget : public QMainWindow
 {
@@ -59,7 +60,8 @@ public:
     bool getIsWindowMinimized();
     static QList<QString> searchProfiles();
     void clearContactsList();
-    void setIdleTimer(int minutes);    
+    void setIdleTimer(int minutes);
+    void setTranslation();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
@@ -138,6 +140,7 @@ private:
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
     QTimer* idleTimer;
+    QTranslator* translator;
 };
 
 #endif // WIDGET_H

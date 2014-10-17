@@ -43,8 +43,10 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QTimer>
-#include <tox/tox.h>
 #include <QStyleFactory>
+#include <QTranslator>
+#include <tox/tox.h>
+
 
 Widget *Widget::instance{nullptr};
 
@@ -53,7 +55,8 @@ Widget::Widget(QWidget *parent)
       ui(new Ui::MainWindow),
       activeChatroomWidget{nullptr}
 {
-
+    translator = new QTranslator;
+    setTranslation();
 }
 
 void Widget::init()
@@ -312,7 +315,7 @@ QString Widget::getUsername()
 void Widget::onAvatarClicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath());
-    if (filename == "")
+    if (filename.isEmpty())
         return;
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
@@ -546,22 +549,24 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     f->friendStatus = status;
     f->widget->updateStatusLight();
     
-    QString fStatus = ""; 
-    switch(f->friendStatus){
-    case Status::Away:
-        fStatus = tr("away", "contact status"); break;
-    case Status::Busy:
-        fStatus = tr("busy", "contact status"); break;
-    case Status::Offline:
-        fStatus = tr("offline", "contact status"); break;
-    default:
-        fStatus = tr("online", "contact status"); break;
-    }
-        
-    //won't print the message if there were no messages before    
+    //won't print the message if there were no messages before
     if(f->chatForm->getNumberOfMessages() != 0
             && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
-        f->chatForm->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getName()).arg(fStatus), "white");
+    {
+        QString fStatus = "";
+        switch(f->friendStatus){
+        case Status::Away:
+            fStatus = tr("away", "contact status"); break;
+        case Status::Busy:
+            fStatus = tr("busy", "contact status"); break;
+        case Status::Offline:
+            fStatus = tr("offline", "contact status"); break;
+        default:
+            fStatus = tr("online", "contact status"); break;
+        }
+        f->chatForm->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getName()).arg(fStatus),
+                                          "white", QDateTime::currentDateTime());
+    }
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -901,4 +906,18 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
 
     if (result == -1)
         g->chatForm->addSystemInfoMessage("Message failed to send", "red");
+}
+
+void Widget::setTranslation()
+{
+    // Load translations
+    QCoreApplication::removeTranslator(translator);
+    QString locale;
+    if ((locale = Settings::getInstance().getTranslation()) == "")
+        locale = QLocale::system().name().section('_', 0, 0);
+    if (translator->load(locale,":translations/"))
+        qDebug() << "Loaded translation" << locale;
+    else
+        qDebug() << "Error loading translation" << locale;
+    QCoreApplication::installTranslator(translator);
 }

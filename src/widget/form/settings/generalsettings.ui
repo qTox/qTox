@@ -30,11 +30,31 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QCheckBox" name="cbUseTranslations">
-        <property name="text">
-         <string extracomment="Text on a checkbox to enable translations">Use translations</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="transLayout">
+        <item>
+         <widget class="QLabel" name="transLabel">
+          <property name="toolTip">
+           <string>The translation may not load until qTox restarts.</string>
+          </property>
+          <property name="text">
+           <string>Translation:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="transComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>The translation may not load until qTox restarts.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QCheckBox" name="cbMakeToxPortable">

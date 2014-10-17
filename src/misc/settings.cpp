@@ -108,7 +108,7 @@ void Settings::load()
 
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
-        useTranslations = s.value("useTranslations", true).toBool();
+        translation = s.value("translation", "").toString();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
@@ -216,7 +216,7 @@ void Settings::save(QString path)
 
     s.beginGroup("General");
         s.setValue("enableIPv6", enableIPv6);
-        s.setValue("useTranslations",useTranslations);
+        s.setValue("translation",translation);
         s.setValue("makeToxPortable",makeToxPortable);
         s.setValue("autostartInTray",autostartInTray);
         s.setValue("useProxy", useProxy);
@@ -389,14 +389,14 @@ void Settings::setStatusChangeNotificationEnabled(bool newValue)
     statusChangeNotificationEnabled = newValue;
 }
 
-bool Settings::getUseTranslations() const
+QString Settings::getTranslation() const
 {
-    return useTranslations;
+    return translation;
 }
 
-void Settings::setUseTranslations(bool newValue)
+void Settings::setTranslation(QString newValue)
 {
-    useTranslations = newValue;
+    translation = newValue;
 }
 
 bool Settings::getForceTCP() const

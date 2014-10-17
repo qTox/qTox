@@ -32,7 +32,7 @@ public:
 
 private slots:
     void onEnableIPv6Updated();
-    void onUseTranslationUpdated();
+    void onTranslationUpdated();
     void onMakeToxPortableUpdated();
     void onSetAutostartInTray();
     void onSmileyBrowserIndexChanged(int index);
