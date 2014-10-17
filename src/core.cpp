@@ -1536,6 +1536,10 @@ void Core::setPassword(QString& password)
 
     CString str(password);
     tox_derive_key_from_pass(str.data(), str.size(), pwsaltedkey);
+
+    barePassword.clear();
+    barePassword.append(password);
+
     password.clear();
 }
 
@@ -1545,6 +1549,7 @@ void Core::clearPassword()
     {
         delete[] pwsaltedkey;
         pwsaltedkey = nullptr;
+        barePassword.clear();
     }
 }
 
@@ -1553,7 +1558,9 @@ QByteArray Core::encryptData(const QByteArray& data)
     if (!pwsaltedkey)
         return QByteArray();
     uint8_t encrypted[data.size() + tox_pass_encryption_extra_length()];
-    if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkey, encrypted) == -1)
+    // if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkey, encrypted) == -1)
+    if (tox_pass_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
+                         reinterpret_cast<uint8_t*>(barePassword.data()), barePassword.size(), encrypted) == -1)
     {
         qWarning() << "Core::encryptData: encryption failed";
         return QByteArray();
@@ -1567,7 +1574,9 @@ QByteArray Core::decryptData(const QByteArray& data)
         return QByteArray();
     int sz = data.size() - tox_pass_encryption_extra_length();
     uint8_t decrypted[sz];
-    if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkey, decrypted) != sz)
+    // if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkey, decrypted) != sz)
+    if (tox_pass_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
+                         reinterpret_cast<uint8_t*>(barePassword.data()), barePassword.size(), decrypted) != sz)
     {
         qWarning() << "Core::decryptData: decryption failed";
         return QByteArray();

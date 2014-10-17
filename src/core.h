@@ -251,6 +251,7 @@ private:
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
     uint8_t* pwsaltedkey = nullptr; // use the pw's hash as the "pw"
+    QByteArray barePassword; // to be deleted after tox_pass_key_decrypt/tox_pass_key_encrypt fix
 
     static const int videobufsize;
     static uint8_t* videobuf;
