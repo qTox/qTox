@@ -164,6 +164,7 @@ Widget::Widget(QWidget *parent)
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
     connect(core, &Core::avInvite, this, &Widget::playRingtone);
     connect(core, &Core::blockingClearContacts, this, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
+    connect(core, &Core::blockingGetPassword, this, &Widget::getPassword, Qt::BlockingQueuedConnection);
 
     connect(core, SIGNAL(messageSentResult(int,QString,int)), this, SLOT(onMessageSendResult(int,QString,int)));
     connect(core, SIGNAL(groupSentResult(int,QString,int)), this, SLOT(onGroupSendResult(int,QString,int)));
@@ -309,7 +310,7 @@ QString Widget::getUsername()
 void Widget::onAvatarClicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath());
-    if (filename == "")
+    if (filename.isEmpty())
         return;
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
@@ -908,4 +909,13 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
 
     if (result == -1)
         g->chatForm->addSystemInfoMessage("Message failed to send", "red", QDateTime::currentDateTime());
+}
+
+void Widget::getPassword()
+{
+    //QString password = QInputDialog();
+    //if (password.isEmpty())
+    //    core->clearPassword();
+    //else
+    //    core->setPassword(password);
 }

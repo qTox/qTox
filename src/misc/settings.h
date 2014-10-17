@@ -79,6 +79,9 @@ public:
     bool getEncryptLogs() const;
     void setEncryptLogs(bool newValue);
 
+    bool getEncryptTox() const;
+    void setEncryptTox(bool newValue);
+
     int getAutoAwayTime() const;
     void setAutoAwayTime(int newValue);
 
@@ -193,6 +196,7 @@ private:
 
     bool enableLogging;
     bool encryptLogs;
+    bool encryptTox;
 
     int autoAwayTime;
 

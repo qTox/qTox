@@ -71,11 +71,11 @@ win32 {
 	    LIBS += -Wl,-Bdynamic -ltbb -lv4l1 -lv4l2 -lgnutls -lrtmp -lgnutls -lavformat -lavcodec -lavutil -lavfilter -lswscale -lusb-1.0
 
         } else {
-            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxencryptsave -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
+            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
         }
 
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a -lopencv_core -lopencv_highgui -lopenal
+            LIBS = ./libs/lib/libsodium.a ./libs/lib/libtoxcore.a ./libs/lib/libtoxav.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libvpx.a ./libs/lib/libopus.a -lopencv_core -lopencv_highgui -lopenal
         }
     }
 }

@@ -472,6 +472,16 @@ void Settings::setEncryptLogs(bool newValue)
     encryptLogs = newValue;
 }
 
+bool Settings::getEncryptTox() const
+{
+    return encryptTox;
+}
+
+void Settings::setEncryptTox(bool newValue)
+{
+    encryptTox = newValue;
+}
+
 int Settings::getAutoAwayTime() const
 {
     return autoAwayTime;
