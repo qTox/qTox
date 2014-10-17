@@ -42,7 +42,9 @@
 #include <QThread>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QTimer>
 #include <tox/tox.h>
+#include <QStyleFactory>
 
 Widget *Widget::instance{nullptr};
 
@@ -74,7 +76,16 @@ Widget::Widget(QWidget *parent)
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
-    ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
+    
+
+    if(QStyleFactory::keys().contains(Settings::getInstance().getStyle())
+            && Settings::getInstance().getStyle() != "None")
+    {
+        ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
+        ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
+    }
+    
+    ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));    
     ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
 
     contactListWidget = new FriendListWidget();
@@ -107,6 +118,11 @@ Widget::Widget(QWidget *parent)
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
 
+    idleTimer = new QTimer();
+    int mins = Settings::getInstance().getAutoAwayTime();
+    if (mins > 0)
+        idleTimer->start(mins * 1000*60);
+
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
@@ -135,7 +151,6 @@ Widget::Widget(QWidget *parent)
     connect(core, SIGNAL(fileUploadFinished(const QString&)), &filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(core, &Core::friendAdded, this, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, this, &Widget::addFriendFailed);
-    connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendUsernameChanged, this, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged, this, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
@@ -170,6 +185,7 @@ Widget::Widget(QWidget *parent)
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(&friendForm, SIGNAL(friendRequested(QString,QString)), this, SIGNAL(friendRequested(QString,QString)));
+    connect(idleTimer, &QTimer::timeout, this, &Widget::onUserAway);
 
     coreThread->start();
 
@@ -277,6 +293,11 @@ QString Widget::askProfiles()
     }
     else
         return profile;
+}
+
+void Widget::setIdleTimer(int minutes)
+{
+    idleTimer->start(minutes * 1000*60);
 }
 
 QString Widget::getUsername()
@@ -522,6 +543,23 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     f->friendStatus = status;
     f->widget->updateStatusLight();
+    
+    QString fStatus = ""; 
+    switch(f->friendStatus){
+    case Status::Away:
+        fStatus = tr("away", "contact status"); break;
+    case Status::Busy:
+        fStatus = tr("busy", "contact status"); break;
+    case Status::Offline:
+        fStatus = tr("offline", "contact status"); break;
+    default:
+        fStatus = tr("online", "contact status"); break;
+    }
+        
+    //won't print the message if there were no messages before    
+    if(f->chatForm->getNumberOfMessages() != 0
+            && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
+        f->chatForm->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getName()).arg(fStatus), "white");
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -783,16 +821,47 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
 
 bool Widget::event(QEvent * e)
 {
-    if (e->type() == QEvent::WindowActivate)
-    {
-        if (activeChatroomWidget != nullptr)
-        {
-            activeChatroomWidget->resetEventFlags();
-            activeChatroomWidget->updateStatusLight();
-        }
+    switch(e->type()) {
+        case QEvent::WindowActivate:
+            if (activeChatroomWidget != nullptr)
+            {
+                activeChatroomWidget->resetEventFlags();
+                activeChatroomWidget->updateStatusLight();
+            }
+        // http://qt-project.org/faq/answer/how_can_i_detect_a_period_of_no_user_interaction
+        // Detecting global inactivity, like Skype, is possible but not via Qt:
+        // http://stackoverflow.com/a/21905027/1497645
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonRelease:
+        case QEvent::Wheel:
+        case QEvent::KeyPress:
+        case QEvent::KeyRelease:
+            if (autoAwayActive)
+            {
+                qDebug() << "Widget: auto away deactivated";
+                autoAwayActive = false;
+                emit statusSet(Status::Online);
+                int mins = Settings::getInstance().getAutoAwayTime();
+                if (mins > 0)
+                    idleTimer->start(mins * 1000*60);
+            }
+        default:
+            break;
     }
 
     return QWidget::event(e);
+}
+
+void Widget::onUserAway()
+{
+    if (Settings::getInstance().getAutoAwayTime() > 0
+        && ui->statusButton->property("status").toString() == "online") // leave user-set statuses in place
+    {
+        qDebug() << "Widget: auto away activated";
+        emit statusSet(Status::Away);
+        autoAwayActive = true;
+    }
+    idleTimer->stop();
 }
 
 void Widget::setStatusOnline()

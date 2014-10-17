@@ -52,7 +52,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     tabBar = new QTabBar;
     bodyLayout->addWidget(tabBar);
 
-    GeneralForm *gfrm = new GeneralForm;
+    GeneralForm *gfrm = new GeneralForm(this);
     ifrm = new IdentityForm;
     PrivacyForm *pfrm = new PrivacyForm;
     AVForm *avfrm = new AVForm;
@@ -71,6 +71,12 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
 SettingsWidget::~SettingsWidget()
 {
+}
+
+void SettingsWidget::setBodyHeadStyle(QString style)
+{
+    head->setStyle(QStyleFactory::create(style));    
+    body->setStyle(QStyleFactory::create(style));
 }
 
 void SettingsWidget::show(Ui::MainWindow& ui)

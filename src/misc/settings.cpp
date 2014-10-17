@@ -115,7 +115,8 @@ void Settings::load()
         useProxy = s.value("useProxy", false).toBool();
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
-		currentProfile = s.value("currentProfile", "").toString();
+        currentProfile = s.value("currentProfile", "").toString();
+    	autoAwayTime = s.value("autoAwayTime", 10).toInt();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -136,6 +137,8 @@ void Settings::load()
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
+        style = s.value("style", "None").toString();
+        statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
     s.endGroup();
 
     s.beginGroup("State");
@@ -221,6 +224,7 @@ void Settings::save(QString path)
         s.setValue("proxyAddr", proxyAddr);
         s.setValue("proxyPort", proxyPort);
         s.setValue("currentProfile", currentProfile);
+        s.setValue("autoAwayTime", autoAwayTime);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -241,6 +245,8 @@ void Settings::save(QString path)
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("nativeStyle", useNativeStyle);
+        s.setValue("style",style);
+        s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
     s.endGroup();
 
     s.beginGroup("State");
@@ -358,9 +364,29 @@ bool Settings::getAutostartInTray() const
     return autostartInTray;
 }
 
+QString Settings::getStyle() const
+{
+    return style;
+}
+
+void Settings::setStyle(const QString& newStyle) 
+{
+    style = newStyle;
+}
+
 void Settings::setAutostartInTray(bool newValue)
 {
     autostartInTray = newValue;
+}
+
+bool Settings::getStatusChangeNotificationEnabled() const
+{
+    return statusChangeNotificationEnabled;
+}
+
+void Settings::setStatusChangeNotificationEnabled(bool newValue)
+{
+    statusChangeNotificationEnabled = newValue;
 }
 
 bool Settings::getUseTranslations() const
@@ -450,6 +476,18 @@ bool Settings::getEncryptTox() const
 void Settings::setEncryptTox(bool newValue)
 {
     encryptTox = newValue;
+}
+
+int Settings::getAutoAwayTime() const
+{
+    return autoAwayTime;
+}
+
+void Settings::setAutoAwayTime(int newValue)
+{
+    if (newValue < 0)
+        newValue = 10;
+    autoAwayTime = newValue;
 }
 
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)
