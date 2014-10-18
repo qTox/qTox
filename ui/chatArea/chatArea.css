@@ -1,3 +1,9 @@
+QTextEdit
+{
+    background: white;
+    color: back;
+}
+
 QScrollArea {
     background: white;
     border: 0 0 0 0 ;
