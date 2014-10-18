@@ -5,18 +5,8 @@
     <name>AVForm</name>
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="22"/>
-        <source>Audio/Video settings</source>
-        <translation>Настройки аудио/видео</translation>
-    </message>
-    <message>
-        <source>Hide video preview</source>
-        <comment>On a button</comment>
-        <translation type="vanished">Спрятать видео-превью</translation>
-    </message>
-    <message>
-        <source>Show video preview</source>
-        <comment>On a button</comment>
-        <translation type="vanished">Посмотреть видео-превью</translation>
+        <source>Audio/Video</source>
+        <translation>Аудио/Видео</translation>
     </message>
 </context>
 <context>
@@ -27,58 +17,49 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="20"/>
-        <source>Volume Settings (Stubs)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="26"/>
-        <source>Playback</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="40"/>
-        <source>Microphone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="57"/>
-        <source>Video settings</source>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="38"/>
+        <source>Video Settings</source>
         <translation>Настройки видео</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="49"/>
+        <source>Resolution</source>
+        <translation>Разрешение</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="148"/>
+        <source>Volume Settings (Stubs)</source>
+        <translation>Настройки звука (заглушка)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="154"/>
+        <source>Playback</source>
+        <translation>Воспроизведение</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="168"/>
+        <source>Microphone</source>
+        <translation>Микрофон</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="66"/>
-        <source>Modes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="83"/>
         <source>Hue</source>
-        <translation type="unfinished"></translation>
+        <translation>Тон</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="97"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="80"/>
         <source>Brightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Яркость</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="111"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="94"/>
         <source>Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Насыщенность</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="125"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
         <source>Contrast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="139"/>
-        <source>Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show video preview</source>
-        <translation type="vanished">Посмотреть видео-превью</translation>
+        <translation>Контраст</translation>
     </message>
 </context>
 <context>
@@ -166,7 +147,7 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="105"/>
+        <location filename="../src/widget/form/chatform.cpp" line="106"/>
         <source>Send a file</source>
         <translation>Отправить файл</translation>
     </message>
@@ -174,12 +155,12 @@
 <context>
     <name>Core</name>
     <message>
-        <location filename="../src/core.cpp" line="1104"/>
+        <location filename="../src/core.cpp" line="1100"/>
         <source>Encrypted profile</source>
         <translation>Зашифрованный профиль</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1105"/>
+        <location filename="../src/core.cpp" line="1101"/>
         <source>Your tox profile seems to be encrypted, qTox can&apos;t open it
 Do you want to erase this profile ?</source>
         <translation>Похоже, ваш tox-профиль зашифрован, qTox не может открыть его
@@ -189,19 +170,19 @@ Do you want to erase this profile ?</source>
 <context>
     <name>FileTransferInstance</name>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="209"/>
+        <location filename="../src/filetransferinstance.cpp" line="233"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Сохранить файл</translation>
     </message>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="220"/>
+        <location filename="../src/filetransferinstance.cpp" line="241"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Непригодная для записи локация</translation>
     </message>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="220"/>
+        <location filename="../src/filetransferinstance.cpp" line="241"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>У вас нет прав записи в эту локацию. Выберете другую или закройте диалог сохранения.</translation>
@@ -267,40 +248,48 @@ Do you want to erase this profile ?</source>
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="48"/>
+        <location filename="../src/widget/friendwidget.cpp" line="53"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Копировать ID друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="49"/>
+        <location filename="../src/widget/friendwidget.cpp" line="54"/>
         <source>Invite in group</source>
         <comment>Menu to invite a friend in a groupchat</comment>
         <translation>Пригласить в группу</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="59"/>
+        <location filename="../src/widget/friendwidget.cpp" line="63"/>
+        <source>Auto accept files from this friend</source>
+        <comment>context menu entry</comment>
+        <translation>Автоматически принимать файлы от этого друга</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="64"/>
+        <source>Diasble auto accepting files</source>
+        <comment>context menu entry</comment>
+        <translation>Запретить принимать файлы автоматически</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="68"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Удалить друга</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="90"/>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Выбрать папку для автоматического приёма</translation>
     </message>
 </context>
 <context>
     <name>GeneralForm</name>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="27"/>
-        <source>General Settings</source>
-        <translation>Общие настройки</translation>
-    </message>
-    <message>
-        <source>Bad port</source>
-        <comment>title of bad port popup</comment>
-        <translation type="vanished">Неправильный порт</translation>
-    </message>
-    <message>
-        <source>The port you entered is invalid; please enter another.</source>
-        <comment>text of bad port popup</comment>
-        <translation type="vanished">Введёный порт неверен; введите другой.</translation>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="30"/>
+        <source>General</source>
+        <translation>Общие</translation>
     </message>
 </context>
 <context>
@@ -316,153 +305,144 @@ Do you want to erase this profile ?</source>
         <translation>Общие настройки</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="113"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="37"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="53"/>
+        <source>The translation may not load until qTox restarts.</source>
+        <translation>Перевод не изменится до перезапуска qTox.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="40"/>
+        <source>Translation:</source>
+        <translation>Перевод:</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="107"/>
+        <source>Set to 0 to disable</source>
+        <translation>Укажите 0, чтобы отключить</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="139"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Набор смайликов:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="134"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="160"/>
         <source>:)</source>
-        <translation type="unfinished"></translation>
+        <translation>:)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="144"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="170"/>
         <source>;)</source>
-        <translation type="unfinished"></translation>
+        <translation>;)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="154"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="180"/>
         <source>:p</source>
-        <translation type="unfinished"></translation>
+        <translation>:p</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="164"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="190"/>
         <source>:O</source>
-        <translation type="unfinished"></translation>
+        <translation>:O</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="174"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="200"/>
         <source>:&apos;(</source>
-        <translation type="unfinished"></translation>
+        <translation>:&apos;(</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="188"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="214"/>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="210"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="236"/>
         <source>Connection Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки соединения</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="216"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="242"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Включить IPv6 (рекомендуется)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="233"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="259"/>
         <source>Use proxy (SOCKS5)</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать прокси (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="242"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="268"/>
         <source>Address</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Адрес</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="35"/>
-        <source>Use translations</source>
-        <extracomment>Text on a checkbox to enable translations</extracomment>
-        <translation>Использовать перевод</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="42"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="62"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
         <translation>Сохранять настройки в рабочую директорию вместо страндартной папки настроек</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="45"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="65"/>
         <source>Make Tox portable</source>
         <translation>Портативный режим</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="52"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="72"/>
         <source>Start in tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускать в системном лотке</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="59"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="79"/>
         <source>Show contacts&apos; status changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать изменения статусов контактов</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="68"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="88"/>
         <source>Provided in minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Выставлено в минутах</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="74"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="94"/>
         <source>Auto away after (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматически отсутствовать после (0 для отключения):</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="87"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="113"/>
         <source> minutes</source>
-        <translation type="unfinished"></translation>
+        <translation> минут</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="105"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="131"/>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>
     <message>
-        <source>Smiley Pack</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation type="vanished">Набор смайликов</translation>
-    </message>
-    <message>
-        <source>Proxy settings</source>
-        <translation type="vanished">Настройки прокси</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="226"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Выключить UDP (не рекомендуется)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="249"/>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Это позволяет, например, использовать tox поверх Tor. Однако это добавляет нагрузку на сеть Tox, так что используйте только в случае необходимости.</translation>
-    </message>
-    <message>
-        <source>Proxy address</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation type="vanished">Адрес прокси</translation>
-    </message>
-    <message>
-        <source>Proxy port</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation type="vanished">Порт прокси</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="154"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="160"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="150"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="156"/>
         <source>Save chat log</source>
         <translation>Сохранить лог чата</translation>
     </message>
@@ -470,13 +450,13 @@ Do you want to erase this profile ?</source>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="47"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="45"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 пользователей в чате</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="85"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="77"/>
         <source>%1 users in chat</source>
         <translation>%1 пользователей в чате</translation>
     </message>
@@ -484,20 +464,20 @@ Do you want to erase this profile ?</source>
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="48"/>
+        <location filename="../src/widget/groupwidget.cpp" line="53"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Покинуть группу</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="39"/>
-        <location filename="../src/widget/groupwidget.cpp" line="59"/>
+        <location filename="../src/widget/groupwidget.cpp" line="42"/>
+        <location filename="../src/widget/groupwidget.cpp" line="64"/>
         <source>%1 users in chat</source>
         <translation>%1 пользователей в чате</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="41"/>
-        <location filename="../src/widget/groupwidget.cpp" line="61"/>
+        <location filename="../src/widget/groupwidget.cpp" line="44"/>
+        <location filename="../src/widget/groupwidget.cpp" line="66"/>
         <source>0 users in chat</source>
         <translation>Ни одного пользователя в чате</translation>
     </message>
@@ -505,87 +485,87 @@ Do you want to erase this profile ?</source>
 <context>
     <name>IdentityForm</name>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="33"/>
-        <source>Your identity</source>
-        <translation>Ваша идентификация</translation>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="34"/>
+        <source>Identity</source>
+        <translation>Личность</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="114"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="111"/>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Идёт звонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="115"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="112"/>
         <source>You can&apos;t switch profiles while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вы не можете переключить профиль, пока идёт звонок!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="125"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="122"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>Переименовать «%1»</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="140"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="137"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="142"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="139"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файл сохранения Tox (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="151"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="148"/>
         <source>Profile currently loaded</source>
         <comment>current profile deletion warning title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Профиль в настоящее время загружен</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="151"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="148"/>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Этот профиль используется. Загрузите другой профиль, прежде чем удалять этот.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="153"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Необратимое удаление!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="153"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите удалить этот профиль?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="168"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="165"/>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="168"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="165"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файл сохранения Tox (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="176"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="173"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Игнорирование не-Tox файла</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="176"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="173"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Внимание: вы выбрали не файл сохранения Tox; игнорирование.</translation>
     </message>
 </context>
 <context>
@@ -623,48 +603,48 @@ Do you want to erase this profile ?</source>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="65"/>
         <source>Profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Профили</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="73"/>
         <source>Available profiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступные профили:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="94"/>
         <source>Load</source>
         <comment>load profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="101"/>
         <source>Rename</source>
         <comment>rename profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Переименовать</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="108"/>
         <source>Export</source>
         <comment>export profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="115"/>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="118"/>
         <source>This is useful to remain safe on public computers</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>Это полезно, чтобы оставаться в безопасности за общими компьютерами</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="127"/>
         <source>Import a profile</source>
         <comment>import profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать профиль</translation>
     </message>
 </context>
 <context>
@@ -719,122 +699,114 @@ Do you want to erase this profile ?</source>
     <name>PrivacyForm</name>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="21"/>
-        <source>Privacy settings</source>
-        <translation>Настройки приватности</translation>
-    </message>
-</context>
-<context>
-    <name>SelfCamView</name>
-    <message>
-        <source>Tox video test</source>
-        <comment>Title of the window to test the video/webcam</comment>
-        <translation type="vanished">Проверка видео</translation>
+        <source>Privacy</source>
+        <translation>Защищённость</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="101"/>
+        <location filename="../src/widget/widget.cpp" line="109"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>В сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="103"/>
+        <location filename="../src/widget/widget.cpp" line="111"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translatorcomment>Вероятно, это не столь долгое путешествие</translatorcomment>
         <translation>Отошёл</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="105"/>
+        <location filename="../src/widget/widget.cpp" line="113"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Занят</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="282"/>
+        <location filename="../src/widget/widget.cpp" line="311"/>
         <source>Choose a profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="283"/>
+        <location filename="../src/widget/widget.cpp" line="312"/>
         <source>Please choose which identity to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите личность, которую хотите использовать</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="309"/>
+        <location filename="../src/widget/widget.cpp" line="338"/>
         <source>Choose a profile picture</source>
         <translation>Выбрать картинку для профиля</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="316"/>
-        <location filename="../src/widget/widget.cpp" line="323"/>
-        <location filename="../src/widget/widget.cpp" line="344"/>
+        <location filename="../src/widget/widget.cpp" line="345"/>
+        <location filename="../src/widget/widget.cpp" line="352"/>
+        <location filename="../src/widget/widget.cpp" line="373"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="316"/>
+        <location filename="../src/widget/widget.cpp" line="345"/>
         <source>Unable to open this file</source>
         <translation>Невозможно открыть файл</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="323"/>
+        <location filename="../src/widget/widget.cpp" line="352"/>
         <source>Unable to read this image</source>
         <translation>Невозможно прочесть это изображение</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="344"/>
+        <location filename="../src/widget/widget.cpp" line="373"/>
         <source>This image is too big</source>
         <translation>Это изображение слишком большое</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="371"/>
+        <location filename="../src/widget/widget.cpp" line="400"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Не удалось запустить toxcore, приложение будет завершено после того как вы закроете это сообщение.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="380"/>
+        <location filename="../src/widget/widget.cpp" line="409"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Не удалось запустить toxcore с вашими настройками прокси, qTox не может работать; измените ваши настройки и перезапустите его.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="549"/>
+        <location filename="../src/widget/widget.cpp" line="580"/>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>отсутствует</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="551"/>
+        <location filename="../src/widget/widget.cpp" line="582"/>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>занят</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="553"/>
+        <location filename="../src/widget/widget.cpp" line="584"/>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>офлайн</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="555"/>
+        <location filename="../src/widget/widget.cpp" line="586"/>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>в сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="561"/>
+        <location filename="../src/widget/widget.cpp" line="588"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 сейчас %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="752"/>
+        <location filename="../src/widget/widget.cpp" line="781"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Неизвестно&gt;</translation>
+        <translation>&lt;Неизвестный&gt;</translation>
     </message>
 </context>
 </TS>
