@@ -324,7 +324,7 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/friendwidget.cpp" line="90"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Wybierz domyślną ścieżką dla plików</translation>
+        <translation>Wybierz domyślną ścieżkę dla plików</translation>
     </message>
 </context>
 <context>
