@@ -16,6 +16,7 @@
 
 #include "filetransferinstance.h"
 #include "core.h"
+#include "misc/settings.h"
 #include "misc/style.h"
 #include <math.h>
 #include <QFileDialog>
@@ -204,20 +205,37 @@ bool isFileWritable(QString& path)
 void FileTransferInstance::acceptRecvRequest()
 {
     QString path;
-    while (true)
+    if (!(path = Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(friendId))).isEmpty())
     {
-        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(filename));
-        if (path.isEmpty())
-            return;
-        else
+        QDir dir(path);
+        path = dir.filePath(filename);
+        QFileInfo info(path);
+        if (info.exists()) // emulate chrome
         {
-            //bool savable = QFileInfo(path).isWritable();
-            //qDebug() << path << " is writable: " << savable;
-            //qDebug() << "/home/bill/bliss.pdf writable: " << QFileInfo("/home/bill/bliss.pdf").isWritable();
-            if (isFileWritable(path))
-                break;
+            QString name = info.baseName(), ext = info.completeSuffix();
+            int i = 0;
+            do
+            {
+                path = dir.filePath(name + QString(" (%1)").arg(++i) + "." + ext);
+            }
+            while (QFileInfo(path).exists());
+        }
+        qDebug() << "File: auto saving to" << path;
+    }
+    else
+    {
+        while (true)
+        {
+            path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(filename));
+            if (path.isEmpty())
+                return;
             else
-                QMessageBox::warning(0, tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+            {
+                if (isFileWritable(path))
+                    break;
+                else
+                    QMessageBox::warning(0, tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+            }
         }
     }
 
