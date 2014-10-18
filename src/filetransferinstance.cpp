@@ -82,24 +82,28 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
 
 //    state = tsProcessing;
     QDateTime now = QDateTime::currentDateTime();
-    if (lastUpdateTime.secsTo(now) < 1) //update every 1s
+    long recenttimediff = lastUpdateTime.msecsTo(now);
+    if (recenttimediff < 1000) //update every 1s
         return;
 
-    int timediff = effStartTime.secsTo(now);
+    long timediff = effStartTime.msecsTo(now);
     if (timediff <= 0)
         return;
 
-    long rawspeed = (BytesSent - previousBytesSent) / timediff;
+    long avgspeed = (BytesSent - previousBytesSent) / timediff * 1000;
+    long recentspeed = (BytesSent - lastBytesSent) / recenttimediff * 1000;
 
-    speed = getHumanReadableSize(rawspeed)+"/s";
+    speed = getHumanReadableSize(recentspeed)+"/s";
     size = getHumanReadableSize(Filesize);
     totalBytes = Filesize;
-    if (!rawspeed)
+
+    if (!avgspeed)
         return;
-    int etaSecs = (Filesize - BytesSent) / rawspeed;
+    int etaSecs = (Filesize - BytesSent) / avgspeed;
     QTime etaTime(0,0);
     etaTime = etaTime.addSecs(etaSecs);
     eta = etaTime.toString("mm:ss");
+
     lastBytesSent = BytesSent;
     lastUpdateTime = now;
     emit stateUpdated();
