@@ -16,6 +16,7 @@
 
 #include "settings.h"
 #include "smileypack.h"
+#include "src/corestructs.h"
 
 #include <QFont>
 #include <QApplication>
@@ -151,6 +152,11 @@ void Settings::load()
         typingNotification = s.value("typingNotification", false).toBool();
     s.endGroup();
 
+    s.beginGroup("AutoAccept");
+        for (auto& key : s.childKeys())
+            autoAccept[key] = s.value(key).toString();
+    s.endGroup();
+
     // try to set a smiley pack if none is selected
     if (!SmileyPack::isValid(smileyPack) && !SmileyPack::listSmileyPacks().isEmpty())
         smileyPack = SmileyPack::listSmileyPacks()[0].second;
@@ -257,6 +263,11 @@ void Settings::save(QString path)
 
     s.beginGroup("Privacy");
         s.setValue("typingNotification", typingNotification);
+    s.endGroup();
+
+    s.beginGroup("AutoAccept");
+        for (auto& id : autoAccept.keys())
+            s.setValue(id, autoAccept.value(id));
     s.endGroup();
 }
 
@@ -478,6 +489,19 @@ void Settings::setAutoAwayTime(int newValue)
     if (newValue < 0)
         newValue = 10;
     autoAwayTime = newValue;
+}
+
+QString Settings::getAutoAcceptDir(const QString& id) const
+{
+    return autoAccept.value(id.left(TOX_ID_PUBLIC_KEY_LENGTH));
+}
+
+void Settings::setAutoAcceptDir(const QString& id, const QString& dir)
+{
+    if (dir.isEmpty())
+        autoAccept.remove(id.left(TOX_ID_PUBLIC_KEY_LENGTH));
+    else
+        autoAccept[id.left(TOX_ID_PUBLIC_KEY_LENGTH)] = dir;
 }
 
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)

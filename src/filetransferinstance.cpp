@@ -16,6 +16,7 @@
 
 #include "filetransferinstance.h"
 #include "core.h"
+#include "misc/settings.h"
 #include "misc/style.h"
 #include <math.h>
 #include <QFileDialog>
@@ -81,24 +82,28 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
 
 //    state = tsProcessing;
     QDateTime now = QDateTime::currentDateTime();
-    if (lastUpdateTime.secsTo(now) < 1) //update every 1s
+    long recenttimediff = lastUpdateTime.msecsTo(now);
+    if (recenttimediff < 1000) //update every 1s
         return;
 
-    int timediff = effStartTime.secsTo(now);
+    long timediff = effStartTime.msecsTo(now);
     if (timediff <= 0)
         return;
 
-    long rawspeed = (BytesSent - previousBytesSent) / timediff;
+    long avgspeed = (BytesSent - previousBytesSent) / timediff * 1000;
+    long recentspeed = (BytesSent - lastBytesSent) / recenttimediff * 1000;
 
-    speed = getHumanReadableSize(rawspeed)+"/s";
+    speed = getHumanReadableSize(recentspeed)+"/s";
     size = getHumanReadableSize(Filesize);
     totalBytes = Filesize;
-    if (!rawspeed)
+
+    if (!avgspeed)
         return;
-    int etaSecs = (Filesize - BytesSent) / rawspeed;
+    int etaSecs = (Filesize - BytesSent) / avgspeed;
     QTime etaTime(0,0);
     etaTime = etaTime.addSecs(etaSecs);
     eta = etaTime.toString("mm:ss");
+
     lastBytesSent = BytesSent;
     lastUpdateTime = now;
     emit stateUpdated();
@@ -203,21 +208,38 @@ bool isFileWritable(QString& path)
 
 void FileTransferInstance::acceptRecvRequest()
 {
-    QString path;
-    while (true)
+    QString path = Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(friendId));
+    if (!path.isEmpty())
     {
-        path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(filename));
-        if (path.isEmpty())
-            return;
-        else
+        QDir dir(path);
+        path = dir.filePath(filename);
+        QFileInfo info(path);
+        if (info.exists()) // emulate chrome
         {
-            //bool savable = QFileInfo(path).isWritable();
-            //qDebug() << path << " is writable: " << savable;
-            //qDebug() << "/home/bill/bliss.pdf writable: " << QFileInfo("/home/bill/bliss.pdf").isWritable();
-            if (isFileWritable(path))
-                break;
+            QString name = info.baseName(), ext = info.completeSuffix();
+            int i = 0;
+            do
+            {
+                path = dir.filePath(name + QString(" (%1)").arg(++i) + "." + ext);
+            }
+            while (QFileInfo(path).exists());
+        }
+        qDebug() << "File: auto saving to" << path;
+    }
+    else
+    {
+        while (true)
+        {
+            path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(filename));
+            if (path.isEmpty())
+                return;
             else
-                QMessageBox::warning(0, tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+            {
+                if (isFileWritable(path))
+                    break;
+                else
+                    QMessageBox::warning(0, tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+            }
         }
     }
 
