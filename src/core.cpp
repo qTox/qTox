@@ -259,10 +259,6 @@ void Core::start()
     toxav_register_audio_recv_callback(toxav, playCallAudio, this);
     toxav_register_video_recv_callback(toxav, playCallVideo, this);
 
-    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
-    tox_get_address(tox, friendAddress);
-    emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
-
     QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
     if (!pic.isNull() && !pic.size().isEmpty())
     {
@@ -1116,12 +1112,16 @@ bool Core::loadConfiguration(QString path)
 
     // set GUI with user and statusmsg
     QString name = getUsername();
-    if (name != "")
+    if (!name.isEmpty())
         emit usernameSet(name);
     
     QString msg = getStatusMessage();
-    if (msg != "")
+    if (!msg.isEmpty())
         emit statusMessageSet(msg);
+
+    QString id = getSelfId().toString();
+    if (!id.isEmpty())
+        emit idSet(id);
 
     loadFriends();
     return true;

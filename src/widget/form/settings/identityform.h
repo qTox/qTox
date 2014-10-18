@@ -47,9 +47,6 @@ public:
     IdentityForm();
     ~IdentityForm();
 
-    void setUserName(const QString &name);
-    void setStatusMessage(const QString &msg);
-
     virtual void present();
 
 signals:
@@ -57,6 +54,7 @@ signals:
     void statusMessageChanged(QString);
 
 private slots:
+    void setToxId(const QString& id);
     void copyIdClicked();
     void onUserNameEdited();
     void onStatusMessageEdited();
