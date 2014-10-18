@@ -22,22 +22,35 @@
 #include "src/misc/smileypack.h"
 #include <QMessageBox>
 #include <QStyleFactory>
+#include <QMap>
 
-static QStringList locales = {"de", "en", "fr", "it", "mannol", "pirate", "pl", "ru", "fi", "uk"};
-static QStringList langs = {"Deustch", "English", "Français", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Українська"};  
+QMap<QString, QString> locales;
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
 {
+    locales.insert("de",     "Deustch");
+    locales.insert("en",     "English");
+    locales.insert("fr",     "Français");
+    locales.insert("it",     "Italiano");
+    locales.insert("mannol", "mannol");
+    locales.insert("pirate", "Pirate");
+    locales.insert("pl",     "Polski");
+    locales.insert("ru",     "Русский");
+    locales.insert("fi",     "Suomi");
+    locales.insert("uk",     "Українська");
+    
     parent = myParent;    
     
     bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
     
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
-    for (int i = 0; i < langs.size(); i++)
-        bodyUI->transComboBox->insertItem(i, langs[i]);
-    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
+    
+    for(QString lang : locales.keys())
+        bodyUI->transComboBox->addItem(locales[lang]);
+    bodyUI->transComboBox->setCurrentIndex(locales.keys().indexOf(Settings::getInstance().getTranslation()));
+        
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
     bodyUI->statusChangesCheckbox->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
@@ -95,7 +108,7 @@ void GeneralForm::onEnableIPv6Updated()
 
 void GeneralForm::onTranslationUpdated()
 {
-    Settings::getInstance().setTranslation(locales[bodyUI->transComboBox->currentIndex()]);
+    Settings::getInstance().setTranslation(locales.keys().at(bodyUI->transComboBox->currentIndex()));
     Widget::getInstance()->setTranslation();
 }
 
