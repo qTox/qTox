@@ -204,8 +204,8 @@ bool isFileWritable(QString& path)
 
 void FileTransferInstance::acceptRecvRequest()
 {
-    QString path;
-    if (!(path = Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(friendId))).isEmpty())
+    QString path = Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(friendId));
+    if (!path.isEmpty())
     {
         QDir dir(path);
         path = dir.filePath(filename);

@@ -36,6 +36,7 @@
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/croppinglabel.h"
 #include "src/misc/style.h"
+#include "src/misc/settings.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -178,6 +179,9 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     previousName = f->getName();
 
     chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), false));
+
+    if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->friendId)).isEmpty())
+        fileTrans->pressFromHtml("btnB");
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
