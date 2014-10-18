@@ -94,9 +94,9 @@ vpx_image Camera::getLastVPXImage()
     {
         for (int x = 0; x < w; ++x)
         {
-            u_int8_t b = currFrame.frameData.data()[(x + y * w) * 3 + 0];
-            u_int8_t g = currFrame.frameData.data()[(x + y * w) * 3 + 1];
-            u_int8_t r = currFrame.frameData.data()[(x + y * w) * 3 + 2];
+            uint8_t b = currFrame.frameData.data()[(x + y * w) * 3 + 0];
+            uint8_t g = currFrame.frameData.data()[(x + y * w) * 3 + 1];
+            uint8_t r = currFrame.frameData.data()[(x + y * w) * 3 + 2];
 
             img.planes[VPX_PLANE_Y][x + y * img.stride[VPX_PLANE_Y]] = ((66 * r + 129 * g + 25 * b) >> 8) + 16;
 
