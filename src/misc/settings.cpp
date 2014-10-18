@@ -496,9 +496,12 @@ QString Settings::getAutoAcceptDir(const QString& id) const
     return autoAccept.value(id.left(TOX_ID_PUBLIC_KEY_LENGTH));
 }
 
-void Settings::setAutoAcceptDir(const QString&id, const QString& dir)
+void Settings::setAutoAcceptDir(const QString& id, const QString& dir)
 {
-    autoAccept[id.left(TOX_ID_PUBLIC_KEY_LENGTH)] = dir;
+    if (dir.isEmpty())
+        autoAccept.remove(id.left(TOX_ID_PUBLIC_KEY_LENGTH));
+    else
+        autoAccept[id.left(TOX_ID_PUBLIC_KEY_LENGTH)] = dir;
 }
 
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)
