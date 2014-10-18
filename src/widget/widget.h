@@ -130,9 +130,9 @@ private:
     QPoint dragPosition;
     Core* core;
     QThread* coreThread;
-    AddFriendForm friendForm;
+    AddFriendForm* addFriendForm;
     SettingsWidget* settingsWidget;
-    FilesForm filesForm;
+    FilesForm* filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
