@@ -74,8 +74,8 @@ private:
     QImage pic;
     QString filename, size, speed, eta;
     QString filenameElided;
-    QDateTime startTime, lastUpdateTime;
-    long long lastBytesSent, totalBytes;
+    QDateTime effStartTime, lastUpdateTime;
+    long long lastBytesSent, totalBytes, previousBytesSent = 0; // last var used for eta on resumes
     int fileNum;
     int friendId;
     int contentPrefWidth;
