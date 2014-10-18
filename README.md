@@ -27,7 +27,8 @@ You can find the latest versions of qTox <a href="https://github.com/tux3/qTox/r
 
 <h3>Screenshots</h3>
 <h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
-<img src="https://wiki.tox.im/images/5/5d/ToxGUI_tux3.png">
+<img src="https://wiki.tox.im/images/5/5d/ToxGUI_tux3.png"/>
+<img src="https://i.imgur.com/0XWcqBc.jpg"/>
 
 ##Documentation:
 
