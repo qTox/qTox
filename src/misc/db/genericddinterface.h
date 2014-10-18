@@ -26,7 +26,6 @@ public:
     virtual ~GenericDdInterface();
 
     virtual QSqlQuery exec(const QString &query) = 0;
-    virtual bool save() = 0;
 };
 
 #endif // GENERICDDINTERFACE_H

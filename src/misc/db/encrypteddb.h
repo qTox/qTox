@@ -29,7 +29,7 @@ public:
     virtual ~EncryptedDb();
 
     virtual QSqlQuery exec(const QString &query);
-    virtual bool save();
+    static bool check(const QString &fname);
 
 private:
     bool pullFileContent();
@@ -37,8 +37,9 @@ private:
 
     QFile encrFile;
 
-    qint64 plainChunkSize;
-    qint64 encryptedChunkSize;
+    static qint64 plainChunkSize;
+    static qint64 encryptedChunkSize;
+
     qint64 chunkPosition;
     QByteArray buffer;
 };

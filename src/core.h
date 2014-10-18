@@ -64,6 +64,7 @@ public:
     void decreaseVideoBusyness();
 
     bool anyActiveCalls();
+    bool isPasswordSet();
 
 public slots:
     void start();

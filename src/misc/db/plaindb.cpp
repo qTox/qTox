@@ -19,30 +19,40 @@
 #include <QSqlQuery>
 #include <QString>
 
+QList<QString> PlainDb::initCmd;
+
 PlainDb::PlainDb(const QString &db_name)
 {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(db_name);
+    db = new QSqlDatabase();
+    *db = QSqlDatabase::addDatabase("QSQLITE");
+    db->setDatabaseName(db_name);
 
-    if (!db.open())
+    if (!db->open())
     {
         qWarning() << QString("Can't open file: %1, history will not be saved!").arg(db_name);
-        db.setDatabaseName(":memory:");
-        db.open();
+        db->setDatabaseName(":memory:");
+        db->open();
     }
+
+    for (const QString &cmd : initCmd)
+        db->exec(cmd);
 }
 
 PlainDb::~PlainDb()
 {
-    db.close();
+    db->close();
+    QString dbConName = db->connectionName();
+    delete db;
+
+    QSqlDatabase::removeDatabase(dbConName);
 }
 
 QSqlQuery PlainDb::exec(const QString &query)
 {
-    return db.exec(query);
+    return db->exec(query);
 }
 
-bool PlainDb::save()
+void PlainDb::setBDInitCommands(const QList<QString> &list)
 {
-    return true;
+    initCmd = list;
 }

@@ -36,7 +36,6 @@ private slots:
 
     void onEncryptLogsUpdated();
     void onEncryptToxUpdated();
-    void onPasswordSet();
 
 private:
     Ui::PrivacySettings* bodyUI;

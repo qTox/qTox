@@ -19,6 +19,7 @@
 #include "misc/cstring.h"
 #include "misc/settings.h"
 #include "widget/widget.h"
+#include "historykeeper.h"
 
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
@@ -1093,13 +1094,31 @@ bool Core::loadConfiguration(QString path)
         return true;
     }
 
+    if (Settings::getInstance().getEncryptTox())
+    {
+        //
+    }
+
+    if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
+    {
+        if (!isPasswordSet())
+        {
+            emit blockingGetPassword();
+            if (!HistoryKeeper::checkPassword())
+            {
+                // FIXME: more interactive
+                qWarning() << "Wrong password! History will be wiped!";
+            }
+        }
+    }
+
     qint64 fileSize = configurationFile.size();
     if (fileSize > 0) {
         QByteArray data = configurationFile.readAll();
         int error = tox_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size());
         if (error < 0)
         {
-            qWarning() << "Core: tox_load failed with error "<<error;
+            qWarning() << "Core: tox_load failed with error "<< error;
         }
         else if (error == 1) // Encrypted data save
         {
@@ -1243,6 +1262,7 @@ void Core::switchConfiguration(const QString& profile)
     
     loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
     Settings::getInstance().setCurrentProfile(profile); 
+    HistoryKeeper::getInstance()->resetInstance();
     
     start();
 }
@@ -1582,4 +1602,12 @@ QByteArray Core::decryptData(const QByteArray& data)
         return QByteArray();
     }
     return QByteArray(reinterpret_cast<char*>(decrypted), sz);
+}
+
+bool Core::isPasswordSet()
+{
+    if (pwsaltedkey)
+        return true;
+
+    return false;
 }

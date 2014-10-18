@@ -14,25 +14,29 @@
     See the COPYING file for more details.
 */
 
-#ifndef PLAINDB_H
-#define PLAINDB_H
+#ifndef SETPASSWORDDIALOG_H
+#define SETPASSWORDDIALOG_H
 
-#include "genericddinterface.h"
+#include <QDialog>
 
-#include <QSqlDatabase>
+namespace Ui {
+class SetPasswordDialog;
+}
 
-class PlainDb : public GenericDdInterface
+class SetPasswordDialog : public QDialog
 {
-public:
-    PlainDb(const QString &db_name);
-    virtual ~PlainDb();
+    Q_OBJECT
 
-    virtual QSqlQuery exec(const QString &query);
-    static void setBDInitCommands(const QList<QString> &list);
+public:
+    explicit SetPasswordDialog(QWidget *parent = 0);
+    ~SetPasswordDialog();
+    QString getPassword();
+
+private slots:
+    void onPasswordEdit();
 
 private:
-    QSqlDatabase *db;
-    static QList<QString> initCmd;
+    Ui::SetPasswordDialog *ui;
 };
 
-#endif // PLAINDB_H
+#endif // SETPASSWORDDIALOG_H

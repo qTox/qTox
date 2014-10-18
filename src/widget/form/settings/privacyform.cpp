@@ -19,6 +19,9 @@
 #include "src/widget/form/settingswidget.h"
 #include "src/misc/settings.h"
 #include "src/historykeeper.h"
+#include "src/core.h"
+#include "src/widget/widget.h"
+#include "src/widget/form/setpassworddialog.h"
 
 PrivacyForm::PrivacyForm() :
     GenericForm(tr("Privacy settings"), QPixmap(":/img/settings/privacy.png"))
@@ -34,7 +37,6 @@ PrivacyForm::PrivacyForm() :
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
     connect(bodyUI->cbEncryptHistory, SIGNAL(stateChanged(int)), this, SLOT(onEncryptLogsUpdated()));
     connect(bodyUI->cbEncryptTox, SIGNAL(stateChanged(int)), this, SLOT(onEncryptToxUpdated()));
-    connect(bodyUI->pswdBtn, SIGNAL(clicked()), this, SLOT(onPasswordSet()));
 }
 
 PrivacyForm::~PrivacyForm()
@@ -56,15 +58,35 @@ void PrivacyForm::onTypingNotificationEnabledUpdated()
 
 void PrivacyForm::onEncryptLogsUpdated()
 {
-    Settings::getInstance().setEncryptLogs(bodyUI->cbEncryptHistory->isChecked());
+    bool encpytionState = bodyUI->cbEncryptHistory->isChecked();
+
+    if (encpytionState)
+    {
+        if (!Core::getInstance()->isPasswordSet())
+        {
+            SetPasswordDialog dialog;
+            if (dialog.exec())
+            {
+                QString pswd = dialog.getPassword();
+                if (pswd.size() > 0)
+                {
+                    Core::getInstance()->setPassword(pswd);
+                    Settings::getInstance().setEncryptLogs(true);
+                    return;
+                }
+            }
+
+            bodyUI->cbEncryptHistory->setChecked(false);
+            Settings::getInstance().setEncryptLogs(false);
+        } else {
+            Settings::getInstance().setEncryptLogs(true);
+        }
+    } else {
+        Settings::getInstance().setEncryptLogs(false);
+    }
 }
 
 void PrivacyForm::onEncryptToxUpdated()
-{
-    //
-}
-
-void PrivacyForm::onPasswordSet()
 {
     //
 }

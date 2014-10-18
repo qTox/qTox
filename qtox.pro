@@ -31,7 +31,9 @@ FORMS    += \
     src/widget/form/settings/avsettings.ui \
     src/widget/form/settings/identitysettings.ui \
     src/widget/form/settings/privacysettings.ui \
-    src/widget/form/loadhistorydialog.ui
+    src/widget/form/loadhistorydialog.ui \
+    src/widget/form/inputpassworddialog.ui \
+    src/widget/form/setpassworddialog.ui
     
 CONFIG   += c++11
 
@@ -142,7 +144,9 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/historykeeper.h \
     src/misc/db/genericddinterface.h \
     src/misc/db/plaindb.h \
-    src/misc/db/encrypteddb.h
+    src/misc/db/encrypteddb.h \
+    src/widget/form/inputpassworddialog.h \
+    src/widget/form/setpassworddialog.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -194,4 +198,6 @@ SOURCES += \
     src/historykeeper.cpp \
     src/misc/db/genericddinterface.cpp \
     src/misc/db/plaindb.cpp \
-    src/misc/db/encrypteddb.cpp
+    src/misc/db/encrypteddb.cpp \
+    src/widget/form/inputpassworddialog.cpp \
+    src/widget/form/setpassworddialog.cpp

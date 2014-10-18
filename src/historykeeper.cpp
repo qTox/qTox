@@ -44,13 +44,13 @@ HistoryKeeper *HistoryKeeper::getInstance()
 
             if (encrypted)
             {
-                path = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.encrypted");
+                path = getHistoryPath();
                 dbIntf = new EncryptedDb(path);
 
                 historyInstance = new HistoryKeeper(dbIntf);
                 return historyInstance;
             } else {
-                path = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.sqlite");
+                path = getHistoryPath();
             }
         }
 
@@ -59,6 +59,22 @@ HistoryKeeper *HistoryKeeper::getInstance()
     }
 
     return historyInstance;
+}
+
+bool HistoryKeeper::checkPassword()
+{
+    if (Settings::getInstance().getEnableLogging())
+    {
+        if (Settings::getInstance().getEncryptLogs())
+        {
+            QString dbpath = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.encrypted");
+            return EncryptedDb::check(dbpath);
+        } else {
+            return true;
+        }
+    } else {
+        return true;
+    }
 }
 
 HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
@@ -243,4 +259,28 @@ HistoryKeeper::ChatType HistoryKeeper::convertToChatType(int ct)
         return ctSingle;
 
     return static_cast<ChatType>(ct);
+}
+
+QString HistoryKeeper::getHistoryPath()
+{
+    QDir baseDir(Settings::getInstance().getSettingsDirPath());
+    QString currentProfile = Settings::getInstance().getCurrentProfile();
+
+    if (Settings::getInstance().getEncryptLogs())
+        return baseDir.filePath(currentProfile + ".qtox_history.encrypted");
+    else
+        return baseDir.filePath(currentProfile + ".qtox_history");
+}
+
+void HistoryKeeper::renameHistory(QString from, QString to)
+{
+    resetInstance();
+
+    QFile fileEnc(QDir(Settings::getInstance().getSettingsDirPath()).filePath(from + ".qtox_history.encrypted"));
+    if (fileEnc.exists())
+        fileEnc.rename(QDir(Settings::getInstance().getSettingsDirPath()).filePath(to + ".qtox_history.encrypted"));
+
+    QFile filePlain(QDir(Settings::getInstance().getSettingsDirPath()).filePath(from + ".qtox_history"));
+    if (filePlain.exists())
+        filePlain.rename(QDir(Settings::getInstance().getSettingsDirPath()).filePath(to + ".qtox_history"));
 }

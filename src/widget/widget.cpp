@@ -46,7 +46,7 @@
 #include <QStyleFactory>
 #include "src/historykeeper.h"
 #include <tox/tox.h>
-
+#include "form/inputpassworddialog.h"
 
 Widget *Widget::instance{nullptr};
 
@@ -913,9 +913,13 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
 
 void Widget::getPassword()
 {
-    //QString password = QInputDialog();
-    //if (password.isEmpty())
-    //    core->clearPassword();
-    //else
-    //    core->setPassword(password);
+    InputPasswordDialog dialog;
+    if (dialog.exec())
+    {
+        QString pswd = dialog.getPassword();
+        if (pswd.isEmpty())
+            core->clearPassword();
+        else
+            core->setPassword(pswd);
+    }
 }

@@ -35,9 +35,13 @@ public:
         QDateTime timestamp;
     };
 
+    virtual ~HistoryKeeper();
+
     static HistoryKeeper* getInstance();
     static void resetInstance();
-    virtual ~HistoryKeeper();
+    static bool checkPassword();
+    static QString getHistoryPath();
+    static void renameHistory(QString from, QString to);
 
     void addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     void addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
@@ -45,7 +49,6 @@ public:
                                       const QDateTime &time_from, const QDateTime &time_to);
 
 private:
-
     HistoryKeeper(GenericDdInterface *db_);
     HistoryKeeper(HistoryKeeper &hk) = delete;
     HistoryKeeper& operator=(const HistoryKeeper&) = delete;

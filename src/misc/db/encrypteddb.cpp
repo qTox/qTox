@@ -24,12 +24,12 @@
 #include <QDebug>
 #include <QSqlError>
 
+qint64 EncryptedDb::plainChunkSize = 1024;
+qint64 EncryptedDb::encryptedChunkSize = EncryptedDb::plainChunkSize + tox_pass_encryption_extra_length();
+
 EncryptedDb::EncryptedDb(const QString &fname) :
     PlainDb(":memory:"), encrFile(fname)
 {
-    plainChunkSize = 1024;
-    encryptedChunkSize = plainChunkSize + tox_pass_encryption_extra_length();
-
     QByteArray fileContent;
     if (pullFileContent())
     {
@@ -37,13 +37,6 @@ EncryptedDb::EncryptedDb(const QString &fname) :
 
         encrFile.seek(0);
         fileContent = encrFile.readAll();
-
-        /*
-        if (encrFile.size() > 0)
-        {
-            encrFile.copy(fname + "~");
-        }
-        */
     } else {
         qWarning() << "corrupted history log file will be wiped!";
         chunkPosition = 0;
@@ -66,11 +59,6 @@ QSqlQuery EncryptedDb::exec(const QString &query)
         appendToEncrypted(query);
 
     return retQSqlQuery;
-}
-
-bool EncryptedDb::save()
-{
-    return true;
 }
 
 bool EncryptedDb::pullFileContent()
@@ -157,4 +145,27 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
         encrFile.write(encr);
     }
     encrFile.flush();
+}
+
+bool EncryptedDb::check(const QString &fname)
+{
+    QFile file(fname);
+    file.open(QIODevice::ReadOnly);
+    bool state = true;
+
+    if (file.size() > 0)
+    {
+        QByteArray encrChunk = file.read(encryptedChunkSize);
+        QByteArray buf = Core::getInstance()->decryptData(encrChunk);
+        if (buf.size() == 0)
+        {
+            state = false;
+        }
+    } else {
+        file.close();
+        file.open(QIODevice::WriteOnly);
+    }
+
+    file.close();
+    return state;
 }
