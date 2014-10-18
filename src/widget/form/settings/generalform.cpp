@@ -23,6 +23,9 @@
 #include <QMessageBox>
 #include <QStyleFactory>
 
+static QStringList locales = {"de", "en", "fr", "it", "mannol", "pirate", "pl", "ru", "fi", "uk"};
+static QStringList langs = {"Deustch", "English", "Français", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Українська"};  
+
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
 {
@@ -32,7 +35,9 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->setupUi(this);
     
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
-    bodyUI->cbUseTranslations->setChecked(Settings::getInstance().getUseTranslations());
+    for (int i = 0; i < langs.size(); i++)
+        bodyUI->transComboBox->insertItem(i, langs[i]);
+    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
     bodyUI->statusChangesCheckbox->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
@@ -64,7 +69,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     onUseProxyUpdated();
 
     connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
-    connect(bodyUI->cbUseTranslations, &QCheckBox::stateChanged, this, &GeneralForm::onUseTranslationUpdated);
+    connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->statusChangesCheckbox, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
@@ -88,9 +93,10 @@ void GeneralForm::onEnableIPv6Updated()
     Settings::getInstance().setEnableIPv6(bodyUI->cbEnableIPv6->isChecked());
 }
 
-void GeneralForm::onUseTranslationUpdated()
+void GeneralForm::onTranslationUpdated()
 {
-    Settings::getInstance().setUseTranslations(bodyUI->cbUseTranslations->isChecked());
+    Settings::getInstance().setTranslation(locales[bodyUI->transComboBox->currentIndex()]);
+    Widget::getInstance()->setTranslation();
 }
 
 void GeneralForm::onMakeToxPortableUpdated()

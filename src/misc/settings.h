@@ -58,8 +58,8 @@ public:
     QString getCurrentProfile() const;
     void setCurrentProfile(QString profile);
 
-    bool getUseTranslations() const;
-    void setUseTranslations(bool newValue);
+    QString getTranslation() const;
+    void setTranslation(QString newValue);
 
     bool getForceTCP() const;
     void setForceTCP(bool newValue);
@@ -179,7 +179,7 @@ private:
     bool dontShowDhtDialog;
 
     bool enableIPv6;
-    bool useTranslations;
+    QString translation;
     static bool makeToxPortable;
     bool autostartInTray;
 

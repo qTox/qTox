@@ -84,11 +84,11 @@ void FileTransferInstance::onFileTransferInfo(int FriendId, int FileNum, int64_t
     if (lastUpdateTime.secsTo(now) < 1) //update every 1s
         return;
 
-    int timediff = startTime.secsTo(now);
+    int timediff = effStartTime.secsTo(now);
     if (timediff <= 0)
         return;
 
-    long rawspeed = BytesSent / timediff;
+    long rawspeed = (BytesSent - previousBytesSent) / timediff;
 
     speed = getHumanReadableSize(rawspeed)+"/s";
     size = getHumanReadableSize(Filesize);
@@ -146,7 +146,7 @@ void FileTransferInstance::onFileTransferAccepted(ToxFile File)
 
     remotePaused = false;
     state = tsProcessing;
-    startTime = QDateTime::currentDateTime();
+    effStartTime = QDateTime::currentDateTime();
 
     emit stateUpdated();
 }
@@ -226,7 +226,7 @@ void FileTransferInstance::acceptRecvRequest()
     Core::getInstance()->acceptFileRecvRequest(friendId, fileNum, path);
     state = tsProcessing;
 
-    startTime = QDateTime::currentDateTime();
+    effStartTime = QDateTime::currentDateTime();
 
     emit stateUpdated();
 }
@@ -243,6 +243,11 @@ void FileTransferInstance::pauseResumeRecv()
 //    if (state == tsProcessing)
 //        state = tsPaused;
 //    else state = tsProcessing;
+    if (state == tsPaused)
+    {
+        effStartTime = QDateTime::currentDateTime();
+        previousBytesSent = lastBytesSent;
+    }
 
     emit stateUpdated();
 }
@@ -259,6 +264,11 @@ void FileTransferInstance::pauseResumeSend()
 //    if (state == tsProcessing)
 //        state = tsPaused;
 //    else state = tsProcessing;
+    if (state == tsPaused)
+    {
+        effStartTime = QDateTime::currentDateTime();
+        previousBytesSent = lastBytesSent;
+    }
 
     emit stateUpdated();
 }

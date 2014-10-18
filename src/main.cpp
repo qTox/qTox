@@ -18,7 +18,6 @@
 #include "misc/settings.h"
 #include <QApplication>
 #include <QFontDatabase>
-#include <QTranslator>
 #include <QSystemTrayIcon>
 #include <QDebug>
 
@@ -31,18 +30,6 @@ int main(int argc, char *argv[])
     // Windows platform plugins DLL hell fix
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
     a.addLibraryPath("platforms");
-
-    // Load translations
-    QTranslator translator;
-    if (Settings::getInstance().getUseTranslations())
-    {
-        QString locale = QLocale::system().name().section('_', 0, 0);
-        if (locale=="en" || translator.load(locale,":translations/"))
-            qDebug() << "Loaded translation "+locale;
-        else
-            qDebug() << "Error loading translation "+locale;
-        a.installTranslator(&translator);
-    }
 
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");

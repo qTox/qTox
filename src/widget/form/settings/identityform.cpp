@@ -46,6 +46,7 @@ IdentityForm::IdentityForm() :
     
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
+    connect(Core::getInstance(), &Core::idSet, this, &IdentityForm::setToxId);
     connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
     connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
     connect(bodyUI->loadButton, &QPushButton::clicked, this, &IdentityForm::onLoadClicked);
@@ -96,14 +97,10 @@ void IdentityForm::present()
     bodyUI->statusMessage->setText(Core::getInstance()->getStatusMessage());
 }
 
-void IdentityForm::setUserName(const QString &name)
+void IdentityForm::setToxId(const QString& id)
 {
-    bodyUI->userName->setText(name);
-}
-
-void IdentityForm::setStatusMessage(const QString &msg)
-{
-    bodyUI->statusMessage->setText(msg);
+    toxId->setText(id);
+    toxId->setCursorPosition(0);
 }
 
 void IdentityForm::onLoadClicked()
