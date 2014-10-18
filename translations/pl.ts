@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pl_PL">
+<TS version="2.1" language="pl_PL">
 <context>
     <name>AVForm</name>
     <message>
@@ -45,7 +45,7 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="38"/>
@@ -83,7 +83,6 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="66"/>
         <source>Hue</source>
-        <translatorcomment>no idea whether translated correctly</translatorcomment>
         <translation>Odcień</translation>
     </message>
     <message>
@@ -259,13 +258,12 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="30"/>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translatorcomment>no idea how it shoule be translated</translatorcomment>
-        <translation>Zapytanie znajomego</translation>
+        <translation>Prośba o dodanie do kontaktów</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Ktoś chce być twoim znajomym</translation>
+        <translation>Ktoś chce zostać Twoim znajomym</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
@@ -275,8 +273,7 @@ Czy chcesz usunąć ten profil ?</translation>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="37"/>
         <source>Friend request message:</source>
-        <translatorcomment>better wording needed?</translatorcomment>
-        <translation>Wiadomość w zapytaniu do znajomej/go:</translation>
+        <translation>Treść zapytania:</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="44"/>
@@ -297,7 +294,7 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/friendwidget.cpp" line="48"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
-        <translation>Kopiuj ID znajomej/go</translation>
+        <translation>Kopiuj ID kontaktu</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="49"/>
@@ -309,7 +306,7 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/friendwidget.cpp" line="59"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Usuń znajomego</translation>
+        <translation>Usuń kontakt</translation>
     </message>
 </context>
 <context>
@@ -365,7 +362,7 @@ Czy chcesz usunąć ten profil ?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="29"/>
@@ -398,8 +395,7 @@ Czy chcesz usunąć ten profil ?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="59"/>
         <source>Show contacts&apos; status changes</source>
-        <translatorcomment>better wording?</translatorcomment>
-        <translation>Pokaż zmiany statusu kontaktu</translation>
+        <translation>Pokazuj zmiany statusów</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="68"/>
@@ -409,13 +405,12 @@ Czy chcesz usunąć ten profil ?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="74"/>
         <source>Auto away after (0 to disable):</source>
-        <translatorcomment>better translation? anyone?</translatorcomment>
-        <translation>Automatyczna zmiana statusu na &quot;Nieobecny&quot; po (0 by wyłączyć):</translation>
+        <translation>Zmiana statusu na &quot;Nieobecny&quot; (0 by wyłączyć):</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="87"/>
         <source>Set to 0 to disable</source>
-        <translation>Ustaw 0 by wyłączyć</translation>
+        <translation>Ustaw na 0 by wyłączyć</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="119"/>
@@ -436,7 +431,7 @@ Czy chcesz usunąć ten profil ?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="93"/>
         <source> minutes</source>
-        <translation> minuty</translation>
+        <translation> min</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="111"/>
@@ -487,19 +482,19 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="222"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Użyj IPv6 (rekomendowane)</translation>
+        <translation>Użyj IPv6 (zalecane)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="229"/>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>To pozwala n.p. na toxowanie przez Tora. Niestety obciąża to sieć Tox, więc używaj tylko w razie potrzeby.</translation>
+        <translation>To pozwala np. na toxowanie przez Tora. Niestety obciąża to sieć Tox, więc używaj tylko w razie potrzeby.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="232"/>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Wyłącz UDP (nie rekomendowane)</translation>
+        <translation>Wyłącz UDP (nie zalecane)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="239"/>
@@ -582,8 +577,7 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="114"/>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translatorcomment>better translation?</translatorcomment>
-        <translation>Aktywna rozmowa</translation>
+        <translation>Rozmowa w trakcie</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="115"/>
@@ -625,7 +619,7 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usuwanie profilu!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
@@ -649,8 +643,7 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="176"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translatorcomment>needs a better translation…</translatorcomment>
-        <translation>Plik nie-Tox zignorowany</translation>
+        <translation>Zignorowano niepoprawny plik profilu</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="176"/>
@@ -689,12 +682,12 @@ Czy chcesz usunąć ten profil ?</translation>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="20"/>
         <source>Public Information</source>
-        <translation>Informacja publiczna</translation>
+        <translation>Informacje publiczne</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="26"/>
@@ -730,7 +723,7 @@ Czy chcesz usunąć ten profil ?</translation>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="94"/>
         <source>Load</source>
         <comment>load profile button</comment>
-        <translation>Załaduj</translation>
+        <translation>Wczytaj</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="101"/>
