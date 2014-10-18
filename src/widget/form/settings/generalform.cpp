@@ -35,7 +35,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->setupUi(this);
     
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
-    for (int i = 0; i < langs.size(); i++) 
+    for (int i = 0; i < langs.size(); i++)
         bodyUI->transComboBox->insertItem(i, langs[i]);
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
