@@ -31,6 +31,9 @@ int main(int argc, char *argv[])
     // Windows platform plugins DLL hell fix
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
     a.addLibraryPath("platforms");
+    
+    qDebug() << "built on: " << __TIME__ << __DATE__;
+    qDebug() << "commit: " << GIT_VERSION << "\n";
 
     // Load translations
     QTranslator translator;

@@ -44,6 +44,9 @@ TRANSLATIONS = translations/de.ts \
 
 RESOURCES += res.qrc
 
+GIT_VERSION = $$system(git rev-parse HEAD)
+DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
+
 contains(JENKINS,YES) {
 	INCLUDEPATH += ./libs/include/
 } else {
