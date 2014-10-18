@@ -125,6 +125,9 @@ public:
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
+    QString getAutoAcceptDir(const QString& id) const;
+    void setAutoAcceptDir(const QString&id, const QString& dir);
+
     // ChatView
     int getFirstColumnHandlePos() const;
     void setFirstColumnHandlePos(const int pos);
@@ -197,6 +200,7 @@ private:
     int autoAwayTime;
 
     QHash<QString, QByteArray> widgetSettings;
+    QHash<QString, QString> autoAccept;
 
     // GUI
     bool enableSmoothAnimation;
