@@ -68,7 +68,7 @@ win32 {
             INSTALLS += target
             LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
 	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
-	    LIBS += -Wl,-Bdynamic -ltbb -lv4l1 -lv4l2 -lgnutls -lrtmp -lgnutls -lavformat -lavcodec -lavutil -lavfilter -lswscale -lusb-1.0
+	    LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
 
         } else {
             LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
