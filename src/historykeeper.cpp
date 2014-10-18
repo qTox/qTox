@@ -67,7 +67,7 @@ bool HistoryKeeper::checkPassword()
     {
         if (Settings::getInstance().getEncryptLogs())
         {
-            QString dbpath = QDir(Settings::getInstance().getSettingsDirPath()).filePath("qtox_history.encrypted");
+            QString dbpath = getHistoryPath();
             return EncryptedDb::check(dbpath);
         } else {
             return true;

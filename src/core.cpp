@@ -1263,7 +1263,8 @@ void Core::switchConfiguration(const QString& profile)
     loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
     Settings::getInstance().setCurrentProfile(profile); 
     HistoryKeeper::getInstance()->resetInstance();
-    
+    clearPassword();
+
     start();
 }
 
