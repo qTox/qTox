@@ -114,7 +114,7 @@ signals:
     void connected();
     void disconnected();
     void blockingClearContacts();
-    void blockingGetPassword();
+    void blockingGetPassword(QString info);
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);

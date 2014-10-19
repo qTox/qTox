@@ -911,9 +911,9 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         g->chatForm->addSystemInfoMessage("Message failed to send", "red", QDateTime::currentDateTime());
 }
 
-void Widget::getPassword()
+void Widget::getPassword(QString info)
 {
-    InputPasswordDialog dialog;
+    InputPasswordDialog dialog(info);
     if (dialog.exec())
     {
         QString pswd = dialog.getPassword();

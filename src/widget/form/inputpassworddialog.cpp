@@ -17,11 +17,14 @@
 #include "inputpassworddialog.h"
 #include "ui_inputpassworddialog.h"
 
-InputPasswordDialog::InputPasswordDialog(QWidget *parent) :
+InputPasswordDialog::InputPasswordDialog(QString title, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InputPasswordDialog)
 {
     ui->setupUi(this);
+
+    if (title != QString())
+        setWindowTitle(title);
 }
 
 InputPasswordDialog::~InputPasswordDialog()

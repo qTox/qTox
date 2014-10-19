@@ -28,7 +28,7 @@ class InputPasswordDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit InputPasswordDialog(QWidget *parent = 0);
+    explicit InputPasswordDialog(QString title = QString(), QWidget *parent = 0);
     ~InputPasswordDialog();
 
     QString getPassword();

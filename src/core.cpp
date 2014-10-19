@@ -1096,19 +1096,11 @@ bool Core::loadConfiguration(QString path)
 
     if (Settings::getInstance().getEncryptTox())
     {
-        //
-    }
-
-    if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
-    {
-        if (!isPasswordSet())
+        while (!isPasswordSet())
         {
-            emit blockingGetPassword();
-            if (!HistoryKeeper::checkPassword())
-            {
-                // FIXME: more interactive
-                qWarning() << "Wrong password! History will be wiped!";
-            }
+            emit blockingGetPassword(tr("Tox datafile decryption password"));
+            if (!isPasswordSet())
+                QMessageBox::warning(nullptr, tr("Password error"), tr("Failed to setup password.\nEmpty password."));
         }
     }
 
@@ -1122,28 +1114,88 @@ bool Core::loadConfiguration(QString path)
         }
         else if (error == 1) // Encrypted data save
         {
-            if (!pwsaltedkey)
+            do
             {
-                qWarning() << "Core: Can not open encrypted tox save";
-                if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted profile"),
-                    tr("Your tox profile seems to be encrypted, qTox can't open it\nDo you want to erase this profile ?"),
-                    QMessageBox::Ok | QMessageBox::Cancel))
+                while (!isPasswordSet())
                 {
-                    qWarning() << "Core: Couldn't open encrypted save, giving up";
-                    configurationFile.close();
-                    return false;
+                    emit blockingGetPassword(tr("Tox datafile decryption password"));
+                    if (!isPasswordSet())
+                        QMessageBox::warning(nullptr, tr("Password error"), tr("Failed to setup password.\nEmpty password."));
                 }
-            }
-            else
-            { /*
-                while (error != 0)
+
+                error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwsaltedkey, TOX_HASH_LENGTH);
+
+                if (error != 0)
                 {
-                    error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwsaltedkey, TOX_HASH_LENGTH);
-                    emit blockingGetPassword();
-                    if (!pwsaltedkey)
-                        // we need a way to start core without any profile
-                } */
+                    QMessageBox msgb;
+                    QPushButton *tryAgain = msgb.addButton(tr("Try Again"), QMessageBox::AcceptRole);
+                    QPushButton *cancel = msgb.addButton(tr("Change profile"), QMessageBox::RejectRole);
+                    QPushButton *wipe = msgb.addButton(tr("Reinit current profile"), QMessageBox::ActionRole);
+                    msgb.setDefaultButton(tryAgain);
+
+                    msgb.exec();
+
+                    if (msgb.clickedButton() == tryAgain)
+                    {
+                        clearPassword();
+                    } else if (msgb.clickedButton() == cancel)
+                    {
+                        configurationFile.close();
+                        return false;
+                    } else if (msgb.clickedButton() == wipe)
+                    {
+                        clearPassword();
+                        Settings::getInstance().setEncryptTox(false);
+                        error = 0;
+                    }
+                }
+
+            } while (error != 0);
+        }
+    }
+
+    // tox core is already decrypted
+    if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
+    {
+        if (isPasswordSet())
+        {
+            if (!HistoryKeeper::checkPassword())
+            {
+                QMessageBox::warning(nullptr, tr("Different passwords!"),
+                                     tr("Tox datafile and history log encrypted with different passwords."));
+                Settings::getInstance().setEncryptLogs(false);
+                Settings::getInstance().setEnableLogging(false);
             }
+        } else {
+            bool error = true;
+            do
+            {
+                while (!isPasswordSet())
+                {
+                    emit blockingGetPassword(tr("History Log decpytion password"));
+                    if (!isPasswordSet())
+                        QMessageBox::warning(nullptr, tr("Password error"), tr("Failed to setup password.\nEmpty password."));
+                }
+
+                if (!HistoryKeeper::checkPassword())
+                {
+                    if (QMessageBox::Ok == QMessageBox::warning(nullptr, tr("Encrypted log"),
+                        tr("Your history encrypted with different password\nDo you want to try another password?"),
+                        QMessageBox::Ok | QMessageBox::Cancel))
+                    {
+                        error = true;
+                        clearPassword();
+                    } else {
+                        error = false;
+                        clearPassword();
+                        QMessageBox::warning(nullptr, tr("Loggin"), tr("Due to incorret password logging will be disabled"));
+                        Settings::getInstance().setEncryptLogs(false);
+                        Settings::getInstance().setEnableLogging(false);
+                    }
+                } else {
+                    error = false;
+                }
+            } while (error);
         }
     }
 
@@ -1218,7 +1270,7 @@ void Core::saveConfiguration(const QString& path)
         if (Settings::getInstance().getEncryptTox())
         {
             if (!pwsaltedkey)
-                emit blockingGetPassword();
+                emit blockingGetPassword(tr("Tox datafile encryption password"));
             //if (!pwsaltedkey)
                 // revert to unsaved...? or maybe we shouldn't even try to get a pw from here ^
             int ret = tox_encrypted_save(tox, data, pwsaltedkey, TOX_HASH_LENGTH);
