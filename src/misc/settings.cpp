@@ -112,6 +112,7 @@ void Settings::load()
         translation = s.value("translation", "").toString();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
+        closeToTray = s.value("closeToTray", false).toBool();        
         forceTCP = s.value("forceTCP", false).toBool();
         useProxy = s.value("useProxy", false).toBool();
         proxyAddr = s.value("proxyAddr", "").toString();
@@ -225,6 +226,7 @@ void Settings::save(QString path)
         s.setValue("translation",translation);
         s.setValue("makeToxPortable",makeToxPortable);
         s.setValue("autostartInTray",autostartInTray);
+        s.setValue("closeToTray", closeToTray);
         s.setValue("useProxy", useProxy);
         s.setValue("forceTCP", forceTCP);
         s.setValue("proxyAddr", proxyAddr);
@@ -388,6 +390,16 @@ void Settings::setStyle(const QString& newStyle)
 void Settings::setAutostartInTray(bool newValue)
 {
     autostartInTray = newValue;
+}
+
+bool Settings::getCloseToTray() const
+{
+    return closeToTray;
+}
+
+void Settings::setCloseToTray(bool newValue)
+{
+    closeToTray = newValue;
 }
 
 bool Settings::getStatusChangeNotificationEnabled() const

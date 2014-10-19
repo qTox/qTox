@@ -40,6 +40,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
+    bodyUI->closeToTrayCheckbox->setChecked(Settings::getInstance().getCloseToTray());
     bodyUI->statusChangesCheckbox->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
 
     for (auto entry : SmileyPack::listSmileyPacks())
@@ -72,6 +73,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
+    connect(bodyUI->closeToTrayCheckbox, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);    
     connect(bodyUI->statusChangesCheckbox, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     // new syntax can't handle overloaded signals... (at least not in a pretty way)
@@ -107,6 +109,11 @@ void GeneralForm::onMakeToxPortableUpdated()
 void GeneralForm::onSetAutostartInTray()
 {
     Settings::getInstance().setAutostartInTray(bodyUI->startInTray->isChecked());
+}
+
+void GeneralForm::onSetCloseToTray()
+{
+    Settings::getInstance().setCloseToTray(bodyUI->closeToTrayCheckbox->isChecked());
 }
 
 void GeneralForm::onStyleSelected(QString style)

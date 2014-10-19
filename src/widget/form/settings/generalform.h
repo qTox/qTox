@@ -35,6 +35,7 @@ private slots:
     void onTranslationUpdated();
     void onMakeToxPortableUpdated();
     void onSetAutostartInTray();
+    void onSetCloseToTray();    
     void onSmileyBrowserIndexChanged(int index);
     void onUDPUpdated();
     void onProxyAddrEdited();

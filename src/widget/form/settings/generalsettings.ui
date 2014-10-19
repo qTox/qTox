@@ -74,6 +74,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="closeToTrayCheckbox">
+        <property name="text">
+         <string>Close to tray</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="statusChangesCheckbox">
         <property name="text">
          <string>Show contacts' status changes</string>
