@@ -408,7 +408,8 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 
 void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 {
-    Q_UNUSED(FriendId)
+    if (FriendId != f->friendId || CallId != callId)
+        return;
 
     if (video)
     {
