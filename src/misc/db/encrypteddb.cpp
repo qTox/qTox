@@ -27,8 +27,8 @@
 qint64 EncryptedDb::plainChunkSize = 1024;
 qint64 EncryptedDb::encryptedChunkSize = EncryptedDb::plainChunkSize + tox_pass_encryption_extra_length();
 
-EncryptedDb::EncryptedDb(const QString &fname) :
-    PlainDb(":memory:"), encrFile(fname)
+EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
+    PlainDb(":memory:", initList), encrFile(fname)
 {
     QByteArray fileContent;
     if (pullFileContent())
@@ -45,6 +45,7 @@ EncryptedDb::EncryptedDb(const QString &fname) :
     encrFile.close();
     encrFile.open(QIODevice::WriteOnly);
     encrFile.write(fileContent);
+    encrFile.flush();
 }
 
 EncryptedDb::~EncryptedDb()
@@ -55,7 +56,7 @@ EncryptedDb::~EncryptedDb()
 QSqlQuery EncryptedDb::exec(const QString &query)
 {
     QSqlQuery retQSqlQuery = PlainDb::exec(query);
-    if (query.startsWith("INSERT", Qt::CaseInsensitive) || query.startsWith("CREATE", Qt::CaseInsensitive))
+    if (query.startsWith("INSERT", Qt::CaseInsensitive))
         appendToEncrypted(query);
 
     return retQSqlQuery;

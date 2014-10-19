@@ -35,8 +35,8 @@ PrivacyForm::PrivacyForm() :
 
     connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
-    connect(bodyUI->cbEncryptHistory, SIGNAL(stateChanged(int)), this, SLOT(onEncryptLogsUpdated()));
-    connect(bodyUI->cbEncryptTox, SIGNAL(stateChanged(int)), this, SLOT(onEncryptToxUpdated()));
+    connect(bodyUI->cbEncryptHistory, SIGNAL(clicked()), this, SLOT(onEncryptLogsUpdated()));
+    connect(bodyUI->cbEncryptTox, SIGNAL(clicked()), this, SLOT(onEncryptToxUpdated()));
 }
 
 PrivacyForm::~PrivacyForm()
@@ -58,9 +58,9 @@ void PrivacyForm::onTypingNotificationEnabledUpdated()
 
 void PrivacyForm::onEncryptLogsUpdated()
 {
-    bool encpytionState = bodyUI->cbEncryptHistory->isChecked();
+    bool encrytionState = bodyUI->cbEncryptHistory->isChecked();
 
-    if (encpytionState)
+    if (encrytionState)
     {
         if (!Core::getInstance()->isPasswordSet())
         {
@@ -68,25 +68,50 @@ void PrivacyForm::onEncryptLogsUpdated()
             if (dialog.exec())
             {
                 QString pswd = dialog.getPassword();
-                if (pswd.size() > 0)
-                {
-                    Core::getInstance()->setPassword(pswd);
-                    Settings::getInstance().setEncryptLogs(true);
-                    return;
-                }
-            }
+                if (pswd.size() == 0)
+                    encrytionState = false;
 
-            bodyUI->cbEncryptHistory->setChecked(false);
-            Settings::getInstance().setEncryptLogs(false);
-        } else {
-            Settings::getInstance().setEncryptLogs(true);
+                Core::getInstance()->setPassword(pswd);
+            } else {
+                encrytionState = false;
+                Core::getInstance()->clearPassword();
+            }
         }
-    } else {
-        Settings::getInstance().setEncryptLogs(false);
     }
+
+    bodyUI->cbEncryptHistory->setChecked(encrytionState);
+    Settings::getInstance().setEncryptLogs(encrytionState);
+
+    if (!Settings::getInstance().getEncryptLogs() && !Settings::getInstance().getEncryptTox())
+        Core::getInstance()->clearPassword();
 }
 
 void PrivacyForm::onEncryptToxUpdated()
 {
-    //
+    bool encrytionState = bodyUI->cbEncryptTox->isChecked();
+
+    if (encrytionState)
+    {
+        if (!Core::getInstance()->isPasswordSet())
+        {
+            SetPasswordDialog dialog;
+            if (dialog.exec())
+            {
+                QString pswd = dialog.getPassword();
+                if (pswd.size() == 0)
+                    encrytionState = false;
+
+                Core::getInstance()->setPassword(pswd);
+            } else {
+                encrytionState = false;
+                Core::getInstance()->clearPassword();
+            }
+        }
+    }
+
+    // bodyUI->cbEncryptTox->setChecked(encrytionState);
+    // Settings::getInstance().setEncryptTox(encrytionState);
+
+    if (!Settings::getInstance().getEncryptLogs() && !Settings::getInstance().getEncryptTox())
+        Core::getInstance()->clearPassword();
 }

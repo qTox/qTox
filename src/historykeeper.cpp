@@ -35,6 +35,12 @@ HistoryKeeper *HistoryKeeper::getInstance()
 {
     if (historyInstance == nullptr)
     {
+        QList<QString> initLst;
+        initLst.push_back(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
+                          QString("profile_id INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, message TEXT NOT NULL);"));
+        initLst.push_back(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
+        initLst.push_back(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
+
         QString path(":memory:");
         GenericDdInterface *dbIntf;
 
@@ -45,7 +51,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
             if (encrypted)
             {
                 path = getHistoryPath();
-                dbIntf = new EncryptedDb(path);
+                dbIntf = new EncryptedDb(path, initLst);
 
                 historyInstance = new HistoryKeeper(dbIntf);
                 return historyInstance;
@@ -54,7 +60,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
             }
         }
 
-        dbIntf = new PlainDb(path);
+        dbIntf = new PlainDb(path, initLst);
         historyInstance = new HistoryKeeper(dbIntf);
     }
 
@@ -101,11 +107,6 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
        sender       -- sender's ID (resolves from aliases table)
        message
     */
-
-    db->exec(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
-             QString("profile_id INTEGER NOT NULL, chat_id INTEGER NOT NULL, sender INTERGER NOT NULL, message TEXT NOT NULL);"));
-    db->exec(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
-    db->exec(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
 
     updateChatsID();
     updateAliases();

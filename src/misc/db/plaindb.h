@@ -24,15 +24,13 @@
 class PlainDb : public GenericDdInterface
 {
 public:
-    PlainDb(const QString &db_name);
+    PlainDb(const QString &db_name, QList<QString> initList);
     virtual ~PlainDb();
 
     virtual QSqlQuery exec(const QString &query);
-    static void setBDInitCommands(const QList<QString> &list);
 
 private:
     QSqlDatabase *db;
-    static QList<QString> initCmd;
 };
 
 #endif // PLAINDB_H

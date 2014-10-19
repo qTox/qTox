@@ -25,7 +25,7 @@
 class EncryptedDb : public PlainDb
 {
 public:
-    EncryptedDb(const QString& fname);
+    EncryptedDb(const QString& fname, QList<QString> initList);
     virtual ~EncryptedDb();
 
     virtual QSqlQuery exec(const QString &query);
