@@ -22,7 +22,7 @@ This client runs on Windows, Linux and Mac natively.<br/>
 
 You can find the latest versions of qTox <a href="https://github.com/tux3/qTox/releases">here</a> (Windows and Linux), or from the Tox Project's servers :
 
-<a href="https://jenkins.libtoxcore.so/job/qTox%20OS%20X/lastSuccessfulBuild/artifact/qtox.dmg">Mac download </a><br/>
+<a href="https://dist-build.tox.im/qtox.dmg">Mac download </a><br/>
 <a href="https://jenkins.libtoxcore.so/job/qTox-linux-amd64/lastSuccessfulBuild/artifact/qt/qtox.xz">Linux download</a> (click "Last successful artifacts")<br/>
 
 <h3>Screenshots</h3>
