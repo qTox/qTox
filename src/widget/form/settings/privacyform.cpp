@@ -22,6 +22,7 @@
 #include "src/core.h"
 #include "src/widget/widget.h"
 #include "src/widget/form/setpassworddialog.h"
+#include <QMessageBox>
 
 PrivacyForm::PrivacyForm() :
     GenericForm(tr("Privacy settings"), QPixmap(":/img/settings/privacy.png"))
@@ -79,8 +80,23 @@ void PrivacyForm::onEncryptLogsUpdated()
         }
     }
 
-    bodyUI->cbEncryptHistory->setChecked(encrytionState);
     Settings::getInstance().setEncryptLogs(encrytionState);
+    if (encrytionState && !HistoryKeeper::checkPassword())
+    {
+        if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted log"),
+            tr("You already have history log file encrypted with different password\nDo you want to delete old history file?"),
+            QMessageBox::Ok | QMessageBox::Cancel))
+        {
+            // TODO: ask user about reencryption with new password
+            encrytionState = false;
+        }
+    }
+
+    Settings::getInstance().setEncryptLogs(encrytionState);
+    bodyUI->cbEncryptHistory->setChecked(encrytionState);
+
+    if (encrytionState)
+        HistoryKeeper::resetInstance();
 
     if (!Settings::getInstance().getEncryptLogs() && !Settings::getInstance().getEncryptTox())
         Core::getInstance()->clearPassword();
