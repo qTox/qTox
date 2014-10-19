@@ -33,6 +33,8 @@ PrivacyForm::PrivacyForm() :
     bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
     bodyUI->cbEncryptHistory->setChecked(Settings::getInstance().getEncryptLogs());
+    bodyUI->cbEncryptHistory->setEnabled(Settings::getInstance().getEnableLogging());
+    bodyUI->cbEncryptTox->setChecked(Settings::getInstance().getEncryptTox());
 
     connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
@@ -125,8 +127,8 @@ void PrivacyForm::onEncryptToxUpdated()
         }
     }
 
-    // bodyUI->cbEncryptTox->setChecked(encrytionState);
-    // Settings::getInstance().setEncryptTox(encrytionState);
+    bodyUI->cbEncryptTox->setChecked(encrytionState);
+    Settings::getInstance().setEncryptTox(encrytionState);
 
     if (!Settings::getInstance().getEncryptLogs() && !Settings::getInstance().getEncryptTox())
         Core::getInstance()->clearPassword();

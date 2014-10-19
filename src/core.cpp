@@ -1123,8 +1123,8 @@ bool Core::loadConfiguration(QString path)
                         QMessageBox::warning(nullptr, tr("Password error"), tr("Failed to setup password.\nEmpty password."));
                 }
 
-                error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwsaltedkey, TOX_HASH_LENGTH);
-
+                error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(),
+                                           reinterpret_cast<uint8_t *>(barePassword.data()), barePassword.size());
                 if (error != 0)
                 {
                     QMessageBox msgb;
@@ -1132,6 +1132,9 @@ bool Core::loadConfiguration(QString path)
                     QPushButton *cancel = msgb.addButton(tr("Change profile"), QMessageBox::RejectRole);
                     QPushButton *wipe = msgb.addButton(tr("Reinit current profile"), QMessageBox::ActionRole);
                     msgb.setDefaultButton(tryAgain);
+                    msgb.setWindowTitle(tr("Password error"));
+                    msgb.setText(tr("Wrong password has been entered"));
+                    // msgb.setInformativeText(tr(""));
 
                     msgb.exec();
 
@@ -1148,8 +1151,9 @@ bool Core::loadConfiguration(QString path)
                         Settings::getInstance().setEncryptTox(false);
                         error = 0;
                     }
+                } else {
+                    Settings::getInstance().setEncryptTox(true);
                 }
-
             } while (error != 0);
         }
     }
@@ -1269,19 +1273,22 @@ void Core::saveConfiguration(const QString& path)
 
         if (Settings::getInstance().getEncryptTox())
         {
-            if (!pwsaltedkey)
-                emit blockingGetPassword(tr("Tox datafile encryption password"));
-            //if (!pwsaltedkey)
-                // revert to unsaved...? or maybe we shouldn't even try to get a pw from here ^
-            int ret = tox_encrypted_save(tox, data, pwsaltedkey, TOX_HASH_LENGTH);
-            if (ret == -1)
+            if (!isPasswordSet())
             {
-                qCritical() << "Core::saveConfiguration: encryption of save file failed!!!";
-                return;
+                // probably zero chance event
+                QMessageBox::warning(nullptr, tr("NO Password"), tr("Will be saved without encryption!"));
+                tox_save(tox, data);
+            } else {
+                int ret = tox_encrypted_save(tox, data, reinterpret_cast<uint8_t *>(barePassword.data()), barePassword.size());
+                if (ret == -1)
+                {
+                    qCritical() << "Core::saveConfiguration: encryption of save file failed!!!";
+                    return;
+                }
             }
-        }
-        else
+        } else {
             tox_save(tox, data);
+        }
 
         configurationFile.write(reinterpret_cast<char *>(data), fileSize);
         configurationFile.commit();
