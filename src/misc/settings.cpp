@@ -153,6 +153,7 @@ void Settings::load()
     s.endGroup();
 
     s.beginGroup("AutoAccept");
+        globalAutoAcceptDir = s.value("globalAutoAcceptDir", "").toString();
         for (auto& key : s.childKeys())
             autoAccept[key] = s.value(key).toString();
     s.endGroup();
@@ -266,6 +267,7 @@ void Settings::save(QString path)
     s.endGroup();
 
     s.beginGroup("AutoAccept");
+        s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
         for (auto& id : autoAccept.keys())
             s.setValue(id, autoAccept.value(id));
     s.endGroup();
@@ -502,6 +504,16 @@ void Settings::setAutoAcceptDir(const QString& id, const QString& dir)
         autoAccept.remove(id.left(TOX_ID_PUBLIC_KEY_LENGTH));
     else
         autoAccept[id.left(TOX_ID_PUBLIC_KEY_LENGTH)] = dir;
+}
+
+QString Settings::getGlobalAutoAcceptDir() const
+{
+    return globalAutoAcceptDir;
+}
+
+void Settings::setGlobalAutoAcceptDir(const QString& newValue)
+{
+    globalAutoAcceptDir = newValue;
 }
 
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)

@@ -180,7 +180,8 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 
     chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), false));
 
-    if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->friendId)).isEmpty())
+    if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->friendId)).isEmpty()
+     || !Settings::getInstance().getGlobalAutoAcceptDir().isEmpty())
         fileTrans->pressFromHtml("btnB");
 }
 
