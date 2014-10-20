@@ -750,14 +750,19 @@ void Widget::onGroupMessageReceived(int groupnumber, const QString& message, con
     if (!g)
         return;
 
-    g->chatForm->addMessage(author, message);
+    QString name = core->getUsername();
+    bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
+    if (targeted)
+        g->chatForm->addAlertMessage(author, message);
+    else
+        g->chatForm->addMessage(author, message);
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
         g->hasNewMessages = 1;
-        newMessageAlert(); // sound alert on any message, not just naming user
-        if (message.contains(core->getUsername(), Qt::CaseInsensitive))
+        if (targeted)
         {
+            newMessageAlert();
             g->userWasMentioned = 1; // useful for highlighting line or desktop notifications
         }
         g->widget->updateStatusLight();

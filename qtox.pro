@@ -135,6 +135,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/tool/chatactions/filetransferaction.h \
     src/widget/tool/chatactions/systemmessageaction.h \
     src/widget/tool/chatactions/actionaction.h \
+    src/widget/tool/chatactions/alertaction.h \
     src/widget/maskablepixmapwidget.h \
     src/videosource.h \
     src/cameraworker.h \
@@ -184,6 +185,7 @@ SOURCES += \
     src/widget/tool/chatactions/filetransferaction.cpp \
     src/widget/tool/chatactions/systemmessageaction.cpp \
     src/widget/tool/chatactions/actionaction.cpp \
+    src/widget/tool/chatactions/alertaction.cpp \
     src/widget/maskablepixmapwidget.cpp \
     src/cameraworker.cpp \
     src/widget/videosurface.cpp \

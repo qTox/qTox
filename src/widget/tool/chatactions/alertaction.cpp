@@ -14,15 +14,14 @@
     See the COPYING file for more details.
 */
 
-#include "actionaction.h"
+#include "alertaction.h"
 
-ActionAction::ActionAction(const QString &author, QString message, const QString &date, const bool& me) :
-    MessageAction(author, message, date, me)
+AlertAction::AlertAction(const QString &author, const QString &message, const QString &date) :
+    MessageAction(author, message, date, false)
 {
-    message = name + " " + message;
 }
 
-void ActionAction::setup(QTextCursor cursor, QTextEdit *)
+void AlertAction::setup(QTextCursor cursor, QTextEdit *)
 {
     // When this function is called, we're supposed to only update ourselve when needed
     // Nobody should ask us to do anything with our content, we're on our own
@@ -36,13 +35,13 @@ void ActionAction::setup(QTextCursor cursor, QTextEdit *)
     date.clear();
     date.squeeze();
 }
-
-QString ActionAction::getName()
+/*
+QString AlertAction::getName()
 {
-    return QString("<div class=action>*</div>");
+    return QString("<div class=%1>%2</div>").arg("alert_name").arg(toHtmlChars(name));
 }
-
-QString ActionAction::getMessage()
+*/
+QString AlertAction::getMessage()
 {
-    return MessageAction::getMessage("action");
+    return MessageAction::getMessage("alert");
 }

@@ -67,6 +67,20 @@ div.red {
   font: @small;
 }
 
+div.alert {
+  margin-left: 0px;
+  margin-right: 0px;
+  color: @black;
+  background-color: @orange;
+  font: @big;
+}
+
+div.alert_name {
+  color: @black;
+  background-color: @orange;
+  font: @bigBold;
+}
+
 div.button {
   margin-top: 0px;
   margin-bottom: 0px;

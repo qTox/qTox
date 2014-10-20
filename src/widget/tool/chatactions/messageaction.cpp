@@ -38,7 +38,7 @@ void MessageAction::setup(QTextCursor cursor, QTextEdit *)
     date.squeeze();
 }
 
-QString MessageAction::getMessage()
+QString MessageAction::getMessage(QString div)
 {
     QString message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
 
@@ -65,14 +65,19 @@ QString MessageAction::getMessage()
     for (QString& s : messageLines)
     {
         if (QRegExp("^[ ]*&gt;.*").exactMatch(s))
-            message_ += "<span class=quote>>" + s.right(s.length()-4) + "</span><br/>";
+            message_ += "<span class=quote>" + s.right(s.length()-4) + "</span><br/>";
         else
             message_ += s + "<br/>";
     }
     message_ = message_.left(message_.length()-4);
 
+    return QString(QString("<div class=%1>").arg(div) + message_ + "</div>");
+}
+
+QString MessageAction::getMessage()
+{
     if (isMe)
-        return QString("<div class=message_me>" + message_ + "</div>");
+        return getMessage("message_me");
     else
-        return QString("<div class=message>" + message_ + "</div>");
+        return getMessage("message");
 }

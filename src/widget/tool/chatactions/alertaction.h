@@ -14,21 +14,21 @@
     See the COPYING file for more details.
 */
 
-#ifndef MESSAGEACTION_H
-#define MESSAGEACTION_H
+#ifndef ALERTACTION_H
+#define ALERTACTION_H
 
-#include "chataction.h"
+#include "messageaction.h"
 
-class MessageAction : public ChatAction
+class AlertAction : public MessageAction
 {
 public:
-    MessageAction(const QString &author, const QString &message, const QString &date, const bool &me);
-    virtual ~MessageAction(){;}
+    AlertAction(const QString &author, const QString &message, const QString& date);
+    virtual ~AlertAction(){;}
     virtual QString getMessage();
-    virtual QString getMessage(QString div);
+    //virtual QString getName(); only do the message for now; preferably would do the whole row
     virtual void setup(QTextCursor cursor, QTextEdit*) override;
 
-protected:
+private:
     QString message;
 };
 
