@@ -66,6 +66,9 @@ public:
 
     virtual void closeEvent(QCloseEvent *event);
 
+public slots:
+    void onSettingsClicked();
+
 signals:
     void friendRequestAccepted(const QString& userId);
     void friendRequested(const QString& friendAddress, const QString& message);
@@ -82,7 +85,6 @@ private slots:
     void onAddClicked();
     void onGroupClicked();
     void onTransferClicked();
-    void onSettingsClicked();
     void onFailedToStartCore();
     void onBadProxyCore();
     void onAvatarClicked();

@@ -63,6 +63,7 @@ private slots:
     void onExportClicked();
     void onDeleteClicked();
     void onImportClicked();
+    void onNewClicked();
 
 private:
     Ui::IdentitySettings* bodyUI;

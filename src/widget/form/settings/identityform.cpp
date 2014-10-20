@@ -54,6 +54,7 @@ IdentityForm::IdentityForm() :
     connect(bodyUI->exportButton, &QPushButton::clicked, this, &IdentityForm::onExportClicked);
     connect(bodyUI->deleteButton, &QPushButton::clicked, this, &IdentityForm::onDeleteClicked);
     connect(bodyUI->importButton, &QPushButton::clicked, this, &IdentityForm::onImportClicked);
+    connect(bodyUI->newButton, &QPushButton::clicked, this, &IdentityForm::onNewClicked);
 
     connect(Core::getInstance(), &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(Core::getInstance(), &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
@@ -178,4 +179,9 @@ void IdentityForm::onImportClicked()
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
     QFile::copy(path, profilePath);
     bodyUI->profiles->addItem(profile);
+}
+
+void IdentityForm::onNewClicked()
+{
+    emit Widget::getInstance()->changeProfile(QString());
 }
