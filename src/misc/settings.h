@@ -52,6 +52,12 @@ public:
     bool getAutostartInTray() const;
     void setAutostartInTray(bool newValue);
     
+    bool getCloseToTray() const;
+    void setCloseToTray(bool newValue);
+    
+    bool getMinimizeToTray() const;
+    void setMinimizeToTray(bool newValue);
+    
     QString getStyle() const;
     void setStyle(const QString& newValue);
 
@@ -188,6 +194,8 @@ private:
     QString translation;
     static bool makeToxPortable;
     bool autostartInTray;
+    bool closeToTray;
+    bool minimizeToTray;
 
     bool forceTCP;
 

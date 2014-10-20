@@ -112,6 +112,7 @@ void Settings::load()
         translation = s.value("translation", "").toString();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
+        closeToTray = s.value("closeToTray", false).toBool();        
         forceTCP = s.value("forceTCP", false).toBool();
         useProxy = s.value("useProxy", false).toBool();
         proxyAddr = s.value("proxyAddr", "").toString();
@@ -137,6 +138,7 @@ void Settings::load()
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
+        minimizeToTray = s.value("minimizeToTray", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
         style = s.value("style", "None").toString();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
@@ -226,6 +228,7 @@ void Settings::save(QString path)
         s.setValue("translation",translation);
         s.setValue("makeToxPortable",makeToxPortable);
         s.setValue("autostartInTray",autostartInTray);
+        s.setValue("closeToTray", closeToTray);
         s.setValue("useProxy", useProxy);
         s.setValue("forceTCP", forceTCP);
         s.setValue("proxyAddr", proxyAddr);
@@ -251,6 +254,7 @@ void Settings::save(QString path)
         s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
+        s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("nativeStyle", useNativeStyle);
         s.setValue("style",style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
@@ -390,6 +394,27 @@ void Settings::setStyle(const QString& newStyle)
 void Settings::setAutostartInTray(bool newValue)
 {
     autostartInTray = newValue;
+}
+
+bool Settings::getCloseToTray() const
+{
+    return closeToTray;
+}
+
+void Settings::setCloseToTray(bool newValue)
+{
+    closeToTray = newValue;
+}
+
+bool Settings::getMinimizeToTray() const
+{
+    return minimizeToTray;
+}
+
+
+void Settings::setMinimizeToTray(bool newValue)
+{
+    minimizeToTray = newValue;
 }
 
 bool Settings::getStatusChangeNotificationEnabled() const

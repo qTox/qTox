@@ -253,10 +253,30 @@ QThread* Widget::getCoreThread()
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    Settings::getInstance().setWindowGeometry(saveGeometry());
-    Settings::getInstance().setWindowState(saveState());
-    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
-    QWidget::closeEvent(event);
+    if(Settings::getInstance().getCloseToTray() == true)
+    {
+        event->ignore();
+        this->hide();
+    }
+    else
+    {
+        Settings::getInstance().setWindowGeometry(saveGeometry());
+        Settings::getInstance().setWindowState(saveState());
+        Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+        QWidget::closeEvent(event);
+    }
+}
+
+void Widget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange)
+    {
+        if(isMinimized() == true
+                && Settings::getInstance().getMinimizeToTray() == true)
+        {
+            this->hide();
+        }
+    }
 }
 
 QString Widget::detectProfile()

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>527</width>
-    <height>500</height>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,7 +74,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="statusChangesCheckbox">
+       <widget class="QCheckBox" name="closeToTray">
+        <property name="text">
+         <string>Close to tray</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="minimizeToTray">
+        <property name="text">
+         <string>Minimize to tray</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="statusChanges">
         <property name="text">
          <string>Show contacts' status changes</string>
         </property>

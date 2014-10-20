@@ -65,6 +65,8 @@ public:
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
+    virtual void changeEvent(QEvent *event);
+    
 
 public slots:
     void onSettingsClicked();
