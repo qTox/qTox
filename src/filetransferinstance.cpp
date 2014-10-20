@@ -46,7 +46,7 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
 
     filenameElided = fm.elidedText(filename, Qt::ElideRight, MAX_CONTENT_WIDTH);
     size = getHumanReadableSize(File.filesize);
-    contentPrefWidth = std::max(fm.width(filenameElided), fm.width(size));
+    contentPrefWidth = std::max(fm.boundingRect(filenameElided).width(), fm.width(size));
 
     speed = "0B/s";
     eta = "00:00";
@@ -209,6 +209,7 @@ bool isFileWritable(QString& path)
 void FileTransferInstance::acceptRecvRequest()
 {
     QString path = Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(friendId));
+    if (path.isEmpty()) path = Settings::getInstance().getGlobalAutoAcceptDir();
     if (!path.isEmpty())
     {
         QDir dir(path);

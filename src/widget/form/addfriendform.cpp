@@ -154,4 +154,6 @@ void AddFriendForm::handleDnsLookup()
 
     // finally we got it
     emit friendRequested(friendAdress, getMessage());
+    this->toxId.setText("");
+    this->message.setText("");
 }

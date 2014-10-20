@@ -128,6 +128,9 @@ public:
     QString getAutoAcceptDir(const QString& id) const;
     void setAutoAcceptDir(const QString&id, const QString& dir);
 
+    QString getGlobalAutoAcceptDir() const;
+    void setGlobalAutoAcceptDir(const QString& dir);
+
     // ChatView
     int getFirstColumnHandlePos() const;
     void setFirstColumnHandlePos(const int pos);
@@ -201,6 +204,7 @@ private:
 
     QHash<QString, QByteArray> widgetSettings;
     QHash<QString, QString> autoAccept;
+    QString globalAutoAcceptDir;
 
     // GUI
     bool enableSmoothAnimation;
