@@ -18,6 +18,7 @@
 #define WIDGET_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 #include "form/addfriendform.h"
 #include "form/settingswidget.h"
 #include "form/settings/identityform.h"
@@ -116,7 +117,7 @@ private slots:
     void onMessageSendResult(int friendId, const QString& message, int messageId);
     void onGroupSendResult(int groupId, const QString& message, int result);
     void playRingtone();
-    void onIconClick();
+    void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAway();
 
 private:
@@ -128,6 +129,12 @@ private:
     void removeGroup(Group* g);
     QString askProfiles();
     QString detectProfile();
+    QSystemTrayIcon *icon;
+    QMenu *trayMenu;
+    QAction *statusOnline,
+            *statusAway,
+            *statusBusy,
+            *actionQuit;
 
     Ui::MainWindow *ui;
     QSplitter *centralLayout;

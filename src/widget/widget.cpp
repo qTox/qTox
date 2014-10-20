@@ -61,7 +61,52 @@ Widget::Widget(QWidget *parent)
 
 void Widget::init()
 {
+    
     ui->setupUi(this);
+    
+    if (QSystemTrayIcon::isSystemTrayAvailable() == true)
+    {
+        icon = new QSystemTrayIcon(this);
+        icon->setIcon(this->windowIcon());
+        trayMenu = new QMenu;
+        trayMenu->setStyleSheet("QMenu {background: white; color: black; border: 1px solid black;}"
+                                "QMenu::item:selected { background: #414141}");
+        
+        statusOnline = new QAction(tr("online"), this);
+        statusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
+        connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
+        statusAway = new QAction(tr("away"), this);
+        statusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
+        connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
+        statusBusy = new QAction(tr("busy"), this);
+        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
+        statusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+        actionQuit = new QAction(tr("&Quit"), this);
+        connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+        
+        trayMenu->addAction(new QAction(tr("Change status to:"), this));
+        trayMenu->addAction(statusOnline);
+        trayMenu->addAction(statusAway);
+        trayMenu->addAction(statusBusy);
+        trayMenu->addSeparator();
+        trayMenu->addAction(actionQuit);
+        icon->setContextMenu(trayMenu);
+        
+        connect(icon,
+                SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                this,
+                SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
+        
+        icon->show();
+        
+        if(Settings::getInstance().getAutostartInTray() == false)
+            this->show();
+    }
+    else
+    {
+        qWarning() << "No system tray detected!";
+        this->show();
+    }
 
     ui->statusbar->hide();
     ui->menubar->hide();
@@ -232,12 +277,19 @@ Widget::~Widget()
     for (Group* g : GroupList::groupList)
         delete g;
     GroupList::groupList.clear();
+    delete statusAway;
+    delete statusBusy;
+    delete statusOnline;
+    delete actionQuit;
+    delete trayMenu;
+    delete icon;
     delete ui;
     instance = nullptr;
 }
 
 Widget* Widget::getInstance()
 {
+    
     if (!instance)
     {
         instance = new Widget();
@@ -473,12 +525,21 @@ void Widget::onTransferClicked()
     activeChatroomWidget = nullptr;
 }
 
-void Widget::onIconClick()
+void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
-    if(this->isHidden() == true)
-        this->show();
-    else
-        this->hide();
+    switch (reason) {
+        case QSystemTrayIcon::Trigger:
+        if(this->isHidden() == true)
+            this->show();
+        else
+            this->hide();
+        case QSystemTrayIcon::DoubleClick:    
+            break;
+        case QSystemTrayIcon::MiddleClick:
+            break;
+        default:
+            ;
+    }
 }
 
 void Widget::onSettingsClicked()
