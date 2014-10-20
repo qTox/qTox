@@ -23,6 +23,15 @@ AVForm::AVForm() :
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
+    // this QWidget style definition is a walk-around for bug in Qt 5.x
+    // the bug causes "Win-98 style" rendering if background color is defined for QWidget,
+    // so I avoided global definition for QWidget.
+    // but if this style is not defined you got: https://github.com/tux3/qTox/pull/475#issuecomment-59627952
+    // this single line can be remove if bug in Qt is fixed. some day.
+    // more reference: 
+    // https://github.com/tux3/qTox/issues/406
+    // https://bugreports.qt-project.org/browse/QTBUG-33537?attachmentOrder=desc
+    this->setStyleSheet("QWidget { background: white; }");
 }
 
 AVForm::~AVForm()

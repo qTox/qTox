@@ -13,6 +13,21 @@ QTextEdit
     border: 1px solid #c4c1bd;
 }
 
+QListWidget
+{
+    background: white;
+}
+
+QScrollArea
+{
+    background: white;
+}
+
+QGroupBox
+{
+    background: white;
+}
+
 QMessageBox
 {
     background: white;
