@@ -44,6 +44,7 @@ private slots:
     void onStyleSelected(QString style);    
     void onSetStatusChange();
     void onAutoAwayChanged();
+    void onSetMinimizeToTray();
     
 
 private:

@@ -268,6 +268,18 @@ void Widget::closeEvent(QCloseEvent *event)
     }
 }
 
+void Widget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange)
+    {
+        if(isMinimized() == true
+                && Settings::getInstance().getMinimizeToTray() == true)
+        {
+            this->hide();
+        }
+    }
+}
+
 QString Widget::detectProfile()
 {
     QDir dir(Settings::getSettingsDirPath());

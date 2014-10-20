@@ -138,6 +138,7 @@ void Settings::load()
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
+        minimizeToTray = s.value("minimizeToTray", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
         style = s.value("style", "None").toString();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
@@ -252,6 +253,7 @@ void Settings::save(QString path)
         s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
+        s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("nativeStyle", useNativeStyle);
         s.setValue("style",style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
@@ -400,6 +402,17 @@ bool Settings::getCloseToTray() const
 void Settings::setCloseToTray(bool newValue)
 {
     closeToTray = newValue;
+}
+
+bool Settings::getMinimizeToTray() const
+{
+    return minimizeToTray;
+}
+
+
+void Settings::setMinimizeToTray(bool newValue)
+{
+    minimizeToTray = newValue;
 }
 
 bool Settings::getStatusChangeNotificationEnabled() const
