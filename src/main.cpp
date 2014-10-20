@@ -18,7 +18,6 @@
 #include "misc/settings.h"
 #include <QApplication>
 #include <QFontDatabase>
-#include <QSystemTrayIcon>
 #include <QDebug>
 
 int main(int argc, char *argv[])
@@ -38,24 +37,6 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
 
     Widget* w = Widget::getInstance();
-    if (QSystemTrayIcon::isSystemTrayAvailable() == false)
-    {
-        qWarning() << "No system tray detected!";
-        w->show();
-        }
-        else
-        {
-            QSystemTrayIcon *icon = new QSystemTrayIcon(w);
-            QObject::connect(icon,
-            SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-                            w,
-                            SLOT(onIconClick()));
-                            icon->setIcon(w->windowIcon());
-            icon->show();
-            if(Settings::getInstance().getAutostartInTray() == false)
-                w->show();
-    }
-
 
     int errorcode = a.exec();
 
