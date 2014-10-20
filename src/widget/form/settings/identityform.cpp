@@ -121,15 +121,22 @@ void IdentityForm::onRenameClicked()
 {
     QString cur = bodyUI->profiles->currentText();
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
-    QString name = QInputDialog::getText(this, title, title+":");
-    if (name != "")
+    do
     {
+        QString name = QInputDialog::getText(this, title, title+":");
+        if (name.isEmpty()) break;
         name = Core::sanitize(name);
         QDir dir(Settings::getSettingsDirPath());
-        QFile::rename(dir.filePath(cur+Core::TOX_EXT), dir.filePath(name+Core::TOX_EXT));
-        bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
-        Settings::getInstance().setCurrentProfile(name);
-    }
+        QString file = dir.filePath(name+Core::TOX_EXT);
+        if (!QFile::exists(file) || checkContinue(tr("Profile already exists", "rename confirm title"),
+                tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
+        {
+            QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
+            bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
+            Settings::getInstance().setCurrentProfile(name);
+            break;
+        }
+    } while (true);
 }
 
 void IdentityForm::onExportClicked()
@@ -150,9 +157,8 @@ void IdentityForm::onDeleteClicked()
     }
     else
     {        
-        QMessageBox::StandardButton resp = QMessageBox::question(this,
-            tr("Deletion imminent!","deletion confirmation title"), tr("Are you sure you want to delete this profile?","deletion confirmation text"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-        if (resp == QMessageBox::Yes)
+        if (checkContinue(tr("Deletion imminent!","deletion confirmation title"),
+                          tr("Are you sure you want to delete this profile?","deletion confirmation text")))
         {
             QFile::remove(QDir(Settings::getSettingsDirPath()).filePath(bodyUI->profiles->currentText()+Core::TOX_EXT));
             bodyUI->profiles->removeItem(bodyUI->profiles->currentIndex());
@@ -168,6 +174,7 @@ void IdentityForm::onImportClicked()
         return;
 
     QFileInfo info(path);
+    QString profile = info.completeBaseName();
 
     if (info.suffix() != "tox")
     {
@@ -175,7 +182,10 @@ void IdentityForm::onImportClicked()
         return;
     }
 
-    QString profile = info.completeBaseName();
+    if (info.exists() && !checkContinue(tr("Profile already exists", "import confirm title"),
+            tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
+        return;
+
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
     QFile::copy(path, profilePath);
     bodyUI->profiles->addItem(profile);
@@ -184,4 +194,10 @@ void IdentityForm::onImportClicked()
 void IdentityForm::onNewClicked()
 {
     emit Widget::getInstance()->changeProfile(QString());
+}
+
+bool IdentityForm::checkContinue(const QString& title, const QString& msg)
+{
+    QMessageBox::StandardButton resp = QMessageBox::question(this, title, msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    return resp == QMessageBox::Yes;
 }
