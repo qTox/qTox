@@ -15,11 +15,11 @@
 */
 
 #include "actionaction.h"
+#include <QDebug>
 
 ActionAction::ActionAction(const QString &author, QString message, const QString &date, const bool& me) :
-    MessageAction(author, message, date, me)
+    MessageAction(author, author+" "+message, date, me)
 {
-    message = name + " " + message;
 }
 
 void ActionAction::setup(QTextCursor cursor, QTextEdit *)

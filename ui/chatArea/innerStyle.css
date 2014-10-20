@@ -38,8 +38,8 @@ span.quote {
 }
 
 div.green {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   margin-left: 0px;
   margin-right: 0px;
   color: @white;
@@ -48,8 +48,8 @@ div.green {
 }
 
 div.silver {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   margin-left: 0px;
   margin-right: 0px;
   color: @black;
@@ -58,8 +58,8 @@ div.silver {
 }
 
 div.red {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   margin-left: 0px;
   margin-right: 0px;
   color: @white;

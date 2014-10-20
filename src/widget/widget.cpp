@@ -778,17 +778,23 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g = createGroup(groupnumber);
     }
 
+    QString name = core->getGroupPeerName(groupnumber, peernumber);
     TOX_CHAT_CHANGE change = static_cast<TOX_CHAT_CHANGE>(Change);
     if (change == TOX_CHAT_CHANGE_PEER_ADD)
     {
-        QString name = core->getGroupPeerName(groupnumber, peernumber);
         if (name.isEmpty())
             name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
         g->addPeer(peernumber,name);
+        //g->chatForm->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "green");
+        // we can't display these messages until irungentoo fixes peernumbers
+        // https://github.com/irungentoo/toxcore/issues/1128
     }
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
+    {
         g->removePeer(peernumber);
-    else if (change == TOX_CHAT_CHANGE_PEER_NAME)
+        //g->chatForm->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "silver");
+    }
+    else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 
