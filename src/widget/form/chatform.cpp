@@ -87,7 +87,7 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
     QString name = Widget::getInstance()->getUsername();
-    if (msg.startsWith("/me "))
+    if (msg.startsWith("/me"))
     {
         msg = msg.right(msg.length() - 4);
         addMessage(name, msg, true);

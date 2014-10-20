@@ -749,14 +749,19 @@ void Widget::onGroupMessageReceived(int groupnumber, const QString& message, con
     if (!g)
         return;
 
-    g->chatForm->addMessage(author, message);
+    QString name = core->getUsername();
+    bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
+    if (targeted)
+        g->chatForm->addAlertMessage(author, message);
+    else
+        g->chatForm->addMessage(author, message);
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
         g->hasNewMessages = 1;
-        newMessageAlert(); // sound alert on any message, not just naming user
-        if (message.contains(core->getUsername(), Qt::CaseInsensitive))
+        if (targeted)
         {
+            newMessageAlert();
             g->userWasMentioned = 1; // useful for highlighting line or desktop notifications
         }
         g->widget->updateStatusLight();
@@ -772,17 +777,23 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g = createGroup(groupnumber);
     }
 
+    QString name = core->getGroupPeerName(groupnumber, peernumber);
     TOX_CHAT_CHANGE change = static_cast<TOX_CHAT_CHANGE>(Change);
     if (change == TOX_CHAT_CHANGE_PEER_ADD)
     {
-        QString name = core->getGroupPeerName(groupnumber, peernumber);
         if (name.isEmpty())
             name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
         g->addPeer(peernumber,name);
+        //g->chatForm->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "green");
+        // we can't display these messages until irungentoo fixes peernumbers
+        // https://github.com/irungentoo/toxcore/issues/1128
     }
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
+    {
         g->removePeer(peernumber);
-    else if (change == TOX_CHAT_CHANGE_PEER_NAME)
+        //g->chatForm->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "silver");
+    }
+    else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 

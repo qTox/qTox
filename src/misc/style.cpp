@@ -70,6 +70,7 @@ QColor Style::getColor(Style::ColorPalette entry)
         QColor("#414141").lighter(120),
         QColor("#d1d1d1"),
         QColor("#ffffff"),
+        QColor("#ff7700"),
     };
 
     return palette[entry];
@@ -108,6 +109,7 @@ QString Style::resolve(QString qss)
         {"@mediumGreyLight", getColor(MediumGreyLight).name()},
         {"@lightGrey", getColor(LightGrey).name()},
         {"@white", getColor(White).name()},
+        {"@orange", getColor(Orange).name()},
 
         // fonts
         {"@extraBig", qssifyFont(getFont(ExtraBig))},

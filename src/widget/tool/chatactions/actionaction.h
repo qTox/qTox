@@ -17,12 +17,12 @@
 #ifndef ACTIONACTION_H
 #define ACTIONACTION_H
 
-#include "chataction.h"
+#include "messageaction.h"
 
-class ActionAction : public ChatAction
+class ActionAction : public MessageAction
 {
 public:
-    ActionAction(const QString &author, const QString &message, const QString& date, const bool&);
+    ActionAction(const QString &author, QString message, const QString& date, const bool&);
     virtual ~ActionAction(){;}
     virtual QString getMessage();
     virtual QString getName();
