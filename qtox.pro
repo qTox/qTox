@@ -138,7 +138,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/maskablepixmapwidget.h \
     src/videosource.h \
     src/cameraworker.h \
-    src/widget/videosurface.h
+    src/widget/videosurface.h \
+    src/widget/form/tabcompleter.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -186,4 +187,5 @@ SOURCES += \
     src/widget/maskablepixmapwidget.cpp \
     src/cameraworker.cpp \
     src/widget/videosurface.cpp \
-    src/netvideosource.cpp
+    src/netvideosource.cpp \
+    src/widget/form/tabcompleter.cpp

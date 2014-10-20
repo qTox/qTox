@@ -28,6 +28,8 @@ public:
 
 signals:
     void enterPressed();
+    void tabPressed();
+    void keyPressed();
 
 public slots:
 
