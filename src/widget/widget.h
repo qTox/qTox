@@ -112,7 +112,7 @@ private slots:
     void playRingtone();
     void onIconClick();
     void onUserAway();
-    void getPassword(QString info);
+    void getPassword(QString info, int passtype);
 
 private:
     void hideMainForms();

@@ -24,7 +24,7 @@
 #include <QDebug>
 #include <QSqlError>
 
-qint64 EncryptedDb::plainChunkSize = 1024;
+qint64 EncryptedDb::plainChunkSize = 4096;
 qint64 EncryptedDb::encryptedChunkSize = EncryptedDb::plainChunkSize + tox_pass_encryption_extra_length();
 
 EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
@@ -50,7 +50,8 @@ EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
 
 EncryptedDb::~EncryptedDb()
 {
-    encrFile.close(); // what if program is killed without being able to clean up?
+    encrFile.close(); // Q: what if program is killed without being able to clean up?
+                      // A: cleanup isn't necessary, everything handled int appendToEncrypted(..) function
 }
 
 QSqlQuery EncryptedDb::exec(const QString &query)
@@ -70,7 +71,7 @@ bool EncryptedDb::pullFileContent()
     while (!encrFile.atEnd())
     {
         QByteArray encrChunk = encrFile.read(encryptedChunkSize);
-        buffer = Core::getInstance()->decryptData(encrChunk);
+        buffer = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
         if (buffer.size() > 0)
         {
             fileContent += buffer;
@@ -129,7 +130,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
     {
         QByteArray filledChunk = buffer.left(plainChunkSize);
         encrFile.seek(chunkPosition * encryptedChunkSize);
-        QByteArray encr = Core::getInstance()->encryptData(filledChunk);
+        QByteArray encr = Core::getInstance()->encryptData(filledChunk, Core::ptHistory);
         if (encr.size() > 0)
         {
             encrFile.write(encr);
@@ -140,7 +141,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
     }
     encrFile.seek(chunkPosition * encryptedChunkSize);
 
-    QByteArray encr = Core::getInstance()->encryptData(buffer);
+    QByteArray encr = Core::getInstance()->encryptData(buffer, Core::ptHistory);
     if (encr.size() > 0)
     {
         encrFile.write(encr);
@@ -157,7 +158,7 @@ bool EncryptedDb::check(const QString &fname)
     if (file.size() > 0)
     {
         QByteArray encrChunk = file.read(encryptedChunkSize);
-        QByteArray buf = Core::getInstance()->decryptData(encrChunk);
+        QByteArray buf = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
         if (buf.size() == 0)
         {
             state = false;

@@ -65,7 +65,7 @@ void PrivacyForm::onEncryptLogsUpdated()
 
     if (encrytionState)
     {
-        if (!Core::getInstance()->isPasswordSet())
+        if (!Core::getInstance()->isPasswordSet(Core::ptHistory))
         {
             SetPasswordDialog dialog;
             if (dialog.exec())
@@ -74,10 +74,10 @@ void PrivacyForm::onEncryptLogsUpdated()
                 if (pswd.size() == 0)
                     encrytionState = false;
 
-                Core::getInstance()->setPassword(pswd);
+                Core::getInstance()->setPassword(pswd, Core::ptHistory);
             } else {
                 encrytionState = false;
-                Core::getInstance()->clearPassword();
+                Core::getInstance()->clearPassword(Core::ptHistory);
             }
         }
     }
@@ -100,8 +100,8 @@ void PrivacyForm::onEncryptLogsUpdated()
     if (encrytionState)
         HistoryKeeper::resetInstance();
 
-    if (!Settings::getInstance().getEncryptLogs() && !Settings::getInstance().getEncryptTox())
-        Core::getInstance()->clearPassword();
+    if (!Settings::getInstance().getEncryptLogs())
+        Core::getInstance()->clearPassword(Core::ptHistory);
 }
 
 void PrivacyForm::onEncryptToxUpdated()
@@ -110,7 +110,7 @@ void PrivacyForm::onEncryptToxUpdated()
 
     if (encrytionState)
     {
-        if (!Core::getInstance()->isPasswordSet())
+        if (!Core::getInstance()->isPasswordSet(Core::ptMain))
         {
             SetPasswordDialog dialog;
             if (dialog.exec())
@@ -119,10 +119,10 @@ void PrivacyForm::onEncryptToxUpdated()
                 if (pswd.size() == 0)
                     encrytionState = false;
 
-                Core::getInstance()->setPassword(pswd);
+                Core::getInstance()->setPassword(pswd, Core::ptMain);
             } else {
                 encrytionState = false;
-                Core::getInstance()->clearPassword();
+                Core::getInstance()->clearPassword(Core::ptMain);
             }
         }
     }
@@ -130,6 +130,6 @@ void PrivacyForm::onEncryptToxUpdated()
     bodyUI->cbEncryptTox->setChecked(encrytionState);
     Settings::getInstance().setEncryptTox(encrytionState);
 
-    if (!Settings::getInstance().getEncryptLogs() && !Settings::getInstance().getEncryptTox())
-        Core::getInstance()->clearPassword();
+    if (!Settings::getInstance().getEncryptTox())
+        Core::getInstance()->clearPassword(Core::ptMain);
 }

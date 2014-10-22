@@ -39,8 +39,9 @@ public:
 
     static HistoryKeeper* getInstance();
     static void resetInstance();
-    static bool checkPassword();
+
     static QString getHistoryPath();
+    static bool checkPassword();
     static void renameHistory(QString from, QString to);
 
     void addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);

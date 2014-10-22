@@ -134,6 +134,7 @@ Widget::Widget(QWidget *parent)
     qRegisterMetaType<QPixmap>("QPixmap");
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
+    qRegisterMetaType<Core::PasswordType>("Core::PasswordType");
 
     QString profilePath = detectProfile();
     coreThread = new QThread(this);
@@ -911,15 +912,16 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         g->chatForm->addSystemInfoMessage("Message failed to send", "red", QDateTime::currentDateTime());
 }
 
-void Widget::getPassword(QString info)
+void Widget::getPassword(QString info, int passtype)
 {
+    Core::PasswordType pt = static_cast<Core::PasswordType>(passtype);
     InputPasswordDialog dialog(info);
     if (dialog.exec())
     {
         QString pswd = dialog.getPassword();
         if (pswd.isEmpty())
-            core->clearPassword();
+            core->clearPassword(pt);
         else
-            core->setPassword(pswd);
+            core->setPassword(pswd, pt);
     }
 }
