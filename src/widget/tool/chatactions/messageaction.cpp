@@ -65,7 +65,7 @@ QString MessageAction::getMessage(QString div)
     for (QString& s : messageLines)
     {
         if (QRegExp("^[ ]*&gt;.*").exactMatch(s))
-            message_ += "<span class=quote>" + s.right(s.length()-4) + "</span><br/>";
+            message_ += "<span class=quote>" + s + "</span><br/>";
         else
             message_ += s + "<br/>";
     }
