@@ -36,7 +36,10 @@ Camera::Camera()
     connect(workerThread, &QThread::started, worker, &CameraWorker::onStart);
     connect(workerThread, &QThread::finished, worker, &CameraWorker::deleteLater);
     connect(worker, &CameraWorker::newFrameAvailable, this, &Camera::onNewFrameAvailable);
-    connect(worker, &CameraWorker::resProbingFinished, this, &Camera::onResProbingFinished);
+
+    connect(worker, &CameraWorker::resProbingFinished, this, &Camera::resolutionProbingFinished);
+    connect(worker, &CameraWorker::propProbingFinished, this, [=](int prop, double val) { emit propProbingFinished(Prop(prop), val); } );
+
     workerThread->start();
 }
 
@@ -48,27 +51,27 @@ Camera::~Camera()
 
 void Camera::subscribe()
 {
-    if (needsInit)
-    {
-        worker->probeResolutions();
-        needsInit = false;
-    }
-
-    if (refcount <= 0)
+    if (refcount++ <= 0)
         worker->resume();
-
-    refcount++;
 }
 
 void Camera::unsubscribe()
 {
-    refcount--;
-
-    if (refcount <= 0)
+    if (--refcount <= 0)
     {
         worker->suspend();
         refcount = 0;
     }
+}
+
+void Camera::probeProp(Camera::Prop prop)
+{
+    worker->probeProp(int(prop));
+}
+
+void Camera::probeResolutions()
+{
+    worker->probeResolutions();
 }
 
 vpx_image Camera::getLastVPXImage()
@@ -115,75 +118,25 @@ vpx_image Camera::getLastVPXImage()
     return img;
 }
 
-QList<QSize> Camera::getSupportedResolutions()
-{
-    return resolutions;
-}
-
-QSize Camera::getBestVideoMode()
-{
-    int bestScore = 0;
-    QSize bestRes;
-
-    for (QSize res : getSupportedResolutions())
-    {
-        int score = res.width() * res.height();
-
-        if (score > bestScore)
-        {
-            bestScore = score;
-            bestRes = res;
-        }
-    }
-
-    return bestRes;
-}
-
 void Camera::setResolution(QSize res)
 {
     worker->setProp(CV_CAP_PROP_FRAME_WIDTH, res.width());
     worker->setProp(CV_CAP_PROP_FRAME_HEIGHT, res.height());
 }
 
-QSize Camera::getResolution()
+QSize Camera::getCurrentResolution()
 {
     return QSize(worker->getProp(CV_CAP_PROP_FRAME_WIDTH), worker->getProp(CV_CAP_PROP_FRAME_HEIGHT));
 }
 
 void Camera::setProp(Camera::Prop prop, double val)
 {
-    switch (prop)
-    {
-    case BRIGHTNESS:
-        worker->setProp(CV_CAP_PROP_BRIGHTNESS, val);
-        break;
-    case SATURATION:
-        worker->setProp(CV_CAP_PROP_SATURATION, val);
-        break;
-    case CONTRAST:
-        worker->setProp(CV_CAP_PROP_CONTRAST, val);
-        break;
-    case HUE:
-        worker->setProp(CV_CAP_PROP_HUE, val);
-        break;
-    }
+    worker->setProp(int(prop), val);
 }
 
 double Camera::getProp(Camera::Prop prop)
 {
-    switch (prop)
-    {
-    case BRIGHTNESS:
-        return worker->getProp(CV_CAP_PROP_BRIGHTNESS);
-    case SATURATION:
-        return worker->getProp(CV_CAP_PROP_SATURATION);
-    case CONTRAST:
-        return worker->getProp(CV_CAP_PROP_CONTRAST);
-    case HUE:
-        return worker->getProp(CV_CAP_PROP_HUE);
-    }
-
-    return 0.0;
+    return worker->getProp(int(prop));
 }
 
 void Camera::onNewFrameAvailable(const VideoFrame frame)
@@ -193,11 +146,6 @@ void Camera::onNewFrameAvailable(const VideoFrame frame)
     mutex.lock();
     currFrame = frame;
     mutex.unlock();
-}
-
-void Camera::onResProbingFinished(QList<QSize> res)
-{
-    resolutions = res;
 }
 
 Camera* Camera::getInstance()

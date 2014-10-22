@@ -40,21 +40,24 @@ public:
     void resume();
     void setProp(int prop, double val);
     double getProp(int prop); // blocking call!
-    void probeResolutions();
 
 public slots:
     void onStart();
+    void probeProp(int prop);
+    void probeResolutions();
 
 signals:
     void started();
     void newFrameAvailable(const VideoFrame frame);
     void resProbingFinished(QList<QSize> res);
+    void propProbingFinished(int prop, double val);
 
 private slots:
     void _suspend();
     void _resume();
     void _setProp(int prop, double val);
     double _getProp(int prop);
+    void _probeResolutions();
 
 private:
     void applyProps();

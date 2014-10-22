@@ -130,9 +130,13 @@ void VideoSurface::paintGL()
     VideoFrame currFrame = frame;
     mutex.unlock();
 
-    if (res != currFrame.resolution)
+    if (res != currFrame.resolution && currFrame.resolution.isValid())
     {
         res = currFrame.resolution;
+
+        // delete old texture
+        if (textureId != 0)
+            glDeleteTextures(1, &textureId);
 
         // a texture used to render the pbo (has the match the pixelformat of the source)
         glGenTextures(1,&textureId);
@@ -148,7 +152,7 @@ void VideoSurface::paintGL()
 
         if (pboAllocSize != currFrame.frameData.size())
         {
-            qDebug() << "VideoSurface: Resize pbo " << currFrame.frameData.size() << "bytes (before" << pboAllocSize << ")";
+            qDebug() << "VideoSurface: Resize pbo " << currFrame.frameData.size() << "(" << currFrame.resolution << ")" << "bytes (before" << pboAllocSize << ")";
 
             pbo[0]->bind();
             pbo[0]->allocate(currFrame.frameData.size());

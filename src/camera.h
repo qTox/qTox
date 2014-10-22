@@ -36,11 +36,13 @@ class Camera : public VideoSource
 {
     Q_OBJECT
 public:
-    enum Prop {
-        BRIGHTNESS,
-        SATURATION,
-        CONTRAST,
-        HUE,
+    enum Prop : int {
+        BRIGHTNESS = CV_CAP_PROP_BRIGHTNESS,
+        SATURATION = CV_CAP_PROP_SATURATION,
+        CONTRAST = CV_CAP_PROP_CONTRAST,
+        HUE = CV_CAP_PROP_HUE,
+        WIDTH = CV_CAP_PROP_FRAME_WIDTH,
+        HEIGHT = CV_CAP_PROP_FRAME_HEIGHT,
     };
 
     ~Camera();
@@ -48,18 +50,22 @@ public:
     static Camera* getInstance(); ///< Returns the global widget's Camera instance
     vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
 
-    QList<QSize> getSupportedResolutions();
-    QSize getBestVideoMode();
-
     void setResolution(QSize res);
-    QSize getResolution();
+    QSize getCurrentResolution();
 
     void setProp(Prop prop, double val);
     double getProp(Prop prop);
 
+    void probeProp(Prop prop);
+    void probeResolutions();
+
     // VideoSource interface
     virtual void subscribe();
     virtual void unsubscribe();
+
+signals:
+    void resolutionProbingFinished(QList<QSize> res);
+    void propProbingFinished(Prop prop, double val);
 
 protected:
     Camera();
@@ -79,7 +85,6 @@ private:
 
 private slots:
     void onNewFrameAvailable(const VideoFrame frame);
-    void onResProbingFinished(QList<QSize> res);
 
 };
 
