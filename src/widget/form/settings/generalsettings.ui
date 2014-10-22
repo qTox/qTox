@@ -28,6 +28,9 @@
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
      <widget class="QWidget" name="scrollAreaWidgetContents_2">
       <property name="geometry">
        <rect>
@@ -37,7 +40,13 @@
         <height>627</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
+       <property name="spacing">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="generalGroup">
          <property name="title">
@@ -262,7 +271,7 @@
          </layout>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="connectionGroup">
          <property name="title">
           <string>Connection Settings</string>
@@ -336,10 +345,6 @@
         </widget>
        </item>
       </layout>
-      <zorder>generalGroup</zorder>
-      <zorder>generalGroup</zorder>
-      <zorder>themeGroup</zorder>
-      <zorder>connectionGroup</zorder>
      </widget>
     </widget>
    </item>

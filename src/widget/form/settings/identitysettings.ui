@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>439</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,145 +15,157 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QGroupBox" name="publicGroup">
-     <property name="title">
-      <string>Public Information</string>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QLabel" name="userNameLabel">
-        <property name="text">
-         <string>Name</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="userName"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="statusMessageLabel">
-        <property name="text">
-         <string>Status</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="statusMessage"/>
-      </item>
-     </layout>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>419</width>
+        <height>452</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
+       <property name="spacing">
+        <number>9</number>
+       </property>
+       <item alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="publicGroup">
+         <property name="title">
+          <string>Public Information</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="userNameLabel">
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="userName"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="statusMessageLabel">
+            <property name="text">
+             <string>Status</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="statusMessage"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="toxGroup">
+         <property name="title">
+          <string>Tox ID</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="CroppingLabel" name="toxIdLabel">
+            <property name="text">
+             <string>Your Tox ID (click to copy)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="profilesGroup">
+         <property name="title">
+          <string>Profiles</string>
+         </property>
+         <layout class="QVBoxLayout" name="profilesVLayout">
+          <item>
+           <layout class="QHBoxLayout" name="profilesComboLayout">
+            <item>
+             <widget class="QLabel" name="profilesLabel">
+              <property name="text">
+               <string>Available profiles:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="profiles">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="profilesButtonsLayout">
+            <item>
+             <widget class="QPushButton" name="loadButton">
+              <property name="text">
+               <string comment="load profile button">Load</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="renameButton">
+              <property name="text">
+               <string comment="rename profile button">Rename</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="exportButton">
+              <property name="text">
+               <string comment="export profile button">Export</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deleteButton">
+              <property name="toolTip">
+               <string comment="delete profile button tooltip">This is useful to remain safe on public computers</string>
+              </property>
+              <property name="text">
+               <string comment="delete profile button">Delete</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="profilesButtonsLayout2">
+            <item>
+             <widget class="QPushButton" name="importButton">
+              <property name="text">
+               <string comment="import profile button">Import a profile</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="newButton">
+              <property name="text">
+               <string comment="new profile button">New Tox ID</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="toxGroup">
-     <property name="title">
-      <string>Tox ID</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="CroppingLabel" name="toxIdLabel">
-        <property name="text">
-         <string>Your Tox ID (click to copy)</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="profilesGroup">
-     <property name="title">
-      <string>Profiles</string>
-     </property>
-     <layout class="QVBoxLayout" name="profilesVLayout">
-      <item>
-       <layout class="QHBoxLayout" name="profilesComboLayout">
-        <item>
-         <widget class="QLabel" name="profilesLabel">
-          <property name="text">
-           <string>Available profiles:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="profiles">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="profilesButtonsLayout">
-        <item>
-         <widget class="QPushButton" name="loadButton">
-          <property name="text">
-           <string comment="load profile button">Load</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="renameButton">
-          <property name="text">
-           <string comment="rename profile button">Rename</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="exportButton">
-          <property name="text">
-           <string comment="export profile button">Export</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="deleteButton">
-          <property name="text">
-           <string comment="delete profile button">Delete</string>
-          </property>
-          <property name="toolTip">
-           <string comment="delete profile button tooltip">This is useful to remain safe on public computers</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="profilesButtonsLayout2">
-        <item>
-         <widget class="QPushButton" name="importButton">
-          <property name="text">
-           <string comment="import profile button">Import a profile</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="newButton">
-          <property name="text">
-           <string comment="new profile button">New Tox ID</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
