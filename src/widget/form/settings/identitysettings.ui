@@ -75,7 +75,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="profiles" />
+         <widget class="QComboBox" name="profiles">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -115,11 +122,22 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="importButton">
-        <property name="text">
-         <string comment="import profile button">Import a profile</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="profilesButtonsLayout2">
+        <item>
+         <widget class="QPushButton" name="importButton">
+          <property name="text">
+           <string comment="import profile button">Import a profile</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="newButton">
+          <property name="text">
+           <string comment="new profile button">New Tox ID</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

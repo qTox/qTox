@@ -2,6 +2,7 @@
 #define COREAV_H
 
 #include <tox/toxav.h>
+#include "netvideosource.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -24,6 +25,7 @@ public:
     bool active;
     bool muteMic;
     ALuint alSource;
+    NetVideoSource videoSource;
 };
 
 #endif // COREAV_H

@@ -234,6 +234,12 @@ void Core::start()
         }
         loadPath = "";
     }
+    else // new ID
+    {
+        setStatusMessage(tr("Toxing on qTox")); // this also solves the not updating issue
+        setUsername(tr("qTox User"));
+        Widget::getInstance()->onSettingsClicked(); // update ui with new profile (im worried about threading, but it seems to work)
+    }
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
@@ -266,10 +272,6 @@ void Core::start()
 
     toxav_register_audio_recv_callback(toxav, playCallAudio, this);
     toxav_register_video_recv_callback(toxav, playCallVideo, this);
-
-    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
-    tox_get_address(tox, friendAddress);
-    emit friendAddressGenerated(CFriendAddress::toString(friendAddress));
 
     QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
     if (!pic.isNull() && !pic.size().isEmpty())
@@ -1200,12 +1202,16 @@ bool Core::loadConfiguration(QString path)
 
     // set GUI with user and statusmsg
     QString name = getUsername();
-    if (name != "")
+    if (!name.isEmpty())
         emit usernameSet(name);
     
     QString msg = getStatusMessage();
-    if (msg != "")
+    if (!msg.isEmpty())
         emit statusMessageSet(msg);
+
+    QString id = getSelfId().toString();
+    if (!id.isEmpty())
+        emit idSet(id);
 
     loadFriends();
     return true;
@@ -1293,10 +1299,7 @@ void Core::saveConfiguration(const QString& path)
 void Core::switchConfiguration(const QString& profile)
 {
     if (profile.isEmpty())
-    {
-        qWarning() << "Core: got null profile to switch to, not switching";
-        return;
-    }
+        qDebug() << "Core: creating new Id";
     else
         qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
     
@@ -1313,8 +1316,11 @@ void Core::switchConfiguration(const QString& profile)
     }
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
     emit blockingClearContacts(); // we need this to block, but signals are required for thread safety
-    
-    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
+
+    if (profile.isEmpty())
+        loadPath = "";
+    else
+        loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
     Settings::getInstance().setCurrentProfile(profile); 
     HistoryKeeper::getInstance()->resetInstance();
 

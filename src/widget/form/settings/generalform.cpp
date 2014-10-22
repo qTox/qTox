@@ -23,8 +23,11 @@
 #include <QMessageBox>
 #include <QStyleFactory>
 
+static QStringList locales = {"de", "en", "fr", "it", "mannol", "pirate", "pl", "ru", "fi", "uk"};
+static QStringList langs = {"Deustch", "English", "Français", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Українська"};  
+
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
-    GenericForm(tr("General Settings"), QPixmap(":/img/settings/general.png"))
+    GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
 {
     parent = myParent;    
     
@@ -32,10 +35,14 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->setupUi(this);
     
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
-    bodyUI->cbUseTranslations->setChecked(Settings::getInstance().getUseTranslations());
+    for (int i = 0; i < langs.size(); i++)
+        bodyUI->transComboBox->insertItem(i, langs[i]);
+    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
-    bodyUI->statusChangesCheckbox->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
+    bodyUI->closeToTray->setChecked(Settings::getInstance().getCloseToTray());
+    bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
+    bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
 
     for (auto entry : SmileyPack::listSmileyPacks())
     {
@@ -64,10 +71,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     onUseProxyUpdated();
 
     connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
-    connect(bodyUI->cbUseTranslations, &QCheckBox::stateChanged, this, &GeneralForm::onUseTranslationUpdated);
+    connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
-    connect(bodyUI->statusChangesCheckbox, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
+    connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
+    connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);    
+    connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     // new syntax can't handle overloaded signals... (at least not in a pretty way)
     connect(bodyUI->cbUDPDisabled, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
@@ -88,9 +97,10 @@ void GeneralForm::onEnableIPv6Updated()
     Settings::getInstance().setEnableIPv6(bodyUI->cbEnableIPv6->isChecked());
 }
 
-void GeneralForm::onUseTranslationUpdated()
+void GeneralForm::onTranslationUpdated()
 {
-    Settings::getInstance().setUseTranslations(bodyUI->cbUseTranslations->isChecked());
+    Settings::getInstance().setTranslation(locales[bodyUI->transComboBox->currentIndex()]);
+    Widget::getInstance()->setTranslation();
 }
 
 void GeneralForm::onMakeToxPortableUpdated()
@@ -101,6 +111,16 @@ void GeneralForm::onMakeToxPortableUpdated()
 void GeneralForm::onSetAutostartInTray()
 {
     Settings::getInstance().setAutostartInTray(bodyUI->startInTray->isChecked());
+}
+
+void GeneralForm::onSetCloseToTray()
+{
+    Settings::getInstance().setCloseToTray(bodyUI->closeToTray->isChecked());
+}
+
+void GeneralForm::onSetMinimizeToTray()
+{
+    Settings::getInstance().setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
 }
 
 void GeneralForm::onStyleSelected(QString style)
@@ -119,7 +139,7 @@ void GeneralForm::onAutoAwayChanged()
 
 void GeneralForm::onSetStatusChange()
 {
-    Settings::getInstance().setStatusChangeNotificationEnabled(bodyUI->statusChangesCheckbox->isChecked());
+    Settings::getInstance().setStatusChangeNotificationEnabled(bodyUI->statusChanges->isChecked());
 }
 
 void GeneralForm::onSmileyBrowserIndexChanged(int index)

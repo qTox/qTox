@@ -32,9 +32,10 @@ public:
 
 private slots:
     void onEnableIPv6Updated();
-    void onUseTranslationUpdated();
+    void onTranslationUpdated();
     void onMakeToxPortableUpdated();
     void onSetAutostartInTray();
+    void onSetCloseToTray();    
     void onSmileyBrowserIndexChanged(int index);
     void onUDPUpdated();
     void onProxyAddrEdited();
@@ -43,6 +44,7 @@ private slots:
     void onStyleSelected(QString style);    
     void onSetStatusChange();
     void onAutoAwayChanged();
+    void onSetMinimizeToTray();
     
 
 private:

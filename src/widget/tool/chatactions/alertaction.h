@@ -14,36 +14,22 @@
     See the COPYING file for more details.
 */
 
-#ifndef EMOTICONSWIDGET_H
-#define EMOTICONSWIDGET_H
+#ifndef ALERTACTION_H
+#define ALERTACTION_H
 
-#include <QMenu>
-#include <QStackedWidget>
-#include <QVBoxLayout>
+#include "messageaction.h"
 
-class EmoticonsWidget : public QMenu
+class AlertAction : public MessageAction
 {
-    Q_OBJECT
 public:
-    explicit EmoticonsWidget(QWidget *parent = 0);
-
-signals:
-    void insertEmoticon(QString str);
-
-private slots:
-    void onSmileyClicked();
-    void onPageButtonClicked();
-
-protected:
-    virtual void mouseReleaseEvent(QMouseEvent *ev);
+    AlertAction(const QString &author, const QString &message, const QString& date);
+    virtual ~AlertAction(){;}
+    virtual QString getMessage();
+    //virtual QString getName(); only do the message for now; preferably would do the whole row
+    virtual void setup(QTextCursor cursor, QTextEdit*) override;
 
 private:
-    QStackedWidget stack;
-    QVBoxLayout layout;
-
-public:
-    virtual QSize sizeHint() const;
-
+    QString message;
 };
 
-#endif // EMOTICONSWIDGET_H
+#endif // MESSAGEACTION_H

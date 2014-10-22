@@ -38,8 +38,8 @@ span.quote {
 }
 
 div.green {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   margin-left: 0px;
   margin-right: 0px;
   color: @white;
@@ -48,8 +48,8 @@ div.green {
 }
 
 div.silver {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   margin-left: 0px;
   margin-right: 0px;
   color: @black;
@@ -58,13 +58,27 @@ div.silver {
 }
 
 div.red {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   margin-left: 0px;
   margin-right: 0px;
   color: @white;
   background-color: @red;
   font: @small;
+}
+
+div.alert {
+  margin-left: 0px;
+  margin-right: 0px;
+  color: @black;
+  background-color: @orange;
+  font: @big;
+}
+
+div.alert_name {
+  color: @black;
+  background-color: @orange;
+  font: @bigBold;
 }
 
 div.button {

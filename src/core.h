@@ -29,6 +29,7 @@ class Camera;
 class QTimer;
 class QString;
 class CString;
+class VideoSource;
 
 class Core : public QObject
 {
@@ -62,6 +63,7 @@ public:
     QString getStatusMessage();
     ToxID getSelfId();
 
+    VideoSource* getVideoSourceFromCall(int callNumber);
     void increaseVideoBusyness();
     void decreaseVideoBusyness();
 
@@ -130,8 +132,6 @@ signals:
     void friendAvatarChanged(int friendId, const QPixmap& pic);
     void friendAvatarRemoved(int friendId);
 
-    void friendAddressGenerated(const QString& friendAddress);
-
     void friendRemoved(int friendId);
 
     void friendLastSeenChanged(int friendId, const QDateTime& dateTime);
@@ -144,6 +144,7 @@ signals:
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
+    void idSet(const QString& id);
     void selfAvatarChanged(const QPixmap& pic);
 
     void messageSentResult(int friendId, const QString& message, int messageId);

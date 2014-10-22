@@ -18,8 +18,6 @@
 #include "misc/settings.h"
 #include <QApplication>
 #include <QFontDatabase>
-#include <QTranslator>
-#include <QSystemTrayIcon>
 #include <QDebug>
 
 int main(int argc, char *argv[])
@@ -31,41 +29,14 @@ int main(int argc, char *argv[])
     // Windows platform plugins DLL hell fix
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
     a.addLibraryPath("platforms");
-
-    // Load translations
-    QTranslator translator;
-    if (Settings::getInstance().getUseTranslations())
-    {
-        QString locale = QLocale::system().name().section('_', 0, 0);
-        if (locale=="en" || translator.load(locale,":translations/"))
-            qDebug() << "Loaded translation "+locale;
-        else
-            qDebug() << "Error loading translation "+locale;
-        a.installTranslator(&translator);
-    }
+    
+    qDebug() << "built on: " << __TIME__ << __DATE__;
+    qDebug() << "commit: " << GIT_VERSION << "\n";
 
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
 
     Widget* w = Widget::getInstance();
-    if (QSystemTrayIcon::isSystemTrayAvailable() == false)
-    {
-        qWarning() << "No system tray detected!";
-        w->show();
-        }
-        else
-        {
-            QSystemTrayIcon *icon = new QSystemTrayIcon(w);
-            QObject::connect(icon,
-            SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-                            w,
-                            SLOT(onIconClick()));
-                            icon->setIcon(w->windowIcon());
-            icon->show();
-            if(Settings::getInstance().getAutostartInTray() == false)
-                w->show();
-    }
-
 
     int errorcode = a.exec();
 

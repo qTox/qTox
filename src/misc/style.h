@@ -37,6 +37,7 @@ public:
         MediumGreyLight,
         LightGrey,
         White,
+        Orange,
     };
 
     enum Font

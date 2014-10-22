@@ -18,6 +18,7 @@
 #define WIDGET_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 #include "form/addfriendform.h"
 #include "form/settingswidget.h"
 #include "form/settings/identityform.h"
@@ -41,6 +42,7 @@ class Camera;
 class FriendListWidget;
 class MaskablePixmapWidget;
 class QTimer;
+class QTranslator;
 
 class Widget : public QMainWindow
 {
@@ -59,10 +61,16 @@ public:
     bool getIsWindowMinimized();
     static QList<QString> searchProfiles();
     void clearContactsList();
-    void setIdleTimer(int minutes);    
+    void setIdleTimer(int minutes);
+    void setTranslation();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
+    virtual void changeEvent(QEvent *event);
+    
+
+public slots:
+    void onSettingsClicked();
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -80,7 +88,6 @@ private slots:
     void onAddClicked();
     void onGroupClicked();
     void onTransferClicked();
-    void onSettingsClicked();
     void onFailedToStartCore();
     void onBadProxyCore();
     void onAvatarClicked();
@@ -110,11 +117,12 @@ private slots:
     void onMessageSendResult(int friendId, const QString& message, int messageId);
     void onGroupSendResult(int groupId, const QString& message, int result);
     void playRingtone();
-    void onIconClick();
+    void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAway();
     void getPassword(QString info, int passtype);
 
 private:
+    void init();
     void hideMainForms();
     virtual bool event(QEvent * e);
     Group* createGroup(int groupId);
@@ -122,15 +130,21 @@ private:
     void removeGroup(Group* g);
     QString askProfiles();
     QString detectProfile();
+    QSystemTrayIcon *icon;
+    QMenu *trayMenu;
+    QAction *statusOnline,
+            *statusAway,
+            *statusBusy,
+            *actionQuit;
 
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
     Core* core;
     QThread* coreThread;
-    AddFriendForm friendForm;
+    AddFriendForm* addFriendForm;
     SettingsWidget* settingsWidget;
-    FilesForm filesForm;
+    FilesForm* filesForm;
     static Widget* instance;
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
@@ -138,6 +152,7 @@ private:
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
     QTimer* idleTimer;
+    QTranslator* translator;
 };
 
 #endif // WIDGET_H

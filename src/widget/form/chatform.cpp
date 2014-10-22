@@ -38,18 +38,20 @@
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/croppinglabel.h"
 #include "src/misc/style.h"
+#include "src/misc/settings.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
+    , audioInputFlag(false)
+    , callId(0)
 {
     nameLabel->setText(f->getName());
 
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 
     statusMessageLabel = new CroppingLabel();
+    statusMessageLabel->setObjectName("statusLabel");
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
-    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
-    statusMessageLabel->setPalette(pal);
 
     netcam = new NetCamView();
 
@@ -60,7 +62,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     menu.addAction(tr("Load History..."), this, SLOT(onLoadHistory()));
 
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
-    connect(Core::getInstance(), &Core::videoFrameReceived, netcam, &NetCamView::updateDisplay);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
@@ -109,24 +110,26 @@ void ChatForm::onSendTriggered()
 
 void ChatForm::onAttachClicked()
 {
-    QString path = QFileDialog::getOpenFileName(0,tr("Send a file"));
-    if (path.isEmpty())
+    QStringList paths = QFileDialog::getOpenFileNames(0,tr("Send a file"));
+    if (paths.isEmpty())
         return;
-
-    QFile file(path);
-    if (!file.exists() || !file.open(QIODevice::ReadOnly))
-        return;
-    if (file.isSequential())
+    for (QString path : paths)
     {
-        QMessageBox::critical(0, "Bad Idea", "You're trying to send a special (sequential) file, that's not going to work!");
-        return;
+        QFile file(path);
+        if (!file.exists() || !file.open(QIODevice::ReadOnly))
+            continue;
+        if (file.isSequential())
+        {
+            QMessageBox::critical(0, "Bad Idea", "You're trying to send a special (sequential) file, that's not going to work!");
+            file.close();
+            continue;
+        }
+        long long filesize = file.size();
         file.close();
-    }
-    long long filesize = file.size();
-    file.close();
-    QFileInfo fi(path);
+        QFileInfo fi(path);
 
-    emit sendFile(f->friendId, fi.fileName(), path, filesize);
+        emit sendFile(f->friendId, fi.fileName(), path, filesize);
+    }
 }
 
 void ChatForm::startFileSend(ToxFile file)
@@ -183,6 +186,10 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     previousName = f->getName();
 
     chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), false));
+
+    if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->friendId)).isEmpty()
+     || !Settings::getInstance().getGlobalAutoAcceptDir().isEmpty())
+        fileTrans->pressFromHtml("btnB");
 }
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
@@ -235,7 +242,8 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
         videoButton->setObjectName("red");
         videoButton->style()->polish(videoButton);
         connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
-        netcam->show();
+
+        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getName());
     }
     else
     {
@@ -263,6 +271,7 @@ void ChatForm::onAvCancel(int FriendId, int)
     videoButton->style()->polish(videoButton);
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+
     netcam->hide();
 }
 
@@ -282,6 +291,7 @@ void ChatForm::onAvEnd(int FriendId, int)
     videoButton->style()->polish(videoButton);
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+
     netcam->hide();
 }
 
@@ -311,7 +321,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
     }
 }
 
-void ChatForm::onAvStarting(int FriendId, int, bool video)
+void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId)
         return;
@@ -325,7 +335,8 @@ void ChatForm::onAvStarting(int FriendId, int, bool video)
         videoButton->setObjectName("red");
         videoButton->style()->polish(videoButton);
         connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
-        netcam->show();
+
+        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getName());
     }
     else
     {
@@ -355,6 +366,7 @@ void ChatForm::onAvEnding(int FriendId, int)
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+
     netcam->hide();
 }
 
@@ -376,6 +388,7 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+
     netcam->hide();
 }
 
@@ -397,14 +410,18 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+
     netcam->hide();
 }
 
-void ChatForm::onAvMediaChange(int, int, bool video)
+void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 {
+    if (FriendId != f->friendId || CallId != callId)
+        return;
+
     if (video)
     {
-        netcam->show();
+        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getName());
     }
     else
     {
@@ -457,6 +474,7 @@ void ChatForm::onCancelCallTriggered()
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+
     netcam->hide();
     emit cancelCall(callId, f->friendId);
 }
@@ -467,15 +485,11 @@ void ChatForm::onMicMuteToggle()
     {
         emit micMuteToggle(callId);
         if (micButton->objectName() == "red")
-        {
             micButton->setObjectName("green");
-            micButton->style()->polish(micButton);
-        }
         else
-        {
             micButton->setObjectName("red");
-            micButton->style()->polish(micButton);
-        }
+
+        Style::repolish(micButton);
     }
 }
 

@@ -15,6 +15,7 @@
 */
 
 #include "groupchatform.h"
+#include "tabcompleter.h"
 #include "src/group.h"
 #include "src/widget/groupwidget.h"
 #include "src/widget/tool/chattextedit.h"
@@ -32,6 +33,9 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 {
     nusersLabel = new QLabel();
     namesList = new QLabel();
+    namesList->setObjectName("peersLabel");
+
+    tabber = new TabCompleter(msgEdit, group);
 
     fileButton->setEnabled(false);
     callButton->setVisible(false);
@@ -39,24 +43,15 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     volButton->setVisible(false);
     micButton->setVisible(false);
 
-    QFont small;
-    small.setPixelSize(10);
-
     nameLabel->setText(group->widget->getName());
 
     nusersLabel->setFont(Style::getFont(Style::Medium));
     nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
-    QPalette pal; pal.setColor(QPalette::WindowText, Style::getColor(Style::MediumGrey));
-    nusersLabel->setPalette(pal);
+    nusersLabel->setObjectName("statusLabel");
 
     avatar->setPixmap(QPixmap(":/img/group_dark.png"), Qt::transparent);
 
-    QString names;
-    for (QString& s : group->peers)
-        names.append(s+", ");
-    names.chop(2);
-    namesList->setText(names);
-    namesList->setFont(small);
+    namesList->setText(QStringList(group->peers.values()).join(", "));
 
     msgEdit->setObjectName("group");
 
@@ -68,6 +63,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
+    connect(msgEdit, &ChatTextEdit::tabPressed, tabber, &TabCompleter::complete);
+    connect(msgEdit, &ChatTextEdit::keyPressed, tabber, &TabCompleter::reset);
 
     setAcceptDrops(true);
 }
@@ -84,11 +81,7 @@ void GroupChatForm::onSendTriggered()
 void GroupChatForm::onUserListChanged()
 {
     nusersLabel->setText(tr("%1 users in chat").arg(group->nPeers));
-    QString names;
-    for (QString& s : group->peers)
-        names.append(s+", ");
-    names.chop(2);
-    namesList->setText(names);
+    namesList->setText(QStringList(group->peers.values()).join(", "));
 }
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)

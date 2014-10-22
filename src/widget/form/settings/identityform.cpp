@@ -22,6 +22,7 @@
 #include "src/widget/croppinglabel.h"
 #include "src/widget/widget.h"
 #include "src/historykeeper.h"
+#include "src/misc/style.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QApplication>
@@ -31,28 +32,22 @@
 #include <QMessageBox>
 
 IdentityForm::IdentityForm() :
-    GenericForm(tr("Your identity"), QPixmap(":/img/settings/identity.png"))
+    GenericForm(tr("Identity"), QPixmap(":/img/settings/identity.png"))
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
 
     // tox
     toxId = new ClickableTE();
-    QFont small;
-    small.setPixelSize(13);
-    small.setKerning(false);
-
-//    toxId->setTextInteractionFlags(Qt::TextSelectableByMouse);
     toxId->setReadOnly(true);
     toxId->setFrame(false);
-//    toxId->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    toxId->setFixedHeight(toxId->document()->size().height()*2);
-    toxId->setFont(small);
+    toxId->setFont(Style::getFont(Style::Small));
     
     bodyUI->toxGroup->layout()->addWidget(toxId);
     
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
+    connect(Core::getInstance(), &Core::idSet, this, &IdentityForm::setToxId);
     connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
     connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
     connect(bodyUI->loadButton, &QPushButton::clicked, this, &IdentityForm::onLoadClicked);
@@ -60,6 +55,10 @@ IdentityForm::IdentityForm() :
     connect(bodyUI->exportButton, &QPushButton::clicked, this, &IdentityForm::onExportClicked);
     connect(bodyUI->deleteButton, &QPushButton::clicked, this, &IdentityForm::onDeleteClicked);
     connect(bodyUI->importButton, &QPushButton::clicked, this, &IdentityForm::onImportClicked);
+    connect(bodyUI->newButton, &QPushButton::clicked, this, &IdentityForm::onNewClicked);
+
+    connect(Core::getInstance(), &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
+    connect(Core::getInstance(), &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
 }
 
 IdentityForm::~IdentityForm()
@@ -95,16 +94,15 @@ void IdentityForm::present()
     QString current = Settings::getInstance().getCurrentProfile();
     if (current != "")
         bodyUI->profiles->setCurrentText(current);
+
+    bodyUI->userName->setText(Core::getInstance()->getUsername());
+    bodyUI->statusMessage->setText(Core::getInstance()->getStatusMessage());
 }
 
-void IdentityForm::setUserName(const QString &name)
+void IdentityForm::setToxId(const QString& id)
 {
-    bodyUI->userName->setText(name);
-}
-
-void IdentityForm::setStatusMessage(const QString &msg)
-{
-    bodyUI->statusMessage->setText(msg);
+    toxId->setText(id);
+    toxId->setCursorPosition(0);
 }
 
 void IdentityForm::onLoadClicked()
@@ -124,16 +122,23 @@ void IdentityForm::onRenameClicked()
 {
     QString cur = bodyUI->profiles->currentText();
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
-    QString name = QInputDialog::getText(this, title, title+":");
-    if (name != "")
+    do
     {
+        QString name = QInputDialog::getText(this, title, title+":");
+        if (name.isEmpty()) break;
         name = Core::sanitize(name);
         QDir dir(Settings::getSettingsDirPath());
-        QFile::rename(dir.filePath(cur+Core::TOX_EXT), dir.filePath(name+Core::TOX_EXT));
-        bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
-        HistoryKeeper::renameHistory(cur, name);
-        Settings::getInstance().setCurrentProfile(name);
-    }
+        QString file = dir.filePath(name+Core::TOX_EXT);
+        if (!QFile::exists(file) || checkContinue(tr("Profile already exists", "rename confirm title"),
+                tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
+        {
+            QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
+            bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
+            HistoryKeeper::renameHistory(cur, name);
+            Settings::getInstance().setCurrentProfile(name);
+            break;
+        }
+    } while (true);
 }
 
 void IdentityForm::onExportClicked()
@@ -154,9 +159,8 @@ void IdentityForm::onDeleteClicked()
     }
     else
     {        
-        QMessageBox::StandardButton resp = QMessageBox::question(this,
-            tr("Deletion imminent!","deletion confirmation title"), tr("Are you sure you want to delete this profile?","deletion confirmation text"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-        if (resp == QMessageBox::Yes)
+        if (checkContinue(tr("Deletion imminent!","deletion confirmation title"),
+                          tr("Are you sure you want to delete this profile?","deletion confirmation text")))
         {
             QFile::remove(QDir(Settings::getSettingsDirPath()).filePath(bodyUI->profiles->currentText()+Core::TOX_EXT));
             bodyUI->profiles->removeItem(bodyUI->profiles->currentIndex());
@@ -172,6 +176,7 @@ void IdentityForm::onImportClicked()
         return;
 
     QFileInfo info(path);
+    QString profile = info.completeBaseName();
 
     if (info.suffix() != "tox")
     {
@@ -179,8 +184,22 @@ void IdentityForm::onImportClicked()
         return;
     }
 
-    QString profile = info.completeBaseName();
+    if (info.exists() && !checkContinue(tr("Profile already exists", "import confirm title"),
+            tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
+        return;
+
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
     QFile::copy(path, profilePath);
     bodyUI->profiles->addItem(profile);
+}
+
+void IdentityForm::onNewClicked()
+{
+    emit Widget::getInstance()->changeProfile(QString());
+}
+
+bool IdentityForm::checkContinue(const QString& title, const QString& msg)
+{
+    QMessageBox::StandardButton resp = QMessageBox::question(this, title, msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    return resp == QMessageBox::Yes;
 }

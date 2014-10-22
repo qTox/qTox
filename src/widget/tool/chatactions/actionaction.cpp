@@ -15,11 +15,10 @@
 */
 
 #include "actionaction.h"
-#include "src/misc/smileypack.h"
+#include <QDebug>
 
-ActionAction::ActionAction(const QString &author, const QString &message, const QString &date, const bool& me) :
-    ChatAction(me, author, date),
-    message(message)
+ActionAction::ActionAction(const QString &author, QString message, const QString &date, const bool& me) :
+    MessageAction(author, author+" "+message, date, me)
 {
 }
 
@@ -30,24 +29,5 @@ QString ActionAction::getName()
 
 QString ActionAction::getMessage()
 {
-    QString message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
-
-    // detect urls
-    QRegExp exp("(www\\.|http[s]?:\\/\\/|ftp:\\/\\/)\\S+");
-    int offset = 0;
-    while ((offset = exp.indexIn(message_, offset)) != -1)
-    {
-        QString url = exp.cap();
-
-        // add scheme if not specified
-        if (exp.cap(1) == "www.")
-            url.prepend("http://");
-
-        QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
-        message_.replace(offset, exp.cap().length(), htmledUrl);
-
-        offset += htmledUrl.length();
-    }
-
-        return QString("<div class=action>%1 %2</div>").arg(name).arg(message_);
+    return MessageAction::getMessage("action");
 }

@@ -49,6 +49,9 @@ TRANSLATIONS = translations/de.ts \
 
 RESOURCES += res.qrc
 
+GIT_VERSION = $$system(git rev-parse HEAD)
+DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
+
 contains(JENKINS,YES) {
 	INCLUDEPATH += ./libs/include/
 } else {
@@ -62,6 +65,7 @@ win32 {
     LIBS += -lz -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32
 } else {
     macx {
+        ICON = img/icons/qtox.icns
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
@@ -70,7 +74,7 @@ win32 {
             INSTALLS += target
             LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
 	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
-	    LIBS += -Wl,-Bdynamic -ltbb -lv4l1 -lv4l2 -lgnutls -lrtmp -lgnutls -lavformat -lavcodec -lavutil -lavfilter -lswscale -lusb-1.0
+	    LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
 
         } else {
             LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
@@ -116,7 +120,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/friendlist.h \
     src/misc/cdata.h \
     src/misc/cstring.h \
-    src/widget/camera.h \
+    src/camera.h \
     src/widget/netcamview.h \
     src/misc/smileypack.h \
     src/widget/emoticonswidget.h \
@@ -136,6 +140,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/tool/chatactions/filetransferaction.h \
     src/widget/tool/chatactions/systemmessageaction.h \
     src/widget/tool/chatactions/actionaction.h \
+    src/widget/tool/chatactions/alertaction.h \
     src/widget/maskablepixmapwidget.h \
     src/videosource.h \
     src/cameraworker.h \
@@ -146,7 +151,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/misc/db/plaindb.h \
     src/misc/db/encrypteddb.h \
     src/widget/form/inputpassworddialog.h \
-    src/widget/form/setpassworddialog.h
+    src/widget/form/setpassworddialog.h \
+    src/widget/form/tabcompleter.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -172,7 +178,7 @@ SOURCES += \
     src/misc/settings.cpp \
     src/misc/cdata.cpp \
     src/misc/cstring.cpp \
-    src/widget/camera.cpp \
+    src/camera.cpp \
     src/widget/netcamview.cpp \
     src/misc/smileypack.cpp \
     src/widget/emoticonswidget.cpp \
@@ -191,6 +197,7 @@ SOURCES += \
     src/widget/tool/chatactions/filetransferaction.cpp \
     src/widget/tool/chatactions/systemmessageaction.cpp \
     src/widget/tool/chatactions/actionaction.cpp \
+    src/widget/tool/chatactions/alertaction.cpp \
     src/widget/maskablepixmapwidget.cpp \
     src/cameraworker.cpp \
     src/widget/videosurface.cpp \
@@ -200,4 +207,6 @@ SOURCES += \
     src/misc/db/plaindb.cpp \
     src/misc/db/encrypteddb.cpp \
     src/widget/form/inputpassworddialog.cpp \
-    src/widget/form/setpassworddialog.cpp
+    src/widget/form/setpassworddialog.cpp \
+    src/netvideosource.cpp \
+    src/widget/form/tabcompleter.cpp

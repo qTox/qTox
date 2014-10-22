@@ -15,19 +15,14 @@
 */
 
 #include "avform.h"
-#include "src/widget/camera.h"
+#include "src/camera.h"
 #include "ui_avsettings.h"
 
 AVForm::AVForm() :
-    GenericForm(tr("Audio/Video settings"), QPixmap(":/img/settings/av.png"))
+    GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png"))
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
-
-    //cam->setVideoMode(cam->getBestVideoMode());
-    camView = new VideoSurface(Camera::getInstance(), this);
-
-    bodyUI->CamViewLayout->addWidget(camView);
 }
 
 AVForm::~AVForm()
@@ -37,6 +32,8 @@ AVForm::~AVForm()
 
 void AVForm::present()
 {
+    bodyUI->CamVideoSurface->setSource(Camera::getInstance());
+
     bodyUI->videoModescomboBox->clear();
     QList<QSize> res = Camera::getInstance()->getSupportedResolutions();
     for (QSize r : res)
@@ -75,4 +72,9 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(const QString &arg1)
     int h = resStr[0].toInt();
 
     Camera::getInstance()->setResolution(QSize(w,h));
+}
+
+void AVForm::hideEvent(QHideEvent *)
+{
+    bodyUI->CamVideoSurface->setSource(nullptr);
 }

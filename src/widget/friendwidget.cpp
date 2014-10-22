@@ -25,12 +25,15 @@
 #include "maskablepixmapwidget.h"
 #include "croppinglabel.h"
 #include "src/misc/style.h"
+#include "src/misc/settings.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QDrag>
 #include <QMimeData>
 #include <QApplication>
 #include <QBitmap>
+#include <QFileDialog>
+#include <QDebug>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
@@ -44,9 +47,12 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
+    QString id = Core::getInstance()->getFriendAddress(friendId);
+    QString dir = Settings::getInstance().getAutoAcceptDir(id);
+    QString globalDir = Settings::getInstance().getGlobalAutoAcceptDir();
     QMenu menu;
+    QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
     QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
-    QMenu* inviteMenu = menu.addMenu(tr("Invite in group","Menu to invite a friend in a groupchat"));
     QMap<QAction*, Group*> groupActions;
     for (Group* group : GroupList::groupList)
     {
@@ -55,6 +61,15 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     }
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
+    menu.addSeparator();
+    QAction* autoAccept = menu.addAction(tr("Auto accept files from this friend", "context menu entry"));
+    QAction* disableAutoAccept = menu.addAction(tr("Manually accept files from this friend", "context menu entry"));
+    QAction* globalAA = menu.addAction(tr("Auto accept files from all friends", "context menu entry"));
+    QAction* disableGlobalAA = menu.addAction(tr("Disable global auto accept", "context menu entry"));
+    if (dir.isEmpty())
+        disableAutoAccept->setEnabled(false);
+    if (globalDir.isEmpty())
+        disableGlobalAA->setEnabled(false);
     menu.addSeparator();
     QAction* removeFriendAction = menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
 
@@ -73,6 +88,36 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             hide();
             emit removeFriend(friendId);
             return;
+        }
+        else if (selectedItem == autoAccept)
+        {
+            if (dir.isEmpty())
+                dir = QDir::homePath();
+            dir = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"), dir);
+            if (!dir.isEmpty())
+            {
+                qDebug() << "FriendWidget: setting auto accept dir for" << friendId << "to" << dir;
+                Settings::getInstance().setAutoAcceptDir(id, dir);
+            }
+        }
+        else if (selectedItem == disableAutoAccept)
+        {
+            Settings::getInstance().setAutoAcceptDir(id, "");
+        }
+        else if (selectedItem == globalAA)
+        {
+            if (globalDir.isEmpty())
+                globalDir = QDir::homePath();
+            globalDir = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"), dir);
+            if (!globalDir.isEmpty())
+            {
+                qDebug() << "FriendWidget: setting global auto accept dir to" << globalDir;
+                Settings::getInstance().setGlobalAutoAcceptDir(globalDir);
+            }
+        }
+        else if (selectedItem == disableGlobalAA)
+        {
+            Settings::getInstance().setGlobalAutoAcceptDir("");
         }
         else if (groupActions.contains(selectedItem))
         {

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>527</width>
-    <height>500</height>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,11 +30,31 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QCheckBox" name="cbUseTranslations">
-        <property name="text">
-         <string extracomment="Text on a checkbox to enable translations">Use translations</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="transLayout">
+        <item>
+         <widget class="QLabel" name="transLabel">
+          <property name="toolTip">
+           <string>The translation may not load until qTox restarts.</string>
+          </property>
+          <property name="text">
+           <string>Translation:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="transComboBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>The translation may not load until qTox restarts.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QCheckBox" name="cbMakeToxPortable">
@@ -54,7 +74,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="statusChangesCheckbox">
+       <widget class="QCheckBox" name="closeToTray">
+        <property name="text">
+         <string>Close to tray</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="minimizeToTray">
+        <property name="text">
+         <string>Minimize to tray</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="statusChanges">
         <property name="text">
          <string>Show contacts' status changes</string>
         </property>
@@ -71,7 +105,7 @@
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="text">
-           <string>Auto away after:</string>
+           <string>Auto away after (0 to disable):</string>
           </property>
          </widget>
         </item>
@@ -83,14 +117,20 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="toolTip">
+           <string>Set to 0 to disable</string>
+          </property>
+          <property name="showGroupSeparator" stdset="0">
+           <bool>true</bool>
+          </property>
           <property name="suffix">
            <string> minutes</string>
           </property>
           <property name="minimum">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="maximum">
-           <number>600</number>
+           <number>2147483647</number>
           </property>
          </widget>
         </item>
@@ -106,14 +146,25 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="smileyPackLabel">
-        <property name="text">
-         <string extracomment="Text on smiley pack label">Smiley Pack</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="smileyPackBrowser"/>
+       <layout class="QHBoxLayout" name="smileyHLayout">
+        <item>
+         <widget class="QLabel" name="smileyPackLabel">
+          <property name="text">
+           <string extracomment="Text on smiley pack label">Smiley Pack:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="smileyPackBrowser">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -170,14 +221,25 @@
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="styleLabel">
-        <property name="text">
-         <string>Style</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="styleBrowser"/>
+       <layout class="QHBoxLayout" name="styleHLayout">
+        <item>
+         <widget class="QLabel" name="styleLabel">
+          <property name="text">
+           <string>Style:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="styleBrowser">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

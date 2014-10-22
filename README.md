@@ -20,15 +20,15 @@ However, it is not a fork.
 
 This client runs on Windows, Linux and Mac natively.<br/>
 
-You can find the latest versions of qTox <a href="https://github.com/tux3/qTox/releases">here</a>, or from the Tox Project's servers :
+You can find the latest versions of qTox <a href="https://github.com/tux3/qTox/releases">here</a> (Windows and Linux), or from the Tox Project's servers :
 
-<a href="https://jenkins.libtoxcore.so/job/tux3-toxgui-win32/lastSuccessfulBuild/artifact/toxgui-win32.zip">Windows download</a><br/>
-<a href="https://jenkins.libtoxcore.so/job/ToxGUI%20OS%20X/lastSuccessfulBuild/artifact/qtox.dmg">Mac download </a><br/>
-<a href="https://jenkins.libtoxcore.so/job/qTox-linux-amd64/">Linux download</a> (click "Last successful artifacts")<br/>
+<a href="https://dist-build.tox.im/qtox.dmg">Mac download </a><br/>
+<a href="https://jenkins.libtoxcore.so/job/qTox-linux-amd64/lastSuccessfulBuild/artifact/qt/qtox.xz">Linux download</a> (click "Last successful artifacts")<br/>
 
 <h3>Screenshots</h3>
 <h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
-<img src="https://wiki.tox.im/images/5/5d/ToxGUI_tux3.png">
+<img src="https://wiki.tox.im/images/5/5d/ToxGUI_tux3.png"/>
+<img src="https://i.imgur.com/0XWcqBc.jpg"/>
 
 ##Documentation:
 
