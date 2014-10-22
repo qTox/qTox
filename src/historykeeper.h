@@ -46,8 +46,7 @@ public:
 
     void addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     void addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
-    QList<HistMessage> getChatHistory(ChatType ct, const QString &profile, const QString &chat,
-                                      const QDateTime &time_from, const QDateTime &time_to);
+    QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
 
 private:
     HistoryKeeper(GenericDdInterface *db_);
@@ -58,7 +57,6 @@ private:
     void updateAliases();
     QPair<int, ChatType> getChatID(const QString &id_str, ChatType ct);
     int getAliasID(const QString &id_str);
-    int getCurrentProfileID();
     QString wrapMessage(const QString &str);
     QString unWrapMessage(const QString &str);
 

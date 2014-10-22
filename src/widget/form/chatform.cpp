@@ -571,8 +571,7 @@ void ChatForm::onLoadHistory()
             }
         }
 
-        auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, Core::getInstance()->getSelfId().publicKey,
-                                                                 f->userId, fromTime, toTime);
+        auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->userId, fromTime, toTime);
 
         QString storedPrevName = previousName;
         previousName = "";

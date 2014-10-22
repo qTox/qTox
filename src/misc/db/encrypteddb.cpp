@@ -112,7 +112,6 @@ bool EncryptedDb::pullFileContent()
     for (auto line : sqlCmds)
     {
         QSqlQuery r = PlainDb::exec(line);
-        qDebug() << r.lastError();
     }
 
     return true;
@@ -122,7 +121,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
 {
     QByteArray b64Str;
     b64Str.append(sql);
-    b64Str = b64Str.toBase64();
+    b64Str = b64Str.toBase64();  // much easier to parse strings like this from file
 
     buffer += b64Str + "\n";
 
