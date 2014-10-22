@@ -15,6 +15,7 @@
 */
 
 #include "groupchatform.h"
+#include "tabcompleter.h"
 #include "src/group.h"
 #include "src/widget/groupwidget.h"
 #include "src/widget/tool/chattextedit.h"
@@ -32,6 +33,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     nusersLabel = new QLabel();
     namesList = new QLabel();
     namesList->setObjectName("peersLabel");
+
+    tabber = new TabCompleter(msgEdit, group);
 
     fileButton->setEnabled(false);
     callButton->setVisible(false);
@@ -59,6 +62,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
+    connect(msgEdit, &ChatTextEdit::tabPressed, tabber, &TabCompleter::complete);
+    connect(msgEdit, &ChatTextEdit::keyPressed, tabber, &TabCompleter::reset);
 
     setAcceptDrops(true);
 }

@@ -226,6 +226,12 @@ void Core::start()
         }
         loadPath = "";
     }
+    else // new ID
+    {
+        setStatusMessage(tr("Toxing on qTox")); // this also solves the not updating issue
+        setUsername(tr("qTox User"));
+        Widget::getInstance()->onSettingsClicked(); // update ui with new profile (im worried about threading, but it seems to work)
+    }
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
@@ -1187,10 +1193,7 @@ void Core::saveConfiguration(const QString& path)
 void Core::switchConfiguration(const QString& profile)
 {
     if (profile.isEmpty())
-    {
-        qWarning() << "Core: got null profile to switch to, not switching";
-        return;
-    }
+        qDebug() << "Core: creating new Id";
     else
         qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
     saveConfiguration();
@@ -1205,8 +1208,11 @@ void Core::switchConfiguration(const QString& profile)
     }
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
     emit blockingClearContacts(); // we need this to block, but signals are required for thread safety
-    
-    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
+
+    if (profile.isEmpty())
+        loadPath = "";
+    else
+        loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
     Settings::getInstance().setCurrentProfile(profile); 
     
     start();

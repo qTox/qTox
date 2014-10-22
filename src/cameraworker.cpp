@@ -18,6 +18,7 @@
 
 #include <QTimer>
 #include <QDebug>
+#include <QCoreApplication>
 
 CameraWorker::CameraWorker(int index)
     : clock(nullptr)
@@ -178,6 +179,7 @@ void CameraWorker::setProp(int prop, double val)
 double CameraWorker::getProp(int prop)
 {
     double ret = 0.0;
+    qApp->processEvents();
     QMetaObject::invokeMethod(this, "_getProp", Qt::BlockingQueuedConnection, Q_RETURN_ARG(double, ret), Q_ARG(int, prop));
 
     return ret;

@@ -22,7 +22,7 @@
 #include <QDateTime>
 
 // Spacing in px inserted when the author of the last message changes
-#define AUTHOR_CHANGE_SPACING 5
+#define AUTHOR_CHANGE_SPACING 5 // why the hell is this a thing? surely the different font is enough?
 
 class QLabel;
 class QVBoxLayout;
@@ -45,6 +45,7 @@ public:
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
     void addMessage(QString author, QString message, bool isAction = false, QDateTime datetime=QDateTime::currentDateTime());
+    void addAlertMessage(QString author, QString message, QDateTime datetime=QDateTime::currentDateTime());
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime=QDateTime::currentDateTime());
     int getNumberOfMessages();
     

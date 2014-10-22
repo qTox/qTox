@@ -25,6 +25,7 @@
 #include "src/widget/tool/chatactions/messageaction.h"
 #include "src/widget/tool/chatactions/systemmessageaction.h"
 #include "src/widget/tool/chatactions/actionaction.h"
+#include "src/widget/tool/chatactions/alertaction.h"
 #include "src/widget/chatareawidget.h"
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/maskablepixmapwidget.h"
@@ -173,7 +174,7 @@ void GenericChatForm::addMessage(QString author, QString message, bool isAction,
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
     bool isMe = (author == Widget::getInstance()->getUsername());
 
-    if (!isAction && message.startsWith("/me "))
+    if (!isAction && message.startsWith("/me"))
     { // always render actions regardless of what core thinks
         isAction = true;
         message = message.right(message.length()-4);
@@ -190,6 +191,13 @@ void GenericChatForm::addMessage(QString author, QString message, bool isAction,
     else
         chatWidget->insertMessage(new MessageAction(getElidedName(author), message, date, isMe));
 
+    previousName = author;
+}
+
+void GenericChatForm::addAlertMessage(QString author, QString message, QDateTime datetime)
+{
+    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
+    chatWidget->insertMessage(new AlertAction(author, message, date));
     previousName = author;
 }
 

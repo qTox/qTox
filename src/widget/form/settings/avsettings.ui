@@ -34,7 +34,44 @@
         <height>489</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QGroupBox" name="audioGroup">
+         <property name="title">
+          <string>Volume Settings (Stubs)</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="4" column="0">
+           <widget class="QLabel" name="microphoneLabel">
+            <property name="text">
+             <string>Microphone</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="playbackLabel">
+            <property name="text">
+             <string>Playback</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSlider" name="playbackSlider">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QSlider" name="microphoneSlider">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item>
         <widget class="QGroupBox" name="videoGroup">
          <property name="title">
@@ -47,7 +84,7 @@
              <enum>QFormLayout::ExpandingFieldsGrow</enum>
             </property>
             <item row="0" column="0">
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="resolutionLabel">
               <property name="text">
                <string>Resolution</string>
               </property>
@@ -64,7 +101,7 @@
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="hueLabel">
               <property name="text">
                <string>Hue</string>
               </property>
@@ -78,7 +115,7 @@
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="brightnessLabel">
               <property name="text">
                <string>Brightness</string>
               </property>
@@ -92,7 +129,7 @@
              </widget>
             </item>
             <item row="3" column="0">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="saturationLabel">
               <property name="text">
                <string>Saturation</string>
               </property>
@@ -106,7 +143,7 @@
              </widget>
             </item>
             <item row="4" column="0">
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="contrastLabel">
               <property name="text">
                <string>Contrast</string>
               </property>
@@ -119,64 +156,27 @@
               </property>
              </widget>
             </item>
-            <item row="5" column="1">
-             <widget class="QFrame" name="CamFrame">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                <horstretch>1</horstretch>
-                <verstretch>99</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <item>
-                <widget class="VideoSurface" name="CamVideoSurface" native="true"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
            </layout>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Volume Settings (Stubs)</string>
-         </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Playback</string>
+          <item>
+           <widget class="QFrame" name="CamFrame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+              <horstretch>1</horstretch>
+              <verstretch>99</verstretch>
+             </sizepolicy>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QSlider" name="horizontalSlider">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Microphone</string>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSlider" name="horizontalSlider_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="VideoSurface" name="CamVideoSurface" native="true"/>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>

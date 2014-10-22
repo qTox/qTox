@@ -25,9 +25,10 @@ public:
     MessageAction(const QString &author, const QString &message, const QString &date, const bool &me);
     virtual ~MessageAction(){;}
     virtual QString getMessage();
+    virtual QString getMessage(QString div);
     virtual void setup(QTextCursor cursor, QTextEdit*) override;
 
-private:
+protected:
     QString message;
 };
 

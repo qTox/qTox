@@ -14,25 +14,22 @@
     See the COPYING file for more details.
 */
 
-#ifndef CHATTEXTEDIT_H
-#define CHATTEXTEDIT_H
+#ifndef ALERTACTION_H
+#define ALERTACTION_H
 
-#include <QTextEdit>
+#include "messageaction.h"
 
-class ChatTextEdit : public QTextEdit
+class AlertAction : public MessageAction
 {
-    Q_OBJECT
 public:
-    explicit ChatTextEdit(QWidget *parent = 0);
-    virtual void keyPressEvent(QKeyEvent * event) override;
+    AlertAction(const QString &author, const QString &message, const QString& date);
+    virtual ~AlertAction(){;}
+    virtual QString getMessage();
+    //virtual QString getName(); only do the message for now; preferably would do the whole row
+    virtual void setup(QTextCursor cursor, QTextEdit*) override;
 
-signals:
-    void enterPressed();
-    void tabPressed();
-    void keyPressed();
-
-public slots:
-
+private:
+    QString message;
 };
 
-#endif // CHATTEXTEDIT_H
+#endif // MESSAGEACTION_H

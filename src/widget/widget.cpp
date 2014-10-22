@@ -61,7 +61,52 @@ Widget::Widget(QWidget *parent)
 
 void Widget::init()
 {
+    
     ui->setupUi(this);
+    
+    if (QSystemTrayIcon::isSystemTrayAvailable() == true)
+    {
+        icon = new QSystemTrayIcon(this);
+        icon->setIcon(this->windowIcon());
+        trayMenu = new QMenu;
+        trayMenu->setStyleSheet("QMenu {background: white; color: black; border: 1px solid black;}"
+                                "QMenu::item:selected { background: #414141}");
+        
+        statusOnline = new QAction(tr("online"), this);
+        statusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
+        connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
+        statusAway = new QAction(tr("away"), this);
+        statusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
+        connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
+        statusBusy = new QAction(tr("busy"), this);
+        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
+        statusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+        actionQuit = new QAction(tr("&Quit"), this);
+        connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+        
+        trayMenu->addAction(new QAction(tr("Change status to:"), this));
+        trayMenu->addAction(statusOnline);
+        trayMenu->addAction(statusAway);
+        trayMenu->addAction(statusBusy);
+        trayMenu->addSeparator();
+        trayMenu->addAction(actionQuit);
+        icon->setContextMenu(trayMenu);
+        
+        connect(icon,
+                SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                this,
+                SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
+        
+        icon->show();
+        
+        if(Settings::getInstance().getAutostartInTray() == false)
+            this->show();
+    }
+    else
+    {
+        qWarning() << "No system tray detected!";
+        this->show();
+    }
 
     ui->statusbar->hide();
     ui->menubar->hide();
@@ -148,7 +193,6 @@ void Widget::init()
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
     settingsWidget = new SettingsWidget();
-    
 
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
@@ -233,12 +277,19 @@ Widget::~Widget()
     for (Group* g : GroupList::groupList)
         delete g;
     GroupList::groupList.clear();
+    delete statusAway;
+    delete statusBusy;
+    delete statusOnline;
+    delete actionQuit;
+    delete trayMenu;
+    delete icon;
     delete ui;
     instance = nullptr;
 }
 
 Widget* Widget::getInstance()
 {
+    
     if (!instance)
     {
         instance = new Widget();
@@ -254,10 +305,30 @@ QThread* Widget::getCoreThread()
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    Settings::getInstance().setWindowGeometry(saveGeometry());
-    Settings::getInstance().setWindowState(saveState());
-    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
-    QWidget::closeEvent(event);
+    if(Settings::getInstance().getCloseToTray() == true)
+    {
+        event->ignore();
+        this->hide();
+    }
+    else
+    {
+        Settings::getInstance().setWindowGeometry(saveGeometry());
+        Settings::getInstance().setWindowState(saveState());
+        Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+        QWidget::closeEvent(event);
+    }
+}
+
+void Widget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange)
+    {
+        if(isMinimized() == true
+                && Settings::getInstance().getMinimizeToTray() == true)
+        {
+            this->hide();
+        }
+    }
 }
 
 QString Widget::detectProfile()
@@ -454,12 +525,21 @@ void Widget::onTransferClicked()
     activeChatroomWidget = nullptr;
 }
 
-void Widget::onIconClick()
+void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
-    if(this->isHidden() == true)
-        this->show();
-    else
-        this->hide();
+    switch (reason) {
+        case QSystemTrayIcon::Trigger:
+        if(this->isHidden() == true)
+            this->show();
+        else
+            this->hide();
+        case QSystemTrayIcon::DoubleClick:    
+            break;
+        case QSystemTrayIcon::MiddleClick:
+            break;
+        default:
+            ;
+    }
 }
 
 void Widget::onSettingsClicked()
@@ -750,14 +830,19 @@ void Widget::onGroupMessageReceived(int groupnumber, const QString& message, con
     if (!g)
         return;
 
-    g->chatForm->addMessage(author, message);
+    QString name = core->getUsername();
+    bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
+    if (targeted)
+        g->chatForm->addAlertMessage(author, message);
+    else
+        g->chatForm->addMessage(author, message);
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
         g->hasNewMessages = 1;
-        newMessageAlert(); // sound alert on any message, not just naming user
-        if (message.contains(core->getUsername(), Qt::CaseInsensitive))
+        if (targeted)
         {
+            newMessageAlert();
             g->userWasMentioned = 1; // useful for highlighting line or desktop notifications
         }
         g->widget->updateStatusLight();
@@ -773,17 +858,23 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g = createGroup(groupnumber);
     }
 
+    QString name = core->getGroupPeerName(groupnumber, peernumber);
     TOX_CHAT_CHANGE change = static_cast<TOX_CHAT_CHANGE>(Change);
     if (change == TOX_CHAT_CHANGE_PEER_ADD)
     {
-        QString name = core->getGroupPeerName(groupnumber, peernumber);
         if (name.isEmpty())
             name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
         g->addPeer(peernumber,name);
+        //g->chatForm->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "green");
+        // we can't display these messages until irungentoo fixes peernumbers
+        // https://github.com/irungentoo/toxcore/issues/1128
     }
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
+    {
         g->removePeer(peernumber);
-    else if (change == TOX_CHAT_CHANGE_PEER_NAME)
+        //g->chatForm->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "silver");
+    }
+    else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 

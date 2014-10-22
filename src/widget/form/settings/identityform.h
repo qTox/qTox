@@ -63,6 +63,8 @@ private slots:
     void onExportClicked();
     void onDeleteClicked();
     void onImportClicked();
+    void onNewClicked();
+    bool checkContinue(const QString& title, const QString& msg);
 
 private:
     Ui::IdentitySettings* bodyUI;

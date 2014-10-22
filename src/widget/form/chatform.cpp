@@ -87,7 +87,7 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
     QString name = Widget::getInstance()->getUsername();
-    if (msg.startsWith("/me "))
+    if (msg.startsWith("/me"))
     {
         msg = msg.right(msg.length() - 4);
         addMessage(name, msg, true);
@@ -180,7 +180,8 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 
     chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), false));
 
-    if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->friendId)).isEmpty())
+    if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->friendId)).isEmpty()
+     || !Settings::getInstance().getGlobalAutoAcceptDir().isEmpty())
         fileTrans->pressFromHtml("btnB");
 }
 
@@ -408,7 +409,8 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 
 void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 {
-    Q_UNUSED(FriendId)
+    if (FriendId != f->friendId || CallId != callId)
+        return;
 
     if (video)
     {

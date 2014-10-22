@@ -60,6 +60,7 @@ win32 {
     LIBS += -lz -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32
 } else {
     macx {
+	 ICON = img/icons/qtox.icns
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
@@ -68,7 +69,7 @@ win32 {
             INSTALLS += target
             LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
 	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
-	    LIBS += -Wl,-Bdynamic -ltbb -lv4l1 -lv4l2 -lgnutls -lrtmp -lgnutls -lavformat -lavcodec -lavutil -lavfilter -lswscale -lusb-1.0
+	    LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
 
         } else {
             LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
@@ -134,10 +135,12 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/tool/chatactions/filetransferaction.h \
     src/widget/tool/chatactions/systemmessageaction.h \
     src/widget/tool/chatactions/actionaction.h \
+    src/widget/tool/chatactions/alertaction.h \
     src/widget/maskablepixmapwidget.h \
     src/videosource.h \
     src/cameraworker.h \
-    src/widget/videosurface.h
+    src/widget/videosurface.h \
+    src/widget/form/tabcompleter.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -182,7 +185,9 @@ SOURCES += \
     src/widget/tool/chatactions/filetransferaction.cpp \
     src/widget/tool/chatactions/systemmessageaction.cpp \
     src/widget/tool/chatactions/actionaction.cpp \
+    src/widget/tool/chatactions/alertaction.cpp \
     src/widget/maskablepixmapwidget.cpp \
     src/cameraworker.cpp \
     src/widget/videosurface.cpp \
-    src/netvideosource.cpp
+    src/netvideosource.cpp \
+    src/widget/form/tabcompleter.cpp

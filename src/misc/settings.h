@@ -52,6 +52,12 @@ public:
     bool getAutostartInTray() const;
     void setAutostartInTray(bool newValue);
     
+    bool getCloseToTray() const;
+    void setCloseToTray(bool newValue);
+    
+    bool getMinimizeToTray() const;
+    void setMinimizeToTray(bool newValue);
+    
     QString getStyle() const;
     void setStyle(const QString& newValue);
 
@@ -128,6 +134,9 @@ public:
     QString getAutoAcceptDir(const QString& id) const;
     void setAutoAcceptDir(const QString&id, const QString& dir);
 
+    QString getGlobalAutoAcceptDir() const;
+    void setGlobalAutoAcceptDir(const QString& dir);
+
     // ChatView
     int getFirstColumnHandlePos() const;
     void setFirstColumnHandlePos(const int pos);
@@ -185,6 +194,8 @@ private:
     QString translation;
     static bool makeToxPortable;
     bool autostartInTray;
+    bool closeToTray;
+    bool minimizeToTray;
 
     bool forceTCP;
 
@@ -201,6 +212,7 @@ private:
 
     QHash<QString, QByteArray> widgetSettings;
     QHash<QString, QString> autoAccept;
+    QString globalAutoAcceptDir;
 
     // GUI
     bool enableSmoothAnimation;
