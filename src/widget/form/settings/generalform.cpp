@@ -24,7 +24,7 @@
 #include <QStyleFactory>
 
 static QStringList locales = {"de", "en", "fr", "it", "mannol", "pirate", "pl", "ru", "fi", "uk"};
-static QStringList langs = {"Deustch", "English", "Français", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Українська"};  
+static QStringList langs = {"Deustch", "English", "Français", "Italiano", "mannol (NSFW)", "Pirate", "Polski", "Русский", "Suomi", "Українська"};  
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
