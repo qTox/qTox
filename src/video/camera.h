@@ -48,7 +48,7 @@ public:
     ~Camera();
 
     static Camera* getInstance(); ///< Returns the global widget's Camera instance
-    vpx_image getLastVPXImage(); ///< Convert the last frame to a vpx_image (can be expensive !)
+    VideoFrame getLastFrame();
 
     void setResolution(QSize res);
     QSize getCurrentResolution();

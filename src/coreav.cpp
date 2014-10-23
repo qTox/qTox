@@ -241,7 +241,7 @@ void Core::sendCallVideo(int callId)
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    vpx_image frame = camera->getLastVPXImage();
+    vpx_image frame = camera->getLastFrame().createVpxImage();
     if (frame.w && frame.h)
     {
         int result;

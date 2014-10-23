@@ -1,3 +1,19 @@
+/*
+    Copyright (C) 2014 by Project Tox <https://tox.im>
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    This program is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+    See the COPYING file for more details.
+*/
+
 #ifndef VIDEOSOURCE_H
 #define VIDEOSOURCE_H
 
@@ -5,44 +21,7 @@
 #include <QSize>
 #include <QRgb>
 
-struct VideoFrame
-{
-    enum ColorFormat
-    {
-        NONE,
-        BGR,
-        YUV,
-    };
-
-    QByteArray frameData;
-    QSize resolution;
-    ColorFormat format;
-
-    VideoFrame() : format(NONE) {}
-    VideoFrame(QByteArray d, QSize r, ColorFormat f) : frameData(d), resolution(r), format(f) {}
-
-    void setNull()
-    {
-        frameData = QByteArray();
-    }
-
-    bool isNull()
-    {
-        return frameData.isEmpty();
-    }
-
-    // assumes format is BGR
-    QRgb getPixel(int x, int y)
-    {
-        char b = frameData.data()[resolution.width() * 3 * y + x * 3 + 0];
-        char g = frameData.data()[resolution.width() * 3 * y + x * 3 + 1];
-        char r = frameData.data()[resolution.width() * 3 * y + x * 3 + 2];
-
-        return qRgb(r, g, b);
-    }
-};
-
-Q_DECLARE_METATYPE(VideoFrame)
+#include "videoframe.h"
 
 class VideoSource : public QObject
 {

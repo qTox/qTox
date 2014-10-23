@@ -126,9 +126,10 @@ void VideoSurface::paintGL()
 {
     mutex.lock();
     VideoFrame currFrame = frame;
+    frame.invalidate();
     mutex.unlock();
 
-    if (res != currFrame.resolution && currFrame.resolution.isValid())
+    if (currFrame.isValid() && res != currFrame.resolution)
     {
         res = currFrame.resolution;
 
@@ -143,7 +144,7 @@ void VideoSurface::paintGL()
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     }
 
-    if (!currFrame.isNull())
+    if (currFrame.isValid())
     {
         pboIndex = (pboIndex + 1) % 2;
         int nextPboIndex = (pboIndex + 1) % 2;
@@ -177,10 +178,6 @@ void VideoSurface::paintGL()
             memcpy(ptr, currFrame.frameData.data(), currFrame.frameData.size());
         pbo[nextPboIndex]->unmap();
         pbo[nextPboIndex]->release();
-
-        mutex.lock();
-        frame.setNull();
-        mutex.unlock();
     }
 
     // render pbo

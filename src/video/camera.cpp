@@ -20,6 +20,13 @@
 #include <QThread>
 #include <QMutexLocker>
 
+Camera* Camera::getInstance()
+{
+    static Camera instance;
+
+    return &instance;
+}
+
 Camera::Camera()
     : refcount(0)
     , workerThread(nullptr)
@@ -72,50 +79,6 @@ void Camera::probeResolutions()
     worker->probeResolutions();
 }
 
-vpx_image Camera::getLastVPXImage()
-{
-    QMutexLocker lock(&mutex);
-
-    vpx_image img;
-
-    if (currFrame.isNull())
-    {
-        img.w = 0;
-        img.h = 0;
-        return img;
-    }
-
-    const int w = currFrame.resolution.width();
-    const int h = currFrame.resolution.height();
-
-    // I420 "It comprises an NxM Y plane followed by (N/2)x(M/2) V and U planes."
-    // http://fourcc.org/yuv.php#IYUV
-    vpx_img_alloc(&img, VPX_IMG_FMT_VPXI420, w, h, 1);
-
-    for (int y = 0; y < h; ++y)
-    {
-        for (int x = 0; x < w; ++x)
-        {
-            uint8_t b = currFrame.frameData.data()[(x + y * w) * 3 + 0];
-            uint8_t g = currFrame.frameData.data()[(x + y * w) * 3 + 1];
-            uint8_t r = currFrame.frameData.data()[(x + y * w) * 3 + 2];
-
-            img.planes[VPX_PLANE_Y][x + y * img.stride[VPX_PLANE_Y]] = ((66 * r + 129 * g + 25 * b) >> 8) + 16;
-
-            if (!(x % 2) && !(y % 2))
-            {
-                const int i = x / 2;
-                const int j = y / 2;
-
-                img.planes[VPX_PLANE_U][i + j * img.stride[VPX_PLANE_U]] = ((112 * r + -94 * g + -18 * b) >> 8) + 128;
-                img.planes[VPX_PLANE_V][i + j * img.stride[VPX_PLANE_V]] = ((-38 * r + -74 * g + 112 * b) >> 8) + 128;
-            }
-        }
-    }
-
-    return img;
-}
-
 void Camera::setResolution(QSize res)
 {
     worker->setProp(CV_CAP_PROP_FRAME_WIDTH, res.width());
@@ -146,9 +109,8 @@ void Camera::onNewFrameAvailable(const VideoFrame frame)
     mutex.unlock();
 }
 
-Camera* Camera::getInstance()
+VideoFrame Camera::getLastFrame()
 {
-    static Camera instance;
-
-    return &instance;
+    QMutexLocker lock(&mutex);
+    return currFrame;
 }
