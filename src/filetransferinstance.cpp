@@ -46,7 +46,7 @@ FileTransferInstance::FileTransferInstance(ToxFile File)
 
     filenameElided = fm.elidedText(filename, Qt::ElideRight, MAX_CONTENT_WIDTH);
     size = getHumanReadableSize(File.filesize);
-    contentPrefWidth = std::max(fm.boundingRect(filenameElided).width(), fm.width(size));
+    contentPrefWidth = std::max(fm.width(filenameElided), fm.width(size)) + fm.leading();
 
     speed = "0B/s";
     eta = "00:00";
@@ -400,6 +400,8 @@ QString FileTransferInstance::insertMiniature(const QString &type)
     QString res;
     res  = "<td><div class=" + type + ">\n";
     res += "<img src=\"data:mini." + widgetId + "/png;base64," + QImage2base64(pic) + "\">";
+    res += "</div></td>\n";
+    res += "<td width=5><div class=" + type + ">\n";
     res += "</div></td>\n";
     return res;
 }
