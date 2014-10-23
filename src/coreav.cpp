@@ -15,7 +15,7 @@
 */
 
 #include "core.h"
-#include "camera.h"
+#include "video/camera.h"
 #include <QDebug>
 #include <QTimer>
 

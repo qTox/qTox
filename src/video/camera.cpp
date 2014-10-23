@@ -15,7 +15,7 @@
 */
 
 #include "camera.h"
-#include "src/cameraworker.h"
+#include "src/video/cameraworker.h"
 #include <QDebug>
 #include <QThread>
 #include <QMutexLocker>

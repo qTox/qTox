@@ -2,7 +2,7 @@
 #define COREAV_H
 
 #include <tox/toxav.h>
-#include "netvideosource.h"
+#include "video/netvideosource.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>

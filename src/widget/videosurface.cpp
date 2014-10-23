@@ -15,13 +15,11 @@
 */
 
 #include "videosurface.h"
-#include "src/camera.h"
+#include "src/video/camera.h"
 #include <QTimer>
-#include <opencv2/opencv.hpp>
 #include <QOpenGLBuffer>
 #include <QOpenGLShaderProgram>
 #include <QDebug>
-#include <QElapsedTimer>
 
 VideoSurface::VideoSurface(QWidget* parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers | QGL::SingleBuffer), parent)

@@ -19,7 +19,7 @@
 
 #include <QGLWidget>
 #include <QMutex>
-#include "src/videosource.h"
+#include "src/video/videosource.h"
 
 class QOpenGLBuffer;
 class QOpenGLShaderProgram;

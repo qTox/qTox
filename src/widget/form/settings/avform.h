@@ -19,7 +19,7 @@
 
 #include "genericsettings.h"
 #include "src/widget/videosurface.h"
-#include "src/camera.h"
+#include "src/video/camera.h"
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QPushButton>
