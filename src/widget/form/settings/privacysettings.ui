@@ -46,7 +46,7 @@
       <item>
        <widget class="QCheckBox" name="cbEncryptTox">
         <property name="enabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="text">
          <string>Encrypt Tox datafile</string>
@@ -55,6 +55,9 @@
       </item>
       <item>
        <widget class="QCheckBox" name="cbEncryptHistory">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Encrypt History</string>
         </property>
