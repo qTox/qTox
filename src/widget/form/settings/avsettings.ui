@@ -16,6 +16,9 @@
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -171,7 +174,14 @@
             </property>
             <layout class="QGridLayout" name="gridLayout">
              <item row="0" column="0">
-              <widget class="VideoSurface" name="CamVideoSurface" native="true"/>
+              <widget class="VideoSurface" name="CamVideoSurface" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>120</height>
+                </size>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

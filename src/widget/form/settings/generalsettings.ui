@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
-    <height>525</height>
+    <width>545</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,302 +24,329 @@
     <number>6</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="generalGroup">
-     <property name="title">
-      <string>General Settings</string>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <layout class="QHBoxLayout" name="transLayout">
-        <item>
-         <widget class="QLabel" name="transLabel">
-          <property name="toolTip">
-           <string>The translation may not load until qTox restarts.</string>
-          </property>
-          <property name="text">
-           <string>Translation:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="transComboBox">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>The translation may not load until qTox restarts.</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="cbMakeToxPortable">
-        <property name="toolTip">
-         <string extracomment="describes makeToxPortable checkbox">Save settings to the working directory instead of the usual conf dir</string>
-        </property>
-        <property name="text">
-         <string>Make Tox portable</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="startInTray">
-        <property name="text">
-         <string>Start in tray</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="closeToTray">
-        <property name="text">
-         <string>Close to tray</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="minimizeToTray">
-        <property name="text">
-         <string>Minimize to tray</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="statusChanges">
-        <property name="text">
-         <string>Show contacts' status changes</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item alignment="Qt::AlignLeft">
-         <widget class="QLabel" name="autoAwayLabel">
-          <property name="toolTip">
-           <string>Provided in minutes</string>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="text">
-           <string>Auto away after (0 to disable):</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="autoAwaySpinBox">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>Set to 0 to disable</string>
-          </property>
-          <property name="showGroupSeparator" stdset="0">
-           <bool>true</bool>
-          </property>
-          <property name="suffix">
-           <string> minutes</string>
-          </property>
-          <property name="minimum">
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>531</width>
+        <height>627</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
+       <property name="spacing">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
+       <item alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="generalGroup">
+         <property name="title">
+          <string>General Settings</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="transLayout">
+            <item>
+             <widget class="QLabel" name="transLabel">
+              <property name="toolTip">
+               <string>The translation may not load until qTox restarts.</string>
+              </property>
+              <property name="text">
+               <string>Translation:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="transComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>The translation may not load until qTox restarts.</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbMakeToxPortable">
+            <property name="toolTip">
+             <string extracomment="describes makeToxPortable checkbox">Save settings to the working directory instead of the usual conf dir</string>
+            </property>
+            <property name="text">
+             <string>Make Tox portable</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="startInTray">
+            <property name="text">
+             <string>Start in tray</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="closeToTray">
+            <property name="text">
+             <string>Close to tray</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="minimizeToTray">
+            <property name="text">
+             <string>Minimize to tray</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="statusChanges">
+            <property name="text">
+             <string>Show contacts' status changes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item alignment="Qt::AlignLeft">
+             <widget class="QLabel" name="autoAwayLabel">
+              <property name="toolTip">
+               <string>Provided in minutes</string>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="text">
+               <string>Auto away after (0 to disable):</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="autoAwaySpinBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Set to 0 to disable</string>
+              </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
+              </property>
+              <property name="suffix">
+               <string> minutes</string>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>2147483647</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="themeGroup">
+         <property name="title">
+          <string>Theme</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="smileyHLayout">
+            <item>
+             <widget class="QLabel" name="smileyPackLabel">
+              <property name="text">
+               <string extracomment="Text on smiley pack label">Smiley Pack:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="smileyPackBrowser">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="smile1">
+              <property name="toolTip">
+               <string>:)</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="smile2">
+              <property name="toolTip">
+               <string>;)</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="smile3">
+              <property name="toolTip">
+               <string>:p</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="smile4">
+              <property name="toolTip">
+               <string>:O</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="smile5">
+              <property name="toolTip">
+               <string>:'(</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="styleHLayout">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="styleLabel">
+              <property name="text">
+               <string>Style:</string>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QComboBox" name="styleBrowser">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="connectionGroup">
+         <property name="title">
+          <string>Connection Settings</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayoutProxy">
+          <property name="topMargin">
            <number>0</number>
           </property>
-          <property name="maximum">
-           <number>2147483647</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
+          <item>
+           <widget class="QCheckBox" name="cbEnableIPv6">
+            <property name="text">
+             <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbUDPDisabled">
+            <property name="toolTip">
+             <string extracomment="force tcp checkbox tooltip">This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</string>
+            </property>
+            <property name="text">
+             <string extracomment="Text on checkbox to disable UDP">Disable UDP (not recommended)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbUseProxy">
+            <property name="text">
+             <string>Use proxy (SOCKS5)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="proxyLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="proxyAddrLabel">
+              <property name="text">
+               <string extracomment="Text on proxy addr label">Address</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="proxyAddr"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="proxyPortLabel">
+              <property name="text">
+               <string extracomment="Text on proxy port label">Port</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="proxyPort">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>65535</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="themeGroup">
-     <property name="title">
-      <string>Theme</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <layout class="QHBoxLayout" name="smileyHLayout">
-        <item>
-         <widget class="QLabel" name="smileyPackLabel">
-          <property name="text">
-           <string extracomment="Text on smiley pack label">Smiley Pack:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="smileyPackBrowser">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="smile1">
-          <property name="toolTip">
-           <string>:)</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="smile2">
-          <property name="toolTip">
-           <string>;)</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="smile3">
-          <property name="toolTip">
-           <string>:p</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="smile4">
-          <property name="toolTip">
-           <string>:O</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="smile5">
-          <property name="toolTip">
-           <string>:'(</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="styleHLayout">
-        <item>
-         <widget class="QLabel" name="styleLabel">
-          <property name="text">
-           <string>Style:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="styleBrowser">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="connectionGroup">
-     <property name="title">
-      <string>Connection Settings</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayoutProxy">
-      <item>
-       <widget class="QCheckBox" name="cbEnableIPv6">
-        <property name="text">
-         <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="cbUDPDisabled">
-        <property name="toolTip">
-         <string extracomment="force tcp checkbox tooltip">This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</string>
-        </property>
-        <property name="text">
-         <string extracomment="Text on checkbox to disable UDP">Disable UDP (not recommended)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="cbUseProxy">
-        <property name="text">
-         <string>Use proxy (SOCKS5)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="proxyLayout">
-        <item>
-         <widget class="QLabel" name="proxyAddrLabel">
-          <property name="text">
-           <string extracomment="Text on proxy addr label">Address</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="proxyAddr"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="proxyPortLabel">
-          <property name="text">
-           <string extracomment="Text on proxy port label">Port</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="proxyPort">
-          <property name="minimum">
-           <number>0</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

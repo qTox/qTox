@@ -69,8 +69,6 @@ void Widget::init()
         icon = new QSystemTrayIcon(this);
         icon->setIcon(this->windowIcon());
         trayMenu = new QMenu;
-        trayMenu->setStyleSheet("QMenu {background: white; color: black; border: 1px solid black;}"
-                                "QMenu::item:selected { background: #414141}");
         
         statusOnline = new QAction(tr("online"), this);
         statusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
