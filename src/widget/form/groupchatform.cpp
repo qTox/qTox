@@ -57,9 +57,11 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     headTextLayout->addWidget(nusersLabel);
     headTextLayout->addWidget(namesList);
-    headTextLayout->setMargin(0);
-    headTextLayout->setSpacing(0);
     headTextLayout->addStretch();
+
+    nameLabel->setMinimumHeight(12);
+    nusersLabel->setMinimumHeight(12);
+    namesList->setMinimumHeight(12);
 
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
