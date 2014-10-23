@@ -26,7 +26,7 @@ public:
     virtual ~ActionAction(){;}
     virtual QString getMessage();
     virtual QString getName();
-    virtual void setup(QTextCursor cursor, QTextEdit*) override;
+    virtual void setup(QTextCursor, QTextEdit*) override {;}
 
 private:
     QString message;

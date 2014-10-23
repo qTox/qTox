@@ -20,7 +20,7 @@
 #    See the COPYING file for more details.
 
 
-QT       += core gui network xml opengl
+QT       += core gui network xml opengl sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET    = qtox
@@ -29,7 +29,12 @@ FORMS    += \
     src/mainwindow.ui \
     src/widget/form/settings/generalsettings.ui \
     src/widget/form/settings/avsettings.ui \
-    src/widget/form/settings/identitysettings.ui
+    src/widget/form/settings/identitysettings.ui \
+    src/widget/form/settings/privacysettings.ui \
+    src/widget/form/loadhistorydialog.ui \
+    src/widget/form/inputpassworddialog.ui \
+    src/widget/form/setpassworddialog.ui
+    
 CONFIG   += c++11
 
 TRANSLATIONS = translations/de.ts \
@@ -55,28 +60,28 @@ contains(JENKINS,YES) {
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
-    LIBS += -liphlpapi -L$$PWD/libs/lib -ltoxav -ltoxcore -lvpx -lpthread
+    LIBS += -liphlpapi -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lopencv_core248 -lopencv_highgui248 -lopencv_imgproc248 -lOpenAL32 -lopus
     LIBS += -lz -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32
 } else {
     macx {
-	 ICON = img/icons/qtox.icns
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
+        ICON = img/icons/qtox.icns
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
         contains(STATICPKG, YES) {
             target.path = /usr/bin
             INSTALLS += target
-            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
+            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
 	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
 	    LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
 
         } else {
-            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
+            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
         }
 
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a -lopencv_core -lopencv_highgui -lopenal
+            LIBS = ./libs/lib/libsodium.a ./libs/lib/libtoxcore.a ./libs/lib/libtoxav.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libvpx.a ./libs/lib/libopus.a -lopencv_core -lopencv_highgui -lopenal
         }
     }
 }
@@ -140,6 +145,13 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/videosource.h \
     src/cameraworker.h \
     src/widget/videosurface.h \
+    src/widget/form/loadhistorydialog.h \
+    src/historykeeper.h \
+    src/misc/db/genericddinterface.h \
+    src/misc/db/plaindb.h \
+    src/misc/db/encrypteddb.h \
+    src/widget/form/inputpassworddialog.h \
+    src/widget/form/setpassworddialog.h \
     src/widget/form/tabcompleter.h
 
 SOURCES += \
@@ -189,5 +201,12 @@ SOURCES += \
     src/widget/maskablepixmapwidget.cpp \
     src/cameraworker.cpp \
     src/widget/videosurface.cpp \
+    src/widget/form/loadhistorydialog.cpp \
+    src/historykeeper.cpp \
+    src/misc/db/genericddinterface.cpp \
+    src/misc/db/plaindb.cpp \
+    src/misc/db/encrypteddb.cpp \
+    src/widget/form/inputpassworddialog.cpp \
+    src/widget/form/setpassworddialog.cpp \
     src/netvideosource.cpp \
     src/widget/form/tabcompleter.cpp

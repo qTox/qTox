@@ -21,6 +21,7 @@
 #include "src/misc/settings.h"
 #include "src/widget/croppinglabel.h"
 #include "src/widget/widget.h"
+#include "src/historykeeper.h"
 #include "src/misc/style.h"
 #include <QLabel>
 #include <QLineEdit>
@@ -133,6 +134,7 @@ void IdentityForm::onRenameClicked()
         {
             QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
             bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
+            HistoryKeeper::renameHistory(cur, name);
             Settings::getInstance().setCurrentProfile(name);
             break;
         }

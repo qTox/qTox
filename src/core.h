@@ -35,6 +35,8 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
+    enum PasswordType {ptMain = 0, ptHistory, ptCounter};
+
     explicit Core(Camera* cam, QThread* coreThread, QString initialLoadPath);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
@@ -66,6 +68,7 @@ public:
     void decreaseVideoBusyness();
 
     bool anyActiveCalls();
+    bool isPasswordSet(PasswordType passtype);
 
 public slots:
     void start();
@@ -106,10 +109,16 @@ public slots:
 
     void micMuteToggle(int callId);
 
+    void setPassword(QString& password, PasswordType passtype);
+    void clearPassword(PasswordType passtype);
+    QByteArray encryptData(const QByteArray& data, PasswordType passtype);
+    QByteArray decryptData(const QByteArray& data, PasswordType passtype);
+
 signals:
     void connected();
     void disconnected();
     void blockingClearContacts();
+    void blockingGetPassword(QString info, int passtype);
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);
@@ -245,6 +254,9 @@ private:
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
+
+    uint8_t* pwsaltedkey[PasswordType::ptCounter]; // use the pw's hash as the "pw"
+    QByteArray barePassword[PasswordType::ptCounter]; // to be deleted after tox_pass_key_decrypt/tox_pass_key_encrypt fix
 
     static const int videobufsize;
     static uint8_t* videobuf;

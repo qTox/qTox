@@ -24,6 +24,8 @@
 #include <QDragEnterEvent>
 #include <QBitmap>
 #include "chatform.h"
+#include "src/historykeeper.h"
+#include "src/widget/form/loadhistorydialog.h"
 #include "src/friend.h"
 #include "src/widget/friendwidget.h"
 #include "src/filetransferinstance.h"
@@ -57,6 +59,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addStretch();
     headTextLayout->setSpacing(0);
 
+    menu.addAction(tr("Load History..."), this, SLOT(onLoadHistory()));
+
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
@@ -87,15 +91,18 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
     QString name = Widget::getInstance()->getUsername();
-    if (msg.startsWith("/me"))
+    QDateTime timestamp = QDateTime::currentDateTime();
+    HistoryKeeper::getInstance()->addChatEntry(f->userId, msg, Core::getInstance()->getSelfId().publicKey, timestamp);
+
+    if (msg.startsWith("/me "))
     {
         msg = msg.right(msg.length() - 4);
-        addMessage(name, msg, true);
+        addMessage(name, msg, true, timestamp);
         emit sendAction(f->friendId, msg);
     }
     else
     {
-        addMessage(name, msg, false);
+        addMessage(name, msg, false, timestamp);
         emit sendMessage(f->friendId, msg);
     }
     msgEdit->clear();
@@ -502,7 +509,7 @@ void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
     if (FriendId != f->friendId)
         return;
 
-    addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red");
+    addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red", QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
@@ -539,4 +546,62 @@ void ChatForm::onAvatarRemoved(int FriendId)
         return;
 
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
+}
+
+void ChatForm::onLoadHistory()
+{
+    LoadHistoryDialog dlg;
+
+    if (dlg.exec())
+    {
+        QDateTime fromTime = dlg.getFromDate();
+        QDateTime toTime = QDateTime::currentDateTime();
+
+        if (fromTime > toTime)
+            return;
+
+        if (earliestMessage)
+        {
+            if (*earliestMessage < fromTime)
+                return;
+            if (*earliestMessage < toTime)
+            {
+                toTime = *earliestMessage;
+                toTime = toTime.addMSecs(-1);
+            }
+        }
+
+        auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->userId, fromTime, toTime);
+
+        QString storedPrevName = previousName;
+        previousName = "";
+        QList<ChatAction*> historyMessages;
+
+        for (const auto &it : msgs)
+        {
+            QString name = f->getName();
+            if (it.sender == Core::getInstance()->getSelfId().publicKey)
+                name = Core::getInstance()->getUsername();
+
+            ChatAction *ca = genMessageActionAction(name, it.message, false, it.timestamp.toLocalTime());
+            historyMessages.append(ca);
+        }
+        previousName = storedPrevName;
+
+        for (ChatAction *ca : chatWidget->getMesages())
+            historyMessages.append(ca);
+
+        int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
+
+        chatWidget->getMesages().clear();
+        chatWidget->clear();
+        if (earliestMessage != nullptr)
+            *earliestMessage = fromTime;
+
+        for (ChatAction *ca : historyMessages)
+            chatWidget->insertMessage(ca);
+
+        savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
+        chatWidget->verticalScrollBar()->setValue(savedSliderPos);
+    }
 }

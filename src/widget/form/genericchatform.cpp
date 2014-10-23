@@ -31,7 +31,8 @@
 #include "src/widget/maskablepixmapwidget.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    earliestMessage(nullptr)
 {
     curRow = 0;
 
@@ -116,6 +117,10 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
+    menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
+    menu.addAction(tr("Clear displayed messages"), this, SLOT(clearChatArea(bool)));
+    menu.addSeparator();
+
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
 
@@ -147,8 +152,6 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 {
     QWidget* sender = (QWidget*)QObject::sender();
     pos = sender->mapToGlobal(pos);
-    QMenu menu;
-    menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
     menu.exec(pos);
 }
 
@@ -169,29 +172,10 @@ void GenericChatForm::onSaveLogClicked()
     file.close();
 }
 
-void GenericChatForm::addMessage(QString author, QString message, bool isAction, QDateTime datetime)
+void GenericChatForm::addMessage(const QString &author, const QString &message, bool isAction, const QDateTime &datetime)
 {
-    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-    bool isMe = (author == Widget::getInstance()->getUsername());
-
-    if (!isAction && message.startsWith("/me"))
-    { // always render actions regardless of what core thinks
-        isAction = true;
-        message = message.right(message.length()-4);
-    }
-
-    if (isAction)
-    {
-        chatWidget->insertMessage(new ActionAction (getElidedName(author), message, date, isMe));
-        previousName = ""; // next msg has a name regardless
-        return;
-    }
-    else if (previousName == author)
-        chatWidget->insertMessage(new MessageAction("", message, date, isMe));
-    else
-        chatWidget->insertMessage(new MessageAction(getElidedName(author), message, date, isMe));
-
-    previousName = author;
+    ChatAction *ca = genMessageActionAction(author, message, isAction, datetime);
+    chatWidget->insertMessage(ca);
 }
 
 void GenericChatForm::addAlertMessage(QString author, QString message, QDateTime datetime)
@@ -235,10 +219,8 @@ void GenericChatForm::focusInput()
 
 void GenericChatForm::addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime)
 {
-    previousName = "";
-    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-
-    chatWidget->insertMessage(new SystemMessageAction(message, type, date));
+    ChatAction *ca = genSystemInfoAction(message, type, datetime);
+    chatWidget->insertMessage(ca);
 }
 
 QString GenericChatForm::getElidedName(const QString& name)
@@ -247,4 +229,59 @@ QString GenericChatForm::getElidedName(const QString& name)
     QFontMetrics fm(Style::getFont(Style::BigBold));
 
     return fm.elidedText(name, Qt::ElideRight, chatWidget->nameColWidth());
+}
+
+void GenericChatForm::clearChatArea(bool notinform)
+{
+    chatWidget->clearChatArea();
+    previousName = "";
+
+    if (!notinform)
+        addSystemInfoMessage(tr("Cleared"), "white", QDateTime::currentDateTime());
+
+    if (earliestMessage)
+    {
+        delete earliestMessage;
+        earliestMessage = nullptr;
+    }
+}
+
+ChatAction* GenericChatForm::genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime)
+{
+    if (earliestMessage == nullptr)
+    {
+        earliestMessage = new QDateTime(datetime);
+    }
+
+    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
+    bool isMe = (author == Widget::getInstance()->getUsername());
+
+    if (!isAction && message.startsWith("/me "))
+    { // always render actions regardless of what core thinks
+        isAction = true;
+        message = message.right(message.length()-4);
+    }
+
+    if (isAction)
+    {
+        previousName = ""; // next msg has a name regardless
+        return (new ActionAction (getElidedName(author), message, date, isMe));
+    }
+
+    ChatAction *res;
+    if (previousName == author)
+        res = (new MessageAction("", message, date, isMe));
+    else
+        res = (new MessageAction(getElidedName(author), message, date, isMe));
+
+    previousName = author;
+    return res;
+}
+
+ChatAction* GenericChatForm::genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime)
+{
+    previousName = "";
+    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
+
+    return (new SystemMessageAction(message, type, date));
 }

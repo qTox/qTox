@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include <QMimeData>
 #include <QDragEnterEvent>
+#include "src/historykeeper.h"
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup)

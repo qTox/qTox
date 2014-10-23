@@ -20,6 +20,7 @@
 #include <QWidget>
 #include <QPoint>
 #include <QDateTime>
+#include <QMenu>
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5 // why the hell is this a thing? surely the different font is enough?
@@ -31,6 +32,7 @@ class CroppingLabel;
 class ChatTextEdit;
 class ChatAreaWidget;
 class MaskablePixmapWidget;
+class ChatAction;
 
 namespace Ui {
     class MainWindow;
@@ -44,11 +46,11 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    void addMessage(QString author, QString message, bool isAction = false, QDateTime datetime=QDateTime::currentDateTime());
-    void addAlertMessage(QString author, QString message, QDateTime datetime=QDateTime::currentDateTime());
-    void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime=QDateTime::currentDateTime());
+    void addMessage(const QString &author, const QString &message, bool isAction, const QDateTime &datetime);
+    void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
+    void addAlertMessage(QString author, QString message, QDateTime datetime);
     int getNumberOfMessages();
-    
+
 signals:
     void sendMessage(int, QString);
     void sendAction(int, QString);
@@ -61,10 +63,14 @@ protected slots:
     void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
+    void clearChatArea(bool);
 
 protected:
     QString getElidedName(const QString& name);
+    ChatAction* genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime);
+    ChatAction* genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);
 
+    QMenu menu;
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;
@@ -75,6 +81,7 @@ protected:
     QString previousName;
     ChatAreaWidget *chatWidget;
     int curRow;
+    QDateTime *earliestMessage;
 };
 
 #endif // GENERICCHATFORM_H

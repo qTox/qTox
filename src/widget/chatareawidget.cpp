@@ -152,6 +152,7 @@ QTextTable *ChatAreaWidget::getMsgTable()
 
     QTextCursor tc = textCursor();
     tc.movePosition(QTextCursor::End);
+
     QTextTable *chatTextTable = tc.insertTable(1, 5, *tableFrmt);
 
     return chatTextTable;
@@ -166,4 +167,25 @@ void ChatAreaWidget::setNameColWidth(int w)
     }
 
     nameWidth = w;
+}
+
+void ChatAreaWidget::clearChatArea()
+{
+    QList<ChatAction*> newMsgs;
+    for (ChatAction* message : messages)
+    {
+        if (message->isInteractive())
+        {
+            newMsgs.append(message);
+        } else {
+            delete message;
+        }
+    }
+    messages.clear();
+    this->clear();
+
+    for (ChatAction* message : newMsgs)
+    {
+        insertMessage(message);
+    }
 }

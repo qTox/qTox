@@ -33,6 +33,7 @@ public:
     virtual QString getName();
     virtual QString getMessage() = 0;
     virtual QString getDate();
+    virtual bool isInteractive(){return false;}
 
 protected:
     QString toHtmlChars(const QString &str);

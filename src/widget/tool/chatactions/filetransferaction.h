@@ -27,6 +27,7 @@ public:
     virtual ~FileTransferAction();
     virtual QString getMessage();
     virtual void setup(QTextCursor cursor, QTextEdit* textEdit) override;
+    virtual bool isInteractive();
 
 private slots:
     void updateHtml();

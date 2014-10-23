@@ -14,24 +14,8 @@
     See the COPYING file for more details.
 */
 
-#ifndef SYSTEMMESSAGEACTION_H
-#define SYSTEMMESSAGEACTION_H
+#include "genericddinterface.h"
 
-#include "chataction.h"
-
-class SystemMessageAction : public ChatAction
+GenericDdInterface::~GenericDdInterface()
 {
-public:
-    SystemMessageAction(const QString &message, const QString& type, const QString &date);
-    virtual ~SystemMessageAction(){;}
-    virtual void setup(QTextCursor, QTextEdit*) override {;}
-
-    virtual QString getName() {return QString();}
-    virtual QString getMessage();
-
-private:
-    QString message;
-    QString type;
-};
-
-#endif // SYSTEMMESSAGEACTION_H
+}

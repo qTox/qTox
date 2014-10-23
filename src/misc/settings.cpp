@@ -152,6 +152,9 @@ void Settings::load()
 
     s.beginGroup("Privacy");
         typingNotification = s.value("typingNotification", false).toBool();
+        enableLogging = s.value("enableLogging", false).toBool();
+        encryptLogs = s.value("encryptLogs", false).toBool();
+        encryptTox = s.value("encryptTox", false).toBool();
     s.endGroup();
 
     s.beginGroup("AutoAccept");
@@ -268,6 +271,9 @@ void Settings::save(QString path)
 
     s.beginGroup("Privacy");
         s.setValue("typingNotification", typingNotification);
+        s.setValue("enableLogging", enableLogging);
+        s.setValue("encryptLogs", encryptLogs);
+        s.setValue("encryptTox", encryptTox);
     s.endGroup();
 
     s.beginGroup("AutoAccept");
@@ -504,6 +510,16 @@ bool Settings::getEncryptLogs() const
 void Settings::setEncryptLogs(bool newValue)
 {
     encryptLogs = newValue;
+}
+
+bool Settings::getEncryptTox() const
+{
+    return encryptTox;
+}
+
+void Settings::setEncryptTox(bool newValue)
+{
+    encryptTox = newValue;
 }
 
 int Settings::getAutoAwayTime() const

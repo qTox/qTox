@@ -74,15 +74,15 @@ void FileTransferAction::updateHtml()
 
     // restore old slider value
     edit->verticalScrollBar()->setValue(vSliderVal);
+}
 
-    // Free our ressources if we'll never need to update again
+bool FileTransferAction::isInteractive()
+{
     if (w->getState() == FileTransferInstance::TransfState::tsCanceled
             || w->getState() == FileTransferInstance::TransfState::tsFinished)
     {
-        name.clear();
-        name.squeeze();
-        date.clear();
-        date.squeeze();
-        cur = QTextCursor();
+        return false;
     }
+
+    return true;
 }

@@ -14,24 +14,23 @@
     See the COPYING file for more details.
 */
 
-#ifndef SYSTEMMESSAGEACTION_H
-#define SYSTEMMESSAGEACTION_H
+#include "loadhistorydialog.h"
+#include "ui_loadhistorydialog.h"
 
-#include "chataction.h"
-
-class SystemMessageAction : public ChatAction
+LoadHistoryDialog::LoadHistoryDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::LoadHistoryDialog)
 {
-public:
-    SystemMessageAction(const QString &message, const QString& type, const QString &date);
-    virtual ~SystemMessageAction(){;}
-    virtual void setup(QTextCursor, QTextEdit*) override {;}
+    ui->setupUi(this);
+}
 
-    virtual QString getName() {return QString();}
-    virtual QString getMessage();
+LoadHistoryDialog::~LoadHistoryDialog()
+{
+    delete ui;
+}
 
-private:
-    QString message;
-    QString type;
-};
-
-#endif // SYSTEMMESSAGEACTION_H
+QDateTime LoadHistoryDialog::getFromDate()
+{
+    QDateTime res(ui->fromDate->selectedDate());
+    return res;
+}

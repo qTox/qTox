@@ -14,24 +14,23 @@
     See the COPYING file for more details.
 */
 
-#ifndef SYSTEMMESSAGEACTION_H
-#define SYSTEMMESSAGEACTION_H
+#ifndef PLAINDB_H
+#define PLAINDB_H
 
-#include "chataction.h"
+#include "genericddinterface.h"
 
-class SystemMessageAction : public ChatAction
+#include <QSqlDatabase>
+
+class PlainDb : public GenericDdInterface
 {
 public:
-    SystemMessageAction(const QString &message, const QString& type, const QString &date);
-    virtual ~SystemMessageAction(){;}
-    virtual void setup(QTextCursor, QTextEdit*) override {;}
+    PlainDb(const QString &db_name, QList<QString> initList);
+    virtual ~PlainDb();
 
-    virtual QString getName() {return QString();}
-    virtual QString getMessage();
+    virtual QSqlQuery exec(const QString &query);
 
 private:
-    QString message;
-    QString type;
+    QSqlDatabase *db;
 };
 
-#endif // SYSTEMMESSAGEACTION_H
+#endif // PLAINDB_H

@@ -14,24 +14,34 @@
     See the COPYING file for more details.
 */
 
-#ifndef SYSTEMMESSAGEACTION_H
-#define SYSTEMMESSAGEACTION_H
+#ifndef ENCRYPTEDDB_H
+#define ENCRYPTEDDB_H
 
-#include "chataction.h"
+#include "plaindb.h"
 
-class SystemMessageAction : public ChatAction
+#include <QList>
+#include <QFile>
+
+class EncryptedDb : public PlainDb
 {
 public:
-    SystemMessageAction(const QString &message, const QString& type, const QString &date);
-    virtual ~SystemMessageAction(){;}
-    virtual void setup(QTextCursor, QTextEdit*) override {;}
+    EncryptedDb(const QString& fname, QList<QString> initList);
+    virtual ~EncryptedDb();
 
-    virtual QString getName() {return QString();}
-    virtual QString getMessage();
+    virtual QSqlQuery exec(const QString &query);
+    static bool check(const QString &fname);
 
 private:
-    QString message;
-    QString type;
+    bool pullFileContent();
+    void appendToEncrypted(const QString &sql);
+
+    QFile encrFile;
+
+    static qint64 plainChunkSize;
+    static qint64 encryptedChunkSize;
+
+    qint64 chunkPosition;
+    QByteArray buffer;
 };
 
-#endif // SYSTEMMESSAGEACTION_H
+#endif // ENCRYPTEDDB_H

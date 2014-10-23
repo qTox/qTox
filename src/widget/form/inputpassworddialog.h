@@ -14,24 +14,27 @@
     See the COPYING file for more details.
 */
 
-#ifndef SYSTEMMESSAGEACTION_H
-#define SYSTEMMESSAGEACTION_H
+#ifndef INPUTPASSWORDDIALOG_H
+#define INPUTPASSWORDDIALOG_H
 
-#include "chataction.h"
+#include <QDialog>
 
-class SystemMessageAction : public ChatAction
+namespace Ui {
+class InputPasswordDialog;
+}
+
+class InputPasswordDialog : public QDialog
 {
-public:
-    SystemMessageAction(const QString &message, const QString& type, const QString &date);
-    virtual ~SystemMessageAction(){;}
-    virtual void setup(QTextCursor, QTextEdit*) override {;}
+    Q_OBJECT
 
-    virtual QString getName() {return QString();}
-    virtual QString getMessage();
+public:
+    explicit InputPasswordDialog(QString title = QString(), QWidget *parent = 0);
+    ~InputPasswordDialog();
+
+    QString getPassword();
 
 private:
-    QString message;
-    QString type;
+    Ui::InputPasswordDialog *ui;
 };
 
-#endif // SYSTEMMESSAGEACTION_H
+#endif // INPUTPASSWORDDIALOG_H
