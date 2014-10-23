@@ -61,6 +61,9 @@
         <property name="text">
          <string>Encrypt History</string>
         </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
      </layout>
