@@ -1173,7 +1173,7 @@ bool Core::loadConfiguration(QString path)
         {
             while (!isPasswordSet(ptHistory))
             {
-                emit blockingGetPassword(tr("History Log decpytion password"), Core::ptHistory);
+                emit blockingGetPassword(tr("History Log decryption password"), Core::ptHistory);
                 if (!isPasswordSet(ptHistory))
                     Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
             }
