@@ -53,18 +53,25 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     msgEdit = new ChatTextEdit();
 
     sendButton = new QPushButton();
+    sendButton->setToolTip(tr("Send message"));
     emoteButton = new QPushButton();
+    emoteButton->setToolTip(tr("Smileys"));
 
     // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
     fileButton = new QPushButton();
+    fileButton->setToolTip(tr("Send a file"));
     callButton = new QPushButton();
     callButton->setFixedSize(50,40);
+    callButton->setToolTip(tr("Audio call"));
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
+    videoButton->setToolTip(tr("Video call"));
     volButton = new QPushButton();
     volButton->setFixedSize(25,20);
+    volButton->setToolTip(tr("Toggle speakers volume"));
     micButton = new QPushButton();
     micButton->setFixedSize(25,20);
+    micButton->setToolTip(tr("Toggle microphone"));
 
     footButtonsSmall->setSpacing(2);
 
