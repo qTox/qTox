@@ -78,11 +78,6 @@ private:
     QThread* workerThread;
     CameraWorker* worker;
 
-    QList<QSize> resolutions;
-
-    static Camera* instance;
-    bool needsInit;
-
 private slots:
     void onNewFrameAvailable(const VideoFrame frame);
 

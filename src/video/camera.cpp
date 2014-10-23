@@ -20,8 +20,6 @@
 #include <QThread>
 #include <QMutexLocker>
 
-Camera* Camera::instance = nullptr;
-
 Camera::Camera()
     : refcount(0)
     , workerThread(nullptr)
@@ -150,8 +148,7 @@ void Camera::onNewFrameAvailable(const VideoFrame frame)
 
 Camera* Camera::getInstance()
 {
-    if (!instance)
-        instance = new Camera();
+    static Camera instance;
 
-    return instance;
+    return &instance;
 }
