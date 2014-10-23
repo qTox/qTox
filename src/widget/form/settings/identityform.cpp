@@ -36,6 +36,7 @@ IdentityForm::IdentityForm() :
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
+    core = Core::getInstance();
 
     // tox
     toxId = new ClickableTE();
@@ -47,7 +48,7 @@ IdentityForm::IdentityForm() :
     
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(Core::getInstance(), &Core::idSet, this, &IdentityForm::setToxId);
+    connect(core, &Core::idSet, this, &IdentityForm::setToxId);
     connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
     connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
     connect(bodyUI->loadButton, &QPushButton::clicked, this, &IdentityForm::onLoadClicked);
@@ -56,6 +57,16 @@ IdentityForm::IdentityForm() :
     connect(bodyUI->deleteButton, &QPushButton::clicked, this, &IdentityForm::onDeleteClicked);
     connect(bodyUI->importButton, &QPushButton::clicked, this, &IdentityForm::onImportClicked);
     connect(bodyUI->newButton, &QPushButton::clicked, this, &IdentityForm::onNewClicked);
+
+    connect(core, &Core::avStart, this, &IdentityForm::disableSwitching);
+    connect(core, &Core::avStarting, this, &IdentityForm::disableSwitching);
+    connect(core, &Core::avInvite, this, &IdentityForm::disableSwitching);
+    connect(core, &Core::avRinging, this, &IdentityForm::disableSwitching);
+    connect(core, &Core::avCancel, this, &IdentityForm::enableSwitching);
+    connect(core, &Core::avEnd, this, &IdentityForm::enableSwitching);
+    connect(core, &Core::avEnding, this, &IdentityForm::enableSwitching);
+    connect(core, &Core::avPeerTimeout, this, &IdentityForm::enableSwitching);
+    connect(core, &Core::avRequestTimeout, this, &IdentityForm::enableSwitching);
 
     connect(Core::getInstance(), &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(Core::getInstance(), &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
@@ -202,4 +213,19 @@ bool IdentityForm::checkContinue(const QString& title, const QString& msg)
 {
     QMessageBox::StandardButton resp = QMessageBox::question(this, title, msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     return resp == QMessageBox::Yes;
+}
+
+void IdentityForm::disableSwitching()
+{
+    bodyUI->loadButton->setEnabled(false);
+    bodyUI->newButton->setEnabled(false);
+}
+
+void IdentityForm::enableSwitching()
+{
+    if (!core->anyActiveCalls())
+    {
+        bodyUI->loadButton->setEnabled(true);
+        bodyUI->newButton->setEnabled(true);
+    }
 }
