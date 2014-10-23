@@ -4,7 +4,7 @@
 #define TOXAV_MAX_CALLS 16
 #define GROUPCHAT_MAX_SIZE 32
 #define TOX_FILE_INTERVAL 0
-#define TOXAV_RINGING_TIME 15
+#define TOXAV_RINGING_TIME 45
 
 // TODO: Put that in the settings
 #define TOXAV_MAX_VIDEO_WIDTH 1600
