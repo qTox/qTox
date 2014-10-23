@@ -19,6 +19,8 @@
 
 #include <QFileInfo>
 #include <QFile>
+#include <QFont>
+#include <QFontInfo>
 #include <QIcon>
 #include <QPixmap>
 #include <QDir>
@@ -178,7 +180,7 @@ QList<QStringList> SmileyPack::getEmoticons() const
 
 QString SmileyPack::getAsRichText(const QString &key)
 {
-    return "<img src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
+    return "<img height=\""%QString().setNum(QFontInfo(QFont()).pixelSize())%"\" src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
 }
 
 QIcon SmileyPack::getAsIcon(const QString &key)
