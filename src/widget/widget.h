@@ -19,6 +19,7 @@
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QMessageBox>
 #include "form/addfriendform.h"
 #include "form/settingswidget.h"
 #include "form/settings/identityform.h"
@@ -63,6 +64,8 @@ public:
     void clearContactsList();
     void setIdleTimer(int minutes);
     void setTranslation();
+    Q_INVOKABLE QMessageBox::StandardButton showWarningMsgBox(const QString& title, const QString& msg,
+                                              QMessageBox::StandardButtons buttonss = QMessageBox::Ok);
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);

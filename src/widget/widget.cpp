@@ -1040,3 +1040,21 @@ void Widget::getPassword(QString info, int passtype)
             core->setPassword(pswd, pt);
     }
 }
+
+QMessageBox::StandardButton Widget::showWarningMsgBox(const QString& title, const QString& msg, QMessageBox::StandardButtons buttons)
+{
+    // We can only display widgets from the GUI thread
+    if (QThread::currentThread() != qApp->thread())
+    {
+        QMessageBox::StandardButton ret;
+        QMetaObject::invokeMethod(this, "showWarningMsgBox", Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QMessageBox::StandardButton, ret),
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
+                                  Q_ARG(QMessageBox::StandardButtons, buttons));
+        return ret;
+    }
+    else
+    {
+        return QMessageBox::warning(this, title, msg, buttons);
+    }
+}

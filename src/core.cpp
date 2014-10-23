@@ -1106,7 +1106,7 @@ bool Core::loadConfiguration(QString path)
         {
             emit blockingGetPassword(tr("Tox datafile decryption password"), ptMain);
             if (!isPasswordSet(ptMain))
-                QMessageBox::warning(nullptr, tr("Password error"), tr("Failed to setup password.\nEmpty password."));
+                Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
         }
     }
 
@@ -1126,7 +1126,7 @@ bool Core::loadConfiguration(QString path)
                 {
                     emit blockingGetPassword(tr("Tox datafile decryption password"), ptMain);
                     if (!isPasswordSet(ptMain))
-                        QMessageBox::warning(nullptr, tr("Password error"), tr("Failed to setup password.\nEmpty password."));
+                        Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
                 }
 
                 error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(),
@@ -1134,6 +1134,7 @@ bool Core::loadConfiguration(QString path)
                 if (error != 0)
                 {
                     QMessageBox msgb;
+                    msgb.moveToThread(qApp->thread());
                     QPushButton *tryAgain = msgb.addButton(tr("Try Again"), QMessageBox::AcceptRole);
                     QPushButton *cancel = msgb.addButton(tr("Change profile"), QMessageBox::RejectRole);
                     QPushButton *wipe = msgb.addButton(tr("Reinit current profile"), QMessageBox::ActionRole);
@@ -1174,12 +1175,12 @@ bool Core::loadConfiguration(QString path)
             {
                 emit blockingGetPassword(tr("History Log decpytion password"), Core::ptHistory);
                 if (!isPasswordSet(ptHistory))
-                    QMessageBox::warning(nullptr, tr("Password error"), tr("Failed to setup password.\nEmpty password."));
+                    Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
             }
 
             if (!HistoryKeeper::checkPassword())
             {
-                if (QMessageBox::Ok == QMessageBox::warning(nullptr, tr("Encrypted log"),
+                if (QMessageBox::Ok == Widget::getInstance()->showWarningMsgBox(tr("Encrypted log"),
                                                             tr("Your history encrypted with different password\nDo you want to try another password?"),
                                                             QMessageBox::Ok | QMessageBox::Cancel))
                 {
@@ -1188,7 +1189,7 @@ bool Core::loadConfiguration(QString path)
                 } else {
                     error = false;
                     clearPassword(ptHistory);
-                    QMessageBox::warning(nullptr, tr("Loggin"), tr("Due to incorret password logging will be disabled"));
+                    Widget::getInstance()->showWarningMsgBox(tr("Loggin"), tr("Due to incorret password logging will be disabled"));
                     Settings::getInstance().setEncryptLogs(false);
                     Settings::getInstance().setEnableLogging(false);
                 }
@@ -1275,7 +1276,7 @@ void Core::saveConfiguration(const QString& path)
             if (!isPasswordSet(ptMain))
             {
                 // probably zero chance event
-                QMessageBox::warning(nullptr, tr("NO Password"), tr("Will be saved without encryption!"));
+                Widget::getInstance()->showWarningMsgBox(tr("NO Password"), tr("Will be saved without encryption!"));
                 tox_save(tox, data);
             } else {
                 int ret = tox_encrypted_save(tox, data, reinterpret_cast<uint8_t *>(barePassword[ptMain].data()),
