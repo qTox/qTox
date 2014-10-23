@@ -40,6 +40,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     nameLabel = new CroppingLabel();
     nameLabel->setObjectName("nameLabel");
+    nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     QHBoxLayout *headLayout = new QHBoxLayout(), *mainFootLayout = new QHBoxLayout();
@@ -54,11 +55,16 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     sendButton = new QPushButton();
     emoteButton = new QPushButton();
 
+    // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
     fileButton = new QPushButton();
     callButton = new QPushButton();
+    callButton->setFixedSize(50,40);
     videoButton = new QPushButton();
+    videoButton->setFixedSize(50,40);
     volButton = new QPushButton();
+    volButton->setFixedSize(25,20);
     micButton = new QPushButton();
+    micButton->setFixedSize(25,20);
 
     footButtonsSmall->setSpacing(2);
 

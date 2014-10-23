@@ -52,12 +52,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel = new CroppingLabel();
     statusMessageLabel->setObjectName("statusLabel");
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
+    statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
 
     netcam = new NetCamView();
 
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
-    headTextLayout->setSpacing(0);
 
     menu.addAction(tr("Load History..."), this, SLOT(onLoadHistory()));
 
