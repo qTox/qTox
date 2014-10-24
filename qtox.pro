@@ -49,7 +49,7 @@ TRANSLATIONS = translations/de.ts \
 
 RESOURCES += res.qrc
 
-GIT_VERSION = $$system(git rev-parse HEAD)
+GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "(built without git)")
 DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
 
 contains(JENKINS,YES) {
