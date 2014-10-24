@@ -79,13 +79,25 @@ void CameraWorker::probeResolutions()
     {
         subscribe();
 
-        // probe resolutions (TODO: add more)
+        // probe resolutions
         QList<QSize> propbeRes = {
             QSize( 160, 120), // QQVGA
             QSize( 320, 240), // HVGA
-            QSize(1024, 768), // XGA
             QSize( 432, 240), // WQVGA
             QSize( 640, 360), // nHD
+            QSize( 640, 480),
+            QSize( 800, 600),
+            QSize( 960, 640),
+            QSize(1024, 768), // XGA
+            QSize(1280, 720),
+            QSize(1280, 1024),
+            QSize(1360, 768),
+            QSize(1366, 768),
+            QSize(1400, 1050),
+            QSize(1440, 900),
+            QSize(1600, 1200),
+            QSize(1680, 1050),
+            QSize(1920, 1200),
         };
 
         for (QSize res : propbeRes)
@@ -105,7 +117,7 @@ void CameraWorker::probeResolutions()
         unsubscribe();
     }
 
-    qDebug() << resolutions;
+    qDebug() << "Camera resolutions:" << resolutions;
 
     emit resProbingFinished(resolutions);
 }
