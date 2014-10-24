@@ -26,6 +26,7 @@ Camera::Camera()
     : refcount(0)
     , workerThread(nullptr)
     , worker(nullptr)
+    , needsInit(true)
 {
     worker = new CameraWorker(0);
     workerThread = new QThread();
@@ -34,15 +35,9 @@ Camera::Camera()
 
     connect(workerThread, &QThread::started, worker, &CameraWorker::onStart);
     connect(workerThread, &QThread::finished, worker, &CameraWorker::deleteLater);
-    connect(worker, &CameraWorker::started, this, &Camera::onWorkerStarted);
     connect(worker, &CameraWorker::newFrameAvailable, this, &Camera::onNewFrameAvailable);
     connect(worker, &CameraWorker::resProbingFinished, this, &Camera::onResProbingFinished);
     workerThread->start();
-}
-
-void Camera::onWorkerStarted()
-{
-    worker->probeResolutions();
 }
 
 Camera::~Camera()
@@ -53,6 +48,12 @@ Camera::~Camera()
 
 void Camera::subscribe()
 {
+    if (needsInit)
+    {
+        worker->probeResolutions();
+        needsInit = false;
+    }
+
     if (refcount <= 0)
         worker->resume();
 

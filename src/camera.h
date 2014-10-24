@@ -75,9 +75,9 @@ private:
     QList<QSize> resolutions;
 
     static Camera* instance;
+    bool needsInit;
 
 private slots:
-    void onWorkerStarted();
     void onNewFrameAvailable(const VideoFrame frame);
     void onResProbingFinished(QList<QSize> res);
 
