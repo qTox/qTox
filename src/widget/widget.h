@@ -122,7 +122,7 @@ private slots:
     void playRingtone();
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAway();
-    void getPassword(QString info, int passtype);
+    void getPassword(QString info, int passtype, uint8_t* salt);
 
 private:
     void init();
