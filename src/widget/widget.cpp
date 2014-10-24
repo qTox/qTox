@@ -1027,7 +1027,7 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         g->chatForm->addSystemInfoMessage("Message failed to send", "red", QDateTime::currentDateTime());
 }
 
-void Widget::getPassword(QString info, int passtype)
+void Widget::getPassword(QString info, int passtype, uint8_t* salt)
 {
     Core::PasswordType pt = static_cast<Core::PasswordType>(passtype);
     InputPasswordDialog dialog(info);
@@ -1037,7 +1037,7 @@ void Widget::getPassword(QString info, int passtype)
         if (pswd.isEmpty())
             core->clearPassword(pt);
         else
-            core->setPassword(pswd, pt);
+            core->setPassword(pswd, pt, salt);
     }
 }
 

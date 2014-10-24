@@ -109,7 +109,7 @@ public slots:
 
     void micMuteToggle(int callId);
 
-    void setPassword(QString& password, PasswordType passtype);
+    void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
     void clearPassword(PasswordType passtype);
     QByteArray encryptData(const QByteArray& data, PasswordType passtype);
     QByteArray decryptData(const QByteArray& data, PasswordType passtype);
@@ -118,7 +118,7 @@ signals:
     void connected();
     void disconnected();
     void blockingClearContacts();
-    void blockingGetPassword(QString info, int passtype);
+    void blockingGetPassword(QString info, int passtype, uint8_t* salt = nullptr);
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);
@@ -255,8 +255,7 @@ private:
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
 
-    uint8_t* pwsaltedkey[PasswordType::ptCounter]; // use the pw's hash as the "pw"
-    QByteArray barePassword[PasswordType::ptCounter]; // to be deleted after tox_pass_key_decrypt/tox_pass_key_encrypt fix
+    uint8_t* pwsaltedkeys[PasswordType::ptCounter]; // use the pw's hash as the "pw"
 
     static const int videobufsize;
     static uint8_t* videobuf;

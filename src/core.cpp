@@ -54,7 +54,7 @@ Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     videoBusyness=0;
 
     for (int i = 0; i < ptCounter; i++)
-        pwsaltedkey[i] = nullptr;
+        pwsaltedkeys[i] = nullptr;
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -1102,10 +1102,10 @@ bool Core::loadConfiguration(QString path)
 
     if (Settings::getInstance().getEncryptTox())
     {
-        while (!isPasswordSet(ptMain))
+        while (!pwsaltedkeys[ptMain])
         {
             emit blockingGetPassword(tr("Tox datafile decryption password"), ptMain);
-            if (!isPasswordSet(ptMain))
+            if (!pwsaltedkeys[ptMain])
                 Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
         }
     }
@@ -1120,17 +1120,18 @@ bool Core::loadConfiguration(QString path)
         }
         else if (error == 1) // Encrypted data save
         {
+            uint8_t salt[tox_pass_salt_length()];
+            tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
             do
             {
-                while (!isPasswordSet(ptMain))
+                while (!pwsaltedkeys[ptMain])
                 {
-                    emit blockingGetPassword(tr("Tox datafile decryption password"), ptMain);
-                    if (!isPasswordSet(ptMain))
+                    emit blockingGetPassword(tr("Tox datafile decryption password"), ptMain, salt);
+                    if (!pwsaltedkeys[ptMain])
                         Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
                 }
 
-                error = tox_encrypted_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(),
-                                           reinterpret_cast<uint8_t *>(barePassword[ptMain].data()), barePassword[ptMain].size());
+                error = tox_encrypted_key_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwsaltedkeys[ptMain]);
                 if (error != 0)
                 {
                     QMessageBox msgb;
@@ -1146,59 +1147,24 @@ bool Core::loadConfiguration(QString path)
                     msgb.exec();
 
                     if (msgb.clickedButton() == tryAgain)
-                    {
                         clearPassword(ptMain);
-                    } else if (msgb.clickedButton() == cancel)
+                    else if (msgb.clickedButton() == cancel)
                     {
                         configurationFile.close();
                         return false;
-                    } else if (msgb.clickedButton() == wipe)
+                    }
+                    else if (msgb.clickedButton() == wipe)
                     {
                         clearPassword(ptMain);
                         Settings::getInstance().setEncryptTox(false);
                         error = 0;
                     }
-                } else {
-                    Settings::getInstance().setEncryptTox(true);
                 }
+                else
+                    Settings::getInstance().setEncryptTox(true);
             } while (error != 0);
         }
     }
-
-    // tox core is already decrypted
-    if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
-    {
-        bool error = true;
-        do
-        {
-            while (!isPasswordSet(ptHistory))
-            {
-                emit blockingGetPassword(tr("History Log decryption password"), Core::ptHistory);
-                if (!isPasswordSet(ptHistory))
-                    Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
-            }
-
-            if (!HistoryKeeper::checkPassword())
-            {
-                if (QMessageBox::Ok == Widget::getInstance()->showWarningMsgBox(tr("Encrypted log"),
-                                                            tr("Your history encrypted with different password\nDo you want to try another password?"),
-                                                            QMessageBox::Ok | QMessageBox::Cancel))
-                {
-                    error = true;
-                    clearPassword(ptHistory);
-                } else {
-                    error = false;
-                    clearPassword(ptHistory);
-                    Widget::getInstance()->showWarningMsgBox(tr("Loggin"), tr("Due to incorret password logging will be disabled"));
-                    Settings::getInstance().setEncryptLogs(false);
-                    Settings::getInstance().setEnableLogging(false);
-                }
-            } else {
-                error = false;
-            }
-        } while (error);
-    }
-
     configurationFile.close();
 
     // set GUI with user and statusmsg
@@ -1213,6 +1179,58 @@ bool Core::loadConfiguration(QString path)
     QString id = getSelfId().toString();
     if (!id.isEmpty())
         emit idSet(id);
+
+    // tox core is already decrypted
+    if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
+    {
+        bool error = true;
+        
+        // get salt
+        QFile file(HistoryKeeper::getHistoryPath());
+        file.open(QIODevice::ReadOnly);
+        QByteArray data = file.read(tox_pass_encryption_extra_length());
+        file.close();
+        uint8_t salt[tox_pass_salt_length()];
+        int err = tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
+        if (err)
+        {   // maybe we should handle this better
+            qWarning() << "Core: history db isn't encrypted, but encryption is set!! No history loaded...";
+            error = false;
+        }
+        else
+        {
+            do
+            {
+                while (!pwsaltedkeys[ptHistory])
+                {
+                    emit blockingGetPassword(tr("History Log decryption password"), Core::ptHistory, salt);
+                    if (!pwsaltedkeys[ptHistory])
+                        Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
+                }
+
+                if (!HistoryKeeper::checkPassword())
+                {
+                    if (QMessageBox::Ok == Widget::getInstance()->showWarningMsgBox(tr("Encrypted log"),
+                                                                tr("Your history is encrypted with different password\nDo you want to try another password?"),
+                                                                QMessageBox::Ok | QMessageBox::Cancel))
+                    {
+                        error = true;
+                        clearPassword(ptHistory);
+                    }
+                    else
+                    {
+                        error = false;
+                        clearPassword(ptHistory);
+                        Widget::getInstance()->showWarningMsgBox(tr("Loggin"), tr("Due to incorret password logging will be disabled"));
+                        Settings::getInstance().setEncryptLogs(false);
+                        Settings::getInstance().setEnableLogging(false);
+                    }
+                } else {
+                    error = false;
+                }
+            } while (error);
+        }
+    }
 
     loadFriends();
     return true;
@@ -1262,8 +1280,8 @@ void Core::saveConfiguration(const QString& path)
 
     qDebug() << "Core: writing tox_save to " << path;
 
-    uint32_t fileSize;
-    if (Settings::getInstance().getEncryptTox())
+    uint32_t fileSize; bool encrypt = Settings::getInstance().getEncryptTox();
+    if (encrypt)
         fileSize = tox_encrypted_size(tox);
     else
         fileSize = tox_size(tox);
@@ -1271,25 +1289,26 @@ void Core::saveConfiguration(const QString& path)
     if (fileSize > 0 && fileSize <= INT32_MAX) {
         uint8_t *data = new uint8_t[fileSize];
 
-        if (Settings::getInstance().getEncryptTox())
+        if (encrypt)
         {
-            if (!isPasswordSet(ptMain))
+            if (!pwsaltedkeys[ptMain])
             {
                 // probably zero chance event
                 Widget::getInstance()->showWarningMsgBox(tr("NO Password"), tr("Will be saved without encryption!"));
                 tox_save(tox, data);
-            } else {
-                int ret = tox_encrypted_save(tox, data, reinterpret_cast<uint8_t *>(barePassword[ptMain].data()),
-                                             barePassword[ptMain].size());
+            }
+            else
+            {
+                int ret = tox_encrypted_key_save(tox, data, pwsaltedkeys[ptMain]);
                 if (ret == -1)
                 {
                     qCritical() << "Core::saveConfiguration: encryption of save file failed!!!";
                     return;
                 }
             }
-        } else {
-            tox_save(tox, data);
         }
+        else
+            tox_save(tox, data);
 
         configurationFile.write(reinterpret_cast<char *>(data), fileSize);
         configurationFile.commit();
@@ -1605,43 +1624,41 @@ QList<CString> Core::splitMessage(const QString &message)
     return splittedMsgs;
 }
 
-void Core::setPassword(QString& password, PasswordType passtype)
+void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
 {
     if (password.isEmpty())
     {
         clearPassword(passtype);
         return;
     }
-    if (!pwsaltedkey[passtype])
-        pwsaltedkey[passtype] = new uint8_t[tox_pass_key_length()];
+    if (!pwsaltedkeys[passtype])
+        pwsaltedkeys[passtype] = new uint8_t[tox_pass_key_length()];
 
     CString str(password);
-    tox_derive_key_from_pass(str.data(), str.size(), pwsaltedkey[passtype]);
-
-    barePassword[passtype].clear();
-    barePassword[passtype].append(password);
+    if (salt)
+        tox_derive_key_with_salt(str.data(), str.size(), salt, pwsaltedkeys[passtype]);
+    else
+        tox_derive_key_from_pass(str.data(), str.size(), pwsaltedkeys[passtype]);
 
     password.clear();
 }
 
 void Core::clearPassword(PasswordType passtype)
 {
-    if (pwsaltedkey[passtype])
+    if (pwsaltedkeys[passtype])
     {
-        delete[] pwsaltedkey[passtype];
-        pwsaltedkey[passtype] = nullptr;
-        barePassword[passtype].clear();
+        delete[] pwsaltedkeys[passtype];
+        pwsaltedkeys[passtype] = nullptr;
     }
 }
 
 QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
 {
-    if (!pwsaltedkey[passtype])
+    if (!pwsaltedkeys[passtype])
         return QByteArray();
     uint8_t encrypted[data.size() + tox_pass_encryption_extra_length()];
-    // if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkey[passtype], encrypted) == -1)
-    if (tox_pass_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                         reinterpret_cast<uint8_t*>(barePassword[passtype].data()), barePassword[passtype].size(), encrypted) == -1)
+    // if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], encrypted) == -1)
+    if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], encrypted) == -1)
     {
         qWarning() << "Core::encryptData: encryption failed";
         return QByteArray();
@@ -1651,13 +1668,12 @@ QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
 
 QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
 {
-    if (!pwsaltedkey[passtype])
+    if (!pwsaltedkeys[passtype])
         return QByteArray();
     int sz = data.size() - tox_pass_encryption_extra_length();
     uint8_t decrypted[sz];
-    // if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkey[passtype], decrypted) != sz)
-    if (tox_pass_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                         reinterpret_cast<uint8_t*>(barePassword[passtype].data()), barePassword[passtype].size(), decrypted) != sz)
+    // if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], decrypted) != sz)
+    if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], decrypted) != sz)
     {
         qWarning() << "Core::decryptData: decryption failed";
         return QByteArray();
@@ -1667,7 +1683,7 @@ QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
 
 bool Core::isPasswordSet(PasswordType passtype)
 {
-    if (pwsaltedkey[passtype])
+    if (pwsaltedkeys[passtype])
         return true;
 
     return false;
