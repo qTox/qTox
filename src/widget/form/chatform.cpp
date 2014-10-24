@@ -588,18 +588,12 @@ void ChatForm::onLoadHistory()
         }
         previousName = storedPrevName;
 
-        for (ChatAction *ca : chatWidget->getMesages())
-            historyMessages.append(ca);
-
         int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
 
-        chatWidget->getMesages().clear();
-        chatWidget->clear();
         if (earliestMessage != nullptr)
             *earliestMessage = fromTime;
 
-        for (ChatAction *ca : historyMessages)
-            chatWidget->insertMessage(ca);
+        chatWidget->insertMessagesTop(historyMessages);
 
         savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
         chatWidget->verticalScrollBar()->setValue(savedSliderPos);

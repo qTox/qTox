@@ -29,8 +29,8 @@ class ChatAreaWidget : public QTextBrowser
 public:
     explicit ChatAreaWidget(QWidget *parent = 0);
     virtual ~ChatAreaWidget();
-    void insertMessage(ChatAction *msgAction);
-    QList<ChatAction*>& getMesages() {return messages;}
+    void insertMessage(ChatAction *msgAction, QTextCursor::MoveOperation pos = QTextCursor::End);
+    void insertMessagesTop(QList<ChatAction *> &list);
 
     int nameColWidth() {return nameWidth;}
     void setNameColWidth(int w);
@@ -51,7 +51,7 @@ private slots:
 
 private:
     void checkSlider();
-    QTextTable* getMsgTable();
+    QTextTable* getMsgTable(QTextCursor::MoveOperation pos = QTextCursor::End);
 
     QTextTableFormat* tableFrmt;
     QList<ChatAction*> messages;

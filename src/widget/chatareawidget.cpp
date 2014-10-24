@@ -22,6 +22,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QCoreApplication>
 #include <QDebug>
+#include <algorithm>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent)
     : QTextBrowser(parent)
@@ -96,14 +97,14 @@ void ChatAreaWidget::onAnchorClicked(const QUrl &url)
     QDesktopServices::openUrl(url);
 }
 
-void ChatAreaWidget::insertMessage(ChatAction *msgAction)
+void ChatAreaWidget::insertMessage(ChatAction *msgAction, QTextCursor::MoveOperation pos)
 {
     if (msgAction == nullptr)
         return;
 
     checkSlider();
 
-    QTextTable *chatTextTable = getMsgTable();
+    QTextTable *chatTextTable = getMsgTable(pos);
     QTextCursor cur = chatTextTable->cellAt(0, 2).firstCursorPosition();
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
@@ -115,7 +116,10 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
 
     msgAction->setup(cur, this);
 
-    messages.append(msgAction);
+    if (msgAction->isInteractive())
+        messages.append(msgAction);
+    else
+        delete msgAction;
 }
 
 int ChatAreaWidget::getNumberOfMessages()
@@ -136,7 +140,7 @@ void ChatAreaWidget::checkSlider()
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
 }
 
-QTextTable *ChatAreaWidget::getMsgTable()
+QTextTable *ChatAreaWidget::getMsgTable(QTextCursor::MoveOperation pos)
 {
     if (tableFrmt == nullptr)
     {
@@ -151,7 +155,7 @@ QTextTable *ChatAreaWidget::getMsgTable()
     }
 
     QTextCursor tc = textCursor();
-    tc.movePosition(QTextCursor::End);
+    tc.movePosition(pos);
 
     QTextTable *chatTextTable = tc.insertTable(1, 5, *tableFrmt);
 
@@ -187,5 +191,15 @@ void ChatAreaWidget::clearChatArea()
     for (ChatAction* message : newMsgs)
     {
         insertMessage(message);
+    }
+}
+
+void ChatAreaWidget::insertMessagesTop(QList<ChatAction*> &list)
+{
+    std::reverse(list.begin(), list.end());
+
+    for (ChatAction* it : list)
+    {
+        insertMessage(it, QTextCursor::Start);
     }
 }
