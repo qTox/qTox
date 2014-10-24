@@ -227,6 +227,7 @@ void Core::start()
     {
         if (!loadConfiguration(loadPath)) // loadPath is meaningless after this
 	    {
+            qCritical() << "Core: loadConfiguration failed, exiting now";
             emit failedToStart();
             tox_kill(tox);
             tox = nullptr;
