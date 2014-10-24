@@ -31,7 +31,6 @@ Camera::Camera()
     : refcount(0)
     , workerThread(nullptr)
     , worker(nullptr)
-    , needsInit(true)
 {
     worker = new CameraWorker(0);
     workerThread = new QThread();
