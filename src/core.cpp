@@ -1100,16 +1100,6 @@ bool Core::loadConfiguration(QString path)
         return true;
     }
 
-    if (Settings::getInstance().getEncryptTox())
-    {
-        while (!pwsaltedkeys[ptMain])
-        {
-            emit blockingGetPassword(tr("Tox datafile decryption password"), ptMain);
-            if (!pwsaltedkeys[ptMain])
-                Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
-        }
-    }
-
     qint64 fileSize = configurationFile.size();
     if (fileSize > 0) {
         QByteArray data = configurationFile.readAll();
@@ -1120,6 +1110,8 @@ bool Core::loadConfiguration(QString path)
         }
         else if (error == 1) // Encrypted data save
         {
+            if (!Settings::getInstance().getEncryptTox())
+                Widget::getInstance()->showWarningMsgBox(tr("Encryption error"), tr("The .tox file is encrypted, but encryption was not checked, continuing regardless."));
             uint8_t salt[tox_pass_salt_length()];
             tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
             do
