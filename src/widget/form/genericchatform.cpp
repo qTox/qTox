@@ -59,7 +59,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
     fileButton = new QPushButton();
-    fileButton->setToolTip(tr("Send a file"));
+    fileButton->setToolTip(tr("Send file(s)"));
     callButton = new QPushButton();
     callButton->setFixedSize(50,40);
     callButton->setToolTip(tr("Audio call"));
