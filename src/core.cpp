@@ -1649,7 +1649,6 @@ QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
     if (!pwsaltedkeys[passtype])
         return QByteArray();
     uint8_t encrypted[data.size() + tox_pass_encryption_extra_length()];
-    // if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], encrypted) == -1)
     if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], encrypted) == -1)
     {
         qWarning() << "Core::encryptData: encryption failed";
@@ -1664,7 +1663,6 @@ QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
         return QByteArray();
     int sz = data.size() - tox_pass_encryption_extra_length();
     uint8_t decrypted[sz];
-    // if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], decrypted) != sz)
     if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], decrypted) != sz)
     {
         qWarning() << "Core::decryptData: decryption failed";
