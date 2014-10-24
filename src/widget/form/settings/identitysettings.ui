@@ -114,6 +114,9 @@
               <property name="text">
                <string comment="load profile button">Load</string>
               </property>
+              <property name="toolTip">
+               <string comment="tooltip">Switching profiles is disabled during calls</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -155,6 +158,9 @@
              <widget class="QPushButton" name="newButton">
               <property name="text">
                <string comment="new profile button">New Tox ID</string>
+              </property>
+              <property name="toolTip">
+               <string comment="tooltip">Switching profiles is disabled during calls</string>
               </property>
              </widget>
             </item>

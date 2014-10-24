@@ -20,6 +20,7 @@
 #include "src/widget/widget.h"
 #include "src/misc/settings.h"
 #include "src/misc/smileypack.h"
+#include "src/core.h"
 #include <QMessageBox>
 #include <QStyleFactory>
 
@@ -85,6 +86,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);
     connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
+    connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
 }
 
 GeneralForm::~GeneralForm()
@@ -176,6 +178,15 @@ void GeneralForm::onUseProxyUpdated()
     bodyUI->proxyAddr->setEnabled(state);
     bodyUI->proxyPort->setEnabled(state);
     Settings::getInstance().setUseProxy(state);
+}
+
+void GeneralForm::onReconnectClicked()
+{
+    if (Core::getInstance()->anyActiveCalls())
+        QMessageBox::warning(this, tr("Call active", "popup title"),
+           tr("You can't disconnect while a call is active!", "popup text"));
+    else
+        emit Widget::getInstance()->changeProfile(Settings::getInstance().getCurrentProfile());
 }
 
 void GeneralForm::reloadSmiles()
