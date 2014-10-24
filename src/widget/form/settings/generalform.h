@@ -45,7 +45,7 @@ private slots:
     void onSetStatusChange();
     void onAutoAwayChanged();
     void onSetMinimizeToTray();
-    
+    void onReconnectClicked();
 
 private:
     Ui::GeneralSettings *bodyUI;

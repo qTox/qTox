@@ -341,6 +341,13 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="QPushButton" name="reconnectButton">
+            <property name="text">
+             <string comment="reconnect button">Reconnect</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
