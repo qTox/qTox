@@ -128,8 +128,8 @@ void Core::answerCall(int callId)
 void Core::hangupCall(int callId)
 {
     qDebug() << QString("Core: hanging up call %1").arg(callId);
-    toxav_hangup(toxav, callId);
     calls[callId].active = false;
+    toxav_hangup(toxav, callId);
 }
 
 void Core::startCall(int friendId, bool video)
@@ -157,20 +157,20 @@ void Core::startCall(int friendId, bool video)
 void Core::cancelCall(int callId, int friendId)
 {
     qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
-    toxav_cancel(toxav, callId, friendId, 0);
     calls[callId].active = false;
+    toxav_cancel(toxav, callId, friendId, 0);
 }
 
 void Core::cleanupCall(int callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
+    calls[callId].active = false;
     disconnect(calls[callId].sendAudioTimer,0,0,0);
     calls[callId].sendAudioTimer->stop();
     calls[callId].sendVideoTimer->stop();
     if (calls[callId].videoEnabled)
         Camera::getInstance()->unsubscribe();
     alcCaptureStop(alInDev);
-    calls[callId].active = false;
 }
 
 void Core::playCallAudio(ToxAv* toxav, int32_t callId, int16_t *data, int samples, void *user_data)
