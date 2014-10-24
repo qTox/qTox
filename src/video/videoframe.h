@@ -45,12 +45,12 @@ struct VideoFrame
         resolution = QSize(-1,-1);
     }
 
-    bool isValid()
+    bool isValid() const
     {
-        return !frameData.isEmpty() && resolution.isValid();
+        return !frameData.isEmpty() && resolution.isValid() && format != NONE;
     }
 
-    vpx_image_t createVpxImage();
+    vpx_image_t createVpxImage() const;
 };
 
 Q_DECLARE_METATYPE(VideoFrame)
