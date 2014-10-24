@@ -51,8 +51,8 @@ void NetVideoSource::pushVPXFrame(vpx_image *image)
         for (int x = 0; x < dw; ++x)
         {
             uint8_t Y = yData[x + y * bpl];
-            uint8_t U = uData[x/2 + y/2*cxbpl];
-            uint8_t V = vData[x/2 + y/2*cxbpl];
+            uint8_t U = uData[x/(1 << image->x_chroma_shift) + y/(1 << image->y_chroma_shift)*cxbpl];
+            uint8_t V = vData[x/(1 << image->x_chroma_shift) + y/(1 << image->y_chroma_shift)*cxbpl];
 
             frame.frameData.data()[dw * 3 * y + x * 3 + 0] = Y;
             frame.frameData.data()[dw * 3 * y + x * 3 + 1] = U;

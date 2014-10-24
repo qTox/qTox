@@ -15,7 +15,6 @@
 */
 
 #include "avform.h"
-#include "src/camera.h"
 #include "ui_avsettings.h"
 
 AVForm::AVForm() :
@@ -23,6 +22,9 @@ AVForm::AVForm() :
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
+
+    connect(Camera::getInstance(), &Camera::propProbingFinished, this, &AVForm::onPropProbingFinished);
+    connect(Camera::getInstance(), &Camera::resolutionProbingFinished, this, &AVForm::onResProbingFinished);
 }
 
 AVForm::~AVForm()
@@ -34,15 +36,12 @@ void AVForm::present()
 {
     bodyUI->CamVideoSurface->setSource(Camera::getInstance());
 
-    bodyUI->videoModescomboBox->clear();
-    QList<QSize> res = Camera::getInstance()->getSupportedResolutions();
-    for (QSize r : res)
-        bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())));
+    Camera::getInstance()->probeProp(Camera::SATURATION);
+    Camera::getInstance()->probeProp(Camera::CONTRAST);
+    Camera::getInstance()->probeProp(Camera::BRIGHTNESS);
+    Camera::getInstance()->probeProp(Camera::HUE);
 
-    bodyUI->ContrastSlider->setValue(Camera::getInstance()->getProp(Camera::CONTRAST)*100);
-    bodyUI->BrightnessSlider->setValue(Camera::getInstance()->getProp(Camera::BRIGHTNESS)*100);
-    bodyUI->SaturationSlider->setValue(Camera::getInstance()->getProp(Camera::SATURATION)*100);
-    bodyUI->HueSlider->setValue(Camera::getInstance()->getProp(Camera::HUE)*100);
+    Camera::getInstance()->probeResolutions();
 }
 
 void AVForm::on_ContrastSlider_sliderMoved(int position)
@@ -65,13 +64,39 @@ void AVForm::on_HueSlider_sliderMoved(int position)
     Camera::getInstance()->setProp(Camera::HUE, position / 100.0);
 }
 
-void AVForm::on_videoModescomboBox_currentIndexChanged(const QString &arg1)
+void AVForm::on_videoModescomboBox_activated(int index)
 {
-    QStringList resStr = arg1.split("x");
-    int w = resStr[0].toInt();
-    int h = resStr[0].toInt();
+    Camera::getInstance()->setResolution(bodyUI->videoModescomboBox->itemData(index).toSize());
+}
 
-    Camera::getInstance()->setResolution(QSize(w,h));
+void AVForm::onPropProbingFinished(Camera::Prop prop, double val)
+{
+    switch (prop)
+    {
+    case Camera::BRIGHTNESS:
+        bodyUI->BrightnessSlider->setValue(val*100);
+        break;
+    case Camera::CONTRAST:
+        bodyUI->ContrastSlider->setValue(val*100);
+        break;
+    case Camera::SATURATION:
+        bodyUI->SaturationSlider->setValue(val*100);
+        break;
+    case Camera::HUE:
+        bodyUI->HueSlider->setValue(val*100);
+        break;
+    default:
+        break;
+    }
+}
+
+void AVForm::onResProbingFinished(QList<QSize> res)
+{
+    bodyUI->videoModescomboBox->clear();
+    for (QSize r : res)
+        bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())), r);
+
+    bodyUI->videoModescomboBox->setCurrentIndex(bodyUI->videoModescomboBox->count()-1);
 }
 
 void AVForm::hideEvent(QHideEvent *)

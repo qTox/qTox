@@ -19,6 +19,7 @@
 
 #include "genericsettings.h"
 #include "src/widget/videosurface.h"
+#include "src/video/camera.h"
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -43,7 +44,11 @@ private slots:
     void on_SaturationSlider_sliderMoved(int position);
     void on_BrightnessSlider_sliderMoved(int position);
     void on_HueSlider_sliderMoved(int position);
-    void on_videoModescomboBox_currentIndexChanged(const QString &arg1);
+    void on_videoModescomboBox_activated(int index);
+
+    // camera
+    void onPropProbingFinished(Camera::Prop prop, double val);
+    void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*);
 

@@ -120,7 +120,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/friendlist.h \
     src/misc/cdata.h \
     src/misc/cstring.h \
-    src/camera.h \
+    src/video/camera.h \
     src/widget/netcamview.h \
     src/misc/smileypack.h \
     src/widget/emoticonswidget.h \
@@ -142,8 +142,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/tool/chatactions/actionaction.h \
     src/widget/tool/chatactions/alertaction.h \
     src/widget/maskablepixmapwidget.h \
-    src/videosource.h \
-    src/cameraworker.h \
+    src/video/videosource.h \
+    src/video/cameraworker.h \
     src/widget/videosurface.h \
     src/widget/form/loadhistorydialog.h \
     src/historykeeper.h \
@@ -152,7 +152,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/misc/db/encrypteddb.h \
     src/widget/form/inputpassworddialog.h \
     src/widget/form/setpassworddialog.h \
-    src/widget/form/tabcompleter.h
+    src/widget/form/tabcompleter.h \
+    src/video/videoframe.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -178,7 +179,7 @@ SOURCES += \
     src/misc/settings.cpp \
     src/misc/cdata.cpp \
     src/misc/cstring.cpp \
-    src/camera.cpp \
+    src/video/camera.cpp \
     src/widget/netcamview.cpp \
     src/misc/smileypack.cpp \
     src/widget/emoticonswidget.cpp \
@@ -199,7 +200,7 @@ SOURCES += \
     src/widget/tool/chatactions/actionaction.cpp \
     src/widget/tool/chatactions/alertaction.cpp \
     src/widget/maskablepixmapwidget.cpp \
-    src/cameraworker.cpp \
+    src/video/cameraworker.cpp \
     src/widget/videosurface.cpp \
     src/widget/form/loadhistorydialog.cpp \
     src/historykeeper.cpp \
@@ -208,5 +209,6 @@ SOURCES += \
     src/misc/db/encrypteddb.cpp \
     src/widget/form/inputpassworddialog.cpp \
     src/widget/form/setpassworddialog.cpp \
-    src/netvideosource.cpp \
-    src/widget/form/tabcompleter.cpp
+    src/video/netvideosource.cpp \
+    src/widget/form/tabcompleter.cpp \
+    src/video/videoframe.cpp

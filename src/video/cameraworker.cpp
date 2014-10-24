@@ -18,7 +18,7 @@
 
 #include <QTimer>
 #include <QDebug>
-#include <QCoreApplication>
+#include <QThread>
 
 CameraWorker::CameraWorker(int index)
     : clock(nullptr)
@@ -26,6 +26,7 @@ CameraWorker::CameraWorker(int index)
     , refCount(0)
 {
     qRegisterMetaType<VideoFrame>();
+    qRegisterMetaType<QList<QSize>>();
 }
 
 void CameraWorker::onStart()
@@ -67,13 +68,14 @@ double CameraWorker::_getProp(int prop)
     {
         subscribe();
         props[prop] = cam.get(prop);
+        emit propProbingFinished(prop, props[prop]);
         unsubscribe();
     }
 
     return props.value(prop);
 }
 
-void CameraWorker::probeResolutions()
+void CameraWorker::_probeResolutions()
 {
     if (resolutions.isEmpty())
     {
@@ -115,9 +117,9 @@ void CameraWorker::probeResolutions()
         }
 
         unsubscribe();
-    }
 
-    qDebug() << "Camera resolutions:" << resolutions;
+        qDebug() << "CameraWorker: Resolutions" <<resolutions;
+    }
 
     emit resProbingFinished(resolutions);
 }
@@ -133,7 +135,7 @@ void CameraWorker::applyProps()
 
 void CameraWorker::subscribe()
 {
-    if (refCount == 0)
+    if (refCount++ == 0)
     {
         if (!cam.isOpened())
         {
@@ -142,15 +144,11 @@ void CameraWorker::subscribe()
             applyProps(); // restore props
         }
     }
-
-    refCount++;
 }
 
 void CameraWorker::unsubscribe()
 {
-    refCount--;
-
-    if(refCount <= 0)
+    if(--refCount <= 0)
     {
         cam.release();
         refCount = 0;
@@ -188,10 +186,19 @@ void CameraWorker::setProp(int prop, double val)
     QMetaObject::invokeMethod(this, "_setProp", Q_ARG(int, prop), Q_ARG(double, val));
 }
 
+void CameraWorker::probeProp(int prop)
+{
+    QMetaObject::invokeMethod(this, "_getProp", Q_ARG(int, prop));
+}
+
+void CameraWorker::probeResolutions()
+{
+    QMetaObject::invokeMethod(this, "_probeResolutions");
+}
+
 double CameraWorker::getProp(int prop)
 {
     double ret = 0.0;
-    qApp->processEvents();
     QMetaObject::invokeMethod(this, "_getProp", Qt::BlockingQueuedConnection, Q_RETURN_ARG(double, ret), Q_ARG(int, prop));
 
     return ret;
