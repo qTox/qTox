@@ -818,7 +818,7 @@ Vuoi provare un&apos;altra password?</translation>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="163"/>
         <source>Switching profiles is disabled during calls</source>
         <comment>tooltip</comment>
-        <translation>Non puoi cambiare profilo durante uan chiamata</translation>
+        <translation>Non puoi cambiare profilo durante una chiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="125"/>
