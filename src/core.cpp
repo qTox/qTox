@@ -239,7 +239,7 @@ void Core::start()
     {
         setStatusMessage(tr("Toxing on qTox")); // this also solves the not updating issue
         setUsername(tr("qTox User"));
-        Widget::getInstance()->onSettingsClicked(); // update ui with new profile (im worried about threading, but it seems to work)
+        QMetaObject::invokeMethod(Widget::getInstance(), "onSettingsClicked"); // update ui with new profile
     }
 
     tox_callback_friend_request(tox, onFriendRequest, this);
