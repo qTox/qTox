@@ -459,6 +459,18 @@ void ChatForm::onVideoCallTriggered()
     emit startVideoCall(f->friendId, true);
 }
 
+void ChatForm::onAvCallFailed(int FriendId)
+{
+    if (FriendId != f->friendId)
+        return;
+
+    audioInputFlag = false;
+    callButton->disconnect();
+    videoButton->disconnect();
+    connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+}
+
 void ChatForm::onCancelCallTriggered()
 {
     audioInputFlag = false;

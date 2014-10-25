@@ -185,6 +185,7 @@ signals:
     void avRequestTimeout(int friendId, int callIndex);
     void avPeerTimeout(int friendId, int callIndex);
     void avMediaChange(int friendId, int callIndex, bool videoEnabled);
+    void avCallFailed(int friendId);
 
     void videoFrameReceived(vpx_image* frame);
 

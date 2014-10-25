@@ -142,15 +142,32 @@ void Core::startCall(int friendId, bool video)
     {
         qDebug() << QString("Core: Starting new call with %1 with video").arg(friendId);
         cSettings.call_type = TypeVideo;
-        toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME);
-        calls[callId].videoEnabled=true;
+        if (toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME) == 0)
+        {
+            calls[callId].videoEnabled=true;
+        }
+        else
+        {
+            qWarning() << QString("Core: Failed to start new video call with %1").arg(friendId);
+            emit avCallFailed(friendId);
+            return;
+        }
     }
     else
     {
         qDebug() << QString("Core: Starting new call with %1 without video").arg(friendId);
         cSettings.call_type = TypeAudio;
-        toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME);
-        calls[callId].videoEnabled=false;
+        if (toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME) == 0)
+        {
+            calls[callId].videoEnabled=false;
+        }
+        else
+        {
+            qWarning() << QString("Core: Failed to start new audio call with %1").arg(friendId);
+            emit avCallFailed(friendId);
+            return;
+        }
+
     }
 }
 
