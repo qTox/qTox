@@ -32,38 +32,6 @@ VIAddVersionKey "FileDescription" "${DESCRIPTION}"
 VIAddVersionKey "FileVersion" "${VERSION}"
 
 ##############
-#MODERN UI
-##############
-!include "MUI.nsh"
-
-!define MUI_ABORTWARNING
-!define MUI_FINISHPAGE_NOAUTOCLOSE
-!insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_DIRECTORY
-!ifdef REG_START_MENU
-	!define MUI_STARTMENUPAGE_NODISABLE
-	!define MUI_STARTMENUPAGE_DEFAULTFOLDER "qTox"
-	!define MUI_STARTMENUPAGE_REGISTRY_ROOT "${REG_ROOT}"
-	!define MUI_STARTMENUPAGE_REGISTRY_KEY "${UNINSTALL_PATH}"
-	!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${REG_START_MENU}"
-	!insertmacro MUI_PAGE_STARTMENU Application $SM_Folder
-!endif
-!insertmacro MUI_PAGE_INSTFILES
-!define MUI_FINISHPAGE_RUN "$INSTDIR\${MAIN_APP_EXE}"
-!define MUI_FINISHPAGE_LINK "Find qTox on GitHub"
-!define MUI_FINISHPAGE_LINK_LOCATION "https://github.com/tux3/qTox"
-!insertmacro MUI_PAGE_FINISH
-
-!define MUI_UNABORTWARNING
-!define MUI_UNFINISHPAGE_NOAUTOCLOSE
-!insertmacro MUI_UNPAGE_WELCOME
-!insertmacro MUI_UNPAGE_CONFIRM
-!insertmacro MUI_UNPAGE_INSTFILES
-!insertmacro MUI_UNPAGE_FINISH
-
-!insertmacro MUI_LANGUAGE "English"
-
-##############
 #UNINSTALL LOG
 ##############
 ;AddItem macro
@@ -231,6 +199,47 @@ VIAddVersionKey "FileVersion" "${VERSION}"
       FileSeek $UninstLog 0 END
   SectionEnd
 
+##############
+#MODERN UI
+##############
+!include "MUI.nsh"
+
+!define MUI_ABORTWARNING
+!define MUI_FINISHPAGE_NOAUTOCLOSE
+!insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_DIRECTORY
+!ifdef REG_START_MENU
+	!define MUI_STARTMENUPAGE_NODISABLE
+	!define MUI_STARTMENUPAGE_DEFAULTFOLDER "qTox"
+	!define MUI_STARTMENUPAGE_REGISTRY_ROOT "${REG_ROOT}"
+	!define MUI_STARTMENUPAGE_REGISTRY_KEY "${UNINSTALL_PATH}"
+	!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${REG_START_MENU}"
+	!insertmacro MUI_PAGE_STARTMENU Application $SM_Folder
+!endif
+!insertmacro MUI_PAGE_INSTFILES
+
+Function finishpageaction
+${CreateShortcut} "$DESKTOP\qTox.lnk" "$INSTDIR\${MAIN_APP_EXE}" "" "" ""
+FunctionEnd
+
+!define MUI_FINISHPAGE_SHOWREADME ""
+!define MUI_FINISHPAGE_SHOWREADME_TEXT "Create Desktop Shortcut"
+!define MUI_FINISHPAGE_SHOWREADME_FUNCTION finishpageaction
+
+!define MUI_FINISHPAGE_RUN "$INSTDIR\${MAIN_APP_EXE}"
+!define MUI_FINISHPAGE_LINK "Find qTox on GitHub"
+!define MUI_FINISHPAGE_LINK_LOCATION "https://github.com/tux3/qTox"
+!insertmacro MUI_PAGE_FINISH
+
+!define MUI_UNABORTWARNING
+!define MUI_UNFINISHPAGE_NOAUTOCLOSE
+!insertmacro MUI_UNPAGE_WELCOME
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
+
+!insertmacro MUI_LANGUAGE "English"
+  
 #################
 #INSTALL
 #################
