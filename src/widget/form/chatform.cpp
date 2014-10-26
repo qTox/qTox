@@ -153,7 +153,8 @@ void ChatForm::startFileSend(ToxFile file)
         name = "";
     previousName = Widget::getInstance()->getUsername();
 
-    chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), true));
+    chatWidget->insertMessage(ChatActionPtr(new FileTransferAction(fileTrans, getElidedName(name),
+                                                                   QTime::currentTime().toString("hh:mm"), true)));
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -185,7 +186,8 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         name = "";
     previousName = f->getName();
 
-    chatWidget->insertMessage(new FileTransferAction(fileTrans, getElidedName(name), QTime::currentTime().toString("hh:mm"), false));
+    chatWidget->insertMessage(ChatActionPtr(new FileTransferAction(fileTrans, getElidedName(name),
+                                                                   QTime::currentTime().toString("hh:mm"), false)));
 
     if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->friendId)).isEmpty()
      || !Settings::getInstance().getGlobalAutoAcceptDir().isEmpty())
@@ -575,7 +577,7 @@ void ChatForm::onLoadHistory()
 
         QString storedPrevName = previousName;
         previousName = "";
-        QList<ChatAction*> historyMessages;
+        QList<ChatActionPtr> historyMessages;
 
         for (const auto &it : msgs)
         {
@@ -583,7 +585,7 @@ void ChatForm::onLoadHistory()
             if (it.sender == Core::getInstance()->getSelfId().publicKey)
                 name = Core::getInstance()->getUsername();
 
-            ChatAction *ca = genMessageActionAction(name, it.message, false, it.timestamp.toLocalTime());
+            ChatActionPtr ca = genMessageActionAction(name, it.message, false, it.timestamp.toLocalTime());
             historyMessages.append(ca);
         }
         previousName = storedPrevName;

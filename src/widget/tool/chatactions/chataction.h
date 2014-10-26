@@ -19,6 +19,7 @@
 
 #include <QString>
 #include <QTextCursor>
+#include <QSharedPointer>
 
 class FileTransferInstance;
 class QTextEdit;
@@ -43,5 +44,7 @@ protected:
     bool isMe;
     QString name, date;
 };
+
+typedef QSharedPointer<ChatAction> ChatActionPtr;
 
 #endif // CHATACTION_H

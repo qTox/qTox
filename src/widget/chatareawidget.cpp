@@ -50,10 +50,6 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent)
 
 ChatAreaWidget::~ChatAreaWidget()
 {
-    for (ChatAction* action : messages)
-        delete action;
-    messages.clear();
-
     if (tableFrmt)
         delete tableFrmt;
 }
@@ -97,7 +93,7 @@ void ChatAreaWidget::onAnchorClicked(const QUrl &url)
     QDesktopServices::openUrl(url);
 }
 
-void ChatAreaWidget::insertMessage(ChatAction *msgAction, QTextCursor::MoveOperation pos)
+void ChatAreaWidget::insertMessage(ChatActionPtr msgAction, QTextCursor::MoveOperation pos)
 {
     if (msgAction == nullptr)
         return;
@@ -118,8 +114,6 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction, QTextCursor::MoveOpera
 
     if (msgAction->isInteractive())
         messages.append(msgAction);
-    else
-        delete msgAction;
 }
 
 int ChatAreaWidget::getNumberOfMessages()
@@ -175,30 +169,28 @@ void ChatAreaWidget::setNameColWidth(int w)
 
 void ChatAreaWidget::clearChatArea()
 {
-    QList<ChatAction*> newMsgs;
-    for (ChatAction* message : messages)
+    QList<ChatActionPtr> newMsgs;
+    for (ChatActionPtr message : messages)
     {
         if (message->isInteractive())
         {
             newMsgs.append(message);
-        } else {
-            delete message;
         }
     }
     messages.clear();
     this->clear();
 
-    for (ChatAction* message : newMsgs)
+    for (ChatActionPtr message : newMsgs)
     {
         insertMessage(message);
     }
 }
 
-void ChatAreaWidget::insertMessagesTop(QList<ChatAction*> &list)
+void ChatAreaWidget::insertMessagesTop(QList<ChatActionPtr> &list)
 {
     std::reverse(list.begin(), list.end());
 
-    for (ChatAction* it : list)
+    for (ChatActionPtr it : list)
     {
         insertMessage(it, QTextCursor::Start);
     }

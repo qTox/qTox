@@ -21,6 +21,7 @@
 #include <QPoint>
 #include <QDateTime>
 #include <QMenu>
+#include "src/widget/tool/chatactions/chataction.h"
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5 // why the hell is this a thing? surely the different font is enough?
@@ -32,7 +33,6 @@ class CroppingLabel;
 class ChatTextEdit;
 class ChatAreaWidget;
 class MaskablePixmapWidget;
-class ChatAction;
 
 namespace Ui {
     class MainWindow;
@@ -67,8 +67,8 @@ protected slots:
 
 protected:
     QString getElidedName(const QString& name);
-    ChatAction* genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime);
-    ChatAction* genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);
+    ChatActionPtr genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime);
+    ChatActionPtr genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);
 
     QMenu menu;
     CroppingLabel *nameLabel;
