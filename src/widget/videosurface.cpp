@@ -82,8 +82,8 @@ void VideoSurface::initializeGL()
                                      "attribute vec4 vertices;"
                                      "varying vec2 coords;"
                                      "void main() {"
-                                     "    gl_Position = vec4(vertices.xy,0.0,1.0);"
-                                     "    coords = vertices.xy*vec2(0.5,0.5)+vec2(0.5,0.5);"
+                                     "    gl_Position = vec4(vertices.xy, 0.0, 1.0);"
+                                     "    coords = vertices.xy*vec2(0.5, 0.5) + vec2(0.5, 0.5);"
                                      "}");
 
     // brg frag-shader
@@ -92,7 +92,7 @@ void VideoSurface::initializeGL()
                                      "varying vec2 coords;"
                                      "void main() {"
                                      "    vec4 color = texture2D(texture0,coords*vec2(1.0, -1.0));"
-                                     "    gl_FragColor = vec4(color.b, color.g, color.r, 1);"
+                                     "    gl_FragColor = vec4(color.bgr, 1.0);"
                                      "}");
 
     bgrProgramm->bindAttributeLocation("vertices", 0);
@@ -104,8 +104,8 @@ void VideoSurface::initializeGL()
                                      "attribute vec4 vertices;"
                                      "varying vec2 coords;"
                                      "void main() {"
-                                     "    gl_Position = vec4(vertices.xy,0.0,1.0);"
-                                     "    coords = vertices.xy*vec2(0.5,0.5)+vec2(0.5,0.5);"
+                                     "    gl_Position = vec4(vertices.xy, 0.0, 1.0);"
+                                     "    coords = vertices.xy*vec2(0.5, 0.5) + vec2(0.5, 0.5);"
                                      "}");
 
     // yuv frag-shader
@@ -113,9 +113,9 @@ void VideoSurface::initializeGL()
                                      "uniform sampler2D texture0;"
                                      "varying vec2 coords;"
                                      "void main() {"
-                                     "      vec3 yuv = texture2D(texture0,coords*vec2(1.0, -1.0)).rgb - vec3(0,0.5,0.5);"
-                                     "      vec3 rgb = mat3(1,1,1,0,-0.21482,2.12798,1.28033,-0.38059,0) * yuv;"
-                                     "      gl_FragColor = vec4(rgb,1);"
+                                     "      vec3 yuv = texture2D(texture0,coords*vec2(1.0, -1.0)).rgb - vec3(0.0, 0.5, 0.5);"
+                                     "      vec3 rgb = mat3(1.0, 1.0, 1.0, 0.0, -0.21482, 2.12798, 1.28033, -0.38059, 0.0)*yuv;"
+                                     "      gl_FragColor = vec4(rgb, 1.0);"
                                      "}");
 
     yuvProgramm->bindAttributeLocation("vertices", 0);
