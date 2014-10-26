@@ -51,7 +51,6 @@ Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     qDebug() << "Core: loading Tox from" << loadPath;
 
     videobuf = new uint8_t[videobufsize];
-    videoBusyness=0;
 
     for (int i = 0; i < ptCounter; i++)
         pwsaltedkeys[i] = nullptr;

@@ -45,36 +45,33 @@ public:
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
 
-    int getGroupNumberPeers(int groupId) const;
-    QString getGroupPeerName(int groupId, int peerId) const;
-    QList<QString> getGroupPeerNames(int groupId) const;
-    QString getFriendAddress(int friendNumber) const;
-    QString getFriendUsername(int friendNumber) const;
-    int joinGroupchat(int32_t friendnumber, const uint8_t* friend_group_public_key,uint16_t length) const;
-    void quitGroupChat(int groupId) const;
-    void dispatchVideoFrame(vpx_image img) const;
+    int getGroupNumberPeers(int groupId) const; ///< Return the number of peers in the group chat on success, or -1 on failure
+    QString getGroupPeerName(int groupId, int peerId) const; ///< Get the name of a peer of a group
+    QList<QString> getGroupPeerNames(int groupId) const; ///< Get the names of the peers of a group
+    QString getFriendAddress(int friendNumber) const; ///< Get the full address if known, or Tox ID of a friend
+    QString getFriendUsername(int friendNumber) const; ///< Get the username of a friend
+    int joinGroupchat(int32_t friendNumber, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
+    void quitGroupChat(int groupId) const; ///< Quit a groupchat
 
     void saveConfiguration();
     void saveConfiguration(const QString& path);
     
-    QString getIDString();
+    QString getIDString(); ///< Get the 12 first characters of our Tox ID
     
-    QString getUsername();
-    QString getStatusMessage();
-    ToxID getSelfId();
+    QString getUsername(); ///< Returns our username, or an empty string on failure
+    QString getStatusMessage(); ///< Returns our status message, or an empty string on failure
+    ToxID getSelfId(); ///< Returns our Tox ID
 
-    VideoSource* getVideoSourceFromCall(int callNumber);
-    void increaseVideoBusyness();
-    void decreaseVideoBusyness();
+    VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
 
-    bool anyActiveCalls();
+    bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
     bool isPasswordSet(PasswordType passtype);
 
 public slots:
-    void start();
-    void process();
-    void bootstrapDht();
-    void switchConfiguration(const QString& profile);
+    void start(); ///< Initializes the core, must be called before anything else
+    void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer
+    void bootstrapDht(); ///< Connects us to the Tox network
+    void switchConfiguration(const QString& profile); ///< Load a different profile and restart the core
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
@@ -260,7 +257,6 @@ private:
 
     static const int videobufsize;
     static uint8_t* videobuf;
-    static int videoBusyness; // Used to know when to drop frames
 
     static ALCdevice* alOutDev, *alInDev;
     static ALCcontext* alContext;

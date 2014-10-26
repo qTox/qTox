@@ -22,7 +22,6 @@
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
-int Core::videoBusyness;
 
 ALCdevice* Core::alOutDev, *Core::alInDev;
 ALCcontext* Core::alContext;
@@ -290,17 +289,6 @@ void Core::sendCallVideo(int callId)
     }
 
     calls[callId].sendVideoTimer->start();
-}
-
-
-void Core::increaseVideoBusyness()
-{
-    videoBusyness++;
-}
-
-void Core::decreaseVideoBusyness()
-{
-  videoBusyness--;
 }
 
 void Core::micMuteToggle(int callId)
