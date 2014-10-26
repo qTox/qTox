@@ -959,13 +959,13 @@ void Core::removeGroup(int groupId)
 
 QString Core::getUsername()
 {
+    QString sname;
     int size = tox_get_self_name_size(tox);
     uint8_t* name = new uint8_t[size];
     if (tox_get_self_name(tox, name) == size)
-        return QString(CString::toString(name, size));
-    else
-        return QString();
+        sname = CString::toString(name, size);
     delete[] name;
+    return sname;
 }
 
 void Core::setUsername(const QString& username)
