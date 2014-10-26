@@ -72,10 +72,14 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
 void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
 {
     ToxAvCSettings settings;
-    toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &settings);
-    int friendId = toxav_get_peer_id((ToxAv*)toxav, callId, 0);
+    int friendId;
+    if (toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &settings) < 0)
+        goto fail;
+    friendId = toxav_get_peer_id((ToxAv*)toxav, callId, 0);
+    if (friendId < 0)
+        goto fail;
 
-    qWarning() << "Core: Received media change from friend "<<friendId;
+    qDebug() << "Core: Received media change from friend "<<friendId;
 
     if (settings.call_type == TypeAudio)
     {
@@ -91,6 +95,11 @@ void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
         calls[callId].sendVideoTimer->start();
         emit ((Core*)core)->avMediaChange(friendId, callId, true);
     }
+    return;
+
+fail: // Centralized error handling
+    qWarning() << "Core: Toxcore error while receiving media change on call "<<callId;
+    return;
 }
 
 void Core::answerCall(int callId)
