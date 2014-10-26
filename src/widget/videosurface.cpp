@@ -113,7 +113,7 @@ void VideoSurface::initializeGL()
                                      "uniform sampler2D texture0;"
                                      "varying vec2 coords;"
                                      "void main() {"
-                                     "      vec3 yuv = texture2D(texture0,coords*vec2(1.0, -1.0)) - vec3(0,0.5,0.5);"
+                                     "      vec3 yuv = texture2D(texture0,coords*vec2(1.0, -1.0)).rgb - vec3(0,0.5,0.5);"
                                      "      vec3 rgb = mat3(1,1,1,0,-0.21482,2.12798,1.28033,-0.38059,0) * yuv;"
                                      "      gl_FragColor = vec4(rgb,1);"
                                      "}");
