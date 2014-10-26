@@ -22,6 +22,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QCoreApplication>
 #include <QDebug>
+#include <algorithm>
 
 ChatAreaWidget::ChatAreaWidget(QWidget *parent)
     : QTextBrowser(parent)
@@ -49,10 +50,6 @@ ChatAreaWidget::ChatAreaWidget(QWidget *parent)
 
 ChatAreaWidget::~ChatAreaWidget()
 {
-    for (ChatAction* action : messages)
-        delete action;
-    messages.clear();
-
     if (tableFrmt)
         delete tableFrmt;
 }
@@ -96,14 +93,14 @@ void ChatAreaWidget::onAnchorClicked(const QUrl &url)
     QDesktopServices::openUrl(url);
 }
 
-void ChatAreaWidget::insertMessage(ChatAction *msgAction)
+void ChatAreaWidget::insertMessage(ChatActionPtr msgAction, QTextCursor::MoveOperation pos)
 {
     if (msgAction == nullptr)
         return;
 
     checkSlider();
 
-    QTextTable *chatTextTable = getMsgTable();
+    QTextTable *chatTextTable = getMsgTable(pos);
     QTextCursor cur = chatTextTable->cellAt(0, 2).firstCursorPosition();
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
@@ -115,7 +112,8 @@ void ChatAreaWidget::insertMessage(ChatAction *msgAction)
 
     msgAction->setup(cur, this);
 
-    messages.append(msgAction);
+    if (msgAction->isInteractive())
+        messages.append(msgAction);
 }
 
 int ChatAreaWidget::getNumberOfMessages()
@@ -136,7 +134,7 @@ void ChatAreaWidget::checkSlider()
     lockSliderToBottom = scroll && scroll->value() == scroll->maximum();
 }
 
-QTextTable *ChatAreaWidget::getMsgTable()
+QTextTable *ChatAreaWidget::getMsgTable(QTextCursor::MoveOperation pos)
 {
     if (tableFrmt == nullptr)
     {
@@ -151,7 +149,7 @@ QTextTable *ChatAreaWidget::getMsgTable()
     }
 
     QTextCursor tc = textCursor();
-    tc.movePosition(QTextCursor::End);
+    tc.movePosition(pos);
 
     QTextTable *chatTextTable = tc.insertTable(1, 5, *tableFrmt);
 
@@ -171,21 +169,29 @@ void ChatAreaWidget::setNameColWidth(int w)
 
 void ChatAreaWidget::clearChatArea()
 {
-    QList<ChatAction*> newMsgs;
-    for (ChatAction* message : messages)
+    QList<ChatActionPtr> newMsgs;
+    for (ChatActionPtr message : messages)
     {
         if (message->isInteractive())
         {
             newMsgs.append(message);
-        } else {
-            delete message;
         }
     }
     messages.clear();
     this->clear();
 
-    for (ChatAction* message : newMsgs)
+    for (ChatActionPtr message : newMsgs)
     {
         insertMessage(message);
+    }
+}
+
+void ChatAreaWidget::insertMessagesTop(QList<ChatActionPtr> &list)
+{
+    std::reverse(list.begin(), list.end());
+
+    for (ChatActionPtr it : list)
+    {
+        insertMessage(it, QTextCursor::Start);
     }
 }

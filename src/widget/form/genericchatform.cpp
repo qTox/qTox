@@ -187,14 +187,14 @@ void GenericChatForm::onSaveLogClicked()
 
 void GenericChatForm::addMessage(const QString &author, const QString &message, bool isAction, const QDateTime &datetime)
 {
-    ChatAction *ca = genMessageActionAction(author, message, isAction, datetime);
+    ChatActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
     chatWidget->insertMessage(ca);
 }
 
 void GenericChatForm::addAlertMessage(QString author, QString message, QDateTime datetime)
 {
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-    chatWidget->insertMessage(new AlertAction(author, message, date));
+    chatWidget->insertMessage(ChatActionPtr(new AlertAction(author, message, date)));
     previousName = author;
 }
 
@@ -232,7 +232,7 @@ void GenericChatForm::focusInput()
 
 void GenericChatForm::addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime)
 {
-    ChatAction *ca = genSystemInfoAction(message, type, datetime);
+    ChatActionPtr ca = genSystemInfoAction(message, type, datetime);
     chatWidget->insertMessage(ca);
 }
 
@@ -259,7 +259,7 @@ void GenericChatForm::clearChatArea(bool notinform)
     }
 }
 
-ChatAction* GenericChatForm::genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime)
+ChatActionPtr GenericChatForm::genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime)
 {
     if (earliestMessage == nullptr)
     {
@@ -278,23 +278,23 @@ ChatAction* GenericChatForm::genMessageActionAction(const QString &author, QStri
     if (isAction)
     {
         previousName = ""; // next msg has a name regardless
-        return (new ActionAction (getElidedName(author), message, date, isMe));
+        return ChatActionPtr(new ActionAction (getElidedName(author), message, date, isMe));
     }
 
-    ChatAction *res;
+    ChatActionPtr res;
     if (previousName == author)
-        res = (new MessageAction("", message, date, isMe));
+        res = ChatActionPtr(new MessageAction("", message, date, isMe));
     else
-        res = (new MessageAction(getElidedName(author), message, date, isMe));
+        res = ChatActionPtr(new MessageAction(getElidedName(author), message, date, isMe));
 
     previousName = author;
     return res;
 }
 
-ChatAction* GenericChatForm::genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime)
+ChatActionPtr GenericChatForm::genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime)
 {
     previousName = "";
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
 
-    return (new SystemMessageAction(message, type, date));
+    return ChatActionPtr(new SystemMessageAction(message, type, date));
 }
