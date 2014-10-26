@@ -19,8 +19,7 @@
 vpx_image_t VideoFrame::createVpxImage() const
 {
     vpx_image img;
-    img.w = 0;
-    img.h = 0;
+    img.w = img.h = img.d_w = img.d_h = 0;
 
     if (!isValid())
         return img;
