@@ -16,6 +16,7 @@
 
 #include "smileypack.h"
 #include "settings.h"
+#include "style.h"
 
 #include <QFileInfo>
 #include <QFile>
@@ -180,7 +181,7 @@ QList<QStringList> SmileyPack::getEmoticons() const
 
 QString SmileyPack::getAsRichText(const QString &key)
 {
-    return "<img height=\""%QString().setNum(QFontInfo(QFont()).pixelSize())%"\" src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
+    return "<img src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
 }
 
 QIcon SmileyPack::getAsIcon(const QString &key)
@@ -192,13 +193,16 @@ QIcon SmileyPack::getAsIcon(const QString &key)
 
 void SmileyPack::cacheSmiley(const QString &name)
 {
-    QSize size(16, 16); // TODO: adapt to text size
+    // The -1 is to avoid having the space for descenders under images move the text down
+    // We can't remove it because Qt doesn't support CSS display or vertical-align
+    int fontHeight = QFontInfo(Style::getFont(Style::Big)).pixelSize() - 1;
+    QSize size(fontHeight, fontHeight);
     QString filename = QDir(path).filePath(name);
     QImage img(filename);
 
     if (!img.isNull())
     {
-        QImage scaledImg = img.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QImage scaledImg = img.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 
         QByteArray scaledImgData;
         QBuffer buffer(&scaledImgData);
