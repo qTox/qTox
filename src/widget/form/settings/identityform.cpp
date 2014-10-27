@@ -74,6 +74,7 @@ IdentityForm::IdentityForm() :
 
 IdentityForm::~IdentityForm()
 {
+    delete bodyUI;
 }
 
 void IdentityForm::copyIdClicked()

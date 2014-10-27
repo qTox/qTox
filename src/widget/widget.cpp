@@ -285,6 +285,7 @@ Widget::~Widget()
     delete trayMenu;
     delete icon;
     delete ui;
+    delete translator;
     instance = nullptr;
 }
 

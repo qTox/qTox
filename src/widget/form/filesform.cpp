@@ -45,14 +45,9 @@ FilesForm::FilesForm()
 
 FilesForm::~FilesForm()
 {
-#if 0    
-    delete recvd; // docs claim this will clean up children
+    delete recvd;
     delete sent;
-    delete head;
-#endif
-    // having these lines caused a SIGABRT because free() received an invalid pointer
-    // but since this is only called on program shutdown anyways, 
-    // I'm not too bummed about removing it
+    head->deleteLater();
 }
 
 void FilesForm::show(Ui::MainWindow& ui)
