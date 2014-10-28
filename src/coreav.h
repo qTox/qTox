@@ -24,6 +24,7 @@ public:
     bool videoEnabled;
     bool active;
     bool muteMic;
+    bool muteVol;
     ALuint alSource;
     NetVideoSource videoSource;
 };

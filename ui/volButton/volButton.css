@@ -13,9 +13,14 @@ QPushButton#green:hover
     background-image: url(":/ui/volButton/volButtonHover.png"); 
 }
 
-QPushButton#green:pressed
+QPushButton#red
 {
-   background-image: url(":/ui/volButton/volButtonPressed.png");
+    background-color: transparent;
+    background-image: url(":/ui/volButton/volButtonPressed.png");
+    background-repeat: none; 
+    border: none;
+    width: 25px;
+    height: 20px;
 }
 
 QPushButton:focus {

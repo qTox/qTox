@@ -43,6 +43,7 @@
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
     , audioInputFlag(false)
+    , audioOutputFlag(false)
     , callId(0)
 {
     nameLabel->setText(f->getName());
@@ -68,6 +69,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
+    connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
 
@@ -234,6 +236,7 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
         return;
 
     audioInputFlag = true;
+    audioOutputFlag = true;
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
@@ -263,8 +266,11 @@ void ChatForm::onAvCancel(int FriendId, int)
         return;
 
     audioInputFlag = false;
+    audioOutputFlag = false;
     micButton->setObjectName("green");
     micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -283,8 +289,11 @@ void ChatForm::onAvEnd(int FriendId, int)
         return;
 
     audioInputFlag = false;
+    audioOutputFlag = false;
     micButton->setObjectName("green");
     micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -356,8 +365,11 @@ void ChatForm::onAvEnding(int FriendId, int)
         return;
 
     audioInputFlag = false;
+    audioOutputFlag = false;
     micButton->setObjectName("green");
     micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -378,8 +390,11 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
         return;
 
     audioInputFlag = false;
+    audioOutputFlag = false;
     micButton->setObjectName("green");
     micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -400,8 +415,11 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
         return;
 
     audioInputFlag = false;
+    audioOutputFlag = false;
     micButton->setObjectName("green");
     micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -434,28 +452,34 @@ void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 void ChatForm::onAnswerCallTriggered()
 {
     audioInputFlag = true;
+    audioOutputFlag = true;
     emit answerCall(callId);
 }
 
 void ChatForm::onHangupCallTriggered()
 {
     audioInputFlag = false;
+    audioOutputFlag = false;
     emit hangupCall(callId);
     micButton->setObjectName("green");
     micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
 }
 
 void ChatForm::onCallTriggered()
 {
-  audioInputFlag = true;
-  callButton->disconnect();
-  videoButton->disconnect();
-  emit startCall(f->friendId);
+    audioInputFlag = true;
+    audioOutputFlag = true;
+    callButton->disconnect();
+    videoButton->disconnect();
+    emit startCall(f->friendId);
 }
 
 void ChatForm::onVideoCallTriggered()
 {
     audioInputFlag = true;
+    audioOutputFlag = true;
     callButton->disconnect();
     videoButton->disconnect();
     emit startVideoCall(f->friendId, true);
@@ -467,6 +491,7 @@ void ChatForm::onAvCallFailed(int FriendId)
         return;
 
     audioInputFlag = false;
+    audioOutputFlag = false;
     callButton->disconnect();
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
@@ -476,8 +501,11 @@ void ChatForm::onAvCallFailed(int FriendId)
 void ChatForm::onCancelCallTriggered()
 {
     audioInputFlag = false;
+    audioOutputFlag = false;
     micButton->setObjectName("green");
     micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
     callButton->disconnect();
     videoButton->disconnect();
     callButton->setObjectName("green");
@@ -506,6 +534,21 @@ void ChatForm::onMicMuteToggle()
         Style::repolish(micButton);
     }
 }
+
+void ChatForm::onVolMuteToggle()
+{
+    if (audioOutputFlag == true)
+    {
+        emit volMuteToggle(callId);
+        if (volButton->objectName() == "red")
+            volButton->setObjectName("green");
+        else
+            volButton->setObjectName("red");
+
+        Style::repolish(volButton);
+    }
+}
+
 
 void ChatForm::onFileTansBtnClicked(QString widgetName, QString buttonName)
 {

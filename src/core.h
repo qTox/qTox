@@ -105,6 +105,7 @@ public slots:
     void cancelCall(int callId, int friendId);
 
     void micMuteToggle(int callId);
+    void volMuteToggle(int callId);
 
     void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
     void clearPassword(PasswordType passtype);

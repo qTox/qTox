@@ -41,6 +41,7 @@ signals:
     void hangupCall(int callId);
     void cancelCall(int callId, int friendId);
     void micMuteToggle(int callId);
+    void volMuteToggle(int callId);
 
 public slots:
     void startFileSend(ToxFile file);
@@ -57,6 +58,7 @@ public slots:
     void onAvMediaChange(int FriendId, int CallId, bool video);
     void onAvCallFailed(int FriendId);
     void onMicMuteToggle();
+    void onVolMuteToggle();
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
 
@@ -82,6 +84,7 @@ private:
     CroppingLabel *statusMessageLabel;
     NetCamView* netcam;
     bool audioInputFlag;
+    bool audioOutputFlag;
     int callId;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
