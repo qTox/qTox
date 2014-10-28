@@ -17,11 +17,22 @@
 #include "avform.h"
 #include "ui_avsettings.h"
 
+#if defined(__APPLE__) && defined(__MACH__)
+ #include <OpenAL/al.h>
+ #include <OpenAL/alc.h>
+#else
+ #include <AL/alc.h>
+ #include <AL/al.h>
+#endif
+
 AVForm::AVForm() :
     GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png"))
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
+
+    getAudioOutDevices();
+    getAudioInDevices();
 
     connect(Camera::getInstance(), &Camera::propProbingFinished, this, &AVForm::onPropProbingFinished);
     connect(Camera::getInstance(), &Camera::resolutionProbingFinished, this, &AVForm::onResProbingFinished);
@@ -102,4 +113,36 @@ void AVForm::onResProbingFinished(QList<QSize> res)
 void AVForm::hideEvent(QHideEvent *)
 {
     bodyUI->CamVideoSurface->setSource(nullptr);
+}
+
+void AVForm::getAudioInDevices()
+{
+    const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+    if (pDeviceList)
+    {
+        while (*pDeviceList)
+        {
+            int len = strlen(pDeviceList);
+            bodyUI->inDevCombobox->addItem(QString::fromLocal8Bit(pDeviceList,len));
+            pDeviceList += len+1;
+        }
+    }
+}
+
+void AVForm::getAudioOutDevices()
+{
+    const ALchar *pDeviceList;
+    if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
+        pDeviceList = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
+    else
+        pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+    if (pDeviceList)
+    {
+        while (*pDeviceList)
+        {
+            int len = strlen(pDeviceList);
+            bodyUI->outDevCombobox->addItem(QString::fromLocal8Bit(pDeviceList,len));
+            pDeviceList += len+1;
+        }
+    }
 }

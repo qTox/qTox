@@ -38,8 +38,11 @@ public:
     ~AVForm();
     virtual void present();
 
-private slots:
+private:
+    void getAudioInDevices();
+    void getAudioOutDevices();
 
+private slots:
     void on_ContrastSlider_sliderMoved(int position);
     void on_SaturationSlider_sliderMoved(int position);
     void on_BrightnessSlider_sliderMoved(int position);
