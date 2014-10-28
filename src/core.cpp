@@ -72,7 +72,11 @@ Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     }
 
     // OpenAL init
-    alOutDev = alcOpenDevice(nullptr);
+    QString outDevDescr = Settings::getInstance().getOutDev();                                     ;
+    if (outDevDescr.isEmpty())
+        alOutDev = alcOpenDevice(nullptr);
+    else
+        alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
     if (!alOutDev)
     {
         qWarning() << "Core: Cannot open output audio device";
@@ -88,7 +92,13 @@ Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
         else
             alGenSources(1, &alMainSource);
     }
-    alInDev = alcCaptureOpenDevice(NULL,av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
+
+    QString inDevDescr = Settings::getInstance().getInDev();
+    if (inDevDescr.isEmpty())
+        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
+                                   (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
+    else
+        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
                                    (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
     if (!alInDev)
         qWarning() << "Core: Cannot open input audio device";
