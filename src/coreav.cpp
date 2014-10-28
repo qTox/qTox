@@ -41,6 +41,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].callId = callId;
     calls[callId].friendId = friendId;
     calls[callId].muteMic = false;
+    calls[callId].muteVol = false;
     // the following three lines are also now redundant from startCall, but are
     // necessary there for outbound and here for inbound
     calls[callId].codecSettings = av_DefaultSettings;
@@ -295,6 +296,14 @@ void Core::micMuteToggle(int callId)
 {
     if (calls[callId].active) {
         calls[callId].muteMic = !calls[callId].muteMic;
+    }
+}
+
+void Core::volMuteToggle(int callId)
+{
+    if (calls[callId].active) {
+        calls[callId].muteVol = !calls[callId].muteVol;
+        alSourcef(calls[callId].alSource, AL_GAIN, calls[callId].muteVol ? 0.f : 1.f);
     }
 }
 
