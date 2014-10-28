@@ -49,6 +49,10 @@ private slots:
     void on_HueSlider_sliderMoved(int position);
     void on_videoModescomboBox_activated(int index);
 
+    // audio
+    void onInDevChanged(const QString& deviceDescriptor);
+    void onOutDevChanged(const QString& deviceDescriptor);
+
     // camera
     void onPropProbingFinished(Camera::Prop prop, double val);
     void onResProbingFinished(QList<QSize> res);

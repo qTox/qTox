@@ -163,6 +163,11 @@ void Settings::load()
             autoAccept[key] = s.value(key).toString();
     s.endGroup();
 
+    s.beginGroup("Audio");
+        inDev = s.value("inDev", "").toString();
+        outDev = s.value("outDev", "").toString();
+    s.endGroup();
+
     // try to set a smiley pack if none is selected
     if (!SmileyPack::isValid(smileyPack) && !SmileyPack::listSmileyPacks().isEmpty())
         smileyPack = SmileyPack::listSmileyPacks()[0].second;
@@ -280,6 +285,11 @@ void Settings::save(QString path)
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
         for (auto& id : autoAccept.keys())
             s.setValue(id, autoAccept.value(id));
+    s.endGroup();
+
+    s.beginGroup("Audio");
+        s.setValue("inDev", inDev);
+        s.setValue("outDev", outDev);
     s.endGroup();
 }
 
@@ -710,4 +720,24 @@ bool Settings::isTypingNotificationEnabled() const
 void Settings::setTypingNotification(bool enabled)
 {
     typingNotification = enabled;
+}
+
+QString Settings::getInDev() const
+{
+    return inDev;
+}
+
+void Settings::setInDev(const QString& deviceSpecifier)
+{
+    inDev = deviceSpecifier;
+}
+
+QString Settings::getOutDev() const
+{
+    return outDev;
+}
+
+void Settings::setOutDev(const QString& deviceSpecifier)
+{
+    outDev = deviceSpecifier;
 }

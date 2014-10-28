@@ -97,6 +97,12 @@ public:
     QByteArray getAvatarHash(const QString& ownerId);
     void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
 
+    QString getInDev() const;
+    void setInDev(const QString& deviceSpecifier);
+
+    QString getOutDev() const;
+    void setOutDev(const QString& deviceSpecifier);
+
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
     // for some general purpose widgets, such as MainWindows or Splitters,
@@ -239,6 +245,10 @@ private:
 
     // Privacy
     bool typingNotification;
+
+    // Audio
+    QString inDev;
+    QString outDev;
 
 signals:
     //void dataChanged();
