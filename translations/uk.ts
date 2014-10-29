@@ -4,36 +4,9 @@
 <context>
     <name>AVForm</name>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="22"/>
-        <source>Audio/Video settings</source>
-        <translation>Параметри аудіо/відео</translation>
-    </message>
-    <message>
-        <source>Hide video preview</source>
-        <comment>On a button</comment>
-        <translation type="vanished">Приховати вікно перегляду</translation>
-    </message>
-    <message>
-        <source>Show video preview</source>
-        <comment>On a button</comment>
-        <translation type="vanished">Показати вікно перегляду</translation>
-    </message>
-</context>
-<context>
-    <name>AVPage</name>
-    <message>
-        <source>Video Settings</source>
-        <translation type="obsolete">Параметри відео</translation>
-    </message>
-    <message>
-        <source>Show video preview</source>
-        <comment>On a button</comment>
-        <translation type="obsolete">Показати вікно попереднього перегляду</translation>
-    </message>
-    <message>
-        <source>Hide video preview</source>
-        <comment>On a button</comment>
-        <translation type="obsolete">Приховати вікно попереднього перегляду</translation>
+        <location filename="../src/widget/form/settings/avform.cpp" line="30"/>
+        <source>Audio/Video</source>
+        <translation>Аудіо/Відео</translation>
     </message>
 </context>
 <context>
@@ -44,58 +17,59 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="20"/>
-        <source>Volume Settings (Stubs)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="26"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="54"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтворення</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="40"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="47"/>
         <source>Microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Мікрофон</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="57"/>
-        <source>Video settings</source>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="41"/>
+        <source>Audio Settings</source>
+        <translation>Аудіо параметри</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="75"/>
+        <source>Playback device</source>
+        <translation>Пристрій відтворення</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="82"/>
+        <source>Capture device</source>
+        <translation>Пристрій захоплення</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="98"/>
+        <source>Video Settings</source>
         <translation>Параметри відео</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="66"/>
-        <source>Modes</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="109"/>
+        <source>Resolution</source>
+        <translation>Роздільна здатність</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="83"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="126"/>
         <source>Hue</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтінок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="97"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="140"/>
         <source>Brightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Яскравість</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="111"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="154"/>
         <source>Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Насиченість</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="125"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="168"/>
         <source>Contrast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="139"/>
-        <source>Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show video preview</source>
-        <translation type="vanished">Показати вікно попереднього перегляду</translation>
+        <translation>Контраст</translation>
     </message>
 </context>
 <context>
@@ -181,42 +155,140 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="105"/>
+        <location filename="../src/widget/form/chatform.cpp" line="63"/>
+        <source>Load History...</source>
+        <translation>Завантажити історію…</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="115"/>
         <source>Send a file</source>
         <translation>Надіслати файл</translation>
     </message>
 </context>
 <context>
+    <name>ChatTextEdit</name>
+    <message>
+        <location filename="../src/widget/tool/chattextedit.cpp" line="23"/>
+        <source>Type your message here...</source>
+        <translation>Наберіть Ваше повідомлення тут…</translation>
+    </message>
+</context>
+<context>
     <name>Core</name>
     <message>
-        <location filename="../src/core.cpp" line="1104"/>
-        <source>Encrypted profile</source>
-        <translation>Зашифрований профіль</translation>
+        <location filename="../src/core.cpp" line="249"/>
+        <source>Toxing on qTox</source>
+        <translation>Вітання з qTox</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1105"/>
-        <source>Your tox profile seems to be encrypted, qTox can&apos;t open it
-Do you want to erase this profile ?</source>
-        <translation>Схоже, що ваш tox-профіль зашифровано, qTox не може його відкрити.
-Бажаєте стерти цей профіль?</translation>
+        <location filename="../src/core.cpp" line="250"/>
+        <source>qTox User</source>
+        <translation>Користувач qTox</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1124"/>
+        <source>Encryption error</source>
+        <translation>Помилка шифрування</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1124"/>
+        <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
+        <translation>Файл .tox зашифровано, але шифрування не перевірено, попри це продовжуємо.</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1131"/>
+        <source>Tox datafile decryption password</source>
+        <translation>Розшифрування файлу даних Tox</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1133"/>
+        <location filename="../src/core.cpp" line="1145"/>
+        <location filename="../src/core.cpp" line="1210"/>
+        <source>Password error</source>
+        <translation>Помилка паролю</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1133"/>
+        <location filename="../src/core.cpp" line="1210"/>
+        <source>Failed to setup password.
+Empty password.</source>
+        <translation>Не вдалось встановити пароль.
+Пароль пустий.</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1141"/>
+        <source>Try Again</source>
+        <translation>Спробуйте ще раз</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1142"/>
+        <source>Change profile</source>
+        <translation>Змінити профіль</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1143"/>
+        <source>Reinit current profile</source>
+        <translation>Пере ініціалізувати поточний профіль</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1146"/>
+        <source>Wrong password has been entered</source>
+        <translation>Введено хибний пароль</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1208"/>
+        <source>History Log decryption password</source>
+        <translation>Розшифрування історії</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1216"/>
+        <source>Your history is encrypted with different password
+Do you want to try another password?</source>
+        <translation>Ваша історія зашифрована інакшим паролем
+Бажаєте спробувати інший пароль?</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1215"/>
+        <source>Encrypted log</source>
+        <translation>Зашифрований звіт</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1226"/>
+        <source>Loggin</source>
+        <translation>Звітування</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1226"/>
+        <source>Due to incorret password logging will be disabled</source>
+        <translation>Введено некоректний пароль, звітування вимкнено</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1299"/>
+        <source>NO Password</source>
+        <translation>Відсутній пароль</translation>
+    </message>
+    <message>
+        <location filename="../src/core.cpp" line="1299"/>
+        <source>Will be saved without encryption!</source>
+        <translation>Буде збережено без шифрування!</translation>
     </message>
 </context>
 <context>
     <name>FileTransferInstance</name>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="209"/>
+        <location filename="../src/filetransferinstance.cpp" line="234"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Зберегти файл</translation>
     </message>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="220"/>
+        <location filename="../src/filetransferinstance.cpp" line="242"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Немає прав на запис</translation>
     </message>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="220"/>
+        <location filename="../src/filetransferinstance.cpp" line="242"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Ви не маєте прав на запис за цим розташуванням. Оберіть інше місце призначення, або скасуйте передачу.</translation>
@@ -252,7 +324,7 @@ Do you want to erase this profile ?</source>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Дехто хоче долучитися до переліку друзів з вами</translation>
+        <translation>Дехто хоче долучитися до переліку ваших друзів</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
@@ -280,19 +352,50 @@ Do you want to erase this profile ?</source>
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="48"/>
+        <location filename="../src/widget/friendwidget.cpp" line="54"/>
+        <source>Invite to group</source>
+        <comment>Menu to invite a friend to a groupchat</comment>
+        <translation>Запросити до групи</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="55"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Копіювати дружній ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="49"/>
-        <source>Invite in group</source>
-        <comment>Menu to invite a friend in a groupchat</comment>
-        <translation>Запросити до групи</translation>
+        <location filename="../src/widget/friendwidget.cpp" line="65"/>
+        <source>Auto accept files from this friend</source>
+        <comment>context menu entry</comment>
+        <translation>Автоматично приймати файли від даного друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="59"/>
+        <location filename="../src/widget/friendwidget.cpp" line="66"/>
+        <source>Manually accept files from this friend</source>
+        <comment>context menu entry</comment>
+        <translation>Вручну підтверджувати отримання файли від даного друга</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="67"/>
+        <source>Auto accept files from all friends</source>
+        <comment>context menu entry</comment>
+        <translation>Автоматично приймати файли від всіх друзів</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="68"/>
+        <source>Disable global auto accept</source>
+        <comment>context menu entry</comment>
+        <translation>Вимкнути автоматичне прийняття файлів</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="96"/>
+        <location filename="../src/widget/friendwidget.cpp" line="111"/>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Оберіть теку, для автоматичного отримання файлів</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="74"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Вилучити з друзів</translation>
@@ -301,44 +404,21 @@ Do you want to erase this profile ?</source>
 <context>
     <name>GeneralForm</name>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="27"/>
-        <source>General Settings</source>
-        <translation>Основні параметри</translation>
-    </message>
-</context>
-<context>
-    <name>GeneralPage</name>
-    <message>
-        <source>General Settings</source>
-        <translation type="obsolete">Основні параметри</translation>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="31"/>
+        <source>General</source>
+        <translation>Основні</translation>
     </message>
     <message>
-        <source>Enable IPv6 (recommended)</source>
-        <comment>Text on a checkbox to enable IPv6</comment>
-        <translation type="obsolete">Дозволити IPv6 (рекомендовано)</translation>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="186"/>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation>Дзвінок активний</translation>
     </message>
     <message>
-        <source>Use translations</source>
-        <comment>Text on a checkbox to enable translations</comment>
-        <translation type="obsolete">Використовувати мову системи</translation>
-    </message>
-    <message>
-        <source>Make Tox portable</source>
-        <comment>Text on a checkbox to make qTox a portable application</comment>
-        <translation type="obsolete">Портативний запуск</translation>
-    </message>
-    <message>
-        <source>Save settings to the working directory instead of the usual conf dir</source>
-        <comment>describes makeToxPortable checkbox</comment>
-        <translation type="obsolete">Зберігати налаштування в робочий теці</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation type="obsolete">Графічна тема</translation>
-    </message>
-    <message>
-        <source>Smiley Pack</source>
-        <translation type="obsolete">Графічний пакунок емоційних картинок</translation>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="187"/>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation>Ви не можете від&apos;єднатись під час активного дзвінка!</translation>
     </message>
 </context>
 <context>
@@ -349,159 +429,221 @@ Do you want to erase this profile ?</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="29"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="53"/>
         <source>General Settings</source>
         <translation>Основні параметри</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="35"/>
-        <source>Use translations</source>
-        <extracomment>Text on a checkbox to enable translations</extracomment>
-        <translation>Використовувати мову системи</translation>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="61"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="77"/>
+        <source>The translation may not load until qTox restarts.</source>
+        <translation>Переклад буде застосовано після перезавантаження qTox.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="42"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="64"/>
+        <source>Translation:</source>
+        <translation>Переклад:</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="86"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
         <translation>Зберігати налаштування в робочий теці</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="45"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="89"/>
         <source>Make Tox portable</source>
         <translation>Портативний запуск</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="52"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="96"/>
         <source>Start in tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускати у системному лотку</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="59"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="103"/>
+        <source>Close to tray</source>
+        <translation>Закривати до лотку</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="110"/>
+        <source>Minimize to tray</source>
+        <translation>Мінімізувати до лотку</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="117"/>
         <source>Show contacts&apos; status changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Показувати зміну статусів контактів</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="68"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="126"/>
         <source>Provided in minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановлено в хвилинах</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="74"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="132"/>
         <source>Auto away after (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Авто-статус «Відійшов» (0 - вимкнено):</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="87"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="145"/>
+        <source>Set to 0 to disable</source>
+        <translation>Встановіть 0, аби вимкнути</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="151"/>
         <source> minutes</source>
-        <translation type="unfinished"></translation>
+        <translation> хвилин</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="105"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="169"/>
         <source>Theme</source>
         <translation>Графічна тема</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="113"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="177"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Графічний пакунок емоцій:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="134"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="201"/>
         <source>:)</source>
-        <translation type="unfinished"></translation>
+        <translation>:)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="144"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="211"/>
         <source>;)</source>
-        <translation type="unfinished"></translation>
+        <translation>;)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="154"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="221"/>
         <source>:p</source>
-        <translation type="unfinished"></translation>
+        <translation>:p</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="164"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="231"/>
         <source>:O</source>
-        <translation type="unfinished"></translation>
+        <translation>:O</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="174"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="241"/>
         <source>:&apos;(</source>
-        <translation type="unfinished"></translation>
+        <translation>:&apos;(</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="188"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="255"/>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль:</translation>
     </message>
     <message>
-        <source>Smiley Pack</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation type="vanished">Графічний пакунок емоційних картинок</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="210"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="277"/>
         <source>Connection Settings</source>
         <translation>Параметри підключення</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="216"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="289"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Дозволити IPv6 (рекомендовано)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Це дозволяє використовувати tox, наприклад, поверх протоколу Tor. Але це збульшує навантаження на мережу, тому використовуйте лише в разі необхідності.</translation>
+        <translation>Це дозволяє використовувати tox, наприклад, поверх протоколу Tor. Але це збільшує навантаження на мережу, тому використовуйте лише в разі необхідності.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="226"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="299"/>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Вимкнути IPv6 (не рекомендовано)</translation>
+        <translation>Вимкнути UDP (не рекомендовано)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="233"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="306"/>
         <source>Use proxy (SOCKS5)</source>
         <translation>Використовувати проксі (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="242"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="318"/>
         <source>Address</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>Адреса</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="328"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Порт</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="347"/>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation>Перепід&apos;єднатись</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="154"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="160"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="56"/>
+        <source>Send message</source>
+        <translation>Відправити повідомлення</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="58"/>
+        <source>Smileys</source>
+        <translation>Смайлики</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="62"/>
+        <source>Send file(s)</source>
+        <translation>Відправити файл(и)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="65"/>
+        <source>Audio call</source>
+        <translation>Аудіо дзвінок</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="68"/>
+        <source>Video call</source>
+        <translation>Відео дзвінок</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="71"/>
+        <source>Toggle speakers volume</source>
+        <translation>Перемкнути стан гучності відтворення</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="74"/>
+        <source>Toggle microphone</source>
+        <translation>Перемкнути стан мікрофону</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="133"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="173"/>
         <source>Save chat log</source>
         <translation>Зберегти чат</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="134"/>
+        <source>Clear displayed messages</source>
+        <translation>Очистити показані повідомлення</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="253"/>
+        <source>Cleared</source>
+        <translation>Очищено</translation>
     </message>
 </context>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="47"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="49"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>Користувачів у чаті: %1</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <translation type="obsolete">&lt;Невідомо&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="85"/>
@@ -512,19 +654,19 @@ Do you want to erase this profile ?</source>
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="39"/>
-        <location filename="../src/widget/groupwidget.cpp" line="59"/>
+        <location filename="../src/widget/groupwidget.cpp" line="42"/>
+        <location filename="../src/widget/groupwidget.cpp" line="64"/>
         <source>%1 users in chat</source>
         <translation>Користувачів у чаті: %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="41"/>
-        <location filename="../src/widget/groupwidget.cpp" line="61"/>
+        <location filename="../src/widget/groupwidget.cpp" line="44"/>
+        <location filename="../src/widget/groupwidget.cpp" line="66"/>
         <source>0 users in chat</source>
         <translation>Немає користувачів</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="48"/>
+        <location filename="../src/widget/groupwidget.cpp" line="53"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Вийти з групи</translation>
@@ -533,112 +675,111 @@ Do you want to erase this profile ?</source>
 <context>
     <name>IdentityForm</name>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="33"/>
-        <source>Your identity</source>
-        <translation>Ваш ідентифікатор</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="114"/>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="115"/>
-        <source>You can&apos;t switch profiles while a call is active!</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="35"/>
+        <source>Identity</source>
+        <translation>Ідентифікація</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="125"/>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation>Дзвінок активний</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="126"/>
+        <source>You can&apos;t switch profiles while a call is active!</source>
+        <comment>popup text</comment>
+        <translation>Ви не можете перемикати профіль під час активного дзвінка!</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="136"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>Перейменувати «%1»</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="140"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="144"/>
+        <source>Profile already exists</source>
+        <comment>rename confirm title</comment>
+        <translation>Профіль вже існує</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="145"/>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>rename confirm text</comment>
+        <translation>Профіль із назвою «%1» вже існує. Бажаєте стерти його?</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="159"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Експорт профілю</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="142"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="161"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файл збереження Tox (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="151"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="170"/>
         <source>Profile currently loaded</source>
         <comment>current profile deletion warning title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Поточний профіль завантажено</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="151"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="170"/>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Даний профіль зараз використовується. Завантажте інший, парад вилученням поточного профілю.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="174"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Небезпечне вилучення!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="175"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дійсно вилучити даний профіль?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="168"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Імпортувати профіль</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="168"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файл збереження Tox (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="176"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="195"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ігнорування не Tox файлу</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="176"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="195"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>IdentityPage</name>
-    <message>
-        <source>Public Information</source>
-        <translation type="obsolete">Публічна інформація</translation>
+        <translation>Увага: вказаний вами файл не є файлом збереження Tox; ігнорую.</translation>
     </message>
     <message>
-        <source>Name</source>
-        <comment>Username/nick</comment>
-        <translation type="obsolete">Ім&apos;я</translation>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation>Профіль вже існує</translation>
     </message>
     <message>
-        <source>Status</source>
-        <comment>Status message</comment>
-        <translation type="obsolete">Статус</translation>
-    </message>
-    <message>
-        <source>Tox ID</source>
-        <translation type="obsolete">Tox ID</translation>
-    </message>
-    <message>
-        <source>Your Tox ID</source>
-        <translation type="obsolete">Ваш Tox ID</translation>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="200"/>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation>Профіль із назвою «%1» вже існує. Бажаєте стерти його?</translation>
     </message>
 </context>
 <context>
@@ -649,75 +790,114 @@ Do you want to erase this profile ?</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="20"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="41"/>
         <source>Public Information</source>
         <translation>Публічна інформація</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="26"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="47"/>
         <source>Name</source>
         <translation>Ім&apos;я</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="36"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="57"/>
         <source>Status</source>
         <translation>Статус</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="49"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="70"/>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="55"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="76"/>
         <source>Your Tox ID (click to copy)</source>
         <translation>Ваш Tox ID (клацніть аби скопіювати)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="65"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="86"/>
         <source>Profiles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="73"/>
-        <source>Available profiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Профілі</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="94"/>
-        <source>Load</source>
-        <comment>load profile button</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="101"/>
-        <source>Rename</source>
-        <comment>rename profile button</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="108"/>
-        <source>Export</source>
-        <comment>export profile button</comment>
-        <translation type="unfinished"></translation>
+        <source>Available profiles:</source>
+        <translation>Доступні профілі:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="115"/>
-        <source>Delete</source>
-        <comment>delete profile button</comment>
-        <translation type="unfinished"></translation>
+        <source>Load</source>
+        <comment>load profile button</comment>
+        <translation>Завантажити</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="118"/>
-        <source>This is useful to remain safe on public computers</source>
-        <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="163"/>
+        <source>Switching profiles is disabled during calls</source>
+        <comment>tooltip</comment>
+        <translation>Перемикання профілю заблоковано під час дзвінків</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="127"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="125"/>
+        <source>Rename</source>
+        <comment>rename profile button</comment>
+        <translation>Перейменувати</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="132"/>
+        <source>Export</source>
+        <comment>export profile button</comment>
+        <translation>Експорт</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="142"/>
+        <source>Delete</source>
+        <comment>delete profile button</comment>
+        <translation>Вилучити</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="139"/>
+        <source>This is useful to remain safe on public computers</source>
+        <comment>delete profile button tooltip</comment>
+        <translation>Це стає в нагоді, при користуванні публічними комп&apos;ютерами</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="153"/>
         <source>Import a profile</source>
         <comment>import profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Імпортувати профіль</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="160"/>
+        <source>New Tox ID</source>
+        <comment>new profile button</comment>
+        <translation>Новий Tox ID</translation>
+    </message>
+</context>
+<context>
+    <name>InputPasswordDialog</name>
+    <message>
+        <location filename="../src/widget/form/inputpassworddialog.ui" line="14"/>
+        <source>Password Dialog</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/inputpassworddialog.ui" line="23"/>
+        <source>Input password:</source>
+        <translation>Введіть пароль:</translation>
+    </message>
+</context>
+<context>
+    <name>LoadHistoryDialog</name>
+    <message>
+        <location filename="../src/widget/form/loadhistorydialog.ui" line="14"/>
+        <source>Load History Dialog</source>
+        <translation>Історія</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/loadhistorydialog.ui" line="23"/>
+        <source>Load history from:</source>
+        <translation>Завантажити історію від:</translation>
     </message>
 </context>
 <context>
@@ -771,157 +951,208 @@ Do you want to erase this profile ?</source>
 <context>
     <name>PrivacyForm</name>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="21"/>
-        <source>Privacy settings</source>
-        <translation>Параметри приватності</translation>
-    </message>
-</context>
-<context>
-    <name>SelfCamView</name>
-    <message>
-        <source>Tox video test</source>
-        <comment>Title of the window to test the video/webcam</comment>
-        <translation type="vanished">Перевірка відео tox</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsDialog</name>
-    <message>
-        <source>qTox – Settings</source>
-        <translation type="obsolete">qTox - Параметри</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Основні</translation>
-    </message>
-    <message>
-        <source>Identity</source>
-        <translation type="obsolete">Ідентифікація</translation>
-    </message>
-    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="28"/>
         <source>Privacy</source>
-        <translation type="obsolete">Приватність</translation>
+        <translation>Приватність</translation>
     </message>
     <message>
-        <source>Audio/Video</source>
-        <translation type="obsolete">Аудіо/Відео</translation>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="88"/>
+        <source>Encrypted log</source>
+        <translation>Зашифрований звіт</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="obsolete">Гаразд</translation>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="89"/>
+        <source>You already have history log file encrypted with different password
+Do you want to delete old history file?</source>
+        <translation>Ви вже маєте зашифрований файл історії іншим паролем
+Бажаєте вилучити старий файл історії?</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacySettings</name>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="14"/>
+        <source>Form</source>
+        <translation>Form</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Скасувати</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="23"/>
+        <source>Typing Notification</source>
+        <translation>Увімкнути сповіщення про набір</translation>
     </message>
     <message>
-        <source>Apply</source>
-        <translation type="obsolete">Застосувати</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="33"/>
+        <source>Keep History (unstable)</source>
+        <translation>Лишати історію (нестабільна функція)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="43"/>
+        <source>Encryption</source>
+        <translation>Шифрування</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="52"/>
+        <source>Encrypt Tox datafile</source>
+        <translation>Шифрувати файл даних Tox</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="62"/>
+        <source>Encrypt History</source>
+        <translation>Шифрувати історію</translation>
+    </message>
+</context>
+<context>
+    <name>SetPasswordDialog</name>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Діалог</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="23"/>
+        <source>Type Password</source>
+        <translation>Наберіть пароль</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="37"/>
+        <source>Repeat Password</source>
+        <translation>Повторіть пароль</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="101"/>
+        <location filename="../src/widget/widget.cpp" line="74"/>
+        <source>online</source>
+        <translation>В мережі</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="77"/>
+        <source>away</source>
+        <translation>Відійшов</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="80"/>
+        <source>busy</source>
+        <translation>Зайнятий</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="83"/>
+        <source>&amp;Quit</source>
+        <translation>&amp;Вийти</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="86"/>
+        <source>Change status to:</source>
+        <translation>Змінити статус на:</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="153"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>В мережі</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="103"/>
+        <location filename="../src/widget/widget.cpp" line="155"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Відійшов</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="105"/>
+        <location filename="../src/widget/widget.cpp" line="157"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Зайнятий</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="282"/>
+        <location filename="../src/widget/widget.cpp" line="384"/>
         <source>Choose a profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть профіль</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="283"/>
+        <location filename="../src/widget/widget.cpp" line="385"/>
         <source>Please choose which identity to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть ідентифікатор для використання</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="309"/>
+        <location filename="../src/widget/widget.cpp" line="411"/>
         <source>Choose a profile picture</source>
         <translation>Оберіть зображення для профілю</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="316"/>
-        <location filename="../src/widget/widget.cpp" line="323"/>
-        <location filename="../src/widget/widget.cpp" line="344"/>
+        <location filename="../src/widget/widget.cpp" line="418"/>
+        <location filename="../src/widget/widget.cpp" line="425"/>
+        <location filename="../src/widget/widget.cpp" line="446"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="316"/>
+        <location filename="../src/widget/widget.cpp" line="418"/>
         <source>Unable to open this file</source>
         <translation>Неможливо відкрити цей файл</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="323"/>
+        <location filename="../src/widget/widget.cpp" line="425"/>
         <source>Unable to read this image</source>
         <translation>Неможливо прочитати це зображення</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="344"/>
+        <location filename="../src/widget/widget.cpp" line="446"/>
         <source>This image is too big</source>
         <translation>Зображення завелике</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="371"/>
+        <location filename="../src/widget/widget.cpp" line="473"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Помилка запуску ядра tox, програма буде завершена після закриття цього повідомлення.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="380"/>
+        <location filename="../src/widget/widget.cpp" line="482"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Помилка запуску ядра tox із поточними параметрами проксі. qTox не працює; змініть параметри і перезапустіть.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="549"/>
+        <location filename="../src/widget/widget.cpp" line="664"/>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>Відійшов</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="551"/>
+        <location filename="../src/widget/widget.cpp" line="666"/>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зайнятий</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="553"/>
+        <location filename="../src/widget/widget.cpp" line="668"/>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>Поза мережею</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="555"/>
+        <location filename="../src/widget/widget.cpp" line="670"/>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>В мережі</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="561"/>
+        <location filename="../src/widget/widget.cpp" line="672"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 тепер вже відомий як %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="752"/>
+        <location filename="../src/widget/widget.cpp" line="876"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Невідомо&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="1019"/>
+        <location filename="../src/widget/widget.cpp" line="1030"/>
+        <source>Message failed to send</source>
+        <translation>Не вдалось відправити повідомлення</translation>
     </message>
 </context>
 </TS>
