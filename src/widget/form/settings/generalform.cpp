@@ -52,8 +52,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
     reloadSmiles();
 
+    bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
-    bodyUI->styleBrowser->addItem("None");
         
     if(QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
         bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
@@ -127,7 +127,11 @@ void GeneralForm::onSetMinimizeToTray()
 
 void GeneralForm::onStyleSelected(QString style)
 {
-    Settings::getInstance().setStyle(style);
+    if(bodyUI->styleBrowser->currentIndex() == 0)
+        Settings::getInstance().setStyle("None");
+    else
+        Settings::getInstance().setStyle(style);
+    
     this->setStyle(QStyleFactory::create(style));
     parent->setBodyHeadStyle(style);
 }
