@@ -24,7 +24,7 @@
 
 #define SMILEYPACK_SEARCH_PATHS                                                                                             \
     {                                                                                                                       \
-        "./smileys", "/usr/share/qtox/smileys", "/usr/share/emoticons", "~/.kde4/share/emoticons", "~/.kde/share/emoticons" \
+        ":/smileys", "./smileys", "/usr/share/qtox/smileys", "/usr/share/emoticons", "~/.kde4/share/emoticons", "~/.kde/share/emoticons" \
     }
 
 //maps emoticons to smileys
