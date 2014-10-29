@@ -122,7 +122,7 @@ void ChatForm::onAttachClicked()
             continue;
         if (file.isSequential())
         {
-            QMessageBox::critical(0, "Bad Idea", "You're trying to send a special (sequential) file, that's not going to work!");
+            QMessageBox::critical(0, tr("Bad Idea"), tr("You're trying to send a special (sequential) file, that's not going to work!"));
             file.close();
             continue;
         }
