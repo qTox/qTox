@@ -294,7 +294,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="cbUDPDisabled">
+           <widget class="QCheckBox" name="cbEnableUDP">
             <property name="toolTip">
              <string extracomment="force tcp checkbox tooltip">This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</string>
             </property>

@@ -62,7 +62,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     
     bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
     
-    bodyUI->cbUDPDisabled->setChecked(!Settings::getInstance().getForceTCP());
+    bodyUI->cbEnableUDP->setChecked(!Settings::getInstance().getForceTCP());
     bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
     int port = Settings::getInstance().getProxyPort();
     if (port != -1)
@@ -80,7 +80,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     // new syntax can't handle overloaded signals... (at least not in a pretty way)
-    connect(bodyUI->cbUDPDisabled, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
+    connect(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
     connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);
@@ -157,7 +157,7 @@ void GeneralForm::onSmileyBrowserIndexChanged(int index)
 
 void GeneralForm::onUDPUpdated()
 {
-    Settings::getInstance().setForceTCP(!bodyUI->cbUDPDisabled->isChecked());
+    Settings::getInstance().setForceTCP(!bodyUI->cbEnableUDP->isChecked());
 }
 
 void GeneralForm::onProxyAddrEdited()
