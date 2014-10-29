@@ -19,6 +19,7 @@
 
 #include <cstdint>
 #include <QObject>
+#include <QMutex>
 
 #include "corestructs.h"
 #include "coreav.h"
@@ -253,6 +254,7 @@ private:
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
+    QMutex fileSendMutex;
 
     uint8_t* pwsaltedkeys[PasswordType::ptCounter]; // use the pw's hash as the "pw"
 

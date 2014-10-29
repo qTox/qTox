@@ -39,6 +39,7 @@
 #include <QList>
 #include <QBuffer>
 #include <QMessageBox>
+#include <QMutexLocker>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 const QString Core::TOX_EXT = ".tox";
@@ -758,6 +759,8 @@ void Core::sendGroupMessage(int groupId, const QString& message)
 
 void Core::sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize)
 {
+    QMutexLocker mlocker(&fileSendMutex);
+
     QByteArray fileName = Filename.toUtf8();
     int fileNum = tox_new_file_sender(tox, friendId, filesize, (uint8_t*)fileName.data(), fileName.size());
     if (fileNum == -1)
