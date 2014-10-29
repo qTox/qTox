@@ -58,7 +58,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     if(QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
         bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
     else
-        bodyUI->styleBrowser->setCurrentText("None");
+        bodyUI->styleBrowser->setCurrentText(tr("None"));
     
     bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
     

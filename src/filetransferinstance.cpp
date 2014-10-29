@@ -420,7 +420,7 @@ QString FileTransferInstance::draw2ButtonsForm(const QString &type, const QImage
     content += "<table cellspacing=\"0\"><tr>";
     content += "<td>" + size + "</td>";
     content += "<td align=center>" + speed + "</td>";
-    content += "<td align=right>ETA: " + eta + "</td>";
+    content += "<td align=right>" + tr("ETA") + ": " + eta + "</td>";
     content += "</tr><tr><td colspan=3>";
     content += progrBar;
     content += "</td></tr></table>";

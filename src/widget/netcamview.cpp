@@ -25,7 +25,7 @@ NetCamView::NetCamView(QWidget* parent)
     , mainLayout(new QHBoxLayout())
 {
     setLayout(mainLayout);
-    setWindowTitle("Tox video");
+    setWindowTitle(tr("Tox video"));
     setMinimumSize(320,240);
 
     videoSurface = new VideoSurface(this);
