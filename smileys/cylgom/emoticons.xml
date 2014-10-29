@@ -10,12 +10,6 @@
 	<string>O:-)</string>
   </emoticon>
   
-  <emoticon file="angry.png">
-    <string>:angry:</string>
-    <string>>:-(</string>
-    <string>>:(</string>
-  </emoticon>
-  
   <emoticon file="beer.png">
     <string>:beer:</string>
   </emoticon>
@@ -25,12 +19,6 @@
 	<string>|-o</string>
 	<string>\-o</string>
 	<string>/-o</string>
-  </emoticon>
-  
-  <emoticon file="cool.png">
-    <string>:cool:</string>
-	<string>8)</string>
-	<string>8-)</string>
   </emoticon>
   
   <emoticon file="crossing.png">
@@ -81,11 +69,6 @@
     <string>:finger:</string>
 	<string>:fuck:</string>
   </emoticon>
-  
-  <emoticon file="happysmile.png">
-    <string>:happy:</string>
-    <string>^^</string>
-  </emoticon>
 
   <emoticon file="heart.png">
     <string>:heart:</string>
@@ -109,20 +92,16 @@
 	<string>':)</string>
   </emoticon>
   
-  <emoticon file="impressed.png">
-    <string>:wow:</string>
-	<string>:O</string>
-	<string>:o</string>
-	<string>:0</string>
+  <emoticon file="tongue.png">
+    <string>:impertinent:</string>
+    <string>:-P</string>
+    <string>:-p</string>
+    <string>:P</string>
+    <string>:p</string>
   </emoticon>
   
   <emoticon file="inlove.png">
     <string>:inlove:</string>
-  </emoticon>
-  
-  <emoticon file="jealous.png">
-    <string>:jealous:</string>
-	<string>:envy:</string>
   </emoticon>
   
   <emoticon file="kiss.png">
@@ -232,14 +211,6 @@
   <emoticon file="suspicious.png">
     <string>:smirk:</string>
   </emoticon>
-
-  <emoticon file="tongue.png">
-    <string>:impertinent:</string>
-	<string>:-P</string>
-	<string>:-p</string>
-	<string>:P</string>
-	<string>:p</string>
-  </emoticon>
   
   <emoticon file="vomit.png">
     <string>:puke:</string>
@@ -312,6 +283,36 @@
   
   <emoticon file="toxlocker.png">
     <string>:tox:</string>
+  </emoticon>
+  
+  <!-- Preview emoticons -->
+  <emoticon file="happysmile.png">
+    <string>:happy:</string>
+    <string>^^</string>
+  </emoticon>
+  
+  <emoticon file="impressed.png">
+    <string>:wow:</string>
+    <string>:O</string>
+    <string>:o</string>
+    <string>:0</string>
+  </emoticon>
+  
+  <emoticon file="jealous.png">
+    <string>:jealous:</string>
+    <string>:envy:</string>
+  </emoticon>
+  
+  <emoticon file="cool.png">
+    <string>:cool:</string>
+    <string>8)</string>
+    <string>8-)</string>
+  </emoticon>
+  
+  <emoticon file="angry.png">
+    <string>:angry:</string>
+    <string>>:-(</string>
+    <string>>:(</string>
   </emoticon>
   
 </messaging-emoticon-map>
