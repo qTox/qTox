@@ -68,11 +68,13 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &p
                 QString relPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(absPath);
 
                 if (relPath.leftRef(2) == "..")
-                    smileyPacks << QPair<QString, QString>(packageName, absPath);
-                else
-                    smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories
+                {
+                    if(!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
+                        smileyPacks << QPair<QString, QString>(packageName, absPath);
+                    else if(!smileyPacks.contains(QPair<QString, QString>(packageName, relPath)))
+                        smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories                            
+                }
             }
-
             dir.cdUp();
         }
     }
