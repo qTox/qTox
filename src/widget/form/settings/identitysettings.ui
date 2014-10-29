@@ -14,6 +14,18 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
+   <property name="rightMargin">
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
+    <number>9</number>
+   </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
@@ -111,11 +123,11 @@
            <layout class="QHBoxLayout" name="profilesButtonsLayout">
             <item>
              <widget class="QPushButton" name="loadButton">
-              <property name="text">
-               <string comment="load profile button">Load</string>
-              </property>
               <property name="toolTip">
                <string comment="tooltip">Switching profiles is disabled during calls</string>
+              </property>
+              <property name="text">
+               <string comment="load profile button">Load</string>
               </property>
              </widget>
             </item>
@@ -156,11 +168,11 @@
             </item>
             <item>
              <widget class="QPushButton" name="newButton">
-              <property name="text">
-               <string comment="new profile button">New Tox ID</string>
-              </property>
               <property name="toolTip">
                <string comment="tooltip">Switching profiles is disabled during calls</string>
+              </property>
+              <property name="text">
+               <string comment="new profile button">New Tox ID</string>
               </property>
              </widget>
             </item>

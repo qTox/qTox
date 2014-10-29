@@ -15,13 +15,16 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="topMargin">
-    <number>6</number>
+    <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>6</number>
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
+    <number>9</number>
    </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
@@ -36,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>531</width>
-        <height>627</height>
+        <width>525</width>
+        <height>624</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -249,7 +252,7 @@
           </item>
           <item>
            <layout class="QHBoxLayout" name="styleHLayout">
-            <item alignment="Qt::AlignTop">
+            <item>
              <widget class="QLabel" name="styleLabel">
               <property name="text">
                <string>Style:</string>
@@ -281,7 +284,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayoutProxy">
           <property name="topMargin">
-           <number>0</number>
+           <number>9</number>
           </property>
           <item>
            <widget class="QCheckBox" name="cbEnableIPv6">
@@ -310,7 +313,7 @@
           <item>
            <layout class="QHBoxLayout" name="proxyLayout">
             <property name="spacing">
-             <number>0</number>
+             <number>6</number>
             </property>
             <item>
              <widget class="QLabel" name="proxyAddrLabel">
