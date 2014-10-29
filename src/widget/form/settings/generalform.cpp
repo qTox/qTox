@@ -62,7 +62,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     
     bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
     
-    bodyUI->cbUDPDisabled->setChecked(Settings::getInstance().getForceTCP());
+    bodyUI->cbUDPDisabled->setChecked(!Settings::getInstance().getForceTCP());
     bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
     int port = Settings::getInstance().getProxyPort();
     if (port != -1)
@@ -153,7 +153,7 @@ void GeneralForm::onSmileyBrowserIndexChanged(int index)
 
 void GeneralForm::onUDPUpdated()
 {
-    Settings::getInstance().setForceTCP(bodyUI->cbUDPDisabled->isChecked());
+    Settings::getInstance().setForceTCP(!bodyUI->cbUDPDisabled->isChecked());
 }
 
 void GeneralForm::onProxyAddrEdited()
