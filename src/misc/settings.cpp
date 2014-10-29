@@ -28,7 +28,7 @@
 #include <QList>
 
 const QString Settings::FILENAME = "settings.ini";
-bool Settings::makeToxPortable{false};
+bool Settings::makeToxPortable{true};
 
 Settings::Settings() :
     loaded(false), useCustomDhtList{false}
