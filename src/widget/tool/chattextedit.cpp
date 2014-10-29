@@ -20,7 +20,7 @@
 ChatTextEdit::ChatTextEdit(QWidget *parent) :
     QTextEdit(parent)
 {
-    setPlaceholderText("Type your message here...");
+    setPlaceholderText(tr("Type your message here..."));
     setAcceptRichText(false);
 }
 
