@@ -263,6 +263,7 @@ void Core::start()
     tox_callback_group_invite(tox, onGroupInvite, this);
     tox_callback_group_message(tox, onGroupMessage, this);
     tox_callback_group_namelist_change(tox, onGroupNamelistChange, this);
+    tox_callback_group_action(tox, onGroupAction, this);
     tox_callback_file_send_request(tox, onFileSendRequestCallback, this);
     tox_callback_file_control(tox, onFileControlCallback, this);
     tox_callback_file_data(tox, onFileDataCallback, this);
@@ -467,6 +468,12 @@ void Core::onConnectionStatusChanged(Tox*/* tox*/, int friendId, uint8_t status,
 void Core::onAction(Tox*/* tox*/, int friendId, const uint8_t *cMessage, uint16_t cMessageSize, void *core)
 {
     emit static_cast<Core*>(core)->friendMessageReceived(friendId, CString::toString(cMessage, cMessageSize), true);
+}
+
+void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *action, uint16_t length, void* _core)
+{
+    Core* core = static_cast<Core*>(_core);
+    emit core->groupMessageReceived(groupnumber, CString::toString(action, length), core->getGroupPeerName(groupnumber, peernumber));
 }
 
 void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key, uint16_t length,void *core)
