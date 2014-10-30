@@ -300,7 +300,7 @@ QString Settings::getSettingsDirPath()
 
     // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
-    return QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+    return "%APPDATA%/tox/";
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + "tox");
 #endif
