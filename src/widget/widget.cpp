@@ -892,7 +892,10 @@ void Widget::removeGroup(Group* g)
 {
     g->widget->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(g->widget) == activeChatroomWidget)
+    {
         activeChatroomWidget = nullptr;
+        onAddClicked();
+    }
     GroupList::removeGroup(g->groupId);
     core->removeGroup(g->groupId);
     delete g;
