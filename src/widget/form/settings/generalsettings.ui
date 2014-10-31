@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
@@ -201,7 +201,7 @@
             <item alignment="Qt::AlignTop">
              <widget class="QLabel" name="smile1">
               <property name="toolTip">
-               <string>:)</string>
+               <string notr="true">:)</string>
               </property>
               <property name="text">
                <string/>
@@ -211,7 +211,7 @@
             <item alignment="Qt::AlignTop">
              <widget class="QLabel" name="smile2">
               <property name="toolTip">
-               <string>;)</string>
+               <string notr="true">;)</string>
               </property>
               <property name="text">
                <string/>
@@ -221,7 +221,7 @@
             <item alignment="Qt::AlignTop">
              <widget class="QLabel" name="smile3">
               <property name="toolTip">
-               <string>:p</string>
+               <string notr="true">:p</string>
               </property>
               <property name="text">
                <string/>
@@ -231,7 +231,7 @@
             <item alignment="Qt::AlignTop">
              <widget class="QLabel" name="smile4">
               <property name="toolTip">
-               <string>:O</string>
+               <string notr="true">:O</string>
               </property>
               <property name="text">
                <string/>
@@ -241,7 +241,7 @@
             <item alignment="Qt::AlignTop">
              <widget class="QLabel" name="smile5">
               <property name="toolTip">
-               <string>:'(</string>
+               <string notr="true">:'(</string>
               </property>
               <property name="text">
                <string/>

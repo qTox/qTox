@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>qTox</string>
+   <string notr="true">qTox</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res.qrc">
@@ -1761,7 +1761,7 @@ QSplitter:handle{
     <string>Close</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Q</string>
+    <string notr="true">Ctrl+Q</string>
    </property>
   </action>
  </widget>
