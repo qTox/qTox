@@ -19,12 +19,37 @@
 #include <QApplication>
 #include <QFontDatabase>
 #include <QDebug>
+#include <QFile>
+#include <QDir>
+#include <QDateTime>
+
+#ifdef LOG_TO_FILE
+static QtMessageHandler dflt;
+static QTextStream logFile;
+
+void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
+{
+    dflt(type, ctxt, msg);
+    logFile << QTime::currentTime().toString("HH:mm:ss'  '") << msg << '\n';
+    logFile.flush();
+}
+#endif
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
+
+#ifdef LOG_TO_FILE
+    dflt = qInstallMessageHandler(nullptr);
+    QFile logfile(QDir(Settings::getSettingsDirPath()).filePath("qtox.log"));
+    logfile.open(QIODevice::Append);
+    logFile.setDevice(&logfile);
+    
+    logFile << QDateTime::currentDateTime().toString("yyyy-dd-MM HH:mm:ss'  file logger starting\n'");
+    qInstallMessageHandler(myMessageHandler);
+#endif
 
     // Windows platform plugins DLL hell fix
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
