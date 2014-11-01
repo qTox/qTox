@@ -76,8 +76,16 @@ void GroupChatForm::onSendTriggered()
     QString msg = msgEdit->toPlainText();
     if (msg.isEmpty())
         return;
+
     msgEdit->clear();
-    emit sendMessage(group->groupId, msg);
+
+    if (msg.startsWith("/me "))
+    {
+        msg = msg.right(msg.length() - 4);
+        emit sendAction(group->groupId, msg);
+    } else {
+        emit sendMessage(group->groupId, msg);
+    }
 }
 
 void GroupChatForm::onUserListChanged()

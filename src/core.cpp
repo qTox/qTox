@@ -473,7 +473,8 @@ void Core::onAction(Tox*/* tox*/, int friendId, const uint8_t *cMessage, uint16_
 void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *action, uint16_t length, void* _core)
 {
     Core* core = static_cast<Core*>(_core);
-    emit core->groupMessageReceived(groupnumber, CString::toString(action, length), core->getGroupPeerName(groupnumber, peernumber));
+    emit core->groupMessageReceived(groupnumber, CString::toString(action, length),
+                                    core->getGroupPeerName(groupnumber, peernumber), true);
 }
 
 void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key, uint16_t length,void *core)
@@ -485,7 +486,8 @@ void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key
 void Core::onGroupMessage(Tox*, int groupnumber, int peernumber, const uint8_t * message, uint16_t length, void *_core)
 {
     Core* core = static_cast<Core*>(_core);
-    emit core->groupMessageReceived(groupnumber, CString::toString(message, length), core->getGroupPeerName(groupnumber, peernumber));
+    emit core->groupMessageReceived(groupnumber, CString::toString(message, length),
+                                    core->getGroupPeerName(groupnumber, peernumber), false);
 }
 
 void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t change, void *core)
@@ -769,6 +771,20 @@ void Core::sendGroupMessage(int groupId, const QString& message)
     for (auto &cMsg :cMessages)
     {
         int ret = tox_group_message_send(tox, groupId, cMsg.data(), cMsg.size());
+
+        if (ret == -1)
+            emit groupSentResult(groupId, message, ret);
+    }
+}
+
+void Core::sendGroupAction(int groupId, const QString& message)
+{
+    QList<CString> cMessages = splitMessage(message);
+
+    for (auto &cMsg :cMessages)
+    {
+        int ret = tox_group_action_send(tox, groupId, cMsg.data(), cMsg.size());
+
         if (ret == -1)
             emit groupSentResult(groupId, message, ret);
     }
