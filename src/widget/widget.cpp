@@ -834,18 +834,19 @@ void Widget::onGroupInviteReceived(int32_t friendId, const uint8_t* publicKey,ui
     }
 }
 
-void Widget::onGroupMessageReceived(int groupnumber, const QString& message, const QString& author)
+void Widget::onGroupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction)
 {
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
         return;
 
     QString name = core->getUsername();
+
     bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
     if (targeted)
         g->chatForm->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
-        g->chatForm->addMessage(author, message, false, QDateTime::currentDateTime());
+        g->chatForm->addMessage(author, message, isAction, QDateTime::currentDateTime());
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
@@ -932,6 +933,7 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->chatForm, SLOT(focusInput()));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
+    connect(newgroup->chatForm, SIGNAL(sendAction(int,QString)), core, SLOT(sendGroupAction(int,QString)));
     return newgroup;
 }
 

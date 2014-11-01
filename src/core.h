@@ -89,6 +89,7 @@ public slots:
 
     void sendMessage(int friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
+    void sendGroupAction(int groupId, const QString& message);
     void sendAction(int friendId, const QString& action);
     void sendTyping(int friendId, bool typing);
 
@@ -137,7 +138,7 @@ signals:
 
     void emptyGroupCreated(int groupnumber);
     void groupInviteReceived(int friendnumber, const uint8_t *group_public_key,uint16_t length);
-    void groupMessageReceived(int groupnumber, const QString& message, const QString& author);
+    void groupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
 
     void usernameSet(const QString& username);
