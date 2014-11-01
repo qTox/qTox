@@ -49,8 +49,9 @@ TRANSLATIONS = translations/de.ts \
 
 RESOURCES += res.qrc
 
-GIT_VERSION = $$system(git rev-parse HEAD)
-DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
+GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "built without git")
+DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
+DEFINES += LOG_TO_FILE
 
 contains(JENKINS,YES) {
 	INCLUDEPATH += ./libs/include/

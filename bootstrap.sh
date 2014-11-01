@@ -103,9 +103,8 @@ rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 # afterwards install libsodium to INSTALL_DIR
 # skip the installation if TOX_ONLY is true
 if [[ $TOX_ONLY = "false" ]]; then
-    git clone git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR} --depth 1
+    git clone --branch $SODIUM_VER git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR} --depth 1
     pushd ${BASE_DIR}/${SODIUM_DIR}
-    git checkout tags/$SODIUM_VER
     ./autogen.sh
 
     if [[ $GLOBAL = "false" ]]; then
