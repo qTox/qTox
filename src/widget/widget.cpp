@@ -213,6 +213,7 @@ void Widget::init()
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
     connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
+    connect(core, &Core::receiptRecieved, this, &Widget::onReceiptRecieved);
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
@@ -759,6 +760,15 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     }
 
     f->getFriendWidget()->updateStatusLight();
+}
+
+void Widget::onReceiptRecieved(int friendId, int receipt)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    if (!f)
+        return;
+
+    qDebug() << "Receipt Recieved" << friendId << "receipt" << receipt;
 }
 
 void Widget::newMessageAlert(GenericChatroomWidget* chat)

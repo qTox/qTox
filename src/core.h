@@ -156,6 +156,8 @@ signals:
     void groupSentResult(int groupId, const QString& message, int result);
     void actionSentResult(int friendId, const QString& action, int success);
 
+    void receiptRecieved(int friedId, int receipt);
+
     void failedToAddFriend(const QString& userId, const QString& errorInfo = QString());
     void failedToRemoveFriend(int friendId);
     void failedToSetUsername(const QString& username);
@@ -215,6 +217,7 @@ private:
     static void onFileDataCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, const uint8_t *data, uint16_t length, void *userdata);
     static void onAvatarInfoCallback(Tox* tox, int32_t friendnumber, uint8_t format, uint8_t *hash, void *userdata);
     static void onAvatarDataCallback(Tox* tox, int32_t friendnumber, uint8_t format, uint8_t *hash, uint8_t *data, uint32_t datalen, void *userdata);
+    static void onReadReceiptCallback(Tox *tox, int32_t friendnumber, uint32_t receipt, void *core);
 
     static void onAvInvite(void* toxav, int32_t call_index, void* core);
     static void onAvStart(void* toxav, int32_t call_index, void* core);
