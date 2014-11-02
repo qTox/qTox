@@ -1,4 +1,12 @@
-#statusPanel 
+QLineEdit
+{
+    background: none;
+    background-color: @darkGrey;
+    color: #fff;
+    border: 0px solid gray;
+}
+
+#statusPanel
 {
   background-color: @darkGrey;
 }
