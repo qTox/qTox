@@ -91,8 +91,7 @@ void GroupChatForm::onSendTriggered()
 
 void GroupChatForm::onUserListChanged()
 {
-    unsigned nPeers = group->nPeers;
-    nusersLabel->setText(tr("%1 users in chat").arg(nPeers));
+    nusersLabel->setText(tr("%1 users in chat").arg(group->nPeers));
 
     QLayoutItem *child;
     while ((child = namesListLayout->takeAt(0)))
@@ -103,10 +102,11 @@ void GroupChatForm::onUserListChanged()
     }
 
     QStringList names(group->peers.values());
-    for (unsigned i=0; i<nPeers; ++i)
+    unsigned nNames = names.size();
+    for (unsigned i=0; i<nNames; ++i)
     {
         QString nameStr = names[i];
-        if (i!=nPeers-1)
+        if (i!=nNames-1)
             nameStr+=", ";
         QLabel* nameLabel = new QLabel(nameStr);
         nameLabel->setObjectName("peersLabel");
