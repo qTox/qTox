@@ -665,7 +665,7 @@ void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
 
     if (format == TOX_AVATAR_FORMAT_NONE)
     {
-        qDebug() << "Core: Got null avatar info from" << core->getFriendUsername(friendnumber);
+        //qDebug() << "Core: Got null avatar info from" << core->getFriendUsername(friendnumber);
         emit core->friendAvatarRemoved(friendnumber);
         QFile::remove(QDir(Settings::getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".png"));
         QFile::remove(QDir(Settings::getSettingsDirPath()).filePath("avatars/"+core->getFriendAddress(friendnumber).left(64)+".hash"));
@@ -679,8 +679,8 @@ void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
             qDebug() << "Core: Got new avatar info from" << core->getFriendUsername(friendnumber);
             tox_request_avatar_data(core->tox, friendnumber);
         }
-        else
-            qDebug() << "Core: Got same avatar info from" << core->getFriendUsername(friendnumber);
+        //else
+        //    qDebug() << "Core: Got same avatar info from" << core->getFriendUsername(friendnumber);
     }
 }
 
