@@ -59,7 +59,7 @@ uint16_t CData::fromString(const QString& data, uint8_t* cData)
 const uint16_t CUserId::SIZE{TOX_CLIENT_ID_SIZE};
 
 CUserId::CUserId(const QString &userId) :
-    CData(userId, SIZE)
+    CData(userId, SIZE < userId.size() ? userId.size() : SIZE)
 {
     // intentionally left empty
 }
