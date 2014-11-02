@@ -118,10 +118,13 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headLayout->addLayout(headTextLayout);
     headLayout->addLayout(volMicLayout);
     headLayout->addWidget(callButton);
+    headLayout->addSpacing(3);
     headLayout->addWidget(videoButton);
     headLayout->setSpacing(0);
 
+    volMicLayout->addSpacing(1);
     volMicLayout->addWidget(micButton);
+    volMicLayout->addSpacing(2);
     volMicLayout->addWidget(volButton);
 
     headTextLayout->addStretch();
