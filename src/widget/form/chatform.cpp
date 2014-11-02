@@ -226,6 +226,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         videoButton->style()->polish(videoButton);
         connect(callButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
     }
+    addSystemInfoMessage(tr("%1 calling").arg(f->getName()), "white", QDateTime::currentDateTime());    
 
     Widget* w = Widget::getInstance();
     if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
@@ -336,6 +337,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
         videoButton->style()->polish(videoButton);
         connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
     }
+    addSystemInfoMessage(tr("%1 calling").arg(f->getName()), "white", QDateTime::currentDateTime());    
 }
 
 void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
@@ -386,7 +388,9 @@ void ChatForm::onAvEnding(int FriendId, int)
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
-
+    
+    addSystemInfoMessage(tr("Call with %1 ended").arg(f->getName()), "white", QDateTime::currentDateTime());
+    
     netcam->hide();
 }
 
@@ -461,6 +465,8 @@ void ChatForm::onAvRejected(int FriendId, int)
     videoButton->disconnect();
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+    
+    addSystemInfoMessage(tr("Call rejected").arg(f->getName()), "white", QDateTime::currentDateTime());
 
     netcam->hide();
 }

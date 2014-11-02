@@ -192,8 +192,9 @@ void GenericChatForm::onSaveLogClicked()
     file.close();
 }
 
-/// THIS FUNCTION IS DEPRECATED
-/// The only reason it's still alive is because the groupchat API is a bit limited
+/**
+ * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
+ */
 void GenericChatForm::addMessage(const QString& author, const QString &message, bool isAction, const QDateTime &datetime)
 {
     ChatActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
@@ -212,8 +213,9 @@ void GenericChatForm::addSelfMessage(const QString &message, bool isAction, cons
     chatWidget->insertMessage(ca);
 }
 
-/// THIS FUNCTION IS DEPRECATED
-/// The only reason it's still alive is because the groupchat API is a bit limited
+/**
+ * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
+ */
 void GenericChatForm::addAlertMessage(const QString& author, QString message, QDateTime datetime)
 {
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
@@ -291,8 +293,9 @@ void GenericChatForm::clearChatArea(bool notinform)
     }
 }
 
-/// THIS FUNCTION IS DEPRECATED
-/// The only reason it's still alive is because the groupchat API is a bit limited
+/**
+ * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
+ */
 ChatActionPtr GenericChatForm::genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime)
 {
     if (earliestMessage == nullptr)
