@@ -1718,7 +1718,6 @@ bool Core::isPasswordSet(PasswordType passtype)
 
 QString Core::getPeerName(const ToxID& id) const
 {
-    uint8_t cname[TOX_MAX_NAME_LENGTH];
     QString name;
     CUserId cid(id.toString());
 
@@ -1729,13 +1728,22 @@ QString Core::getPeerName(const ToxID& id) const
         return name;
     }
 
-    int nameSize = tox_get_name(tox, friendId, cname);
-    if (nameSize < 0)
+    const int nameSize = tox_get_name_size(tox, friendId);
+    if (nameSize <= 0)
     {
         qWarning() << "Core::getPeerName: Can't get name of friend "+QString().setNum(friendId)+" ("+id.toString()+")";
         return name;
     }
 
+    uint8_t* cname = new uint8_t[nameSize<TOX_MAX_NAME_LENGTH ? TOX_MAX_NAME_LENGTH : nameSize];
+    if (tox_get_name(tox, friendId, cname) != nameSize)
+    {
+        qWarning() << "Core::getPeerName: Can't get name of friend "+QString().setNum(friendId)+" ("+id.toString()+")";
+        delete[] cname;
+        return name;
+    }
+
     name = name.fromLocal8Bit((char*)cname, nameSize);
+    delete[] cname;
     return name;
 }
