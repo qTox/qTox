@@ -26,7 +26,7 @@ class Settings : public QObject
     Q_OBJECT
 public:
     static Settings& getInstance();
-    ~Settings();
+    ~Settings() = default;
 
     void executeSettingsDialog(QWidget* parent);
 

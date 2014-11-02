@@ -36,11 +36,6 @@ Settings::Settings() :
     load();
 }
 
-Settings::~Settings()
-{
-    save();
-}
-
 Settings& Settings::getInstance()
 {
     static Settings settings;

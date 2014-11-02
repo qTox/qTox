@@ -108,7 +108,6 @@ Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
 Core::~Core()
 {
     if (tox) {
-        saveConfiguration();
         toxav_kill(toxav);
         tox_kill(tox);
     }
