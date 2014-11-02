@@ -1355,6 +1355,7 @@ void Core::switchConfiguration(const QString& profile)
     clearPassword(ptHistory);
     toxTimer->stop();
     
+    Widget::getInstance()->setEnabled(false);
     if (tox) {
         toxav_kill(toxav);
         toxav = nullptr;
@@ -1372,6 +1373,7 @@ void Core::switchConfiguration(const QString& profile)
     HistoryKeeper::getInstance()->resetInstance();
 
     start();
+    Widget::getInstance()->setEnabled(true);
 }
 
 void Core::loadFriends()
