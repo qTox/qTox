@@ -253,6 +253,9 @@ void Widget::setTranslation()
     if ((locale = Settings::getInstance().getTranslation()).isEmpty())
         locale = QLocale::system().name().section('_', 0, 0);
     
+    if (locale == "en")
+        return;
+
     if (translator->load(locale, ":translations/"))
         qDebug() << "Loaded translation" << locale;
     else
