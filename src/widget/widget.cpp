@@ -799,6 +799,9 @@ void Widget::removeFriend(Friend* f)
     delete f;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
+
+    contactListWidget->hide();
+    contactListWidget->show();
 }
 
 void Widget::removeFriend(int friendId)
@@ -902,6 +905,9 @@ void Widget::removeGroup(Group* g)
     delete g;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
+
+    contactListWidget->hide();
+    contactListWidget->show();
 }
 
 void Widget::removeGroup(int groupId)
