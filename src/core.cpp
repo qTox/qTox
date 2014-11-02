@@ -1526,7 +1526,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
         return;
     }
     emit core->fileTransferInfo(file->friendId, file->fileNum, file->filesize, file->bytesSent, ToxFile::SENDING);
-    qApp->processEvents();
+//    qApp->processEvents();
     long long chunkSize = tox_file_data_size(core->tox, file->friendId);
     if (chunkSize == -1)
     {
