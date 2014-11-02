@@ -1072,3 +1072,18 @@ QMessageBox::StandardButton Widget::showWarningMsgBox(const QString& title, cons
         return QMessageBox::warning(this, title, msg, buttons);
     }
 }
+
+void Widget::setEnabledThreadsafe(bool enabled)
+{
+    // We can only do this from the GUI thread
+    if (QThread::currentThread() != qApp->thread())
+    {
+        QMetaObject::invokeMethod(this, "setEnabledThreadsafe", Qt::BlockingQueuedConnection,
+                                  Q_ARG(bool, enabled));
+        return;
+    }
+    else
+    {
+        return setEnabled(enabled);
+    }
+}
