@@ -46,6 +46,8 @@ public:
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
 
+    QString getPeerName(const ToxID& id) const;
+
     int getGroupNumberPeers(int groupId) const; ///< Return the number of peers in the group chat on success, or -1 on failure
     QString getGroupPeerName(int groupId, int peerId) const; ///< Get the name of a peer of a group
     QList<QString> getGroupPeerNames(int groupId) const; ///< Get the names of the peers of a group
@@ -57,11 +59,11 @@ public:
     void saveConfiguration();
     void saveConfiguration(const QString& path);
     
-    QString getIDString(); ///< Get the 12 first characters of our Tox ID
+    QString getIDString() const; ///< Get the 12 first characters of our Tox ID
     
-    QString getUsername(); ///< Returns our username, or an empty string on failure
-    QString getStatusMessage(); ///< Returns our status message, or an empty string on failure
-    ToxID getSelfId(); ///< Returns our Tox ID
+    QString getUsername() const; ///< Returns our username, or an empty string on failure
+    QString getStatusMessage() const; ///< Returns our status message, or an empty string on failure
+    ToxID getSelfId() const; ///< Returns our Tox ID
 
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
 

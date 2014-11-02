@@ -30,7 +30,8 @@ public:
     ~Friend();
     void setName(QString name);
     void setStatusMessage(QString message);
-    QString getName();
+    QString getName() const;
+    ToxID getToxID() const;
 
 public:
     FriendWidget* widget;

@@ -721,7 +721,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    f->chatForm->addMessage(f->getName(), message, isAction, timestamp);
+    f->chatForm->addMessage(f->getToxID(), message, isAction, timestamp);
 
     if (isAction)
         HistoryKeeper::getInstance()->addChatEntry(f->userId, "/me " + message, f->userId, timestamp);

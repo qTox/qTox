@@ -92,19 +92,19 @@ void ChatForm::onSendTriggered()
     QString msg = msgEdit->toPlainText();
     if (msg.isEmpty())
         return;
-    QString name = Widget::getInstance()->getUsername();
+
     QDateTime timestamp = QDateTime::currentDateTime();
     HistoryKeeper::getInstance()->addChatEntry(f->userId, msg, Core::getInstance()->getSelfId().publicKey, timestamp);
 
     if (msg.startsWith("/me "))
     {
         msg = msg.right(msg.length() - 4);
-        addMessage(name, msg, true, timestamp);
+        addSelfMessage(msg, true, timestamp);
         emit sendAction(f->friendId, msg);
     }
     else
     {
-        addMessage(name, msg, false, timestamp);
+        addSelfMessage(msg, false, timestamp);
         emit sendMessage(f->friendId, msg);
     }
     msgEdit->clear();
@@ -150,10 +150,13 @@ void ChatForm::startFileSend(ToxFile file)
     connect(Core::getInstance(), SIGNAL(fileTransferRemotePausedUnpaused(ToxFile,bool)), fileTrans, SLOT(onFileTransferRemotePausedUnpaused(ToxFile,bool)));
     connect(Core::getInstance(), SIGNAL(fileTransferBrokenUnbroken(ToxFile, bool)), fileTrans, SLOT(onFileTransferBrokenUnbroken(ToxFile, bool)));
 
-    QString name = Widget::getInstance()->getUsername();
-    if (name == previousName)
-        name = "";
-    previousName = Widget::getInstance()->getUsername();
+    QString name;
+    if (!previousId.isMine())
+    {
+        Core* core = Core::getInstance();
+        name = core->getUsername();
+        previousId = core->getSelfId();
+    }
 
     chatWidget->insertMessage(ChatActionPtr(new FileTransferAction(fileTrans, getElidedName(name),
                                                                    QTime::currentTime().toString("hh:mm"), true)));
@@ -183,10 +186,13 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         f->widget->updateStatusLight();
     }
 
-    QString name = f->getName();
-    if (name == previousName)
-        name = "";
-    previousName = f->getName();
+    QString name;
+    ToxID friendId = f->getToxID();
+    if (friendId != previousId)
+    {
+        name = f->getName();
+        previousId = friendId;
+    }
 
     chatWidget->insertMessage(ChatActionPtr(new FileTransferAction(fileTrans, getElidedName(name),
                                                                    QTime::currentTime().toString("hh:mm"), false)));
@@ -655,20 +661,16 @@ void ChatForm::onLoadHistory()
 
         auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->userId, fromTime, toTime);
 
-        QString storedPrevName = previousName;
-        previousName = "";
+        ToxID storedPrevId;
+        std::swap(storedPrevId, previousId);
         QList<ChatActionPtr> historyMessages;
 
         for (const auto &it : msgs)
         {
-            QString name = f->getName();
-            if (it.sender == Core::getInstance()->getSelfId().publicKey)
-                name = Core::getInstance()->getUsername();
-
-            ChatActionPtr ca = genMessageActionAction(name, it.message, false, it.timestamp.toLocalTime());
+            ChatActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, it.timestamp.toLocalTime());
             historyMessages.append(ca);
         }
-        previousName = storedPrevName;
+        std::swap(storedPrevId, previousId);
 
         int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
 

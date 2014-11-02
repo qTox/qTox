@@ -46,7 +46,12 @@ void Friend::setStatusMessage(QString message)
     chatForm->setStatusMessage(message);
 }
 
-QString Friend::getName()
+QString Friend::getName() const
 {
     return widget->getName();
+}
+
+ToxID Friend::getToxID() const
+{
+    return ToxID::fromString(userId);
 }

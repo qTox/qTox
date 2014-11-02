@@ -991,7 +991,7 @@ void Core::removeGroup(int groupId)
     tox_del_groupchat(tox, groupId);
 }
 
-QString Core::getUsername()
+QString Core::getUsername() const
 {
     QString sname;
     int size = tox_get_self_name_size(tox);
@@ -1034,21 +1034,21 @@ void Core::setAvatar(uint8_t format, const QByteArray& data)
         tox_send_avatar_info(tox, i);
 }
 
-ToxID Core::getSelfId()
+ToxID Core::getSelfId() const
 {
     uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
     tox_get_address(tox, friendAddress);
     return ToxID::fromString(CFriendAddress::toString(friendAddress));
 }
 
-QString Core::getIDString()
+QString Core::getIDString() const
 {
     return getSelfId().toString().left(12);
     // 12 is the smallest multiple of four such that
     // 16^n > 10^10 (which is roughly the planet's population)
 }
 
-QString Core::getStatusMessage()
+QString Core::getStatusMessage() const
 {
     QString sname;
     int size = tox_get_self_status_message_size(tox);
@@ -1714,4 +1714,28 @@ bool Core::isPasswordSet(PasswordType passtype)
         return true;
 
     return false;
+}
+
+QString Core::getPeerName(const ToxID& id) const
+{
+    uint8_t cname[TOX_MAX_NAME_LENGTH];
+    QString name;
+    CUserId cid(id.toString());
+
+    int friendId = tox_get_friend_number(tox, (uint8_t*)cid.data());
+    if (friendId < 0)
+    {
+        qWarning() << "Core::getPeerName: No such peer "+id.toString();
+        return name;
+    }
+
+    int nameSize = tox_get_name(tox, friendId, cname);
+    if (nameSize < 0)
+    {
+        qWarning() << "Core::getPeerName: Can't get name of friend "+QString().setNum(friendId)+" ("+id.toString()+")";
+        return name;
+    }
+
+    name = name.fromLocal8Bit((char*)cname, nameSize);
+    return name;
 }

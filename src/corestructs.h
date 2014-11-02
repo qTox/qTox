@@ -20,20 +20,12 @@ struct ToxID
     QString noSpam;
     QString checkSum;
 
-    QString toString() const
-    {
-        return publicKey + noSpam + checkSum;
-    }
+    QString toString() const;
+    ToxID static fromString(QString id);
 
-    ToxID static fromString(QString id)
-    {
-        ToxID toxID;
-        toxID.publicKey = id.left(TOX_ID_PUBLIC_KEY_LENGTH);
-        toxID.noSpam    = id.mid(TOX_ID_PUBLIC_KEY_LENGTH, TOX_ID_NO_SPAM_LENGTH);
-        toxID.checkSum  = id.right(TOX_ID_CHECKSUM_LENGTH);
-        return toxID;
-    }
-
+    bool operator==(const ToxID& other) const;
+    bool operator!=(const ToxID& other) const;
+    bool isMine() const;
 };
 
 struct DhtServer
