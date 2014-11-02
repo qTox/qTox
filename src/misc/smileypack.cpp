@@ -183,7 +183,7 @@ QList<QStringList> SmileyPack::getEmoticons() const
 
 QString SmileyPack::getAsRichText(const QString &key)
 {
-    return "<img src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
+    return "<img title=\""%key%"\" src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
 }
 
 QIcon SmileyPack::getAsIcon(const QString &key)
