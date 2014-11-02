@@ -32,6 +32,11 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QStr
     if (!logFile)
         return;
 
+    // Silence qWarning spam due to bug in QTextBrowser (trying to open a file for base64 images)
+    if (ctxt.function == QString("virtual bool QFSFileEngine::open(QIODevice::OpenMode)")
+            && msg == QString("QFSFileEngine::open: No file name specified"))
+        return;
+
     dflt(type, ctxt, msg);
     *logFile << QTime::currentTime().toString("HH:mm:ss' '") << msg << '\n';
     logFile->flush();
