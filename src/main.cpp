@@ -25,13 +25,16 @@
 
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
-static QTextStream logFile;
+static QTextStream* logFile {nullptr};
 
 void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
 {
+    if (!logFile)
+        return;
+
     dflt(type, ctxt, msg);
-    logFile << QTime::currentTime().toString("HH:mm:ss' '") << msg << '\n';
-    logFile.flush();
+    *logFile << QTime::currentTime().toString("HH:mm:ss' '") << msg << '\n';
+    logFile->flush();
 }
 #endif
 
@@ -42,12 +45,13 @@ int main(int argc, char *argv[])
     a.setOrganizationName("Tox");
 
 #ifdef LOG_TO_FILE
+    logFile = new QTextStream;
     dflt = qInstallMessageHandler(nullptr);
     QFile logfile(QDir(Settings::getSettingsDirPath()).filePath("qtox.log"));
     logfile.open(QIODevice::Append);
-    logFile.setDevice(&logfile);
+    logFile->setDevice(&logfile);
 
-    logFile << QDateTime::currentDateTime().toString("yyyy-dd-MM HH:mm:ss' file logger starting\n'");
+    *logFile << QDateTime::currentDateTime().toString("yyyy-dd-MM HH:mm:ss' file logger starting\n'");
     qInstallMessageHandler(myMessageHandler);
 #endif
 
@@ -66,6 +70,10 @@ int main(int argc, char *argv[])
     int errorcode = a.exec();
 
     delete w;
+#ifdef LOG_TO_FILE
+    delete logFile;
+    logFile = nullptr;
+#endif
 
     return errorcode;
 }
