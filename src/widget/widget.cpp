@@ -623,6 +623,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::avPeerTimeout, newfriend->chatForm, &ChatForm::onAvPeerTimeout);
     connect(core, &Core::avMediaChange, newfriend->chatForm, &ChatForm::onAvMediaChange);
     connect(core, &Core::avCallFailed, newfriend->chatForm, &ChatForm::onAvCallFailed);
+    connect(core, &Core::avRejected, newfriend->chatForm, &ChatForm::onAvRejected);
     connect(core, &Core::friendAvatarChanged, newfriend->chatForm, &ChatForm::onAvatarChange);
     connect(core, &Core::friendAvatarChanged, newfriend->widget, &FriendWidget::onAvatarChange);
     connect(core, &Core::friendAvatarRemoved, newfriend->chatForm, &ChatForm::onAvatarRemoved);

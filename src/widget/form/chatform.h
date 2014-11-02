@@ -57,6 +57,7 @@ public slots:
     void onAvPeerTimeout(int FriendId, int CallId);
     void onAvMediaChange(int FriendId, int CallId, bool video);
     void onAvCallFailed(int FriendId);
+    void onAvRejected(int FriendId, int CallId);
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onAvatarChange(int FriendId, const QPixmap& pic);

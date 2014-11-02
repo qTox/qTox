@@ -324,9 +324,19 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
     emit static_cast<Core*>(core)->avCancel(friendId, callId);
 }
 
-void Core::onAvReject(void*, int32_t, void*)
+void Core::onAvReject(void* _toxav, int32_t callId, void* core)
 {
-    qDebug() << "Core: AV reject";
+    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
+    int friendId = toxav_get_peer_id(toxav, callId, 0);
+    if (friendId < 0)
+    {
+        qWarning() << "Core: Received invalid AV reject";
+        return;
+    }
+
+    qDebug() << QString("Core: AV reject from %1").arg(friendId);
+
+    emit static_cast<Core*>(core)->avRejected(friendId, callId);
 }
 
 void Core::onAvEnd(void* _toxav, int32_t call_index, void* core)

@@ -434,6 +434,31 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
     netcam->hide();
 }
 
+void ChatForm::onAvRejected(int FriendId, int)
+{
+    if (FriendId != f->friendId)
+        return;
+
+    audioInputFlag = false;
+    audioOutputFlag = false;
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
+    callButton->disconnect();
+    videoButton->disconnect();
+    callButton->setObjectName("green");
+    callButton->style()->polish(callButton);
+    callButton->disconnect();
+    videoButton->setObjectName("green");
+    videoButton->style()->polish(videoButton);
+    videoButton->disconnect();
+    connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
+    connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
+
+    netcam->hide();
+}
+
 void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 {
     if (FriendId != f->friendId || CallId != callId)
