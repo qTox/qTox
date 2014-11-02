@@ -22,6 +22,7 @@
 namespace Ui {class MainWindow;}
 class Group;
 class TabCompleter;
+class FlowLayout;
 
 class GroupChatForm : public GenericChatForm
 {
@@ -41,7 +42,8 @@ protected:
 
 private:
     Group* group;
-    QLabel *nusersLabel, *namesList;
+    FlowLayout* namesListLayout;
+    QLabel *nusersLabel;
     TabCompleter* tabber;
 };
 

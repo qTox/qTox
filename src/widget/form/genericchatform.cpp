@@ -17,6 +17,7 @@
 #include "genericchatform.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
+#include <QHBoxLayout>
 #include "src/misc/smileypack.h"
 #include "src/widget/emoticonswidget.h"
 #include "src/misc/style.h"
@@ -113,10 +114,12 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     headWidget->setLayout(headLayout);
     headLayout->addWidget(avatar);
+    headLayout->addSpacing(5);
     headLayout->addLayout(headTextLayout);
     headLayout->addLayout(volMicLayout);
     headLayout->addWidget(callButton);
     headLayout->addWidget(videoButton);
+    headLayout->setSpacing(0);
 
     volMicLayout->addWidget(micButton);
     volMicLayout->addWidget(volButton);

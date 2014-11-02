@@ -155,7 +155,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/form/inputpassworddialog.h \
     src/widget/form/setpassworddialog.h \
     src/widget/form/tabcompleter.h \
-    src/video/videoframe.h
+    src/video/videoframe.h \
+    src/misc/flowlayout.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -213,4 +214,5 @@ SOURCES += \
     src/widget/form/setpassworddialog.cpp \
     src/video/netvideosource.cpp \
     src/widget/form/tabcompleter.cpp \
-    src/video/videoframe.cpp
+    src/video/videoframe.cpp \
+    src/misc/flowlayout.cpp
