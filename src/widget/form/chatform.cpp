@@ -56,6 +56,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
 
     netcam = new NetCamView();
+    timer = nullptr;
 
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
@@ -733,9 +734,8 @@ void ChatForm::onLoadHistory()
 
 void ChatForm::startCounter()
 {
-    if(timer)
+    if(!timer)
     {
-        qDebug() << "timer nie istnieje";
         timer = new QTimer();
         connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
         timer->start(1000);
@@ -752,6 +752,7 @@ void ChatForm::stopCounter()
                              "white", QDateTime::currentDateTime());
         timer->stop();
         callDuration->hide();
+        timer = nullptr;
         delete timer;
     }
 }
