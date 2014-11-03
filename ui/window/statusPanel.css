@@ -1,9 +1,9 @@
 QLineEdit
 {
     background: none;
-    background-color: @darkGrey;
-    color: #fff;
-    border: 0px solid gray;
+    background-color: @mediumGrey;
+    color: white;
+    border: 0px;
 }
 
 #statusPanel
