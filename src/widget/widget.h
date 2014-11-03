@@ -131,7 +131,6 @@ private slots:
     void playRingtone();
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAwayCheck();
-    void getPassword(QString info, int passtype, uint8_t* salt);
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
 

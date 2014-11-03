@@ -65,12 +65,14 @@ QSqlQuery EncryptedDb::exec(const QString &query)
 
 bool EncryptedDb::pullFileContent()
 {
+    qDebug() << "EncryptedDb::pullFileContent()";
     encrFile.open(QIODevice::ReadOnly);
     QByteArray fileContent;
 
     while (!encrFile.atEnd())
     {
         QByteArray encrChunk = encrFile.read(encryptedChunkSize);
+        qDebug() << "got chunk:" << encrChunk.size();
         buffer = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
         if (buffer.size() > 0)
         {

@@ -45,6 +45,7 @@ public:
 
     static QString getHistoryPath(QString currentProfile = QString(), int encrypted = -1); // -1 defaults to checking settings, 0 or 1 to specify
     static bool checkPassword();
+    static bool isFileExist();
     static void renameHistory(QString from, QString to);
 
     int addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent);

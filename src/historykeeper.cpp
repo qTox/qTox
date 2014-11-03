@@ -342,3 +342,11 @@ void HistoryKeeper::setSyncType(Db::syncType sType)
 
     db->exec(QString("PRAGMA synchronous=%1;").arg(syncCmd));
 }
+
+bool HistoryKeeper::isFileExist()
+{
+    QString path = getHistoryPath();
+    QFile file(path);
+
+    return file.exists();
+}

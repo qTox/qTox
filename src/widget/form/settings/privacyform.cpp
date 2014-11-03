@@ -23,6 +23,7 @@
 #include "src/widget/widget.h"
 #include "src/widget/form/setpassworddialog.h"
 #include <QMessageBox>
+#include <QFile>
 
 PrivacyForm::PrivacyForm() :
     GenericForm(tr("Privacy"), QPixmap(":/img/settings/privacy.png"))
@@ -60,43 +61,75 @@ void PrivacyForm::onTypingNotificationEnabledUpdated()
 void PrivacyForm::onEncryptLogsUpdated()
 {
     bool encrytionState = bodyUI->cbEncryptHistory->isChecked();
+    bool keepOldFile = false;
 
     if (encrytionState)
     {
-        if (!Core::getInstance()->isPasswordSet(Core::ptHistory))
-        {
-            SetPasswordDialog dialog;
-            if (dialog.exec())
-            {
-                QString pswd = dialog.getPassword();
-                if (pswd.size() == 0)
-                    encrytionState = false;
+        Settings::getInstance().setEncryptLogs(true);
 
-                Core::getInstance()->setPassword(pswd, Core::ptHistory);
-            } else {
-                encrytionState = false;
-                Core::getInstance()->clearPassword(Core::ptHistory);
+        if (HistoryKeeper::isFileExist())
+        {
+            QByteArray salt = Core::getSaltFromFile(HistoryKeeper::getHistoryPath());
+            if (salt.size() != 0)
+            {
+                if (QMessageBox::Ok == QMessageBox::warning(nullptr, tr("Encrypted log"),
+                                                            tr("You already have history file.\nDo you want to try open it?"),
+                                                            QMessageBox::Ok | QMessageBox::Cancel))
+                {
+                    keepOldFile = true;
+                    bool exit = false;
+
+                    do
+                    {
+                        Widget::getInstance()->getPassword(tr("Encrypted log"), Core::ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
+                        exit = HistoryKeeper::checkPassword();
+                        if (!exit)
+                        {
+                            if (QMessageBox::warning(nullptr, tr("Encrypted log"), tr("Wrong password!\nTry again?"),
+                                                     QMessageBox::Ok | QMessageBox::Cancel) != QMessageBox::Ok)
+                            {
+                                keepOldFile = false;
+                                encrytionState = false;
+                                exit = true;
+                                QMessageBox::warning(nullptr, tr("Encrypetd log"), tr("Encrypted log will be disabled!"));
+                            }
+                        }
+                    } while (!exit);
+                } else {
+                    if (QMessageBox::warning(nullptr, tr("Encrypted log"), tr("Do you want to delete encrypted history file?"),
+                                             QMessageBox::Ok | QMessageBox::Cancel) != QMessageBox::Ok)
+                    {
+                        keepOldFile = true;
+                        encrytionState = false;
+                    }
+                }
             }
         }
     }
 
-    Settings::getInstance().setEncryptLogs(encrytionState);
-    if (encrytionState && !HistoryKeeper::checkPassword())
+    if (encrytionState && !keepOldFile)
     {
-        if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted log"),
-            tr("You already have history log file encrypted with different password\nDo you want to delete old history file?"),
-            QMessageBox::Ok | QMessageBox::Cancel))
+        Core::getInstance()->clearPassword(Core::ptHistory);
+
+        SetPasswordDialog dialog;
+        if (dialog.exec())
         {
-            // TODO: ask user about reencryption with new password
+            QString pswd = dialog.getPassword();
+            if (pswd.size() == 0)
+                encrytionState = false;
+
+            Core::getInstance()->setPassword(pswd, Core::ptHistory);
+        } else {
             encrytionState = false;
         }
     }
 
     Settings::getInstance().setEncryptLogs(encrytionState);
-    bodyUI->cbEncryptHistory->setChecked(encrytionState);
 
-    if (encrytionState)
-        HistoryKeeper::resetInstance();
+    HistoryKeeper::resetInstance();
+
+    Settings::getInstance().setEncryptLogs(encrytionState);
+    bodyUI->cbEncryptHistory->setChecked(encrytionState);
 
     if (!Settings::getInstance().getEncryptLogs())
         Core::getInstance()->clearPassword(Core::ptHistory);

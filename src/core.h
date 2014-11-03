@@ -49,6 +49,8 @@ public:
     static QString sanitize(QString name);
     static QList<CString> splitMessage(const QString &message);
 
+    static QByteArray getSaltFromFile(QString filename);
+
     QString getPeerName(const ToxID& id) const;
 
     int getGroupNumberPeers(int groupId) const; ///< Return the number of peers in the group chat on success, or -1 on failure

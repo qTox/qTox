@@ -1235,13 +1235,9 @@ bool Core::loadConfiguration(QString path)
         bool error = true;
         
         // get salt
-        QFile file(HistoryKeeper::getHistoryPath());
-        file.open(QIODevice::ReadOnly);
-        QByteArray data = file.read(tox_pass_encryption_extra_length());
-        file.close();
-        uint8_t salt[tox_pass_salt_length()];
-        int err = tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-        if (err)
+        QByteArray salt = getSaltFromFile(HistoryKeeper::getHistoryPath());
+
+        if (salt.size() == 0)
         {   // maybe we should handle this better
             qWarning() << "Core: history db isn't encrypted, but encryption is set!! No history loaded...";
         }
@@ -1251,7 +1247,8 @@ bool Core::loadConfiguration(QString path)
             {
                 while (!pwsaltedkeys[ptHistory])
                 {
-                    emit blockingGetPassword(tr("History Log decryption password"), Core::ptHistory, salt);
+                    emit blockingGetPassword(tr("History Log decryption password"), Core::ptHistory,
+                                             reinterpret_cast<uint8_t*>(salt.data()));
                     if (!pwsaltedkeys[ptHistory])
                         Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
                 }
@@ -1890,4 +1887,25 @@ void Core::resetCallSources()
             alGenSources(1, &call.alSource);
         }
     }
+}
+
+QByteArray Core::getSaltFromFile(QString filename)
+{
+    qDebug() << filename;
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    QByteArray data = file.read(tox_pass_encryption_extra_length());
+    file.close();
+
+    qDebug() << "data size" << data.size();
+
+    uint8_t *salt = new uint8_t[tox_pass_salt_length()];
+    int err = tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
+    if (err)
+    {
+        qWarning() << "Core: can't get salt from" << filename << "header";
+        return QByteArray();
+    }
+
+    return QByteArray::fromRawData(reinterpret_cast<const char*>(salt), tox_pass_salt_length());
 }
