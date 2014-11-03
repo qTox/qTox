@@ -397,7 +397,7 @@ QSplitter:handle{
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="0" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <layout class="QHBoxLayout" name="myProfile">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -1034,7 +1034,7 @@ QSplitter:handle{
              <x>0</x>
              <y>0</y>
              <width>284</width>
-             <height>401</height>
+             <height>399</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1757,7 +1757,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

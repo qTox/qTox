@@ -121,8 +121,8 @@ void Widget::init()
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.png");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
     profilePicture->setClickable(true);
-    ui->horizontalLayout_3->insertWidget(0, profilePicture);
-    ui->horizontalLayout_3->insertSpacing(1, 7);
+    ui->myProfile->insertWidget(0, profilePicture);
+    ui->myProfile->insertSpacing(1, 7);
 
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
@@ -139,6 +139,8 @@ void Widget::init()
     
     ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));    
     ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
+    
+    ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 
     contactListWidget = new FriendListWidget();
     ui->friendList->setWidget(contactListWidget);
