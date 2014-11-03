@@ -4,6 +4,7 @@ QLineEdit
     background-color: @mediumGrey;
     color: white;
     border: 0px;
+    border-radius: 6px;
 }
 
 #statusPanel
