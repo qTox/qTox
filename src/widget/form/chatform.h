@@ -19,6 +19,9 @@
 
 #include "genericchatform.h"
 #include "src/corestructs.h"
+#include <QLabel>
+#include <QTimer>
+#include <QElapsedTimer>
 
 struct Friend;
 class FileTransferInstance;
@@ -74,6 +77,7 @@ private slots:
     void onFileTansBtnClicked(QString widgetName, QString buttonName);
     void onFileSendFailed(int FriendId, const QString &fname);
     void onLoadHistory();
+    void updateTime();    
 
 protected:
     // drag & drop
@@ -87,8 +91,14 @@ private:
     bool audioInputFlag;
     bool audioOutputFlag;
     int callId;
+    QLabel *callDuration;
+    QTimer *timer;
+    QElapsedTimer timeElapsed;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
+    void startCounter();
+    void stopCounter();
+    QString secondsToDHMS(quint32 duration);
 };
 
 #endif // CHATFORM_H
