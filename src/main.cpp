@@ -53,11 +53,18 @@ int main(int argc, char *argv[])
     logFile = new QTextStream;
     dflt = qInstallMessageHandler(nullptr);
     QFile logfile(QDir(Settings::getSettingsDirPath()).filePath("qtox.log"));
-    logfile.open(QIODevice::Append);
-    logFile->setDevice(&logfile);
-
-    *logFile << QDateTime::currentDateTime().toString("yyyy-dd-MM HH:mm:ss' file logger starting\n'");
-    qInstallMessageHandler(myMessageHandler);
+    if (logfile.open(QIODevice::Append))
+    {
+        logFile->setDevice(&logfile);
+        *logFile << QDateTime::currentDateTime().toString("\nyyyy-dd-MM HH:mm:ss' file logger starting\n'");
+        qInstallMessageHandler(myMessageHandler);
+    }
+    else
+    {
+        fprintf(stderr, "Couldn't open log file!!!\n");
+        delete logFile;
+        logFile = nullptr;
+    }
 #endif
 
     // Windows platform plugins DLL hell fix
