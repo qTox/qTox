@@ -213,5 +213,6 @@
         <file>smileys/cylgom/XD.png</file>
         <file>smileys/cylgom/XP.png</file>
         <file>smileys/cylgom/yawn.png</file>
+        <file>translations/bg.qm</file>
     </qresource>
 </RCC>
