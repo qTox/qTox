@@ -150,38 +150,43 @@
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="63"/>
+        <location filename="../src/widget/form/chatform.cpp" line="67"/>
         <source>Load History...</source>
         <translation>Carica log...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="115"/>
+        <location filename="../src/widget/form/chatform.cpp" line="119"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="125"/>
+        <location filename="../src/widget/form/chatform.cpp" line="129"/>
         <source>Bad Idea</source>
         <translation>Pessima idea</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="125"/>
+        <location filename="../src/widget/form/chatform.cpp" line="129"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>Stai cercando di inviare un file speciale (sequenziale), questo non funzionerà!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="229"/>
-        <location filename="../src/widget/form/chatform.cpp" line="340"/>
+        <location filename="../src/widget/form/chatform.cpp" line="234"/>
+        <location filename="../src/widget/form/chatform.cpp" line="356"/>
         <source>%1 calling</source>
         <translation>%1 ti sta chiamando</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="392"/>
-        <source>Call with %1 ended</source>
-        <translation>Chiamata con %1 terminata</translation>
+        <location filename="../src/widget/form/chatform.cpp" line="751"/>
+        <source>Call with %1 ended. %2</source>
+        <translation>Chiamata con %1 terminata. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="469"/>
+        <location filename="../src/widget/form/chatform.cpp" line="769"/>
+        <source>Call duration: </source>
+        <translation>Durata chiamata: </translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="497"/>
         <source>Call rejected</source>
         <translation>Chiamata rifiutata</translation>
     </message>
@@ -1033,110 +1038,110 @@ Vuoi eliminare il vecchio file?</translation>
         <translation>Cambia stato in:</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="153"/>
+        <location filename="../src/widget/widget.cpp" line="155"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="155"/>
+        <location filename="../src/widget/widget.cpp" line="157"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="157"/>
+        <location filename="../src/widget/widget.cpp" line="159"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="387"/>
+        <location filename="../src/widget/widget.cpp" line="389"/>
         <source>Choose a profile</source>
         <translation>Scegli un profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="388"/>
+        <location filename="../src/widget/widget.cpp" line="390"/>
         <source>Please choose which identity to use</source>
         <translation>Per favore scegli quale identità usare</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="414"/>
+        <location filename="../src/widget/widget.cpp" line="416"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="421"/>
-        <location filename="../src/widget/widget.cpp" line="428"/>
-        <location filename="../src/widget/widget.cpp" line="449"/>
+        <location filename="../src/widget/widget.cpp" line="423"/>
+        <location filename="../src/widget/widget.cpp" line="430"/>
+        <location filename="../src/widget/widget.cpp" line="451"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="421"/>
+        <location filename="../src/widget/widget.cpp" line="423"/>
         <source>Unable to open this file</source>
         <translation>Impossibile aprire il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="428"/>
+        <location filename="../src/widget/widget.cpp" line="430"/>
         <source>Unable to read this image</source>
         <translation>Impossibile leggere l&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="449"/>
+        <location filename="../src/widget/widget.cpp" line="451"/>
         <source>This image is too big</source>
         <translation>L&apos;immagine è troppo grande</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="476"/>
+        <location filename="../src/widget/widget.cpp" line="478"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="485"/>
+        <location filename="../src/widget/widget.cpp" line="487"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="668"/>
+        <location filename="../src/widget/widget.cpp" line="670"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="670"/>
+        <location filename="../src/widget/widget.cpp" line="672"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="672"/>
+        <location filename="../src/widget/widget.cpp" line="674"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="674"/>
+        <location filename="../src/widget/widget.cpp" line="676"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="676"/>
+        <location filename="../src/widget/widget.cpp" line="678"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="884"/>
+        <location filename="../src/widget/widget.cpp" line="886"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1034"/>
-        <location filename="../src/widget/widget.cpp" line="1045"/>
+        <location filename="../src/widget/widget.cpp" line="1036"/>
+        <location filename="../src/widget/widget.cpp" line="1047"/>
         <source>Message failed to send</source>
         <translation>Impossibile inviare il messaggio</translation>
     </message>
