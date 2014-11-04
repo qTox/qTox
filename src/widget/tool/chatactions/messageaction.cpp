@@ -28,7 +28,7 @@ QString MessageAction::getMessage(QString div)
     QString message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
 
     // detect urls
-    QRegExp exp("(www\\.|http[s]?:\\/\\/|ftp:\\/\\/)\\S+");
+    QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/)\\S+");
     int offset = 0;
     while ((offset = exp.indexIn(message_, offset)) != -1)
     {
