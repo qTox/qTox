@@ -231,6 +231,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         videoButton->style()->polish(videoButton);
         connect(callButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
     }
+    
     addSystemInfoMessage(tr("%1 calling").arg(f->getName()), "white", QDateTime::currentDateTime());    
 
     Widget* w = Widget::getInstance();
@@ -299,7 +300,8 @@ void ChatForm::onAvCancel(int FriendId, int)
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
 
     netcam->hide();
-        
+    
+    addSystemInfoMessage(tr("%1 stopped calling").arg(f->getName()), "white", QDateTime::currentDateTime());        
 }
 
 void ChatForm::onAvEnd(int FriendId, int)
@@ -331,6 +333,7 @@ void ChatForm::onAvEnd(int FriendId, int)
 
 void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
 {    
+    qDebug() << "onAvRinging";
     if (FriendId != f->friendId)
         return;
 
@@ -353,7 +356,8 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
         videoButton->style()->polish(videoButton);
         connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
     }
-    addSystemInfoMessage(tr("%1 calling").arg(f->getName()), "white", QDateTime::currentDateTime());    
+    
+    addSystemInfoMessage(tr("Calling to %1").arg(f->getName()), "white", QDateTime::currentDateTime());    
 }
 
 void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
@@ -748,9 +752,11 @@ void ChatForm::stopCounter()
 {
     if(timer)
     {
-        addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getName(), secondsToDHMS(timeElapsed.elapsed()/1000)),
+        addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getName(),
+                                                              secondsToDHMS(timeElapsed.elapsed()/1000)),
                              "white", QDateTime::currentDateTime());
         timer->stop();
+        callDuration->setText("");
         callDuration->hide();
         timer = nullptr;
         delete timer;

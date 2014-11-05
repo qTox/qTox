@@ -12,10 +12,6 @@
 <context>
     <name>AVSettings</name>
     <message>
-        <source>Form</source>
-        <translation type="vanished">Ustawienia</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="41"/>
         <source>Audio Settings</source>
         <translation>Ustawienia audio</translation>
@@ -176,23 +172,34 @@
         <translation>Nie można przesłać tego pliku!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="234"/>
-        <location filename="../src/widget/form/chatform.cpp" line="356"/>
+        <location filename="../src/widget/form/chatform.cpp" line="235"/>
         <source>%1 calling</source>
         <translation>%1 dzwoni</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="497"/>
-        <source>Call rejected</source>
-        <translation>Połączenie odrzucone</translation>
+        <location filename="../src/widget/form/chatform.cpp" line="304"/>
+        <source>%1 stopped calling</source>
+        <translatorcomment>?</translatorcomment>
+        <translation>Nieodebrana rozmowa od %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="751"/>
+        <location filename="../src/widget/form/chatform.cpp" line="360"/>
+        <source>Calling to %1</source>
+        <translatorcomment>at least gender neutral...</translatorcomment>
+        <translation>Dzwonisz do %1</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="501"/>
+        <source>Call rejected</source>
+        <translation>Połączenie zostało odrzucone</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="755"/>
         <source>Call with %1 ended. %2</source>
         <translation>Rozmowa z %1 została zakończona. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="769"/>
+        <location filename="../src/widget/form/chatform.cpp" line="775"/>
         <source>Call duration: </source>
         <translation>Czas trwania rozmowy: </translation>
     </message>
@@ -291,7 +298,7 @@ Czy chcesz spróbować z innym hasłem?</translation>
         <location filename="../src/core.cpp" line="1251"/>
         <source>Loggin</source>
         <translatorcomment>pasuje do kontekstu</translatorcomment>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1251"/>
@@ -320,19 +327,19 @@ Czy chcesz spróbować z innym hasłem?</translation>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="242"/>
+        <location filename="../src/filetransferinstance.cpp" line="243"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Nie można zapisać w lokacji</translation>
     </message>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="242"/>
+        <location filename="../src/filetransferinstance.cpp" line="244"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Nie masz uprawnienia by zapisać w tej lokacji. Wybierz inną lub anuluj zapis.</translation>
     </message>
     <message>
-        <location filename="../src/filetransferinstance.cpp" line="423"/>
+        <location filename="../src/filetransferinstance.cpp" line="420"/>
         <source>ETA</source>
         <translation>ETA</translation>
     </message>
@@ -474,10 +481,6 @@ Czy chcesz spróbować z innym hasłem?</translation>
 <context>
     <name>GeneralSettings</name>
     <message>
-        <source>Form</source>
-        <translation type="vanished">Ustawienia</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="56"/>
         <source>General Settings</source>
         <translation>Główne ustawienia</translation>
@@ -574,26 +577,6 @@ Czy chcesz spróbować z innym hasłem?</translation>
         <translation>Motyw</translation>
     </message>
     <message>
-        <source>:)</source>
-        <translation type="vanished">:)</translation>
-    </message>
-    <message>
-        <source>;)</source>
-        <translation type="vanished">;)</translation>
-    </message>
-    <message>
-        <source>:p</source>
-        <translation type="vanished">:p</translation>
-    </message>
-    <message>
-        <source>:O</source>
-        <translation type="vanished">:O</translation>
-    </message>
-    <message>
-        <source>:&apos;(</source>
-        <translation type="vanished">:&apos;(</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="280"/>
         <source>Connection Settings</source>
         <translation>Ustawienia połączenia</translation>
@@ -609,11 +592,6 @@ Czy chcesz spróbować z innym hasłem?</translation>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>To pozwala np. na toxowanie przez Tora. Niestety obciąża to sieć Tox, więc używaj tylko w razie potrzeby.</translation>
-    </message>
-    <message>
-        <source>Disable UDP (not recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="vanished">Wyłącz UDP (nie zalecane)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="309"/>
@@ -796,37 +774,37 @@ Czy chcesz spróbować z innym hasłem?</translation>
         <translation>Czy na pewno chcesz usunąć ten profil?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="187"/>
         <source>Import profile</source>
         <comment>import dialog title</comment>
         <translation>Importuj profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="189"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
         <translation>Plik zapisu Tox (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="195"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
         <translation>Zignorowano niepoprawny plik profilu</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="195"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="200"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
         <translation>Ostrzeżenie: Wybrano plik który nie jest plikiem zapisu Tox; zignorowano.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="204"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
         <translation>Profil już istnieje</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="200"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="205"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Profil pod nazwą &quot;%1&quot; już istnieje. Czy chcesz go usunąć?</translation>
@@ -834,10 +812,6 @@ Czy chcesz spróbować z innym hasłem?</translation>
 </context>
 <context>
     <name>IdentitySettings</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Ustawienia</translation>
-    </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="53"/>
         <source>Public Information</source>
@@ -952,10 +926,6 @@ Czy chcesz spróbować z innym hasłem?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>qTox</source>
-        <translation type="vanished">qTox</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="859"/>
         <source>Your name</source>
         <translation>Twój nick</translation>
@@ -991,17 +961,13 @@ Czy chcesz spróbować z innym hasłem?</translation>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <translation type="vanished">Ctrl+Q</translation>
-    </message>
 </context>
 <context>
     <name>NetCamView</name>
     <message>
         <location filename="../src/widget/netcamview.cpp" line="28"/>
         <source>Tox video</source>
-        <translation type="unfinished">Tox video</translation>
+        <translation>Tox video</translation>
     </message>
 </context>
 <context>
@@ -1026,10 +992,6 @@ Czy chcesz usunąć stary plik historii?</translation>
 </context>
 <context>
     <name>PrivacySettings</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Ustawienia</translation>
-    </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
         <source>Typing Notification</source>

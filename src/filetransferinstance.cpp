@@ -239,7 +239,9 @@ void FileTransferInstance::acceptRecvRequest()
                 if (isFileWritable(path))
                     break;
                 else
-                    QMessageBox::warning(0, tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+                    QMessageBox::warning(0,
+                                         tr("Location not writable","Title of permissions popup"),
+                                         tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
             }
         }
     }
@@ -263,9 +265,7 @@ void FileTransferInstance::pauseResumeRecv()
         return;
 
     Core::getInstance()->pauseResumeFileRecv(friendId, fileNum);
-//    if (state == tsProcessing)
-//        state = tsPaused;
-//    else state = tsProcessing;
+
     if (state == tsPaused)
     {
         effStartTime = QDateTime::currentDateTime();
@@ -284,9 +284,7 @@ void FileTransferInstance::pauseResumeSend()
         return;
 
     Core::getInstance()->pauseResumeFileSend(friendId, fileNum);
-//    if (state == tsProcessing)
-//        state = tsPaused;
-//    else state = tsProcessing;
+
     if (state == tsPaused)
     {
         effStartTime = QDateTime::currentDateTime();
@@ -307,7 +305,6 @@ QString FileTransferInstance::QImage2base64(const QImage &img)
 
 QString FileTransferInstance::getHtmlImage()
 {
-    //qDebug() << "QString FileTransferInstance::getHtmlImage() " << state;
 
     QString res;
     if (state == tsPending || state == tsProcessing || state == tsPaused)
