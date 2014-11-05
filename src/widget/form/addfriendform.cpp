@@ -110,7 +110,7 @@ void AddFriendForm::onSendTriggered()
 
 void AddFriendForm::handleDnsLookup()
 {
-    const QString idKeyWord("id=");
+    const QString idKeyWord("id="), verKeyWord("v=");
 
     if (dns.error() == QDnsLookup::NotFoundError) {
         showWarning(tr("This address does not exist","The DNS gives the Tox ID associated to toxme.se addresses"));
@@ -134,6 +134,23 @@ void AddFriendForm::handleDnsLookup()
     }
 
     const QString entry(textRecordValues.first());
+
+    // Check toxdns protocol version, we only support tox1 for now
+    int verx = entry.indexOf(verKeyWord);
+    if (verx) {
+        verx += verKeyWord.size();
+        int verend = entry.indexOf(';', verx);
+        if (verend)
+        {
+            QString ver = entry.mid(verx, verend);
+            if (ver != "tox1")
+            {
+                showWarning(tr("The version of Tox DNS used by this server is not supported", "Error with the DNS"));
+                return;
+            }
+        }
+    }
+
     int idx = entry.indexOf(idKeyWord);
     if (idx < 0) {
         showWarning(tr("The DNS lookup does not contain any Tox ID", "Error with the DNS"));
