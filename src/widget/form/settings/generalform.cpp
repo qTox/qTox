@@ -188,13 +188,11 @@ void GeneralForm::onAutoAcceptFileChange()
     if(bodyUI->autoacceptFiles->isChecked() == true)
     {
         Settings::getInstance().setAutoSaveEnabled(true);
-        bodyUI->autoSaveFilesDir->setEnabled(true);
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     }
     else
     {
         Settings::getInstance().setAutoSaveEnabled(false);
-        bodyUI->autoSaveFilesDir->setEnabled(false);
         disconnect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()),this, SLOT(onAutoSaveDirChange()));
     }
 }
@@ -205,6 +203,7 @@ void GeneralForm::onAutoSaveDirChange()
     QString directory = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"));
     if(directory.isEmpty())
         directory = previousDir;
+    
     Settings::getInstance().setAutoSaveFilesDir(directory);
     bodyUI->autoSaveFilesDir->setText(directory);
 }
