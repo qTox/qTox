@@ -498,7 +498,7 @@ void ChatForm::onAvRejected(int FriendId, int)
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
     
-    addSystemInfoMessage(tr("Call rejected").arg(f->getName()), "white", QDateTime::currentDateTime());
+    addSystemInfoMessage(tr("Call rejected"), "white", QDateTime::currentDateTime());
 
     netcam->hide();
 }
