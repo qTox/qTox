@@ -65,10 +65,8 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     
     menu.addSeparator();
     QAction* autoAccept = menu.addAction(tr("Auto accept files from this friend", "context menu entry"));
-    QAction* disableAutoAccept = menu.addAction(tr("Manually accept files from this friend", "context menu entry"));
-    
-    if (dir.isEmpty())
-        disableAutoAccept->setEnabled(false);
+    autoAccept->setCheckable(true);
+    autoAccept->setChecked(!dir.isEmpty());
     menu.addSeparator();
     
     QAction* removeFriendAction = menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
@@ -91,11 +89,18 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         }
         else if (selectedItem == autoAccept)
         {
-            if (dir.isEmpty())
-                dir = QDir::homePath();
-            dir = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"), dir);
-            if (!dir.isEmpty())
+            if (!autoAccept->isChecked())
             {
+                qDebug() << "not checked";
+                dir = QDir::homePath();
+                autoAccept->setChecked(false);
+                Settings::getInstance().setAutoAcceptDir(id, "");
+            }
+            
+            if (autoAccept->isChecked())
+            {
+                dir = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"), dir);
+                autoAccept->setChecked(true);
                 qDebug() << "FriendWidget: setting auto accept dir for" << friendId << "to" << dir;
                 Settings::getInstance().setAutoAcceptDir(id, dir);
             }

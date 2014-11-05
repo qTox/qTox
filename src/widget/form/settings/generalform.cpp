@@ -184,16 +184,12 @@ void GeneralForm::onAutoAwayChanged()
 
 void GeneralForm::onAutoAcceptFileChange()
 {
+    Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
+    
     if(bodyUI->autoacceptFiles->isChecked() == true)
-    {
-        Settings::getInstance().setAutoSaveEnabled(true);
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
-    }
     else
-    {
-        Settings::getInstance().setAutoSaveEnabled(false);
         disconnect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()),this, SLOT(onAutoSaveDirChange()));
-    }
 }
 
 void GeneralForm::onAutoSaveDirChange()
