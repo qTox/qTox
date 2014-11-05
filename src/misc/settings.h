@@ -70,9 +70,6 @@ public:
     QString getTranslation() const;
     void setTranslation(QString newValue);
     
-    QString getAutoSaveFilesDir() const;
-    void setAutoSaveFilesDir(QString newValue);
-    
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
 
@@ -210,13 +207,11 @@ private:
 
     bool enableIPv6;
     QString translation;
-    QString autoSaveDir;
     static bool makeToxPortable;
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
     bool useEmoticons;
-    bool autoSaveEnabled;
 
     bool forceTCP;
 
@@ -234,6 +229,7 @@ private:
 
     QHash<QString, QByteArray> widgetSettings;
     QHash<QString, QString> autoAccept;
+    bool autoSaveEnabled;    
     QString globalAutoAcceptDir;
 
     // GUI
