@@ -63,42 +63,31 @@ contains(JENKINS,YES) {
 # Rules for Windows, Mac OSX, and Linux
 win32 {
     RC_FILE = windows/qtox.rc
-    LIBS += -liphlpapi -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -lvpx -lpthread
+    LIBS += -liphlpapi -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lopencv_core248 -lopencv_highgui248 -lopencv_imgproc248 -lOpenAL32 -lopus
     LIBS += -lz -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32
 } else {
     macx {
         ICON = img/icons/qtox.icns
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
         contains(STATICPKG, YES) {
             target.path = /usr/bin
             INSTALLS += target
-            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
+            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
 	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
 	    LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
 
         } else {
-            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
+            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
         }
 
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libsodium.a ./libs/lib/libtoxcore.a ./libs/lib/libtoxav.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libvpx.a ./libs/lib/libopus.a -lopencv_core -lopencv_highgui -lopenal
+            LIBS = ./libs/lib/libsodium.a ./libs/lib/libtoxcore.a ./libs/lib/libtoxav.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxdns.a ./libs/lib/libvpx.a ./libs/lib/libopus.a -lopencv_core -lopencv_highgui -lopenal
         }
     }
 }
-
-
-#### Static linux build
-#LIBS += -Wl,-Bstatic -ltoxcore -ltoxav -lsodium -lvpx -lopus \
-#      -lgstbase-0.10 -lgstreamer-0.10 -lgmodule-2.0 -lgstaudio-0.10 -lxml2 \
-#       -lX11-xcb -lXi -lxcb-render-util -lxcb-glx -lxcb-render -ldbus-1 \
-#    -lxcb -lXau -lXdmcp -lxcb-image -lxcb-icccm -lxcb-sync -lxcb-xfixes -lxcb-shm -lxcb-randr -lxcb-shape \
-#    -lxcb-keysyms -lxcb-xkb -lfontconfig -lfreetype -lXrender -lXext -lX11 \
-#   -lpng -lz -licui18n -licuuc -licudata -lm -lgthread-2.0 \
-#     -pthread -lrt -lGL -lpthread -Wl,-Bdynamic -ldl -lc
-#QMAKE_CXXFLAGS += -Os -flto -static-libstdc++ -static-libgcc
 
 HEADERS  += src/widget/form/addfriendform.h \
     src/widget/form/chatform.h \
