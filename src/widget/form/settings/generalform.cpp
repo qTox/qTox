@@ -23,9 +23,14 @@
 #include "src/core.h"
 #include <QMessageBox>
 #include <QStyleFactory>
+#include <QTime>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 static QStringList locales = {"bg", "de", "en", "fr", "it", "mannol", "pirate", "pl", "ru", "fi", "uk"};
 static QStringList langs = {"Български", "Deustch", "English", "Français", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Українська"};
+
+static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
@@ -44,7 +49,10 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->closeToTray->setChecked(Settings::getInstance().getCloseToTray());
     bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
-
+    bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
+    bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
+    bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getAutoSaveFilesDir());
+    
     for (auto entry : SmileyPack::listSmileyPacks())
     {
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
@@ -60,6 +68,19 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     else
         bodyUI->styleBrowser->setCurrentText(tr("None"));
     
+    bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
+    
+    QStringList timestamps;
+    timestamps << QString("%1 - %2").arg(timeFormats[0],QTime::currentTime().toString(timeFormats[0]))
+               << QString("%1 - %2").arg(timeFormats[1],QTime::currentTime().toString(timeFormats[1]))
+               << QString("%1 - %2").arg(timeFormats[2],QTime::currentTime().toString(timeFormats[2]))
+               << QString("%1 - %2").arg(timeFormats[3],QTime::currentTime().toString(timeFormats[3]));
+    bodyUI->timestamp->addItems(timestamps);
+    
+    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(),
+                                                             QTime::currentTime().toString(Settings::getInstance().getTimestampFormat()))
+                                      ); //idiot proof enough?
+    
     bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
     
     bodyUI->cbEnableUDP->setChecked(!Settings::getInstance().getForceTCP());
@@ -71,21 +92,29 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->cbUseProxy->setChecked(Settings::getInstance().getUseProxy());
     onUseProxyUpdated();
 
-    connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
+    //general
     connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
-    connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);    
+    connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);
     connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
+    connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
+    connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
+    if(bodyUI->autoacceptFiles->isChecked())
+        connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+    //theme
+    connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
-    // new syntax can't handle overloaded signals... (at least not in a pretty way)
+    connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
+    connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));    
+    connect(bodyUI->timestamp, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimestampSelected(int)));
+    //connection
+    connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
     connect(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
+    connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);    
     connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
-    connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);
-    connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
-    connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
 }
 
@@ -136,11 +165,52 @@ void GeneralForm::onStyleSelected(QString style)
     parent->setBodyHeadStyle(style);
 }
 
+void GeneralForm::onEmoticonSizeChanged()
+{
+    Settings::getInstance().setEmojiFontPointSize(bodyUI->emoticonSize->value());
+}
+
+void GeneralForm::onTimestampSelected(int index)
+{
+    Settings::getInstance().setTimestampFormat(
+                bodyUI->timestamp->currentText().split(" ").at(0));
+}
+
 void GeneralForm::onAutoAwayChanged()
 {
     int minutes = bodyUI->autoAwaySpinBox->value();
     Settings::getInstance().setAutoAwayTime(minutes);
     Widget::getInstance()->setIdleTimer(minutes);
+}
+
+void GeneralForm::onAutoAcceptFileChange()
+{
+    if(bodyUI->autoacceptFiles->isChecked() == true)
+    {
+        Settings::getInstance().setAutoSaveEnabled(true);
+        connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+    }
+    else
+    {
+        Settings::getInstance().setAutoSaveEnabled(false);
+        disconnect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()),this, SLOT(onAutoSaveDirChange()));
+    }
+}
+
+void GeneralForm::onAutoSaveDirChange()
+{
+    QString previousDir = Settings::getInstance().getAutoSaveFilesDir();
+    QString directory = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"));
+    if(directory.isEmpty())
+        directory = previousDir;
+    
+    Settings::getInstance().setAutoSaveFilesDir(directory);
+    bodyUI->autoSaveFilesDir->setText(directory);
+}
+
+void GeneralForm::onUseEmoticonsChange()
+{
+    Settings::getInstance().setUseEmoticons(bodyUI->useEmoticons->isChecked());
 }
 
 void GeneralForm::onSetStatusChange()

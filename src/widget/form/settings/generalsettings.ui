@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>525</width>
-        <height>624</height>
+        <width>511</width>
+        <height>739</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -64,7 +64,7 @@
                <string>The translation may not load until qTox restarts.</string>
               </property>
               <property name="text">
-               <string>Translation:</string>
+               <string>Translation</string>
               </property>
              </widget>
             </item>
@@ -132,7 +132,7 @@
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Auto away after (0 to disable):</string>
+               <string>Auto away after (0 to disable)</string>
               </property>
              </widget>
             </item>
@@ -163,6 +163,37 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="QCheckBox" name="autoacceptFiles">
+            <property name="text">
+             <string>Autoaccept files</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="saveFilesHLayout">
+            <item>
+             <widget class="QLabel" name="autoSaveFilesDirLabel">
+              <property name="text">
+               <string>Save files in</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="autoSaveFilesDir">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
        </item>
@@ -173,11 +204,18 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
+           <widget class="QCheckBox" name="useEmoticons">
+            <property name="text">
+             <string>Use emoticons</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="smileyHLayout">
             <item>
              <widget class="QLabel" name="smileyPackLabel">
               <property name="text">
-               <string extracomment="Text on smiley pack label">Smiley Pack:</string>
+               <string extracomment="Text on smiley pack label">Smiley Pack</string>
               </property>
              </widget>
             </item>
@@ -255,12 +293,69 @@
             <item>
              <widget class="QLabel" name="styleLabel">
               <property name="text">
-               <string>Style:</string>
+               <string>Style</string>
               </property>
              </widget>
             </item>
             <item alignment="Qt::AlignTop">
              <widget class="QComboBox" name="styleBrowser">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="emoiticonHLayout">
+            <item>
+             <widget class="QLabel" name="emoticonSizeLabel">
+              <property name="text">
+               <string>Emoticon size</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="emoticonSize">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="specialValueText">
+               <string/>
+              </property>
+              <property name="suffix">
+               <string> px</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>2147483647</number>
+              </property>
+              <property name="value">
+               <number>25</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="timestampHLayout">
+            <item>
+             <widget class="QLabel" name="timestampLabel">
+              <property name="text">
+               <string>Timestamp format</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="timestamp">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
