@@ -209,7 +209,10 @@ bool isFileWritable(QString& path)
 void FileTransferInstance::acceptRecvRequest()
 {
     QString path = Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(friendId));
-    if (path.isEmpty()) path = Settings::getInstance().getGlobalAutoAcceptDir();
+    
+    if (path.isEmpty())
+        path = Settings::getInstance().getGlobalAutoAcceptDir();
+    
     if (!path.isEmpty())
     {
         QDir dir(path);

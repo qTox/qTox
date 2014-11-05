@@ -104,7 +104,7 @@ void Settings::load()
 
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
-        translation = s.value("translation", "").toString();
+        translation = s.value("translation", "en").toString();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();        
@@ -114,8 +114,6 @@ void Settings::load()
         proxyPort = s.value("proxyPort", 0).toInt();
         currentProfile = s.value("currentProfile", "").toString();
     	autoAwayTime = s.value("autoAwayTime", 10).toInt();
-        autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
-        autoSaveDir = s.value("autoSaveDir", QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)).toString();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -156,7 +154,11 @@ void Settings::load()
     s.endGroup();
 
     s.beginGroup("AutoAccept");
-        globalAutoAcceptDir = s.value("globalAutoAcceptDir", "").toString();
+        autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
+        globalAutoAcceptDir = s.value("globalAutoAcceptDir",
+                                      QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
+                                      ).toString();
+        
         for (auto& key : s.childKeys())
             autoAccept[key] = s.value(key).toString();
     s.endGroup();
@@ -165,10 +167,6 @@ void Settings::load()
         inDev = s.value("inDev", "").toString();
         outDev = s.value("outDev", "").toString();
     s.endGroup();
-
-    // try to set a smiley pack if none is selected
-    if (!SmileyPack::isValid(smileyPack) && !SmileyPack::listSmileyPacks().isEmpty())
-        smileyPack = SmileyPack::listSmileyPacks()[0].second;
 
     // Read the embedded DHT bootsrap nodes list if needed
     if (dhtServerList.isEmpty())
@@ -241,8 +239,6 @@ void Settings::save(QString path)
         s.setValue("proxyPort", proxyPort);
         s.setValue("currentProfile", currentProfile);
         s.setValue("autoAwayTime", autoAwayTime);
-        s.setValue("autoSaveEnabled", autoSaveEnabled);
-        s.setValue("autoSaveDir", autoSaveDir);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -283,6 +279,7 @@ void Settings::save(QString path)
     s.endGroup();
 
     s.beginGroup("AutoAccept");
+        s.setValue("autoSaveEnabled", autoSaveEnabled);  
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
         for (auto& id : autoAccept.keys())
             s.setValue(id, autoAccept.value(id));
@@ -473,17 +470,6 @@ QString Settings::getTranslation() const
 void Settings::setTranslation(QString newValue)
 {
     translation = newValue;
-}
-
-
-QString Settings::getAutoSaveFilesDir() const
-{
-    return autoSaveDir;
-}
-
-void Settings::setAutoSaveFilesDir(QString newValue)
-{
-    autoSaveDir = newValue;
 }
 
 bool Settings::getForceTCP() const

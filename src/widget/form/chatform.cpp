@@ -202,7 +202,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
                                                                    QTime::currentTime().toString("hh:mm"), false)));
 
     if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->friendId)).isEmpty()
-     || !Settings::getInstance().getGlobalAutoAcceptDir().isEmpty())
+     || Settings::getInstance().getAutoSaveEnabled())
         fileTrans->pressFromHtml("btnB");
 }
 
