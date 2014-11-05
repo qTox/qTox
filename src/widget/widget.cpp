@@ -518,6 +518,7 @@ void Widget::onAddClicked()
 {
     hideMainForms();
     addFriendForm->show(*ui);
+    setWindowTitle(tr("Add friend") + " - qTox");
 }
 
 void Widget::onGroupClicked()
@@ -529,6 +530,7 @@ void Widget::onTransferClicked()
 {
     hideMainForms();
     filesForm->show(*ui);
+    setWindowTitle(tr("File transfers") + " - qTox");
     activeChatroomWidget = nullptr;
 }
 
@@ -553,6 +555,7 @@ void Widget::onSettingsClicked()
 {
     hideMainForms();
     settingsWidget->show(*ui);
+    setWindowTitle(tr("Settings") + " - qTox");
     activeChatroomWidget = nullptr;
 }
 
@@ -712,6 +715,7 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
     }
     activeChatroomWidget = widget;
     widget->setAsActiveChatroom();
+    setWindowTitle(widget->getName() + " - qTox");
     widget->resetEventFlags();
     widget->updateStatusLight();
 }
@@ -959,10 +963,7 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
     if (!f)
         return false;
 
-    if (activeChatroomWidget == static_cast<GenericChatroomWidget*>(f->widget))
-        return true;
-    else
-        return false;
+    return (activeChatroomWidget == static_cast<GenericChatroomWidget*>(f->widget));
 }
 
 bool Widget::event(QEvent * e)
