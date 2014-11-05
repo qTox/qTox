@@ -60,12 +60,21 @@ public:
     
     QString getStyle() const;
     void setStyle(const QString& newValue);
+    
+    bool getUseEmoticons() const;
+    void setUseEmoticons(bool newValue);
 
     QString getCurrentProfile() const;
     void setCurrentProfile(QString profile);
 
     QString getTranslation() const;
     void setTranslation(QString newValue);
+    
+    QString getAutoSaveFilesDir() const;
+    void setAutoSaveFilesDir(QString newValue);
+    
+    void setAutoSaveEnabled(bool newValue);
+    bool getAutoSaveEnabled() const;
 
     bool getForceTCP() const;
     void setForceTCP(bool newValue);
@@ -201,10 +210,13 @@ private:
 
     bool enableIPv6;
     QString translation;
+    QString autoSaveDir;
     static bool makeToxPortable;
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
+    bool useEmoticons;
+    bool autoSaveEnabled;
 
     bool forceTCP;
 
