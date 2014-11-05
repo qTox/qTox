@@ -170,7 +170,7 @@ void GeneralForm::onEmoticonSizeChanged()
     Settings::getInstance().setEmojiFontPointSize(bodyUI->emoticonSize->value());
 }
 
-void GeneralForm::onTimestampSelected(int index)
+void GeneralForm::onTimestampSelected(int)
 {
     Settings::getInstance().setTimestampFormat(
                 bodyUI->timestamp->currentText().split(" ").at(0));
