@@ -183,7 +183,10 @@ void IdentityForm::onDeleteClicked()
 
 void IdentityForm::onImportClicked()
 {
-    QString path = QFileDialog::getOpenFileName(this, tr("Import profile", "import dialog title"), QDir::homePath(), tr("Tox save file (*.tox)", "import dialog filter"));
+    QString path = QFileDialog::getOpenFileName(this,
+                                                tr("Import profile", "import dialog title"),
+                                                QDir::homePath(),
+                                                tr("Tox save file (*.tox)", "import dialog filter"));
     if (path.isEmpty())
         return;
 
@@ -192,7 +195,9 @@ void IdentityForm::onImportClicked()
 
     if (info.suffix() != "tox")
     {
-        QMessageBox::warning(this, tr("Ignoring non-Tox file", "popup title"), tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
+        QMessageBox::warning(this,
+                             tr("Ignoring non-Tox file", "popup title"),
+                             tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
         return;
     }
 
