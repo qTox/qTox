@@ -25,6 +25,7 @@
 #include <QStyleFactory>
 #include <QTime>
 #include <QFileDialog>
+#include <QStandardPaths>
 
 static QStringList locales = {"bg", "de", "en", "fr", "it", "mannol", "pirate", "pl", "ru", "fi", "uk"};
 static QStringList langs = {"Български", "Deustch", "English", "Français", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Українська"};
@@ -50,7 +51,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
-    bodyUI->autoSaveFilesDir->setEnabled(Settings::getInstance().getAutoSaveEnabled());
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getAutoSaveFilesDir());
     
     for (auto entry : SmileyPack::listSmileyPacks())
@@ -101,6 +101,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
+    if(bodyUI->autoacceptFiles->isChecked())
+        connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
@@ -199,7 +201,10 @@ void GeneralForm::onAutoAcceptFileChange()
 
 void GeneralForm::onAutoSaveDirChange()
 {
+    QString previousDir = Settings::getInstance().getAutoSaveFilesDir();
     QString directory = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"));
+    if(directory.isEmpty())
+        directory = previousDir;
     Settings::getInstance().setAutoSaveFilesDir(directory);
     bodyUI->autoSaveFilesDir->setText(directory);
 }
