@@ -20,12 +20,13 @@
 #include "widget/form/chatform.h"
 
 Friend::Friend(int FriendId, QString UserId)
-    : friendId(FriendId), userId(UserId)
+    : friendId(FriendId)
 {
-    widget = new FriendWidget(friendId, userId);
+    widget = new FriendWidget(friendId, UserId);
     chatForm = new ChatForm(this);
     hasNewEvents = 0;
     friendStatus = Status::Offline;
+    userID = ToxID::fromString(UserId);
 }
 
 Friend::~Friend()
@@ -36,8 +37,21 @@ Friend::~Friend()
 
 void Friend::setName(QString name)
 {
-    widget->setName(name);
-    chatForm->setName(name);
+    userName = name;
+    if (userAlias.size() == 0)
+    {
+        widget->setName(name);
+        chatForm->setName(name);
+    }
+}
+
+void Friend::setAlias(QString name)
+{
+    userAlias = name;
+    QString dispName = userAlias.size() == 0 ? userName : userAlias;
+
+    widget->setName(dispName);
+    chatForm->setName(dispName);
 }
 
 void Friend::setStatusMessage(QString message)
@@ -46,12 +60,49 @@ void Friend::setStatusMessage(QString message)
     chatForm->setStatusMessage(message);
 }
 
-QString Friend::getName() const
+QString Friend::getDisplayedName() const
 {
-    return widget->getName();
+    if (userAlias.size() == 0)
+        return userName;
+    return userAlias;
 }
 
-ToxID Friend::getToxID() const
+const ToxID &Friend::getToxID() const
 {
-    return ToxID::fromString(userId);
+    return userID;
+}
+
+int Friend::getFriendID() const
+{
+    return friendId;
+}
+
+void Friend::setEventFlag(int f)
+{
+    hasNewEvents = f;
+}
+
+int Friend::getEventFlag() const
+{
+    return hasNewEvents;
+}
+
+void Friend::setStatus(Status s)
+{
+    friendStatus = s;
+}
+
+Status Friend::getStatus() const
+{
+    return friendStatus;
+}
+
+ChatForm *Friend::getChatForm()
+{
+    return chatForm;
+}
+
+FriendWidget *Friend::getFriendWidget()
+{
+    return widget;
 }

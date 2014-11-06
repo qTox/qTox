@@ -132,36 +132,36 @@ void FriendWidget::setAsInactiveChatroom()
 void FriendWidget::updateStatusLight()
 {
     Friend* f = FriendList::findFriend(friendId);
-    Status status = f->friendStatus;
+    Status status = f->getStatus();
 
-    if (status == Status::Online && f->hasNewEvents == 0)
+    if (status == Status::Online && f->getEventFlag() == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-    else if (status == Status::Online && f->hasNewEvents == 1)
+    else if (status == Status::Online && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-    else if (status == Status::Away && f->hasNewEvents == 0)
+    else if (status == Status::Away && f->getEventFlag() == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
-    else if (status == Status::Away && f->hasNewEvents == 1)
+    else if (status == Status::Away && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
-    else if (status == Status::Busy && f->hasNewEvents == 0)
+    else if (status == Status::Busy && f->getEventFlag() == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
-    else if (status == Status::Busy && f->hasNewEvents == 1)
+    else if (status == Status::Busy && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
-    else if (status == Status::Offline && f->hasNewEvents == 0)
+    else if (status == Status::Offline && f->getEventFlag() == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
-    else if (status == Status::Offline && f->hasNewEvents == 1)
+    else if (status == Status::Offline && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.png"));
 }
 
 void FriendWidget::setChatForm(Ui::MainWindow &ui)
 {
     Friend* f = FriendList::findFriend(friendId);
-    f->chatForm->show(ui);
+    f->getChatForm()->show(ui);
 }
 
 void FriendWidget::resetEventFlags()
 {
     Friend* f = FriendList::findFriend(friendId);
-    f->hasNewEvents = 0;
+    f->setEventFlag(false);
 }
 
 void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)

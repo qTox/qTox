@@ -24,7 +24,7 @@ QList<Friend*> FriendList::friendList;
 Friend* FriendList::addFriend(int friendId, const QString& userId)
 {
     for (Friend* f : friendList)
-        if (f->friendId == friendId)
+        if (f->getFriendID() == friendId)
             qWarning() << "FriendList::addFriend: friendId already taken";
     Friend* newfriend = new Friend(friendId, userId);
     friendList.append(newfriend);
@@ -34,7 +34,7 @@ Friend* FriendList::addFriend(int friendId, const QString& userId)
 Friend* FriendList::findFriend(int friendId)
 {
     for (Friend* f : friendList)
-        if (f->friendId == friendId)
+        if (f->getFriendID() == friendId)
             return f;
     return nullptr;
 }
@@ -43,7 +43,7 @@ void FriendList::removeFriend(int friendId)
 {
     for (int i=0; i<friendList.size(); i++)
     {
-        if (friendList[i]->friendId == friendId)
+        if (friendList[i]->getFriendID() == friendId)
         {
             friendList.removeAt(i);
             return;

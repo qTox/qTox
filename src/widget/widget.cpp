@@ -603,46 +603,46 @@ void Widget::addFriend(int friendId, const QString &userId)
     //qDebug() << "Widget: Adding friend with id" << userId;
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
-    layout->addWidget(newfriend->widget);
-    connect(newfriend->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
-    connect(newfriend->widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
-    connect(newfriend->widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
-    connect(newfriend->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newfriend->chatForm, SLOT(focusInput()));
-    connect(newfriend->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
-    connect(newfriend->chatForm, &GenericChatForm::sendAction, core, &Core::sendAction);
-    connect(newfriend->chatForm, SIGNAL(sendFile(int32_t, QString, QString, long long)), core, SLOT(sendFile(int32_t, QString, QString, long long)));
-    connect(newfriend->chatForm, SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
-    connect(newfriend->chatForm, SIGNAL(hangupCall(int)), core, SLOT(hangupCall(int)));
-    connect(newfriend->chatForm, SIGNAL(startCall(int)), core, SLOT(startCall(int)));
-    connect(newfriend->chatForm, SIGNAL(startVideoCall(int,bool)), core, SLOT(startCall(int,bool)));
-    connect(newfriend->chatForm, SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
-    connect(newfriend->chatForm, SIGNAL(micMuteToggle(int)), core, SLOT(micMuteToggle(int)));
-    connect(newfriend->chatForm, SIGNAL(volMuteToggle(int)), core, SLOT(volMuteToggle(int)));
-    connect(core, &Core::fileReceiveRequested, newfriend->chatForm, &ChatForm::onFileRecvRequest);
-    connect(core, &Core::avInvite, newfriend->chatForm, &ChatForm::onAvInvite);
-    connect(core, &Core::avStart, newfriend->chatForm, &ChatForm::onAvStart);
-    connect(core, &Core::avCancel, newfriend->chatForm, &ChatForm::onAvCancel);
-    connect(core, &Core::avEnd, newfriend->chatForm, &ChatForm::onAvEnd);
-    connect(core, &Core::avRinging, newfriend->chatForm, &ChatForm::onAvRinging);
-    connect(core, &Core::avStarting, newfriend->chatForm, &ChatForm::onAvStarting);
-    connect(core, &Core::avEnding, newfriend->chatForm, &ChatForm::onAvEnding);
-    connect(core, &Core::avRequestTimeout, newfriend->chatForm, &ChatForm::onAvRequestTimeout);
-    connect(core, &Core::avPeerTimeout, newfriend->chatForm, &ChatForm::onAvPeerTimeout);
-    connect(core, &Core::avMediaChange, newfriend->chatForm, &ChatForm::onAvMediaChange);
-    connect(core, &Core::avCallFailed, newfriend->chatForm, &ChatForm::onAvCallFailed);
-    connect(core, &Core::avRejected, newfriend->chatForm, &ChatForm::onAvRejected);
-    connect(core, &Core::friendAvatarChanged, newfriend->chatForm, &ChatForm::onAvatarChange);
-    connect(core, &Core::friendAvatarChanged, newfriend->widget, &FriendWidget::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, newfriend->chatForm, &ChatForm::onAvatarRemoved);
-    connect(core, &Core::friendAvatarRemoved, newfriend->widget, &FriendWidget::onAvatarRemoved);
+    layout->addWidget(newfriend->getFriendWidget());
+    connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
+    connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
+    connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
+    connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newfriend->getChatForm(), SLOT(focusInput()));
+    connect(newfriend->getChatForm(), SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
+    connect(newfriend->getChatForm(), &GenericChatForm::sendAction, core, &Core::sendAction);
+    connect(newfriend->getChatForm(), SIGNAL(sendFile(int32_t, QString, QString, long long)), core, SLOT(sendFile(int32_t, QString, QString, long long)));
+    connect(newfriend->getChatForm(), SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
+    connect(newfriend->getChatForm(), SIGNAL(hangupCall(int)), core, SLOT(hangupCall(int)));
+    connect(newfriend->getChatForm(), SIGNAL(startCall(int)), core, SLOT(startCall(int)));
+    connect(newfriend->getChatForm(), SIGNAL(startVideoCall(int,bool)), core, SLOT(startCall(int,bool)));
+    connect(newfriend->getChatForm(), SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
+    connect(newfriend->getChatForm(), SIGNAL(micMuteToggle(int)), core, SLOT(micMuteToggle(int)));
+    connect(newfriend->getChatForm(), SIGNAL(volMuteToggle(int)), core, SLOT(volMuteToggle(int)));
+    connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
+    connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
+    connect(core, &Core::avStart, newfriend->getChatForm(), &ChatForm::onAvStart);
+    connect(core, &Core::avCancel, newfriend->getChatForm(), &ChatForm::onAvCancel);
+    connect(core, &Core::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd);
+    connect(core, &Core::avRinging, newfriend->getChatForm(), &ChatForm::onAvRinging);
+    connect(core, &Core::avStarting, newfriend->getChatForm(), &ChatForm::onAvStarting);
+    connect(core, &Core::avEnding, newfriend->getChatForm(), &ChatForm::onAvEnding);
+    connect(core, &Core::avRequestTimeout, newfriend->getChatForm(), &ChatForm::onAvRequestTimeout);
+    connect(core, &Core::avPeerTimeout, newfriend->getChatForm(), &ChatForm::onAvPeerTimeout);
+    connect(core, &Core::avMediaChange, newfriend->getChatForm(), &ChatForm::onAvMediaChange);
+    connect(core, &Core::avCallFailed, newfriend->getChatForm(), &ChatForm::onAvCallFailed);
+    connect(core, &Core::avRejected, newfriend->getChatForm(), &ChatForm::onAvRejected);
+    connect(core, &Core::friendAvatarChanged, newfriend->getChatForm(), &ChatForm::onAvatarChange);
+    connect(core, &Core::friendAvatarChanged, newfriend->getFriendWidget(), &FriendWidget::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, newfriend->getChatForm(), &ChatForm::onAvatarRemoved);
+    connect(core, &Core::friendAvatarRemoved, newfriend->getFriendWidget(), &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
     QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);
     if (!avatar.isNull())
     {
         //qWarning() << "Widget: loadded avatar for id" << userId;
-        newfriend->chatForm->onAvatarChange(friendId, avatar);
-        newfriend->widget->onAvatarChange(friendId, avatar);
+        newfriend->getChatForm()->onAvatarChange(friendId, avatar);
+        newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
     }
 }
 
@@ -657,17 +657,17 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (!f)
         return;
 
-    contactListWidget->moveWidget(f->widget, status);
+    contactListWidget->moveWidget(f->getFriendWidget(), status);
 
-    f->friendStatus = status;
-    f->widget->updateStatusLight();
+    f->setStatus(status);
+    f->getFriendWidget()->updateStatusLight();
     
     //won't print the message if there were no messages before
-    if(f->chatForm->getNumberOfMessages() != 0
+    if(f->getChatForm()->getNumberOfMessages() != 0
             && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
     {
         QString fStatus = "";
-        switch(f->friendStatus){
+        switch(f->getStatus()){
         case Status::Away:
             fStatus = tr("away", "contact status"); break;
         case Status::Busy:
@@ -677,7 +677,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
         default:
             fStatus = tr("online", "contact status"); break;
         }
-        f->chatForm->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getName()).arg(fStatus),
+        f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
                                           "white", QDateTime::currentDateTime());
     }
 }
@@ -726,28 +726,28 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    f->chatForm->addMessage(f->getToxID(), message, isAction, timestamp);
+    f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp);
 
     if (isAction)
-        HistoryKeeper::getInstance()->addChatEntry(f->userId, "/me " + message, f->userId, timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().toString(), "/me " + message, f->getToxID().toString(), timestamp);
     else
-        HistoryKeeper::getInstance()->addChatEntry(f->userId, message, f->userId, timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().toString(), message, f->getToxID().toString(), timestamp);
 
     if (activeChatroomWidget != nullptr)
     {
-        if ((static_cast<GenericChatroomWidget*>(f->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
+        if ((static_cast<GenericChatroomWidget*>(f->getFriendWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
         {
-            f->hasNewEvents = 1;
+            f->setEventFlag(true);
             newMessageAlert();
         }
     }
     else
     {
-        f->hasNewEvents = 1;
+        f->setEventFlag(true);
         newMessageAlert();
     }
 
-    f->widget->updateStatusLight();
+    f->getFriendWidget()->updateStatusLight();
 }
 
 void Widget::newMessageAlert()
@@ -800,11 +800,11 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 
 void Widget::removeFriend(Friend* f)
 {
-    f->widget->setAsInactiveChatroom();
-    if (static_cast<GenericChatroomWidget*>(f->widget) == activeChatroomWidget)
+    f->getFriendWidget()->setAsInactiveChatroom();
+    if (static_cast<GenericChatroomWidget*>(f->getFriendWidget()) == activeChatroomWidget)
         activeChatroomWidget = nullptr;
-    FriendList::removeFriend(f->friendId);
-    core->removeFriend(f->friendId);
+    FriendList::removeFriend(f->getFriendID());
+    core->removeFriend(f->getFriendID());
     delete f;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
@@ -832,7 +832,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     if (f != nullptr)
     {
         QClipboard *clipboard = QApplication::clipboard();
-        clipboard->setText(core->getFriendAddress(f->friendId), QClipboard::Clipboard);
+        clipboard->setText(core->getFriendAddress(f->getFriendID()), QClipboard::Clipboard);
     }
 }
 
@@ -962,7 +962,7 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
     if (!f)
         return false;
 
-    return (activeChatroomWidget == static_cast<GenericChatroomWidget*>(f->widget));
+    return (activeChatroomWidget == static_cast<GenericChatroomWidget*>(f->getFriendWidget()));
 }
 
 bool Widget::event(QEvent * e)
@@ -1033,7 +1033,7 @@ void Widget::onMessageSendResult(int friendId, const QString& message, int messa
         return;
 
     if (!messageId)
-        f->chatForm->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
+        f->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
 }
 
 void Widget::onGroupSendResult(int groupId, const QString& message, int result)
