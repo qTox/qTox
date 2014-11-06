@@ -498,7 +498,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="135"/>
         <source>Auto away after (0 to disable)</source>
-        <translation type="unfinished">Автоматически отсутствовать после (0 для отключения)</translation>
+        <translation>Менять статус на «Отошёл» после (0 — не менять)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="148"/>
