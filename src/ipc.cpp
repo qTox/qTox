@@ -52,7 +52,11 @@ IPC::IPC() :
 
 IPC::~IPC()
 {
-
+    if (globalMemory.lock())
+    {
+        *(time_t*)((char*)globalMemory.data()+sizeof(globalId)) = 0;
+        globalMemory.unlock();
+    }
 }
 
 bool IPC::isCurrentOwner()
