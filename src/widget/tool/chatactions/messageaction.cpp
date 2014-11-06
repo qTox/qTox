@@ -16,6 +16,7 @@
 
 #include "messageaction.h"
 #include "src/misc/smileypack.h"
+#include "src/misc/settings.h"
 
 MessageAction::MessageAction(const QString &author, const QString &message, const QString &date, const bool &me) :
     ChatAction(me, author, date),
@@ -25,7 +26,11 @@ MessageAction::MessageAction(const QString &author, const QString &message, cons
 
 QString MessageAction::getMessage(QString div)
 {
-    QString message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
+    QString message_;
+    if(Settings::getInstance().getUseEmoticons())
+         message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
+    else
+         message_ = toHtmlChars(message);
 
     // detect urls
     QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/)\\S+");
