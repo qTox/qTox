@@ -18,11 +18,13 @@
 
 #include <QFont>
 #include <QMessageBox>
+#include <QErrorMessage>
 #include <tox/tox.h>
 #include "ui_mainwindow.h"
 #include "src/core.h"
 #include "src/misc/cdata.h"
 #include "src/toxdns.h"
+#include "src/misc/settings.h"
 
 AddFriendForm::AddFriendForm()
 {
@@ -93,6 +95,14 @@ void AddFriendForm::onSendTriggered()
         this->toxId.clear();
         this->message.clear();
     } else {
+        if (Settings::getInstance().getUseProxy())
+        {
+            QMessageBox::StandardButton btn = QMessageBox::warning(main, "qTox", tr("qTox needs to use the Tox DNS, but can't do it through a proxy\n\
+Ignore the proxy and connect to the Internet directly ?"), QMessageBox::Ok|QMessageBox::No, QMessageBox::No);
+            if (btn != QMessageBox::Ok)
+                return;
+        }
+
         ToxID toxId = ToxDNS::resolveToxAddress(id, true);
 
         if (toxId.toString().isEmpty())
