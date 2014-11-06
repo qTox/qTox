@@ -279,7 +279,7 @@ Empty password.</source>
         <location filename="../src/core.cpp" line="1168"/>
         <source>Reinit current profile</source>
         <translatorcomment>Увы, никто не знает, что разработчики имели в виду. Ту би транслейтед.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить данные текущего профиля</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1171"/>
@@ -498,7 +498,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="135"/>
         <source>Auto away after (0 to disable)</source>
-        <translation>Автоматически отсутствовать после (0 для отключения)</translation>
+        <translation type="unfinished">Автоматически отсутствовать после (0 для отключения)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="148"/>
@@ -977,7 +977,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1147"/>
         <source>View completed file transfers</source>
-        <translation>Завершённые файлопередачи</translation>
+        <translation>Завершённые передачи файлов</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1179"/>
@@ -1003,7 +1003,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="28"/>
         <source>Privacy</source>
-        <translation>Конфиденсальность</translation>
+        <translation>Конфиденциальность</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="88"/>
