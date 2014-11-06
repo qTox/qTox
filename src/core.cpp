@@ -524,7 +524,7 @@ void Core::onGroupTitleChange(Tox*, int groupnumber, int peernumber, const uint8
     qDebug() << "Core: group" << groupnumber << "title changed by" << peernumber;
     Core* core = static_cast<Core*>(_core);
     QString author;
-    if (peernumber >= 0 && !tox_group_peernumber_is_ours(core->tox, groupnumber, peernumber))
+    if (peernumber >= 0)
         author = core->getGroupPeerName(groupnumber, peernumber);
     emit core->groupTitleChanged(groupnumber, author, CString::toString(title, len));
 }
@@ -832,7 +832,7 @@ void Core::changeGroupTitle(int groupId, const QString& title)
     CString cTitle(title);
     int err = tox_group_set_title(tox, groupId, cTitle.data(), cTitle.size());
     if (!err)
-        emit groupTitleChanged(groupId, "", title);
+        emit groupTitleChanged(groupId, getUsername(), title);
 }
 
 void Core::sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize)
