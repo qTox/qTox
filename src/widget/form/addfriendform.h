@@ -22,7 +22,6 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPushButton>
-#include <QDnsLookup>
 
 namespace Ui {class MainWindow;}
 
@@ -34,33 +33,16 @@ public:
     ~AddFriendForm();
 
     void show(Ui::MainWindow &ui);
-    bool isToxId(const QString& value) const;
-    void showWarning(const QString& message) const;
     QString getMessage() const;
 
 signals:
     void friendRequested(const QString& friendAddress, const QString& message);
 
+protected:
+    void showWarning(const QString& message) const;
+
 private slots:
     void onSendTriggered();
-
-private:
-    struct tox3_server
-    {
-        tox3_server()=default;
-        tox3_server(const char* _name, uint8_t _pk[32]):name{_name},pubkey{_pk}{}
-
-        const char* name; ///< Hostname of the server, e.g. toxme.se
-        uint8_t* pubkey; ///< Public key of the tox3 server, usually 256bit long
-    };
-
-private:
-    void queryTox1(const QString& record); ///< Record should look like user@domain.tld
-    void queryTox3(const tox3_server& server, QString& record); ///< Record should look like user@domain.tld, may fallback on queryTox1
-    /// Try to fetch the first entry of the given TXT record
-    /// Returns an empty object on failure. May block for up to ~3s
-    /// May display message boxes on error if silent if false
-    QByteArray fetchLastTextRecord(const QString& record, bool silent=true);
 
 private:
     QLabel headLabel, toxIdLabel, messageLabel;
@@ -69,10 +51,6 @@ private:
     QTextEdit message;
     QVBoxLayout layout, headLayout;
     QWidget *head, *main;
-
-    /** will be used for dns discovery if necessary */
-    QDnsLookup dns;
-    static const tox3_server pinnedServers[];
 };
 
 #endif // ADDFRIENDFORM_H

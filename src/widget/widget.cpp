@@ -62,7 +62,6 @@ Widget::Widget(QWidget *parent)
 
 void Widget::init()
 {
-    
     ui->setupUi(this);
     
     if (QSystemTrayIcon::isSystemTrayAvailable() == true)

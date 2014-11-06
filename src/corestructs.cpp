@@ -1,6 +1,10 @@
 #include "src/corestructs.h"
 #include "src/core.h"
+#include <tox/tox.h>
 #include <QFile>
+#include <QRegularExpression>
+
+#define TOX_ID_LENGTH 2*TOX_FRIEND_ADDRESS_SIZE
 
 ToxFile::ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePath, FileDirection Direction)
     : fileNum(FileNum), friendId(FriendId), fileName{FileName}, filePath{FilePath}, file{new QFile(filePath)},
@@ -47,4 +51,10 @@ bool ToxID::operator!=(const ToxID& other) const
 bool ToxID::isMine() const
 {
     return *this == Core::getInstance()->getSelfId();
+}
+
+bool ToxID::isToxId(const QString& value)
+{
+    const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");
+    return value.length() == TOX_ID_LENGTH && value.contains(hexRegExp);
 }

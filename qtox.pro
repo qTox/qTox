@@ -149,7 +149,10 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/form/setpassworddialog.h \
     src/widget/form/tabcompleter.h \
     src/video/videoframe.h \
-    src/misc/flowlayout.h
+    src/misc/flowlayout.h \
+    src/ipc.h \
+    src/widget/toxuri.h \
+    src/toxdns.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -208,4 +211,7 @@ SOURCES += \
     src/video/netvideosource.cpp \
     src/widget/form/tabcompleter.cpp \
     src/video/videoframe.cpp \
-    src/misc/flowlayout.cpp
+    src/misc/flowlayout.cpp \
+    src/widget/toxuri.cpp \
+    src/toxdns.cpp \
+    src/ipc.cpp

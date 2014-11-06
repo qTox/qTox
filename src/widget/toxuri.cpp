@@ -1,0 +1,92 @@
+#include "src/widget/toxuri.h"
+#include "src/toxdns.h"
+#include "src/widget/tool/friendrequestdialog.h"
+#include "src/core.h"
+#include <QByteArray>
+#include <QString>
+#include <QMessageBox>
+#include <QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QCoreApplication>
+
+void toxURIEventHandler(const QByteArray& eventData)
+{
+    if (!eventData.startsWith("tox:"))
+        return;
+
+    handleToxURI(eventData);
+}
+
+void handleToxURI(const QString &toxURI)
+{
+    Core* core = Core::getInstance();
+
+    while (!core)
+    {
+        core = Core::getInstance();
+        qApp->processEvents();
+    }
+
+    while (!core->isReady())
+    {
+        qApp->processEvents();
+    }
+
+    QString toxaddr = toxURI.mid(4);
+    QString toxid = ToxDNS::resolveToxAddress(toxaddr, true).toString();
+
+    if (toxid.isEmpty())
+    {
+        QMessageBox::warning(0, "qTox", toxaddr+" is not a valid Tox address.");
+    }
+    else
+    {
+        ToxURIDialog dialog(0, toxaddr, QObject::tr("Tox me maybe?","Default message in Tox URI friend requests. Write something appropriate!"));
+        if (dialog.exec() == QDialog::Accepted)
+            Core::getInstance()->requestFriendship(toxid, dialog.getRequestMessage());
+    }
+}
+
+ToxURIDialog::ToxURIDialog(QWidget *parent, const QString &userId, const QString &message) :
+    QDialog(parent)
+{
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowTitle(tr("Add a friend","Title of the window to add a friend through Tox URI"));
+
+    QLabel *friendsLabel = new QLabel(tr("Do you want to add %1 as a friend ?").arg(userId), this);
+    QLabel *userIdLabel = new QLabel(tr("User ID:"), this);
+    QLineEdit *userIdEdit = new QLineEdit(userId, this);
+    userIdEdit->setCursorPosition(0);
+    userIdEdit->setReadOnly(true);
+    QLabel *messageLabel = new QLabel(tr("Friend request message:"), this);
+    messageEdit = new QPlainTextEdit(message, this);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
+
+    buttonBox->addButton(tr("Send","Send a friend request"), QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(tr("Cancel","Don't send a friend request"), QDialogButtonBox::RejectRole);
+
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &FriendRequestDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &FriendRequestDialog::reject);
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+
+    layout->addWidget(friendsLabel);
+    layout->addSpacing(12);
+    layout->addWidget(userIdLabel);
+    layout->addWidget(userIdEdit);
+    layout->addWidget(messageLabel);
+    layout->addWidget(messageEdit);
+    layout->addWidget(buttonBox);
+
+    resize(300, 200);
+}
+
+QString ToxURIDialog::getRequestMessage()
+{
+    return messageEdit->toPlainText();
+}

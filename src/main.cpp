@@ -16,6 +16,8 @@
 
 #include "widget/widget.h"
 #include "misc/settings.h"
+#include "src/ipc.h"
+#include "src/widget/toxuri.h"
 #include <QApplication>
 #include <QFontDatabase>
 #include <QDebug>
@@ -77,8 +79,35 @@ int main(int argc, char *argv[])
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
 
-    Widget* w = Widget::getInstance();
+    // Inter-process communication
+    IPC ipc;
+    ipc.registerEventHandler(&toxURIEventHandler);
 
+    // Process arguments
+    if (argc >= 2)
+    {
+        QString firstParam(argv[1]);
+        // Tox URIs. If there's already another qTox instance running, we ask it to handle the URI and we exit
+        // Otherwise we start a new qTox instance and process it ourselves
+        if (firstParam.startsWith("tox:"))
+        {
+            if (ipc.isCurrentOwner()) // Don't bother sending an event if we're going to process it ourselves
+            {
+                handleToxURI(firstParam.toUtf8());
+            }
+            else
+            {
+                time_t event = ipc.postEvent(firstParam.toUtf8());
+                ipc.waitUntilProcessed(event);
+                // If someone else processed it, we're done here, no need to actually start qTox
+                if (!ipc.isCurrentOwner())
+                    return EXIT_SUCCESS;
+            }
+        }
+    }
+
+    // Run
+    Widget* w = Widget::getInstance();
     int errorcode = a.exec();
 
     delete w;
