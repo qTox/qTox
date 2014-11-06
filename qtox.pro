@@ -84,7 +84,7 @@ win32 {
         }
 
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libsodium.a ./libs/lib/libtoxcore.a ./libs/lib/libtoxav.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libvpx.a ./libs/lib/libopus.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -s
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -s
         }
     }
 }
