@@ -32,6 +32,9 @@ public:
 
     void onUserListChanged();
 
+signals:
+    void groupTitleChanged(int groupnum, const QString& name);
+
 private slots:
     void onSendTriggered();
 
