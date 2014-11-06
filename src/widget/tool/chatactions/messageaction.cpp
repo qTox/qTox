@@ -33,7 +33,7 @@ QString MessageAction::getMessage(QString div)
          message_ = toHtmlChars(message);
 
     // detect urls
-    QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/)\\S+");
+    QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/|tox:\\/\\/|tox:)\\S+");
     int offset = 0;
     while ((offset = exp.indexIn(message_, offset)) != -1)
     {
