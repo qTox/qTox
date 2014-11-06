@@ -4,7 +4,7 @@ if which apt-get; then
     sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopencv-dev \
                          libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev
 elif which pacman; then
-    sudo pacman -S --needed base-devel qt5 opencv openal opus vpx
+    sudo pacman -S --needed base-devel qt5 opencv openal opus libvpx
 elif which yum; then
     yum groupinstall "Development Tools"
     yum install qt-devel qt-doc qt-creator opencv-devel openal-soft-devel libtool autoconf automake check check-devel
