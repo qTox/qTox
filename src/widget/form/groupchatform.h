@@ -35,6 +35,9 @@ public:
     void keyPressEvent(QKeyEvent* ev);
     void keyReleaseEvent(QKeyEvent* ev);
 
+signals:
+    void groupTitleChanged(int groupnum, const QString& name);
+
 private slots:
     void onSendTriggered();
     void onMicMuteToggle();

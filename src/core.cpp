@@ -269,6 +269,7 @@ void Core::start()
     tox_callback_group_invite(tox, onGroupInvite, this);
     tox_callback_group_message(tox, onGroupMessage, this);
     tox_callback_group_namelist_change(tox, onGroupNamelistChange, this);
+    tox_callback_group_title(tox, onGroupTitleChange, this);
     tox_callback_group_action(tox, onGroupAction, this);
     tox_callback_file_send_request(tox, onFileSendRequestCallback, this);
     tox_callback_file_control(tox, onFileControlCallback, this);
@@ -516,6 +517,16 @@ void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t 
 {
     qDebug() << QString("Core: Group namelist change %1:%2 %3").arg(groupnumber).arg(peernumber).arg(change);
     emit static_cast<Core*>(core)->groupNamelistChanged(groupnumber, peernumber, change);
+}
+
+void Core::onGroupTitleChange(Tox*, int groupnumber, int peernumber, const uint8_t* title, uint8_t len, void* _core)
+{
+    qDebug() << "Core: group" << groupnumber << "title changed by" << peernumber;
+    Core* core = static_cast<Core*>(_core);
+    QString author;
+    if (peernumber >= 0 && !tox_group_peernumber_is_ours(core->tox, groupnumber, peernumber))
+        author = core->getGroupPeerName(groupnumber, peernumber);
+    emit core->groupTitleChanged(groupnumber, author, CString::toString(title, len));
 }
 
 void Core::onFileSendRequestCallback(Tox*, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
@@ -814,6 +825,14 @@ void Core::sendGroupAction(int groupId, const QString& message)
         if (ret == -1)
             emit groupSentResult(groupId, message, ret);
     }
+}
+
+void Core::changeGroupTitle(int groupId, const QString& title)
+{
+    CString cTitle(title);
+    int err = tox_group_set_title(tox, groupId, cTitle.data(), cTitle.size());
+    if (!err)
+        emit groupTitleChanged(groupId, "", title);
 }
 
 void Core::sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize)
