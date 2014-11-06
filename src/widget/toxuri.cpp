@@ -36,7 +36,12 @@ void handleToxURI(const QString &toxURI)
         qApp->processEvents();
     }
 
-    QString toxaddr = toxURI.mid(4);
+    QString toxaddr;
+    if (toxURI.startsWith("tox://"))
+        toxaddr = toxURI.mid(6);
+    else
+        toxaddr = toxURI.mid(4);
+
     QString toxid = ToxDNS::resolveToxAddress(toxaddr, true).toString();
 
     if (toxid.isEmpty())
