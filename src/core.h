@@ -69,6 +69,7 @@ public:
 
     bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
     bool isPasswordSet(PasswordType passtype);
+    bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
 
 public slots:
     void start(); ///< Initializes the core, must be called before anything else
@@ -260,6 +261,7 @@ private:
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
     QMutex fileSendMutex;
+    bool ready;
 
     uint8_t* pwsaltedkeys[PasswordType::ptCounter]; // use the pw's hash as the "pw"
 

@@ -21,7 +21,8 @@ struct ToxID
     QString checkSum;
 
     QString toString() const;
-    ToxID static fromString(QString id);
+    static ToxID fromString(QString id);
+    static bool isToxId(const QString& id);
 
     bool operator==(const ToxID& other) const;
     bool operator!=(const ToxID& other) const;

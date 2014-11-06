@@ -47,7 +47,7 @@ QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 
 Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
-    tox(nullptr), camera(cam), loadPath(loadPath)
+    tox(nullptr), camera(cam), loadPath(loadPath), ready{false}
 {
     qDebug() << "Core: loading Tox from" << loadPath;
 
@@ -297,6 +297,8 @@ void Core::start()
     else
         qDebug() << "Core: Error loading self avatar";
     
+    ready = true;
+
     process(); // starts its own timer
 }
 
@@ -1353,8 +1355,9 @@ void Core::switchConfiguration(const QString& profile)
     saveConfiguration();
     clearPassword(ptMain);
     clearPassword(ptHistory);
+
+    ready = false;
     toxTimer->stop();
-    
     Widget::getInstance()->setEnabledThreadsafe(false);
     if (tox) {
         toxav_kill(toxav);
@@ -1746,4 +1749,9 @@ QString Core::getPeerName(const ToxID& id) const
     name = name.fromLocal8Bit((char*)cname, nameSize);
     delete[] cname;
     return name;
+}
+
+bool Core::isReady()
+{
+    return ready;
 }
