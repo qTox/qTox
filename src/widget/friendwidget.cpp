@@ -26,6 +26,7 @@
 #include "croppinglabel.h"
 #include "src/misc/style.h"
 #include "src/misc/settings.h"
+#include "src/widget/widget.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QDrag>
@@ -234,5 +235,8 @@ void FriendWidget::setFriendAlias()
         Settings::getInstance().setFriendAlias(f->getToxID(), alias);
         hide();
         show();
+
+        if (f->getFriendWidget()->isActive())
+            Widget::getInstance()->setWindowTitle(f->getFriendWidget()->getName() + " - qTox");
     }
 }
