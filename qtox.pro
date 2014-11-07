@@ -37,17 +37,8 @@ FORMS    += \
     
 CONFIG   += c++11
 
-TRANSLATIONS = translations/de.ts \
-               translations/fr.ts \
-               translations/it.ts \
-               translations/ru.ts \
-               translations/pirate.ts \
-               translations/pl.ts \
-               translations/fi.ts \
-               translations/mannol.ts \
-               translations/uk.ts \
-               translations/sv.ts \
-               translations/bg.ts
+# Rules for creating/updating {ts|qm}-files
+include(translations/i18n.pri)
 
 RESOURCES += res.qrc
 
