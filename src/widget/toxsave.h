@@ -14,29 +14,16 @@
     See the COPYING file for more details.
 */
 
+#ifndef TOXSAVE_H
+#define TOXSAVE_H
 
-#ifndef TOXURI_H
-#define TOXURI_H
+class QString;
+class QByteArray;
 
-#include <QDialog>
-
-/// Shows a dialog asking whether or not to add this tox address as a friend
 /// Will wait until the core is ready first
-void handleToxURI(const QString& toxURI);
+void handleToxSave(const QString& path);
 
 // Internals
-class QByteArray;
-class QPlainTextEdit;
-void toxURIEventHandler(const QByteArray& eventData);
-class ToxURIDialog : public QDialog
-{
-    Q_OBJECT
-public:
-    explicit ToxURIDialog(QWidget *parent, const QString &userId, const QString &message);
-    QString getRequestMessage();
+void toxSaveEventHandler(const QByteArray& eventData);
 
-private:
-    QPlainTextEdit *messageEdit;
-};
-
-#endif // TOXURI_H
+#endif
