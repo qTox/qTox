@@ -227,6 +227,9 @@ void FriendWidget::setFriendAlias()
 
     if (ok)
     {
+        alias = alias.trimmed();
+        alias.remove(QRegExp("[\t\n\v\f\r]"));
+        alias = alias.left(128); // same as TOX_MAX_NAME_LENGTH
         f->setAlias(alias);
         Settings::getInstance().setFriendAlias(f->getToxID(), alias);
         hide();
