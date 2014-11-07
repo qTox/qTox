@@ -26,6 +26,7 @@
 #include "croppinglabel.h"
 #include "src/misc/style.h"
 #include "src/misc/settings.h"
+#include "src/widget/widget.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QDrag>
@@ -34,6 +35,7 @@
 #include <QBitmap>
 #include <QFileDialog>
 #include <QDebug>
+#include <QInputDialog>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
@@ -63,6 +65,8 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
     
+    QAction* setAlias = menu.addAction(tr("Set alias..."));
+
     menu.addSeparator();
     QAction* autoAccept = menu.addAction(tr("Auto accept files from this friend", "context menu entry"));
     autoAccept->setCheckable(true);
@@ -78,6 +82,9 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         {
             emit copyFriendIdToClipboard(friendId);
             return;
+        } else if (selectedItem == setAlias)
+        {
+            setFriendAlias();
         }
         else if (selectedItem == removeFriendAction)
         {
@@ -132,36 +139,36 @@ void FriendWidget::setAsInactiveChatroom()
 void FriendWidget::updateStatusLight()
 {
     Friend* f = FriendList::findFriend(friendId);
-    Status status = f->friendStatus;
+    Status status = f->getStatus();
 
-    if (status == Status::Online && f->hasNewEvents == 0)
+    if (status == Status::Online && f->getEventFlag() == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-    else if (status == Status::Online && f->hasNewEvents == 1)
+    else if (status == Status::Online && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-    else if (status == Status::Away && f->hasNewEvents == 0)
+    else if (status == Status::Away && f->getEventFlag() == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
-    else if (status == Status::Away && f->hasNewEvents == 1)
+    else if (status == Status::Away && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
-    else if (status == Status::Busy && f->hasNewEvents == 0)
+    else if (status == Status::Busy && f->getEventFlag() == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
-    else if (status == Status::Busy && f->hasNewEvents == 1)
+    else if (status == Status::Busy && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
-    else if (status == Status::Offline && f->hasNewEvents == 0)
+    else if (status == Status::Offline && f->getEventFlag() == 0)
         statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
-    else if (status == Status::Offline && f->hasNewEvents == 1)
+    else if (status == Status::Offline && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.png"));
 }
 
 void FriendWidget::setChatForm(Ui::MainWindow &ui)
 {
     Friend* f = FriendList::findFriend(friendId);
-    f->chatForm->show(ui);
+    f->getChatForm()->show(ui);
 }
 
 void FriendWidget::resetEventFlags()
 {
     Friend* f = FriendList::findFriend(friendId);
-    f->hasNewEvents = 0;
+    f->setEventFlag(false);
 }
 
 void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
@@ -208,5 +215,28 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
         drag->setPixmap(avatar->getPixmap());
 
         drag->exec(Qt::CopyAction | Qt::MoveAction);
+    }
+}
+
+void FriendWidget::setFriendAlias()
+{
+    bool ok;
+    Friend* f = FriendList::findFriend(friendId);
+
+    QString alias = QInputDialog::getText(nullptr, tr("User alias"), tr("Alias:"), QLineEdit::Normal,
+                                          f->getDisplayedName(), &ok);
+
+    if (ok)
+    {
+        alias = alias.trimmed();
+        alias.remove(QRegExp("[\t\n\v\f\r]"));
+        alias = alias.left(128); // same as TOX_MAX_NAME_LENGTH
+        f->setAlias(alias);
+        Settings::getInstance().setFriendAlias(f->getToxID(), alias);
+        hide();
+        show();
+
+        if (f->getFriendWidget()->isActive())
+            Widget::getInstance()->setWindowTitle(f->getFriendWidget()->getName() + " - qTox");
     }
 }
