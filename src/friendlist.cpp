@@ -18,35 +18,65 @@
 #include "friendlist.h"
 #include <QMenu>
 #include <QDebug>
+#include <QHash>
 
-QList<Friend*> FriendList::friendList;
+QHash<int, Friend*> FriendList::friendList;
+QHash<QString, int> FriendList::tox2id;
 
 Friend* FriendList::addFriend(int friendId, const QString& userId)
 {
-    for (Friend* f : friendList)
-        if (f->getFriendID() == friendId)
-            qWarning() << "FriendList::addFriend: friendId already taken";
+    auto friendChecker = friendList.find(friendId);
+    if (friendChecker != friendList.end())
+        qWarning() << "FriendList::addFriend: friendId already taken";
+
     Friend* newfriend = new Friend(friendId, userId);
-    friendList.append(newfriend);
+    friendList[friendId] = newfriend;
+    tox2id[userId] = friendId;
+
     return newfriend;
 }
 
 Friend* FriendList::findFriend(int friendId)
 {
-    for (Friend* f : friendList)
-        if (f->getFriendID() == friendId)
-            return f;
+    auto f_it = friendList.find(friendId);
+    if (f_it != friendList.end())
+        return *f_it;
+
     return nullptr;
 }
 
 void FriendList::removeFriend(int friendId)
 {
-    for (int i=0; i<friendList.size(); i++)
+    auto f_it = friendList.find(friendId);
+    if (f_it != friendList.end())
+        friendList.erase(f_it);
+}
+
+void FriendList::clear()
+{
+    for (auto friendptr : friendList)
+        delete friendptr;
+}
+
+Friend* FriendList::findFriend(QString userId)
+{
+    auto id = tox2id.find(userId);
+    if (id != tox2id.end())
     {
-        if (friendList[i]->getFriendID() == friendId)
-        {
-            friendList.removeAt(i);
-            return;
-        }
+        Friend *f = findFriend(*id);
+        if (f->getToxID() == ToxID::fromString(userId))
+            return f;
     }
+
+    return nullptr;
+}
+
+QList<Friend*> FriendList::getAllFriends()
+{
+    QList<Friend*> res;
+
+    for (auto it : friendList)
+        res.append(it);
+
+    return res;
 }

@@ -18,6 +18,7 @@
 #define FRIENDLIST_H
 
 template <class T> class QList;
+template <class A, class B> class QHash;
 struct Friend;
 class QString;
 
@@ -27,10 +28,14 @@ public:
     FriendList();
     static Friend* addFriend(int friendId, const QString& userId);
     static Friend* findFriend(int friendId);
+    static Friend* findFriend(QString userId);
+    static QList<Friend*> getAllFriends();
     static void removeFriend(int friendId);
+    static void clear();
 
-public:
-    static QList<Friend*> friendList;
+private:
+    static QHash<int, Friend*> friendList;
+    static QHash<QString, int> tox2id;
 };
 
 #endif // FRIENDLIST_H

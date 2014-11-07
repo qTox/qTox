@@ -276,9 +276,7 @@ Widget::~Widget()
     delete addFriendForm;
     delete filesForm;
 
-    for (Friend* f : FriendList::friendList)
-        delete f;
-    FriendList::friendList.clear();
+    FriendList::clear();
     for (Group* g : GroupList::groupList)
         delete g;
     GroupList::groupList.clear();
@@ -604,6 +602,9 @@ void Widget::addFriend(int friendId, const QString &userId)
     Friend* newfriend = FriendList::addFriend(friendId, userId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->getFriendWidget());
+
+    newfriend->setAlias("");
+
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -820,7 +821,8 @@ void Widget::removeFriend(int friendId)
 
 void Widget::clearContactsList()
 {
-    for (Friend* f : FriendList::friendList)
+    QList<Friend*> friends = FriendList::getAllFriends();
+    for (Friend* f : friends)
         removeFriend(f);
     for (Group* g : GroupList::groupList)
         removeGroup(g);

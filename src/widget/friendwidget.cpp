@@ -42,6 +42,10 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
     statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     nameLabel->setText(id);
+    nameLabel->setAttribute(Qt::WA_NoMousePropagation);
+    nameLabel->setEditable(true);
+
+    connect(nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onFriendAliasChange(QString,QString)));
 }
 
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -209,4 +213,10 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
 
         drag->exec(Qt::CopyAction | Qt::MoveAction);
     }
+}
+
+void FriendWidget::onFriendAliasChange(QString newText, QString)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    f->setAlias(newText);
 }
