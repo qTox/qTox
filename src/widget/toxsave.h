@@ -20,7 +20,6 @@
 class QString;
 class QByteArray;
 
-/// Shows a dialog asking whether or not to add this tox address as a friend
 /// Will wait until the core is ready first
 void handleToxSave(const QString& path);
 
