@@ -275,6 +275,13 @@ Section "Install"
 	# Write setup info into the registry
 	${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "Install Directory" "$INSTDIR"
 	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "UninstallString" "$INSTDIR\uninstall.exe"
+
+	# Register the tox: protocol
+	${WriteRegStr} HKCR "tox" "" "URL:tox Protocol"
+	${WriteRegStr} HKCR "tox" "URL Protocol" ""
+	${WriteRegStr} HKCR "tox\shell" "" ""
+	${WriteRegStr} HKCR "tox\shell\open" "" ""
+	${WriteRegStr} HKCR "tox\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE}"
 SectionEnd
 
 
