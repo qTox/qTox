@@ -10,8 +10,8 @@
 !define INSTALLER_NAME "setup-qtox.exe"
 !define MAIN_APP_EXE "bin\qtox.exe"
 !define INSTALL_TYPE "SetShellVarContext current"
-!define REG_ROOT "HKLM"
-!define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\${MAIN_APP_EXE}"
+!define REG_ROOT "HKCU"
+!define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\qtox.exe"
 !define UNINSTALL_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 !define REG_START_MENU "Start Menu Folder"
 var SM_Folder
@@ -271,17 +271,23 @@ Section "Install"
 	${CreateDirectory} "$SMPROGRAMS\qTox"
 	${CreateShortCut} "$SMPROGRAMS\qTox\qTox.lnk" "$INSTDIR\${MAIN_APP_EXE}" "" "" ""
 	${CreateShortCut} "$SMPROGRAMS\qTox\Uninstall qTox.lnk" "$INSTDIR\uninstall.exe" "" "" ""
-	
-	# Write setup info into the registry
-	${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "Install Directory" "$INSTDIR"
+
+	# Write setup/app info into the registry
+	${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "" "$INSTDIR\${MAIN_APP_EXE}"
+	${WriteRegStr} "${REG_ROOT}" "${REG_APP_PATH}" "Path" "$INSTDIR\bin\"
 	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "UninstallString" "$INSTDIR\uninstall.exe"
 
 	# Register the tox: protocol
 	${WriteRegStr} HKCR "tox" "" "URL:tox Protocol"
 	${WriteRegStr} HKCR "tox" "URL Protocol" ""
-	${WriteRegStr} HKCR "tox\shell" "" ""
-	${WriteRegStr} HKCR "tox\shell\open" "" ""
 	${WriteRegStr} HKCR "tox\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE}"
+
+	# Register the .tox file associations
+	${WriteRegStr} "HKCR" "Applications\qtox.exe\SupportedTypes" ".tox" ""
+	${WriteRegStr} HKCR ".tox" "" "toxsave"
+	${WriteRegStr} HKCR "toxsave" "" "Tox save file"
+	${WriteRegStr} HKCR "toxsave\DefaultIcon" "" "$INSTDIR\${MAIN_APP_EXE}"
+	${WriteRegStr} HKCR "toxsave\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE} %1"
 SectionEnd
 
 
@@ -340,6 +346,10 @@ Section Uninstall
   Pop $R0
  
   ;Remove registry keys
-    ;DeleteRegKey ${REG_ROOT} "${REG_APP_PATH}"
-    ;DeleteRegKey ${REG_ROOT} "${UNINSTALL_PATH}"
+    DeleteRegKey ${REG_ROOT} "${REG_APP_PATH}"
+    DeleteRegKey ${REG_ROOT} "${UNINSTALL_PATH}"
+    DeleteRegKey HKCR "Applications\qtox.exe"
+	DeleteRegKey HKCR ".tox"
+    DeleteRegKey HKCR "tox"
+    DeleteRegKey HKCR "toxsave"
 SectionEnd
