@@ -98,7 +98,7 @@ void ChatForm::onSendTriggered()
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    HistoryKeeper::getInstance()->addChatEntry(f->getToxID().toString(), msg, Core::getInstance()->getSelfId().publicKey, timestamp);
+    HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, msg, Core::getInstance()->getSelfId().publicKey, timestamp);
 
     if (msg.startsWith("/me "))
     {
@@ -711,7 +711,7 @@ void ChatForm::onLoadHistory()
             }
         }
 
-        auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->getToxID().toString(), fromTime, toTime);
+        auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->getToxID().publicKey, fromTime, toTime);
 
         ToxID storedPrevId;
         std::swap(storedPrevId, previousId);

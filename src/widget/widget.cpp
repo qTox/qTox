@@ -729,9 +729,9 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp);
 
     if (isAction)
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().toString(), "/me " + message, f->getToxID().toString(), timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp);
     else
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().toString(), message, f->getToxID().toString(), timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, message, f->getToxID().publicKey, timestamp);
 
     if (activeChatroomWidget != nullptr)
     {
