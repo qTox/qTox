@@ -24,10 +24,12 @@
 #include <QFile>
 #include <QDir>
 #include <QDateTime>
+#include <QMutexLocker>
 
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
 static QTextStream* logFile {nullptr};
+static QMutex mutex;
 
 void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
 {
@@ -39,7 +41,8 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QStr
             && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
-    dflt(type, ctxt, msg);
+    dflt(type, ctxt, msg); // this must be thread safe, otherwise qDebug() would never ever work
+    QMutexLocker locker(&mutex);
     *logFile << QTime::currentTime().toString("HH:mm:ss' '") << msg << '\n';
     logFile->flush();
 }
