@@ -6,3 +6,4 @@ ui_*
 qrc_*
 Makefile
 qtox
+*.qm
