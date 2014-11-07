@@ -92,12 +92,16 @@ void Settings::load()
             useCustomDhtList=false;
     s.endGroup();
 
-    friendAddresses.clear();
+    friendLst.clear();
     s.beginGroup("Friends");
         int size = s.beginReadArray("fullAddresses");
-        for (int i = 0; i < size; i ++) {
+        for (int i = 0; i < size; i ++)
+        {
             s.setArrayIndex(i);
-            friendAddresses.append(s.value("addr").toString());
+            friendProp fp;
+            fp.addr = s.value("addr").toString();
+            fp.alias = s.value("alias").toString();
+            friendLst[ToxID::fromString(fp.addr).publicKey] = fp;
         }
         s.endArray();
     s.endGroup();
@@ -219,10 +223,14 @@ void Settings::save(QString path)
     s.endGroup();
 
     s.beginGroup("Friends");
-        s.beginWriteArray("fullAddresses", friendAddresses.size());
-        for (int i = 0; i < friendAddresses.size(); i ++) {
-            s.setArrayIndex(i);
-            s.setValue("addr", friendAddresses[i]);
+        s.beginWriteArray("fullAddresses", friendLst.size());
+        int index = 0;
+        for (auto &frnd : friendLst)
+        {
+            s.setArrayIndex(index);
+            s.setValue("addr", frnd.addr);
+            s.setValue("alias", frnd.alias);
+            index++;
         }
         s.endArray();
     s.endGroup();
@@ -759,4 +767,53 @@ QString Settings::getOutDev() const
 void Settings::setOutDev(const QString& deviceSpecifier)
 {
     outDev = deviceSpecifier;
+}
+
+QString Settings::getFriendAdress(const QString &publicKey) const
+{
+    QString key = ToxID::fromString(publicKey).publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+    {
+        return it->addr;
+    }
+
+    return QString();
+}
+
+void Settings::updateFriendAdress(const QString &newAddr)
+{
+    QString key = ToxID::fromString(newAddr).publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+    {
+        it->addr = newAddr;
+    } else {
+        friendProp fp;
+        fp.addr = newAddr;
+        fp.alias = "";
+        friendLst[newAddr] = fp;
+    }
+}
+
+QString Settings::getFriendAlias(const ToxID &id) const
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+    {
+        return it->alias;
+    }
+
+    return QString();
+}
+
+void Settings::setFriendAlias(const ToxID &id, const QString &alias)
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+    {
+        it->alias = alias;
+    }
 }

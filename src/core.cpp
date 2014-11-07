@@ -722,18 +722,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
         emit failedToAddFriend(userId);
     } else {
         // Update our friendAddresses
-        bool found=false;
-        QList<QString>& friendAddresses = Settings::getInstance().friendAddresses;
-        for (QString& addr : friendAddresses)
-        {
-            if (addr.toUpper().contains(friendAddress))
-            {
-                addr = friendAddress;
-                found = true;
-            }
-        }
-        if (!found)
-            friendAddresses.append(friendAddress);
+        Settings::getInstance().updateFriendAdress(friendAddress);
         emit friendAdded(friendId, userId);
     }
     saveConfiguration();
@@ -1612,10 +1601,9 @@ QString Core::getFriendAddress(int friendNumber) const
     QByteArray data((char*)rawid,TOX_CLIENT_ID_SIZE);
     QString id = data.toHex().toUpper();
 
-    QList<QString>& friendAddresses = Settings::getInstance().friendAddresses;
-    for (QString addr : friendAddresses)
-        if (addr.toUpper().contains(id))
-            return addr;
+    QString addr = Settings::getInstance().getFriendAdress(id);
+    if (addr.size() > id.size())
+        return addr;
 
     return id;
 }

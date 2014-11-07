@@ -603,7 +603,8 @@ void Widget::addFriend(int friendId, const QString &userId)
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->getFriendWidget());
 
-    newfriend->setAlias("");
+    QString alias = Settings::getInstance().getFriendAlias(ToxID::fromString(userId));
+    newfriend->setAlias(alias);
 
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));

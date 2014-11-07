@@ -21,6 +21,8 @@
 #include <QObject>
 #include <QPixmap>
 
+class ToxID;
+
 class Settings : public QObject
 {
     Q_OBJECT
@@ -185,8 +187,13 @@ public:
     QByteArray getSplitterState() const;
     void setSplitterState(const QByteArray &value);
 
+    QString getFriendAdress(const QString &publicKey) const;
+    void updateFriendAdress(const QString &newAddr);
+
+    QString getFriendAlias(const ToxID &id) const;
+    void setFriendAlias(const ToxID &id, const QString &alias);
+
 public:
-    QList<QString> friendAddresses;
     void save();
     void save(QString path);
     void load();
@@ -257,6 +264,14 @@ private:
     // Audio
     QString inDev;
     QString outDev;
+
+    struct friendProp
+    {
+        QString alias;
+        QString addr;
+    };
+
+    QHash<QString, friendProp> friendLst;
 
 signals:
     //void dataChanged();

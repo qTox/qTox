@@ -34,6 +34,7 @@
 #include <QBitmap>
 #include <QFileDialog>
 #include <QDebug>
+#include <QInputDialog>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
@@ -42,10 +43,6 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
     statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     nameLabel->setText(id);
-    nameLabel->setAttribute(Qt::WA_NoMousePropagation);
-    nameLabel->setEditable(true);
-
-    connect(nameLabel, SIGNAL(textChanged(QString,QString)), this, SLOT(onFriendAliasChange(QString,QString)));
 }
 
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -67,6 +64,8 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
     
+    QAction* setAlias = menu.addAction(tr("Set alias..."));
+
     menu.addSeparator();
     QAction* autoAccept = menu.addAction(tr("Auto accept files from this friend", "context menu entry"));
     autoAccept->setCheckable(true);
@@ -82,6 +81,9 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         {
             emit copyFriendIdToClipboard(friendId);
             return;
+        } else if (selectedItem == setAlias)
+        {
+            setFriendAlias();
         }
         else if (selectedItem == removeFriendAction)
         {
@@ -215,8 +217,19 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
     }
 }
 
-void FriendWidget::onFriendAliasChange(QString newText, QString)
+void FriendWidget::setFriendAlias()
 {
+    bool ok;
     Friend* f = FriendList::findFriend(friendId);
-    f->setAlias(newText);
+
+    QString alias = QInputDialog::getText(nullptr, tr("User alias"), tr("Alias:"), QLineEdit::Normal,
+                                          f->getDisplayedName(), &ok);
+
+    if (ok)
+    {
+        f->setAlias(alias);
+        Settings::getInstance().setFriendAlias(f->getToxID(), alias);
+        hide();
+        show();
+    }
 }

@@ -45,12 +45,10 @@ public slots:
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
 
-private slots:
-    void onFriendAliasChange(QString newText, QString oldText);
-
 protected:
     void mousePressEvent(QMouseEvent* ev);
     void mouseMoveEvent(QMouseEvent* ev);
+    void setFriendAlias();
 
 public:
     int friendId;
