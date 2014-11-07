@@ -42,8 +42,8 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QStr
             && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
-    dflt(type, ctxt, msg); // this must be thread safe, otherwise qDebug() would never ever work
     QMutexLocker locker(&mutex);
+    dflt(type, ctxt, msg);
     *logFile << QTime::currentTime().toString("HH:mm:ss' '") << msg << '\n';
     logFile->flush();
 }
