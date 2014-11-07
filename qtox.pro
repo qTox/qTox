@@ -152,7 +152,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/misc/flowlayout.h \
     src/ipc.h \
     src/widget/toxuri.h \
-    src/toxdns.h
+    src/toxdns.h \
+    src/widget/toxsave.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -214,4 +215,5 @@ SOURCES += \
     src/misc/flowlayout.cpp \
     src/widget/toxuri.cpp \
     src/toxdns.cpp \
-    src/ipc.cpp
+    src/ipc.cpp \
+    src/widget/toxsave.cpp    

@@ -201,11 +201,12 @@ void IdentityForm::onImportClicked()
         return;
     }
 
-    if (info.exists() && !checkContinue(tr("Profile already exists", "import confirm title"),
+    QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
+
+    if (QFileInfo(profilePath).exists() && !checkContinue(tr("Profile already exists", "import confirm title"),
             tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
         return;
 
-    QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
     QFile::copy(path, profilePath);
     bodyUI->profiles->addItem(profile);
 }
