@@ -27,6 +27,7 @@ Friend::Friend(int FriendId, QString UserId)
     hasNewEvents = 0;
     friendStatus = Status::Offline;
     userID = ToxID::fromString(UserId);
+    userName = UserId;
 }
 
 Friend::~Friend()
