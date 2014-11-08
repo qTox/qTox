@@ -7,6 +7,6 @@ Comment=qTox is a powerful Tox client that follows the Tox design guidelines.
 TryExec=qtox
 Exec=qtox %u
 Icon=qtox
-Categories=InstantMessaging;;AudioVideo;Network;
+Categories=InstantMessaging;AudioVideo;Network;
 Terminal=false
 MimeType=x-scheme-handler/tox;application/x-tox;
