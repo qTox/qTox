@@ -37,3 +37,6 @@ updateqm.output = ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
 updateqm.commands = $$QMAKE_LRELEASE ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
 updateqm.CONFIG += no_link  no_clean target_predeps
 QMAKE_EXTRA_COMPILERS += updateqm
+
+# Release all the .ts files at once
+updateallqm = $$QMAKE_LRELEASE -silent $$TRANSLATIONS

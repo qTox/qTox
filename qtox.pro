@@ -39,6 +39,8 @@ CONFIG   += c++11
 
 # Rules for creating/updating {ts|qm}-files
 include(translations/i18n.pri)
+# Build all the qm files now, to make RCC happy
+system($$fromfile(translations/i18n.pri, updateallqm))
 
 RESOURCES += res.qrc
 
