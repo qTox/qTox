@@ -32,10 +32,11 @@ public:
     static bool check(const QString &fname);
 
 private:
-    bool pullFileContent();
+    bool pullFileContent(const QString& fname, QByteArray &buf);
     void appendToEncrypted(const QString &sql);
 
     QFile encrFile;
+    QString fileName;
 
     static qint64 plainChunkSize;
     static qint64 encryptedChunkSize;

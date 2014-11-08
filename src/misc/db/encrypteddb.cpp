@@ -28,24 +28,32 @@ qint64 EncryptedDb::plainChunkSize = 4096;
 qint64 EncryptedDb::encryptedChunkSize = EncryptedDb::plainChunkSize + tox_pass_encryption_extra_length();
 
 EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
-    PlainDb(":memory:", initList), encrFile(fname)
+    PlainDb(":memory:", initList), fileName(fname)
 {
     QByteArray fileContent;
-    if (pullFileContent())
+    if (pullFileContent(fileName, buffer))
     {
         chunkPosition = encrFile.size() / encryptedChunkSize;
 
-        encrFile.seek(0);
+        qDebug() << "writing old data";
+        encrFile.setFileName(fileName);
+        encrFile.open(QIODevice::ReadOnly);
         fileContent = encrFile.readAll();
+        encrFile.close();
     } else {
         qWarning() << "corrupted history log file will be wiped!";
         chunkPosition = 0;
     }
 
-    encrFile.close();
-    encrFile.open(QIODevice::WriteOnly);
-    encrFile.write(fileContent);
-    encrFile.flush();
+    encrFile.setFileName(fileName);
+
+    if (!encrFile.open(QIODevice::WriteOnly))
+    {
+        qWarning() << "can't open file:" << fileName;
+    } else {
+        encrFile.write(fileContent);
+        encrFile.flush();
+    }
 }
 
 EncryptedDb::~EncryptedDb()
@@ -63,23 +71,25 @@ QSqlQuery EncryptedDb::exec(const QString &query)
     return retQSqlQuery;
 }
 
-bool EncryptedDb::pullFileContent()
+bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
 {
     qDebug() << "EncryptedDb::pullFileContent()";
-    encrFile.open(QIODevice::ReadOnly);
+
+    QFile dbFile(fname);
+    dbFile.open(QIODevice::ReadOnly);
     QByteArray fileContent;
 
-    while (!encrFile.atEnd())
+    while (!dbFile.atEnd())
     {
-        QByteArray encrChunk = encrFile.read(encryptedChunkSize);
+        QByteArray encrChunk = dbFile.read(encryptedChunkSize);
         qDebug() << "got chunk:" << encrChunk.size();
-        buffer = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
-        if (buffer.size() > 0)
+        buf = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
+        if (buf.size() > 0)
         {
-            fileContent += buffer;
+            fileContent += buf;
         } else {
             qWarning() << "Encrypted history log is corrupted: can't decrypt";
-            buffer = QByteArray();
+            buf = QByteArray();
             return false;
         }
     }
@@ -106,7 +116,7 @@ bool EncryptedDb::pullFileContent()
         if (!isGoodLine)
         {
             qWarning() << "Encrypted history log is corrupted: errors in content";
-            buffer = QByteArray();
+            buf = QByteArray();
             return false;
         }
     }
@@ -115,6 +125,8 @@ bool EncryptedDb::pullFileContent()
     {
         QSqlQuery r = PlainDb::exec(line);
     }
+
+    dbFile.close();
 
     return true;
 }

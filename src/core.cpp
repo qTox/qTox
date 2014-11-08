@@ -1811,7 +1811,8 @@ QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
         return QByteArray();
     int sz = data.size() - tox_pass_encryption_extra_length();
     uint8_t decrypted[sz];
-    if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], decrypted) != sz)
+    int decr_size = tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], decrypted);
+    if (decr_size != sz)
     {
         qWarning() << "Core::decryptData: decryption failed";
         return QByteArray();
@@ -1907,5 +1908,7 @@ QByteArray Core::getSaltFromFile(QString filename)
         return QByteArray();
     }
 
-    return QByteArray::fromRawData(reinterpret_cast<const char*>(salt), tox_pass_salt_length());
+    QByteArray res = QByteArray::fromRawData(reinterpret_cast<const char*>(salt), tox_pass_salt_length());
+    qDebug() << res.toBase64();
+    return res;
 }
