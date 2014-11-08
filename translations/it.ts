@@ -197,90 +197,90 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <translation>qTox User</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1151"/>
+        <location filename="../src/core.cpp" line="1140"/>
         <source>Encryption error</source>
         <translation>Errore crittografia</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1151"/>
+        <location filename="../src/core.cpp" line="1140"/>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
         <translation>Il Tox datafile è criptato, ma la crittografia non è abilitata nelle impostazioni.
 Continuo ignorando le impostazioni.</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1158"/>
+        <location filename="../src/core.cpp" line="1147"/>
         <source>Tox datafile decryption password</source>
         <translation>Password per decriptare il Tox datafile</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1160"/>
-        <location filename="../src/core.cpp" line="1172"/>
-        <location filename="../src/core.cpp" line="1237"/>
+        <location filename="../src/core.cpp" line="1149"/>
+        <location filename="../src/core.cpp" line="1161"/>
+        <location filename="../src/core.cpp" line="1226"/>
         <source>Password error</source>
         <translation>Errore password</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1160"/>
-        <location filename="../src/core.cpp" line="1237"/>
+        <location filename="../src/core.cpp" line="1149"/>
+        <location filename="../src/core.cpp" line="1226"/>
         <source>Failed to setup password.
 Empty password.</source>
         <translation>Impossibile impostare la password.
 Password vuota.</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1168"/>
+        <location filename="../src/core.cpp" line="1157"/>
         <source>Try Again</source>
         <translation>Riprova</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1169"/>
+        <location filename="../src/core.cpp" line="1158"/>
         <source>Change profile</source>
         <translation>Cambia profilo</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1170"/>
+        <location filename="../src/core.cpp" line="1159"/>
         <source>Reinit current profile</source>
         <translation>Reinizializza il profilo corrente</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1173"/>
+        <location filename="../src/core.cpp" line="1162"/>
         <source>Wrong password has been entered</source>
         <translation>È stata inserita una password sbagliata</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1235"/>
+        <location filename="../src/core.cpp" line="1224"/>
         <source>History Log decryption password</source>
         <translation>Password per decriptare i log</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1242"/>
+        <location filename="../src/core.cpp" line="1231"/>
         <source>Encrypted log</source>
         <translation>Log criptato</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1243"/>
+        <location filename="../src/core.cpp" line="1232"/>
         <source>Your history is encrypted with different password
 Do you want to try another password?</source>
         <translation>I log sono criptati con una password diversa.
 Vuoi provare un&apos;altra password?</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1253"/>
+        <location filename="../src/core.cpp" line="1242"/>
         <source>Loggin</source>
         <translation>Logging</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1253"/>
+        <location filename="../src/core.cpp" line="1242"/>
         <source>Due to incorret password logging will be disabled</source>
         <translation>I log saranno disabilitati a causa di una password incorretta</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1326"/>
+        <location filename="../src/core.cpp" line="1315"/>
         <source>NO Password</source>
         <translation>Nessuna password</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1326"/>
+        <location filename="../src/core.cpp" line="1315"/>
         <source>Will be saved without encryption!</source>
         <translation>Il Tox datafile sarà salvato senza password!</translation>
     </message>
@@ -369,34 +369,49 @@ Vuoi provare un&apos;altra password?</translation>
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="54"/>
+        <location filename="../src/widget/friendwidget.cpp" line="56"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Copia Tox ID del contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="67"/>
+        <location filename="../src/widget/friendwidget.cpp" line="71"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>Accetta automaticamente i files inviati da questo contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="53"/>
+        <location filename="../src/widget/friendwidget.cpp" line="55"/>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
         <translation>Invita nel gruppo</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="72"/>
+        <location filename="../src/widget/friendwidget.cpp" line="68"/>
+        <source>Set alias...</source>
+        <translation>Imposta soprannome...</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="76"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Rimuovi contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="102"/>
+        <location filename="../src/widget/friendwidget.cpp" line="109"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Scegli dove salvare i files accettati automaticamente</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="226"/>
+        <source>User alias</source>
+        <translation>Rinomina contatto</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="226"/>
+        <source>Alias:</source>
+        <translation>Soprannome:</translation>
     </message>
 </context>
 <context>
@@ -601,53 +616,53 @@ Vuoi provare un&apos;altra password?</translation>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="58"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="60"/>
         <source>Send message</source>
         <translation>Invia messaggio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="60"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="62"/>
         <source>Smileys</source>
         <translation>Emoticons</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="64"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="66"/>
         <source>Send file(s)</source>
         <translation>Invia file(s)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="67"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="69"/>
         <source>Audio call</source>
         <translation>Chiamata audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="70"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="72"/>
         <source>Video call</source>
         <translation>Videochiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="73"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="75"/>
         <source>Toggle speakers volume</source>
         <translation>Cambia il volume degli altoparlanti</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="76"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="78"/>
         <source>Toggle microphone</source>
         <translation>Attiva/Disattiva microfono</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="140"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="180"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="142"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="182"/>
         <source>Save chat log</source>
         <translation>Salva il log della chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="141"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="143"/>
         <source>Clear displayed messages</source>
         <translation>Rimuovi messaggi visualizzati</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="287"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="289"/>
         <source>Cleared</source>
         <translation>Pulito</translation>
     </message>
@@ -785,13 +800,13 @@ Vuoi provare un&apos;altra password?</translation>
         <translation>Attenzione: hai scelto un file che non contiente un profilo Tox.\nQuesto file verrà ignorato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="204"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="206"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
         <translation>Profilo già esistente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="205"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="207"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
@@ -1007,10 +1022,44 @@ Vuoi eliminare il vecchio file?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="53"/>
+        <location filename="../src/widget/toxuri.cpp" line="70"/>
         <source>Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Permettimi di aggiungerti alla mia lista contatti</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/toxsave.cpp" line="63"/>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation>File ignorato</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/toxsave.cpp" line="64"/>
+        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation>Attenzione: hai scelto un file che non contiente un profilo Tox.\nQuesto file verrà ignorato.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/toxsave.cpp" line="70"/>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation>Profilo già esistente</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/toxsave.cpp" line="71"/>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/toxsave.cpp" line="77"/>
+        <source>Profile imported</source>
+        <translation>Profilo importato</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/toxsave.cpp" line="77"/>
+        <source>%1.tox was successfully imported</source>
+        <translation>%1.tox è stato importato con successo</translation>
     </message>
 </context>
 <context>
@@ -1029,50 +1078,50 @@ Vuoi eliminare il vecchio file?</translation>
 <context>
     <name>ToxDNS</name>
     <message>
-        <location filename="../src/toxdns.cpp" line="47"/>
+        <location filename="../src/toxdns.cpp" line="64"/>
         <source>The connection timed out</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Connessione scaduta</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="53"/>
+        <location filename="../src/toxdns.cpp" line="70"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Questo nickname non esiste</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="58"/>
+        <location filename="../src/toxdns.cpp" line="75"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Errore nel consultare il server DNS</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="65"/>
+        <location filename="../src/toxdns.cpp" line="82"/>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
         <translation>Nessun text record trovato</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="72"/>
+        <location filename="../src/toxdns.cpp" line="89"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Numero inaspettato di valori nel text-record</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="99"/>
+        <location filename="../src/toxdns.cpp" line="116"/>
         <source>The version of Tox DNS used by this server is not supported</source>
         <comment>Error with the DNS</comment>
         <translation>La versione di Tox DNS usata dal server non è supportata</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="109"/>
+        <location filename="../src/toxdns.cpp" line="126"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La risposta del server DNS non contiene nessun Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="116"/>
-        <location filename="../src/toxdns.cpp" line="123"/>
+        <location filename="../src/toxdns.cpp" line="133"/>
+        <location filename="../src/toxdns.cpp" line="140"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La risposta del server DNS non contiene un Tox ID valido</translation>
@@ -1081,34 +1130,34 @@ Vuoi eliminare il vecchio file?</translation>
 <context>
     <name>ToxURIDialog</name>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="63"/>
+        <location filename="../src/widget/toxuri.cpp" line="80"/>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
         <translation>Aggiungi un contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="65"/>
+        <location filename="../src/widget/toxuri.cpp" line="82"/>
         <source>Do you want to add %1 as a friend ?</source>
         <translation>Vuoi aggiungere %1 come contatto?</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="66"/>
+        <location filename="../src/widget/toxuri.cpp" line="83"/>
         <source>User ID:</source>
         <translation>Tox ID del contatto:</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="70"/>
+        <location filename="../src/widget/toxuri.cpp" line="87"/>
         <source>Friend request message:</source>
         <translation>Messaggio da inviare assieme alla richiesta d&apos;amicizia:</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="75"/>
+        <location filename="../src/widget/toxuri.cpp" line="92"/>
         <source>Send</source>
         <comment>Send a friend request</comment>
         <translation>Invia</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="76"/>
+        <location filename="../src/widget/toxuri.cpp" line="93"/>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Annulla</translation>
@@ -1160,107 +1209,107 @@ Vuoi eliminare il vecchio file?</translation>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="388"/>
+        <location filename="../src/widget/widget.cpp" line="386"/>
         <source>Choose a profile</source>
         <translation>Scegli un profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="389"/>
+        <location filename="../src/widget/widget.cpp" line="387"/>
         <source>Please choose which identity to use</source>
         <translation>Per favore scegli quale identità usare</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="415"/>
+        <location filename="../src/widget/widget.cpp" line="413"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="422"/>
-        <location filename="../src/widget/widget.cpp" line="429"/>
-        <location filename="../src/widget/widget.cpp" line="450"/>
+        <location filename="../src/widget/widget.cpp" line="420"/>
+        <location filename="../src/widget/widget.cpp" line="427"/>
+        <location filename="../src/widget/widget.cpp" line="448"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="422"/>
+        <location filename="../src/widget/widget.cpp" line="420"/>
         <source>Unable to open this file</source>
         <translation>Impossibile aprire il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="429"/>
+        <location filename="../src/widget/widget.cpp" line="427"/>
         <source>Unable to read this image</source>
         <translation>Impossibile leggere l&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="450"/>
+        <location filename="../src/widget/widget.cpp" line="448"/>
         <source>This image is too big</source>
         <translation>L&apos;immagine è troppo grande</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="477"/>
+        <location filename="../src/widget/widget.cpp" line="475"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="486"/>
+        <location filename="../src/widget/widget.cpp" line="484"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="520"/>
+        <location filename="../src/widget/widget.cpp" line="518"/>
         <source>Add friend</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="532"/>
+        <location filename="../src/widget/widget.cpp" line="530"/>
         <source>File transfers</source>
         <translation>Files trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="557"/>
+        <location filename="../src/widget/widget.cpp" line="555"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="672"/>
+        <location filename="../src/widget/widget.cpp" line="674"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="674"/>
+        <location filename="../src/widget/widget.cpp" line="676"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="676"/>
+        <location filename="../src/widget/widget.cpp" line="678"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="678"/>
+        <location filename="../src/widget/widget.cpp" line="680"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="680"/>
+        <location filename="../src/widget/widget.cpp" line="682"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="889"/>
+        <location filename="../src/widget/widget.cpp" line="892"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1036"/>
-        <location filename="../src/widget/widget.cpp" line="1047"/>
+        <location filename="../src/widget/widget.cpp" line="1039"/>
+        <location filename="../src/widget/widget.cpp" line="1050"/>
         <source>Message failed to send</source>
         <translation>Impossibile inviare il messaggio</translation>
     </message>
