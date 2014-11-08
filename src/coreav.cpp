@@ -18,6 +18,8 @@
 #include "video/camera.h"
 #include <QDebug>
 #include <QTimer>
+#include <QtConcurrent/QtConcurrent>
+#include <functional>
 
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
@@ -53,11 +55,13 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     // Audio
     alGenSources(1, &calls[callId].alSource);
     alcCaptureStart(alInDev);
+    alSourcei(calls[callId].alSource, AL_LOOPING, AL_FALSE);
 
     // Go
     calls[callId].active = true;
     calls[callId].sendAudioTimer->setInterval(5);
     calls[callId].sendAudioTimer->setSingleShot(true);
+    QtConcurrent::run(std::bind(Core::playCallAudio, callId, toxav));
     connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
     calls[callId].sendAudioTimer->start();
     calls[callId].sendVideoTimer->setInterval(50);
@@ -66,6 +70,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     {
         calls[callId].sendVideoTimer->start();
         Camera::getInstance()->subscribe();
+        QtConcurrent::run(std::bind(Core::playCallVideo, callId, toxav));
     }
 }
 
@@ -199,16 +204,31 @@ void Core::cleanupCall(int callId)
     alcCaptureStop(alInDev);
 }
 
-void Core::playCallAudio(ToxAv* toxav, int32_t callId, int16_t *data, int samples, void *user_data)
+void Core::playCallAudio(int callId, ToxAv *toxav)
 {
-    Q_UNUSED(user_data);
+    qDebug() << "Started audio playback thread";
 
-    if (!calls[callId].active)
-        return;
+    ToxAvCSettings csettings;
+    toxav_get_peer_csettings(toxav, callId, 0, &csettings);
 
-    ToxAvCSettings dest;
-    if(toxav_get_peer_csettings(toxav, callId, 0, &dest) == 0)
-        playAudioBuffer(callId, data, samples, dest.audio_channels, dest.audio_sample_rate);
+    // TODO make this dynamic by (preferably) monitoring peer csettings in the callbacks and changing behaviour
+    // When csettings are changed rather than getting csettings on every packet received.
+
+    uint8_t channels (csettings.audio_channels);
+    uint32_t sampleRate (csettings.audio_sample_rate);
+    uint16_t maxSize ((csettings.audio_sample_rate/ 1000) * csettings.audio_frame_duration * channels);
+
+    int16_t* data (new int16_t [maxSize]);
+    int size;
+
+    // We wait until data is received or error event. When call ends and we are still waiting toxav_recv_audio
+    // returns -1 (Error) so we exit the thread
+    while (calls[callId].active && ((size = toxav_recv_audio(toxav, callId, data, maxSize, -1)) >= 0))
+        playAudioBuffer(callId, data, size, channels, sampleRate);
+
+    delete [] data;
+
+    qDebug() << "Closing audio playback thread";
 }
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
@@ -250,16 +270,22 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     calls[callId].sendAudioTimer->start();
 }
 
-void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_data)
+void Core::playCallVideo(int callId, ToxAv *toxav)
 {
-    Q_UNUSED(user_data);
+    qDebug() << "Started video playback thread";
 
-    if (!calls[callId].active || !calls[callId].videoEnabled)
-        return;
+    // TODO you might want to increase thread stack size
+    vpx_image_t* images [100]; // I dunno how much images you'll usually need
+    int size;
 
-    calls[callId].videoSource.pushVPXFrame(img);
+    while (calls[callId].active && calls[callId].videoEnabled)
+        if ((size = toxav_recv_video(toxav, callId, images, 100, -1)) >= 0)
+            for(int i = 0; i < size; i++) {
+                calls[callId].videoSource.pushVPXFrame(images[i]);
+                vpx_img_free(images[i]);
+            }
 
-    vpx_img_free(img);
+    qDebug() << "Closing video playback thread";
 }
 
 void Core::sendCallVideo(int callId)
@@ -538,7 +564,7 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
 }
 
 // This function's logic was shamelessly stolen from uTox
-void Core::playAudioBuffer(int callId, int16_t *data, int samples, unsigned channels, int sampleRate)
+void Core::playAudioBuffer(int callId, const int16_t *data, int samples, unsigned channels, int sampleRate)
 {
     if(!channels || channels > 2)
     {
@@ -550,7 +576,6 @@ void Core::playAudioBuffer(int callId, int16_t *data, int samples, unsigned chan
     ALint processed, queued;
     alGetSourcei(calls[callId].alSource, AL_BUFFERS_PROCESSED, &processed);
     alGetSourcei(calls[callId].alSource, AL_BUFFERS_QUEUED, &queued);
-    alSourcei(calls[callId].alSource, AL_LOOPING, AL_FALSE);
 
     if(processed)
     {

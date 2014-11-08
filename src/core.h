@@ -228,10 +228,10 @@ private:
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
-    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int samples, void *user_data); // Callback
+    static void playCallAudio(int callId, ToxAv *toxav);
     static void sendCallAudio(int callId, ToxAv* toxav);
-    static void playAudioBuffer(int callId, int16_t *data, int samples, unsigned channels, int sampleRate);
-    static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
+    static void playAudioBuffer(int callId, const int16_t *data, int samples, unsigned channels, int sampleRate);
+    static void playCallVideo(int callId, ToxAv* toxav);
     void sendCallVideo(int callId);
 
     bool checkConnection();
