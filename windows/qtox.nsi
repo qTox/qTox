@@ -280,7 +280,7 @@ Section "Install"
 	# Register the tox: protocol
 	${WriteRegStr} HKCR "tox" "" "URL:tox Protocol"
 	${WriteRegStr} HKCR "tox" "URL Protocol" ""
-	${WriteRegStr} HKCR "tox\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE}"
+	${WriteRegStr} HKCR "tox\shell\open\command" "" "$INSTDIR\${MAIN_APP_EXE} %1"
 
 	# Register the .tox file associations
 	${WriteRegStr} "HKCR" "Applications\qtox.exe\SupportedTypes" ".tox" ""
