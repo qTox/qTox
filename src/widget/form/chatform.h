@@ -80,6 +80,7 @@ private slots:
     void updateTime();    
 
 protected:
+    void loadHistory(QDateTime since);
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);

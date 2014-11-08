@@ -78,6 +78,9 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
 
     setAcceptDrops(true);
+
+    if (Settings::getInstance().getEnableLogging())
+        loadHistory(QDateTime::currentDateTime().addDays(-7));
 }
 
 ChatForm::~ChatForm()
@@ -688,6 +691,48 @@ void ChatForm::onAvatarRemoved(int FriendId)
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 }
 
+void ChatForm::loadHistory(QDateTime since)
+{
+    QDateTime now = QDateTime::currentDateTime();
+
+    if (since > now)
+        return;
+
+    if (earliestMessage)
+    {
+        if (*earliestMessage < since)
+            return;
+        if (*earliestMessage < now)
+        {
+            now = *earliestMessage;
+            now = now.addMSecs(-1);
+        }
+    }
+
+    auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->getToxID().publicKey, since, now);
+
+    ToxID storedPrevId;
+    std::swap(storedPrevId, previousId);
+    QList<ChatActionPtr> historyMessages;
+
+    for (const auto &it : msgs)
+    {
+        ChatActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, it.timestamp.toLocalTime());
+        historyMessages.append(ca);
+    }
+    std::swap(storedPrevId, previousId);
+
+    int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
+
+    if (earliestMessage != nullptr)
+        *earliestMessage = since;
+
+    chatWidget->insertMessagesTop(historyMessages);
+
+    savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
+    chatWidget->verticalScrollBar()->setValue(savedSliderPos);
+}
+
 void ChatForm::onLoadHistory()
 {
     LoadHistoryDialog dlg;
@@ -695,44 +740,7 @@ void ChatForm::onLoadHistory()
     if (dlg.exec())
     {
         QDateTime fromTime = dlg.getFromDate();
-        QDateTime toTime = QDateTime::currentDateTime();
-
-        if (fromTime > toTime)
-            return;
-
-        if (earliestMessage)
-        {
-            if (*earliestMessage < fromTime)
-                return;
-            if (*earliestMessage < toTime)
-            {
-                toTime = *earliestMessage;
-                toTime = toTime.addMSecs(-1);
-            }
-        }
-
-        auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->getToxID().publicKey, fromTime, toTime);
-
-        ToxID storedPrevId;
-        std::swap(storedPrevId, previousId);
-        QList<ChatActionPtr> historyMessages;
-
-        for (const auto &it : msgs)
-        {
-            ChatActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, it.timestamp.toLocalTime());
-            historyMessages.append(ca);
-        }
-        std::swap(storedPrevId, previousId);
-
-        int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
-
-        if (earliestMessage != nullptr)
-            *earliestMessage = fromTime;
-
-        chatWidget->insertMessagesTop(historyMessages);
-
-        savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
-        chatWidget->verticalScrollBar()->setValue(savedSliderPos);
+        loadHistory(fromTime);
     }
 }
 
