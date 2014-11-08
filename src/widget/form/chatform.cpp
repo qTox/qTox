@@ -715,9 +715,20 @@ void ChatForm::loadHistory(QDateTime since)
     std::swap(storedPrevId, previousId);
     QList<ChatActionPtr> historyMessages;
 
+    QDate lastDate(1,0,0);
     for (const auto &it : msgs)
     {
-        ChatActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, it.timestamp.toLocalTime());
+        // Show the date every new day
+        QDateTime msgDateTime = it.timestamp.toLocalTime();
+        QDate msgDate = msgDateTime.date();
+        if (msgDate > lastDate)
+        {
+            lastDate = msgDate;
+            historyMessages.append(genSystemInfoAction(msgDate.toString(),"",QDateTime()));
+        }
+
+        // Show each messages
+        ChatActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
         historyMessages.append(ca);
     }
     std::swap(storedPrevId, previousId);
