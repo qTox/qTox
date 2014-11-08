@@ -64,7 +64,7 @@ void Widget::init()
 {
     ui->setupUi(this);
     
-    if (QSystemTrayIcon::isSystemTrayAvailable() == true)
+    if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         icon = new QSystemTrayIcon(this);
         icon->setIcon(this->windowIcon());
@@ -280,10 +280,6 @@ Widget::~Widget()
     for (Group* g : GroupList::groupList)
         delete g;
     GroupList::groupList.clear();
-    delete statusAway;
-    delete statusBusy;
-    delete statusOnline;
-    delete actionQuit;
     delete trayMenu;
     delete icon;
     delete ui;
