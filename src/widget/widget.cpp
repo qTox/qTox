@@ -70,13 +70,13 @@ void Widget::init()
         icon->setIcon(this->windowIcon());
         trayMenu = new QMenu;
         
-        statusOnline = new QAction(tr("online"), this);
+        statusOnline = new QAction(tr("Online"), this);
         statusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
         connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
-        statusAway = new QAction(tr("away"), this);
+        statusAway = new QAction(tr("Away"), this);
         statusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
         connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
-        statusBusy = new QAction(tr("busy"), this);
+        statusBusy = new QAction(tr("Busy"), this);
         connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         statusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
         actionQuit = new QAction(tr("&Quit"), this);
