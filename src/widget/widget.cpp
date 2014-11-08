@@ -665,7 +665,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     f->getFriendWidget()->updateStatusLight();
     
     //won't print the message if there were no messages before
-    if(f->getChatForm()->getNumberOfMessages() != 0
+    if(!f->getChatForm()->isEmpty()
             && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
     {
         QString fStatus = "";

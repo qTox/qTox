@@ -54,7 +54,7 @@ public:
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
     void addAlertMessage(const QString& author, QString message, QDateTime datetime); ///< Deprecated
     void addAlertMessage(const ToxID& author, QString message, QDateTime datetime);
-    int getNumberOfMessages();
+    bool isEmpty();
 
 signals:
     void sendMessage(int, QString);

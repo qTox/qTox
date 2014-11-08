@@ -34,6 +34,8 @@
 #include "src/friendlist.h"
 #include "src/friend.h"
 
+#include <QDebug>
+
 GenericChatForm::GenericChatForm(QWidget *parent) :
     QWidget(parent),
     earliestMessage(nullptr)
@@ -151,9 +153,9 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
 }
 
-int GenericChatForm::getNumberOfMessages()
+bool GenericChatForm::isEmpty()
 {
-    return chatWidget->getNumberOfMessages();
+    return chatWidget->isEmpty();
 }
 
 void GenericChatForm::setName(const QString &newName)
