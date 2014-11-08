@@ -18,6 +18,7 @@
 #include "friendlist.h"
 #include "widget/friendwidget.h"
 #include "widget/form/chatform.h"
+#include "widget/widget.h"
 
 Friend::Friend(int FriendId, QString UserId)
     : friendId(FriendId)
@@ -43,6 +44,9 @@ void Friend::setName(QString name)
     {
         widget->setName(name);
         chatForm->setName(name);
+
+        if (widget->isActive())
+            Widget::getInstance()->setWindowTitle(name + " - qTox");
     }
 }
 
