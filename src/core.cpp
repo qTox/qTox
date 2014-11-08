@@ -1213,7 +1213,6 @@ bool Core::loadConfiguration(QString path)
         if (err)
         {   // maybe we should handle this better
             qWarning() << "Core: history db isn't encrypted, but encryption is set!! No history loaded...";
-            error = false;
         }
         else
         {

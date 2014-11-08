@@ -34,8 +34,6 @@
 #include "src/friendlist.h"
 #include "src/friend.h"
 
-#include <QDebug>
-
 GenericChatForm::GenericChatForm(QWidget *parent) :
     QWidget(parent),
     earliestMessage(nullptr)
