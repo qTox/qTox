@@ -145,3 +145,7 @@ void EmoticonsWidget::mouseReleaseEvent(QMouseEvent *ev)
     if (!rect().contains(ev->pos()))
         hide();
 }
+
+void EmoticonsWidget::mousePressEvent(QMouseEvent*)
+{
+}

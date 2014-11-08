@@ -36,6 +36,7 @@ private slots:
 
 protected:
     virtual void mouseReleaseEvent(QMouseEvent *ev);
+    virtual void mousePressEvent(QMouseEvent *ev);
 
 private:
     QStackedWidget stack;
