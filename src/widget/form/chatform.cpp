@@ -121,6 +121,7 @@ void ChatForm::onSendTriggered()
         qDebug() << "db id:" << id;
 
         addSelfMessage(msg, isAction, timestamp);
+
         int rec;
         if (isAction)
             rec = Core::getInstance()->sendAction(f->getFriendID(), msg);

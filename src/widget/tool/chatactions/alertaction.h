@@ -24,9 +24,9 @@ class AlertAction : public MessageAction
 public:
     AlertAction(const QString &author, const QString &message, const QString& date);
     virtual ~AlertAction(){;}
+
+protected:
     virtual QString getMessage();
-    //virtual QString getName(); only do the message for now; preferably would do the whole row
-    virtual void setup(QTextCursor cursor, QTextEdit*) override;
 
 private:
     QString message;

@@ -24,9 +24,10 @@ class ActionAction : public MessageAction
 public:
     ActionAction(const QString &author, QString message, const QString& date, const bool&);
     virtual ~ActionAction(){;}
+
+protected:
     virtual QString getMessage();
     virtual QString getName();
-    virtual void setup(QTextCursor, QTextEdit*) override {;}
 
 private:
     QString message;

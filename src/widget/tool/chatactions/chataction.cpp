@@ -17,6 +17,11 @@
 #include "chataction.h"
 #include <QStringList>
 #include <QBuffer>
+#include <QTextTable>
+#include <QScrollBar>
+#include <QTextEdit>
+
+QTextBlockFormat ChatAction::nameFormat, ChatAction::dateFormat;
 
 QString ChatAction::toHtmlChars(const QString &str)
 {
@@ -52,4 +57,60 @@ QString ChatAction::getDate()
         return QString("<div class=date_me>" + toHtmlChars(date) + "</div>");
     else
         return QString("<div class=date>" + toHtmlChars(date) + "</div>");
+}
+
+void ChatAction::assignPlace(QTextTable *position, QTextEdit *te)
+{
+    textTable = position;
+    cur = position->cellAt(0, 2).firstCursorPosition();
+    cur.clearSelection();
+    cur.setKeepPositionOnInsert(true);
+    textEdit = te;
+}
+
+void ChatAction::dispaly()
+{
+    textTable->cellAt(0, 0).firstCursorPosition().setBlockFormat(nameFormat);
+    textTable->cellAt(0, 0).firstCursorPosition().insertHtml(getName());
+    textTable->cellAt(0, 2).firstCursorPosition().insertHtml(getMessage());
+    textTable->cellAt(0, 4).firstCursorPosition().setBlockFormat(dateFormat);
+    textTable->cellAt(0, 4).firstCursorPosition().insertHtml(getDate());
+
+    cur.setKeepPositionOnInsert(true);
+    int end=cur.selectionEnd();
+    cur.setPosition(cur.position());
+    cur.setPosition(end, QTextCursor::KeepAnchor);
+
+    featureUpdate();
+}
+
+void ChatAction::setupFormat()
+{
+    nameFormat.setAlignment(Qt::AlignRight);
+    nameFormat.setNonBreakableLines(true);
+    dateFormat.setAlignment(Qt::AlignLeft);
+    dateFormat.setNonBreakableLines(true);
+}
+
+void ChatAction::updateContent()
+{
+    if (cur.isNull() || !textEdit)
+        return;
+
+    int vSliderVal = textEdit->verticalScrollBar()->value();
+
+    // update content
+    int pos = cur.selectionStart();
+    cur.removeSelectedText();
+    cur.setKeepPositionOnInsert(false);
+    cur.insertHtml(getMessage());
+    cur.setKeepPositionOnInsert(true);
+    int end = cur.position();
+    cur.setPosition(pos);
+    cur.setPosition(end, QTextCursor::KeepAnchor);
+
+    // restore old slider value
+    textEdit->verticalScrollBar()->setValue(vSliderVal);
+
+    featureUpdate();
 }

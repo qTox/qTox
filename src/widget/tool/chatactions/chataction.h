@@ -23,26 +23,42 @@
 
 class FileTransferInstance;
 class QTextEdit;
+class QTextTable;
 
 class ChatAction : public QObject
 {
+    Q_OBJECT
 public:
     ChatAction(const bool &me, const QString &author, const QString &date) : isMe(me), name(author), date(date) {;}
     virtual ~ChatAction(){;}
-    virtual void setup(QTextCursor cursor, QTextEdit* textEdit) = 0; ///< Call once, and then you MUST let the object update itself
 
+    void assignPlace(QTextTable *position, QTextEdit* te);
+    virtual void dispaly();
+    virtual bool isInteractive(){return false;}
+    virtual void featureUpdate() {;}
+
+    static void setupFormat();
+
+public slots:
+    void updateContent();
+
+protected:
     virtual QString getName();
     virtual QString getMessage() = 0;
     virtual QString getDate();
-    virtual bool isInteractive(){return false;}
 
-protected:
     QString toHtmlChars(const QString &str);
     QString QImage2base64(const QImage &img);
 
 protected:
     bool isMe;
     QString name, date;
+
+    QTextTable *textTable;
+    QTextEdit *textEdit;
+    QTextCursor cur;
+
+    static QTextBlockFormat nameFormat, dateFormat;
 };
 
 typedef QSharedPointer<ChatAction> ChatActionPtr;

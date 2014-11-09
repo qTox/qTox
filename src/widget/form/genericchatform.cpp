@@ -149,6 +149,8 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     chatWidget->document()->setDefaultStyleSheet(Style::getStylesheet(":ui/chatArea/innerStyle.css"));
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
+
+    ChatAction::setupFormat();
 }
 
 bool GenericChatForm::isEmpty()

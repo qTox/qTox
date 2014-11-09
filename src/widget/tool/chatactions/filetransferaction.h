@@ -25,17 +25,13 @@ class FileTransferAction : public ChatAction
 public:
     FileTransferAction(FileTransferInstance *widget, const QString &author, const QString &date, const bool &me);
     virtual ~FileTransferAction();
-    virtual QString getMessage();
-    virtual void setup(QTextCursor cursor, QTextEdit* textEdit) override;
     virtual bool isInteractive();
 
-private slots:
-    void updateHtml();
+protected:
+    virtual QString getMessage();
 
 private:
     FileTransferInstance *w;
-    QTextCursor cur;
-    QTextEdit* edit;
 };
 
 #endif // FILETRANSFERACTION_H
