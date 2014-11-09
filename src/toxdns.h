@@ -25,6 +25,8 @@
 /// Handles tox1 and tox3 DNS queries
 class ToxDNS : public QObject
 {
+    Q_OBJECT
+
 public:
     struct tox3_server ///< Represents a tox3 server
     {
