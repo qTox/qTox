@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/qtox-256x256.png</file>
+    </qresource>
+</RCC>

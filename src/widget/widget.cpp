@@ -31,6 +31,9 @@
 #include "src/video/camera.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
+#include "src/historykeeper.h"
+#include "form/inputpassworddialog.h"
+#include "src/autoupdate.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -45,9 +48,7 @@
 #include <QTimer>
 #include <QStyleFactory>
 #include <QTranslator>
-#include "src/historykeeper.h"
 #include <tox/tox.h>
-#include "form/inputpassworddialog.h"
 
 Widget *Widget::instance{nullptr};
 
@@ -244,6 +245,11 @@ void Widget::init()
     coreThread->start();
 
     addFriendForm->show(*ui);
+
+#if (AUTOUPDATE_ENABLED)
+    if (Settings::getInstance().getCheckUpdates())
+        AutoUpdater::checkUpdatesAsyncInteractive();
+#endif
 }
 
 void Widget::setTranslation()
@@ -1093,5 +1099,22 @@ void Widget::setEnabledThreadsafe(bool enabled)
     else
     {
         return setEnabled(enabled);
+    }
+}
+
+bool Widget::askMsgboxQuestion(const QString& title, const QString& msg)
+{
+    // We can only display widgets from the GUI thread
+    if (QThread::currentThread() != qApp->thread())
+    {
+        bool ret;
+        QMetaObject::invokeMethod(this, "askMsgboxQuestion", Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(bool, ret),
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
+        return ret;
+    }
+    else
+    {
+        return QMessageBox::question(this, title, msg) == QMessageBox::StandardButton::Yes;
     }
 }

@@ -19,6 +19,7 @@
 #include "src/ipc.h"
 #include "src/widget/toxuri.h"
 #include "src/widget/toxsave.h"
+#include "src/autoupdate.h"
 #include <QApplication>
 #include <QFontDatabase>
 #include <QDebug>
@@ -26,6 +27,8 @@
 #include <QDir>
 #include <QDateTime>
 #include <QMutexLocker>
+
+#include <sodium.h>
 
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
@@ -55,6 +58,8 @@ int main(int argc, char *argv[])
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
 
+    sodium_init(); // For the auto-updater
+
 #ifdef LOG_TO_FILE
     logFile = new QTextStream;
     dflt = qInstallMessageHandler(nullptr);
@@ -82,6 +87,12 @@ int main(int argc, char *argv[])
 
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
+
+    // Check whether we have an update waiting to be installed
+#if AUTOUPDATE_ENABLED
+    if (AutoUpdater::isLocalUpdateReady())
+        AutoUpdater::installLocalUpdate(); ///< NORETURN
+#endif
 
     // Inter-process communication
     IPC ipc;
@@ -127,7 +138,7 @@ int main(int argc, char *argv[])
     }
 
     // Run
-    Widget* w = Widget::getInstance();
+    Widget* w = Widget::getInstance();    
     int errorcode = a.exec();
 
     delete w;

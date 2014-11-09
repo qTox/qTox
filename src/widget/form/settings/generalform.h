@@ -51,6 +51,7 @@ private slots:
     void onReconnectClicked();
     void onAutoAcceptFileChange();
     void onAutoSaveDirChange();
+    void onCheckUpdateChanged();
 
 private:
     Ui::GeneralSettings *bodyUI;

@@ -67,6 +67,7 @@ public:
     Q_INVOKABLE QMessageBox::StandardButton showWarningMsgBox(const QString& title, const QString& msg,
                                               QMessageBox::StandardButtons buttonss = QMessageBox::Ok);
     Q_INVOKABLE void setEnabledThreadsafe(bool enabled);
+    Q_INVOKABLE bool askMsgboxQuestion(const QString& title, const QString& msg);
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
