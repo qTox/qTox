@@ -33,6 +33,7 @@ public:
         QString sender;
         QString message;
         QDateTime timestamp;
+        bool isSent;
     };
 
     virtual ~HistoryKeeper();

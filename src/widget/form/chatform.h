@@ -36,7 +36,7 @@ public:
     ChatForm(Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(QString newMessage);
-    void registerReceipt(int receipt, int messageID);
+    void registerReceipt(int receipt, int messageID, MessageActionPtr msg);
     void dischargeReceipt(int receipt);
     void clearReciepts();
 
@@ -104,8 +104,8 @@ private:
     void startCounter();
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
-    QHash<int, int> receipts;
-    QSet<int> undeliveredMsgs;
+    QHash<int, QPair<int, MessageActionPtr>> receipts;
+    QSet<int> undeliveredIDs;
 };
 
 #endif // CHATFORM_H

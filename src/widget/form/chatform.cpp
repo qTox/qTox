@@ -120,7 +120,7 @@ void ChatForm::onSendTriggered()
 
         qDebug() << "db id:" << id;
 
-        addSelfMessage(msg, isAction, timestamp);
+        MessageActionPtr ma = addSelfMessage(msg, isAction, timestamp, false);
 
         int rec;
         if (isAction)
@@ -129,7 +129,7 @@ void ChatForm::onSendTriggered()
             rec = Core::getInstance()->sendMessage(f->getFriendID(), msg);
 
         qDebug() << "receipt:" << rec;
-        registerReceipt(rec, id);
+        registerReceipt(rec, id, ma);
     }
 
     msgEdit->clear();
@@ -746,7 +746,9 @@ void ChatForm::loadHistory(QDateTime since)
         }
 
         // Show each messages
-        ChatActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
+        MessageActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
+        if (it.isSent)
+            ca->markAsSent();
         historyMessages.append(ca);
     }
     std::swap(storedPrevId, previousId);
@@ -828,10 +830,10 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
 }
 
-void ChatForm::registerReceipt(int receipt, int messageID)
+void ChatForm::registerReceipt(int receipt, int messageID, MessageActionPtr msg)
 {
-    receipts[receipt] = messageID;
-    undeliveredMsgs.insert(messageID);
+    receipts[receipt] = {messageID, msg};
+    undeliveredIDs.insert(messageID);
     qDebug() << "linking: rec" << receipt << "with" << messageID;
 }
 
@@ -840,8 +842,13 @@ void ChatForm::dischargeReceipt(int receipt)
     auto it = receipts.find(receipt);
     if (it != receipts.end())
     {
-        if (undeliveredMsgs.remove(it.value()))
-            HistoryKeeper::getInstance()->markAsSent(it.value());
+        int mID = it.value().first;
+        if (undeliveredIDs.remove(mID))
+        {
+            HistoryKeeper::getInstance()->markAsSent(mID);
+        }
+        it.value().second->markAsSent();
+        it.value().second->featureUpdate();
         receipts.erase(it);
         qDebug() << "receipt" << receipt << "delivered";
     }
@@ -850,5 +857,5 @@ void ChatForm::dischargeReceipt(int receipt)
 void ChatForm::clearReciepts()
 {
     receipts.clear();
-    undeliveredMsgs.clear();
+    undeliveredIDs.clear();
 }

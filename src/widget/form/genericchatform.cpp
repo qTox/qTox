@@ -205,16 +205,23 @@ void GenericChatForm::addMessage(const QString& author, const QString &message, 
     chatWidget->insertMessage(ca);
 }
 
-void GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime)
+MessageActionPtr GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
+                                             const QDateTime &datetime, bool isSent)
 {
-    ChatActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
+    MessageActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
+    if (isSent)
+        ca->markAsSent();
     chatWidget->insertMessage(ca);
+    return ca;
 }
 
-void GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime)
+MessageActionPtr GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent)
 {
-    ChatActionPtr ca = genSelfActionAction(message, isAction, datetime);
+    MessageActionPtr ca = genSelfActionAction(message, isAction, datetime);
+    if (isSent)
+        ca->markAsSent();
     chatWidget->insertMessage(ca);
+    return ca;
 }
 
 /**
@@ -332,7 +339,7 @@ ChatActionPtr GenericChatForm::genMessageActionAction(const QString &author, QSt
     return res;
 }
 
-ChatActionPtr GenericChatForm::genMessageActionAction(const ToxID& author, QString message, bool isAction, const QDateTime &datetime)
+MessageActionPtr GenericChatForm::genMessageActionAction(const ToxID& author, QString message, bool isAction, const QDateTime &datetime)
 {
     if (earliestMessage == nullptr)
     {
@@ -366,20 +373,20 @@ ChatActionPtr GenericChatForm::genMessageActionAction(const ToxID& author, QStri
     if (isAction)
     {
         previousId = ToxID(); // next msg has a name regardless
-        return ChatActionPtr(new ActionAction (getElidedName(authorStr), message, date, isMe));
+        return MessageActionPtr(new ActionAction (getElidedName(authorStr), message, date, isMe));
     }
 
-    ChatActionPtr res;
+    MessageActionPtr res;
     if (previousId == author)
-        res = ChatActionPtr(new MessageAction(QString(), message, date, isMe));
+        res = MessageActionPtr(new MessageAction(QString(), message, date, isMe));
     else
-        res = ChatActionPtr(new MessageAction(getElidedName(authorStr), message, date, isMe));
+        res = MessageActionPtr(new MessageAction(getElidedName(authorStr), message, date, isMe));
 
     previousId = author;
     return res;
 }
 
-ChatActionPtr GenericChatForm::genSelfActionAction(QString message, bool isAction, const QDateTime &datetime)
+MessageActionPtr GenericChatForm::genSelfActionAction(QString message, bool isAction, const QDateTime &datetime)
 {
     if (earliestMessage == nullptr)
     {
@@ -400,14 +407,14 @@ ChatActionPtr GenericChatForm::genSelfActionAction(QString message, bool isActio
     if (isAction)
     {
         previousId = ToxID(); // next msg has a name regardless
-        return ChatActionPtr(new ActionAction (getElidedName(author), message, date, true));
+        return MessageActionPtr(new ActionAction (getElidedName(author), message, date, true));
     }
 
-    ChatActionPtr res;
+    MessageActionPtr res;
     if (previousId.isMine())
-        res = ChatActionPtr(new MessageAction(QString(), message, date, true));
+        res = MessageActionPtr(new MessageAction(QString(), message, date, true));
     else
-        res = ChatActionPtr(new MessageAction(getElidedName(author), message, date, true));
+        res = MessageActionPtr(new MessageAction(getElidedName(author), message, date, true));
 
     previousId = Core::getInstance()->getSelfId();
     return res;

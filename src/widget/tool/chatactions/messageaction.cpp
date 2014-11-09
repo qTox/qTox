@@ -80,6 +80,8 @@ void MessageAction::featureUpdate()
     QTextTableCellFormat format;
     if (!isProcessed)
         format.setBackground(QColor(Qt::red));
+    else
+        format.setBackground(QColor(Qt::white));
     cell.setFormat(format);
 }
 

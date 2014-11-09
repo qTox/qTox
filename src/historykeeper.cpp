@@ -147,7 +147,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     QSqlQuery dbAnswer;
     if (ct == ctSingle)
     {
-        dbAnswer = db->exec(QString("SELECT timestamp, user_id, message FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
+        dbAnswer = db->exec(QString("SELECT timestamp, user_id, message, sent_ok FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
                             QString("AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;")
                             .arg(time64_from).arg(time64_to).arg(chat_id));
     } else {
@@ -160,8 +160,9 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
         QString message = unWrapMessage(dbAnswer.value(2).toString());
         qint64 timeInt = dbAnswer.value(0).toLongLong();
         QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
+        bool isSent = dbAnswer.value(3).toBool();
 
-        res.push_back({sender,message,time});
+        res.push_back({sender,message,time,isSent});
     }
 
     return res;
