@@ -37,7 +37,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
     {
         QList<QString> initLst;
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
-                          QString("chat_id INTEGER NOT NULL, sender INTEGER NOT NULL, sent_ok BOOLEAN NOT NULL DEFAULT TRUE, message TEXT NOT NULL);"));
+                          QString("chat_id INTEGER NOT NULL, sender INTEGER NOT NULL, sent_ok INTEGER NOT NULL DEFAULT 0, message TEXT NOT NULL);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
 
@@ -109,6 +109,10 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
 
     updateChatsID();
     updateAliases();
+
+    QSqlQuery sqlAnswer = db->exec("select seq from sqlite_sequence where name=\"history\";");
+    sqlAnswer.first();
+    messageID = sqlAnswer.value(0).toInt();
 }
 
 HistoryKeeper::~HistoryKeeper()
@@ -116,7 +120,7 @@ HistoryKeeper::~HistoryKeeper()
     delete db;
 }
 
-void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt)
+int HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt)
 {
     int chat_id = getChatID(chat, ctSingle).first;
     int sender_id = getAliasID(sender);
@@ -124,6 +128,9 @@ void HistoryKeeper::addChatEntry(const QString& chat, const QString& message, co
     db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, message)") +
              QString("VALUES (%1, %2, %3, '%4');")
              .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
+
+    messageID++;
+    return messageID;
 }
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::ChatType ct, const QString &chat,
@@ -235,13 +242,15 @@ void HistoryKeeper::resetInstance()
     historyInstance = nullptr;
 }
 
-void HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &message, const QString &sender, const QDateTime &dt)
+int HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &message, const QString &sender, const QDateTime &dt)
 {
     Q_UNUSED(chat)
     Q_UNUSED(message)
     Q_UNUSED(sender)
     Q_UNUSED(dt)
     // no groupchats yet
+
+    return -1;
 }
 
 HistoryKeeper::ChatType HistoryKeeper::convertToChatType(int ct)
@@ -274,4 +283,9 @@ void HistoryKeeper::renameHistory(QString from, QString to)
     QFile filePlain(QDir(Settings::getInstance().getSettingsDirPath()).filePath(from + ".qtox_history"));
     if (filePlain.exists())
         filePlain.rename(QDir(Settings::getInstance().getSettingsDirPath()).filePath(to + ".qtox_history"));
+}
+
+void HistoryKeeper::markAsSent(int m_id)
+{
+    db->exec(QString("UPDATE history SET sent_ok = 1 WHERE id = %1;").arg(m_id));
 }

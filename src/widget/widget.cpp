@@ -769,6 +769,7 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
         return;
 
     qDebug() << "Receipt Recieved" << friendId << "receipt" << receipt;
+    f->getChatForm()->dischargeReceipt(receipt);
 }
 
 void Widget::newMessageAlert(GenericChatroomWidget* chat)

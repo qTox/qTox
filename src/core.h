@@ -45,6 +45,7 @@ public:
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
+    static QList<CString> splitMessage(const QString &message);
 
     QString getPeerName(const ToxID& id) const;
 
@@ -92,10 +93,10 @@ public slots:
     void setStatusMessage(const QString& message);
     void setAvatar(uint8_t format, const QByteArray& data);
 
-    void sendMessage(int friendId, const QString& message);
+    int sendMessage(int friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
     void sendGroupAction(int groupId, const QString& message);
-    void sendAction(int friendId, const QString& action);
+    int sendAction(int friendId, const QString& action);
     void sendTyping(int friendId, bool typing);
 
     void sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize);
@@ -154,7 +155,6 @@ signals:
 
     void messageSentResult(int friendId, const QString& message, int messageId);
     void groupSentResult(int groupId, const QString& message, int result);
-    void actionSentResult(int friendId, const QString& action, int success);
 
     void receiptRecieved(int friedId, int receipt);
 
@@ -250,8 +250,6 @@ private:
 
     void checkLastOnline(int friendId);
 
-    QList<CString> splitMessage(const QString &message);
-
 private slots:
      void onFileTransferFinished(ToxFile file);
 
@@ -265,7 +263,7 @@ private:
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
-    QMutex fileSendMutex;
+    QMutex fileSendMutex, messageSendMutex;
     bool ready;
 
     uint8_t* pwsaltedkeys[PasswordType::ptCounter]; // use the pw's hash as the "pw"

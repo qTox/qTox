@@ -745,23 +745,22 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
     saveConfiguration();
 }
 
-void Core::sendMessage(int friendId, const QString& message)
+int Core::sendMessage(int friendId, const QString& message)
 {
-    QList<CString> cMessages = splitMessage(message);
-
-    for (auto &cMsg :cMessages)
-    {
-        int messageId = tox_send_message(tox, friendId, cMsg.data(), cMsg.size());
-        if (messageId == 0)
-            emit messageSentResult(friendId, message, messageId);
-    }
+    QMutexLocker ml(&messageSendMutex);
+    CString cMessage(message);
+    int receipt = tox_send_message(tox, friendId, cMessage.data(), cMessage.size());
+    emit messageSentResult(friendId, message, receipt);
+    return receipt;
 }
 
-void Core::sendAction(int friendId, const QString &action)
+int Core::sendAction(int friendId, const QString &action)
 {
+    QMutexLocker ml(&messageSendMutex);
     CString cMessage(action);
-    int ret = tox_send_action(tox, friendId, cMessage.data(), cMessage.size());
-    emit actionSentResult(friendId, action, ret);
+    int receipt = tox_send_action(tox, friendId, cMessage.data(), cMessage.size());
+    emit messageSentResult(friendId, action, receipt);
+    return receipt;
 }
 
 void Core::sendTyping(int friendId, bool typing)

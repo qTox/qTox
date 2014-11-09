@@ -39,6 +39,7 @@
 #include "src/widget/croppinglabel.h"
 #include "src/misc/style.h"
 #include "src/misc/settings.h"
+#include "src/misc/cstring.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -100,20 +101,36 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
 
-    QDateTime timestamp = QDateTime::currentDateTime();
-    HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, msg, Core::getInstance()->getSelfId().publicKey, timestamp);
+    bool isAction = msg.startsWith("/me ");
+    if (isAction)
+        msg = msg = msg.right(msg.length() - 4);
 
-    if (msg.startsWith("/me "))
+    QList<CString> splittedMsg = Core::splitMessage(msg);
+    QDateTime timestamp = QDateTime::currentDateTime();
+
+    for (CString& c_msg : splittedMsg)
     {
-        msg = msg.right(msg.length() - 4);
-        addSelfMessage(msg, true, timestamp);
-        emit sendAction(f->getFriendID(), msg);
+        QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
+        QString qt_msg_hist = qt_msg;
+        if (isAction)
+            qt_msg_hist = "/me " + qt_msg;
+
+        int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
+                                                            Core::getInstance()->getSelfId().publicKey, timestamp);
+
+        qDebug() << "db id:" << id;
+
+        addSelfMessage(msg, isAction, timestamp);
+        int rec;
+        if (isAction)
+            rec = Core::getInstance()->sendAction(f->getFriendID(), msg);
+        else
+            rec = Core::getInstance()->sendMessage(f->getFriendID(), msg);
+
+        qDebug() << "receipt:" << rec;
+        registerReceipt(rec, id);
     }
-    else
-    {
-        addSelfMessage(msg, false, timestamp);
-        emit sendMessage(f->getFriendID(), msg);
-    }
+
     msgEdit->clear();
 }
 
@@ -787,7 +804,6 @@ void ChatForm::updateTime()
     callDuration->setText(secondsToDHMS(timeElapsed.elapsed()/1000));
 }
 
-
 QString ChatForm::secondsToDHMS(quint32 duration)
 {
     QString res;
@@ -809,4 +825,29 @@ QString ChatForm::secondsToDHMS(quint32 duration)
         return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
     //I assume no one will ever have call longer than ~30days
     return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
+}
+
+void ChatForm::registerReceipt(int receipt, int messageID)
+{
+    receipts[receipt] = messageID;
+    undeliveredMsgs.insert(messageID);
+    qDebug() << "linking: rec" << receipt << "with" << messageID;
+}
+
+void ChatForm::dischargeReceipt(int receipt)
+{
+    auto it = receipts.find(receipt);
+    if (it != receipts.end())
+    {
+        if (undeliveredMsgs.remove(it.value()))
+            HistoryKeeper::getInstance()->markAsSent(it.value());
+        receipts.erase(it);
+        qDebug() << "receipt" << receipt << "delivered";
+    }
+}
+
+void ChatForm::clearReciepts()
+{
+    receipts.clear();
+    undeliveredMsgs.clear();
 }

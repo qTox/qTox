@@ -44,9 +44,10 @@ public:
     static bool checkPassword();
     static void renameHistory(QString from, QString to);
 
-    void addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
-    void addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
+    int addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
+    int addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
+    void markAsSent(int m_id);
 
 private:
     HistoryKeeper(GenericDdInterface *db_);
@@ -66,6 +67,7 @@ private:
     QMap<QString, int> aliases;
     QMap<QString, QPair<int, ChatType>> chats;
     bool isEncrypted;
+    int messageID;
 };
 
 #endif // HISTORYKEEPER_H

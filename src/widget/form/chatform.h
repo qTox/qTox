@@ -22,6 +22,7 @@
 #include <QLabel>
 #include <QTimer>
 #include <QElapsedTimer>
+#include <QSet>
 
 struct Friend;
 class FileTransferInstance;
@@ -35,6 +36,9 @@ public:
     ChatForm(Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(QString newMessage);
+    void registerReceipt(int receipt, int messageID);
+    void dischargeReceipt(int receipt);
+    void clearReciepts();
 
 signals:
     void sendFile(int32_t friendId, QString, QString, long long);
@@ -100,6 +104,8 @@ private:
     void startCounter();
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
+    QHash<int, int> receipts;
+    QSet<int> undeliveredMsgs;
 };
 
 #endif // CHATFORM_H
