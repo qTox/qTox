@@ -19,10 +19,27 @@
 #define AUTOUPDATE_H
 
 #include <QString>
+#include <QList>
+#include <sodium.h>
 
 /// Handles checking and applying updates for qTox
 class AutoUpdater
 {
+public:
+    struct UpdateFileMeta
+    {
+        unsigned char sig[crypto_sign_BYTES]; ///< Signature of the file (ed25519)
+        QString id; ///< Unique id of the file
+        QString installpath; ///< Local path including the file name. May be relative to qtox-updater or absolute
+        uint64_t size; ///< Size in bytes of the file
+    };
+
+    struct UpdateFile
+    {
+        UpdateFileMeta metadata;
+        QByteArray data;
+    };
+
 public:
     /// Connects to the qTox update server, returns true if an update is available for download
     /// Will call getUpdateVersion, and as such may block and processEvents
@@ -30,6 +47,16 @@ public:
     /// Fetch the version string of the last update available from the qTox update server
     /// Will try to follow qTox's proxy settings, may block and processEvents
     static QString getUpdateVersion();
+    /// Generates a list of files we need to update
+    /// Will try to follow qTox's proxy settings, may block and processEvents
+    static QList<UpdateFileMeta> genUpdateDiff();
+
+protected:
+    /// Parses and validates a flist file. Returns an empty list on error
+    static QList<UpdateFileMeta> parseflist(QByteArray flistData);
+    /// Get the update server's flist and parse it. Returns an empty list on error
+    /// Will try to follow qTox's proxy settings, may block and processEvents
+    static QList<UpdateFileMeta> getUpdateFlist();
 
 private:
     AutoUpdater() = delete;

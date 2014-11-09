@@ -31,6 +31,9 @@
 #include "src/video/camera.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
+#include "src/historykeeper.h"
+#include "form/inputpassworddialog.h"
+#include "src/autoupdate.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -45,9 +48,7 @@
 #include <QTimer>
 #include <QStyleFactory>
 #include <QTranslator>
-#include "src/historykeeper.h"
 #include <tox/tox.h>
-#include "form/inputpassworddialog.h"
 
 Widget *Widget::instance{nullptr};
 
@@ -194,6 +195,16 @@ void Widget::init()
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
     settingsWidget = new SettingsWidget();
+
+    // Check for updates
+    {
+        QString newVersion = AutoUpdater::getUpdateVersion();
+        if (!newVersion.isEmpty() && newVersion != GIT_VERSION)
+        {
+            qWarning() << "New update:"<<newVersion;
+            AutoUpdater::genUpdateDiff();
+        }
+    }
 
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
