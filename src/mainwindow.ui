@@ -1034,7 +1034,7 @@ QSplitter:handle{
              <x>0</x>
              <y>0</y>
              <width>284</width>
-             <height>399</height>
+             <height>401</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1051,6 +1051,18 @@ QSplitter:handle{
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	background-color:#1c1c1c;
+	border:none;
+}
+
+QPushButton:hover{
+	background-color:#292929;
+	border:none;
+}
+</string>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <property name="spacing">
@@ -1088,6 +1100,12 @@ QSplitter:handle{
              <property name="toolTip">
               <string>Add friends</string>
              </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1095,8 +1113,14 @@ QSplitter:handle{
               <iconset resource="../res.qrc">
                <normaloff>:/img/add.png</normaloff>:/img/add.png</iconset>
              </property>
+             <property name="checkable">
+              <bool>false</bool>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
              <property name="flat">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -1113,6 +1137,9 @@ QSplitter:handle{
              </property>
              <property name="toolTip">
               <string>Create a group chat</string>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
              </property>
              <property name="text">
               <string/>
@@ -1757,7 +1784,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>21</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>
