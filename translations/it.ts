@@ -131,47 +131,47 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <translation>Carica log...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="119"/>
+        <location filename="../src/widget/form/chatform.cpp" line="122"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="129"/>
+        <location filename="../src/widget/form/chatform.cpp" line="132"/>
         <source>Bad Idea</source>
         <translation>Pessima idea</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="129"/>
+        <location filename="../src/widget/form/chatform.cpp" line="132"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>Stai cercando di inviare un file speciale (sequenziale), questo non funzionerà!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="235"/>
+        <location filename="../src/widget/form/chatform.cpp" line="238"/>
         <source>%1 calling</source>
         <translation>%1 ti sta chiamando</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="304"/>
+        <location filename="../src/widget/form/chatform.cpp" line="307"/>
         <source>%1 stopped calling</source>
         <translation>%1 ha fermato la chiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="360"/>
+        <location filename="../src/widget/form/chatform.cpp" line="363"/>
         <source>Calling to %1</source>
         <translation>Stai chiamando %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="755"/>
+        <location filename="../src/widget/form/chatform.cpp" line="774"/>
         <source>Call with %1 ended. %2</source>
         <translation>Chiamata con %1 terminata. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="775"/>
+        <location filename="../src/widget/form/chatform.cpp" line="794"/>
         <source>Call duration: </source>
         <translation>Durata chiamata: </translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="501"/>
+        <location filename="../src/widget/form/chatform.cpp" line="504"/>
         <source>Call rejected</source>
         <translation>Chiamata rifiutata</translation>
     </message>
@@ -215,13 +215,13 @@ Continuo ignorando le impostazioni.</translation>
     <message>
         <location filename="../src/core.cpp" line="1149"/>
         <location filename="../src/core.cpp" line="1161"/>
-        <location filename="../src/core.cpp" line="1226"/>
+        <location filename="../src/core.cpp" line="1225"/>
         <source>Password error</source>
         <translation>Errore password</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1149"/>
-        <location filename="../src/core.cpp" line="1226"/>
+        <location filename="../src/core.cpp" line="1225"/>
         <source>Failed to setup password.
 Empty password.</source>
         <translation>Impossibile impostare la password.
@@ -248,39 +248,39 @@ Password vuota.</translation>
         <translation>È stata inserita una password sbagliata</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1224"/>
+        <location filename="../src/core.cpp" line="1223"/>
         <source>History Log decryption password</source>
         <translation>Password per decriptare i log</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1231"/>
+        <location filename="../src/core.cpp" line="1230"/>
         <source>Encrypted log</source>
         <translation>Log criptato</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1232"/>
+        <location filename="../src/core.cpp" line="1231"/>
         <source>Your history is encrypted with different password
 Do you want to try another password?</source>
         <translation>I log sono criptati con una password diversa.
 Vuoi provare un&apos;altra password?</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1242"/>
+        <location filename="../src/core.cpp" line="1241"/>
         <source>Loggin</source>
         <translation>Logging</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1242"/>
+        <location filename="../src/core.cpp" line="1241"/>
         <source>Due to incorret password logging will be disabled</source>
         <translation>I log saranno disabilitati a causa di una password incorretta</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1315"/>
+        <location filename="../src/core.cpp" line="1314"/>
         <source>NO Password</source>
         <translation>Nessuna password</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1315"/>
+        <location filename="../src/core.cpp" line="1314"/>
         <source>Will be saved without encryption!</source>
         <translation>Il Tox datafile sarà salvato senza password!</translation>
     </message>
@@ -938,27 +938,27 @@ Vuoi provare un&apos;altra password?</translation>
         <translation>Toxing on qTox</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1089"/>
+        <location filename="../src/mainwindow.ui" line="1101"/>
         <source>Add friends</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1115"/>
+        <location filename="../src/mainwindow.ui" line="1139"/>
         <source>Create a group chat</source>
         <translation>Crea un gruppo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1147"/>
+        <location filename="../src/mainwindow.ui" line="1174"/>
         <source>View completed file transfers</source>
         <translation>Visualizza i trasferimenti completati</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1179"/>
+        <location filename="../src/mainwindow.ui" line="1206"/>
         <source>Change your settings</source>
         <translation>Cambia le impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1767"/>
+        <location filename="../src/mainwindow.ui" line="1794"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
@@ -1167,18 +1167,18 @@ Vuoi eliminare il vecchio file?</translation>
     <name>Widget</name>
     <message>
         <location filename="../src/widget/widget.cpp" line="73"/>
-        <source>online</source>
-        <translation>online</translation>
+        <source>Online</source>
+        <translation>Online</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="76"/>
-        <source>away</source>
-        <translation>assente</translation>
+        <source>Away</source>
+        <translation>Assente</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="79"/>
-        <source>busy</source>
-        <translation>occupato</translation>
+        <source>Busy</source>
+        <translation>Occupato</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="82"/>
@@ -1209,107 +1209,107 @@ Vuoi eliminare il vecchio file?</translation>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="386"/>
+        <location filename="../src/widget/widget.cpp" line="382"/>
         <source>Choose a profile</source>
         <translation>Scegli un profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="387"/>
+        <location filename="../src/widget/widget.cpp" line="383"/>
         <source>Please choose which identity to use</source>
         <translation>Per favore scegli quale identità usare</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="413"/>
+        <location filename="../src/widget/widget.cpp" line="409"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="420"/>
-        <location filename="../src/widget/widget.cpp" line="427"/>
-        <location filename="../src/widget/widget.cpp" line="448"/>
+        <location filename="../src/widget/widget.cpp" line="416"/>
+        <location filename="../src/widget/widget.cpp" line="423"/>
+        <location filename="../src/widget/widget.cpp" line="444"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="420"/>
+        <location filename="../src/widget/widget.cpp" line="416"/>
         <source>Unable to open this file</source>
         <translation>Impossibile aprire il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="427"/>
+        <location filename="../src/widget/widget.cpp" line="423"/>
         <source>Unable to read this image</source>
         <translation>Impossibile leggere l&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="448"/>
+        <location filename="../src/widget/widget.cpp" line="444"/>
         <source>This image is too big</source>
         <translation>L&apos;immagine è troppo grande</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="475"/>
+        <location filename="../src/widget/widget.cpp" line="471"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="484"/>
+        <location filename="../src/widget/widget.cpp" line="480"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="518"/>
+        <location filename="../src/widget/widget.cpp" line="514"/>
         <source>Add friend</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="530"/>
+        <location filename="../src/widget/widget.cpp" line="526"/>
         <source>File transfers</source>
         <translation>Files trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="555"/>
+        <location filename="../src/widget/widget.cpp" line="551"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="674"/>
+        <location filename="../src/widget/widget.cpp" line="672"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="676"/>
+        <location filename="../src/widget/widget.cpp" line="674"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="678"/>
+        <location filename="../src/widget/widget.cpp" line="676"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="680"/>
+        <location filename="../src/widget/widget.cpp" line="678"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="682"/>
+        <location filename="../src/widget/widget.cpp" line="681"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="892"/>
+        <location filename="../src/widget/widget.cpp" line="891"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1039"/>
-        <location filename="../src/widget/widget.cpp" line="1050"/>
+        <location filename="../src/widget/widget.cpp" line="1038"/>
+        <location filename="../src/widget/widget.cpp" line="1049"/>
         <source>Message failed to send</source>
         <translation>Impossibile inviare il messaggio</translation>
     </message>
