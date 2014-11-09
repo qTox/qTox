@@ -37,7 +37,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
     {
         QList<QString> initLst;
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
-                          QString("chat_id INTEGER NOT NULL, sender INTEGER NOT NULL, message TEXT NOT NULL, sent_ok BOOLEAN NOT NULL );"));
+                          QString("chat_id INTEGER NOT NULL, sender INTEGER NOT NULL, sent_ok BOOLEAN NOT NULL DEFAULT TRUE, message TEXT NOT NULL);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
 
