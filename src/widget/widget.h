@@ -101,7 +101,7 @@ private slots:
     void setUsername(const QString& username);
     void setStatusMessage(const QString &statusMessage);
     void addFriend(int friendId, const QString& userId);
-    void addFriendFailed(const QString& userId);
+    void addFriendFailed(const QString& userId, const QString& errorInfo = QString());
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);

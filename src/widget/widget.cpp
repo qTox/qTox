@@ -644,9 +644,14 @@ void Widget::addFriend(int friendId, const QString &userId)
     }
 }
 
-void Widget::addFriendFailed(const QString&)
+void Widget::addFriendFailed(const QString&, const QString& errorInfo)
 {
-    QMessageBox::critical(0,"Error","Couldn't request friendship");
+    QString info = QString("Couldn't request friendship");
+    if(!errorInfo.isEmpty()) {
+        info = info + (QString(": ") + errorInfo);
+    }
+
+    QMessageBox::critical(0,"Error",info);
 }
 
 void Widget::onFriendStatusChanged(int friendId, Status status)
