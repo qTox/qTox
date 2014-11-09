@@ -27,6 +27,8 @@
 #include <QDateTime>
 #include <QMutexLocker>
 
+#include <sodium.h>
+
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
 static QTextStream* logFile {nullptr};
@@ -54,6 +56,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
+
+    sodium_init(); // For the auto-updater
 
 #ifdef LOG_TO_FILE
     logFile = new QTextStream;
@@ -127,7 +131,7 @@ int main(int argc, char *argv[])
     }
 
     // Run
-    Widget* w = Widget::getInstance();
+    Widget* w = Widget::getInstance();    
     int errorcode = a.exec();
 
     delete w;
