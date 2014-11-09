@@ -26,6 +26,7 @@
 #include <QStandardPaths>
 #include <QDebug>
 #include <QList>
+#include <QStyleFactory>
 
 const QString Settings::FILENAME = "settings.ini";
 bool Settings::makeToxPortable{false};
@@ -140,8 +141,15 @@ void Settings::load()
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
-        style = s.value("style", "None").toString();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
+        style = s.value("style", "").toString();
+        if (style == "") // Default to Fusion if available, otherwise no style
+        {
+            if (QStyleFactory::keys().contains("Fusion"))
+                style = "Fusion";
+            else
+                style = "None";
+        }
     s.endGroup();
 
     s.beginGroup("State");
