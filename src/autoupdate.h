@@ -22,7 +22,16 @@
 #include <QList>
 #include <sodium.h>
 
+/// For now we only support auto updates on Windows, although extending it is not a technical issue.
+/// Linux and Mac users are expected to use their package managers or update manually through official channels.
+#ifdef Q_OS_WIN
+#define AUTOUPDATE_ENABLED 1
+#else
+#define AUTOUPDATE_ENABLED 0
+#endif
+
 /// Handles checking and applying updates for qTox
+/// Do *NOT* use auto update unless AUTOUPDATE_ENABLED is defined to 1
 class AutoUpdater
 {
 public:
@@ -32,6 +41,13 @@ public:
         QString id; ///< Unique id of the file
         QString installpath; ///< Local path including the file name. May be relative to qtox-updater or absolute
         uint64_t size; ///< Size in bytes of the file
+
+        bool operator==(const UpdateFileMeta& other)
+        {
+            return (size == other.size
+                    && id == other.id && installpath == other.installpath
+                    && memcmp(sig, other.sig, crypto_sign_BYTES) == 0);
+        }
     };
 
     struct UpdateFile
@@ -47,16 +63,33 @@ public:
     /// Fetch the version string of the last update available from the qTox update server
     /// Will try to follow qTox's proxy settings, may block and processEvents
     static QString getUpdateVersion();
-    /// Generates a list of files we need to update
+    /// Will try to download an update, if successful returns true and qTox will apply it after a restart
     /// Will try to follow qTox's proxy settings, may block and processEvents
-    static QList<UpdateFileMeta> genUpdateDiff();
+    static bool downloadUpdate();
+    /// Returns true if an update is downloaded and ready to be installed
+    /// If so, call installLocalUpdate. If not, call downloadUpdate.
+    /// This only checks that we downloaded an update and didn't stop in the middle, not that every file is still valid
+    static bool isLocalUpdateReady();
+    /// Launches the qTox updater to try to install the local update and exits immediately
+    /// Will not check that the update actually exists, use isLocalUpdateReady first for that
+    /// The qTox updater will restart us after the update is done
+    /// Note: If we fail to start the qTox updater, we will delete the update and exit
+    [[ noreturn ]] static void installLocalUpdate();
 
 protected:
     /// Parses and validates a flist file. Returns an empty list on error
-    static QList<UpdateFileMeta> parseflist(QByteArray flistData);
-    /// Get the update server's flist and parse it. Returns an empty list on error
+    static QList<UpdateFileMeta> parseFlist(QByteArray flistData);
+    /// Gets the update server's flist. Returns an empty array on error
     /// Will try to follow qTox's proxy settings, may block and processEvents
-    static QList<UpdateFileMeta> getUpdateFlist();
+    static QByteArray getUpdateFlist();
+    /// Gets the local flist. Returns an empty array on error
+    static QByteArray getLocalFlist();
+    /// Generates a list of files we need to update
+    static QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist);
+    /// Tries to fetch the file from the update server. Returns a file with a null QByteArray on error.
+    /// Note that a file with an empty but non-null QByteArray is not an error, merely a file of size 0.
+    /// Will try to follow qTox's proxy settings, may block and processEvents
+    static UpdateFile getUpdateFile(UpdateFileMeta fileMeta);
 
 private:
     AutoUpdater() = delete;
@@ -68,6 +101,7 @@ private:
     static const QString checkURI; ///< URI of the file containing the latest version string
     static const QString flistURI; ///< URI of the file containing info on each file (hash, signature, size, name, ..)
     static const QString filesURI; ///< URI of the actual files of the latest version
+    static const QString updaterBin; ///< Path to the qtox-updater binary
     static unsigned char key[];
 };
 

@@ -19,6 +19,7 @@
 #include "src/ipc.h"
 #include "src/widget/toxuri.h"
 #include "src/widget/toxsave.h"
+#include "src/autoupdate.h"
 #include <QApplication>
 #include <QFontDatabase>
 #include <QDebug>
@@ -86,6 +87,12 @@ int main(int argc, char *argv[])
 
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
+
+    // Check whether we have an update waiting to be installed
+#if AUTOUPDATE_ENABLED
+    if (AutoUpdater::isLocalUpdateReady())
+        AutoUpdater::installLocalUpdate(); ///< NORETURN
+#endif
 
     // Inter-process communication
     IPC ipc;

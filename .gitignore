@@ -7,3 +7,5 @@ qrc_*
 Makefile
 qtox
 *.qm
+build-*-Release
+build-*-Debug

@@ -196,16 +196,6 @@ void Widget::init()
     addFriendForm = new AddFriendForm;
     settingsWidget = new SettingsWidget();
 
-    // Check for updates
-    {
-        QString newVersion = AutoUpdater::getUpdateVersion();
-        if (!newVersion.isEmpty() && newVersion != GIT_VERSION)
-        {
-            qWarning() << "New update:"<<newVersion;
-            AutoUpdater::genUpdateDiff();
-        }
-    }
-
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
     connect(core, &Core::failedToStart, this, &Widget::onFailedToStartCore);
