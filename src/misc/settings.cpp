@@ -119,6 +119,7 @@ void Settings::load()
         proxyPort = s.value("proxyPort", 0).toInt();
         currentProfile = s.value("currentProfile", "").toString();
     	autoAwayTime = s.value("autoAwayTime", 10).toInt();
+        checkUpdates = s.value("checkUpdates", false).toBool();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -255,6 +256,7 @@ void Settings::save(QString path)
         s.setValue("proxyPort", proxyPort);
         s.setValue("currentProfile", currentProfile);
         s.setValue("autoAwayTime", autoAwayTime);
+        s.setValue("checkUpdates", checkUpdates);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -725,6 +727,16 @@ QByteArray Settings::getWindowState() const
 void Settings::setWindowState(const QByteArray &value)
 {
     windowState = value;
+}
+
+bool Settings::getCheckUpdates() const
+{
+    return checkUpdates;
+}
+
+void Settings::setCheckUpdates(bool newValue)
+{
+    checkUpdates = newValue;
 }
 
 QByteArray Settings::getSplitterState() const

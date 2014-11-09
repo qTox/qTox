@@ -57,6 +57,10 @@ public:
     };
 
 public:
+    /// Connects to the qTox update server, if an updat is found shows a dialog to the user asking to download it
+    /// Runs asynchronously in its own thread, and will return immediatly
+    /// Will call isUpdateAvailable, and as such may processEvents
+    static void checkUpdatesAsyncInteractive();
     /// Connects to the qTox update server, returns true if an update is available for download
     /// Will call getUpdateVersion, and as such may block and processEvents
     static bool isUpdateAvailable();
@@ -90,6 +94,9 @@ protected:
     /// Note that a file with an empty but non-null QByteArray is not an error, merely a file of size 0.
     /// Will try to follow qTox's proxy settings, may block and processEvents
     static UpdateFile getUpdateFile(UpdateFileMeta fileMeta);
+    /// Does the actual work for checkUpdatesAsyncInteractive
+    /// Blocking, but otherwise has the same properties than checkUpdatesAsyncInteractive
+    static void checkUpdatesAsyncInteractiveWorker();
 
 private:
     AutoUpdater() = delete;

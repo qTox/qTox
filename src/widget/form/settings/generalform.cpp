@@ -27,6 +27,8 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 
+#include "src/autoupdate.h"
+
 static QStringList locales = {"bg", "de", "en", "fr", "it", "mannol", "pirate", "pl", "ru", "fi", "sv", "uk"};
 static QStringList langs = {"Български", "Deustch", "English", "Français", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Svenska", "Українська"};
 
@@ -39,6 +41,9 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     
     bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
+
+    bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
+    bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
     
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
@@ -93,6 +98,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     onUseProxyUpdated();
 
     //general
+    connect(bodyUI->checkUpdates, &QCheckBox::stateChanged, this, &GeneralForm::onCheckUpdateChanged);
     connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
@@ -279,4 +285,9 @@ void GeneralForm::reloadSmiles()
     bodyUI->smile3->setToolTip(smiles[2]);
     bodyUI->smile4->setToolTip(smiles[3]);
     bodyUI->smile5->setToolTip(smiles[4]);
+}
+
+void GeneralForm::onCheckUpdateChanged()
+{
+    Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
 }

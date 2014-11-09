@@ -18,12 +18,15 @@
 #include "src/autoupdate.h"
 #include "src/misc/serialize.h"
 #include "src/misc/settings.h"
+#include "src/widget/widget.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QCoreApplication>
 #include <QFile>
 #include <QDir>
 #include <QProcess>
+#include <QtConcurrent/QtConcurrent>
+#include <QMessageBox>
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -37,7 +40,7 @@ const QString AutoUpdater::updaterBin = "qtox-updater.exe";
 const QString AutoUpdater::platform;
 const QString AutoUpdater::updaterBin;
 #endif
-const QString AutoUpdater::updateServer = "http://127.0.0.1";
+const QString AutoUpdater::updateServer = "http://mlkj.bounceme.net";
 const QString AutoUpdater::checkURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/version";
 const QString AutoUpdater::flistURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/flist";
 const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/files/";
@@ -391,4 +394,21 @@ fail:
     QString updateDirStr = Settings::getInstance().getSettingsDirPath() + "/update/";
     QDir(updateDirStr).removeRecursively();
     exit(-1);
+}
+
+void AutoUpdater::checkUpdatesAsyncInteractive()
+{
+    QtConcurrent::run(&AutoUpdater::checkUpdatesAsyncInteractiveWorker);
+}
+
+void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
+{
+    if (!isUpdateAvailable())
+        return;
+
+    if (Widget::getInstance()->askMsgboxQuestion(QObject::tr("Update", "The title of a message box"),
+        QObject::tr("An update is available, do you want to download it now ?\nIt will be installed when qTox restarts.")))
+    {
+        downloadUpdate();
+    }
 }

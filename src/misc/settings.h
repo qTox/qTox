@@ -99,6 +99,9 @@ public:
     int getAutoAwayTime() const;
     void setAutoAwayTime(int newValue);
 
+    bool getCheckUpdates() const;
+    void setCheckUpdates(bool newValue);
+
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
 
@@ -219,6 +222,7 @@ private:
     bool closeToTray;
     bool minimizeToTray;
     bool useEmoticons;
+    bool checkUpdates;
 
     bool forceTCP;
 

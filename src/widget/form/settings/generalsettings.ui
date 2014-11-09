@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>511</width>
-        <height>739</height>
+        <height>720</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -118,6 +118,13 @@
            <widget class="QCheckBox" name="statusChanges">
             <property name="text">
              <string>Show contacts' status changes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkUpdates">
+            <property name="text">
+             <string>Check for updates on startup (unstable)</string>
             </property>
            </widget>
           </item>
