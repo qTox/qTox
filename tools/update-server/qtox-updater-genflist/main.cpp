@@ -9,8 +9,8 @@
 using namespace std;
 
 /// Pass the target folder as first argument, no spaces allowed. We'll call that dir $TARGET
-/// Update the content of $TARGET/files/ before calling this tool
-/// We'll generate $TARGET/flist and exit
+/// Update the content of $TARGET/source/ before calling this tool
+/// We'll generate $TARGET/flist and $TARGET/files/ then exit
 /// We need qtox-updater-skey in our working directory to sign the flist
 ///
 /// The generated flist is very simple and just installs everything in the working directory ...
@@ -45,14 +45,18 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    QDir fdir(target+"/files/");
-    if (!fdir.isReadable())
+    // Wipe the /files/ folder
+    QDir(target+"/files/").removeRecursively();
+    QDir(target).mkdir("files");
+
+    QDir sdir(target+"/source/");
+    if (!sdir.isReadable())
     {
-        cout << "ERROR: qtox-updater-genflist can't open the target files directory" << endl;
+        cout << "ERROR: qtox-updater-genflist can't open the target source directory" << endl;
         return 1;
     }
 
-    QStringList filesListStr = fdir.entryList(QDir::Files);
+    QStringList filesListStr = sdir.entryList(QDir::Files);
 
     /// Serialize the flist data
     QByteArray flistData;
@@ -60,7 +64,7 @@ int main(int argc, char* argv[])
     {
         cout << "Adding "<<fileStr.toStdString()<<"..."<<endl;
 
-        QFile file(target+"/files/"+fileStr);
+        QFile file(target+"/source/"+fileStr);
         if (!file.open(QIODevice::ReadOnly))
         {
             cout << "ERROR: qtox-updater-genflist couldn't open a target file to sign it" << endl;
@@ -72,12 +76,19 @@ int main(int argc, char* argv[])
         unsigned char sig[crypto_sign_BYTES];
         crypto_sign_detached(sig, nullptr, (unsigned char*)fileData.data(), fileData.size(), (unsigned char*)skeyData.data());
 
+        QString id = QCryptographicHash::hash(fileStr.toUtf8(), QCryptographicHash::Sha3_224).toHex();
+
         flistData += QByteArray::fromRawData((char*)sig, crypto_sign_BYTES);
-        flistData += stringToData(QCryptographicHash::hash(fileStr.toUtf8(), QCryptographicHash::Sha3_224).toHex());
+        flistData += stringToData(id);
         flistData += stringToData("./"+fileStr); ///< Always install in the working directory for now
         flistData += uint64ToData(fileData.size());
 
         file.close();
+        if (!file.copy(target+"/files/"+id))
+        {
+            cout << "ERROR: qtox-updater-genflist couldn't copy target file to /files/" << endl;
+            return 1;
+        }
     }
 
     cout << "Signing and writing the flist..."<<endl;
