@@ -217,7 +217,9 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
 fallbackOnTox1:
     if (tox_dns3)
         tox_dns3_kill(tox_dns3);
-    queryTox1(record, silent);
+#if TOX1_SILENT_FALLBACK
+    toxIdStr = queryTox1(record, silent);
+#endif
     return toxIdStr;
 }
 
@@ -254,7 +256,11 @@ ToxID ToxDNS::resolveToxAddress(const QString &address, bool silent)
         }
         else
         {
+#if TOX1_SILENT_FALLBACK
             toxId = ToxID::fromString(queryTox1(address, silent));
+#else
+            return toxId;
+#endif
         }
         return toxId;
     }

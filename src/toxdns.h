@@ -22,6 +22,9 @@
 #include <QDnsLookup>
 #include <QObject>
 
+/// Tox1 is not encrypted, it's unsafe
+#define TOX1_SILENT_FALLBACK 0
+
 /// Handles tox1 and tox3 DNS queries
 class ToxDNS : public QObject
 {
@@ -41,8 +44,8 @@ public:
     /// Tries to map a text string to a ToxID struct, will query Tox DNS records if necessary
     static ToxID resolveToxAddress(const QString& address, bool silent=true);
 
-    static QString queryTox1(const QString& record, bool silent=true); ///< Record should look like user@domain.tld
-    static QString queryTox3(const tox3_server& server, const QString& record, bool silent=true); ///< Record should look like user@domain.tld, may fallback on queryTox1
+    static QString queryTox1(const QString& record, bool silent=true); ///< Record should look like user@domain.tld. Do *NOT* use tox1 without a good reason, it's unsafe.
+    static QString queryTox3(const tox3_server& server, const QString& record, bool silent=true); ///< Record should look like user@domain.tld, will *NOT* fallback on queryTox1 anymore
 
 protected:
     static void showWarning(const QString& message);
