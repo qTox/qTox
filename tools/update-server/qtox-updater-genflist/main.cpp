@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QByteArray>
 #include <QDir>
+#include <QStack>
 #include <QCryptographicHash>
 #include <sodium.h>
 #include "serialize.h"
@@ -14,6 +15,31 @@ using namespace std;
 /// We need qtox-updater-skey in our working directory to sign the flist
 ///
 /// The generated flist is very simple and just installs everything in the working directory ...
+
+QList<QString> scanDir(QDir dir)
+{
+    QList<QString> files;
+    QStack<QString> stack;
+    stack.push(dir.absolutePath());
+    while (!stack.isEmpty()) {
+      QString sSubdir = stack.pop();
+      QDir subdir(sSubdir);
+
+      // Check for the files.
+      QList<QString> sublist = subdir.entryList(QDir::Files);
+      for (QString& file : sublist)
+          file = dir.relativeFilePath(sSubdir + '/' + file);
+      files += sublist;
+
+      QFileInfoList infoEntries = subdir.entryInfoList(QStringList(),
+                                                       QDir::AllDirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+      for (int i = 0; i < infoEntries.size(); i++) {
+         QFileInfo& item = infoEntries[i];
+         stack.push(item.absoluteFilePath());
+      }
+    }
+    return files;
+}
 
 int main(int argc, char* argv[])
 {
@@ -56,7 +82,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    QStringList filesListStr = sdir.entryList(QDir::Files);
+    QStringList filesListStr = scanDir(sdir);
 
     /// Serialize the flist data
     QByteArray flistData;
