@@ -73,7 +73,7 @@ protected slots:
 
 protected:
     QString getElidedName(const QString& name);
-    ChatActionPtr genMessageActionAction(const QString& author, QString message, bool isAction, const QDateTime &datetime); ///< Deprecated
+    MessageActionPtr genMessageActionAction(const QString& author, QString message, bool isAction, const QDateTime &datetime); ///< Deprecated
     MessageActionPtr genMessageActionAction(const ToxID& author, QString message, bool isAction, const QDateTime &datetime);
     MessageActionPtr genSelfActionAction(QString message, bool isAction, const QDateTime &datetime);
     ChatActionPtr genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);

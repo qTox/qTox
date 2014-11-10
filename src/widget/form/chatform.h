@@ -104,8 +104,8 @@ private:
     void startCounter();
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
-    QHash<int, QPair<int, MessageActionPtr>> receipts;
-    QSet<int> undeliveredIDs;
+    QHash<int, int> receipts;
+    QHash<int, MessageActionPtr> undeliveredMsgs;
 };
 
 #endif // CHATFORM_H

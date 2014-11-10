@@ -201,7 +201,8 @@ void GenericChatForm::onSaveLogClicked()
  */
 void GenericChatForm::addMessage(const QString& author, const QString &message, bool isAction, const QDateTime &datetime)
 {
-    ChatActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
+    MessageActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
+    ca->markAsSent();
     chatWidget->insertMessage(ca);
 }
 
@@ -230,7 +231,9 @@ MessageActionPtr GenericChatForm::addSelfMessage(const QString &message, bool is
 void GenericChatForm::addAlertMessage(const QString& author, QString message, QDateTime datetime)
 {
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-    chatWidget->insertMessage(ChatActionPtr(new AlertAction(author, message, date)));
+    AlertAction *alact = new AlertAction(author, message, date);
+    alact->markAsSent();
+    chatWidget->insertMessage(ChatActionPtr(alact));
 
     previousId.publicKey = author;
 }
@@ -307,7 +310,8 @@ void GenericChatForm::clearChatArea(bool notinform)
 /**
  * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
  */
-ChatActionPtr GenericChatForm::genMessageActionAction(const QString &author, QString message, bool isAction, const QDateTime &datetime)
+MessageActionPtr GenericChatForm::genMessageActionAction(const QString &author, QString message, bool isAction,
+                                                         const QDateTime &datetime)
 {
     if (earliestMessage == nullptr)
     {
@@ -326,14 +330,14 @@ ChatActionPtr GenericChatForm::genMessageActionAction(const QString &author, QSt
     if (isAction)
     {
         previousId = ToxID(); // next msg has a name regardless
-        return ChatActionPtr(new ActionAction (getElidedName(author), message, date, isMe));
+        return MessageActionPtr(new ActionAction (getElidedName(author), message, date, isMe));
     }
 
-    ChatActionPtr res;
+    MessageActionPtr res;
     if (previousId.publicKey == author)
-        res = ChatActionPtr(new MessageAction(QString(), message, date, isMe));
+        res = MessageActionPtr(new MessageAction(QString(), message, date, isMe));
     else
-        res = ChatActionPtr(new MessageAction(getElidedName(author), message, date, isMe));
+        res = MessageActionPtr(new MessageAction(getElidedName(author), message, date, isMe));
 
     previousId.publicKey = author;
     return res;

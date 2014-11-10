@@ -832,8 +832,8 @@ QString ChatForm::secondsToDHMS(quint32 duration)
 
 void ChatForm::registerReceipt(int receipt, int messageID, MessageActionPtr msg)
 {
-    receipts[receipt] = {messageID, msg};
-    undeliveredIDs.insert(messageID);
+    receipts[receipt] = messageID;
+    undeliveredMsgs[messageID] = msg;
     qDebug() << "linking: rec" << receipt << "with" << messageID;
 }
 
@@ -842,13 +842,15 @@ void ChatForm::dischargeReceipt(int receipt)
     auto it = receipts.find(receipt);
     if (it != receipts.end())
     {
-        int mID = it.value().first;
-        if (undeliveredIDs.remove(mID))
+        int mID = it.value();
+        auto msgIt = undeliveredMsgs.find(mID);
+        if (msgIt != undeliveredMsgs.end())
         {
             HistoryKeeper::getInstance()->markAsSent(mID);
+            msgIt.value()->markAsSent();
+            msgIt.value()->featureUpdate();
+            undeliveredMsgs.erase(msgIt);
         }
-        it.value().second->markAsSent();
-        it.value().second->featureUpdate();
         receipts.erase(it);
         qDebug() << "receipt" << receipt << "delivered";
     }
@@ -857,5 +859,5 @@ void ChatForm::dischargeReceipt(int receipt)
 void ChatForm::clearReciepts()
 {
     receipts.clear();
-    undeliveredIDs.clear();
+    undeliveredMsgs.clear();
 }
