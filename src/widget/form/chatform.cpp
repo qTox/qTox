@@ -77,6 +77,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
+    connect(this, SIGNAL(chatAreaCleared()), this, SLOT(clearReciepts()));
 
     setAcceptDrops(true);
 
@@ -115,10 +116,10 @@ void ChatForm::onSendTriggered()
         if (isAction)
             qt_msg_hist = "/me " + qt_msg;
 
-        int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
-                                                            Core::getInstance()->getSelfId().publicKey, timestamp);
+        bool status = !Settings::getInstance().getFauxOfflineMessaging();
 
-        qDebug() << "db id:" << id;
+        int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
+                                                            Core::getInstance()->getSelfId().publicKey, timestamp, status);
 
         MessageActionPtr ma = addSelfMessage(msg, isAction, timestamp, false);
 
@@ -128,7 +129,6 @@ void ChatForm::onSendTriggered()
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), msg);
 
-        qDebug() << "receipt:" << rec;
         registerReceipt(rec, id, ma);
     }
 
@@ -846,7 +846,6 @@ void ChatForm::registerReceipt(int receipt, int messageID, MessageActionPtr msg)
 {
     receipts[receipt] = messageID;
     undeliveredMsgs[messageID] = msg;
-    qDebug() << "linking: rec" << receipt << "with" << messageID;
 }
 
 void ChatForm::dischargeReceipt(int receipt)
@@ -864,7 +863,6 @@ void ChatForm::dischargeReceipt(int receipt)
             undeliveredMsgs.erase(msgIt);
         }
         receipts.erase(it);
-        qDebug() << "receipt" << receipt << "delivered";
     }
 }
 
@@ -876,6 +874,9 @@ void ChatForm::clearReciepts()
 
 void ChatForm::deliverOfflineMsgs()
 {
+    if (!Settings::getInstance().getFauxOfflineMessaging())
+        return;
+
     QMap<int, MessageActionPtr> msgs = undeliveredMsgs;
     clearReciepts();
 

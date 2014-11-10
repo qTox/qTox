@@ -199,6 +199,9 @@ public:
     QString getFriendAlias(const ToxID &id) const;
     void setFriendAlias(const ToxID &id, const QString &alias);
 
+    bool getFauxOfflineMessaging() const;
+    void setFauxOfflineMessaging(bool value);
+
 public:
     void save();
     void save(QString path);
@@ -218,6 +221,7 @@ private:
     int dhtServerId;
     bool dontShowDhtDialog;
 
+    bool fauxOfflineMessaging;
     bool enableIPv6;
     QString translation;
     static bool makeToxPortable;
@@ -280,6 +284,7 @@ private:
     };
 
     QHash<QString, friendProp> friendLst;
+
 
 signals:
     //void dataChanged();

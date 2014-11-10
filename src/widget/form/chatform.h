@@ -38,7 +38,6 @@ public:
     void setStatusMessage(QString newMessage);
 
     void dischargeReceipt(int receipt);
-    void clearReciepts();
 
 signals:
     void sendFile(int32_t friendId, QString, QString, long long);
@@ -52,6 +51,7 @@ signals:
 
 public slots:
     void deliverOfflineMsgs();
+    void clearReciepts();
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
     void onAvInvite(int FriendId, int CallId, bool video);

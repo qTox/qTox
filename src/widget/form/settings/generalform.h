@@ -53,6 +53,7 @@ private slots:
     void onAutoSaveDirChange();
     void onCheckUpdateChanged();
     void onSetShowInFront();
+    void onFauxOfflineMessaging();
 
 private:
     Ui::GeneralSettings *bodyUI;

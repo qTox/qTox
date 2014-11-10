@@ -73,6 +73,7 @@ public:
     virtual void closeEvent(QCloseEvent *event);
     virtual void changeEvent(QEvent *event);
     
+    void clearAllReceipts();
 
 public slots:
     void onSettingsClicked();

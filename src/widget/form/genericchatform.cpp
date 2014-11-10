@@ -305,6 +305,8 @@ void GenericChatForm::clearChatArea(bool notinform)
         delete earliestMessage;
         earliestMessage = nullptr;
     }
+
+    emit chatAreaCleared();
 }
 
 /**

@@ -60,6 +60,7 @@ public:
 signals:
     void sendMessage(int, QString);
     void sendAction(int, QString);
+    void chatAreaCleared();
 
 public slots:
     void focusInput();

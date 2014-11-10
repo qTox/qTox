@@ -746,9 +746,9 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
 
     if (isAction)
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp, true);
     else
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, message, f->getToxID().publicKey, timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, message, f->getToxID().publicKey, timestamp, true);
 
     if (activeChatroomWidget != nullptr)
     {
@@ -773,7 +773,6 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
     if (!f)
         return;
 
-    qDebug() << "Receipt Recieved" << friendId << "receipt" << receipt;
     f->getChatForm()->dischargeReceipt(receipt);
 }
 
@@ -1141,5 +1140,14 @@ bool Widget::askMsgboxQuestion(const QString& title, const QString& msg)
     else
     {
         return QMessageBox::question(this, title, msg) == QMessageBox::StandardButton::Yes;
+    }
+}
+
+void Widget::clearAllReceipts()
+{
+    QList<Friend*> frnds = FriendList::getAllFriends();
+    for (Friend *f : frnds)
+    {
+        f->getChatForm()->clearReciepts();
     }
 }

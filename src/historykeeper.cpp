@@ -120,15 +120,14 @@ HistoryKeeper::~HistoryKeeper()
     delete db;
 }
 
-int HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt)
+int HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)
 {
     int chat_id = getChatID(chat, ctSingle).first;
     int sender_id = getAliasID(sender);
-    bool status = sender != Core::getInstance()->getSelfId().publicKey;
 
     db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, sent_ok, message)") +
              QString("VALUES (%1, %2, %3, %4, '%5');")
-             .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(status).arg(wrapMessage(message)));
+             .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(isSent).arg(wrapMessage(message)));
 
     messageID++;
     return messageID;

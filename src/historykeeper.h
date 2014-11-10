@@ -46,7 +46,7 @@ public:
     static bool checkPassword();
     static void renameHistory(QString from, QString to);
 
-    int addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
+    int addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent);
     int addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
     void markAsSent(int m_id);
