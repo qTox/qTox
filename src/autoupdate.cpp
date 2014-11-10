@@ -40,7 +40,7 @@ const QString AutoUpdater::updaterBin = "qtox-updater.exe";
 const QString AutoUpdater::platform;
 const QString AutoUpdater::updaterBin;
 #endif
-const QString AutoUpdater::updateServer = "http://mlkj.bounceme.net";
+const QString AutoUpdater::updateServer = "https://s3.amazonaws.com/qtox-updater";
 const QString AutoUpdater::checkURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/version";
 const QString AutoUpdater::flistURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/flist";
 const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/files/";
