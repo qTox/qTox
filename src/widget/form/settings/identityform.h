@@ -22,6 +22,7 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QLabel>
+#include <QTimer>
 
 class CroppingLabel;
 class Core;
@@ -72,6 +73,7 @@ private slots:
 private:
     Ui::IdentitySettings* bodyUI;
     Core* core;
+    QTimer timer;
 
     ClickableTE* toxId;
 };

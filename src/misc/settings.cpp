@@ -121,7 +121,7 @@ void Settings::load()
     	autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", false).toBool();
         showInFront = s.value("showInFront", false).toBool();
-        fauxOfflineMessaging = s.value("fauxOfflineMessaging", false).toBool();
+        fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
     s.endGroup();
 
     s.beginGroup("Widgets");
