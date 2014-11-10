@@ -329,8 +329,7 @@ void Widget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange)
     {
-        if(isMinimized() == true
-                && Settings::getInstance().getMinimizeToTray() == true)
+        if(isMinimized() && Settings::getInstance().getMinimizeToTray())
         {
             this->hide();
         }
@@ -770,6 +769,8 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
     if ((isMinimized() || !isActiveWindow()) && Settings::getInstance().getShowInFront())
     {
         this->show();
+        showNormal();
+        activateWindow();
         emit chat->chatroomWidgetClicked(chat);
     }
     static QByteArray sndData;
