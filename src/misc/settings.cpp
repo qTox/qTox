@@ -119,6 +119,7 @@ void Settings::load()
         proxyPort = s.value("proxyPort", 0).toInt();
         currentProfile = s.value("currentProfile", "").toString();
     	autoAwayTime = s.value("autoAwayTime", 10).toInt();
+        showInFront = s.value("showInFront", false).toBool();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -255,6 +256,7 @@ void Settings::save(QString path)
         s.setValue("proxyPort", proxyPort);
         s.setValue("currentProfile", currentProfile);
         s.setValue("autoAwayTime", autoAwayTime);
+        s.setValue("showInFront", showInFront);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -476,6 +478,16 @@ bool Settings::getStatusChangeNotificationEnabled() const
 void Settings::setStatusChangeNotificationEnabled(bool newValue)
 {
     statusChangeNotificationEnabled = newValue;
+}
+
+bool Settings::getShowInFront() const
+{
+   return showInFront;
+}
+
+void Settings::setShowInFront(bool newValue)
+{
+   showInFront = newValue;
 }
 
 QString Settings::getTranslation() const
