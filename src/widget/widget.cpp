@@ -646,7 +646,7 @@ void Widget::addFriend(int friendId, const QString &userId)
 
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
 {
-    QString info = QString("Couldn't request friendship");
+    QString info = QString(tr("Couldn't request friendship"));
     if(!errorInfo.isEmpty()) {
         info = info + (QString(": ") + errorInfo);
     }

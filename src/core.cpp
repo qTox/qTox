@@ -715,17 +715,22 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
 {
     const QString userId = friendAddress.mid(0, TOX_CLIENT_ID_SIZE * 2);
 
-    if(hasFriendWithAddress(friendAddress)) {
-        emit failedToAddFriend(userId, "Friend is already added");
+    if(hasFriendWithAddress(friendAddress))
+    {
+        emit failedToAddFriend(userId, QString(tr("Friend is already added")));
     }
-    else {
+    else
+    {
         qDebug() << "Core: requesting friendship of "+friendAddress;
         CString cMessage(message);
 
         int friendId = tox_add_friend(tox, CFriendAddress(friendAddress).data(), cMessage.data(), cMessage.size());
-        if (friendId < 0) {
+        if (friendId < 0)
+        {
             emit failedToAddFriend(userId);
-        } else {
+        }
+        else
+        {
             // Update our friendAddresses
             Settings::getInstance().updateFriendAdress(friendAddress);
             emit friendAdded(friendId, userId);
@@ -1601,7 +1606,8 @@ void Core::createGroup()
 bool Core::hasFriendWithAddress(const QString &addr) const
 {
     // Valid length check
-    if(addr.length() != (TOX_FRIEND_ADDRESS_SIZE * 2)) {
+    if(addr.length() != (TOX_FRIEND_ADDRESS_SIZE * 2))
+    {
         return false;
     }
 
@@ -1612,21 +1618,25 @@ bool Core::hasFriendWithAddress(const QString &addr) const
 bool Core::hasFriendWithPublicKey(const QString &pubkey) const
 {
     // Valid length check
-    if(pubkey.length() != (TOX_CLIENT_ID_SIZE * 2)) {
+    if(pubkey.length() != (TOX_CLIENT_ID_SIZE * 2))
+    {
         return false;
     }
 
     bool found = false;
     const uint32_t friendCount = tox_count_friendlist(tox);
-    if (friendCount > 0) {
+    if (friendCount > 0)
+    {
         int32_t *ids = new int32_t[friendCount];
         tox_get_friendlist(tox, ids, friendCount);
-        for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i) {
+        for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i)
+        {
             // getFriendAddress may return either id (public key) or address
             QString addrOrId = getFriendAddress(ids[i]);
 
             // Set true if found
-            if(addrOrId.toUpper().startsWith(pubkey.toUpper())) {
+            if(addrOrId.toUpper().startsWith(pubkey.toUpper()))
+            {
                 found = true;
                 break;
             }
