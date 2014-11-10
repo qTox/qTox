@@ -44,6 +44,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
     bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
+    bodyUI->trayLayout->addStretch();
     
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
@@ -298,3 +299,4 @@ void GeneralForm::onSetShowInFront()
 {
    Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
 }
+
