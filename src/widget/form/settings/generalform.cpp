@@ -57,6 +57,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
+    bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
     
     for (auto entry : SmileyPack::listSmileyPacks())
     {
@@ -106,6 +107,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);
     connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
+    connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     if(bodyUI->autoacceptFiles->isChecked())
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
@@ -290,4 +292,9 @@ void GeneralForm::reloadSmiles()
 void GeneralForm::onCheckUpdateChanged()
 {
     Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
+}
+
+void GeneralForm::onSetShowInFront()
+{
+   Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
 }

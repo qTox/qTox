@@ -102,6 +102,9 @@ public:
     bool getCheckUpdates() const;
     void setCheckUpdates(bool newValue);
 
+    bool getShowInFront() const;
+    void setShowInFront(bool newValue);
+
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
 
@@ -223,6 +226,7 @@ private:
     bool minimizeToTray;
     bool useEmoticons;
     bool checkUpdates;
+    bool showInFront;
 
     bool forceTCP;
 

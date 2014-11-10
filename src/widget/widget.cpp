@@ -767,6 +767,10 @@ void Widget::newMessageAlert()
     QApplication::alert(this);
 
     static QFile sndFile(":audio/notification.pcm");
+    if(Settings::getInstance().getShowInFront() == true)
+    {
+        this->show();
+    }
     static QByteArray sndData;
     if (sndData.isEmpty())
     {
