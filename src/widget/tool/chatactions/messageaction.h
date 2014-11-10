@@ -24,12 +24,20 @@ class MessageAction : public ChatAction
 public:
     MessageAction(const QString &author, const QString &message, const QString &date, const bool &me);
     virtual ~MessageAction(){;}
+    virtual void featureUpdate();
+    void markAsSent();
+    virtual QString getRawMessage();
+    virtual bool isAction() {return false;}
+
+protected:
     virtual QString getMessage();
     virtual QString getMessage(QString div);
-    virtual void setup(QTextCursor, QTextEdit*) override {;}
 
 protected:
     QString message;
+    bool isProcessed;
 };
+
+typedef QSharedPointer<MessageAction> MessageActionPtr;
 
 #endif // MESSAGEACTION_H

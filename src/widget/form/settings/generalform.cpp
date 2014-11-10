@@ -59,6 +59,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
+    bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     
     for (auto entry : SmileyPack::listSmileyPacks())
     {
@@ -125,6 +126,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
+    connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
 }
 
 GeneralForm::~GeneralForm()
@@ -300,3 +302,7 @@ void GeneralForm::onSetShowInFront()
    Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
 }
 
+void GeneralForm::onFauxOfflineMessaging()
+{
+    Settings::getInstance().setFauxOfflineMessaging(bodyUI->cbFauxOfflineMessaging->isChecked());
+}

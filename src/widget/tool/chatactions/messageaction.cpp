@@ -17,11 +17,13 @@
 #include "messageaction.h"
 #include "src/misc/smileypack.h"
 #include "src/misc/settings.h"
+#include <QTextTable>
 
 MessageAction::MessageAction(const QString &author, const QString &message, const QString &date, const bool &me) :
     ChatAction(me, author, date),
     message(message)
 {
+    isProcessed = false;
 }
 
 QString MessageAction::getMessage(QString div)
@@ -70,4 +72,25 @@ QString MessageAction::getMessage()
         return getMessage("message_me");
     else
         return getMessage("message");
+}
+
+void MessageAction::featureUpdate()
+{
+    QTextTableCell cell = textTable->cellAt(0,3);
+    QTextTableCellFormat format;
+    if (!isProcessed)
+        format.setBackground(QColor(Qt::red));
+    else
+        format.setBackground(QColor(Qt::white));
+    cell.setFormat(format);
+}
+
+void MessageAction::markAsSent()
+{
+    isProcessed = true;
+}
+
+QString MessageAction::getRawMessage()
+{
+    return message;
 }

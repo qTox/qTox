@@ -21,26 +21,6 @@ AlertAction::AlertAction(const QString &author, const QString &message, const QS
 {
 }
 
-void AlertAction::setup(QTextCursor cursor, QTextEdit *)
-{
-    // When this function is called, we're supposed to only update ourselve when needed
-    // Nobody should ask us to do anything with our content, we're on our own
-    // Except we never udpate on our own, so we can safely free our resources
-
-    (void) cursor;
-    message.clear();
-    message.squeeze();
-    name.clear();
-    name.squeeze();
-    date.clear();
-    date.squeeze();
-}
-/*
-QString AlertAction::getName()
-{
-    return QString("<div class=%1>%2</div>").arg("alert_name").arg(toHtmlChars(name));
-}
-*/
 QString AlertAction::getMessage()
 {
     return MessageAction::getMessage("alert");

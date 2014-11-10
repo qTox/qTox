@@ -121,6 +121,7 @@ void Settings::load()
     	autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", false).toBool();
         showInFront = s.value("showInFront", false).toBool();
+        fauxOfflineMessaging = s.value("fauxOfflineMessaging", false).toBool();
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -259,6 +260,7 @@ void Settings::save(QString path)
         s.setValue("autoAwayTime", autoAwayTime);
         s.setValue("checkUpdates", checkUpdates);
         s.setValue("showInFront", showInFront);
+        s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -848,4 +850,14 @@ void Settings::setFriendAlias(const ToxID &id, const QString &alias)
     {
         it->alias = alias;
     }
+}
+
+bool Settings::getFauxOfflineMessaging() const
+{
+    return fauxOfflineMessaging;
+}
+
+void Settings::setFauxOfflineMessaging(bool value)
+{
+    fauxOfflineMessaging = value;
 }

@@ -52,6 +52,7 @@ void PrivacyForm::onEnableLoggingUpdated()
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     bodyUI->cbEncryptHistory->setEnabled(bodyUI->cbKeepHistory->isChecked());
     HistoryKeeper::getInstance()->resetInstance();
+    Widget::getInstance()->clearAllReceipts();
 }
 
 void PrivacyForm::onTypingNotificationEnabledUpdated()

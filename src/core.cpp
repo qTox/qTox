@@ -268,6 +268,7 @@ void Core::start()
     tox_callback_file_data(tox, onFileDataCallback, this);
     tox_callback_avatar_info(tox, onAvatarInfoCallback, this);
     tox_callback_avatar_data(tox, onAvatarDataCallback, this);
+    tox_callback_read_receipt(tox, onReadReceiptCallback, this);
 
     toxav_register_callstate_callback(toxav, onAvInvite, av_OnInvite, this);
     toxav_register_callstate_callback(toxav, onAvStart, av_OnStart, this);
@@ -700,6 +701,11 @@ void Core::onAvatarDataCallback(Tox*, int32_t friendnumber, uint8_t,
     }
 }
 
+void Core::onReadReceiptCallback(Tox*, int32_t friendnumber, uint32_t receipt, void *core)
+{
+     emit static_cast<Core*>(core)->receiptRecieved(friendnumber, receipt);
+}
+
 void Core::acceptFriendRequest(const QString& userId)
 {
     int friendId = tox_add_friend_norequest(tox, CUserId(userId).data());
@@ -739,23 +745,22 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
     saveConfiguration();
 }
 
-void Core::sendMessage(int friendId, const QString& message)
+int Core::sendMessage(int friendId, const QString& message)
 {
-    QList<CString> cMessages = splitMessage(message);
-
-    for (auto &cMsg :cMessages)
-    {
-        int messageId = tox_send_message(tox, friendId, cMsg.data(), cMsg.size());
-        if (messageId == 0)
-            emit messageSentResult(friendId, message, messageId);
-    }
+    QMutexLocker ml(&messageSendMutex);
+    CString cMessage(message);
+    int receipt = tox_send_message(tox, friendId, cMessage.data(), cMessage.size());
+    emit messageSentResult(friendId, message, receipt);
+    return receipt;
 }
 
-void Core::sendAction(int friendId, const QString &action)
+int Core::sendAction(int friendId, const QString &action)
 {
+    QMutexLocker ml(&messageSendMutex);
     CString cMessage(action);
-    int ret = tox_send_action(tox, friendId, cMessage.data(), cMessage.size());
-    emit actionSentResult(friendId, action, ret);
+    int receipt = tox_send_action(tox, friendId, cMessage.data(), cMessage.size());
+    emit messageSentResult(friendId, action, receipt);
+    return receipt;
 }
 
 void Core::sendTyping(int friendId, bool typing)

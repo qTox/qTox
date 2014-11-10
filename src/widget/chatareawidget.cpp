@@ -102,6 +102,10 @@ void ChatAreaWidget::insertMessage(ChatActionPtr msgAction, QTextCursor::MoveOpe
     checkSlider();
 
     QTextTable *chatTextTable = getMsgTable(pos);
+    msgAction->assignPlace(chatTextTable, this);
+    msgAction->dispaly();
+
+    /*
     QTextCursor cur = chatTextTable->cellAt(0, 2).firstCursorPosition();
     cur.clearSelection();
     cur.setKeepPositionOnInsert(true);
@@ -110,8 +114,8 @@ void ChatAreaWidget::insertMessage(ChatActionPtr msgAction, QTextCursor::MoveOpe
     chatTextTable->cellAt(0, 2).firstCursorPosition().insertHtml(msgAction->getMessage());
     chatTextTable->cellAt(0, 4).firstCursorPosition().setBlockFormat(dateFormat);
     chatTextTable->cellAt(0, 4).firstCursorPosition().insertHtml(msgAction->getDate());
-
     msgAction->setup(cur, this);
+    */
 
     if (msgAction->isInteractive())
         messages.append(msgAction);

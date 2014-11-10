@@ -39,6 +39,7 @@
 #include "src/widget/croppinglabel.h"
 #include "src/misc/style.h"
 #include "src/misc/settings.h"
+#include "src/misc/cstring.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -76,11 +77,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
+    connect(this, SIGNAL(chatAreaCleared()), this, SLOT(clearReciepts()));
 
     setAcceptDrops(true);
 
     if (Settings::getInstance().getEnableLogging())
-        loadHistory(QDateTime::currentDateTime().addDays(-7));
+        loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 }
 
 ChatForm::~ChatForm()
@@ -100,20 +102,36 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
 
-    QDateTime timestamp = QDateTime::currentDateTime();
-    HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, msg, Core::getInstance()->getSelfId().publicKey, timestamp);
+    bool isAction = msg.startsWith("/me ");
+    if (isAction)
+        msg = msg = msg.right(msg.length() - 4);
 
-    if (msg.startsWith("/me "))
+    QList<CString> splittedMsg = Core::splitMessage(msg);
+    QDateTime timestamp = QDateTime::currentDateTime();
+
+    for (CString& c_msg : splittedMsg)
     {
-        msg = msg.right(msg.length() - 4);
-        addSelfMessage(msg, true, timestamp);
-        emit sendAction(f->getFriendID(), msg);
+        QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
+        QString qt_msg_hist = qt_msg;
+        if (isAction)
+            qt_msg_hist = "/me " + qt_msg;
+
+        bool status = !Settings::getInstance().getFauxOfflineMessaging();
+
+        int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
+                                                            Core::getInstance()->getSelfId().publicKey, timestamp, status);
+
+        MessageActionPtr ma = addSelfMessage(msg, isAction, timestamp, false);
+
+        int rec;
+        if (isAction)
+            rec = Core::getInstance()->sendAction(f->getFriendID(), msg);
+        else
+            rec = Core::getInstance()->sendMessage(f->getFriendID(), msg);
+
+        registerReceipt(rec, id, ma);
     }
-    else
-    {
-        addSelfMessage(msg, false, timestamp);
-        emit sendMessage(f->getFriendID(), msg);
-    }
+
     msgEdit->clear();
 }
 
@@ -691,7 +709,7 @@ void ChatForm::onAvatarRemoved(int FriendId)
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 }
 
-void ChatForm::loadHistory(QDateTime since)
+void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 {
     QDateTime now = QDateTime::currentDateTime();
 
@@ -728,7 +746,21 @@ void ChatForm::loadHistory(QDateTime since)
         }
 
         // Show each messages
-        ChatActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
+        MessageActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
+        if (it.isSent)
+        {
+            ca->markAsSent();
+        } else {
+            if (processUndelivered)
+            {
+                int rec;
+                if (ca->isAction())
+                    rec = Core::getInstance()->sendAction(f->getFriendID(), ca->getRawMessage());
+                else
+                    rec = Core::getInstance()->sendMessage(f->getFriendID(), ca->getRawMessage());
+                registerReceipt(rec, it.id, ca);
+            }
+        }
         historyMessages.append(ca);
     }
     std::swap(storedPrevId, previousId);
@@ -787,7 +819,6 @@ void ChatForm::updateTime()
     callDuration->setText(secondsToDHMS(timeElapsed.elapsed()/1000));
 }
 
-
 QString ChatForm::secondsToDHMS(quint32 duration)
 {
     QString res;
@@ -809,4 +840,54 @@ QString ChatForm::secondsToDHMS(quint32 duration)
         return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
     //I assume no one will ever have call longer than ~30days
     return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
+}
+
+void ChatForm::registerReceipt(int receipt, int messageID, MessageActionPtr msg)
+{
+    receipts[receipt] = messageID;
+    undeliveredMsgs[messageID] = msg;
+}
+
+void ChatForm::dischargeReceipt(int receipt)
+{
+    auto it = receipts.find(receipt);
+    if (it != receipts.end())
+    {
+        int mID = it.value();
+        auto msgIt = undeliveredMsgs.find(mID);
+        if (msgIt != undeliveredMsgs.end())
+        {
+            HistoryKeeper::getInstance()->markAsSent(mID);
+            msgIt.value()->markAsSent();
+            msgIt.value()->featureUpdate();
+            undeliveredMsgs.erase(msgIt);
+        }
+        receipts.erase(it);
+    }
+}
+
+void ChatForm::clearReciepts()
+{
+    receipts.clear();
+    undeliveredMsgs.clear();
+}
+
+void ChatForm::deliverOfflineMsgs()
+{
+    if (!Settings::getInstance().getFauxOfflineMessaging())
+        return;
+
+    QMap<int, MessageActionPtr> msgs = undeliveredMsgs;
+    clearReciepts();
+
+    for (auto iter = msgs.begin(); iter != msgs.end(); iter++)
+    {
+        QString messageText = iter.value()->getRawMessage();
+        int rec;
+        if (iter.value()->isAction())
+            rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
+        else
+            rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
+        registerReceipt(rec, iter.key(), iter.value());
+    }
 }

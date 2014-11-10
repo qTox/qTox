@@ -22,6 +22,7 @@
 #include <QLabel>
 #include <QTimer>
 #include <QElapsedTimer>
+#include <QSet>
 
 struct Friend;
 class FileTransferInstance;
@@ -36,6 +37,8 @@ public:
     ~ChatForm();
     void setStatusMessage(QString newMessage);
 
+    void dischargeReceipt(int receipt);
+
 signals:
     void sendFile(int32_t friendId, QString, QString, long long);
     void startCall(int friendId);
@@ -47,6 +50,8 @@ signals:
     void volMuteToggle(int callId);
 
 public slots:
+    void deliverOfflineMsgs();
+    void clearReciepts();
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
     void onAvInvite(int FriendId, int CallId, bool video);
@@ -80,10 +85,11 @@ private slots:
     void updateTime();    
 
 protected:
-    void loadHistory(QDateTime since);
+    void loadHistory(QDateTime since, bool processUndelivered = false);
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);
+    void registerReceipt(int receipt, int messageID, MessageActionPtr msg);
 
 private:
     Friend* f;
@@ -100,6 +106,8 @@ private:
     void startCounter();
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
+    QHash<int, int> receipts;
+    QMap<int, MessageActionPtr> undeliveredMsgs;
 };
 
 #endif // CHATFORM_H

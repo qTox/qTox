@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>511</width>
-        <height>796</height>
+        <height>698</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -97,40 +97,40 @@
            <layout class="QHBoxLayout" name="trayLayout">
             <item>
              <widget class="QCheckBox" name="startInTray">
-              <property name="text">
-               <string>Start in tray</string>
-              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Start in tray</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="closeToTray">
-              <property name="text">
-               <string>Close to tray</string>
-              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Close to tray</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="minimizeToTray">
-              <property name="text">
-               <string>Minimize to tray</string>
-              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Minimize to tray</string>
               </property>
              </widget>
             </item>
@@ -154,6 +154,13 @@
            <widget class="QCheckBox" name="showInFront">
             <property name="text">
              <string>Focus qTox when a message is received</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbFauxOfflineMessaging">
+            <property name="text">
+             <string>Faux offline messaging</string>
             </property>
            </widget>
           </item>

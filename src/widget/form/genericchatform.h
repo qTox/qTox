@@ -21,7 +21,7 @@
 #include <QPoint>
 #include <QDateTime>
 #include <QMenu>
-#include "src/widget/tool/chatactions/chataction.h"
+#include "src/widget/tool/chatactions/messageaction.h"
 #include "src/corestructs.h"
 
 // Spacing in px inserted when the author of the last message changes
@@ -48,9 +48,10 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
+
     void addMessage(const QString& author, const QString &message, bool isAction, const QDateTime &datetime); ///< Deprecated
-    void addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime);
-    void addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime);
+    MessageActionPtr addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    MessageActionPtr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
     void addAlertMessage(const QString& author, QString message, QDateTime datetime); ///< Deprecated
     void addAlertMessage(const ToxID& author, QString message, QDateTime datetime);
@@ -59,6 +60,7 @@ public:
 signals:
     void sendMessage(int, QString);
     void sendAction(int, QString);
+    void chatAreaCleared();
 
 public slots:
     void focusInput();
@@ -72,9 +74,9 @@ protected slots:
 
 protected:
     QString getElidedName(const QString& name);
-    ChatActionPtr genMessageActionAction(const QString& author, QString message, bool isAction, const QDateTime &datetime); ///< Deprecated
-    ChatActionPtr genMessageActionAction(const ToxID& author, QString message, bool isAction, const QDateTime &datetime);
-    ChatActionPtr genSelfActionAction(QString message, bool isAction, const QDateTime &datetime);
+    MessageActionPtr genMessageActionAction(const QString& author, QString message, bool isAction, const QDateTime &datetime); ///< Deprecated
+    MessageActionPtr genMessageActionAction(const ToxID& author, QString message, bool isAction, const QDateTime &datetime);
+    MessageActionPtr genSelfActionAction(QString message, bool isAction, const QDateTime &datetime);
     ChatActionPtr genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);
 
     ToxID previousId;

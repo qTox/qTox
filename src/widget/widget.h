@@ -73,6 +73,7 @@ public:
     virtual void closeEvent(QCloseEvent *event);
     virtual void changeEvent(QEvent *event);
     
+    void clearAllReceipts();
 
 public slots:
     void onSettingsClicked();
@@ -109,6 +110,7 @@ private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget *);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
+    void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, const uint8_t *publicKey,uint16_t length);
     void onGroupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction);

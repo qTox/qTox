@@ -213,6 +213,7 @@ void Widget::init()
     connect(core, &Core::friendStatusMessageChanged, this, &Widget::onFriendStatusMessageChanged);
     connect(core, &Core::friendRequestReceived, this, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived, this, &Widget::onFriendMessageReceived);
+    connect(core, &Core::receiptRecieved, this, &Widget::onReceiptRecieved);
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
@@ -691,6 +692,11 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
             f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
                                           "white", QDateTime::currentDateTime());
     }
+
+    if (isActualChange && status != Status::Offline)
+    { // wait a little
+        QTimer::singleShot(250, f->getChatForm(), SLOT(deliverOfflineMsgs()));
+    }
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -737,12 +743,12 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp);
+    f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
 
     if (isAction)
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp, true);
     else
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, message, f->getToxID().publicKey, timestamp);
+        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, message, f->getToxID().publicKey, timestamp, true);
 
     if (activeChatroomWidget != nullptr)
     {
@@ -759,6 +765,15 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     }
 
     f->getFriendWidget()->updateStatusLight();
+}
+
+void Widget::onReceiptRecieved(int friendId, int receipt)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    if (!f)
+        return;
+
+    f->getChatForm()->dischargeReceipt(receipt);
 }
 
 void Widget::newMessageAlert(GenericChatroomWidget* chat)
@@ -1047,12 +1062,10 @@ void Widget::setStatusBusy()
 void Widget::onMessageSendResult(int friendId, const QString& message, int messageId)
 {
     Q_UNUSED(message)
+    Q_UNUSED(messageId)
     Friend* f = FriendList::findFriend(friendId);
     if (!f)
         return;
-
-    if (!messageId)
-        f->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
 }
 
 void Widget::onGroupSendResult(int groupId, const QString& message, int result)
@@ -1127,5 +1140,14 @@ bool Widget::askMsgboxQuestion(const QString& title, const QString& msg)
     else
     {
         return QMessageBox::question(this, title, msg) == QMessageBox::StandardButton::Yes;
+    }
+}
+
+void Widget::clearAllReceipts()
+{
+    QList<Friend*> frnds = FriendList::getAllFriends();
+    for (Friend *f : frnds)
+    {
+        f->getChatForm()->clearReciepts();
     }
 }
