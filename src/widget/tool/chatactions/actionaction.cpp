@@ -20,6 +20,7 @@
 ActionAction::ActionAction(const QString &author, QString message, const QString &date, const bool& me) :
     MessageAction(author, author+" "+message, date, me)
 {
+    rawMessage = message;
 }
 
 QString ActionAction::getName()
@@ -30,4 +31,9 @@ QString ActionAction::getName()
 QString ActionAction::getMessage()
 {
     return MessageAction::getMessage("action");
+}
+
+QString ActionAction::getRawMessage()
+{
+    return rawMessage;
 }

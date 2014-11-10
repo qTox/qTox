@@ -81,7 +81,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     setAcceptDrops(true);
 
     if (Settings::getInstance().getEnableLogging())
-        loadHistory(QDateTime::currentDateTime().addDays(-7));
+        loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 }
 
 ChatForm::~ChatForm()
@@ -709,7 +709,7 @@ void ChatForm::onAvatarRemoved(int FriendId)
     avatar->setPixmap(QPixmap(":/img/contact_dark.png"), Qt::transparent);
 }
 
-void ChatForm::loadHistory(QDateTime since)
+void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 {
     QDateTime now = QDateTime::currentDateTime();
 
@@ -748,7 +748,19 @@ void ChatForm::loadHistory(QDateTime since)
         // Show each messages
         MessageActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
         if (it.isSent)
+        {
             ca->markAsSent();
+        } else {
+            if (processUndelivered)
+            {
+                int rec;
+                if (ca->isAction())
+                    rec = Core::getInstance()->sendAction(f->getFriendID(), ca->getRawMessage());
+                else
+                    rec = Core::getInstance()->sendMessage(f->getFriendID(), ca->getRawMessage());
+                registerReceipt(rec, it.id, ca);
+            }
+        }
         historyMessages.append(ca);
     }
     std::swap(storedPrevId, previousId);
@@ -860,4 +872,21 @@ void ChatForm::clearReciepts()
 {
     receipts.clear();
     undeliveredMsgs.clear();
+}
+
+void ChatForm::deliverOfflineMsgs()
+{
+    QMap<int, MessageActionPtr> msgs = undeliveredMsgs;
+    clearReciepts();
+
+    for (auto iter = msgs.begin(); iter != msgs.end(); iter++)
+    {
+        QString messageText = iter.value()->getRawMessage();
+        int rec;
+        if (iter.value()->isAction())
+            rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
+        else
+            rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
+        registerReceipt(rec, iter.key(), iter.value());
+    }
 }

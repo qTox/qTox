@@ -26,6 +26,8 @@ public:
     virtual ~MessageAction(){;}
     virtual void featureUpdate();
     void markAsSent();
+    virtual QString getRawMessage();
+    virtual bool isAction() {return false;}
 
 protected:
     virtual QString getMessage();

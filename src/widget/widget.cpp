@@ -692,6 +692,11 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
             f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
                                           "white", QDateTime::currentDateTime());
     }
+
+    if (isActualChange && status != Status::Offline)
+    { // wait a little
+        QTimer::singleShot(250, f->getChatForm(), SLOT(deliverOfflineMsgs()));
+    }
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -1058,12 +1063,10 @@ void Widget::setStatusBusy()
 void Widget::onMessageSendResult(int friendId, const QString& message, int messageId)
 {
     Q_UNUSED(message)
+    Q_UNUSED(messageId)
     Friend* f = FriendList::findFriend(friendId);
     if (!f)
         return;
-
-    if (!messageId)
-        f->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
 }
 
 void Widget::onGroupSendResult(int groupId, const QString& message, int result)

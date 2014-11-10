@@ -24,13 +24,15 @@ class ActionAction : public MessageAction
 public:
     ActionAction(const QString &author, QString message, const QString& date, const bool&);
     virtual ~ActionAction(){;}
+    virtual QString getRawMessage();
+    virtual bool isAction() {return true;}
 
 protected:
     virtual QString getMessage();
     virtual QString getName();
 
 private:
-    QString message;
+    QString message, rawMessage;
 };
 
 #endif // MESSAGEACTION_H

@@ -89,3 +89,8 @@ void MessageAction::markAsSent()
 {
     isProcessed = true;
 }
+
+QString MessageAction::getRawMessage()
+{
+    return message;
+}

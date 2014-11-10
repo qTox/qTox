@@ -30,6 +30,7 @@ public:
 
     struct HistMessage
     {
+        qint64 id;
         QString sender;
         QString message;
         QDateTime timestamp;

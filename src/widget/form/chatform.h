@@ -36,7 +36,7 @@ public:
     ChatForm(Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(QString newMessage);
-    void registerReceipt(int receipt, int messageID, MessageActionPtr msg);
+
     void dischargeReceipt(int receipt);
     void clearReciepts();
 
@@ -51,6 +51,7 @@ signals:
     void volMuteToggle(int callId);
 
 public slots:
+    void deliverOfflineMsgs();
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
     void onAvInvite(int FriendId, int CallId, bool video);
@@ -84,10 +85,11 @@ private slots:
     void updateTime();    
 
 protected:
-    void loadHistory(QDateTime since);
+    void loadHistory(QDateTime since, bool processUndelivered = false);
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);
+    void registerReceipt(int receipt, int messageID, MessageActionPtr msg);
 
 private:
     Friend* f;
@@ -105,7 +107,7 @@ private:
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
     QHash<int, int> receipts;
-    QHash<int, MessageActionPtr> undeliveredMsgs;
+    QMap<int, MessageActionPtr> undeliveredMsgs;
 };
 
 #endif // CHATFORM_H
