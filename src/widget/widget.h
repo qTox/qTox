@@ -57,7 +57,7 @@ public:
     QThread* getCoreThread();
     Camera* getCamera();
     static Widget* getInstance();
-    void newMessageAlert();
+    void newMessageAlert(GenericChatroomWidget* chat);
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
     static QList<QString> searchProfiles();
