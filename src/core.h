@@ -53,6 +53,8 @@ public:
     QList<QString> getGroupPeerNames(int groupId) const; ///< Get the names of the peers of a group
     QString getFriendAddress(int friendNumber) const; ///< Get the full address if known, or Tox ID of a friend
     QString getFriendUsername(int friendNumber) const; ///< Get the username of a friend
+    bool hasFriendWithAddress(const QString &addr) const; ///< Check if we have a friend by address
+    bool hasFriendWithPublicKey(const QString &pubkey) const; ///< Check if we have a friend by public key
     int joinGroupchat(int32_t friendNumber, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
     void quitGroupChat(int groupId) const; ///< Quit a groupchat
 
@@ -154,7 +156,7 @@ signals:
     void groupSentResult(int groupId, const QString& message, int result);
     void actionSentResult(int friendId, const QString& action, int success);
 
-    void failedToAddFriend(const QString& userId);
+    void failedToAddFriend(const QString& userId, const QString& errorInfo = QString());
     void failedToRemoveFriend(int friendId);
     void failedToSetUsername(const QString& username);
     void failedToSetStatusMessage(const QString& message);
