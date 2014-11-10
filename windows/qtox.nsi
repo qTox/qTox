@@ -20,7 +20,6 @@ Name "${APP_NAME}"
 Caption "${APP_NAME}"
 OutFile "${INSTALLER_NAME}"
 BrandingText "${APP_NAME}"
-InstallDirRegKey "${REG_ROOT}" "${REG_APP_PATH}" ""
 InstallDir "$PROGRAMFILES\${APP_NAME}"
 SetCompressor /SOLID lzma
 
