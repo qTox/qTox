@@ -39,6 +39,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     
     bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
+    bodyUI->trayLayout->addStretch();
     
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
