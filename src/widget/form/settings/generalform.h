@@ -52,6 +52,7 @@ private slots:
     void onAutoAcceptFileChange();
     void onAutoSaveDirChange();
     void onCheckUpdateChanged();
+    void onSetShowInFront();
 
 private:
     Ui::GeneralSettings *bodyUI;

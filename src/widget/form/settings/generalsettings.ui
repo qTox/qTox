@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>511</width>
-        <height>720</height>
+        <height>796</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -94,25 +94,47 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="startInTray">
-            <property name="text">
-             <string>Start in tray</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="closeToTray">
-            <property name="text">
-             <string>Close to tray</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="minimizeToTray">
-            <property name="text">
-             <string>Minimize to tray</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="trayLayout">
+            <item>
+             <widget class="QCheckBox" name="startInTray">
+              <property name="text">
+               <string>Start in tray</string>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="closeToTray">
+              <property name="text">
+               <string>Close to tray</string>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="minimizeToTray">
+              <property name="text">
+               <string>Minimize to tray</string>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QCheckBox" name="statusChanges">
@@ -125,6 +147,13 @@
            <widget class="QCheckBox" name="checkUpdates">
             <property name="text">
              <string>Check for updates on startup (unstable)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="showInFront">
+            <property name="text">
+             <string>Focus qTox when a message is received</string>
             </property>
            </widget>
           </item>
@@ -171,33 +200,37 @@
            </layout>
           </item>
           <item>
-           <widget class="QCheckBox" name="autoacceptFiles">
-            <property name="text">
-             <string>Autoaccept files</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="saveFilesHLayout">
+           <layout class="QHBoxLayout" name="fileLayout">
             <item>
-             <widget class="QLabel" name="autoSaveFilesDirLabel">
+             <widget class="QCheckBox" name="autoacceptFiles">
               <property name="text">
-               <string>Save files in</string>
+               <string>Autoaccept files</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="autoSaveFilesDir">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="saveFilesHLayout">
+              <item>
+               <widget class="QLabel" name="autoSaveFilesDirLabel">
+                <property name="text">
+                 <string>Save files in</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="autoSaveFilesDir">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>PushButton</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -398,7 +431,7 @@
           <item>
            <widget class="QCheckBox" name="cbEnableUDP">
             <property name="toolTip">
-             <string extracomment="force tcp checkbox tooltip">This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</string>
+             <string extracomment="force tcp checkbox tooltip">Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</string>
             </property>
             <property name="text">
              <string extracomment="Text on checkbox to disable UDP">Enable UDP (recommended)</string>

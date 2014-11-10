@@ -329,8 +329,7 @@ void Widget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange)
     {
-        if(isMinimized() == true
-                && Settings::getInstance().getMinimizeToTray() == true)
+        if(isMinimized() && Settings::getInstance().getMinimizeToTray())
         {
             this->hide();
         }
@@ -675,7 +674,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     
     //won't print the message if there were no messages before
     if(!f->getChatForm()->isEmpty()
-            && Settings::getInstance().getStatusChangeNotificationEnabled() == true)
+            && Settings::getInstance().getStatusChangeNotificationEnabled())
     {
         QString fStatus = "";
         switch(f->getStatus()){
@@ -750,23 +749,30 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         if ((static_cast<GenericChatroomWidget*>(f->getFriendWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
         {
             f->setEventFlag(true);
-            newMessageAlert();
+            newMessageAlert(f->getFriendWidget());
         }
     }
     else
     {
         f->setEventFlag(true);
-        newMessageAlert();
+        newMessageAlert(f->getFriendWidget());
     }
 
     f->getFriendWidget()->updateStatusLight();
 }
 
-void Widget::newMessageAlert()
+void Widget::newMessageAlert(GenericChatroomWidget* chat)
 {
     QApplication::alert(this);
 
     static QFile sndFile(":audio/notification.pcm");
+    if ((isMinimized() || !isActiveWindow()) && Settings::getInstance().getShowInFront())
+    {
+        this->show();
+        showNormal();
+        activateWindow();
+        emit chat->chatroomWidgetClicked(chat);
+    }
     static QByteArray sndData;
     if (sndData.isEmpty())
     {
@@ -878,7 +884,7 @@ void Widget::onGroupMessageReceived(int groupnumber, const QString& message, con
         g->hasNewMessages = 1;
         if (targeted)
         {
-            newMessageAlert();
+            newMessageAlert(g->widget);
             g->userWasMentioned = 1; // useful for highlighting line or desktop notifications
         }
         g->widget->updateStatusLight();
