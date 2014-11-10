@@ -188,7 +188,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     Widget* w = Widget::getInstance();
     if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
     {
-        w->newMessageAlert();
+        w->newMessageAlert(f->getFriendWidget());
         f->setEventFlag(true);
         f->getFriendWidget()->updateStatusLight();
     }
@@ -240,7 +240,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     Widget* w = Widget::getInstance();
     if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
     {
-        w->newMessageAlert();
+        w->newMessageAlert(f->getFriendWidget());
         f->setEventFlag(true);
         f->getFriendWidget()->updateStatusLight();
     }
