@@ -587,3 +587,8 @@ VideoSource *Core::getVideoSourceFromCall(int callNumber)
     return &calls[callNumber].videoSource;
 }
 
+void Core::playGroupAudio(Tox* tox, int  groupnumber, int friendgroupnumber, const int16_t* out_audio,
+                unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* userdata)
+{
+    qDebug() << "Core::playGroupAudio: Not implemented";
+}
