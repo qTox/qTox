@@ -167,8 +167,8 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     QSqlQuery dbAnswer;
     if (ct == ctSingle)
     {
-        dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
-                            QString("LEFT OUTER JOIN sent_status ON history.id = sent_status.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;")
+        dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
+                            QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;")
                             .arg(time64_from).arg(time64_to).arg(chat_id));
     } else {
         // no groupchats yet
