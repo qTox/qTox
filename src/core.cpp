@@ -1793,7 +1793,7 @@ QString Core::getPeerName(const ToxID& id) const
     const int nameSize = tox_get_name_size(tox, friendId);
     if (nameSize <= 0)
     {
-        qWarning() << "Core::getPeerName: Can't get name of friend "+QString().setNum(friendId)+" ("+id.toString()+")";
+        //qDebug() << "Core::getPeerName: Can't get name of friend "+QString().setNum(friendId)+" ("+id.toString()+")";
         return name;
     }
 

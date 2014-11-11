@@ -64,6 +64,8 @@ Friend* FriendList::findFriend(QString userId)
     if (id != tox2id.end())
     {
         Friend *f = findFriend(*id);
+        if (!f)
+            return nullptr;
         if (f->getToxID() == ToxID::fromString(userId))
             return f;
     }
