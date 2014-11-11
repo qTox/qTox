@@ -479,10 +479,21 @@ void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *a
                                     core->getGroupPeerName(groupnumber, peernumber), true);
 }
 
-void Core::onGroupInvite(Tox*, int friendnumber, const uint8_t *group_public_key, uint16_t length,void *core)
+void Core::onGroupInvite(Tox*, int friendnumber, uint8_t type, const uint8_t *data, uint16_t length,void *core)
 {
-    qDebug() << QString("Core: Group invite by %1").arg(friendnumber);
-    emit static_cast<Core*>(core)->groupInviteReceived(friendnumber, group_public_key,length);
+    if (type == TOX_GROUPCHAT_TYPE_TEXT)
+    {
+        qDebug() << QString("Core: Text group invite by %1").arg(friendnumber);
+        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber, data,length);
+    }
+    else if (type == TOX_GROUPCHAT_TYPE_AV)
+    {
+        qDebug() << QString("Core: AV group invite by %1, not implemented").arg(friendnumber);
+    }
+    else
+    {
+        qWarning() << "Core: Group invite with unknown type "<<type;
+    }
 }
 
 void Core::onGroupMessage(Tox*, int groupnumber, int peernumber, const uint8_t * message, uint16_t length, void *_core)

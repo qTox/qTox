@@ -207,7 +207,7 @@ private:
     static void onConnectionStatusChanged(Tox* tox, int friendId, uint8_t status, void* core);
     static void onAction(Tox* tox, int friendId, const uint8_t* cMessage, uint16_t cMessageSize, void* core);
     static void onGroupAction(Tox* tox, int groupnumber, int peernumber, const uint8_t * action, uint16_t length, void* core);
-    static void onGroupInvite(Tox *tox, int friendnumber, const uint8_t *group_public_key, uint16_t length,void *userdata);
+    static void onGroupInvite(Tox *tox, int friendnumber, uint8_t type, const uint8_t *data, uint16_t length,void *userdata);
     static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber, const uint8_t * message, uint16_t length, void *userdata);
     static void onGroupNamelistChange(Tox *tox, int groupnumber, int peernumber, uint8_t change, void *userdata);
     static void onFileSendRequestCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
