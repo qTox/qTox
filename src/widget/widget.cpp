@@ -870,12 +870,20 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, const uint8_t* publicKey,uint16_t length)
+void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, const uint8_t* publicKey,uint16_t length)
 {
-    int groupId = core->joinGroupchat(friendId, publicKey,length);
-    if (groupId == -1)
+    if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        qWarning() << "Widget::onGroupInviteReceived: Unable to accept invitation";
+        int groupId = core->joinGroupchat(friendId, type, publicKey,length);
+        if (groupId < 0)
+        {
+            qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";
+            return;
+        }
+    }
+    else
+    {
+        qWarning() << "Widget::onGroupInviteReceived: Unknown groupchat type:"<<type;
         return;
     }
 }

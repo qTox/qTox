@@ -21,6 +21,8 @@
 #include <QObject>
 #include <QMutex>
 
+#include <tox/tox.h>
+
 #include "corestructs.h"
 #include "coreav.h"
 #include "coredefines.h"
@@ -56,7 +58,7 @@ public:
     QString getFriendUsername(int friendNumber) const; ///< Get the username of a friend
     bool hasFriendWithAddress(const QString &addr) const; ///< Check if we have a friend by address
     bool hasFriendWithPublicKey(const QString &pubkey) const; ///< Check if we have a friend by public key
-    int joinGroupchat(int32_t friendNumber, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
+    int joinGroupchat(int32_t friendNumber, uint8_t type, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
     void quitGroupChat(int groupId) const; ///< Quit a groupchat
 
     void saveConfiguration();
@@ -83,7 +85,7 @@ public slots:
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
     void groupInviteFriend(int friendId, int groupId);
-    void createGroup();
+    void createGroup(uint8_t type = TOX_GROUPCHAT_TYPE_AV);
 
     void removeFriend(int friendId);
     void removeGroup(int groupId);
@@ -143,7 +145,7 @@ signals:
     void friendLastSeenChanged(int friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(int friendnumber, const uint8_t *group_public_key,uint16_t length);
+    void groupInviteReceived(int friendnumber, uint8_t type, const uint8_t *group_public_key,uint16_t length);
     void groupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
 
@@ -231,11 +233,14 @@ private:
     static void onAvPeerTimeout(void* toxav, int32_t call_index, void* core);
     static void onAvMediaChange(void *toxav, int32_t call_index, void* core);
 
+    static void playGroupAudio(Tox* tox, int  groupnumber, int friendgroupnumber, const int16_t* out_audio,
+                unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* userdata);
+
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
     static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int samples, void *user_data); // Callback
     static void sendCallAudio(int callId, ToxAv* toxav);
-    static void playAudioBuffer(int callId, int16_t *data, int samples, unsigned channels, int sampleRate);
+    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
     static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
