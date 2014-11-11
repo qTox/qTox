@@ -167,7 +167,24 @@ void IdentityForm::onExportClicked()
                     QDir::home().filePath(current), 
                     tr("Tox save file (*.tox)", "save dialog filter"));
     if (!path.isEmpty())
-        QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path);
+    {
+        bool success;
+        if (QFile::exists(path))
+        {
+            // should we popup a warning?
+            // if (!checkContinue(tr("Overwriting a file"), tr("Are you sure you want to overwrite %1?").arg(path)))
+            //     return;
+            success = QFile::remove(path);
+            if (!success)
+            {
+                QMessageBox::warning(this, tr("Failed to remove file"), tr("The file you chose to overwrite could not be removed first."));
+                return;
+            }
+        }
+        success = QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path);
+        if (!success)
+            QMessageBox::warning(this, tr("Failed to copy file"), tr("The file you chose could not be written to."));
+    }
 }
 
 void IdentityForm::onDeleteClicked()
