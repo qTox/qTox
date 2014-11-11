@@ -834,7 +834,10 @@ void Widget::removeFriend(Friend* f)
 {
     f->getFriendWidget()->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(f->getFriendWidget()) == activeChatroomWidget)
+    {
         activeChatroomWidget = nullptr;
+        onAddClicked();
+    }
     FriendList::removeFriend(f->getFriendID());
     core->removeFriend(f->getFriendID());
     delete f;
