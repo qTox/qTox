@@ -33,7 +33,7 @@ ToxID ToxID::fromString(QString id)
     ToxID toxID;
     toxID.publicKey = id.left(TOX_ID_PUBLIC_KEY_LENGTH);
     toxID.noSpam    = id.mid(TOX_ID_PUBLIC_KEY_LENGTH, TOX_ID_NO_SPAM_LENGTH);
-    toxID.checkSum  = id.right(TOX_ID_CHECKSUM_LENGTH);
+    toxID.checkSum  = id.mid(TOX_ID_PUBLIC_KEY_LENGTH + TOX_ID_NO_SPAM_LENGTH, TOX_ID_CHECKSUM_LENGTH);
     return toxID;
 }
 
