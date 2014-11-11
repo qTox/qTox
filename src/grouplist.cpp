@@ -34,7 +34,7 @@ Group* GroupList::findGroup(int groupId)
     return nullptr;
 }
 
-void GroupList::removeGroup(int groupId)
+void GroupList::removeGroup(int groupId, bool /*fake*/)
 {
     for (int i=0; i<groupList.size(); i++)
     {

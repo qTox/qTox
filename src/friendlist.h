@@ -30,7 +30,7 @@ public:
     static Friend* findFriend(int friendId);
     static Friend* findFriend(QString userId);
     static QList<Friend*> getAllFriends();
-    static void removeFriend(int friendId);
+    static void removeFriend(int friendId, bool fake = false);
     static void clear();
 
 private:

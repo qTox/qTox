@@ -830,7 +830,7 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
         emit friendRequestAccepted(userId);
 }
 
-void Widget::removeFriend(Friend* f)
+void Widget::removeFriend(Friend* f, bool fake)
 {
     f->getFriendWidget()->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(f->getFriendWidget()) == activeChatroomWidget)
@@ -838,10 +838,10 @@ void Widget::removeFriend(Friend* f)
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
-    FriendList::removeFriend(f->getFriendID());
-    core->removeFriend(f->getFriendID());
+    FriendList::removeFriend(f->getFriendID(), fake);
+    core->removeFriend(f->getFriendID(), fake);
     delete f;
-    if (ui->mainHead->layout()->isEmpty())
+    if (ui->mainHead->layout()->isEmpty()) // tux3: this should have covered the case of the bug you "fixed" 5 lines above
         onAddClicked();
 
     contactListWidget->hide();
@@ -850,16 +850,16 @@ void Widget::removeFriend(Friend* f)
 
 void Widget::removeFriend(int friendId)
 {
-    removeFriend(FriendList::findFriend(friendId));
+    removeFriend(FriendList::findFriend(friendId), false);
 }
 
 void Widget::clearContactsList()
 {
     QList<Friend*> friends = FriendList::getAllFriends();
     for (Friend* f : friends)
-        removeFriend(f);
+        removeFriend(f, true);
     for (Group* g : GroupList::groupList)
-        removeGroup(g);
+        removeGroup(g, true);
 }
 
 void Widget::copyFriendIdToClipboard(int friendId)
@@ -945,7 +945,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 
-void Widget::removeGroup(Group* g)
+void Widget::removeGroup(Group* g, bool fake)
 {
     g->widget->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(g->widget) == activeChatroomWidget)
@@ -953,8 +953,8 @@ void Widget::removeGroup(Group* g)
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
-    GroupList::removeGroup(g->groupId);
-    core->removeGroup(g->groupId);
+    GroupList::removeGroup(g->groupId, fake);
+    core->removeGroup(g->groupId, fake);
     delete g;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
