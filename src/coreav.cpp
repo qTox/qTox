@@ -208,7 +208,7 @@ void Core::playCallAudio(ToxAv* toxav, int32_t callId, int16_t *data, int sample
 
     ToxAvCSettings dest;
     if(toxav_get_peer_csettings(toxav, callId, 0, &dest) == 0)
-        playAudioBuffer(callId, data, samples, dest.audio_channels, dest.audio_sample_rate);
+        playAudioBuffer(calls[callId].alSource, data, samples, dest.audio_channels, dest.audio_sample_rate);
 }
 
 void Core::sendCallAudio(int callId, ToxAv* toxav)
@@ -538,7 +538,7 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
 }
 
 // This function's logic was shamelessly stolen from uTox
-void Core::playAudioBuffer(int callId, int16_t *data, int samples, unsigned channels, int sampleRate)
+void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate)
 {
     if(!channels || channels > 2)
     {
@@ -548,14 +548,14 @@ void Core::playAudioBuffer(int callId, int16_t *data, int samples, unsigned chan
 
     ALuint bufid;
     ALint processed, queued;
-    alGetSourcei(calls[callId].alSource, AL_BUFFERS_PROCESSED, &processed);
-    alGetSourcei(calls[callId].alSource, AL_BUFFERS_QUEUED, &queued);
-    alSourcei(calls[callId].alSource, AL_LOOPING, AL_FALSE);
+    alGetSourcei(alSource, AL_BUFFERS_PROCESSED, &processed);
+    alGetSourcei(alSource, AL_BUFFERS_QUEUED, &queued);
+    alSourcei(alSource, AL_LOOPING, AL_FALSE);
 
     if(processed)
     {
         ALuint bufids[processed];
-        alSourceUnqueueBuffers(calls[callId].alSource, processed, bufids);
+        alSourceUnqueueBuffers(alSource, processed, bufids);
         alDeleteBuffers(processed - 1, bufids + 1);
         bufid = bufids[0];
     }
@@ -571,14 +571,14 @@ void Core::playAudioBuffer(int callId, int16_t *data, int samples, unsigned chan
 
     alBufferData(bufid, (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data,
                     samples * 2 * channels, sampleRate);
-    alSourceQueueBuffers(calls[callId].alSource, 1, &bufid);
+    alSourceQueueBuffers(alSource, 1, &bufid);
 
     ALint state;
-    alGetSourcei(calls[callId].alSource, AL_SOURCE_STATE, &state);
+    alGetSourcei(alSource, AL_SOURCE_STATE, &state);
     if(state != AL_PLAYING)
     {
-        alSourcePlay(calls[callId].alSource);
-        qDebug() << "Core: Starting audio source of call " << callId;
+        alSourcePlay(alSource);
+        qDebug() << "Core: Starting audio source " << (int)alSource;
     }
 }
 
@@ -590,5 +590,7 @@ VideoSource *Core::getVideoSourceFromCall(int callNumber)
 void Core::playGroupAudio(Tox* tox, int  groupnumber, int friendgroupnumber, const int16_t* out_audio,
                 unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* userdata)
 {
-    qDebug() << "Core::playGroupAudio: Not implemented";
+    /// TODO: FIXME: Don't play groupchat audio on the main source!
+    /// We'll need some sort of call[] array but for groupchats, when that's done use this source
+    playAudioBuffer(alMainSource, out_audio, out_audio_samples, decoder_channels, audio_sample_rate);
 }
