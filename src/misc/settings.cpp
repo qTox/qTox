@@ -39,8 +39,10 @@ Settings::Settings() :
 
 Settings& Settings::getInstance()
 {
-    static Settings settings;
-    return settings;
+    static Settings* settings{nullptr};
+    if (!settings)
+        settings = new Settings();
+    return *settings;
 }
 
 void Settings::load()

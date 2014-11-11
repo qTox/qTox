@@ -58,6 +58,8 @@ int main(int argc, char *argv[])
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
 
+    Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
+
     sodium_init(); // For the auto-updater
 
 #ifdef LOG_TO_FILE

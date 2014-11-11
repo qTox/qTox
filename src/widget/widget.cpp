@@ -296,7 +296,6 @@ Widget::~Widget()
 
 Widget* Widget::getInstance()
 {
-    
     if (!instance)
     {
         instance = new Widget();
