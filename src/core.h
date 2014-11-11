@@ -87,8 +87,8 @@ public slots:
     void groupInviteFriend(int friendId, int groupId);
     void createGroup(uint8_t type = TOX_GROUPCHAT_TYPE_AV);
 
-    void removeFriend(int friendId);
-    void removeGroup(int groupId);
+    void removeFriend(int friendId, bool fake = false);
+    void removeGroup(int groupId, bool fake = false);
 
     void setStatus(Status status);
     void setUsername(const QString& username);

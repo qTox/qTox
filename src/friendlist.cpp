@@ -46,12 +46,13 @@ Friend* FriendList::findFriend(int friendId)
     return nullptr;
 }
 
-void FriendList::removeFriend(int friendId)
+void FriendList::removeFriend(int friendId, bool fake)
 {
     auto f_it = friendList.find(friendId);
     if (f_it != friendList.end())
     {
-        Settings::getInstance().removeFriendSettings(f_it.value()->getToxID());
+        if (!fake)
+            Settings::getInstance().removeFriendSettings(f_it.value()->getToxID());
         friendList.erase(f_it);
     }
 }

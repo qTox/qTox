@@ -991,9 +991,9 @@ void Core::acceptFileRecvRequest(int friendId, int fileNum, QString path)
     tox_file_send_control(tox, file->friendId, 1, file->fileNum, TOX_FILECONTROL_ACCEPT, nullptr, 0);
 }
 
-void Core::removeFriend(int friendId)
+void Core::removeFriend(int friendId, bool fake)
 {
-    if (!tox)
+    if (!tox || fake)
         return;
     if (tox_del_friend(tox, friendId) == -1) {
         emit failedToRemoveFriend(friendId);
@@ -1003,9 +1003,9 @@ void Core::removeFriend(int friendId)
     }
 }
 
-void Core::removeGroup(int groupId)
+void Core::removeGroup(int groupId, bool fake)
 {
-    if (!tox)
+    if (!tox || fake)
         return;
     tox_del_groupchat(tox, groupId);
 }

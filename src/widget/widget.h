@@ -133,8 +133,8 @@ private:
     void hideMainForms();
     virtual bool event(QEvent * e);
     Group* createGroup(int groupId);
-    void removeFriend(Friend* f);
-    void removeGroup(Group* g);
+    void removeFriend(Friend* f, bool fake = false);
+    void removeGroup(Group* g, bool fake = false);
     QString askProfiles();
     QString detectProfile();
     QSystemTrayIcon *icon;
