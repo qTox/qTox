@@ -26,6 +26,8 @@
 /// Linux and Mac users are expected to use their package managers or update manually through official channels.
 #ifdef Q_OS_WIN
 #define AUTOUPDATE_ENABLED 1
+#elif defined(Q_OS_OSX)
+#define AUTOUPDATE_ENABLED 0
 #else
 #define AUTOUPDATE_ENABLED 0
 #endif

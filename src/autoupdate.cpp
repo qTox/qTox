@@ -36,19 +36,35 @@
 #ifdef Q_OS_WIN
 const QString AutoUpdater::platform = "win32";
 const QString AutoUpdater::updaterBin = "qtox-updater.exe";
-#else
-const QString AutoUpdater::platform;
-const QString AutoUpdater::updaterBin;
-#endif
 const QString AutoUpdater::updateServer = "https://s3.amazonaws.com/qtox-updater";
-const QString AutoUpdater::checkURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/version";
-const QString AutoUpdater::flistURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/flist";
-const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/files/";
+
 unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 {
     0xa5, 0x80, 0xf3, 0xb7, 0xd0, 0x10, 0xc0, 0xf9, 0xd6, 0xcf, 0x48, 0x15, 0x99, 0x70, 0x92, 0x49,
     0xf6, 0xe8, 0xe5, 0xe2, 0x6c, 0x73, 0x8c, 0x48, 0x25, 0xed, 0x01, 0x72, 0xf7, 0x6c, 0x17, 0x28
 };
+
+#elif defined(Q_OS_OSX)
+const QString AutoUpdater::platform = "osx";
+const QString AutoUpdater::updaterBin = "installer -store -pkg "+Settings::getInstance().getSettingsDirPath()
+                                                    +"/update/qtox.pkg -target /";
+const QString AutoUpdater::updateServer = "https://dist-build.tox.im";
+
+unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
+{
+    0xa5, 0x80, 0xf3, 0xb7, 0xd0, 0x10, 0xc0, 0xf9, 0xd6, 0xcf, 0x48, 0x15, 0x99, 0x70, 0x92, 0x49,
+    0xf6, 0xe8, 0xe5, 0xe2, 0x6c, 0x73, 0x8c, 0x48, 0x25, 0xed, 0x01, 0x72, 0xf7, 0x6c, 0x17, 0x28
+};
+
+#else
+const QString AutoUpdater::platform;
+const QString AutoUpdater::updaterBin;
+const QString AutoUpdater::updateServer;
+unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES];
+#endif
+const QString AutoUpdater::checkURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/version";
+const QString AutoUpdater::flistURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/flist";
+const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/files/";
 
 bool AutoUpdater::isUpdateAvailable()
 {
