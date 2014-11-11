@@ -120,7 +120,7 @@ sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopen
 
 Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopencv-dev
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libopenal-dev libopencv-dev
 ```
 
 Arch Linux:
