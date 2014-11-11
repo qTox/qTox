@@ -19,7 +19,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>
     <os-version min=\"10.7\"/>
 </allowed-os-versions>
     <choice id=\"default\"/>
-    <choice id=\"im.tox.qtox\" visible="false">
+    <choice id=\"im.tox.qtox\" visible="\false\">
         <pkg-ref id=\"im.tox.qtox\"/>
     </choice>
     <pkg-ref id=\"im.tox.qtox\" version=\"1\" onConclusion=\"none\">qtox.pkg</pkg-ref>
