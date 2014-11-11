@@ -2,25 +2,25 @@
 
 PWD=`pwd`
 
-echo "<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<installer-gui-script minSpecVersion="1">
-    <pkg-ref id="im.tox.qtox"/>
-    <options hostArchitectures="x86_64"/>
+echo "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>
+<installer-gui-script minSpecVersion=\"1\">
+    <pkg-ref id=\"im.tox.qtox\"/>
+    <options hostArchitectures=\"x86_64\"/>
     <title>qTox</title>
-    <license file="$PWD/gplv3.rtf"/>
-    <welcome vfile="$PWD/welcome.txt"/>
-    <options customize="never" require-scripts="false"/>
+    <license file=\"$PWD/gplv3.rtf\"/>
+    <welcome file=\"$PWD/welcome.txt\"/>
+    <options customize=\"never\" require-scripts=\"false\"/>
     <choices-outline>
-        <line choice="default">
-            <line choice="im.tox.qtox"/>
+        <line choice=\"default\">
+            <line choice=\"im.tox.qtox\"/>
         </line>
     </choices-outline>
     <allowed-os-versions>
-    <os-version min="10.7" />
+    <os-version min=\"10.7\"/>
 </allowed-os-versions>
-    <choice id="default"/>
-    <choice id="im.tox.qtox" visible="false">
-        <pkg-ref id="im.tox.qtox"/>
+    <choice id=\"default\"/>
+    <choice id=\"im.tox.qtox\" visible="false">
+        <pkg-ref id=\"im.tox.qtox\"/>
     </choice>
-    <pkg-ref id="im.tox.qtox" version="1" onConclusion="none">qtox.pkg</pkg-ref>
+    <pkg-ref id=\"im.tox.qtox\" version=\"1\" onConclusion=\"none\">qtox.pkg</pkg-ref>
 </installer-gui-script>" > distribution.xml
