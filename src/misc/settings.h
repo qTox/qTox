@@ -199,6 +199,8 @@ public:
     QString getFriendAlias(const ToxID &id) const;
     void setFriendAlias(const ToxID &id, const QString &alias);
 
+    void removeFriendSettings(const ToxID &id);
+
     bool getFauxOfflineMessaging() const;
     void setFauxOfflineMessaging(bool value);
 
