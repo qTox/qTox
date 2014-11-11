@@ -1,0 +1,3 @@
+Welcome to the qTox for OS X internal nightly installer!
+
+Please report all bugs to https://support.libtoxcore.so
