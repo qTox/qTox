@@ -112,7 +112,6 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     QSqlQuery ans = db->exec("select seq from sqlite_sequence where name=\"history\";");
     if (ans.first())
     {
-        int idMax = ans.value(0).toInt();
         QSqlQuery ret = db->exec("select seq from sqlite_sequence where name=\"sent_status\";");
         int idCur = 0;
         if (ret.first())
@@ -120,9 +119,10 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
             idCur = ret.value(0).toInt();
         }
 
-        if (idCur != idMax)
+        int idMax = ans.value(0).toInt();
+        for (int i = idCur; i < idMax; i++)
         {
-            QString cmd = QString("INSERT INTO sent_status (id, status) VALUES (%1, 1)").arg(idMax);
+            QString cmd = QString("INSERT INTO sent_status (status) VALUES (1)");
             db->exec(cmd);
         }
     }
@@ -168,7 +168,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     if (ct == ctSingle)
     {
         dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status FROM history INNER JOIN aliases ON history.sender = aliases.id ") +
-                            QString("LEFT OUTER JOIN sent_status ON history.id = sent_status.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;")
+                            QString("INNER JOIN sent_status ON history.id = sent_status.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;")
                             .arg(time64_from).arg(time64_to).arg(chat_id));
     } else {
         // no groupchats yet
