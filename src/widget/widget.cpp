@@ -872,11 +872,11 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, const uint8_t* publicKey,uint16_t length)
+void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite)
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int groupId = core->joinGroupchat(friendId, type, publicKey,length);
+        int groupId = core->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
         if (groupId < 0)
         {
             qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";

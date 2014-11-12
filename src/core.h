@@ -145,7 +145,7 @@ signals:
     void friendLastSeenChanged(int friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(int friendnumber, uint8_t type, const uint8_t *group_public_key,uint16_t length);
+    void groupInviteReceived(int friendnumber, uint8_t type, QByteArray publicKey);
     void groupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
 

@@ -481,15 +481,16 @@ void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *a
 
 void Core::onGroupInvite(Tox*, int friendnumber, uint8_t type, const uint8_t *data, uint16_t length,void *core)
 {
+    QByteArray pk((char*)data, length);
     if (type == TOX_GROUPCHAT_TYPE_TEXT)
     {
         qDebug() << QString("Core: Text group invite by %1").arg(friendnumber);
-        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber,type,data,length);
+        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber,type,pk);
     }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
         qDebug() << QString("Core: AV group invite by %1").arg(friendnumber);
-        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber,type,data,length);
+        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber,type,pk);
     }
     else
     {
@@ -1491,6 +1492,7 @@ int Core::joinGroupchat(int32_t friendnumber, uint8_t type, const uint8_t* frien
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendnumber);
+        const_cast<uint8_t*>(friend_group_public_key)[2] = TOX_GROUPCHAT_TYPE_AV;
         return toxav_join_av_groupchat(tox, friendnumber, friend_group_public_key, length, playGroupAudio, const_cast<Core*>(this));
     }
     else
