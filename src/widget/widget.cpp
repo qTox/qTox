@@ -171,6 +171,7 @@ void Widget::init()
     ui->statusButton->setEnabled(false);
 
     idleTimer = new QTimer();
+    idleTimer->setSingleShot(true);
     int mins = Settings::getInstance().getAutoAwayTime();
     if (mins > 0)
         idleTimer->start(mins * 1000*60);
@@ -497,6 +498,7 @@ void Widget::onStatusSet(Status status)
     {
     case Status::Online:
         ui->statusButton->setProperty("status" ,"online");
+        qDebug() << "Widget: something set the status to online";
         break;
     case Status::Away:
         ui->statusButton->setProperty("status" ,"away");
@@ -1028,7 +1030,7 @@ bool Widget::event(QEvent * e)
         case QEvent::KeyRelease:
             if (autoAwayActive)
             {
-                qDebug() << "Widget: auto away deactivated";
+                qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
                 autoAwayActive = false;
                 emit statusSet(Status::Online);
                 int mins = Settings::getInstance().getAutoAwayTime();
@@ -1047,7 +1049,7 @@ void Widget::onUserAway()
     if (Settings::getInstance().getAutoAwayTime() > 0
         && ui->statusButton->property("status").toString() == "online") // leave user-set statuses in place
     {
-        qDebug() << "Widget: auto away activated";
+        qDebug() << "Widget: auto away activated" << QTime::currentTime().toString();
         emit statusSet(Status::Away);
         autoAwayActive = true;
     }
