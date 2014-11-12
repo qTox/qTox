@@ -22,6 +22,7 @@
 #include "src/widget/form/settings/identityform.h"
 #include "src/widget/form/settings/privacyform.h"
 #include "src/widget/form/settings/avform.h"
+#include "src/widget/form/settings/advancedform.h"
 #include <QTabWidget>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
@@ -54,8 +55,9 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     IdentityForm* ifrm = new IdentityForm;
     PrivacyForm* pfrm = new PrivacyForm;
     AVForm* avfrm = new AVForm;
+    AdvancedForm *expfrm = new AdvancedForm;
 
-    GenericForm* cfgForms[] = { gfrm, ifrm, pfrm, avfrm };
+    GenericForm* cfgForms[] = { gfrm, ifrm, pfrm, avfrm, expfrm };
     for (GenericForm* cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
 

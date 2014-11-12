@@ -33,7 +33,8 @@ FORMS    += \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/inputpassworddialog.ui \
-    src/widget/form/setpassworddialog.ui
+    src/widget/form/setpassworddialog.ui \
+    src/widget/form/settings/advancedsettings.ui
     
 CONFIG   += c++11
 
@@ -150,7 +151,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/toxdns.h \
     src/widget/toxsave.h \
     src/autoupdate.h \
-    src/misc/serialize.h
+    src/misc/serialize.h \
+    src/widget/form/settings/advancedform.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -215,4 +217,5 @@ SOURCES += \
     src/ipc.cpp \
     src/widget/toxsave.cpp \    
     src/autoupdate.cpp \
-    src/misc/serialize.cpp
+    src/misc/serialize.cpp \
+    src/widget/form/settings/advancedform.cpp
