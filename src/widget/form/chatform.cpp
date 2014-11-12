@@ -121,13 +121,13 @@ void ChatForm::onSendTriggered()
         int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
                                                             Core::getInstance()->getSelfId().publicKey, timestamp, status);
 
-        MessageActionPtr ma = addSelfMessage(msg, isAction, timestamp, false);
+        MessageActionPtr ma = addSelfMessage(qt_msg, isAction, timestamp, false);
 
         int rec;
         if (isAction)
-            rec = Core::getInstance()->sendAction(f->getFriendID(), msg);
+            rec = Core::getInstance()->sendAction(f->getFriendID(), qt_msg);
         else
-            rec = Core::getInstance()->sendMessage(f->getFriendID(), msg);
+            rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
         registerReceipt(rec, id, ma);
     }
