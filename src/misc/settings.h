@@ -22,6 +22,7 @@
 #include <QPixmap>
 
 struct ToxID;
+namespace Db { enum class syncType; }
 
 class Settings : public QObject
 {
@@ -98,6 +99,9 @@ public:
 
     bool getEncryptTox() const;
     void setEncryptTox(bool newValue);
+
+    Db::syncType getDbSyncType() const;
+    void setDbSyncType(int newValue);
 
     int getAutoAwayTime() const;
     void setAutoAwayTime(int newValue);
@@ -278,6 +282,7 @@ private:
 
     // Privacy
     bool typingNotification;
+    Db::syncType dbSyncType;
 
     // Audio
     QString inDev;

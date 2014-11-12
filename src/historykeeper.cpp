@@ -130,6 +130,8 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     updateChatsID();
     updateAliases();
 
+    setSyncType(Settings::getInstance().getDbSyncType());
+
     QSqlQuery sqlAnswer = db->exec("select seq from sqlite_sequence where name=\"history\";");
     sqlAnswer.first();
     messageID = sqlAnswer.value(0).toInt();
@@ -314,4 +316,26 @@ void HistoryKeeper::renameHistory(QString from, QString to)
 void HistoryKeeper::markAsSent(int m_id)
 {
     db->exec(QString("UPDATE sent_status SET status = 1 WHERE id = %1;").arg(m_id));
+}
+
+void HistoryKeeper::setSyncType(Db::syncType sType)
+{
+    QString syncCmd;
+
+    switch (sType) {
+    case Db::syncType::stFull:
+        syncCmd = "FULL";
+        break;
+    case Db::syncType::stNormal:
+        syncCmd = "NORMAL";
+        break;
+    case Db::syncType::stOff:
+        syncCmd = "OFF";
+        break;
+    default:
+        syncCmd = "FULL";
+        break;
+    }
+
+    db->exec(QString("PRAGMA synchronous=%1;").arg(syncCmd));
 }

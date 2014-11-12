@@ -17,6 +17,7 @@
 #include "settings.h"
 #include "smileypack.h"
 #include "src/corestructs.h"
+#include "src/misc/db/plaindb.h"
 
 #include <QFont>
 #include <QApplication>
@@ -121,10 +122,15 @@ void Settings::load()
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
         currentProfile = s.value("currentProfile", "").toString();
-    	autoAwayTime = s.value("autoAwayTime", 10).toInt();
+        autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", false).toBool();
         showInFront = s.value("showInFront", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
+    s.endGroup();
+
+    s.beginGroup("Advanced");
+        int sType = s.value("dbSyncType", static_cast<int>(Db::syncType::stFull)).toInt();
+        setDbSyncType(sType);
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -265,6 +271,10 @@ void Settings::save(QString path)
         s.setValue("checkUpdates", checkUpdates);
         s.setValue("showInFront", showInFront);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
+    s.endGroup();
+
+    s.beginGroup("Advanced");
+        s.setValue("dbSyncType", static_cast<int>(dbSyncType));
     s.endGroup();
 
     s.beginGroup("Widgets");
@@ -595,6 +605,19 @@ bool Settings::getEncryptTox() const
 void Settings::setEncryptTox(bool newValue)
 {
     encryptTox = newValue;
+}
+
+Db::syncType Settings::getDbSyncType() const
+{
+    return dbSyncType;
+}
+
+void Settings::setDbSyncType(int newValue)
+{
+    if (newValue >= 0 && newValue <= 2)
+        dbSyncType = static_cast<Db::syncType>(newValue);
+    else
+        dbSyncType = Db::syncType::stFull;
 }
 
 int Settings::getAutoAwayTime() const

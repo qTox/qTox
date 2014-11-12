@@ -22,6 +22,7 @@
 #include <QDateTime>
 
 class GenericDdInterface;
+namespace Db { enum class syncType; }
 
 class HistoryKeeper
 {
@@ -50,6 +51,8 @@ public:
     int addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
     void markAsSent(int m_id);
+
+    void setSyncType(Db::syncType sType);
 
 private:
     HistoryKeeper(GenericDdInterface *db_);
