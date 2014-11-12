@@ -28,7 +28,7 @@
 #include "src/core.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
-#include "src/chatlog/chatlog.h"
+#include "src/chatlog/content/text.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent) :
     QWidget(parent),
@@ -202,24 +202,16 @@ void GenericChatForm::onSaveLogClicked()
 //    chatWidget->insertMessage(ca);
 //}
 
-//MessageActionPtr GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
-//                                             const QDateTime &datetime, bool isSent)
-//{
-//    MessageActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
-//    if (isSent)
-//        ca->markAsSent();
-//    chatWidget->insertMessage(ca);
-//    return ca;
-//}
+ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
+                                             const QDateTime &datetime, bool isSent)
+{
+    return chatWidget->addChatMessage(Core::getInstance()->getPeerName(author), new Text(message), datetime);
+}
 
-//MessageActionPtr GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent)
-//{
-//    MessageActionPtr ca = genSelfActionAction(message, isAction, datetime);
-//    if (isSent)
-//        ca->markAsSent();
-//    chatWidget->insertMessage(ca);
-//    return ca;
-//}
+ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent)
+{
+    return chatWidget->addChatMessage(Core::getInstance()->getUsername(), new Text(message));
+}
 
 /**
  * @deprecated The only reason it's still alive is because the groupchat API is a bit limited

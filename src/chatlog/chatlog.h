@@ -7,6 +7,7 @@
 class QGraphicsScene;
 class ChatLine;
 class ChatLineContent;
+class ChatMessage;
 
 class ChatLog : public QGraphicsView
 {
@@ -15,16 +16,15 @@ public:
     explicit ChatLog(QWidget* parent = 0);
     virtual ~ChatLog();
 
-    void addTextLine(const QString& sender, const QString& text, QDateTime timestamp = QDateTime::currentDateTime());
-    void addWidgetLine(const QString& sender, QDateTime timestamp = QDateTime::currentDateTime());
+    ChatMessage* addChatMessage(const QString& sender, ChatLineContent* content, const QDateTime& timestamp);
+    ChatMessage* addChatMessage(const QString& sender, ChatLineContent* content);
+
     void insertChatline(ChatLine* l);
 
     void clearSelection();
     void clear();
     void copySelectedText() const;
     QString getSelectedText() const;
-
-    void dbgPopulate();
 
 signals:
 

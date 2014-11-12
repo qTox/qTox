@@ -38,6 +38,7 @@
 #include "src/misc/style.h"
 #include "src/misc/settings.h"
 #include "src/misc/cstring.h"
+#include "src/chatlog/chatmessage.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -119,7 +120,8 @@ void ChatForm::onSendTriggered()
         int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
                                                             Core::getInstance()->getSelfId().publicKey, timestamp, status);
 
-        //MessageActionPtr ma = addSelfMessage(msg, isAction, timestamp, false);
+
+        ChatMessage* ma = addSelfMessage(msg, isAction, timestamp, false);
 
         int rec;
         if (isAction)
@@ -127,7 +129,7 @@ void ChatForm::onSendTriggered()
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), msg);
 
-        //registerReceipt(rec, id, ma);
+        registerReceipt(rec, id, ma);
     }
 
     msgEdit->clear();
@@ -842,29 +844,28 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
 }
 
-//void ChatForm::registerReceipt(int receipt, int messageID, MessageActionPtr msg)
-//{
-//    receipts[receipt] = messageID;
-//    undeliveredMsgs[messageID] = msg;
-//}
+void ChatForm::registerReceipt(int receipt, int messageID, ChatMessage* msg)
+{
+    receipts[receipt] = messageID;
+    undeliveredMsgs[messageID] = msg;
+}
 
-//void ChatForm::dischargeReceipt(int receipt)
-//{
-//    auto it = receipts.find(receipt);
-//    if (it != receipts.end())
-//    {
-//        int mID = it.value();
-//        auto msgIt = undeliveredMsgs.find(mID);
-//        if (msgIt != undeliveredMsgs.end())
-//        {
-//            HistoryKeeper::getInstance()->markAsSent(mID);
-//            msgIt.value()->markAsSent();
-//            msgIt.value()->featureUpdate();
-//            undeliveredMsgs.erase(msgIt);
-//        }
-//        receipts.erase(it);
-//    }
-//}
+void ChatForm::dischargeReceipt(int receipt)
+{
+    auto it = receipts.find(receipt);
+    if (it != receipts.end())
+    {
+        int mID = it.value();
+        auto msgIt = undeliveredMsgs.find(mID);
+        if (msgIt != undeliveredMsgs.end())
+        {
+            HistoryKeeper::getInstance()->markAsSent(mID);
+            msgIt.value()->markAsSent(QDateTime::currentDateTime());
+            undeliveredMsgs.erase(msgIt);
+        }
+        receipts.erase(it);
+    }
+}
 
 void ChatForm::clearReciepts()
 {

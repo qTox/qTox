@@ -1,5 +1,6 @@
 #include "chatlog.h"
 #include "chatline.h"
+#include "chatmessage.h"
 #include "chatlinecontent.h"
 #include "chatlinecontentproxy.h"
 #include "content/text.h"
@@ -52,26 +53,21 @@ ChatLog::~ChatLog()
         delete line;
 }
 
-void ChatLog::addTextLine(const QString& sender, const QString& text, QDateTime timestamp)
+ChatMessage* ChatLog::addChatMessage(const QString& sender, ChatLineContent* content)
 {
-    ChatLine* line = new ChatLine(scene);
-
-    line->addColumn(new Text(sender, true), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
-    line->addColumn(new Text(text), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, 1));
-
+    ChatMessage* line = new ChatMessage(scene, sender, content);
     insertChatline(line);
+
+    return line;
 }
 
-void ChatLog::addWidgetLine(const QString& sender, QDateTime timestamp)
+ChatMessage* ChatLog::addChatMessage(const QString& sender, ChatLineContent* content, const QDateTime& timestamp)
 {
-    ChatLine* line = new ChatLine(scene);
-
-    line->addColumn(new Text(sender, true), ColumnFormat(75.0, ColumnFormat::FixedSize, 1));
-    line->addColumn(new ChatLineContentProxy(new FileTransferWidget()), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
-
+    ChatMessage* line = new ChatMessage(scene, sender, content);
+    line->markAsSent(timestamp);
     insertChatline(line);
+
+    return line;
 }
 
 void ChatLog::clearSelection()
@@ -84,18 +80,6 @@ void ChatLog::clearSelection()
     selStartCol = -1;
     selLastRow = -1;
     selLastCol = -1;
-}
-
-void ChatLog::dbgPopulate()
-{
-    for(int i = 0; i < 2000; i++)
-        addTextLine("Jemp longlong name foo moth", "Line " + QString::number(i) +
-                    " Lorem ipsum <b>Hello</b> dolor sit amet, "
-                    "consectetur adipisicing elit, sed do eiusmod "
-                    "tempor incididunt ut labore et dolore magna "
-                    "aliqua. Ut enim ad minim veniam, quis nostrud "
-                    "exercitation ullamco laboris nisi ut aliquip ex "
-                    "ea commodo consequat. ");
 }
 
 QRect ChatLog::getVisibleRect() const

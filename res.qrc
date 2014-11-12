@@ -42,6 +42,7 @@
         <file>ui/callButton/callButtonYellowPressed.png</file>
         <file>ui/chatArea/chatArea.css</file>
         <file>ui/chatArea/innerStyle.css</file>
+	<file>ui/chatArea/spinner.png</file>
         <file>ui/chatArea/scrollBarDownArrow.png</file>
         <file>ui/chatArea/scrollBarDownArrowHover.png</file>
         <file>ui/chatArea/scrollBarDownArrowPressed.png</file>

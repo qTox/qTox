@@ -102,6 +102,18 @@ void ChatLine::addColumn(ChatLineContent* item, ColumnFormat fmt)
     content << item;
 }
 
+void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
+{
+    if(col >= 0 && col < content.size() && lineContent)
+    {
+        scene->removeItem(content[col]);
+        delete content[col];
+
+        content[col] = lineContent;
+        scene->addItem(content[col]);
+    }
+}
+
 void ChatLine::layout(qreal w, QPointF scenePos)
 {
     width = w;

@@ -6,7 +6,7 @@
 Spinner::Spinner(QSizeF Size)
     : size(Size)
 {
-    pmap.load(":/media/spinner.png");
+    pmap.load(":/ui/chatArea/spinner.png");
 
     timer.setInterval(33); // 30Hz
     timer.setSingleShot(false);

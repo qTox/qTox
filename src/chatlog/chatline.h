@@ -46,6 +46,7 @@ public:
     virtual QRectF boundingSceneRect() const;
 
     void addColumn(ChatLineContent* item, ColumnFormat fmt);
+    void replaceContent(int col, ChatLineContent* lineContent);
 
     void layout(qreal width, QPointF scenePos);
     void layout(QPointF scenePos);

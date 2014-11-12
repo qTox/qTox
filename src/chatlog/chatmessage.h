@@ -3,10 +3,14 @@
 
 #include "chatline.h"
 
+class QGraphicsScene;
+
 class ChatMessage : public ChatLine
 {
 public:
-    ChatMessage();
+    ChatMessage(QGraphicsScene* scene, const QString &author, ChatLineContent* content);
+
+    void markAsSent(const QDateTime& time);
 };
 
 #endif // CHATMESSAGE_H

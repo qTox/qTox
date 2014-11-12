@@ -22,6 +22,7 @@
 #include <QDateTime>
 #include <QMenu>
 #include "src/corestructs.h"
+#include "src/chatlog/chatlog.h"
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5 // why the hell is this a thing? surely the different font is enough?
@@ -32,6 +33,7 @@ class QPushButton;
 class CroppingLabel;
 class ChatTextEdit;
 class ChatLog;
+class ChatMessage;
 class MaskablePixmapWidget;
 struct ToxID;
 
@@ -49,8 +51,8 @@ public:
     virtual void show(Ui::MainWindow &ui);
 
     void addMessage(const QString& author, const QString &message, bool isAction, const QDateTime &datetime); ///< Deprecated
-// TODO:   MessageActionPtr addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
-//    MessageActionPtr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    ChatMessage* addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    ChatMessage* addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
     void addAlertMessage(const QString& author, QString message, QDateTime datetime); ///< Deprecated
     void addAlertMessage(const ToxID& author, QString message, QDateTime datetime);

@@ -89,7 +89,7 @@ protected:
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);
-    //TODO: void registerReceipt(int receipt, int messageID, MessageActionPtr msg);
+    void registerReceipt(int receipt, int messageID, ChatMessage* msg);
 
 private:
     Friend* f;
@@ -107,7 +107,7 @@ private:
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
     QHash<int, int> receipts;
-    //TODO: QMap<int, MessageActionPtr> undeliveredMsgs;
+    QMap<int, ChatMessage*> undeliveredMsgs;
 };
 
 #endif // CHATFORM_H
