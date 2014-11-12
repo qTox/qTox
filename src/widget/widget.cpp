@@ -687,9 +687,10 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
         default:
             fStatus = tr("online", "contact status"); break;
         }
-        if (isActualChange)
-            f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
-                                          "white", QDateTime::currentDateTime());
+        //TODO:
+//        if (isActualChange)
+//            f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
+//                                          "white", QDateTime::currentDateTime());
     }
 
     if (isActualChange && status != Status::Offline)
@@ -742,7 +743,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
+    //TODO: f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
 
     if (isAction)
         HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp, true);
@@ -772,7 +773,7 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
     if (!f)
         return;
 
-    f->getChatForm()->dischargeReceipt(receipt);
+    //TODO: f->getChatForm()->dischargeReceipt(receipt);
 }
 
 void Widget::newMessageAlert(GenericChatroomWidget* chat)
@@ -900,9 +901,9 @@ void Widget::onGroupMessageReceived(int groupnumber, const QString& message, con
 
     bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
     if (targeted)
-        g->chatForm->addAlertMessage(author, message, QDateTime::currentDateTime());
+        ;//TODO: g->chatForm->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
-        g->chatForm->addMessage(author, message, isAction, QDateTime::currentDateTime());
+        ;//TODO: g->chatForm->addMessage(author, message, isAction, QDateTime::currentDateTime());
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
@@ -1086,7 +1087,7 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         return;
 
     if (result == -1)
-        g->chatForm->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
+        ;//TODO: g->chatForm->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
 }
 
 void Widget::getPassword(QString info, int passtype, uint8_t* salt)
@@ -1158,6 +1159,6 @@ void Widget::clearAllReceipts()
     QList<Friend*> frnds = FriendList::getAllFriends();
     for (Friend *f : frnds)
     {
-        f->getChatForm()->clearReciepts();
+        //TODO: f->getChatForm()->clearReciepts();
     }
 }
