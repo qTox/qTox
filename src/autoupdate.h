@@ -58,6 +58,12 @@ public:
         QByteArray data;
     };
 
+    struct VersionInfo
+    {
+        uint64_t timestamp;
+        QString versionString;
+    };
+
 public:
     /// Connects to the qTox update server, if an updat is found shows a dialog to the user asking to download it
     /// Runs asynchronously in its own thread, and will return immediatly
@@ -66,9 +72,9 @@ public:
     /// Connects to the qTox update server, returns true if an update is available for download
     /// Will call getUpdateVersion, and as such may block and processEvents
     static bool isUpdateAvailable();
-    /// Fetch the version string of the last update available from the qTox update server
+    /// Fetch the version info of the last update available from the qTox update server
     /// Will try to follow qTox's proxy settings, may block and processEvents
-    static QString getUpdateVersion();
+    static VersionInfo getUpdateVersion();
     /// Will try to download an update, if successful returns true and qTox will apply it after a restart
     /// Will try to follow qTox's proxy settings, may block and processEvents
     static bool downloadUpdate();

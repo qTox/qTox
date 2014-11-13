@@ -68,20 +68,22 @@ const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpd
 
 bool AutoUpdater::isUpdateAvailable()
 {
-    QString newVersion = getUpdateVersion();
-    if (newVersion.isEmpty() || newVersion == GIT_VERSION)
+    VersionInfo newVersion = getUpdateVersion();
+    if (newVersion.timestamp <= TIMESTAMP
+            || newVersion.versionString.isEmpty() || newVersion.versionString == GIT_VERSION)
         return false;
     else
         return true;
 }
 
-QString AutoUpdater::getUpdateVersion()
+AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
 {
-    QString version;
+    VersionInfo versionInfo;
+    versionInfo.timestamp = 0;
 
     // Updates only for supported platforms
     if (platform.isEmpty())
-        return version;
+        return versionInfo;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(checkURI)));
@@ -93,20 +95,20 @@ QString AutoUpdater::getUpdateVersion()
         qWarning() << "AutoUpdater: getUpdateVersion: network error: "<<reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
-        return version;
+        return versionInfo;
     }
 
     QByteArray data = reply->readAll();
     reply->deleteLater();
     manager->deleteLater();
     if (data.size() < (int)(1+crypto_sign_BYTES))
-        return version;
+        return versionInfo;
 
     // Check updater protocol version
-    if ((int)data[0] != '1')
+    if ((int)data[0] != '2')
     {
         qWarning() << "AutoUpdater: getUpdateVersion: Bad version "<<(uint8_t)data[0];
-        return version;
+        return versionInfo;
     }
 
     // Check the signature
@@ -118,12 +120,16 @@ QString AutoUpdater::getUpdateVersion()
     if (crypto_sign_verify_detached(sig, msg, msgData.size(), key) != 0)
     {
         qCritical() << "AutoUpdater: getUpdateVersion: RECEIVED FORGED VERSION FILE FROM "<<updateServer;
-        return version;
+        return versionInfo;
     }
 
-    version = msgData;
+    int sepPos = msgData.indexOf('!');
+    versionInfo.timestamp = QString(msgData.left(sepPos)).toInt();
+    versionInfo.versionString = msgData.mid(sepPos+1);
 
-    return version;
+    qDebug() << "timestamp:"<<versionInfo.timestamp << ", str:"<<versionInfo.versionString;
+
+    return versionInfo;
 }
 
 QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
