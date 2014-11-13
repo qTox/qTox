@@ -592,7 +592,7 @@ void Core::playGroupAudio(Tox* /*tox*/, int  groupnumber, int /*friendgroupnumbe
     if (!groupCalls[groupnumber].active)
         return;
 
-    if (!groupCalls[groupbumber].muteVol)
+    if (!groupCalls[groupnumber].muteVol)
         return;
 
     playAudioBuffer(alMainSource, out_audio, out_audio_samples, decoder_channels, audio_sample_rate);
