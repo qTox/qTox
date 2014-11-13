@@ -546,7 +546,7 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
     }
 
     ALuint bufid;
-    ALint processed, queued;
+    ALint processed = 0, queued = 16;
     alGetSourcei(alSource, AL_BUFFERS_PROCESSED, &processed);
     alGetSourcei(alSource, AL_BUFFERS_QUEUED, &queued);
     alSourcei(alSource, AL_LOOPING, AL_FALSE);
@@ -586,7 +586,7 @@ VideoSource *Core::getVideoSourceFromCall(int callNumber)
     return &calls[callNumber].videoSource;
 }
 
-void Core::playGroupAudio(Tox* /*tox*/, int  groupnumber, int /*friendgroupnumber*/, const int16_t* out_audio,
+void Core::playGroupAudio(Tox* /*tox*/, int  groupnumber, int friendgroupnumber, const int16_t* out_audio,
                 unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* /*userdata*/)
 {
     if (!groupCalls[groupnumber].active)
@@ -595,7 +595,11 @@ void Core::playGroupAudio(Tox* /*tox*/, int  groupnumber, int /*friendgroupnumbe
     if (groupCalls[groupnumber].muteVol)
         return;
 
-    playAudioBuffer(alMainSource, out_audio, out_audio_samples, decoder_channels, audio_sample_rate);
+    if (!groupCalls[groupnumber].alSources.contains(friendgroupnumber))
+        alGenSources(1, &groupCalls[groupnumber].alSources[friendgroupnumber]);
+
+    playAudioBuffer(groupCalls[groupnumber].alSources[friendgroupnumber], out_audio,
+                    out_audio_samples, decoder_channels, audio_sample_rate);
 }
 
 void Core::joinGroupCall(int groupId)
@@ -611,7 +615,7 @@ void Core::joinGroupCall(int groupId)
     groupCalls[groupId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
 
     // Audio
-    alGenSources(1, &groupCalls[groupId].alSource);
+    //alGenSources(1, &groupCalls[groupId].alSource);
     alcCaptureStart(alInDev);
 
     // Go

@@ -1,6 +1,7 @@
 #ifndef COREAV_H
 #define COREAV_H
 
+#include <QHash>
 #include <tox/toxav.h>
 #include "video/netvideosource.h"
 
@@ -36,7 +37,7 @@ struct ToxGroupCall
     bool active;
     bool muteMic;
     bool muteVol;
-    ALuint alSource;
+    QHash<int, ALuint> alSources;
 };
 
 #endif // COREAV_H
