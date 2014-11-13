@@ -923,7 +923,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
     {
-        qDebug() << "Widget::onGroupNamelistChanged: Group not found, creating it";
+        qDebug() << "Widget::onGroupNamelistChanged: Group "<<groupnumber<<" not found, creating it";
         g = createGroup(groupnumber);
     }
 
