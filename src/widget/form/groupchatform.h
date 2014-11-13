@@ -34,6 +34,9 @@ public:
 
 private slots:
     void onSendTriggered();
+    void onMicMuteToggle();
+    void onVolMuteToggle();
+    void onCallClicked();
 
 protected:
     // drag & drop
@@ -45,6 +48,7 @@ private:
     FlowLayout* namesListLayout;
     QLabel *nusersLabel;
     TabCompleter* tabber;
+    bool inCall;
 };
 
 #endif // GROUPCHATFORM_H

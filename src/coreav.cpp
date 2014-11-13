@@ -592,10 +592,13 @@ void Core::playGroupAudio(Tox* /*tox*/, int  groupnumber, int /*friendgroupnumbe
     if (!groupCalls[groupnumber].active)
         return;
 
-    playAudioBuffer(groupCalls[groupnumber].alSource, out_audio, out_audio_samples, decoder_channels, audio_sample_rate);
+    if (!groupCalls[groupbumber].muteVol)
+        return;
+
+    playAudioBuffer(alMainSource, out_audio, out_audio_samples, decoder_channels, audio_sample_rate);
 }
 
-void Core::joinGroupCall(int groupId, ToxAv *toxav)
+void Core::joinGroupCall(int groupId)
 {
     qDebug() << QString("Core: Joining group call %1").arg(groupId);
     groupCalls[groupId].groupId = groupId;
@@ -608,10 +611,13 @@ void Core::joinGroupCall(int groupId, ToxAv *toxav)
     groupCalls[groupId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
 
     // Audio
-    alGenSources(1, &calls[groupId].alSource);
+    alGenSources(1, &groupCalls[groupId].alSource);
     alcCaptureStart(alInDev);
 
     // Go
+    ToxAv* toxav = Core::getInstance()->toxav;
+    groupCalls[groupId].sendAudioTimer = new QTimer();
+    groupCalls[groupId].sendAudioTimer->moveToThread(coreThread);
     groupCalls[groupId].active = true;
     groupCalls[groupId].sendAudioTimer->setInterval(5);
     groupCalls[groupId].sendAudioTimer->setSingleShot(true);
@@ -619,7 +625,7 @@ void Core::joinGroupCall(int groupId, ToxAv *toxav)
     groupCalls[groupId].sendAudioTimer->start();
 }
 
-void Core::leaveGroupCall(int groupId, ToxAv *)
+void Core::leaveGroupCall(int groupId)
 {
     qDebug() << QString("Core: Leaving group call %1").arg(groupId);
     groupCalls[groupId].active = false;
@@ -663,4 +669,24 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
         }
     }
     groupCalls[groupId].sendAudioTimer->start();
+}
+
+void Core::disableGroupCallMic(int groupId)
+{
+    groupCalls[groupId].muteMic = true;
+}
+
+void Core::disableGroupCallVol(int groupId)
+{
+    groupCalls[groupId].muteVol = true;
+}
+
+void Core::enableGroupCallMic(int groupId)
+{
+    groupCalls[groupId].muteMic = false;
+}
+
+void Core::enableGroupCallVol(int groupId)
+{
+    groupCalls[groupId].muteVol = false;
 }

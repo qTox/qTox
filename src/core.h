@@ -117,6 +117,13 @@ public slots:
     void micMuteToggle(int callId);
     void volMuteToggle(int callId);
 
+    static void joinGroupCall(int groupId); ///< Starts a call in an existing AV groupchat
+    static void leaveGroupCall(int groupId); ///< Will not leave the group, just stop the call
+    static void disableGroupCallMic(int groupId);
+    static void disableGroupCallVol(int groupId);
+    static void enableGroupCallMic(int groupId);
+    static void enableGroupCallVol(int groupId);
+
     void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
     void clearPassword(PasswordType passtype);
     QByteArray encryptData(const QByteArray& data, PasswordType passtype);
@@ -233,8 +240,6 @@ private:
     static void onAvPeerTimeout(void* toxav, int32_t call_index, void* core);
     static void onAvMediaChange(void *toxav, int32_t call_index, void* core);
 
-    static void joinGroupCall(int groupId, ToxAv *toxav); ///< Starts a call in an existing AV groupchat
-    static void leaveGroupCall(int groupId, ToxAv *toxav); ///< Will not leave the group, just stop the call
     static void playGroupAudio(Tox* tox, int  groupnumber, int friendgroupnumber, const int16_t* out_audio,
                 unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* userdata);
     static void sendGroupCallAudio(int groupId, ToxAv* toxav);
@@ -282,6 +287,8 @@ private:
 
     static ALCdevice* alOutDev, *alInDev;
     static ALCcontext* alContext;
+
+    static QThread *coreThread;
 public:
     static ALuint alMainSource;
 };

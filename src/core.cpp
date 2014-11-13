@@ -46,11 +46,14 @@ const QString Core::TOX_EXT = ".tox";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
 QHash<int, ToxGroupCall> Core::groupCalls;
+QThread* Core::coreThread{nullptr};
 
-Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
+Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
     tox(nullptr), camera(cam), loadPath(loadPath), ready{false}
 {
     qDebug() << "Core: loading Tox from" << loadPath;
+
+    coreThread = CoreThread;
 
     videobuf = new uint8_t[videobufsize];
 

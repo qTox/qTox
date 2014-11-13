@@ -23,8 +23,8 @@
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int GroupId, QString Name)
-    : groupId(GroupId), nPeers{0}
+Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
+    : groupId(GroupId), nPeers{0}, avGroupchat{IsAvGroupchat}
 {
     widget = new GroupWidget(groupId, Name);
     chatForm = new GroupChatForm(this);

@@ -43,8 +43,6 @@
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
-    , audioInputFlag(false)
-    , audioOutputFlag(false)
     , callId(0)
 {
     nameLabel->setText(f->getDisplayedName());

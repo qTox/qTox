@@ -19,9 +19,9 @@
 
 QList<Group*> GroupList::groupList;
 
-Group* GroupList::addGroup(int groupId, const QString& name)
+Group* GroupList::addGroup(int groupId, const QString& name, bool isAvGroupchat)
 {
-    Group* newGroup = new Group(groupId, name);
+    Group* newGroup = new Group(groupId, name, isAvGroupchat);
     groupList.append(newGroup);
     return newGroup;
 }

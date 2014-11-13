@@ -37,6 +37,8 @@
 GenericChatForm::GenericChatForm(QWidget *parent) :
     QWidget(parent),
     earliestMessage(nullptr)
+  , audioInputFlag(false)
+  , audioOutputFlag(false)
 {
     curRow = 0;
 

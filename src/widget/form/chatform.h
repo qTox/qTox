@@ -95,8 +95,6 @@ private:
     Friend* f;
     CroppingLabel *statusMessageLabel;
     NetCamView* netcam;
-    bool audioInputFlag;
-    bool audioOutputFlag;
     int callId;
     QLabel *callDuration;
     QTimer *timer;
