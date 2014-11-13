@@ -68,7 +68,6 @@ private:
     GenericDdInterface *db;
     QMap<QString, int> aliases;
     QMap<QString, QPair<int, ChatType>> chats;
-    bool isEncrypted;
     int messageID;
 };
 
