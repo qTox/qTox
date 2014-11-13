@@ -657,6 +657,7 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
     if(samples >= framesize)
     {
+        memset(buf, 0, framesize*2); // Avoid uninitialized values (Valgrind)
         alcCaptureSamples(alInDev, buf, framesize);
         frame = 1;
     }
