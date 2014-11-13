@@ -1,20 +1,20 @@
 qTox
 ======
 
-Powerful Tox client that tries to follow the Tox UI mockup while running on all major systems. <br/>
-This GUI uses code from @nurupo'tos ProjectTox-Qt-GUI, in particular the "Core" Toxcore wrapper. <br/>
-However, it is not a fork.
+qTox is a powerful Tox client that tries to follow the Tox design guidelines while running on all major platforms. <br/>
 
 <h2>Features</h2>
 
 - One to one chat with friends
 - Group chats
 - File transfers, with previewing of images
-- Audio calls
+- Audio calls, including group calls
 - Video calls
-- Tox DNS
+- Tox DNS and Tox URI support
 - Translations in various languages
 - Avatars
+- Auto-updates on Windows and Mac
+- And many more options!
 
 <h2>Downloads</h2>
 
@@ -33,3 +33,9 @@ This client runs on Windows, Linux and Mac natively.<br/>
 ##Documentation:
 
 [Compiling](/INSTALL.md)
+
+##Developer overview:
+
+[GitStats](http://207.12.89.155/index.html)<br/>
+[Mac & Linux jenkins](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/)<br/>
+[Windows jenkins](http://207.12.89.155:8080)<br/>
