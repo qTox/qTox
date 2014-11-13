@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
     a.addLibraryPath("platforms");
 
-    qDebug() << "built on: " << __TIME__ << __DATE__;
+    qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
 
     // Install Unicode 6.1 supporting font

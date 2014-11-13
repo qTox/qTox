@@ -46,6 +46,8 @@ RESOURCES += res.qrc
 
 GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "built without git")
 DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
+TIMESTAMP = $$system(date +"%s" || echo 0)
+DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
 
 contains(JENKINS,YES) {
