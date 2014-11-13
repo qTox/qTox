@@ -13,7 +13,7 @@ qTox is a powerful Tox client that tries to follow the Tox design guidelines whi
 - Tox DNS and Tox URI support
 - Translations in various languages
 - Avatars
-- Auto-updates on Windows and Mac
+- Auto-updates on Windows and Mac, packages on Linux
 - And many more options!
 
 <h2>Downloads</h2>
