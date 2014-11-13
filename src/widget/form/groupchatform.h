@@ -32,6 +32,9 @@ public:
 
     void onUserListChanged();
 
+    void keyPressEvent(QKeyEvent* ev);
+    void keyReleaseEvent(QKeyEvent* ev);
+
 private slots:
     void onSendTriggered();
     void onMicMuteToggle();
@@ -42,8 +45,6 @@ protected:
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);
-    void keyPressEvent(QKeyEvent* ev);
-    void keyReleaseEvent(QKeyEvent* ev);
 
 private:
     Group* group;

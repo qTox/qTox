@@ -207,15 +207,12 @@ void GroupChatForm::onCallClicked()
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 {
-    qDebug() << "Press:"<<ev->key();
     // Push to talk
     if (ev->key() == Qt::Key_P && inCall)
     {
-        qDebug() << "Press:"<<ev->key();
         Core* core = Core::getInstance();
         if (!core->isGroupCallMicEnabled(group->groupId))
         {
-            qDebug() << "Press:"<<ev->key();
             core->enableGroupCallMic(group->groupId);
             micButton->setObjectName("green");
             micButton->style()->polish(micButton);
@@ -226,7 +223,6 @@ void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 
 void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 {
-    qDebug() << "Release:"<<ev->key();
     // Push to talk
     if (ev->key() == Qt::Key_P && inCall)
     {
