@@ -46,8 +46,8 @@ unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 
 #elif defined(Q_OS_OSX)
 const QString AutoUpdater::platform = "osx";
-const QString AutoUpdater::updaterBin = "installer -store -pkg "+Settings::getInstance().getSettingsDirPath()
-                                                    +"/update/qtox.pkg -target /";
+const QString AutoUpdater::updaterBin = "installer -pkg "+Settings::getInstance().getSettingsDirPath()
+                                                    +"/update/qtox.pkg -target CurrentUserHomeDirectory";
 const QString AutoUpdater::updateServer = "https://dist-build.tox.im";
 
 unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
