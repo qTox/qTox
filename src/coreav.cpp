@@ -690,3 +690,13 @@ void Core::enableGroupCallVol(int groupId)
 {
     groupCalls[groupId].muteVol = false;
 }
+
+bool Core::isGroupCallMicEnabled(int groupId)
+{
+    return !groupCalls[groupId].muteMic;
+}
+
+bool Core::isGroupCallVolEnabled(int groupId)
+{
+    return !groupCalls[groupId].muteVol;
+}

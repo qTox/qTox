@@ -123,6 +123,8 @@ public slots:
     static void disableGroupCallVol(int groupId);
     static void enableGroupCallMic(int groupId);
     static void enableGroupCallVol(int groupId);
+    static bool isGroupCallMicEnabled(int groupId);
+    static bool isGroupCallVolEnabled(int groupId);
 
     void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
     void clearPassword(PasswordType passtype);

@@ -28,6 +28,7 @@
 #include <QDragEnterEvent>
 #include "src/historykeeper.h"
 #include "src/misc/flowlayout.h"
+#include <QDebug>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), inCall{false}
@@ -201,5 +202,41 @@ void GroupChatForm::onCallClicked()
         callButton->setObjectName("green");
         callButton->style()->polish(callButton);
         inCall = false;
+    }
+}
+
+void GroupChatForm::keyPressEvent(QKeyEvent* ev)
+{
+    qDebug() << "Press:"<<ev->key();
+    // Push to talk
+    if (ev->key() == Qt::Key_P && inCall)
+    {
+        qDebug() << "Press:"<<ev->key();
+        Core* core = Core::getInstance();
+        if (!core->isGroupCallMicEnabled(group->groupId))
+        {
+            qDebug() << "Press:"<<ev->key();
+            core->enableGroupCallMic(group->groupId);
+            micButton->setObjectName("green");
+            micButton->style()->polish(micButton);
+            Style::repolish(micButton);
+        }
+    }
+}
+
+void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
+{
+    qDebug() << "Release:"<<ev->key();
+    // Push to talk
+    if (ev->key() == Qt::Key_P && inCall)
+    {
+        Core* core = Core::getInstance();
+        if (core->isGroupCallMicEnabled(group->groupId))
+        {
+            core->disableGroupCallMic(group->groupId);
+            micButton->setObjectName("red");
+            micButton->style()->polish(micButton);
+            Style::repolish(micButton);
+        }
     }
 }
