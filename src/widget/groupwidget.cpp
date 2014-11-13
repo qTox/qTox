@@ -122,3 +122,8 @@ void GroupWidget::dropEvent(QDropEvent *ev)
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
 }
+
+void GroupWidget::setName(const QString& name)
+{
+    nameLabel->setText(name);
+}

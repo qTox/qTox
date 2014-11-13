@@ -218,6 +218,7 @@ void Widget::init()
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
+    connect(core, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
     connect(core, &Core::avInvite, this, &Widget::playRingtone);
     connect(core, &Core::blockingClearContacts, this, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
@@ -843,7 +844,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     FriendList::removeFriend(f->getFriendID(), fake);
     core->removeFriend(f->getFriendID(), fake);
     delete f;
-    if (ui->mainHead->layout()->isEmpty()) // tux3: this should have covered the case of the bug you "fixed" 5 lines above
+    if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
 
     contactListWidget->hide();
@@ -947,6 +948,17 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 
+void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const QString& title)
+{
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g)
+        return;
+
+    g->setName(title);
+    if (!author.isEmpty())
+        g->chatForm->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), "silver", QDateTime::currentDateTime());
+}
+
 void Widget::removeGroup(Group* g, bool fake)
 {
     g->widget->setAsInactiveChatroom();
@@ -995,6 +1007,7 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->chatForm, SLOT(focusInput()));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
     connect(newgroup->chatForm, SIGNAL(sendAction(int,QString)), core, SLOT(sendGroupAction(int,QString)));
+    connect(newgroup->chatForm, &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
     return newgroup;
 }
 

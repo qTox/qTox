@@ -35,6 +35,7 @@ public:
     void addPeer(int peerId, QString name);
     void removePeer(int peerId);
     void updatePeer(int peerId, QString newName);
+    void setName(const QString& name);
 
 public:
     int groupId;

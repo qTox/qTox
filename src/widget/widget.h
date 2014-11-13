@@ -115,6 +115,7 @@ private slots:
     void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
     void onGroupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
+    void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
