@@ -71,7 +71,9 @@ IPC::~IPC()
 {
     if (globalMemory.lock())
     {
-        *(time_t*)((char*)globalMemory.data()+sizeof(globalId)) = 0;
+        char* data = (char*)globalMemory.data();
+        if (data)
+            *(time_t*)(data+sizeof(globalId)) = 0;
         globalMemory.unlock();
     }
 }
