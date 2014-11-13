@@ -1032,8 +1032,8 @@ bool Widget::event(QEvent * e)
         case QEvent::Wheel:
         case QEvent::KeyPress:
         case QEvent::KeyRelease:
-            if (autoAwayActive)
-            {
+            if (autoAwayActive && ui->statusButton->property("status").toString() == "away")
+            { // be sure nothing else has changed the status in the meantime
                 qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
                 autoAwayActive = false;
                 emit statusSet(Status::Online);
