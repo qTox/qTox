@@ -128,6 +128,7 @@ void GroupWidget::keyPressEvent(QKeyEvent* ev)
     Group* g = GroupList::findGroup(groupId);
     if (g)
         g->chatForm->keyPressEvent(ev);
+
 }
 
 void GroupWidget::keyReleaseEvent(QKeyEvent* ev)
