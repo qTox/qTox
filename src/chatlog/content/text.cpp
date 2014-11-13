@@ -11,14 +11,15 @@
 #include <QFontMetrics>
 #include <QDesktopServices>
 
-int Text::count = 0;
-
 Text::Text(const QString& txt, bool enableElide)
     : ChatLineContent()
     , elide(enableElide)
 {
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+
+    ensureIntegrity();
+    freeResources();
     //setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 }
 
@@ -161,6 +162,11 @@ void Text::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         QDesktopServices::openUrl(anchor);
 }
 
+QString Text::toString() const
+{
+    return text;
+}
+
 void Text::ensureIntegrity()
 {
     if(!doc)
@@ -179,18 +185,16 @@ void Text::ensureIntegrity()
             opt.setWrapMode(QTextOption::NoWrap);
             doc->setDefaultTextOption(opt);
             doc->setPlainText(elidedText);
-
         }
 
         cursor = QTextCursor(doc);
-        count++;
     }
 
     doc->setTextWidth(width);
     doc->documentLayout()->update();
 
     if(doc->firstBlock().layout()->lineCount() > 0)
-        vOffset = doc->firstBlock().layout()->lineAt(0).ascent();
+        vOffset = doc->firstBlock().layout()->lineAt(0).height();
 
     if(size != idealSize())
     {
@@ -206,8 +210,6 @@ void Text::freeResources()
         delete doc;
         doc = nullptr;
         cursor = QTextCursor();
-
-        count--;
     }
 }
 

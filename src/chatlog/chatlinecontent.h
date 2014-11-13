@@ -36,6 +36,8 @@ public:
 
     virtual void visibilityChanged(bool visible);
 
+    virtual QString toString() const;
+
 private:
     friend class ChatLine;
 

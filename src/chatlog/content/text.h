@@ -36,7 +36,7 @@ public:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-    static int count;
+    virtual QString toString() const;
 
 protected:
     // dynamic resource management

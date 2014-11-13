@@ -29,6 +29,7 @@
 #include "src/friendlist.h"
 #include "src/friend.h"
 #include "src/chatlog/content/text.h"
+#include "src/chatlog/chatmessage.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent) :
     QWidget(parent),
@@ -205,12 +206,16 @@ void GenericChatForm::onSaveLogClicked()
 ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    return chatWidget->addChatMessage(Core::getInstance()->getPeerName(author), new Text(message), datetime);
+    ChatMessage* msg = chatWidget->addChatMessage(Core::getInstance()->getPeerName(author), new Text(SmileyPack::getInstance().smileyfied(message)), datetime);
+    if(isSent)
+        msg->markAsSent(datetime);
+
+    return msg;
 }
 
 ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent)
 {
-    return chatWidget->addChatMessage(Core::getInstance()->getUsername(), new Text(message));
+    return chatWidget->addChatMessage(Core::getInstance()->getUsername(), new Text(SmileyPack::getInstance().smileyfied(message)));
 }
 
 /**

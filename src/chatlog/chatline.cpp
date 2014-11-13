@@ -111,6 +111,10 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
 
         content[col] = lineContent;
         scene->addItem(content[col]);
+
+        layout(width, pos);
+        content[col]->visibilityChanged(isVisible);
+        content[col]->update();
     }
 }
 
@@ -145,14 +149,8 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         else
             width = format[i].size / varWidth * leftover;
 
-        // set the width of the current column as
-        // firstLineVOffset() may depend on the current width
+        // set the width of the current column
         content[i]->setWidth(width);
-
-        // calculate vertical alignment
-        qreal yOffset = 0.0;
-        if(format[i].vAlignCol >= 0 && format[i].vAlignCol < content.size())
-            yOffset = content[format[i].vAlignCol]->firstLineVOffset() - content[i]->firstLineVOffset();
 
         // calculate horizontal alignment
         qreal xAlign = 0.0;
@@ -169,9 +167,21 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         }
 
         // reposition
-        content[i]->setPos(pos.x() + xOffset + xAlign, pos.y() + yOffset);
+        content[i]->setPos(pos.x() + xOffset + xAlign, pos.y());
 
         xOffset += width;
+    }
+
+    for(int i = 0; i < content.size(); ++i)
+    {
+        // calculate vertical alignment
+        // vertical alignment may depend on width, so we do it in a second pass
+        qreal yOffset = 0.0;
+        if(format[i].vAlignCol >= 0 && format[i].vAlignCol < content.size())
+            yOffset = content[format[i].vAlignCol]->firstLineVOffset() - content[i]->firstLineVOffset();
+
+        // reposition
+        content[i]->setPos(content[i]->pos().x(), content[i]->pos().y() + yOffset);
     }
 
     updateBBox();

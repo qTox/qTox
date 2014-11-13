@@ -743,7 +743,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    //TODO: f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
+    f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
 
     if (isAction)
         HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp, true);
@@ -773,7 +773,7 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
     if (!f)
         return;
 
-    //TODO: f->getChatForm()->dischargeReceipt(receipt);
+    f->getChatForm()->dischargeReceipt(receipt);
 }
 
 void Widget::newMessageAlert(GenericChatroomWidget* chat)

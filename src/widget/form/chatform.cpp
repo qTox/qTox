@@ -732,7 +732,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
     ToxID storedPrevId;
     std::swap(storedPrevId, previousId);
-    //QList<ChatActionPtr> historyMessages;
+//    QList<ChatMessage*> historyMessages;
 
 //    QDate lastDate(1,0,0);
 //    for (const auto &it : msgs)
@@ -743,11 +743,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 //        if (msgDate > lastDate)
 //        {
 //            lastDate = msgDate;
-//            historyMessages.append(genSystemInfoAction(msgDate.toString(),"",QDateTime()));
+//            //TODO: historyMessages.append(genSystemInfoAction(msgDate.toString(),"",QDateTime()));
 //        }
 
 //        // Show each messages
-//        MessageActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
+//        ChatMessage* ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
 //        if (it.isSent)
 //        {
 //            ca->markAsSent();
@@ -869,26 +869,26 @@ void ChatForm::dischargeReceipt(int receipt)
 
 void ChatForm::clearReciepts()
 {
-//    receipts.clear();
-//    undeliveredMsgs.clear();
+    receipts.clear();
+    undeliveredMsgs.clear();
 }
 
 void ChatForm::deliverOfflineMsgs()
 {
-//    if (!Settings::getInstance().getFauxOfflineMessaging())
-//        return;
+    if (!Settings::getInstance().getFauxOfflineMessaging())
+        return;
 
-//    QMap<int, MessageActionPtr> msgs = undeliveredMsgs;
-//    clearReciepts();
+    QMap<int, ChatMessage*> msgs = undeliveredMsgs;
+    clearReciepts();
 
-//    for (auto iter = msgs.begin(); iter != msgs.end(); iter++)
-//    {
-//        QString messageText = iter.value()->getRawMessage();
-//        int rec;
-//        if (iter.value()->isAction())
-//            rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
-//        else
-//            rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
-//        registerReceipt(rec, iter.key(), iter.value());
-//    }
+    for (auto iter = msgs.begin(); iter != msgs.end(); iter++)
+    {
+        QString messageText = iter.value()->toString();
+        int rec;
+        //if (iter.value()->isAction())
+            ;//TODO: rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
+        //else
+            rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
+        registerReceipt(rec, iter.key(), iter.value());
+    }
 }
