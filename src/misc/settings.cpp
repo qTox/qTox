@@ -112,6 +112,7 @@ void Settings::load()
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
         translation = s.value("translation", "en").toString();
+        showSystemTray = s.value("showSystemTray", false).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();        
@@ -252,6 +253,7 @@ void Settings::save(QString path)
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("translation",translation);
         s.setValue("makeToxPortable",makeToxPortable);
+        s.setValue("showSystemTray", showSystemTray);
         s.setValue("autostartInTray",autostartInTray);
         s.setValue("closeToTray", closeToTray);
         s.setValue("useProxy", useProxy);
@@ -428,6 +430,16 @@ QString Settings::getStyle() const
 void Settings::setStyle(const QString& newStyle) 
 {
     style = newStyle;
+}
+
+bool Settings::getShowSystemTray() const
+{
+    return showSystemTray;
+}
+
+void Settings::setShowSystemTray(const bool& newValue)
+{
+    showSystemTray = newValue;
 }
 
 void Settings::setUseEmoticons(bool newValue)

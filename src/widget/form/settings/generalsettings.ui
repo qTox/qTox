@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>511</width>
-        <height>698</height>
+        <width>583</width>
+        <height>748</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -95,6 +95,13 @@
           </item>
           <item>
            <layout class="QHBoxLayout" name="trayLayout">
+            <item>
+             <widget class="QCheckBox" name="showSystemTray">
+              <property name="text">
+               <string>Show system tray</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QCheckBox" name="startInTray">
               <property name="sizePolicy">
@@ -190,9 +197,6 @@
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
-              </property>
               <property name="suffix">
                <string> minutes</string>
               </property>
@@ -201,6 +205,9 @@
               </property>
               <property name="maximum">
                <number>2147483647</number>
+              </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -503,5 +510,54 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>showSystemTray</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>startInTray</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>207</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showSystemTray</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>closeToTray</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>66</x>
+     <y>119</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showSystemTray</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>minimizeToTray</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>83</x>
+     <y>121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>476</x>
+     <y>120</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -96,7 +96,9 @@ void Widget::init()
                 this,
                 SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
         
-        icon->show();
+        if (Settings::getInstance().getShowSystemTray()){
+            icon->show();
+        }
         
         if(Settings::getInstance().getAutostartInTray() == false)
             this->show();
@@ -196,6 +198,8 @@ void Widget::init()
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
     settingsWidget = new SettingsWidget();
+
+    connect(settingsWidget, SIGNAL(setShowSystemTray(bool)), this, SLOT(onSetShowSystemTray(bool)));
 
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
@@ -1104,6 +1108,11 @@ void Widget::getPassword(QString info, int passtype, uint8_t* salt)
             core->setPassword(pswd, pt, salt);
     }
 }
+
+void Widget::onSetShowSystemTray(bool newValue){
+    icon->setVisible(newValue);
+}
+
 
 QMessageBox::StandardButton Widget::showWarningMsgBox(const QString& title, const QString& msg, QMessageBox::StandardButtons buttons)
 {
