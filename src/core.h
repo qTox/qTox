@@ -233,8 +233,11 @@ private:
     static void onAvPeerTimeout(void* toxav, int32_t call_index, void* core);
     static void onAvMediaChange(void *toxav, int32_t call_index, void* core);
 
+    static void joinGroupCall(int groupId, ToxAv *toxav); ///< Starts a call in an existing AV groupchat
+    static void leaveGroupCall(int groupId, ToxAv *toxav); ///< Will not leave the group, just stop the call
     static void playGroupAudio(Tox* tox, int  groupnumber, int friendgroupnumber, const int16_t* out_audio,
                 unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* userdata);
+    static void sendGroupCallAudio(int groupId, ToxAv* toxav);
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
@@ -268,6 +271,7 @@ private:
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[];
+    static QHash<int, ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
     QMutex fileSendMutex, messageSendMutex;
     bool ready;
 

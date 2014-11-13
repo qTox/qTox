@@ -176,7 +176,6 @@ void Core::startCall(int friendId, bool video)
             emit avCallFailed(friendId);
             return;
         }
-
     }
 }
 
@@ -222,7 +221,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
         return;
     }
 
-    int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000;
+    int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000 * av_DefaultSettings.audio_channels;
     uint8_t buf[framesize*2], dest[framesize*2];
 
     bool frame = false;
@@ -578,7 +577,7 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
     if(state != AL_PLAYING)
     {
         alSourcePlay(alSource);
-        qDebug() << "Core: Starting audio source " << (int)alSource;
+        //qDebug() << "Core: Starting audio source " << (int)alSource;
     }
 }
 
@@ -587,10 +586,81 @@ VideoSource *Core::getVideoSourceFromCall(int callNumber)
     return &calls[callNumber].videoSource;
 }
 
-void Core::playGroupAudio(Tox* /*tox*/, int  /*groupnumber*/, int /*friendgroupnumber*/, const int16_t* out_audio,
+void Core::playGroupAudio(Tox* /*tox*/, int  groupnumber, int /*friendgroupnumber*/, const int16_t* out_audio,
                 unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* /*userdata*/)
 {
-    /// TODO: FIXME: Don't play groupchat audio on the main source!
-    /// We'll need some sort of call[] array but for groupchats, when that's done use this source
-    playAudioBuffer(alMainSource, out_audio, out_audio_samples, decoder_channels, audio_sample_rate);
+    if (!groupCalls[groupnumber].active)
+        return;
+
+    playAudioBuffer(groupCalls[groupnumber].alSource, out_audio, out_audio_samples, decoder_channels, audio_sample_rate);
+}
+
+void Core::joinGroupCall(int groupId, ToxAv *toxav)
+{
+    qDebug() << QString("Core: Joining group call %1").arg(groupId);
+    groupCalls[groupId].groupId = groupId;
+    groupCalls[groupId].muteMic = false;
+    groupCalls[groupId].muteVol = false;
+    // the following three lines are also now redundant from startCall, but are
+    // necessary there for outbound and here for inbound
+    groupCalls[groupId].codecSettings = av_DefaultSettings;
+    groupCalls[groupId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
+    groupCalls[groupId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
+
+    // Audio
+    alGenSources(1, &calls[groupId].alSource);
+    alcCaptureStart(alInDev);
+
+    // Go
+    groupCalls[groupId].active = true;
+    groupCalls[groupId].sendAudioTimer->setInterval(5);
+    groupCalls[groupId].sendAudioTimer->setSingleShot(true);
+    connect(groupCalls[groupId].sendAudioTimer, &QTimer::timeout, [=](){sendGroupCallAudio(groupId,toxav);});
+    groupCalls[groupId].sendAudioTimer->start();
+}
+
+void Core::leaveGroupCall(int groupId, ToxAv *)
+{
+    qDebug() << QString("Core: Leaving group call %1").arg(groupId);
+    groupCalls[groupId].active = false;
+    disconnect(groupCalls[groupId].sendAudioTimer,0,0,0);
+    groupCalls[groupId].sendAudioTimer->stop();
+    alcCaptureStop(alInDev);
+}
+
+void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
+{
+    if (!groupCalls[groupId].active)
+        return;
+
+    if (groupCalls[groupId].muteMic)
+    {
+        groupCalls[groupId].sendAudioTimer->start();
+        return;
+    }
+
+    int framesize = (groupCalls[groupId].codecSettings.audio_frame_duration * groupCalls[groupId].codecSettings.audio_sample_rate) / 1000 * av_DefaultSettings.audio_channels;
+    uint8_t buf[framesize*2];
+
+    bool frame = false;
+    ALint samples;
+    alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
+    if(samples >= framesize)
+    {
+        alcCaptureSamples(alInDev, buf, framesize);
+        frame = 1;
+    }
+
+    if(frame)
+    {
+        int r;
+        if((r = toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,
+                framesize, av_DefaultSettings.audio_channels, av_DefaultSettings.audio_sample_rate)) < 0)
+        {
+            qDebug() << "Core: toxav_group_send_audio error";
+            groupCalls[groupId].sendAudioTimer->start();
+            return;
+        }
+    }
+    groupCalls[groupId].sendAudioTimer->start();
 }

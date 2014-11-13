@@ -45,6 +45,7 @@ const QString Core::CONFIG_FILE_NAME = "data";
 const QString Core::TOX_EXT = ".tox";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
+QHash<int, ToxGroupCall> Core::groupCalls;
 
 Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     tox(nullptr), camera(cam), loadPath(loadPath), ready{false}
@@ -95,12 +96,15 @@ Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     }
 
     QString inDevDescr = Settings::getInstance().getInDev();
+    int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
-                                   (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
+        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
+            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
+                                       / 1000 * av_DefaultSettings.audio_channels);
     else
-        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
-                                   (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
+        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, stereoFlag,
+            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
+                                       / 1000 * av_DefaultSettings.audio_channels);
     if (!alInDev)
         qWarning() << "Core: Cannot open input audio device";
 }
@@ -1632,11 +1636,17 @@ void Core::groupInviteFriend(int friendId, int groupId)
 void Core::createGroup(uint8_t type)
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT)
+    {
         emit emptyGroupCreated(tox_add_groupchat(tox));
+    }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
+    {
         emit emptyGroupCreated(toxav_add_av_groupchat(tox, playGroupAudio, this));
+    }
     else
+    {
         qWarning() << "Core::createGroup: Unknown type "<<type;
+    }
 }
 
 bool Core::hasFriendWithAddress(const QString &addr) const

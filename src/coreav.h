@@ -16,7 +16,6 @@ class QTimer;
 
 struct ToxCall
 {
-public:
     ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer, *sendVideoTimer;
     int callId;
@@ -27,6 +26,17 @@ public:
     bool muteVol;
     ALuint alSource;
     NetVideoSource videoSource;
+};
+
+struct ToxGroupCall
+{
+    ToxAvCSettings codecSettings;
+    QTimer *sendAudioTimer;
+    int groupId;
+    bool active;
+    bool muteMic;
+    bool muteVol;
+    ALuint alSource;
 };
 
 #endif // COREAV_H
