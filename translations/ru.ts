@@ -462,7 +462,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="226"/>
         <source>Alias:</source>
-        <translation>Псевдоним:</translation>
+        <translation>Новый псевдоним:</translation>
     </message>
 </context>
 <context>
@@ -533,7 +533,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="163"/>
         <source>Faux offline messaging</source>
-        <translation type="unfinished">Как-бы оффлайновые сообщения</translation>
+        <translation type="unfinished">Имитация офлайнового обмена сообщениями</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="178"/>
@@ -1397,7 +1397,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/widget/widget.cpp" line="654"/>
         <source>Couldn&apos;t request friendship</source>
-        <translation type="unfinished">Невозможно запросить дружбомагию</translation>
+        <translation type="unfinished">Не удалось запросить добавление в друзья</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="682"/>
