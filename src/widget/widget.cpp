@@ -985,7 +985,7 @@ Group *Widget::createGroup(int groupId)
     }
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName);
+    Group* newgroup = GroupList::addGroup(groupId, groupName, true);
     QLayout* layout = contactListWidget->getGroupLayout();
     layout->addWidget(newgroup->widget);
     newgroup->widget->updateStatusLight();

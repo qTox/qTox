@@ -30,17 +30,25 @@
 #include "src/misc/flowlayout.h"
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
-    : group(chatGroup)
+    : group(chatGroup), inCall{false}
 {
     nusersLabel = new QLabel();
 
     tabber = new TabCompleter(msgEdit, group);
 
     fileButton->setEnabled(false);
-    callButton->setVisible(false);
-    videoButton->setVisible(false);
-    volButton->setVisible(false);
-    micButton->setVisible(false);
+    if (group->avGroupchat)
+    {
+        videoButton->setEnabled(false);
+        videoButton->setObjectName("grey");
+    }
+    else
+    {
+        videoButton->setVisible(false);
+        callButton->setVisible(false);
+        volButton->setVisible(false);
+        micButton->setVisible(false);
+    }
 
     nameLabel->setText(group->widget->getName());
 
@@ -68,6 +76,9 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(msgEdit, SIGNAL(enterPressed()), this, SLOT(onSendTriggered()));
     connect(msgEdit, &ChatTextEdit::tabPressed, tabber, &TabCompleter::complete);
     connect(msgEdit, &ChatTextEdit::keyPressed, tabber, &TabCompleter::reset);
+    connect(callButton, &QPushButton::clicked, this, &GroupChatForm::onCallClicked);
+    connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
+    connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
 
     setAcceptDrops(true);
 }
@@ -129,3 +140,66 @@ void GroupChatForm::dropEvent(QDropEvent *ev)
     }
 }
 
+void GroupChatForm::onMicMuteToggle()
+{
+    if (audioInputFlag == true)
+    {
+        if (micButton->objectName() == "red")
+        {
+            Core::getInstance()->enableGroupCallMic(group->groupId);
+            micButton->setObjectName("green");
+        }
+        else
+        {
+            Core::getInstance()->disableGroupCallMic(group->groupId);
+            micButton->setObjectName("red");
+        }
+
+        Style::repolish(micButton);
+    }
+}
+
+void GroupChatForm::onVolMuteToggle()
+{
+    if (audioOutputFlag == true)
+    {
+        if (volButton->objectName() == "red")
+        {
+            Core::getInstance()->enableGroupCallVol(group->groupId);
+            volButton->setObjectName("green");
+        }
+        else
+        {
+            Core::getInstance()->disableGroupCallVol(group->groupId);
+            volButton->setObjectName("red");
+        }
+
+        Style::repolish(volButton);
+    }
+}
+
+void GroupChatForm::onCallClicked()
+{
+    if (!inCall)
+    {
+        Core::getInstance()->joinGroupCall(group->groupId);
+        audioInputFlag = true;
+        audioOutputFlag = true;
+        callButton->setObjectName("red");
+        callButton->style()->polish(callButton);
+        inCall = true;
+    }
+    else
+    {
+        Core::getInstance()->leaveGroupCall(group->groupId);
+        audioInputFlag = false;
+        audioOutputFlag = false;
+        micButton->setObjectName("green");
+        micButton->style()->polish(micButton);
+        volButton->setObjectName("green");
+        volButton->style()->polish(volButton);
+        callButton->setObjectName("green");
+        callButton->style()->polish(callButton);
+        inCall = false;
+    }
+}
