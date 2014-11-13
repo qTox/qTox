@@ -338,17 +338,20 @@ Section Uninstall
   Delete "$INSTDIR\${UninstLog}"
   noLog:
   Delete /REBOOTOK "$INSTDIR\uninstall.exe"
-  RMDir /r /REBOOTOK $INSTDIR\bin"
+  RMDir /r /REBOOTOK "$INSTDIR\bin"
   RMDir /REBOOTOK "$INSTDIR"
   Pop $R2
   Pop $R1
   Pop $R0
  
+  ;Remove start menu entries
+  RMDir /r /REBOOTOK "$SMPROGRAMS\qTox"
+ 
   ;Remove registry keys
-    DeleteRegKey ${REG_ROOT} "${REG_APP_PATH}"
-    DeleteRegKey ${REG_ROOT} "${UNINSTALL_PATH}"
-    DeleteRegKey HKCR "Applications\qtox.exe"
-	DeleteRegKey HKCR ".tox"
-    DeleteRegKey HKCR "tox"
-    DeleteRegKey HKCR "toxsave"
+  DeleteRegKey ${REG_ROOT} "${REG_APP_PATH}"
+  DeleteRegKey ${REG_ROOT} "${UNINSTALL_PATH}"
+  DeleteRegKey HKCR "Applications\qtox.exe"
+  DeleteRegKey HKCR ".tox"
+  DeleteRegKey HKCR "tox"
+  DeleteRegKey HKCR "toxsave"
 SectionEnd
