@@ -62,6 +62,9 @@ public:
     
     QString getStyle() const;
     void setStyle(const QString& newValue);
+
+    bool getShowSystemTray() const;
+    void setShowSystemTray(const bool& newValue);
     
     bool getUseEmoticons() const;
     void setUseEmoticons(bool newValue);
@@ -265,7 +268,8 @@ private:
     QByteArray windowState;
     QByteArray splitterState;
     QString style;
-    
+    bool showSystemTray;
+
     // ChatView
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;

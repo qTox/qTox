@@ -127,6 +127,7 @@ private slots:
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAway();
     void getPassword(QString info, int passtype, uint8_t* salt);
+    void onSetShowSystemTray(bool newValue);
 
 private:
     void init();
