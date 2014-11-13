@@ -27,7 +27,7 @@
 #ifdef Q_OS_WIN
 #define AUTOUPDATE_ENABLED 1
 #elif defined(Q_OS_OSX)
-#define AUTOUPDATE_ENABLED 0
+#define AUTOUPDATE_ENABLED 1
 #else
 #define AUTOUPDATE_ENABLED 0
 #endif
