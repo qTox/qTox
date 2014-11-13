@@ -21,7 +21,7 @@
 #include <QObject>
 #include <QPixmap>
 
-class ToxID;
+struct ToxID;
 
 class Settings : public QObject
 {
