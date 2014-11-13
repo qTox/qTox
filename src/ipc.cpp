@@ -132,7 +132,7 @@ void IPC::processEvents()
     }
     else
     {
-        qWarning() << "IPC:processEvents failed to lock";
+        //qWarning() << "IPC:processEvents failed to lock";
         goto restartTimer;
     }
 
