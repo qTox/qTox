@@ -146,6 +146,11 @@ int main(int argc, char *argv[])
                     return EXIT_SUCCESS;
             }
         }
+        else
+        {
+            fprintf(stderr, "Invalid argument\n");
+            return EXIT_FAILURE;
+        }
     }
 
     // Run
