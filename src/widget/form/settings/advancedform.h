@@ -14,27 +14,30 @@
     See the COPYING file for more details.
 */
 
-#ifndef PLAINDB_H
-#define PLAINDB_H
+#ifndef ADVANCEDFORM_H
+#define ADVANCEDFORM_H
 
-#include "genericddinterface.h"
+#include "genericsettings.h"
 
-#include <QSqlDatabase>
+class Core;
 
-namespace Db {
-    enum class syncType : int {stOff = 0, stNormal = 1, stFull = 2};
+namespace Ui {
+class AdvancedSettings;
 }
 
-class PlainDb : public GenericDdInterface
+class AdvancedForm : public GenericForm
 {
+    Q_OBJECT
 public:
-    PlainDb(const QString &db_name, QList<QString> initList);
-    virtual ~PlainDb();
+    AdvancedForm();
+    virtual ~AdvancedForm();
 
-    virtual QSqlQuery exec(const QString &query);
+private slots:
+    void onDbSyncTypeUpdated();
+    void resetToDefault();
 
 private:
-    QSqlDatabase *db;
+    Ui::AdvancedSettings* bodyUI;
 };
 
-#endif // PLAINDB_H
+#endif // ADVANCEDFORM_H
