@@ -52,7 +52,7 @@
 			<string>qtox.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
-				<string>tox/x-profile</string>
+				<string>application/x-tox.profile</string>
 			</array>
 			<key>LSHandlerRank</key>
         		<string>Owner</string>
