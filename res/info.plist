@@ -12,6 +12,14 @@
 	<string>????</string>
 	<key>CFBundleExecutable</key>
 	<string>qtox</string>
+	<key>CFBundleDisplayName</key>
+	<string>qTox</string>
+	<key>CFBundleName</key>
+	<string>qTox</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0-EXPERIMENTIAL</string>
 	<key>CFBundleIdentifier</key>
 	<string>im.tox.qtox</string>
 	<key>CFBundleURLName</key>
@@ -28,11 +36,25 @@
 	<string>Tox profile</string>
 	<key>CFBundleTypeMIMETypes</key>
 	<array>
-		<string></string>
+		<string>tox/x-profile</string>
 	</array>
 	<key>CFBundleTypeIconFile</key>
 	<string>qtox.icns</string>
 	<key>CFBundleURLIconFile</key>
 	<string>qtox.icns</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en_US</string>
+		<string>en</string>
+		<string>bg_BG</string>
+		<string>de_DE</string>
+		<string>fi_FI</string>
+		<string>fr_FR</string>
+		<string>it_IT</string>
+		<string>pl_PL</string>
+		<string>ru_RU</string>
+		<string>uk_UA</string>
+		<string>sv</string>
+	</array>
 </dict>
 </plist>
