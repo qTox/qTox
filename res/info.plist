@@ -15,10 +15,24 @@
 	<key>CFBundleIdentifier</key>
 	<string>im.tox.qtox</string>
 	<key>CFBundleURLName</key>
-	<string>qtox</string>
+	<string>tox</string>
 	<key>CFBundleURLSchemes</key>
-        <array>
-            <string>tox</string>
-        </array>
+	<array>
+		<string>tox</string>
+	</array>
+	<key>CFBundleTypeExtensions</key>
+	<array>
+		<string>tox</string>
+	</array>
+	<key>CFBundleTypeName</key>
+	<string>Tox profile</string>
+	<key>CFBundleTypeMIMETypes</key>
+	<array>
+		<string></string>
+	</array>
+	<key>CFBundleTypeIconFile</key>
+	<string>qtox.icns</string>
+	<key>CFBundleURLIconFile</key>
+	<string>qtox.icns</string>
 </dict>
 </plist>
