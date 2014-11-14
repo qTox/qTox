@@ -14,5 +14,11 @@
 	<string>qtox</string>
 	<key>CFBundleIdentifier</key>
 	<string>im.tox.qtox</string>
+	<key>CFBundleURLName</key>
+	<string>qtox</string>
+	<key>CFBundleURLSchemes</key>
+        <array>
+            <string>tox</string>
+        </array>
 </dict>
 </plist>
