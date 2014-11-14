@@ -118,8 +118,8 @@ public slots:
     void micMuteToggle(int callId);
     void volMuteToggle(int callId);
 
-    static void joinGroupCall(int groupId); ///< Starts a call in an existing AV groupchat
-    static void leaveGroupCall(int groupId); ///< Will not leave the group, just stop the call
+    static void joinGroupCall(int groupId); ///< Starts a call in an existing AV groupchat. Call from the GUI thread.
+    static void leaveGroupCall(int groupId); ///< Will not leave the group, just stop the call. Call from the GUI thread.
     static void disableGroupCallMic(int groupId);
     static void disableGroupCallVol(int groupId);
     static void enableGroupCallMic(int groupId);

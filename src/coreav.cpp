@@ -624,7 +624,6 @@ void Core::joinGroupCall(int groupId)
     // Go
     ToxAv* toxav = Core::getInstance()->toxav;
     groupCalls[groupId].sendAudioTimer = new QTimer();
-    groupCalls[groupId].sendAudioTimer->moveToThread(coreThread);
     groupCalls[groupId].active = true;
     groupCalls[groupId].sendAudioTimer->setInterval(5);
     groupCalls[groupId].sendAudioTimer->setSingleShot(true);
