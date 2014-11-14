@@ -69,3 +69,9 @@ void Group::updatePeer(int peerId, QString name)
     widget->onUserListChanged();
     chatForm->onUserListChanged();
 }
+
+void Group::setName(const QString& name)
+{
+    widget->setName(name);
+    chatForm->setName(name);
+}

@@ -137,3 +137,8 @@ void GroupWidget::keyReleaseEvent(QKeyEvent* ev)
     if (g)
         g->chatForm->keyReleaseEvent(ev);
 }
+
+void GroupWidget::setName(const QString& name)
+{
+    nameLabel->setText(name);
+}

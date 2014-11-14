@@ -95,10 +95,11 @@ public slots:
     void setStatusMessage(const QString& message);
     void setAvatar(uint8_t format, const QByteArray& data);
 
-    int sendMessage(int friendId, const QString& message);
+     int sendMessage(int friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
     void sendGroupAction(int groupId, const QString& message);
-    int sendAction(int friendId, const QString& action);
+    void changeGroupTitle(int groupId, const QString& title);
+     int sendAction(int friendId, const QString& action);
     void sendTyping(int friendId, bool typing);
 
     void sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize);
@@ -157,6 +158,7 @@ signals:
     void groupInviteReceived(int friendnumber, uint8_t type, QByteArray publicKey);
     void groupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
+    void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
 
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
@@ -166,6 +168,7 @@ signals:
 
     void messageSentResult(int friendId, const QString& message, int messageId);
     void groupSentResult(int groupId, const QString& message, int result);
+    void actionSentResult(int friendId, const QString& action, int success);
 
     void receiptRecieved(int friedId, int receipt);
 
@@ -221,6 +224,7 @@ private:
     static void onGroupInvite(Tox *tox, int friendnumber, uint8_t type, const uint8_t *data, uint16_t length,void *userdata);
     static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber, const uint8_t * message, uint16_t length, void *userdata);
     static void onGroupNamelistChange(Tox *tox, int groupnumber, int peernumber, uint8_t change, void *userdata);
+    static void onGroupTitleChange(Tox*, int groupnumber, int peernumber, const uint8_t* title, uint8_t len, void* _core);
     static void onFileSendRequestCallback(Tox *tox, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
                                           const uint8_t *filename, uint16_t filename_length, void *userdata);
     static void onFileControlCallback(Tox *tox, int32_t friendnumber, uint8_t receive_send, uint8_t filenumber,
