@@ -94,6 +94,9 @@ bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
     // events fired by the QLineEdit
     if (obj == textEdit)
     {
+        if (!textEdit->isVisible())
+            return false;
+
         if (e->type() == QEvent::KeyPress)
         {
             QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
