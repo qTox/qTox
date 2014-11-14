@@ -48,7 +48,9 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
     calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
     calls[callId].videoEnabled = videoEnabled;
-    toxav_prepare_transmission(toxav, callId, av_jbufdc, av_VADd, videoEnabled);
+    int r = toxav_prepare_transmission(toxav, callId, av_jbufdc, av_VADd, videoEnabled);
+    if (r < 0)
+        qWarning() << QString("Error starting call %1: toxav_prepare_transmission failed with %2").arg(callId).arg(r);
 
     // Audio
     alGenSources(1, &calls[callId].alSource);
