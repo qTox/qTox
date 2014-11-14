@@ -178,9 +178,7 @@ void Widget::init()
 
     idleTimer = new QTimer();
     idleTimer->setSingleShot(true);
-    int mins = Settings::getInstance().getAutoAwayTime();
-    if (mins > 0)
-        idleTimer->start(mins * 1000*60);
+    setIdleTimer(Settings::getInstance().getAutoAwayTime());
 
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<vpx_image>("vpx_image");
@@ -407,11 +405,6 @@ QString Widget::askProfiles()
     }
     else
         return profile;
-}
-
-void Widget::setIdleTimer(int minutes)
-{
-    idleTimer->start(minutes * 1000*60);
 }
 
 QString Widget::getUsername()
@@ -1054,15 +1047,19 @@ bool Widget::event(QEvent * e)
                 qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
                 autoAwayActive = false;
                 emit statusSet(Status::Online);
-                int mins = Settings::getInstance().getAutoAwayTime();
-                if (mins > 0)
-                    idleTimer->start(mins * 1000*60);
             }
+            setIdleTimer(Settings::getInstance().getAutoAwayTime());
         default:
             break;
     }
 
     return QWidget::event(e);
+}
+
+void Widget::setIdleTimer(int minutes)
+{
+    if (minutes > 0)
+        idleTimer->start(minutes * 1000*60);
 }
 
 void Widget::onUserAway()
