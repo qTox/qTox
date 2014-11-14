@@ -44,9 +44,6 @@ QGroupBox
     color: black;
     background-color: white;
     font: @bigBold;
-    border: 2px solid gray;
-    border-radius: 5px;
-    margin-top: 2ex; /* leave space at the top for the title */
 }
 
 QComboBox

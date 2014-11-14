@@ -21,7 +21,8 @@
 #include <QObject>
 #include <QPixmap>
 
-class ToxID;
+struct ToxID;
+namespace Db { enum class syncType; }
 
 class Settings : public QObject
 {
@@ -62,6 +63,9 @@ public:
     
     QString getStyle() const;
     void setStyle(const QString& newValue);
+
+    bool getShowSystemTray() const;
+    void setShowSystemTray(const bool& newValue);
     
     bool getUseEmoticons() const;
     void setUseEmoticons(bool newValue);
@@ -95,6 +99,9 @@ public:
 
     bool getEncryptTox() const;
     void setEncryptTox(bool newValue);
+
+    Db::syncType getDbSyncType() const;
+    void setDbSyncType(int newValue);
 
     int getAutoAwayTime() const;
     void setAutoAwayTime(int newValue);
@@ -265,7 +272,8 @@ private:
     QByteArray windowState;
     QByteArray splitterState;
     QString style;
-    
+    bool showSystemTray;
+
     // ChatView
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
@@ -274,6 +282,7 @@ private:
 
     // Privacy
     bool typingNotification;
+    Db::syncType dbSyncType;
 
     // Audio
     QString inDev;

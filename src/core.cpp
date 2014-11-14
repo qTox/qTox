@@ -45,11 +45,15 @@ const QString Core::CONFIG_FILE_NAME = "data";
 const QString Core::TOX_EXT = ".tox";
 QList<ToxFile> Core::fileSendQueue;
 QList<ToxFile> Core::fileRecvQueue;
+QHash<int, ToxGroupCall> Core::groupCalls;
+QThread* Core::coreThread{nullptr};
 
-Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
+Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
     tox(nullptr), camera(cam), loadPath(loadPath), ready{false}
 {
     qDebug() << "Core: loading Tox from" << loadPath;
+
+    coreThread = CoreThread;
 
     videobuf = new uint8_t[videobufsize];
 
@@ -95,12 +99,15 @@ Core::Core(Camera* cam, QThread *coreThread, QString loadPath) :
     }
 
     QString inDevDescr = Settings::getInstance().getInDev();
+    int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
-                                   (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
+        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
+            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
+                                       / 1000 * av_DefaultSettings.audio_channels);
     else
-        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, AL_FORMAT_MONO16,
-                                   (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4) / 1000);
+        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, stereoFlag,
+            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
+                                       / 1000 * av_DefaultSettings.audio_channels);
     if (!alInDev)
         qWarning() << "Core: Cannot open input audio device";
 }
@@ -262,6 +269,7 @@ void Core::start()
     tox_callback_group_invite(tox, onGroupInvite, this);
     tox_callback_group_message(tox, onGroupMessage, this);
     tox_callback_group_namelist_change(tox, onGroupNamelistChange, this);
+    tox_callback_group_title(tox, onGroupTitleChange, this);
     tox_callback_group_action(tox, onGroupAction, this);
     tox_callback_file_send_request(tox, onFileSendRequestCallback, this);
     tox_callback_file_control(tox, onFileControlCallback, this);
@@ -481,15 +489,16 @@ void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *a
 
 void Core::onGroupInvite(Tox*, int friendnumber, uint8_t type, const uint8_t *data, uint16_t length,void *core)
 {
+    QByteArray pk((char*)data, length);
     if (type == TOX_GROUPCHAT_TYPE_TEXT)
     {
         qDebug() << QString("Core: Text group invite by %1").arg(friendnumber);
-        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber,type,data,length);
+        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber,type,pk);
     }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
         qDebug() << QString("Core: AV group invite by %1").arg(friendnumber);
-        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber,type,data,length);
+        emit static_cast<Core*>(core)->groupInviteReceived(friendnumber,type,pk);
     }
     else
     {
@@ -508,6 +517,16 @@ void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t 
 {
     qDebug() << QString("Core: Group namelist change %1:%2 %3").arg(groupnumber).arg(peernumber).arg(change);
     emit static_cast<Core*>(core)->groupNamelistChanged(groupnumber, peernumber, change);
+}
+
+void Core::onGroupTitleChange(Tox*, int groupnumber, int peernumber, const uint8_t* title, uint8_t len, void* _core)
+{
+    qDebug() << "Core: group" << groupnumber << "title changed by" << peernumber;
+    Core* core = static_cast<Core*>(_core);
+    QString author;
+    if (peernumber >= 0)
+        author = core->getGroupPeerName(groupnumber, peernumber);
+    emit core->groupTitleChanged(groupnumber, author, CString::toString(title, len));
 }
 
 void Core::onFileSendRequestCallback(Tox*, int32_t friendnumber, uint8_t filenumber, uint64_t filesize,
@@ -806,6 +825,14 @@ void Core::sendGroupAction(int groupId, const QString& message)
         if (ret == -1)
             emit groupSentResult(groupId, message, ret);
     }
+}
+
+void Core::changeGroupTitle(int groupId, const QString& title)
+{
+    CString cTitle(title);
+    int err = tox_group_set_title(tox, groupId, cTitle.data(), cTitle.size());
+    if (!err)
+        emit groupTitleChanged(groupId, getUsername(), title);
 }
 
 void Core::sendFile(int32_t friendId, QString Filename, QString FilePath, long long filesize)
@@ -1631,11 +1658,17 @@ void Core::groupInviteFriend(int friendId, int groupId)
 void Core::createGroup(uint8_t type)
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT)
+    {
         emit emptyGroupCreated(tox_add_groupchat(tox));
+    }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
+    {
         emit emptyGroupCreated(toxav_add_av_groupchat(tox, playGroupAudio, this));
+    }
     else
+    {
         qWarning() << "Core::createGroup: Unknown type "<<type;
+    }
 }
 
 bool Core::hasFriendWithAddress(const QString &addr) const

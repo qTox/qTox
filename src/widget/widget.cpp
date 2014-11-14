@@ -96,7 +96,9 @@ void Widget::init()
                 this,
                 SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
         
-        icon->show();
+        if (Settings::getInstance().getShowSystemTray()){
+            icon->show();
+        }
         
         if(Settings::getInstance().getAutostartInTray() == false)
             this->show();
@@ -171,6 +173,7 @@ void Widget::init()
     ui->statusButton->setEnabled(false);
 
     idleTimer = new QTimer();
+    idleTimer->setSingleShot(true);
     int mins = Settings::getInstance().getAutoAwayTime();
     if (mins > 0)
         idleTimer->start(mins * 1000*60);
@@ -196,6 +199,8 @@ void Widget::init()
     addFriendForm = new AddFriendForm;
     settingsWidget = new SettingsWidget();
 
+    connect(settingsWidget, SIGNAL(setShowSystemTray(bool)), this, SLOT(onSetShowSystemTray(bool)));
+
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
     connect(core, &Core::failedToStart, this, &Widget::onFailedToStartCore);
@@ -217,6 +222,7 @@ void Widget::init()
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
+    connect(core, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
     connect(core, &Core::avInvite, this, &Widget::playRingtone);
     connect(core, &Core::blockingClearContacts, this, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
@@ -497,6 +503,7 @@ void Widget::onStatusSet(Status status)
     {
     case Status::Online:
         ui->statusButton->setProperty("status" ,"online");
+        qDebug() << "Widget: something set the status to online";
         break;
     case Status::Away:
         ui->statusButton->setProperty("status" ,"away");
@@ -841,7 +848,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     FriendList::removeFriend(f->getFriendID(), fake);
     core->removeFriend(f->getFriendID(), fake);
     delete f;
-    if (ui->mainHead->layout()->isEmpty()) // tux3: this should have covered the case of the bug you "fixed" 5 lines above
+    if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
 
     contactListWidget->hide();
@@ -872,11 +879,11 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, const uint8_t* publicKey,uint16_t length)
+void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite)
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int groupId = core->joinGroupchat(friendId, type, publicKey,length);
+        int groupId = core->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
         if (groupId < 0)
         {
             qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";
@@ -921,7 +928,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
     {
-        qDebug() << "Widget::onGroupNamelistChanged: Group not found, creating it";
+        qDebug() << "Widget::onGroupNamelistChanged: Group "<<groupnumber<<" not found, creating it";
         g = createGroup(groupnumber);
     }
 
@@ -943,6 +950,17 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     }
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
+}
+
+void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const QString& title)
+{
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g)
+        return;
+
+    g->setName(title);
+    if (!author.isEmpty())
+        g->chatForm->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), "silver", QDateTime::currentDateTime());
 }
 
 void Widget::removeGroup(Group* g, bool fake)
@@ -983,7 +1001,7 @@ Group *Widget::createGroup(int groupId)
     }
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName);
+    Group* newgroup = GroupList::addGroup(groupId, groupName, true);
     QLayout* layout = contactListWidget->getGroupLayout();
     layout->addWidget(newgroup->widget);
     newgroup->widget->updateStatusLight();
@@ -993,6 +1011,7 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->chatForm, SLOT(focusInput()));
     connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
     connect(newgroup->chatForm, SIGNAL(sendAction(int,QString)), core, SLOT(sendGroupAction(int,QString)));
+    connect(newgroup->chatForm, &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
     return newgroup;
 }
 
@@ -1026,9 +1045,9 @@ bool Widget::event(QEvent * e)
         case QEvent::Wheel:
         case QEvent::KeyPress:
         case QEvent::KeyRelease:
-            if (autoAwayActive)
-            {
-                qDebug() << "Widget: auto away deactivated";
+            if (autoAwayActive && ui->statusButton->property("status").toString() == "away")
+            { // be sure nothing else has changed the status in the meantime
+                qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
                 autoAwayActive = false;
                 emit statusSet(Status::Online);
                 int mins = Settings::getInstance().getAutoAwayTime();
@@ -1047,7 +1066,7 @@ void Widget::onUserAway()
     if (Settings::getInstance().getAutoAwayTime() > 0
         && ui->statusButton->property("status").toString() == "online") // leave user-set statuses in place
     {
-        qDebug() << "Widget: auto away activated";
+        qDebug() << "Widget: auto away activated" << QTime::currentTime().toString();
         emit statusSet(Status::Away);
         autoAwayActive = true;
     }
@@ -1102,6 +1121,11 @@ void Widget::getPassword(QString info, int passtype, uint8_t* salt)
             core->setPassword(pswd, pt, salt);
     }
 }
+
+void Widget::onSetShowSystemTray(bool newValue){
+    icon->setVisible(newValue);
+}
+
 
 QMessageBox::StandardButton Widget::showWarningMsgBox(const QString& title, const QString& msg, QMessageBox::StandardButtons buttons)
 {

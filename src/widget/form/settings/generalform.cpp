@@ -51,6 +51,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
         bodyUI->transComboBox->insertItem(i, langs[i]);
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
+    bodyUI->showSystemTray->setChecked(Settings::getInstance().getShowSystemTray());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
     bodyUI->closeToTray->setChecked(Settings::getInstance().getCloseToTray());
     bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
@@ -104,6 +105,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->checkUpdates, &QCheckBox::stateChanged, this, &GeneralForm::onCheckUpdateChanged);
     connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
+    connect(bodyUI->showSystemTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowSystemTray);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
     connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);
@@ -148,6 +150,12 @@ void GeneralForm::onTranslationUpdated()
 void GeneralForm::onMakeToxPortableUpdated()
 {
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
+}
+
+void GeneralForm::onSetShowSystemTray()
+{
+    Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
+    emit parent->setShowSystemTray(bodyUI->showSystemTray->isChecked());
 }
 
 void GeneralForm::onSetAutostartInTray()

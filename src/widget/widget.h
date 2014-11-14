@@ -112,9 +112,10 @@ private slots:
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
-    void onGroupInviteReceived(int32_t friendId, uint8_t type, const uint8_t *publicKey,uint16_t length);
+    void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
     void onGroupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
+    void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
@@ -127,6 +128,7 @@ private slots:
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAway();
     void getPassword(QString info, int passtype, uint8_t* salt);
+    void onSetShowSystemTray(bool newValue);
 
 private:
     void init();

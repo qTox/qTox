@@ -46,14 +46,14 @@ unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 
 #elif defined(Q_OS_OSX)
 const QString AutoUpdater::platform = "osx";
-const QString AutoUpdater::updaterBin = "installer -store -pkg "+Settings::getInstance().getSettingsDirPath()
-                                                    +"/update/qtox.pkg -target /";
+const QString AutoUpdater::updaterBin = "installer -pkg "+Settings::getInstance().getSettingsDirPath()
+                                                    +"/update/qtox.pkg -target CurrentUserHomeDirectory";
 const QString AutoUpdater::updateServer = "https://dist-build.tox.im";
 
 unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 {
-    0xa5, 0x80, 0xf3, 0xb7, 0xd0, 0x10, 0xc0, 0xf9, 0xd6, 0xcf, 0x48, 0x15, 0x99, 0x70, 0x92, 0x49,
-    0xf6, 0xe8, 0xe5, 0xe2, 0x6c, 0x73, 0x8c, 0x48, 0x25, 0xed, 0x01, 0x72, 0xf7, 0x6c, 0x17, 0x28
+    0x9c, 0x7a, 0x0b, 0x2a, 0xe9, 0xdc, 0x33, 0xf7, 0x74, 0x9f, 0xec, 0x14, 0x29, 0x22, 0x06, 0x4b,
+    0xbe, 0x37, 0xe1, 0x9b, 0xb7, 0x18, 0xb4, 0xae, 0x8f, 0x29, 0x6b, 0x9d, 0xfe, 0xd6, 0x39, 0x3f
 };
 
 #else
@@ -68,20 +68,22 @@ const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpd
 
 bool AutoUpdater::isUpdateAvailable()
 {
-    QString newVersion = getUpdateVersion();
-    if (newVersion.isEmpty() || newVersion == GIT_VERSION)
+    VersionInfo newVersion = getUpdateVersion();
+    if (newVersion.timestamp <= TIMESTAMP
+            || newVersion.versionString.isEmpty() || newVersion.versionString == GIT_VERSION)
         return false;
     else
         return true;
 }
 
-QString AutoUpdater::getUpdateVersion()
+AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
 {
-    QString version;
+    VersionInfo versionInfo;
+    versionInfo.timestamp = 0;
 
     // Updates only for supported platforms
     if (platform.isEmpty())
-        return version;
+        return versionInfo;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(checkURI)));
@@ -93,20 +95,20 @@ QString AutoUpdater::getUpdateVersion()
         qWarning() << "AutoUpdater: getUpdateVersion: network error: "<<reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
-        return version;
+        return versionInfo;
     }
 
     QByteArray data = reply->readAll();
     reply->deleteLater();
     manager->deleteLater();
     if (data.size() < (int)(1+crypto_sign_BYTES))
-        return version;
+        return versionInfo;
 
     // Check updater protocol version
-    if ((int)data[0] != '1')
+    if ((int)data[0] != '2')
     {
         qWarning() << "AutoUpdater: getUpdateVersion: Bad version "<<(uint8_t)data[0];
-        return version;
+        return versionInfo;
     }
 
     // Check the signature
@@ -118,12 +120,16 @@ QString AutoUpdater::getUpdateVersion()
     if (crypto_sign_verify_detached(sig, msg, msgData.size(), key) != 0)
     {
         qCritical() << "AutoUpdater: getUpdateVersion: RECEIVED FORGED VERSION FILE FROM "<<updateServer;
-        return version;
+        return versionInfo;
     }
 
-    version = msgData;
+    int sepPos = msgData.indexOf('!');
+    versionInfo.timestamp = QString(msgData.left(sepPos)).toInt();
+    versionInfo.versionString = msgData.mid(sepPos+1);
 
-    return version;
+    qDebug() << "timestamp:"<<versionInfo.timestamp << ", str:"<<versionInfo.versionString;
+
+    return versionInfo;
 }
 
 QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)

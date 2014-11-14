@@ -30,11 +30,12 @@ class Group : public QObject
 {
     Q_OBJECT
 public:
-    Group(int GroupId, QString Name);
+    Group(int GroupId, QString Name, bool IsAvGroupchat);
     ~Group();
     void addPeer(int peerId, QString name);
     void removePeer(int peerId);
     void updatePeer(int peerId, QString newName);
+    void setName(const QString& name);
 
 public:
     int groupId;
@@ -43,6 +44,7 @@ public:
     GroupWidget* widget;
     GroupChatForm* chatForm;
     int hasNewMessages, userWasMentioned;
+    bool avGroupchat;
 };
 
 #endif // GROUP_H

@@ -14,24 +14,30 @@
     See the COPYING file for more details.
 */
 
-#ifndef GROUPLIST_H
-#define GROUPLIST_H
+#ifndef ADVANCEDFORM_H
+#define ADVANCEDFORM_H
 
-template <typename T>
-class QList;
-class Group;
-class QString;
+#include "genericsettings.h"
 
-class GroupList
+class Core;
+
+namespace Ui {
+class AdvancedSettings;
+}
+
+class AdvancedForm : public GenericForm
 {
+    Q_OBJECT
 public:
-    GroupList();
-    static Group* addGroup(int groupId, const QString& name, bool isAvGroupchat);
-    static Group* findGroup(int groupId);
-    static void removeGroup(int groupId, bool fake = false);
+    AdvancedForm();
+    virtual ~AdvancedForm();
 
-public:
-    static QList<Group*> groupList;
+private slots:
+    void onDbSyncTypeUpdated();
+    void resetToDefault();
+
+private:
+    Ui::AdvancedSettings* bodyUI;
 };
 
-#endif // GROUPLIST_H
+#endif // ADVANCEDFORM_H

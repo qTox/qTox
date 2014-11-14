@@ -122,3 +122,23 @@ void GroupWidget::dropEvent(QDropEvent *ev)
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
 }
+
+void GroupWidget::keyPressEvent(QKeyEvent* ev)
+{
+    Group* g = GroupList::findGroup(groupId);
+    if (g)
+        g->chatForm->keyPressEvent(ev);
+
+}
+
+void GroupWidget::keyReleaseEvent(QKeyEvent* ev)
+{
+    Group* g = GroupList::findGroup(groupId);
+    if (g)
+        g->chatForm->keyReleaseEvent(ev);
+}
+
+void GroupWidget::setName(const QString& name)
+{
+    nameLabel->setText(name);
+}

@@ -91,6 +91,8 @@ protected:
     QPushButton *sendButton;
     ChatAreaWidget *chatWidget;
     QDateTime *earliestMessage;
+    bool audioInputFlag;
+    bool audioOutputFlag;
 };
 
 #endif // GENERICCHATFORM_H

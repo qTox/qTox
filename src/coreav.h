@@ -1,6 +1,7 @@
 #ifndef COREAV_H
 #define COREAV_H
 
+#include <QHash>
 #include <tox/toxav.h>
 #include "video/netvideosource.h"
 
@@ -16,7 +17,6 @@ class QTimer;
 
 struct ToxCall
 {
-public:
     ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer, *sendVideoTimer;
     int callId;
@@ -27,6 +27,17 @@ public:
     bool muteVol;
     ALuint alSource;
     NetVideoSource videoSource;
+};
+
+struct ToxGroupCall
+{
+    ToxAvCSettings codecSettings;
+    QTimer *sendAudioTimer;
+    int groupId;
+    bool active;
+    bool muteMic;
+    bool muteVol;
+    QHash<int, ALuint> alSources;
 };
 
 #endif // COREAV_H

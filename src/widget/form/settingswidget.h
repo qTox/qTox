@@ -45,6 +45,9 @@ public:
 private slots:
     void onTabChanged(int);
 
+signals:
+    void setShowSystemTray(bool newValue);
+
 private:
     QWidget *head, *body; // keep the others private
     IdentityForm *ifrm;

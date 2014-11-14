@@ -33,7 +33,8 @@ FORMS    += \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/inputpassworddialog.ui \
-    src/widget/form/setpassworddialog.ui
+    src/widget/form/setpassworddialog.ui \
+    src/widget/form/settings/advancedsettings.ui
     
 CONFIG   += c++11
 
@@ -46,6 +47,10 @@ RESOURCES += res.qrc
 
 GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "built without git")
 DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
+# date works on linux/mac, but it would hangs qmake on windows
+# This hack returns 0 on batch (windows), but executes "date +%s" or return 0 if it fails on bash (linux/mac)
+TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sorry
+DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
 
 contains(JENKINS,YES) {
@@ -148,7 +153,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/toxdns.h \
     src/widget/toxsave.h \
     src/autoupdate.h \
-    src/misc/serialize.h
+    src/misc/serialize.h \
+    src/widget/form/settings/advancedform.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -213,4 +219,5 @@ SOURCES += \
     src/ipc.cpp \
     src/widget/toxsave.cpp \    
     src/autoupdate.cpp \
-    src/misc/serialize.cpp
+    src/misc/serialize.cpp \
+    src/widget/form/settings/advancedform.cpp
