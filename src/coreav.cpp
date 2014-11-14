@@ -625,17 +625,11 @@ void Core::joinGroupCall(int groupId)
     Core* core = Core::getInstance();
     ToxAv* toxav = core->toxav;
 
-    qWarning()<<"Core is "<<(long)core<<", toxav is "<<(long)toxav;
-
     groupCalls[groupId].sendAudioTimer = new QTimer();
     groupCalls[groupId].active = true;
     groupCalls[groupId].sendAudioTimer->setInterval(5);
     groupCalls[groupId].sendAudioTimer->setSingleShot(true);
-    connect(groupCalls[groupId].sendAudioTimer, &QTimer::timeout, [=]()
-    {
-        qWarning()<<"In the lambda toxav is "<<(long)toxav;
-        sendGroupCallAudio(groupId,toxav);}
-    );
+    connect(groupCalls[groupId].sendAudioTimer, &QTimer::timeout, [=](){sendGroupCallAudio(groupId,toxav);});
     groupCalls[groupId].sendAudioTimer->start();
 }
 
