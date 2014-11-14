@@ -123,97 +123,93 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <comment>DNS error</comment>
         <translation>Такого Tox ID не существует</translation>
     </message>
+</context>
+<context>
+    <name>AdvancedForm</name>
     <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="vanished">Время ожидания соединения истекло</translation>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="25"/>
+        <source>Advanced</source>
+        <translation>Расширенные</translation>
+    </message>
+</context>
+<context>
+    <name>AdvancedSettings</name>
+    <message>
+        <location filename="../src/widget/form/settings/advancedsettings.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="vanished">Нет такого адреса</translation>
+        <location filename="../src/widget/form/settings/advancedsettings.ui" line="35"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ВНИМАНИЕ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;За исключением случая, когда вы &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;точно&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; знаете, что делаете, пожалуйста, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;не&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; меняйте здесь ничего. Изменения могут привести к неприятностям, и даже вызвать потерю данных (например, истории переписки).&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="vanished">Ошибка при просмотре DNS</translation>
+        <location filename="../src/widget/form/settings/advancedsettings.ui" line="51"/>
+        <source>Reset to default settings</source>
+        <translation>Вернуть стандартные настройки</translation>
     </message>
     <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translation type="vanished">Текстовых записей не найдено</translation>
+        <location filename="../src/widget/form/settings/advancedsettings.ui" line="58"/>
+        <source>History</source>
+        <translation>История</translation>
     </message>
     <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation type="vanished">Непредвиденное количество значений в текстовой записи</translation>
-    </message>
-    <message>
-        <source>The version of Tox DNS used by this server is not supported</source>
-        <comment>Error with the DNS</comment>
-        <translation type="vanished">Используемая сервером версия Tox DNS не поддерживается</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain any Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation type="vanished">В ответе DNS ни одного Tox ID</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain a valid Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation type="vanished">Ответ DNS не содержит корректных Tox ID</translation>
+        <location filename="../src/widget/form/settings/advancedsettings.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Синхронизация записи в БД&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="68"/>
+        <location filename="../src/widget/form/chatform.cpp" line="66"/>
         <source>Load History...</source>
         <translation>Загрузить историю...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="140"/>
+        <location filename="../src/widget/form/chatform.cpp" line="138"/>
         <source>Send a file</source>
         <translation>Отправить файл</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="150"/>
+        <location filename="../src/widget/form/chatform.cpp" line="148"/>
         <source>Bad Idea</source>
         <translation>Плохая идея</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="150"/>
+        <location filename="../src/widget/form/chatform.cpp" line="148"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translatorcomment>...передаёте последовательный файл и получаете te-le-fun-ken. И переводчик работает по другой линии. По линии «Библиотека».</translatorcomment>
         <translation>Вы пытаетесь отправить специальный (последовательный) файл. Это так не работает!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="256"/>
+        <location filename="../src/widget/form/chatform.cpp" line="254"/>
         <source>%1 calling</source>
         <translation>%1 звонит</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="325"/>
+        <location filename="../src/widget/form/chatform.cpp" line="323"/>
         <source>%1 stopped calling</source>
         <translation>%1 прекратил звонить</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="381"/>
+        <location filename="../src/widget/form/chatform.cpp" line="379"/>
         <source>Calling to %1</source>
         <translation>Звоним %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="522"/>
+        <location filename="../src/widget/form/chatform.cpp" line="520"/>
         <source>Call rejected</source>
         <translation>Звонок отклонён</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="806"/>
+        <location filename="../src/widget/form/chatform.cpp" line="804"/>
         <source>Call with %1 ended. %2</source>
         <translation>Разговор с %1 завершился. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="825"/>
+        <location filename="../src/widget/form/chatform.cpp" line="823"/>
         <source>Call duration: </source>
         <translation>Длительность разговора:</translation>
     </message>
@@ -229,106 +225,106 @@ Ignore the proxy and connect to the Internet directly ?</source>
 <context>
     <name>Core</name>
     <message>
-        <location filename="../src/core.cpp" line="249"/>
+        <location filename="../src/core.cpp" line="256"/>
         <source>Toxing on qTox</source>
         <translatorcomment>Как-то так. Может, можно ещё что-нибудь придумать?</translatorcomment>
         <translation type="unfinished">Всем привет из qTox&apos;а</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="250"/>
+        <location filename="../src/core.cpp" line="257"/>
         <source>qTox User</source>
         <translation>Пользователь qTox</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="738"/>
+        <location filename="../src/core.cpp" line="757"/>
         <source>Friend is already added</source>
         <translation>Друг уже добавлен</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1168"/>
+        <location filename="../src/core.cpp" line="1195"/>
         <source>Encryption error</source>
         <translation>Ошибка шифрования</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1168"/>
+        <location filename="../src/core.cpp" line="1195"/>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
         <translation>Файл .tox зашифрован, однако шифрование в настройках включено не было. Продолжаем вопреки.</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1175"/>
+        <location filename="../src/core.cpp" line="1202"/>
         <source>Tox datafile decryption password</source>
         <translation>Пароль для расшифровки файла данных Tox</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1177"/>
-        <location filename="../src/core.cpp" line="1189"/>
-        <location filename="../src/core.cpp" line="1253"/>
+        <location filename="../src/core.cpp" line="1204"/>
+        <location filename="../src/core.cpp" line="1216"/>
+        <location filename="../src/core.cpp" line="1280"/>
         <source>Password error</source>
         <translation>Ошибка пароля</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1177"/>
-        <location filename="../src/core.cpp" line="1253"/>
+        <location filename="../src/core.cpp" line="1204"/>
+        <location filename="../src/core.cpp" line="1280"/>
         <source>Failed to setup password.
 Empty password.</source>
         <translation>Не удалось установить пароль.
 Пустой пароль.</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1185"/>
+        <location filename="../src/core.cpp" line="1212"/>
         <source>Try Again</source>
         <translation>Попробуйте ещё</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1186"/>
+        <location filename="../src/core.cpp" line="1213"/>
         <source>Change profile</source>
         <translation>Сменить профиль</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1187"/>
+        <location filename="../src/core.cpp" line="1214"/>
         <source>Reinit current profile</source>
         <translatorcomment>Увы, никто не знает, что разработчики имели в виду. Ту би транслейтед.</translatorcomment>
         <translation>Сбросить данные текущего профиля</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1190"/>
+        <location filename="../src/core.cpp" line="1217"/>
         <source>Wrong password has been entered</source>
         <translation>Введён неправильный пароль</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1251"/>
+        <location filename="../src/core.cpp" line="1278"/>
         <source>History Log decryption password</source>
         <translation>Пароль для расшифровки журнала переписки</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1258"/>
+        <location filename="../src/core.cpp" line="1285"/>
         <source>Encrypted log</source>
         <translation>Зашифрованный журнал</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1259"/>
+        <location filename="../src/core.cpp" line="1286"/>
         <source>Your history is encrypted with different password
 Do you want to try another password?</source>
         <translation>Ваша переписка зашифрована другим паролем
 Ходите попробовать другой пароль?</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1269"/>
+        <location filename="../src/core.cpp" line="1296"/>
         <source>Loggin</source>
         <translation>Журналирование</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1269"/>
+        <location filename="../src/core.cpp" line="1296"/>
         <source>Due to incorret password logging will be disabled</source>
         <translation>Из-за некорректного пароля журналирование будет отключено</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1342"/>
+        <location filename="../src/core.cpp" line="1369"/>
         <source>NO Password</source>
         <translation>БЕЗ пароля</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1342"/>
+        <location filename="../src/core.cpp" line="1369"/>
         <source>Will be saved without encryption!</source>
         <translation>Будет сохранено без шифрования!</translation>
     </message>
@@ -473,25 +469,25 @@ Do you want to try another password?</source>
         <translation>Общие</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="71"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="77"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="72"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="78"/>
         <source>None</source>
         <translation>Отсутствует</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="209"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="217"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Выбрать папку для автоматического приёма</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="266"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="274"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Идёт звонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="267"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="275"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>Нельзя отключиться пока идёт звонок!</translation>
@@ -511,114 +507,119 @@ Do you want to try another password?</source>
         <translation>Перевод не изменится до перезапуска qTox.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="120"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="101"/>
+        <source>Show system tray</source>
+        <translation>Показывать иконку в трее</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="127"/>
         <source>Close to tray</source>
         <translation>Сворачивать в трей при закрытии</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="133"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="140"/>
         <source>Minimize to tray</source>
         <translation>Сворачивать в трей</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="149"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
         <source>Check for updates on startup (unstable)</source>
         <translation>Проверять на наличие обновлений (нестабильно)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="163"/>
         <source>Focus qTox when a message is received</source>
         <translation>Захватывать фокус при приёме сообщений</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="163"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="170"/>
         <source>Faux offline messaging</source>
         <translation type="unfinished">Имитация офлайнового обмена сообщениями</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="178"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="185"/>
         <source>Auto away after (0 to disable)</source>
         <translation>Менять статус на «Отошёл» после (0 — не менять)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="191"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="198"/>
         <source>Set to 0 to disable</source>
         <translation>Укажите 0, чтобы отключить</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="256"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="263"/>
         <source>Use emoticons</source>
         <translation>Использовать смайлики</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="272"/>
         <source>Smiley Pack</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>Набор смайликов</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="343"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="350"/>
         <source>Style</source>
         <translation>Стиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="364"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="371"/>
         <source>Emoticon size</source>
         <translation>Размер смайликов</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="387"/>
         <source> px</source>
         <translatorcomment>По аналогии с Мпикс. Хотя, может лучше принять http://ilyabirman.ru/meanwhile/all/px/?</translatorcomment>
         <translation> пикс</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="400"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="407"/>
         <source>Timestamp format</source>
         <translation>Формат времени</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="422"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="429"/>
         <source>Connection Settings</source>
         <translation>Настройки соединения</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="434"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="441"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Включить IPv6 (рекомендуется)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="441"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="448"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Отключение позволяет, например, использовать Tox поверх Tor. Однако это добавляет нагрузку на сеть Tox, так что отключайте только в случае необходимости.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="444"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="451"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Включить UDP (рекомендуется)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="451"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="458"/>
         <source>Use proxy (SOCKS5)</source>
         <translation>Использовать прокси (SOCKS5)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="463"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="470"/>
         <source>Address</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>Адрес</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="473"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="480"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="492"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="499"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Переподключиться</translation>
@@ -640,101 +641,96 @@ Do you want to try another password?</source>
         <translation>Портативный режим</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="107"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="114"/>
         <source>Start in tray</source>
         <translation>Запускать свёрнутым в трей</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="142"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="149"/>
         <source>Show contacts&apos; status changes</source>
         <translation>Показывать изменения статусов контактов</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="172"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="179"/>
         <source>Provided in minutes</source>
         <translation>Выставлено в минутах</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="197"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="201"/>
         <source> minutes</source>
         <translation> минут</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="214"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="221"/>
         <source>Autoaccept files</source>
         <translation>Автоматически принимать файлы</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="230"/>
         <source>Save files in</source>
         <translation>Сохранять в</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="236"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="243"/>
         <source>PushButton</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="250"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="257"/>
         <source>Theme</source>
         <translation>Тема</translation>
-    </message>
-    <message>
-        <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="vanished">Это позволяет, например, использовать tox поверх Tor. Однако это добавляет нагрузку на сеть Tox, так что используйте только в случае необходимости.</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="60"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="62"/>
         <source>Send message</source>
         <translation>Отправить сообщение</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="62"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="64"/>
         <source>Smileys</source>
         <translation>Смайлики</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="66"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="68"/>
         <source>Send file(s)</source>
         <translation>Отправить файл(ы)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="69"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="71"/>
         <source>Audio call</source>
         <translation>Позвонить</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="72"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="74"/>
         <source>Video call</source>
         <translation>Видеозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="75"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="77"/>
         <source>Toggle speakers volume</source>
         <translation>Включить или выключить звук</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="78"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
         <source>Toggle microphone</source>
         <translation>Включить или выключить микрофон</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="142"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="184"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="144"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="186"/>
         <source>Save chat log</source>
         <translation>Сохранить журнал чата</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="143"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="145"/>
         <source>Clear displayed messages</source>
         <translation>Очистить показываемые сообщения</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="301"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="303"/>
         <source>Cleared</source>
         <translation>Очищено</translation>
     </message>
@@ -742,13 +738,13 @@ Do you want to try another password?</source>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="48"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="58"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 пользователей в чате</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="94"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="108"/>
         <source>%1 users in chat</source>
         <translation>%1 пользователей в чате</translation>
     </message>
@@ -1114,13 +1110,13 @@ Do you want to delete old history file?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/autoupdate.cpp" line="425"/>
+        <location filename="../src/autoupdate.cpp" line="431"/>
         <source>Update</source>
         <comment>The title of a message box</comment>
         <translation>Обновление</translation>
     </message>
     <message>
-        <location filename="../src/autoupdate.cpp" line="426"/>
+        <location filename="../src/autoupdate.cpp" line="432"/>
         <source>An update is available, do you want to download it now ?
 It will be installed when qTox restarts.</source>
         <translation>Обновление доступно, не желаете ли скачать его прамо сейчас?
@@ -1276,18 +1272,6 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>Widget</name>
     <message>
-        <source>online</source>
-        <translation type="vanished">в сети</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <translation type="vanished">отошёл</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <translation type="vanished">занят</translation>
-    </message>
-    <message>
         <location filename="../src/widget/widget.cpp" line="74"/>
         <source>Online</source>
         <translation>В сети</translation>
@@ -1313,130 +1297,135 @@ It will be installed when qTox restarts.</source>
         <translation>Сменить статус на:</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="155"/>
+        <location filename="../src/widget/widget.cpp" line="157"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>В сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="157"/>
+        <location filename="../src/widget/widget.cpp" line="159"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translatorcomment>Вероятно, это не столь долгое путешествие</translatorcomment>
         <translation>Отошёл</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="159"/>
+        <location filename="../src/widget/widget.cpp" line="161"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Занят</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="387"/>
+        <location filename="../src/widget/widget.cpp" line="393"/>
         <source>Choose a profile</source>
         <translation>Выберите профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="388"/>
+        <location filename="../src/widget/widget.cpp" line="394"/>
         <source>Please choose which identity to use</source>
         <translation>Выберите личность, которую хотите использовать</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="414"/>
+        <location filename="../src/widget/widget.cpp" line="420"/>
         <source>Choose a profile picture</source>
         <translation>Выбрать картинку для профиля</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="421"/>
-        <location filename="../src/widget/widget.cpp" line="428"/>
-        <location filename="../src/widget/widget.cpp" line="449"/>
+        <location filename="../src/widget/widget.cpp" line="427"/>
+        <location filename="../src/widget/widget.cpp" line="434"/>
+        <location filename="../src/widget/widget.cpp" line="455"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="421"/>
+        <location filename="../src/widget/widget.cpp" line="427"/>
         <source>Unable to open this file</source>
         <translation>Невозможно открыть файл</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="428"/>
+        <location filename="../src/widget/widget.cpp" line="434"/>
         <source>Unable to read this image</source>
         <translation>Невозможно прочесть это изображение</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="449"/>
+        <location filename="../src/widget/widget.cpp" line="455"/>
         <source>This image is too big</source>
         <translation>Это изображение слишком большое</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="476"/>
+        <location filename="../src/widget/widget.cpp" line="482"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Не удалось запустить toxcore, приложение будет завершено после того как вы закроете это сообщение.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="485"/>
+        <location filename="../src/widget/widget.cpp" line="491"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Не удалось запустить toxcore с вашими настройками прокси, qTox не может работать; измените ваши настройки и перезапустите его.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="519"/>
+        <location filename="../src/widget/widget.cpp" line="526"/>
         <source>Add friend</source>
         <translation>Добавить друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="531"/>
+        <location filename="../src/widget/widget.cpp" line="538"/>
         <source>File transfers</source>
         <translation>Передачи файлов</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="556"/>
+        <location filename="../src/widget/widget.cpp" line="563"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="654"/>
+        <location filename="../src/widget/widget.cpp" line="661"/>
         <source>Couldn&apos;t request friendship</source>
         <translation type="unfinished">Не удалось запросить добавление в друзья</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="682"/>
+        <location filename="../src/widget/widget.cpp" line="689"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>отсутствует</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="684"/>
+        <location filename="../src/widget/widget.cpp" line="691"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>занят</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="686"/>
+        <location filename="../src/widget/widget.cpp" line="693"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>офлайн</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="688"/>
+        <location filename="../src/widget/widget.cpp" line="695"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>в сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="691"/>
+        <location filename="../src/widget/widget.cpp" line="698"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 сейчас %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="933"/>
+        <location filename="../src/widget/widget.cpp" line="940"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Неизвестный&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1089"/>
+        <location filename="../src/widget/widget.cpp" line="963"/>
+        <source>%1 has set the title to %2</source>
+        <translation type="unfinished">%1 сменил заголовок на %2</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="1108"/>
         <source>Message failed to send</source>
         <translation>Не удалось отправить сообщение</translation>
     </message>
