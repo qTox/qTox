@@ -77,7 +77,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     volButton->setToolTip(tr("Toggle speakers volume"));
     micButton = new QPushButton();
     micButton->setFixedSize(25,20);
-    micButton->setToolTip(tr("Toggle microphone"));
+    micButton->setToolTip(tr("Toggle microphone: RED is OFF"));
 
     footButtonsSmall->setSpacing(2);
 
