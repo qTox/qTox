@@ -157,11 +157,11 @@ void PrivacyForm::generateRandomNospam()
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
 
-    uint8_t newNospam[4];
+    uint32_t newNospam;
     for (int i = 0; i < 4; i++)
-        newNospam[i] = qrand() % 256;
+        newNospam = (newNospam<<8) + (qrand() % 256); // Generate byte by byte. For some reason.
 
-    Core::getInstance()->setNospam(*reinterpret_cast<uint32_t*>(newNospam));
+    Core::getInstance()->setNospam(newNospam);
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
 }
 
