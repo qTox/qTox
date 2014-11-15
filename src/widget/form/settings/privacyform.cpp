@@ -36,6 +36,7 @@ PrivacyForm::PrivacyForm() :
     connect(bodyUI->cbEncryptTox, SIGNAL(clicked()), this, SLOT(onEncryptToxUpdated()));
     connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
     connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
+    connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
 }
 
 PrivacyForm::~PrivacyForm()
@@ -156,10 +157,22 @@ void PrivacyForm::generateRandomNospam()
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
 
-    uint8_t *newNospam = new uint8_t[4];
+    uint8_t newNospam[4];
     for (int i = 0; i < 4; i++)
         newNospam[i] = qrand() % 256;
 
     Core::getInstance()->setNospam(*reinterpret_cast<uint32_t*>(newNospam));
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
+}
+
+void PrivacyForm::onNospamEdit()
+{
+    QString str = bodyUI->nospamLineEdit->text();
+    int curs = bodyUI->nospamLineEdit->cursorPosition();
+    if (str.length() != 8)
+    {
+        str = QString("00000000").replace(0, str.length(), str);
+        bodyUI->nospamLineEdit->setText(str);
+        bodyUI->nospamLineEdit->setCursorPosition(curs);
+    };
 }

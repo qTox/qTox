@@ -37,7 +37,7 @@ private slots:
     void onTypingNotificationEnabledUpdated();
     void setNospam();
     void generateRandomNospam();
-
+    void onNospamEdit();
     void onEncryptLogsUpdated();
     void onEncryptToxUpdated();
 
