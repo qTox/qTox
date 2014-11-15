@@ -68,16 +68,16 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     fileButton->setToolTip(tr("Send file(s)"));
     callButton = new QPushButton();
     callButton->setFixedSize(50,40);
-    callButton->setToolTip(tr("Audio call"));
+    callButton->setToolTip(tr("Audio call: RED means you're on a call"));
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
-    videoButton->setToolTip(tr("Video call"));
+    videoButton->setToolTip(tr("Video call: RED means you're on a call"));
     volButton = new QPushButton();
     volButton->setFixedSize(25,20);
-    volButton->setToolTip(tr("Toggle speakers volume"));
+    volButton->setToolTip(tr("Toggle speakers volume: RED is OFF"));
     micButton = new QPushButton();
     micButton->setFixedSize(25,20);
-    micButton->setToolTip(tr("Toggle microphone"));
+    micButton->setToolTip(tr("Toggle microphone: RED is OFF"));
 
     footButtonsSmall->setSpacing(2);
 
