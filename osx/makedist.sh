@@ -9,7 +9,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>
     <title>qTox</title>
     <license file=\"$PWD/gplv3.rtf\"/>
     <welcome file=\"$PWD/welcome.txt\"/>
-    <domains enable_currentUserHome=\"true\" enable_localSystem=\"true\" enable_anywhere=\"true\"/>
+    <domains enable_currentUserHome=\"true\" enable_localSystem=\"false\" enable_anywhere=\"false\"/>
     <options customize=\"never\" require-scripts=\"false\"/>
     <choices-outline>
         <line choice=\"default\">
