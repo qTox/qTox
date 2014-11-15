@@ -1,3 +1,7 @@
+QScrollArea {
+    background: @themeMedium;
+}
+
 QScrollBar:vertical  {
     background: @themeMedium;
     width: 16px;
