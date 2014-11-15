@@ -97,3 +97,8 @@ void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)
 {
     emit chatroomWidgetClicked(this);
 }
+
+void GenericChatroomWidget::reloadTheme()
+{
+    setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/genericChatroomWidget.css"));
+}

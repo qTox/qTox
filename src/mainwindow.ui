@@ -1053,16 +1053,7 @@ QSplitter:handle{
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color:#1c1c1c;
-	border:none;
-}
-
-QPushButton:hover{
-	background-color:#292929;
-	border:none;
-}
-</string>
+           <string notr="true"/>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <property name="spacing">

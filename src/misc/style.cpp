@@ -17,6 +17,10 @@
 #include "style.h"
 #include "settings.h"
 
+#include "src/widget/widget.h"
+#include "ui_mainwindow.h"
+#include "src/widget/genericchatroomwidget.h"
+
 #include <QFile>
 #include <QDebug>
 #include <QMap>
@@ -42,6 +46,33 @@ QString qssifyFont(QFont font)
             .arg(font.family());
 }
 
+// colors as defined in
+// https://github.com/ItsDuke/Tox-UI/blob/master/UI%20GUIDELINES.md
+static QColor palette[] = {
+    QColor("#6bc260"),
+    QColor("#cebf44"),
+    QColor("#c84e4e"),
+    QColor("#000000"),
+    QColor("#1c1c1c"),
+    QColor("#414141"),
+    QColor("#414141").lighter(120),
+    QColor("#d1d1d1"),
+    QColor("#ffffff"),
+    QColor("#ff7700"),
+
+    // Theme colors
+    QColor("#1c1c1c"),
+    QColor("#2a2a2a"),
+    QColor("#414141"),
+    QColor("#4e4e4e"),
+};
+
+static QMap<QString, QString> dict;
+
+QStringList Style::themeColorNames = {QObject::tr("Default"), QObject::tr("Blue"), QObject::tr("Olive"), QObject::tr("Red"), QObject::tr("Violet")};
+QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"), QColor("#c23716"), QColor("#4617b5")};
+
+
 QString Style::getStylesheet(const QString &filename)
 {
     if (!Settings::getInstance().getUseNativeStyle())
@@ -58,21 +89,6 @@ QString Style::getStylesheet(const QString &filename)
 
 QColor Style::getColor(Style::ColorPalette entry)
 {
-    // colors as defined in
-    // https://github.com/ItsDuke/Tox-UI/blob/master/UI%20GUIDELINES.md
-    static QColor palette[] = {
-        QColor("#6bc260"),
-        QColor("#cebf44"),
-        QColor("#c84e4e"),
-        QColor("#000000"),
-        QColor("#1c1c1c"),
-        QColor("#414141"),
-        QColor("#414141").lighter(120),
-        QColor("#d1d1d1"),
-        QColor("#ffffff"),
-        QColor("#ff7700"),
-    };
-
     return palette[entry];
 }
 
@@ -98,28 +114,35 @@ QFont Style::getFont(Style::Font font)
 
 QString Style::resolve(QString qss)
 {
-    static QMap<QString, QString> dict = {
-        // colors
-        {"@green", getColor(Green).name()},
-        {"@yellow", getColor(Yellow).name()},
-        {"@red", getColor(Red).name()},
-        {"@black", getColor(Black).name()},
-        {"@darkGrey", getColor(DarkGrey).name()},
-        {"@mediumGrey", getColor(MediumGrey).name()},
-        {"@mediumGreyLight", getColor(MediumGreyLight).name()},
-        {"@lightGrey", getColor(LightGrey).name()},
-        {"@white", getColor(White).name()},
-        {"@orange", getColor(Orange).name()},
+    if (dict.isEmpty())
+    {
+        dict = {
+            // colors
+            {"@green", Style::getColor(Style::Green).name()},
+            {"@yellow", Style::getColor(Style::Yellow).name()},
+            {"@red", Style::getColor(Style::Red).name()},
+            {"@black", Style::getColor(Style::Black).name()},
+            {"@darkGrey", Style::getColor(Style::DarkGrey).name()},
+            {"@mediumGrey", Style::getColor(Style::MediumGrey).name()},
+            {"@mediumGreyLight", Style::getColor(Style::MediumGreyLight).name()},
+            {"@lightGrey", Style::getColor(Style::LightGrey).name()},
+            {"@white", Style::getColor(Style::White).name()},
+            {"@orange", Style::getColor(Style::Orange).name()},
+            {"@themeDark", Style::getColor(Style::ThemeDark).name()},
+            {"@themeMediumDark", Style::getColor(Style::ThemeMediumDark).name()},
+            {"@themeMedium", Style::getColor(Style::ThemeMedium).name()},
+            {"@themeLight", Style::getColor(Style::ThemeLight).name()},
 
-        // fonts
-        {"@extraBig", qssifyFont(getFont(ExtraBig))},
-        {"@big", qssifyFont(getFont(Big))},
-        {"@bigBold", qssifyFont(getFont(BigBold))},
-        {"@medium", qssifyFont(getFont(Medium))},
-        {"@mediumBold", qssifyFont(getFont(MediumBold))},
-        {"@small", qssifyFont(getFont(Small))},
-        {"@smallLight", qssifyFont(getFont(SmallLight))},
-    };
+            // fonts
+            {"@extraBig", qssifyFont(Style::getFont(Style::ExtraBig))},
+            {"@big", qssifyFont(Style::getFont(Style::Big))},
+            {"@bigBold", qssifyFont(Style::getFont(Style::BigBold))},
+            {"@medium", qssifyFont(Style::getFont(Style::Medium))},
+            {"@mediumBold", qssifyFont(Style::getFont(Style::MediumBold))},
+            {"@small", qssifyFont(Style::getFont(Style::Small))},
+            {"@smallLight", qssifyFont(Style::getFont(Style::SmallLight))},
+        };
+    }
 
     for (const QString& key : dict.keys())
     {
@@ -143,4 +166,43 @@ void Style::repolish(QWidget *w)
             c->style()->polish(c);
         }
     }
+}
+
+void Style::setThemeColor(int color)
+{
+    if (color < 0 || color >= themeColorColors.size())
+        setThemeColor(QColor());
+    else
+        setThemeColor(themeColorColors[color]);
+}
+
+void Style::setThemeColor(QColor color)
+{
+    if (!color.isValid())
+    {
+        // Reset to default
+        palette[ThemeDark] = QColor("#1c1c1c");
+        palette[ThemeMediumDark] = QColor("#2a2a2a");
+        palette[ThemeMedium] = QColor("#414141");
+        palette[ThemeLight] = QColor("#4e4e4e");
+    }
+    else
+    {
+        palette[ThemeDark] = color.darker(155);
+        palette[ThemeMediumDark] = color.darker(135);
+        palette[ThemeMedium] = color.darker(120);
+        palette[ThemeLight] = color.lighter(110);
+    }
+
+    dict["@themeDark"] = getColor(ThemeDark).name();
+    dict["@themeMediumDark"] = getColor(ThemeMediumDark).name();
+    dict["@themeMedium"] = getColor(ThemeMedium).name();
+    dict["@themeLight"] = getColor(ThemeLight).name();
+
+    applyTheme();
+}
+
+void Style::applyTheme()
+{
+    Widget::getInstance()->reloadTheme();
 }
