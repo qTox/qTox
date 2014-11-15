@@ -98,10 +98,12 @@ void Widget::init()
         
         if (Settings::getInstance().getShowSystemTray()){
             icon->show();
+            if(Settings::getInstance().getAutostartInTray() == false)
+                this->show();
         }
-        
-        if(Settings::getInstance().getAutostartInTray() == false)
+        else
             this->show();
+
     }
     else
     {
