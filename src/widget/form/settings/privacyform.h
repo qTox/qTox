@@ -30,10 +30,14 @@ public:
     PrivacyForm();
     ~PrivacyForm();
 
+    virtual void present();
+
 private slots:
     void onEnableLoggingUpdated();
     void onTypingNotificationEnabledUpdated();
-
+    void setNospam();
+    void generateRandomNospam();
+    void onNospamEdit();
     void onEncryptLogsUpdated();
     void onEncryptToxUpdated();
 

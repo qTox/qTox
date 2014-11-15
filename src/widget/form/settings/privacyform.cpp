@@ -30,16 +30,13 @@ PrivacyForm::PrivacyForm() :
     bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);
 
-    bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());
-    bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
-    bodyUI->cbEncryptHistory->setChecked(Settings::getInstance().getEncryptLogs());
-    bodyUI->cbEncryptHistory->setEnabled(Settings::getInstance().getEnableLogging());
-    bodyUI->cbEncryptTox->setChecked(Settings::getInstance().getEncryptTox());
-
     connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
     connect(bodyUI->cbEncryptHistory, SIGNAL(clicked()), this, SLOT(onEncryptLogsUpdated()));
     connect(bodyUI->cbEncryptTox, SIGNAL(clicked()), this, SLOT(onEncryptToxUpdated()));
+    connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
+    connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
+    connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
 }
 
 PrivacyForm::~PrivacyForm()
@@ -133,4 +130,49 @@ void PrivacyForm::onEncryptToxUpdated()
 
     if (!Settings::getInstance().getEncryptTox())
         Core::getInstance()->clearPassword(Core::ptMain);
+}
+
+void PrivacyForm::setNospam()
+{
+    QString newNospam = bodyUI->nospamLineEdit->text();
+
+    bool ok;
+    uint32_t nospam = newNospam.toLongLong(&ok, 16);
+    if (ok)
+        Core::getInstance()->setNospam(nospam);
+}
+
+void PrivacyForm::present()
+{
+    bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
+    bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());
+    bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
+    bodyUI->cbEncryptHistory->setChecked(Settings::getInstance().getEncryptLogs());
+    bodyUI->cbEncryptHistory->setEnabled(Settings::getInstance().getEnableLogging());
+    bodyUI->cbEncryptTox->setChecked(Settings::getInstance().getEncryptTox());
+}
+
+void PrivacyForm::generateRandomNospam()
+{
+    QTime time = QTime::currentTime();
+    qsrand((uint)time.msec());
+
+    uint8_t newNospam[4];
+    for (int i = 0; i < 4; i++)
+        newNospam[i] = qrand() % 256;
+
+    Core::getInstance()->setNospam(*reinterpret_cast<uint32_t*>(newNospam));
+    bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
+}
+
+void PrivacyForm::onNospamEdit()
+{
+    QString str = bodyUI->nospamLineEdit->text();
+    int curs = bodyUI->nospamLineEdit->cursorPosition();
+    if (str.length() != 8)
+    {
+        str = QString("00000000").replace(0, str.length(), str);
+        bodyUI->nospamLineEdit->setText(str);
+        bodyUI->nospamLineEdit->setCursorPosition(curs);
+    };
 }
