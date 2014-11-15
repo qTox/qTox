@@ -516,11 +516,16 @@ void Widget::onStatusSet(Status status)
     Style::repolish(ui->statusButton);
 }
 
+void Widget::setWindowTitle(const QString& title)
+{
+    QMainWindow::setWindowTitle("qTox - " + title);
+}
+
 void Widget::onAddClicked()
 {
     hideMainForms();
     addFriendForm->show(*ui);
-    setWindowTitle(tr("Add friend") + " - qTox");
+    setWindowTitle(tr("Add friend"));
 }
 
 void Widget::onGroupClicked()
@@ -532,7 +537,7 @@ void Widget::onTransferClicked()
 {
     hideMainForms();
     filesForm->show(*ui);
-    setWindowTitle(tr("File transfers") + " - qTox");
+    setWindowTitle(tr("File transfers"));
     activeChatroomWidget = nullptr;
 }
 
@@ -557,7 +562,7 @@ void Widget::onSettingsClicked()
 {
     hideMainForms();
     settingsWidget->show(*ui);
-    setWindowTitle(tr("Settings") + " - qTox");
+    setWindowTitle(tr("Settings"));
     activeChatroomWidget = nullptr;
 }
 
@@ -734,7 +739,7 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
     }
     activeChatroomWidget = widget;
     widget->setAsActiveChatroom();
-    setWindowTitle(widget->getName() + " - qTox");
+    setWindowTitle(widget->getName());
     widget->resetEventFlags();
     widget->updateStatusLight();
 }

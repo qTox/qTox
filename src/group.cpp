@@ -20,6 +20,7 @@
 #include "friendlist.h"
 #include "friend.h"
 #include "core.h"
+#include "widget/widget.h"
 #include <QDebug>
 #include <QTimer>
 
@@ -74,4 +75,7 @@ void Group::setName(const QString& name)
 {
     widget->setName(name);
     chatForm->setName(name);
+
+    if (widget->isActive())
+            Widget::getInstance()->setWindowTitle(name);
 }
