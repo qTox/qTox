@@ -321,7 +321,7 @@ QThread* Widget::getCoreThread()
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    if(Settings::getInstance().getCloseToTray() == true)
+    if(Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)
     {
         event->ignore();
         this->hide();
