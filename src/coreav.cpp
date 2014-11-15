@@ -223,15 +223,16 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
         return;
     }
 
-    int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000 * av_DefaultSettings.audio_channels;
-    uint8_t buf[framesize*2], dest[framesize*2];
+    const int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000 * av_DefaultSettings.audio_channels;
+    const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
+    uint8_t buf[bufsize], dest[bufsize];
 
     bool frame = false;
     ALint samples;
     alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
     if(samples >= framesize)
     {
-        memset(buf, 0, framesize*2); // Avoid uninitialized values (Valgrind)
+        memset(buf, 0, bufsize); // Avoid uninitialized values (Valgrind)
         alcCaptureSamples(alInDev, buf, framesize);
         frame = 1;
     }
@@ -653,15 +654,16 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
         return;
     }
 
-    int framesize = (groupCalls[groupId].codecSettings.audio_frame_duration * groupCalls[groupId].codecSettings.audio_sample_rate) / 1000 * av_DefaultSettings.audio_channels;
-    uint8_t buf[framesize*2];
+    const int framesize = (groupCalls[groupId].codecSettings.audio_frame_duration * groupCalls[groupId].codecSettings.audio_sample_rate) / 1000 * av_DefaultSettings.audio_channels;
+    const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
+    uint8_t buf[bufsize];
 
     bool frame = false;
     ALint samples;
     alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
     if(samples >= framesize)
     {
-        memset(buf, 0, framesize*2); // Avoid uninitialized values (Valgrind)
+        memset(buf, 0, bufsize); // Avoid uninitialized values (Valgrind)
         alcCaptureSamples(alInDev, buf, framesize);
         frame = 1;
     }
