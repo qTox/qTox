@@ -235,8 +235,5 @@ void FriendWidget::setFriendAlias()
         Settings::getInstance().setFriendAlias(f->getToxID(), alias);
         hide();
         show();
-
-        if (f->getFriendWidget()->isActive())
-            Widget::getInstance()->setWindowTitle(f->getFriendWidget()->getName() + " - qTox");
     }
 }

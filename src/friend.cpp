@@ -46,7 +46,7 @@ void Friend::setName(QString name)
         chatForm->setName(name);
 
         if (widget->isActive())
-            Widget::getInstance()->setWindowTitle(name + " - qTox");
+            Widget::getInstance()->setWindowTitle(name);
     }
 }
 
@@ -57,6 +57,9 @@ void Friend::setAlias(QString name)
 
     widget->setName(dispName);
     chatForm->setName(dispName);
+
+    if (widget->isActive())
+            Widget::getInstance()->setWindowTitle(dispName);
 }
 
 void Friend::setStatusMessage(QString message)
