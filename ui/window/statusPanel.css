@@ -9,7 +9,7 @@ QLineEdit
 
 #statusPanel
 {
-  background-color: @darkGrey;
+  background-color: @themeDark;
 }
 
 #statusPanel > #statusHead > #nameLabel {

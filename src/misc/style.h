@@ -38,6 +38,10 @@ public:
         LightGrey,
         White,
         Orange,
+        ThemeDark,
+        ThemeMediumDark,
+        ThemeMedium,
+        ThemeLight,
     };
 
     enum Font

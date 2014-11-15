@@ -71,6 +71,12 @@ QColor Style::getColor(Style::ColorPalette entry)
         QColor("#d1d1d1"),
         QColor("#ffffff"),
         QColor("#ff7700"),
+
+        // Theme colors
+        QColor("#1c1c1c"),
+        QColor("#2a2a2a"),
+        QColor("#414141"),
+        QColor("#4e4e4e"),
     };
 
     return palette[entry];
@@ -110,6 +116,10 @@ QString Style::resolve(QString qss)
         {"@lightGrey", getColor(LightGrey).name()},
         {"@white", getColor(White).name()},
         {"@orange", getColor(Orange).name()},
+        {"@themeDark", getColor(ThemeDark).name()},
+        {"@themeMediumDark", getColor(ThemeMediumDark).name()},
+        {"@themeMedium", getColor(ThemeMedium).name()},
+        {"@themeLight", getColor(ThemeLight).name()},
 
         // fonts
         {"@extraBig", qssifyFont(getFont(ExtraBig))},
