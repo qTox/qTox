@@ -154,8 +154,22 @@ void GeneralForm::onMakeToxPortableUpdated()
 
 void GeneralForm::onSetShowSystemTray()
 {
-    Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
-    emit parent->setShowSystemTray(bodyUI->showSystemTray->isChecked());
+    bool enableIcon = bodyUI->showSystemTray->isChecked();
+    Settings::getInstance().setShowSystemTray(enableIcon);
+    emit parent->setShowSystemTray(enableIcon);
+
+    bodyUI->startInTray->setEnabled(enableIcon);
+    bodyUI->startInTray->setCheckable(enableIcon);
+    bodyUI->closeToTray->setEnabled(enableIcon);
+    bodyUI->closeToTray->setCheckable(enableIcon);
+    bodyUI->minimizeToTray->setEnabled(enableIcon);
+    bodyUI->minimizeToTray->setCheckable(enableIcon);
+    if (!enableIcon)
+    {
+        Settings::getInstance().setAutostartInTray(false);
+        Settings::getInstance().setCloseToTray(false);
+        Settings::getInstance().setMinimizeToTray(false);
+    }
 }
 
 void GeneralForm::onSetAutostartInTray()

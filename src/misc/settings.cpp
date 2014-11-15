@@ -113,7 +113,7 @@ void Settings::load()
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
         translation = s.value("translation", "en").toString();
-        showSystemTray = s.value("showSystemTray", false).toBool();
+        showSystemTray = s.value("showSystemTray", true).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();        
