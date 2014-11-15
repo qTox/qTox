@@ -152,6 +152,9 @@ public:
     QString getSmileyPack() const;
     void setSmileyPack(const QString &value);
 
+    int getThemeColor() const;
+    void setThemeColor(const int& value);
+
     bool isCurstomEmojiFont() const;
     void setCurstomEmojiFont(bool value);
 
@@ -296,6 +299,7 @@ private:
 
     QHash<QString, friendProp> friendLst;
 
+    int themeColor;
 
 signals:
     //void dataChanged();

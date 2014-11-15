@@ -173,6 +173,9 @@ void Widget::init()
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
 
+    Style::setThemeColor(Settings::getInstance().getThemeColor());
+    Style::applyTheme();
+
     idleTimer = new QTimer();
     idleTimer->setSingleShot(true);
     int mins = Settings::getInstance().getAutoAwayTime();
@@ -1185,4 +1188,18 @@ void Widget::clearAllReceipts()
     {
         f->getChatForm()->clearReciepts();
     }
+}
+
+void Widget::reloadTheme()
+{
+    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
+    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
+    ui->statusButton->setStyleSheet(Style::getStylesheet(":ui/statusButton/statusButton.css"));
+
+    for (Friend* f : FriendList::getAllFriends())
+        f->getFriendWidget()->reloadTheme();
+
+    for (Group* g : GroupList::groupList)
+        g->widget->reloadTheme();
 }

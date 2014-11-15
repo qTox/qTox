@@ -60,6 +60,15 @@ public:
     static QFont getFont(Font font);
     static QString resolve(QString qss);
     static void repolish(QWidget* w);
+    static void setThemeColor(int color);
+    static void setThemeColor(QColor color); ///< Pass an invalid QColor to reset to defaults
+    static void applyTheme(); ///< Reloads some CCS
+
+    static QStringList themeColorNames;
+    static QList<QColor> themeColorColors;
+
+signals:
+    void themeChanged();
 
 private:
     Style();
