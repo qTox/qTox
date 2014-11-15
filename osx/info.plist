@@ -34,7 +34,7 @@
 				<string>tox</string>
 			</array>
 			<key>CFBundleURLIconFile</key>
-			<string>qtox.icns</string>
+			<string>qtox_profile.icns</string>
 		</dict>
 	</array>
 	<key>CFBundleDocumentTypes</key>
@@ -49,10 +49,10 @@
 			<key>CFBundleTypeRole</key>
         		<string>Editor</string>
         		<key>CFBundleTypeIconFile</key>
-			<string>qtox.icns</string>
+			<string>qtox_profile.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
-				<string>tox/x-profile</string>
+				<string>application/x-tox.profile</string>
 			</array>
 			<key>LSHandlerRank</key>
         		<string>Owner</string>
