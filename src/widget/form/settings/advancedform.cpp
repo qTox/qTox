@@ -31,9 +31,9 @@ AdvancedForm::AdvancedForm() :
     bodyUI->dbLabel->setOpenExternalLinks(true);
 
     bodyUI->syncTypeComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
-    bodyUI->syncTypeComboBox->addItems({"FULL - very safe, slowest (recommended)",
-                                        "NORMAL - almost as safe as FULL, about 20% faster than FULL",
-                                        "OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)"
+    bodyUI->syncTypeComboBox->addItems({tr("FULL - very safe, slowest (recommended)"),
+                                        tr("NORMAL - almost as safe as FULL, about 20% faster than FULL"),
+                                        tr("OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)")
                                        });
     int index = 2 - static_cast<int>(Settings::getInstance().getDbSyncType());
     bodyUI->syncTypeComboBox->setCurrentIndex(index);
