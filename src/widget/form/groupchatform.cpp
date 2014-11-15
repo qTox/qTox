@@ -81,7 +81,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(callButton, &QPushButton::clicked, this, &GroupChatForm::onCallClicked);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
-    connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString s, QString) {emit groupTitleChanged(group->groupId, s);} );
+    connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig)
+        {if (text != orig) emit groupTitleChanged(group->groupId, text);} );
 
     setAcceptDrops(true);
 }
