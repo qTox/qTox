@@ -323,7 +323,7 @@ void ChatForm::onAvCancel(int FriendId, int)
 
     netcam->hide();
     
-    //TODO: addSystemInfoMessage(tr("%1 stopped calling").arg(f->getDisplayedName()), "white", QDateTime::currentDateTime());
+    addSystemInfoMessage(tr("%1 stopped calling").arg(f->getDisplayedName()), "white", QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvEnd(int FriendId, int)
@@ -379,7 +379,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
         connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
     }
     
-    //TODO: addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), "white", QDateTime::currentDateTime());
+    addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), "white", QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
@@ -671,7 +671,7 @@ void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
     if (FriendId != f->getFriendID())
         return;
 
-    //TODO: addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red", QDateTime::currentDateTime());
+    addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red", QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
@@ -804,10 +804,8 @@ void ChatForm::stopCounter()
 {
     if(timer)
     {
-        //TODO:
-//        addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),
-//                                                              secondsToDHMS(timeElapsed.elapsed()/1000)),
-//                             "white", QDateTime::currentDateTime());
+        addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),secondsToDHMS(timeElapsed.elapsed()/1000)),
+                                                              "white", QDateTime::currentDateTime());
         timer->stop();
         callDuration->setText("");
         callDuration->hide();
