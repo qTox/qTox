@@ -17,7 +17,7 @@
 #include "avform.h"
 #include "ui_avsettings.h"
 #include "src/misc/settings.h"
-#include "src/core.h"
+#include "src/audio.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -180,11 +180,11 @@ void AVForm::getAudioOutDevices()
 void AVForm::onInDevChanged(const QString &deviceDescriptor)
 {
     Settings::getInstance().setInDev(deviceDescriptor);
-    Core::getInstance()->useAudioInput(deviceDescriptor);
+    Audio::openInput(deviceDescriptor);
 }
 
 void AVForm::onOutDevChanged(const QString& deviceDescriptor)
 {
     Settings::getInstance().setOutDev(deviceDescriptor);
-    Core::getInstance()->useAudioOutput(deviceDescriptor);
+    Audio::openOutput(deviceDescriptor);
 }

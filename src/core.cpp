@@ -20,6 +20,7 @@
 #include "misc/settings.h"
 #include "widget/widget.h"
 #include "historykeeper.h"
+#include "src/audio.h"
 
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
@@ -69,6 +70,8 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
 
     for (int i=0; i<TOXAV_MAX_CALLS;i++)
     {
+        calls[i].active = false;
+        calls[i].alSource = 0;
         calls[i].sendAudioTimer = new QTimer();
         calls[i].sendVideoTimer = new QTimer();
         calls[i].sendAudioTimer->moveToThread(coreThread);
@@ -78,38 +81,9 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
 
     // OpenAL init
     QString outDevDescr = Settings::getInstance().getOutDev();                                     ;
-    if (outDevDescr.isEmpty())
-        alOutDev = alcOpenDevice(nullptr);
-    else
-        alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
-    if (!alOutDev)
-    {
-        qWarning() << "Core: Cannot open output audio device";
-    }
-    else
-    {
-        alContext=alcCreateContext(alOutDev,nullptr);
-        if (!alcMakeContextCurrent(alContext))
-        {
-            qWarning() << "Core: Cannot create output audio context";
-            alcCloseDevice(alOutDev);
-        }
-        else
-            alGenSources(1, &alMainSource);
-    }
-
+    Audio::openOutput(outDevDescr);
     QString inDevDescr = Settings::getInstance().getInDev();
-    int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-    if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
-    else
-        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
-    if (!alInDev)
-        qWarning() << "Core: Cannot open input audio device";
+    Audio::openInput(inDevDescr);
 }
 
 Core::~Core()
@@ -125,15 +99,8 @@ Core::~Core()
         videobuf=nullptr;
     }
 
-    if (alContext)
-    {
-        alcMakeContextCurrent(nullptr);
-        alcDestroyContext(alContext);
-    }
-    if (alOutDev)
-        alcCloseDevice(alOutDev);
-    if (alInDev)
-        alcCaptureCloseDevice(alInDev);
+    Audio::closeInput();
+    Audio::closeOutput();
 
     clearPassword(Core::ptMain);
     clearPassword(Core::ptHistory);
@@ -1876,64 +1843,20 @@ void Core::setNospam(uint32_t nospam)
     tox_set_nospam(tox, nospam);
 }
 
-void Core::useAudioInput(const QString& inDevDescr)
+void Core::resetCallSources()
 {
-    auto* tmp = alInDev;
-    alInDev = nullptr;
-    alcCaptureCloseDevice(tmp);
-    int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-    if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
-    else
-        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
-    if (!alInDev)
-        qWarning() << "Core: Cannot open input audio device";
-    else
-        qDebug() << "Core: Opening audio input "<<inDevDescr;
-
-    // Force to regen each call's sources
     for (ToxGroupCall& call : groupCalls)
         call.alSources.clear();
 
-    // Force to restart any call's capture
-    if (alInDev)
-        alcCaptureStart(alInDev);
-}
-
-void Core::useAudioOutput(const QString& outDevDescr)
-{
-    auto* tmp = alOutDev;
-    alOutDev = nullptr;
-    alcCloseDevice(tmp);
-    if (outDevDescr.isEmpty())
-        alOutDev = alcOpenDevice(nullptr);
-    else
-        alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
-    if (!alOutDev)
+    for (ToxCall& call : calls)
     {
-        qWarning() << "Core: Cannot open output audio device";
-    }
-    else
-    {
-        alcDestroyContext(alContext);
-        alContext=alcCreateContext(alOutDev,nullptr);
-        if (!alcMakeContextCurrent(alContext))
+        if (call.active && call.alSource)
         {
-            qWarning() << "Core: Cannot create output audio context";
-            alcCloseDevice(alOutDev);
+            ALuint tmp = call.alSource;
+            call.alSource = 0;
+            alDeleteSources(1, &tmp);
+
+            alGenSources(1, &call.alSource);
         }
-        else
-            alGenSources(1, &alMainSource);
-
-
-        qDebug() << "Core: Opening audio output "<<outDevDescr;
     }
-
-    // Force to regen each call's sources
-    for (ToxGroupCall& call : groupCalls)
-        call.alSources.clear();
 }

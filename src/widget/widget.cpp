@@ -34,6 +34,7 @@
 #include "src/historykeeper.h"
 #include "form/inputpassworddialog.h"
 #include "src/autoupdate.h"
+#include "src/audio.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -807,11 +808,7 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
         sndFile.close();
     }
 
-    ALuint buffer;
-    alGenBuffers(1, &buffer);
-    alBufferData(buffer, AL_FORMAT_MONO16, sndData.data(), sndData.size(), 44100);
-    alSourcei(core->alMainSource, AL_BUFFER, buffer);
-    alSourcePlay(core->alMainSource);
+    Audio::playMono16Sound(sndData);
 }
 
 void Widget::playRingtone()
@@ -827,11 +824,7 @@ void Widget::playRingtone()
         sndFile1.close();
     }
 
-    ALuint buffer;
-    alGenBuffers(1, &buffer);
-    alBufferData(buffer, AL_FORMAT_MONO16, sndData1.data(), sndData1.size(), 44100);
-    alSourcei(core->alMainSource, AL_BUFFER, buffer);
-    alSourcePlay(core->alMainSource);
+    Audio::playMono16Sound(sndData1);
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)

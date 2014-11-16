@@ -76,8 +76,7 @@ public:
     bool isPasswordSet(PasswordType passtype);
     bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
 
-    void useAudioInput(const QString &name);
-    void useAudioOutput(const QString &name);
+    void resetCallSources(); ///< Forces to regenerate each call's audio sources
 
 public slots:
     void start(); ///< Initializes the core, must be called before anything else
@@ -286,7 +285,7 @@ private:
     QList<DhtServer> dhtServerList;
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
-    static ToxCall calls[];
+    static ToxCall calls[TOXAV_MAX_CALLS];
     static QHash<int, ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
     QMutex fileSendMutex, messageSendMutex;
     bool ready;
@@ -296,12 +295,7 @@ private:
     static const int videobufsize;
     static uint8_t* videobuf;
 
-    static ALCdevice* alOutDev, *alInDev;
-    static ALCcontext* alContext;
-
     static QThread *coreThread;
-public:
-    static ALuint alMainSource;
 };
 
 #endif // CORE_HPP
