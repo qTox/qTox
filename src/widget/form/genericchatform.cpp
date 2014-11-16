@@ -364,7 +364,7 @@ MessageActionPtr GenericChatForm::genMessageActionAction(const ToxID& author, QS
     if (isMe)
         authorStr = core->getUsername();
     else {
-        Friend *f = FriendList::findFriend(author.publicKey);
+        Friend *f = FriendList::findFriend(author);
         if (f)
             authorStr = f->getDisplayedName();
         else

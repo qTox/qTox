@@ -26,7 +26,7 @@ class ChatForm;
 struct Friend
 {
 public:
-    Friend(int FriendId, QString UserId);
+    Friend(int FriendId, const ToxID &UserId);
     ~Friend();
 
     void setName(QString name);
