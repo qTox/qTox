@@ -1,7 +1,7 @@
 QLineEdit
 {
     background: none;
-    background-color: @mediumGrey;
+    background-color: @themeMedium;
     color: white;
     border: 0px;
     border-radius: 6px;
@@ -9,7 +9,7 @@ QLineEdit
 
 #statusPanel
 {
-  background-color: @darkGrey;
+  background-color: @themeDark;
 }
 
 #statusPanel > #statusHead > #nameLabel {
@@ -25,7 +25,7 @@ QLineEdit
 #statusPanel > #statusHead > #statusButton
 {
     background: none;
-    background-color: @mediumGrey;
+    background-color: @themeMedium;
     border: none;
     border-radius: 6px;
     width: 20px;
@@ -55,12 +55,12 @@ QLineEdit
 /*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
 #statusPanel > #statusHead > #statusButton:hover 
 {
-  background-color: @mediumGreyLight;
+  background-color: @themeLight;
 }
 
 #statusPanel > #statusHead > #statusButton:pressed 
 {
-  background-color: @mediumGrey;
+  background-color: @themeMedium;
 }
 
 #statusPanel > #statusHead > #statusButton:focus {

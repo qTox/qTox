@@ -85,7 +85,7 @@ void GenericChatroomWidget::setStatusMsg(const QString &status)
 
 QString GenericChatroomWidget::getName() const
 {
-    return nameLabel->text();
+    return nameLabel->fullText();
 }
 
 QString GenericChatroomWidget::getStatusMsg() const
@@ -96,4 +96,9 @@ QString GenericChatroomWidget::getStatusMsg() const
 void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)
 {
     emit chatroomWidgetClicked(this);
+}
+
+void GenericChatroomWidget::reloadTheme()
+{
+    setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/genericChatroomWidget.css"));
 }

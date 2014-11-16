@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>583</width>
-        <height>748</height>
+        <width>524</width>
+        <height>726</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -197,6 +197,9 @@
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
+              </property>
               <property name="suffix">
                <string> minutes</string>
               </property>
@@ -205,9 +208,6 @@
               </property>
               <property name="maximum">
                <number>2147483647</number>
-              </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -251,8 +251,14 @@
          </layout>
         </widget>
        </item>
-       <item alignment="Qt::AlignTop">
+       <item>
         <widget class="QGroupBox" name="themeGroup">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>232</height>
+          </size>
+         </property>
          <property name="title">
           <string>Theme</string>
          </property>
@@ -353,6 +359,27 @@
             </item>
             <item alignment="Qt::AlignTop">
              <widget class="QComboBox" name="styleBrowser">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="themeColorLayour">
+            <item>
+             <widget class="QLabel" name="themeColorLabel">
+              <property name="text">
+               <string>Theme color</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="themeColorCBox">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>

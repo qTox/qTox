@@ -55,6 +55,7 @@ private slots:
     void onCheckUpdateChanged();
     void onSetShowInFront();
     void onFauxOfflineMessaging();
+    void onThemeColorChanged(int);
 
 private:
     Ui::GeneralSettings *bodyUI;

@@ -51,6 +51,8 @@ public:
     QString getName() const;
     QString getStatusMsg() const;
 
+    void reloadTheme();
+
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
@@ -63,6 +65,8 @@ protected:
     MaskablePixmapWidget* avatar;
     QLabel statusPic;
     CroppingLabel *nameLabel, *statusMessageLabel;
+
+    friend class Style; ///< To update our stylesheets
 };
 
 #endif // GENERICCHATROOMWIDGET_H

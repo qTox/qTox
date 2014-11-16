@@ -37,6 +37,8 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent *e);
     virtual bool eventFilter(QObject *obj, QEvent *e);
 
+    QString fullText(); ///< Returns the un-cropped text
+
 signals:
     void textChanged(QString newText, QString oldText);
     void clicked();

@@ -75,6 +75,8 @@ public:
     
     void clearAllReceipts();
 
+    void reloadTheme();
+
 public slots:
     void onSettingsClicked();
 

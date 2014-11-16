@@ -120,7 +120,7 @@ void Widget::init()
     ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
 
     layout()->setContentsMargins(0, 0, 0, 0);
-    ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
+    ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.png");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
@@ -132,8 +132,9 @@ void Widget::init()
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
-    
 
+    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
+    
     if(QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
     {
@@ -173,6 +174,9 @@ void Widget::init()
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
+
+    Style::setThemeColor(Settings::getInstance().getThemeColor());
+    Style::applyTheme();
 
     idleTimer = new QTimer();
     idleTimer->setSingleShot(true);
@@ -1186,4 +1190,18 @@ void Widget::clearAllReceipts()
     {
         f->getChatForm()->clearReciepts();
     }
+}
+
+void Widget::reloadTheme()
+{
+    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
+    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
+    ui->statusButton->setStyleSheet(Style::getStylesheet(":ui/statusButton/statusButton.css"));
+
+    for (Friend* f : FriendList::getAllFriends())
+        f->getFriendWidget()->reloadTheme();
+
+    for (Group* g : GroupList::groupList)
+        g->widget->reloadTheme();
 }

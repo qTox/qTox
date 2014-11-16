@@ -1,6 +1,6 @@
 GenericChatroomWidget 
 { 
-  background-color: @mediumGrey;
+  background-color: @themeMedium;
 }
 
 GenericChatroomWidget[active="true"]
@@ -10,7 +10,7 @@ GenericChatroomWidget[active="true"]
 
 GenericChatroomWidget[active="false"]:hover 
 { 
-  background-color: @mediumGreyLight; 
+  background-color: @themeLight; 
 } 
 
 GenericChatroomWidget[active="true"] > QLabel#status 

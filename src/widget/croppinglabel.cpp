@@ -144,3 +144,8 @@ void CroppingLabel::showTextEdit()
     textEdit->setFocus();
     textEdit->setText(origText);
 }
+
+QString CroppingLabel::fullText()
+{
+    return origText;
+}

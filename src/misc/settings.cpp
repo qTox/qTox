@@ -154,6 +154,7 @@ void Settings::load()
         useNativeStyle = s.value("nativeStyle", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
+        themeColor = s.value("themeColor", 0).toInt();
         style = s.value("style", "").toString();
         if (style == "") // Default to Fusion if available, otherwise no style
         {
@@ -297,6 +298,7 @@ void Settings::save(QString path)
         s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("nativeStyle", useNativeStyle);
         s.setValue("useEmoticons", useEmoticons);
+        s.setValue("themeColor", themeColor);
         s.setValue("style", style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
     s.endGroup();
@@ -908,4 +910,14 @@ bool Settings::getFauxOfflineMessaging() const
 void Settings::setFauxOfflineMessaging(bool value)
 {
     fauxOfflineMessaging = value;
+}
+
+int Settings::getThemeColor() const
+{
+    return themeColor;
+}
+
+void Settings::setThemeColor(const int &value)
+{
+    themeColor = value;
 }

@@ -21,6 +21,7 @@
 #include "src/misc/settings.h"
 #include "src/misc/smileypack.h"
 #include "src/core.h"
+#include "src/misc/style.h"
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QTime>
@@ -77,6 +78,10 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     else
         bodyUI->styleBrowser->setCurrentText(tr("None"));
     
+    for (QString color : Style::themeColorNames)
+        bodyUI->themeColorCBox->addItem(color);
+    bodyUI->themeColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
+
     bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
     
     QStringList timestamps;
@@ -119,6 +124,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
+    connect(bodyUI->themeColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onThemeColorChanged(int)));
     connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));    
     connect(bodyUI->timestamp, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimestampSelected(int)));
     //connection
@@ -313,4 +319,11 @@ void GeneralForm::onSetShowInFront()
 void GeneralForm::onFauxOfflineMessaging()
 {
     Settings::getInstance().setFauxOfflineMessaging(bodyUI->cbFauxOfflineMessaging->isChecked());
+}
+
+void GeneralForm::onThemeColorChanged(int)
+{
+    int index = bodyUI->themeColorCBox->currentIndex();
+    Settings::getInstance().setThemeColor(index);
+    Style::setThemeColor(index);
 }

@@ -69,7 +69,7 @@ win32 {
     macx {
         BUNDLEID = im.tox.qtox
         ICON = img/icons/qtox.icns
-        QMAKE_INFO_PLIST = res/info.plist
+        QMAKE_INFO_PLIST = osx/info.plist
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
