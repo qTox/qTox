@@ -715,23 +715,23 @@ Do you want to try another password?</source>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="71"/>
-        <source>Audio call</source>
-        <translation>Позвонить</translation>
+        <source>Audio call: RED means you're on a call</source>
+        <translation>Позвонить, только аудио (красная кнопка значит что вы на связи)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="74"/>
-        <source>Video call</source>
-        <translation>Видеозвонок</translation>
+        <source>Video call: RED means you're on a call</source>
+        <translation>Видеозвонок (красная кнопка значит что вы на связи)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="77"/>
-        <source>Toggle speakers volume</source>
-        <translation>Включить или выключить звук</translation>
+        <source>Toggle speakers volume: RED is OFF</source>
+        <translation>Включить или выключить звук (красная кнопка значит звук выключен)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
-        <source>Toggle microphone</source>
-        <translation>Включить или выключить микрофон</translation>
+        <source>Toggle microphone: RED is OFF</source>
+        <translation>Включить или выключить микрофон (красная кнопка значит микрофон выключен)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="144"/>
