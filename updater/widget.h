@@ -33,6 +33,8 @@ public:
     ~Widget();
 
     // Utilities
+    void deleteBackups();
+    void restoreBackups();
     void setProgress(int value);
 
     // Noreturn
@@ -46,6 +48,7 @@ public slots:
 
 private:
     Ui::Widget *ui;
+    QStringList backups;
 };
 
 #endif // WIDGET_H
