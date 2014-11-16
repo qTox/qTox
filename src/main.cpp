@@ -93,6 +93,9 @@ int main(int argc, char *argv[])
     // Windows platform plugins DLL hell fix
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
     a.addLibraryPath("platforms");
+#ifdef Q_OS_OSX
+    a.addLibraryPath("../../PlugIns");
+#endif
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
