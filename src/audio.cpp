@@ -28,16 +28,14 @@ ALuint Audio::alMainSource{0};
 
 void Audio::suscribeInput()
 {
-    if (userCount++)
-        if (alInDev)
-            alcCaptureStart(alInDev);
+    if (!userCount++ && alInDev)
+        alcCaptureStart(alInDev);
 }
 
 void Audio::unsuscribeInput()
 {
-    if (--userCount)
-        if (alInDev)
-            alcCaptureStop(alInDev);
+    if (!--userCount && alInDev)
+        alcCaptureStop(alInDev);
 }
 
 void Audio::openInput(const QString& inDevDescr)
