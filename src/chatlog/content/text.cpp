@@ -1,5 +1,7 @@
 #include "text.h"
 
+#include "../customtextdocument.h"
+
 #include <QFontMetrics>
 #include <QPainter>
 #include <QPalette>
@@ -11,9 +13,10 @@
 #include <QFontMetrics>
 #include <QDesktopServices>
 
-Text::Text(const QString& txt, bool enableElide)
+Text::Text(const QString& txt, QFont font, bool enableElide)
     : ChatLineContent()
     , elide(enableElide)
+    , defFont(font)
 {
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
@@ -142,7 +145,7 @@ void Text::visibilityChanged(bool visible)
         freeResources();
 }
 
-qreal Text::firstLineVOffset()
+qreal Text::firstLineVOffset() const
 {
     return vOffset;
 }
@@ -162,18 +165,14 @@ void Text::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         QDesktopServices::openUrl(anchor);
 }
 
-QString Text::toString() const
-{
-    return text;
-}
-
 void Text::ensureIntegrity()
 {
     if(!doc)
     {
-        doc = new QTextDocument();
+        doc = new CustomTextDocument();
         doc->setUndoRedoEnabled(false);
         doc->setUseDesignMetrics(true);
+        doc->setDefaultFont(defFont);
 
         if(!elide)
         {

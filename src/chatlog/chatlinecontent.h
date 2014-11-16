@@ -28,15 +28,13 @@ public:
     virtual bool isOverSelection(QPointF scenePos) const;
     virtual QString getSelectedText() const;
 
-    virtual qreal firstLineVOffset();
+    virtual qreal firstLineVOffset() const;
 
     virtual QRectF boundingSceneRect() const = 0;
     virtual QRectF boundingRect() const = 0;
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) = 0;
 
     virtual void visibilityChanged(bool visible);
-
-    virtual QString toString() const;
 
 private:
     friend class ChatLine;

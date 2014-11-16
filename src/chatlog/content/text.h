@@ -6,13 +6,12 @@
 #include <QTextDocument>
 #include <QTextCursor>
 
-class ChatLine;
-class QTextLayout;
+class CustomTextDocument;
 
 class Text : public ChatLineContent
 {
 public:
-    Text(const QString& txt = "", bool enableElide = false);
+    Text(const QString& txt = "", QFont font = QFont(), bool enableElide = false);
     virtual ~Text();
 
     void setText(const QString& txt);
@@ -32,11 +31,9 @@ public:
 
     virtual void visibilityChanged(bool isVisible);
 
-    virtual qreal firstLineVOffset();
+    virtual qreal firstLineVOffset() const;
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-
-    virtual QString toString() const;
 
 protected:
     // dynamic resource management
@@ -47,7 +44,7 @@ protected:
     int cursorFromPos(QPointF scenePos) const;
 
 private:
-    QTextDocument* doc = nullptr;
+    CustomTextDocument* doc = nullptr;
     QString text;
     QString elidedText;
     QSizeF size;
@@ -56,6 +53,7 @@ private:
     QTextCursor cursor;
     qreal vOffset = 0.0;
     qreal width = 0.0;
+    QFont defFont;
 
 };
 

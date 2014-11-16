@@ -54,6 +54,11 @@ void Spinner::visibilityChanged(bool visible)
         timer.stop();
 }
 
+qreal Spinner::firstLineVOffset() const
+{
+    return size.height() / 4.0;
+}
+
 void Spinner::timeout()
 {
     rot += 8;

@@ -16,8 +16,10 @@ public:
     explicit ChatLog(QWidget* parent = 0);
     virtual ~ChatLog();
 
-    ChatMessage* addChatMessage(const QString& sender, ChatLineContent* content, const QDateTime& timestamp);
-    ChatMessage* addChatMessage(const QString& sender, ChatLineContent* content);
+    ChatMessage* addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self);
+    ChatMessage* addChatMessage(const QString& sender, const QString& msg, bool self);
+
+    ChatMessage* addSystemMessage(const QString& msg, const QDateTime& timestamp);
 
     void insertChatline(ChatLine* l);
 
@@ -25,10 +27,6 @@ public:
     void clear();
     void copySelectedText() const;
     QString getSelectedText() const;
-
-signals:
-
-public slots:
 
 protected:
     QRect getVisibleRect() const;

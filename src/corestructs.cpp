@@ -53,6 +53,11 @@ bool ToxID::isMine() const
     return *this == Core::getInstance()->getSelfId();
 }
 
+void ToxID::clear()
+{
+    publicKey.clear();
+}
+
 bool ToxID::isToxId(const QString& value)
 {
     const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");

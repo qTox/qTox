@@ -150,7 +150,9 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/chatlog/content/text.h \
     src/chatlog/content/spinner.h \
     src/chatlog/content/filetransferwidget.h \
-    src/chatlog/chatmessage.h
+    src/chatlog/chatmessage.h \
+    src/chatlog/content/image.h \
+    src/chatlog/customtextdocument.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -216,4 +218,6 @@ SOURCES += \
     src/chatlog/content/text.cpp \
     src/chatlog/content/spinner.cpp \
     src/chatlog/content/filetransferwidget.cpp \
-    src/chatlog/chatmessage.cpp
+    src/chatlog/chatmessage.cpp \
+    src/chatlog/content/image.cpp \
+    src/chatlog/customtextdocument.cpp

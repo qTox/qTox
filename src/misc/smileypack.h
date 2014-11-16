@@ -41,6 +41,7 @@ public:
     QList<QStringList> getEmoticons() const;
     QString getAsRichText(const QString& key);
     QIcon getAsIcon(const QString& key);
+    QImage getAsImage(const QString& key);
 
 private slots:
     void onSmileyPackChanged();

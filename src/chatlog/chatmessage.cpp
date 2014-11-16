@@ -4,23 +4,22 @@
 
 #include <QDateTime>
 
-ChatMessage::ChatMessage(QGraphicsScene *scene, const QString& author ,ChatLineContent *content)
+ChatMessage::ChatMessage(QGraphicsScene* scene, const QString& rawMessage)
     : ChatLine(scene)
+    , rawString(rawMessage)
 {
-    addColumn(new Text(author, true), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
-    addColumn(content, ColumnFormat(1.0, ColumnFormat::VariableSize));
-    addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
-
-    midColumn = content;
+//    addColumn(new Text(author, true), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+//    addColumn(content, ColumnFormat(1.0, ColumnFormat::VariableSize));
+//    addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
 }
 
 void ChatMessage::markAsSent(const QDateTime &time)
 {
     // remove the spinner and replace it by $time
-    replaceContent(2, new Text(time.toString("hh:mm"), true));
+    replaceContent(2, new Text(time.toString("hh:mm")));
 }
 
 QString ChatMessage::toString() const
 {
-    return midColumn->toString();
+    return rawString;
 }

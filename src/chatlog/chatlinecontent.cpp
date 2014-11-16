@@ -59,7 +59,7 @@ QString ChatLineContent::getSelectedText() const
     return QString();
 }
 
-qreal ChatLineContent::firstLineVOffset()
+qreal ChatLineContent::firstLineVOffset() const
 {
     return 0.0;
 }
@@ -67,9 +67,4 @@ qreal ChatLineContent::firstLineVOffset()
 void ChatLineContent::visibilityChanged(bool)
 {
 
-}
-
-QString ChatLineContent::toString() const
-{
-    return QString();
 }

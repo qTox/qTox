@@ -78,7 +78,7 @@ protected:
 //TODO:    MessageActionPtr genMessageActionAction(const QString& author, QString message, bool isAction, const QDateTime &datetime); ///< Deprecated
 //    MessageActionPtr genMessageActionAction(const ToxID& author, QString message, bool isAction, const QDateTime &datetime);
 //    MessageActionPtr genSelfActionAction(QString message, bool isAction, const QDateTime &datetime);
-//    ChatActionPtr genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);
+//    ChatMessage* genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);
 
     ToxID previousId;
     QMenu menu;

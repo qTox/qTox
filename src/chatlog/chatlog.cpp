@@ -4,8 +4,12 @@
 #include "chatlinecontent.h"
 #include "chatlinecontentproxy.h"
 #include "content/text.h"
+#include "content/image.h"
 #include "content/filetransferwidget.h"
 #include "content/spinner.h"
+
+#include "../misc/style.h"
+#include "../misc/smileypack.h"
 
 #include <QDebug>
 #include <QScrollBar>
@@ -53,20 +57,33 @@ ChatLog::~ChatLog()
         delete line;
 }
 
-ChatMessage* ChatLog::addChatMessage(const QString& sender, ChatLineContent* content)
+ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self)
 {
-    ChatMessage* line = new ChatMessage(scene, sender, content);
+    ChatMessage* line = new ChatMessage(scene, msg);
+    line->addColumn(new Text(sender, self ? Style::getFont(Style::MediumBold) : Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new Text(SmileyPack::getInstance().smileyfied(msg)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+
     insertChatline(line);
+    return line;
+}
+
+ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self)
+{
+    ChatMessage* line = addChatMessage(sender, msg, self);
+    line->markAsSent(timestamp);
 
     return line;
 }
 
-ChatMessage* ChatLog::addChatMessage(const QString& sender, ChatLineContent* content, const QDateTime& timestamp)
+ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& timestamp)
 {
-    ChatMessage* line = new ChatMessage(scene, sender, content);
-    line->markAsSent(timestamp);
-    insertChatline(line);
+    ChatMessage* line = new ChatMessage(scene, msg);
+    line->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new Text(msg), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
 
+    insertChatline(line);
     return line;
 }
 
@@ -134,9 +151,6 @@ void ChatLog::partialUpdate()
     auto oldUpdateMode = viewportUpdateMode();
     setViewportUpdateMode(NoViewportUpdate);
 
-    static int count = 0;
-    int count2 = 0;
-    int lastNonDirty = visibleLines.first()->getRowIndex();
     bool repos;
     do
     {
@@ -144,19 +158,14 @@ void ChatLog::partialUpdate()
         if(!visibleLines.empty())
         {
             repos = layout(visibleLines.first()->getRowIndex(), visibleLines.last()->getRowIndex(), useableWidth());
-            lastNonDirty = visibleLines.last()->getRowIndex();
         }
 
         checkVisibility();
-        count2++;
     }
     while(repos);
 
     reposition(visibleLines.last()->getRowIndex(), lines.size());
     checkVisibility();
-
-    count = qMax(count, count2);
-    //qDebug() << "COUNT: " << count;
 
     setViewportUpdateMode(oldUpdateMode);
     updateSceneRect();

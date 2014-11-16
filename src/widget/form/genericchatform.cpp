@@ -206,7 +206,10 @@ void GenericChatForm::onSaveLogClicked()
 ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    ChatMessage* msg = chatWidget->addChatMessage(Core::getInstance()->getPeerName(author), new Text(SmileyPack::getInstance().smileyfied(message)), datetime);
+    QString authorStr = previousId != author ? Core::getInstance()->getPeerName(author) : QString();
+    previousId = author;
+
+    ChatMessage* msg = chatWidget->addChatMessage(authorStr, message, datetime, false);
     if(isSent)
         msg->markAsSent(datetime);
 
@@ -215,7 +218,10 @@ ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &mes
 
 ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent)
 {
-    return chatWidget->addChatMessage(Core::getInstance()->getUsername(), new Text(SmileyPack::getInstance().smileyfied(message)));
+    QString authorStr = previousId != Core::getInstance()->getSelfId() ? Core::getInstance()->getUsername() : QString();
+    previousId = Core::getInstance()->getSelfId();
+
+    return chatWidget->addChatMessage(authorStr, message, true);
 }
 
 /**
@@ -231,13 +237,13 @@ ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isActi
 //    previousId.publicKey = author;
 //}
 
-//void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
-//{
+void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
+{
 //    QString authorStr = Core::getInstance()->getPeerName(author);
 //    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
 //    chatWidget->insertMessage(ChatActionPtr(new AlertAction(authorStr, message, date)));
 //    previousId = author;
-//}
+}
 
 void GenericChatForm::onEmoteButtonClicked()
 {
@@ -271,11 +277,11 @@ void GenericChatForm::focusInput()
     msgEdit->setFocus();
 }
 
-//void GenericChatForm::addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime)
-//{
-//    ChatActionPtr ca = genSystemInfoAction(message, type, datetime);
-//    chatWidget->insertMessage(ca);
-//}
+void GenericChatForm::addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime)
+{
+    previousId.clear();
+    chatWidget->addSystemMessage(message, datetime);
+}
 
 //QString GenericChatForm::getElidedName(const QString& name)
 //{
@@ -287,19 +293,19 @@ void GenericChatForm::focusInput()
 
 void GenericChatForm::clearChatArea(bool notinform)
 {
-//    chatWidget->clearChatArea();
-//    previousId = ToxID();
+    chatWidget->clear();
+    previousId = ToxID();
 
-//    if (!notinform)
-//        addSystemInfoMessage(tr("Cleared"), "white", QDateTime::currentDateTime());
+    if (!notinform)
+        addSystemInfoMessage(tr("Cleared"), "white", QDateTime::currentDateTime());
 
-//    if (earliestMessage)
-//    {
-//        delete earliestMessage;
-//        earliestMessage = nullptr;
-//    }
+    if (earliestMessage)
+    {
+        delete earliestMessage;
+        earliestMessage = nullptr;
+    }
 
-//    emit chatAreaCleared();
+    emit chatAreaCleared();
 }
 
 /**
@@ -419,7 +425,7 @@ void GenericChatForm::clearChatArea(bool notinform)
 //    return res;
 //}
 
-//ChatActionPtr GenericChatForm::genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime)
+//ChatMessage* GenericChatForm::genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime)
 //{
 //    previousId = ToxID();
 //    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());

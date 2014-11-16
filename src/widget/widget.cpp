@@ -687,10 +687,9 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
         default:
             fStatus = tr("online", "contact status"); break;
         }
-        //TODO:
-//        if (isActualChange)
-//            f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
-//                                          "white", QDateTime::currentDateTime());
+        if (isActualChange)
+            f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
+                                                   "white", QDateTime::currentDateTime());
     }
 
     if (isActualChange && status != Status::Offline)
