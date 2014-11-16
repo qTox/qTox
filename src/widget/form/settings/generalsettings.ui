@@ -98,7 +98,7 @@
             <item>
              <widget class="QCheckBox" name="showSystemTray">
               <property name="text">
-               <string>Show system tray</string>
+               <string>Show system tray icon</string>
               </property>
              </widget>
             </item>
@@ -217,6 +217,9 @@
            <layout class="QHBoxLayout" name="fileLayout">
             <item>
              <widget class="QCheckBox" name="autoacceptFiles">
+              <property name="toolTip">
+               <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking them.</string>
+              </property>
               <property name="text">
                <string>Autoaccept files</string>
               </property>
