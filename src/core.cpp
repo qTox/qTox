@@ -1892,6 +1892,14 @@ void Core::useAudioInput(const QString& inDevDescr)
         qWarning() << "Core: Cannot open input audio device";
     else
         qDebug() << "Core: Opening audio input "<<inDevDescr;
+
+    // Force to regen each call's sources
+    for (ToxGroupCall& call : groupCalls)
+        call.alSources.clear();
+
+    // Force to restart any call's capture
+    if (alInDev)
+        alcCaptureStart(alInDev);
 }
 
 void Core::useAudioOutput(const QString& outDevDescr)
@@ -1922,4 +1930,8 @@ void Core::useAudioOutput(const QString& outDevDescr)
 
         qDebug() << "Core: Opening audio output "<<outDevDescr;
     }
+
+    // Force to regen each call's sources
+    for (ToxGroupCall& call : groupCalls)
+        call.alSources.clear();
 }
