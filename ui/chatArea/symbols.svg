@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.2"
+   width="744.09448"
+   height="1052.3622"
+   id="svg2">
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1">
+    <g
+       transform="translate(-19.999993,-14.285714)"
+       id="g3864">
+      <path
+         d="m 205.71429,686.64789 160,320.00001 -320.000004,0 z"
+         id="rect2985"
+         style="fill:#c84e4e;fill-opacity:1;stroke:#000000;stroke-width:16;stroke-linejoin:round;stroke-opacity:1" />
+      <flowRoot
+         transform="matrix(8.7750279,0,0,6.5433553,-681.18052,-5346.0366)"
+         id="flowRoot2988"
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+           id="flowRegion2990"><rect
+             width="125.71429"
+             height="85.714287"
+             x="95.714287"
+             y="926.64789"
+             id="rect2992" /></flowRegion><flowPara
+           id="flowPara2994">!</flowPara></flowRoot>    </g>
+    <g
+       transform="translate(-18.571423,8.5714286)"
+       id="g3857">
+      <path
+         d="m 448.57143,603.07648 a 189.28572,189.28572 0 1 1 -378.571445,0 189.28572,189.28572 0 1 1 378.571445,0 z"
+         transform="matrix(0.72483708,0,0,0.72483708,16.345817,46.658532)"
+         id="path3764"
+         style="fill:#6bc260;fill-opacity:1;stroke:#1c1c1c;stroke-width:16;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0;stroke-dasharray:none;stroke-dashoffset:0" />
+      <flowRoot
+         transform="matrix(8.7750279,0,0,6.1071156,-679.17313,-5322.6227)"
+         id="flowRoot2988-9"
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#1c1c1c;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+           id="flowRegion2990-3"><rect
+             width="125.71429"
+             height="85.714287"
+             x="95.714287"
+             y="926.64789"
+             id="rect2992-2"
+             style="fill:#1c1c1c;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara2994-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Aller;-inkscape-font-specification:Aller">i</flowPara></flowRoot>    </g>
+    <g
+       transform="translate(-342.85714,-295.71428)"
+       id="g3850">
+      <path
+         d="m 448.57143,603.07648 a 189.28572,189.28572 0 1 1 -378.571445,0 189.28572,189.28572 0 1 1 378.571445,0 z"
+         transform="matrix(0.72483708,0,0,0.72483708,340.63154,52.37285)"
+         id="path3764-1"
+         style="fill:#414141;fill-opacity:1;stroke:none" />
+      <flowRoot
+         transform="matrix(8.7750279,0,0,6.1071156,-354.88741,-5316.9084)"
+         id="flowRoot2988-9-1"
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+           id="flowRegion2990-3-0"><rect
+             width="125.71429"
+             height="85.714287"
+             x="95.714287"
+             y="926.64789"
+             id="rect2992-2-08"
+             style="fill:#ffffff;fill-opacity:1" /></flowRegion><flowPara
+           id="flowPara2994-4-8"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;font-family:Aller;-inkscape-font-specification:Aller">i</flowPara></flowRoot>    </g>
+  </g>
+</svg>
