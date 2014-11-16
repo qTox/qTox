@@ -1003,7 +1003,8 @@ void Core::removeGroup(int groupId, bool fake)
         return;
     tox_del_groupchat(tox, groupId);
 
-    leaveGroupCall(groupId);
+    if (groupCalls[groupId].active)
+        leaveGroupCall(groupId);
 }
 
 QString Core::getUsername() const
