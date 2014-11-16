@@ -726,12 +726,12 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="77"/>
         <source>Toggle speakers volume: RED is OFF</source>
-        <translation>Включить или выключить звук (красная кнопка значит звук выключен)</translation>
+        <translation>Включить или выключить звук (красная кнопка значит что звук выключен)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
         <source>Toggle microphone: RED is OFF</source>
-        <translation>Включить или выключить микрофон (красная кнопка значит микрофон выключен)</translation>
+        <translation>Включить или выключить микрофон (красная кнопка значит что микрофон выключен)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="144"/>
