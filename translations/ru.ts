@@ -131,6 +131,21 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <source>Advanced</source>
         <translation>Расширенные</translation>
     </message>
+    <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="25"/>
+        <source>FULL - very safe, slowest (recommended)</source>
+        <translation>Полная - полностью безопасно, самая медленная (рекомендуется)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="25"/>
+        <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
+        <translation>Нормальная - почти так же безопасно, как полная, но на 20% быстрее</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="25"/>
+        <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
+        <translation>Выключена - небезопасно, если что-то пойдёт не так, история может быть утрачена, самая быстрая (не рекомендуется)</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -508,7 +523,7 @@ Do you want to try another password?</source>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="101"/>
-        <source>Show system tray</source>
+        <source>Show system tray icon</source>
         <translation>Показывать иконку в трее</translation>
     </message>
     <message>
@@ -700,23 +715,23 @@ Do you want to try another password?</source>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="71"/>
-        <source>Audio call</source>
-        <translation>Позвонить</translation>
+        <source>Audio call: RED means you're on a call</source>
+        <translation>Позвонить, только аудио (красная кнопка значит что вы на связи)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="74"/>
-        <source>Video call</source>
-        <translation>Видеозвонок</translation>
+        <source>Video call: RED means you're on a call</source>
+        <translation>Видеозвонок (красная кнопка значит что вы на связи)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="77"/>
-        <source>Toggle speakers volume</source>
-        <translation>Включить или выключить звук</translation>
+        <source>Toggle speakers volume: RED is OFF</source>
+        <translation>Включить или выключить звук (красная кнопка значит что звук выключен)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
-        <source>Toggle microphone</source>
-        <translation>Включить или выключить микрофон</translation>
+        <source>Toggle microphone: RED is OFF</source>
+        <translation>Включить или выключить микрофон (красная кнопка значит что микрофон выключен)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="144"/>
