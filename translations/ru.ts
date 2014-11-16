@@ -131,6 +131,21 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <source>Advanced</source>
         <translation>Расширенные</translation>
     </message>
+    <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="25"/>
+        <source>FULL - very safe, slowest (recommended)</source>
+        <translation>Полная - полностью безопасно, самая медленная (рекомендуется)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="25"/>
+        <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
+        <translation>Нормальная - почти так же безопасно, как полная, но на 20% быстрее</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="25"/>
+        <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
+        <translation>Выключена - небезопасно, если что-то пойдёт не так, история может быть утрачена, самая быстрая (не рекомендуется)</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
