@@ -41,6 +41,13 @@ QString MessageAction::getMessage(QString div)
     {
         QString url = exp.cap();
 
+        // If there's a trailing " it's a HTML attribute, e.g. a smiley img's title=":tox:"
+        if (url == "tox:\"")
+        {
+            offset += url.length();
+            continue;
+        }
+
         // add scheme if not specified
         if (exp.cap(1) == "www.")
             url.prepend("http://");
