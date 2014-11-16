@@ -76,6 +76,9 @@ public:
     bool isPasswordSet(PasswordType passtype);
     bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
 
+    void useAudioInput(const QString &name);
+    void useAudioOutput(const QString &name);
+
 public slots:
     void start(); ///< Initializes the core, must be called before anything else
     void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer

@@ -217,7 +217,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     if (!calls[callId].active)
         return;
 
-    if (calls[callId].muteMic)
+    if (calls[callId].muteMic || !alInDev)
     {
         calls[callId].sendAudioTimer->start();
         return;
@@ -641,6 +641,7 @@ void Core::leaveGroupCall(int groupId)
     disconnect(groupCalls[groupId].sendAudioTimer,0,0,0);
     groupCalls[groupId].sendAudioTimer->stop();
     alcCaptureStop(alInDev);
+    groupCalls[groupId].alSources.clear();
 }
 
 void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
@@ -648,7 +649,7 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     if (!groupCalls[groupId].active)
         return;
 
-    if (groupCalls[groupId].muteMic)
+    if (groupCalls[groupId].muteMic || !alInDev)
     {
         groupCalls[groupId].sendAudioTimer->start();
         return;

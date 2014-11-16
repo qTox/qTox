@@ -1873,3 +1873,53 @@ void Core::setNospam(uint32_t nospam)
     std::reverse(nspm, nspm + 4);
     tox_set_nospam(tox, nospam);
 }
+
+void Core::useAudioInput(const QString& inDevDescr)
+{
+    auto* tmp = alInDev;
+    alInDev = nullptr;
+    alcCaptureCloseDevice(tmp);
+    int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+    if (inDevDescr.isEmpty())
+        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
+            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
+                                       / 1000 * av_DefaultSettings.audio_channels);
+    else
+        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, stereoFlag,
+            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
+                                       / 1000 * av_DefaultSettings.audio_channels);
+    if (!alInDev)
+        qWarning() << "Core: Cannot open input audio device";
+    else
+        qDebug() << "Core: Opening audio input "<<inDevDescr;
+}
+
+void Core::useAudioOutput(const QString& outDevDescr)
+{
+    auto* tmp = alOutDev;
+    alOutDev = nullptr;
+    alcCloseDevice(tmp);
+    if (outDevDescr.isEmpty())
+        alOutDev = alcOpenDevice(nullptr);
+    else
+        alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
+    if (!alOutDev)
+    {
+        qWarning() << "Core: Cannot open output audio device";
+    }
+    else
+    {
+        alcDestroyContext(alContext);
+        alContext=alcCreateContext(alOutDev,nullptr);
+        if (!alcMakeContextCurrent(alContext))
+        {
+            qWarning() << "Core: Cannot create output audio context";
+            alcCloseDevice(alOutDev);
+        }
+        else
+            alGenSources(1, &alMainSource);
+
+
+        qDebug() << "Core: Opening audio output "<<outDevDescr;
+    }
+}
