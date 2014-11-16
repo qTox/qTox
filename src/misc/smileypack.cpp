@@ -91,7 +91,7 @@ bool SmileyPack::load(const QString& filename)
 {
     // discard old data
     filenameTable.clear();
-    imgCache.clear();
+    pixmapCache.clear();
     emoticons.clear();
     path.clear();
 
@@ -134,11 +134,8 @@ bool SmileyPack::load(const QString& filename)
             filenameTable.insert(emoticon, file);
             
             cacheSmiley(file); // preload all smileys
-            
-            QPixmap pm;
-            pm.loadFromData(getCachedSmiley(emoticon), "PNG");
-            
-            if(pm.size().width() > 0) 
+                       
+            if(!getCachedSmiley(emoticon).size().isEmpty())
                 emoticonSet.push_back(emoticon);
             
             stringElement = stringElement.nextSibling().toElement();
@@ -184,22 +181,11 @@ QList<QStringList> SmileyPack::getEmoticons() const
 QString SmileyPack::getAsRichText(const QString &key)
 {
     return QString("<img title=\"%1\" src=\"key:%1\"\\>").arg(key);
-    //return "<img title=\""%key%"\" src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
 }
 
-QIcon SmileyPack::getAsIcon(const QString &key)
+QPixmap SmileyPack::getAsPixmap(const QString &key)
 {
-    QPixmap pm;
-    pm.loadFromData(getCachedSmiley(key), "PNG");
-    return QIcon(pm);
-}
-
-QImage SmileyPack::getAsImage(const QString &key)
-{
-    QImage img;
-    img.loadFromData(getCachedSmiley(key), "PNG");
-
-    return img;
+    return getCachedSmiley(key);
 }
 
 void SmileyPack::cacheSmiley(const QString &name)
@@ -214,28 +200,23 @@ void SmileyPack::cacheSmiley(const QString &name)
     if (!img.isNull())
     {
         QImage scaledImg = img.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-
-        QByteArray scaledImgData;
-        QBuffer buffer(&scaledImgData);
-        scaledImg.save(&buffer, "PNG");
-
-        imgCache.insert(name, scaledImgData);
+        pixmapCache.insert(name, QPixmap::fromImage(scaledImg));
     }
 }
 
-QByteArray SmileyPack::getCachedSmiley(const QString &key)
+QPixmap SmileyPack::getCachedSmiley(const QString &key)
 {
     // valid key?
     if (!filenameTable.contains(key))
-        return QByteArray();
+        return QPixmap();
 
     // cache it if needed
     QString file = filenameTable.value(key);
-    if (!imgCache.contains(file)) {
+    if (!pixmapCache.contains(file)) {
         cacheSmiley(file);
     }
 
-    return imgCache.value(file);
+    return pixmapCache.value(file);
 }
 
 void SmileyPack::onSmileyPackChanged()

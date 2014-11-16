@@ -13,7 +13,7 @@ CustomTextDocument::CustomTextDocument(QObject *parent)
 QVariant CustomTextDocument::loadResource(int type, const QUrl &name)
 {
     if (type == QTextDocument::ImageResource && name.scheme() == "key")
-        return SmileyPack::getInstance().getAsImage(name.fileName());
+        return SmileyPack::getInstance().getAsPixmap(name.fileName());
 
     return QTextDocument::loadResource(type, name);
 }
