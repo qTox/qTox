@@ -508,7 +508,7 @@ Do you want to try another password?</source>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="101"/>
-        <source>Show system tray</source>
+        <source>Show system tray icon</source>
         <translation>Показывать иконку в трее</translation>
     </message>
     <message>
