@@ -17,14 +17,22 @@
 #include "filetransferwidget.h"
 #include "ui_filetransferwidget.h"
 
+#include "src/core.h"
+
 #include <QMouseEvent>
 #include <QDebug>
 
-FileTransferWidget::FileTransferWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FileTransferWidget)
+FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
+    : QWidget(parent)
+    , ui(new Ui::FileTransferWidget)
+    , fileInfo(file)
 {
     ui->setupUi(this);
+
+    ui->filenameLabel->setText(file.fileName);
+    ui->progressBar->setValue(0);
+
+    connect(Core::getInstance(), &Core::fileTransferInfo, this, &FileTransferWidget::onFileTransferInfo);
 
     setFixedHeight(100);
 }
@@ -34,17 +42,12 @@ FileTransferWidget::~FileTransferWidget()
     delete ui;
 }
 
-void FileTransferWidget::on_pushButton_2_clicked()
+void FileTransferWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction)
 {
-    qDebug() << "Button Cancel Clicked";
-}
+    if(FileNum != fileInfo.fileNum)
+        return;
 
-void FileTransferWidget::on_pushButton_clicked()
-{
-    qDebug() << "Button Resume Clicked";
-}
-
-void FileTransferWidget::on_pushButton_2_pressed()
-{
-    qDebug() << "Button Resume Clicked";
+    // update progress
+    qreal progress = static_cast<qreal>(Filesize)/static_cast<qreal>(BytesSent);
+    ui->progressBar->setValue(static_cast<int>(progress * 100.0));
 }

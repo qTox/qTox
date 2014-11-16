@@ -19,6 +19,7 @@
 
 #include <QWidget>
 #include "../chatlinecontent.h"
+#include "../../corestructs.h"
 
 namespace Ui {
 class FileTransferWidget;
@@ -29,16 +30,15 @@ class FileTransferWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit FileTransferWidget(QWidget *parent = 0);
+    explicit FileTransferWidget(QWidget *parent, ToxFile file);
     virtual ~FileTransferWidget();
+
+protected slots:
+    void onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction);
 
 private:
     Ui::FileTransferWidget *ui;
-
-private slots:
-    void on_pushButton_2_clicked();
-    void on_pushButton_clicked();
-    void on_pushButton_2_pressed();
+    ToxFile fileInfo;
 
 };
 

@@ -103,6 +103,17 @@ ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& time
     return line;
 }
 
+ChatMessage *ChatLog::addFileTransferMessage(const QString &sender, const ToxFile &file,  const QDateTime& timestamp, bool self)
+{
+    ChatMessage* line = new ChatMessage(scene, QString());
+    line->addColumn(new Text(sender, self ? Style::getFont(Style::MediumBold) : Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+
+    insertChatline(line);
+    return line;
+}
+
 void ChatLog::clearSelection()
 {
     if(selStartRow >= 0)

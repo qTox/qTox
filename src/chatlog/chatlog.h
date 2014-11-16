@@ -24,6 +24,7 @@ class QGraphicsScene;
 class ChatLine;
 class ChatLineContent;
 class ChatMessage;
+class ToxFile;
 
 class ChatLog : public QGraphicsView
 {
@@ -36,6 +37,7 @@ public:
     ChatMessage* addChatMessage(const QString& sender, const QString& msg, bool self);
 
     ChatMessage* addSystemMessage(const QString& msg, const QDateTime& timestamp);
+    ChatMessage* addFileTransferMessage(const QString& sender, const ToxFile& file, const QDateTime &timestamp, bool self);
 
     void insertChatline(ChatLine* l);
 
