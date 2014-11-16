@@ -192,7 +192,7 @@ void SmileyPack::cacheSmiley(const QString &name)
 {
     // The -1 is to avoid having the space for descenders under images move the text down
     // We can't remove it because Qt doesn't support CSS display or vertical-align
-    int fontHeight = QFontInfo(Style::getFont(Style::Big)).pixelSize() - 1;
+    //TODO: int fontHeight = QFontInfo(Style::getFont(Style::Big)).pixelSize() - 1;
     QSize size(16, 16);
     QString filename = QDir(path).filePath(name);
     QImage img(filename);
