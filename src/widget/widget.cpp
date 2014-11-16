@@ -611,12 +611,13 @@ void Widget::setStatusMessage(const QString &statusMessage)
 void Widget::addFriend(int friendId, const QString &userId)
 {
     //qDebug() << "Widget: Adding friend with id" << userId;
-    Friend* newfriend = FriendList::addFriend(friendId, userId);
+    ToxID userToxId = ToxID::fromString(userId);
+    Friend* newfriend = FriendList::addFriend(friendId, userToxId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->getFriendWidget());
 
-    QString alias = Settings::getInstance().getFriendAlias(ToxID::fromString(userId));
-    newfriend->setAlias(alias);
+    if (Settings::getInstance().getEnableLogging())
+        newfriend->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));

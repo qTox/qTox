@@ -78,9 +78,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(this, SIGNAL(chatAreaCleared()), this, SLOT(clearReciepts()));
 
     setAcceptDrops(true);
-
-    if (Settings::getInstance().getEnableLogging())
-        loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 }
 
 ChatForm::~ChatForm()

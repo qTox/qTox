@@ -19,15 +19,22 @@
 #include "widget/friendwidget.h"
 #include "widget/form/chatform.h"
 #include "widget/widget.h"
+#include "src/core.h"
+#include "src/misc/settings.h"
 
-Friend::Friend(int FriendId, QString UserId)
+Friend::Friend(int FriendId, const ToxID &UserId)
     : friendId(FriendId)
 {
     hasNewEvents = 0;
     friendStatus = Status::Offline;
-    userID = ToxID::fromString(UserId);
-    userName = UserId;
-    widget = new FriendWidget(friendId, UserId);
+    userID = UserId;
+    userName = Core::getInstance()->getPeerName(UserId);
+    if (userName.size() == 0)
+        userName = UserId.publicKey;
+
+    userAlias = Settings::getInstance().getFriendAlias(UserId);
+
+    widget = new FriendWidget(friendId, getDisplayedName());
     chatForm = new ChatForm(this);
 }
 
