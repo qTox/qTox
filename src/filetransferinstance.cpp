@@ -18,6 +18,8 @@
 #include "core.h"
 #include "misc/settings.h"
 #include "misc/style.h"
+#include "src/friendlist.h"
+#include "src/friend.h"
 #include <math.h>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -208,7 +210,7 @@ bool isFileWritable(QString& path)
 
 void FileTransferInstance::acceptRecvRequest()
 {
-    QString path = Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(friendId));
+    QString path = Settings::getInstance().getAutoAcceptDir(FriendList::findFriend(friendId)->getToxID());
     
     if (path.isEmpty())
         path = Settings::getInstance().getGlobalAutoAcceptDir();
