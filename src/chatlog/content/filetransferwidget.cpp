@@ -21,6 +21,10 @@
 #include "src/misc/style.h"
 
 #include <QMouseEvent>
+#include <QFileDialog>
+#include <QDir>
+#include <QFileInfo>
+#include <QMessageBox>
 #include <QDebug>
 
 FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
@@ -31,6 +35,10 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
 {
     ui->setupUi(this);
 
+    // hide the QWidget background (background-color: transparent doesn't seem to work)
+    setAttribute(Qt::WA_TranslucentBackground, true);
+
+    ui->previewLabel->hide();
     ui->filenameLabel->setText(file.fileName);
     ui->progressBar->setValue(0);
     ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
@@ -47,6 +55,10 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     connect(Core::getInstance(), &Core::fileTransferFinished, this, &FileTransferWidget::onFileTransferFinished);
 
     setupButtons();
+
+    //preview
+    if(fileInfo.direction == ToxFile::SENDING)
+        showPreview(fileInfo.filePath);
 
     setFixedHeight(85);
 }
@@ -123,7 +135,7 @@ void FileTransferWidget::onFileTransferCancelled(ToxFile file)
     setupButtons();
     hideWidgets();
 
-    disconnect(Core::getInstance());
+    disconnect(Core::getInstance(), 0, this, 0);
 }
 
 void FileTransferWidget::onFileTransferPaused(ToxFile file)
@@ -152,7 +164,11 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
     setupButtons();
     hideWidgets();
 
-    disconnect(Core::getInstance());
+    // preview
+    if(fileInfo.direction == ToxFile::RECEIVING)
+        showPreview(fileInfo.filePath);
+
+    disconnect(Core::getInstance(), 0, this, 0);
 }
 
 QString FileTransferWidget::getHumanReadableSize(qint64 size)
@@ -194,6 +210,19 @@ void FileTransferWidget::setupButtons()
         break;
     case ToxFile::STOPPED:
     case ToxFile::BROKEN: //TODO: ?
+        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no_2x.png"));
+        ui->topButton->setObjectName("cancel");
+
+        if(fileInfo.direction == ToxFile::SENDING)
+        {
+            ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause_2x.png"));
+            ui->bottomButton->setObjectName("pause");
+        }
+        else
+        {
+            ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/yes_2x.png"));
+            ui->bottomButton->setObjectName("accept");
+        }
         break;
     }
 }
@@ -217,7 +246,31 @@ void FileTransferWidget::handleButton(QPushButton *btn)
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
         if(btn->objectName() == "resume")
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
+        if(btn->objectName() == "accept")
+        {
+            QString path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(fileInfo.fileName));
+
+            if(!QFileInfo(QDir(path).path()).isWritable())
+            {
+                QMessageBox::warning(0,
+                                     tr("Location not writable","Title of permissions popup"),
+                                     tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+
+                return;
+            }
+
+            if(!path.isEmpty())
+                Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, path);
+        }
     }
+}
+
+void FileTransferWidget::showPreview(const QString &filename)
+{
+    //QPixmap pmap = QPixmap(filename).scaled(QSize(ui->previewLabel->maximumWidth(), maximumHeight()), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QPixmap pmap = QPixmap(filename).scaledToWidth(ui->previewLabel->maximumWidth(), Qt::SmoothTransformation);
+    ui->previewLabel->setPixmap(pmap);
+    ui->previewLabel->show();
 }
 
 void FileTransferWidget::on_topButton_clicked()

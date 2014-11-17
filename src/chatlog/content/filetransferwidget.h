@@ -48,6 +48,7 @@ protected:
     void hideWidgets();
     void setupButtons();
     void handleButton(QPushButton* btn);
+    void showPreview(const QString& filename);
 
 private slots:
     void on_topButton_clicked();

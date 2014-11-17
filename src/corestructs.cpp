@@ -14,7 +14,7 @@ ToxFile::ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePat
 
 bool ToxFile::operator==(const ToxFile &other) const
 {
-    return fileNum == other.fileNum && friendId && other.friendId;
+    return (fileNum == other.fileNum) && (friendId == other.friendId) && (direction == other.direction);
 }
 
 bool ToxFile::operator!=(const ToxFile &other) const

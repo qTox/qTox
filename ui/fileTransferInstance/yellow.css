@@ -1,0 +1,27 @@
+QFrame {
+	border-image: url(:/ui/fileTransferInstance/background_yellow.png);
+	border-left:25;padding-top:-30;
+	border-top:28;
+	border-right:25; padding-right:-28;
+	border-bottom:28;padding-bottom:-30;
+}
+
+QLabel {
+	color:black;
+}
+
+QPushButton {
+	margin:0;
+} 
+
+QProgressBar {
+	border: 2px solid black;
+	border-radius: 0px;
+	color: white;
+	background-color:white;
+}
+
+QProgressBar::chunk {
+	background-color: black;
+	width: 20px;
+}
