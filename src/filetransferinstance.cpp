@@ -212,7 +212,7 @@ void FileTransferInstance::acceptRecvRequest()
 {
     QString path = Settings::getInstance().getAutoAcceptDir(FriendList::findFriend(friendId)->getToxID());
     
-    if (path.isEmpty())
+    if (path.isEmpty() && Settings::getInstance().getAutoSaveEnabled())
         path = Settings::getInstance().getGlobalAutoAcceptDir();
     
     if (!path.isEmpty())
