@@ -21,14 +21,15 @@ template <class T> class QList;
 template <class A, class B> class QHash;
 struct Friend;
 class QString;
+struct ToxID;
 
 class FriendList
 {
 public:
     FriendList();
-    static Friend* addFriend(int friendId, const QString& userId);
+    static Friend* addFriend(int friendId, const ToxID &userId);
     static Friend* findFriend(int friendId);
-    static Friend* findFriend(QString userId);
+    static Friend* findFriend(const ToxID &userId);
     static QList<Friend*> getAllFriends();
     static void removeFriend(int friendId, bool fake = false);
     static void clear();

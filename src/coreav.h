@@ -34,7 +34,7 @@ struct ToxGroupCall
     ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer;
     int groupId;
-    bool active;
+    bool active = false;
     bool muteMic;
     bool muteVol;
     QHash<int, ALuint> alSources;

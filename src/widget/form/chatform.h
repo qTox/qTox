@@ -36,6 +36,7 @@ public:
     ChatForm(Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(QString newMessage);
+    void loadHistory(QDateTime since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
 
@@ -85,7 +86,6 @@ private slots:
     void updateTime();    
 
 protected:
-    void loadHistory(QDateTime since, bool processUndelivered = false);
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);

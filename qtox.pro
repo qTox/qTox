@@ -154,7 +154,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/toxsave.h \
     src/autoupdate.h \
     src/misc/serialize.h \
-    src/widget/form/settings/advancedform.h
+    src/widget/form/settings/advancedform.h \
+    src/audio.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -220,4 +221,5 @@ SOURCES += \
     src/widget/toxsave.cpp \    
     src/autoupdate.cpp \
     src/misc/serialize.cpp \
-    src/widget/form/settings/advancedform.cpp
+    src/widget/form/settings/advancedform.cpp \
+    src/audio.cpp

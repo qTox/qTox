@@ -336,7 +336,7 @@ MessageActionPtr GenericChatForm::genMessageActionAction(const QString &author, 
     if (isAction)
     {
         previousId = ToxID(); // next msg has a name regardless
-        return MessageActionPtr(new ActionAction (getElidedName(author), message, date, isMe));
+        return MessageActionPtr(new ActionAction (author, message, date, isMe));
     }
 
     MessageActionPtr res;
@@ -364,7 +364,7 @@ MessageActionPtr GenericChatForm::genMessageActionAction(const ToxID& author, QS
     if (isMe)
         authorStr = core->getUsername();
     else {
-        Friend *f = FriendList::findFriend(author.publicKey);
+        Friend *f = FriendList::findFriend(author);
         if (f)
             authorStr = f->getDisplayedName();
         else

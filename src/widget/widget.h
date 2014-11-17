@@ -79,6 +79,7 @@ public:
 
 public slots:
     void onSettingsClicked();
+    void setWindowTitle(const QString& title);
 
 signals:
     void friendRequestAccepted(const QString& userId);
