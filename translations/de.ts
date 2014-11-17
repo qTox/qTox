@@ -1290,29 +1290,29 @@ It will be installed when qTox restarts.</source>
         <location filename="../src/widget/toxsave.cpp" line="70"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished"></translation>
+        <translation type=Profil existiert bereits></translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="71"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished"></translation>
+        <translation type=Ein Profil mit dem Namen &quot;%1&quot; existiert bereits. Wollen Sie es löschen??></translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="77"/>
         <source>Profile imported</source>
-        <translation type="unfinished"></translation>
+        <translation type=Profil importiert></translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="77"/>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished"></translation>
+        <translation type=%1.tox wurde erfolgreich importiert></translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="70"/>
         <source>Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished">Lass uns Toxen!</translation>
+        <translation type=Lass uns Toxen!></translation>
     </message>
 </context>
 <context>
@@ -1328,12 +1328,12 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="23"/>
         <source>Type Password</source>
-        <translation type="unfinished"></translation>
+        <translation type=Passwort eingeben></translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="37"/>
         <source>Repeat Password</source>
-        <translation type="unfinished"></translation>
+        <translation type=Passworteingabe wiederholen></translation>
     </message>
 </context>
 <context>
@@ -1341,27 +1341,27 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>User Settings</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="vanished">Einstellungen</translation>
+        <translation type=Einstellungen></translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Username/nick</comment>
-        <translation type="vanished">Benutzername</translation>
+        <translation type=Benutzername></translation>
     </message>
     <message>
         <source>Status</source>
         <comment>Status message</comment>
-        <translation type="vanished">Status</translation>
+        <translation type=Status></translation>
     </message>
     <message>
         <source>Test video</source>
         <comment>Text on a button to test the video/webcam</comment>
-        <translation type="vanished">Video testen</translation>
+        <translation type=Testvideo</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
-        <translation type="vanished">IPv6 aktivieren (empfohlen)</translation>
+        <translation type=IPv6 aktivieren (empfohlen)></translation>
     </message>
 </context>
 <context>
@@ -1376,13 +1376,13 @@ It will be installed when qTox restarts.</source>
         <location filename="../src/toxdns.cpp" line="70"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="unfinished"></translation>
+        <translation type=Diese Adresse existiert nicht></translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="75"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="unfinished">Fehler beim Auflösen des DNS</translation>
+        <translation type=Fehler beim Auflösen des DNS></translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="82"/>
@@ -1394,7 +1394,7 @@ It will be installed when qTox restarts.</source>
         <location filename="../src/toxdns.cpp" line="89"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
-        <translation type="unfinished">Unerwartete Anzahl von Werten innerhalb des Texteintrages</translation>
+        <translation type=Unerwartete Anzahl von Werten innerhalb des Texteintrages></translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="116"/>
@@ -1406,14 +1406,14 @@ It will be installed when qTox restarts.</source>
         <location filename="../src/toxdns.cpp" line="126"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation type="unfinished">Der DNS Eintrag enthält keine gültige TOX ID</translation>
+        <translation type=Der DNS Eintrag enthält keine gültige TOX ID></translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="133"/>
         <location filename="../src/toxdns.cpp" line="140"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation type="unfinished">Der DNS Eintrag enthält keine gültige TOX ID</translation>
+        <translation type=Der DNS Eintrag enthält keine gültige TOX ID></translation>
     </message>
 </context>
 <context>
@@ -1422,22 +1422,22 @@ It will be installed when qTox restarts.</source>
         <location filename="../src/widget/toxuri.cpp" line="80"/>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation type="unfinished"></translation>
+        <translation type=Einen Freund hinzufügen></translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="82"/>
         <source>Do you want to add %1 as a friend ?</source>
-        <translation type="unfinished"></translation>
+        <translation type=Wollen Sie %1 als Freund hinzufügen?></translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="83"/>
         <source>User ID:</source>
-        <translation type="unfinished">Benutzer ID:</translation>
+        <translation type=Benutzer ID:></translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="87"/>
         <source>Friend request message:</source>
-        <translation type="unfinished">Nachricht</translation>
+        <translation type=Nachricht></translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="92"/>
@@ -1477,17 +1477,17 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/widget/widget.cpp" line="75"/>
         <source>Online</source>
-        <translation type="unfinished">Online</translation>
+        <translation type=Online></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="78"/>
         <source>Away</source>
-        <translation type="unfinished">Abwesend</translation>
+        <translation type=Abwesend></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="81"/>
         <source>Busy</source>
-        <translation type="unfinished">Beschäftigt</translation>
+        <translation type=Beschäftigt></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="84"/>
@@ -1497,30 +1497,30 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/widget/widget.cpp" line="87"/>
         <source>Change status to:</source>
-        <translation type="unfinished"></translation>
+        <translation type=Ändere den Status zu:></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="161"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished">Online</translation>
+        <translation type=Online></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="163"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished">Abwesend</translation>
+        <translation type=Abwesend></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="165"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished">Beschäftigt</translation>
+        <translation type=Beschäftigt></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="398"/>
         <source>Choose a profile</source>
-        <translation type="unfinished"></translation>
+        <translation type=Wähle ein Profil></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="399"/>
@@ -1530,29 +1530,29 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/widget/widget.cpp" line="420"/>
         <source>Choose a profile picture</source>
-        <translation type="unfinished"></translation>
+        <translation type=Wähle ein Profilbild></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="427"/>
         <location filename="../src/widget/widget.cpp" line="434"/>
         <location filename="../src/widget/widget.cpp" line="455"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type=Fehler></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="427"/>
         <source>Unable to open this file</source>
-        <translation type="unfinished"></translation>
+        <translation type=Kann diese Datei nicht öffnen></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="434"/>
         <source>Unable to read this image</source>
-        <translation type="unfinished"></translation>
+        <translation type=Kann dieses Bild nicht lesen></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="455"/>
         <source>This image is too big</source>
-        <translation type="unfinished"></translation>
+        <translation type=Dieses Bild ist zu groß></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="482"/>
@@ -1568,17 +1568,17 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/widget/widget.cpp" line="531"/>
         <source>Add friend</source>
-        <translation type="unfinished"></translation>
+        <translation type=Freund hinzufügen></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="543"/>
         <source>File transfers</source>
-        <translation type="unfinished"></translation>
+        <translation type=Dateiübertragungen></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="568"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type=Einstellungen></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="667"/>
@@ -1589,37 +1589,37 @@ It will be installed when qTox restarts.</source>
         <location filename="../src/widget/widget.cpp" line="695"/>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation type=abwesend></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="697"/>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation type=beschäftigt></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="699"/>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation type="Offline></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="701"/>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation type=Online></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="704"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation type=%1 ist nun %2></translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="938"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation type="unfinished">&lt;Unbekannt&gt;</translation>
+        <translation type=&lt;Unbekannt&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="961"/>
@@ -1629,7 +1629,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/widget/widget.cpp" line="1110"/>
         <source>Message failed to send</source>
-        <translation type="unfinished"></translation>
+        <translation type=Senden der Nachricht fehlgeschlagen></translation>
     </message>
 </context>
 </TS>
