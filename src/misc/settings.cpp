@@ -98,13 +98,14 @@ void Settings::load()
 
     friendLst.clear();
     s.beginGroup("Friends");
-        int size = s.beginReadArray("fullAddresses");
+        int size = s.beginReadArray("Friend");
         for (int i = 0; i < size; i ++)
         {
             s.setArrayIndex(i);
             friendProp fp;
             fp.addr = s.value("addr").toString();
             fp.alias = s.value("alias").toString();
+            fp.autoAcceptDir = s.value("autoAcceptDir").toString();
             friendLst[ToxID::fromString(fp.addr).publicKey] = fp;
         }
         s.endArray();
@@ -126,6 +127,10 @@ void Settings::load()
         checkUpdates = s.value("checkUpdates", false).toBool();
         showInFront = s.value("showInFront", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
+        autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
+        globalAutoAcceptDir = s.value("globalAutoAcceptDir",
+                                      QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
+                                      ).toString();
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -176,16 +181,6 @@ void Settings::load()
         enableLogging = s.value("enableLogging", false).toBool();
         encryptLogs = s.value("encryptLogs", false).toBool();
         encryptTox = s.value("encryptTox", false).toBool();
-    s.endGroup();
-
-    s.beginGroup("AutoAccept");
-        autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
-        globalAutoAcceptDir = s.value("globalAutoAcceptDir",
-                                      QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
-                                      ).toString();
-        
-        for (auto& key : s.childKeys())
-            autoAccept[key] = s.value(key).toString();
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -244,13 +239,14 @@ void Settings::save(QString path)
     s.endGroup();
 
     s.beginGroup("Friends");
-        s.beginWriteArray("fullAddresses", friendLst.size());
+        s.beginWriteArray("Friend", friendLst.size());
         int index = 0;
         for (auto &frnd : friendLst)
         {
             s.setArrayIndex(index);
             s.setValue("addr", frnd.addr);
             s.setValue("alias", frnd.alias);
+            s.setValue("autoAcceptDir", frnd.autoAcceptDir);
             index++;
         }
         s.endArray();
@@ -272,6 +268,8 @@ void Settings::save(QString path)
         s.setValue("checkUpdates", checkUpdates);
         s.setValue("showInFront", showInFront);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
+        s.setValue("autoSaveEnabled", autoSaveEnabled);
+        s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -314,13 +312,6 @@ void Settings::save(QString path)
         s.setValue("enableLogging", enableLogging);
         s.setValue("encryptLogs", encryptLogs);
         s.setValue("encryptTox", encryptTox);
-    s.endGroup();
-
-    s.beginGroup("AutoAccept");
-        s.setValue("autoSaveEnabled", autoSaveEnabled);  
-        s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
-        for (auto& id : autoAccept.keys())
-            s.setValue(id, autoAccept.value(id));
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -634,17 +625,31 @@ void Settings::setAutoAwayTime(int newValue)
     autoAwayTime = newValue;
 }
 
-QString Settings::getAutoAcceptDir(const QString& id) const
+QString Settings::getAutoAcceptDir(const ToxID& id) const
 {
-    return autoAccept.value(id.left(TOX_ID_PUBLIC_KEY_LENGTH));
+    QString key = id.publicKey;
+
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+    {
+        return it->autoAcceptDir;
+    }
+
+    return QString();
 }
 
-void Settings::setAutoAcceptDir(const QString& id, const QString& dir)
+void Settings::setAutoAcceptDir(const ToxID &id, const QString& dir)
 {
-    if (dir.isEmpty())
-        autoAccept.remove(id.left(TOX_ID_PUBLIC_KEY_LENGTH));
-    else
-        autoAccept[id.left(TOX_ID_PUBLIC_KEY_LENGTH)] = dir;
+    QString key = id.publicKey;
+
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+    {
+        it->autoAcceptDir = dir;
+    } else {
+        updateFriendAdress(id.toString());
+        setAutoAcceptDir(id, dir);
+    }
 }
 
 QString Settings::getGlobalAutoAcceptDir() const
@@ -865,6 +870,7 @@ void Settings::updateFriendAdress(const QString &newAddr)
         friendProp fp;
         fp.addr = newAddr;
         fp.alias = "";
+        fp.autoAcceptDir = "";
         friendLst[newAddr] = fp;
     }
 }
@@ -892,6 +898,7 @@ void Settings::setFriendAlias(const ToxID &id, const QString &alias)
         friendProp fp;
         fp.addr = key;
         fp.alias = alias;
+        fp.autoAcceptDir = "";
         friendLst[key] = fp;
     }
 }

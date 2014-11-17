@@ -164,8 +164,8 @@ public:
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
-    QString getAutoAcceptDir(const QString& id) const;
-    void setAutoAcceptDir(const QString&id, const QString& dir);
+    QString getAutoAcceptDir(const ToxID& id) const;
+    void setAutoAcceptDir(const ToxID&id, const QString& dir);
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
@@ -295,6 +295,7 @@ private:
     {
         QString alias;
         QString addr;
+        QString autoAcceptDir;
     };
 
     QHash<QString, friendProp> friendLst;

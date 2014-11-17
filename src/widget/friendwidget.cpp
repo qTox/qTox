@@ -49,7 +49,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
-    QString id = Core::getInstance()->getFriendAddress(friendId);
+    ToxID id = FriendList::findFriend(friendId)->getToxID();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
