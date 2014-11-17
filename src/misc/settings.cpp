@@ -29,6 +29,13 @@
 #include <QList>
 #include <QStyleFactory>
 
+
+#ifdef Q_OS_LINUX
+#define SHOW_SYSTEM_TRAY_DEFAULT (bool) false
+#else   // OS is not linux
+#define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
+#endif
+
 const QString Settings::FILENAME = "settings.ini";
 bool Settings::makeToxPortable{false};
 
@@ -114,7 +121,7 @@ void Settings::load()
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
         translation = s.value("translation", "en").toString();
-        showSystemTray = s.value("showSystemTray", false).toBool();
+        showSystemTray = s.value("showSystemTray", SHOW_SYSTEM_TRAY_DEFAULT).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();        
