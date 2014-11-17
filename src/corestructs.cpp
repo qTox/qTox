@@ -12,6 +12,16 @@ ToxFile::ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePat
 {
 }
 
+bool ToxFile::operator==(const ToxFile &other) const
+{
+    return fileNum == other.fileNum && friendId && other.friendId;
+}
+
+bool ToxFile::operator!=(const ToxFile &other) const
+{
+    return !(*this == other);
+}
+
 void ToxFile::setFilePath(QString path)
 {
     filePath=path;

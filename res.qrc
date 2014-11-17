@@ -94,7 +94,14 @@
         <file>translations/fr.qm</file>
         <file>translations/ru.qm</file>
         <file>ui/fileTransferWidget/fileTransferWidget.css</file>
+	<file>ui/fileTransferInstance/red.css</file>
+	<file>ui/fileTransferInstance/green.css</file>
+	<file>ui/fileTransferInstance/grey.css</file>
+	<file>ui/fileTransferInstance/yellow.css</file>
 	<file>ui/fileTransferInstance/background_red.png</file>
+	<file>ui/fileTransferInstance/background_yellow.png</file>
+	<file>ui/fileTransferInstance/background_green.png</file>
+	<file>ui/fileTransferInstance/background_grey.png</file>
 	<file>ui/fileTransferInstance/pause_2x.png</file>
 	<file>ui/fileTransferInstance/no_2x.png</file>
 	<file>ui/fileTransferInstance/yes_2x.png</file>

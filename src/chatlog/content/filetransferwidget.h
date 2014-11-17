@@ -18,12 +18,15 @@
 #define FILETRANSFERWIDGET_H
 
 #include <QWidget>
+#include <QTime>
 #include "../chatlinecontent.h"
 #include "../../corestructs.h"
 
 namespace Ui {
 class FileTransferWidget;
 }
+
+class QPushButton;
 
 class FileTransferWidget : public QWidget
 {
@@ -34,11 +37,27 @@ public:
     virtual ~FileTransferWidget();
 
 protected slots:
-    void onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction);
+    void onFileTransferInfo(ToxFile file);
+    void onFileTransferAccepted(ToxFile file);
+    void onFileTransferCancelled(ToxFile file);
+    void onFileTransferPaused(ToxFile file);
+    void onFileTransferFinished(ToxFile file);
+
+protected:
+    QString getHumanReadableSize(qint64 size);
+    void hideWidgets();
+    void setupButtons();
+    void handleButton(QPushButton* btn);
+
+private slots:
+    void on_topButton_clicked();
+    void on_bottomButton_clicked();
 
 private:
     Ui::FileTransferWidget *ui;
     ToxFile fileInfo;
+    QTime lastTick;
+    qint64 lastBytesSent = 0;
 
 };
 

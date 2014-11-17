@@ -18,6 +18,7 @@
 #include "ui_filetransferwidget.h"
 
 #include "src/core.h"
+#include "src/misc/style.h"
 
 #include <QMouseEvent>
 #include <QDebug>
@@ -26,15 +27,28 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     : QWidget(parent)
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
+    , lastTick(QTime::currentTime())
 {
     ui->setupUi(this);
 
     ui->filenameLabel->setText(file.fileName);
     ui->progressBar->setValue(0);
+    ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
+    ui->progressLabel->setText("0%");
+    ui->etaLabel->setText("--:--");
+
+    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
+    Style::repolish(this);
 
     connect(Core::getInstance(), &Core::fileTransferInfo, this, &FileTransferWidget::onFileTransferInfo);
+    connect(Core::getInstance(), &Core::fileTransferAccepted, this, &FileTransferWidget::onFileTransferAccepted);
+    connect(Core::getInstance(), &Core::fileTransferCancelled, this, &FileTransferWidget::onFileTransferCancelled);
+    connect(Core::getInstance(), &Core::fileTransferPaused, this, &FileTransferWidget::onFileTransferPaused);
+    connect(Core::getInstance(), &Core::fileTransferFinished, this, &FileTransferWidget::onFileTransferFinished);
 
-    setFixedHeight(100);
+    setupButtons();
+
+    setFixedHeight(85);
 }
 
 FileTransferWidget::~FileTransferWidget()
@@ -42,12 +56,176 @@ FileTransferWidget::~FileTransferWidget()
     delete ui;
 }
 
-void FileTransferWidget::onFileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction)
+void FileTransferWidget::onFileTransferInfo(ToxFile file)
 {
-    if(FileNum != fileInfo.fileNum)
+    if(fileInfo != file)
         return;
 
+    fileInfo = file;
+
     // update progress
-    qreal progress = static_cast<qreal>(Filesize)/static_cast<qreal>(BytesSent);
+    qreal progress = static_cast<qreal>(file.bytesSent) / static_cast<qreal>(file.filesize);
     ui->progressBar->setValue(static_cast<int>(progress * 100.0));
+
+    // eta, speed
+    QTime now = QTime::currentTime();
+    qreal deltaSecs = lastTick.msecsTo(now) / 1000.0;
+
+    if(deltaSecs >= 1.0)
+    {
+        qint64 deltaBytes = file.bytesSent - lastBytesSent;
+        qint64 bytesPerSec = static_cast<int>(static_cast<qreal>(deltaBytes) / deltaSecs);
+
+        if(bytesPerSec > 0)
+        {
+            QTime toGo(0,0,file.filesize / bytesPerSec);
+            ui->etaLabel->setText(toGo.toString("mm:ss"));
+        }
+        else
+        {
+            ui->etaLabel->setText("--:--");
+        }
+
+        ui->progressLabel->setText(getHumanReadableSize(bytesPerSec) + "/s");
+
+        lastTick = now;
+        lastBytesSent = file.bytesSent;
+    }
+
+    setupButtons();
+
+    repaint();
+}
+
+void FileTransferWidget::onFileTransferAccepted(ToxFile file)
+{
+    if(fileInfo != file)
+        return;
+
+    fileInfo = file;
+
+    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/yellow.css"));
+    Style::repolish(this);
+
+    setupButtons();
+}
+
+void FileTransferWidget::onFileTransferCancelled(ToxFile file)
+{
+    if(fileInfo != file)
+        return;
+
+    fileInfo = file;
+
+    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/red.css"));
+    Style::repolish(this);
+
+    setupButtons();
+    hideWidgets();
+
+    disconnect(Core::getInstance());
+}
+
+void FileTransferWidget::onFileTransferPaused(ToxFile file)
+{
+    if(fileInfo != file)
+        return;
+
+    fileInfo = file;
+
+    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
+    Style::repolish(this);
+
+    setupButtons();
+}
+
+void FileTransferWidget::onFileTransferFinished(ToxFile file)
+{
+    if(fileInfo != file)
+        return;
+
+    fileInfo = file;
+
+    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/green.css"));
+    Style::repolish(this);
+
+    setupButtons();
+    hideWidgets();
+
+    disconnect(Core::getInstance());
+}
+
+QString FileTransferWidget::getHumanReadableSize(qint64 size)
+{
+    static const char* suffix[] = {"B","kiB","MiB","GiB","TiB"};
+    int exp = 0;
+
+    if (size > 0)
+        exp = std::min( (int) (log(size) / log(1024)), (int) (sizeof(suffix) / sizeof(suffix[0]) - 1));
+
+    return QString().setNum(size / pow(1024, exp),'f',2).append(suffix[exp]);
+}
+
+void FileTransferWidget::hideWidgets()
+{
+    ui->buttonWidget->hide();
+    ui->progressBar->hide();
+    ui->progressLabel->hide();
+    ui->etaLabel->hide();
+}
+
+void FileTransferWidget::setupButtons()
+{
+    switch(fileInfo.status)
+    {
+    case ToxFile::TRANSMITTING:
+        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no_2x.png"));
+        ui->topButton->setObjectName("cancel");
+
+        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause_2x.png"));
+        ui->bottomButton->setObjectName("pause");
+        break;
+    case ToxFile::PAUSED:
+        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no_2x.png"));
+        ui->topButton->setObjectName("cancel");
+
+        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white_2x.png"));
+        ui->bottomButton->setObjectName("resume");
+        break;
+    case ToxFile::STOPPED:
+    case ToxFile::BROKEN: //TODO: ?
+        break;
+    }
+}
+
+void FileTransferWidget::handleButton(QPushButton *btn)
+{
+    if(fileInfo.direction == ToxFile::SENDING)
+    {
+        if(btn->objectName() == "cancel")
+            Core::getInstance()->cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
+        if(btn->objectName() == "pause")
+            Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
+        if(btn->objectName() == "resume")
+            Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
+    }
+    else
+    {
+        if(btn->objectName() == "cancel")
+            Core::getInstance()->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
+        if(btn->objectName() == "pause")
+            Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
+        if(btn->objectName() == "resume")
+            Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
+    }
+}
+
+void FileTransferWidget::on_topButton_clicked()
+{
+    handleButton(ui->topButton);
+}
+
+void FileTransferWidget::on_bottomButton_clicked()
+{
+    handleButton(ui->bottomButton);
 }
