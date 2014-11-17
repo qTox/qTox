@@ -299,7 +299,6 @@ Widget::~Widget()
         delete g;
     GroupList::groupList.clear();
     delete trayMenu;
-    delete icon;
     delete ui;
     delete translator;
     instance = nullptr;
