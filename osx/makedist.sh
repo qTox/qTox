@@ -10,7 +10,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>
     <license file=\"$PWD/gplv3.rtf\"/>
     <welcome file=\"$PWD/welcome.txt\"/>
     <domains enable_currentUserHome=\"true\" enable_localSystem=\"false\" enable_anywhere=\"false\"/>
-    <options customize=\"never\" require-scripts=\"false\"/>
+    <options customize=\"never\" require-scripts=\"true\"/>
     <choices-outline>
         <line choice=\"default\">
             <line choice=\"im.tox.qtox\"/>
