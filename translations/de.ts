@@ -1443,7 +1443,7 @@ It will be installed when qTox restarts.</source>
         <location filename="../src/widget/toxuri.cpp" line="92"/>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation type="unfinished"</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="93"/>
