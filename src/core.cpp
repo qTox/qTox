@@ -482,7 +482,6 @@ void Core::onGroupInvite(Tox*, int friendnumber, uint8_t type, const uint8_t *da
 void Core::onGroupMessage(Tox*, int groupnumber, int peernumber, const uint8_t * message, uint16_t length, void *_core)
 {
     Core* core = static_cast<Core*>(_core);
-
     emit core->groupMessageReceived(groupnumber, peernumber, CString::toString(message, length), false);
 }
 
@@ -1239,7 +1238,9 @@ bool Core::loadConfiguration(QString path)
 
         if (salt.size() == 0)
         {   // maybe we should handle this better
-            qWarning() << "Core: history db isn't encrypted, but encryption is set!! No history loaded...";
+            Widget::getInstance()->showWarningMsgBox(tr("Encrypted History"), tr("No encrypted history file found.\nHistory will be disabled!"));
+            Settings::getInstance().setEncryptLogs(false);
+            Settings::getInstance().setEnableLogging(false);
         }
         else
         {

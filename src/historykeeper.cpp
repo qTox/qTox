@@ -132,9 +132,10 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
 
     setSyncType(Settings::getInstance().getDbSyncType());
 
+    messageID = 0;
     QSqlQuery sqlAnswer = db->exec("select seq from sqlite_sequence where name=\"history\";");
-    sqlAnswer.first();
-    messageID = sqlAnswer.value(0).toInt();
+    if (sqlAnswer.first())
+        messageID = sqlAnswer.value(0).toInt();
 }
 
 HistoryKeeper::~HistoryKeeper()
@@ -148,7 +149,7 @@ int HistoryKeeper::addChatEntry(const QString& chat, const QString& message, con
     int sender_id = getAliasID(sender);
 
     db->exec("BEGIN TRANSACTION;");
-    db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, message) ") +
+    db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, message)") +
              QString("VALUES (%1, %2, %3, '%4');")
              .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
     db->exec(QString("INSERT INTO sent_status (status) VALUES (%1);").arg(isSent));

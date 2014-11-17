@@ -24,8 +24,8 @@
 #include <QDebug>
 #include <QSqlError>
 
-qint64 EncryptedDb::plainChunkSize = 4096;
-qint64 EncryptedDb::encryptedChunkSize = EncryptedDb::plainChunkSize + tox_pass_encryption_extra_length();
+qint64 EncryptedDb::encryptedChunkSize = 4096;
+qint64 EncryptedDb::plainChunkSize = EncryptedDb::encryptedChunkSize - tox_pass_encryption_extra_length();
 
 EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
     PlainDb(":memory:", initList), fileName(fname)
@@ -65,7 +65,7 @@ EncryptedDb::~EncryptedDb()
 QSqlQuery EncryptedDb::exec(const QString &query)
 {
     QSqlQuery retQSqlQuery = PlainDb::exec(query);
-    if (query.startsWith("INSERT", Qt::CaseInsensitive))
+    if (checkCmd(query))
         appendToEncrypted(query);
 
     return retQSqlQuery;
@@ -100,31 +100,15 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
     for (auto ba_line : splittedBA)
     {
         QString line = QByteArray::fromBase64(ba_line);
-        if (line.size() == 0)
-            continue;
-
-        bool isGoodLine = false;
-        if (line.startsWith("CREATE", Qt::CaseInsensitive) || line.startsWith("INSERT", Qt::CaseInsensitive))
-        {
-            if (line.endsWith(");"))
-            {
-                sqlCmds.append(line);
-                isGoodLine = true;
-            }
-        }
-
-        if (!isGoodLine)
-        {
-            qWarning() << "Encrypted history log is corrupted: errors in content";
-            buf = QByteArray();
-            return false;
-        }
+        sqlCmds.append(line);
     }
 
+    PlainDb::exec("BEGIN TRANSACTION;");
     for (auto line : sqlCmds)
     {
         QSqlQuery r = PlainDb::exec(line);
     }
+    PlainDb::exec("COMMIT TRANSACTION;");
 
     dbFile.close();
 
@@ -183,4 +167,15 @@ bool EncryptedDb::check(const QString &fname)
 
     file.close();
     return state;
+}
+
+bool EncryptedDb::checkCmd(const QString &cmd)
+{
+    if (cmd.startsWith("INSERT", Qt::CaseInsensitive) || cmd.startsWith("UPDATE", Qt::CaseInsensitive)
+            || cmd.startsWith("DELETE", Qt::CaseInsensitive))
+    {
+        return true;
+    }
+
+    return false;
 }
