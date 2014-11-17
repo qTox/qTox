@@ -27,7 +27,7 @@ public:
     NetVideoSource();
 
     void pushFrame(VideoFrame frame);
-    void pushVPXFrame(vpx_image* image);
+    void pushVPXFrame(const vpx_image *image);
 
     virtual void subscribe() {}
     virtual void unsubscribe() {}
