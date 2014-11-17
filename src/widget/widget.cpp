@@ -959,6 +959,8 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
     g->setName(title);
     if (!author.isEmpty())
         g->chatForm->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), "silver", QDateTime::currentDateTime());
+
+    this->setWindowTitle(title + " - qTox");
 }
 
 void Widget::removeGroup(Group* g, bool fake)
