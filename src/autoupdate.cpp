@@ -393,7 +393,7 @@ void AutoUpdater::installLocalUpdate()
     // Workaround QTBUG-7645
     // QProcess fails silently when elevation is required instead of showing a UAC prompt on Win7/Vista
 #ifdef Q_OS_WIN
-    int result = (int)::ShellExecuteA(0, "open", updaterBin.toUtf8().constData(), 0, 0, SW_SHOWNORMAL);
+    HINSTANCE result = (int)::ShellExecuteA(0, "open", updaterBin.toUtf8().constData(), 0, 0, SW_SHOWNORMAL);
     if (SE_ERR_ACCESSDENIED == result)
     {
         // Requesting elevation
