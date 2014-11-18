@@ -295,7 +295,7 @@ private:
     static const int videobufsize;
     static uint8_t* videobuf;
 
-    static QThread *coreThread;
+    static QThread *coreThread, *audioThread;
 };
 
 #endif // CORE_HPP

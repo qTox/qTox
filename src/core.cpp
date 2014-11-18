@@ -56,6 +56,9 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
 
     coreThread = CoreThread;
 
+    audioThread = new QThread();
+    audioThread->start();
+
     videobuf = new uint8_t[videobufsize];
 
     for (int i = 0; i < ptCounter; i++)

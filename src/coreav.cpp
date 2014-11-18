@@ -23,6 +23,7 @@
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
+QThread* Core::audioThread{nullptr};
 
 bool Core::anyActiveCalls()
 {
@@ -630,6 +631,7 @@ void Core::joinGroupCall(int groupId)
     groupCalls[groupId].sendAudioTimer->setSingleShot(true);
     connect(groupCalls[groupId].sendAudioTimer, &QTimer::timeout, [=](){sendGroupCallAudio(groupId,toxav);});
     groupCalls[groupId].sendAudioTimer->start();
+    groupCalls[groupId].sendAudioTimer->moveToThread(audioThread);
 }
 
 void Core::leaveGroupCall(int groupId)
@@ -640,6 +642,7 @@ void Core::leaveGroupCall(int groupId)
     groupCalls[groupId].sendAudioTimer->stop();
     groupCalls[groupId].alSources.clear();
     Audio::unsuscribeInput();
+    delete groupCalls[groupId].sendAudioTimer;
 }
 
 void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
