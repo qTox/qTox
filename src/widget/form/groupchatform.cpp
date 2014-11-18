@@ -52,7 +52,6 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     }
 
     nameLabel->setText(group->widget->getName());
-    nameLabel->setEditable(true);
 
     nusersLabel->setFont(Style::getFont(Style::Medium));
     nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));

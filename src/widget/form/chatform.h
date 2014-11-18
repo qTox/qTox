@@ -49,6 +49,7 @@ signals:
     void cancelCall(int callId, int friendId);
     void micMuteToggle(int callId);
     void volMuteToggle(int callId);
+    void aliasChanged(const QString& alias);
 
 public slots:
     void deliverOfflineMsgs();

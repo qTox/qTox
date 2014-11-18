@@ -47,6 +47,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     nameLabel = new CroppingLabel();
     nameLabel->setObjectName("nameLabel");
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
+    nameLabel->setEditable(true);
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     QHBoxLayout *headLayout = new QHBoxLayout(), *mainFootLayout = new QHBoxLayout();

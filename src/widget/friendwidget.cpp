@@ -218,6 +218,18 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
     }
 }
 
+void FriendWidget::setAlias(const QString& _alias)
+{
+    QString alias = _alias.trimmed();
+    alias.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]")); // we should really treat regular names this way as well (*ahem* zetok)
+    alias = alias.left(128); // same as TOX_MAX_NAME_LENGTH
+    Friend* f = FriendList::findFriend(friendId);
+    f->setAlias(alias);
+    Settings::getInstance().setFriendAlias(f->getToxID(), alias);
+    hide();
+    show();
+}
+
 void FriendWidget::setFriendAlias()
 {
     bool ok;
@@ -227,13 +239,5 @@ void FriendWidget::setFriendAlias()
                                           f->getDisplayedName(), &ok);
 
     if (ok)
-    {
-        alias = alias.trimmed();
-        alias.remove(QRegExp("[\t\n\v\f\r]"));
-        alias = alias.left(128); // same as TOX_MAX_NAME_LENGTH
-        f->setAlias(alias);
-        Settings::getInstance().setFriendAlias(f->getToxID(), alias);
-        hide();
-        show();
-    }
+        setAlias(alias);
 }
