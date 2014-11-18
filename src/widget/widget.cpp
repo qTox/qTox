@@ -466,11 +466,24 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 void Widget::onConnected()
 {
     ui->statusButton->setEnabled(true);
-    emit statusSet(Status::Online);
+    if (beforeDisconnect == Status::Offline)
+        emit statusSet(Status::Online);
+    else
+        emit statusSet(beforeDisconnect);
 }
 
 void Widget::onDisconnected()
 {
+    QString stat = ui->statusButton->property("status").toString();
+    if      (stat == "online")
+        beforeDisconnect = Status::Online;
+    else if (stat == "busy")
+        beforeDisconnect = Status::Busy;
+    else if (stat == "away")
+        beforeDisconnect = Status::Away;
+    else
+        beforeDisconnect = Status::Offline;
+
     ui->statusButton->setEnabled(false);
     emit statusSet(Status::Offline);
 }
