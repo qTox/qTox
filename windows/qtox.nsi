@@ -249,21 +249,21 @@ Section "Install"
 	
 	${CreateDirectory} "bin"
 	${SetOutPath} "$INSTDIR\bin"
-	${File} "qTox-win32\*.*"
+	${File} "qtox\*.*"
 	
 	${CreateDirectory} "imageformats"
 	${SetOutPath} "$INSTDIR\bin\imageformats"
-	${File} "qTox-win32\imageformats\*.*"
+	${File} "qtox\imageformats\*.*"
 	${SetOutPath} "$INSTDIR\bin"
 	
 	${CreateDirectory} "platforms"
 	${SetOutPath} "$INSTDIR\bin\platforms"
-	${File} "qTox-win32\platforms\*.*"
+	${File} "qtox\platforms\*.*"
 	${SetOutPath} "$INSTDIR\bin"
 	
 	${CreateDirectory} "sqldrivers"
 	${SetOutPath} "$INSTDIR\bin\sqldrivers"
-	${File} "qTox-win32\sqldrivers\*.*"
+	${File} "qtox\sqldrivers\*.*"
 	${SetOutPath} "$INSTDIR\bin"
 
 	# Create shortcuts
