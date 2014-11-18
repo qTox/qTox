@@ -44,6 +44,7 @@ signals:
 public slots:
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
+    void setAlias(const QString& alias);
 
 protected:
     void mousePressEvent(QMouseEvent* ev);

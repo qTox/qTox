@@ -163,6 +163,7 @@ private:
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
+    Status beforeDisconnect = Status::Offline;
     QTimer* idleTimer;
     QTranslator* translator;
 };

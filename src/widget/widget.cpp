@@ -466,11 +466,24 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 void Widget::onConnected()
 {
     ui->statusButton->setEnabled(true);
-    emit statusSet(Status::Online);
+    if (beforeDisconnect == Status::Offline)
+        emit statusSet(Status::Online);
+    else
+        emit statusSet(beforeDisconnect);
 }
 
 void Widget::onDisconnected()
 {
+    QString stat = ui->statusButton->property("status").toString();
+    if      (stat == "online")
+        beforeDisconnect = Status::Online;
+    else if (stat == "busy")
+        beforeDisconnect = Status::Busy;
+    else if (stat == "away")
+        beforeDisconnect = Status::Away;
+    else
+        beforeDisconnect = Status::Offline;
+
     ui->statusButton->setEnabled(false);
     emit statusSet(Status::Offline);
 }
@@ -633,6 +646,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
     connect(newfriend->getChatForm(), SIGNAL(micMuteToggle(int)), core, SLOT(micMuteToggle(int)));
     connect(newfriend->getChatForm(), SIGNAL(volMuteToggle(int)), core, SLOT(volMuteToggle(int)));
+    connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
     connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
     connect(core, &Core::avStart, newfriend->getChatForm(), &ChatForm::onAvStart);
