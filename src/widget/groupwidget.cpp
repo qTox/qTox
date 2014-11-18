@@ -27,6 +27,7 @@
 #include <QContextMenuEvent>
 #include <QMimeData>
 #include <QDragEnterEvent>
+#include <QInputDialog>
 
 #include "ui_mainwindow.h"
 
@@ -51,10 +52,25 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
     QPoint pos = event->globalPos();
     QMenu menu;
     QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
+    QAction* setAlias = menu.addAction(tr("Set title..."));
 
     QAction* selectedItem = menu.exec(pos);
-    if (selectedItem == quitGroup)
-        emit removeGroup(groupId);
+    if (selectedItem)
+    {
+        if (selectedItem == quitGroup)
+            emit removeGroup(groupId);
+        else if (selectedItem == setAlias)
+        {
+            bool ok;
+            Group* g = GroupList::findGroup(groupId);
+
+            QString alias = QInputDialog::getText(nullptr, tr("Group title"), tr("You can also set this by clicking the chat form name.\nTitle:"), QLineEdit::Normal,
+                                          nameLabel->fullText(), &ok);
+
+            if (ok && alias != nameLabel->fullText())
+                emit g->chatForm->groupTitleChanged(groupId, alias.left(128));
+        }
+    }
 }
 
 void GroupWidget::onUserListChanged()

@@ -235,7 +235,7 @@ void FriendWidget::setFriendAlias()
     bool ok;
     Friend* f = FriendList::findFriend(friendId);
 
-    QString alias = QInputDialog::getText(nullptr, tr("User alias"), tr("Alias:"), QLineEdit::Normal,
+    QString alias = QInputDialog::getText(nullptr, tr("User alias"), tr("You can also set this by clicking the chat form name.\nAlias:"), QLineEdit::Normal,
                                           f->getDisplayedName(), &ok);
 
     if (ok)
