@@ -129,8 +129,9 @@ void CroppingLabel::hideTextEdit(bool acceptText)
 {
     if (acceptText)
     {
-        emit textChanged(textEdit->text(), origText);
-        setText(textEdit->text());
+        QString oldOrigText = origText;
+        setText(textEdit->text()); // set before emitting so we don't override external reactions to signal
+        emit textChanged(textEdit->text(), oldOrigText);
     }
 
     textEdit->hide();
