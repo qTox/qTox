@@ -20,8 +20,9 @@ qTox is a powerful Tox client that tries to follow the Tox design guidelines whi
 
 This client runs on Windows, Linux and Mac natively.<br/>
 
-<a href="https://github.com/tux3/qTox/releases/latest">Windows download</a><br/>
-<a href="https://dist-build.tox.im/qtox.dmg">Mac download </a><br/>
+<a href="http://207.12.89.155:8080/job/qTox-win64-nsis/lastSuccessfulBuild/artifact/setup-qtox64.exe">Windows 64 bit download</a><br/>
+<a href="http://207.12.89.155:8080/job/qTox-win32-nsis/lastSuccessfulBuild/artifact/setup-qtox32.exe">Windows 32 bit download (for older hardware)</a><br/>
+<a href="https://dist-build.tox.im/qtox.dmg">Mac OS X download </a><br/>
 <a href="https://jenkins.libtoxcore.so/job/qTox-linux-amd64/lastSuccessfulBuild/artifact/qt/qtox.xz">Linux binary download</a><br/>
 <a href="https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/job/qTox-Linux-pkg/lastSuccessfulBuild/artifact/">Linux packages</a><br/>
 
