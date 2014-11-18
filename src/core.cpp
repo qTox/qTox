@@ -337,6 +337,11 @@ void Core::bootstrapDht()
     QList<Settings::DhtServer> dhtServerList = s.getDhtServerList();
 
     int listSize = dhtServerList.size();
+    if (listSize == 0)
+    {
+        qDebug() << "Settings: no bootstrap list?!?";
+        return;
+    }
     static int j = qrand() % listSize;
 
     qDebug() << "Core: Bootstraping to the DHT ...";
