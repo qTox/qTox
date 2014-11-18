@@ -143,7 +143,6 @@ signals:
     void connected();
     void disconnected();
     void blockingClearContacts();
-    void blockingGetPassword(QString info, int passtype, uint8_t* salt = nullptr);
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);
@@ -264,6 +263,8 @@ private:
     bool checkConnection();
 
     bool loadConfiguration(QString path); // Returns false for a critical error, true otherwise
+    bool loadEncryptedSave(QByteArray& data);
+    void checkEncryptedHistory();
     void make_tox();
     void loadFriends();
 

@@ -1140,6 +1140,62 @@ QString Core::sanitize(QString name)
     return name;
 }
 
+bool Core::loadConfiguration(QString path)
+{
+    // setting the profile is now the responsibility of the caller
+    QFile configurationFile(path);
+    qDebug() << "Core::loadConfiguration: reading from " << path;
+
+    if (!configurationFile.exists()) {
+        qWarning() << "The Tox configuration file was not found";
+        return true;
+    }
+
+    if (!configurationFile.open(QIODevice::ReadOnly)) {
+        qCritical() << "File " << path << " cannot be opened";
+        return true;
+    }
+
+    qint64 fileSize = configurationFile.size();
+    if (fileSize > 0) {
+        QByteArray data = configurationFile.readAll();
+        int error = tox_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size());
+        if (error < 0)
+        {
+            qWarning() << "Core: tox_load failed with error "<< error;
+        }
+        else if (error == 1) // Encrypted data save
+        {
+            if (!loadEncryptedSave(data))
+            {
+                configurationFile.close();
+                return false;
+            }
+        }
+    }
+    configurationFile.close();
+
+    // set GUI with user and statusmsg
+    QString name = getUsername();
+    if (!name.isEmpty())
+        emit usernameSet(name);
+    
+    QString msg = getStatusMessage();
+    if (!msg.isEmpty())
+        emit statusMessageSet(msg);
+
+    QString id = getSelfId().toString();
+    if (!id.isEmpty())
+        emit idSet(id);
+
+    // tox core is already decrypted
+    if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
+        checkEncryptedHistory();
+
+    loadFriends();
+    return true;
+}
+
 void Core::saveConfiguration()
 {
     QString dir = Settings::getSettingsDirPath();
