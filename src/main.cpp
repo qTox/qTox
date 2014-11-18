@@ -93,21 +93,6 @@ int main(int argc, char *argv[])
     // Windows platform plugins DLL hell fix
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
     a.addLibraryPath("platforms");
-#ifdef Q_OS_OSX
-    QString startPath = a.applicationDirPath();
-    QDir pluginsDir(startPath);
-    pluginsDir.cdUp();
-    pluginsDir.cd("PlugIns");
-    a.addLibraryPath(pluginsDir.absolutePath());
-    pluginsDir.cd(startPath);
-    pluginsDir.cdUp();
-    pluginsDir.cd("Plugins");
-    a.addLibraryPath(pluginsDir.absolutePath());
-    pluginsDir.cd(startPath);
-    pluginsDir.cdUp();
-    pluginsDir.cd("plugins");
-    a.addLibraryPath(pluginsDir.absolutePath());
-#endif
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
