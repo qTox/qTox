@@ -183,6 +183,7 @@ SOURCES += \
     src/widget/groupwidget.cpp \
     src/widget/widget.cpp \
     src/core.cpp \
+    src/coreencryption.cpp \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \
