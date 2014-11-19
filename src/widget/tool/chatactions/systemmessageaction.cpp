@@ -25,5 +25,5 @@ SystemMessageAction::SystemMessageAction(const QString &message, const QString &
 
 QString SystemMessageAction::getMessage()
 {
-    return QString("<table width=100%><tr><td align=center><div class=" + type + ">" + message + "</td><tr></div></table>");
+    return QString("<table width=100%><tr><td align=center><div class=" + type + ">" + toHtmlChars(message) + "</td><tr></div></table>");
 }
