@@ -18,6 +18,8 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
+#include <QObject>
+#include <QHash>
 #include <atomic>
 
 #if defined(__APPLE__) && defined(__MACH__)
@@ -30,10 +32,17 @@
 
 class QString;
 class QByteArray;
+class QTimer;
+class QThread;
+struct Tox;
 
-class Audio
+class Audio : QObject
 {
+    Q_OBJECT
+
 public:
+    static Audio& getInstance(); ///< Returns the singleton's instance. Will construct on first call.
+
     static void suscribeInput(); ///< Call when you need to capture sound from the open input device.
     static void unsuscribeInput(); ///< Call once you don't need to capture on the open input device anymore.
 
@@ -45,15 +54,28 @@ public:
 
     static void playMono16Sound(const QByteArray& data); ///< Play a 44100Hz mono 16bit PCM sound
 
+    /// May be called from any thread, will always queue a call to playGroupAudio
+    /// The first and last argument are ignored, but allow direct compatibility with toxcore
+    static void playGroupAudioQueued(Tox*, int group, int peer, const int16_t* data,
+                        unsigned samples, uint8_t channels, unsigned sample_rate, void*);
+
+public slots:
+    /// Must be called from the audio thread, plays a group call's received audio
+    void playGroupAudio(int group, int peer, const int16_t* data,
+                        unsigned samples, uint8_t channels, unsigned sample_rate);
+
 public:
+    static QThread* audioThread;
     static ALCdevice* alOutDev, *alInDev;
     static ALCcontext* alContext;
     static ALuint alMainSource;
 
 private:
-    Audio();
+    explicit Audio()=default;
+    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
 
 private:
+    static Audio* instance;
     static std::atomic<int> userCount;
 };
 

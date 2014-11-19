@@ -187,6 +187,7 @@ void Widget::init()
     qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<uint16_t>("uint16_t");
+    qRegisterMetaType<const int16_t*>("const int16_t*");
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
     qRegisterMetaType<QPixmap>("QPixmap");
@@ -196,6 +197,7 @@ void Widget::init()
 
     QString profilePath = detectProfile();
     coreThread = new QThread(this);
+    coreThread->setObjectName("qTox Core");
     core = new Core(Camera::getInstance(), coreThread, profilePath);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);

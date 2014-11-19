@@ -23,7 +23,6 @@
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
-QThread* Core::audioThread{nullptr};
 
 bool Core::anyActiveCalls()
 {
@@ -590,22 +589,6 @@ VideoSource *Core::getVideoSourceFromCall(int callNumber)
     return &calls[callNumber].videoSource;
 }
 
-void Core::playGroupAudio(Tox* /*tox*/, int  groupnumber, int friendgroupnumber, const int16_t* out_audio,
-                unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* /*userdata*/)
-{
-    if (!groupCalls[groupnumber].active)
-        return;
-
-    if (groupCalls[groupnumber].muteVol)
-        return;
-
-    if (!groupCalls[groupnumber].alSources.contains(friendgroupnumber))
-        alGenSources(1, &groupCalls[groupnumber].alSources[friendgroupnumber]);
-
-    playAudioBuffer(groupCalls[groupnumber].alSources[friendgroupnumber], out_audio,
-                    out_audio_samples, decoder_channels, audio_sample_rate);
-}
-
 void Core::joinGroupCall(int groupId)
 {
     qDebug() << QString("Core: Joining group call %1").arg(groupId);
@@ -631,7 +614,6 @@ void Core::joinGroupCall(int groupId)
     groupCalls[groupId].sendAudioTimer->setSingleShot(true);
     connect(groupCalls[groupId].sendAudioTimer, &QTimer::timeout, [=](){sendGroupCallAudio(groupId,toxav);});
     groupCalls[groupId].sendAudioTimer->start();
-    groupCalls[groupId].sendAudioTimer->moveToThread(audioThread);
 }
 
 void Core::leaveGroupCall(int groupId)
