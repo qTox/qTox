@@ -743,8 +743,9 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
 
         // Show each messages
-        MessageActionPtr ca = genMessageActionAction(ToxID::fromString(it.sender), it.message, false, msgDateTime);
-        if (it.isSent)
+        ToxID msgSender = ToxID::fromString(it.sender);
+        MessageActionPtr ca = genMessageActionAction(msgSender, it.message, false, msgDateTime);
+        if (it.isSent || !msgSender.isMine())
         {
             ca->markAsSent();
         } else {
