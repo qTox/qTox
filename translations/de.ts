@@ -101,7 +101,7 @@
         <location filename="../src/widget/form/addfriendform.cpp" line="89"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Geben sie bitte eine gültige Tox ID ein</translation>
+        <translation>Geben Sie bitte eine gültige Tox ID ein</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="92"/>
@@ -364,7 +364,7 @@ Leeres Passwort.</translation>
         <source>Your history is encrypted with different password
 Do you want to try another password?</source>
         <translation>Ihre Historie wurde mit einem anderen Passwort verschlüsselt
-Wollen sie ein anderes probieren?</translation>
+Wollen Sie ein anderes probieren?</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1296"/>
@@ -405,7 +405,7 @@ Wollen sie ein anderes probieren?</translation>
         <location filename="../src/filetransferinstance.cpp" line="247"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Sie haben keine Erlaubnis, die Datei in diesen Ort zu speichern. Wählen sie einen anderen Ort oder beenden sIe den Dialog.</translation>
+        <translation>Sie haben keine Erlaubnis, die Datei in diesen Ort zu speichern. Wählen Sie einen anderen Ort oder beenden Sie den Dialog.</translation>
     </message>
     <message>
         <location filename="../src/filetransferinstance.cpp" line="423"/>
@@ -546,7 +546,7 @@ Wollen sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/generalform.cpp" line="223"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Wählen sie ein Verzeichnis</translation>
+        <translation>Wählen Sie ein Verzeichnis</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="280"/>
@@ -893,7 +893,7 @@ Wollen sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="152"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>rename confirm text</comment>
-        <translation>Ein Profil mit dem Namen &quot;%1&quot; existiert bereits. Wollen sie es löschen?</translation>
+        <translation>Ein Profil mit dem Namen &quot;%1&quot; existiert bereits. Wollen Sie es löschen?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="166"/>
@@ -937,7 +937,7 @@ Wollen sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="194"/>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
-        <translation>Dieses Profil ist aktuell in Gebrauch. Bitte laden sie vor dem Löschen ein anderes Profil.</translation>
+        <translation>Dieses Profil ist aktuell in Gebrauch. Bitte laden Sie vor dem Löschen ein anderes Profil.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="198"/>
@@ -949,7 +949,7 @@ Wollen sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Sind sie sicher, dass dasProfil gelöscht werden soll?</translation>
+        <translation>Sind Sie sicher, dass dasProfil gelöscht werden soll?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="211"/>
@@ -985,7 +985,7 @@ Wollen sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="231"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Ein Profil mit dem Namen &quot;%1&quot; existiert bereits. Wollen sie es löschen?</translation>
+        <translation>Ein Profil mit dem Namen &quot;%1&quot; existiert bereits. Wollen Sie es löschen?</translation>
     </message>
 </context>
 <context>
@@ -1298,7 +1298,7 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/widget/toxsave.cpp" line="71"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Ein Profil mit dem Namen &quot;%1&quot; existiert bereits. Wollen sie es löschen?</translation>
+        <translation>Ein Profil mit dem Namen &quot;%1&quot; existiert bereits. Wollen Sie es löschen?</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="77"/>
@@ -1429,7 +1429,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="82"/>
         <source>Do you want to add %1 as a friend ?</source>
-        <translation>Wollen sie %1 als Freund hinzufügen?</translation>
+        <translation>Wollen Sie %1 als Freund hinzufügen?</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="83"/>
@@ -1565,7 +1565,7 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/widget/widget.cpp" line="495"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>Tox startet mit ihren Proxy-Einstellungen nicht. qTox funktioniert nicht, ändern sie bitte ihre Einstellungen und starten qTox neu.</translation>
+        <translation>Tox startet mit ihren Proxy-Einstellungen nicht. qTox funktioniert nicht, ändern Sie bitte ihre Einstellungen und starten qTox neu.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="530"/>
