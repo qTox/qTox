@@ -115,6 +115,10 @@ void Widget::init()
     ui->statusbar->hide();
     ui->menubar->hide();
 
+    idleTimer = new QTimer();
+    idleTimer->setSingleShot(true);
+    setIdleTimer(Settings::getInstance().getAutoAwayTime());
+
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());
     restoreState(Settings::getInstance().getWindowState());
@@ -178,10 +182,6 @@ void Widget::init()
 
     Style::setThemeColor(Settings::getInstance().getThemeColor());
     Style::applyTheme();
-
-    idleTimer = new QTimer();
-    idleTimer->setSingleShot(true);
-    setIdleTimer(Settings::getInstance().getAutoAwayTime());
 
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<vpx_image>("vpx_image");
