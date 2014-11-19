@@ -250,8 +250,6 @@ private:
     static void onAvPeerTimeout(void* toxav, int32_t call_index, void* core);
     static void onAvMediaChange(void *toxav, int32_t call_index, void* core);
 
-    static void playGroupAudio(Tox* tox, int  groupnumber, int friendgroupnumber, const int16_t* out_audio,
-                unsigned out_audio_samples, uint8_t decoder_channels, unsigned audio_sample_rate, void* userdata);
     static void sendGroupCallAudio(int groupId, ToxAv* toxav);
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
@@ -295,7 +293,9 @@ private:
     static const int videobufsize;
     static uint8_t* videobuf;
 
-    static QThread *coreThread, *audioThread;
+    static QThread *coreThread;
+
+    friend class Audio; ///< Audio can access our calls directly to reduce latency
 };
 
 #endif // CORE_HPP

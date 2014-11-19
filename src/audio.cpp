@@ -19,12 +19,30 @@
 #include "src/core.h"
 
 #include <QDebug>
+#include <QThread>
+
+#include <cassert>
 
 std::atomic<int> Audio::userCount{0};
+Audio* Audio::instance{nullptr};
+QThread* Audio::audioThread{nullptr};
 ALCdevice* Audio::alInDev{nullptr};
 ALCdevice* Audio::alOutDev{nullptr};
-ALCcontext* Audio::alContext{0};
+ALCcontext* Audio::alContext{nullptr};
 ALuint Audio::alMainSource{0};
+
+Audio& Audio::getInstance()
+{
+    if (!instance)
+    {
+        instance = new Audio();
+        audioThread = new QThread(instance);
+        audioThread->setObjectName("qTox Audio");
+        audioThread->start();
+        instance->moveToThread(audioThread);
+    }
+    return *instance;
+}
 
 void Audio::suscribeInput()
 {
@@ -124,4 +142,65 @@ void Audio::playMono16Sound(const QByteArray& data)
     alSourcei(alMainSource, AL_BUFFER, buffer);
     alSourcePlay(alMainSource);
     alDeleteBuffers(1, &buffer);
+}
+
+void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
+                        unsigned samples, uint8_t channels, unsigned sample_rate,void*)
+{
+    QMetaObject::invokeMethod(instance, "playGroupAudio", Qt::BlockingQueuedConnection,
+                              Q_ARG(int,group), Q_ARG(int,peer), Q_ARG(const int16_t*,data),
+                              Q_ARG(unsigned,samples), Q_ARG(uint8_t,channels), Q_ARG(unsigned,sample_rate));
+}
+
+void Audio::playGroupAudio(int group, int peer, const int16_t* data,
+                           unsigned samples, uint8_t channels, unsigned sample_rate)
+{
+    assert(QThread::currentThread() == audioThread);
+
+    ToxGroupCall& call = Core::groupCalls[group];
+
+    if (!call.active || call.muteVol)
+        return;
+
+    if (!call.alSources.contains(peer))
+        alGenSources(1, &call.alSources[peer]);
+
+    playAudioBuffer(call.alSources[peer], data, samples, channels, sample_rate);
+}
+
+void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate)
+{
+    assert(channels == 1 || channels == 2);
+
+    ALuint bufid;
+    ALint processed = 0, queued = 16;
+    alGetSourcei(alSource, AL_BUFFERS_PROCESSED, &processed);
+    alGetSourcei(alSource, AL_BUFFERS_QUEUED, &queued);
+    alSourcei(alSource, AL_LOOPING, AL_FALSE);
+
+    if(processed)
+    {
+        ALuint bufids[processed];
+        alSourceUnqueueBuffers(alSource, processed, bufids);
+        alDeleteBuffers(processed - 1, bufids + 1);
+        bufid = bufids[0];
+    }
+    else if(queued < 16)
+    {
+        alGenBuffers(1, &bufid);
+    }
+    else
+    {
+        qDebug() << "Audio: Dropped frame";
+        return;
+    }
+
+    alBufferData(bufid, (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data,
+                    samples * 2 * channels, sampleRate);
+    alSourceQueueBuffers(alSource, 1, &bufid);
+
+    ALint state;
+    alGetSourcei(alSource, AL_SOURCE_STATE, &state);
+    if(state != AL_PLAYING)
+        alSourcePlay(alSource);
 }

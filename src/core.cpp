@@ -56,8 +56,7 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
 
     coreThread = CoreThread;
 
-    audioThread = new QThread();
-    audioThread->start();
+    Audio::getInstance();
 
     videobuf = new uint8_t[videobufsize];
 
@@ -1496,7 +1495,8 @@ int Core::joinGroupchat(int32_t friendnumber, uint8_t type, const uint8_t* frien
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendnumber);
-        return toxav_join_av_groupchat(tox, friendnumber, friend_group_public_key, length, playGroupAudio, const_cast<Core*>(this));
+        return toxav_join_av_groupchat(tox, friendnumber, friend_group_public_key, length,
+                                       &Audio::playGroupAudioQueued, const_cast<Core*>(this));
     }
     else
     {
@@ -1641,7 +1641,7 @@ void Core::createGroup(uint8_t type)
     }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
-        emit emptyGroupCreated(toxav_add_av_groupchat(tox, playGroupAudio, this));
+        emit emptyGroupCreated(toxav_add_av_groupchat(tox, &Audio::playGroupAudioQueued, this));
     }
     else
     {
