@@ -122,7 +122,7 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
 
         if (idCur != idMax)
         {
-            QString cmd = QString("INSERT INTO sent_status (id, status) VALUES (%1, 1)").arg(idMax);
+            QString cmd = QString("INSERT INTO sent_status (id, status) VALUES (%1, 1);").arg(idMax);
             db->exec(cmd);
         }
     }
@@ -147,12 +147,12 @@ int HistoryKeeper::addChatEntry(const QString& chat, const QString& message, con
     int chat_id = getChatID(chat, ctSingle).first;
     int sender_id = getAliasID(sender);
 
-    db->exec("BEGIN TRANSACTION");
-    db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, message)") +
+    db->exec("BEGIN TRANSACTION;");
+    db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, message) ") +
              QString("VALUES (%1, %2, %3, '%4');")
              .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
-    db->exec(QString("INSERT INTO sent_status (status) VALUES (%1)").arg(isSent));
-    db->exec("COMMIT TRANSACTION");
+    db->exec(QString("INSERT INTO sent_status (status) VALUES (%1);").arg(isSent));
+    db->exec("COMMIT TRANSACTION;");
 
     messageID++;
     return messageID;
