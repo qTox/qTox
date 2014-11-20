@@ -17,21 +17,22 @@
 #ifndef GROUPLIST_H
 #define GROUPLIST_H
 
-template <typename T>
-class QList;
+template <class A, class B> class QHash;
+template <class T> class QList;
 class Group;
 class QString;
 
 class GroupList
 {
 public:
-    GroupList();
     static Group* addGroup(int groupId, const QString& name, bool isAvGroupchat);
     static Group* findGroup(int groupId);
     static void removeGroup(int groupId, bool fake = false);
+    static QList<Group*> getAllGroups();
+    static void clear();
 
-public:
-    static QList<Group*> groupList;
+private:
+    static QHash<int, Group*> groupList;
 };
 
 #endif // GROUPLIST_H

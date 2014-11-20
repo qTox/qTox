@@ -56,7 +56,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
     QMap<QAction*, Group*> groupActions;
     
-    for (Group* group : GroupList::groupList)
+    for (Group* group : GroupList::getAllGroups())
     {
         QAction* groupAction = inviteMenu->addAction(group->widget->getName());
         groupActions[groupAction] =  group;

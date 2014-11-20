@@ -297,9 +297,7 @@ Widget::~Widget()
     delete filesForm;
 
     FriendList::clear();
-    for (Group* g : GroupList::groupList)
-        delete g;
-    GroupList::groupList.clear();
+    GroupList::clear();
     delete trayMenu;
     delete ui;
     delete translator;
@@ -878,7 +876,9 @@ void Widget::clearContactsList()
     QList<Friend*> friends = FriendList::getAllFriends();
     for (Friend* f : friends)
         removeFriend(f, true);
-    for (Group* g : GroupList::groupList)
+
+    QList<Group*> groups = GroupList::getAllGroups();
+    for (Group* g : groups)
         removeGroup(g, true);
 }
 
@@ -1213,6 +1213,6 @@ void Widget::reloadTheme()
     for (Friend* f : FriendList::getAllFriends())
         f->getFriendWidget()->reloadTheme();
 
-    for (Group* g : GroupList::groupList)
+    for (Group* g : GroupList::getAllGroups())
         g->widget->reloadTheme();
 }

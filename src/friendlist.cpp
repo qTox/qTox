@@ -61,6 +61,7 @@ void FriendList::clear()
 {
     for (auto friendptr : friendList)
         delete friendptr;
+    friendList.clear();
 }
 
 Friend* FriendList::findFriend(const ToxID& userId)
