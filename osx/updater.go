@@ -93,4 +93,5 @@ func main() {
 	os.RemoveAll(update_dir)
 	fmt.Println("Update metadata wiped, launching qTox")
 	launchqtox := exec.Command("/usr/bin/open", "-b", "im.tox.qtox")
+	launchqtox.Run()
 }
