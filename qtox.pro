@@ -32,7 +32,6 @@ FORMS    += \
     src/widget/form/settings/identitysettings.ui \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/loadhistorydialog.ui \
-    src/widget/form/inputpassworddialog.ui \
     src/widget/form/setpassworddialog.ui \
     src/widget/form/settings/advancedsettings.ui
     
@@ -153,7 +152,6 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/misc/db/genericddinterface.h \
     src/misc/db/plaindb.h \
     src/misc/db/encrypteddb.h \
-    src/widget/form/inputpassworddialog.h \
     src/widget/form/setpassworddialog.h \
     src/widget/form/tabcompleter.h \
     src/video/videoframe.h \
@@ -220,7 +218,6 @@ SOURCES += \
     src/misc/db/genericddinterface.cpp \
     src/misc/db/plaindb.cpp \
     src/misc/db/encrypteddb.cpp \
-    src/widget/form/inputpassworddialog.cpp \
     src/widget/form/setpassworddialog.cpp \
     src/video/netvideosource.cpp \
     src/widget/form/tabcompleter.cpp \

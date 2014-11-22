@@ -32,7 +32,6 @@
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
 #include "src/historykeeper.h"
-#include "form/inputpassworddialog.h"
 #include "src/autoupdate.h"
 #include "src/audio.h"
 #include "src/platform/timer.h"
@@ -1163,20 +1162,6 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
 
     if (result == -1)
         g->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
-}
-
-void Widget::getPassword(QString info, int passtype, uint8_t* salt)
-{
-    Core::PasswordType pt = static_cast<Core::PasswordType>(passtype);
-    InputPasswordDialog dialog(info);
-    if (dialog.exec())
-    {
-        QString pswd = dialog.getPassword();
-        if (pswd.isEmpty())
-            core->clearPassword(pt);
-        else
-            core->setPassword(pswd, pt, salt);
-    }
 }
 
 void Widget::onSetShowSystemTray(bool newValue){
