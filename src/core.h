@@ -53,6 +53,7 @@ public:
 
     int getGroupNumberPeers(int groupId) const; ///< Return the number of peers in the group chat on success, or -1 on failure
     QString getGroupPeerName(int groupId, int peerId) const; ///< Get the name of a peer of a group
+    ToxID getGroupPeerToxID(int groupId, int peerId) const; ///< Get the ToxID of a peer of a group
     QList<QString> getGroupPeerNames(int groupId) const; ///< Get the names of the peers of a group
     QString getFriendAddress(int friendNumber) const; ///< Get the full address if known, or Tox ID of a friend
     QString getFriendUsername(int friendNumber) const; ///< Get the username of a friend
@@ -160,7 +161,7 @@ signals:
 
     void emptyGroupCreated(int groupnumber);
     void groupInviteReceived(int friendnumber, uint8_t type, QByteArray publicKey);
-    void groupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction);
+    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
 

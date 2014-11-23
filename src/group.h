@@ -25,6 +25,7 @@
 struct Friend;
 class GroupWidget;
 class GroupChatForm;
+struct ToxID;
 
 class Group : public QObject
 {
@@ -54,10 +55,13 @@ public:
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name);
 
+    QString resolveToxID(const ToxID &id) const;
+
 private:
     GroupWidget* widget;
     GroupChatForm* chatForm;
     QMap<int, QString> peers;
+    QMap<QString, QString> toxids;
     int hasNewMessages, userWasMentioned;
     int groupId;
     int nPeers;

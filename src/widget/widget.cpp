@@ -910,19 +910,20 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
     }
 }
 
-void Widget::onGroupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction)
+void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction)
 {
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
         return;
 
+    ToxID author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
     QString name = core->getUsername();
 
-    bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
+    bool targeted = (!author.isMine()) && message.contains(name, Qt::CaseInsensitive);
     if (targeted)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
-        g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime());
+        g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
 
     if ((static_cast<GenericChatroomWidget*>(g->getGroupWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {

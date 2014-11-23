@@ -67,6 +67,9 @@ void Group::removePeer(int peerId)
 void Group::updatePeer(int peerId, QString name)
 {
     peers[peerId] = name;
+    QString toxid = Core::getInstance()->getGroupPeerToxID(groupId, peerId).publicKey;
+    toxids[toxid] = name;
+
     widget->onUserListChanged();
     chatForm->onUserListChanged();
 }
@@ -84,9 +87,14 @@ void Group::regeneratePeerList()
 {
     QList<QString> peerLst = Core::getInstance()->getGroupPeerNames(groupId);
     peers.clear();
+    toxids.clear();
     nPeers = peerLst.size();
     for (int i = 0; i < peerLst.size(); i++)
+    {
         peers[i] = peerLst.at(i);
+        QString toxid = Core::getInstance()->getGroupPeerToxID(groupId, i).publicKey;
+        toxids[toxid] = peerLst.at(i);
+    }
 
     widget->onUserListChanged();
     chatForm->onUserListChanged();
@@ -140,4 +148,17 @@ void Group::setMentionedFlag(int f)
 int Group::getMentionedFlag() const
 {
     return userWasMentioned;
+}
+
+QString Group::resolveToxID(const ToxID &id) const
+{
+    QString key = id.publicKey;
+    auto it = toxids.find(key);
+
+    if (it != toxids.end())
+    {
+        return *it;
+    }
+
+    return QString();
 }
