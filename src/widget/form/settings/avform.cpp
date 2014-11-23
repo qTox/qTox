@@ -33,9 +33,6 @@ AVForm::AVForm() :
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
-    getAudioOutDevices();
-    getAudioInDevices();
-
     connect(Camera::getInstance(), &Camera::propProbingFinished, this, &AVForm::onPropProbingFinished);
     connect(Camera::getInstance(), &Camera::resolutionProbingFinished, this, &AVForm::onResProbingFinished);
 
@@ -51,6 +48,9 @@ AVForm::~AVForm()
 
 void AVForm::present()
 {
+    getAudioOutDevices();
+    getAudioInDevices();
+
     bodyUI->CamVideoSurface->setSource(Camera::getInstance());
 
     Camera::getInstance()->probeProp(Camera::SATURATION);
