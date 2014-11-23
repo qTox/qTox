@@ -51,8 +51,8 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
     QAction* setAlias = menu.addAction(tr("Set title..."));
+    QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
 
     QAction* selectedItem = menu.exec(pos);
     if (selectedItem)
