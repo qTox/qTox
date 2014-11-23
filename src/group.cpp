@@ -43,6 +43,7 @@ Group::~Group()
     delete widget;
 }
 
+/*
 void Group::addPeer(int peerId, QString name)
 {
     if (peers.contains(peerId))
@@ -63,6 +64,7 @@ void Group::removePeer(int peerId)
     widget->onUserListChanged();
     chatForm->onUserListChanged();
 }
+*/
 
 void Group::updatePeer(int peerId, QString name)
 {

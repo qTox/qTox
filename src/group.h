@@ -49,8 +49,10 @@ public:
     void setMentionedFlag(int f);
     int getMentionedFlag() const;
 
+    /*
     void addPeer(int peerId, QString name);
     void removePeer(int peerId);
+    */
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name);
