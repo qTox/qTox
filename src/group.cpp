@@ -66,9 +66,17 @@ void Group::removePeer(int peerId)
 
 void Group::updatePeer(int peerId, QString name)
 {
+    ToxID id = Core::getInstance()->getGroupPeerToxID(groupId, peerId);
+    QString toxid = id.publicKey;
     peers[peerId] = name;
-    QString toxid = Core::getInstance()->getGroupPeerToxID(groupId, peerId).publicKey;
     toxids[toxid] = name;
+
+    Friend *f = FriendList::findFriend(id);
+    if (f)
+    {
+        peers[peerId] = f->getDisplayedName();
+        toxids[toxid] = f->getDisplayedName();
+    }
 
     widget->onUserListChanged();
     chatForm->onUserListChanged();
@@ -91,9 +99,17 @@ void Group::regeneratePeerList()
     nPeers = peerLst.size();
     for (int i = 0; i < peerLst.size(); i++)
     {
+        ToxID id = Core::getInstance()->getGroupPeerToxID(groupId, i);
+        QString toxid = id.publicKey;
         peers[i] = peerLst.at(i);
-        QString toxid = Core::getInstance()->getGroupPeerToxID(groupId, i).publicKey;
         toxids[toxid] = peerLst.at(i);
+
+        Friend *f = FriendList::findFriend(id);
+        if (f)
+        {
+            peers[i] = f->getDisplayedName();
+            toxids[toxid] = f->getDisplayedName();
+        }
     }
 
     widget->onUserListChanged();
