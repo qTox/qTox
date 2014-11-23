@@ -31,20 +31,38 @@ class Group : public QObject
     Q_OBJECT
 public:
     Group(int GroupId, QString Name, bool IsAvGroupchat);
-    ~Group();
+    virtual ~Group();
+
+    bool isAvGroupchat() const;
+    int getGroupId() const;
+    int getPeersCount() const;
+    void regeneratePeerList();
+    QStringList getPeerList() const;
+
+    GroupChatForm *getChatForm();
+    GroupWidget *getGroupWidget();
+
+    void setEventFlag(int f);
+    int getEventFlag() const;
+
+    void setMentionedFlag(int f);
+    int getMentionedFlag() const;
+
     void addPeer(int peerId, QString name);
     void removePeer(int peerId);
+
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name);
 
-public:
-    int groupId;
-    QMap<int,QString> peers;
-    int nPeers;
+private:
     GroupWidget* widget;
     GroupChatForm* chatForm;
+    QMap<int, QString> peers;
     int hasNewMessages, userWasMentioned;
+    int groupId;
+    int nPeers;
     bool avGroupchat;
+
 };
 
 #endif // GROUP_H

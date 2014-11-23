@@ -38,7 +38,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     tabber = new TabCompleter(msgEdit, group);
 
     fileButton->setEnabled(false);
-    if (group->avGroupchat)
+    if (group->isAvGroupchat())
     {
         videoButton->setEnabled(false);
         videoButton->setObjectName("grey");
@@ -51,10 +51,10 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
         micButton->setVisible(false);
     }
 
-    nameLabel->setText(group->widget->getName());
+    nameLabel->setText(group->getGroupWidget()->getName());
 
     nusersLabel->setFont(Style::getFont(Style::Medium));
-    nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->peers.size()));
+    nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->getPeersCount()));
     nusersLabel->setObjectName("statusLabel");
 
     avatar->setPixmap(QPixmap(":/img/group_dark.png"), Qt::transparent);
@@ -62,7 +62,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     msgEdit->setObjectName("group");
 
     namesListLayout = new FlowLayout(0,5,0);
-    QStringList names(group->peers.values());
+    QStringList names(group->getPeerList());
     for (const QString& name : names)
         namesListLayout->addWidget(new QLabel(name));
 
@@ -81,7 +81,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig)
-        {if (text != orig) emit groupTitleChanged(group->groupId, text.left(128));} );
+        {if (text != orig) emit groupTitleChanged(group->getGroupId(), text.left(128));} );
 
     setAcceptDrops(true);
 }
@@ -97,15 +97,15 @@ void GroupChatForm::onSendTriggered()
     if (msg.startsWith("/me "))
     {
         msg = msg.right(msg.length() - 4);
-        emit sendAction(group->groupId, msg);
+        emit sendAction(group->getGroupId(), msg);
     } else {
-        emit sendMessage(group->groupId, msg);
+        emit sendMessage(group->getGroupId(), msg);
     }
 }
 
 void GroupChatForm::onUserListChanged()
 {
-    nusersLabel->setText(tr("%1 users in chat").arg(group->nPeers));
+    nusersLabel->setText(tr("%1 users in chat").arg(group->getPeersCount()));
 
     QLayoutItem *child;
     while ((child = namesListLayout->takeAt(0)))
@@ -115,7 +115,7 @@ void GroupChatForm::onUserListChanged()
         delete child;
     }
 
-    QStringList names(group->peers.values());
+    QStringList names(group->getPeerList());
     unsigned nNames = names.size();
     for (unsigned i=0; i<nNames; ++i)
     {
@@ -139,7 +139,7 @@ void GroupChatForm::dropEvent(QDropEvent *ev)
     if (ev->mimeData()->hasFormat("friend"))
     {
         int friendId = ev->mimeData()->data("friend").toInt();
-        Core::getInstance()->groupInviteFriend(friendId, group->groupId);
+        Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
     }
 }
 
@@ -149,12 +149,12 @@ void GroupChatForm::onMicMuteToggle()
     {
         if (micButton->objectName() == "red")
         {
-            Core::getInstance()->enableGroupCallMic(group->groupId);
+            Core::getInstance()->enableGroupCallMic(group->getGroupId());
             micButton->setObjectName("green");
         }
         else
         {
-            Core::getInstance()->disableGroupCallMic(group->groupId);
+            Core::getInstance()->disableGroupCallMic(group->getGroupId());
             micButton->setObjectName("red");
         }
 
@@ -168,12 +168,12 @@ void GroupChatForm::onVolMuteToggle()
     {
         if (volButton->objectName() == "red")
         {
-            Core::getInstance()->enableGroupCallVol(group->groupId);
+            Core::getInstance()->enableGroupCallVol(group->getGroupId());
             volButton->setObjectName("green");
         }
         else
         {
-            Core::getInstance()->disableGroupCallVol(group->groupId);
+            Core::getInstance()->disableGroupCallVol(group->getGroupId());
             volButton->setObjectName("red");
         }
 
@@ -185,7 +185,7 @@ void GroupChatForm::onCallClicked()
 {
     if (!inCall)
     {
-        Core::getInstance()->joinGroupCall(group->groupId);
+        Core::getInstance()->joinGroupCall(group->getGroupId());
         audioInputFlag = true;
         audioOutputFlag = true;
         callButton->setObjectName("red");
@@ -194,7 +194,7 @@ void GroupChatForm::onCallClicked()
     }
     else
     {
-        Core::getInstance()->leaveGroupCall(group->groupId);
+        Core::getInstance()->leaveGroupCall(group->getGroupId());
         audioInputFlag = false;
         audioOutputFlag = false;
         micButton->setObjectName("green");
@@ -216,9 +216,9 @@ void GroupChatForm::keyPressEvent(QKeyEvent* ev)
     if (ev->key() == Qt::Key_P && inCall)
     {
         Core* core = Core::getInstance();
-        if (!core->isGroupCallMicEnabled(group->groupId))
+        if (!core->isGroupCallMicEnabled(group->getGroupId()))
         {
-            core->enableGroupCallMic(group->groupId);
+            core->enableGroupCallMic(group->getGroupId());
             micButton->setObjectName("green");
             micButton->style()->polish(micButton);
             Style::repolish(micButton);
@@ -235,9 +235,9 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
     if (ev->key() == Qt::Key_P && inCall)
     {
         Core* core = Core::getInstance();
-        if (core->isGroupCallMicEnabled(group->groupId))
+        if (core->isGroupCallMicEnabled(group->getGroupId()))
         {
-            core->disableGroupCallMic(group->groupId);
+            core->disableGroupCallMic(group->getGroupId());
             micButton->setObjectName("red");
             micButton->style()->polish(micButton);
             Style::repolish(micButton);

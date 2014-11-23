@@ -79,3 +79,65 @@ void Group::setName(const QString& name)
     if (widget->isActive())
             Widget::getInstance()->setWindowTitle(name);
 }
+
+void Group::regeneratePeerList()
+{
+    QList<QString> peerLst = Core::getInstance()->getGroupPeerNames(groupId);
+    peers.clear();
+    nPeers = peerLst.size();
+    for (int i = 0; i < peerLst.size(); i++)
+        peers[i] = peerLst.at(i);
+
+    widget->onUserListChanged();
+    chatForm->onUserListChanged();
+}
+
+bool Group::isAvGroupchat() const
+{
+    return avGroupchat;
+}
+
+int Group::getGroupId() const
+{
+    return groupId;
+}
+
+int Group::getPeersCount() const
+{
+    return nPeers;
+}
+
+GroupChatForm *Group::getChatForm()
+{
+    return chatForm;
+}
+
+GroupWidget *Group::getGroupWidget()
+{
+    return widget;
+}
+
+QStringList Group::getPeerList() const
+{
+    return peers.values();
+}
+
+void Group::setEventFlag(int f)
+{
+    hasNewMessages = f;
+}
+
+int Group::getEventFlag() const
+{
+    return hasNewMessages;
+}
+
+void Group::setMentionedFlag(int f)
+{
+    userWasMentioned = f;
+}
+
+int Group::getMentionedFlag() const
+{
+    return userWasMentioned;
+}
