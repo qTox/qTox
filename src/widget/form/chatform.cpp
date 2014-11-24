@@ -216,8 +216,9 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         previousId = friendId;
     }
 
-    chatWidget->insertMessage(ChatActionPtr(new FileTransferAction(fileTrans, getElidedName(name),
-                                                                   QTime::currentTime().toString("hh:mm"), false)));
+    QString dateStr = QTime::currentTime().toString(Settings::getInstance().getTimestampFormat());
+    FileTransferAction *fa = new FileTransferAction(fileTrans, getElidedName(name), dateStr, false);
+    chatWidget->insertMessage(ChatActionPtr(fa));
 
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxID()).isEmpty()
      || Settings::getInstance().getAutoSaveEnabled())
