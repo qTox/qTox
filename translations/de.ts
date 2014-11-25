@@ -234,7 +234,7 @@ Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</tr
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="254"/>
-        <source>%1 calling</source>
+        <source>%1 is calling</source>
         <translation>%1 ruft an</translation>
     </message>
     <message>
