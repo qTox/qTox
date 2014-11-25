@@ -152,6 +152,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    connect(chatWidget, SIGNAL(onClick()), this, SLOT(onChatWidgetClicked()));
 
     chatWidget->document()->setDefaultStyleSheet(Style::getStylesheet(":ui/chatArea/innerStyle.css"));
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
@@ -250,6 +251,11 @@ void GenericChatForm::onEmoteButtonClicked()
         QPoint pos = -QPoint(widget.sizeHint().width() / 2, widget.sizeHint().height()) - QPoint(0, 10);
         widget.exec(sender->mapToGlobal(pos));
     }
+}
+
+void GenericChatForm::onChatWidgetClicked()
+{
+    msgEdit->setFocus();
 }
 
 void GenericChatForm::onEmoteInsertRequested(QString str)
