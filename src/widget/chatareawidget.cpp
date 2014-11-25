@@ -87,6 +87,7 @@ void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
             }
         }
     }
+    emit onClick();
 }
 
 void ChatAreaWidget::onAnchorClicked(const QUrl &url)
