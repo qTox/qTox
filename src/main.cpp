@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addPositionalArgument("uri", QObject::tr("Tox URI to parse"));
-    parser.addOption(QCommandLineOption("P", QObject::tr("Starts new instance and loads specified profile."), "profile"));
+    parser.addOption(QCommandLineOption("P", QObject::tr("Starts new instance and loads specified profile."), QObject::tr("profile")));
     parser.process(a);
 
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
