@@ -118,6 +118,11 @@ void Widget::update()
     for (UpdateFileMeta fileMeta : diff)
         if (!QFile::exists(updateDirStr+fileMeta.installpath))
             fatalError(tr("The update is incomplete."));
+
+    if (diff.size() == 0){
+       fatalError(tr("The diff list is empty."));
+    }
+
     setProgress(5);
 
     /// 2. Check the update (5-50%)
