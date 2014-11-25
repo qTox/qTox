@@ -95,7 +95,7 @@
         <location filename="../src/widget/form/addfriendform.cpp" line="40"/>
         <source>Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Lass uns Toxen!</translation>
+        <translation>Lass uns toxen!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="89"/>
@@ -107,14 +107,14 @@
         <location filename="../src/widget/form/addfriendform.cpp" line="92"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Du kannst dich nicht selbst als Freund hinzufügen!</translation>
+        <translation>Sie können sich nicht selbst als Freund hinzufügen!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="100"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly ?</source>
         <translation>qTox muss die Tox DNS nutzen. Dies klappt nicht über einen Proxy.
-Ignoriere diesen und nutze eine direkte Internetverbindung?</translation>
+Ignoriere Sie diesen und nutzen Sie eine direkte Internetverbindung.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
@@ -347,7 +347,7 @@ Leeres Passwort.</translation>
     <message>
         <location filename="../src/core.cpp" line="1217"/>
         <source>Wrong password has been entered</source>
-        <translation>Falsches Passwort eingegeben</translation>
+        <translation>Es wurde ein falsches Passwort eingegeben</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1278"/>
@@ -451,7 +451,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Es möchte jemand mit ihnen befreundet sein</translation>
+        <translation>Es möchte jemand mit Ihnen befreundet sein</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
@@ -636,7 +636,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="170"/>
         <source>Faux offline messaging</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="179"/>
@@ -656,7 +656,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="269"/>
         <source>Use emoticons</source>
-        <translation>Smileys benutzen</translation>
+        <translation>Emoticons benutzen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
@@ -949,7 +949,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Sind Sie sicher, dass dasProfil gelöscht werden soll?</translation>
+        <translation>Sind Sie sicher, dass dieses Profil gelöscht werden soll?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="211"/>
@@ -973,7 +973,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="224"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Warnung:  Sie haben eine Datei gewählt, die keine Toxdatei ist, wird ignoriert.</translation>
+        <translation>Warnung: Sie haben eine Datei gewählt, die keine Toxdatei ist, wird ignoriert.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="230"/>
@@ -1184,7 +1184,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="87"/>
         <source>You already have history log file encrypted with different password
 Do you want to delete old history file?</source>
-        <translation>Es gibt schon eine Historie Logdatei mit einem anderen Passwort
+        <translation>Es gibt schon eine Historie Logdatei mit einem anderen Passwort.
 Soll die alte Historiedatei gelöscht werden?</translation>
     </message>
 </context>
@@ -1286,7 +1286,7 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/widget/toxsave.cpp" line="64"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Warnung:  Sie haben eine Datei gewählt, die keine Toxdatei ist, wird ignoriert.</translation>
+        <translation>Warnung: Sie haben eine Datei gewählt, die keine Toxdatei ist, wird ignoriert.</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="70"/>
@@ -1314,7 +1314,7 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/widget/toxuri.cpp" line="70"/>
         <source>Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>Lass uns Toxen!</translation>
+        <translation>Lass uns toxen!</translation>
     </message>
 </context>
 <context>
@@ -1358,7 +1358,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <source>Test video</source>
         <comment>Text on a button to test the video/webcam</comment>
-        <translation type="vanished">Testvideo</translation>
+        <translation type="vanished">Video testen</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
@@ -1462,11 +1462,11 @@ Es wird beim Neustart von qTox installiert.</translation>
     </message>
     <message>
         <source>Your name</source>
-        <translation type="vanished">Dein Name</translation>
+        <translation type="vanished">Ihr Name</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="vanished">Dein Status</translation>
+        <translation type="vanished">Ihr Status</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1499,7 +1499,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="86"/>
         <source>Change status to:</source>
-        <translation>Ändere den Status zu:</translation>
+        <translation>Ändern Sie den Status zu:</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="158"/>
@@ -1522,12 +1522,12 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="397"/>
         <source>Choose a profile</source>
-        <translation>Wähle ein Profil</translation>
+        <translation>Wählen Sie ein Profil</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="398"/>
         <source>Please choose which identity to use</source>
-        <translation>Wähle die Identität, die benutzt werden soll</translation>
+        <translation>Wählen Sie die Identität, die benutzt werden soll</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="424"/>
@@ -1565,7 +1565,7 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/widget/widget.cpp" line="495"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>Tox startet mit ihren Proxy-Einstellungen nicht. qTox funktioniert nicht, ändern Sie bitte ihre Einstellungen und starten qTox neu.</translation>
+        <translation>Tox startet mit ihren Proxy-Einstellungen nicht. qTox funktioniert nicht, ändern Sie bitte Ihre Einstellungen und starten qTox neu.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="530"/>
@@ -1591,13 +1591,13 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/widget/widget.cpp" line="693"/>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>abwesend</translation>
+        <translation>Abwesend</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="695"/>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation>beschäftigt</translation>
+        <translation>Beschäftigt</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="697"/>
