@@ -235,7 +235,7 @@ Ignoriere Sie diesen und nutzen Sie eine direkte Internetverbindung.</translatio
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="254"/>
         <source>%1 calling</source>
-        <translation>%1 wird angerufen</translation>
+        <translation>%1 ruft an</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="323"/>
