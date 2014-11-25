@@ -12,7 +12,7 @@
 | Qt           | >= 5.2.0    | core, gui, network, widget, xml, sql |
 | GCC/MinGW    | >= 4.8      | C++11 enabled                        |
 | Tox Core     | most recent | core, av                             |
-| OpenCV       | >= 2.4.9    | core, highgui                        |
+| OpenCV       | >= 2.4.9    | core, highgui, imgproc               |
 | OpenAL Soft  | >= 1.16.0   |                                      |
 
 <a name="windows" />
