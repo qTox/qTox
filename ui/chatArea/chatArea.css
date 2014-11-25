@@ -3,3 +3,8 @@ QTextEdit
     background: white;
     color: back;
 }
+
+QTextBrowser
+{
+	border: none;
+}
