@@ -110,6 +110,7 @@ int main(int argc, char *argv[])
     IPC ipc;
     ipc.registerEventHandler(&toxURIEventHandler);
     ipc.registerEventHandler(&toxSaveEventHandler);
+    ipc.registerEventHandler(&toxActivateEventHandler);
 
     if (parser.positionalArguments().size() > 0)
     {
@@ -152,9 +153,16 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
     }
+    else if(!ipc.isCurrentOwner())
+    {
+        time_t event = ipc.postEvent("$activate");
+        ipc.waitUntilProcessed(event);
+        if (!ipc.isCurrentOwner())
+            return EXIT_SUCCESS;
+    }
 
     // Run
-    Widget* w = Widget::getInstance();    
+    Widget* w = Widget::getInstance();
     int errorcode = a.exec();
 
     delete w;
