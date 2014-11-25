@@ -49,11 +49,9 @@ public:
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
 
-    void addMessage(const QString& author, const QString &message, bool isAction, const QDateTime &datetime); ///< Deprecated
     MessageActionPtr addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     MessageActionPtr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
-    void addAlertMessage(const QString& author, QString message, QDateTime datetime); ///< Deprecated
     void addAlertMessage(const ToxID& author, QString message, QDateTime datetime);
     bool isEmpty();
 
@@ -74,10 +72,11 @@ protected slots:
 
 protected:
     QString getElidedName(const QString& name);
-    MessageActionPtr genMessageActionAction(const QString& author, QString message, bool isAction, const QDateTime &datetime); ///< Deprecated
     MessageActionPtr genMessageActionAction(const ToxID& author, QString message, bool isAction, const QDateTime &datetime);
     MessageActionPtr genSelfActionAction(QString message, bool isAction, const QDateTime &datetime);
     ChatActionPtr genSystemInfoAction(const QString &message, const QString &type, const QDateTime &datetime);
+
+    QString resolveToxID(const ToxID &id);
 
     ToxID previousId;
     QMenu menu;

@@ -43,6 +43,7 @@ Group::~Group()
     delete widget;
 }
 
+/*
 void Group::addPeer(int peerId, QString name)
 {
     if (peers.contains(peerId))
@@ -63,10 +64,22 @@ void Group::removePeer(int peerId)
     widget->onUserListChanged();
     chatForm->onUserListChanged();
 }
+*/
 
 void Group::updatePeer(int peerId, QString name)
 {
+    ToxID id = Core::getInstance()->getGroupPeerToxID(groupId, peerId);
+    QString toxid = id.publicKey;
     peers[peerId] = name;
+    toxids[toxid] = name;
+
+    Friend *f = FriendList::findFriend(id);
+    if (f)
+    {
+        peers[peerId] = f->getDisplayedName();
+        toxids[toxid] = f->getDisplayedName();
+    }
+
     widget->onUserListChanged();
     chatForm->onUserListChanged();
 }
@@ -78,4 +91,92 @@ void Group::setName(const QString& name)
 
     if (widget->isActive())
             Widget::getInstance()->setWindowTitle(name);
+}
+
+void Group::regeneratePeerList()
+{
+    QList<QString> peerLst = Core::getInstance()->getGroupPeerNames(groupId);
+    peers.clear();
+    toxids.clear();
+    nPeers = peerLst.size();
+    for (int i = 0; i < peerLst.size(); i++)
+    {
+        ToxID id = Core::getInstance()->getGroupPeerToxID(groupId, i);
+        QString toxid = id.publicKey;
+        peers[i] = peerLst.at(i);
+        toxids[toxid] = peerLst.at(i);
+
+        Friend *f = FriendList::findFriend(id);
+        if (f)
+        {
+            peers[i] = f->getDisplayedName();
+            toxids[toxid] = f->getDisplayedName();
+        }
+    }
+
+    widget->onUserListChanged();
+    chatForm->onUserListChanged();
+}
+
+bool Group::isAvGroupchat() const
+{
+    return avGroupchat;
+}
+
+int Group::getGroupId() const
+{
+    return groupId;
+}
+
+int Group::getPeersCount() const
+{
+    return nPeers;
+}
+
+GroupChatForm *Group::getChatForm()
+{
+    return chatForm;
+}
+
+GroupWidget *Group::getGroupWidget()
+{
+    return widget;
+}
+
+QStringList Group::getPeerList() const
+{
+    return peers.values();
+}
+
+void Group::setEventFlag(int f)
+{
+    hasNewMessages = f;
+}
+
+int Group::getEventFlag() const
+{
+    return hasNewMessages;
+}
+
+void Group::setMentionedFlag(int f)
+{
+    userWasMentioned = f;
+}
+
+int Group::getMentionedFlag() const
+{
+    return userWasMentioned;
+}
+
+QString Group::resolveToxID(const ToxID &id) const
+{
+    QString key = id.publicKey;
+    auto it = toxids.find(key);
+
+    if (it != toxids.end())
+    {
+        return *it;
+    }
+
+    return QString();
 }

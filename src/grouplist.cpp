@@ -16,32 +16,54 @@
 
 #include "grouplist.h"
 #include "group.h"
+#include <QHash>
+#include <QDebug>
 
-QList<Group*> GroupList::groupList;
+QHash<int, Group*> GroupList::groupList;
 
 Group* GroupList::addGroup(int groupId, const QString& name, bool isAvGroupchat)
 {
+    auto checker = groupList.find(groupId);
+    if (checker != groupList.end())
+        qWarning() << "GroupList::addGroup: groupId already taken";
+
     Group* newGroup = new Group(groupId, name, isAvGroupchat);
-    groupList.append(newGroup);
+    groupList[groupId] = newGroup;
+
     return newGroup;
 }
 
 Group* GroupList::findGroup(int groupId)
 {
-    for (Group* g : groupList)
-        if (g->groupId == groupId)
-            return g;
+    auto g_it = groupList.find(groupId);
+    if (g_it != groupList.end())
+        return *g_it;
+
     return nullptr;
 }
 
 void GroupList::removeGroup(int groupId, bool /*fake*/)
 {
-    for (int i=0; i<groupList.size(); i++)
+    auto g_it = groupList.find(groupId);
+    if (g_it != groupList.end())
     {
-        if (groupList[i]->groupId == groupId)
-        {
-            groupList.removeAt(i);
-            return;
-        }
+        groupList.erase(g_it);
     }
+}
+
+QList<Group *> GroupList::getAllGroups()
+{
+    QList<Group*> res;
+
+    for (auto it : groupList)
+        res.append(it);
+
+    return res;
+}
+
+void GroupList::clear()
+{
+    for (auto groupptr : groupList)
+        delete groupptr;
+    groupList.clear();
 }

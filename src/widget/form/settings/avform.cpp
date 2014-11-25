@@ -33,15 +33,13 @@ AVForm::AVForm() :
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
-    getAudioOutDevices();
-    getAudioInDevices();
-
     connect(Camera::getInstance(), &Camera::propProbingFinished, this, &AVForm::onPropProbingFinished);
     connect(Camera::getInstance(), &Camera::resolutionProbingFinished, this, &AVForm::onResProbingFinished);
 
     auto qcomboboxIndexChanged = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
     connect(bodyUI->inDevCombobox, qcomboboxIndexChanged, this, &AVForm::onInDevChanged);
     connect(bodyUI->outDevCombobox, qcomboboxIndexChanged, this, &AVForm::onOutDevChanged);
+    connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
 }
 
 AVForm::~AVForm()
@@ -51,6 +49,9 @@ AVForm::~AVForm()
 
 void AVForm::present()
 {
+    getAudioOutDevices();
+    getAudioInDevices();
+
     bodyUI->CamVideoSurface->setSource(Camera::getInstance());
 
     Camera::getInstance()->probeProp(Camera::SATURATION);

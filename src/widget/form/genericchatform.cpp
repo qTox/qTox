@@ -31,6 +31,8 @@
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/core.h"
+#include "src/grouplist.h"
+#include "src/group.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
 
@@ -201,16 +203,6 @@ void GenericChatForm::onSaveLogClicked()
     file.close();
 }
 
-/**
- * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
- */
-void GenericChatForm::addMessage(const QString& author, const QString &message, bool isAction, const QDateTime &datetime)
-{
-    MessageActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
-    ca->markAsSent();
-    chatWidget->insertMessage(ca);
-}
-
 MessageActionPtr GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
@@ -230,24 +222,16 @@ MessageActionPtr GenericChatForm::addSelfMessage(const QString &message, bool is
     return ca;
 }
 
-/**
- * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
- */
-void GenericChatForm::addAlertMessage(const QString& author, QString message, QDateTime datetime)
-{
-    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-    AlertAction *alact = new AlertAction(author, message, date);
-    alact->markAsSent();
-    chatWidget->insertMessage(ChatActionPtr(alact));
-
-    previousId.publicKey = author;
-}
-
 void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
 {
-    QString authorStr = Core::getInstance()->getPeerName(author);
+    QString authorStr = resolveToxID(author);
+    if (authorStr.isEmpty())
+        authorStr = author.publicKey;
+
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-    chatWidget->insertMessage(ChatActionPtr(new AlertAction(authorStr, message, date)));
+    MessageActionPtr ca = MessageActionPtr(new AlertAction(authorStr, message, date));
+    ca->markAsSent();
+    chatWidget->insertMessage(ca);
     previousId = author;
 }
 
@@ -314,42 +298,6 @@ void GenericChatForm::clearChatArea(bool notinform)
     emit chatAreaCleared();
 }
 
-/**
- * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
- */
-MessageActionPtr GenericChatForm::genMessageActionAction(const QString &author, QString message, bool isAction,
-                                                         const QDateTime &datetime)
-{
-    if (earliestMessage == nullptr)
-    {
-        earliestMessage = new QDateTime(datetime);
-    }
-
-    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-    bool isMe = (author == Widget::getInstance()->getUsername());
-
-    if (!isAction && message.startsWith("/me "))
-    { // always render actions regardless of what core thinks
-        isAction = true;
-        message = message.right(message.length()-4);
-    }
-
-    if (isAction)
-    {
-        previousId = ToxID(); // next msg has a name regardless
-        return MessageActionPtr(new ActionAction (author, message, date, isMe));
-    }
-
-    MessageActionPtr res;
-    if (previousId.publicKey == author)
-        res = MessageActionPtr(new MessageAction(QString(), message, date, isMe));
-    else
-        res = MessageActionPtr(new MessageAction(getElidedName(author), message, date, isMe));
-
-    previousId.publicKey = author;
-    return res;
-}
-
 MessageActionPtr GenericChatForm::genMessageActionAction(const ToxID& author, QString message, bool isAction, const QDateTime &datetime)
 {
     if (earliestMessage == nullptr)
@@ -365,11 +313,7 @@ MessageActionPtr GenericChatForm::genMessageActionAction(const ToxID& author, QS
     if (isMe)
         authorStr = core->getUsername();
     else {
-        Friend *f = FriendList::findFriend(author);
-        if (f)
-            authorStr = f->getDisplayedName();
-        else
-            authorStr = core->getPeerName(author);
+        authorStr = resolveToxID(author);
     }
 
     if (authorStr.isEmpty()) // Fallback if we can't find a username
@@ -437,4 +381,22 @@ ChatActionPtr GenericChatForm::genSystemInfoAction(const QString &message, const
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
 
     return ChatActionPtr(new SystemMessageAction(message, type, date));
+}
+
+QString GenericChatForm::resolveToxID(const ToxID &id)
+{
+    Friend *f = FriendList::findFriend(id);
+    if (f)
+    {
+        return f->getDisplayedName();
+    } else {
+        for (auto it : GroupList::getAllGroups())
+        {
+            QString res = it->resolveToxID(id);
+            if (res.size())
+                return res;
+        }
+    }
+
+    return QString();
 }

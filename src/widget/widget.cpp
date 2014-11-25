@@ -297,9 +297,7 @@ Widget::~Widget()
     delete filesForm;
 
     FriendList::clear();
-    for (Group* g : GroupList::groupList)
-        delete g;
-    GroupList::groupList.clear();
+    GroupList::clear();
     delete trayMenu;
     delete ui;
     delete translator;
@@ -878,7 +876,9 @@ void Widget::clearContactsList()
     QList<Friend*> friends = FriendList::getAllFriends();
     for (Friend* f : friends)
         removeFriend(f, true);
-    for (Group* g : GroupList::groupList)
+
+    QList<Group*> groups = GroupList::getAllGroups();
+    for (Group* g : groups)
         removeGroup(g, true);
 }
 
@@ -910,29 +910,30 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
     }
 }
 
-void Widget::onGroupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction)
+void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction)
 {
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
         return;
 
+    ToxID author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
     QString name = core->getUsername();
 
-    bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
+    bool targeted = (!author.isMine()) && message.contains(name, Qt::CaseInsensitive);
     if (targeted)
-        g->chatForm->addAlertMessage(author, message, QDateTime::currentDateTime());
+        g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
-        g->chatForm->addMessage(author, message, isAction, QDateTime::currentDateTime());
+        g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
 
-    if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
+    if ((static_cast<GenericChatroomWidget*>(g->getGroupWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
-        g->hasNewMessages = 1;
+        g->setEventFlag(true);
         if (targeted)
         {
-            newMessageAlert(g->widget);
-            g->userWasMentioned = 1; // useful for highlighting line or desktop notifications
+            newMessageAlert(g->getGroupWidget());
+            g->setMentionedFlag(true); // useful for highlighting line or desktop notifications
         }
-        g->widget->updateStatusLight();
+        g->getGroupWidget()->updateStatusLight();
     }
 }
 
@@ -951,14 +952,16 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     {
         if (name.isEmpty())
             name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
-        g->addPeer(peernumber,name);
+        // g->addPeer(peernumber,name);
+        g->regeneratePeerList();
         //g->chatForm->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "green");
         // we can't display these messages until irungentoo fixes peernumbers
         // https://github.com/irungentoo/toxcore/issues/1128
     }
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
     {
-        g->removePeer(peernumber);
+        // g->removePeer(peernumber);
+        g->regeneratePeerList();
         //g->chatForm->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "silver");
     }
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
@@ -973,19 +976,19 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
 
     g->setName(title);
     if (!author.isEmpty())
-        g->chatForm->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), "silver", QDateTime::currentDateTime());
+        g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), "silver", QDateTime::currentDateTime());
 }
 
 void Widget::removeGroup(Group* g, bool fake)
 {
-    g->widget->setAsInactiveChatroom();
-    if (static_cast<GenericChatroomWidget*>(g->widget) == activeChatroomWidget)
+    g->getGroupWidget()->setAsInactiveChatroom();
+    if (static_cast<GenericChatroomWidget*>(g->getGroupWidget()) == activeChatroomWidget)
     {
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
-    GroupList::removeGroup(g->groupId, fake);
-    core->removeGroup(g->groupId, fake);
+    GroupList::removeGroup(g->getGroupId(), fake);
+    core->removeGroup(g->getGroupId(), fake);
     delete g;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
@@ -1016,15 +1019,15 @@ Group *Widget::createGroup(int groupId)
     QString groupName = QString("Groupchat #%1").arg(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName, true);
     QLayout* layout = contactListWidget->getGroupLayout();
-    layout->addWidget(newgroup->widget);
-    newgroup->widget->updateStatusLight();
+    layout->addWidget(newgroup->getGroupWidget());
+    newgroup->getGroupWidget()->updateStatusLight();
 
-    connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
-    connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
-    connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->chatForm, SLOT(focusInput()));
-    connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
-    connect(newgroup->chatForm, SIGNAL(sendAction(int,QString)), core, SLOT(sendGroupAction(int,QString)));
-    connect(newgroup->chatForm, &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
+    connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
+    connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
+    connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->getChatForm(), SLOT(focusInput()));
+    connect(newgroup->getChatForm(), SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
+    connect(newgroup->getChatForm(), SIGNAL(sendAction(int,QString)), core, SLOT(sendGroupAction(int,QString)));
+    connect(newgroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
     return newgroup;
 }
 
@@ -1122,7 +1125,7 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         return;
 
     if (result == -1)
-        g->chatForm->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
+        g->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
 }
 
 void Widget::getPassword(QString info, int passtype, uint8_t* salt)
@@ -1213,6 +1216,6 @@ void Widget::reloadTheme()
     for (Friend* f : FriendList::getAllFriends())
         f->getFriendWidget()->reloadTheme();
 
-    for (Group* g : GroupList::groupList)
-        g->widget->reloadTheme();
+    for (Group* g : GroupList::getAllGroups())
+        g->getGroupWidget()->reloadTheme();
 }

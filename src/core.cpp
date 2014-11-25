@@ -457,8 +457,7 @@ void Core::onAction(Tox*/* tox*/, int friendId, const uint8_t *cMessage, uint16_
 void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *action, uint16_t length, void* _core)
 {
     Core* core = static_cast<Core*>(_core);
-    emit core->groupMessageReceived(groupnumber, CString::toString(action, length),
-                                    core->getGroupPeerName(groupnumber, peernumber), true);
+    emit core->groupMessageReceived(groupnumber, peernumber, CString::toString(action, length), true);
 }
 
 void Core::onGroupInvite(Tox*, int friendnumber, uint8_t type, const uint8_t *data, uint16_t length,void *core)
@@ -483,8 +482,8 @@ void Core::onGroupInvite(Tox*, int friendnumber, uint8_t type, const uint8_t *da
 void Core::onGroupMessage(Tox*, int groupnumber, int peernumber, const uint8_t * message, uint16_t length, void *_core)
 {
     Core* core = static_cast<Core*>(_core);
-    emit core->groupMessageReceived(groupnumber, CString::toString(message, length),
-                                    core->getGroupPeerName(groupnumber, peernumber), false);
+
+    emit core->groupMessageReceived(groupnumber, peernumber, CString::toString(message, length), false);
 }
 
 void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t change, void *core)
@@ -1461,6 +1460,22 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
     }
     name = CString::toString(nameArray, length);
     return name;
+}
+
+ToxID Core::getGroupPeerToxID(int groupId, int peerId) const
+{
+    ToxID peerToxID;
+
+    uint8_t rawID[TOX_CLIENT_ID_SIZE];
+    int res = tox_group_peer_pubkey(tox, groupId, peerId, rawID);
+    if (res == -1)
+    {
+        qWarning() << "Core::getGroupPeerToxID: Unknown error";
+        return peerToxID;
+    }
+
+    peerToxID = ToxID::fromString(CUserId::toString(rawID));
+    return peerToxID;
 }
 
 QList<QString> Core::getGroupPeerNames(int groupId) const
