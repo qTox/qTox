@@ -66,9 +66,12 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addPositionalArgument("uri", QObject::tr("Tox URI to parse"));
+    parser.addOption(QCommandLineOption("P", QObject::tr("Starts new instance and loads specified profile."), QObject::tr("profile")));
     parser.process(a);
 
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
+    if(parser.isSet("P"))
+        Settings::getInstance().setCurrentProfile(parser.value("P"));
 
     sodium_init(); // For the auto-updater
 
@@ -110,6 +113,7 @@ int main(int argc, char *argv[])
     IPC ipc;
     ipc.registerEventHandler(&toxURIEventHandler);
     ipc.registerEventHandler(&toxSaveEventHandler);
+    ipc.registerEventHandler(&toxActivateEventHandler);
 
     if (parser.positionalArguments().size() > 0)
     {
@@ -152,9 +156,16 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
     }
+    else if(!ipc.isCurrentOwner() && !parser.isSet("P"))
+    {
+        time_t event = ipc.postEvent("$activate");
+        ipc.waitUntilProcessed(event);
+        if (!ipc.isCurrentOwner())
+            return EXIT_SUCCESS;
+    }
 
     // Run
-    Widget* w = Widget::getInstance();    
+    Widget* w = Widget::getInstance();
     int errorcode = a.exec();
 
     delete w;

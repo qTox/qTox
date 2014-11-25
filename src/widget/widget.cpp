@@ -51,6 +51,14 @@
 #include <QTranslator>
 #include <tox/tox.h>
 
+void toxActivateEventHandler(const QByteArray& data)
+{
+    if(data != "$activate")
+        return;
+    Widget::getInstance()->show();
+    Widget::getInstance()->activateWindow();
+}
+
 Widget *Widget::instance{nullptr};
 
 Widget::Widget(QWidget *parent)
@@ -561,7 +569,10 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
     switch (reason) {
         case QSystemTrayIcon::Trigger:
         if(this->isHidden() == true)
+        {
             this->show();
+            this->activateWindow();
+        }
         else
             this->hide();
         case QSystemTrayIcon::DoubleClick:    

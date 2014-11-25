@@ -168,4 +168,6 @@ private:
     QTranslator* translator;
 };
 
+void toxActivateEventHandler(const QByteArray& data);
+
 #endif // WIDGET_H
