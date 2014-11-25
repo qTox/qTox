@@ -1259,7 +1259,7 @@ bool Core::loadConfiguration(QString path)
                 if (!HistoryKeeper::checkPassword())
                 {
                     if (QMessageBox::Ok == Widget::getInstance()->showWarningMsgBox(tr("Encrypted log"),
-                                                                tr("Your history is encrypted with different password\nDo you want to try another password?"),
+                                                                tr("Your history is encrypted with different password.\nDo you want to try another password?"),
                                                                 QMessageBox::Ok | QMessageBox::Cancel))
                     {
                         error = true;
@@ -1269,7 +1269,7 @@ bool Core::loadConfiguration(QString path)
                     {
                         error = false;
                         clearPassword(ptHistory);
-                        Widget::getInstance()->showWarningMsgBox(tr("Loggin"), tr("Due to incorret password logging will be disabled"));
+                        Widget::getInstance()->showWarningMsgBox(tr("History"), tr("Due to incorret password history will be disabled."));
                         Settings::getInstance().setEncryptLogs(false);
                         Settings::getInstance().setEnableLogging(false);
                     }
