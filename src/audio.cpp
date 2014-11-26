@@ -60,7 +60,8 @@ void Audio::openInput(const QString& inDevDescr)
 {
     auto* tmp = alInDev;
     alInDev = nullptr;
-    alcCaptureCloseDevice(tmp);
+    if (tmp)
+        alcCaptureCloseDevice(tmp);
     int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     if (inDevDescr.isEmpty())
         alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
@@ -78,7 +79,7 @@ void Audio::openInput(const QString& inDevDescr)
     Core::getInstance()->resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
-    if (userCount.load() != 0)
+    if (userCount.load() != 0 && alInDev)
         alcCaptureStart(alInDev);
 }
 
@@ -86,7 +87,8 @@ void Audio::openOutput(const QString& outDevDescr)
 {
     auto* tmp = alOutDev;
     alOutDev = nullptr;
-    alcCloseDevice(tmp);
+    if (tmp)
+        alcCloseDevice(tmp);
     if (outDevDescr.isEmpty())
         alOutDev = alcOpenDevice(nullptr);
     else
@@ -97,7 +99,8 @@ void Audio::openOutput(const QString& outDevDescr)
     }
     else
     {
-        alcDestroyContext(alContext);
+        if (alContext)
+            alcDestroyContext(alContext);
         alContext=alcCreateContext(alOutDev,nullptr);
         if (!alcMakeContextCurrent(alContext))
         {
