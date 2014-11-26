@@ -113,8 +113,8 @@
         <location filename="../src/widget/form/addfriendform.cpp" line="100"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly ?</source>
-        <translation>qTox muss die Tox DNS nutzen. Dies klappt nicht über einen Proxy.
-Ignoriere Sie diesen und nutzen Sie eine direkte Internetverbindung.</translation>
+        <translation>qTox muss Tox DNS nutzen, dies klappt allerdings nicht über einen Proxy.
+Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
@@ -140,12 +140,12 @@ Ignoriere Sie diesen und nutzen Sie eine direkte Internetverbindung.</translatio
     <message>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation type="vanished">Der DNS Eintrag enthält keine gültige TOX ID</translation>
+        <translation type="vanished">Der DNS Eintrag enthält keine Tox ID</translation>
     </message>
     <message>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation type="vanished">Der DNS Eintrag enthält keine gültige TOX ID</translation>
+        <translation type="vanished">Der DNS Eintrag enthält keine gültige Tox ID</translation>
     </message>
 </context>
 <context>
@@ -168,7 +168,7 @@ Ignoriere Sie diesen und nutzen Sie eine direkte Internetverbindung.</translatio
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="36"/>
         <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
-        <translation>AUS - keinerlei Sicherheit, geht etwas schief kann die Historie verloren gehen, ist am schnellsten (nicht empfohlen)</translation>
+        <translation>AUS - keinerlei Sicherheit, geht etwas schief, kann die Historie verloren gehen, ist am schnellsten (nicht empfohlen)</translation>
     </message>
 </context>
 <context>
@@ -181,7 +181,7 @@ Ignoriere Sie diesen und nutzen Sie eine direkte Internetverbindung.</translatio
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="35"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;WICHTIGE NOTIZ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Wenn Sie nicht &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;wirklich&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; wissen, was Sie tun, ändern Sie hier bitte &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;nichts&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;. Hier getätigte Änderungen können zu Problemen mit qTox führen, evtl. sogar zum Datenverlust, z.B. die Historie.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;WICHTIGE NOTIZ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Wenn Sie nicht &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;wirklich&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; wissen, was Sie tun, ändern Sie hier bitte &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;nichts&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;. Hier getätigte Änderungen können zu Problemen mit qTox führen, evtl. sogar zum Datenverlust, z.B. der Historie.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="51"/>
@@ -234,13 +234,13 @@ Ignoriere Sie diesen und nutzen Sie eine direkte Internetverbindung.</translatio
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="254"/>
-        <source>%1 calling</source>
+        <source>%1 is calling</source>
         <translation>%1 ruft an</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="323"/>
         <source>%1 stopped calling</source>
-        <translation>%1 stoppte den Anruf</translation>
+        <translation>%1 hat den Anruf beendet</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="379"/>
@@ -361,20 +361,15 @@ Leeres Passwort.</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1286"/>
-        <source>Your history is encrypted with different password
+        <source>Your history is encrypted with different password.
 Do you want to try another password?</source>
-        <translation>Ihre Historie wurde mit einem anderen Passwort verschlüsselt
+        <translation>Ihre Historie wurde mit einem anderen Passwort verschlüsselt.
 Wollen Sie ein anderes probieren?</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1296"/>
-        <source>Loggin</source>
-        <translation>Anmeldung</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1296"/>
-        <source>Due to incorret password logging will be disabled</source>
-        <translation>Falsches Passwort, Anmeldung wird beendet</translation>
+        <source>Due to incorret password history will be disabled.</source>
+        <translation>Falsches Passwort, Historie wird deaktiviert.</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1369"/>
@@ -432,7 +427,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="38"/>
         <source>Downloads</source>
-        <translation>Runtergeladen</translation>
+        <translation>Heruntergeladen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="39"/>
@@ -451,7 +446,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Es möchte jemand mit Ihnen befreundet sein</translation>
+        <translation>Es hat Ihnen jemand eine Freundschaftsanfrage gesendet</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
@@ -580,7 +575,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="64"/>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="80"/>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Änderung wird erst nach Neustart aktiv.</translation>
+        <translation>Änderung wird erst nach Neustart von qTox aktiv.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="67"/>
@@ -591,12 +586,12 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="89"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Speichert die Einstellungen im Arbeits- statt im  normalen Konfigurationsverzeichnis</translation>
+        <translation>Speichert die Einstellungen im Arbeits- statt im normalen Konfigurationsverzeichnis</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="92"/>
         <source>Make Tox portable</source>
-        <translation>Macht Tox portabel</translation>
+        <translation>Mache Tox portabel</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="101"/>
@@ -621,17 +616,17 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="149"/>
         <source>Show contacts&apos; status changes</source>
-        <translation>Zeigt Statusänderungen der Kontakte</translation>
+        <translation>Zeige Statusänderungen der Kontakte</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
         <source>Check for updates on startup (unstable)</source>
-        <translation>Prüft beim Start auf Updates (nicht stabil)</translation>
+        <translation>Beim Start auf Updates prüfen (nicht stabil)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="163"/>
         <source>Focus qTox when a message is received</source>
-        <translation>Bringt qTox in den Vordergrund, wenn eine Nachricht eintrifft</translation>
+        <translation>Bringe qTox in den Vordergrund, wenn eine Nachricht eintrifft</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="170"/>
@@ -641,7 +636,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="179"/>
         <source>Provided in minutes</source>
-        <translation>Bereitgestellt in Minuten</translation>
+        <translation>Angabe in Minuten</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="185"/>
@@ -662,7 +657,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
         <source>Smiley Pack</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Smiley Paket</translation>
+        <translation>Emoticon Paket</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="356"/>
@@ -677,7 +672,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="398"/>
         <source>Emoticon size</source>
-        <translation>Smiley Größe</translation>
+        <translation>Emoticon Größe</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="414"/>
@@ -705,7 +700,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Erneut verbinden</translation>
+        <translation>Neu verbinden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="204"/>
@@ -746,7 +741,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="485"/>
         <source>Use proxy (SOCKS5)</source>
-        <translation>Proy benutzen (SOCKS5)</translation>
+        <translation>Proxy benutzen (SOCKS5)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="497"/>
@@ -781,12 +776,12 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="71"/>
         <source>Audio call: RED means you&apos;re on a call</source>
-        <translation>Audio Anruf: ROT bedeutet verbunden</translation>
+        <translation>Sprachanruf: ROT bedeutet verbunden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="74"/>
         <source>Video call: RED means you&apos;re on a call</source>
-        <translation>Video Anruf: ROT bedeutet verbunden</translation>
+        <translation>Videoanruf: ROT bedeutet verbunden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="77"/>
@@ -821,7 +816,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/groupchatform.cpp" line="58"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>%1 User im Chat</translation>
+        <translation>%1 Teilnehmer im Chat</translation>
     </message>
     <message>
         <source>&lt;Unknown&gt;</source>
@@ -830,7 +825,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="108"/>
         <source>%1 users in chat</source>
-        <translation>%1 User im Chat</translation>
+        <translation>%1 Teilnehmer im Chat</translation>
     </message>
     <message>
         <source>Save chat log</source>
@@ -843,13 +838,13 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/groupwidget.cpp" line="42"/>
         <location filename="../src/widget/groupwidget.cpp" line="64"/>
         <source>%1 users in chat</source>
-        <translation>%1 User im Chat</translation>
+        <translation>%1 Teilnehmer im Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="44"/>
         <location filename="../src/widget/groupwidget.cpp" line="66"/>
         <source>0 users in chat</source>
-        <translation>kein User im Chat</translation>
+        <translation>kein Teilnehmer im Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="53"/>
@@ -875,7 +870,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="133"/>
         <source>You can&apos;t switch profiles while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Profil kann während eines Anrufes nicht gewechselt werden!</translation>
+        <translation>Das Profil kann während eines Anrufes nicht gewechselt werden!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="143"/>
@@ -910,7 +905,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="180"/>
         <source>Failed to remove file</source>
-        <translation>Datei konnte nicht entfernt werden</translation>
+        <translation>Die Datei konnte nicht entfernt werden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="180"/>
@@ -920,7 +915,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
         <source>Failed to copy file</source>
-        <translation>Datei konnte nicht kopiert werden</translation>
+        <translation>Die Datei konnte nicht kopiert werden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
@@ -1010,7 +1005,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="53"/>
         <source>Public Information</source>
-        <translation>Öffentliche Information</translation>
+        <translation>Öffentliche Informationen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="59"/>
@@ -1173,7 +1168,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="28"/>
         <source>Privacy</source>
-        <translation>Datenschutz</translation>
+        <translation>Privatsphäre</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="86"/>
@@ -1243,7 +1238,7 @@ Soll die alte Historiedatei gelöscht werden?</translation>
         <location filename="../src/autoupdate.cpp" line="432"/>
         <source>An update is available, do you want to download it now ?
 It will be installed when qTox restarts.</source>
-        <translation>Ein Update steht zur Verfügung, soll es runtergeladen werden?
+        <translation>Ein Update steht zur Verfügung, soll es heruntergeladen werden?
 Es wird beim Neustart von qTox installiert.</translation>
     </message>
     <message>
@@ -1390,7 +1385,7 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/toxdns.cpp" line="82"/>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
-        <translation>Keine Textaufzeichnung gefunden</translation>
+        <translation>Kein Text Eintrag im DNS gefunden</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="89"/>
@@ -1408,7 +1403,7 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/toxdns.cpp" line="126"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>Der DNS Eintrag enthält keine TOX ID</translation>
+        <translation>Der DNS Eintrag enthält keine Tox ID</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="133"/>
