@@ -204,7 +204,6 @@ void GeneralForm::onAutoAwayChanged()
 {
     int minutes = bodyUI->autoAwaySpinBox->value();
     Settings::getInstance().setAutoAwayTime(minutes);
-    Widget::getInstance()->setIdleTimer(minutes);
 }
 
 void GeneralForm::onAutoAcceptFileChange()

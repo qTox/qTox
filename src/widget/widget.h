@@ -62,7 +62,6 @@ public:
     bool getIsWindowMinimized();
     static QList<QString> searchProfiles();
     void clearContactsList();
-    void setIdleTimer(int minutes);
     void setTranslation();
     Q_INVOKABLE QMessageBox::StandardButton showWarningMsgBox(const QString& title, const QString& msg,
                                               QMessageBox::StandardButtons buttonss = QMessageBox::Ok);
@@ -129,7 +128,7 @@ private slots:
     void onGroupSendResult(int groupId, const QString& message, int result);
     void playRingtone();
     void onIconClick(QSystemTrayIcon::ActivationReason);
-    void onUserAway();
+    void onUserAwayCheck();
     void getPassword(QString info, int passtype, uint8_t* salt);
     void onSetShowSystemTray(bool newValue);
 

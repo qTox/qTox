@@ -35,6 +35,7 @@
 #include "form/inputpassworddialog.h"
 #include "src/autoupdate.h"
 #include "src/audio.h"
+#include "src/platform.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -124,8 +125,7 @@ void Widget::init()
     ui->menubar->hide();
 
     idleTimer = new QTimer();
-    idleTimer->setSingleShot(true);
-    setIdleTimer(Settings::getInstance().getAutoAwayTime());
+    idleTimer->start(10000);
 
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());
@@ -262,7 +262,7 @@ void Widget::init()
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
-    connect(idleTimer, &QTimer::timeout, this, &Widget::onUserAway);
+    connect(idleTimer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
 
     coreThread->start();
 
@@ -1064,21 +1064,13 @@ bool Widget::event(QEvent * e)
                 activeChatroomWidget->resetEventFlags();
                 activeChatroomWidget->updateStatusLight();
             }
-        // http://qt-project.org/faq/answer/how_can_i_detect_a_period_of_no_user_interaction
-        // Detecting global inactivity, like Skype, is possible but not via Qt:
-        // http://stackoverflow.com/a/21905027/1497645
         case QEvent::MouseButtonPress:
         case QEvent::MouseButtonRelease:
         case QEvent::Wheel:
         case QEvent::KeyPress:
         case QEvent::KeyRelease:
-            if (autoAwayActive && ui->statusButton->property("status").toString() == "away")
-            { // be sure nothing else has changed the status in the meantime
-                qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
-                autoAwayActive = false;
-                emit statusSet(Status::Online);
-            }
-            setIdleTimer(Settings::getInstance().getAutoAwayTime());
+            if (autoAwayActive)
+                onUserAwayCheck();  // Just so we get back from away faster when interacting with app
         default:
             break;
     }
@@ -1086,22 +1078,35 @@ bool Widget::event(QEvent * e)
     return QWidget::event(e);
 }
 
-void Widget::setIdleTimer(int minutes)
+void Widget::onUserAwayCheck()
 {
-    if (minutes > 0)
-        idleTimer->start(minutes * 1000*60);
-}
-
-void Widget::onUserAway()
-{
-    if (Settings::getInstance().getAutoAwayTime() > 0
-        && ui->statusButton->property("status").toString() == "online") // leave user-set statuses in place
+    u_int32_t autoAwayTime = Settings::getInstance().getAutoAwayTime() * 60 * 1000;
+    if(ui->statusButton->property("status").toString() == "online")
     {
-        qDebug() << "Widget: auto away activated" << QTime::currentTime().toString();
-        emit statusSet(Status::Away);
-        autoAwayActive = true;
+        if(autoAwayTime)
+        {
+            if (Platform::getIdleTime() >= autoAwayTime)
+            {
+                qDebug() << "Widget: auto away activated" << QTime::currentTime().toString();
+                emit statusSet(Status::Away);
+                autoAwayActive = true;
+            }
+        }
     }
-    idleTimer->stop();
+    else if(ui->statusButton->property("status").toString() == "away")
+    {
+        if(autoAwayActive)
+        {
+            if(!autoAwayTime || Platform::getIdleTime() < autoAwayTime)
+            {
+                qDebug() << "Widget: auto away deactivated" << QTime::currentTime().toString();
+                emit statusSet(Status::Online);
+                autoAwayActive = false;
+            }
+        }
+    }
+    else if(autoAwayActive)
+        autoAwayActive = false;
 }
 
 void Widget::setStatusOnline()
