@@ -70,7 +70,7 @@ win32 {
         BUNDLEID = im.tox.qtox
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -framework OpenAL -framework IOKit -lopencv_core -lopencv_highgui
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -framework OpenAL -framework IOKit -lopencv_core -lopencv_highgui -framework CoreFoundation
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
         contains(STATICPKG, YES) {
