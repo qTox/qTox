@@ -45,7 +45,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     calls[callId].codecSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
     calls[callId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
     calls[callId].videoEnabled = videoEnabled;
-    int r = toxav_prepare_transmission(toxav, callId, av_jbufdc, av_VADd, videoEnabled);
+    int r = toxav_prepare_transmission(toxav, callId, videoEnabled);
     if (r < 0)
         qWarning() << QString("Error starting call %1: toxav_prepare_transmission failed with %2").arg(callId).arg(r);
 
@@ -79,7 +79,7 @@ void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
 
     qDebug() << "Core: Received media change from friend "<<friendId;
 
-    if (settings.call_type == TypeAudio)
+    if (settings.call_type == av_TypeAudio)
     {
         calls[callId].videoEnabled = false;
         calls[callId].sendVideoTimer->stop();
@@ -111,14 +111,14 @@ void Core::answerCall(int callId)
 
     ToxAvCSettings* transSettings = new ToxAvCSettings;
     int err = toxav_get_peer_csettings(toxav, callId, 0, transSettings);
-    if (err != ErrorNone)
+    if (err != av_ErrorNone)
     {
          qWarning() << "Core::answerCall: error getting call settings";
          delete transSettings;
          return;
     }
 
-    if (transSettings->call_type == TypeVideo)
+    if (transSettings->call_type == av_TypeVideo)
     {
         qDebug() << QString("Core: answering call %1 with video").arg(callId);
         toxav_answer(toxav, callId, transSettings);
@@ -148,7 +148,7 @@ void Core::startCall(int friendId, bool video)
     if (video)
     {
         qDebug() << QString("Core: Starting new call with %1 with video").arg(friendId);
-        cSettings.call_type = TypeVideo;
+        cSettings.call_type = av_TypeVideo;
         if (toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME) == 0)
         {
             calls[callId].videoEnabled=true;
@@ -163,7 +163,7 @@ void Core::startCall(int friendId, bool video)
     else
     {
         qDebug() << QString("Core: Starting new call with %1 without video").arg(friendId);
-        cSettings.call_type = TypeAudio;
+        cSettings.call_type = av_TypeAudio;
         if (toxav_call(toxav, &callId, friendId, &cSettings, TOXAV_RINGING_TIME) == 0)
         {
             calls[callId].videoEnabled=false;
@@ -196,7 +196,7 @@ void Core::cleanupCall(int callId)
     Audio::unsuscribeInput();
 }
 
-void Core::playCallAudio(ToxAv* toxav, int32_t callId, int16_t *data, int samples, void *user_data)
+void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint16_t samples, void *user_data)
 {
     Q_UNUSED(user_data);
 
@@ -207,7 +207,7 @@ void Core::playCallAudio(ToxAv* toxav, int32_t callId, int16_t *data, int sample
         alGenSources(1, &calls[callId].alSource);
 
     ToxAvCSettings dest;
-    if(toxav_get_peer_csettings(toxav, callId, 0, &dest) == 0)
+    if(toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &dest) == 0)
         playAudioBuffer(calls[callId].alSource, data, samples, dest.audio_channels, dest.audio_sample_rate);
 }
 
@@ -252,7 +252,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     calls[callId].sendAudioTimer->start();
 }
 
-void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_data)
+void Core::playCallVideo(void*, int32_t callId, const vpx_image_t* img, void *user_data)
 {
     Q_UNUSED(user_data);
 
@@ -260,8 +260,6 @@ void Core::playCallVideo(ToxAv*, int32_t callId, vpx_image_t* img, void *user_da
         return;
 
     calls[callId].videoSource.pushVPXFrame(img);
-
-    vpx_img_free(img);
 }
 
 void Core::sendCallVideo(int callId)
@@ -381,58 +379,58 @@ void Core::onAvRinging(void* _toxav, int32_t call_index, void* core)
     }
 }
 
-void Core::onAvStarting(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
+//void Core::onAvStarting(void* _toxav, int32_t call_index, void* core)
+//{
+//    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV starting";
-        return;
-    }
+//    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+//    if (friendId < 0)
+//    {
+//        qWarning() << "Core: Received invalid AV starting";
+//        return;
+//    }
 
-    ToxAvCSettings* transSettings = new ToxAvCSettings;
-    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
-    if (err != ErrorNone)
-    {
-        qWarning() << "Core::onAvStarting: error getting call type";
-        delete transSettings;
-        return;
-    }
+//    ToxAvCSettings* transSettings = new ToxAvCSettings;
+//    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
+//    if (err != ErrorNone)
+//    {
+//        qWarning() << "Core::onAvStarting: error getting call type";
+//        delete transSettings;
+//        return;
+//    }
 
-    if (transSettings->call_type == TypeVideo)
-    {
-        qDebug() << QString("Core: AV starting from %1 with video").arg(friendId);
-        prepareCall(friendId, call_index, toxav, true);
-        emit static_cast<Core*>(core)->avStarting(friendId, call_index, true);
-    }
-    else
-    {
-        qDebug() << QString("Core: AV starting from %1 without video").arg(friendId);
-        prepareCall(friendId, call_index, toxav, false);
-        emit static_cast<Core*>(core)->avStarting(friendId, call_index, false);
-    }
+//    if (transSettings->call_type == TypeVideo)
+//    {
+//        qDebug() << QString("Core: AV starting from %1 with video").arg(friendId);
+//        prepareCall(friendId, call_index, toxav, true);
+//        emit static_cast<Core*>(core)->avStarting(friendId, call_index, true);
+//    }
+//    else
+//    {
+//        qDebug() << QString("Core: AV starting from %1 without video").arg(friendId);
+//        prepareCall(friendId, call_index, toxav, false);
+//        emit static_cast<Core*>(core)->avStarting(friendId, call_index, false);
+//    }
 
-    delete transSettings;
-}
+//    delete transSettings;
+//}
 
-void Core::onAvEnding(void* _toxav, int32_t call_index, void* core)
-{
-    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
+//void Core::onAvEnding(void* _toxav, int32_t call_index, void* core)
+//{
+//    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-    if (friendId < 0)
-    {
-        qWarning() << "Core: Received invalid AV ending";
-        return;
-    }
-    qDebug() << QString("Core: AV ending from %1").arg(friendId);
+//    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+//    if (friendId < 0)
+//    {
+//        qWarning() << "Core: Received invalid AV ending";
+//        return;
+//    }
+//    qDebug() << QString("Core: AV ending from %1").arg(friendId);
 
-    cleanupCall(call_index);
+//    cleanupCall(call_index);
 
-    emit static_cast<Core*>(core)->avEnding(friendId, call_index);
-}
+//    emit static_cast<Core*>(core)->avEnding(friendId, call_index);
+//}
 
 void Core::onAvRequestTimeout(void* _toxav, int32_t call_index, void* core)
 {
@@ -482,14 +480,14 @@ void Core::onAvInvite(void* _toxav, int32_t call_index, void* core)
 
     ToxAvCSettings* transSettings = new ToxAvCSettings;
     int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
-    if (err != ErrorNone)
+    if (err != av_ErrorNone)
     {
         qWarning() << "Core::onAvInvite: error getting call type";
         delete transSettings;
         return;
     }
 
-    if (transSettings->call_type == TypeVideo)
+    if (transSettings->call_type == av_TypeVideo)
     {
         qDebug() << QString("Core: AV invite from %1 with video").arg(friendId);
         emit static_cast<Core*>(core)->avInvite(friendId, call_index, true);
@@ -516,14 +514,14 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
 
     ToxAvCSettings* transSettings = new ToxAvCSettings;
     int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
-    if (err != ErrorNone)
+    if (err != av_ErrorNone)
     {
         qWarning() << "Core::onAvStart: error getting call type";
         delete transSettings;
         return;
     }
 
-    if (transSettings->call_type == TypeVideo)
+    if (transSettings->call_type == av_TypeVideo)
     {
         qDebug() << QString("Core: AV start from %1 with video").arg(friendId);
         prepareCall(friendId, call_index, toxav, true);

@@ -253,14 +253,13 @@ void Core::start()
     toxav_register_callstate_callback(toxav, onAvReject, av_OnReject, this);
     toxav_register_callstate_callback(toxav, onAvEnd, av_OnEnd, this);
     toxav_register_callstate_callback(toxav, onAvRinging, av_OnRinging, this);
-    toxav_register_callstate_callback(toxav, onAvStarting, av_OnStarting, this);
-    toxav_register_callstate_callback(toxav, onAvEnding, av_OnEnding, this);
-    toxav_register_callstate_callback(toxav, onAvMediaChange, av_OnMediaChange, this);
+    toxav_register_callstate_callback(toxav, onAvMediaChange, av_OnPeerCSChange, this);
+    toxav_register_callstate_callback(toxav, onAvMediaChange, av_OnSelfCSChange, this);
     toxav_register_callstate_callback(toxav, onAvRequestTimeout, av_OnRequestTimeout, this);
     toxav_register_callstate_callback(toxav, onAvPeerTimeout, av_OnPeerTimeout, this);
 
-    toxav_register_audio_recv_callback(toxav, playCallAudio, this);
-    toxav_register_video_recv_callback(toxav, playCallVideo, this);
+    toxav_register_audio_callback(playCallAudio, this);
+    toxav_register_video_callback(playCallVideo, this);
 
     QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
     if (!pic.isNull() && !pic.size().isEmpty())
@@ -296,6 +295,7 @@ void Core::process()
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
     tox_do(tox);
+    toxav_do(toxav);
 
 #ifdef DEBUG
     //we want to see the debug messages immediately
@@ -309,7 +309,7 @@ void Core::process()
         bootstrapDht();
     }
 
-    toxTimer->start(tox_do_interval(tox));
+    toxTimer->start(qMin(tox_do_interval(tox), toxav_do_interval(toxav)));
 }
 
 bool Core::checkConnection()

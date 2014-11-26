@@ -245,8 +245,6 @@ private:
     static void onAvReject(void* toxav, int32_t call_index, void* core);
     static void onAvEnd(void* toxav, int32_t call_index, void* core);
     static void onAvRinging(void* toxav, int32_t call_index, void* core);
-    static void onAvStarting(void* toxav, int32_t call_index, void* core);
-    static void onAvEnding(void* toxav, int32_t call_index, void* core);
     static void onAvRequestTimeout(void* toxav, int32_t call_index, void* core);
     static void onAvPeerTimeout(void* toxav, int32_t call_index, void* core);
     static void onAvMediaChange(void *toxav, int32_t call_index, void* core);
@@ -255,10 +253,10 @@ private:
 
     static void prepareCall(int friendId, int callId, ToxAv *toxav, bool videoEnabled);
     static void cleanupCall(int callId);
-    static void playCallAudio(ToxAv *toxav, int32_t callId, int16_t *data, int samples, void *user_data); // Callback
+    static void playCallAudio(void *toxav, int32_t callId, const int16_t *data, uint16_t samples, void *user_data); // Callback
     static void sendCallAudio(int callId, ToxAv* toxav);
     static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
-    static void playCallVideo(ToxAv* toxav, int32_t callId, vpx_image_t* img, void *user_data);
+    static void playCallVideo(void *toxav, int32_t callId, const vpx_image_t* img, void *user_data);
     void sendCallVideo(int callId);
 
     bool checkConnection();
