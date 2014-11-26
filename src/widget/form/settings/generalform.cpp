@@ -52,7 +52,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
         bodyUI->transComboBox->insertItem(i, langs[i]);
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
-
     bodyUI->showSystemTray->setChecked(Settings::getInstance().getShowSystemTray());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
     bodyUI->closeToTray->setChecked(Settings::getInstance().getCloseToTray());
