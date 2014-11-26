@@ -64,6 +64,7 @@ public:
     void clearContactsList();
     void setIdleTimer(int minutes);
     void setTranslation();
+    void updateTrayIcon();
     Q_INVOKABLE QMessageBox::StandardButton showWarningMsgBox(const QString& title, const QString& msg,
                                               QMessageBox::StandardButtons buttonss = QMessageBox::Ok);
     Q_INVOKABLE void setEnabledThreadsafe(bool enabled);
