@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>524</width>
-        <height>726</height>
+        <width>509</width>
+        <height>849</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -94,66 +94,78 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="trayLayout">
-            <item>
-             <widget class="QCheckBox" name="showSystemTray">
-              <property name="text">
-               <string>Show system tray icon</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="startInTray">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Start in tray</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="closeToTray">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Close to tray</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="minimizeToTray">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Minimize to tray</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="trayShowsUserStatus">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QGroupBox" name="trayGroup">
+            <property name="title">
+             <string>System tray integration</string>
             </property>
-            <property name="text">
-             <string>Tray icon displays user status</string>
-            </property>
+            <layout class="QFormLayout" name="formLayout_2">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+             </property>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="showSystemTray">
+               <property name="text">
+                <string>Show system tray icon</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <layout class="QHBoxLayout" name="trayBehavior">
+               <item>
+                <widget class="QCheckBox" name="startInTray">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Start in tray</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="closeToTray">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Close to tray</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="minimizeToTray">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Minimize to tray</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="trayShowsUserStatus">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Tray icon displays user status</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -210,9 +222,6 @@
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
-              </property>
               <property name="suffix">
                <string> minutes</string>
               </property>
@@ -221,6 +230,9 @@
               </property>
               <property name="maximum">
                <number>2147483647</number>
+              </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -551,12 +563,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>122</y>
+     <x>105</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
-     <x>207</x>
-     <y>124</y>
+     <x>119</x>
+     <y>177</y>
     </hint>
    </hints>
   </connection>
@@ -567,12 +579,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>119</y>
+     <x>205</x>
+     <y>146</y>
     </hint>
     <hint type="destinationlabel">
-     <x>346</x>
-     <y>116</y>
+     <x>224</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>
@@ -583,12 +595,28 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>83</x>
-     <y>121</y>
+     <x>180</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
-     <x>476</x>
-     <y>120</y>
+     <x>359</x>
+     <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showSystemTray</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>trayShowsUserStatus</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>158</x>
+     <y>205</y>
     </hint>
    </hints>
   </connection>
