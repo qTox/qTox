@@ -169,19 +169,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="trayShowsUserStatus">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Tray icon displays user status</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="statusChanges">
             <property name="text">
              <string>Show contacts' status changes</string>
@@ -235,6 +222,9 @@
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
+              </property>
               <property name="suffix">
                <string> minutes</string>
               </property>
@@ -243,9 +233,6 @@
               </property>
               <property name="maximum">
                <number>2147483647</number>
-              </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -614,22 +601,6 @@
     <hint type="destinationlabel">
      <x>359</x>
      <y>178</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>showSystemTray</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>trayShowsUserStatus</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>148</x>
-     <y>143</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>158</x>
-     <y>205</y>
     </hint>
    </hints>
   </connection>
