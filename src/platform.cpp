@@ -1,8 +1,8 @@
 #include "platform.h"
 #include <QDebug>
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN32)
 #include <Windows.h>
-#elif defined(Q_OS_DARWIN) && defined(HAVE_IOKIT)
+#elif defined(__APPLE__) && defined(__MACH__)
 #include <IOKit/IOKitLib.h>
 #include <CoreFoundation/CoreFoundation.h>
 #else // Q_OS_UNIX
@@ -17,11 +17,11 @@ u_int32_t Platform::getIdleTime()
     // https://hg.pidgin.im/pidgin/main/file/13e4ae613a6a/pidgin/gtkidle.c
     u_int32_t idleTime = 0;
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN32)
     LASTINPUTINFO info = { 0 };
     if(GetLastInputInfo(&info))
         idleTime = info.dwTime / 1000;
-#elif defined(Q_OS_DARWIN) && defined(HAVE_IOKIT)
+#elif defined(__APPLE__) && defined(__MACH__)
     static io_service_t service = NULL;
     CFTypeRef property;
     u_int64_t idleTime_ns = 0;
