@@ -49,6 +49,7 @@ private slots:
     void onAutoAwayChanged();
     void onUseEmoticonsChange();
     void onSetMinimizeToTray();
+    void onSettrayShowsUserStatus();
     void onReconnectClicked();
     void onAutoAcceptFileChange();
     void onAutoSaveDirChange();
