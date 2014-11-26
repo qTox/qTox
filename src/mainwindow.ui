@@ -1137,7 +1137,7 @@ QSplitter:handle{
              </property>
              <property name="icon">
               <iconset resource="../res.qrc">
-               <normaloff>:/img/group_2x.png</normaloff>:/img/group_2x.png</iconset>
+               <normaloff>:/img/group_button.png</normaloff>:/img/group_button.png</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>
