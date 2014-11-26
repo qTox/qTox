@@ -53,16 +53,11 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
 
-    bool showSystemTray = Settings::getInstance().getShowSystemTray();
-    bodyUI->showSystemTray->setChecked(showSystemTray);
+    bodyUI->showSystemTray->setChecked(Settings::getInstance().getShowSystemTray());
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
-    bodyUI->startInTray->setEnabled(showSystemTray);
     bodyUI->closeToTray->setChecked(Settings::getInstance().getCloseToTray());
-    bodyUI->closeToTray->setEnabled(showSystemTray);
     bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
-    bodyUI->minimizeToTray->setEnabled(showSystemTray);
     bodyUI->trayShowsUserStatus->setChecked(Settings::getInstance().gettrayShowsUserStatus());
-    bodyUI->trayShowsUserStatus->setEnabled(showSystemTray);
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
