@@ -77,7 +77,7 @@ void Widget::init()
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         icon = new QSystemTrayIcon(this);
-        icon->setIcon(this->windowIcon());
+        updateTrayIcon();
         trayMenu = new QMenu;
         
         statusOnline = new QAction(tr("Online"), this);
@@ -257,6 +257,7 @@ void Widget::init()
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onUsernameChanged(QString, QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onStatusMessageChanged(QString, QString)));
+    connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
@@ -290,6 +291,26 @@ void Widget::setTranslation()
     else
         qDebug() << "Error loading translation" << locale;
     QCoreApplication::installTranslator(translator);
+}
+
+void Widget::updateTrayIcon()
+{
+    if(Settings::getInstance().gettrayShowsUserStatus())
+    {
+        QString status = ui->statusButton->property("status").toString();
+        QString icon;
+        if(status == "online")
+            icon = ":img/status/dot_online_2x.png";
+        else if(status == "away")
+            icon = ":img/status/dot_idle_2x.png";
+        else if(status == "busy")
+            icon = ":img/status/dot_busy_2x.png";
+        else
+            icon = ":img/status/dot_away_2x.png";
+        this->icon->setIcon(QIcon(icon));
+    }
+    else
+        icon->setIcon(windowIcon());
 }
 
 Widget::~Widget()
@@ -336,9 +357,8 @@ void Widget::closeEvent(QCloseEvent *event)
     }
     else
     {
-        Settings::getInstance().setWindowGeometry(saveGeometry());
-        Settings::getInstance().setWindowState(saveState());
-        Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+        saveWindowGeometry();
+        saveSplitterGeometry();
         QWidget::closeEvent(event);
     }
 }
@@ -352,6 +372,11 @@ void Widget::changeEvent(QEvent *event)
             this->hide();
         }
     }
+}
+
+void Widget::resizeEvent(QResizeEvent *)
+{
+    saveWindowGeometry();
 }
 
 QString Widget::detectProfile()
@@ -535,7 +560,7 @@ void Widget::onStatusSet(Status status)
         ui->statusButton->setProperty("status" ,"offline");
         break;
     }
-
+    updateTrayIcon();
     Style::repolish(ui->statusButton);
 }
 
@@ -1008,6 +1033,17 @@ void Widget::removeGroup(Group* g, bool fake)
     contactListWidget->show();
 }
 
+void Widget::saveWindowGeometry()
+{
+    Settings::getInstance().setWindowGeometry(saveGeometry());
+    Settings::getInstance().setWindowState(saveState());
+}
+
+void Widget::saveSplitterGeometry()
+{
+    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+}
+
 void Widget::removeGroup(int groupId)
 {
     removeGroup(GroupList::findGroup(groupId));
@@ -1155,6 +1191,11 @@ void Widget::getPassword(QString info, int passtype, uint8_t* salt)
 
 void Widget::onSetShowSystemTray(bool newValue){
     icon->setVisible(newValue);
+}
+
+void Widget::onSplitterMoved(int, int)
+{
+    saveSplitterGeometry();
 }
 
 

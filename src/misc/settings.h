@@ -57,6 +57,9 @@ public:
     
     bool getCloseToTray() const;
     void setCloseToTray(bool newValue);
+
+    bool gettrayShowsUserStatus() const;
+    void settrayShowsUserStatus(bool newValue);
     
     bool getMinimizeToTray() const;
     void setMinimizeToTray(bool newValue);
@@ -240,6 +243,7 @@ private:
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
+    bool trayShowsUserStatus;
     bool useEmoticons;
     bool checkUpdates;
     bool showInFront;
