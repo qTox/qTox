@@ -1080,7 +1080,7 @@ bool Widget::event(QEvent * e)
 
 void Widget::onUserAwayCheck()
 {
-    u_int32_t autoAwayTime = Settings::getInstance().getAutoAwayTime() * 60 * 1000;
+    uint32_t autoAwayTime = Settings::getInstance().getAutoAwayTime() * 60 * 1000;
     if(ui->statusButton->property("status").toString() == "online")
     {
         if(autoAwayTime)
