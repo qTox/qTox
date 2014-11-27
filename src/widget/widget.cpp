@@ -1014,17 +1014,6 @@ void Widget::removeGroup(Group* g, bool fake)
     contactListWidget->show();
 }
 
-void Widget::saveWindowGeometry()
-{
-    Settings::getInstance().setWindowGeometry(saveGeometry());
-    Settings::getInstance().setWindowState(saveState());
-}
-
-void Widget::saveSplitterGeometry()
-{
-    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
-}
-
 void Widget::removeGroup(int groupId)
 {
     removeGroup(GroupList::findGroup(groupId));
@@ -1172,6 +1161,17 @@ void Widget::getPassword(QString info, int passtype, uint8_t* salt)
 
 void Widget::onSetShowSystemTray(bool newValue){
     icon->setVisible(newValue);
+}
+
+void Widget::saveWindowGeometry()
+{
+    Settings::getInstance().setWindowGeometry(saveGeometry());
+    Settings::getInstance().setWindowState(saveState());
+}
+
+void Widget::saveSplitterGeometry()
+{
+    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
 }
 
 void Widget::onSplitterMoved(int pos, int index)
