@@ -71,17 +71,9 @@ HistoryKeeper *HistoryKeeper::getInstance()
 bool HistoryKeeper::checkPassword()
 {
     if (Settings::getInstance().getEnableLogging())
-    {
         if (Settings::getInstance().getEncryptLogs())
-        {
-            QString dbpath = getHistoryPath();
-            return EncryptedDb::check(dbpath);
-        } else {
-            return true;
-        }
-    } else {
-        return true;
-    }
+            return EncryptedDb::check(getHistoryPath());
+    return true;
 }
 
 HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
@@ -141,6 +133,12 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
 HistoryKeeper::~HistoryKeeper()
 {
     delete db;
+}
+
+void HistoryKeeper::reencrypt(QString newpw)
+{
+    // this needs to appropriately set the core password as well
+    // if newpw.isEmpty(), then use the other core password
 }
 
 int HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)

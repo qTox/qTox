@@ -22,6 +22,7 @@
 #include "src/core.h"
 #include "src/widget/widget.h"
 #include "src/widget/form/setpassworddialog.h"
+#include "src/widget/form/checkcontinue.h"
 #include <QMessageBox>
 #include <QFile>
 
@@ -60,16 +61,65 @@ void PrivacyForm::onTypingNotificationEnabledUpdated()
 
 void PrivacyForm::onEncryptLogsUpdated()
 {
-    bool encryption = bodyUI->cbEncryptHistory->isChecked();
+    Core* core = Core::getInstance();
 
-    if (encryption)
+    if (bodyUI->cbEncryptHistory->isChecked())
     {
-        
+        if (!core->isPasswordSet(Core::ptHistory))
+        {
+            SetPasswordDialog* dialog;
+            QString body = tr("Please set your new chat log password:");
+            if (core->isPasswordSet(Core::ptMain))
+                dialog = new SetPasswordDialog(body, tr("Use datafile password", "pushbutton text"));
+            else
+                dialog = new SetPasswordDialog(body, QString());
+
+            if (int r = dialog->exec())
+            {
+                QString newpw;                
+                if (r != 2)
+                    newpw = dialog->getPassword();
+                delete dialog;
+                if (r != 2 && newpw.isEmpty())
+                    goto fail;
+
+                Settings::getInstance().setEncryptLogs(true);
+                bodyUI->cbEncryptHistory->setChecked(true);
+                // not logically necessary, but more consistent (esp. if the logic changes)
+                if (!HistoryKeeper::checkPassword())
+                    if (checkContinue(tr("Old encrypted chat logs", "title"),
+                                      tr("Would you like to re-encrypt your old chat logs?\nOtherwise they will be deleted.", "body")))
+                    {
+                        HistoryKeeper::getInstance()->reencrypt(newpw); 
+                        // will set core and reset itself
+                        return;
+                    }
+                // @apprb you resetInstance() in the old code but wouldn't that wipe out the current unencrypted history?
+                // that should of course just become encrypted
+                if (newpw.isEmpty())
+                    core->useOtherPassword(Core::ptHistory);
+                else
+                    core->setPassword(newpw, Core::ptHistory);
+                return;
+            }
+            else
+                delete dialog;
+        }
     }
     else
     {
-    
+        if (checkContinue(tr("Old encrypted chat logs", "title"), tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted.")))
+        {
+            // TODO: how to unencrypt current encrypted logs
+        }
+        else
+            HistoryKeeper::resetInstance();
     }
+
+    fail:
+        core->clearPassword(Core::ptHistory);
+        Settings::getInstance().setEncryptLogs(false);
+        bodyUI->cbEncryptHistory->setChecked(false);
 }
 
 void PrivacyForm::onEncryptToxUpdated()

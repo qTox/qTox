@@ -50,6 +50,15 @@ void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
     password.clear();
 }
 
+void Core::useOtherPassword(PasswordType type)
+{
+    clearPassword(type);
+    if (type == ptHistory)
+        pwsaltedkeys[ptHistory] = pwsaltedkeys[ptMain];
+    else if (type == ptMain)
+        pwsaltedkeys[ptMain] = pwsaltedkeys[ptHistory];
+}
+
 void Core::clearPassword(PasswordType passtype)
 {
     if (pwsaltedkeys[passtype])

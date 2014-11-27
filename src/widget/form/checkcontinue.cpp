@@ -14,29 +14,10 @@
     See the COPYING file for more details.
 */
 
-#ifndef SETPASSWORDDIALOG_H
-#define SETPASSWORDDIALOG_H
+#include <QMessageBox>
 
-#include <QDialog>
-
-namespace Ui {
-class SetPasswordDialog;
-}
-
-class SetPasswordDialog : public QDialog
+bool checkContinue(const QString& title, const QString& msg, QWidget* parent = nullptr)
 {
-    Q_OBJECT
-
-public:
-    explicit SetPasswordDialog(QString body, QString extraButton, QWidget* parent = 0);
-    ~SetPasswordDialog();
-    QString getPassword();
-
-private slots:
-    void onPasswordEdit();
-
-private:
-    Ui::SetPasswordDialog *ui;
-};
-
-#endif // SETPASSWORDDIALOG_H
+    QMessageBox::StandardButton resp = QMessageBox::question(parent, title, msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    return resp == QMessageBox::Yes;
+}

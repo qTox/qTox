@@ -18,6 +18,7 @@
 #include "widget.h"
 #include "src/core.h"
 #include "src/misc/settings.h"
+#include "src/widget/form/checkcontinue.h"
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
@@ -28,12 +29,6 @@ void toxSaveEventHandler(const QByteArray& eventData)
         return;
 
     handleToxSave(eventData);
-}
-
-static bool checkContinue(const QString& title, const QString& msg)
-{
-    QMessageBox::StandardButton resp = QMessageBox::question(Widget::getInstance(), title, msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-    return resp == QMessageBox::Yes;
 }
 
 void handleToxSave(const QString& path)

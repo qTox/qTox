@@ -135,6 +135,7 @@ public slots:
     static bool isGroupCallVolEnabled(int groupId);
 
     void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
+    void useOtherPassword(PasswordType type);
     void clearPassword(PasswordType passtype);
     QByteArray encryptData(const QByteArray& data, PasswordType passtype);
     QByteArray decryptData(const QByteArray& data, PasswordType passtype);
