@@ -100,7 +100,10 @@ void Audio::openOutput(const QString& outDevDescr)
     else
     {
         if (alContext)
+        {
+            alcMakeContextCurrent(nullptr);
             alcDestroyContext(alContext);
+        }
         alContext=alcCreateContext(alOutDev,nullptr);
         if (!alcMakeContextCurrent(alContext))
         {
