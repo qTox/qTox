@@ -14,16 +14,15 @@
     See the COPYING file for more details.
 */
 
-#ifndef PLATFORM_H
-#define PLATFORM_H
+#ifndef PLATFORM_TIMER_H
+#define PLATFORM_TIMER_H
 
 #include <cstdint>
 
-/* Platform-dependent code */
 
 namespace Platform
 {
     uint32_t getIdleTime();
 }
 
-#endif // PLATFORM_H
+#endif // PLATFORM_TIMER_H

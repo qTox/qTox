@@ -35,7 +35,7 @@
 #include "form/inputpassworddialog.h"
 #include "src/autoupdate.h"
 #include "src/audio.h"
-#include "src/platform.h"
+#include "src/platform/timer.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -125,7 +125,7 @@ void Widget::init()
     ui->menubar->hide();
 
     idleTimer = new QTimer();
-    idleTimer->start(10000);
+    idleTimer->start(1000);
 
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());

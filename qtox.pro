@@ -156,7 +156,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/misc/serialize.h \
     src/widget/form/settings/advancedform.h \
     src/audio.h \
-    src/platform.h
+    src/platform/timer.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -224,4 +224,6 @@ SOURCES += \
     src/misc/serialize.cpp \
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp \
-    src/platform.cpp
+    src/platform/osx_timer.cpp \
+    src/platform/win_timer.cpp \
+    src/platform/x11_timer.cpp
