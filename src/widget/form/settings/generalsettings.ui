@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>509</width>
-        <height>849</height>
+        <width>513</width>
+        <height>847</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -601,6 +601,22 @@
     <hint type="destinationlabel">
      <x>359</x>
      <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showSystemTray</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>trayShowsUserStatus</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>158</x>
+     <y>205</y>
     </hint>
    </hints>
   </connection>
