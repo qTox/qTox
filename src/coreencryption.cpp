@@ -72,6 +72,9 @@ void Core::clearPassword(PasswordType passtype)
         delete[] pwsaltedkeys[passtype];
         pwsaltedkeys[passtype] = nullptr;
     }
+
+    if (passtype == ptMain)
+        saveConfiguration();
 }
 
 QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)

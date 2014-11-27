@@ -32,10 +32,15 @@ PrivacyForm::PrivacyForm() :
     bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);
 
+    bodyUI->encryptToxHLayout->addStretch();
+    bodyUI->encryptLogsHLayout->addStretch();
+
     connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
     connect(bodyUI->cbEncryptHistory, SIGNAL(clicked()), this, SLOT(onEncryptLogsUpdated()));
+    connect(bodyUI->changeLogsPwButton, &QPushButton::clicked, this, &PrivacyForm::setChatLogsPassword);
     connect(bodyUI->cbEncryptTox, SIGNAL(clicked()), this, SLOT(onEncryptToxUpdated()));
+    connect(bodyUI->changeToxPwButton, &QPushButton::clicked, this, &PrivacyForm::setToxPassword);
     connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
     connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
     connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
@@ -61,8 +66,9 @@ void PrivacyForm::onTypingNotificationEnabledUpdated()
 
 bool PrivacyForm::setChatLogsPassword()
 {
+    Core* core = Core::getInstance();
     SetPasswordDialog* dialog;
-    QString body = tr("Please set your new chat log password:");
+    QString body = tr("Please set your new chat log password.");
     if (core->isPasswordSet(Core::ptMain))
         dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), this);
     else
@@ -110,7 +116,8 @@ void PrivacyForm::onEncryptLogsUpdated()
                 Settings::getInstance().setEncryptLogs(true);
                 bodyUI->cbEncryptHistory->setChecked(true);
                 // not logically necessary, but more consistent (esp. if the logic changes)
-                // enable change pw button
+                bodyUI->changeLogsPwButton->setEnabled(true);
+                return;
             }
         }
     }
@@ -127,13 +134,14 @@ void PrivacyForm::onEncryptLogsUpdated()
     core->clearPassword(Core::ptHistory);
     Settings::getInstance().setEncryptLogs(false);
     bodyUI->cbEncryptHistory->setChecked(false);
-    // disable change pw button
+    bodyUI->changeLogsPwButton->setEnabled(false);
 }
 
 bool PrivacyForm::setToxPassword()
 {
+    Core* core = Core::getInstance();
     SetPasswordDialog* dialog;
-    QString body = tr("Please set your new data file password:");
+    QString body = tr("Please set your new data file password.");
     if (core->isPasswordSet(Core::ptHistory))
         dialog = new SetPasswordDialog(body, tr("Use chat log password", "pushbutton text"), this);
     else
@@ -162,18 +170,18 @@ void PrivacyForm::onEncryptToxUpdated()
     Core* core = Core::getInstance();
 
     if (bodyUI->cbEncryptTox->isChecked())
-        if (!Core::getInstance()->isPasswordSet(Core::ptMain))
+        if (!core->isPasswordSet(Core::ptMain))
             if (setToxPassword())
             {
                 bodyUI->cbEncryptTox->setChecked(true);
                 Settings::getInstance().setEncryptTox(true);
-                // enable change pw button
+                bodyUI->changeToxPwButton->setEnabled(true);
                 return;
             }
 
     bodyUI->cbEncryptTox->setChecked(false);
     Settings::getInstance().setEncryptTox(false);
-    // disable change pw button
+    bodyUI->changeToxPwButton->setEnabled(false);
     core->clearPassword(Core::ptMain);
 }
 
@@ -193,8 +201,10 @@ void PrivacyForm::present()
     bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
     bodyUI->cbEncryptHistory->setChecked(Settings::getInstance().getEncryptLogs());
+    bodyUI->changeLogsPwButton->setEnabled(Settings::getInstance().getEncryptLogs());
     bodyUI->cbEncryptHistory->setEnabled(Settings::getInstance().getEnableLogging());
     bodyUI->cbEncryptTox->setChecked(Settings::getInstance().getEncryptTox());
+    bodyUI->changeToxPwButton->setEnabled(Settings::getInstance().getEncryptTox());
 }
 
 void PrivacyForm::generateRandomNospam()

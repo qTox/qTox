@@ -27,7 +27,8 @@ SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget*
     connect(ui->passwordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
     connect(ui->repasswordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
 
-    ui->body->setText(body);
+    ui->body->setText(body + tr("\nTo encourage good habits, qTox requires at least 8 characters."));
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
     if (!extraButton.isEmpty())
     {
@@ -44,7 +45,7 @@ SetPasswordDialog::~SetPasswordDialog()
 
 void SetPasswordDialog::onPasswordEdit()
 {
-    if (  !ui->passwordlineEdit->text().isEmpty()
+    if (   ui->passwordlineEdit->text().length() >= 8
         && ui->passwordlineEdit->text() == ui->repasswordlineEdit->text())
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
     else

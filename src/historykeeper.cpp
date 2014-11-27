@@ -137,7 +137,7 @@ HistoryKeeper::~HistoryKeeper()
 
 void HistoryKeeper::reencrypt(QString newpw)
 {
-    // this needs to appropriately set the core password as well
+    // TODO: this needs to appropriately set the core password as well
     // if newpw.isEmpty(), then use the other core password
 }
 
