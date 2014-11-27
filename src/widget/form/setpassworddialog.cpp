@@ -44,7 +44,8 @@ SetPasswordDialog::~SetPasswordDialog()
 
 void SetPasswordDialog::onPasswordEdit()
 {
-    if (ui->passwordlineEdit->text() == ui->repasswordlineEdit->text())
+    if (  !ui->passwordlineEdit->text().isEmpty()
+        && ui->passwordlineEdit->text() == ui->repasswordlineEdit->text())
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
     else
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);

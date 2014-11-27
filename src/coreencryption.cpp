@@ -48,6 +48,9 @@ void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
         tox_derive_key_from_pass(str.data(), str.size(), pwsaltedkeys[passtype]);
 
     password.clear();
+
+    if (passtype == ptMain)
+        saveConfiguration();
 }
 
 void Core::useOtherPassword(PasswordType type)
@@ -56,7 +59,10 @@ void Core::useOtherPassword(PasswordType type)
     if (type == ptHistory)
         pwsaltedkeys[ptHistory] = pwsaltedkeys[ptMain];
     else if (type == ptMain)
+    {
         pwsaltedkeys[ptMain] = pwsaltedkeys[ptHistory];
+        saveConfiguration();
+    }
 }
 
 void Core::clearPassword(PasswordType passtype)

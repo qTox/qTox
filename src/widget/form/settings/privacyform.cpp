@@ -59,6 +59,44 @@ void PrivacyForm::onTypingNotificationEnabledUpdated()
     Settings::getInstance().setTypingNotification(bodyUI->cbTypingNotification->isChecked());
 }
 
+bool PrivacyForm::setChatLogsPassword()
+{
+    SetPasswordDialog* dialog;
+    QString body = tr("Please set your new chat log password:");
+    if (core->isPasswordSet(Core::ptMain))
+        dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), this);
+    else
+        dialog = new SetPasswordDialog(body, QString(), this);
+
+    if (int r = dialog->exec())
+    {
+        QString newpw = dialog->getPassword();
+        delete dialog;
+
+        if (!HistoryKeeper::checkPassword())
+            if (checkContinue(tr("Old encrypted chat logs", "title"),
+                              tr("Would you like to re-encrypt your old chat logs?\nOtherwise they will be deleted.", "body")))
+            {
+                HistoryKeeper::getInstance()->reencrypt(r == 2 ? QString() : newpw); 
+                // will set core and reset itself
+                return true;
+            }
+        // @apprb you resetInstance() in the old code but wouldn't that wipe out the current unencrypted history?
+        // current history should of course just become encrypted
+        if (r == 2)
+            core->useOtherPassword(Core::ptHistory);
+        else
+            core->setPassword(newpw, Core::ptHistory);
+        // HistoryKeeper::encryptPlain();
+        return true;
+    }
+    else
+    {
+        delete dialog;
+        return false;
+    }
+}
+
 void PrivacyForm::onEncryptLogsUpdated()
 {
     Core* core = Core::getInstance();
@@ -67,43 +105,13 @@ void PrivacyForm::onEncryptLogsUpdated()
     {
         if (!core->isPasswordSet(Core::ptHistory))
         {
-            SetPasswordDialog* dialog;
-            QString body = tr("Please set your new chat log password:");
-            if (core->isPasswordSet(Core::ptMain))
-                dialog = new SetPasswordDialog(body, tr("Use datafile password", "pushbutton text"));
-            else
-                dialog = new SetPasswordDialog(body, QString());
-
-            if (int r = dialog->exec())
+            if (setChatLogsPassword())
             {
-                QString newpw;                
-                if (r != 2)
-                    newpw = dialog->getPassword();
-                delete dialog;
-                if (r != 2 && newpw.isEmpty())
-                    goto fail;
-
                 Settings::getInstance().setEncryptLogs(true);
                 bodyUI->cbEncryptHistory->setChecked(true);
                 // not logically necessary, but more consistent (esp. if the logic changes)
-                if (!HistoryKeeper::checkPassword())
-                    if (checkContinue(tr("Old encrypted chat logs", "title"),
-                                      tr("Would you like to re-encrypt your old chat logs?\nOtherwise they will be deleted.", "body")))
-                    {
-                        HistoryKeeper::getInstance()->reencrypt(newpw); 
-                        // will set core and reset itself
-                        return;
-                    }
-                // @apprb you resetInstance() in the old code but wouldn't that wipe out the current unencrypted history?
-                // that should of course just become encrypted
-                if (newpw.isEmpty())
-                    core->useOtherPassword(Core::ptHistory);
-                else
-                    core->setPassword(newpw, Core::ptHistory);
-                return;
+                // enable change pw button
             }
-            else
-                delete dialog;
         }
     }
     else
@@ -116,40 +124,57 @@ void PrivacyForm::onEncryptLogsUpdated()
             HistoryKeeper::resetInstance();
     }
 
-    fail:
-        core->clearPassword(Core::ptHistory);
-        Settings::getInstance().setEncryptLogs(false);
-        bodyUI->cbEncryptHistory->setChecked(false);
+    core->clearPassword(Core::ptHistory);
+    Settings::getInstance().setEncryptLogs(false);
+    bodyUI->cbEncryptHistory->setChecked(false);
+    // disable change pw button
+}
+
+bool PrivacyForm::setToxPassword()
+{
+    SetPasswordDialog* dialog;
+    QString body = tr("Please set your new data file password:");
+    if (core->isPasswordSet(Core::ptHistory))
+        dialog = new SetPasswordDialog(body, tr("Use chat log password", "pushbutton text"), this);
+    else
+        dialog = new SetPasswordDialog(body, QString(), this);
+
+    if (int r = dialog->exec())
+    {
+        QString newpw = dialog->getPassword();
+        delete dialog;
+
+        if (r == 2)
+            core->useOtherPassword(Core::ptMain);
+        else
+            core->setPassword(newpw, Core::ptMain);
+        return true;
+    }
+    else
+    {
+        delete dialog;
+        return false;
+    }
 }
 
 void PrivacyForm::onEncryptToxUpdated()
 {
-    bool encryptionState = bodyUI->cbEncryptTox->isChecked();
+    Core* core = Core::getInstance();
 
-    if (encryptionState)
-    {
+    if (bodyUI->cbEncryptTox->isChecked())
         if (!Core::getInstance()->isPasswordSet(Core::ptMain))
-        {
-            SetPasswordDialog dialog;
-            if (dialog.exec())
+            if (setToxPassword())
             {
-                QString pswd = dialog.getPassword();
-                if (pswd.size() == 0)
-                    encryptionState = false;
-
-                Core::getInstance()->setPassword(pswd, Core::ptMain);
-            } else {
-                encryptionState = false;
-                Core::getInstance()->clearPassword(Core::ptMain);
+                bodyUI->cbEncryptTox->setChecked(true);
+                Settings::getInstance().setEncryptTox(true);
+                // enable change pw button
+                return;
             }
-        }
-    }
 
-    bodyUI->cbEncryptTox->setChecked(encryptionState);
-    Settings::getInstance().setEncryptTox(encryptionState);
-
-    if (!Settings::getInstance().getEncryptTox())
-        Core::getInstance()->clearPassword(Core::ptMain);
+    bodyUI->cbEncryptTox->setChecked(false);
+    Settings::getInstance().setEncryptTox(false);
+    // disable change pw button
+    core->clearPassword(Core::ptMain);
 }
 
 void PrivacyForm::setNospam()

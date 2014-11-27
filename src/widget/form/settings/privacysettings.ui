@@ -57,7 +57,7 @@
           <string extracomment="History keeping still under developing. Log format changin is possible."/>
          </property>
          <property name="text">
-          <string>Keep History (unstable)</string>
+          <string>Keep chat logs (mostly stable)</string>
          </property>
         </widget>
        </item>
@@ -76,7 +76,7 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>Encrypt Tox datafile</string>
+             <string>Encrypt Tox data file</string>
             </property>
            </widget>
           </item>
@@ -86,7 +86,7 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>Encrypt History</string>
+             <string>Encrypt chat logs</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
