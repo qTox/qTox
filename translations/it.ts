@@ -203,7 +203,7 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="254"/>
-        <source>%1 calling</source>
+        <source>%1 is calling</source>
         <translation>%1 ti sta chiamando</translation>
     </message>
     <message>
@@ -320,20 +320,20 @@ Password vuota.</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1262"/>
-        <source>Your history is encrypted with different password
+        <source>Your history is encrypted with different password.
 Do you want to try another password?</source>
-        <translation>I log sono criptati con una password diversa.
-Vuoi provare un&apos;altra password?</translation>
+        <translation>I log delle chat sono criptati con una password diversa.
+Vuoi provare ad inserire un&apos;altra password?</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1272"/>
-        <source>Loggin</source>
-        <translation>Logging</translation>
+        <source>History</source>
+        <translation>Chat Log</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1272"/>
-        <source>Due to incorret password logging will be disabled</source>
-        <translation>I log saranno disabilitati a causa di una password incorretta</translation>
+        <source>Due to incorret password history will be disabled.</source>
+        <translation>Password errata, i log delle chat non saranno caricati.</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1345"/>
