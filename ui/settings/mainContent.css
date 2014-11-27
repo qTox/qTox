@@ -29,6 +29,11 @@ QCheckBox
     color: black;    
 }
 
+QCheckBox:disabled
+{
+    color: grey;
+}
+
 QSpinBox
 {
     background: white;
