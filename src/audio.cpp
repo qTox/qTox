@@ -188,7 +188,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
         alDeleteBuffers(processed - 1, bufids + 1);
         bufid = bufids[0];
     }
-    else if(queued < 16)
+    else if(queued < 128)
     {
         alGenBuffers(1, &bufid);
     }
