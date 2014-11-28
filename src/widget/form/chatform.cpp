@@ -630,6 +630,9 @@ void ChatForm::onCancelCallTriggered()
 
     netcam->hide();
     emit cancelCall(callId, f->getFriendID());
+    
+    addSystemInfoMessage(tr("Call rejected"), "white", QDateTime::currentDateTime());
+    
 }
 
 void ChatForm::onMicMuteToggle()
