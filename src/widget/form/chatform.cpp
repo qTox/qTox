@@ -237,6 +237,9 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
+    rejectButton->show();
+    connect(rejectButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
+            
     if (video)
     {
         callButton->setObjectName("grey");
@@ -276,7 +279,8 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
-        
+    rejectButton->hide();
+    
     if (video)
     {
         callButton->setObjectName("grey");
@@ -306,6 +310,7 @@ void ChatForm::onAvCancel(int FriendId, int)
     if (FriendId != f->getFriendID())
         return;
 
+    rejectButton->hide();
     audioInputFlag = false;
     audioOutputFlag = false;
     micButton->setObjectName("green");
@@ -604,6 +609,7 @@ void ChatForm::onAvCallFailed(int FriendId)
 void ChatForm::onCancelCallTriggered()
 {
     qDebug() << "onCancelCallTriggered";
+    rejectButton->hide();
     
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -624,6 +630,9 @@ void ChatForm::onCancelCallTriggered()
 
     netcam->hide();
     emit cancelCall(callId, f->getFriendID());
+    
+    addSystemInfoMessage(tr("Call rejected"), "white", QDateTime::currentDateTime());
+    
 }
 
 void ChatForm::onMicMuteToggle()

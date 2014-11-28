@@ -216,5 +216,9 @@
         <file>smileys/cylgom/yawn.png</file>
         <file>translations/bg.qm</file>
         <file>translations/sv.qm</file>
+        <file>ui/rejectButton/rejectButton.css</file>
+        <file>ui/rejectButton/rejectButtonRed.png</file>
+        <file>ui/rejectButton/rejectButtonRedHover.png</file>
+        <file>ui/rejectButton/rejectButtonRedPressed.png</file>
     </qresource>
 </RCC>

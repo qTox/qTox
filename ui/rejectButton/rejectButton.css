@@ -1,0 +1,72 @@
+QPushButton#green
+{
+    background-color: transparent;
+    background-image: url(":/ui/rejectButton/rejectButton.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+
+QPushButton#green:hover
+{
+   background-image: url(":/ui/rejectButton/rejectButtonHover.png");
+}
+
+QPushButton#green:pressed
+{
+   background-image: url(":/ui/rejectButton/rejectButtonPressed.png");
+}
+
+QPushButton#red
+{
+    background-color: transparent;
+    background-image: url(":/ui/rejectButton/rejectButtonRed.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+QPushButton#red:hover
+{
+   background-image: url(":/ui/rejectButton/rejectButtonRedHover.png");
+}
+
+QPushButton#red:pressed
+{
+   background-image: url(":/ui/rejectButton/rejectButtonRedPressed.png");
+}
+
+QPushButton#yellow
+{
+    background-color: transparent;
+    background-image: url(":/ui/rejectButton/rejectButtonYellow.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+QPushButton#yellow:hover
+{
+   background-image: url(":/ui/rejectButton/rejectButtonYellowHover.png");
+}
+
+QPushButton#yellow:pressed
+{
+   background-image: url(":/ui/rejectButton/rejectButtonYellowPressed.png");
+}
+
+QPushButton#grey
+{
+    background-color: transparent;
+    background-image: url(":/ui/rejectButton/rejectButtonDisabled.png");
+    background-repeat: none;    
+    border: none;
+    width: 50px;
+    height: 40px;
+}
+
+QPushButton:focus {
+    outline: none;
+}
+
