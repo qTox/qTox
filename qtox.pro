@@ -224,6 +224,6 @@ SOURCES += \
     src/misc/serialize.cpp \
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp \
-    src/platform/osx_timer.cpp \
-    src/platform/win_timer.cpp \
-    src/platform/x11_timer.cpp
+    src/platform/timer_osx.cpp \
+    src/platform/timer_win.cpp \
+    src/platform/timer_x11.cpp
