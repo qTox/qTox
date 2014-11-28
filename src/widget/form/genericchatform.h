@@ -84,7 +84,14 @@ protected:
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;
-    QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QPushButton *fileButton,
+                *emoteButton,
+                *callButton,
+                *rejectButton,
+                *videoButton,
+                *volButton,
+                *micButton;
+    
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;

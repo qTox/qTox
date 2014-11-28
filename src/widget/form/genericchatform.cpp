@@ -75,6 +75,9 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
     videoButton->setToolTip(tr("Video call: RED means you're on a call"));
+    rejectButton = new QPushButton();
+    rejectButton->setFixedSize(25, 40);
+    rejectButton->setToolTip(tr("Reject call"));
     volButton = new QPushButton();
     volButton->setFixedSize(25,20);
     volButton->setToolTip(tr("Toggle speakers volume: RED is OFF"));
@@ -97,6 +100,10 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     videoButton->setObjectName("green");
     videoButton->setStyleSheet(Style::getStylesheet(":/ui/videoButton/videoButton.css"));
+    
+    rejectButton->hide();
+    rejectButton->setObjectName("red");
+    rejectButton->setStyleSheet(Style::getStylesheet(":/ui/rejectButton/rejectButton.css"));
 
     QString volButtonStylesheet = Style::getStylesheet(":/ui/volButton/volButton.css");
     volButton->setObjectName("green");
@@ -126,6 +133,8 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headLayout->addLayout(headTextLayout);
     headLayout->addLayout(volMicLayout);
     headLayout->addWidget(callButton);
+    headLayout->addSpacing(3);    
+    headLayout->addWidget(rejectButton);
     headLayout->addSpacing(3);
     headLayout->addWidget(videoButton);
     headLayout->setSpacing(0);
