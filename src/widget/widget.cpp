@@ -73,7 +73,12 @@ Widget::Widget(QWidget *parent)
 void Widget::init()
 {
     ui->setupUi(this);
-    
+
+    //restore window state
+    restoreGeometry(Settings::getInstance().getWindowGeometry());
+    restoreState(Settings::getInstance().getWindowState());
+    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
+
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         icon = new QSystemTrayIcon(this);
@@ -126,11 +131,6 @@ void Widget::init()
     idleTimer = new QTimer();
     idleTimer->setSingleShot(true);
     setIdleTimer(Settings::getInstance().getAutoAwayTime());
-
-    //restore window state
-    restoreGeometry(Settings::getInstance().getWindowGeometry());
-    restoreState(Settings::getInstance().getWindowState());
-    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
 
     layout()->setContentsMargins(0, 0, 0, 0);
     ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
@@ -257,6 +257,7 @@ void Widget::init()
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onUsernameChanged(QString, QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onStatusMessageChanged(QString, QString)));
+    connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
@@ -336,9 +337,8 @@ void Widget::closeEvent(QCloseEvent *event)
     }
     else
     {
-        Settings::getInstance().setWindowGeometry(saveGeometry());
-        Settings::getInstance().setWindowState(saveState());
-        Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+        saveWindowGeometry();
+        saveSplitterGeometry();
         QWidget::closeEvent(event);
     }
 }
@@ -352,6 +352,12 @@ void Widget::changeEvent(QEvent *event)
             this->hide();
         }
     }
+}
+
+void Widget::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event);
+    saveWindowGeometry();
 }
 
 QString Widget::detectProfile()
@@ -1008,6 +1014,17 @@ void Widget::removeGroup(Group* g, bool fake)
     contactListWidget->show();
 }
 
+void Widget::saveWindowGeometry()
+{
+    Settings::getInstance().setWindowGeometry(saveGeometry());
+    Settings::getInstance().setWindowState(saveState());
+}
+
+void Widget::saveSplitterGeometry()
+{
+    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+}
+
 void Widget::removeGroup(int groupId)
 {
     removeGroup(GroupList::findGroup(groupId));
@@ -1157,6 +1174,12 @@ void Widget::onSetShowSystemTray(bool newValue){
     icon->setVisible(newValue);
 }
 
+void Widget::onSplitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterGeometry();
+}
 
 QMessageBox::StandardButton Widget::showWarningMsgBox(const QString& title, const QString& msg, QMessageBox::StandardButtons buttons)
 {
