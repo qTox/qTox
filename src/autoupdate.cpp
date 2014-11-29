@@ -428,7 +428,7 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
         return;
 
     if (Widget::getInstance()->askMsgboxQuestion(QObject::tr("Update", "The title of a message box"),
-        QObject::tr("An update is available, do you want to download it now ?\nIt will be installed when qTox restarts.")))
+        QObject::tr("An update is available, do you want to download it now?\nIt will be installed when qTox restarts.")))
     {
         downloadUpdate();
     }
