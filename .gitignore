@@ -10,3 +10,5 @@ qtox
 *.orig
 build-*-Release
 build-*-Debug
+*.*~
+filter_audio/
