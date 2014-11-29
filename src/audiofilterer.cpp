@@ -17,7 +17,7 @@
 #include "audiofilterer.h"
 
 extern "C"{
-#include "filter_audio/filter_audio.h"
+#include <filter_audio.h>
 }
 
 void AudioFilterer::startFilter(unsigned int fs){
