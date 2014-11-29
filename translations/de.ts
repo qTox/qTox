@@ -616,7 +616,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="149"/>
         <source>Show contacts&apos; status changes</source>
-        <translation>Zeige Statusänderungen der Kontakte</translation>
+        <translation>Zeigt Statusänderungen der Kontakte</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
@@ -626,7 +626,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="163"/>
         <source>Focus qTox when a message is received</source>
-        <translation>Bringe qTox in den Vordergrund, wenn eine Nachricht eintrifft</translation>
+        <translation>Bringt qTox in den Vordergrund, wenn eine Nachricht eintrifft</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="170"/>
