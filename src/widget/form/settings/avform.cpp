@@ -33,6 +33,8 @@ AVForm::AVForm() :
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
+    bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
+
     connect(Camera::getInstance(), &Camera::propProbingFinished, this, &AVForm::onPropProbingFinished);
     connect(Camera::getInstance(), &Camera::resolutionProbingFinished, this, &AVForm::onResProbingFinished);
 
