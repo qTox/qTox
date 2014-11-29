@@ -31,11 +31,11 @@ void AudioFilterer::closeFilter(){
 }
 
 
-void AudioFilterer::filterAudio(const int16_t *data, int samples){
+void AudioFilterer::filterAudio(int16_t *data, int framesize){
     if (!filter)
         return;
 
-    filter_audio(filter, (int16_t*) data, samples);
+    filter_audio(filter, (int16_t*) data, framesize);
 }
 
 
