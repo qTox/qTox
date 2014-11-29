@@ -52,6 +52,7 @@ private slots:
     // audio
     void onInDevChanged(const QString& deviceDescriptor);
     void onOutDevChanged(const QString& deviceDescriptor);
+    void onFilterAudioToggled(bool filterAudio);
 
     // camera
     void onPropProbingFinished(Camera::Prop prop, double val);

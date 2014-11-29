@@ -124,6 +124,9 @@ public:
     QString getOutDev() const;
     void setOutDev(const QString& deviceSpecifier);
 
+    bool getFilterAudio() const;
+    void setFilterAudio(bool newValue);
+
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
     // for some general purpose widgets, such as MainWindows or Splitters,
@@ -290,6 +293,7 @@ private:
     // Audio
     QString inDev;
     QString outDev;
+    bool filterAudio;
 
     struct friendProp
     {
