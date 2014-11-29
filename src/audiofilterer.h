@@ -19,12 +19,22 @@
 
 #include <cstdint>
 
+#ifndef _FILTER_AUDIO
+typedef struct Filter_Audio Filter_Audio;
+#endif
+
 class AudioFilterer
 {
 public:
-    static void startFilter(unsigned int fs);
-    static void filterAudio(const int16_t *data, int samples);
-    static void closeFilter();
+    explicit AudioFilterer() = default;
+    ~AudioFilterer();
+
+    void startFilter(unsigned int fs);
+    void filterAudio(int16_t *data, int framesize);
+    void closeFilter();
+
+private:
+    struct Filter_Audio * filter{nullptr};
 };
 
 #endif // AUDIOFILTERER_H
