@@ -225,3 +225,5 @@ SOURCES += \
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp \
     src/audiofilterer.cpp
+
+unix|win32: LIBS += -lfilteraudio

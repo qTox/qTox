@@ -17,6 +17,7 @@
 #include "core.h"
 #include "video/camera.h"
 #include "audio.h"
+#include "audiofilterer.h"
 #include <QDebug>
 #include <QTimer>
 
@@ -246,8 +247,12 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
             return;
         }
 
-        if((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
+        AudioFilterer::filterAudio((int16_t*) buf, framesize);
+
+        if((r = toxav_send_audio(toxav, callId, dest, r)) < 0){
             qDebug() << "Core: toxav_send_audio error";
+            return;
+        }
     }
     calls[callId].sendAudioTimer->start();
 }
@@ -320,6 +325,8 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
     qDebug() << QString("Core: AV cancel from %1").arg(friendId);
 
     calls[callId].active = false;
+
+    AudioFilterer::closeFilter();
 
     emit static_cast<Core*>(core)->avCancel(friendId, callId);
 }
@@ -533,6 +540,8 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
         prepareCall(friendId, call_index, toxav, false);
         emit static_cast<Core*>(core)->avStart(friendId, call_index, false);
     }
+
+    AudioFilterer::startFilter(48000);
 
     delete transSettings;
 }
