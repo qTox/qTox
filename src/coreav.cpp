@@ -69,10 +69,15 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         Camera::getInstance()->subscribe();
     }
 
-    if (Settings::getInstance().getFilterAudio()){
+    if (Settings::getInstance().getFilterAudio())
+    {
         Core::filterer[callId] = new AudioFilterer();
         filterer[callId]->startFilter(48000);
-    } else{
+    }
+    else
+    {
+        if (filterer[callId])
+            delete filterer[callId];
         filterer[callId] = nullptr;
     }
 }
@@ -257,11 +262,13 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
         }
 
         if (filterer[callId])
+        {
             filterer[callId]->filterAudio((int16_t*) buf, framesize);
+        }
 
-        if((r = toxav_send_audio(toxav, callId, dest, r)) < 0){
+        if((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
+        {
             qDebug() << "Core: toxav_send_audio error";
-            return;
         }
     }
     calls[callId].sendAudioTimer->start();
@@ -309,14 +316,16 @@ void Core::sendCallVideo(int callId)
 
 void Core::micMuteToggle(int callId)
 {
-    if (calls[callId].active) {
+    if (calls[callId].active)
+    {
         calls[callId].muteMic = !calls[callId].muteMic;
     }
 }
 
 void Core::volMuteToggle(int callId)
 {
-    if (calls[callId].active) {
+    if (calls[callId].active)
+    {
         calls[callId].muteVol = !calls[callId].muteVol;
         alSourcef(calls[callId].alSource, AL_GAIN, calls[callId].muteVol ? 0.f : 1.f);
     }
@@ -336,7 +345,8 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
 
     calls[callId].active = false;
 
-    if (filterer[callId] != nullptr){
+    if (filterer[callId])
+    {
         filterer[callId]->closeFilter();
         delete filterer[callId];
         filterer[callId] = nullptr;

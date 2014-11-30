@@ -26,7 +26,7 @@ void AudioFilterer::startFilter(unsigned int fs){
 }
 
 void AudioFilterer::closeFilter(){
-    if (filter != nullptr)
+    if (filter)
         kill_filter_audio(filter);
 }
 
