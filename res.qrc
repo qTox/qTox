@@ -216,5 +216,6 @@
         <file>smileys/cylgom/yawn.png</file>
         <file>translations/bg.qm</file>
         <file>translations/sv.qm</file>
+        <file>translations/es.qm</file>
     </qresource>
 </RCC>
