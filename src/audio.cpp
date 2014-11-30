@@ -87,8 +87,6 @@ void Audio::openOutput(const QString& outDevDescr)
 {
     auto* tmp = alOutDev;
     alOutDev = nullptr;
-    if (tmp)
-        alcCloseDevice(tmp);
     if (outDevDescr.isEmpty())
         alOutDev = alcOpenDevice(nullptr);
     else
@@ -104,6 +102,8 @@ void Audio::openOutput(const QString& outDevDescr)
             alcMakeContextCurrent(nullptr);
             alcDestroyContext(alContext);
         }
+        if (tmp)
+            alcCloseDevice(tmp);
         alContext=alcCreateContext(alOutDev,nullptr);
         if (!alcMakeContextCurrent(alContext))
         {
