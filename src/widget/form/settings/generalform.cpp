@@ -30,23 +30,23 @@
 
 #include "src/autoupdate.h"
 
-static QStringList locales = {"bg", "de", "en", "fr", "es", "it", "mannol", "pirate", "pl", "ru", "fi", "sv", "uk"};
-static QStringList langs = {"Български", "Deutsch", "English", "Français", "Español", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Svenska", "Українська"};
+static QStringList locales = {"bg", "de", "en", "es", "fr", "it", "mannol", "pirate", "pl", "ru", "fi", "sv", "uk"};
+static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Italiano", "mannol", "Pirate", "Polski", "Русский", "Suomi", "Svenska", "Українська"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
 {
-    parent = myParent;    
-    
+    parent = myParent;
+
     bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
 
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
     bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
     bodyUI->trayLayout->addStretch();
-    
+
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
         bodyUI->transComboBox->insertItem(i, langs[i]);
@@ -62,7 +62,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
-    
+
     for (auto entry : SmileyPack::listSmileyPacks())
     {
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
@@ -72,31 +72,31 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
-        
+
     if(QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
         bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
     else
         bodyUI->styleBrowser->setCurrentText(tr("None"));
-    
+
     for (QString color : Style::themeColorNames)
         bodyUI->themeColorCBox->addItem(color);
     bodyUI->themeColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
 
     bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
-    
+
     QStringList timestamps;
     timestamps << QString("%1 - %2").arg(timeFormats[0],QTime::currentTime().toString(timeFormats[0]))
                << QString("%1 - %2").arg(timeFormats[1],QTime::currentTime().toString(timeFormats[1]))
                << QString("%1 - %2").arg(timeFormats[2],QTime::currentTime().toString(timeFormats[2]))
                << QString("%1 - %2").arg(timeFormats[3],QTime::currentTime().toString(timeFormats[3]));
     bodyUI->timestamp->addItems(timestamps);
-    
+
     bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(),
                                                              QTime::currentTime().toString(Settings::getInstance().getTimestampFormat()))
                                       ); //idiot proof enough?
-    
+
     bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
-    
+
     bodyUI->cbEnableUDP->setChecked(!Settings::getInstance().getForceTCP());
     bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
     int port = Settings::getInstance().getProxyPort();
@@ -125,12 +125,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
     connect(bodyUI->themeColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onThemeColorChanged(int)));
-    connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));    
+    connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));
     connect(bodyUI->timestamp, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimestampSelected(int)));
     //connection
     connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
     connect(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
-    connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);    
+    connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);
     connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
@@ -185,7 +185,7 @@ void GeneralForm::onStyleSelected(QString style)
         Settings::getInstance().setStyle("None");
     else
         Settings::getInstance().setStyle(style);
-    
+
     this->setStyle(QStyleFactory::create(style));
     parent->setBodyHeadStyle(style);
 }
@@ -210,7 +210,7 @@ void GeneralForm::onAutoAwayChanged()
 void GeneralForm::onAutoAcceptFileChange()
 {
     Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
-    
+
     if(bodyUI->autoacceptFiles->isChecked() == true)
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     else
@@ -223,7 +223,7 @@ void GeneralForm::onAutoSaveDirChange()
     QString directory = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"));
     if(directory.isEmpty())
         directory = previousDir;
-    
+
     Settings::getInstance().setGlobalAutoAcceptDir(directory);
     bodyUI->autoSaveFilesDir->setText(directory);
 }
@@ -289,17 +289,17 @@ void GeneralForm::reloadSmiles()
     QStringList smiles;
     smiles << ":)" << ";)" << ":p" << ":O" << ":["; //just in case...
 
-    for(int i = 0; i < emoticons.size(); i++)  
+    for(int i = 0; i < emoticons.size(); i++)
         smiles.push_front(emoticons.at(i).first());
-        
+
     int pixSize = 30;
     bodyUI->smile1->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[0]).pixmap(pixSize, pixSize));
     bodyUI->smile2->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[1]).pixmap(pixSize, pixSize));
     bodyUI->smile3->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[2]).pixmap(pixSize, pixSize));
     bodyUI->smile4->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[3]).pixmap(pixSize, pixSize));
     bodyUI->smile5->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[4]).pixmap(pixSize, pixSize));
-    
-    bodyUI->smile1->setToolTip(smiles[0]);    
+
+    bodyUI->smile1->setToolTip(smiles[0]);
     bodyUI->smile2->setToolTip(smiles[1]);
     bodyUI->smile3->setToolTip(smiles[2]);
     bodyUI->smile4->setToolTip(smiles[3]);
