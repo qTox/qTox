@@ -67,9 +67,16 @@
           <bool>true</bool>
          </property>
          <property name="title">
-          <string>Encryption</string>
+          <string>Local file encryption</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="encryptStatement">
+            <property name="text">
+             <string>All internet communication is encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <layout class="QHBoxLayout" name="encryptToxHLayout">
             <item>
