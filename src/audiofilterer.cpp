@@ -20,18 +20,21 @@ extern "C"{
 #include <filter_audio.h>
 }
 
-void AudioFilterer::startFilter(unsigned int fs){
+void AudioFilterer::startFilter(unsigned int fs)
+{
     closeFilter();
     filter = new_filter_audio(fs);
 }
 
-void AudioFilterer::closeFilter(){
+void AudioFilterer::closeFilter()
+{
     if (filter)
         kill_filter_audio(filter);
 }
 
 
-void AudioFilterer::filterAudio(int16_t *data, int framesize){
+void AudioFilterer::filterAudio(int16_t* data, int framesize)
+{
     if (!filter)
         return;
 
@@ -39,6 +42,7 @@ void AudioFilterer::filterAudio(int16_t *data, int framesize){
 }
 
 
-AudioFilterer::~AudioFilterer(){
+AudioFilterer::~AudioFilterer()
+{
     closeFilter();
 }

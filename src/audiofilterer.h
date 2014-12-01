@@ -30,11 +30,11 @@ public:
     ~AudioFilterer();
 
     void startFilter(unsigned int fs);
-    void filterAudio(int16_t *data, int framesize);
+    void filterAudio(int16_t* data, int framesize);
     void closeFilter();
 
 private:
-    struct Filter_Audio * filter{nullptr};
+    struct Filter_Audio* filter{nullptr};
 };
 
 #endif // AUDIOFILTERER_H
