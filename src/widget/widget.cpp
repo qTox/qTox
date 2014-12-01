@@ -523,7 +523,6 @@ void Widget::onStatusSet(Status status)
     {
     case Status::Online:
         ui->statusButton->setProperty("status" ,"online");
-        qDebug() << "Widget: something set the status to online";
         break;
     case Status::Away:
         ui->statusButton->setProperty("status" ,"away");
@@ -1081,31 +1080,26 @@ bool Widget::event(QEvent * e)
 void Widget::onUserAwayCheck()
 {
     uint32_t autoAwayTime = Settings::getInstance().getAutoAwayTime() * 60 * 1000;
-    if(ui->statusButton->property("status").toString() == "online")
+
+    if (ui->statusButton->property("status").toString() == "online")
     {
-        if(autoAwayTime)
+        if (autoAwayTime && Platform::getIdleTime() >= autoAwayTime)
         {
-            if (Platform::getIdleTime() >= autoAwayTime)
-            {
-                qDebug() << "Widget: auto away activated" << QTime::currentTime().toString();
-                emit statusSet(Status::Away);
-                autoAwayActive = true;
-            }
+            qDebug() << "Widget: auto away activated at" << QTime::currentTime().toString();
+            emit statusSet(Status::Away);
+            autoAwayActive = true;
         }
     }
-    else if(ui->statusButton->property("status").toString() == "away")
+    else if (ui->statusButton->property("status").toString() == "away")
     {
-        if(autoAwayActive)
+        if (autoAwayActive && (!autoAwayTime || Platform::getIdleTime() < autoAwayTime))
         {
-            if(!autoAwayTime || Platform::getIdleTime() < autoAwayTime)
-            {
-                qDebug() << "Widget: auto away deactivated" << QTime::currentTime().toString();
-                emit statusSet(Status::Online);
-                autoAwayActive = false;
-            }
+            qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
+            emit statusSet(Status::Online);
+            autoAwayActive = false;
         }
     }
-    else if(autoAwayActive)
+    else if (autoAwayActive)
         autoAwayActive = false;
 }
 

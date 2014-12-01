@@ -1,5 +1,10 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
+    Pidgin is the legal property of its developers, whose names are too numerous
+    to list here.  Please refer to the COPYRIGHT file distributed with this
+    source distribution (which can be found at
+    <https://hg.pidgin.im/pidgin/main/file/13e4ae613a6a/COPYRIGHT> ).
+
+    Additional Copyright (C) 2014 by Project Tox <https://tox.im>
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
