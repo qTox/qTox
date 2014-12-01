@@ -74,6 +74,10 @@ void Widget::init()
 {
     ui->setupUi(this);
 
+    idleTimer = new QTimer();
+    idleTimer->setSingleShot(true);
+    setIdleTimer(Settings::getInstance().getAutoAwayTime());
+
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());
     restoreState(Settings::getInstance().getWindowState());
@@ -127,10 +131,6 @@ void Widget::init()
 
     ui->statusbar->hide();
     ui->menubar->hide();
-
-    idleTimer = new QTimer();
-    idleTimer->setSingleShot(true);
-    setIdleTimer(Settings::getInstance().getAutoAwayTime());
 
     layout()->setContentsMargins(0, 0, 0, 0);
     ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
