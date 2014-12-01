@@ -163,6 +163,9 @@
                <property name="text">
                 <string>Tray icon displays user status</string>
                </property>
+               <property name="toolTip">
+                <string>This is a temporary work around until proper systray status icons are available.</string>
+               </property>
               </widget>
              </item>
             </layout>
