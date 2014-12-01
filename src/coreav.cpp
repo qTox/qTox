@@ -17,10 +17,13 @@
 #include "core.h"
 #include "video/camera.h"
 #include "audio.h"
+#include "audiofilterer.h"
+#include "misc/settings.h"
 #include <QDebug>
 #include <QTimer>
 
 ToxCall Core::calls[TOXAV_MAX_CALLS];
+AudioFilterer * Core::filterer[TOXAV_MAX_CALLS] { nullptr};
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
 
@@ -64,6 +67,18 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     {
         calls[callId].sendVideoTimer->start();
         Camera::getInstance()->subscribe();
+    }
+
+    if (Settings::getInstance().getFilterAudio())
+    {
+        Core::filterer[callId] = new AudioFilterer();
+        filterer[callId]->startFilter(48000);
+    }
+    else
+    {
+        if (filterer[callId])
+            delete filterer[callId];
+        filterer[callId] = nullptr;
     }
 }
 
@@ -246,8 +261,15 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
             return;
         }
 
+        if (filterer[callId])
+        {
+            filterer[callId]->filterAudio((int16_t*) buf, framesize);
+        }
+
         if((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
+        {
             qDebug() << "Core: toxav_send_audio error";
+        }
     }
     calls[callId].sendAudioTimer->start();
 }
@@ -294,14 +316,16 @@ void Core::sendCallVideo(int callId)
 
 void Core::micMuteToggle(int callId)
 {
-    if (calls[callId].active) {
+    if (calls[callId].active)
+    {
         calls[callId].muteMic = !calls[callId].muteMic;
     }
 }
 
 void Core::volMuteToggle(int callId)
 {
-    if (calls[callId].active) {
+    if (calls[callId].active)
+    {
         calls[callId].muteVol = !calls[callId].muteVol;
         alSourcef(calls[callId].alSource, AL_GAIN, calls[callId].muteVol ? 0.f : 1.f);
     }
@@ -320,6 +344,13 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
     qDebug() << QString("Core: AV cancel from %1").arg(friendId);
 
     calls[callId].active = false;
+
+    if (filterer[callId])
+    {
+        filterer[callId]->closeFilter();
+        delete filterer[callId];
+        filterer[callId] = nullptr;
+    }
 
     emit static_cast<Core*>(core)->avCancel(friendId, callId);
 }
