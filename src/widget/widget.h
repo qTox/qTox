@@ -72,7 +72,8 @@ public:
 
     virtual void closeEvent(QCloseEvent *event);
     virtual void changeEvent(QEvent *event);
-    
+    virtual void resizeEvent(QResizeEvent *event);
+
     void clearAllReceipts();
 
     void reloadTheme();
@@ -132,6 +133,7 @@ private slots:
     void onUserAway();
     void getPassword(QString info, int passtype, uint8_t* salt);
     void onSetShowSystemTray(bool newValue);
+    void onSplitterMoved(int pos, int index);
 
 private:
     void init();
@@ -140,6 +142,8 @@ private:
     Group* createGroup(int groupId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
+    void saveWindowGeometry();
+    void saveSplitterGeometry();
     QString askProfiles();
     QString detectProfile();
     QSystemTrayIcon *icon;
