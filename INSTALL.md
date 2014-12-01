@@ -115,23 +115,23 @@ The following steps assumes that you cloned the repository at "/home/user/qTox".
 
 Debian:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopencv-dev
+sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopencv-dev libxss-dev
 ```
 
 Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libopenal-dev libopencv-dev
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libopenal-dev libopencv-dev libxss-dev
 ```
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed base-devel qt5 opencv openal
+sudo pacman -S --needed base-devel qt5 opencv openal libxss
 ```
 
 Fedora:
 ```bash
 yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator opencv-devel openal-soft-devel
+yum install qt-devel qt-doc qt-creator opencv-devel openal-soft-devel libXScrnSaver-devel
 ```
 
 ###Tox Core

@@ -15,7 +15,7 @@
 */
 
 #include <QDebug>
-#ifdef Q_OS_UNIX
+#if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
 #include "src/platform/timer.h"
 #include <X11/extensions/scrnsaver.h>
 
