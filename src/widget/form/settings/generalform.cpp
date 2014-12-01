@@ -45,17 +45,25 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
     bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
-    bodyUI->trayLayout->addStretch();
+    bodyUI->trayBehavior->addStretch();
 
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
         bodyUI->transComboBox->insertItem(i, langs[i]);
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
-    bodyUI->showSystemTray->setChecked(Settings::getInstance().getShowSystemTray());
+
+    bool showSystemTray = Settings::getInstance().getShowSystemTray();
+   
+    bodyUI->showSystemTray->setChecked(showSystemTray);
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
+    bodyUI->startInTray->setEnabled(showSystemTray);
     bodyUI->closeToTray->setChecked(Settings::getInstance().getCloseToTray());
+    bodyUI->closeToTray->setEnabled(showSystemTray);
     bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
+    bodyUI->minimizeToTray->setEnabled(showSystemTray);
+    bodyUI->trayShowsUserStatus->setChecked(Settings::getInstance().getTrayShowsUserStatus());
+    bodyUI->trayShowsUserStatus->setEnabled(showSystemTray);
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
@@ -114,6 +122,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
     connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);
+    connect(bodyUI->trayShowsUserStatus, &QCheckBox::stateChanged, this, &GeneralForm::onSettrayShowsUserStatus);
     connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
@@ -177,6 +186,12 @@ void GeneralForm::onSetCloseToTray()
 void GeneralForm::onSetMinimizeToTray()
 {
     Settings::getInstance().setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
+}
+
+void GeneralForm::onSettrayShowsUserStatus()
+{
+    Settings::getInstance().setTrayShowsUserStatus(bodyUI->trayShowsUserStatus->isChecked());
+    Widget::getInstance()->updateTrayIcon();
 }
 
 void GeneralForm::onStyleSelected(QString style)

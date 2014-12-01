@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>524</width>
-        <height>726</height>
+        <width>509</width>
+        <height>849</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -94,54 +94,79 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="trayLayout">
-            <item>
-             <widget class="QCheckBox" name="showSystemTray">
-              <property name="text">
-               <string>Show system tray icon</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="startInTray">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Start in tray</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="closeToTray">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Close to tray</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="minimizeToTray">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Minimize to tray</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QGroupBox" name="trayGroup">
+            <property name="title">
+             <string>System tray integration</string>
+            </property>
+            <layout class="QFormLayout" name="formLayout_2">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+             </property>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="showSystemTray">
+               <property name="text">
+                <string>Show system tray icon</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <layout class="QHBoxLayout" name="trayBehavior">
+               <item>
+                <widget class="QCheckBox" name="startInTray">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Start in tray</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="closeToTray">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Close to tray</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="minimizeToTray">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Minimize to tray</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="trayShowsUserStatus">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Tray icon displays user status</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="statusChanges">
@@ -197,9 +222,6 @@
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
-              </property>
               <property name="suffix">
                <string> minutes</string>
               </property>
@@ -208,6 +230,9 @@
               </property>
               <property name="maximum">
                <number>2147483647</number>
+              </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -274,15 +299,21 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="smileyHLayout">
-            <item>
+           <layout class="QFormLayout" name="formLayout">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
              <widget class="QLabel" name="smileyPackLabel">
               <property name="text">
                <string extracomment="Text on smiley pack label">Smiley Pack</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="0" column="1">
              <widget class="QComboBox" name="smileyPackBrowser">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -292,75 +323,14 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
-            <property name="sizeConstraint">
-             <enum>QLayout::SetDefaultConstraint</enum>
-            </property>
-            <item alignment="Qt::AlignTop">
-             <widget class="QLabel" name="smile1">
-              <property name="toolTip">
-               <string notr="true">:)</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QLabel" name="smile2">
-              <property name="toolTip">
-               <string notr="true">;)</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QLabel" name="smile3">
-              <property name="toolTip">
-               <string notr="true">:p</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QLabel" name="smile4">
-              <property name="toolTip">
-               <string notr="true">:O</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QLabel" name="smile5">
-              <property name="toolTip">
-               <string notr="true">:'(</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="styleHLayout">
-            <item>
+            <item row="2" column="0">
              <widget class="QLabel" name="styleLabel">
               <property name="text">
                <string>Style</string>
               </property>
              </widget>
             </item>
-            <item alignment="Qt::AlignTop">
+            <item row="2" column="1">
              <widget class="QComboBox" name="styleBrowser">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -370,18 +340,71 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="themeColorLayour">
-            <item>
+            <item row="1" column="0" colspan="2">
+             <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile1">
+                <property name="toolTip">
+                 <string notr="true">:)</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile2">
+                <property name="toolTip">
+                 <string notr="true">;)</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile3">
+                <property name="toolTip">
+                 <string notr="true">:p</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile4">
+                <property name="toolTip">
+                 <string notr="true">:O</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile5">
+                <property name="toolTip">
+                 <string notr="true">:'(</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="3" column="0">
              <widget class="QLabel" name="themeColorLabel">
               <property name="text">
                <string>Theme color</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="3" column="1">
              <widget class="QComboBox" name="themeColorCBox">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -391,18 +414,14 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="emoiticonHLayout">
-            <item>
+            <item row="4" column="0">
              <widget class="QLabel" name="emoticonSizeLabel">
               <property name="text">
                <string>Emoticon size</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="4" column="1">
              <widget class="QSpinBox" name="emoticonSize">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -427,18 +446,14 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="timestampHLayout">
-            <item>
+            <item row="5" column="0">
              <widget class="QLabel" name="timestampLabel">
               <property name="text">
                <string>Timestamp format</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="5" column="1">
              <widget class="QComboBox" name="timestamp">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -548,12 +563,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>122</y>
+     <x>105</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
-     <x>207</x>
-     <y>124</y>
+     <x>119</x>
+     <y>177</y>
     </hint>
    </hints>
   </connection>
@@ -564,12 +579,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>119</y>
+     <x>205</x>
+     <y>146</y>
     </hint>
     <hint type="destinationlabel">
-     <x>346</x>
-     <y>116</y>
+     <x>224</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>
@@ -580,12 +595,28 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>83</x>
-     <y>121</y>
+     <x>180</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
-     <x>476</x>
-     <y>120</y>
+     <x>359</x>
+     <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showSystemTray</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>trayShowsUserStatus</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>158</x>
+     <y>205</y>
     </hint>
    </hints>
   </connection>
