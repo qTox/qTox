@@ -23,8 +23,9 @@
 uint32_t Platform::getIdleTime()
 {
     LASTINPUTINFO info = { 0 };
+    info.cbSize = sizeof(info);
     if(GetLastInputInfo(&info))
-        return info.dwTime / 1000;
+        return GetTickCount() - info.dwTime;
     return 0;
 }
 
