@@ -228,6 +228,7 @@ private:
     Settings& operator=(const Settings&) = delete;
 
     static const QString FILENAME;
+    static const QString OLDFILENAME;
 
     bool loaded;
 

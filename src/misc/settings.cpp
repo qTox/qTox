@@ -36,7 +36,8 @@
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
 #endif
 
-const QString Settings::FILENAME = "settings.ini";
+const QString Settings::OLDFILENAME = "settings.ini";
+const QString Settings::FILENAME = "qtox.ini";
 bool Settings::makeToxPortable{false};
 
 Settings::Settings() :
@@ -55,14 +56,19 @@ Settings& Settings::getInstance()
 
 void Settings::load()
 {
-    if (loaded) {
+    if (loaded)
         return;
-    }
 
-    QFile portableSettings(FILENAME);
-    if (portableSettings.exists())
+    if (QFile(FILENAME).exists())
     {
         QSettings ps(FILENAME, QSettings::IniFormat);
+        ps.beginGroup("General");
+            makeToxPortable = ps.value("makeToxPortable", false).toBool();
+        ps.endGroup();
+    }
+    else if (QFile(OLDFILENAME).exists())
+    {
+        QSettings ps(OLDFILENAME, QSettings::IniFormat);
         ps.beginGroup("General");
             makeToxPortable = ps.value("makeToxPortable", false).toBool();
         ps.endGroup();
@@ -70,13 +76,17 @@ void Settings::load()
     else
         makeToxPortable = false;
 
-    QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
+    QDir dir(getSettingsDirPath());
+    QString filePath = dir.filePath(FILENAME);
 
     //if no settings file exist -- use the default one
-    QFile file(filePath);
-    if (!file.exists()) {
-        qDebug() << "No settings file found, using defaults";
-        filePath = ":/conf/" + FILENAME;
+    if (!QFile(filePath).exists())
+    {
+        if (!QFile(filePath = dir.filePath(OLDFILENAME)).exists())
+        {
+            qDebug() << "No settings file found, using defaults";
+            filePath = ":/conf/" + FILENAME;
+        }
     }
 
     qDebug() << "Settings: Loading from "<<filePath;
