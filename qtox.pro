@@ -52,6 +52,7 @@ DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
 TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sorry
 DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
+DEFINES += QTOX_PLATFORM_EXT # Comment out to increase portability
 
 contains(JENKINS,YES) {
 	INCLUDEPATH += ./libs/include/
@@ -85,7 +86,7 @@ win32 {
         }
 
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -s
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -s
         }
     }
 }
@@ -155,8 +156,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/autoupdate.h \
     src/misc/serialize.h \
     src/widget/form/settings/advancedform.h \
-    src/audio.h \
-    src/platform/timer.h
+    src/audio.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -223,7 +223,11 @@ SOURCES += \
     src/autoupdate.cpp \
     src/misc/serialize.cpp \
     src/widget/form/settings/advancedform.cpp \
-    src/audio.cpp \
-    src/platform/timer_osx.cpp \
-    src/platform/timer_win.cpp \
-    src/platform/timer_x11.cpp
+    src/audio.cpp
+
+contains(DEFINES, QTOX_PLATFORM_EXT) {
+    HEADERS += src/platform/timer.h
+    SOURCES += src/platform/timer_osx.cpp \
+               src/platform/timer_win.cpp \
+               src/platform/timer_x11.cpp
+}

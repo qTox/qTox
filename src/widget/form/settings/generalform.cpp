@@ -144,6 +144,11 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
+
+#ifndef QTOX_PLATFORM_EXT
+    bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
+    bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
+#endif
 }
 
 GeneralForm::~GeneralForm()

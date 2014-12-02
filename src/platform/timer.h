@@ -14,6 +14,8 @@
     See the COPYING file for more details.
 */
 
+#ifdef QTOX_PLATFORM_EXT
+
 #ifndef PLATFORM_TIMER_H
 #define PLATFORM_TIMER_H
 
@@ -26,3 +28,5 @@ namespace Platform
 }
 
 #endif // PLATFORM_TIMER_H
+
+#endif // QTOX_PLATFORM_EXT

@@ -1105,6 +1105,7 @@ bool Widget::event(QEvent * e)
 
 void Widget::onUserAwayCheck()
 {
+#ifdef QTOX_PLATFORM_EXT
     uint32_t autoAwayTime = Settings::getInstance().getAutoAwayTime() * 60 * 1000;
 
     if (ui->statusButton->property("status").toString() == "online")
@@ -1127,6 +1128,7 @@ void Widget::onUserAwayCheck()
     }
     else if (autoAwayActive)
         autoAwayActive = false;
+#endif
 }
 
 void Widget::setStatusOnline()
