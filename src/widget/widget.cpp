@@ -956,7 +956,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     QString name = core->getUsername();
 
     bool targeted = (!author.isMine()) && message.contains(name, Qt::CaseInsensitive);
-    if (targeted)
+    if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
         g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
