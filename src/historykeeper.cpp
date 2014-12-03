@@ -291,12 +291,13 @@ HistoryKeeper::ChatType HistoryKeeper::convertToChatType(int ct)
     return static_cast<ChatType>(ct);
 }
 
-QString HistoryKeeper::getHistoryPath()
+QString HistoryKeeper::getHistoryPath(QString currentProfile, int encrypted)
 {
-    QDir baseDir(Settings::getInstance().getSettingsDirPath());
-    QString currentProfile = Settings::getInstance().getCurrentProfile();
+    QDir baseDir(Settings::getSettingsDirPath());
+    if (currentProfile.isEmpty())
+        currentProfile = Settings::getInstance().getCurrentProfile();
 
-    if (Settings::getInstance().getEncryptLogs())
+    if (encrypted == 1 || (encrypted == -1 && Settings::getInstance().getEncryptLogs()))
         return baseDir.filePath(currentProfile + ".qtox_history.encrypted");
     else
         return baseDir.filePath(currentProfile + ".qtox_history");

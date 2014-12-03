@@ -43,7 +43,7 @@ public:
     static HistoryKeeper* getInstance();
     static void resetInstance();
 
-    static QString getHistoryPath();
+    static QString getHistoryPath(QString currentProfile = QString(), int encrypted = -1); // -1 defaults to checking settings, 0 or 1 to specify
     static bool checkPassword();
     static void renameHistory(QString from, QString to);
 
