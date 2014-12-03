@@ -229,7 +229,7 @@ void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDat
         authorStr = author.publicKey;
 
     QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-    MessageActionPtr ca = MessageActionPtr(new AlertAction(authorStr, message, date));
+    MessageActionPtr ca = MessageActionPtr(new AlertAction(getElidedName(authorStr), message, date));
     ca->markAsSent();
     chatWidget->insertMessage(ca);
     previousId = author;
