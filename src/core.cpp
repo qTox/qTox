@@ -90,9 +90,15 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
 
 Core::~Core()
 {
-    if (tox) {
+    clearPassword(Core::ptMain);
+    clearPassword(Core::ptHistory);
+
+    if (tox)
+    {
         toxav_kill(toxav);
+        toxav = nullptr;
         tox_kill(tox);
+        tox = nullptr;
     }
 
     if (videobuf)
@@ -103,9 +109,6 @@ Core::~Core()
 
     Audio::closeInput();
     Audio::closeOutput();
-
-    clearPassword(Core::ptMain);
-    clearPassword(Core::ptHistory);
 }
 
 Core* Core::getInstance()
