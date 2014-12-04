@@ -92,6 +92,7 @@ bool PrivacyForm::setChatLogsPassword()
         //                      tr("Would you like to re-encrypt your old chat logs?\nOtherwise they will be deleted.", "body")))
         // for now, don't bother asking. Why wouldn't you want to reencrypt?
 
+        Settings::getInstance().setEncryptLogs(true);
         HistoryKeeper::getInstance()->importMessages(oldMessages);
 
         return true;
