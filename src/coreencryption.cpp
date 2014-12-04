@@ -49,9 +49,6 @@ void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
         tox_derive_key_from_pass(str.data(), str.size(), pwsaltedkeys[passtype]);
 
     password.clear();
-
-    if (passtype == ptMain)
-        saveConfiguration();
 }
 
 void Core::useOtherPassword(PasswordType type)
@@ -73,9 +70,6 @@ void Core::clearPassword(PasswordType passtype)
         delete[] pwsaltedkeys[passtype];
         pwsaltedkeys[passtype] = nullptr;
     }
-
-    if (passtype == ptMain)
-        saveConfiguration();
 }
 
 QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)

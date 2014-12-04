@@ -114,11 +114,8 @@ void PrivacyForm::onEncryptLogsUpdated()
         {
             if (setChatLogsPassword())
             {
-                Settings::getInstance().setEncryptLogs(true);
                 bodyUI->cbEncryptHistory->setChecked(true);
-                // not logically necessary, but more consistent (esp. if the logic changes)
                 bodyUI->changeLogsPwButton->setEnabled(true);
-
                 return;
             }
         }
@@ -163,6 +160,9 @@ bool PrivacyForm::setToxPassword()
             core->useOtherPassword(Core::ptMain);
         else
             core->setPassword(newpw, Core::ptMain);
+
+        Settings::getInstance().setEncryptTox(true);
+        core->saveConfiguration();
         return true;
     }
     else
@@ -181,7 +181,6 @@ void PrivacyForm::onEncryptToxUpdated()
             if (setToxPassword())
             {
                 bodyUI->cbEncryptTox->setChecked(true);
-                Settings::getInstance().setEncryptTox(true);
                 bodyUI->changeToxPwButton->setEnabled(true);
                 return;
             }
