@@ -305,6 +305,8 @@ void ChatForm::onAvCancel(int FriendId, int)
     
     if (FriendId != f->getFriendID())
         return;
+    
+    stopCounter();
 
     audioInputFlag = false;
     audioOutputFlag = false;
