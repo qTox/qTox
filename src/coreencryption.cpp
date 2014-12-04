@@ -275,7 +275,8 @@ void Core::saveConfiguration(const QString& path)
             if (!pwsaltedkeys[ptMain])
             {
                 // probably zero chance event
-                Widget::getInstance()->showWarningMsgBox(tr("NO Password"), tr("Will be saved without encryption!"));
+                Widget::getInstance()->showWarningMsgBox(tr("NO Password"), tr("Encryption is enabled, but there is no password! Encryption will be disabled."));
+                Settings::getInstance().setEncryptTox(false);
                 tox_save(tox, data);
             }
             else
