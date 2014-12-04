@@ -33,12 +33,11 @@ EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
     QByteArray fileContent;
     if (pullFileContent(fileName, buffer))
     {
-        chunkPosition = encrFile.size() / encryptedChunkSize;
-
         qDebug() << "writing old data";
         encrFile.setFileName(fileName);
         encrFile.open(QIODevice::ReadOnly);
         fileContent = encrFile.readAll();
+        chunkPosition = encrFile.size() / encryptedChunkSize;
         encrFile.close();
     } else {
         qWarning() << "corrupted history log file will be wiped!";
@@ -131,6 +130,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
         if (encr.size() > 0)
         {
             encrFile.write(encr);
+            encrFile.flush();
         }
 
         buffer = buffer.right(buffer.size() - plainChunkSize);

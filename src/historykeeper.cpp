@@ -68,11 +68,14 @@ HistoryKeeper *HistoryKeeper::getInstance()
     return historyInstance;
 }
 
-bool HistoryKeeper::checkPassword()
+bool HistoryKeeper::checkPassword(int encrypted)
 {
-    if (Settings::getInstance().getEnableLogging())
-        if (Settings::getInstance().getEncryptLogs())
-            return EncryptedDb::check(getHistoryPath());
+    if (!Settings::getInstance().getEnableLogging() && (encrypted == -1))
+        return true;
+
+    if ((encrypted == 1) || (encrypted == -1 && Settings::getInstance().getEncryptLogs()))
+        return EncryptedDb::check(getHistoryPath(Settings::getInstance().getCurrentProfile(), encrypted));
+
     return true;
 }
 
@@ -127,7 +130,7 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     messageID = 0;
     QSqlQuery sqlAnswer = db->exec("select seq from sqlite_sequence where name=\"history\";");
     if (sqlAnswer.first())
-        messageID = sqlAnswer.value(0).toInt();
+        messageID = sqlAnswer.value(0).toLongLong();
 }
 
 HistoryKeeper::~HistoryKeeper()
@@ -141,16 +144,13 @@ void HistoryKeeper::reencrypt(QString newpw)
     // if newpw.isEmpty(), then use the other core password
 }
 
-int HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)
+qint64 HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)
 {
-    int chat_id = getChatID(chat, ctSingle).first;
-    int sender_id = getAliasID(sender);
+    QList<QString> cmds = generateAddChatEntryCmd(chat, message, sender, dt, isSent);
 
     db->exec("BEGIN TRANSACTION;");
-    db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, message)") +
-             QString("VALUES (%1, %2, %3, '%4');")
-             .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
-    db->exec(QString("INSERT INTO sent_status (status) VALUES (%1);").arg(isSent));
+    for (auto &it : cmds)
+        db->exec(it);
     db->exec("COMMIT TRANSACTION;");
 
     messageID++;
@@ -189,10 +189,64 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
 
         QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
 
-        res.push_back({id, sender,message,time,isSent});
+        res.push_back(HistMessage(id, "", sender, message, time, isSent));
     }
 
     return res;
+}
+
+QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()
+{
+    QSqlQuery dbAnswer;
+    dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status, name FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
+                        QString("INNER JOIN aliases ON history.sender = aliases.id INNER JOIN chats ON history.chat_id = chats.id;"));
+
+    QList<HistMessage> res;
+
+    while (dbAnswer.next())
+    {
+        qint64 id = dbAnswer.value(0).toLongLong();
+        qint64 timeInt = dbAnswer.value(1).toLongLong();
+        QString sender = dbAnswer.value(2).toString();
+        QString message = unWrapMessage(dbAnswer.value(3).toString());
+        bool isSent = true;
+        if (!dbAnswer.value(4).isNull())
+            isSent = dbAnswer.value(4).toBool();
+        QString chat = dbAnswer.value(5).toString();
+        QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
+
+        res.push_back(HistMessage(id, chat, sender, message, time, isSent));
+    }
+
+    return res;
+}
+
+void HistoryKeeper::importMessages(const QList<HistoryKeeper::HistMessage> &lst)
+{
+    db->exec("BEGIN TRANSACTION;");
+    for (const HistMessage &msg : lst)
+    {
+        QList<QString> cmds = generateAddChatEntryCmd(msg.chat, msg.message, msg.sender, msg.timestamp, msg.isSent);
+        for (auto &it : cmds)
+            db->exec(it);
+
+        messageID++;
+    }
+    db->exec("COMMIT TRANSACTION;");
+}
+
+QList<QString> HistoryKeeper::generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)
+{
+    QList<QString> cmds;
+
+    int chat_id = getChatID(chat, ctSingle).first;
+    int sender_id = getAliasID(sender);
+
+    cmds.push_back(QString("INSERT INTO history (timestamp, chat_id, sender, message) VALUES (%1, %2, %3, '%4');")
+                   .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
+    cmds.push_back(QString("INSERT INTO sent_status (status) VALUES (%1);").arg(isSent));
+
+    return cmds;
 }
 
 QString HistoryKeeper::wrapMessage(const QString &str)
@@ -271,7 +325,7 @@ void HistoryKeeper::resetInstance()
     historyInstance = nullptr;
 }
 
-int HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &message, const QString &sender, const QDateTime &dt)
+qint64 HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &message, const QString &sender, const QDateTime &dt)
 {
     Q_UNUSED(chat)
     Q_UNUSED(message)
@@ -348,4 +402,14 @@ bool HistoryKeeper::isFileExist()
     QFile file(path);
 
     return file.exists();
+}
+
+bool HistoryKeeper::removeHistory(int encrypted)
+{
+    Q_UNUSED(encrypted);
+    resetInstance();
+
+    QString path = getHistoryPath();
+    QFile DbFile(path);
+    return DbFile.remove();
 }
