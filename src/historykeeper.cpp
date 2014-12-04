@@ -138,12 +138,6 @@ HistoryKeeper::~HistoryKeeper()
     delete db;
 }
 
-void HistoryKeeper::reencrypt(QString newpw)
-{
-    // TODO: this needs to appropriately set the core password as well
-    // if newpw.isEmpty(), then use the other core password
-}
-
 qint64 HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)
 {
     QList<QString> cmds = generateAddChatEntryCmd(chat, message, sender, dt, isSent);
@@ -406,10 +400,18 @@ bool HistoryKeeper::isFileExist()
 
 bool HistoryKeeper::removeHistory(int encrypted)
 {
-    Q_UNUSED(encrypted);
     resetInstance();
 
-    QString path = getHistoryPath();
+    QString path = getHistoryPath(QString(), encrypted);
     QFile DbFile(path);
     return DbFile.remove();
+}
+
+QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile(int encrypted)
+{
+    auto msgs = getInstance()->exportMessages();
+    qDebug() << "HistoryKeeper: count" << msgs.size() << "messages exported";
+    if (!removeHistory(encrypted))
+        qWarning() << "HistoryKeeper: couldn't delete old log file!";
+    return msgs;
 }

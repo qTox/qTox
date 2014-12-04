@@ -52,12 +52,12 @@ public:
     static bool isFileExist();
     static void renameHistory(QString from, QString to);
     static bool removeHistory(int encrypted = -1);
+    static QList<HistMessage> exportMessagesDeleteFile(int encrypted = -1);
 
     qint64 addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent);
     qint64 addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
     void markAsSent(int m_id);
-    void reencrypt(QString newpw);
 
     QList<HistMessage> exportMessages();
     void importMessages(const QList<HistoryKeeper::HistMessage> &lst);

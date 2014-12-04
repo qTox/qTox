@@ -77,24 +77,23 @@ bool PrivacyForm::setChatLogsPassword()
 
     if (int r = dialog->exec())
     {
+        QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
+
         QString newpw = dialog->getPassword();
         delete dialog;
 
-        if (!HistoryKeeper::checkPassword(true))
-            if (checkContinue(tr("Old encrypted chat logs", "title"),
-                              tr("Would you like to re-encrypt your old chat logs?\nOtherwise they will be deleted.", "body")))
-            {
-                HistoryKeeper::getInstance()->reencrypt(r == 2 ? QString() : newpw); 
-                // will set core and reset itself
-                return true;
-            }
-        // @apprb you resetInstance() in the old code but wouldn't that wipe out the current unencrypted history?
-        // current history should of course just become encrypted
         if (r == 2)
             core->useOtherPassword(Core::ptHistory);
         else
             core->setPassword(newpw, Core::ptHistory);
-        // HistoryKeeper::encryptPlain();
+
+        //if (!HistoryKeeper::checkPassword(true))
+        //    if (checkContinue(tr("Old encrypted chat logs", "title"),
+        //                      tr("Would you like to re-encrypt your old chat logs?\nOtherwise they will be deleted.", "body")))
+        // for now, don't bother asking. Why wouldn't you want to reencrypt?
+
+        HistoryKeeper::getInstance()->importMessages(oldMessages);
+
         return true;
     }
     else
@@ -106,19 +105,7 @@ bool PrivacyForm::setChatLogsPassword()
 
 void PrivacyForm::onEncryptLogsUpdated()
 {
-    auto getOldMessages = []()
-    {
-        auto msgs = HistoryKeeper::getInstance()->exportMessages();
-        qDebug() << "Loaded messages:" << msgs.size();
-        bool delRet = HistoryKeeper::removeHistory();
-        if (!delRet)
-            qWarning() << "HistoryKeeper::removeHistory() returned FALSE";
-        HistoryKeeper::resetInstance(); // HistoryKeeper::removeHistory() invokes HistoryKeeper::removeHistory() but logic may be changed
-        return msgs;
-    };
-
     Core* core = Core::getInstance();
-    QList<HistoryKeeper::HistMessage> oldMessages;
 
     if (bodyUI->cbEncryptHistory->isChecked())
     {
@@ -126,14 +113,11 @@ void PrivacyForm::onEncryptLogsUpdated()
         {
             if (setChatLogsPassword())
             {
-                oldMessages = getOldMessages();
-
                 Settings::getInstance().setEncryptLogs(true);
                 bodyUI->cbEncryptHistory->setChecked(true);
                 // not logically necessary, but more consistent (esp. if the logic changes)
                 bodyUI->changeLogsPwButton->setEnabled(true);
 
-                HistoryKeeper::getInstance()->importMessages(oldMessages);
                 return;
             }
         }
@@ -142,14 +126,14 @@ void PrivacyForm::onEncryptLogsUpdated()
     {
         if (checkContinue(tr("Old encrypted chat logs", "title"), tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted.")))
         {
-            oldMessages = getOldMessages();
-
+            QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile(true);
+            core->clearPassword(Core::ptHistory);
             Settings::getInstance().setEncryptLogs(false);
             HistoryKeeper::getInstance()->importMessages(oldMessages);
         }
         else
         {
-            HistoryKeeper::resetInstance();
+            HistoryKeeper::removeHistory(true);
         }
     }
 
