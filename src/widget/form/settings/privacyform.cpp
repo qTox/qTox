@@ -106,6 +106,17 @@ bool PrivacyForm::setChatLogsPassword()
 
 void PrivacyForm::onEncryptLogsUpdated()
 {
+    auto getOldMessages = []()
+    {
+        auto msgs = HistoryKeeper::getInstance()->exportMessages();
+        qDebug() << "Loaded messages:" << msgs.size();
+        bool delRet = HistoryKeeper::removeHistory();
+        if (!delRet)
+            qWarning() << "HistoryKeeper::removeHistory() returned FALSE";
+        HistoryKeeper::resetInstance(); // HistoryKeeper::removeHistory() invokes HistoryKeeper::removeHistory() but logic may be changed
+        return msgs;
+    };
+
     Core* core = Core::getInstance();
     QList<HistoryKeeper::HistMessage> oldMessages;
 
@@ -115,12 +126,7 @@ void PrivacyForm::onEncryptLogsUpdated()
         {
             if (setChatLogsPassword())
             {
-                oldMessages = HistoryKeeper::getInstance()->exportMessages();
-                qDebug() << "Loaded messages:" << oldMessages.size();
-                bool delRet = HistoryKeeper::removeHistory();
-                if (!delRet)
-                    qWarning() << "HistoryKeeper::removeHistory() returned FALSE";
-                HistoryKeeper::resetInstance(); // HistoryKeeper::removeHistory() invokes HistoryKeeper::removeHistory() but logic may be changed
+                oldMessages = getOldMessages();
 
                 Settings::getInstance().setEncryptLogs(true);
                 bodyUI->cbEncryptHistory->setChecked(true);
@@ -136,12 +142,7 @@ void PrivacyForm::onEncryptLogsUpdated()
     {
         if (checkContinue(tr("Old encrypted chat logs", "title"), tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted.")))
         {
-            oldMessages = HistoryKeeper::getInstance()->exportMessages();
-            qDebug() << "Loaded messages:" << oldMessages.size();
-            bool delRet = HistoryKeeper::removeHistory();
-            if (!delRet)
-                qWarning() << "HistoryKeeper::removeHistory() returned FALSE";
-            HistoryKeeper::resetInstance(); // HistoryKeeper::removeHistory() invokes HistoryKeeper::removeHistory() but logic may be changed
+            oldMessages = getOldMessages();
 
             Settings::getInstance().setEncryptLogs(false);
             HistoryKeeper::getInstance()->importMessages(oldMessages);
