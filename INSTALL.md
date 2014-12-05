@@ -134,6 +134,16 @@ yum groupinstall "Development Tools"
 yum install qt-devel qt-doc qt-creator opencv-devel openal-soft-devel libXScrnSaver-devel
 ```
 
+Slackware:
+
+You can grab slackbuilds of the needed dependencies here:
+
+http://slackbuilds.org/repository/14.1/libraries/OpenAL/
+
+http://slackbuilds.org/repository/14.1/libraries/qt5/
+
+http://slackbuilds.org/repository/14.1/libraries/opencv/
+
 ###Tox Core
 
 First of all install the dependencies of Tox Core.
