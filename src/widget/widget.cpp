@@ -295,22 +295,17 @@ void Widget::setTranslation()
 
 void Widget::updateTrayIcon()
 {
-    if(Settings::getInstance().getTrayShowsUserStatus())
-    {
-        QString status = ui->statusButton->property("status").toString();
-        QString icon;
-        if(status == "online")
-            icon = ":img/status/dot_online_2x.png";
-        else if(status == "away")
-            icon = ":img/status/dot_idle_2x.png";
-        else if(status == "busy")
-            icon = ":img/status/dot_busy_2x.png";
-        else
-            icon = ":img/status/dot_away_2x.png";
-        this->icon->setIcon(QIcon(icon));
-    }
+    QString status = ui->statusButton->property("status").toString();
+    QString icon;
+    if(status == "online")
+        icon = ":img/taskbar/taskbar_online_2x.png";
+    else if(status == "away")
+        icon = ":img/taskbar/taskbar_idle_2x.png";
+    else if(status == "busy")
+        icon = ":img/taskbar/taskbar_busy_2x.png";
     else
-        icon->setIcon(windowIcon());
+        icon = ":img/taskbar/taskbar_offline_2x.png";
+    this->icon->setIcon(QIcon(icon));
 }
 
 Widget::~Widget()

@@ -129,7 +129,6 @@ void Settings::load()
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();        
-        trayShowsUserStatus = s.value("trayShowsUserStatus", false).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         useProxy = s.value("useProxy", false).toBool();
         proxyAddr = s.value("proxyAddr", "").toString();
@@ -281,7 +280,6 @@ void Settings::save(QString path, bool writeFriends)
         s.setValue("showSystemTray", showSystemTray);
         s.setValue("autostartInTray",autostartInTray);
         s.setValue("closeToTray", closeToTray);
-        s.setValue("trayShowsUserStatus", trayShowsUserStatus);
         s.setValue("useProxy", useProxy);
         s.setValue("forceTCP", forceTCP);
         s.setValue("proxyAddr", proxyAddr);
@@ -519,16 +517,6 @@ bool Settings::getCloseToTray() const
 void Settings::setCloseToTray(bool newValue)
 {
     closeToTray = newValue;
-}
-
-bool Settings::getTrayShowsUserStatus() const
-{
-    return trayShowsUserStatus;
-}
-
-void Settings::setTrayShowsUserStatus(bool newValue)
-{
-    trayShowsUserStatus = newValue;
 }
 
 bool Settings::getMinimizeToTray() const
