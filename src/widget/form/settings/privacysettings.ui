@@ -75,6 +75,9 @@
             <property name="text">
              <string>All internet communication is encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</string>
             </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
