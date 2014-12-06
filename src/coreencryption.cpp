@@ -30,7 +30,6 @@
 #include <QDebug>
 #include <QSaveFile>
 #include <QFile>
-#include <QInputDialog>
 
 void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
 {

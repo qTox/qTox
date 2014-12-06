@@ -121,7 +121,7 @@ void PrivacyForm::onEncryptLogsUpdated()
     }
     else
     {
-        if (Widget::getInstance()->askQuestion(tr("Old encrypted chat logs", "title"), tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted."), false))
+        if (Widget::getInstance()->askQuestion(tr("Old encrypted chat logs", "title"), tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted."), true, false))
         {
             QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile(true);
             core->clearPassword(Core::ptHistory);

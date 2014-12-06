@@ -1215,7 +1215,7 @@ void Widget::setEnabledThreadsafe(bool enabled)
     }
 }
 
-bool Widget::askQuestion(const QString& title, const QString& msg, bool warning)
+bool Widget::askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning)
 {
     // We can only display widgets from the GUI thread
     if (QThread::currentThread() != qApp->thread())
@@ -1223,15 +1223,26 @@ bool Widget::askQuestion(const QString& title, const QString& msg, bool warning)
         bool ret;
         QMetaObject::invokeMethod(this, "askMsgboxQuestion", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg), Q_ARG(bool, warning));
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
+                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning));
         return ret;
     }
     else
     {
         if (warning)
-            return QMessageBox::warning(this, title, msg, QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::StandardButton::Ok;
+        {
+            QMessageBox::StandardButton def = QMessageBox::Cancel;
+            if (defaultAns)
+                def = QMessageBox::Ok;
+            return QMessageBox::warning(this, title, msg, QMessageBox::Ok | QMessageBox::Cancel, def) == QMessageBox::Ok;
+        }
         else
-            return QMessageBox::question(this, title, msg) == QMessageBox::StandardButton::Yes;
+        {
+            QMessageBox::StandardButton def = QMessageBox::No;
+            if (defaultAns)
+                def = QMessageBox::Yes;
+            return QMessageBox::question(this, title, msg, QMessageBox::Yes | QMessageBox::No, def) == QMessageBox::Yes;
+        }
     }
 }
 
