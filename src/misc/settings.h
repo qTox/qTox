@@ -219,8 +219,8 @@ public:
     void setFauxOfflineMessaging(bool value);
 
 public:
-    void save(bool writeFriends = true);
-    void save(QString path, bool writeFriends = true);
+    void save(bool writePersonal = true);
+    void save(QString path, bool writePersonal = true);
     void load();
 
 private:
