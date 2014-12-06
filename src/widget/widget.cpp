@@ -1236,6 +1236,34 @@ bool Widget::askMsgboxQuestion(const QString& title, const QString& msg)
     }
 }
 
+QString Widget::passwordDialog(const QString& cancel, const QString& body)
+{
+    // We can only display widgets from the GUI thread
+    if (QThread::currentThread() != qApp->thread())
+    {
+        QString ret;
+        QMetaObject::invokeMethod(this, "passwordDialog", Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QString, ret),
+                                  Q_ARG(const QString&, cancel), Q_ARG(const QString&, body));
+        return ret;
+    }
+    else
+    {
+        QString ret;
+        QInputDialog dialog;
+        dialog.setWindowTitle(tr("Enter your password"));
+        dialog.setOkButtonText(tr("Set password"));
+        dialog.setCancelButtonText(cancel);
+        dialog.setInputMode(QInputDialog::TextInput);
+        dialog.setTextEchoMode(QLineEdit::Password);
+        dialog.setLabelText(body);
+        int val = dialog.exec();
+        if (val == QDialog::Accepted)
+            ret = dialog.textValue();
+        return ret;
+    }
+}
+
 void Widget::clearAllReceipts()
 {
     QList<Friend*> frnds = FriendList::getAllFriends();

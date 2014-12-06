@@ -133,7 +133,7 @@ bool Core::loadEncryptedSave(QByteArray& data)
         Widget::getInstance()->showWarningMsgBox(tr("Encryption error"), tr("The .tox file is encrypted, but encryption was not checked, continuing regardless."));
 
     int error = -1;
-    QString a(tr("Please enter the password for this profile:", "used in load() when no pw is already set"));
+    QString a(tr("Please enter the password for this profile.", "used in load() when no pw is already set"));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
     QString dialogtxt;
 
@@ -152,30 +152,18 @@ bool Core::loadEncryptedSave(QByteArray& data)
 
     uint8_t salt[tox_pass_salt_length()];
     tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-    QInputDialog dialog;
-    dialog.moveToThread(qApp->thread());
-    dialog.setOkButtonText(tr("Set password"));
-    dialog.setCancelButtonText(tr("Change profile"));
-    dialog.setWindowTitle(tr("Enter your password"));
-    dialog.setInputMode(QInputDialog::TextInput);
-    dialog.setTextEchoMode(QLineEdit::Password);
+
     do
     {
-        dialog.setTextValue(QString());
-        dialog.setLabelText(dialogtxt);
+        QString pw = Widget::getInstance()->passwordDialog(tr("Change profile"), dialogtxt);
 
-        int val = dialog.exec();
-
-        if (val == QDialog::Accepted)
-        {
-            QString pw = dialog.textValue();
-            setPassword(pw, ptMain, salt);
-        }
-        else
+        if (pw.isEmpty())
         {
             clearPassword(ptMain);
             return false;
         }
+        else
+            setPassword(pw, ptMain, salt);
 
         error = tox_encrypted_key_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwsaltedkeys[ptMain]);
         dialogtxt = a + " " + b;
@@ -210,33 +198,20 @@ void Core::checkEncryptedHistory()
     else
         dialogtxt = a;
 
-    QInputDialog dialog;
-    dialog.moveToThread(qApp->thread());
-    dialog.setOkButtonText(tr("Set password"));
-    dialog.setCancelButtonText(tr("Disable history"));
-    dialog.setWindowTitle(tr("Enter your password"));
-    dialog.setInputMode(QInputDialog::TextInput);
-    dialog.setTextEchoMode(QLineEdit::Password);
     bool error = true;
     do
     {
-        dialog.setLabelText(dialogtxt);
-        dialog.setTextValue(QString());
+        QString pw = Widget::getInstance()->passwordDialog(tr("Disable history"), dialogtxt);
 
-        int val = dialog.exec();
-
-        if (val == QDialog::Accepted)
-        {
-            QString pw = dialog.textValue();
-            setPassword(pw, ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
-        }
-        else
+        if (pw.isEmpty())
         {
             clearPassword(ptHistory);
             Settings::getInstance().setEncryptLogs(false);
             Settings::getInstance().setEnableLogging(false);
             return;
         }
+        else
+            setPassword(pw, ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
 
         error = !HistoryKeeper::checkPassword();
         dialogtxt = a + " " + b;

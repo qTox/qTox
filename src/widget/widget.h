@@ -68,6 +68,8 @@ public:
                                               QMessageBox::StandardButtons buttonss = QMessageBox::Ok);
     Q_INVOKABLE void setEnabledThreadsafe(bool enabled);
     Q_INVOKABLE bool askMsgboxQuestion(const QString& title, const QString& msg);
+    Q_INVOKABLE QString passwordDialog(const QString& cancel, const QString& body);
+    // hooray for threading hacks
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
