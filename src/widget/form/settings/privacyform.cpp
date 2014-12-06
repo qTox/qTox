@@ -22,7 +22,6 @@
 #include "src/core.h"
 #include "src/widget/widget.h"
 #include "src/widget/form/setpassworddialog.h"
-#include "src/widget/form/checkcontinue.h"
 #include <QMessageBox>
 #include <QFile>
 #include <QDebug>
@@ -122,7 +121,7 @@ void PrivacyForm::onEncryptLogsUpdated()
     }
     else
     {
-        if (checkContinue(tr("Old encrypted chat logs", "title"), tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted.")))
+        if (Widget::getInstance()->askQuestion(tr("Old encrypted chat logs", "title"), tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted."), false))
         {
             QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile(true);
             core->clearPassword(Core::ptHistory);

@@ -163,8 +163,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/autoupdate.h \
     src/misc/serialize.h \
     src/widget/form/settings/advancedform.h \
-    src/audio.h \
-    src/widget/form/checkcontinue.h
+    src/audio.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -231,8 +230,7 @@ SOURCES += \
     src/autoupdate.cpp \
     src/misc/serialize.cpp \
     src/widget/form/settings/advancedform.cpp \
-    src/audio.cpp \
-    src/widget/form/checkcontinue.cpp
+    src/audio.cpp
 
 contains(DEFINES, QTOX_PLATFORM_EXT) {
     HEADERS += src/platform/timer.h

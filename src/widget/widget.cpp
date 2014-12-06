@@ -1186,21 +1186,17 @@ void Widget::onSplitterMoved(int pos, int index)
     saveSplitterGeometry();
 }
 
-QMessageBox::StandardButton Widget::showWarningMsgBox(const QString& title, const QString& msg, QMessageBox::StandardButtons buttons)
+void Widget::showWarningMsgBox(const QString& title, const QString& msg)
 {
     // We can only display widgets from the GUI thread
     if (QThread::currentThread() != qApp->thread())
     {
-        QMessageBox::StandardButton ret;
         QMetaObject::invokeMethod(this, "showWarningMsgBox", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(QMessageBox::StandardButton, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
-                                  Q_ARG(QMessageBox::StandardButtons, buttons));
-        return ret;
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
     else
     {
-        return QMessageBox::warning(this, title, msg, buttons);
+        QMessageBox::warning(this, title, msg);
     }
 }
 
@@ -1219,7 +1215,7 @@ void Widget::setEnabledThreadsafe(bool enabled)
     }
 }
 
-bool Widget::askMsgboxQuestion(const QString& title, const QString& msg)
+bool Widget::askQuestion(const QString& title, const QString& msg, bool warning)
 {
     // We can only display widgets from the GUI thread
     if (QThread::currentThread() != qApp->thread())
@@ -1227,12 +1223,15 @@ bool Widget::askMsgboxQuestion(const QString& title, const QString& msg)
         bool ret;
         QMetaObject::invokeMethod(this, "askMsgboxQuestion", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg), Q_ARG(bool, warning));
         return ret;
     }
     else
     {
-        return QMessageBox::question(this, title, msg) == QMessageBox::StandardButton::Yes;
+        if (warning)
+            return QMessageBox::warning(this, title, msg, QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::StandardButton::Ok;
+        else
+            return QMessageBox::question(this, title, msg) == QMessageBox::StandardButton::Yes;
     }
 }
 

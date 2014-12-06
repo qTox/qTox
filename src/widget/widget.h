@@ -64,10 +64,9 @@ public:
     void clearContactsList();
     void setTranslation();
     void updateTrayIcon();
-    Q_INVOKABLE QMessageBox::StandardButton showWarningMsgBox(const QString& title, const QString& msg,
-                                              QMessageBox::StandardButtons buttonss = QMessageBox::Ok);
+    Q_INVOKABLE void showWarningMsgBox(const QString& title, const QString& msg);
     Q_INVOKABLE void setEnabledThreadsafe(bool enabled);
-    Q_INVOKABLE bool askMsgboxQuestion(const QString& title, const QString& msg);
+    Q_INVOKABLE bool askQuestion(const QString& title, const QString& msg, bool warning = true);
     Q_INVOKABLE QString passwordDialog(const QString& cancel, const QString& body);
     // hooray for threading hacks
     ~Widget();
