@@ -209,9 +209,6 @@ void GroupChatForm::onCallClicked()
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 {
-    if (msgEdit->hasFocus())
-        return;
-
     // Push to talk (CTRL+P)
     if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall)
     {
@@ -224,13 +221,13 @@ void GroupChatForm::keyPressEvent(QKeyEvent* ev)
             Style::repolish(micButton);
         }
     }
+
+    if (msgEdit->hasFocus())
+        return;
 }
 
 void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 {
-    if (msgEdit->hasFocus())
-        return;
-
     // Push to talk (CTRL+P (only need to release P))
     if (ev->key() == Qt::Key_P && inCall)
     {
@@ -243,4 +240,7 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
             Style::repolish(micButton);
         }
     }
+
+    if (msgEdit->hasFocus())
+        return;
 }
