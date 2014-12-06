@@ -37,6 +37,7 @@ private slots:
 
 private:
     Ui::SetPasswordDialog *ui;
+    static const double reasonablePasswordLength;
 };
 
 #endif // SETPASSWORDDIALOG_H
