@@ -212,8 +212,8 @@ void GroupChatForm::keyPressEvent(QKeyEvent* ev)
     if (msgEdit->hasFocus())
         return;
 
-    // Push to talk
-    if (ev->key() == Qt::Key_P && inCall)
+    // Push to talk (CTRL+P)
+    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall)
     {
         Core* core = Core::getInstance();
         if (!core->isGroupCallMicEnabled(group->getGroupId()))
@@ -231,7 +231,7 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
     if (msgEdit->hasFocus())
         return;
 
-    // Push to talk
+    // Push to talk (CTRL+P (only need to release P))
     if (ev->key() == Qt::Key_P && inCall)
     {
         Core* core = Core::getInstance();
