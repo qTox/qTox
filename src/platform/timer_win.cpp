@@ -17,7 +17,7 @@
 #include <QDebug>
 #ifdef Q_OS_WIN32
 #include "src/platform/timer.h"
-#include <Windows.h>
+#include <windows.h>
 
 
 uint32_t Platform::getIdleTime()
