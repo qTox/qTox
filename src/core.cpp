@@ -88,15 +88,23 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
     Audio::openInput(inDevDescr);
 }
 
-Core::~Core()
+void Core::deadifyTox()
 {
-    if (tox)
+    if (toxav)
     {
         toxav_kill(toxav);
         toxav = nullptr;
+    }
+    if (tox)
+    {
         tox_kill(tox);
         tox = nullptr;
     }
+}
+
+Core::~Core()
+{
+    deadifyTox();
 
     if (videobuf)
     {
@@ -164,9 +172,6 @@ void Core::make_tox()
             {
                 if (toxOptions.proxy_enabled)
                 {
-                    //QMessageBox::critical(Widget::getInstance(), tr("Proxy failure", "popup title"), 
-                    //tr("toxcore failed to start with your proxy settings. qTox cannot run; please modify your "
-                       //"settings and restart.", "popup text"));
                     qCritical() << "Core: bad proxy! no toxcore!";
                     emit badProxy();
                 } 
@@ -210,14 +215,17 @@ void Core::start()
 
     if (loadPath != "")
     {
-        if (!loadConfiguration(loadPath)) // loadPath is meaningless after this
-	    {
-            qCritical() << "Core: loadConfiguration failed, exiting now";
-            emit failedToStart();
-            tox_kill(tox);
-            tox = nullptr;
-            return;
+        while (!loadConfiguration(loadPath))
+        {
+            if (loadPath.isEmpty())
+            {
+                qCritical() << "Core: loadConfiguration failed, exiting now";
+                deadifyTox();
+                emit failedToStart();
+                return;
+            }
         }
+        // loadPath is meaningless after this
         loadPath = "";
     }
     else // new ID
@@ -1142,6 +1150,7 @@ QString Core::sanitize(QString name)
 
 bool Core::loadConfiguration(QString path)
 {
+    loadPath = ""; // if not empty, then user forgot a password
     // setting the profile is now the responsibility of the caller
     QFile configurationFile(path);
     qDebug() << "Core::loadConfiguration: reading from " << path;
@@ -1169,11 +1178,21 @@ bool Core::loadConfiguration(QString path)
             if (!loadEncryptedSave(data))
             {
                 configurationFile.close();
+
+                QString profile;
+                QMetaObject::invokeMethod(Widget::getInstance(), "askProfiles", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, profile));
+
+                if (!profile.isEmpty())
+                    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
                 return false;
             }
         }
     }
     configurationFile.close();
+
+    Settings::getInstance().setCurrentProfile(QFileInfo(path).completeBaseName());
+    // this is necessary for anything that doesn't call switchConfiguration, i.e.
+    // forgetting a password and choosing a different profile
 
     // set GUI with user and statusmsg
     QString name = getUsername();
@@ -1237,12 +1256,7 @@ void Core::switchConfiguration(const QString& profile)
 
     toxTimer->stop();
     Widget::getInstance()->setEnabledThreadsafe(false);
-    if (tox) {
-        toxav_kill(toxav);
-        toxav = nullptr;
-        tox_kill(tox);
-        tox = nullptr;
-    }
+    deadifyTox();
 
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
     emit blockingClearContacts(); // we need this to block, but signals are required for thread safety

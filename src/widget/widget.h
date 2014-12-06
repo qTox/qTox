@@ -69,6 +69,7 @@ public:
     Q_INVOKABLE bool askQuestion(const QString& title, const QString& msg, bool defaultAns = false, bool warning = true);
     Q_INVOKABLE QString passwordDialog(const QString& cancel, const QString& body);
     // hooray for threading hacks
+    Q_INVOKABLE QString askProfiles();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
@@ -144,7 +145,6 @@ private:
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();
-    QString askProfiles();
     QString detectProfile();
     QSystemTrayIcon *icon;
     QMenu *trayMenu;
