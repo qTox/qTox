@@ -42,8 +42,8 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     ui->filenameLabel->setText(file.fileName);
     ui->progressBar->setValue(0);
     ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
-    ui->progressLabel->setText("0%");
-    ui->etaLabel->setText("--:--");
+    ui->progressLabel->setText("0kiB/s");
+    ui->etaLabel->setText("-:-");
 
     setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
     Style::repolish(this);
@@ -267,10 +267,15 @@ void FileTransferWidget::handleButton(QPushButton *btn)
 
 void FileTransferWidget::showPreview(const QString &filename)
 {
-    //QPixmap pmap = QPixmap(filename).scaled(QSize(ui->previewLabel->maximumWidth(), maximumHeight()), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    QPixmap pmap = QPixmap(filename).scaledToWidth(ui->previewLabel->maximumWidth(), Qt::SmoothTransformation);
-    ui->previewLabel->setPixmap(pmap);
-    ui->previewLabel->show();
+    static const QStringList previewExtensions = { "png", "jpeg", "jpg", "gif" };
+
+    if(previewExtensions.contains(QFileInfo(filename).suffix()))
+    {
+        //QPixmap pmap = QPixmap(filename).scaled(QSize(ui->previewLabel->maximumWidth(), maximumHeight()), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QPixmap pmap = QPixmap(filename).scaledToWidth(ui->previewLabel->maximumWidth(), Qt::SmoothTransformation);
+        ui->previewLabel->setPixmap(pmap);
+        ui->previewLabel->show();
+    }
 }
 
 void FileTransferWidget::on_topButton_clicked()
