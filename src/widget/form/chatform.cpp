@@ -673,7 +673,7 @@ void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
     if (FriendId != f->getFriendID())
         return;
 
-    addSystemInfoMessage(tr("Failed to send file") + ": \"" + fname + "\"", "red", QDateTime::currentDateTime());
+    addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), "red", QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
