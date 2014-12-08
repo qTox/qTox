@@ -23,7 +23,6 @@
 #include "src/audio.h"
 
 #include <tox/tox.h>
-#include <tox/toxencryptsave.h>
 
 #include <ctime>
 #include <functional>
@@ -39,7 +38,6 @@
 #include <QDateTime>
 #include <QList>
 #include <QBuffer>
-#include <QMessageBox>
 #include <QMutexLocker>
 
 const QString Core::CONFIG_FILE_NAME = "data";
@@ -1251,11 +1249,11 @@ void Core::switchConfiguration(const QString& profile)
     saveConfiguration();
 
     ready = false;
+    Widget::getInstance()->setEnabledThreadsafe(false);
     clearPassword(ptMain);
     clearPassword(ptHistory);
 
     toxTimer->stop();
-    Widget::getInstance()->setEnabledThreadsafe(false);
     deadifyTox();
 
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
