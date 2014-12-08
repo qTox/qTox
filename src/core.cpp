@@ -1150,8 +1150,8 @@ QString Core::sanitize(QString name)
 
 bool Core::loadConfiguration(QString path)
 {
-    loadPath = ""; // if not empty, then user forgot a password
-    // setting the profile is now the responsibility of the caller
+    loadPath = ""; // if not empty upon return, then user forgot a password and is switching
+
     QFile configurationFile(path);
     qDebug() << "Core::loadConfiguration: reading from " << path;
 
@@ -1183,16 +1183,16 @@ bool Core::loadConfiguration(QString path)
                 QMetaObject::invokeMethod(Widget::getInstance(), "askProfiles", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, profile));
 
                 if (!profile.isEmpty())
+                {
                     loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
+                    Settings::getInstance().switchProfile(profile);
+                    HistoryKeeper::getInstance()->resetInstance();
+                }
                 return false;
             }
         }
     }
     configurationFile.close();
-
-    Settings::getInstance().setCurrentProfile(QFileInfo(path).completeBaseName());
-    // this is necessary for anything that doesn't call switchConfiguration, i.e.
-    // forgetting a password and choosing a different profile
 
     // set GUI with user and statusmsg
     QString name = getUsername();
@@ -1233,7 +1233,7 @@ void Core::saveConfiguration()
         if (profile == "") // happens on creation of a new Tox ID
             profile = getIDString();
 
-        Settings::getInstance().setCurrentProfile(profile);
+        Settings::getInstance().switchProfile(profile);
     }
     
     QString path = directory.filePath(profile + TOX_EXT);
@@ -1266,11 +1266,7 @@ void Core::switchConfiguration(const QString& profile)
     else
         loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
 
-    // the new profile needs to be set before resetting the settings, so that
-    // we don't load the old profile's profile.ini
-    Settings::getInstance().setCurrentProfile(profile);
-    Settings::getInstance().save(false); // save new profile, but don't write old profile info to newprofile.ini
-    Settings::resetInstance();
+    Settings::getInstance().switchProfile(profile);
     HistoryKeeper::getInstance()->resetInstance();
 
     start();

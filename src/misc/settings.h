@@ -30,6 +30,7 @@ class Settings : public QObject
 public:
     static Settings& getInstance();
     static void resetInstance();
+    void switchProfile(const QString& profile);
     ~Settings() = default;
 
     void executeSettingsDialog(QWidget* parent);

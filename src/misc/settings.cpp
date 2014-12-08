@@ -63,6 +63,13 @@ void Settings::resetInstance()
     }
 }
 
+void Settings::switchProfile(const QString& profile)
+{
+    setCurrentProfile(profile);
+    save(false);
+    resetInstance();
+}
+
 void Settings::load()
 {
     if (loaded)

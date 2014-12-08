@@ -402,7 +402,10 @@ QString Widget::detectProfile()
             if (profile.isEmpty())
                 return "";
             else
+            {
+                Settings::getInstance().setCurrentProfile(profile);
                 return dir.filePath(profile + Core::TOX_EXT);
+            }
         }
     }
     else
