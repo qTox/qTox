@@ -37,6 +37,11 @@
         <translation>Aufnahmegerät</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="95"/>
+        <source>Rescan audio devices</source>
+        <translation>Erneut nach Audiogeräten suchen</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="98"/>
         <source>Video Settings</source>
         <translation>Video Einstellungen</translation>
