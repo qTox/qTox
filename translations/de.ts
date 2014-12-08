@@ -258,6 +258,11 @@ Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</tr
         <translation>Anruf abgewiesen</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/chatform.cpp" line="676"/>
+        <source>Failed to send file</source>
+        <translation>Fehler beim Senden der Datei</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/chatform.cpp" line="804"/>
         <source>Call with %1 ended. %2</source>
         <translation>Anruf zu %1 beendet. %2 </translation>
