@@ -76,9 +76,9 @@ ChatLog::~ChatLog()
 ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self)
 {
     ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Text(sender, self ? Style::getFont(Style::MediumBold) : Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new Text(sender, self ? Style::getFont(Style::MediumBold) : Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->addColumn(new Text(SmileyPack::getInstance().smileyfied(msg)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;
@@ -95,9 +95,9 @@ ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString& msg, 
 ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& timestamp)
 {
     ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->addColumn(new Text(msg), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;
@@ -106,9 +106,9 @@ ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& time
 ChatMessage *ChatLog::addFileTransferMessage(const QString &sender, const ToxFile &file,  const QDateTime& timestamp, bool self)
 {
     ChatMessage* line = new ChatMessage(scene, QString());
-    line->addColumn(new Text(sender, self ? Style::getFont(Style::MediumBold) : Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new Text(sender, self ? Style::getFont(Style::MediumBold) : Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, 1, ColumnFormat::Right));
+    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;

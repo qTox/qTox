@@ -38,16 +38,14 @@ struct ColumnFormat
     };
 
     ColumnFormat() {}
-    ColumnFormat(qreal s, Policy p, int valign = -1, Align halign = Left)
+    ColumnFormat(qreal s, Policy p, Align halign = Left)
         : size(s)
         , policy(p)
-        , vAlignCol(valign)
         , hAlign(halign)
     {}
 
     qreal size = 1.0;
     Policy policy = VariableSize;
-    int vAlignCol = -1;
     Align hAlign = Left;
 };
 

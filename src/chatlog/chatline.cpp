@@ -155,9 +155,13 @@ void ChatLine::layout(qreal w, QPointF scenePos)
 
     qreal leftover = qMax(0.0, width - fixedWidth);
 
+    qreal maxVOffset = 0.0;
     qreal xOffset = 0.0;
+
     for(int i = 0; i < content.size(); ++i)
     {
+        maxVOffset = qMax(maxVOffset, content[i]->firstLineVOffset());
+
         // calculate the effective width of the current column
         qreal width;
         if(format[i].policy == ColumnFormat::FixedSize)
@@ -193,8 +197,9 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         // calculate vertical alignment
         // vertical alignment may depend on width, so we do it in a second pass
         qreal yOffset = 0.0;
-        if(format[i].vAlignCol >= 0 && format[i].vAlignCol < content.size())
-            yOffset = content[format[i].vAlignCol]->firstLineVOffset() - content[i]->firstLineVOffset();
+
+        if(content[i]->firstLineVOffset() > 0.0)
+            yOffset = maxVOffset - content[i]->firstLineVOffset();
 
         // reposition
         content[i]->setPos(content[i]->pos().x(), content[i]->pos().y() + yOffset);
