@@ -19,6 +19,7 @@
 
 #include <QGraphicsView>
 #include <QDateTime>
+#include <QMarginsF>
 
 class QGraphicsScene;
 class QGraphicsRectItem;
@@ -55,7 +56,7 @@ protected:
     bool isOverSelection(QPointF scenePos);
     bool stickToBottom();
 
-    int useableWidth();
+    qreal useableWidth();
 
     void reposition(int start, int end);
     void repositionDownTo(int start, qreal end);
@@ -71,6 +72,8 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent* ev);
     virtual void scrollContentsBy(int dx, int dy);
     virtual void resizeEvent(QResizeEvent *ev);
+
+    void updateMultiSelectionRect();
 
 private:
     enum SelectionMode {
@@ -101,6 +104,7 @@ private:
     QAction* copyAction = nullptr;
 
     // layout
+    QMarginsF margins = QMarginsF(10.0,10.0,10.0,10.0);
     qreal lineSpacing = 10.0f;
 
 };

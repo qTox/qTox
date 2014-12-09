@@ -123,14 +123,14 @@ void ChatLog::clearSelection()
     for(int i=selFirstRow; i<=selLastRow && i<lines.size() && i >= 0; ++i)
         lines[i]->selectionCleared();
 
-    selGraphItem->hide();
-
     selFirstRow = -1;
     selLastRow = -1;
     selClickedCol = -1;
     selClickedRow = -1;
 
     selectionMode = None;
+
+    updateMultiSelectionRect();
 }
 
 QRect ChatLog::getVisibleRect() const
@@ -140,7 +140,7 @@ QRect ChatLog::getVisibleRect() const
 
 void ChatLog::updateSceneRect()
 {
-    setSceneRect(QRectF(0, 0, width(), lines.empty() ? 0.0 : lines.last()->boundingSceneRect().bottom()));
+    setSceneRect(QRectF(-margins.left(), -margins.top(), useableWidth(), (lines.empty() ? 0.0 : lines.last()->boundingSceneRect().bottom()) + margins.bottom() + margins.top()));
 }
 
 bool ChatLog::layout(int start, int end, qreal width)
@@ -160,7 +160,7 @@ bool ChatLog::layout(int start, int end, qreal width)
         ChatLine* l = lines[i];
 
         qreal oldHeight = l->boundingSceneRect().height();
-        l->layout(width, QPointF(0, h));
+        l->layout(width, QPointF(0.0, h));
 
         if(oldHeight != l->boundingSceneRect().height())
             needsReposition = true;
@@ -299,12 +299,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
                 lines[selClickedRow]->selectionCleared();
 
-                QRectF selBBox;
-                selBBox = selBBox.united(lines[selFirstRow]->boundingSceneRect());
-                selBBox = selBBox.united(lines[selLastRow]->boundingSceneRect());
-
-                selGraphItem->setRect(selBBox);
-                selGraphItem->show();
+                updateMultiSelectionRect();
             }
         }
     }
@@ -338,9 +333,9 @@ bool ChatLog::isOverSelection(QPointF scenePos)
     return false;
 }
 
-int ChatLog::useableWidth()
+qreal ChatLog::useableWidth()
 {
-    return width() - verticalScrollBar()->sizeHint().width() - 10.0;
+    return width() - verticalScrollBar()->sizeHint().width() - margins.right() - margins.left();
 }
 
 void ChatLog::reposition(int start, int end)
@@ -550,4 +545,23 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
 
     if(stb)
         scrollToBottom();
+
+    updateMultiSelectionRect();
+}
+
+void ChatLog::updateMultiSelectionRect()
+{
+    if(selectionMode == Multi && selFirstRow >= 0 && selLastRow >= 0)
+    {
+        QRectF selBBox;
+        selBBox = selBBox.united(lines[selFirstRow]->boundingSceneRect());
+        selBBox = selBBox.united(lines[selLastRow]->boundingSceneRect());
+
+        selGraphItem->setRect(selBBox);
+        selGraphItem->show();
+    }
+    else
+    {
+        selGraphItem->hide();
+    }
 }
