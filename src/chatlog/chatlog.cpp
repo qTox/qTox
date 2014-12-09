@@ -57,11 +57,9 @@ ChatLog::ChatLog(QWidget* parent)
     setViewportUpdateMode(SmartViewportUpdate);
     //setRenderHint(QPainter::TextAntialiasing);
 
-    selGraphItem = new QGraphicsRectItem();
+    const QColor selGraphColor = QColor(166,225,255);
+    selGraphItem = scene->addRect(0,0,0,0,selGraphColor.darker(120),selGraphColor);
     selGraphItem->setZValue(-10.0); //behind all items
-    selGraphItem->setBrush(QBrush(QColor(166,225,255)));
-
-    scene->addItem(selGraphItem);
 
     // copy action
     copyAction = new QAction(this);
