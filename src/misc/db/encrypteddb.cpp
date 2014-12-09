@@ -33,23 +33,24 @@ EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
     QByteArray fileContent;
     if (pullFileContent(fileName, buffer))
     {
-        qDebug() << "writing old data";
+        qDebug() << "EncryptedDb: writing old data";
         encrFile.setFileName(fileName);
         encrFile.open(QIODevice::ReadOnly);
         fileContent = encrFile.readAll();
         chunkPosition = encrFile.size() / encryptedChunkSize;
         encrFile.close();
-    } else {
-        qWarning() << "corrupted history log file will be wiped!";
-        chunkPosition = 0;
     }
+    else
+        chunkPosition = 0;
 
     encrFile.setFileName(fileName);
 
     if (!encrFile.open(QIODevice::WriteOnly))
     {
         qWarning() << "can't open file:" << fileName;
-    } else {
+    }
+    else
+    {
         encrFile.write(fileContent);
         encrFile.flush();
     }
@@ -75,7 +76,12 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
     qDebug() << "EncryptedDb::pullFileContent()";
 
     QFile dbFile(fname);
-    dbFile.open(QIODevice::ReadOnly);
+    if (!dbFile.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "EncryptedDb::pullFileContent: file doesn't exist";
+        buf = QByteArray();
+        return false;
+    }
     QByteArray fileContent;
 
     while (!dbFile.atEnd())
@@ -87,7 +93,7 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
         {
             fileContent += buf;
         } else {
-            qWarning() << "Encrypted history log is corrupted: can't decrypt";
+            qWarning() << "Encrypted history log is corrupted: can't decrypt, will be deleted";
             buf = QByteArray();
             return false;
         }
