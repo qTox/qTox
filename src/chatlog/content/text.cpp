@@ -78,7 +78,10 @@ void Text::selectionMouseMove(QPointF scenePos)
     ensureIntegrity();
     int cur = cursorFromPos(scenePos);
     if(cur >= 0)
+    {
         cursor.setPosition(cur, QTextCursor::KeepAnchor);
+        selectedText = cursor.selectedText();
+    }
 
     update();
 }
@@ -89,12 +92,17 @@ void Text::selectionStarted(QPointF scenePos)
     int cur = cursorFromPos(scenePos);
     if(cur >= 0)
         cursor.setPosition(cur);
+
+    selectedText.clear();
+    selectedText.squeeze();
 }
 
 void Text::selectionCleared()
 {
     ensureIntegrity();
     cursor.setPosition(0);
+    selectedText.clear();
+    selectedText.squeeze();
     freeResources();
 
     update();
@@ -104,6 +112,7 @@ void Text::selectAll()
 {
     ensureIntegrity();
     cursor.select(QTextCursor::Document);
+    selectedText = text;
     update();
 }
 
@@ -118,7 +127,7 @@ bool Text::isOverSelection(QPointF scenePos) const
 
 QString Text::getSelectedText() const
 {
-    return cursor.selectedText();
+    return selectedText;
 }
 
 QRectF Text::boundingSceneRect() const
@@ -179,6 +188,11 @@ void Text::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     // open anchors in browser
     if(!anchor.isEmpty())
         QDesktopServices::openUrl(anchor);
+}
+
+QString Text::getText() const
+{
+    return text;
 }
 
 void Text::ensureIntegrity()

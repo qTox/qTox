@@ -32,24 +32,26 @@ public:
 
     void setText(const QString& txt);
 
-    virtual void setWidth(qreal width);
+    virtual void setWidth(qreal width) override;
 
-    virtual void selectionMouseMove(QPointF scenePos);
-    virtual void selectionStarted(QPointF scenePos);
-    virtual void selectionCleared();
-    virtual void selectAll();
-    virtual bool isOverSelection(QPointF scenePos) const;
-    virtual QString getSelectedText() const;
+    virtual void selectionMouseMove(QPointF scenePos) override;
+    virtual void selectionStarted(QPointF scenePos) override;
+    virtual void selectionCleared() override;
+    virtual void selectAll() override;
+    virtual bool isOverSelection(QPointF scenePos) const override;
+    virtual QString getSelectedText() const override;
 
-    virtual QRectF boundingSceneRect() const;
-    virtual QRectF boundingRect() const;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    virtual QRectF boundingSceneRect() const override;
+    virtual QRectF boundingRect() const override;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-    virtual void visibilityChanged(bool isVisible);
+    virtual void visibilityChanged(bool isVisible) override;
 
-    virtual qreal firstLineVOffset() const;
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    virtual qreal firstLineVOffset() const override;
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+
+    virtual QString getText() const override;
 
 protected:
     // dynamic resource management
@@ -63,6 +65,7 @@ private:
     CustomTextDocument* doc = nullptr;
     QString text;
     QString elidedText;
+    QString selectedText;
     QSizeF size;
     bool isVisible = false;
     bool elide = false;
