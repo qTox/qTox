@@ -125,7 +125,8 @@ void Widget::init()
     }
     else
     {
-        qWarning() << "No system tray detected!";
+        qWarning() << "Widget: No system tray detected!";
+        icon = nullptr;
         this->show();
     }
 
@@ -295,17 +296,19 @@ void Widget::setTranslation()
 
 void Widget::updateTrayIcon()
 {
+    if (!icon)
+        return;
     QString status = ui->statusButton->property("status").toString();
-    QString icon;
-    if(status == "online")
-        icon = ":img/taskbar/taskbar_online_2x.png";
-    else if(status == "away")
-        icon = ":img/taskbar/taskbar_idle_2x.png";
-    else if(status == "busy")
-        icon = ":img/taskbar/taskbar_busy_2x.png";
+    QString pic;
+    if (status == "online")
+        pic = ":img/taskbar/taskbar_online_2x.png";
+    else if (status == "away")
+        pic = ":img/taskbar/taskbar_idle_2x.png";
+    else if (status == "busy")
+        pic = ":img/taskbar/taskbar_busy_2x.png";
     else
-        icon = ":img/taskbar/taskbar_offline_2x.png";
-    this->icon->setIcon(QIcon(icon));
+        pic = ":img/taskbar/taskbar_offline_2x.png";
+    icon->setIcon(QIcon(pic));
 }
 
 Widget::~Widget()
