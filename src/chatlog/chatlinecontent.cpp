@@ -84,3 +84,8 @@ void ChatLineContent::visibilityChanged(bool)
 {
 
 }
+
+QString ChatLineContent::getText() const
+{
+    return QString();
+}

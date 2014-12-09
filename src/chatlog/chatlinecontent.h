@@ -44,6 +44,8 @@ public:
     virtual bool isOverSelection(QPointF scenePos) const;
     virtual QString getSelectedText() const;
 
+    virtual QString getText() const;
+
     virtual qreal firstLineVOffset() const;
 
     virtual QRectF boundingSceneRect() const = 0;

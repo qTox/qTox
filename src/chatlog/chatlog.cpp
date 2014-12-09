@@ -57,6 +57,12 @@ ChatLog::ChatLog(QWidget* parent)
     setViewportUpdateMode(SmartViewportUpdate);
     //setRenderHint(QPainter::TextAntialiasing);
 
+    selGraphItem = new QGraphicsRectItem();
+    selGraphItem->setZValue(-10.0); //behind all items
+    selGraphItem->setBrush(QBrush(QColor(166,225,255)));
+
+    scene->addItem(selGraphItem);
+
     // copy action
     copyAction = new QAction(this);
     copyAction->setShortcut(QKeySequence::Copy);
@@ -116,14 +122,17 @@ ChatMessage *ChatLog::addFileTransferMessage(const QString &sender, const ToxFil
 
 void ChatLog::clearSelection()
 {
-    if(selStartRow >= 0)
-        for(int r = qMin(selStartRow, selLastRow); r <= qMax(selLastRow, selStartRow) && r < lines.size(); ++r)
-            lines[r]->selectionCleared();
+    for(int i=selFirstRow; i<=selLastRow && i<lines.size() && i >= 0; ++i)
+        lines[i]->selectionCleared();
 
-    selStartRow = -1;
-    selStartCol = -1;
+    selGraphItem->hide();
+
+    selFirstRow = -1;
     selLastRow = -1;
-    selLastCol = -1;
+    selClickedCol = -1;
+    selClickedRow = -1;
+
+    selectionMode = None;
 }
 
 QRect ChatLog::getVisibleRect() const
@@ -229,9 +238,6 @@ void ChatLog::mousePressEvent(QMouseEvent* ev)
 void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
 {
     QGraphicsView::mouseReleaseEvent(ev);
-
-    if(ev->button() == Qt::LeftButton)
-        selecting = false;
 }
 
 void ChatLog::mouseMoveEvent(QMouseEvent* ev)
@@ -242,21 +248,21 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
     if(ev->buttons() & Qt::LeftButton)
     {
-        if(!selecting && (clickPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
+        if(selectionMode == None && (clickPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
         {
             QPointF sceneClickPos = mapToScene(clickPos.toPoint());
 
             ChatLineContent* content = getContentFromPos(sceneClickPos);
             if(content)
             {
-                selStartRow = content->getRow();
-                selStartCol = content->getColumn();
-                selLastRow = selStartRow;
-                selLastCol = selStartCol;
+                selClickedRow = content->getRow();
+                selClickedCol = content->getColumn();
+                selFirstRow = content->getRow();
+                selLastRow = content->getRow();
 
                 content->selectionStarted(sceneClickPos);
 
-                selecting = true;
+                selectionMode = Precise;
 
                 // ungrab mouse grabber
                 if(scene->mouseGrabberItem())
@@ -265,7 +271,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
         }
     }
 
-    if(selecting && ev->pos() != lastPos)
+    if(selectionMode != None && ev->pos() != lastPos)
     {
         lastPos = ev->pos();
 
@@ -273,47 +279,35 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
         if(content)
         {
-            // TODO: turn this into a sane algo.
             int row = content->getRow();
             int col = content->getColumn();
-            int firstRow = selStartRow;
 
-            // selection
-            for(int r = qMin(firstRow, row + 1); r < qMax(row, firstRow); r++)
-                lines[r]->selectAll();
+            if(row >= selClickedRow)
+                selLastRow = row;
 
-            if(row != selStartRow)
-                for(int c = 0; c < col; c++)
-                    lines[selStartRow]->selectAll();
+            if(row <= selClickedRow)
+                selFirstRow = row;
 
-            if(row == selStartRow)
+            if(row == selClickedRow && col == selClickedCol)
+            {
+                selectionMode = Precise;
+
                 content->selectionMouseMove(scenePos);
+                selGraphItem->hide();
+            }
             else
             {
-                lines[row]->selectAll();
-                selStartCol = 0;
-                selLastCol = lines[row]->getColumnCount();
+                selectionMode = Multi;
+
+                lines[selClickedRow]->selectionCleared();
+
+                QRectF selBBox;
+                selBBox = selBBox.united(lines[selFirstRow]->boundingSceneRect());
+                selBBox = selBBox.united(lines[selLastRow]->boundingSceneRect());
+
+                selGraphItem->setRect(selBBox);
+                selGraphItem->show();
             }
-
-            // de-selection
-            if(row < selStartRow)
-                selLastRow = qMin(row, selLastRow);
-            else
-                selLastRow = qMax(row, selLastRow);
-
-            if(col < selStartCol)
-                selLastCol = qMin(col, selLastCol);
-            else
-                selLastCol = qMax(col, selLastCol);
-
-            for(int r = qMin(row, selLastRow); r < qMax(row, selLastRow + 1) && r < lines.size(); ++r)
-                if(r != row)
-                    lines[r]->selectionCleared();
-
-            if(row == selStartRow)
-                for(int c = col + 1; c < lines[row]->getColumnCount() && c < selLastCol; ++c)
-                    lines[row]->selectionCleared(c);
-
         }
     }
 }
@@ -330,17 +324,25 @@ ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
 
 bool ChatLog::isOverSelection(QPointF scenePos)
 {
-    ChatLineContent* content = getContentFromPos(scenePos);
+    if(selectionMode == Precise)
+    {
+        ChatLineContent* content = getContentFromPos(scenePos);
 
-    if(content)
-        return content->isOverSelection(scenePos);
+        if(content)
+            return content->isOverSelection(scenePos);
+    }
+    else if(selectionMode == Multi)
+    {
+        if(selGraphItem->rect().contains(scenePos))
+            return true;
+    }
 
     return false;
 }
 
 int ChatLog::useableWidth()
 {
-    return width() - verticalScrollBar()->sizeHint().width();
+    return width() - verticalScrollBar()->sizeHint().width() - 10.0;
 }
 
 void ChatLog::reposition(int start, int end)
@@ -411,19 +413,33 @@ void ChatLog::scrollToBottom()
 
 QString ChatLog::getSelectedText() const
 {
-    QString ret;
+    if(selectionMode == Precise)
+    {
+        return lines[selClickedRow]->content[selClickedCol]->getSelectedText();
+    }
+    else if(selectionMode == Multi)
+    {
+        // build a nicely formatted message
+        QString out;
 
-    const int rowStart = qMin(selStartRow, selLastRow);
-    const int rowLast = qMax(selStartRow, selLastRow);
+        QString lastSender;
+        for(int i=selFirstRow; i<=selLastRow && i>=0 && i<lines.size(); ++i)
+        {
+            if(lastSender != lines[i]->content[0]->getText() && !lines[i]->content[0]->getText().isEmpty())
+            {
+                //author changed
+                out += lines[i]->content[0]->getText() + ":\n";
+                lastSender = lines[i]->content[0]->getText();
+            }
 
-    const int colStart = qMin(selStartCol, selLastCol);
-    const int colLast = qMax(selStartCol, selLastCol);
+            out += lines[i]->content[1]->getText();
+            out += "\n\n";
+        }
 
-    for(int r = rowStart; r <= rowLast && r < lines.size(); ++r)
-        for(int c = colStart; c <= colLast && c < lines[r]->getColumnCount(); ++c)
-            ret.append(lines[r]->content[c]->getSelectedText() + '\n');
+        return out;
+    }
 
-    return ret;
+    return QString();
 }
 
 void ChatLog::showContextMenu(const QPoint& globalPos, const QPointF& scenePos)

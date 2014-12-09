@@ -21,6 +21,7 @@
 #include <QDateTime>
 
 class QGraphicsScene;
+class QGraphicsRectItem;
 class ChatLine;
 class ChatLineContent;
 class ChatMessage;
@@ -72,6 +73,12 @@ protected:
     virtual void resizeEvent(QResizeEvent *ev);
 
 private:
+    enum SelectionMode {
+        None,
+        Precise,
+        Multi,
+    };
+
     QGraphicsScene* scene = nullptr;
     QList<ChatLine*> lines;
     QList<ChatLine*> visibleLines;
@@ -81,13 +88,14 @@ private:
     int insertStartIndex = -1;
 
     // selection
-    int selStartRow = -1;
-    int selStartCol = -1;
+    int selClickedRow = -1;
+    int selClickedCol = -1;
+    int selFirstRow = -1;
     int selLastRow = -1;
-    int selLastCol = -1;
-    bool selecting = false;
+    SelectionMode selectionMode = None;
     QPointF clickPos;
     QPointF lastPos;
+    QGraphicsRectItem* selGraphItem = nullptr;
 
     // actions
     QAction* copyAction = nullptr;
