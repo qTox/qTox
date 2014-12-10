@@ -1,9 +1,9 @@
 QFrame {
 	border-image: url(:/ui/fileTransferInstance/background_green.png);
-	border-left:25;padding-top:-30;
-	border-top:28;
-	border-right:25; padding-right:-28;
-	border-bottom:28;padding-bottom:-30;
+	border-left:25;		padding-left:-25;
+	border-top:28;		padding-top:-28;
+	border-right:25;	padding-right:-25;
+	border-bottom:28;	padding-bottom:-28;
 }
 
 QLabel {

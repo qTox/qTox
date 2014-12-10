@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QDesktopServices>
 #include <QDebug>
 
 FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
@@ -60,7 +61,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     if(fileInfo.direction == ToxFile::SENDING)
         showPreview(fileInfo.filePath);
 
-    setFixedHeight(85);
+    setFixedHeight(69);
 }
 
 FileTransferWidget::~FileTransferWidget()
@@ -164,6 +165,10 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
     setupButtons();
     hideWidgets();
 
+    ui->bottomButton->show();
+    ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/browse_path.png"));
+    ui->bottomButton->setObjectName("browse");
+
     // preview
     if(fileInfo.direction == ToxFile::RECEIVING)
         showPreview(fileInfo.filePath);
@@ -184,7 +189,9 @@ QString FileTransferWidget::getHumanReadableSize(qint64 size)
 
 void FileTransferWidget::hideWidgets()
 {
-    ui->buttonWidget->hide();
+    ui->topButton->hide();
+    ui->bottomButton->hide();
+    //ui->buttonWidget->hide();
     ui->progressBar->hide();
     ui->progressLabel->hide();
     ui->etaLabel->hide();
@@ -262,6 +269,11 @@ void FileTransferWidget::handleButton(QPushButton *btn)
             if(!path.isEmpty())
                 Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, path);
         }
+    }
+
+    if(btn->objectName() == "browse")
+    {
+        QDesktopServices::openUrl("file://" + fileInfo.filePath);
     }
 }
 
