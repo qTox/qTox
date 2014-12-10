@@ -196,6 +196,14 @@ void Core::checkEncryptedHistory()
     else
         dialogtxt = a;
 
+    if (pwsaltedkeys[ptMain])
+    {
+        useOtherPassword(ptHistory);
+        if (HistoryKeeper::checkPassword())
+            return;
+        clearPassword(ptHistory);
+    }
+
     bool error = true;
     do
     {
