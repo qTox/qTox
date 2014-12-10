@@ -253,7 +253,7 @@ QSizeF Text::idealSize()
 int Text::cursorFromPos(QPointF scenePos) const
 {
     if(doc)
-        return doc->documentLayout()->hitTest(mapFromScene(scenePos), Qt::ExactHit);
+        return doc->documentLayout()->hitTest(mapFromScene(scenePos), Qt::FuzzyHit);
 
     return -1;
 }
