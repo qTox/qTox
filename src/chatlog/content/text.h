@@ -1,13 +1,3 @@
-#ifndef TEXT_H
-#define TEXT_H
-
-#include "../chatlinecontent.h"
-
-#include <QTextDocument>
-#include <QTextCursor>
-
-class CustomTextDocument;
-
 /*
     Copyright (C) 2014 by Project Tox <https://tox.im>
 
@@ -23,6 +13,16 @@ class CustomTextDocument;
 
     See the COPYING file for more details.
 */
+
+#ifndef TEXT_H
+#define TEXT_H
+
+#include "../chatlinecontent.h"
+
+#include <QTextDocument>
+#include <QTextCursor>
+
+class CustomTextDocument;
 
 class Text : public ChatLineContent
 {
@@ -60,6 +60,8 @@ protected:
     QSizeF idealSize();
 
     int cursorFromPos(QPointF scenePos) const;
+
+    void detectAnchors();
 
 private:
     CustomTextDocument* doc = nullptr;
