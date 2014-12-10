@@ -36,7 +36,7 @@ QRectF Image::boundingSceneRect() const
 
 qreal Image::firstLineVOffset() const
 {
-    return size.height() / 4.0;
+    return 0.0;
 }
 
 void Image::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)

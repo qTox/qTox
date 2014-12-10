@@ -72,7 +72,7 @@ void Spinner::visibilityChanged(bool visible)
 
 qreal Spinner::firstLineVOffset() const
 {
-    return size.height() / 4.0;
+    return 0.0;
 }
 
 void Spinner::timeout()

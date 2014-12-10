@@ -42,7 +42,7 @@ void ChatLineContentProxy::paint(QPainter *painter, const QStyleOptionGraphicsIt
 
 qreal ChatLineContentProxy::firstLineVOffset() const
 {
-    return proxy->widget()->layout()->contentsMargins().top() + proxy->widget()->layout()->contentsMargins().bottom();
+    return proxy->widget()->layout()->contentsMargins().top();
 }
 
 void ChatLineContentProxy::setWidth(qreal width)
