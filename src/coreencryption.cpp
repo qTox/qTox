@@ -105,7 +105,11 @@ bool Core::isPasswordSet(PasswordType passtype)
 QByteArray Core::getSaltFromFile(QString filename)
 {
     QFile file(filename);
-    file.open(QIODevice::ReadOnly);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qWarning() << "Core: encrypted history file doesn't exist";
+        return QByteArray();
+    }
     QByteArray data = file.read(tox_pass_encryption_extra_length());
     file.close();
 
@@ -173,7 +177,7 @@ void Core::checkEncryptedHistory()
 
     if (salt.size() == 0)
     {   // maybe we should handle this better
-        Widget::getInstance()->showWarningMsgBox(tr("Encrypted History"), tr("No encrypted history file found.\nHistory will be disabled!"));
+        Widget::getInstance()->showWarningMsgBox(tr("Encrypted History"), tr("No encrypted history file found, or it was corrupted.\nHistory will be disabled!"));
         Settings::getInstance().setEncryptLogs(false);
         Settings::getInstance().setEnableLogging(false);
         return;
