@@ -46,7 +46,7 @@ public:
 
     virtual QString getText() const;
 
-    virtual qreal firstLineVOffset() const;
+    virtual qreal getAscent() const;
 
     virtual QRectF boundingSceneRect() const = 0;
     virtual QRectF boundingRect() const = 0;

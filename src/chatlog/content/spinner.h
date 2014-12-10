@@ -33,7 +33,7 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual void setWidth(qreal width);
     virtual void visibilityChanged(bool visible);
-    virtual qreal firstLineVOffset() const;
+    virtual qreal getAscent() const;
 
 private slots:
     void timeout();

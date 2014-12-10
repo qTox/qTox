@@ -70,7 +70,7 @@ void Spinner::visibilityChanged(bool visible)
         timer.stop();
 }
 
-qreal Spinner::firstLineVOffset() const
+qreal Spinner::getAscent() const
 {
     return 0.0;
 }

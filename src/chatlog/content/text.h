@@ -47,7 +47,7 @@ public:
 
     virtual void visibilityChanged(bool isVisible) override;
 
-    virtual qreal firstLineVOffset() const override;
+    virtual qreal getAscent() const override;
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 

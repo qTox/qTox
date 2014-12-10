@@ -170,7 +170,7 @@ void Text::visibilityChanged(bool visible)
         freeResources();
 }
 
-qreal Text::firstLineVOffset() const
+qreal Text::getAscent() const
 {
     return vOffset;
 }

@@ -29,7 +29,7 @@ public:
     virtual QRectF boundingSceneRect() const;
     virtual void setWidth(qreal width);
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    virtual qreal firstLineVOffset() const;
+    virtual qreal getAscent() const;
 
 private:
     QGraphicsProxyWidget* proxy;

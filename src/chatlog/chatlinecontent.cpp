@@ -75,7 +75,7 @@ QString ChatLineContent::getSelectedText() const
     return QString();
 }
 
-qreal ChatLineContent::firstLineVOffset() const
+qreal ChatLineContent::getAscent() const
 {
     return 0.0;
 }

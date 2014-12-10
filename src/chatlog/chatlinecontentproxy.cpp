@@ -40,7 +40,7 @@ void ChatLineContentProxy::paint(QPainter *painter, const QStyleOptionGraphicsIt
     proxy->paint(painter, option, widget);
 }
 
-qreal ChatLineContentProxy::firstLineVOffset() const
+qreal ChatLineContentProxy::getAscent() const
 {
     return proxy->widget()->layout()->contentsMargins().top();
 }

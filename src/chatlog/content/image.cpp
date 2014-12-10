@@ -34,7 +34,7 @@ QRectF Image::boundingSceneRect() const
     return QRectF(scenePos(), size);
 }
 
-qreal Image::firstLineVOffset() const
+qreal Image::getAscent() const
 {
     return 0.0;
 }
