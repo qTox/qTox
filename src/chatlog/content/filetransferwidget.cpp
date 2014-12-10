@@ -61,7 +61,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     if(fileInfo.direction == ToxFile::SENDING)
         showPreview(fileInfo.filePath);
 
-    setFixedHeight(69);
+    setFixedHeight(85);
 }
 
 FileTransferWidget::~FileTransferWidget()
