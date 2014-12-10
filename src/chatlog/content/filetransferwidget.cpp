@@ -191,7 +191,6 @@ void FileTransferWidget::hideWidgets()
 {
     ui->topButton->hide();
     ui->bottomButton->hide();
-    //ui->buttonWidget->hide();
     ui->progressBar->hide();
     ui->progressLabel->hide();
     ui->etaLabel->hide();
