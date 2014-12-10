@@ -1184,7 +1184,7 @@ bool Core::loadConfiguration(QString path)
                 {
                     loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
                     Settings::getInstance().switchProfile(profile);
-                    HistoryKeeper::getInstance()->resetInstance();
+                    HistoryKeeper::resetInstance();
                 }
                 return false;
             }
@@ -1265,7 +1265,7 @@ void Core::switchConfiguration(const QString& profile)
         loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
 
     Settings::getInstance().switchProfile(profile);
-    HistoryKeeper::getInstance()->resetInstance();
+    HistoryKeeper::resetInstance();
 
     start();
     Widget::getInstance()->setEnabledThreadsafe(true);
