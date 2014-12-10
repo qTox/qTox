@@ -223,7 +223,7 @@ void Text::ensureIntegrity()
     doc->documentLayout()->update();
 
     if(doc->firstBlock().layout()->lineCount() > 0)
-        vOffset = doc->firstBlock().layout()->lineAt(0).height();
+        vOffset = doc->firstBlock().layout()->lineAt(0).ascent();
 
     if(size != idealSize())
     {
