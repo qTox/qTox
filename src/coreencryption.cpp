@@ -59,11 +59,11 @@ void Core::useOtherPassword(PasswordType type)
 
 void Core::clearPassword(PasswordType passtype)
 {
-    if (pwsaltedkeys[passtype])
-    {
-        delete[] pwsaltedkeys[passtype];
-        pwsaltedkeys[passtype] = nullptr;
-    }
+    PasswordType other = (passtype == ptMain) ? ptHistory : ptMain;
+    if (pwsaltedkeys[passtype] == pwsaltedkeys[other])
+        pwsaltedkeys[other] = nullptr;
+    delete[] pwsaltedkeys[passtype];
+    pwsaltedkeys[passtype] = nullptr;
 }
 
 QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
