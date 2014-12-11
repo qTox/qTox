@@ -728,7 +728,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
 {
     const QString userId = friendAddress.mid(0, TOX_CLIENT_ID_SIZE * 2);
 
-    if(hasFriendWithAddress(friendAddress))
+    if (hasFriendWithAddress(friendAddress))
     {
         emit failedToAddFriend(userId, QString(tr("Friend is already added")));
     }
@@ -1677,7 +1677,7 @@ void Core::createGroup(uint8_t type)
 bool Core::hasFriendWithAddress(const QString &addr) const
 {
     // Valid length check
-    if(addr.length() != (TOX_FRIEND_ADDRESS_SIZE * 2))
+    if (addr.length() != (TOX_FRIEND_ADDRESS_SIZE * 2))
     {
         return false;
     }
@@ -1689,7 +1689,7 @@ bool Core::hasFriendWithAddress(const QString &addr) const
 bool Core::hasFriendWithPublicKey(const QString &pubkey) const
 {
     // Valid length check
-    if(pubkey.length() != (TOX_CLIENT_ID_SIZE * 2))
+    if (pubkey.length() != (TOX_CLIENT_ID_SIZE * 2))
     {
         return false;
     }
@@ -1706,7 +1706,7 @@ bool Core::hasFriendWithPublicKey(const QString &pubkey) const
             QString addrOrId = getFriendAddress(ids[i]);
 
             // Set true if found
-            if(addrOrId.toUpper().startsWith(pubkey.toUpper()))
+            if (addrOrId.toUpper().startsWith(pubkey.toUpper()))
             {
                 found = true;
                 break;

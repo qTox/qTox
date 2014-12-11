@@ -130,6 +130,6 @@ void MaskablePixmapWidget::paintEvent(QPaintEvent *)
 
 void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)
 {
-    if(clickable)
+    if (clickable)
         emit clicked();
 }

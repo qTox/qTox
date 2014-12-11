@@ -52,7 +52,7 @@ void TabCompleter::buildCompletionList()
     // that section is then used as the completion regex
     QRegExp regex(QString("^[-_\\[\\]{}|`^.\\\\]*").append(QRegExp::escape(tabAbbrev)), Qt::CaseInsensitive);
 
-    for(auto name : group->getPeerList())
+    for (auto name : group->getPeerList())
         if (regex.indexIn(name) > -1)
             completionMap[name.toLower()] = name;
 

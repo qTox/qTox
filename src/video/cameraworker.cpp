@@ -129,7 +129,7 @@ void CameraWorker::applyProps()
     if (!cam.isOpened())
         return;
 
-    for(int prop : props.keys())
+    for (int prop : props.keys())
         cam.set(prop, props.value(prop));
 }
 
@@ -148,7 +148,7 @@ void CameraWorker::subscribe()
 
 void CameraWorker::unsubscribe()
 {
-    if(--refCount <= 0)
+    if (--refCount <= 0)
     {
         cam.release();
         refCount = 0;
