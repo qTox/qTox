@@ -215,6 +215,9 @@ public:
     bool getFauxOfflineMessaging() const;
     void setFauxOfflineMessaging(bool value);
 
+    bool getCompactLayout() const;
+    void setCompactLayout(bool compact);
+
 public:
     void save(bool writeFriends = true);
     void save(QString path, bool writeFriends = true);
@@ -238,6 +241,7 @@ private:
     bool dontShowDhtDialog;
 
     bool fauxOfflineMessaging;
+    bool compactLayout;
     bool enableIPv6;
     QString translation;
     static bool makeToxPortable;
@@ -313,6 +317,7 @@ signals:
     void smileyPackChanged();
     void emojiFontChanged();
     void timestampFormatChanged();
+    void compactLayoutChanged();
 };
 
 #endif // SETTINGS_HPP

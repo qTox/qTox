@@ -53,6 +53,11 @@ public:
 
     void reloadTheme();
 
+    bool isCompact() const;
+    void setCompact(bool compact);
+
+    Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
+
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
@@ -65,6 +70,7 @@ protected:
     MaskablePixmapWidget* avatar;
     QLabel statusPic;
     CroppingLabel *nameLabel, *statusMessageLabel;
+    bool compact;
 
     friend class Style; ///< To update our stylesheets
 };

@@ -16,6 +16,7 @@
 
 #include "genericchatroomwidget.h"
 #include "src/misc/style.h"
+#include "src/misc/settings.h"
 #include "maskablepixmapwidget.h"
 #include "croppinglabel.h"
 #include <QMouseEvent>
@@ -24,7 +25,16 @@
 GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     : QFrame(parent)
 {
-    setFixedHeight(55);
+    setProperty("compact", Settings::getInstance().getCompactLayout());
+
+    if(property("compact").toBool())
+    {
+        setFixedHeight(25);
+    }
+    else
+    {
+        setFixedHeight(55);
+    }
 
     setLayout(&layout);
     layout.setSpacing(0);
@@ -34,7 +44,14 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     // avatar
-    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
+    if(property("compact").toBool())
+    {
+        avatar = new MaskablePixmapWidget(this, QSize(20,20), ":/img/avatar_mask.png");
+    }
+    else
+    {
+        avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
+    }
 
     // status text
     statusMessageLabel = new CroppingLabel(this);
@@ -43,20 +60,35 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     // name text
     nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("name");
+    
+    if(property("compact").toBool())
+    {
+        layout.addSpacing(18);
+        layout.addWidget(avatar);
+        layout.addSpacing(5);
+        layout.addWidget(nameLabel);
+        layout.addWidget(statusMessageLabel);
+        layout.addSpacing(5);
+        layout.addWidget(&statusPic);
+        layout.addSpacing(5);
+        layout.activate();
+    }
+    else
+    {
+        textLayout.addStretch();
+        textLayout.addWidget(nameLabel);
+        textLayout.addWidget(statusMessageLabel);
+        textLayout.addStretch();
 
-    textLayout.addStretch();
-    textLayout.addWidget(nameLabel);
-    textLayout.addWidget(statusMessageLabel);
-    textLayout.addStretch();
-
-    layout.addSpacing(20);
-    layout.addWidget(avatar);
-    layout.addSpacing(10);
-    layout.addLayout(&textLayout);
-    layout.addSpacing(10);
-    layout.addWidget(&statusPic);
-    layout.addSpacing(10);
-    layout.activate();
+        layout.addSpacing(20);
+        layout.addWidget(avatar);
+        layout.addSpacing(10);
+        layout.addLayout(&textLayout);
+        layout.addSpacing(10);
+        layout.addWidget(&statusPic);
+        layout.addSpacing(10);
+        layout.activate();
+    }
 
     setProperty("active", false);
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/genericChatroomWidget.css"));
@@ -101,4 +133,14 @@ void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)
 void GenericChatroomWidget::reloadTheme()
 {
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/genericChatroomWidget.css"));
+}
+
+bool GenericChatroomWidget::isCompact() const
+{
+    return compact;
+}
+
+void GenericChatroomWidget::setCompact(bool compact) {
+    this->compact = compact;
+    Style::repolish(this);
 }

@@ -142,6 +142,7 @@ void Settings::load()
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
+        compactLayout = s.value("compactLayout", false).toBool();
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -289,6 +290,7 @@ void Settings::save(QString path, bool writeFriends)
         s.setValue("checkUpdates", checkUpdates);
         s.setValue("showInFront", showInFront);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
+        s.setValue("compactLayout", compactLayout);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
     s.endGroup();
@@ -956,6 +958,15 @@ bool Settings::getFauxOfflineMessaging() const
 void Settings::setFauxOfflineMessaging(bool value)
 {
     fauxOfflineMessaging = value;
+}
+
+bool Settings::getCompactLayout() const {
+    return compactLayout;
+}
+
+void Settings::setCompactLayout(bool value) {
+    compactLayout = value;
+    emit compactLayoutChanged();
 }
 
 int Settings::getThemeColor() const

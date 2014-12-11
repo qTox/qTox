@@ -68,6 +68,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
+    bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
 
     for (auto entry : SmileyPack::listSmileyPacks())
     {
@@ -141,6 +142,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
+    connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
 
 #ifndef QTOX_PLATFORM_EXT
     bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
@@ -329,6 +331,11 @@ void GeneralForm::onSetShowInFront()
 void GeneralForm::onFauxOfflineMessaging()
 {
     Settings::getInstance().setFauxOfflineMessaging(bodyUI->cbFauxOfflineMessaging->isChecked());
+}
+
+void GeneralForm::onCompactLayout()
+{
+    Settings::getInstance().setCompactLayout(bodyUI->cbCompactLayout->isChecked());
 }
 
 void GeneralForm::onThemeColorChanged(int)
