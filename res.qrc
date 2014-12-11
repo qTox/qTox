@@ -41,10 +41,12 @@
         <file>img/taskbar/dark/taskbar_away.svg</file>
         <file>img/taskbar/dark/taskbar_busy.svg</file>
         <file>img/taskbar/dark/taskbar_offline.svg</file>
+        <file>img/taskbar/dark/taskbar_event.svg</file>
         <file>img/taskbar/light/taskbar_online.svg</file>
         <file>img/taskbar/light/taskbar_away.svg</file>
         <file>img/taskbar/light/taskbar_busy.svg</file>
         <file>img/taskbar/light/taskbar_offline.svg</file>
+        <file>img/taskbar/light/taskbar_event.svg</file>
         <file>img/transfer.png</file>
         <file>smileys/cylgom/angel.png</file>
         <file>smileys/cylgom/angry.png</file>

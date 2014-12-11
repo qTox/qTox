@@ -134,6 +134,7 @@ private slots:
     void playRingtone();
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAwayCheck();
+    void onEventIconTick();
     void getPassword(QString info, int passtype, uint8_t* salt);
     void onFriendTypingChanged(int friendId, bool isTyping);
     void onSetShowSystemTray(bool newValue);
@@ -172,9 +173,11 @@ private:
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
     Status beforeDisconnect = Status::Offline;
-    QTimer* idleTimer;
+    QTimer* timer;
     QTranslator* translator;
     QRegExp nameMention, sanitizedNameMention;
+    bool eventFlag;
+    bool eventIcon;
 };
 
 void toxActivateEventHandler(const QByteArray& data);
