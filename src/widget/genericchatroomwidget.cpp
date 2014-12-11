@@ -27,7 +27,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
 {
     setProperty("compact", Settings::getInstance().getCompactLayout());
 
-    if(property("compact").toBool())
+    if (property("compact").toBool())
     {
         setFixedHeight(25);
     }
@@ -44,7 +44,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     // avatar
-    if(property("compact").toBool())
+    if (property("compact").toBool())
     {
         avatar = new MaskablePixmapWidget(this, QSize(20,20), ":/img/avatar_mask.png");
     }
@@ -61,7 +61,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("name");
     
-    if(property("compact").toBool())
+    if (property("compact").toBool())
     {
         layout.addSpacing(18);
         layout.addWidget(avatar);
