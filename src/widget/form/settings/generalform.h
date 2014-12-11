@@ -37,6 +37,7 @@ private slots:
     void onSetShowSystemTray();
     void onSetAutostartInTray();
     void onSetCloseToTray();
+    void onSetLightTrayIcon();
     void onSmileyBrowserIndexChanged(int index);
     void onUDPUpdated();
     void onProxyAddrEdited();
