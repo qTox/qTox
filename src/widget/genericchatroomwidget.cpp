@@ -140,7 +140,8 @@ bool GenericChatroomWidget::isCompact() const
     return compact;
 }
 
-void GenericChatroomWidget::setCompact(bool compact) {
+void GenericChatroomWidget::setCompact(bool compact)
+{
     this->compact = compact;
     Style::repolish(this);
 }

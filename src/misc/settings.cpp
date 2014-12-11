@@ -960,11 +960,13 @@ void Settings::setFauxOfflineMessaging(bool value)
     fauxOfflineMessaging = value;
 }
 
-bool Settings::getCompactLayout() const {
+bool Settings::getCompactLayout() const
+{
     return compactLayout;
 }
 
-void Settings::setCompactLayout(bool value) {
+void Settings::setCompactLayout(bool value)
+{
     compactLayout = value;
     emit compactLayoutChanged();
 }
