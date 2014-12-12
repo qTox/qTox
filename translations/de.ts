@@ -118,7 +118,7 @@
         <location filename="../src/widget/form/addfriendform.cpp" line="100"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox muss die Tox DNS nutzen, dies klappt allerdings nicht über einen Proxy.
+        <translation>qTox muss das Tox DNS nutzen, dies klappt allerdings nicht über einen Proxy.
 Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</translation>
     </message>
     <message>
