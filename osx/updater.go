@@ -32,6 +32,41 @@ func fs_type(path string) int {
 	return -1
 }
 
+func install(path string, pathlen int) int {
+	files, _ := ioutil.ReadDir(path)
+
+	for _, file := range files {
+		if fs_type(path+file.Name()) == 1 {
+
+			addpath := ""
+			if len(path) != pathlen {
+				addpath = path[pathlen:len(path)]
+			}
+
+			fmt.Print("Installing: ")
+			fmt.Println("/Applications/qtox.app/Contents/" + addpath + file.Name())
+			if _, err := os.Stat("/Applications/qtox.app/Contents/" + file.Name()); os.IsNotExist(err) {
+				newfile := exec.Command("/usr/libexec/authopen", "-c", "-x", "-m", "drwxrwxr-x+", "/Applications/qtox.app/Contents/"+addpath+file.Name())
+				newfile.Run()
+			}
+
+			cat := exec.Command("/bin/cat", path+file.Name())
+
+			auth := exec.Command("/usr/libexec/authopen", "-w", "/Applications/qtox.app/Contents/"+addpath+file.Name())
+			auth.Stdin, _ = cat.StdoutPipe()
+			auth.Stdout = os.Stdout
+			auth.Stderr = os.Stderr
+			_ = auth.Start()
+			_ = cat.Run()
+			_ = auth.Wait()
+
+		} else {
+			install(path+file.Name()+"/", pathlen)
+		}
+	}
+	return 0
+}
+
 func main() {
 	usr, e := user.Current()
 	if e != nil {
@@ -45,51 +80,11 @@ func main() {
 	}
 	fmt.Println("qTox Updater")
 
-	files, _ := ioutil.ReadDir(update_dir)
 	killqtox := exec.Command("/usr/bin/killall", "qtox")
 	_ = killqtox.Run()
 
-	for _, file := range files {
-		if fs_type(update_dir+file.Name()) == 1 {
-			fmt.Print("Installing: ")
-			fmt.Println("/Applications/qtox.app/Contents/" + file.Name())
-			if _, err := os.Stat("/Applications/qtox.app/Contents/" + file.Name()); os.IsNotExist(err) {
-				newfile := exec.Command("/usr/libexec/authopen", "-c", "-x", "-m", "drwxrwxr-x+", "/Applications/qtox.app/Contents/"+file.Name())
-				newfile.Run()
-			}
+	install(update_dir, len(update_dir))
 
-			cat := exec.Command("/bin/cat", update_dir+file.Name())
-			auth := exec.Command("/usr/libexec/authopen", "-w", "/Applications/qtox.app/Contents/"+file.Name())
-			auth.Stdin, _ = cat.StdoutPipe()
-			auth.Stdout = os.Stdout
-			auth.Stderr = os.Stderr
-			_ = auth.Start()
-			_ = cat.Run()
-			_ = auth.Wait()
-
-		} else {
-			files, _ := ioutil.ReadDir(update_dir + file.Name())
-			for _, file2 := range files {
-				fmt.Print("Installing: ")
-				fmt.Println("/Applications/qtox.app/Contents/" + file.Name() + "/" + file2.Name())
-
-				if _, err := os.Stat("/Applications/qtox.app/Contents/" + file.Name() + "/" + file2.Name()); os.IsNotExist(err) {
-					newfile := exec.Command("/usr/libexec/authopen", "-c", "-x", "-m", "drwxrwxr-x+", "/Applications/qtox.app/Contents/"+file.Name()+"/"+file2.Name())
-					newfile.Run()
-				}
-
-				cat := exec.Command("/bin/cat", update_dir+file.Name()+"/"+file2.Name())
-				auth := exec.Command("/usr/libexec/authopen", "-w", "/Applications/qtox.app/Contents/"+file.Name()+"/"+file2.Name())
-				auth.Stdin, _ = cat.StdoutPipe()
-				auth.Stdout = os.Stdout
-				auth.Stderr = os.Stderr
-				_ = auth.Start()
-				_ = cat.Run()
-				_ = auth.Wait()
-			}
-		}
-
-	}
 	os.RemoveAll(update_dir)
 	fmt.Println("Update metadata wiped, launching qTox")
 	launchqtox := exec.Command("/usr/bin/open", "-b", "im.tox.qtox")
