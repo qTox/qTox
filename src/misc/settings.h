@@ -61,6 +61,9 @@ public:
     
     bool getMinimizeToTray() const;
     void setMinimizeToTray(bool newValue);
+
+    bool getLightTrayIcon() const;
+    void setLightTrayIcon(bool newValue);
     
     QString getStyle() const;
     void setStyle(const QString& newValue);
@@ -244,6 +247,7 @@ private:
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
+    bool lightTrayIcon;
     bool useEmoticons;
     bool checkUpdates;
     bool showInFront;
