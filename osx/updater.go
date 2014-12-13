@@ -57,7 +57,7 @@ func install(path string, pathlen int) int {
 
 			cat := exec.Command("/bin/cat", path+file.Name())
 
-			auth := exec.Command("/usr/libexec/authopen", "-w", "-extauth", "/Applications/qtox.app/Contents/"+addpath+file.Name())
+			auth := exec.Command("/usr/libexec/authopen", "-w", "/Applications/qtox.app/Contents/"+addpath+file.Name())
 			auth.Stdin, _ = cat.StdoutPipe()
 			auth.Stdout = os.Stdout
 			auth.Stderr = os.Stderr
@@ -85,7 +85,7 @@ CHECK:
 
 		appdir, _ := osext.Executable()
 		appdir_len := len(appdir)
-		sudo_path := appdir[0:(appdir_len-7)] + "qtox_sudo"
+		sudo_path := appdir[0:(appdir_len-7)] + "qtox_sudo" //qtox_sudo is a fork of cocoasudo with all of its flags and other features stripped out
 
 		if _, err := os.Stat(sudo_path); os.IsNotExist(err) {
 			fmt.Println("Error: No qtox_sudo binary installed, falling back")
