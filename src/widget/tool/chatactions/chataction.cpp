@@ -25,7 +25,7 @@ QTextBlockFormat ChatAction::nameFormat, ChatAction::dateFormat;
 
 QString ChatAction::toHtmlChars(const QString &str)
 {
-    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}, {" ", "&nbsp;"}}; // {"&","&amp;"} should be always first
+    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}};
     QString res = str;
 
     for (auto &it : replaceList)
