@@ -793,7 +793,7 @@ void ChatForm::onLoadHistory()
 
 void ChatForm::startCounter()
 {
-    if(!timer)
+    if (!timer)
     {
         timer = new QTimer();
         connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
@@ -805,7 +805,7 @@ void ChatForm::startCounter()
 
 void ChatForm::stopCounter()
 {
-    if(timer)
+    if (timer)
     {
         addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),
                                                               secondsToDHMS(timeElapsed.elapsed()/1000)),
@@ -834,10 +834,10 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     int hours = (int) (duration % 24);
     int days = (int) (duration / 24);
     
-    if(minutes == 0)
+    if (minutes == 0)
         return cD + res.sprintf("%02ds", seconds);
     
-    if(hours == 0 && days == 0)
+    if (hours == 0 && days == 0)
         return cD + res.sprintf("%02dm %02ds", minutes, seconds);
     
     if (days == 0)

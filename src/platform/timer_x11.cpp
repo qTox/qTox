@@ -25,7 +25,7 @@ uint32_t Platform::getIdleTime()
     uint32_t idleTime = 0;
 
     Display *display = XOpenDisplay(NULL);
-    if(!display)
+    if (!display)
     {
         qDebug() << "XOpenDisplay(NULL) failed";
         return 0;
@@ -33,10 +33,10 @@ uint32_t Platform::getIdleTime()
 
     int32_t x11event = 0, x11error = 0;
     static int32_t hasExtension = XScreenSaverQueryExtension(display, &x11event, &x11error);
-    if(hasExtension)
+    if (hasExtension)
     {
         XScreenSaverInfo *info = XScreenSaverAllocInfo();
-        if(info)
+        if (info)
         {
             XScreenSaverQueryInfo(display, DefaultRootWindow(display), info);
             idleTime = info->idle;

@@ -79,7 +79,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
 
-    if(QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
+    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
         bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
     else
         bodyUI->styleBrowser->setCurrentText(tr("None"));
@@ -124,7 +124,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
-    if(bodyUI->autoacceptFiles->isChecked())
+    if (bodyUI->autoacceptFiles->isChecked())
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
@@ -192,7 +192,7 @@ void GeneralForm::onSetMinimizeToTray()
 
 void GeneralForm::onStyleSelected(QString style)
 {
-    if(bodyUI->styleBrowser->currentIndex() == 0)
+    if (bodyUI->styleBrowser->currentIndex() == 0)
         Settings::getInstance().setStyle("None");
     else
         Settings::getInstance().setStyle(style);
@@ -221,7 +221,7 @@ void GeneralForm::onAutoAcceptFileChange()
 {
     Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
 
-    if(bodyUI->autoacceptFiles->isChecked() == true)
+    if (bodyUI->autoacceptFiles->isChecked() == true)
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     else
         disconnect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()),this, SLOT(onAutoSaveDirChange()));
@@ -231,7 +231,7 @@ void GeneralForm::onAutoSaveDirChange()
 {
     QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
     QString directory = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"));
-    if(directory.isEmpty())
+    if (directory.isEmpty())
         directory = previousDir;
 
     Settings::getInstance().setGlobalAutoAcceptDir(directory);
@@ -299,7 +299,7 @@ void GeneralForm::reloadSmiles()
     QStringList smiles;
     smiles << ":)" << ";)" << ":p" << ":O" << ":["; //just in case...
 
-    for(int i = 0; i < emoticons.size(); i++)
+    for (int i = 0; i < emoticons.size(); i++)
         smiles.push_front(emoticons.at(i).first());
 
     int pixSize = 30;
