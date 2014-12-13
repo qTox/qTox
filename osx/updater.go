@@ -7,7 +7,12 @@ import (
 	"os"
 	"os/exec"
 	"os/user"
+	"syscall"
+
+	"bitbucket.org/kardianos/osext"
 )
+
+var custom_user string
 
 func fs_type(path string) int {
 	//name := "FileOrDir"
@@ -68,25 +73,61 @@ func install(path string, pathlen int) int {
 }
 
 func main() {
+	syscall.Setuid(0)
 	usr, e := user.Current()
 	if e != nil {
 		log.Fatal(e)
 	}
 
-	update_dir := usr.HomeDir + "/Library/Preferences/tox/update/"
-	if _, err := os.Stat(update_dir); os.IsNotExist(err) {
-		fmt.Println("Error: No update folder, is check for updates enabled?")
+CHECK:
+	if usr.Name != "System Administrator" {
+		fmt.Println("Not running as root, relaunching")
+
+		appdir, _ := osext.Executable()
+		appdir_len := len(appdir)
+		sudo_path := appdir[0:(appdir_len-7)] + "qtox_sudo" //qtox_sudo is a fork of cocoasudo with all of its flags and other features stripped out
+
+		if _, err := os.Stat(sudo_path); os.IsNotExist(err) {
+			fmt.Println("Error: No qtox_sudo binary installed, falling back")
+			custom_user = usr.Name
+			usr.Name = "System Administrator"
+			goto CHECK
+		}
+
+		relaunch := exec.Command(sudo_path, appdir, usr.Name)
+		relaunch.Stdout = os.Stdout
+		relaunch.Stderr = os.Stderr
+		relaunch.Run()
 		return
+
+	} else {
+
+		if len(os.Args) > 1 || custom_user != "" {
+
+			if custom_user == "" {
+				custom_user = os.Args[1]
+			}
+
+			update_dir := "/Users/" + custom_user + "/Library/Preferences/tox/update/"
+			if _, err := os.Stat(update_dir); os.IsNotExist(err) {
+				fmt.Println("Error: No update folder, is check for updates enabled?")
+				return
+			}
+			fmt.Println("qTox Updater")
+
+			killqtox := exec.Command("/usr/bin/killall", "qtox")
+			_ = killqtox.Run()
+
+			install(update_dir, len(update_dir))
+
+			os.RemoveAll(update_dir)
+			fmt.Println("Update metadata wiped, launching qTox")
+			launchqtox := exec.Command("/usr/bin/open", "-b", "im.tox.qtox")
+			launchqtox.Run()
+
+		} else {
+			fmt.Println("Error: no user passed")
+		}
+
 	}
-	fmt.Println("qTox Updater")
-
-	killqtox := exec.Command("/usr/bin/killall", "qtox")
-	_ = killqtox.Run()
-
-	install(update_dir, len(update_dir))
-
-	os.RemoveAll(update_dir)
-	fmt.Println("Update metadata wiped, launching qTox")
-	launchqtox := exec.Command("/usr/bin/open", "-b", "im.tox.qtox")
-	launchqtox.Run()
 }
