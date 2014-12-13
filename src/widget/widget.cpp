@@ -902,6 +902,7 @@ void Widget::onGroupMessageReceived(int groupnumber, const QString& message, con
     if (targeted)
         ;//TODO: g->chatForm->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
+
         ;//TODO: g->chatForm->addMessage(author, message, isAction, QDateTime::currentDateTime());
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
@@ -932,14 +933,14 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         if (name.isEmpty())
             name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
         g->addPeer(peernumber,name);
-        //g->chatForm->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "green");
+        g->chatForm->getChatLog()->addSystemMessage(tr("%1 has joined the chat").arg(name), QDateTime::currentDateTime());
         // we can't display these messages until irungentoo fixes peernumbers
         // https://github.com/irungentoo/toxcore/issues/1128
     }
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
     {
         g->removePeer(peernumber);
-        //g->chatForm->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "silver");
+        g->chatForm->getChatLog()->addSystemMessage(tr("%1 has left the chat").arg(name), QDateTime::currentDateTime());
     }
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
@@ -1086,7 +1087,7 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         return;
 
     if (result == -1)
-        ;//TODO: g->chatForm->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
+        g->chatForm->getChatLog()->addSystemMessage(tr("Message failed to send"), QDateTime::currentDateTime());
 }
 
 void Widget::getPassword(QString info, int passtype, uint8_t* salt)
@@ -1158,6 +1159,6 @@ void Widget::clearAllReceipts()
     QList<Friend*> frnds = FriendList::getAllFriends();
     for (Friend *f : frnds)
     {
-        //TODO: f->getChatForm()->clearReciepts();
+        f->getChatForm()->clearReciepts();
     }
 }

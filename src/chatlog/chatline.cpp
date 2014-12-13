@@ -61,6 +61,14 @@ int ChatLine::getRowIndex() const
     return rowIndex;
 }
 
+ChatLineContent *ChatLine::getContent(int col) const
+{
+    if(col < content.size() && col >= 0)
+        return content[col];
+
+    return nullptr;
+}
+
 void ChatLine::selectionCleared()
 {
     for(ChatLineContent* c : content)

@@ -96,6 +96,26 @@ ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString& msg, 
     return line;
 }
 
+ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg, const QDateTime &timestamp)
+{
+    ChatMessage* line = addChatAction(sender, msg);
+    line->markAsSent(timestamp);
+
+    return line;
+}
+
+ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg)
+{
+    ChatMessage* line = new ChatMessage(scene, msg);
+    line->addColumn(new Text("", Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text("<font color=\"red\">*" + sender + " " + SmileyPack::getInstance().smileyfied(msg) + "</font>"), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->setAsAction();
+
+    insertChatline(line);
+    return line;
+}
+
 ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& timestamp)
 {
     ChatMessage* line = new ChatMessage(scene, msg);
@@ -433,6 +453,11 @@ QString ChatLog::getSelectedText() const
     }
 
     return QString();
+}
+
+bool ChatLog::isEmpty() const
+{
+    return lines.isEmpty();
 }
 
 void ChatLog::showContextMenu(const QPoint& globalPos, const QPointF& scenePos)

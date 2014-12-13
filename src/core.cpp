@@ -1054,7 +1054,7 @@ void Core::setAvatar(uint8_t format, const QByteArray& data)
 
 ToxID Core::getSelfId() const
 {
-    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
+    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE] = {0};
     tox_get_address(tox, friendAddress);
     return ToxID::fromString(CFriendAddress::toString(friendAddress));
 }

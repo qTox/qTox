@@ -36,6 +36,8 @@ public:
     explicit FileTransferWidget(QWidget *parent, ToxFile file);
     virtual ~FileTransferWidget();
 
+    void acceptTransfer(const QString& path);
+
 protected slots:
     void onFileTransferInfo(ToxFile file);
     void onFileTransferAccepted(ToxFile file);

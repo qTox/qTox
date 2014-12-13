@@ -28,10 +28,13 @@ public:
 
     void markAsSent(const QDateTime& time);
     QString toString() const;
+    bool isAction() const;
+    void setAsAction();
 
 private:
     ChatLineContent* midColumn = nullptr;
     QString rawString;
+    bool action = false;
 };
 
 #endif // CHATMESSAGE_H

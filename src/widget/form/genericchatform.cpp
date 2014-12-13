@@ -152,7 +152,12 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
 bool GenericChatForm::isEmpty()
 {
-    //return chatWidget->isEmpty();
+    return chatWidget->isEmpty();
+}
+
+ChatLog *GenericChatForm::getChatLog() const
+{
+    return chatWidget;
 }
 
 void GenericChatForm::setName(const QString &newName)
@@ -193,35 +198,29 @@ void GenericChatForm::onSaveLogClicked()
 //    file.close();
 }
 
-/**
- * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
- */
-//void GenericChatForm::addMessage(const QString& author, const QString &message, bool isAction, const QDateTime &datetime)
-//{
-//    MessageActionPtr ca = genMessageActionAction(author, message, isAction, datetime);
-//    ca->markAsSent();
-//    chatWidget->insertMessage(ca);
-//}
-
 ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    QString authorStr = previousId != author ? Core::getInstance()->getPeerName(author) : QString();
-    previousId = author;
+    QString authorStr = (author.isMine() ? Core::getInstance()->getUsername() : Core::getInstance()->getPeerName(author));
 
-    ChatMessage* msg = chatWidget->addChatMessage(authorStr, message, datetime, false);
+    ChatMessage* msg = nullptr;
+    if(isAction)
+        msg = chatWidget->addChatAction(authorStr, message);
+    else
+        msg = chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, author.isMine());
+
     if(isSent)
         msg->markAsSent(datetime);
+
+    if(!isAction)
+        previousId = author;
 
     return msg;
 }
 
 ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent)
 {
-    QString authorStr = previousId != Core::getInstance()->getSelfId() ? Core::getInstance()->getUsername() : QString();
-    previousId = Core::getInstance()->getSelfId();
-
-    return chatWidget->addChatMessage(authorStr, message, true);
+    return addMessage(Core::getInstance()->getSelfId(), message, isAction, datetime, isSent);
 }
 
 /**

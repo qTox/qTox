@@ -37,6 +37,8 @@ public:
 
     ChatMessage* addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self);
     ChatMessage* addChatMessage(const QString& sender, const QString& msg, bool self);
+    ChatMessage* addChatAction(const QString& sender, const QString& msg, const QDateTime& timestamp);
+    ChatMessage* addChatAction(const QString& sender, const QString& msg);
 
     ChatMessage* addSystemMessage(const QString& msg, const QDateTime& timestamp);
     ChatMessage* addFileTransferMessage(const QString& sender, const ToxFile& file, const QDateTime &timestamp, bool self);
@@ -47,6 +49,8 @@ public:
     void clear();
     void copySelectedText() const;
     QString getSelectedText() const;
+
+    bool isEmpty() const;
 
 protected:
     QRect getVisibleRect() const;

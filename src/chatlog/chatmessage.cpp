@@ -37,3 +37,13 @@ QString ChatMessage::toString() const
 {
     return rawString;
 }
+
+bool ChatMessage::isAction() const
+{
+    return action;
+}
+
+void ChatMessage::setAsAction()
+{
+    action = true;
+}

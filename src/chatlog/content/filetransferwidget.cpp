@@ -69,6 +69,21 @@ FileTransferWidget::~FileTransferWidget()
     delete ui;
 }
 
+void FileTransferWidget::acceptTransfer(const QString &path)
+{
+    if(!QFileInfo(QDir(path).path()).isWritable())
+    {
+        QMessageBox::warning(0,
+                             tr("Location not writable","Title of permissions popup"),
+                             tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+
+        return;
+    }
+
+    if(!path.isEmpty())
+        Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, path);
+}
+
 void FileTransferWidget::onFileTransferInfo(ToxFile file)
 {
     if(fileInfo != file)
@@ -255,18 +270,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
         if(btn->objectName() == "accept")
         {
             QString path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(fileInfo.fileName));
-
-            if(!QFileInfo(QDir(path).path()).isWritable())
-            {
-                QMessageBox::warning(0,
-                                     tr("Location not writable","Title of permissions popup"),
-                                     tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
-
-                return;
-            }
-
-            if(!path.isEmpty())
-                Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, path);
+            acceptTransfer(path);
         }
     }
 
