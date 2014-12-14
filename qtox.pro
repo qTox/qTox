@@ -234,6 +234,12 @@ SOURCES += \
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp
 
+contains(DEFINES, QTOX_FILTER_AUDIO) {
+    HEADERS += src/audiofilterer.h
+    SOURCES += src/audiofilterer.cpp
+    unix|win32: LIBS += -lfilteraudio
+}
+
 contains(DEFINES, QTOX_PLATFORM_EXT) {
     HEADERS += src/platform/timer.h
     SOURCES += src/platform/timer_osx.cpp \

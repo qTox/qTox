@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>810</width>
-        <height>496</height>
+        <width>808</width>
+        <height>618</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -93,6 +93,13 @@
            <widget class="QPushButton" name="rescanButton">
             <property name="text">
              <string>Rescan audio devices</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="filterAudio">
+            <property name="text">
+             <string>Filter audio</string>
             </property>
            </widget>
           </item>
