@@ -207,7 +207,7 @@ void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint1
         alGenSources(1, &calls[callId].alSource);
 
     ToxAvCSettings dest;
-    if(toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &dest) == 0)
+    if (toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &dest) == 0)
         playAudioBuffer(calls[callId].alSource, data, samples, dest.audio_channels, dest.audio_sample_rate);
 }
 
@@ -229,24 +229,24 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     bool frame = false;
     ALint samples;
     alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if(samples >= framesize)
+    if (samples >= framesize)
     {
         memset(buf, 0, bufsize); // Avoid uninitialized values (Valgrind)
         alcCaptureSamples(Audio::alInDev, buf, framesize);
         frame = 1;
     }
 
-    if(frame)
+    if (frame)
     {
         int r;
-        if((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
+        if ((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
         {
             qDebug() << "Core: toxav_prepare_audio_frame error";
             calls[callId].sendAudioTimer->start();
             return;
         }
 
-        if((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
+        if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
             qDebug() << "Core: toxav_send_audio error";
     }
     calls[callId].sendAudioTimer->start();
@@ -271,7 +271,7 @@ void Core::sendCallVideo(int callId)
     if (frame.w && frame.h)
     {
         int result;
-        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, videobufsize, &frame)) < 0)
+        if ((result = toxav_prepare_video_frame(toxav, callId, videobuf, videobufsize, &frame)) < 0)
         {
             qDebug() << QString("Core: toxav_prepare_video_frame: error %1").arg(result);
             vpx_img_free(&frame);
@@ -279,7 +279,7 @@ void Core::sendCallVideo(int callId)
             return;
         }
 
-        if((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
+        if ((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
             qDebug() << QString("Core: toxav_send_video error: %1").arg(result);
 
         vpx_img_free(&frame);
@@ -540,7 +540,7 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
 // This function's logic was shamelessly stolen from uTox
 void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate)
 {
-    if(!channels || channels > 2)
+    if (!channels || channels > 2)
     {
         qWarning() << "Core::playAudioBuffer: trying to play on "<<channels<<" channels! Giving up.";
         return;
@@ -552,14 +552,14 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
     alGetSourcei(alSource, AL_BUFFERS_QUEUED, &queued);
     alSourcei(alSource, AL_LOOPING, AL_FALSE);
 
-    if(processed)
+    if (processed)
     {
         ALuint bufids[processed];
         alSourceUnqueueBuffers(alSource, processed, bufids);
         alDeleteBuffers(processed - 1, bufids + 1);
         bufid = bufids[0];
     }
-    else if(queued < 32)
+    else if (queued < 32)
     {
         alGenBuffers(1, &bufid);
     }
@@ -575,7 +575,7 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
-    if(state != AL_PLAYING)
+    if (state != AL_PLAYING)
     {
         alSourcePlay(alSource);
         //qDebug() << "Core: Starting audio source " << (int)alSource;
@@ -643,17 +643,17 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     bool frame = false;
     ALint samples;
     alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if(samples >= framesize)
+    if (samples >= framesize)
     {
         memset(buf, 0, bufsize); // Avoid uninitialized values (Valgrind)
         alcCaptureSamples(Audio::alInDev, buf, framesize);
         frame = 1;
     }
 
-    if(frame)
+    if (frame)
     {
         int r;
-        if((r = toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,
+        if ((r = toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,
                 framesize, av_DefaultSettings.audio_channels, av_DefaultSettings.audio_sample_rate)) < 0)
         {
             qDebug() << "Core: toxav_group_send_audio error";

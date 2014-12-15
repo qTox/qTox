@@ -76,13 +76,13 @@
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="34"/>
         <source>Add Friends</source>
-        <translation>Ajouter des amis</translation>
+        <translation>Ajouter des contacts</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="37"/>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>ID Tox</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="38"/>
@@ -93,25 +93,25 @@
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="39"/>
         <source>Send friend request</source>
-        <translation>Envoyer la demande d&apos;ami</translation>
+        <translation>Envoyer la demande de contact</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="40"/>
         <source>Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Je souhaiterais vous ajouter à mes contacts</translation>
+        <translation>Je souhaiterais vous ajouter à mes contacts.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="89"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Merci de remplir un ID Tox valide</translation>
+        <translation>Merci d&apos;entrer un Tox ID valide</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="92"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Vous ne pouvez pas vous ajouter vous même en temps qu&apos;ami!</translation>
+        <translation>Vous ne pouvez pas vous ajouter vous-même !</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="100"/>
@@ -123,19 +123,19 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy
 Ignore the proxy and connect to the Internet directly ?</source>
-        <translation type="vanished">qTox as besoin d&apos;utiliser le DNS Tox, mais ne peut pas le faire avec un proxy
+        <translation type="vanished">qTox a besoin d&apos;utiliser le DNS Tox, mais ne peut pas le faire avec un proxy
 Ignorer le proxy et se connecter directement à Internet ?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation>Cet ID Tox n&apos;existe pas</translation>
+        <translation>Ce Tox ID n&apos;existe pas</translation>
     </message>
     <message>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="vanished">Cette addresse n&apos;existe pas</translation>
+        <translation type="vanished">Cette adresse n&apos;existe pas</translation>
     </message>
     <message>
         <source>Error while looking up DNS</source>
@@ -178,22 +178,22 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="148"/>
         <source>Bad Idea</source>
-        <translation>Mauvaise Idée</translation>
+        <translation>Mauvaise idée</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="148"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>Vous êtes en train d&apos;essayer d&apos;envoyer un fichier spécial (sequentiel), ça ne marchera pas!</translation>
+        <translation>Vous êtes en train d&apos;essayer d&apos;envoyer un fichier spécial (sequentiel), ça ne fonctionnera pas !</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="254"/>
         <source>%1 calling</source>
-        <translation>%1 appelle</translation>
+        <translation>%1 appel</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="323"/>
         <source>%1 stopped calling</source>
-        <translation>%1a arreté l&apos;appel</translation>
+        <translation>%1 a arreté l&apos;appel</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="379"/>
@@ -229,7 +229,7 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/core.cpp" line="256"/>
         <source>Toxing on qTox</source>
-        <translation>Toxer avec qTox</translation>
+        <translation>Je Tox sur qTox</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="257"/>
@@ -239,7 +239,7 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/core.cpp" line="746"/>
         <source>Friend is already added</source>
-        <translation>Cet ami est déjà dans cos contact</translation>
+        <translation>Ce contact est déjà dans vos contacts</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1176"/>
@@ -249,7 +249,7 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/core.cpp" line="1176"/>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
-        <translation>Le fichier .tox est chiffré, mais l&apos;encryption n&apos;as pas été activée. Le problème sera ignoré.</translation>
+        <translation>Le fichier .tox est chiffré, mais le chiffrement n&apos;a pas été activé. Le problème sera ignoré.</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1183"/>
@@ -261,14 +261,14 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
         <location filename="../src/core.cpp" line="1197"/>
         <location filename="../src/core.cpp" line="1261"/>
         <source>Password error</source>
-        <translation>Mod de passe invalide</translation>
+        <translation>Mot de passe invalide</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1185"/>
         <location filename="../src/core.cpp" line="1261"/>
         <source>Failed to setup password.
 Empty password.</source>
-        <translation>Impossible de mettre ne place le mot de passe.
+        <translation>Impossible de mettre en place le mot de passe.
 Le mot de passe est vide.</translation>
     </message>
     <message>
@@ -289,7 +289,7 @@ Le mot de passe est vide.</translation>
     <message>
         <location filename="../src/core.cpp" line="1198"/>
         <source>Wrong password has been entered</source>
-        <translation>Un mauvais mot de passe à été entré</translation>
+        <translation>Un mauvais mot de passe a été entré</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1259"/>
@@ -316,7 +316,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/core.cpp" line="1277"/>
         <source>Due to incorret password logging will be disabled</source>
-        <translation>À cause d&apos;un mauvais mot de passe, l&apos;historique sera désactivé</translation>
+        <translation>Due à l&apos;utilisation d&apos;un mauvais mot de passe, l&apos;historique sera désactivé</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1350"/>
@@ -326,7 +326,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/core.cpp" line="1350"/>
         <source>Will be saved without encryption!</source>
-        <translation>L&apos;historique sera sauvegardé sans être chiffré!</translation>
+        <translation>L&apos;historique sera sauvegardé sans être chiffré !</translation>
     </message>
 </context>
 <context>
@@ -380,12 +380,12 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="30"/>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Demande d&apos;ami</translation>
+        <translation>Demande de contact</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Quelqu&apos;un veut devenir votre ami</translation>
+        <translation>Quelqu&apos;un vient de vous ajouter dans sa liste de contacts</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
@@ -395,7 +395,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="37"/>
         <source>Friend request message:</source>
-        <translation>Message de demande d&apos;ami:</translation>
+        <translation>Message au sujet de la demande:</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="44"/>
@@ -422,7 +422,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/friendwidget.cpp" line="56"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
-        <translation>Copier l&apos;ID ami</translation>
+        <translation>Copier l&apos;ID du contact</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="68"/>
@@ -458,7 +458,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <source>Disable global auto accept</source>
         <comment>context menu entry</comment>
-        <translation type="vanished">Désactiver l&apos;acceptation automatique de fichier</translation>
+        <translation type="vanished">Désactiver le téléchargement automatique de fichiers</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="109"/>
@@ -470,7 +470,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/friendwidget.cpp" line="76"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Supprimer ami</translation>
+        <translation>Supprimer ce contact</translation>
     </message>
 </context>
 <context>
@@ -502,7 +502,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/form/settings/generalform.cpp" line="267"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Vous ne pouvez pas vous déconnecter avec un appel en cours!</translation>
+        <translation>Vous ne pouvez pas vous déconnecter avec un appel en cours !</translation>
     </message>
 </context>
 <context>
@@ -520,7 +520,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="64"/>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="80"/>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>La translation peut ne pas se charger jusqu&apos;à ce que qTox redémarre.</translation>
+        <translation>La traduction peut ne pas prendre effet immédiatement. Redémarrez qTox si ce n&apos;est pas le cas.</translation>
     </message>
     <message>
         <source>Translation:</source>
@@ -550,7 +550,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="133"/>
         <source>Minimize to tray</source>
-        <translation>Minimizer dans la barre d&apos;état</translation>
+        <translation>Minimiser dans la barre d&apos;état</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="142"/>
@@ -564,7 +564,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation type="vanished">Auto-absent après (0 pour désactiver):</translation>
+        <translation type="vanished">Se rendre absent après (0 pour désactiver):</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="191"/>
@@ -620,7 +620,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="492"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Reconnection</translation>
+        <translation>Se reconnecter</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="422"/>
@@ -640,7 +640,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
         <source>Focus qTox when a message is received</source>
-        <translation>Montrer qTox quand un message est reçu</translation>
+        <translation>Montrer la fênetre qTox quand un message est reçu</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="163"/>
@@ -713,7 +713,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="vanished">Permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire, car cela ralenti le réseau Tox.</translation>
+        <translation type="vanished">Permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire car cela ralenti le réseau Tox.</translation>
     </message>
     <message>
         <source>Disable UDP (not recommended)</source>
@@ -748,7 +748,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="64"/>
         <source>Smileys</source>
-        <translation>Emoticones</translation>
+        <translation>Émoticônes</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="68"/>
@@ -768,7 +768,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="77"/>
         <source>Toggle speakers volume</source>
-        <translation>Couper les haut parleurs</translation>
+        <translation>Couper les haut-parleurs</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
@@ -818,7 +818,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/groupwidget.cpp" line="44"/>
         <location filename="../src/widget/groupwidget.cpp" line="66"/>
         <source>0 users in chat</source>
-        <translation>0 personnes</translation>
+        <translation>Le groupe est vide</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="53"/>
@@ -844,7 +844,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="133"/>
         <source>You can&apos;t switch profiles while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Vous ne pouvez pas changer de profil quand un appel est en cours!</translation>
+        <translation>Vous ne pouvez pas changer de profil quand un appel est en cours !</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="143"/>
@@ -894,7 +894,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
         <source>The file you chose could not be written to.</source>
-        <translation>Le fichier que vous avez choisi n&apos;as pas pu être écrit.</translation>
+        <translation>Le fichier que vous avez choisi n&apos;es pas disponible en écriture.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="194"/>
@@ -912,7 +912,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="198"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation>Suppression imminente!</translation>
+        <translation>Suppression imminente !</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
@@ -936,13 +936,13 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="223"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>Fichier non-Tox ignoré</translation>
+        <translation>Fichier incompatible avec Tox ignoré</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="224"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention: Vous avez sélectionné un fichier qui n&apos;est pas une sauvegarde Tox: il sera ignoré.</translation>
+        <translation>Attention: Vous avez sélectionné un fichier qui n&apos;est pas une sauvegarde Tox, il sera ignoré.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="230"/>
@@ -986,7 +986,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="88"/>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Votre ID Tox (cliquez pour copier)</translation>
+        <translation>Votre Tox ID (cliquez pour copier)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="98"/>
@@ -1033,7 +1033,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="151"/>
         <source>This is useful to remain safe on public computers</source>
         <comment>delete profile button tooltip</comment>
-        <translation>Util pour sécuriser sur un ordinateur public</translation>
+        <translation>Utile pour rester en sécurité sur un ordinateur public</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="165"/>
@@ -1045,7 +1045,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="175"/>
         <source>New Tox ID</source>
         <comment>new profile button</comment>
-        <translation>Nouvel ID Tox</translation>
+        <translation>Nouvel Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1093,12 +1093,12 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1101"/>
         <source>Add friends</source>
-        <translation>Ajouter des amis</translation>
+        <translation>Ajouter des contacts</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1139"/>
         <source>Create a group chat</source>
-        <translation>Creer un groupe</translation>
+        <translation>Créer un groupe</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1174"/>
@@ -1125,7 +1125,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/netcamview.cpp" line="28"/>
         <source>Tox video</source>
-        <translation>Vidéo tox</translation>
+        <translation>Vidéo Tox</translation>
     </message>
 </context>
 <context>
@@ -1145,7 +1145,7 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <source>You already have history log file encrypted with different password
 Do you want to delete old history file?</source>
         <translation>Vous avez déjà un historique chiffré avec un autre mot de passe
-Voulez vous supprimer l&apos;ancien historique?</translation>
+Voulez vous supprimer l&apos;ancien historique ?</translation>
     </message>
 </context>
 <context>
@@ -1192,7 +1192,7 @@ Voulez vous supprimer l&apos;ancien historique?</translation>
         <location filename="../src/widget/toxsave.cpp" line="64"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention: Vous avez sélectionné un fichier qui n&apos;est pas une sauvegarde Tox: il sera ignoré.</translation>
+        <translation>Attention: Vous avez sélectionné un fichier qui n&apos;est pas une sauvegarde Tox, il sera ignoré.</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="70"/>
@@ -1233,12 +1233,12 @@ Voulez vous supprimer l&apos;ancien historique?</translation>
         <source>An update is available, do you want to download it now ?
 It will be installed when qTox restarts.</source>
         <translation>Une mise à jour est disponible, voulez vous la télécharger maintenant ?
-Elle sera installée au prochain démarrage de qTox</translation>
+Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="68"/>
         <source>Tox URI to parse</source>
-        <translation>URI Tox à utiliser</translation>
+        <translation>URL Tox à utiliser</translation>
     </message>
 </context>
 <context>
@@ -1255,7 +1255,7 @@ Elle sera installée au prochain démarrage de qTox</translation>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="37"/>
         <source>Repeat Password</source>
-        <translation>Répetez le mot de passe</translation>
+        <translation>Retapez le mot de passe</translation>
     </message>
 </context>
 <context>
@@ -1270,13 +1270,13 @@ Elle sera installée au prochain démarrage de qTox</translation>
         <location filename="../src/toxdns.cpp" line="70"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Cette addresse n&apos;existe pas</translation>
+        <translation>Cette adresse n&apos;existe pas</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="75"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Erreur en consultant le serveur DNS</translation>
+        <translation>Une erreur s&apos;est produite en consultant le serveur DNS</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="82"/>
@@ -1316,22 +1316,22 @@ Elle sera installée au prochain démarrage de qTox</translation>
         <location filename="../src/widget/toxuri.cpp" line="80"/>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation>Ajouter un ami</translation>
+        <translation>Ajouter un contact</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="82"/>
         <source>Do you want to add %1 as a friend ?</source>
-        <translation>Voulez-vous ajouter %1 à vos amis ?</translation>
+        <translation>Voulez-vous ajouter %1 à vos contacts ?</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="83"/>
         <source>User ID:</source>
-        <translation>ID utilisateur:</translation>
+        <translation>ID d&apos;utilisateur:</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="87"/>
         <source>Friend request message:</source>
-        <translation>Message de demande d&apos;ami:</translation>
+        <translation>Associer un message à cette demande:</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="92"/>
@@ -1354,7 +1354,7 @@ Elle sera installée au prochain démarrage de qTox</translation>
     </message>
     <message>
         <source>away</source>
-        <translation type="vanished">indisponnible</translation>
+        <translation type="vanished">absent</translation>
     </message>
     <message>
         <source>busy</source>
@@ -1368,7 +1368,7 @@ Elle sera installée au prochain démarrage de qTox</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="77"/>
         <source>Away</source>
-        <translation>Indisponible</translation>
+        <translation>Absent</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="80"/>
@@ -1383,7 +1383,7 @@ Elle sera installée au prochain démarrage de qTox</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="86"/>
         <source>Change status to:</source>
-        <translation>Changer le status en:</translation>
+        <translation>Changer le status par:</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="155"/>
@@ -1395,7 +1395,7 @@ Elle sera installée au prochain démarrage de qTox</translation>
         <location filename="../src/widget/widget.cpp" line="157"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Indisponible</translation>
+        <translation>Absent</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="159"/>
@@ -1443,18 +1443,18 @@ Elle sera installée au prochain démarrage de qTox</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="477"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>Toxcore n&apos;as pas pu démarrer correctement, l&apos;application va quitter quand vous fermerez ce message.</translation>
+        <translation>ToxCore n&apos;as pas pu démarrer correctement, l&apos;application va s&apos;arrêter quand vous fermerez cette alerte.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="486"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>Toxcore n&apos;as pas pu démarrer avec ces paramètres de proxy, qTox ne peut pas continuer; merci de modifier vos paramètres et redémarrer.</translation>
+        <translation>ToxCore n&apos;as pas pu démarrer avec ces paramètres proxy. Merci de modifier ou désactiver vos paramètres et redémarrer l&apos;application.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="521"/>
         <source>Add friend</source>
-        <translation>Ajouter un ami</translation>
+        <translation>Ajouter un contact</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="533"/>
@@ -1469,13 +1469,13 @@ Elle sera installée au prochain démarrage de qTox</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="656"/>
         <source>Couldn&apos;t request friendship</source>
-        <translation>Impossible de demander en ami</translation>
+        <translation>Impossible d&apos;envoyer la demande de contact</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="684"/>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>indisponnible</translation>
+        <translation>absent</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="686"/>
@@ -1487,7 +1487,7 @@ Elle sera installée au prochain démarrage de qTox</translation>
         <location filename="../src/widget/widget.cpp" line="688"/>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation>déconnecté</translation>
+        <translation>hors ligne</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="690"/>
@@ -1510,7 +1510,7 @@ Elle sera installée au prochain démarrage de qTox</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="1091"/>
         <source>Message failed to send</source>
-        <translation>Le message n&apos;as pas pu être envoyé</translation>
+        <translation>Le message n&apos;as pu être envoyé</translation>
     </message>
 </context>
 </TS>

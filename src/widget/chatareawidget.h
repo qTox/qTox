@@ -41,6 +41,7 @@ public slots:
 
 signals:
     void onFileTranfertInterract(QString widgetName, QString buttonName);
+    void onClick();
 
 protected:
     void mouseReleaseEvent(QMouseEvent * event);

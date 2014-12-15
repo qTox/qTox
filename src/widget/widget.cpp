@@ -54,7 +54,7 @@
 
 void toxActivateEventHandler(const QByteArray& data)
 {
-    if(data != "$activate")
+    if (data != "$activate")
         return;
     Widget::getInstance()->show();
     Widget::getInstance()->activateWindow();
@@ -116,7 +116,7 @@ void Widget::init()
         
         if (Settings::getInstance().getShowSystemTray()){
             icon->show();
-            if(Settings::getInstance().getAutostartInTray() == false)
+            if (Settings::getInstance().getAutostartInTray() == false)
                 this->show();
         }
         else
@@ -125,7 +125,8 @@ void Widget::init()
     }
     else
     {
-        qWarning() << "No system tray detected!";
+        qWarning() << "Widget: No system tray detected!";
+        icon = nullptr;
         this->show();
     }
 
@@ -148,7 +149,7 @@ void Widget::init()
 
     ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
     
-    if(QStyleFactory::keys().contains(Settings::getInstance().getStyle())
+    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
     {
         ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
@@ -295,22 +296,20 @@ void Widget::setTranslation()
 
 void Widget::updateTrayIcon()
 {
-    if(Settings::getInstance().getTrayShowsUserStatus())
-    {
-        QString status = ui->statusButton->property("status").toString();
-        QString icon;
-        if(status == "online")
-            icon = ":img/status/dot_online_2x.png";
-        else if(status == "away")
-            icon = ":img/status/dot_idle_2x.png";
-        else if(status == "busy")
-            icon = ":img/status/dot_busy_2x.png";
-        else
-            icon = ":img/status/dot_away_2x.png";
-        this->icon->setIcon(QIcon(icon));
-    }
+    if (!icon)
+        return;
+    QString status = ui->statusButton->property("status").toString();
+    QString pic;
+    QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
+    if (status == "online")
+        pic = ":img/taskbar/" + color + "/taskbar_online_2x.png";
+    else if (status == "away")
+        pic = ":img/taskbar/" + color + "/taskbar_idle_2x.png";
+    else if (status == "busy")
+        pic = ":img/taskbar/" + color + "/taskbar_busy_2x.png";
     else
-        icon->setIcon(windowIcon());
+        pic = ":img/taskbar/" + color + "/taskbar_offline_2x.png";
+    icon->setIcon(QIcon(pic));
 }
 
 Widget::~Widget()
@@ -350,7 +349,7 @@ QThread* Widget::getCoreThread()
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    if(Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)
+    if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)
     {
         event->ignore();
         this->hide();
@@ -367,7 +366,7 @@ void Widget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange)
     {
-        if(isMinimized() && Settings::getInstance().getMinimizeToTray())
+        if (isMinimized() && Settings::getInstance().getMinimizeToTray())
         {
             this->hide();
         }
@@ -417,7 +416,7 @@ QList<QString> Widget::searchProfiles()
     QDir dir(Settings::getSettingsDirPath());
 	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 	dir.setNameFilters(QStringList("*.tox"));
-	for(QFileInfo file : dir.entryInfoList())
+	for (QFileInfo file : dir.entryInfoList())
 		out += file.completeBaseName();
 	return out;
 }
@@ -593,7 +592,7 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
         case QSystemTrayIcon::Trigger:
-        if(this->isHidden() == true)
+        if (this->isHidden() == true)
         {
             this->show();
             this->activateWindow();
@@ -714,7 +713,7 @@ void Widget::addFriend(int friendId, const QString &userId)
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
 {
     QString info = QString(tr("Couldn't request friendship"));
-    if(!errorInfo.isEmpty()) {
+    if (!errorInfo.isEmpty()) {
         info = info + (QString(": ") + errorInfo);
     }
 
@@ -735,7 +734,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     f->getFriendWidget()->updateStatusLight();
     
     //won't print the message if there were no messages before
-    if(!f->getChatForm()->isEmpty()
+    if (!f->getChatForm()->isEmpty()
             && Settings::getInstance().getStatusChangeNotificationEnabled())
     {
         QString fStatus = "";

@@ -29,7 +29,7 @@ MessageAction::MessageAction(const QString &author, const QString &message, cons
 QString MessageAction::getMessage(QString div)
 {
     QString message_;
-    if(Settings::getInstance().getUseEmoticons())
+    if (Settings::getInstance().getUseEmoticons())
          message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
     else
          message_ = toHtmlChars(message);

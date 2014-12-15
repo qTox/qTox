@@ -62,8 +62,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->closeToTray->setEnabled(showSystemTray);
     bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
     bodyUI->minimizeToTray->setEnabled(showSystemTray);
-    bodyUI->trayShowsUserStatus->setChecked(Settings::getInstance().getTrayShowsUserStatus());
-    bodyUI->trayShowsUserStatus->setEnabled(showSystemTray);
+    bodyUI->lightTrayIcon->setChecked(Settings::getInstance().getLightTrayIcon());
+    bodyUI->lightTrayIcon->setEnabled(showSystemTray);
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
@@ -81,7 +81,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
 
-    if(QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
+    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
         bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
     else
         bodyUI->styleBrowser->setCurrentText(tr("None"));
@@ -122,12 +122,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
     connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);
-    connect(bodyUI->trayShowsUserStatus, &QCheckBox::stateChanged, this, &GeneralForm::onSettrayShowsUserStatus);
+    connect(bodyUI->lightTrayIcon, &QCheckBox::stateChanged, this, &GeneralForm::onSetLightTrayIcon);
     connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
-    if(bodyUI->autoacceptFiles->isChecked())
+    if (bodyUI->autoacceptFiles->isChecked())
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
@@ -188,20 +188,20 @@ void GeneralForm::onSetCloseToTray()
     Settings::getInstance().setCloseToTray(bodyUI->closeToTray->isChecked());
 }
 
+void GeneralForm::onSetLightTrayIcon()
+{
+    Settings::getInstance().setLightTrayIcon(bodyUI->lightTrayIcon->isChecked());
+    Widget::getInstance()->updateTrayIcon();
+}
+
 void GeneralForm::onSetMinimizeToTray()
 {
     Settings::getInstance().setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
 }
 
-void GeneralForm::onSettrayShowsUserStatus()
-{
-    Settings::getInstance().setTrayShowsUserStatus(bodyUI->trayShowsUserStatus->isChecked());
-    Widget::getInstance()->updateTrayIcon();
-}
-
 void GeneralForm::onStyleSelected(QString style)
 {
-    if(bodyUI->styleBrowser->currentIndex() == 0)
+    if (bodyUI->styleBrowser->currentIndex() == 0)
         Settings::getInstance().setStyle("None");
     else
         Settings::getInstance().setStyle(style);
@@ -230,7 +230,7 @@ void GeneralForm::onAutoAcceptFileChange()
 {
     Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
 
-    if(bodyUI->autoacceptFiles->isChecked() == true)
+    if (bodyUI->autoacceptFiles->isChecked() == true)
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     else
         disconnect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()),this, SLOT(onAutoSaveDirChange()));
@@ -240,7 +240,7 @@ void GeneralForm::onAutoSaveDirChange()
 {
     QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
     QString directory = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"));
-    if(directory.isEmpty())
+    if (directory.isEmpty())
         directory = previousDir;
 
     Settings::getInstance().setGlobalAutoAcceptDir(directory);
@@ -308,7 +308,7 @@ void GeneralForm::reloadSmiles()
     QStringList smiles;
     smiles << ":)" << ";)" << ":p" << ":O" << ":["; //just in case...
 
-    for(int i = 0; i < emoticons.size(); i++)
+    for (int i = 0; i < emoticons.size(); i++)
         smiles.push_front(emoticons.at(i).first());
 
     int pixSize = 30;

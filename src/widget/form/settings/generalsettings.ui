@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>509</width>
-        <height>849</height>
+        <width>513</width>
+        <height>819</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -109,7 +109,7 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
+             <item row="1" column="0" colspan="2">
               <layout class="QHBoxLayout" name="trayBehavior">
                <item>
                 <widget class="QCheckBox" name="startInTray">
@@ -152,19 +152,10 @@
                </item>
               </layout>
              </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="trayShowsUserStatus">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="lightTrayIcon">
                <property name="text">
-                <string>Tray icon displays user status</string>
-               </property>
-               <property name="toolTip">
-                <string>This is a temporary work around until proper systray status icons are available.</string>
+                <string>Light icon</string>
                </property>
               </widget>
              </item>
@@ -604,22 +595,6 @@
     <hint type="destinationlabel">
      <x>359</x>
      <y>178</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>showSystemTray</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>trayShowsUserStatus</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>148</x>
-     <y>143</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>158</x>
-     <y>205</y>
     </hint>
    </hints>
   </connection>
