@@ -84,7 +84,7 @@ win32 {
         QMAKE_INFO_PLIST = osx/info.plist
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
-        contains(DEFINES, QTOX_FILTER_AUDIO) { }
+        contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
         contains(STATICPKG, YES) {
