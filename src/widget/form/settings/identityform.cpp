@@ -158,7 +158,11 @@ void IdentityForm::onRenameClicked()
             QFile::rename(dir.filePath(cur+".ini"), dir.filePath(name+".ini"));
             bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
             HistoryKeeper::renameHistory(cur, name);
+            bool resetAutorun = Settings::getInstance().getAutorun();
+            Settings::getInstance().setAutorun(false);
             Settings::getInstance().setCurrentProfile(name);
+            if (resetAutorun)
+                Settings::getInstance().setAutorun(true);                   // fixes -P flag in autostart command line
             break;
         }
     } while (true);

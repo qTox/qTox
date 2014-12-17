@@ -287,4 +287,9 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
     SOURCES += src/platform/timer_osx.cpp \
                src/platform/timer_win.cpp \
                src/platform/timer_x11.cpp
+
+    HEADERS += src/platform/autorun.h
+    SOURCES += src/platform/autorun_win.cpp \
+               src/platform/autorun_xdg.cpp \
+               src/platform/autorun_osx.cpp
 }

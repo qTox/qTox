@@ -50,6 +50,10 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     for (int i = 0; i < langs.size(); i++)
         bodyUI->transComboBox->insertItem(i, langs[i]);
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
+    bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());
+#if defined(__APPLE__) && defined(__MACH__)
+    bodyUI->cbAutorun->setEnabled(False);
+#endif
 
     bool showSystemTray = Settings::getInstance().getShowSystemTray();
 
@@ -118,6 +122,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     //general
     connect(bodyUI->checkUpdates, &QCheckBox::stateChanged, this, &GeneralForm::onCheckUpdateChanged);
     connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
+    connect(bodyUI->cbAutorun, &QCheckBox::stateChanged, this, &GeneralForm::onAutorunUpdated);
     connect(bodyUI->showSystemTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowSystemTray);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
@@ -168,6 +173,11 @@ void GeneralForm::onTranslationUpdated()
 {
     Settings::getInstance().setTranslation(locales[bodyUI->transComboBox->currentIndex()]);
     Widget::getInstance()->setTranslation();
+}
+
+void GeneralForm::onAutorunUpdated()
+{
+    Settings::getInstance().setAutorun(bodyUI->cbAutorun->isChecked());
 }
 
 void GeneralForm::onSetShowSystemTray()
