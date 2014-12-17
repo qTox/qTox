@@ -900,11 +900,13 @@ void Settings::setOutDev(const QString& deviceSpecifier)
     outDev = deviceSpecifier;
 }
 
-bool Settings::getFilterAudio() const{
+bool Settings::getFilterAudio() const
+{
     return filterAudio;
 }
 
-void Settings::setFilterAudio(bool newValue){
+void Settings::setFilterAudio(bool newValue)
+{
     filterAudio = newValue;
 }
 

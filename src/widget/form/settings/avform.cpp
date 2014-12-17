@@ -197,6 +197,7 @@ void AVForm::onOutDevChanged(const QString& deviceDescriptor)
     Audio::openOutput(deviceDescriptor);
 }
 
-void AVForm::onFilterAudioToggled(bool filterAudio){
+void AVForm::onFilterAudioToggled(bool filterAudio)
+{
     Settings::getInstance().setFilterAudio(filterAudio);
 }

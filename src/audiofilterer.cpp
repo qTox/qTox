@@ -32,6 +32,7 @@ void AudioFilterer::closeFilter()
 {
     if (filter)
         kill_filter_audio(filter);
+    filter = nullptr;
 }
 
 

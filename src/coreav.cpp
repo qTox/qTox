@@ -81,8 +81,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
     }
     else
     {
-        if (filterer[callId])
-            delete filterer[callId];
+        delete filterer[callId];
         filterer[callId] = nullptr;
     }
 #endif
