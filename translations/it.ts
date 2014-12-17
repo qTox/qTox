@@ -12,12 +12,12 @@
 <context>
     <name>AVSettings</name>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="105"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="112"/>
         <source>Video Settings</source>
         <translation>Impostazioni Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="116"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="123"/>
         <source>Resolution</source>
         <translation>Risoluzione</translation>
     </message>
@@ -52,22 +52,27 @@
         <translation>Cerca dispositivi audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="133"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="102"/>
+        <source>Filter audio</source>
+        <translation>Filtra audio</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="140"/>
         <source>Hue</source>
         <translation>Colore</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="147"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="154"/>
         <source>Brightness</source>
         <translation>Luminoistà</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="161"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="168"/>
         <source>Saturation</source>
         <translation>Saturazione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="175"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="182"/>
         <source>Contrast</source>
         <translation>Contrasto</translation>
     </message>

@@ -17,10 +17,17 @@
 #include "core.h"
 #include "video/camera.h"
 #include "audio.h"
+#ifdef QTOX_FILTER_AUDIO
+#include "audiofilterer.h"
+#endif
+#include "misc/settings.h"
 #include <QDebug>
 #include <QTimer>
 
 ToxCall Core::calls[TOXAV_MAX_CALLS];
+#ifdef QTOX_FILTER_AUDIO
+AudioFilterer * Core::filterer[TOXAV_MAX_CALLS] { nullptr};
+#endif
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
 
@@ -65,6 +72,19 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         calls[callId].sendVideoTimer->start();
         Camera::getInstance()->subscribe();
     }
+
+#ifdef QTOX_FILTER_AUDIO
+    if (Settings::getInstance().getFilterAudio())
+    {
+        Core::filterer[callId] = new AudioFilterer();
+        filterer[callId]->startFilter(48000);
+    }
+    else
+    {
+        delete filterer[callId];
+        filterer[callId] = nullptr;
+    }
+#endif
 }
 
 void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
@@ -246,8 +266,16 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
             return;
         }
 
+#ifdef QTOX_FILTER_AUDIO
+        if (filterer[callId])
+        {
+            filterer[callId]->filterAudio((int16_t*) buf, framesize);
+        }
+#endif
         if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
+        {
             qDebug() << "Core: toxav_send_audio error";
+        }
     }
     calls[callId].sendAudioTimer->start();
 }
@@ -294,14 +322,16 @@ void Core::sendCallVideo(int callId)
 
 void Core::micMuteToggle(int callId)
 {
-    if (calls[callId].active) {
+    if (calls[callId].active)
+    {
         calls[callId].muteMic = !calls[callId].muteMic;
     }
 }
 
 void Core::volMuteToggle(int callId)
 {
-    if (calls[callId].active) {
+    if (calls[callId].active)
+    {
         calls[callId].muteVol = !calls[callId].muteVol;
         alSourcef(calls[callId].alSource, AL_GAIN, calls[callId].muteVol ? 0.f : 1.f);
     }
@@ -320,6 +350,15 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
     qDebug() << QString("Core: AV cancel from %1").arg(friendId);
 
     calls[callId].active = false;
+
+#ifdef QTOX_FILTER_AUDIO
+    if (filterer[callId])
+    {
+        filterer[callId]->closeFilter();
+        delete filterer[callId];
+        filterer[callId] = nullptr;
+    }
+#endif
 
     emit static_cast<Core*>(core)->avCancel(friendId, callId);
 }

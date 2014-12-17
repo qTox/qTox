@@ -198,6 +198,7 @@ void Settings::load()
     s.beginGroup("Audio");
         inDev = s.value("inDev", "").toString();
         outDev = s.value("outDev", "").toString();
+        filterAudio = s.value("filterAudio", false).toBool();
     s.endGroup();
 
     // Read the embedded DHT bootsrap nodes list if needed
@@ -340,6 +341,7 @@ void Settings::save(QString path, bool writeFriends)
     s.beginGroup("Audio");
         s.setValue("inDev", inDev);
         s.setValue("outDev", outDev);
+        s.setValue("filterAudio", filterAudio);
     s.endGroup();
 
     if (!writeFriends || currentProfile.isEmpty()) // Core::switchConfiguration
@@ -896,6 +898,16 @@ QString Settings::getOutDev() const
 void Settings::setOutDev(const QString& deviceSpecifier)
 {
     outDev = deviceSpecifier;
+}
+
+bool Settings::getFilterAudio() const
+{
+    return filterAudio;
+}
+
+void Settings::setFilterAudio(bool newValue)
+{
+    filterAudio = newValue;
 }
 
 QString Settings::getFriendAdress(const QString &publicKey) const
