@@ -5,7 +5,7 @@ QPushButton#green
     background-repeat: none;
     border: none;
     width: 25px;
-    height: 20px;
+    height: 18px;
 }
 
 QPushButton#green:hover
@@ -20,7 +20,7 @@ QPushButton#red
     background-repeat: none; 
     border: none;
     width: 25px;
-    height: 20px;
+    height: 18px;
 }
 
 QPushButton:focus {
