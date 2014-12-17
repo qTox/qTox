@@ -131,9 +131,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headLayout->setSpacing(0);
 
     volMicLayout->addStretch();
-    volMicLayout->addSpacing(1);
     volMicLayout->addWidget(micButton);
-    volMicLayout->addSpacing(2);
     volMicLayout->addWidget(volButton);
     volMicLayout->addStretch();
 
