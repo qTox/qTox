@@ -96,12 +96,11 @@ void Widget::init()
         statusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
         connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
         statusBusy = new QAction(tr("Busy"), this);
-        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         statusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         actionQuit = new QAction(tr("&Quit"), this);
         connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
         
-        trayMenu->addAction(new QAction(tr("Change status to:"), this));
         trayMenu->addAction(statusOnline);
         trayMenu->addAction(statusAway);
         trayMenu->addAction(statusBusy);
