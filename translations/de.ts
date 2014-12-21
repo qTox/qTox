@@ -207,7 +207,7 @@ Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</tr
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="66"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Synchrones Schreiben in die DB</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchrones Schreiben in die DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -356,7 +356,7 @@ Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</tr
         <location filename="../src/core.cpp" line="1259"/>
         <source>Failed to setup password.
 Empty password.</source>
-        <translation>Fehler beim Setzen des Passwortes.
+        <translation>Setzen des Passwortes fehlgeschlagen.
 Leeres Passwort.</translation>
     </message>
     <message>
@@ -372,7 +372,7 @@ Leeres Passwort.</translation>
     <message>
         <location filename="../src/core.cpp" line="1193"/>
         <source>Reinit current profile</source>
-        <translation>Aktuelles Profil neu starten</translation>
+        <translation>Aktuelles Profil erneut starten</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1196"/>
@@ -394,7 +394,7 @@ Leeres Passwort.</translation>
         <source>Your history is encrypted with different password.
 Do you want to try another password?</source>
         <translation>Ihre Historie wurde mit einem anderen Passwort verschlüsselt.
-Wollen Sie ein anderes probieren?</translation>
+Wollen Sie ein weiteres probieren?</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1275"/>
@@ -481,7 +481,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Es hat Ihnen jemand eine Freundschaftsanfrage gesendet</translation>
+        <translation>Jemand möchte Ihr Freund werden</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
@@ -546,7 +546,8 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/friendwidget.cpp" line="238"/>
         <source>You can also set this by clicking the chat form name.
 Alias:</source>
-        <translation></translation>
+        <translation>Sie können diesen auch durch Klick auf den Namen des Chatfensters festlegen.
+Alias:</translation>
     </message>
     <message>
         <source>Alias:</source>
@@ -697,7 +698,7 @@ Alias:</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="233"/>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation></translation>
+        <translation>Sie können dies durch Rechtsklick auf den jeweiligen Freund festlegen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="284"/>
@@ -751,7 +752,7 @@ Alias:</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="531"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Neu verbinden</translation>
+        <translation>Erneut verbinden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="213"/>
@@ -917,7 +918,7 @@ Alias:</source>
         <location filename="../src/widget/groupwidget.cpp" line="67"/>
         <source>You can also set this by clicking the chat form name.
 Title:</source>
-        <translation>Sie können dies auch durch Klick auf den Namen des Chatfensters festlegen.
+        <translation>Sie können diesen auch durch Klick auf den Namen des Chatfensters festlegen.
 Titel:</translation>
     </message>
 </context>
@@ -1006,7 +1007,7 @@ Titel:</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="198"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation>Löschen steht an!</translation>
+        <translation>Löschen steht bevor!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
@@ -1203,17 +1204,17 @@ Dazugehörige Informationen und Chatprotokolle werden ebenfalls gelöscht.</tran
     <message>
         <location filename="../src/mainwindow.ui" line="1092"/>
         <source>Add friends</source>
-        <translation>Freund hinzufügen</translation>
+        <translation>Freunde hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1130"/>
         <source>Create a group chat</source>
-        <translation>Gruppenchat erstellen</translation>
+        <translation>Gruppenchat anlegen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1165"/>
         <source>View completed file transfers</source>
-        <translation>Alle Dateiübertragungen anzeigen</translation>
+        <translation>Vollendete Dateiübertragungen anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1197"/>
@@ -1476,7 +1477,7 @@ Es wird beim Neustart von qTox installiert.</translation>
         <location filename="../src/toxdns.cpp" line="82"/>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
-        <translation>Kein Text Eintrag im DNS gefunden</translation>
+        <translation>Kein Texteintrag im DNS gefunden</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="89"/>
@@ -1622,7 +1623,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="451"/>
         <source>Choose a profile picture</source>
-        <translation>Wähle ein Profilbild</translation>
+        <translation>Wählen Sie ein Profilbild</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="458"/>
