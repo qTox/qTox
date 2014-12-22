@@ -14,6 +14,7 @@
 | Tox Core     | most recent | core, av                             |
 | OpenCV       | >= 2.4.9    | core, highgui, imgproc               |
 | OpenAL Soft  | >= 1.16.0   |                                      |
+| filter_audio | most recent |                                      |
 
 
 <a name="linux" />
@@ -125,6 +126,12 @@ The script will automatically download and install Tox Core and libsodium to "/h
 ```bash
 cd /home/user/qTox
 ./bootstrap.sh # use -h or --help for more information
+```
+
+###filter_audio
+You also need to install filter_audio library separately if you did not run ``./bootstrap.sh``.
+```bash
+./install_libfilteraudio.sh
 ```
 
 After all the dependencies are thus reeady to go, compiling should be as simple as 
