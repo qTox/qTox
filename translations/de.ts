@@ -41,6 +41,12 @@
         <source>Rescan audio devices</source>
         <translation>Erneut nach Audiogeräten suchen</translation>
     </message>
+     <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="102"/>
+        <source>Filter audio</source>
+        <translation>Audiofilter</translation>
+    </message>
+
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="98"/>
         <source>Video Settings</source>
@@ -201,7 +207,7 @@ Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</tr
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="66"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Synchrones Schreiben in die DB</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchrones Schreiben in die DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -336,7 +342,7 @@ Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</tr
         <location filename="../src/core.cpp" line="1280"/>
         <source>Failed to setup password.
 Empty password.</source>
-        <translation>Fehler beim Setzen des Passwortes.
+        <translation>Setzen des Passwortes fehlgeschlagen.
 Leeres Passwort.</translation>
     </message>
     <message>
@@ -352,7 +358,7 @@ Leeres Passwort.</translation>
     <message>
         <location filename="../src/core.cpp" line="1214"/>
         <source>Reinit current profile</source>
-        <translation>Aktuelles Profil neu starten</translation>
+        <translation>Aktuelles Profil erneut starten</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1217"/>
@@ -374,7 +380,7 @@ Leeres Passwort.</translation>
         <source>Your history is encrypted with different password.
 Do you want to try another password?</source>
         <translation>Ihre Historie wurde mit einem anderen Passwort verschlüsselt.
-Wollen Sie ein anderes probieren?</translation>
+Wollen Sie ein weiteres probieren?</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1296"/>
@@ -456,7 +462,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Es hat Ihnen jemand eine Freundschaftsanfrage gesendet</translation>
+        <translation>Jemand möchte Ihr Freund werden</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
@@ -545,7 +551,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/generalform.cpp" line="73"/>
         <location filename="../src/widget/form/settings/generalform.cpp" line="79"/>
         <source>None</source>
-        <translation>Keine</translation>
+        <translation>Kein</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="223"/>
@@ -571,7 +577,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <comment>Text on a checkbox to enable IPv6</comment>
-        <translation type="obsolete">IPv6 aktivieren (empfohlen)</translation>
+        <translation>IPv6 aktivieren (empfohlen)</translation>
     </message>
 </context>
 <context>
@@ -601,7 +607,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="92"/>
         <source>Make Tox portable</source>
-        <translation>Mache Tox portabel</translation>
+        <translation>Macht Tox portabel</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="99"/>
@@ -628,6 +634,11 @@ Wollen Sie ein anderes probieren?</translation>
         <source>Minimize to tray</source>
         <translation>Ins Tray minimieren</translation>
     </message>
+     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="158"/>
+        <source>Light icon</source>
+        <translation>Helles Icon</translation>
+    </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="149"/>
         <source>Show contacts&apos; status changes</source>
@@ -646,7 +657,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="170"/>
         <source>Faux offline messaging</source>
-        <translation></translation>
+        <translation>Imitiert Offline Benachrichtigung</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="179"/>
@@ -703,7 +714,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="475"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Wenn deaktiviert, kann z.B. über Tor getoxt werden. Dies belastet das Tox Netzwerk zusätzlich und sollte nur deaktiviert werden wenn notwendig.</translation>
+        <translation>Wenn deaktiviert kann z.B. über Tor getoxt werden. Dies belastet das Tox Netzwerk zusätzlich und sollte nur deaktiviert werden wenn notwendig.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="478"/>
@@ -715,7 +726,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Neu verbinden</translation>
+        <translation>Erneut verbinden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="204"/>
@@ -920,7 +931,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="180"/>
         <source>Failed to remove file</source>
-        <translation>Die Datei konnte nicht entfernt werden</translation>
+        <translation>Entfernen der Datei fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="180"/>
@@ -930,7 +941,7 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
         <source>Failed to copy file</source>
-        <translation>Die Datei konnte nicht kopiert werden</translation>
+        <translation>Kopieren der Datei fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
@@ -953,7 +964,7 @@ Wollen Sie ein anderes probieren?</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="198"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation>Löschen steht an!</translation>
+        <translation>Löschen steht bevor!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
@@ -1143,17 +1154,17 @@ Wollen Sie ein anderes probieren?</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1092"/>
         <source>Add friends</source>
-        <translation>Freund hinzufügen</translation>
+        <translation>Freunde hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1130"/>
         <source>Create a group chat</source>
-        <translation>Gruppenchat erstellen</translation>
+        <translation>Gruppenchat anlegen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1165"/>
         <source>View completed file transfers</source>
-        <translation>Alle Dateiübertragungen anzeigen</translation>
+        <translation>Vollendete Dateiübertragungen anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1197"/>
@@ -1509,7 +1520,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="86"/>
         <source>Change status to:</source>
-        <translation>Ändern Sie den Status zu:</translation>
+        <translation>Ändert den Status in:</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="158"/>
@@ -1542,7 +1553,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="424"/>
         <source>Choose a profile picture</source>
-        <translation>Wähle ein Profilbild</translation>
+        <translation>Wählen Sie ein Profilbild</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="431"/>
