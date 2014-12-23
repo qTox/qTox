@@ -1219,7 +1219,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/main.cpp" line="69"/>
         <source>Starts new instance and loads specified profile.</source>
-        <translation>Startet einen neue Instanz und lädt das festgelegte Profil.</translation>
+        <translation>Startet eine neue Instanz und lädt das festgelegte Profil.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="69"/>
