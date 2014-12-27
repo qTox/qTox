@@ -255,7 +255,8 @@ void GenericChatForm::onEmoteButtonClicked()
 
 void GenericChatForm::onChatWidgetClicked()
 {
-    msgEdit->setFocus();
+    if (!chatWidget->textCursor().hasSelection())
+        msgEdit->setFocus();
 }
 
 void GenericChatForm::onEmoteInsertRequested(QString str)
