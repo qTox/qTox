@@ -130,7 +130,7 @@ void Settings::load()
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();        
         forceTCP = s.value("forceTCP", false).toBool();
-        useProxy = s.value("useProxy", false).toBool();
+        setProxyType(s.value("proxyType", 0).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
         currentProfile = s.value("currentProfile", "").toString();
@@ -282,7 +282,7 @@ void Settings::save(QString path, bool writeFriends)
         s.setValue("showSystemTray", showSystemTray);
         s.setValue("autostartInTray",autostartInTray);
         s.setValue("closeToTray", closeToTray);
-        s.setValue("useProxy", useProxy);
+        s.setValue("proxyType", static_cast<int>(proxyType));
         s.setValue("forceTCP", forceTCP);
         s.setValue("proxyAddr", proxyAddr);
         s.setValue("proxyPort", proxyPort);
@@ -584,13 +584,17 @@ void Settings::setForceTCP(bool newValue)
     forceTCP = newValue;
 }
 
-bool Settings::getUseProxy() const
+ProxyType Settings::getProxyType() const
 {
-    return useProxy;
+    return proxyType;
 }
-void Settings::setUseProxy(bool newValue)
+
+void Settings::setProxyType(int newValue)
 {
-    useProxy = newValue;
+    if (newValue >= 0 && newValue <= 3)
+        proxyType = static_cast<ProxyType>(newValue);
+    else
+        proxyType = ProxyType::ptNone;
 }
 
 QString Settings::getProxyAddr() const
