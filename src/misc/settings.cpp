@@ -130,7 +130,7 @@ void Settings::load()
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();        
         forceTCP = s.value("forceTCP", false).toBool();
-        setProxyType(s.value("proxyType", 0).toInt());
+        setProxyType(s.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
         currentProfile = s.value("currentProfile", "").toString();
@@ -591,7 +591,7 @@ ProxyType Settings::getProxyType() const
 
 void Settings::setProxyType(int newValue)
 {
-    if (newValue >= 0 && newValue <= 3)
+    if (newValue >= 0 && newValue <= 2)
         proxyType = static_cast<ProxyType>(newValue);
     else
         proxyType = ProxyType::ptNone;
