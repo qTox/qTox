@@ -103,7 +103,7 @@ void ChatForm::onSendTriggered()
     if (isAction)
         msg = msg = msg.right(msg.length() - 4);
 
-    QList<CString> splittedMsg = Core::splitMessage(msg);
+    QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (CString& c_msg : splittedMsg)
