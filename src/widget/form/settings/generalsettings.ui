@@ -513,7 +513,7 @@
               </property>
               <item>
                <property name="text">
-                <string>Direct Connect</string>
+                <string>None</string>
                </property>
               </item>
               <item>
