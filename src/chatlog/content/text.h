@@ -62,6 +62,7 @@ protected:
     int cursorFromPos(QPointF scenePos) const;
 
     void detectAnchors();
+    QString toHtmlChars(const QString& str);
 
 private:
     CustomTextDocument* doc = nullptr;

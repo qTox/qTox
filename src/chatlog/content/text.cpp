@@ -286,3 +286,14 @@ void Text::detectAnchors()
         offset += htmledUrl.length();
     }
 }
+
+QString Text::toHtmlChars(const QString &str)
+{
+    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}};
+    QString res = str;
+
+    for (auto &it : replaceList)
+        res = res.replace(it.first,it.second);
+
+    return res;
+}
