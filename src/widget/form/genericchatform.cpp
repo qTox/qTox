@@ -174,6 +174,18 @@ void GenericChatForm::show(Ui::MainWindow &ui)
     QWidget::show();
 }
 
+void GenericChatForm::addMessage(const QString &author, const QString &message, bool isAction, const QDateTime &datetime)
+{
+    if(!isAction)
+    {
+        chatWidget->addChatMessage(author, message, datetime, false, false);
+    }
+    else
+    {
+        chatWidget->addChatAction(author, message, datetime);
+    }
+}
+
 void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 {
     QWidget* sender = (QWidget*)QObject::sender();
@@ -207,7 +219,7 @@ ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &mes
     if(isAction)
         msg = chatWidget->addChatAction(authorStr, message);
     else
-        msg = chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, author.isMine());
+        msg = chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, author.isMine(), false);
 
     if(isSent)
         msg->markAsSent(datetime);
@@ -223,25 +235,11 @@ ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isActi
     return addMessage(Core::getInstance()->getSelfId(), message, isAction, datetime, isSent);
 }
 
-/**
- * @deprecated The only reason it's still alive is because the groupchat API is a bit limited
- */
-//void GenericChatForm::addAlertMessage(const QString& author, QString message, QDateTime datetime)
-//{
-//    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-//    AlertAction *alact = new AlertAction(author, message, date);
-//    alact->markAsSent();
-//    chatWidget->insertMessage(ChatActionPtr(alact));
-
-//    previousId.publicKey = author;
-//}
-
 void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
 {
-//    QString authorStr = Core::getInstance()->getPeerName(author);
-//    QString date = datetime.toString(Settings::getInstance().getTimestampFormat());
-//    chatWidget->insertMessage(ChatActionPtr(new AlertAction(authorStr, message, date)));
-//    previousId = author;
+    QString authorStr = Core::getInstance()->getPeerName(author);
+    chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, author.isMine(), true);
+    previousId = author;
 }
 
 void GenericChatForm::onEmoteButtonClicked()
@@ -280,6 +278,12 @@ void GenericChatForm::addSystemInfoMessage(const QString &message, const QString
 {
     previousId.clear();
     chatWidget->addSystemMessage(message, datetime);
+}
+
+void GenericChatForm::addAlertMessage(const QString &author, QString message, QDateTime datetime)
+{
+    ChatMessage* msg = chatWidget->addChatMessage(author, message, false, true);
+    msg->markAsSent(datetime);
 }
 
 //QString GenericChatForm::getElidedName(const QString& name)

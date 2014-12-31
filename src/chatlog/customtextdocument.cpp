@@ -16,6 +16,7 @@
 
 #include "customtextdocument.h"
 #include "../misc/smileypack.h"
+#include "../misc/style.h"
 
 #include <QIcon>
 #include <QDebug>
@@ -23,7 +24,7 @@
 CustomTextDocument::CustomTextDocument(QObject *parent)
     : QTextDocument(parent)
 {
-
+    setDefaultStyleSheet(Style::getStylesheet(":ui/chatArea/innerStyle.css"));
 }
 
 QVariant CustomTextDocument::loadResource(int type, const QUrl &name)

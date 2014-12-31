@@ -77,20 +77,24 @@ ChatLog::~ChatLog()
         delete line;
 }
 
-ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self)
+ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self, bool alert)
 {
+    QString txt = SmileyPack::getInstance().smileyfied(msg);
+    if(alert)
+        txt = "<div class=alert>" + txt + "</div>";
+
     ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Text(sender, self ? Style::getFont(Style::MediumBold) : Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new Text(SmileyPack::getInstance().smileyfied(msg)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(txt, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
     line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;
 }
 
-ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self)
+ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert)
 {
-    ChatMessage* line = addChatMessage(sender, msg, self);
+    ChatMessage* line = addChatMessage(sender, msg, self, alert);
     line->markAsSent(timestamp);
 
     return line;
@@ -107,8 +111,8 @@ ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg, c
 ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg)
 {
     ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Text("", Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new Text("<font color=\"red\">*" + sender + " " + SmileyPack::getInstance().smileyfied(msg) + "</font>"), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new Text(""), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text("<div class=action>*" + sender + " " + SmileyPack::getInstance().smileyfied(msg) + "</div>", Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
     line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->setAsAction();
 
@@ -120,8 +124,8 @@ ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& time
 {
     ChatMessage* line = new ChatMessage(scene, msg);
     line->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new Text(msg), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(msg, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new Text(timestamp.toString("hh:mm"), Style::getFont(Style::Big)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;
@@ -130,9 +134,9 @@ ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& time
 ChatMessage *ChatLog::addFileTransferMessage(const QString &sender, const ToxFile &file,  const QDateTime& timestamp, bool self)
 {
     ChatMessage* line = new ChatMessage(scene, QString());
-    line->addColumn(new Text(sender, self ? Style::getFont(Style::MediumBold) : Style::getFont(Style::Medium), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString("hh:mm")), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(timestamp.toString("hh:mm"), Style::getFont(Style::Big)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;

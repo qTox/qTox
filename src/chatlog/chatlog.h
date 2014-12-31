@@ -35,8 +35,8 @@ public:
     explicit ChatLog(QWidget* parent = 0);
     virtual ~ChatLog();
 
-    ChatMessage* addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self);
-    ChatMessage* addChatMessage(const QString& sender, const QString& msg, bool self);
+    ChatMessage* addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert);
+    ChatMessage* addChatMessage(const QString& sender, const QString& msg, bool self, bool alert);
     ChatMessage* addChatAction(const QString& sender, const QString& msg, const QDateTime& timestamp);
     ChatMessage* addChatAction(const QString& sender, const QString& msg);
 

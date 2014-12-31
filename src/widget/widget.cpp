@@ -900,10 +900,9 @@ void Widget::onGroupMessageReceived(int groupnumber, const QString& message, con
 
     bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
     if (targeted)
-        ;//TODO: g->chatForm->addAlertMessage(author, message, QDateTime::currentDateTime());
+        g->chatForm->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
-
-        ;//TODO: g->chatForm->addMessage(author, message, isAction, QDateTime::currentDateTime());
+        g->chatForm->addMessage(author, message, isAction, QDateTime::currentDateTime());
 
     if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {

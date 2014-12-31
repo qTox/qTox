@@ -716,7 +716,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
         // Show each messages
         ToxID id = ToxID::fromString(it.sender);
-        ChatMessage* msg = chatWidget->addChatMessage(Core::getInstance()->getPeerName(id), it.message, id.isMine());
+        ChatMessage* msg = chatWidget->addChatMessage(Core::getInstance()->getPeerName(id), it.message, id.isMine(), false);
         if (it.isSent)
         {
             msg->markAsSent(msgDateTime);
