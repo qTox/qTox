@@ -24,6 +24,8 @@
 struct ToxID;
 namespace Db { enum class syncType; }
 
+enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
+
 class Settings : public QObject
 {
     Q_OBJECT
@@ -89,8 +91,8 @@ public:
     QString getProxyAddr() const;
     void setProxyAddr(const QString& newValue);
 
-    bool getUseProxy() const;
-    void setUseProxy(bool newValue);
+    ProxyType getProxyType() const;
+    void setProxyType(int newValue);
 
     int getProxyPort() const;
     void setProxyPort(int newValue);
@@ -257,7 +259,7 @@ private:
 
     bool forceTCP;
 
-    bool useProxy;
+    ProxyType proxyType;
     QString proxyAddr;
     int proxyPort;
 

@@ -111,7 +111,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     if (port != -1)
         bodyUI->proxyPort->setValue(port);
 
-    bodyUI->cbUseProxy->setChecked(Settings::getInstance().getUseProxy());
+    bodyUI->proxyType->setCurrentIndex(static_cast<int>(Settings::getInstance().getProxyType()));
     onUseProxyUpdated();
 
     //general
@@ -139,7 +139,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     //connection
     connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
     connect(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
-    connect(bodyUI->cbUseProxy, &QCheckBox::stateChanged, this, &GeneralForm::onUseProxyUpdated);
+    connect(bodyUI->proxyType, SIGNAL(currentIndexChanged(int)), this, SLOT(onUseProxyUpdated()));
     connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
@@ -286,11 +286,11 @@ void GeneralForm::onProxyPortEdited(int port)
 
 void GeneralForm::onUseProxyUpdated()
 {
-    bool state = bodyUI->cbUseProxy->isChecked();
+    int proxytype = bodyUI->proxyType->currentIndex();
 
-    bodyUI->proxyAddr->setEnabled(state);
-    bodyUI->proxyPort->setEnabled(state);
-    Settings::getInstance().setUseProxy(state);
+    bodyUI->proxyAddr->setEnabled(proxytype);
+    bodyUI->proxyPort->setEnabled(proxytype);
+    Settings::getInstance().setProxyType(proxytype);
 }
 
 void GeneralForm::onReconnectClicked()
