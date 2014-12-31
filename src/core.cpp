@@ -49,6 +49,8 @@ QList<ToxFile> Core::fileRecvQueue;
 QHash<int, ToxGroupCall> Core::groupCalls;
 QThread* Core::coreThread{nullptr};
 
+#define MAX_GROUP_MESSAGE_LEN 1024
+
 Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
     tox(nullptr), camera(cam), loadPath(loadPath), ready{false}
 {
@@ -783,7 +785,7 @@ void Core::sendTyping(int friendId, bool typing)
 
 void Core::sendGroupMessage(int groupId, const QString& message)
 {
-    QList<CString> cMessages = splitMessage(message);
+    QList<CString> cMessages = splitMessage(message, MAX_GROUP_MESSAGE_LEN);
 
     for (auto &cMsg :cMessages)
     {
@@ -796,7 +798,7 @@ void Core::sendGroupMessage(int groupId, const QString& message)
 
 void Core::sendGroupAction(int groupId, const QString& message)
 {
-    QList<CString> cMessages = splitMessage(message);
+    QList<CString> cMessages = splitMessage(message, MAX_GROUP_MESSAGE_LEN);
 
     for (auto &cMsg :cMessages)
     {
@@ -1745,17 +1747,17 @@ QString Core::getFriendUsername(int friendnumber) const
     return CString::toString(name, tox_get_name_size(tox, friendnumber));
 }
 
-QList<CString> Core::splitMessage(const QString &message)
+QList<CString> Core::splitMessage(const QString &message, int maxLen)
 {
     QList<CString> splittedMsgs;
     QByteArray ba_message(message.toUtf8());
 
-    while (ba_message.size() > TOX_MAX_MESSAGE_LENGTH)
+    while (ba_message.size() > maxLen)
     {
-        int splitPos = ba_message.lastIndexOf(' ', TOX_MAX_MESSAGE_LENGTH - 1);
+        int splitPos = ba_message.lastIndexOf(' ', maxLen - 1);
         if (splitPos <= 0)
         {
-            splitPos = TOX_MAX_MESSAGE_LENGTH;
+            splitPos = maxLen;
             if (ba_message[splitPos] & 0x80)
             {
                 do {

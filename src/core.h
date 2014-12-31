@@ -50,7 +50,7 @@ public:
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
-    static QList<CString> splitMessage(const QString &message);
+    static QList<CString> splitMessage(const QString &message, int maxLen);
 
     QString getPeerName(const ToxID& id) const;
 
