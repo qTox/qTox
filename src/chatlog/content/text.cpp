@@ -40,7 +40,7 @@ Text::Text(const QString& txt, QFont font, bool enableElide)
 
     ensureIntegrity();
     freeResources();
-    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+    //setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 }
 
 Text::~Text()
