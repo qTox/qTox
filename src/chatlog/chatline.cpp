@@ -134,6 +134,7 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
         delete content[col];
 
         content[col] = lineContent;
+        lineContent->setIndex(rowIndex, col);
         scene->addItem(content[col]);
 
         layout(width, pos);
