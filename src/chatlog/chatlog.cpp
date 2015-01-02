@@ -58,6 +58,7 @@ ChatLog::ChatLog(QWidget* parent)
     setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(SmartViewportUpdate);
     //setRenderHint(QPainter::TextAntialiasing);
+    setAcceptDrops(false);
 
     const QColor selGraphColor = QColor(166,225,255);
     selGraphItem = scene->addRect(0,0,0,0,selGraphColor.darker(120),selGraphColor);
