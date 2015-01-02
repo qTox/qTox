@@ -717,9 +717,17 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
 
         // Show each messages
-        ToxID id = ToxID::fromString(it.sender);
-        ChatMessage* msg = chatWidget->addChatMessage(Core::getInstance()->getPeerName(id), it.message, id.isMine(), false);
-        if (it.isSent || !id.isMine())
+        ToxID msgSender = ToxID::fromString(it.sender);
+
+        bool isAction = it.message.startsWith("/me ");
+        ChatMessage* msg;
+        QString authorStr = (msgSender.isMine() ? Core::getInstance()->getUsername() : resolveToxID(msgSender));
+        if (!isAction)
+            msg = chatWidget->addChatMessage(authorStr, it.message, msgSender.isMine(), false);
+        else
+            msg = chatWidget->addChatAction(authorStr, it.message.right(it.message.length() - 4));
+
+        if (it.isSent || !msgSender.isMine())
         {
             msg->markAsSent(msgDateTime);
         }
@@ -727,7 +735,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         {
             if (processUndelivered)
             {
-                int rec = Core::getInstance()->sendMessage(f->getFriendID(), msg->toString());
+                int rec;
+                if (!isAction)
+                    rec = Core::getInstance()->sendMessage(f->getFriendID(), msg->toString());
+                else
+                    rec = Core::getInstance()->sendAction(f->getFriendID(), msg->toString());
                 registerReceipt(rec, it.id, msg);
             }
         }
