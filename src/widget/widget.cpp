@@ -725,7 +725,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (!f)
         return;
 
-    contactListWidget->moveWidget(f->getFriendWidget(), status);
+    contactListWidget->moveWidget(f->getFriendWidget(), status, f->getEventFlag());
 
     bool isActualChange = f->getStatus() != status;
 

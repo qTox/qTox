@@ -21,7 +21,7 @@
 #include <QHash>
 #include "src/corestructs.h"
 
-class QLayout;
+class QVBoxLayout;
 class QGridLayout;
 class QPixmap;
 
@@ -31,17 +31,17 @@ class FriendListWidget : public QWidget
 public:
     explicit FriendListWidget(QWidget *parent = 0);
 
-    QLayout* getGroupLayout();
-    QLayout* getFriendLayout(Status s);
-    void moveWidget(QWidget *w, Status s);
+    QVBoxLayout* getGroupLayout();
+    QVBoxLayout* getFriendLayout(Status s);
+    void moveWidget(QWidget *w, Status s, int hasNewEvents);
 
 signals:
 
 public slots:
 
 private:
-    QHash<int, QLayout*> layouts;
-    QLayout *groupLayout;
+    QHash<int, QVBoxLayout*> layouts;
+    QVBoxLayout *groupLayout;
     QGridLayout *mainLayout;
 };
 

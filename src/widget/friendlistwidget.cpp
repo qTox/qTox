@@ -32,7 +32,7 @@ FriendListWidget::FriendListWidget(QWidget *parent) :
 
     for (Status s : {Status::Online, Status::Away, Status::Busy, Status::Offline})
     {
-        QLayout *l = new QVBoxLayout();
+        QVBoxLayout *l = new QVBoxLayout();
         l->setSpacing(0);
         l->setMargin(0);
 
@@ -46,12 +46,12 @@ FriendListWidget::FriendListWidget(QWidget *parent) :
     mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 4, 0);
 }
 
-QLayout* FriendListWidget::getGroupLayout()
+QVBoxLayout* FriendListWidget::getGroupLayout()
 {
     return groupLayout;
 }
 
-QLayout* FriendListWidget::getFriendLayout(Status s)
+QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
 {
     auto res = layouts.find(static_cast<int>(s));
     if (res != layouts.end())
@@ -61,8 +61,11 @@ QLayout* FriendListWidget::getFriendLayout(Status s)
     return layouts[static_cast<int>(Status::Online)];
 }
 
-void FriendListWidget::moveWidget(QWidget *w, Status s)
+void FriendListWidget::moveWidget(QWidget *w, Status s, int hasNewEvents)
 {
     mainLayout->removeWidget(w);
-    getFriendLayout(s)->addWidget(w);
+    if (hasNewEvents == 0)
+        getFriendLayout(s)->addWidget(w);
+    else
+        getFriendLayout(s)->insertWidget(0, w);
 }
