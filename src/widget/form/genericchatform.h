@@ -72,7 +72,6 @@ protected slots:
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
     void clearChatArea(bool);
-    void onChatWidgetClicked();
 
 protected:
     QString resolveToxID(const ToxID &id);

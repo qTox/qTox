@@ -75,8 +75,9 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(this, SIGNAL(chatAreaCleared()), this, SLOT(clearReciepts()));
-    connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig)
-        {if (text != orig) emit aliasChanged(text);} );
+    connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig) {
+        if (text != orig) emit aliasChanged(text);
+    } );
 
     setAcceptDrops(true);
 }

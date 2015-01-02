@@ -4,7 +4,7 @@ QTextEdit
     color: back;
 }
 
-QTextBrowser
+QGraphicsView 
 {
-	border: none;
+    border: none;
 }
