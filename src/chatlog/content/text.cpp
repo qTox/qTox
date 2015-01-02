@@ -202,8 +202,6 @@ void Text::ensureIntegrity()
     if(!doc)
     {
         doc = new CustomTextDocument();
-        doc->setUndoRedoEnabled(false);
-        doc->setUseDesignMetrics(true);
         doc->setDefaultFont(defFont);
 
         if(!elide)

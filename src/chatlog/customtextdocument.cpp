@@ -25,6 +25,8 @@ CustomTextDocument::CustomTextDocument(QObject *parent)
     : QTextDocument(parent)
 {
     setDefaultStyleSheet(Style::getStylesheet(":ui/chatArea/innerStyle.css"));
+    setUndoRedoEnabled(false);
+    setUseDesignMetrics(false);
 }
 
 QVariant CustomTextDocument::loadResource(int type, const QUrl &name)
