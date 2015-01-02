@@ -291,39 +291,39 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                     scene->mouseGrabberItem()->ungrabMouse();
             }
         }
-    }
 
-    if(selectionMode != None && ev->pos() != lastPos)
-    {
-        lastPos = ev->pos();
-
-        ChatLineContent* content = getContentFromPos(scenePos);
-
-        if(content)
+        if(selectionMode != None && ev->pos() != lastPos)
         {
-            int row = content->getRow();
-            int col = content->getColumn();
+            lastPos = ev->pos();
 
-            if(row >= selClickedRow)
-                selLastRow = row;
+            ChatLineContent* content = getContentFromPos(scenePos);
 
-            if(row <= selClickedRow)
-                selFirstRow = row;
-
-            if(row == selClickedRow && col == selClickedCol)
+            if(content)
             {
-                selectionMode = Precise;
+                int row = content->getRow();
+                int col = content->getColumn();
 
-                content->selectionMouseMove(scenePos);
-                selGraphItem->hide();
-            }
-            else
-            {
-                selectionMode = Multi;
+                if(row >= selClickedRow)
+                    selLastRow = row;
 
-                lines[selClickedRow]->selectionCleared();
+                if(row <= selClickedRow)
+                    selFirstRow = row;
 
-                updateMultiSelectionRect();
+                if(row == selClickedRow && col == selClickedCol)
+                {
+                    selectionMode = Precise;
+
+                    content->selectionMouseMove(scenePos);
+                    selGraphItem->hide();
+                }
+                else
+                {
+                    selectionMode = Multi;
+
+                    lines[selClickedRow]->selectionCleared();
+
+                    updateMultiSelectionRect();
+                }
             }
         }
     }
