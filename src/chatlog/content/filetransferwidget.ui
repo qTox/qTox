@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>544</width>
-    <height>207</height>
+    <width>532</width>
+    <height>90</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,13 +66,13 @@
          <number>6</number>
         </property>
         <property name="topMargin">
-         <number>6</number>
+         <number>0</number>
         </property>
         <property name="rightMargin">
          <number>6</number>
         </property>
         <property name="bottomMargin">
-         <number>6</number>
+         <number>0</number>
         </property>
         <item>
          <widget class="QLabel" name="filenameLabel">
@@ -216,12 +216,14 @@
          </property>
          <item>
           <widget class="QPushButton" name="topButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../../res.qrc">
-             <normaloff>:/ui/fileTransferInstance/pause_2x.png</normaloff>:/ui/fileTransferInstance/pause_2x.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -249,12 +251,14 @@
          </item>
          <item>
           <widget class="QPushButton" name="bottomButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../../res.qrc">
-             <normaloff>:/ui/fileTransferInstance/arrow_white_2x.png</normaloff>:/ui/fileTransferInstance/arrow_white_2x.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -275,8 +279,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../../res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
