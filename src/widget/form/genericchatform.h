@@ -69,7 +69,6 @@ public slots:
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
-    void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
     void clearChatArea(bool);

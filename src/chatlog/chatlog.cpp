@@ -32,6 +32,8 @@
 #include <QApplication>
 #include <QMenu>
 #include <QClipboard>
+#include <QFile>
+#include <QFileDialog>
 
 template<class T>
 T clamp(T x, T min, T max)
@@ -459,6 +461,27 @@ QString ChatLog::getSelectedText() const
     return QString();
 }
 
+QString ChatLog::toPlainText() const
+{
+    QString out;
+    QString lastSender;
+
+    for(ChatLine* l : lines)
+    {
+        if(lastSender != l->content[0]->getText() && !l->content[0]->getText().isEmpty())
+        {
+            //author changed
+            out += l->content[0]->getText() + ":\n";
+            lastSender = l->content[0]->getText();
+        }
+
+        out += l->content[1]->getText();
+        out += "\n\n";
+    }
+
+    return out;
+}
+
 bool ChatLog::isEmpty() const
 {
     return lines.isEmpty();
@@ -469,9 +492,10 @@ void ChatLog::showContextMenu(const QPoint& globalPos, const QPointF& scenePos)
     QMenu menu;
 
     // populate
-    QAction* copyAction = menu.addAction(QIcon::fromTheme("edit-copy"), "Copy");
+    QAction* copyAction = menu.addAction(QIcon::fromTheme("edit-copy"), tr("Copy"));
     menu.addSeparator();
-    QAction* clearAction = menu.addAction("Clear log");
+    QAction* clearAction = menu.addAction(QIcon::fromTheme("edit-clear") ,tr("Clear chat log"));
+    QAction* saveAction = menu.addAction(QIcon::fromTheme("document-save") ,tr("Save chat log"));
 
     if(!isOverSelection(scenePos))
         copyAction->setDisabled(true);
@@ -484,6 +508,20 @@ void ChatLog::showContextMenu(const QPoint& globalPos, const QPointF& scenePos)
 
     if(action == clearAction)
         clear();
+
+    if(action == saveAction)
+    {
+        QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"));
+        if (path.isEmpty())
+            return;
+
+        QFile file(path);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+            return;
+
+        file.write(toPlainText().toUtf8());
+        file.close();
+    }
 }
 
 void ChatLog::clear()

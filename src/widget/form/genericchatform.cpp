@@ -143,10 +143,6 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
-    menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
-    menu.addAction(tr("Clear displayed messages"), this, SLOT(clearChatArea(bool)));
-    menu.addSeparator();
-
     connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
     connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
     connect(chatWidget, SIGNAL(onClick()), this, SLOT(onChatWidgetClicked()));
@@ -187,23 +183,6 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
     QWidget* sender = (QWidget*)QObject::sender();
     pos = sender->mapToGlobal(pos);
     menu.exec(pos);
-}
-
-void GenericChatForm::onSaveLogClicked()
-{
-//    QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"));
-//    if (path.isEmpty())
-//        return;
-
-//    QFile file(path);
-//    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-//        return;
-
-//    QString log;
-//    log = chatWidget->toPlainText();
-
-//    file.write(log.toUtf8());
-//    file.close();
 }
 
 ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,

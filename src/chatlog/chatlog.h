@@ -49,6 +49,7 @@ public:
     void clear();
     void copySelectedText() const;
     QString getSelectedText() const;
+    QString toPlainText() const;
 
     bool isEmpty() const;
 
