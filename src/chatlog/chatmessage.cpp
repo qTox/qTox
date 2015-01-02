@@ -18,6 +18,8 @@
 #include "content/text.h"
 #include "content/spinner.h"
 
+#include "src/misc/settings.h"
+
 #include <QDateTime>
 
 ChatMessage::ChatMessage(QGraphicsScene* scene, const QString& rawMessage)
@@ -30,7 +32,7 @@ ChatMessage::ChatMessage(QGraphicsScene* scene, const QString& rawMessage)
 void ChatMessage::markAsSent(const QDateTime &time)
 {
     // remove the spinner and replace it by $time
-    replaceContent(2, new Text(time.toString("hh:mm")));
+    replaceContent(2, new Text(time.toString(Settings::getInstance().getTimestampFormat())));
 }
 
 QString ChatMessage::toString() const

@@ -26,6 +26,7 @@
 
 #include "../misc/style.h"
 #include "../misc/smileypack.h"
+#include "../misc/settings.h"
 
 #include <QDebug>
 #include <QScrollBar>
@@ -34,6 +35,9 @@
 #include <QClipboard>
 #include <QFile>
 #include <QFileDialog>
+
+#define NAME_COL_WIDTH 75.0
+#define TIME_COL_WIDTH 85.0
 
 template<class T>
 T clamp(T x, T min, T max)
@@ -87,9 +91,9 @@ ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString &msg, 
         txt = "<div class=alert>" + txt + "</div>";
 
     ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->addColumn(new Text(txt, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;
@@ -114,9 +118,9 @@ ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg, c
 ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg)
 {
     ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Text(""), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(""), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->addColumn(new Text("<div class=action>*" + sender + " " + SmileyPack::getInstance().smileyfied(msg) + "</div>", Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->setAsAction();
 
     insertChatline(line);
@@ -126,9 +130,9 @@ ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg)
 ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& timestamp)
 {
     ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->addColumn(new Text(msg, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString("hh:mm"), Style::getFont(Style::Big)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(timestamp.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;
@@ -137,9 +141,9 @@ ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& time
 ChatMessage *ChatLog::addFileTransferMessage(const QString &sender, const ToxFile &file,  const QDateTime& timestamp, bool self)
 {
     ChatMessage* line = new ChatMessage(scene, QString());
-    line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 380, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString("hh:mm"), Style::getFont(Style::Big)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
+    line->addColumn(new Text(timestamp.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);
     return line;
@@ -569,7 +573,7 @@ void ChatLog::checkVisibility()
 
     // set visibilty
     QList<ChatLine*> newVisibleLines;
-    for(auto itr = upperBound; itr <= lowerBound && itr != lines.end(); ++itr)
+    for(auto itr = upperBound; itr <= lowerBound && itr != lines.cend(); ++itr)
     {
         newVisibleLines.append(*itr);
 
