@@ -23,7 +23,7 @@
 class ChatLineContentProxy : public ChatLineContent
 {
 public:
-    ChatLineContentProxy(QWidget* widget);
+    ChatLineContentProxy(QWidget* widget, int minWidth, float widthInPercent = 1.0f);
 
     virtual QRectF boundingRect() const;
     virtual QRectF boundingSceneRect() const;
@@ -33,7 +33,8 @@ public:
 
 private:
     QGraphicsProxyWidget* proxy;
-
+    int widthMin;
+    float widthPercent;
 };
 
 #endif // CHATLINECONTENTPROXY_H

@@ -135,7 +135,7 @@ ChatMessage *ChatLog::addFileTransferMessage(const QString &sender, const ToxFil
 {
     ChatMessage* line = new ChatMessage(scene, QString());
     line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(75.0, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 380, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
     line->addColumn(new Text(timestamp.toString("hh:mm"), Style::getFont(Style::Big)), ColumnFormat(50.0, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     insertChatline(line);

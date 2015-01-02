@@ -19,7 +19,9 @@
 #include <QWidget>
 #include <QDebug>
 
-ChatLineContentProxy::ChatLineContentProxy(QWidget* widget)
+ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, int minWidth, float widthInPercent)
+    : widthMin(minWidth)
+    , widthPercent(widthInPercent)
 {
     proxy = new QGraphicsProxyWidget(this);
     proxy->setWidget(widget);
@@ -47,5 +49,5 @@ qreal ChatLineContentProxy::getAscent() const
 
 void ChatLineContentProxy::setWidth(qreal width)
 {
-    proxy->widget()->setFixedWidth(qMax(width,0.0));
+    proxy->widget()->setFixedWidth(qMax(static_cast<int>(width*widthPercent), widthMin));
 }
