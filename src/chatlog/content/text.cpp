@@ -26,7 +26,6 @@
 #include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QGraphicsSceneMouseEvent>
-#include <QFontMetrics>
 #include <QRegExp>
 #include <QDesktopServices>
 
@@ -51,6 +50,7 @@ Text::~Text()
 void Text::setText(const QString& txt)
 {
     text = txt;
+    dirty = true;
 
     ensureIntegrity();
     freeResources();
@@ -65,9 +65,12 @@ void Text::setWidth(qreal w)
 
     if(elide)
     {
-        QFontMetrics metrics = QFontMetrics(QFont());
+        QFontMetrics metrics = QFontMetrics(defFont);
         elidedText = metrics.elidedText(text, Qt::ElideRight, width);
+        dirty = true;
     }
+
+    size = idealSize();
 
     ensureIntegrity();
     freeResources();
@@ -168,6 +171,8 @@ void Text::visibilityChanged(bool visible)
         ensureIntegrity();
     else
         freeResources();
+
+    update();
 }
 
 qreal Text::getAscent() const
@@ -197,7 +202,7 @@ QString Text::getText() const
 
 void Text::ensureIntegrity()
 {
-    if(!doc)
+    if(!doc || dirty)
     {
         doc = new CustomTextDocument();
         doc->setDefaultFont(defFont);
@@ -215,6 +220,7 @@ void Text::ensureIntegrity()
         }
 
         cursor = QTextCursor(doc);
+        dirty = false;
     }
 
     doc->setTextWidth(width);
@@ -224,10 +230,9 @@ void Text::ensureIntegrity()
         vOffset = doc->firstBlock().layout()->lineAt(0).ascent();
 
     if(size != idealSize())
-    {
         prepareGeometryChange();
-        size = idealSize();
-    }
+
+    size = idealSize();
 }
 
 void Text::freeResources()
@@ -243,9 +248,9 @@ void Text::freeResources()
 QSizeF Text::idealSize()
 {
     if(doc)
-        return QSizeF(doc->idealWidth(), doc->size().height());
+        return QSizeF(qMin(doc->idealWidth(), width), doc->size().height());
 
-    return QSizeF();
+    return size;
 }
 
 int Text::cursorFromPos(QPointF scenePos) const

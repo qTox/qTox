@@ -69,6 +69,7 @@ private:
     QSizeF size;
     bool isVisible = false;
     bool elide = false;
+    bool dirty = false;
     QTextCursor cursor;
     qreal vOffset = 0.0;
     qreal width = 0.0;
