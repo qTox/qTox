@@ -192,15 +192,15 @@ void ChatLog::partialUpdate()
     {
         repos = false;
         if(!visibleLines.empty())
-        {
             repos = layout(visibleLines.first()->getRowIndex(), visibleLines.last()->getRowIndex(), useableWidth());
-        }
 
         checkVisibility();
     }
     while(repos);
 
-    reposition(visibleLines.last()->getRowIndex(), lines.size());
+    if(!visibleLines.empty())
+        reposition(visibleLines.last()->getRowIndex(), lines.size());
+
     checkVisibility();
 
     setViewportUpdateMode(oldUpdateMode);
@@ -530,7 +530,14 @@ void ChatLog::checkVisibility()
     });
 
     if(upperBound == lines.end())
-        upperBound = lines.begin();
+    {
+        //no lines visible
+        for(ChatLine* line : visibleLines)
+            line->visibilityChanged(false);
+
+        visibleLines.clear();
+        return;
+    }
 
     // find last visible row
     QList<ChatLine*>::const_iterator lowerBound;
@@ -538,9 +545,6 @@ void ChatLog::checkVisibility()
     {
         return lhs->boundingSceneRect().bottom() < rhs;
     });
-
-    if(lowerBound == lines.end())
-        lowerBound = lines.end();
 
     // set visibilty
     QList<ChatLine*> newVisibleLines;
