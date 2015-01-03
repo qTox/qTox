@@ -48,7 +48,7 @@ ChatLog::ChatLog(QWidget* parent)
     setAlignment(Qt::AlignTop | Qt::AlignLeft);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setDragMode(QGraphicsView::NoDrag);
-    setViewportUpdateMode(SmartViewportUpdate);
+    setViewportUpdateMode(BoundingRectViewportUpdate);
     //setRenderHint(QPainter::TextAntialiasing);
     setAcceptDrops(false);
 
@@ -522,6 +522,9 @@ void ChatLog::copySelectedText() const
 
 void ChatLog::checkVisibility()
 {
+    if(lines.empty())
+        return;
+
     // find first visible row
     QList<ChatLine*>::const_iterator upperBound;
     upperBound = std::upper_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), [](const qreal lhs, const ChatLine* rhs)
@@ -529,26 +532,16 @@ void ChatLog::checkVisibility()
         return lhs < rhs->boundingSceneRect().bottom();
     });
 
-    if(upperBound == lines.end())
-    {
-        //no lines visible
-        for(ChatLine* line : visibleLines)
-            line->visibilityChanged(false);
-
-        visibleLines.clear();
-        return;
-    }
-
     // find last visible row
     QList<ChatLine*>::const_iterator lowerBound;
     lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), [](const ChatLine* lhs, const qreal rhs)
     {
-        return lhs->boundingSceneRect().bottom() < rhs;
+        return lhs->boundingSceneRect().top() < rhs;
     });
 
     // set visibilty
     QList<ChatLine*> newVisibleLines;
-    for(auto itr = upperBound; itr <= lowerBound && itr != lines.cend(); ++itr)
+    for(auto itr = upperBound; itr != lowerBound; ++itr)
     {
         newVisibleLines.append(*itr);
 
