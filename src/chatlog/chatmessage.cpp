@@ -52,7 +52,9 @@ ChatMessage *ChatMessage::createChatMessage(QGraphicsScene *scene, const QString
         msg->setAsAction();
     }
     else if(alert)
+    {
         text = "<div class=alert>" + text + "</div>";
+    }
 
     msg->addColumn(new Text(isAction ? "*" : sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(text, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
