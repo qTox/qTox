@@ -211,7 +211,7 @@ ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isActi
 void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
 {
     QString authorStr = Core::getInstance()->getPeerName(author);
-    chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, author.isMine(), true);
+    chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, datetime, author.isMine(), true);
 
     previousId = author;
 }
@@ -250,8 +250,11 @@ void GenericChatForm::focusInput()
 
 void GenericChatForm::addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime)
 {
+    //TODO: respect type
     previousId.clear();
     chatWidget->addSystemMessage(message, datetime);
+
+    Q_UNUSED(type)
 }
 
 void GenericChatForm::clearChatArea(bool notinform)

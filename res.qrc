@@ -220,7 +220,6 @@
         <file>ui/videoButton/videoButtonYellow.png</file>
         <file>ui/videoButton/videoButtonYellowHover.png</file>
         <file>ui/videoButton/videoButtonYellowPressed.png</file>
-	<file>ui/fileTransferWidget/fileTransferWidget.css</file>
         <file>ui/fileTransferInstance/red.css</file>
         <file>ui/fileTransferInstance/green.css</file>
         <file>ui/fileTransferInstance/grey.css</file>
