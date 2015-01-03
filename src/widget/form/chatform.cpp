@@ -61,7 +61,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addStretch();
     callDuration = new QLabel();
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
-    callDuration->hide();    
+    callDuration->hide();
 
     menu.addAction(tr("Load History..."), this, SLOT(onLoadHistory()));
 
@@ -199,7 +199,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 
     ChatMessage* msg = chatWidget->addFileTransferMessage(name, file, QDateTime::currentDateTime(), false);
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxID()).isEmpty()
-        || Settings::getInstance().getAutoSaveEnabled())
+            || Settings::getInstance().getAutoSaveEnabled())
     {
         FileTransferWidget* tfWidget = dynamic_cast<FileTransferWidget*>(msg->getContent(1));
         if(tfWidget)
@@ -255,7 +255,7 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
-        
+
     if (video)
     {
         callButton->setObjectName("grey");
@@ -419,7 +419,7 @@ void ChatForm::onAvEnding(int FriendId, int)
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
     
     netcam->hide();
-        
+
     stopCounter();
 }
 
@@ -526,7 +526,7 @@ void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 void ChatForm::onAnswerCallTriggered()
 {
     qDebug() << "onAnswerCallTriggered";
-        
+
     audioInputFlag = true;
     audioOutputFlag = true;
     emit answerCall(callId);
@@ -703,7 +703,6 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     std::swap(storedPrevId, previousId);
     QList<ChatMessage*> historyMessages;
 
-    //TODO: possibly broken
     QDate lastDate(1,0,0);
     for (const auto &it : msgs)
     {
@@ -720,12 +719,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         ToxID msgSender = ToxID::fromString(it.sender);
 
         bool isAction = it.message.startsWith("/me ");
-        ChatMessage* msg;
-        QString authorStr = (msgSender.isMine() ? Core::getInstance()->getUsername() : resolveToxID(msgSender));
-        if (!isAction)
-            msg = chatWidget->addChatMessage(authorStr, it.message, msgSender.isMine(), false);
-        else
-            msg = chatWidget->addChatAction(authorStr, it.message.right(it.message.length() - 4));
+
+        ChatMessage* msg = addMessage(msgSender,
+                                      isAction ? it.message.right(it.message.length() - 4) : it.message,
+                                      isAction, QDateTime::currentDateTime(),
+                                      false);
 
         if (it.isSent || !msgSender.isMine())
         {
@@ -747,15 +745,15 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     }
     std::swap(storedPrevId, previousId);
 
-//    int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
+    //    int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
 
-//    if (earliestMessage != nullptr)
-//        *earliestMessage = since;
+    //    if (earliestMessage != nullptr)
+    //        *earliestMessage = since;
 
-//    chatWidget->insertMessagesTop(historyMessages);
+    //    chatWidget->insertMessagesTop(historyMessages);
 
-//    savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
-//    chatWidget->verticalScrollBar()->setValue(savedSliderPos);
+    //    savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
+    //    chatWidget->verticalScrollBar()->setValue(savedSliderPos);
 }
 
 void ChatForm::onLoadHistory()
@@ -786,7 +784,7 @@ void ChatForm::stopCounter()
     if (timer)
     {
         addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),secondsToDHMS(timeElapsed.elapsed()/1000)),
-                                                              "white", QDateTime::currentDateTime());
+                             "white", QDateTime::currentDateTime());
         timer->stop();
         callDuration->setText("");
         callDuration->hide();
