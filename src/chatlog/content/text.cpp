@@ -51,9 +51,11 @@ Text::~Text()
 void Text::setText(const QString& txt)
 {
     text = txt;
-    text.replace("\n", "<br/>");
 
     detectAnchors();
+
+    text.replace("\n", " <br/>");
+
     ensureIntegrity();
     freeResources();
 }
