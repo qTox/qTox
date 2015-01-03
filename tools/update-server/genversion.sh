@@ -1,4 +1,4 @@
 #!/bin/bash
-echo -n 1 > /var/www/html/qtox/win32/version
-./qtox-updater-sign $1 >> /var/www/html/qtox/win32/version
+echo -n 2 > version
+./qtox-updater-sign `date +%s`!$1 >> version
 

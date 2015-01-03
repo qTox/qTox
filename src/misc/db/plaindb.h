@@ -21,6 +21,10 @@
 
 #include <QSqlDatabase>
 
+namespace Db {
+    enum class syncType : int {stOff = 0, stNormal = 1, stFull = 2};
+}
+
 class PlainDb : public GenericDdInterface
 {
 public:

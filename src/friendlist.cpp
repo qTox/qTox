@@ -24,7 +24,7 @@
 QHash<int, Friend*> FriendList::friendList;
 QHash<QString, int> FriendList::tox2id;
 
-Friend* FriendList::addFriend(int friendId, const QString& userId)
+Friend* FriendList::addFriend(int friendId, const ToxID& userId)
 {
     auto friendChecker = friendList.find(friendId);
     if (friendChecker != friendList.end())
@@ -32,7 +32,7 @@ Friend* FriendList::addFriend(int friendId, const QString& userId)
 
     Friend* newfriend = new Friend(friendId, userId);
     friendList[friendId] = newfriend;
-    tox2id[userId] = friendId;
+    tox2id[userId.publicKey] = friendId;
 
     return newfriend;
 }
@@ -61,17 +61,18 @@ void FriendList::clear()
 {
     for (auto friendptr : friendList)
         delete friendptr;
+    friendList.clear();
 }
 
-Friend* FriendList::findFriend(QString userId)
+Friend* FriendList::findFriend(const ToxID& userId)
 {
-    auto id = tox2id.find(userId);
+    auto id = tox2id.find(userId.publicKey);
     if (id != tox2id.end())
     {
         Friend *f = findFriend(*id);
         if (!f)
             return nullptr;
-        if (f->getToxID() == ToxID::fromString(userId))
+        if (f->getToxID() == userId)
             return f;
     }
 

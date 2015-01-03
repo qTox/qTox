@@ -65,6 +65,7 @@ void Widget::fatalError(QString message)
 {
     QMessageBox::critical(this,tr("Error"), message+'\n'+tr("qTox will restart now."));
     deleteUpdate();
+    restoreBackups();
     startQToxAndExit();
 }
 
@@ -78,6 +79,18 @@ void Widget::startQToxAndExit()
 {
     QProcess::startDetached(QTOX_PATH);
     exit(0);
+}
+
+void Widget::deleteBackups()
+{
+    for (QString file : backups)
+        QFile(file+".bak").remove();
+}
+
+void Widget::restoreBackups()
+{
+    for (QString file : backups)
+        QFile(file+".bak").rename(file);
 }
 
 void Widget::update()
@@ -105,6 +118,11 @@ void Widget::update()
     for (UpdateFileMeta fileMeta : diff)
         if (!QFile::exists(updateDirStr+fileMeta.installpath))
             fatalError(tr("The update is incomplete."));
+
+    if (diff.size() == 0){
+       fatalError(tr("The diff list is empty."));
+    }
+
     setProgress(5);
 
     /// 2. Check the update (5-50%)
@@ -138,17 +156,26 @@ void Widget::update()
     float installProgress = 50;
     for (UpdateFileMeta fileMeta : diff)
     {
-         QFile fileFile(updateDirStr+fileMeta.installpath);
-         if (!fileFile.copy(fileMeta.installpath))
-             fatalError(tr("Unable to copy the update's files."));
+        // Backup old files
+        if (QFile(fileMeta.installpath).exists())
+        {
+            QFile(fileMeta.installpath).rename(fileMeta.installpath+".bak");
+            backups.append(fileMeta.installpath);
+        }
 
-         installProgress += installProgressStep;
-         setProgress(installProgress);
+        // Install new ones
+        QFile fileFile(updateDirStr+fileMeta.installpath);
+        if (!fileFile.copy(fileMeta.installpath))
+            fatalError(tr("Unable to copy the update's files."));
+        installProgress += installProgressStep;
+        setProgress(installProgress);
     }
     setProgress(95);
 
-    /// 4. Delete the update (95-100%)
+    /// 4. Delete the update and backups (95-100%)
     deleteUpdate();
+    setProgress(97);
+    deleteBackups();
     setProgress(100);
 
     /// 5. Start qTox and exit

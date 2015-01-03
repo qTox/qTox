@@ -34,8 +34,10 @@ private slots:
     void onEnableIPv6Updated();
     void onTranslationUpdated();
     void onMakeToxPortableUpdated();
+    void onSetShowSystemTray();
     void onSetAutostartInTray();
     void onSetCloseToTray();
+    void onSetLightTrayIcon();
     void onSmileyBrowserIndexChanged(int index);
     void onUDPUpdated();
     void onProxyAddrEdited();
@@ -54,6 +56,7 @@ private slots:
     void onCheckUpdateChanged();
     void onSetShowInFront();
     void onFauxOfflineMessaging();
+    void onThemeColorChanged(int);
 
 private:
     Ui::GeneralSettings *bodyUI;

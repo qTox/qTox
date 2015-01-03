@@ -27,6 +27,7 @@
 #include <QContextMenuEvent>
 #include <QMimeData>
 #include <QDragEnterEvent>
+#include <QInputDialog>
 
 #include "ui_mainwindow.h"
 
@@ -39,7 +40,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
 
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        statusMessageLabel->setText(GroupWidget::tr("%1 users in chat").arg(g->peers.size()));
+        statusMessageLabel->setText(GroupWidget::tr("%1 users in chat").arg(g->getPeersCount()));
     else
         statusMessageLabel->setText(GroupWidget::tr("0 users in chat"));
 
@@ -50,18 +51,33 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
+    QAction* setAlias = menu.addAction(tr("Set title..."));
     QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
 
     QAction* selectedItem = menu.exec(pos);
-    if (selectedItem == quitGroup)
-        emit removeGroup(groupId);
+    if (selectedItem)
+    {
+        if (selectedItem == quitGroup)
+            emit removeGroup(groupId);
+        else if (selectedItem == setAlias)
+        {
+            bool ok;
+            Group* g = GroupList::findGroup(groupId);
+
+            QString alias = QInputDialog::getText(nullptr, tr("Group title"), tr("You can also set this by clicking the chat form name.\nTitle:"), QLineEdit::Normal,
+                                          nameLabel->fullText(), &ok);
+
+            if (ok && alias != nameLabel->fullText())
+                emit g->getChatForm()->groupTitleChanged(groupId, alias.left(128));
+        }
+    }
 }
 
 void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        statusMessageLabel->setText(tr("%1 users in chat").arg(g->nPeers));
+        statusMessageLabel->setText(tr("%1 users in chat").arg(g->getPeersCount()));
     else
         statusMessageLabel->setText(tr("0 users in chat"));
 }
@@ -82,13 +98,13 @@ void GroupWidget::updateStatusLight()
 {
     Group *g = GroupList::findGroup(groupId);
 
-    if (g->hasNewMessages == 0)
+    if (!g->getEventFlag())
     {
         statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
     }
     else
     {
-        if (g->userWasMentioned == 0)
+        if (!g->getMentionedFlag())
             statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
         else
             statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
@@ -98,14 +114,14 @@ void GroupWidget::updateStatusLight()
 void GroupWidget::setChatForm(Ui::MainWindow &ui)
 {
     Group* g = GroupList::findGroup(groupId);
-    g->chatForm->show(ui);
+    g->getChatForm()->show(ui);
 }
 
 void GroupWidget::resetEventFlags()
 {
     Group* g = GroupList::findGroup(groupId);
-    g->hasNewMessages = 0;
-    g->userWasMentioned = 0;
+    g->setEventFlag(false);
+    g->setMentionedFlag(false);
 }
 
 void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
@@ -121,4 +137,24 @@ void GroupWidget::dropEvent(QDropEvent *ev)
         int friendId = ev->mimeData()->data("friend").toInt();
         Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
+}
+
+void GroupWidget::keyPressEvent(QKeyEvent* ev)
+{
+    Group* g = GroupList::findGroup(groupId);
+    if (g)
+        g->getChatForm()->keyPressEvent(ev);
+
+}
+
+void GroupWidget::keyReleaseEvent(QKeyEvent* ev)
+{
+    Group* g = GroupList::findGroup(groupId);
+    if (g)
+        g->getChatForm()->keyReleaseEvent(ev);
+}
+
+void GroupWidget::setName(const QString& name)
+{
+    nameLabel->setText(name);
 }

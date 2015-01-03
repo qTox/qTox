@@ -34,6 +34,8 @@
 #include "src/historykeeper.h"
 #include "form/inputpassworddialog.h"
 #include "src/autoupdate.h"
+#include "src/audio.h"
+#include "src/platform/timer.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -50,6 +52,14 @@
 #include <QTranslator>
 #include <tox/tox.h>
 
+void toxActivateEventHandler(const QByteArray& data)
+{
+    if (data != "$activate")
+        return;
+    Widget::getInstance()->show();
+    Widget::getInstance()->activateWindow();
+}
+
 Widget *Widget::instance{nullptr};
 
 Widget::Widget(QWidget *parent)
@@ -64,11 +74,19 @@ Widget::Widget(QWidget *parent)
 void Widget::init()
 {
     ui->setupUi(this);
-    
+
+    idleTimer = new QTimer();
+    idleTimer->start(1000);
+
+    //restore window state
+    restoreGeometry(Settings::getInstance().getWindowGeometry());
+    restoreState(Settings::getInstance().getWindowState());
+    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
+
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         icon = new QSystemTrayIcon(this);
-        icon->setIcon(this->windowIcon());
+        updateTrayIcon();
         trayMenu = new QMenu;
         
         statusOnline = new QAction(tr("Online"), this);
@@ -78,12 +96,11 @@ void Widget::init()
         statusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
         connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
         statusBusy = new QAction(tr("Busy"), this);
-        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         statusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         actionQuit = new QAction(tr("&Quit"), this);
         connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
         
-        trayMenu->addAction(new QAction(tr("Change status to:"), this));
         trayMenu->addAction(statusOnline);
         trayMenu->addAction(statusAway);
         trayMenu->addAction(statusBusy);
@@ -96,27 +113,27 @@ void Widget::init()
                 this,
                 SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
         
-        icon->show();
-        
-        if(Settings::getInstance().getAutostartInTray() == false)
+        if (Settings::getInstance().getShowSystemTray()){
+            icon->show();
+            if (Settings::getInstance().getAutostartInTray() == false)
+                this->show();
+        }
+        else
             this->show();
+
     }
     else
     {
-        qWarning() << "No system tray detected!";
+        qWarning() << "Widget: No system tray detected!";
+        icon = nullptr;
         this->show();
     }
 
     ui->statusbar->hide();
     ui->menubar->hide();
 
-    //restore window state
-    restoreGeometry(Settings::getInstance().getWindowGeometry());
-    restoreState(Settings::getInstance().getWindowState());
-    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
-
     layout()->setContentsMargins(0, 0, 0, 0);
-    ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
+    ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
 
     profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.png");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
@@ -128,9 +145,10 @@ void Widget::init()
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
-    
 
-    if(QStyleFactory::keys().contains(Settings::getInstance().getStyle())
+    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
+    
+    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
     {
         ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
@@ -170,15 +188,14 @@ void Widget::init()
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
 
-    idleTimer = new QTimer();
-    int mins = Settings::getInstance().getAutoAwayTime();
-    if (mins > 0)
-        idleTimer->start(mins * 1000*60);
+    Style::setThemeColor(Settings::getInstance().getThemeColor());
+    Style::applyTheme();
 
     qRegisterMetaType<Status>("Status");
     qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<uint16_t>("uint16_t");
+    qRegisterMetaType<const int16_t*>("const int16_t*");
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
     qRegisterMetaType<QPixmap>("QPixmap");
@@ -188,6 +205,7 @@ void Widget::init()
 
     QString profilePath = detectProfile();
     coreThread = new QThread(this);
+    coreThread->setObjectName("qTox Core");
     core = new Core(Camera::getInstance(), coreThread, profilePath);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
@@ -195,6 +213,8 @@ void Widget::init()
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
     settingsWidget = new SettingsWidget();
+
+    connect(settingsWidget, SIGNAL(setShowSystemTray(bool)), this, SLOT(onSetShowSystemTray(bool)));
 
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
@@ -217,6 +237,7 @@ void Widget::init()
     connect(core, &Core::groupInviteReceived, this, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived, this, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged, this, &Widget::onGroupNamelistChanged);
+    connect(core, &Core::groupTitleChanged, this, &Widget::onGroupTitleChanged);
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
     connect(core, &Core::avInvite, this, &Widget::playRingtone);
     connect(core, &Core::blockingClearContacts, this, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
@@ -236,12 +257,13 @@ void Widget::init()
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
     connect(ui->nameLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onUsernameChanged(QString, QString)));
     connect(ui->statusLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onStatusMessageChanged(QString, QString)));
+    connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
-    connect(idleTimer, &QTimer::timeout, this, &Widget::onUserAway);
+    connect(idleTimer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
 
     coreThread->start();
 
@@ -271,6 +293,24 @@ void Widget::setTranslation()
     QCoreApplication::installTranslator(translator);
 }
 
+void Widget::updateTrayIcon()
+{
+    if (!icon)
+        return;
+    QString status = ui->statusButton->property("status").toString();
+    QString pic;
+    QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
+    if (status == "online")
+        pic = ":img/taskbar/" + color + "/taskbar_online_2x.png";
+    else if (status == "away")
+        pic = ":img/taskbar/" + color + "/taskbar_idle_2x.png";
+    else if (status == "busy")
+        pic = ":img/taskbar/" + color + "/taskbar_busy_2x.png";
+    else
+        pic = ":img/taskbar/" + color + "/taskbar_offline_2x.png";
+    icon->setIcon(QIcon(pic));
+}
+
 Widget::~Widget()
 {
     core->saveConfiguration();
@@ -284,11 +324,8 @@ Widget::~Widget()
     delete filesForm;
 
     FriendList::clear();
-    for (Group* g : GroupList::groupList)
-        delete g;
-    GroupList::groupList.clear();
+    GroupList::clear();
     delete trayMenu;
-    delete icon;
     delete ui;
     delete translator;
     instance = nullptr;
@@ -311,16 +348,15 @@ QThread* Widget::getCoreThread()
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    if(Settings::getInstance().getCloseToTray() == true)
+    if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)
     {
         event->ignore();
         this->hide();
     }
     else
     {
-        Settings::getInstance().setWindowGeometry(saveGeometry());
-        Settings::getInstance().setWindowState(saveState());
-        Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+        saveWindowGeometry();
+        saveSplitterGeometry();
         QWidget::closeEvent(event);
     }
 }
@@ -329,11 +365,17 @@ void Widget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange)
     {
-        if(isMinimized() && Settings::getInstance().getMinimizeToTray())
+        if (isMinimized() && Settings::getInstance().getMinimizeToTray())
         {
             this->hide();
         }
     }
+}
+
+void Widget::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event);
+    saveWindowGeometry();
 }
 
 QString Widget::detectProfile()
@@ -373,7 +415,7 @@ QList<QString> Widget::searchProfiles()
     QDir dir(Settings::getSettingsDirPath());
 	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 	dir.setNameFilters(QStringList("*.tox"));
-	for(QFileInfo file : dir.entryInfoList())
+	for (QFileInfo file : dir.entryInfoList())
 		out += file.completeBaseName();
 	return out;
 }
@@ -397,11 +439,6 @@ QString Widget::askProfiles()
     }
     else
         return profile;
-}
-
-void Widget::setIdleTimer(int minutes)
-{
-    idleTimer->start(minutes * 1000*60);
 }
 
 QString Widget::getUsername()
@@ -461,11 +498,24 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 void Widget::onConnected()
 {
     ui->statusButton->setEnabled(true);
-    emit statusSet(Status::Online);
+    if (beforeDisconnect == Status::Offline)
+        emit statusSet(Status::Online);
+    else
+        emit statusSet(beforeDisconnect);
 }
 
 void Widget::onDisconnected()
 {
+    QString stat = ui->statusButton->property("status").toString();
+    if      (stat == "online")
+        beforeDisconnect = Status::Online;
+    else if (stat == "busy")
+        beforeDisconnect = Status::Busy;
+    else if (stat == "away")
+        beforeDisconnect = Status::Away;
+    else
+        beforeDisconnect = Status::Offline;
+
     ui->statusButton->setEnabled(false);
     emit statusSet(Status::Offline);
 }
@@ -508,15 +558,20 @@ void Widget::onStatusSet(Status status)
         ui->statusButton->setProperty("status" ,"offline");
         break;
     }
-
+    updateTrayIcon();
     Style::repolish(ui->statusButton);
+}
+
+void Widget::setWindowTitle(const QString& title)
+{
+    QMainWindow::setWindowTitle("qTox - " + title);
 }
 
 void Widget::onAddClicked()
 {
     hideMainForms();
     addFriendForm->show(*ui);
-    setWindowTitle(tr("Add friend") + " - qTox");
+    setWindowTitle(tr("Add friend"));
 }
 
 void Widget::onGroupClicked()
@@ -528,7 +583,7 @@ void Widget::onTransferClicked()
 {
     hideMainForms();
     filesForm->show(*ui);
-    setWindowTitle(tr("File transfers") + " - qTox");
+    setWindowTitle(tr("File transfers"));
     activeChatroomWidget = nullptr;
 }
 
@@ -536,8 +591,11 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
         case QSystemTrayIcon::Trigger:
-        if(this->isHidden() == true)
+        if (this->isHidden() == true)
+        {
             this->show();
+            this->activateWindow();
+        }
         else
             this->hide();
         case QSystemTrayIcon::DoubleClick:    
@@ -553,7 +611,7 @@ void Widget::onSettingsClicked()
 {
     hideMainForms();
     settingsWidget->show(*ui);
-    setWindowTitle(tr("Settings") + " - qTox");
+    setWindowTitle(tr("Settings"));
     activeChatroomWidget = nullptr;
 }
 
@@ -600,12 +658,13 @@ void Widget::setStatusMessage(const QString &statusMessage)
 void Widget::addFriend(int friendId, const QString &userId)
 {
     //qDebug() << "Widget: Adding friend with id" << userId;
-    Friend* newfriend = FriendList::addFriend(friendId, userId);
+    ToxID userToxId = ToxID::fromString(userId);
+    Friend* newfriend = FriendList::addFriend(friendId, userToxId);
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->getFriendWidget());
 
-    QString alias = Settings::getInstance().getFriendAlias(ToxID::fromString(userId));
-    newfriend->setAlias(alias);
+    if (Settings::getInstance().getEnableLogging())
+        newfriend->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
@@ -621,6 +680,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
     connect(newfriend->getChatForm(), SIGNAL(micMuteToggle(int)), core, SLOT(micMuteToggle(int)));
     connect(newfriend->getChatForm(), SIGNAL(volMuteToggle(int)), core, SLOT(volMuteToggle(int)));
+    connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
     connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
     connect(core, &Core::avStart, newfriend->getChatForm(), &ChatForm::onAvStart);
@@ -652,7 +712,7 @@ void Widget::addFriend(int friendId, const QString &userId)
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
 {
     QString info = QString(tr("Couldn't request friendship"));
-    if(!errorInfo.isEmpty()) {
+    if (!errorInfo.isEmpty()) {
         info = info + (QString(": ") + errorInfo);
     }
 
@@ -673,7 +733,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     f->getFriendWidget()->updateStatusLight();
     
     //won't print the message if there were no messages before
-    if(!f->getChatForm()->isEmpty()
+    if (!f->getChatForm()->isEmpty()
             && Settings::getInstance().getStatusChangeNotificationEnabled())
     {
         QString fStatus = "";
@@ -730,7 +790,7 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
     }
     activeChatroomWidget = widget;
     widget->setAsActiveChatroom();
-    setWindowTitle(widget->getName() + " - qTox");
+    setWindowTitle(widget->getName());
     widget->resetEventFlags();
     widget->updateStatusLight();
 }
@@ -795,11 +855,7 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
         sndFile.close();
     }
 
-    ALuint buffer;
-    alGenBuffers(1, &buffer);
-    alBufferData(buffer, AL_FORMAT_MONO16, sndData.data(), sndData.size(), 44100);
-    alSourcei(core->alMainSource, AL_BUFFER, buffer);
-    alSourcePlay(core->alMainSource);
+    Audio::playMono16Sound(sndData);
 }
 
 void Widget::playRingtone()
@@ -815,11 +871,7 @@ void Widget::playRingtone()
         sndFile1.close();
     }
 
-    ALuint buffer;
-    alGenBuffers(1, &buffer);
-    alBufferData(buffer, AL_FORMAT_MONO16, sndData1.data(), sndData1.size(), 44100);
-    alSourcei(core->alMainSource, AL_BUFFER, buffer);
-    alSourcePlay(core->alMainSource);
+    Audio::playMono16Sound(sndData1);
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
@@ -841,7 +893,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     FriendList::removeFriend(f->getFriendID(), fake);
     core->removeFriend(f->getFriendID(), fake);
     delete f;
-    if (ui->mainHead->layout()->isEmpty()) // tux3: this should have covered the case of the bug you "fixed" 5 lines above
+    if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
 
     contactListWidget->hide();
@@ -858,7 +910,9 @@ void Widget::clearContactsList()
     QList<Friend*> friends = FriendList::getAllFriends();
     for (Friend* f : friends)
         removeFriend(f, true);
-    for (Group* g : GroupList::groupList)
+
+    QList<Group*> groups = GroupList::getAllGroups();
+    for (Group* g : groups)
         removeGroup(g, true);
 }
 
@@ -872,11 +926,11 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, const uint8_t* publicKey,uint16_t length)
+void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite)
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int groupId = core->joinGroupchat(friendId, type, publicKey,length);
+        int groupId = core->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
         if (groupId < 0)
         {
             qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";
@@ -890,29 +944,30 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, const uint8_t
     }
 }
 
-void Widget::onGroupMessageReceived(int groupnumber, const QString& message, const QString& author, bool isAction)
+void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction)
 {
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
         return;
 
+    ToxID author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
     QString name = core->getUsername();
 
-    bool targeted = (author != name) && message.contains(name, Qt::CaseInsensitive);
-    if (targeted)
-        g->chatForm->addAlertMessage(author, message, QDateTime::currentDateTime());
+    bool targeted = (!author.isMine()) && message.contains(name, Qt::CaseInsensitive);
+    if (targeted && !isAction)
+        g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
-        g->chatForm->addMessage(author, message, isAction, QDateTime::currentDateTime());
+        g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
 
-    if ((static_cast<GenericChatroomWidget*>(g->widget) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
+    if ((static_cast<GenericChatroomWidget*>(g->getGroupWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
     {
-        g->hasNewMessages = 1;
+        g->setEventFlag(true);
         if (targeted)
         {
-            newMessageAlert(g->widget);
-            g->userWasMentioned = 1; // useful for highlighting line or desktop notifications
+            newMessageAlert(g->getGroupWidget());
+            g->setMentionedFlag(true); // useful for highlighting line or desktop notifications
         }
-        g->widget->updateStatusLight();
+        g->getGroupWidget()->updateStatusLight();
     }
 }
 
@@ -921,7 +976,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
     {
-        qDebug() << "Widget::onGroupNamelistChanged: Group not found, creating it";
+        qDebug() << "Widget::onGroupNamelistChanged: Group "<<groupnumber<<" not found, creating it";
         g = createGroup(groupnumber);
     }
 
@@ -931,30 +986,44 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     {
         if (name.isEmpty())
             name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
-        g->addPeer(peernumber,name);
-        g->chatForm->getChatLog()->addSystemMessage(tr("%1 has joined the chat").arg(name), QDateTime::currentDateTime());
+
+        // g->addPeer(peernumber,name);
+        g->regeneratePeerList();
+        //g->chatForm->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "green");
         // we can't display these messages until irungentoo fixes peernumbers
         // https://github.com/irungentoo/toxcore/issues/1128
     }
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
     {
-        g->removePeer(peernumber);
-        g->chatForm->getChatLog()->addSystemMessage(tr("%1 has left the chat").arg(name), QDateTime::currentDateTime());
+        // g->removePeer(peernumber);
+        g->regeneratePeerList();
+        //g->chatForm->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "silver");
     }
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
         g->updatePeer(peernumber,core->getGroupPeerName(groupnumber, peernumber));
 }
 
+void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const QString& title)
+{
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g)
+        return;
+
+    g->setName(title);
+    if (!author.isEmpty())
+        g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), "silver", QDateTime::currentDateTime());
+}
+
 void Widget::removeGroup(Group* g, bool fake)
 {
-    g->widget->setAsInactiveChatroom();
-    if (static_cast<GenericChatroomWidget*>(g->widget) == activeChatroomWidget)
+    g->getGroupWidget()->setAsInactiveChatroom();
+    if (static_cast<GenericChatroomWidget*>(g->getGroupWidget()) == activeChatroomWidget)
     {
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
-    GroupList::removeGroup(g->groupId, fake);
-    core->removeGroup(g->groupId, fake);
+    GroupList::removeGroup(g->getGroupId(), fake);
+    core->removeGroup(g->getGroupId(), fake);
     delete g;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
@@ -983,16 +1052,17 @@ Group *Widget::createGroup(int groupId)
     }
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName);
+    Group* newgroup = GroupList::addGroup(groupId, groupName, true);
     QLayout* layout = contactListWidget->getGroupLayout();
-    layout->addWidget(newgroup->widget);
-    newgroup->widget->updateStatusLight();
+    layout->addWidget(newgroup->getGroupWidget());
+    newgroup->getGroupWidget()->updateStatusLight();
 
-    connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
-    connect(newgroup->widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
-    connect(newgroup->widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->chatForm, SLOT(focusInput()));
-    connect(newgroup->chatForm, SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
-    connect(newgroup->chatForm, SIGNAL(sendAction(int,QString)), core, SLOT(sendGroupAction(int,QString)));
+    connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
+    connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
+    connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->getChatForm(), SLOT(focusInput()));
+    connect(newgroup->getChatForm(), SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
+    connect(newgroup->getChatForm(), SIGNAL(sendAction(int,QString)), core, SLOT(sendGroupAction(int,QString)));
+    connect(newgroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
     return newgroup;
 }
 
@@ -1018,23 +1088,13 @@ bool Widget::event(QEvent * e)
                 activeChatroomWidget->resetEventFlags();
                 activeChatroomWidget->updateStatusLight();
             }
-        // http://qt-project.org/faq/answer/how_can_i_detect_a_period_of_no_user_interaction
-        // Detecting global inactivity, like Skype, is possible but not via Qt:
-        // http://stackoverflow.com/a/21905027/1497645
         case QEvent::MouseButtonPress:
         case QEvent::MouseButtonRelease:
         case QEvent::Wheel:
         case QEvent::KeyPress:
         case QEvent::KeyRelease:
             if (autoAwayActive)
-            {
-                qDebug() << "Widget: auto away deactivated";
-                autoAwayActive = false;
-                emit statusSet(Status::Online);
-                int mins = Settings::getInstance().getAutoAwayTime();
-                if (mins > 0)
-                    idleTimer->start(mins * 1000*60);
-            }
+                onUserAwayCheck();  // Just so we get back from away faster when interacting with app
         default:
             break;
     }
@@ -1042,16 +1102,32 @@ bool Widget::event(QEvent * e)
     return QWidget::event(e);
 }
 
-void Widget::onUserAway()
+void Widget::onUserAwayCheck()
 {
-    if (Settings::getInstance().getAutoAwayTime() > 0
-        && ui->statusButton->property("status").toString() == "online") // leave user-set statuses in place
+#ifdef QTOX_PLATFORM_EXT
+    uint32_t autoAwayTime = Settings::getInstance().getAutoAwayTime() * 60 * 1000;
+
+    if (ui->statusButton->property("status").toString() == "online")
     {
-        qDebug() << "Widget: auto away activated";
-        emit statusSet(Status::Away);
-        autoAwayActive = true;
+        if (autoAwayTime && Platform::getIdleTime() >= autoAwayTime)
+        {
+            qDebug() << "Widget: auto away activated at" << QTime::currentTime().toString();
+            emit statusSet(Status::Away);
+            autoAwayActive = true;
+        }
     }
-    idleTimer->stop();
+    else if (ui->statusButton->property("status").toString() == "away")
+    {
+        if (autoAwayActive && (!autoAwayTime || Platform::getIdleTime() < autoAwayTime))
+        {
+            qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
+            emit statusSet(Status::Online);
+            autoAwayActive = false;
+        }
+    }
+    else if (autoAwayActive)
+        autoAwayActive = false;
+#endif
 }
 
 void Widget::setStatusOnline()
@@ -1086,7 +1162,7 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         return;
 
     if (result == -1)
-        g->chatForm->getChatLog()->addSystemMessage(tr("Message failed to send"), QDateTime::currentDateTime());
+        g->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), "white", QDateTime::currentDateTime());
 }
 
 void Widget::getPassword(QString info, int passtype, uint8_t* salt)
@@ -1101,6 +1177,28 @@ void Widget::getPassword(QString info, int passtype, uint8_t* salt)
         else
             core->setPassword(pswd, pt, salt);
     }
+}
+
+void Widget::onSetShowSystemTray(bool newValue){
+    icon->setVisible(newValue);
+}
+
+void Widget::saveWindowGeometry()
+{
+    Settings::getInstance().setWindowGeometry(saveGeometry());
+    Settings::getInstance().setWindowState(saveState());
+}
+
+void Widget::saveSplitterGeometry()
+{
+    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+}
+
+void Widget::onSplitterMoved(int pos, int index)
+{
+    Q_UNUSED(pos);
+    Q_UNUSED(index);
+    saveSplitterGeometry();
 }
 
 QMessageBox::StandardButton Widget::showWarningMsgBox(const QString& title, const QString& msg, QMessageBox::StandardButtons buttons)
@@ -1160,4 +1258,18 @@ void Widget::clearAllReceipts()
     {
         f->getChatForm()->clearReciepts();
     }
+}
+
+void Widget::reloadTheme()
+{
+    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
+    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
+    ui->statusButton->setStyleSheet(Style::getStylesheet(":ui/statusButton/statusButton.css"));
+
+    for (Friend* f : FriendList::getAllFriends())
+        f->getFriendWidget()->reloadTheme();
+
+    for (Group* g : GroupList::getAllGroups())
+        g->getGroupWidget()->reloadTheme();
 }

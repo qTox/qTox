@@ -1034,7 +1034,7 @@ QSplitter:handle{
              <x>0</x>
              <y>0</y>
              <width>284</width>
-             <height>401</height>
+             <height>399</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1053,16 +1053,7 @@ QSplitter:handle{
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{
-	background-color:#1c1c1c;
-	border:none;
-}
-
-QPushButton:hover{
-	background-color:#292929;
-	border:none;
-}
-</string>
+           <string notr="true"/>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <property name="spacing">
@@ -1146,7 +1137,7 @@ QPushButton:hover{
              </property>
              <property name="icon">
               <iconset resource="../res.qrc">
-               <normaloff>:/img/group_2x.png</normaloff>:/img/group_2x.png</iconset>
+               <normaloff>:/img/group_button.png</normaloff>:/img/group_button.png</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -1674,7 +1665,7 @@ QPushButton:hover{
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>57</height>
+            <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -1784,7 +1775,7 @@ QPushButton:hover{
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

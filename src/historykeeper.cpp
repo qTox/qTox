@@ -122,13 +122,15 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
 
         if (idCur != idMax)
         {
-            QString cmd = QString("INSERT INTO sent_status (id, status) VALUES (%1, 1)").arg(idMax);
+            QString cmd = QString("INSERT INTO sent_status (id, status) VALUES (%1, 1);").arg(idMax);
             db->exec(cmd);
         }
     }
 
     updateChatsID();
     updateAliases();
+
+    setSyncType(Settings::getInstance().getDbSyncType());
 
     QSqlQuery sqlAnswer = db->exec("select seq from sqlite_sequence where name=\"history\";");
     sqlAnswer.first();
@@ -145,10 +147,12 @@ int HistoryKeeper::addChatEntry(const QString& chat, const QString& message, con
     int chat_id = getChatID(chat, ctSingle).first;
     int sender_id = getAliasID(sender);
 
-    db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, message)") +
+    db->exec("BEGIN TRANSACTION;");
+    db->exec(QString("INSERT INTO history (timestamp, chat_id, sender, message) ") +
              QString("VALUES (%1, %2, %3, '%4');")
              .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
-    db->exec(QString("INSERT INTO sent_status (status) VALUES (%1)").arg(isSent));
+    db->exec(QString("INSERT INTO sent_status (status) VALUES (%1);").arg(isSent));
+    db->exec("COMMIT TRANSACTION;");
 
     messageID++;
     return messageID;
@@ -287,12 +291,13 @@ HistoryKeeper::ChatType HistoryKeeper::convertToChatType(int ct)
     return static_cast<ChatType>(ct);
 }
 
-QString HistoryKeeper::getHistoryPath()
+QString HistoryKeeper::getHistoryPath(QString currentProfile, int encrypted)
 {
-    QDir baseDir(Settings::getInstance().getSettingsDirPath());
-    QString currentProfile = Settings::getInstance().getCurrentProfile();
+    QDir baseDir(Settings::getSettingsDirPath());
+    if (currentProfile.isEmpty())
+        currentProfile = Settings::getInstance().getCurrentProfile();
 
-    if (Settings::getInstance().getEncryptLogs())
+    if (encrypted == 1 || (encrypted == -1 && Settings::getInstance().getEncryptLogs()))
         return baseDir.filePath(currentProfile + ".qtox_history.encrypted");
     else
         return baseDir.filePath(currentProfile + ".qtox_history");
@@ -314,4 +319,26 @@ void HistoryKeeper::renameHistory(QString from, QString to)
 void HistoryKeeper::markAsSent(int m_id)
 {
     db->exec(QString("UPDATE sent_status SET status = 1 WHERE id = %1;").arg(m_id));
+}
+
+void HistoryKeeper::setSyncType(Db::syncType sType)
+{
+    QString syncCmd;
+
+    switch (sType) {
+    case Db::syncType::stFull:
+        syncCmd = "FULL";
+        break;
+    case Db::syncType::stNormal:
+        syncCmd = "NORMAL";
+        break;
+    case Db::syncType::stOff:
+        syncCmd = "OFF";
+        break;
+    default:
+        syncCmd = "FULL";
+        break;
+    }
+
+    db->exec(QString("PRAGMA synchronous=%1;").arg(syncCmd));
 }

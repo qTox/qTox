@@ -22,6 +22,7 @@
 #include <QDateTime>
 
 class GenericDdInterface;
+namespace Db { enum class syncType; }
 
 class HistoryKeeper
 {
@@ -42,7 +43,7 @@ public:
     static HistoryKeeper* getInstance();
     static void resetInstance();
 
-    static QString getHistoryPath();
+    static QString getHistoryPath(QString currentProfile = QString(), int encrypted = -1); // -1 defaults to checking settings, 0 or 1 to specify
     static bool checkPassword();
     static void renameHistory(QString from, QString to);
 
@@ -50,6 +51,8 @@ public:
     int addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
     void markAsSent(int m_id);
+
+    void setSyncType(Db::syncType sType);
 
 private:
     HistoryKeeper(GenericDdInterface *db_);
@@ -68,7 +71,6 @@ private:
     GenericDdInterface *db;
     QMap<QString, int> aliases;
     QMap<QString, QPair<int, ChatType>> chats;
-    bool isEncrypted;
     int messageID;
 };
 

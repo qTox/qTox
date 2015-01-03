@@ -43,8 +43,6 @@
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
-    , audioInputFlag(false)
-    , audioOutputFlag(false)
     , callId(0)
 {
     nameLabel->setText(f->getDisplayedName());
@@ -77,11 +75,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(this, SIGNAL(chatAreaCleared()), this, SLOT(clearReciepts()));
+    connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig)
+        {if (text != orig) emit aliasChanged(text);} );
 
     setAcceptDrops(true);
-
-    if (Settings::getInstance().getEnableLogging())
-        loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 }
 
 ChatForm::~ChatForm()
@@ -105,7 +102,7 @@ void ChatForm::onSendTriggered()
     if (isAction)
         msg = msg = msg.right(msg.length() - 4);
 
-    QList<CString> splittedMsg = Core::splitMessage(msg);
+    QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (CString& c_msg : splittedMsg)
@@ -120,14 +117,13 @@ void ChatForm::onSendTriggered()
         int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
                                                             Core::getInstance()->getSelfId().publicKey, timestamp, status);
 
-
         ChatMessage* ma = addSelfMessage(msg, isAction, timestamp, false);
 
         int rec;
         if (isAction)
-            rec = Core::getInstance()->sendAction(f->getFriendID(), msg);
+            rec = Core::getInstance()->sendAction(f->getFriendID(), qt_msg);
         else
-            rec = Core::getInstance()->sendMessage(f->getFriendID(), msg);
+            rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
         registerReceipt(rec, id, ma);
     }
@@ -144,7 +140,10 @@ void ChatForm::onAttachClicked()
     {
         QFile file(path);
         if (!file.exists() || !file.open(QIODevice::ReadOnly))
+        {
+            QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to open %1").arg(QFileInfo(path).fileName()));
             continue;
+        }
         if (file.isSequential())
         {
             QMessageBox::critical(0, tr("Bad Idea"), tr("You're trying to send a special (sequential) file, that's not going to work!"));
@@ -198,12 +197,12 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     }
 
     ChatMessage* msg = chatWidget->addFileTransferMessage(name, file, QDateTime::currentDateTime(), false);
-    if (!Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->getFriendID())).isEmpty()
+    if (!Settings::getInstance().getAutoAcceptDir(f->getToxID()).isEmpty()
         || Settings::getInstance().getAutoSaveEnabled())
     {
         FileTransferWidget* tfWidget = dynamic_cast<FileTransferWidget*>(msg->getContent(1));
         if(tfWidget)
-            tfWidget->acceptTransfer(Settings::getInstance().getAutoAcceptDir(Core::getInstance()->getFriendAddress(f->getFriendID())));
+            tfWidget->acceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxID()));
     }
 }
 
@@ -284,6 +283,8 @@ void ChatForm::onAvCancel(int FriendId, int)
     
     if (FriendId != f->getFriendID())
         return;
+    
+    stopCounter();
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -638,7 +639,7 @@ void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
     if (FriendId != f->getFriendID())
         return;
 
-    addSystemInfoMessage("File: \"" + fname + "\" failed to send.", "red", QDateTime::currentDateTime());
+    addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), "red", QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
@@ -717,7 +718,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         // Show each messages
         ToxID id = ToxID::fromString(it.sender);
         ChatMessage* msg = chatWidget->addChatMessage(Core::getInstance()->getPeerName(id), it.message, id.isMine(), false);
-        if (it.isSent)
+        if (it.isSent || !id.isMine())
         {
             msg->markAsSent(msgDateTime);
         }
@@ -757,7 +758,7 @@ void ChatForm::onLoadHistory()
 
 void ChatForm::startCounter()
 {
-    if(!timer)
+    if (!timer)
     {
         timer = new QTimer();
         connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
@@ -769,7 +770,7 @@ void ChatForm::startCounter()
 
 void ChatForm::stopCounter()
 {
-    if(timer)
+    if (timer)
     {
         addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),secondsToDHMS(timeElapsed.elapsed()/1000)),
                                                               "white", QDateTime::currentDateTime());
@@ -797,10 +798,10 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     int hours = (int) (duration % 24);
     int days = (int) (duration / 24);
     
-    if(minutes == 0)
+    if (minutes == 0)
         return cD + res.sprintf("%02ds", seconds);
     
-    if(hours == 0 && days == 0)
+    if (hours == 0 && days == 0)
         return cD + res.sprintf("%02dm %02ds", minutes, seconds);
     
     if (days == 0)

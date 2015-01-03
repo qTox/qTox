@@ -21,13 +21,17 @@
 #include <QObject>
 #include <QPixmap>
 
-class ToxID;
+struct ToxID;
+namespace Db { enum class syncType; }
+
+enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
 
 class Settings : public QObject
 {
     Q_OBJECT
 public:
     static Settings& getInstance();
+    static void resetInstance();
     ~Settings() = default;
 
     void executeSettingsDialog(QWidget* parent);
@@ -59,9 +63,15 @@ public:
     
     bool getMinimizeToTray() const;
     void setMinimizeToTray(bool newValue);
+
+    bool getLightTrayIcon() const;
+    void setLightTrayIcon(bool newValue);
     
     QString getStyle() const;
     void setStyle(const QString& newValue);
+
+    bool getShowSystemTray() const;
+    void setShowSystemTray(const bool& newValue);
     
     bool getUseEmoticons() const;
     void setUseEmoticons(bool newValue);
@@ -81,8 +91,8 @@ public:
     QString getProxyAddr() const;
     void setProxyAddr(const QString& newValue);
 
-    bool getUseProxy() const;
-    void setUseProxy(bool newValue);
+    ProxyType getProxyType() const;
+    void setProxyType(int newValue);
 
     int getProxyPort() const;
     void setProxyPort(int newValue);
@@ -95,6 +105,9 @@ public:
 
     bool getEncryptTox() const;
     void setEncryptTox(bool newValue);
+
+    Db::syncType getDbSyncType() const;
+    void setDbSyncType(int newValue);
 
     int getAutoAwayTime() const;
     void setAutoAwayTime(int newValue);
@@ -116,6 +129,9 @@ public:
 
     QString getOutDev() const;
     void setOutDev(const QString& deviceSpecifier);
+
+    bool getFilterAudio() const;
+    void setFilterAudio(bool newValue);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -145,6 +161,9 @@ public:
     QString getSmileyPack() const;
     void setSmileyPack(const QString &value);
 
+    int getThemeColor() const;
+    void setThemeColor(const int& value);
+
     bool isCurstomEmojiFont() const;
     void setCurstomEmojiFont(bool value);
 
@@ -154,8 +173,8 @@ public:
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
-    QString getAutoAcceptDir(const QString& id) const;
-    void setAutoAcceptDir(const QString&id, const QString& dir);
+    QString getAutoAcceptDir(const ToxID& id) const;
+    void setAutoAcceptDir(const ToxID&id, const QString& dir);
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
@@ -205,16 +224,19 @@ public:
     void setFauxOfflineMessaging(bool value);
 
 public:
-    void save();
-    void save(QString path);
+    void save(bool writeFriends = true);
+    void save(QString path, bool writeFriends = true);
     void load();
 
 private:
+    static Settings* settings;
+
     Settings();
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
 
     static const QString FILENAME;
+    static const QString OLDFILENAME;
 
     bool loaded;
 
@@ -230,13 +252,14 @@ private:
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
+    bool lightTrayIcon;
     bool useEmoticons;
     bool checkUpdates;
     bool showInFront;
 
     bool forceTCP;
 
-    bool useProxy;
+    ProxyType proxyType;
     QString proxyAddr;
     int proxyPort;
 
@@ -265,7 +288,8 @@ private:
     QByteArray windowState;
     QByteArray splitterState;
     QString style;
-    
+    bool showSystemTray;
+
     // ChatView
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
@@ -274,19 +298,23 @@ private:
 
     // Privacy
     bool typingNotification;
+    Db::syncType dbSyncType;
 
     // Audio
     QString inDev;
     QString outDev;
+    bool filterAudio;
 
     struct friendProp
     {
         QString alias;
         QString addr;
+        QString autoAcceptDir;
     };
 
     QHash<QString, friendProp> friendLst;
 
+    int themeColor;
 
 signals:
     //void dataChanged();

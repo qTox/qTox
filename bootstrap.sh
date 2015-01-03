@@ -15,6 +15,7 @@ SODIUM_VER=1.0.0
 # directory names of cloned repositories
 SODIUM_DIR=libsodium-$SODIUM_VER
 TOX_CORE_DIR=libtoxcore-latest
+FILTER_AUDIO_DIR=filter_audio
 
 # this boolean describes whether the installation of
 # libsodium should be skipped or not
@@ -42,6 +43,11 @@ if [ -z "$TOX_CORE_DIR" ]; then
     exit 1
 fi
 
+if [ -z "$FILTER_AUDIO_DIR" ]; then
+    echo "internal error detected!"
+    echo "FILTER_AUDIO_DIR should not be empty... aborting"
+    exit 1
+fi
 
 
 ########## check input parameters ##########
@@ -95,7 +101,7 @@ mkdir -p ${BASE_DIR}
 # if exists, otherwise cloning them may fail
 rm -rf ${BASE_DIR}/${SODIUM_DIR}
 rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
-
+rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
 
 
 ############### install step ###############
@@ -122,6 +128,12 @@ if [[ $TOX_ONLY = "false" ]]; then
     fi
     
     popd
+
+    if [[ $GLOBAL = "false" ]]; then
+        ./install_libfilteraudio.sh ${BASE_DIR}/${FILTER_AUDIO_DIR} ${BASE_DIR}
+    else
+        ./install_libfilteraudio.sh ${BASE_DIR}/${FILTER_AUDIO_DIR}
+    fi
 fi
 
 # clone current master of libtoxcore

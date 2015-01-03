@@ -50,11 +50,10 @@ public:
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
 
-    void addMessage(const QString& author, const QString &message, bool isAction, const QDateTime &datetime); ///< Deprecated
     ChatMessage* addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     ChatMessage* addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
-    void addAlertMessage(const QString& author, QString message, QDateTime datetime); ///< Deprecated
     void addAlertMessage(const ToxID& author, QString message, QDateTime datetime);
     bool isEmpty();
 
@@ -74,9 +73,10 @@ protected slots:
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
     void clearChatArea(bool);
+    void onChatWidgetClicked();
 
 protected:
-    QString getElidedName(const QString& name);
+    QString resolveToxID(const ToxID &id);
 
     ToxID previousId;
     QMenu menu;
@@ -90,6 +90,8 @@ protected:
     QPushButton *sendButton;
     ChatLog *chatWidget;
     QDateTime *earliestMessage;
+    bool audioInputFlag;
+    bool audioOutputFlag;
 };
 
 #endif // GENERICCHATFORM_H

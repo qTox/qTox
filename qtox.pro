@@ -34,7 +34,8 @@ FORMS    += \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/inputpassworddialog.ui \
     src/widget/form/setpassworddialog.ui \
-    src/chatlog/content/filetransferwidget.ui
+    src/chatlog/content/filetransferwidget.ui \
+    src/widget/form/settings/advancedsettings.ui
     
 CONFIG   += c++11
 
@@ -47,7 +48,23 @@ RESOURCES += res.qrc
 
 GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "built without git")
 DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
+# date works on linux/mac, but it would hangs qmake on windows
+# This hack returns 0 on batch (windows), but executes "date +%s" or return 0 if it fails on bash (linux/mac)
+TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sorry
+DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
+
+contains(DISABLE_PLATFORM_EXT, YES) {
+
+} else {
+    DEFINES += QTOX_PLATFORM_EXT
+}
+
+contains(DISABLE_FILTER_AUDIO, YES) {
+
+} else {
+     DEFINES += QTOX_FILTER_AUDIO
+}
 
 contains(JENKINS,YES) {
 	INCLUDEPATH += ./libs/include/
@@ -60,13 +77,15 @@ win32 {
     RC_FILE = windows/qtox.rc
     LIBS += -liphlpapi -L$$PWD/libs/lib -lsodium -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lopencv_core248 -lopencv_highgui248 -lopencv_imgproc248 -lOpenAL32 -lopus
-    LIBS += -lz -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32
+    LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32 -lz
 } else {
     macx {
         BUNDLEID = im.tox.qtox
         ICON = img/icons/qtox.icns
-        QMAKE_INFO_PLIST = res/info.plist
+        QMAKE_INFO_PLIST = osx/info.plist
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
+        contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
+        contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
         contains(STATICPKG, YES) {
@@ -74,14 +93,25 @@ win32 {
             INSTALLS += target
             LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
 	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
-	    LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
-
+            LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
         } else {
             LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
         }
 
+        contains(DEFINES, QTOX_PLATFORM_EXT) {
+            LIBS += -lX11 -lXss
+        }
+
+        contains(DEFINES, QTOX_FILTER_AUDIO) {
+            contains(STATICPKG, YES) {
+                LIBS += -Wl,-Bstatic -lfilteraudio
+            } else {
+                LIBS += -lfilteraudio
+            }
+        }
+
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -s
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -s
         }
     }
 }
@@ -152,7 +182,9 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/chatlog/content/filetransferwidget.h \
     src/chatlog/chatmessage.h \
     src/chatlog/content/image.h \
-    src/chatlog/customtextdocument.h
+    src/chatlog/customtextdocument.h \
+    src/widget/form/settings/advancedform.h \
+    src/audio.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -220,4 +252,19 @@ SOURCES += \
     src/chatlog/content/filetransferwidget.cpp \
     src/chatlog/chatmessage.cpp \
     src/chatlog/content/image.cpp \
-    src/chatlog/customtextdocument.cpp
+    src/chatlog/customtextdocument.cpp\
+    src/widget/form/settings/advancedform.cpp \
+    src/audio.cpp
+
+contains(DEFINES, QTOX_FILTER_AUDIO) {
+    HEADERS += src/audiofilterer.h
+    SOURCES += src/audiofilterer.cpp
+}
+
+contains(DEFINES, QTOX_PLATFORM_EXT) {
+    HEADERS += src/platform/timer.h
+    SOURCES += src/platform/timer_osx.cpp \
+               src/platform/timer_win.cpp \
+               src/platform/timer_x11.cpp
+}
+

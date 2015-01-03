@@ -94,6 +94,9 @@ bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
     // events fired by the QLineEdit
     if (obj == textEdit)
     {
+        if (!textEdit->isVisible())
+            return false;
+
         if (e->type() == QEvent::KeyPress)
         {
             QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
@@ -126,8 +129,9 @@ void CroppingLabel::hideTextEdit(bool acceptText)
 {
     if (acceptText)
     {
-        emit textChanged(textEdit->text(), origText);
-        setText(textEdit->text());
+        QString oldOrigText = origText;
+        setText(textEdit->text()); // set before emitting so we don't override external reactions to signal
+        emit textChanged(textEdit->text(), oldOrigText);
     }
 
     textEdit->hide();
@@ -140,4 +144,9 @@ void CroppingLabel::showTextEdit()
     textEdit->show();
     textEdit->setFocus();
     textEdit->setText(origText);
+}
+
+QString CroppingLabel::fullText()
+{
+    return origText;
 }

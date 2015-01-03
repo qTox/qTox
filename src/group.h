@@ -25,24 +25,50 @@
 struct Friend;
 class GroupWidget;
 class GroupChatForm;
+struct ToxID;
 
 class Group : public QObject
 {
     Q_OBJECT
 public:
-    Group(int GroupId, QString Name);
-    ~Group();
+    Group(int GroupId, QString Name, bool IsAvGroupchat);
+    virtual ~Group();
+
+    bool isAvGroupchat() const;
+    int getGroupId() const;
+    int getPeersCount() const;
+    void regeneratePeerList();
+    QStringList getPeerList() const;
+
+    GroupChatForm *getChatForm();
+    GroupWidget *getGroupWidget();
+
+    void setEventFlag(int f);
+    int getEventFlag() const;
+
+    void setMentionedFlag(int f);
+    int getMentionedFlag() const;
+
+    /*
     void addPeer(int peerId, QString name);
     void removePeer(int peerId);
-    void updatePeer(int peerId, QString newName);
+    */
 
-public:
-    int groupId;
-    QMap<int,QString> peers;
-    int nPeers;
+    void updatePeer(int peerId, QString newName);
+    void setName(const QString& name);
+
+    QString resolveToxID(const ToxID &id) const;
+
+private:
     GroupWidget* widget;
     GroupChatForm* chatForm;
+    QMap<int, QString> peers;
+    QMap<QString, QString> toxids;
     int hasNewMessages, userWasMentioned;
+    int groupId;
+    int nPeers;
+    bool avGroupchat;
+
 };
 
 #endif // GROUP_H

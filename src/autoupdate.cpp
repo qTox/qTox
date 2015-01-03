@@ -46,14 +46,13 @@ unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 
 #elif defined(Q_OS_OSX)
 const QString AutoUpdater::platform = "osx";
-const QString AutoUpdater::updaterBin = "installer -store -pkg "+Settings::getInstance().getSettingsDirPath()
-                                                    +"/update/qtox.pkg -target /";
+const QString AutoUpdater::updaterBin = "/Applications/qtox.app/Contents/MacOS/updater";
 const QString AutoUpdater::updateServer = "https://dist-build.tox.im";
 
 unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 {
-    0xa5, 0x80, 0xf3, 0xb7, 0xd0, 0x10, 0xc0, 0xf9, 0xd6, 0xcf, 0x48, 0x15, 0x99, 0x70, 0x92, 0x49,
-    0xf6, 0xe8, 0xe5, 0xe2, 0x6c, 0x73, 0x8c, 0x48, 0x25, 0xed, 0x01, 0x72, 0xf7, 0x6c, 0x17, 0x28
+    0x12, 0x86, 0x25, 0x05, 0xb8, 0x9b, 0x39, 0x6f, 0xf1, 0xb1, 0xc4, 0x4d, 0x6f, 0x39, 0x35, 0x4d,
+    0xea, 0xdf, 0x6c, 0x97, 0x98, 0x7d, 0x6f, 0x1c, 0x29, 0xf5, 0xb2, 0x3a, 0x5b, 0x78, 0xc1, 0x34
 };
 
 #else
@@ -68,20 +67,22 @@ const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpd
 
 bool AutoUpdater::isUpdateAvailable()
 {
-    QString newVersion = getUpdateVersion();
-    if (newVersion.isEmpty() || newVersion == GIT_VERSION)
+    VersionInfo newVersion = getUpdateVersion();
+    if (newVersion.timestamp <= TIMESTAMP
+            || newVersion.versionString.isEmpty() || newVersion.versionString == GIT_VERSION)
         return false;
     else
         return true;
 }
 
-QString AutoUpdater::getUpdateVersion()
+AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
 {
-    QString version;
+    VersionInfo versionInfo;
+    versionInfo.timestamp = 0;
 
     // Updates only for supported platforms
     if (platform.isEmpty())
-        return version;
+        return versionInfo;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(checkURI)));
@@ -93,20 +94,20 @@ QString AutoUpdater::getUpdateVersion()
         qWarning() << "AutoUpdater: getUpdateVersion: network error: "<<reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
-        return version;
+        return versionInfo;
     }
 
     QByteArray data = reply->readAll();
     reply->deleteLater();
     manager->deleteLater();
     if (data.size() < (int)(1+crypto_sign_BYTES))
-        return version;
+        return versionInfo;
 
     // Check updater protocol version
-    if ((int)data[0] != '1')
+    if ((int)data[0] != '2')
     {
         qWarning() << "AutoUpdater: getUpdateVersion: Bad version "<<(uint8_t)data[0];
-        return version;
+        return versionInfo;
     }
 
     // Check the signature
@@ -118,12 +119,16 @@ QString AutoUpdater::getUpdateVersion()
     if (crypto_sign_verify_detached(sig, msg, msgData.size(), key) != 0)
     {
         qCritical() << "AutoUpdater: getUpdateVersion: RECEIVED FORGED VERSION FILE FROM "<<updateServer;
-        return version;
+        return versionInfo;
     }
 
-    version = msgData;
+    int sepPos = msgData.indexOf('!');
+    versionInfo.timestamp = QString(msgData.left(sepPos)).toInt();
+    versionInfo.versionString = msgData.mid(sepPos+1);
 
-    return version;
+    qDebug() << "timestamp:"<<versionInfo.timestamp << ", str:"<<versionInfo.versionString;
+
+    return versionInfo;
 }
 
 QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
@@ -387,13 +392,13 @@ void AutoUpdater::installLocalUpdate()
     // Workaround QTBUG-7645
     // QProcess fails silently when elevation is required instead of showing a UAC prompt on Win7/Vista
 #ifdef Q_OS_WIN
-    int result = (int)::ShellExecuteA(0, "open", updaterBin.toUtf8().constData(), 0, 0, SW_SHOWNORMAL);
-    if (SE_ERR_ACCESSDENIED == result)
+    HINSTANCE result = ::ShellExecuteA(0, "open", updaterBin.toUtf8().constData(), 0, 0, SW_SHOWNORMAL);
+    if (result == (HINSTANCE)SE_ERR_ACCESSDENIED)
     {
         // Requesting elevation
-        result = (int)::ShellExecuteA(0, "runas", updaterBin.toUtf8().constData(), 0, 0, SW_SHOWNORMAL);
+        result = ::ShellExecuteA(0, "runas", updaterBin.toUtf8().constData(), 0, 0, SW_SHOWNORMAL);
     }
-    if (result <= 32)
+    if (result <= (HINSTANCE)32)
     {
         goto fail;
     }
@@ -423,7 +428,7 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
         return;
 
     if (Widget::getInstance()->askMsgboxQuestion(QObject::tr("Update", "The title of a message box"),
-        QObject::tr("An update is available, do you want to download it now ?\nIt will be installed when qTox restarts.")))
+        QObject::tr("An update is available, do you want to download it now?\nIt will be installed when qTox restarts.")))
     {
         downloadUpdate();
     }

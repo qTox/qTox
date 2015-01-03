@@ -32,6 +32,7 @@ public:
     void updateStatusLight();
     void setChatForm(Ui::MainWindow &);
     void resetEventFlags();
+    void setName(const QString& name);
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
@@ -41,6 +42,8 @@ protected:
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);
+    void keyPressEvent(QKeyEvent* ev);
+    void keyReleaseEvent(QKeyEvent* ev);
 
 public:
     int groupId;

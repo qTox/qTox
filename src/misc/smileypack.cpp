@@ -69,9 +69,9 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &p
 
                 if (relPath.leftRef(2) == "..")
                 {
-                    if(!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
+                    if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
                         smileyPacks << QPair<QString, QString>(packageName, absPath);
-                    else if(!smileyPacks.contains(QPair<QString, QString>(packageName, relPath)))
+                    else if (!smileyPacks.contains(QPair<QString, QString>(packageName, relPath)))
                         smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories                            
                 }
             }
@@ -97,7 +97,7 @@ bool SmileyPack::load(const QString& filename)
 
     // open emoticons.xml
     QFile xmlFile(filename);
-    if(!xmlFile.open(QIODevice::ReadOnly))
+    if (!xmlFile.open(QIODevice::ReadOnly))
         return false; // cannot open file
 
     /* parse the cfg file
@@ -134,7 +134,7 @@ bool SmileyPack::load(const QString& filename)
             filenameTable.insert(emoticon, file);
             
             cacheSmiley(file); // preload all smileys
-                       
+
             if(!getCachedSmiley(emoticon).size().isEmpty())
                 emoticonSet.push_back(emoticon);
             
@@ -142,7 +142,7 @@ bool SmileyPack::load(const QString& filename)
             
         }
         
-        if(emoticonSet.size() > 0)
+        if (emoticonSet.size() > 0)
             emoticons.push_back(emoticonSet);
     }
 

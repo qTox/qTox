@@ -196,9 +196,16 @@ void IdentityForm::onDeleteClicked()
     else
     {        
         if (checkContinue(tr("Deletion imminent!","deletion confirmation title"),
-                          tr("Are you sure you want to delete this profile?","deletion confirmation text")))
+                          tr("Are you sure you want to delete this profile?\nAssociated friend information and chat logs will be deleted as well.","deletion confirmation text")))
         {
-            QFile::remove(QDir(Settings::getSettingsDirPath()).filePath(bodyUI->profiles->currentText()+Core::TOX_EXT));
+            QString profile = bodyUI->profiles->currentText();
+            QDir dir(Settings::getSettingsDirPath());
+
+            QFile::remove(dir.filePath(profile + Core::TOX_EXT));
+            QFile::remove(dir.filePath(profile + ".ini"));
+            QFile::remove(HistoryKeeper::getHistoryPath(profile, 0));
+            QFile::remove(HistoryKeeper::getHistoryPath(profile, 1));
+
             bodyUI->profiles->removeItem(bodyUI->profiles->currentIndex());
             bodyUI->profiles->setCurrentText(Settings::getInstance().getCurrentProfile());
         }

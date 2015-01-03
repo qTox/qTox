@@ -20,7 +20,7 @@
 #include <QWidget>
 
 class QHBoxLayout;
-class vpx_image;
+struct vpx_image;
 class VideoSurface;
 class VideoSource;
 

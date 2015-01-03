@@ -28,7 +28,7 @@ void NetVideoSource::pushFrame(VideoFrame frame)
     emit frameAvailable(frame);
 }
 
-void NetVideoSource::pushVPXFrame(vpx_image *image)
+void NetVideoSource::pushVPXFrame(const vpx_image *image)
 {
     const int dw = image->d_w;
     const int dh = image->d_h;
