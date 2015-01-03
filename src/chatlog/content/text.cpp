@@ -17,7 +17,6 @@
 #include "text.h"
 
 #include "../customtextdocument.h"
-#include "src/misc/smileypack.h"
 
 #include <QFontMetrics>
 #include <QPainter>
@@ -51,10 +50,7 @@ Text::~Text()
 
 void Text::setText(const QString& txt)
 {
-    text = SmileyPack::getInstance().smileyfied(toHtmlChars(txt));
-
-    detectAnchors();
-    detectQuotes();
+    text = txt;
 
     ensureIntegrity();
     freeResources();
@@ -258,61 +254,4 @@ int Text::cursorFromPos(QPointF scenePos) const
         return doc->documentLayout()->hitTest(mapFromScene(scenePos), Qt::FuzzyHit);
 
     return -1;
-}
-
-void Text::detectAnchors()
-{
-    // detect urls
-    QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/|tox:\\/\\/|tox:)\\S+");
-    int offset = 0;
-    while ((offset = exp.indexIn(text, offset)) != -1)
-    {
-        QString url = exp.cap();
-
-        // If there's a trailing " it's a HTML attribute, e.g. a smiley img's title=":tox:"
-        if (url == "tox:\"")
-        {
-            offset += url.length();
-            continue;
-        }
-
-        // add scheme if not specified
-        if (exp.cap(1) == "www.")
-            url.prepend("http://");
-
-        QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
-        text.replace(offset, exp.cap().length(), htmledUrl);
-
-        offset += htmledUrl.length();
-    }
-}
-
-void Text::detectQuotes()
-{
-    // detect text quotes
-    QStringList messageLines = text.split("\n");
-    QString quotedText;
-    for (int i=0;i<messageLines.size();++i)
-    {
-        if (QRegExp("^[ ]*&gt;.*").exactMatch(messageLines[i]))
-            quotedText += "<span class=quote>" + messageLines[i] + "</span>";
-        else
-            quotedText += messageLines[i];
-
-        if (i < messageLines.size() - 1)
-            quotedText += "<br/>";
-    }
-
-    text = quotedText;
-}
-
-QString Text::toHtmlChars(const QString &str)
-{
-    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}};
-    QString res = str;
-
-    for (auto &it : replaceList)
-        res = res.replace(it.first,it.second);
-
-    return res;
 }

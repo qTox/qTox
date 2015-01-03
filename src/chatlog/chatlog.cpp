@@ -18,14 +18,6 @@
 #include "chatline.h"
 #include "chatmessage.h"
 #include "chatlinecontent.h"
-#include "chatlinecontentproxy.h"
-#include "content/text.h"
-#include "content/image.h"
-#include "content/filetransferwidget.h"
-#include "content/spinner.h"
-
-#include "../misc/style.h"
-#include "../misc/settings.h"
 
 #include <QDebug>
 #include <QScrollBar>
@@ -34,9 +26,6 @@
 #include <QClipboard>
 #include <QFile>
 #include <QFileDialog>
-
-#define NAME_COL_WIDTH 75.0
-#define TIME_COL_WIDTH 85.0
 
 template<class T>
 T clamp(T x, T min, T max)
@@ -85,66 +74,49 @@ ChatLog::~ChatLog()
 
 ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self, bool alert)
 {
-    QString txt = msg;
-    if(alert)
-        txt = "<div class=alert>" + txt + "</div>";
-
-    ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new Text(txt, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-
+    ChatMessage* line = ChatMessage::createChatMessage(scene, sender, msg, false, alert, self);
     insertChatline(line);
+
     return line;
 }
 
 ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert)
 {
-    ChatMessage* line = addChatMessage(sender, msg, self, alert);
-    line->markAsSent(timestamp);
+    ChatMessage* line = ChatMessage::createChatMessage(scene, sender, msg, false, alert, self, timestamp);
+    insertChatline(line);
 
     return line;
 }
 
 ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg, const QDateTime &timestamp)
 {
-    ChatMessage* line = addChatAction(sender, msg);
-    line->markAsSent(timestamp);
+    ChatMessage* line = ChatMessage::createChatMessage(scene, sender, msg, true, false, false, timestamp);
+    insertChatline(line);
 
     return line;
 }
 
 ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg)
 {
-    ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Text(""), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new Text("<div class=action>*" + sender + " " + msg + "</div>", Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->setAsAction();
-
+    ChatMessage* line = ChatMessage::createChatMessage(scene, sender, msg, true, false, false);
     insertChatline(line);
+
     return line;
 }
 
 ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& timestamp)
 {
-    ChatMessage* line = new ChatMessage(scene, msg);
-    line->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new Text(msg, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-
+    ChatMessage* line = ChatMessage::createChatInfoMessage(scene, msg, "", timestamp);
     insertChatline(line);
+
     return line;
 }
 
 ChatMessage *ChatLog::addFileTransferMessage(const QString &sender, const ToxFile &file,  const QDateTime& timestamp, bool self)
 {
-    ChatMessage* line = new ChatMessage(scene, QString());
-    line->addColumn(new Text(sender, self ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 380, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    line->addColumn(new Text(timestamp.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-
+    ChatMessage* line = ChatMessage::createFileTransferMessage(scene, sender, "", file, self, timestamp);
     insertChatline(line);
+
     return line;
 }
 

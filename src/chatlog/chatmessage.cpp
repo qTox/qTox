@@ -15,18 +15,70 @@
 */
 
 #include "chatmessage.h"
+#include "chatlinecontentproxy.h"
 #include "content/text.h"
 #include "content/spinner.h"
+#include "content/filetransferwidget.h"
+#include "content/image.h"
 
 #include "src/misc/settings.h"
+#include "src/misc/smileypack.h"
+#include "src/misc/style.h"
 
-#include <QDateTime>
+#define NAME_COL_WIDTH 75.0
+#define TIME_COL_WIDTH 85.0
 
 ChatMessage::ChatMessage(QGraphicsScene* scene, const QString& rawMessage)
     : ChatLine(scene)
     , rawString(rawMessage)
 {
 
+}
+
+ChatMessage *ChatMessage::createChatMessage(QGraphicsScene *scene, const QString &sender, const QString &rawMessage, bool isAction, bool alert, bool isMe, const QDateTime &date)
+{
+    ChatMessage* msg = new ChatMessage(scene, rawMessage);
+
+    QString text = detectQuotes(detectAnchors(SmileyPack::getInstance().smileyfied(toHtmlChars(rawMessage))));
+
+    if(isAction)
+    {
+        text = QString("<div class=action>%1 %2</div>").arg(sender, text);
+        msg->setAsAction();
+    }
+    else if(alert)
+        text = "<div class=alert>" + text + "</div>";
+
+    msg->addColumn(new Text(isAction ? "*" : sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(text, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    msg->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+
+    if(!date.isNull())
+        msg->markAsSent(date);
+
+    return msg;
+}
+
+ChatMessage *ChatMessage::createChatInfoMessage(QGraphicsScene *scene, const QString &rawMessage, const QString &type, const QDateTime &date)
+{
+    ChatMessage* msg = new ChatMessage(scene, rawMessage);
+
+    msg->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+
+    return msg;
+}
+
+ChatMessage *ChatMessage::createFileTransferMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, ToxFile file, bool isMe, const QDateTime& date)
+{
+    ChatMessage* msg = new ChatMessage(scene, rawMessage);
+
+    msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 380, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+
+    return msg;
 }
 
 void ChatMessage::markAsSent(const QDateTime &time)
@@ -48,4 +100,65 @@ bool ChatMessage::isAction() const
 void ChatMessage::setAsAction()
 {
     action = true;
+}
+
+QString ChatMessage::detectAnchors(const QString &str)
+{
+    QString out = str;
+
+    // detect urls
+    QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/|tox:\\/\\/|tox:)\\S+");
+    int offset = 0;
+    while ((offset = exp.indexIn(out, offset)) != -1)
+    {
+        QString url = exp.cap();
+
+        // If there's a trailing " it's a HTML attribute, e.g. a smiley img's title=":tox:"
+        if (url == "tox:\"")
+        {
+            offset += url.length();
+            continue;
+        }
+
+        // add scheme if not specified
+        if (exp.cap(1) == "www.")
+            url.prepend("http://");
+
+        QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
+        out.replace(offset, exp.cap().length(), htmledUrl);
+
+        offset += htmledUrl.length();
+    }
+
+    return out;
+}
+
+QString ChatMessage::detectQuotes(const QString& str)
+{
+    // detect text quotes
+    QStringList messageLines = str.split("\n");
+    QString quotedText;
+    for (int i=0;i<messageLines.size();++i)
+    {
+        if (QRegExp("^[ ]*&gt;.*").exactMatch(messageLines[i]))
+            quotedText += "<span class=quote>" + messageLines[i] + "</span>";
+        else
+            quotedText += messageLines[i];
+
+        if (i < messageLines.size() - 1)
+            quotedText += "<br/>";
+    }
+
+    return quotedText;
+}
+
+QString ChatMessage::toHtmlChars(const QString &str)
+{
+    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}};
+    QString res = str;
+
+    for (auto &it : replaceList)
+        res = res.replace(it.first,it.second);
+
+    return res;
 }

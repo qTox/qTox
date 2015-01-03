@@ -18,18 +18,29 @@
 #define CHATMESSAGE_H
 
 #include "chatline.h"
+#include "src/corestructs.h"
+#include <QDateTime>
 
 class QGraphicsScene;
 
 class ChatMessage : public ChatLine
 {
 public:
-     ChatMessage(QGraphicsScene* scene, const QString& rawMessage);
+    ChatMessage(QGraphicsScene* scene, const QString& rawMessage);
+
+    static ChatMessage* createChatMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, bool isAction, bool alert, bool isMe, const QDateTime& date = QDateTime());
+    static ChatMessage* createChatInfoMessage(QGraphicsScene* scene, const QString& rawMessage, const QString& type, const QDateTime& date);
+    static ChatMessage* createFileTransferMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, ToxFile file, bool isMe, const QDateTime& date);
 
     void markAsSent(const QDateTime& time);
     QString toString() const;
     bool isAction() const;
     void setAsAction();
+
+protected:
+    static QString detectAnchors(const QString& str);
+    static QString detectQuotes(const QString& str);
+    static QString toHtmlChars(const QString& str);
 
 private:
     ChatLineContent* midColumn = nullptr;
