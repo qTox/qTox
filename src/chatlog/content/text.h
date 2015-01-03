@@ -62,6 +62,7 @@ protected:
     int cursorFromPos(QPointF scenePos) const;
 
     void detectAnchors();
+    void detectQuotes();
     QString toHtmlChars(const QString& str);
 
 private:

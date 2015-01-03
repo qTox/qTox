@@ -17,6 +17,7 @@
 #include "text.h"
 
 #include "../customtextdocument.h"
+#include "src/misc/smileypack.h"
 
 #include <QFontMetrics>
 #include <QPainter>
@@ -50,11 +51,10 @@ Text::~Text()
 
 void Text::setText(const QString& txt)
 {
-    text = txt;
+    text = SmileyPack::getInstance().smileyfied(toHtmlChars(txt));
 
     detectAnchors();
-
-    text.replace("\n", " <br/>");
+    detectQuotes();
 
     ensureIntegrity();
     freeResources();
@@ -285,6 +285,25 @@ void Text::detectAnchors()
 
         offset += htmledUrl.length();
     }
+}
+
+void Text::detectQuotes()
+{
+    // detect text quotes
+    QStringList messageLines = text.split("\n");
+    QString quotedText;
+    for (int i=0;i<messageLines.size();++i)
+    {
+        if (QRegExp("^[ ]*&gt;.*").exactMatch(messageLines[i]))
+            quotedText += "<span class=quote>" + messageLines[i] + "</span>";
+        else
+            quotedText += messageLines[i];
+
+        if (i < messageLines.size() - 1)
+            quotedText += "<br/>";
+    }
+
+    text = quotedText;
 }
 
 QString Text::toHtmlChars(const QString &str)

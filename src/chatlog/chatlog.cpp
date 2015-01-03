@@ -25,7 +25,6 @@
 #include "content/spinner.h"
 
 #include "../misc/style.h"
-#include "../misc/smileypack.h"
 #include "../misc/settings.h"
 
 #include <QDebug>
@@ -86,7 +85,7 @@ ChatLog::~ChatLog()
 
 ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self, bool alert)
 {
-    QString txt = SmileyPack::getInstance().smileyfied(msg);
+    QString txt = msg;
     if(alert)
         txt = "<div class=alert>" + txt + "</div>";
 
@@ -119,7 +118,7 @@ ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg)
 {
     ChatMessage* line = new ChatMessage(scene, msg);
     line->addColumn(new Text(""), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    line->addColumn(new Text("<div class=action>*" + sender + " " + SmileyPack::getInstance().smileyfied(msg) + "</div>", Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    line->addColumn(new Text("<div class=action>*" + sender + " " + msg + "</div>", Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
     line->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     line->setAsAction();
 
