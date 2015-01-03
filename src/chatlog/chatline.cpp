@@ -22,6 +22,8 @@
 #include <QDebug>
 #include <QGraphicsScene>
 
+#define CELL_SPACING 15
+
 ChatLine::ChatLine(QGraphicsScene* grScene)
     : scene(grScene)
 {
@@ -148,7 +150,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     width = w;
     pos = scenePos;
 
-    qreal fixedWidth = 0.0;
+    qreal fixedWidth = (content.size()-1) * CELL_SPACING;
     qreal varWidth = 0.0; // used for normalisation
 
     for(int i = 0; i < format.size(); ++i)
@@ -183,6 +185,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
 
         // calculate horizontal alignment
         qreal xAlign = 0.0;
+
         switch(format[i].hAlign)
         {
             case ColumnFormat::Right:
@@ -198,7 +201,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         // reposition
         content[i]->setPos(pos.x() + xOffset + xAlign, pos.y());
 
-        xOffset += width;
+        xOffset += width + CELL_SPACING;
     }
 
     for(int i = 0; i < content.size(); ++i)
