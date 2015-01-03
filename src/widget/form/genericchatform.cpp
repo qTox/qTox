@@ -186,7 +186,7 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    QString authorStr = (author.isMine() ? Core::getInstance()->getUsername() : Core::getInstance()->getPeerName(author));
+    QString authorStr = author.isMine() ? Core::getInstance()->getUsername() : resolveToxID(author);
 
     ChatMessage* msg = nullptr;
     if(isAction)
@@ -210,7 +210,7 @@ ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isActi
 
 void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
 {
-    QString authorStr = Core::getInstance()->getPeerName(author);
+    QString authorStr = resolveToxID(author);
     chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, datetime, author.isMine(), true);
 
     previousId = author;
