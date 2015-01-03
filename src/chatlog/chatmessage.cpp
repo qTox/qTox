@@ -39,7 +39,12 @@ ChatMessage *ChatMessage::createChatMessage(QGraphicsScene *scene, const QString
 {
     ChatMessage* msg = new ChatMessage(scene, rawMessage);
 
-    QString text = detectQuotes(detectAnchors(SmileyPack::getInstance().smileyfied(toHtmlChars(rawMessage))));
+    QString text = toHtmlChars(rawMessage);
+
+    if(Settings::getInstance().getUseEmoticons())
+        text = SmileyPack::getInstance().smileyfied(text);
+
+    text = detectQuotes(detectAnchors(text));
 
     if(isAction)
     {
