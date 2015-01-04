@@ -311,8 +311,6 @@ void GeneralForm::reloadSmiles()
     for (int i = 0; i < emoticons.size(); i++)
         smiles.push_front(emoticons.at(i).first());
 
-    int pixSize = 30;
-
     bodyUI->smile1->setPixmap(SmileyPack::getInstance().getAsPixmap(smiles[0]));
     bodyUI->smile2->setPixmap(SmileyPack::getInstance().getAsPixmap(smiles[1]));
     bodyUI->smile3->setPixmap(SmileyPack::getInstance().getAsPixmap(smiles[2]));
