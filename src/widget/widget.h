@@ -132,6 +132,7 @@ private slots:
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAwayCheck();
     void getPassword(QString info, int passtype, uint8_t* salt);
+    void onFriendTypingChanged(int friendId, bool isTyping);
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
 
