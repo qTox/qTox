@@ -15,6 +15,14 @@
 */
 
 
+// Output some extra debug info
+#define AUDIO_DEBUG 1
+
+// Fix a 7 years old openal-soft/alsa bug
+// http://blog.gmane.org/gmane.comp.lib.openal.devel/month=20080501
+// If set to 1, the capture will be started as long as the device is open
+#define FIX_SND_PCM_PREPARE_BUG 0
+
 #include "audio.h"
 #include "src/core.h"
 
@@ -34,6 +42,13 @@ ALCdevice* Audio::alOutDev{nullptr};
 ALCcontext* Audio::alContext{nullptr};
 ALuint Audio::alMainSource{0};
 
+void audioDebugLog(QString msg)
+{
+#if (AUDIO_DEBUG)
+    qDebug()<<"Audio: "<<msg;
+#endif
+}
+
 Audio& Audio::getInstance()
 {
     if (!instance)
@@ -51,20 +66,45 @@ Audio& Audio::getInstance()
 
 void Audio::suscribeInput()
 {
+    if (!alInDev)
+    {
+        qWarning()<<"Audio::suscribeInput: input device is closed";
+        return;
+    }
+
+    audioDebugLog("suscribing");
     QMutexLocker lock(audioInLock);
     if (!userCount++ && alInDev)
+    {
+#if (!FIX_SND_PCM_PREPARE_BUG)
+        audioDebugLog("starting capture");
         alcCaptureStart(alInDev);
+#endif
+    }
 }
 
 void Audio::unsuscribeInput()
 {
+    if (!alInDev)
+    {
+        qWarning()<<"Audio::unsuscribeInput: input device is closed";
+        return;
+    }
+
+    audioDebugLog("unsuscribing");
     QMutexLocker lock(audioInLock);
     if (!--userCount && alInDev)
+    {
+#if (!FIX_SND_PCM_PREPARE_BUG)
+        audioDebugLog("stopping capture");
         alcCaptureStop(alInDev);
+#endif
+    }
 }
 
 void Audio::openInput(const QString& inDevDescr)
 {
+    audioDebugLog("Trying to open input "+inDevDescr);
     QMutexLocker lock(audioInLock);
     auto* tmp = alInDev;
     alInDev = nullptr;
@@ -88,11 +128,21 @@ void Audio::openInput(const QString& inDevDescr)
 
     // Restart the capture if necessary
     if (userCount.load() != 0 && alInDev)
+    {
         alcCaptureStart(alInDev);
+    }
+    else
+    {
+#if (FIX_SND_PCM_PREPARE_BUG)
+    alcCaptureStart(alInDev);
+#endif
+    }
+
 }
 
 void Audio::openOutput(const QString& outDevDescr)
 {
+    audioDebugLog("Trying to open output "+outDevDescr);
     QMutexLocker lock(audioOutLock);
     auto* tmp = alOutDev;
     alOutDev = nullptr;
@@ -128,21 +178,40 @@ void Audio::openOutput(const QString& outDevDescr)
 
 void Audio::closeInput()
 {
+    audioDebugLog("Closing input");
     QMutexLocker lock(audioInLock);
     if (alInDev)
-        alcCaptureCloseDevice(alInDev);
-
-    userCount = 0;
+    {
+        if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
+        {
+            alInDev = nullptr;
+            userCount = 0;
+        }
+        else
+        {
+            qWarning() << "Audio: Failed to close input";
+        }
+    }
 }
 
 void Audio::closeOutput()
 {
+    audioDebugLog("Closing output");
     QMutexLocker lock(audioOutLock);
     if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
         alcDestroyContext(alContext);
 
     if (alOutDev)
-        alcCloseDevice(alOutDev);
+    {
+        if (alcCloseDevice(alOutDev) == ALC_TRUE)
+        {
+            alOutDev = nullptr;
+        }
+        else
+        {
+            qWarning() << "Audio: Failed to close output";
+        }
+    }
 }
 
 void Audio::playMono16Sound(const QByteArray& data)
