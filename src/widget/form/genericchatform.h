@@ -89,7 +89,7 @@ protected:
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
     ChatLog *chatWidget;
-    QDateTime *earliestMessage;
+    QDateTime earliestMessage;
     bool audioInputFlag;
     bool audioOutputFlag;
 };

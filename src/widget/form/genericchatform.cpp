@@ -32,9 +32,8 @@
 #include "src/friend.h"
 #include "src/chatlog/chatlog.h"
 
-GenericChatForm::GenericChatForm(QWidget *parent) :
-    QWidget(parent),
-    earliestMessage(nullptr)
+GenericChatForm::GenericChatForm(QWidget *parent)
+  : QWidget(parent)
   , audioInputFlag(false)
   , audioOutputFlag(false)
 {
@@ -300,11 +299,7 @@ void GenericChatForm::clearChatArea(bool notinform)
     if (!notinform)
         addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
 
-    if (earliestMessage)
-    {
-        delete earliestMessage;
-        earliestMessage = nullptr;
-    }
+    earliestMessage = QDateTime(); //null
 
     emit chatAreaCleared();
 }
@@ -329,5 +324,5 @@ QString GenericChatForm::resolveToxID(const ToxID &id)
 
 void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
 {
-    chatWidget->insertChatline(std::dynamic_pointer_cast<ChatLine>(msg));
+    chatWidget->insertChatlineAtBottom(std::dynamic_pointer_cast<ChatLine>(msg));
 }

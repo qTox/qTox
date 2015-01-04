@@ -688,20 +688,22 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     if (since > now)
         return;
 
-    if (earliestMessage)
+    if (!earliestMessage.isNull())
     {
-        if (*earliestMessage < since)
+        if (earliestMessage < since)
             return;
-        if (*earliestMessage < now)
+        if (earliestMessage < now)
         {
-            now = *earliestMessage;
+            now = earliestMessage;
             now = now.addMSecs(-1);
         }
     }
 
     auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->getToxID().publicKey, since, now);
 
-    ToxID storedPrevId;
+    ToxID storedPrevId = previousId;
+    ToxID prevId;
+
     std::swap(storedPrevId, previousId);
     QList<ChatMessage::Ptr> historyMessages;
 
@@ -714,20 +716,26 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            insertChatMessage(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime::currentDateTime()));
+            historyMessages.prepend(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime::currentDateTime()));
         }
 
         // Show each messages
-        ToxID msgSender = ToxID::fromString(it.sender);
-
+        ToxID authorId = ToxID::fromString(it.sender);
+        QString authorStr = authorId.isMine() ? Core::getInstance()->getUsername() : resolveToxID(authorId);
         bool isAction = it.message.startsWith("/me ");
 
-        ChatMessage::Ptr msg = addMessage(msgSender,
-                                      isAction ? it.message.right(it.message.length() - 4) : it.message,
-                                      isAction, QDateTime::currentDateTime(),
-                                      false);
+        ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
+                                                              isAction ? it.message.right(it.message.length() - 4) : it.message,
+                                                              isAction, false,
+                                                              authorId.isMine(),
+                                                              QDateTime::currentDateTime());
 
-        if (it.isSent || !msgSender.isMine())
+        if(prevId == authorId)
+            msg->hideSender();
+
+        prevId = authorId;
+
+        if (it.isSent || !authorId.isMine())
         {
             msg->markAsSent(msgDateTime);
         }
@@ -743,19 +751,19 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                 registerReceipt(rec, it.id, msg);
             }
         }
-        historyMessages.append(msg);
+        historyMessages.prepend(msg);
     }
-    std::swap(storedPrevId, previousId);
 
-    //    int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
+    previousId = storedPrevId;
+    int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
 
-    //    if (earliestMessage != nullptr)
-    //        *earliestMessage = since;
+    earliestMessage = since;
 
-    //    chatWidget->insertMessagesTop(historyMessages);
+    for(ChatMessage::Ptr m : historyMessages)
+        chatWidget->insertChatlineOnTop(m);
 
-    //    savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
-    //    chatWidget->verticalScrollBar()->setValue(savedSliderPos);
+    savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
+    chatWidget->verticalScrollBar()->setValue(savedSliderPos);
 }
 
 void ChatForm::onLoadHistory()
