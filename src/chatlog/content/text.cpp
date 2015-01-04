@@ -70,8 +70,6 @@ void Text::setWidth(qreal w)
         dirty = true;
     }
 
-    size = idealSize();
-
     ensureIntegrity();
     freeResources();
 }

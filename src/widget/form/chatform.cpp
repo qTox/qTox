@@ -704,7 +704,6 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     ToxID storedPrevId = previousId;
     ToxID prevId;
 
-    std::swap(storedPrevId, previousId);
     QList<ChatMessage::Ptr> historyMessages;
 
     QDate lastDate(1,0,0);
