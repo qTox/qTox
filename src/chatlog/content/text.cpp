@@ -30,10 +30,9 @@
 #include <QDesktopServices>
 
 Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText)
-    : ChatLineContent()
+    : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
-    , rawText(rwText)
 {
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);

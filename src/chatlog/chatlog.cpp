@@ -353,7 +353,7 @@ void ChatLog::repositionDownTo(int start, qreal end)
     }
 }
 
-void ChatLog::insertChatline(ChatLine::Ptr l)
+void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 {
     if(!l.get())
         return;
@@ -365,7 +365,32 @@ void ChatLog::insertChatline(ChatLine::Ptr l)
     l->setRowIndex(lines.size());
     lines.append(l);
 
+    //partial refresh
     layout(lines.last()->getRowIndex() - 1, lines.size(), useableWidth());
+    updateSceneRect();
+
+    if(stickToBtm)
+        scrollToBottom();
+
+    checkVisibility();
+}
+
+void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
+{
+    if(!l.get())
+        return;
+
+    //move all lines down by 1
+    for(ChatLine::Ptr l : lines)
+        l->setRowIndex(l->getRowIndex() + 1);
+
+    //add the new line
+    l->addToScene(scene);
+    l->setRowIndex(0);
+    lines.prepend(l);
+
+    //full refresh is required
+    layout(0, lines.size(), useableWidth());
     updateSceneRect();
 
     if(stickToBtm)

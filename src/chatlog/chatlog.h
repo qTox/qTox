@@ -37,7 +37,8 @@ public:
     explicit ChatLog(QWidget* parent = 0);
     virtual ~ChatLog();
 
-    void insertChatline(ChatLine::Ptr l);
+    void insertChatlineAtBottom(ChatLine::Ptr l);
+    void insertChatlineOnTop(ChatLine::Ptr l);
     void clearSelection();
     void clear();
     void copySelectedText() const;
