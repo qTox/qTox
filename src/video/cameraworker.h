@@ -24,7 +24,7 @@
 #include <QQueue>
 #include <QSize>
 
-#include "opencv2/opencv.hpp"
+#include "opencv2/highgui/highgui.hpp"
 #include "videosource.h"
 
 class QTimer;
