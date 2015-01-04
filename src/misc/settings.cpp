@@ -189,7 +189,7 @@ void Settings::load()
     s.endGroup();
 
     s.beginGroup("Privacy");
-        typingNotification = s.value("typingNotification", false).toBool();
+        typingNotification = s.value("typingNotification", true).toBool();
         enableLogging = s.value("enableLogging", false).toBool();
         encryptLogs = s.value("encryptLogs", false).toBool();
         encryptTox = s.value("encryptTox", false).toBool();

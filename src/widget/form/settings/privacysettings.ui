@@ -43,9 +43,6 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QCheckBox" name="cbTypingNotification">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="text">
           <string>Typing Notification</string>
          </property>

@@ -39,6 +39,7 @@ public:
     void loadHistory(QDateTime since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
+    void setFriendTyping(bool isTyping);
 
 signals:
     void sendFile(int32_t friendId, QString, QString, long long);
@@ -75,6 +76,7 @@ public slots:
 
 private slots:
     void onSendTriggered();
+    void onTextEditChanged();
     void onAttachClicked();
     void onCallTriggered();
     void onVideoCallTriggered();
@@ -100,6 +102,7 @@ private:
     QLabel *callDuration;
     QTimer *timer;
     QElapsedTimer timeElapsed;
+    QLabel *isTypingLabel;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     void startCounter();
@@ -107,6 +110,7 @@ private:
     QString secondsToDHMS(quint32 duration);
     QHash<int, int> receipts;
     QMap<int, MessageActionPtr> undeliveredMsgs;
+    bool isTyping;
 };
 
 #endif // CHATFORM_H

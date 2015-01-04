@@ -54,6 +54,15 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
 
+    isTypingLabel = new QLabel();
+    QFont font = isTypingLabel->font();
+    font.setItalic(true);
+    font.setPixelSize(8);
+    isTypingLabel->setFont(font);
+
+    QVBoxLayout* mainLayout = dynamic_cast<QVBoxLayout*>(layout());
+    mainLayout->insertWidget(1, isTypingLabel);
+
     netcam = new NetCamView();
     timer = nullptr;
 
@@ -71,6 +80,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
+    connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
@@ -130,6 +140,21 @@ void ChatForm::onSendTriggered()
     }
 
     msgEdit->clear();
+}
+
+void ChatForm::onTextEditChanged()
+{
+    bool isNowTyping;
+    if (!Settings::getInstance().isTypingNotificationEnabled())
+        isNowTyping = false;
+    else
+        isNowTyping = msgEdit->toPlainText().length() > 0;
+
+    if (isTyping != isNowTyping)
+    {
+        isTyping = isNowTyping;
+        Core::getInstance()->sendTyping(f->getFriendID(), isTyping);
+    }
 }
 
 void ChatForm::onAttachClicked()
@@ -868,6 +893,14 @@ void ChatForm::dischargeReceipt(int receipt)
         }
         receipts.erase(it);
     }
+}
+
+void ChatForm::setFriendTyping(bool isTyping)
+{
+    if (isTyping)
+        isTypingLabel->setText(f->getDisplayedName() + " " + tr("is typing..."));
+    else
+        isTypingLabel->clear();
 }
 
 void ChatForm::clearReciepts()
