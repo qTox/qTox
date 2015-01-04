@@ -52,6 +52,9 @@ void Text::setText(const QString& txt)
     text = txt;
     dirty = true;
 
+    if(rawText.isEmpty())
+        rawText = txt;
+
     ensureIntegrity();
     freeResources();
 }

@@ -445,19 +445,10 @@ QString ChatLog::getSelectedText() const
 QString ChatLog::toPlainText() const
 {
     QString out;
-    QString lastSender;
 
     for(ChatLine::Ptr l : lines)
     {
-        if(lastSender != l->content[0]->getText() && !l->content[0]->getText().isEmpty())
-        {
-            //author changed
-            out += l->content[0]->getText() + ":\n";
-            lastSender = l->content[0]->getText();
-        }
-
-        out += l->content[1]->getText();
-        out += "\n\n";
+        out += QString("|%1 @%2|\n%3\n\n").arg(l->getContent(0)->getText(),l->getContent(2)->getText(),l->getContent(1)->getText());
     }
 
     return out;
