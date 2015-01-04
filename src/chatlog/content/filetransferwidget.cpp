@@ -91,38 +91,44 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
 
     fileInfo = file;
 
-    // update progress
-    qreal progress = static_cast<qreal>(file.bytesSent) / static_cast<qreal>(file.filesize);
-    ui->progressBar->setValue(static_cast<int>(progress * 100.0));
-
-    // eta, speed
-    QTime now = QTime::currentTime();
-    qreal deltaSecs = lastTick.msecsTo(now) / 1000.0;
-
-    if(deltaSecs >= 1.0)
+    if(fileInfo.status == ToxFile::TRANSMITTING)
     {
-        qint64 deltaBytes = file.bytesSent - lastBytesSent;
-        qint64 bytesPerSec = static_cast<int>(static_cast<qreal>(deltaBytes) / deltaSecs);
+        // update progress
+        qreal progress = static_cast<qreal>(file.bytesSent) / static_cast<qreal>(file.filesize);
+        ui->progressBar->setValue(static_cast<int>(progress * 100.0));
 
-        if(bytesPerSec > 0)
+        // eta, speed
+        QTime now = QTime::currentTime();
+        qreal deltaSecs = lastTick.msecsTo(now) / 1000.0;
+
+        if(deltaSecs >= 1.0)
         {
-            QTime toGo(0,0,file.filesize / bytesPerSec);
-            ui->etaLabel->setText(toGo.toString("mm:ss"));
-        }
-        else
-        {
-            ui->etaLabel->setText("--:--");
-        }
+            qint64 deltaBytes = file.bytesSent - lastBytesSent;
+            qint64 bytesPerSec = static_cast<int>(static_cast<qreal>(deltaBytes) / deltaSecs);
 
-        ui->progressLabel->setText(getHumanReadableSize(bytesPerSec) + "/s");
+            if(bytesPerSec > 0)
+            {
+                QTime toGo = QTime(0,0).addSecs(file.filesize / bytesPerSec);
+                ui->etaLabel->setText(toGo.toString("mm:ss"));
+            }
+            else
+            {
+                ui->etaLabel->setText("--:--");
+            }
 
-        lastTick = now;
-        lastBytesSent = file.bytesSent;
+            ui->progressLabel->setText(getHumanReadableSize(bytesPerSec) + "/s");
+
+            lastTick = now;
+            lastBytesSent = file.bytesSent;
+        }
+    }
+    else if(fileInfo.status == ToxFile::PAUSED)
+    {
+        ui->etaLabel->setText("--:--");
+        ui->progressLabel->setText(getHumanReadableSize(0) + "/s");
     }
 
-    setupButtons();
-
-    repaint();
+    update();
 }
 
 void FileTransferWidget::onFileTransferAccepted(ToxFile file)
@@ -160,6 +166,9 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
         return;
 
     fileInfo = file;
+
+    ui->etaLabel->setText("--:--");
+    ui->progressLabel->setText(getHumanReadableSize(0) + "/s");
 
     setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
     Style::repolish(this);
@@ -254,20 +263,20 @@ void FileTransferWidget::handleButton(QPushButton *btn)
     {
         if(btn->objectName() == "cancel")
             Core::getInstance()->cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
-        if(btn->objectName() == "pause")
+        else if(btn->objectName() == "pause")
             Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
-        if(btn->objectName() == "resume")
+        else if(btn->objectName() == "resume")
             Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
     }
     else
     {
         if(btn->objectName() == "cancel")
             Core::getInstance()->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        if(btn->objectName() == "pause")
+        else if(btn->objectName() == "pause")
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        if(btn->objectName() == "resume")
+        else if(btn->objectName() == "resume")
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        if(btn->objectName() == "accept")
+        else if(btn->objectName() == "accept")
         {
             QString path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(fileInfo.fileName));
             acceptTransfer(path);
