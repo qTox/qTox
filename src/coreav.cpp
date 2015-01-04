@@ -214,6 +214,7 @@ void Core::cleanupCall(int callId)
     if (calls[callId].videoEnabled)
         Camera::getInstance()->unsubscribe();
     Audio::unsuscribeInput();
+    toxav_kill_transmission(Core::getInstance()->toxav, callId);
 }
 
 void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint16_t samples, void *user_data)
