@@ -21,10 +21,8 @@
 #include <QDebug>
 #include <QScrollBar>
 #include <QApplication>
-#include <QMenu>
 #include <QClipboard>
-#include <QFile>
-#include <QFileDialog>
+#include <QAction>
 
 template<class T>
 T clamp(T x, T min, T max)
@@ -50,6 +48,7 @@ ChatLog::ChatLog(QWidget* parent)
     setViewportUpdateMode(BoundingRectViewportUpdate);
     //setRenderHint(QPainter::TextAntialiasing);
     setAcceptDrops(false);
+    setContextMenuPolicy(Qt::CustomContextMenu);
 
     const QColor selGraphColor = QColor(166,225,255);
     selGraphItem = scene->addRect(0,0,0,0,selGraphColor.darker(120),selGraphColor);
@@ -228,14 +227,22 @@ void ChatLog::mousePressEvent(QMouseEvent* ev)
     {
         if(!isOverSelection(scenePos))
             clearSelection();
-
-        showContextMenu(ev->globalPos(), scenePos);
     }
 }
 
 void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
 {
     QGraphicsView::mouseReleaseEvent(ev);
+
+    QPointF scenePos = mapToScene(ev->pos());
+
+    if(ev->button() == Qt::RightButton)
+    {
+        if(!isOverSelection(scenePos))
+            clearSelection();
+
+        emit customContextMenuRequested(ev->pos());
+    }
 }
 
 void ChatLog::mouseMoveEvent(QMouseEvent* ev)
@@ -461,41 +468,9 @@ bool ChatLog::isEmpty() const
     return lines.isEmpty();
 }
 
-void ChatLog::showContextMenu(const QPoint& globalPos, const QPointF& scenePos)
+bool ChatLog::hasTextToBeCopied() const
 {
-    QMenu menu;
-
-    // populate
-    QAction* copyAction = menu.addAction(QIcon::fromTheme("edit-copy"), tr("Copy"));
-    menu.addSeparator();
-    QAction* clearAction = menu.addAction(QIcon::fromTheme("edit-clear") ,tr("Clear chat log"));
-    QAction* saveAction = menu.addAction(QIcon::fromTheme("document-save") ,tr("Save chat log"));
-
-    if(!isOverSelection(scenePos))
-        copyAction->setDisabled(true);
-
-    // show
-    QAction* action = menu.exec(globalPos);
-
-    if(action == copyAction)
-        copySelectedText();
-
-    if(action == clearAction)
-        clear();
-
-    if(action == saveAction)
-    {
-        QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"));
-        if (path.isEmpty())
-            return;
-
-        QFile file(path);
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-            return;
-
-        file.write(toPlainText().toUtf8());
-        file.close();
-    }
+    return selectionMode != None;
 }
 
 void ChatLog::clear()

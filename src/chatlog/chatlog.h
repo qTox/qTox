@@ -53,6 +53,7 @@ public:
     QString toPlainText() const;
 
     bool isEmpty() const;
+    bool hasTextToBeCopied() const;
 
 protected:
     QRect getVisibleRect() const;
@@ -71,7 +72,6 @@ protected:
     void fullUpdate();
     void checkVisibility();
     void scrollToBottom();
-    void showContextMenu(const QPoint& globalPos, const QPointF& scenePos);
 
     virtual void mousePressEvent(QMouseEvent* ev);
     virtual void mouseReleaseEvent(QMouseEvent* ev);

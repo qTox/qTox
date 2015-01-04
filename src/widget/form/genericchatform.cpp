@@ -50,12 +50,12 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     QHBoxLayout *headLayout = new QHBoxLayout(),
-                *mainFootLayout = new QHBoxLayout();
+            *mainFootLayout = new QHBoxLayout();
     
     QVBoxLayout *mainLayout = new QVBoxLayout(),
-                *footButtonsSmall = new QVBoxLayout(),
-                *volMicLayout = new QVBoxLayout();
-    headTextLayout = new QVBoxLayout();    
+            *footButtonsSmall = new QVBoxLayout(),
+            *volMicLayout = new QVBoxLayout();
+    headTextLayout = new QVBoxLayout();
 
     chatWidget = new ChatLog(this);
 
@@ -79,7 +79,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     //volButton->setFixedSize(25,20);
     volButton->setToolTip(tr("Toggle speakers volume: RED is OFF"));
     micButton = new QPushButton();
-   // micButton->setFixedSize(25,20);
+    // micButton->setFixedSize(25,20);
     micButton->setToolTip(tr("Toggle microphone: RED is OFF"));
 
     footButtonsSmall->setSpacing(2);
@@ -122,7 +122,7 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     
     headTextLayout->addStretch();
     headTextLayout->addWidget(nameLabel);
-        
+
     volMicLayout->addWidget(micButton, Qt::AlignTop);
     volMicLayout->addSpacing(2);
     volMicLayout->addWidget(volButton, Qt::AlignBottom);
@@ -143,13 +143,17 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
-    connect(emoteButton,  SIGNAL(clicked()), this, SLOT(onEmoteButtonClicked()));
-    connect(chatWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onChatContextMenuRequested(QPoint)));
+    menu.addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, SLOT(onCopyLogClicked()));
+    menu.addSeparator();
+    menu.addAction(QIcon::fromTheme("document-save"), tr("Save chat log"), this, SLOT(onSaveLogClicked()));
+    menu.addAction(QIcon::fromTheme("edit-clear"), tr("Clear displayed messages"), this, SLOT(clearChatArea(bool)));
+    menu.addSeparator();
+
+    connect(emoteButton, &QPushButton::clicked, this, &GenericChatForm::onEmoteButtonClicked);
+    connect(chatWidget, &ChatLog::customContextMenuRequested, this, &GenericChatForm::onChatContextMenuRequested);
 
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
-
-    //ChatAction::setupFormat();
 }
 
 bool GenericChatForm::isEmpty()
@@ -180,6 +184,10 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 {
     QWidget* sender = (QWidget*)QObject::sender();
     pos = sender->mapToGlobal(pos);
+
+    //copy action
+    menu.actions().first()->setEnabled(chatWidget->hasTextToBeCopied());
+
     menu.exec(pos);
 }
 
@@ -241,6 +249,25 @@ void GenericChatForm::onEmoteInsertRequested(QString str)
         msgEdit->insertPlainText(str);
 
     msgEdit->setFocus(); // refocus so that we can continue typing
+}
+
+void GenericChatForm::onSaveLogClicked()
+{
+    QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"));
+    if (path.isEmpty())
+        return;
+
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    file.write(chatWidget->toPlainText().toUtf8());
+    file.close();
+}
+
+void GenericChatForm::onCopyLogClicked()
+{
+    chatWidget->copySelectedText();
 }
 
 void GenericChatForm::focusInput()

@@ -71,6 +71,8 @@ protected slots:
     void onChatContextMenuRequested(QPoint pos);
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
+    void onSaveLogClicked();
+    void onCopyLogClicked();
     void clearChatArea(bool);
 
 protected:
