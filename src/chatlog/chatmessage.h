@@ -28,16 +28,24 @@ class ChatMessage : public ChatLine
 public:
     using Ptr = std::shared_ptr<ChatMessage>;
 
-    ChatMessage(QGraphicsScene* scene, const QString& rawMessage);
+    enum SystemMessageType
+    {
+        INFO,
+        ERROR,
+    };
 
-    static ChatMessage::Ptr createChatMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, bool isAction, bool alert, bool isMe, const QDateTime& date = QDateTime());
-    static ChatMessage::Ptr createChatInfoMessage(QGraphicsScene* scene, const QString& rawMessage, const QString& type, const QDateTime& date);
-    static ChatMessage::Ptr createFileTransferMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, ToxFile file, bool isMe, const QDateTime& date);
+    ChatMessage();
+
+    static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage, bool isAction, bool alert, bool isMe, const QDateTime& date = QDateTime());
+    static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type, const QDateTime& date);
+    static ChatMessage::Ptr createFileTransferMessage(const QString& sender, ToxFile file, bool isMe, const QDateTime& date);
 
     void markAsSent(const QDateTime& time);
     QString toString() const;
     bool isAction() const;
     void setAsAction();
+    void hideSender();
+    void hideDate();
 
 protected:
     static QString detectAnchors(const QString& str);
@@ -45,8 +53,6 @@ protected:
     static QString toHtmlChars(const QString& str);
 
 private:
-    ChatLineContent* midColumn = nullptr;
-    QString rawString;
     bool action = false;
 };
 

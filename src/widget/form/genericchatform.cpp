@@ -30,8 +30,7 @@
 #include "src/group.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
-#include "src/chatlog/content/text.h"
-#include "src/chatlog/chatmessage.h"
+#include "src/chatlog/chatlog.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent) :
     QWidget(parent),
@@ -198,9 +197,17 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString 
 
     ChatMessage::Ptr msg;
     if(isAction)
-        msg = chatWidget->addChatAction(authorStr, message);
+    {
+        msg = ChatMessage::createChatMessage(authorStr, message, true, false, false);
+    }
     else
-        msg = chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, author.isMine(), false);
+    {
+        msg = ChatMessage::createChatMessage(authorStr, message, false, false, author.isMine());
+        if(author == previousId)
+            msg->hideSender();
+    }
+
+    insertChatMessage(msg);
 
     if(isSent)
         msg->markAsSent(datetime);
@@ -219,7 +226,11 @@ ChatMessage::Ptr GenericChatForm::addSelfMessage(const QString &message, bool is
 void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
 {
     QString authorStr = resolveToxID(author);
-    chatWidget->addChatMessage(author != previousId ? authorStr : QString(), message, datetime, author.isMine(), true);
+    ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, false, true, author.isMine(), datetime);
+    insertChatMessage(msg);
+
+    if(author == previousId)
+        msg->hideSender();
 
     previousId = author;
 }
@@ -275,13 +286,10 @@ void GenericChatForm::focusInput()
     msgEdit->setFocus();
 }
 
-void GenericChatForm::addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime)
+void GenericChatForm::addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime)
 {
-    //TODO: respect type
     previousId.clear();
-    chatWidget->addSystemMessage(message, datetime);
-
-    Q_UNUSED(type)
+    insertChatMessage(ChatMessage::createChatInfoMessage(message, type, datetime));
 }
 
 void GenericChatForm::clearChatArea(bool notinform)
@@ -290,7 +298,7 @@ void GenericChatForm::clearChatArea(bool notinform)
     previousId = ToxID();
 
     if (!notinform)
-        addSystemInfoMessage(tr("Cleared"), "white", QDateTime::currentDateTime());
+        addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
 
     if (earliestMessage)
     {
@@ -317,4 +325,9 @@ QString GenericChatForm::resolveToxID(const ToxID &id)
     }
 
     return QString();
+}
+
+void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
+{
+    chatWidget->insertChatline(std::dynamic_pointer_cast<ChatLine>(msg));
 }

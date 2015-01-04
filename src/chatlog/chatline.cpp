@@ -24,8 +24,7 @@
 
 #define CELL_SPACING 15
 
-ChatLine::ChatLine(QGraphicsScene* grScene)
-    : scene(grScene)
+ChatLine::ChatLine()
 {
 
 }
@@ -35,7 +34,7 @@ ChatLine::~ChatLine()
     for(ChatLineContent* c : content)
     {
         if(c->scene())
-            scene->removeItem(c);
+            c->scene()->removeItem(c);
 
         delete c;
     }
@@ -78,8 +77,17 @@ void ChatLine::removeFromScene()
     for(ChatLineContent* c : content)
     {
         if(c->scene())
-            scene->removeItem(c);
+            c->scene()->removeItem(c);
     }
+}
+
+void ChatLine::addToScene(QGraphicsScene *scene)
+{
+    if(!scene)
+        return;
+
+    for(ChatLineContent* c : content)
+        scene->addItem(c);
 }
 
 void ChatLine::selectionCleared()
@@ -133,7 +141,6 @@ void ChatLine::addColumn(ChatLineContent* item, ColumnFormat fmt)
         return;
 
     item->setChatLine(this);
-    scene->addItem(item);
 
     format << fmt;
     content << item;
@@ -143,12 +150,14 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
 {
     if(col >= 0 && col < content.size() && lineContent)
     {
-        scene->removeItem(content[col]);
+        QGraphicsScene* scene = content[col]->scene();
         delete content[col];
 
         content[col] = lineContent;
         lineContent->setIndex(rowIndex, col);
-        scene->addItem(content[col]);
+
+        if(scene)
+            scene->addItem(content[col]);
 
         layout(width, pos);
         content[col]->visibilityChanged(isVisible);

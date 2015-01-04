@@ -29,10 +29,11 @@
 #include <QRegExp>
 #include <QDesktopServices>
 
-Text::Text(const QString& txt, QFont font, bool enableElide)
+Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText)
     : ChatLineContent()
     , elide(enableElide)
     , defFont(font)
+    , rawText(rwText)
 {
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
@@ -197,7 +198,7 @@ void Text::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 QString Text::getText() const
 {
-    return text;
+    return rawText;
 }
 
 void Text::ensureIntegrity()

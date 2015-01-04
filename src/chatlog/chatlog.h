@@ -37,16 +37,7 @@ public:
     explicit ChatLog(QWidget* parent = 0);
     virtual ~ChatLog();
 
-    ChatMessage::Ptr addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert);
-    ChatMessage::Ptr addChatMessage(const QString& sender, const QString& msg, bool self, bool alert);
-    ChatMessage::Ptr addChatAction(const QString& sender, const QString& msg, const QDateTime& timestamp);
-    ChatMessage::Ptr addChatAction(const QString& sender, const QString& msg);
-
-    ChatMessage::Ptr addSystemMessage(const QString& msg, const QDateTime& timestamp);
-    ChatMessage::Ptr addFileTransferMessage(const QString& sender, const ToxFile& file, const QDateTime &timestamp, bool self);
-
     void insertChatline(ChatLine::Ptr l);
-
     void clearSelection();
     void clear();
     void copySelectedText() const;

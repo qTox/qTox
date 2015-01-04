@@ -27,7 +27,7 @@ class CustomTextDocument;
 class Text : public ChatLineContent
 {
 public:
-    Text(const QString& txt = "", QFont font = QFont(), bool enableElide = false);
+    Text(const QString& txt = "", QFont font = QFont(), bool enableElide = false, const QString& rawText = "");
     virtual ~Text();
 
     void setText(const QString& txt);
@@ -64,6 +64,7 @@ protected:
 private:
     CustomTextDocument* doc = nullptr;
     QString text;
+    QString rawText;
     QString elidedText;
     QString selectedText;
     QSizeF size;

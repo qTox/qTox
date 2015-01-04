@@ -749,7 +749,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
         }
         if (isActualChange)
             f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
-                                                   "white", QDateTime::currentDateTime());
+                                                   ChatMessage::INFO, QDateTime::currentDateTime());
     }
 
     if (isActualChange && status != Status::Offline)
@@ -1011,7 +1011,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
 
     g->setName(title);
     if (!author.isEmpty())
-        g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), "silver", QDateTime::currentDateTime());
+        g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
 void Widget::removeGroup(Group* g, bool fake)
@@ -1162,7 +1162,7 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         return;
 
     if (result == -1)
-        g->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), "white", QDateTime::currentDateTime());
+        g->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
 void Widget::getPassword(QString info, int passtype, uint8_t* salt)

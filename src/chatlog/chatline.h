@@ -57,12 +57,11 @@ class ChatLine
 public:
     using Ptr = std::shared_ptr<ChatLine>;
 
-    explicit ChatLine(QGraphicsScene* scene);
+    explicit ChatLine();
     virtual ~ChatLine();
 
     virtual QRectF boundingSceneRect() const;
 
-    void addColumn(ChatLineContent* item, ColumnFormat fmt);
     void replaceContent(int col, ChatLineContent* lineContent);
 
     void layout(qreal width, QPointF scenePos);
@@ -80,9 +79,11 @@ public:
     bool isOverSelection(QPointF scenePos);
 
     void removeFromScene();
+    void addToScene(QGraphicsScene* scene);
 
-private:
+protected:
     QPointF mapToContent(ChatLineContent* c, QPointF pos);
+    void addColumn(ChatLineContent* item, ColumnFormat fmt);
     void updateBBox();
 
     friend class ChatLog;
@@ -91,7 +92,6 @@ private:
 
 private:
     int rowIndex = -1;
-    QGraphicsScene* scene = nullptr;
     QVector<ChatLineContent*> content; // 3 columns
     QVector<ColumnFormat> format;
     qreal width;

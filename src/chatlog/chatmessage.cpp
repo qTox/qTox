@@ -28,16 +28,14 @@
 #define NAME_COL_WIDTH 75.0
 #define TIME_COL_WIDTH 85.0
 
-ChatMessage::ChatMessage(QGraphicsScene* scene, const QString& rawMessage)
-    : ChatLine(scene)
-    , rawString(rawMessage)
+ChatMessage::ChatMessage()
 {
 
 }
 
-ChatMessage::Ptr ChatMessage::createChatMessage(QGraphicsScene *scene, const QString &sender, const QString &rawMessage, bool isAction, bool alert, bool isMe, const QDateTime &date)
+ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage, bool isAction, bool alert, bool isMe, const QDateTime &date)
 {
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(scene, rawMessage));
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     QString text = toHtmlChars(rawMessage);
 
@@ -57,7 +55,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(QGraphicsScene *scene, const QSt
     }
 
     msg->addColumn(new Text(isAction ? "*" : sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(text, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    msg->addColumn(new Text(text, Style::getFont(Style::Big), false, rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     if(!date.isNull())
@@ -66,12 +64,12 @@ ChatMessage::Ptr ChatMessage::createChatMessage(QGraphicsScene *scene, const QSt
     return msg;
 }
 
-ChatMessage::Ptr ChatMessage::createChatInfoMessage(QGraphicsScene *scene, const QString &rawMessage, const QString &type, const QDateTime &date)
+ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, SystemMessageType type, const QDateTime &date)
 {
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(scene, rawMessage));
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     msg->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big), false, rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     Q_UNUSED(type)
@@ -79,9 +77,9 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(QGraphicsScene *scene, const
     return msg;
 }
 
-ChatMessage::Ptr ChatMessage::createFileTransferMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, ToxFile file, bool isMe, const QDateTime& date)
+ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, ToxFile file, bool isMe, const QDateTime& date)
 {
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(scene, rawMessage));
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 380, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
@@ -98,7 +96,11 @@ void ChatMessage::markAsSent(const QDateTime &time)
 
 QString ChatMessage::toString() const
 {
-    return rawString;
+    ChatLineContent* c = getContent(1);
+    if(c)
+        return c->getText();
+
+    return QString();
 }
 
 bool ChatMessage::isAction() const
@@ -109,6 +111,20 @@ bool ChatMessage::isAction() const
 void ChatMessage::setAsAction()
 {
     action = true;
+}
+
+void ChatMessage::hideSender()
+{
+    ChatLineContent* c = getContent(0);
+    if(c)
+        c->hide();
+}
+
+void ChatMessage::hideDate()
+{
+    ChatLineContent* c = getContent(2);
+    if(c)
+        c->hide();
 }
 
 QString ChatMessage::detectAnchors(const QString &str)

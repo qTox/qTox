@@ -76,54 +76,6 @@ ChatLog::~ChatLog()
 
 }
 
-ChatMessage::Ptr ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self, bool alert)
-{
-    ChatMessage::Ptr line = ChatMessage::createChatMessage(scene, sender, msg, false, alert, self);
-    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
-
-    return line;
-}
-
-ChatMessage::Ptr ChatLog::addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert)
-{
-    ChatMessage::Ptr line = ChatMessage::createChatMessage(scene, sender, msg, false, alert, self, timestamp);
-    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
-
-    return line;
-}
-
-ChatMessage::Ptr ChatLog::addChatAction(const QString &sender, const QString &msg, const QDateTime &timestamp)
-{
-    ChatMessage::Ptr line = ChatMessage::createChatMessage(scene, sender, msg, true, false, false, timestamp);
-    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
-
-    return line;
-}
-
-ChatMessage::Ptr ChatLog::addChatAction(const QString &sender, const QString &msg)
-{
-    ChatMessage::Ptr line = ChatMessage::createChatMessage(scene, sender, msg, true, false, false);
-    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
-
-    return line;
-}
-
-ChatMessage::Ptr ChatLog::addSystemMessage(const QString &msg, const QDateTime& timestamp)
-{
-    ChatMessage::Ptr line = ChatMessage::createChatInfoMessage(scene, msg, "", timestamp);
-    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
-
-    return line;
-}
-
-ChatMessage::Ptr ChatLog::addFileTransferMessage(const QString &sender, const ToxFile &file,  const QDateTime& timestamp, bool self)
-{
-    ChatMessage::Ptr line = ChatMessage::createFileTransferMessage(scene, sender, "", file, self, timestamp);
-    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
-
-    return line;
-}
-
 void ChatLog::clearSelection()
 {
     for(int i=selFirstRow; i<=selLastRow && i<lines.size() && i >= 0; ++i)
@@ -403,6 +355,11 @@ void ChatLog::repositionDownTo(int start, qreal end)
 
 void ChatLog::insertChatline(ChatLine::Ptr l)
 {
+    if(!l.get())
+        return;
+
+    l->addToScene(scene);
+
     stickToBtm = stickToBottom();
 
     l->setRowIndex(lines.size());

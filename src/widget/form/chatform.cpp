@@ -40,6 +40,7 @@
 #include "src/misc/cstring.h"
 #include "src/chatlog/chatmessage.h"
 #include "src/chatlog/content/filetransferwidget.h"
+#include "src/chatlog/chatlog.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -172,8 +173,7 @@ void ChatForm::startFileSend(ToxFile file)
         previousId = core->getSelfId();
     }
 
-
-    chatWidget->addFileTransferMessage(name, file, QDateTime::currentDateTime(), true);
+    insertChatMessage(ChatMessage::createFileTransferMessage(name, file, true, QDateTime::currentDateTime()));
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -197,7 +197,9 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         previousId = friendId;
     }
 
-    ChatMessage::Ptr msg = chatWidget->addFileTransferMessage(name, file, QDateTime::currentDateTime(), false);
+    ChatMessage::Ptr msg = ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
+    insertChatMessage(msg);
+
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxID()).isEmpty()
             || Settings::getInstance().getAutoSaveEnabled())
     {
@@ -233,7 +235,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         connect(callButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
     }
     
-    chatWidget->addSystemMessage(tr("%1 calling").arg(f->getDisplayedName()), QDateTime::currentDateTime());
+    insertChatMessage(ChatMessage::createChatInfoMessage(tr("%1 calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime()));
 
     Widget* w = Widget::getInstance();
     if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
@@ -304,7 +306,7 @@ void ChatForm::onAvCancel(int FriendId, int)
 
     netcam->hide();
     
-    addSystemInfoMessage(tr("%1 stopped calling").arg(f->getDisplayedName()), "white", QDateTime::currentDateTime());
+    addSystemInfoMessage(tr("%1 stopped calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvEnd(int FriendId, int)
@@ -360,7 +362,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
         connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
     }
     
-    addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), "white", QDateTime::currentDateTime());
+    addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
@@ -501,7 +503,7 @@ void ChatForm::onAvRejected(int FriendId, int)
     connect(callButton, SIGNAL(clicked()), this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()), this, SLOT(onVideoCallTriggered()));
     
-    chatWidget->addSystemMessage(tr("Call rejected"), QDateTime::currentDateTime());
+    insertChatMessage(ChatMessage::createChatInfoMessage(tr("Call rejected"), ChatMessage::INFO, QDateTime::currentDateTime()));
 
     netcam->hide();
 }
@@ -640,7 +642,7 @@ void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
     if (FriendId != f->getFriendID())
         return;
 
-    addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), "red", QDateTime::currentDateTime());
+    addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR, QDateTime::currentDateTime());
 }
 
 void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
@@ -712,7 +714,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            chatWidget->addSystemMessage(msgDate.toString(), QDateTime());
+            insertChatMessage(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime::currentDateTime()));
         }
 
         // Show each messages
@@ -784,7 +786,7 @@ void ChatForm::stopCounter()
     if (timer)
     {
         addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),secondsToDHMS(timeElapsed.elapsed()/1000)),
-                             "white", QDateTime::currentDateTime());
+                             ChatMessage::INFO, QDateTime::currentDateTime());
         timer->stop();
         callDuration->setText("");
         callDuration->hide();
