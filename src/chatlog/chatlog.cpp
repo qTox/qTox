@@ -23,6 +23,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QAction>
+#include <QTimer>
 
 template<class T>
 T clamp(T x, T min, T max)
@@ -62,6 +63,12 @@ ChatLog::ChatLog(QWidget* parent)
     {
         copySelectedText();
     });
+
+    selectionTimer = new QTimer(this);
+    selectionTimer->setInterval(1000/60);
+    selectionTimer->setSingleShot(false);
+    selectionTimer->start();
+    connect(selectionTimer, &QTimer::timeout, this, &ChatLog::onSelectionTimerTimeout);
 }
 
 ChatLog::~ChatLog()
@@ -243,6 +250,8 @@ void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
 
         emit customContextMenuRequested(ev->pos());
     }
+
+    selectionScrollDir = NoDirection;
 }
 
 void ChatLog::mouseMoveEvent(QMouseEvent* ev)
@@ -253,6 +262,15 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
     if(ev->buttons() & Qt::LeftButton)
     {
+        //autoscroll
+        if(ev->pos().y() < 0)
+            selectionScrollDir = Up;
+        else if(ev->pos().y() > height())
+            selectionScrollDir = Down;
+        else
+            selectionScrollDir = NoDirection;
+
+        //select
         if(selectionMode == None && (clickPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
         {
             QPointF sceneClickPos = mapToScene(clickPos.toPoint());
@@ -577,5 +595,22 @@ void ChatLog::updateMultiSelectionRect()
     else
     {
         selGraphItem->hide();
+    }
+}
+
+void ChatLog::onSelectionTimerTimeout()
+{
+    const int scrollSpeed = 10;
+
+    switch(selectionScrollDir)
+    {
+    case Up:
+        verticalScrollBar()->setValue(verticalScrollBar()->value() - scrollSpeed);
+        break;
+    case Down:
+        verticalScrollBar()->setValue(verticalScrollBar()->value() + scrollSpeed);
+        break;
+    default:
+        break;
     }
 }

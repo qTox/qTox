@@ -26,6 +26,7 @@
 
 class QGraphicsScene;
 class QGraphicsRectItem;
+class QTimer;
 class ChatLineContent;
 class ToxFile;
 
@@ -81,11 +82,20 @@ protected:
 
     void updateMultiSelectionRect();
 
+private slots:
+    void onSelectionTimerTimeout();
+
 private:
     enum SelectionMode {
         None,
         Precise,
         Multi,
+    };
+
+    enum AutoScrollDirection {
+        NoDirection,
+        Up,
+        Down,
     };
 
     QGraphicsScene* scene = nullptr;
@@ -105,6 +115,8 @@ private:
     QPointF clickPos;
     QPointF lastPos;
     QGraphicsRectItem* selGraphItem = nullptr;
+    QTimer* selectionTimer = nullptr;
+    AutoScrollDirection selectionScrollDir = NoDirection;
 
     // actions
     QAction* copyAction = nullptr;
