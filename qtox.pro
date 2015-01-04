@@ -77,6 +77,14 @@ win32 {
     LIBS += -liphlpapi -L$$PWD/libs/lib -lsodium -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lopencv_core248 -lopencv_highgui248 -lopencv_imgproc248 -lOpenAL32 -lopus
     LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32 -lz
+
+    contains(DEFINES, QTOX_FILTER_AUDIO) {
+        contains(STATICPKG, YES) {
+            LIBS += -Wl,-Bstatic -lfilteraudio
+        } else {
+            LIBS += -lfilteraudio
+        }
+    }
 } else {
     macx {
         BUNDLEID = im.tox.qtox
