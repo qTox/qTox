@@ -26,11 +26,13 @@ class QGraphicsScene;
 class ChatMessage : public ChatLine
 {
 public:
+    using Ptr = std::shared_ptr<ChatMessage>;
+
     ChatMessage(QGraphicsScene* scene, const QString& rawMessage);
 
-    static ChatMessage* createChatMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, bool isAction, bool alert, bool isMe, const QDateTime& date = QDateTime());
-    static ChatMessage* createChatInfoMessage(QGraphicsScene* scene, const QString& rawMessage, const QString& type, const QDateTime& date);
-    static ChatMessage* createFileTransferMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, ToxFile file, bool isMe, const QDateTime& date);
+    static ChatMessage::Ptr createChatMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, bool isAction, bool alert, bool isMe, const QDateTime& date = QDateTime());
+    static ChatMessage::Ptr createChatInfoMessage(QGraphicsScene* scene, const QString& rawMessage, const QString& type, const QDateTime& date);
+    static ChatMessage::Ptr createFileTransferMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, ToxFile file, bool isMe, const QDateTime& date);
 
     void markAsSent(const QDateTime& time);
     QString toString() const;

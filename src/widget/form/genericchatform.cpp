@@ -183,12 +183,12 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
     menu.exec(pos);
 }
 
-ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
+ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
     QString authorStr = author.isMine() ? Core::getInstance()->getUsername() : resolveToxID(author);
 
-    ChatMessage* msg = nullptr;
+    ChatMessage::Ptr msg;
     if(isAction)
         msg = chatWidget->addChatAction(authorStr, message);
     else
@@ -203,7 +203,7 @@ ChatMessage* GenericChatForm::addMessage(const ToxID& author, const QString &mes
     return msg;
 }
 
-ChatMessage* GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent)
+ChatMessage::Ptr GenericChatForm::addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent)
 {
     return addMessage(Core::getInstance()->getSelfId(), message, isAction, datetime, isSent);
 }

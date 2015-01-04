@@ -21,11 +21,12 @@
 #include <QDateTime>
 #include <QMarginsF>
 
+#include "chatline.h"
+#include "chatmessage.h"
+
 class QGraphicsScene;
 class QGraphicsRectItem;
-class ChatLine;
 class ChatLineContent;
-class ChatMessage;
 class ToxFile;
 
 class ChatLog : public QGraphicsView
@@ -35,15 +36,15 @@ public:
     explicit ChatLog(QWidget* parent = 0);
     virtual ~ChatLog();
 
-    ChatMessage* addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert);
-    ChatMessage* addChatMessage(const QString& sender, const QString& msg, bool self, bool alert);
-    ChatMessage* addChatAction(const QString& sender, const QString& msg, const QDateTime& timestamp);
-    ChatMessage* addChatAction(const QString& sender, const QString& msg);
+    ChatMessage::Ptr addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert);
+    ChatMessage::Ptr addChatMessage(const QString& sender, const QString& msg, bool self, bool alert);
+    ChatMessage::Ptr addChatAction(const QString& sender, const QString& msg, const QDateTime& timestamp);
+    ChatMessage::Ptr addChatAction(const QString& sender, const QString& msg);
 
-    ChatMessage* addSystemMessage(const QString& msg, const QDateTime& timestamp);
-    ChatMessage* addFileTransferMessage(const QString& sender, const ToxFile& file, const QDateTime &timestamp, bool self);
+    ChatMessage::Ptr addSystemMessage(const QString& msg, const QDateTime& timestamp);
+    ChatMessage::Ptr addFileTransferMessage(const QString& sender, const ToxFile& file, const QDateTime &timestamp, bool self);
 
-    void insertChatline(ChatLine* l);
+    void insertChatline(ChatLine::Ptr l);
 
     void clearSelection();
     void clear();
@@ -88,8 +89,8 @@ private:
     };
 
     QGraphicsScene* scene = nullptr;
-    QList<ChatLine*> lines;
-    QList<ChatLine*> visibleLines;
+    QList<ChatLine::Ptr> lines;
+    QList<ChatLine::Ptr> visibleLines;
 
     bool multiLineInsert = false;
     bool stickToBtm = false;

@@ -15,7 +15,6 @@
 */
 
 #include "chatlog.h"
-#include "chatline.h"
 #include "chatmessage.h"
 #include "chatlinecontent.h"
 
@@ -68,54 +67,53 @@ ChatLog::ChatLog(QWidget* parent)
 
 ChatLog::~ChatLog()
 {
-    for(ChatLine* line : lines)
-        delete line;
+
 }
 
-ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self, bool alert)
+ChatMessage::Ptr ChatLog::addChatMessage(const QString& sender, const QString &msg, bool self, bool alert)
 {
-    ChatMessage* line = ChatMessage::createChatMessage(scene, sender, msg, false, alert, self);
-    insertChatline(line);
+    ChatMessage::Ptr line = ChatMessage::createChatMessage(scene, sender, msg, false, alert, self);
+    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
 
     return line;
 }
 
-ChatMessage* ChatLog::addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert)
+ChatMessage::Ptr ChatLog::addChatMessage(const QString& sender, const QString& msg, const QDateTime& timestamp, bool self, bool alert)
 {
-    ChatMessage* line = ChatMessage::createChatMessage(scene, sender, msg, false, alert, self, timestamp);
-    insertChatline(line);
+    ChatMessage::Ptr line = ChatMessage::createChatMessage(scene, sender, msg, false, alert, self, timestamp);
+    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
 
     return line;
 }
 
-ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg, const QDateTime &timestamp)
+ChatMessage::Ptr ChatLog::addChatAction(const QString &sender, const QString &msg, const QDateTime &timestamp)
 {
-    ChatMessage* line = ChatMessage::createChatMessage(scene, sender, msg, true, false, false, timestamp);
-    insertChatline(line);
+    ChatMessage::Ptr line = ChatMessage::createChatMessage(scene, sender, msg, true, false, false, timestamp);
+    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
 
     return line;
 }
 
-ChatMessage *ChatLog::addChatAction(const QString &sender, const QString &msg)
+ChatMessage::Ptr ChatLog::addChatAction(const QString &sender, const QString &msg)
 {
-    ChatMessage* line = ChatMessage::createChatMessage(scene, sender, msg, true, false, false);
-    insertChatline(line);
+    ChatMessage::Ptr line = ChatMessage::createChatMessage(scene, sender, msg, true, false, false);
+    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
 
     return line;
 }
 
-ChatMessage *ChatLog::addSystemMessage(const QString &msg, const QDateTime& timestamp)
+ChatMessage::Ptr ChatLog::addSystemMessage(const QString &msg, const QDateTime& timestamp)
 {
-    ChatMessage* line = ChatMessage::createChatInfoMessage(scene, msg, "", timestamp);
-    insertChatline(line);
+    ChatMessage::Ptr line = ChatMessage::createChatInfoMessage(scene, msg, "", timestamp);
+    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
 
     return line;
 }
 
-ChatMessage *ChatLog::addFileTransferMessage(const QString &sender, const ToxFile &file,  const QDateTime& timestamp, bool self)
+ChatMessage::Ptr ChatLog::addFileTransferMessage(const QString &sender, const ToxFile &file,  const QDateTime& timestamp, bool self)
 {
-    ChatMessage* line = ChatMessage::createFileTransferMessage(scene, sender, "", file, self, timestamp);
-    insertChatline(line);
+    ChatMessage::Ptr line = ChatMessage::createFileTransferMessage(scene, sender, "", file, self, timestamp);
+    insertChatline(std::dynamic_pointer_cast<ChatLine>(line));
 
     return line;
 }
@@ -159,7 +157,7 @@ bool ChatLog::layout(int start, int end, qreal width)
     bool needsReposition = false;
     for(int i = start; i < end; ++i)
     {
-        ChatLine* l = lines[i];
+        ChatLine* l = lines[i].get();
 
         qreal oldHeight = l->boundingSceneRect().height();
         l->layout(width, QPointF(0.0, h));
@@ -352,7 +350,7 @@ void ChatLog::reposition(int start, int end)
 
     for(int i = start + 1; i < end; ++i)
     {
-        ChatLine* l = lines[i];
+        ChatLine* l = lines[i].get();
         l->layout(QPointF(0, h));
         h += l->boundingSceneRect().height() + lineSpacing;
     }
@@ -369,7 +367,7 @@ void ChatLog::repositionDownTo(int start, qreal end)
 
     for(int i = start + 1; i < lines.size(); ++i)
     {
-        ChatLine* l = lines[i];
+        ChatLine* l = lines[i].get();
         l->layout(QPointF(0, h));
         h += l->boundingSceneRect().height() + lineSpacing;
 
@@ -378,7 +376,7 @@ void ChatLog::repositionDownTo(int start, qreal end)
     }
 }
 
-void ChatLog::insertChatline(ChatLine* l)
+void ChatLog::insertChatline(ChatLine::Ptr l)
 {
     stickToBtm = stickToBottom();
 
@@ -442,7 +440,7 @@ QString ChatLog::toPlainText() const
     QString out;
     QString lastSender;
 
-    for(ChatLine* l : lines)
+    for(ChatLine::Ptr l : lines)
     {
         if(lastSender != l->content[0]->getText() && !l->content[0]->getText().isEmpty())
         {
@@ -502,13 +500,14 @@ void ChatLog::showContextMenu(const QPoint& globalPos, const QPointF& scenePos)
 
 void ChatLog::clear()
 {
-    visibleLines.clear();
     clearSelection();
 
-    for(ChatLine* line : lines)
-        delete line;
+    for(ChatLine::Ptr l : lines)
+        l->removeFromScene();
 
     lines.clear();
+    visibleLines.clear();
+
     updateSceneRect();
 }
 
@@ -526,21 +525,21 @@ void ChatLog::checkVisibility()
         return;
 
     // find first visible row
-    QList<ChatLine*>::const_iterator upperBound;
-    upperBound = std::upper_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), [](const qreal lhs, const ChatLine* rhs)
+    QList<ChatLine::Ptr>::const_iterator upperBound;
+    upperBound = std::upper_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), [](const qreal lhs, const ChatLine::Ptr rhs)
     {
         return lhs < rhs->boundingSceneRect().bottom();
     });
 
     // find last visible row
-    QList<ChatLine*>::const_iterator lowerBound;
-    lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), [](const ChatLine* lhs, const qreal rhs)
+    QList<ChatLine::Ptr>::const_iterator lowerBound;
+    lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), [](const ChatLine::Ptr lhs, const qreal rhs)
     {
         return lhs->boundingSceneRect().top() < rhs;
     });
 
     // set visibilty
-    QList<ChatLine*> newVisibleLines;
+    QList<ChatLine::Ptr> newVisibleLines;
     for(auto itr = upperBound; itr != lowerBound; ++itr)
     {
         newVisibleLines.append(*itr);
@@ -551,13 +550,13 @@ void ChatLog::checkVisibility()
         visibleLines.removeOne(*itr);
     }
 
-    for(ChatLine* line : visibleLines)
+    for(ChatLine::Ptr line : visibleLines)
         line->visibilityChanged(false);
 
     visibleLines = newVisibleLines;
 
     // assure order
-    std::sort(visibleLines.begin(), visibleLines.end(), [](const ChatLine* lhs, const ChatLine* rhs)
+    std::sort(visibleLines.begin(), visibleLines.end(), [](const ChatLine::Ptr lhs, const ChatLine::Ptr rhs)
     {
         return lhs->getRowIndex() < rhs->getRowIndex();
     });

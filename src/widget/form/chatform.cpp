@@ -118,7 +118,7 @@ void ChatForm::onSendTriggered()
         int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
                                                             Core::getInstance()->getSelfId().publicKey, timestamp, status);
 
-        ChatMessage* ma = addSelfMessage(msg, isAction, timestamp, false);
+        ChatMessage::Ptr ma = addSelfMessage(msg, isAction, timestamp, false);
 
         int rec;
         if (isAction)
@@ -197,7 +197,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         previousId = friendId;
     }
 
-    ChatMessage* msg = chatWidget->addFileTransferMessage(name, file, QDateTime::currentDateTime(), false);
+    ChatMessage::Ptr msg = chatWidget->addFileTransferMessage(name, file, QDateTime::currentDateTime(), false);
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxID()).isEmpty()
             || Settings::getInstance().getAutoSaveEnabled())
     {
@@ -701,7 +701,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
     ToxID storedPrevId;
     std::swap(storedPrevId, previousId);
-    QList<ChatMessage*> historyMessages;
+    QList<ChatMessage::Ptr> historyMessages;
 
     QDate lastDate(1,0,0);
     for (const auto &it : msgs)
@@ -720,7 +720,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
         bool isAction = it.message.startsWith("/me ");
 
-        ChatMessage* msg = addMessage(msgSender,
+        ChatMessage::Ptr msg = addMessage(msgSender,
                                       isAction ? it.message.right(it.message.length() - 4) : it.message,
                                       isAction, QDateTime::currentDateTime(),
                                       false);
@@ -821,7 +821,7 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
 }
 
-void ChatForm::registerReceipt(int receipt, int messageID, ChatMessage* msg)
+void ChatForm::registerReceipt(int receipt, int messageID, ChatMessage::Ptr msg)
 {
     receipts[receipt] = messageID;
     undeliveredMsgs[messageID] = msg;
@@ -855,7 +855,7 @@ void ChatForm::deliverOfflineMsgs()
     if (!Settings::getInstance().getFauxOfflineMessaging())
         return;
 
-    QMap<int, ChatMessage*> msgs = undeliveredMsgs;
+    QMap<int, ChatMessage::Ptr> msgs = undeliveredMsgs;
     clearReciepts();
 
     for (auto iter = msgs.begin(); iter != msgs.end(); iter++)

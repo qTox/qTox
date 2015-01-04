@@ -17,7 +17,8 @@
 #ifndef CHATLINE_H
 #define CHATLINE_H
 
-#include <QTextLayout>
+#include <QMouseEvent>
+#include <memory>
 
 class ChatLog;
 class ChatLineContent;
@@ -54,6 +55,8 @@ using ColumnFormats = QVector<ColumnFormat>;
 class ChatLine
 {
 public:
+    using Ptr = std::shared_ptr<ChatLine>;
+
     explicit ChatLine(QGraphicsScene* scene);
     virtual ~ChatLine();
 
@@ -75,6 +78,8 @@ public:
     ChatLineContent* getContent(int col) const;
 
     bool isOverSelection(QPointF scenePos);
+
+    void removeFromScene();
 
 private:
     QPointF mapToContent(ChatLineContent* c, QPointF pos);

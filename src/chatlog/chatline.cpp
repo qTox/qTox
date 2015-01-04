@@ -34,7 +34,9 @@ ChatLine::~ChatLine()
 {
     for(ChatLineContent* c : content)
     {
-        scene->removeItem(c);
+        if(c->scene())
+            scene->removeItem(c);
+
         delete c;
     }
 }
@@ -69,6 +71,15 @@ ChatLineContent *ChatLine::getContent(int col) const
         return content[col];
 
     return nullptr;
+}
+
+void ChatLine::removeFromScene()
+{
+    for(ChatLineContent* c : content)
+    {
+        if(c->scene())
+            scene->removeItem(c);
+    }
 }
 
 void ChatLine::selectionCleared()

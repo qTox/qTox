@@ -50,8 +50,8 @@ public:
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
 
-    ChatMessage* addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
-    ChatMessage* addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    ChatMessage::Ptr addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    ChatMessage::Ptr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
 
     void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime);
     void addAlertMessage(const ToxID& author, QString message, QDateTime datetime);

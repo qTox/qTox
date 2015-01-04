@@ -35,9 +35,9 @@ ChatMessage::ChatMessage(QGraphicsScene* scene, const QString& rawMessage)
 
 }
 
-ChatMessage *ChatMessage::createChatMessage(QGraphicsScene *scene, const QString &sender, const QString &rawMessage, bool isAction, bool alert, bool isMe, const QDateTime &date)
+ChatMessage::Ptr ChatMessage::createChatMessage(QGraphicsScene *scene, const QString &sender, const QString &rawMessage, bool isAction, bool alert, bool isMe, const QDateTime &date)
 {
-    ChatMessage* msg = new ChatMessage(scene, rawMessage);
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(scene, rawMessage));
 
     QString text = toHtmlChars(rawMessage);
 
@@ -66,20 +66,22 @@ ChatMessage *ChatMessage::createChatMessage(QGraphicsScene *scene, const QString
     return msg;
 }
 
-ChatMessage *ChatMessage::createChatInfoMessage(QGraphicsScene *scene, const QString &rawMessage, const QString &type, const QDateTime &date)
+ChatMessage::Ptr ChatMessage::createChatInfoMessage(QGraphicsScene *scene, const QString &rawMessage, const QString &type, const QDateTime &date)
 {
-    ChatMessage* msg = new ChatMessage(scene, rawMessage);
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(scene, rawMessage));
 
     msg->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big)), ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
+    Q_UNUSED(type)
+
     return msg;
 }
 
-ChatMessage *ChatMessage::createFileTransferMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, ToxFile file, bool isMe, const QDateTime& date)
+ChatMessage::Ptr ChatMessage::createFileTransferMessage(QGraphicsScene* scene, const QString& sender, const QString& rawMessage, ToxFile file, bool isMe, const QDateTime& date)
 {
-    ChatMessage* msg = new ChatMessage(scene, rawMessage);
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage(scene, rawMessage));
 
     msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 380, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
