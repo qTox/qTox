@@ -704,7 +704,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     ToxID storedPrevId = previousId;
     ToxID prevId;
 
-    QList<ChatMessage::Ptr> historyMessages;
+    QList<ChatLine::Ptr> historyMessages;
 
     QDate lastDate(1,0,0);
     for (const auto &it : msgs)
@@ -758,8 +758,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
     earliestMessage = since;
 
-    for(ChatMessage::Ptr m : historyMessages)
-        chatWidget->insertChatlineOnTop(m);
+    chatWidget->insertChatlineOnTop(historyMessages);
 
     savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
     chatWidget->verticalScrollBar()->setValue(savedSliderPos);

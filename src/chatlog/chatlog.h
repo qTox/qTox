@@ -39,6 +39,7 @@ public:
 
     void insertChatlineAtBottom(ChatLine::Ptr l);
     void insertChatlineOnTop(ChatLine::Ptr l);
+    void insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines);
     void clearSelection();
     void clear();
     void copySelectedText() const;

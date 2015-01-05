@@ -399,6 +399,34 @@ void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
     checkVisibility();
 }
 
+void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
+{
+    if(newLines.isEmpty())
+        return;
+
+    //move all lines down by n
+    int n = newLines.size();
+    for(ChatLine::Ptr l : lines)
+        l->setRowIndex(l->getRowIndex() + n);
+
+    //add the new line
+    for(ChatLine::Ptr l : newLines)
+    {
+        l->addToScene(scene);
+        l->setRowIndex(--n);
+        lines.prepend(l);
+    }
+
+    //full refresh is required
+    layout(0, lines.size(), useableWidth());
+    updateSceneRect();
+
+    if(stickToBtm)
+        scrollToBottom();
+
+    checkVisibility();
+}
+
 bool ChatLog::stickToBottom()
 {
     return verticalScrollBar()->value() == verticalScrollBar()->maximum();
@@ -521,7 +549,7 @@ void ChatLog::checkVisibility()
 
     visibleLines = newVisibleLines;
 
-    // assure order
+    // enforce order
     std::sort(visibleLines.begin(), visibleLines.end(), [](const ChatLine::Ptr lhs, const ChatLine::Ptr rhs)
     {
         return lhs->getRowIndex() < rhs->getRowIndex();
