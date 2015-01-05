@@ -64,6 +64,7 @@ unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES];
 const QString AutoUpdater::checkURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/version";
 const QString AutoUpdater::flistURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/flist";
 const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/files/";
+bool AutoUpdater::abortFlag{false};
 
 bool AutoUpdater::isUpdateAvailable()
 {
@@ -251,7 +252,11 @@ AutoUpdater::UpdateFile AutoUpdater::getUpdateFile(UpdateFileMeta fileMeta)
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(filesURI+fileMeta.id)));
     while (!reply->isFinished())
+    {
+        if (abortFlag)
+            return file;
         qApp->processEvents();
+    }
 
     if (reply->error() != QNetworkReply::NoError)
     {
@@ -279,6 +284,9 @@ bool AutoUpdater::downloadUpdate()
     QByteArray newFlistData = getUpdateFlist();
     QList<UpdateFileMeta> newFlist = parseFlist(newFlistData);
     QList<UpdateFileMeta> diff = genUpdateDiff(newFlist);
+
+    if (abortFlag)
+        return false;
 
     qDebug() << "AutoUpdater: Need to update "<<diff.size()<<" files";
 
@@ -308,6 +316,9 @@ bool AutoUpdater::downloadUpdate()
     // Download and write each new file
     for (UpdateFileMeta fileMeta : diff)
     {
+        if (abortFlag)
+            return false;
+
         qDebug() << "AutoUpdater: Downloading '"+fileMeta.installpath+"' ...";
 
         // Create subdirs if necessary
@@ -317,6 +328,8 @@ bool AutoUpdater::downloadUpdate()
 
         // Download
         UpdateFile file = getUpdateFile(fileMeta);
+        if (abortFlag)
+            return false;
         if (file.data.isNull())
         {
             qWarning() << "AutoUpdater::downloadUpdate: Error downloading a file, aborting...";
@@ -432,4 +445,9 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
     {
         downloadUpdate();
     }
+}
+
+void AutoUpdater::abortUpdates()
+{
+    abortFlag = true;
 }

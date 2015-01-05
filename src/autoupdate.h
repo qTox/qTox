@@ -87,6 +87,9 @@ public:
     /// The qTox updater will restart us after the update is done
     /// Note: If we fail to start the qTox updater, we will delete the update and exit
     [[ noreturn ]] static void installLocalUpdate();
+    /// Aborting will make some functions try to return early
+    /// Call before qTox exits to avoid the updater running in the background
+    static void abortUpdates();
 
 protected:
     /// Parses and validates a flist file. Returns an empty list on error
@@ -118,6 +121,7 @@ private:
     static const QString filesURI; ///< URI of the actual files of the latest version
     static const QString updaterBin; ///< Path to the qtox-updater binary
     static unsigned char key[];
+    static bool abortFlag; ///< If true, try to abort everything.
 };
 
 #endif // AUTOUPDATE_H

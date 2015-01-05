@@ -319,6 +319,7 @@ Widget::~Widget()
     coreThread->wait(500); // In case of deadlock (can happen with QtAudio/PA bugs)
     if (!coreThread->isFinished())
         coreThread->terminate();
+    AutoUpdater::abortUpdates();
     delete core;
     delete settingsWidget;
     delete addFriendForm;
