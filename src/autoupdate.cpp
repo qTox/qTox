@@ -370,7 +370,7 @@ bool AutoUpdater::isLocalUpdateReady()
     if (!updateDir.exists())
         return false;
 
-    // Check that we have a flist and that every file on the diff exists
+    // Check that we have a flist and generate a diff
     QFile updateFlistFile(updateDirStr+"flist");
     if (!updateFlistFile.open(QIODevice::ReadOnly))
         return false;
@@ -380,9 +380,23 @@ bool AutoUpdater::isLocalUpdateReady()
     QList<UpdateFileMeta> updateFlist = parseFlist(updateFlistData);
     QList<UpdateFileMeta> diff = genUpdateDiff(updateFlist);
 
+    // If the update wasn't downloaded correctly, redownload it
+    // We don't check signatures to not block qTox too long, the updater will do it anyway
     for (UpdateFileMeta fileMeta : diff)
+    {
         if (!QFile::exists(updateDirStr+fileMeta.installpath))
+        {
+            QtConcurrent::run(&AutoUpdater::downloadUpdate);
             return false;
+        }
+
+        QFile f(updateDirStr+fileMeta.installpath);
+        if (f.size() != (int64_t)fileMeta.size)
+        {
+            QtConcurrent::run(&AutoUpdater::downloadUpdate);
+            return false;
+        }
+    }
 
     return true;
 }

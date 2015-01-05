@@ -78,9 +78,9 @@ public:
     /// Will try to download an update, if successful returns true and qTox will apply it after a restart
     /// Will try to follow qTox's proxy settings, may block and processEvents
     static bool downloadUpdate();
-    /// Returns true if an update is downloaded and ready to be installed
-    /// If so, call installLocalUpdate. If not, call downloadUpdate.
-    /// This only checks that we downloaded an update and didn't stop in the middle, not that every file is still valid
+    /// Returns true if an update is downloaded and ready to be installed,
+    /// if so, call installLocalUpdate.
+    /// If an update was partially downloaded, the function will resume asynchronously and return false
     static bool isLocalUpdateReady();
     /// Launches the qTox updater to try to install the local update and exits immediately
     /// Will not check that the update actually exists, use isLocalUpdateReady first for that
