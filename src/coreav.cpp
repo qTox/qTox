@@ -227,11 +227,6 @@ void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint1
     if (!calls[callId].alSource)
         alGenSources(1, &calls[callId].alSource);
 
-#ifdef QTOX_FILTER_AUDIO
-    if (filterer[callId])
-        filterer[callId]->filterAudio((int16_t*) data, samples);
-#endif
-
     ToxAvCSettings dest;
     if (toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &dest) == 0)
         playAudioBuffer(calls[callId].alSource, data, samples, dest.audio_channels, dest.audio_sample_rate);
@@ -261,6 +256,11 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
             calls[callId].sendAudioTimer->start();
             return;
         }
+
+#ifdef QTOX_FILTER_AUDIO
+        if (filterer[callId])
+            filterer[callId]->filterAudio((int16_t*) buf, framesize);
+#endif
 
         if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
         {
