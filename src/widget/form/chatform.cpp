@@ -727,7 +727,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                                                               isAction ? it.message.right(it.message.length() - 4) : it.message,
                                                               isAction, false,
                                                               authorId.isMine(),
-                                                              QDateTime::currentDateTime());
+                                                              QDateTime());
 
         if(prevId == authorId)
             msg->hideSender();
