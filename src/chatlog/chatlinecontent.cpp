@@ -16,16 +16,6 @@
 
 #include "chatlinecontent.h"
 
-void ChatLineContent::setChatLine(ChatLine* chatline)
-{
-    line = chatline;
-}
-
-ChatLine* ChatLineContent::getChatLine() const
-{
-    return line;
-}
-
 void ChatLineContent::setIndex(int r, int c)
 {
     row = r;

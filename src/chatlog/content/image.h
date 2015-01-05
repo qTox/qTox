@@ -19,16 +19,16 @@
 
 #include "../chatlinecontent.h"
 
-class Image : public QObject, public ChatLineContent
+class Image : public ChatLineContent
 {
 public:
     Image(QSizeF size, const QString &filename);
 
-    virtual QRectF boundingRect() const;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    virtual void setWidth(qreal width);
-    virtual QRectF boundingSceneRect() const;
-    virtual qreal getAscent() const;
+    virtual QRectF boundingRect() const override;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    virtual void setWidth(qreal width) override;
+    virtual QRectF boundingSceneRect() const override;
+    virtual qreal getAscent() const override;
 
 private:
     QSizeF size;

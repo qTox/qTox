@@ -140,8 +140,6 @@ void ChatLine::addColumn(ChatLineContent* item, ColumnFormat fmt)
     if(!item)
         return;
 
-    item->setChatLine(this);
-
     format << fmt;
     content << item;
 }
@@ -239,14 +237,13 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     updateBBox();
 }
 
-void ChatLine::layout(QPointF scenePos)
+void ChatLine::moveBy(qreal deltaY)
 {
     // reposition only
-    QPointF offset = pos - scenePos;
     for(ChatLineContent* c : content)
-        c->setPos(c->pos() - offset);
+        c->moveBy(0, deltaY);
 
-    pos = scenePos;
+    pos.setY(pos.y() + deltaY);
 
     updateBBox();
 }

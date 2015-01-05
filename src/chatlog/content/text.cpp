@@ -26,7 +26,6 @@
 #include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QGraphicsSceneMouseEvent>
-#include <QRegExp>
 #include <QDesktopServices>
 
 Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText)

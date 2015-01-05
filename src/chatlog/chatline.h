@@ -65,7 +65,7 @@ public:
     void replaceContent(int col, ChatLineContent* lineContent);
 
     void layout(qreal width, QPointF scenePos);
-    void layout(QPointF scenePos);
+    void moveBy(qreal deltaY);
 
     void selectionCleared();
     void selectionCleared(int col);

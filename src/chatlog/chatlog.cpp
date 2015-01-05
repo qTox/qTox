@@ -126,10 +126,6 @@ qreal ChatLog::layout(int start, int end, qreal width)
         h += l->boundingSceneRect().height() + lineSpacing;
     }
 
-    // move up
-    if(deltaRepos != 0)
-        reposition(end-1, lines.size());
-
     return deltaRepos;
 }
 
@@ -150,15 +146,13 @@ void ChatLog::partialUpdate()
         if(!visibleLines.empty())
         {
             repos = layout(visibleLines.first()->getRowIndex(), visibleLines.last()->getRowIndex(), useableWidth());
+            reposition(visibleLines.last()->getRowIndex()+1, lines.size(), -repos);
             verticalScrollBar()->setValue(verticalScrollBar()->value() - repos);
         }
 
         checkVisibility();
     }
     while(repos != 0);
-
-    if(!visibleLines.empty())
-        reposition(visibleLines.last()->getRowIndex(), lines.size());
 
     checkVisibility();
 
@@ -318,7 +312,7 @@ qreal ChatLog::useableWidth()
     return width() - verticalScrollBar()->sizeHint().width() - margins.right() - margins.left();
 }
 
-void ChatLog::reposition(int start, int end)
+void ChatLog::reposition(int start, int end, qreal deltaY)
 {
     if(lines.isEmpty())
         return;
@@ -326,33 +320,10 @@ void ChatLog::reposition(int start, int end)
     start = clamp<int>(start, 0, lines.size() - 1);
     end = clamp<int>(end + 1, 0, lines.size());
 
-    qreal h = lines[start]->boundingSceneRect().bottom() + lineSpacing;
-
-    for(int i = start + 1; i < end; ++i)
+    for(int i = start; i < end; ++i)
     {
         ChatLine* l = lines[i].get();
-        l->layout(QPointF(0, h));
-        h += l->boundingSceneRect().height() + lineSpacing;
-    }
-}
-
-void ChatLog::repositionDownTo(int start, qreal end)
-{
-    if(lines.isEmpty())
-        return;
-
-    start = clamp<int>(start, 0, lines.size() - 1);
-
-    qreal h = lines[start]->boundingSceneRect().bottom() + lineSpacing;
-
-    for(int i = start + 1; i < lines.size(); ++i)
-    {
-        ChatLine* l = lines[i].get();
-        l->layout(QPointF(0, h));
-        h += l->boundingSceneRect().height() + lineSpacing;
-
-        if(h > end)
-            break;
+        l->moveBy(deltaY);
     }
 }
 

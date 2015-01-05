@@ -26,7 +26,7 @@
 #include "src/misc/style.h"
 
 #define NAME_COL_WIDTH 75.0
-#define TIME_COL_WIDTH 85.0
+#define TIME_COL_WIDTH 90.0
 
 ChatMessage::ChatMessage()
 {

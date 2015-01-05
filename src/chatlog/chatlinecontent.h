@@ -29,8 +29,6 @@ public:
         ChatLineContentType = QGraphicsItem::UserType + 1,
     };
 
-    ChatLine* getChatLine() const;
-
     int getColumn() const;
     int getRow() const;
 
@@ -56,12 +54,9 @@ public:
 
 private:
     friend class ChatLine;
-
     void setIndex(int row, int col);
-    void setChatLine(ChatLine* chatline);
 
 private:
-    ChatLine* line = nullptr;
     int row = -1;
     int col = -1;
 };

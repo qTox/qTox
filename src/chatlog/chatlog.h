@@ -59,8 +59,7 @@ protected:
 
     qreal useableWidth();
 
-    void reposition(int start, int end);
-    void repositionDownTo(int start, qreal end);
+    void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
     void partialUpdate();
     void fullUpdate();
@@ -116,7 +115,7 @@ private:
 
     // layout
     QMarginsF margins = QMarginsF(10.0,10.0,10.0,10.0);
-    qreal lineSpacing = 10.0f;
+    qreal lineSpacing = 5.0f;
 
 };
 

@@ -28,12 +28,12 @@ class Spinner : public QObject, public ChatLineContent
 public:
     Spinner(QSizeF size);
 
-    virtual QRectF boundingRect() const;
-    virtual QRectF boundingSceneRect() const;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    virtual void setWidth(qreal width);
-    virtual void visibilityChanged(bool visible);
-    virtual qreal getAscent() const;
+    virtual QRectF boundingRect() const override;
+    virtual QRectF boundingSceneRect() const override;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    virtual void setWidth(qreal width) override;
+    virtual void visibilityChanged(bool visible) override;
+    virtual qreal getAscent() const override;
 
 private slots:
     void timeout();
