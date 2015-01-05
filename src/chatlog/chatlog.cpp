@@ -101,7 +101,7 @@ void ChatLog::updateSceneRect()
     setSceneRect(QRectF(-margins.left(), -margins.top(), useableWidth(), (lines.empty() ? 0.0 : lines.last()->boundingSceneRect().bottom()) + margins.bottom() + margins.top()));
 }
 
-bool ChatLog::layout(int start, int end, qreal width)
+qreal ChatLog::layout(int start, int end, qreal width)
 {
     //qDebug() << "layout " << start << end;
     if(lines.empty())
@@ -112,7 +112,7 @@ bool ChatLog::layout(int start, int end, qreal width)
 
     qreal h = lines[start]->boundingSceneRect().top();
 
-    bool needsReposition = false;
+    qreal deltaRepos = 0.0;
     for(int i = start; i < end; ++i)
     {
         ChatLine* l = lines[i].get();
@@ -121,16 +121,16 @@ bool ChatLog::layout(int start, int end, qreal width)
         l->layout(width, QPointF(0.0, h));
 
         if(oldHeight != l->boundingSceneRect().height())
-            needsReposition = true;
+            deltaRepos += oldHeight - l->boundingSceneRect().height();
 
         h += l->boundingSceneRect().height() + lineSpacing;
     }
 
     // move up
-    if(needsReposition)
-        reposition(end-1, end+10);
+    if(deltaRepos != 0)
+        reposition(end-1, lines.size());
 
-    return needsReposition;
+    return deltaRepos;
 }
 
 void ChatLog::partialUpdate()
@@ -143,16 +143,19 @@ void ChatLog::partialUpdate()
     auto oldUpdateMode = viewportUpdateMode();
     setViewportUpdateMode(NoViewportUpdate);
 
-    bool repos;
+    qreal repos;
     do
     {
-        repos = false;
+        repos = 0;
         if(!visibleLines.empty())
+        {
             repos = layout(visibleLines.first()->getRowIndex(), visibleLines.last()->getRowIndex(), useableWidth());
+            verticalScrollBar()->setValue(verticalScrollBar()->value() - repos);
+        }
 
         checkVisibility();
     }
-    while(repos);
+    while(repos != 0);
 
     if(!visibleLines.empty())
         reposition(visibleLines.last()->getRowIndex(), lines.size());

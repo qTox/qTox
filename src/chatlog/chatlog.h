@@ -53,7 +53,7 @@ protected:
     QRect getVisibleRect() const;
     ChatLineContent* getContentFromPos(QPointF scenePos) const;
 
-    bool layout(int start, int end, qreal width);
+    qreal layout(int start, int end, qreal width);
     bool isOverSelection(QPointF scenePos);
     bool stickToBottom();
 
