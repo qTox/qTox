@@ -44,7 +44,7 @@ void ChatLine::setRowIndex(int idx)
 {
     rowIndex = idx;
 
-    for(int c = 0; c < content.size(); ++c)
+    for(int c = 0; c < static_cast<int>(content.size()); ++c)
         content[c]->setIndex(rowIndex, c);
 }
 
@@ -66,7 +66,7 @@ int ChatLine::getRowIndex() const
 
 ChatLineContent *ChatLine::getContent(int col) const
 {
-    if(col < content.size() && col >= 0)
+    if(col < static_cast<int>(content.size()) && col >= 0)
         return content[col];
 
     return nullptr;
@@ -98,7 +98,7 @@ void ChatLine::selectionCleared()
 
 void ChatLine::selectionCleared(int col)
 {
-    if(col < content.size() && content[col])
+    if(col < static_cast<int>(content.size()) && content[col])
         content[col]->selectionCleared();
 }
 
@@ -110,7 +110,7 @@ void ChatLine::selectAll()
 
 void ChatLine::selectAll(int col)
 {
-    if(col < content.size() && content[col])
+    if(col < static_cast<int>(content.size()) && content[col])
         content[col]->selectAll();
 }
 
@@ -138,13 +138,13 @@ void ChatLine::addColumn(ChatLineContent* item, ColumnFormat fmt)
     if(!item)
         return;
 
-    format << fmt;
-    content << item;
+    format.push_back(fmt);
+    content.push_back(item);
 }
 
 void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
 {
-    if(col >= 0 && col < content.size() && lineContent)
+    if(col >= 0 && col < static_cast<int>(content.size()) && lineContent)
     {
         QGraphicsScene* scene = content[col]->scene();
         delete content[col];
@@ -169,7 +169,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal fixedWidth = (content.size()-1) * CELL_SPACING;
     qreal varWidth = 0.0; // used for normalisation
 
-    for(int i = 0; i < format.size(); ++i)
+    for(int i = 0; i < static_cast<int>(format.size()); ++i)
     {
         if(format[i].policy == ColumnFormat::FixedSize)
             fixedWidth += format[i].size;
@@ -185,7 +185,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal maxVOffset = 0.0;
     qreal xOffset = 0.0;
 
-    for(int i = 0; i < content.size(); ++i)
+    for(int i = 0; i < static_cast<int>(content.size()); ++i)
     {
         maxVOffset = qMax(maxVOffset, content[i]->getAscent());
 
@@ -220,7 +220,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         xOffset += width + CELL_SPACING;
     }
 
-    for(int i = 0; i < content.size(); ++i)
+    for(int i = 0; i < static_cast<int>(content.size()); ++i)
     {
         // calculate vertical alignment
         // vertical alignment may depend on width, so we do it in a second pass

@@ -19,6 +19,7 @@
 
 #include <QMouseEvent>
 #include <memory>
+#include <vector>
 
 class ChatLog;
 class ChatLineContent;
@@ -92,8 +93,8 @@ protected:
 
 private:
     int rowIndex = -1;
-    QVector<ChatLineContent*> content; // 3 columns
-    QVector<ColumnFormat> format;
+    std::vector<ChatLineContent*> content; // 3 columns
+    std::vector<ColumnFormat> format;
     qreal width;
     QRectF bbox;
     bool isVisible = false;
