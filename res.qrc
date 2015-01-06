@@ -171,16 +171,6 @@
         <file>ui/fileButton/fileButtonHover.png</file>
         <file>ui/fileButton/fileButtonPressed.png</file>
         <file>ui/fileButton/fileButtonDisabled.png</file>
-        <file>ui/fileTransferInstance/acceptFileButton.png</file>
-        <file>ui/fileTransferInstance/emptyLGreenFileButton.png</file>
-        <file>ui/fileTransferInstance/emptyLRedFileButton.png</file>
-        <file>ui/fileTransferInstance/emptyRGreenFileButton.png</file>
-        <file>ui/fileTransferInstance/emptyRRedFileButton.png</file>
-        <file>ui/fileTransferInstance/pauseFileButton.png</file>
-        <file>ui/fileTransferInstance/pauseGreyFileButton.png</file>
-        <file>ui/fileTransferInstance/resumeFileButton.png</file>
-        <file>ui/fileTransferInstance/stopFileButton.png</file>
-        <file>ui/fileTransferInstance/sliverRTEdge.png</file>
         <file>ui/fileTransferWidget/fileTransferWidget.css</file>
         <file>ui/friendList/friendList.css</file>
         <file>ui/micButton/micButton.css</file>
