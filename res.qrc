@@ -150,6 +150,7 @@
         <file>ui/chatArea/innerStyle.css</file>
         <file>ui/chatArea/spinner.png</file>
         <file>ui/chatArea/info.png</file>
+	<file>ui/chatArea/error.png</file>
         <file>ui/chatArea/scrollBarDownArrow.png</file>
         <file>ui/chatArea/scrollBarDownArrowHover.png</file>
         <file>ui/chatArea/scrollBarDownArrowPressed.png</file>

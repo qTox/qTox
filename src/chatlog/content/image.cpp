@@ -41,8 +41,8 @@ qreal Image::getAscent() const
 
 void Image::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    painter->translate(-size.width() / 2.0, -size.height() / 2.0);
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
+    painter->translate(-size.width() / 2.0, -size.height() / 2.0);
     painter->drawPixmap(0, 0, size.width(), size.height(), pmap);
 
     Q_UNUSED(option)

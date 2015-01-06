@@ -68,11 +68,16 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
-    msg->addColumn(new Image(QSizeF(16, 16), ":/ui/chatArea/info.png"), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    QString img;
+    switch(type)
+    {
+    case INFO:  img = ":/ui/chatArea/info.png";     break;
+    case ERROR: img = ":/ui/chatArea/error.png";    break;
+    }
+
+    msg->addColumn(new Image(QSizeF(16, 16), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big), false, rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-
-    Q_UNUSED(type)
 
     return msg;
 }
