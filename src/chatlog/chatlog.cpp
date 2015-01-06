@@ -39,7 +39,7 @@ ChatLog::ChatLog(QWidget* parent)
     : QGraphicsView(parent)
 {
     scene = new QGraphicsScene(this);
-    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    scene->setItemIndexMethod(QGraphicsScene::BspTreeIndex);
     setScene(scene);
 
     setInteractive(true);
