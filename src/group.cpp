@@ -145,7 +145,9 @@ GroupWidget *Group::getGroupWidget()
 
 QStringList Group::getPeerList() const
 {
-    return peers.values();
+    QStringList peerNames(peers.values());
+    peerNames.sort(Qt::CaseInsensitive);
+    return peerNames;
 }
 
 void Group::setEventFlag(int f)
