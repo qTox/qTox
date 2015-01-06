@@ -30,12 +30,6 @@ void toxSaveEventHandler(const QByteArray& eventData)
     handleToxSave(eventData);
 }
 
-static bool checkContinue(const QString& title, const QString& msg)
-{
-    QMessageBox::StandardButton resp = QMessageBox::question(Widget::getInstance(), title, msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-    return resp == QMessageBox::Yes;
-}
-
 void handleToxSave(const QString& path)
 {
     Core* core = Core::getInstance();
@@ -67,7 +61,7 @@ void handleToxSave(const QString& path)
 
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
 
-    if (QFileInfo(profilePath).exists() && !checkContinue(QObject::tr("Profile already exists", "import confirm title"),
+    if (QFileInfo(profilePath).exists() && !Widget::getInstance()->askQuestion(QObject::tr("Profile already exists", "import confirm title"),
             QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
         return;
 
