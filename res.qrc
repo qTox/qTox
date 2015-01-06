@@ -232,6 +232,7 @@
         <file>ui/fileTransferInstance/no_2x.png</file>
         <file>ui/fileTransferInstance/yes_2x.png</file>
         <file>ui/fileTransferInstance/arrow_white_2x.png</file>
+	<file>ui/fileTransferInstance/browse_path.png</file>
         <file>ui/volButton/volButton.png</file>
         <file>ui/volButton/volButtonHover.png</file>
         <file>ui/volButton/volButtonPressed.png</file>
