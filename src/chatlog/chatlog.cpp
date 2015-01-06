@@ -115,7 +115,7 @@ qreal ChatLog::layout(int start, int end, qreal width)
     start = clamp<int>(start, 0, lines.size());
     end = clamp<int>(end + 1, 0, lines.size());
 
-    qreal deltaRepos = 0.0;
+    qreal deltaY = 0.0;
     for(int i = start; i < end; ++i)
     {
         ChatLine* l = lines[i].get();
@@ -124,12 +124,12 @@ qreal ChatLog::layout(int start, int end, qreal width)
         l->layout(width, QPointF(0.0, h));
 
         if(oldHeight != l->boundingSceneRect().height())
-            deltaRepos += oldHeight - l->boundingSceneRect().height();
+            deltaY += oldHeight - l->boundingSceneRect().height();
 
         h += l->boundingSceneRect().height() + lineSpacing;
     }
 
-    return deltaRepos;
+    return deltaY;
 }
 
 void ChatLog::partialUpdate()
