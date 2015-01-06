@@ -107,10 +107,13 @@ qreal ChatLog::layout(int start, int end, qreal width)
     if(lines.empty())
         return false;
 
-    start = clamp<int>(start, 0, lines.size() - 1);
-    end = clamp<int>(end + 1, 0, lines.size());
+    qreal h = 0.0;
 
-    qreal h = lines[start]->boundingSceneRect().top();
+    if(start - 1 >= 0)
+        h = lines[start - 1]->boundingSceneRect().bottom() + lineSpacing;
+
+    start = clamp<int>(start, 0, lines.size());
+    end = clamp<int>(end + 1, 0, lines.size());
 
     qreal deltaRepos = 0.0;
     for(int i = start; i < end; ++i)
@@ -340,7 +343,7 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     lines.append(l);
 
     //partial refresh
-    layout(lines.last()->getRowIndex() - 1, lines.size(), useableWidth());
+    layout(lines.last()->getRowIndex(), lines.size(), useableWidth());
     updateSceneRect();
 
     if(stickToBtm)
