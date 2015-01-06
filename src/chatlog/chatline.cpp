@@ -121,13 +121,11 @@ int ChatLine::getColumnCount()
 
 void ChatLine::updateBBox()
 {
-    bbox = QRectF();
-    bbox.setTop(pos.y());
-    bbox.setLeft(pos.x());
+    bbox.setHeight(0);
     bbox.setWidth(width);
 
     for(ChatLineContent* c : content)
-        bbox.setHeight(qMax(c->sceneBoundingRect().bottom() - pos.y(), bbox.height()));
+        bbox.setHeight(qMax(c->sceneBoundingRect().height(), bbox.height()));
 }
 
 QRectF ChatLine::boundingSceneRect() const
@@ -157,7 +155,7 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
         if(scene)
             scene->addItem(content[col]);
 
-        layout(width, pos);
+        layout(width, bbox.topLeft());
         content[col]->visibilityChanged(isVisible);
         content[col]->update();
     }
@@ -166,7 +164,7 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
 void ChatLine::layout(qreal w, QPointF scenePos)
 {
     width = w;
-    pos = scenePos;
+    bbox.setTopLeft(scenePos);
 
     qreal fixedWidth = (content.size()-1) * CELL_SPACING;
     qreal varWidth = 0.0; // used for normalisation
@@ -217,7 +215,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         }
 
         // reposition
-        content[i]->setPos(pos.x() + xOffset + xAlign, pos.y());
+        content[i]->setPos(scenePos.x() + xOffset + xAlign, scenePos.y());
 
         xOffset += width + CELL_SPACING;
     }
@@ -243,7 +241,5 @@ void ChatLine::moveBy(qreal deltaY)
     for(ChatLineContent* c : content)
         c->moveBy(0, deltaY);
 
-    pos.setY(pos.y() + deltaY);
-
-    updateBBox();
+    bbox.moveTop(bbox.top() + deltaY);
 }

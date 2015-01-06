@@ -96,7 +96,6 @@ private:
     QVector<ColumnFormat> format;
     qreal width;
     QRectF bbox;
-    QPointF pos;
     bool isVisible = false;
 
 };
