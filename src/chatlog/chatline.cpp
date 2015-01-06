@@ -72,6 +72,17 @@ ChatLineContent *ChatLine::getContent(int col) const
     return nullptr;
 }
 
+ChatLineContent *ChatLine::getContent(QPointF scenePos) const
+{
+    for(ChatLineContent* c: content)
+    {
+        if(c->sceneBoundingRect().contains(scenePos))
+            return c;
+    }
+
+    return nullptr;
+}
+
 void ChatLine::removeFromScene()
 {
     for(ChatLineContent* c : content)

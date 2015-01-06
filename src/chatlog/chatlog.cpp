@@ -284,10 +284,26 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
 ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
 {
-    QGraphicsItem* item = scene->itemAt(scenePos, QTransform());
+    if(lines.empty())
+        return nullptr;
 
-    if(item && item->type() == ChatLineContent::ChatLineContentType)
-        return static_cast<ChatLineContent*>(item);
+    QList<ChatLine::Ptr>::const_iterator upperBound;
+    upperBound = std::upper_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const qreal lhs, const ChatLine::Ptr rhs)
+    {
+        return lhs < rhs->boundingSceneRect().bottom();
+    });
+
+    QList<ChatLine::Ptr>::const_iterator lowerBound;
+    lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const ChatLine::Ptr lhs, const qreal rhs)
+    {
+        return lhs->boundingSceneRect().top() < rhs;
+    });
+
+    for(auto itr = upperBound; itr != lowerBound; ++itr)
+    {
+        if((*itr)->boundingSceneRect().contains(scenePos))
+            return (*itr)->getContent(scenePos);
+    }
 
     return nullptr;
 }

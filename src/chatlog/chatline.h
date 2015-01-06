@@ -76,6 +76,7 @@ public:
     int getColumnCount();
     int getRowIndex() const;
     ChatLineContent* getContent(int col) const;
+    ChatLineContent* getContent(QPointF scenePos) const;
 
     bool isOverSelection(QPointF scenePos);
 
