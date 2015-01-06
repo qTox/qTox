@@ -211,8 +211,7 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString 
     if(isSent)
         msg->markAsSent(datetime);
 
-    if(!isAction)
-        previousId = author;
+    previousId = author;
 
     return msg;
 }
