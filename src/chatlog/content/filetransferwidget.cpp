@@ -189,9 +189,14 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
     setupButtons();
     hideWidgets();
 
-    ui->bottomButton->show();
-    ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/browse_path.png"));
-    ui->bottomButton->setObjectName("browse");
+    static const QStringList openExtensions = { "png", "jpeg", "jpg", "gif", "zip", "rar" };
+
+    if(openExtensions.contains(QFileInfo(file.fileName).suffix()))
+    {
+        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/browse_path.png"));
+        ui->bottomButton->setObjectName("browse");
+        ui->bottomButton->show();
+    }
 
     // preview
     if(fileInfo.direction == ToxFile::RECEIVING)
