@@ -91,7 +91,7 @@ private:
     };
 
     QGraphicsScene* scene = nullptr;
-    QList<ChatLine::Ptr> lines;
+    QVector<ChatLine::Ptr> lines;
     QList<ChatLine::Ptr> visibleLines;
 
     bool multiLineInsert = false;
@@ -108,6 +108,7 @@ private:
     QPointF lastPos;
     QGraphicsRectItem* selGraphItem = nullptr;
     QTimer* selectionTimer = nullptr;
+    QTimer* refreshTimer = nullptr;
     AutoScrollDirection selectionScrollDir = NoDirection;
 
     // actions

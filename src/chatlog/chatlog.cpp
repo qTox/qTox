@@ -69,6 +69,11 @@ ChatLog::ChatLog(QWidget* parent)
     selectionTimer->setSingleShot(false);
     selectionTimer->start();
     connect(selectionTimer, &QTimer::timeout, this, &ChatLog::onSelectionTimerTimeout);
+
+    refreshTimer = new QTimer(this);
+    refreshTimer->setSingleShot(true);
+    refreshTimer->setInterval(100);
+    connect(refreshTimer, &QTimer::timeout, this, [this] { partialUpdate(); });
 }
 
 ChatLog::~ChatLog()
@@ -287,13 +292,13 @@ ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
     if(lines.empty())
         return nullptr;
 
-    QList<ChatLine::Ptr>::const_iterator upperBound;
+    QVector<ChatLine::Ptr>::const_iterator upperBound;
     upperBound = std::upper_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const qreal lhs, const ChatLine::Ptr rhs)
     {
         return lhs < rhs->boundingSceneRect().bottom();
     });
 
-    QList<ChatLine::Ptr>::const_iterator lowerBound;
+    QVector<ChatLine::Ptr>::const_iterator lowerBound;
     lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const ChatLine::Ptr lhs, const qreal rhs)
     {
         return lhs->boundingSceneRect().top() < rhs;
@@ -512,14 +517,14 @@ void ChatLog::checkVisibility()
         return;
 
     // find first visible row
-    QList<ChatLine::Ptr>::const_iterator upperBound;
+    QVector<ChatLine::Ptr>::const_iterator upperBound;
     upperBound = std::upper_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), [](const qreal lhs, const ChatLine::Ptr rhs)
     {
         return lhs < rhs->boundingSceneRect().bottom();
     });
 
     // find last visible row
-    QList<ChatLine::Ptr>::const_iterator lowerBound;
+    QVector<ChatLine::Ptr>::const_iterator lowerBound;
     lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), [](const ChatLine::Ptr lhs, const qreal rhs)
     {
         return lhs->boundingSceneRect().top() < rhs;
@@ -555,7 +560,9 @@ void ChatLog::checkVisibility()
 void ChatLog::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
-    partialUpdate();
+    if(!refreshTimer->isActive())
+        refreshTimer->start();
+    checkVisibility();
 }
 
 void ChatLog::resizeEvent(QResizeEvent* ev)

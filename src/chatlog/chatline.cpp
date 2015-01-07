@@ -174,6 +174,12 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
 
 void ChatLine::layout(qreal w, QPointF scenePos)
 {
+    if(width == w)
+    {
+        moveBy(scenePos.y() - bbox.top());
+        return;
+    }
+
     width = w;
     bbox.setTopLeft(scenePos);
 
