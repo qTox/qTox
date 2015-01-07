@@ -109,7 +109,11 @@ private:
     QGraphicsRectItem* selGraphItem = nullptr;
     QTimer* selectionTimer = nullptr;
     QTimer* refreshTimer = nullptr;
+    QTimer* workerTimer = nullptr;
     AutoScrollDirection selectionScrollDir = NoDirection;
+
+    int lastWorkerIndex = 0;
+    qreal workerDy = 0;
 
     // actions
     QAction* copyAction = nullptr;

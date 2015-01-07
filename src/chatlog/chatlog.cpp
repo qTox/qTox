@@ -72,8 +72,54 @@ ChatLog::ChatLog(QWidget* parent)
 
     refreshTimer = new QTimer(this);
     refreshTimer->setSingleShot(true);
-    refreshTimer->setInterval(100);
+    refreshTimer->setInterval(500);
     connect(refreshTimer, &QTimer::timeout, this, [this] { partialUpdate(); });
+
+    workerTimer = new QTimer(this);
+    workerTimer->setSingleShot(false);
+    workerTimer->setInterval(100);
+    connect(workerTimer, &QTimer::timeout, this, [this] {
+        const int stepSize = 200;
+
+        workerDy += layout(lastWorkerIndex, lastWorkerIndex+stepSize, useableWidth());
+
+        qDebug() << "working... " << lastWorkerIndex << "/" << lines.size();
+
+        if(!visibleLines.isEmpty())
+        {
+            int firstVisLineIndex = visibleLines.first()->getRowIndex();
+            int delta = firstVisLineIndex - lastWorkerIndex;
+            if(delta > 0 && delta < stepSize)
+            {
+                //qDebug() << "delta " << delta << "fvl " << firstVisLineIndex;
+                lastWorkerIndex += delta+1;
+
+                if(!stickToBottom())
+                    verticalScrollBar()->setValue(verticalScrollBar()->value() - workerDy);
+
+                workerDy = 0.0;
+                checkVisibility();
+            }
+            else
+                lastWorkerIndex += stepSize;
+        }
+        else
+            lastWorkerIndex += stepSize;
+
+        if(lastWorkerIndex >= lines.size())
+        {
+            workerTimer->stop();
+            lastWorkerIndex = 0;
+            workerDy = 0.0;
+
+            bool stb = stickToBottom();
+            updateSceneRect();
+            if(stb)
+                scrollToBottom();
+
+            qDebug() << "working... done!";
+        }
+    });
 }
 
 ChatLog::~ChatLog()
@@ -108,7 +154,6 @@ void ChatLog::updateSceneRect()
 
 qreal ChatLog::layout(int start, int end, qreal width)
 {
-    //qDebug() << "layout " << start << end;
     if(lines.empty())
         return false;
 
@@ -154,7 +199,7 @@ void ChatLog::partialUpdate()
         if(!visibleLines.empty())
         {
             repos = layout(visibleLines.first()->getRowIndex(), visibleLines.last()->getRowIndex(), useableWidth());
-            reposition(visibleLines.last()->getRowIndex()+1, lines.size(), -repos);
+            reposition(visibleLines.last()->getRowIndex()+1, visibleLines.last()->getRowIndex()+10, -repos);
             verticalScrollBar()->setValue(verticalScrollBar()->value() - repos);
         }
 
@@ -580,6 +625,11 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
         scrollToBottom();
 
     updateMultiSelectionRect();
+
+    qDebug() << "starting worker";
+    lastWorkerIndex = 0;
+    workerDy = 0.0;
+    workerTimer->start();
 }
 
 void ChatLog::updateMultiSelectionRect()
