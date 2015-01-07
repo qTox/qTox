@@ -663,9 +663,6 @@ void Widget::addFriend(int friendId, const QString &userId)
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->getFriendWidget());
 
-    if (Settings::getInstance().getEnableLogging())
-        newfriend->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
-
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
