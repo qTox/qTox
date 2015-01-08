@@ -11,7 +11,8 @@ TRANSLATIONS = translations/es.ts \
                translations/pl.ts \
                translations/ru.ts \
                translations/sv.ts \
-               translations/uk.ts
+               translations/uk.ts \
+               translations/pt.ts
 
 #rules to generate ts
 isEmpty(QMAKE_LUPDATE) {
