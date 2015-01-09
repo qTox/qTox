@@ -27,6 +27,7 @@
 #include <QApplication>
 #include <QGraphicsSceneMouseEvent>
 #include <QDesktopServices>
+#include <QTextFragment>
 
 Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText)
     : rawText(rwText)
@@ -83,7 +84,38 @@ void Text::selectionMouseMove(QPointF scenePos)
     if(cur >= 0)
     {
         cursor.setPosition(cur, QTextCursor::KeepAnchor);
-        selectedText = cursor.selectedText();
+        selectedText.clear();
+
+        QTextBlock block = cursor.block();
+        for(QTextBlock::Iterator itr = block.begin(); itr!=block.end(); ++itr)
+        {
+            int pos = itr.fragment().position(); //fragment position -> position of the first character in the fragment
+
+            if(itr.fragment().charFormat().isImageFormat())
+            {
+                QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
+                QString key = imgFmt.name(); //img key (eg. key::D for :D)
+                QString rune = key.mid(4);
+
+                if(pos >= cursor.selectionStart() && pos < cursor.selectionEnd())
+                {
+                    selectedText += rune;
+                    pos++;
+                }
+            }
+            else
+            {
+                text = itr.fragment().text();
+
+                for(QChar c : text)
+                {
+                    if(pos >= cursor.selectionStart() && pos < cursor.selectionEnd())
+                        selectedText += c;
+
+                    pos++;
+                }
+            }
+        }
     }
 
     update();
