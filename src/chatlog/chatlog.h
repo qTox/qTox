@@ -108,7 +108,6 @@ private:
     QPointF lastPos;
     QGraphicsRectItem* selGraphItem = nullptr;
     QTimer* selectionTimer = nullptr;
-    QTimer* refreshTimer = nullptr;
     QTimer* workerTimer = nullptr;
     AutoScrollDirection selectionScrollDir = NoDirection;
 
