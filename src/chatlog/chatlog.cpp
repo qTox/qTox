@@ -70,11 +70,6 @@ ChatLog::ChatLog(QWidget* parent)
     selectionTimer->start();
     connect(selectionTimer, &QTimer::timeout, this, &ChatLog::onSelectionTimerTimeout);
 
-    refreshTimer = new QTimer(this);
-    refreshTimer->setSingleShot(true);
-    refreshTimer->setInterval(500);
-    connect(refreshTimer, &QTimer::timeout, this, [this] { partialUpdate(); });
-
     workerTimer = new QTimer(this);
     workerTimer->setSingleShot(false);
     workerTimer->setInterval(100);
@@ -605,8 +600,7 @@ void ChatLog::checkVisibility()
 void ChatLog::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
-    if(!refreshTimer->isActive())
-        refreshTimer->start();
+    partialUpdate();
     checkVisibility();
 }
 
