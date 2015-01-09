@@ -214,6 +214,7 @@ void Core::cleanupCall(int callId)
     if (calls[callId].videoEnabled)
         Camera::getInstance()->unsubscribe();
     Audio::unsuscribeInput();
+    toxav_kill_transmission(Core::getInstance()->toxav, callId);
 }
 
 void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint16_t samples, void *user_data)
@@ -236,7 +237,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     if (!calls[callId].active)
         return;
 
-    if (calls[callId].muteMic || !Audio::alInDev)
+    if (calls[callId].muteMic || !Audio::isInputReady())
     {
         calls[callId].sendAudioTimer->start();
         return;
@@ -246,17 +247,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
     uint8_t buf[bufsize], dest[bufsize];
 
-    bool frame = false;
-    ALint samples;
-    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if (samples >= framesize)
-    {
-        memset(buf, 0, bufsize); // Avoid uninitialized values (Valgrind)
-        alcCaptureSamples(Audio::alInDev, buf, framesize);
-        frame = 1;
-    }
-
-    if (frame)
+    if (Audio::tryCaptureSamples(buf, framesize))
     {
         int r;
         if ((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
@@ -268,10 +259,9 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
 
 #ifdef QTOX_FILTER_AUDIO
         if (filterer[callId])
-        {
             filterer[callId]->filterAudio((int16_t*) buf, framesize);
-        }
 #endif
+
         if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
         {
             qDebug() << "Core: toxav_send_audio error";
@@ -417,59 +407,6 @@ void Core::onAvRinging(void* _toxav, int32_t call_index, void* core)
         emit static_cast<Core*>(core)->avRinging(friendId, call_index, false);
     }
 }
-
-//void Core::onAvStarting(void* _toxav, int32_t call_index, void* core)
-//{
-//    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-//    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-//    if (friendId < 0)
-//    {
-//        qWarning() << "Core: Received invalid AV starting";
-//        return;
-//    }
-
-//    ToxAvCSettings* transSettings = new ToxAvCSettings;
-//    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
-//    if (err != ErrorNone)
-//    {
-//        qWarning() << "Core::onAvStarting: error getting call type";
-//        delete transSettings;
-//        return;
-//    }
-
-//    if (transSettings->call_type == TypeVideo)
-//    {
-//        qDebug() << QString("Core: AV starting from %1 with video").arg(friendId);
-//        prepareCall(friendId, call_index, toxav, true);
-//        emit static_cast<Core*>(core)->avStarting(friendId, call_index, true);
-//    }
-//    else
-//    {
-//        qDebug() << QString("Core: AV starting from %1 without video").arg(friendId);
-//        prepareCall(friendId, call_index, toxav, false);
-//        emit static_cast<Core*>(core)->avStarting(friendId, call_index, false);
-//    }
-
-//    delete transSettings;
-//}
-
-//void Core::onAvEnding(void* _toxav, int32_t call_index, void* core)
-//{
-//    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-//    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-//    if (friendId < 0)
-//    {
-//        qWarning() << "Core: Received invalid AV ending";
-//        return;
-//    }
-//    qDebug() << QString("Core: AV ending from %1").arg(friendId);
-
-//    cleanupCall(call_index);
-
-//    emit static_cast<Core*>(core)->avEnding(friendId, call_index);
-//}
 
 void Core::onAvRequestTimeout(void* _toxav, int32_t call_index, void* core)
 {
@@ -669,7 +606,7 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     if (!groupCalls[groupId].active)
         return;
 
-    if (groupCalls[groupId].muteMic || !Audio::alInDev)
+    if (groupCalls[groupId].muteMic || !Audio::isInputReady())
     {
         groupCalls[groupId].sendAudioTimer->start();
         return;
@@ -679,17 +616,7 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
     uint8_t buf[bufsize];
 
-    bool frame = false;
-    ALint samples;
-    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if (samples >= framesize)
-    {
-        memset(buf, 0, bufsize); // Avoid uninitialized values (Valgrind)
-        alcCaptureSamples(Audio::alInDev, buf, framesize);
-        frame = 1;
-    }
-
-    if (frame)
+    if (Audio::tryCaptureSamples(buf, framesize))
     {
         int r;
         if ((r = toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,

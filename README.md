@@ -37,6 +37,6 @@ This client runs on Windows, Linux and Mac natively.<br/>
 
 ##Developer overview:
 
-[GitStats](http://207.12.89.155/index.html)<br/>
+[GitStats](http://104.219.184.93/index.html)<br/>
 [Mac & Linux jenkins](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/)<br/>
-[Windows jenkins](http://207.12.89.155:8080)<br/>
+[Windows jenkins](http://104.219.184.93:8080)<br/>

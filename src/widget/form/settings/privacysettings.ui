@@ -43,11 +43,11 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QCheckBox" name="cbTypingNotification">
-         <property name="enabled">
-          <bool>false</bool>
+         <property name="toolTip">
+          <string extracomment="Your friends will be able to see when you are typing."/>
          </property>
          <property name="text">
-          <string>Typing Notification</string>
+          <string>Send Typing Notifications</string>
          </property>
         </widget>
        </item>

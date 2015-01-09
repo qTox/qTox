@@ -242,6 +242,7 @@ void Widget::init()
     connect(core, &Core::avInvite, this, &Widget::playRingtone);
     connect(core, &Core::blockingClearContacts, this, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
     connect(core, &Core::blockingGetPassword, this, &Widget::getPassword, Qt::BlockingQueuedConnection);
+    connect(core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
 
     connect(core, SIGNAL(messageSentResult(int,QString,int)), this, SLOT(onMessageSendResult(int,QString,int)));
     connect(core, SIGNAL(groupSentResult(int,QString,int)), this, SLOT(onGroupSendResult(int,QString,int)));
@@ -318,6 +319,7 @@ Widget::~Widget()
     coreThread->wait(500); // In case of deadlock (can happen with QtAudio/PA bugs)
     if (!coreThread->isFinished())
         coreThread->terminate();
+    AutoUpdater::abortUpdates();
     delete core;
     delete settingsWidget;
     delete addFriendForm;
@@ -722,7 +724,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (!f)
         return;
 
-    contactListWidget->moveWidget(f->getFriendWidget(), status);
+    contactListWidget->moveWidget(f->getFriendWidget(), status, f->getEventFlag());
 
     bool isActualChange = f->getStatus() != status;
 
@@ -1174,6 +1176,14 @@ void Widget::getPassword(QString info, int passtype, uint8_t* salt)
         else
             core->setPassword(pswd, pt, salt);
     }
+}
+
+void Widget::onFriendTypingChanged(int friendId, bool isTyping)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    if (!f)
+        return;
+    f->getChatForm()->setFriendTyping(isTyping);
 }
 
 void Widget::onSetShowSystemTray(bool newValue){

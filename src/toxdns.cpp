@@ -219,6 +219,11 @@ fallbackOnTox1:
         tox_dns3_kill(tox_dns3);
 #if TOX1_SILENT_FALLBACK
     toxIdStr = queryTox1(record, silent);
+#elif TOX1_ASK_FALLBACK
+    QMessageBox::StandardButton btn = QMessageBox::warning(nullptr, "qTox", tr("It appears that qTox has to use the old tox1 protocol.\n\
+Unfortunately tox1 is not secure. Should it be used anyway?"), QMessageBox::Ok|QMessageBox::No, QMessageBox::No);
+    if (btn == QMessageBox::Ok)
+        queryTox1(record, silent);
 #endif
     return toxIdStr;
 }
@@ -258,6 +263,11 @@ ToxID ToxDNS::resolveToxAddress(const QString &address, bool silent)
         {
 #if TOX1_SILENT_FALLBACK
             toxId = ToxID::fromString(queryTox1(address, silent));
+#elif TOX1_ASK_FALLBACK
+            QMessageBox::StandardButton btn = QMessageBox::warning(nullptr, "qTox", tr("It appears that qTox has to use the old tox1 protocol.\n\
+Unfortunately tox1 is not secure. Should it be used anyway?"), QMessageBox::Ok|QMessageBox::No, QMessageBox::No);
+            if (btn == QMessageBox::Ok)
+                toxId = ToxID::fromString(queryTox1(address, silent));
 #else
             return toxId;
 #endif

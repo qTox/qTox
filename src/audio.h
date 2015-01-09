@@ -34,6 +34,7 @@ class QString;
 class QByteArray;
 class QTimer;
 class QThread;
+class QMutex;
 struct Tox;
 
 class Audio : QObject
@@ -52,7 +53,11 @@ public:
     static void closeInput(); ///< Close an input device, please don't use unless everyone's unsuscribed
     static void closeOutput(); ///< Close an output device
 
+    static bool isInputReady(); ///< Returns true if the input device is open and suscribed to
+    static bool isOutputClosed(); ///< Returns true if the output device is open
+
     static void playMono16Sound(const QByteArray& data); ///< Play a 44100Hz mono 16bit PCM sound
+    static bool tryCaptureSamples(uint8_t* buf, int framesize); ///< Does nothing and return false on failure
 
     /// May be called from any thread, will always queue a call to playGroupAudio
     /// The first and last argument are ignored, but allow direct compatibility with toxcore
@@ -66,7 +71,6 @@ public slots:
 
 public:
     static QThread* audioThread;
-    static ALCdevice* alOutDev, *alInDev;
     static ALCcontext* alContext;
     static ALuint alMainSource;
 
@@ -77,6 +81,8 @@ private:
 private:
     static Audio* instance;
     static std::atomic<int> userCount;
+    static ALCdevice* alOutDev, *alInDev;
+    static QMutex* audioInLock, *audioOutLock;
 };
 
 #endif // AUDIO_H

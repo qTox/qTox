@@ -32,5 +32,11 @@ LoadHistoryDialog::~LoadHistoryDialog()
 QDateTime LoadHistoryDialog::getFromDate()
 {
     QDateTime res(ui->fromDate->selectedDate());
+    if (res.date().month() != ui->fromDate->monthShown() || res.date().year() != ui->fromDate->yearShown())
+    {
+        QDate newDate(ui->fromDate->yearShown(), ui->fromDate->monthShown(), 1);
+        res.setDate(newDate);
+    }
+
     return res;
 }
