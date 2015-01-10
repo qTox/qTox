@@ -101,7 +101,6 @@ private:
     QLabel *callDuration;
     QTimer *timer;
     QElapsedTimer timeElapsed;
-    QLabel *isTypingLabel;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     void startCounter();

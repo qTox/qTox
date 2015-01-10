@@ -40,6 +40,7 @@
 #include "src/misc/cstring.h"
 #include "src/chatlog/chatmessage.h"
 #include "src/chatlog/content/filetransferwidget.h"
+#include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
@@ -55,17 +56,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
 
-    isTypingLabel = new QLabel();
-    QFont font = isTypingLabel->font();
-    font.setItalic(true);
-    font.setPixelSize(8);
-    isTypingLabel->setFont(font);
-
-    QVBoxLayout* mainLayout = dynamic_cast<QVBoxLayout*>(layout());
-    mainLayout->insertWidget(1, isTypingLabel);
-
     netcam = new NetCamView();
     timer = nullptr;
+
+    chatWidget->setTypingNotification(ChatMessage::createChatInfoMessage("", ChatMessage::TYPING, QDateTime()));
 
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
@@ -883,10 +877,12 @@ void ChatForm::dischargeReceipt(int receipt)
 
 void ChatForm::setFriendTyping(bool isTyping)
 {
-    if (isTyping)
-        isTypingLabel->setText(f->getDisplayedName() + " " + tr("is typing..."));
-    else
-        isTypingLabel->clear();
+    chatWidget->setTypingNotificationVisible(isTyping);
+
+    Text* text = dynamic_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
+
+    if(text)
+        text->setText("<div class=typing>" + tr("%1 is typing...").arg(f->getDisplayedName()) + "</div>");
 }
 
 void ChatForm::clearReciepts()

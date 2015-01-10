@@ -151,7 +151,7 @@
         <file>ui/chatArea/innerStyle.css</file>
         <file>ui/chatArea/spinner.png</file>
         <file>ui/chatArea/info.png</file>
-	<file>ui/chatArea/error.png</file>
+        <file>ui/chatArea/error.png</file>
         <file>ui/chatArea/scrollBarDownArrow.png</file>
         <file>ui/chatArea/scrollBarDownArrowHover.png</file>
         <file>ui/chatArea/scrollBarDownArrowPressed.png</file>
@@ -224,7 +224,7 @@
         <file>ui/fileTransferInstance/no_2x.png</file>
         <file>ui/fileTransferInstance/yes_2x.png</file>
         <file>ui/fileTransferInstance/arrow_white_2x.png</file>
-	<file>ui/fileTransferInstance/browse_path.png</file>
+        <file>ui/fileTransferInstance/browse_path.png</file>
         <file>ui/volButton/volButton.png</file>
         <file>ui/volButton/volButtonHover.png</file>
         <file>ui/volButton/volButtonPressed.png</file>
@@ -232,5 +232,6 @@
         <file>ui/window/applicationIcon.png</file>
         <file>ui/window/statusPanel.css</file>
         <file>ui/window/window.css</file>
+        <file>ui/chatArea/typing.png</file>
     </qresource>
 </RCC>

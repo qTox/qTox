@@ -83,6 +83,8 @@ public:
     void removeFromScene();
     void addToScene(QGraphicsScene* scene);
 
+    void setVisible(bool visible);
+
 protected:
     QPointF mapToContent(ChatLineContent* c, QPointF pos);
     void addColumn(ChatLineContent* item, ColumnFormat fmt);

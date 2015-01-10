@@ -43,11 +43,15 @@ public:
     void clearSelection();
     void clear();
     void copySelectedText() const;
+    void setTypingNotification(ChatLine::Ptr notification);
+    void setTypingNotificationVisible(bool visible);
     QString getSelectedText() const;
     QString toPlainText() const;
 
     bool isEmpty() const;
     bool hasTextToBeCopied() const;
+
+    ChatLine::Ptr getTypingNotification() const;
 
 protected:
     QRect getVisibleRect() const;
@@ -73,6 +77,7 @@ protected:
     virtual void resizeEvent(QResizeEvent *ev);
 
     void updateMultiSelectionRect();
+    void updateTypingNotification();
 
 private slots:
     void onSelectionTimerTimeout();
@@ -93,6 +98,7 @@ private:
     QGraphicsScene* scene = nullptr;
     QVector<ChatLine::Ptr> lines;
     QList<ChatLine::Ptr> visibleLines;
+    ChatLine::Ptr typingNotification;
 
     bool multiLineInsert = false;
     bool stickToBtm = false;

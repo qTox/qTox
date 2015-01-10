@@ -8,6 +8,11 @@ div.action {
   font: @big;
 }
 
+div.typing {
+  color: @black;
+  font: @bigBold;
+}
+
 span.quote {
   color: #279419;
 }

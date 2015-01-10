@@ -71,8 +71,9 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     QString img;
     switch(type)
     {
-    case INFO:  img = ":/ui/chatArea/info.png";     break;
-    case ERROR: img = ":/ui/chatArea/error.png";    break;
+    case INFO:   img = ":/ui/chatArea/info.png";     break;
+    case ERROR:  img = ":/ui/chatArea/error.png";    break;
+    case TYPING: img = ":/ui/chatArea/typing.png";   break;
     }
 
     msg->addColumn(new Image(QSizeF(16, 16), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));

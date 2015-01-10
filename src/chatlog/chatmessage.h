@@ -32,6 +32,7 @@ public:
     {
         INFO,
         ERROR,
+        TYPING,
     };
 
     ChatMessage();

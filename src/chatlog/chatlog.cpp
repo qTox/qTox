@@ -144,7 +144,12 @@ QRect ChatLog::getVisibleRect() const
 
 void ChatLog::updateSceneRect()
 {
-    setSceneRect(QRectF(-margins.left(), -margins.top(), useableWidth(), (lines.empty() ? 0.0 : lines.last()->boundingSceneRect().bottom()) + margins.bottom() + margins.top()));
+    qreal bottom = (lines.empty() ? 0.0 : lines.last()->boundingSceneRect().bottom());
+
+    if(typingNotification.get() != nullptr)
+        bottom += typingNotification->boundingSceneRect().height() + lineSpacing;
+
+    setSceneRect(QRectF(-margins.left(), -margins.top(), useableWidth(), bottom + margins.bottom() + margins.top()));
 }
 
 qreal ChatLog::layout(int start, int end, qreal width)
@@ -530,6 +535,11 @@ bool ChatLog::hasTextToBeCopied() const
     return selectionMode != None;
 }
 
+ChatLine::Ptr ChatLog::getTypingNotification() const
+{
+    return typingNotification;
+}
+
 void ChatLog::clear()
 {
     clearSelection();
@@ -549,6 +559,24 @@ void ChatLog::copySelectedText() const
 
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(text);
+}
+
+void ChatLog::setTypingNotification(ChatLine::Ptr notification)
+{
+    typingNotification = notification;
+    typingNotification->visibilityChanged(true);
+    typingNotification->setVisible(false);
+    typingNotification->addToScene(scene);
+    updateTypingNotification();
+}
+
+void ChatLog::setTypingNotificationVisible(bool visible)
+{
+    if(typingNotification.get() != nullptr)
+    {
+        typingNotification->setVisible(visible);
+        updateTypingNotification();
+    }
 }
 
 void ChatLog::checkVisibility()
@@ -641,6 +669,20 @@ void ChatLog::updateMultiSelectionRect()
     {
         selGraphItem->hide();
     }
+}
+
+void ChatLog::updateTypingNotification()
+{
+    ChatLine* notification = typingNotification.get();
+    if(!notification)
+        return;
+
+    qreal posY = 0.0;
+
+    if(!lines.empty())
+        posY = lines.last()->boundingSceneRect().bottom() + lineSpacing;
+
+    notification->layout(useableWidth(), QPointF(0.0, posY));
 }
 
 void ChatLog::onSelectionTimerTimeout()

@@ -110,4 +110,27 @@
            style="fill:#1c1c1c;fill-opacity:1" /></flowRegion><flowPara
          id="flowPara2994-4-0"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Aller;-inkscape-font-specification:Aller">i</flowPara></flowRoot>  </g>
+  <g
+     id="g3028">
+    <path
+       d="m 578.61101,583.89197 -151.31581,0"
+       id="path3020"
+       style="fill:none;stroke:#000000;stroke-width:22.62518883;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <rect
+       width="56.114246"
+       height="165.16646"
+       x="744.20551"
+       y="12.56288"
+       transform="matrix(0.8660254,0.5,-0.5,0.8660254,0,0)"
+       id="rect3024"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <rect
+       width="23.292706"
+       height="27.527742"
+       x="759.55756"
+       y="174.55305"
+       transform="matrix(0.8660254,0.5,-0.5,0.8660254,0,0)"
+       id="rect3026"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+  </g>
 </svg>

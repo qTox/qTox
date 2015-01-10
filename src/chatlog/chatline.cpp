@@ -101,6 +101,12 @@ void ChatLine::addToScene(QGraphicsScene *scene)
         scene->addItem(c);
 }
 
+void ChatLine::setVisible(bool visible)
+{
+    for(ChatLineContent* c : content)
+        c->setVisible(visible);
+}
+
 void ChatLine::selectionCleared()
 {
     for(ChatLineContent* c : content)
