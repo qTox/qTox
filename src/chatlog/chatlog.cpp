@@ -74,11 +74,9 @@ ChatLog::ChatLog(QWidget* parent)
     workerTimer->setSingleShot(false);
     workerTimer->setInterval(100);
     connect(workerTimer, &QTimer::timeout, this, [this] {
-        const int stepSize = 200;
+        const int stepSize = 400;
 
         workerDy += layout(lastWorkerIndex, lastWorkerIndex+stepSize, useableWidth());
-
-        qDebug() << "working... " << lastWorkerIndex << "/" << lines.size();
 
         if(!visibleLines.isEmpty())
         {
@@ -86,7 +84,6 @@ ChatLog::ChatLog(QWidget* parent)
             int delta = firstVisLineIndex - lastWorkerIndex;
             if(delta > 0 && delta < stepSize)
             {
-                //qDebug() << "delta " << delta << "fvl " << firstVisLineIndex;
                 lastWorkerIndex += delta+1;
 
                 if(!stickToBottom())
@@ -96,7 +93,9 @@ ChatLog::ChatLog(QWidget* parent)
                 checkVisibility();
             }
             else
+            {
                 lastWorkerIndex += stepSize;
+            }
         }
         else
             lastWorkerIndex += stepSize;
@@ -111,8 +110,6 @@ ChatLog::ChatLog(QWidget* parent)
             updateSceneRect();
             if(stb)
                 scrollToBottom();
-
-            qDebug() << "working... done!";
         }
     });
 }

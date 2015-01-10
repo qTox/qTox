@@ -25,7 +25,7 @@
 #include "src/misc/smileypack.h"
 #include "src/misc/style.h"
 
-#define NAME_COL_WIDTH 75.0
+#define NAME_COL_WIDTH 90.0
 #define TIME_COL_WIDTH 90.0
 
 ChatMessage::ChatMessage()
@@ -39,9 +39,11 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
 
     QString text = toHtmlChars(rawMessage);
 
+    //smileys
     if(Settings::getInstance().getUseEmoticons())
         text = SmileyPack::getInstance().smileyfied(text);
 
+    //quotes (green text)
     text = detectQuotes(detectAnchors(text));
 
     if(isAction)
@@ -54,7 +56,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
         text = "<div class=alert>" + text + "</div>";
     }
 
-    msg->addColumn(new Text(isAction ? "*" : sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(isAction ? "<div class=action>*</div>" : sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), isAction ? false : true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(text, Style::getFont(Style::Big), false, rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
@@ -77,7 +79,7 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     }
 
     msg->addColumn(new Image(QSizeF(16, 16), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big), false, rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big), false, rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
     msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
