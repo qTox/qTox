@@ -1157,7 +1157,7 @@ Soll die alte Historiedatei gelöscht werden?</translation>
     <name>PrivacySettings</name>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
-        <source>Typing Notification</source>
+        <source>Send Typing Notifications</source>
         <translation>Tippen anzeigen</translation>
     </message>
     <message>
