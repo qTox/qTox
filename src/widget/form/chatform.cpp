@@ -40,6 +40,7 @@
 #include "src/misc/cstring.h"
 #include "src/chatlog/chatmessage.h"
 #include "src/chatlog/content/filetransferwidget.h"
+#include "src/chatlog/chatlinecontentproxy.h"
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
 
@@ -222,9 +223,14 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxID()).isEmpty()
             || Settings::getInstance().getAutoSaveEnabled())
     {
-        FileTransferWidget* tfWidget = dynamic_cast<FileTransferWidget*>(msg->getContent(1));
-        if(tfWidget)
-            tfWidget->acceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxID()));
+        ChatLineContentProxy* proxy = dynamic_cast<ChatLineContentProxy*>(msg->getContent(1));
+        if(proxy)
+        {
+            FileTransferWidget* tfWidget = dynamic_cast<FileTransferWidget*>(proxy->getWidget());
+
+            if(tfWidget)
+                tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxID()));
+        }
     }
 }
 

@@ -47,6 +47,11 @@ qreal ChatLineContentProxy::getAscent() const
     return proxy->widget()->layout()->contentsMargins().top();
 }
 
+QWidget *ChatLineContentProxy::getWidget() const
+{
+    return proxy->widget();
+}
+
 void ChatLineContentProxy::setWidth(qreal width)
 {
     proxy->widget()->setFixedWidth(qMax(static_cast<int>(width*widthPercent), widthMin));

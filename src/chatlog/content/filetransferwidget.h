@@ -35,8 +35,7 @@ class FileTransferWidget : public QWidget
 public:
     explicit FileTransferWidget(QWidget *parent, ToxFile file);
     virtual ~FileTransferWidget();
-
-    void acceptTransfer(const QString& path);
+    void autoAcceptTransfer(const QString& path);
 
 protected slots:
     void onFileTransferInfo(ToxFile file);
@@ -51,6 +50,9 @@ protected:
     void setupButtons();
     void handleButton(QPushButton* btn);
     void showPreview(const QString& filename);
+    void acceptTransfer(const QString& filepath);
+
+    bool isFilePathWritable(const QString& filepath);
 
 private slots:
     void on_topButton_clicked();

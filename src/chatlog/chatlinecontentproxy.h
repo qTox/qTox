@@ -31,6 +31,8 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     virtual qreal getAscent() const;
 
+    QWidget* getWidget() const;
+
 private:
     QGraphicsProxyWidget* proxy;
     int widthMin;

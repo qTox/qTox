@@ -22,8 +22,7 @@
 
 #include <QMouseEvent>
 #include <QFileDialog>
-#include <QDir>
-#include <QFileInfo>
+#include <QFile>
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QDebug>
@@ -69,19 +68,54 @@ FileTransferWidget::~FileTransferWidget()
     delete ui;
 }
 
-void FileTransferWidget::acceptTransfer(const QString &path)
+void FileTransferWidget::autoAcceptTransfer(const QString &path)
 {
-    if(!QFileInfo(QDir(path).path()).isWritable())
+    QString filepath;
+    int number = 0;
+
+    QString suffix = QFileInfo(fileInfo.fileName).completeSuffix();
+    QString base = QFileInfo(fileInfo.fileName).completeBaseName();
+
+    do
+    {
+        filepath = QString("%1/%2%3.%4").arg(path, base, number > 0 ? QString(" (%1)").arg(QString::number(number)) : QString(), suffix);
+        number++;
+    }
+    while(QFileInfo(filepath).exists());
+
+    if(!isFilePathWritable(filepath))
     {
         QMessageBox::warning(0,
                              tr("Location not writable","Title of permissions popup"),
                              tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
-
         return;
     }
 
-    if(!path.isEmpty())
-        Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, path);
+    //everything ok!
+    Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
+}
+
+void FileTransferWidget::acceptTransfer(const QString &filepath)
+{
+    //test if writable
+    if(isFilePathWritable(filepath))
+    {
+        QMessageBox::warning(0,
+                             tr("Location not writable","Title of permissions popup"),
+                             tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+        return;
+    }
+
+    //everything ok!
+    Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
+}
+
+bool FileTransferWidget::isFilePathWritable(const QString &filepath)
+{
+    QFile tmp(filepath);
+    bool writable = tmp.open(QIODevice::WriteOnly);
+    tmp.remove();
+    return writable;
 }
 
 void FileTransferWidget::onFileTransferInfo(ToxFile file)
