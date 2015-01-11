@@ -87,3 +87,7 @@ div.button {
   margin-left: 0px;
   color: @white;
 }
+
+*:link {
+    color: blue;
+}
