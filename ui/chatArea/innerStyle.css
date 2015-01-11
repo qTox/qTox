@@ -88,6 +88,6 @@ div.button {
   color: @white;
 }
 
-*:link {
+a {
     color: blue;
 }
