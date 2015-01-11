@@ -157,7 +157,6 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/friendlistwidget.h \
     src/widget/genericchatroomwidget.h \
     src/widget/form/genericchatform.h \
-    src/filetransferinstance.h \
     src/corestructs.h \
     src/coredefines.h \
     src/coreav.h \
@@ -229,7 +228,6 @@ SOURCES += \
     src/coreav.cpp \
     src/widget/genericchatroomwidget.cpp \
     src/widget/form/genericchatform.cpp \
-    src/filetransferinstance.cpp \
     src/corestructs.cpp \
     src/widget/maskablepixmapwidget.cpp \
     src/video/cameraworker.cpp \

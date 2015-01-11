@@ -28,7 +28,6 @@
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/friend.h"
 #include "src/widget/friendwidget.h"
-#include "src/filetransferinstance.h"
 #include "src/widget/netcamview.h"
 #include "src/widget/tool/chattextedit.h"
 #include "src/core.h"

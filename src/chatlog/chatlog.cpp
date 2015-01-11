@@ -645,7 +645,6 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
 
     updateMultiSelectionRect();
 
-    qDebug() << "starting worker";
     lastWorkerIndex = 0;
     workerDy = 0.0;
     workerTimer->start();
