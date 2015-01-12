@@ -30,7 +30,7 @@ VideoSurface::VideoSurface(QWidget* parent)
     , hasSubscribed(false)
     , pboIndex(0)
 {
-    setAutoBufferSwap(false);
+    setAutoBufferSwap(true);
 }
 
 VideoSurface::VideoSurface(VideoSource *source, QWidget* parent)
