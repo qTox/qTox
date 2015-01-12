@@ -67,6 +67,10 @@ void AVForm::present()
     Camera::getInstance()->probeProp(Camera::HUE);
 
     Camera::getInstance()->probeResolutions();
+	
+	bodyUI->videoModescomboBox->blockSignals(true);
+	bodyUI->videoModescomboBox->addItem(tr("Initializing Camera..."));
+	bodyUI->videoModescomboBox->blockSignals(false);
 }
 
 void AVForm::on_ContrastSlider_sliderMoved(int position)
@@ -89,7 +93,7 @@ void AVForm::on_HueSlider_sliderMoved(int position)
     Camera::getInstance()->setProp(Camera::HUE, position / 100.0);
 }
 
-void AVForm::on_videoModescomboBox_activated(int index)
+void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 {
     Camera::getInstance()->setResolution(bodyUI->videoModescomboBox->itemData(index).toSize());
 }
@@ -118,8 +122,10 @@ void AVForm::onPropProbingFinished(Camera::Prop prop, double val)
 void AVForm::onResProbingFinished(QList<QSize> res)
 {
     bodyUI->videoModescomboBox->clear();
+	bodyUI->videoModescomboBox->blockSignals(true);
     for (QSize r : res)
         bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())), r);
+	bodyUI->videoModescomboBox->blockSignals(false);
 
     bodyUI->videoModescomboBox->setCurrentIndex(bodyUI->videoModescomboBox->count()-1);
 }
