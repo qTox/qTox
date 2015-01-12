@@ -52,10 +52,13 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     nameLabel->setEditable(true);
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
-    QHBoxLayout *headLayout = new QHBoxLayout(), *mainFootLayout = new QHBoxLayout();
-    headTextLayout = new QVBoxLayout();
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-    QVBoxLayout *footButtonsSmall = new QVBoxLayout(), *volMicLayout = new QVBoxLayout();
+    QHBoxLayout *headLayout = new QHBoxLayout(),
+                *mainFootLayout = new QHBoxLayout();
+    
+    QVBoxLayout *mainLayout = new QVBoxLayout(),
+                *footButtonsSmall = new QVBoxLayout(),
+                *volMicLayout = new QVBoxLayout();
+    headTextLayout = new QVBoxLayout();    
 
     chatWidget = new ChatAreaWidget();
 
@@ -76,10 +79,10 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     videoButton->setFixedSize(50,40);
     videoButton->setToolTip(tr("Video call: RED means you're on a call"));
     volButton = new QPushButton();
-    volButton->setFixedSize(25,20);
+    //volButton->setFixedSize(25,20);
     volButton->setToolTip(tr("Toggle speakers volume: RED is OFF"));
     micButton = new QPushButton();
-    micButton->setFixedSize(25,20);
+   // micButton->setFixedSize(25,20);
     micButton->setToolTip(tr("Toggle microphone: RED is OFF"));
 
     footButtonsSmall->setSpacing(2);
@@ -119,6 +122,13 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     mainFootLayout->addSpacing(5);
     mainFootLayout->addWidget(sendButton);
     mainFootLayout->setSpacing(0);
+    
+    headTextLayout->addStretch();
+    headTextLayout->addWidget(nameLabel);
+        
+    volMicLayout->addWidget(micButton, Qt::AlignTop);
+    volMicLayout->addSpacing(2);
+    volMicLayout->addWidget(volButton, Qt::AlignBottom);
 
     headWidget->setLayout(headLayout);
     headLayout->addWidget(avatar);
@@ -129,16 +139,6 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headLayout->addSpacing(3);
     headLayout->addWidget(videoButton);
     headLayout->setSpacing(0);
-
-    volMicLayout->addStretch();
-    volMicLayout->addSpacing(1);
-    volMicLayout->addWidget(micButton);
-    volMicLayout->addSpacing(2);
-    volMicLayout->addWidget(volButton);
-    volMicLayout->addStretch();
-
-    headTextLayout->addStretch();
-    headTextLayout->addWidget(nameLabel);
 
     //Fix for incorrect layouts on OS X as per
     //https://bugreports.qt-project.org/browse/QTBUG-14591
@@ -255,7 +255,8 @@ void GenericChatForm::onEmoteButtonClicked()
 
 void GenericChatForm::onChatWidgetClicked()
 {
-    msgEdit->setFocus();
+    if (!chatWidget->textCursor().hasSelection())
+        msgEdit->setFocus();
 }
 
 void GenericChatForm::onEmoteInsertRequested(QString str)

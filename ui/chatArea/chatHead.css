@@ -1,3 +1,9 @@
+QLineEdit {
+  color: @black;
+  background: white;
+  border: 0px;
+}
+
 #nameLabel {
   color: @black;
   font: @mediumBold;

@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     parser.process(a);
 
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
-    if(parser.isSet("P"))
+    if (parser.isSet("P"))
         Settings::getInstance().setCurrentProfile(parser.value("P"));
 
     sodium_init(); // For the auto-updater
@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
     }
-    else if(!ipc.isCurrentOwner() && !parser.isSet("P"))
+    else if (!ipc.isCurrentOwner() && !parser.isSet("P"))
     {
         time_t event = ipc.postEvent("$activate");
         ipc.waitUntilProcessed(event);

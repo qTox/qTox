@@ -15,21 +15,39 @@
 */
 
 
+// Output some extra debug info
+#define AUDIO_DEBUG 1
+
+// Fix a 7 years old openal-soft/alsa bug
+// http://blog.gmane.org/gmane.comp.lib.openal.devel/month=20080501
+// If set to 1, the capture will be started as long as the device is open
+#define FIX_SND_PCM_PREPARE_BUG 0
+
 #include "audio.h"
 #include "src/core.h"
 
 #include <QDebug>
 #include <QThread>
+#include <QMutexLocker>
 
 #include <cassert>
 
 std::atomic<int> Audio::userCount{0};
 Audio* Audio::instance{nullptr};
 QThread* Audio::audioThread{nullptr};
+QMutex* Audio::audioInLock{nullptr};
+QMutex* Audio::audioOutLock{nullptr};
 ALCdevice* Audio::alInDev{nullptr};
 ALCdevice* Audio::alOutDev{nullptr};
 ALCcontext* Audio::alContext{nullptr};
 ALuint Audio::alMainSource{0};
+
+void audioDebugLog(QString msg)
+{
+#if (AUDIO_DEBUG)
+    qDebug()<<"Audio: "<<msg;
+#endif
+}
 
 Audio& Audio::getInstance()
 {
@@ -39,6 +57,8 @@ Audio& Audio::getInstance()
         audioThread = new QThread(instance);
         audioThread->setObjectName("qTox Audio");
         audioThread->start();
+        audioInLock = new QMutex(QMutex::Recursive);
+        audioOutLock = new QMutex(QMutex::Recursive);
         instance->moveToThread(audioThread);
     }
     return *instance;
@@ -46,18 +66,46 @@ Audio& Audio::getInstance()
 
 void Audio::suscribeInput()
 {
+    if (!alInDev)
+    {
+        qWarning()<<"Audio::suscribeInput: input device is closed";
+        return;
+    }
+
+    audioDebugLog("suscribing");
+    QMutexLocker lock(audioInLock);
     if (!userCount++ && alInDev)
+    {
+#if (!FIX_SND_PCM_PREPARE_BUG)
+        audioDebugLog("starting capture");
         alcCaptureStart(alInDev);
+#endif
+    }
 }
 
 void Audio::unsuscribeInput()
 {
+    if (!alInDev)
+    {
+        qWarning()<<"Audio::unsuscribeInput: input device is closed";
+        return;
+    }
+
+    audioDebugLog("unsuscribing");
+    QMutexLocker lock(audioInLock);
     if (!--userCount && alInDev)
+    {
+#if (!FIX_SND_PCM_PREPARE_BUG)
+        audioDebugLog("stopping capture");
         alcCaptureStop(alInDev);
+#endif
+    }
 }
 
 void Audio::openInput(const QString& inDevDescr)
 {
+    audioDebugLog("Trying to open input "+inDevDescr);
+    QMutexLocker lock(audioInLock);
     auto* tmp = alInDev;
     alInDev = nullptr;
     if (tmp)
@@ -80,11 +128,22 @@ void Audio::openInput(const QString& inDevDescr)
 
     // Restart the capture if necessary
     if (userCount.load() != 0 && alInDev)
+    {
         alcCaptureStart(alInDev);
+    }
+    else
+    {
+#if (FIX_SND_PCM_PREPARE_BUG)
+    alcCaptureStart(alInDev);
+#endif
+    }
+
 }
 
 void Audio::openOutput(const QString& outDevDescr)
 {
+    audioDebugLog("Trying to open output "+outDevDescr);
+    QMutexLocker lock(audioOutLock);
     auto* tmp = alOutDev;
     alOutDev = nullptr;
     if (outDevDescr.isEmpty())
@@ -97,11 +156,8 @@ void Audio::openOutput(const QString& outDevDescr)
     }
     else
     {
-        if (alContext)
-        {
-            alcMakeContextCurrent(nullptr);
+        if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
             alcDestroyContext(alContext);
-        }
         if (tmp)
             alcCloseDevice(tmp);
         alContext=alcCreateContext(alOutDev,nullptr);
@@ -122,26 +178,48 @@ void Audio::openOutput(const QString& outDevDescr)
 
 void Audio::closeInput()
 {
+    audioDebugLog("Closing input");
+    QMutexLocker lock(audioInLock);
     if (alInDev)
-        alcCaptureCloseDevice(alInDev);
-
-    userCount = 0;
+    {
+        if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
+        {
+            alInDev = nullptr;
+            userCount = 0;
+        }
+        else
+        {
+            qWarning() << "Audio: Failed to close input";
+        }
+    }
 }
 
 void Audio::closeOutput()
 {
-    if (alContext)
-    {
-        alcMakeContextCurrent(nullptr);
+    audioDebugLog("Closing output");
+    QMutexLocker lock(audioOutLock);
+    if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
         alcDestroyContext(alContext);
-    }
 
     if (alOutDev)
-        alcCloseDevice(alOutDev);
+    {
+        if (alcCloseDevice(alOutDev) == ALC_TRUE)
+        {
+            alOutDev = nullptr;
+        }
+        else
+        {
+            qWarning() << "Audio: Failed to close output";
+        }
+    }
 }
 
 void Audio::playMono16Sound(const QByteArray& data)
 {
+    QMutexLocker lock(audioOutLock);
+    if (!alOutDev)
+        return;
+
     ALuint buffer;
     alGenBuffers(1, &buffer);
     alBufferData(buffer, AL_FORMAT_MONO16, data.data(), data.size(), 44100);
@@ -163,6 +241,8 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
 {
     assert(QThread::currentThread() == audioThread);
 
+    QMutexLocker lock(audioOutLock);
+
     ToxGroupCall& call = Core::groupCalls[group];
 
     if (!call.active || call.muteVol)
@@ -178,20 +258,22 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 {
     assert(channels == 1 || channels == 2);
 
+    QMutexLocker lock(audioOutLock);
+
     ALuint bufid;
     ALint processed = 0, queued = 16;
     alGetSourcei(alSource, AL_BUFFERS_PROCESSED, &processed);
     alGetSourcei(alSource, AL_BUFFERS_QUEUED, &queued);
     alSourcei(alSource, AL_LOOPING, AL_FALSE);
 
-    if(processed)
+    if (processed)
     {
         ALuint bufids[processed];
         alSourceUnqueueBuffers(alSource, processed, bufids);
         alDeleteBuffers(processed - 1, bufids + 1);
         bufid = bufids[0];
     }
-    else if(queued < 16)
+    else if (queued < 16)
     {
         alGenBuffers(1, &bufid);
     }
@@ -207,6 +289,30 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
-    if(state != AL_PLAYING)
+    if (state != AL_PLAYING)
         alSourcePlay(alSource);
+}
+
+bool Audio::isInputReady()
+{
+    return (alInDev && userCount);
+}
+
+bool Audio::isOutputClosed()
+{
+    return (alOutDev);
+}
+
+bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
+{
+    QMutexLocker lock(audioInLock);
+
+    ALint samples=0;
+    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
+    if (samples < framesize)
+        return false;
+
+    memset(buf, 0, framesize * 2 * av_DefaultSettings.audio_channels); // Avoid uninitialized values (Valgrind)
+    alcCaptureSamples(Audio::alInDev, buf, framesize);
+    return true;
 }

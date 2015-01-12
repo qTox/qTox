@@ -25,6 +25,9 @@
 /// Tox1 is not encrypted, it's unsafe
 #define TOX1_SILENT_FALLBACK 0
 
+/// That said if the user insists ...
+#define TOX1_ASK_FALLBACK 1
+
 /// Handles tox1 and tox3 DNS queries
 class ToxDNS : public QObject
 {

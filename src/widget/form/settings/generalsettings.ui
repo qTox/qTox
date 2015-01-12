@@ -38,12 +38,12 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>509</width>
-        <height>849</height>
+        <y>-173</y>
+        <width>511</width>
+        <height>797</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0">
        <property name="spacing">
         <number>9</number>
        </property>
@@ -109,7 +109,7 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
+             <item row="1" column="0" colspan="2">
               <layout class="QHBoxLayout" name="trayBehavior">
                <item>
                 <widget class="QCheckBox" name="startInTray">
@@ -151,6 +151,13 @@
                 </widget>
                </item>
               </layout>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="lightTrayIcon">
+               <property name="text">
+                <string>Light icon</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -216,6 +223,9 @@
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
+              </property>
               <property name="suffix">
                <string> minutes</string>
               </property>
@@ -224,9 +234,6 @@
               </property>
               <property name="maximum">
                <number>2147483647</number>
-              </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -294,6 +301,9 @@
           </item>
           <item>
            <layout class="QFormLayout" name="formLayout">
+            <property name="fieldGrowthPolicy">
+             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+            </property>
             <property name="topMargin">
              <number>0</number>
             </property>
@@ -309,23 +319,6 @@
             </item>
             <item row="0" column="1">
              <widget class="QComboBox" name="smileyPackBrowser">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="styleLabel">
-              <property name="text">
-               <string>Style</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QComboBox" name="styleBrowser">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -390,6 +383,23 @@
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="styleLabel">
+              <property name="text">
+               <string>Style</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="styleBrowser">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="themeColorLabel">
@@ -462,7 +472,7 @@
          </layout>
         </widget>
        </item>
-       <item alignment="Qt::AlignTop">
+       <item>
         <widget class="QGroupBox" name="connectionGroup">
          <property name="title">
           <string>Connection Settings</string>
@@ -492,11 +502,40 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="cbUseProxy">
-            <property name="text">
-             <string>Use proxy (SOCKS5)</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="proxyLayout_2">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Proxy type</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="proxyType">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <item>
+               <property name="text">
+                <string>None</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>SOCKS5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>HTTP</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="proxyLayout">

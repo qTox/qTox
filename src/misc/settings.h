@@ -24,6 +24,8 @@
 struct ToxID;
 namespace Db { enum class syncType; }
 
+enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
+
 class Settings : public QObject
 {
     Q_OBJECT
@@ -61,6 +63,9 @@ public:
     
     bool getMinimizeToTray() const;
     void setMinimizeToTray(bool newValue);
+
+    bool getLightTrayIcon() const;
+    void setLightTrayIcon(bool newValue);
     
     QString getStyle() const;
     void setStyle(const QString& newValue);
@@ -86,8 +91,8 @@ public:
     QString getProxyAddr() const;
     void setProxyAddr(const QString& newValue);
 
-    bool getUseProxy() const;
-    void setUseProxy(bool newValue);
+    ProxyType getProxyType() const;
+    void setProxyType(int newValue);
 
     int getProxyPort() const;
     void setProxyPort(int newValue);
@@ -124,6 +129,9 @@ public:
 
     QString getOutDev() const;
     void setOutDev(const QString& deviceSpecifier);
+
+    bool getFilterAudio() const;
+    void setFilterAudio(bool newValue);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -248,13 +256,14 @@ private:
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
+    bool lightTrayIcon;
     bool useEmoticons;
     bool checkUpdates;
     bool showInFront;
 
     bool forceTCP;
 
-    bool useProxy;
+    ProxyType proxyType;
     QString proxyAddr;
     int proxyPort;
 
@@ -298,6 +307,7 @@ private:
     // Audio
     QString inDev;
     QString outDev;
+    bool filterAudio;
 
     struct friendProp
     {

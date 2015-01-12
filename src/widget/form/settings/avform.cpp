@@ -33,12 +33,19 @@ AVForm::AVForm() :
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
+#ifdef QTOX_FILTER_AUDIO
+    bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
+#else
+    bodyUI->filterAudio->setDisabled(true);
+#endif
+
     connect(Camera::getInstance(), &Camera::propProbingFinished, this, &AVForm::onPropProbingFinished);
     connect(Camera::getInstance(), &Camera::resolutionProbingFinished, this, &AVForm::onResProbingFinished);
 
     auto qcomboboxIndexChanged = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
     connect(bodyUI->inDevCombobox, qcomboboxIndexChanged, this, &AVForm::onInDevChanged);
     connect(bodyUI->outDevCombobox, qcomboboxIndexChanged, this, &AVForm::onOutDevChanged);
+    connect(bodyUI->filterAudio, SIGNAL(toggled(bool)), this, SLOT(onFilterAudioToggled(bool)));
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
 }
 
@@ -188,4 +195,9 @@ void AVForm::onOutDevChanged(const QString& deviceDescriptor)
 {
     Settings::getInstance().setOutDev(deviceDescriptor);
     Audio::openOutput(deviceDescriptor);
+}
+
+void AVForm::onFilterAudioToggled(bool filterAudio)
+{
+    Settings::getInstance().setFilterAudio(filterAudio);
 }

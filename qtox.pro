@@ -59,6 +59,12 @@ contains(DISABLE_PLATFORM_EXT, YES) {
     DEFINES += QTOX_PLATFORM_EXT
 }
 
+contains(DISABLE_FILTER_AUDIO, YES) {
+
+} else {
+     DEFINES += QTOX_FILTER_AUDIO
+}
+
 contains(JENKINS,YES) {
 	INCLUDEPATH += ./libs/include/
 } else {
@@ -71,6 +77,14 @@ win32 {
     LIBS += -liphlpapi -L$$PWD/libs/lib -lsodium -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lopencv_core248 -lopencv_highgui248 -lopencv_imgproc248 -lOpenAL32 -lopus
     LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32 -lz
+
+    contains(DEFINES, QTOX_FILTER_AUDIO) {
+        contains(STATICPKG, YES) {
+            LIBS += -Wl,-Bstatic -lfilteraudio
+        } else {
+            LIBS += -lfilteraudio
+        }
+    }
 } else {
     macx {
         BUNDLEID = im.tox.qtox
@@ -78,6 +92,7 @@ win32 {
         QMAKE_INFO_PLIST = osx/info.plist
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -framework OpenAL -lopencv_core -lopencv_highgui
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
+        contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
     } else {
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
         contains(STATICPKG, YES) {
@@ -94,8 +109,16 @@ win32 {
             LIBS += -lX11 -lXss
         }
 
+        contains(DEFINES, QTOX_FILTER_AUDIO) {
+            contains(STATICPKG, YES) {
+                LIBS += -Wl,-Bstatic -lfilteraudio
+            } else {
+                LIBS += -lfilteraudio
+            }
+        }
+
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -s
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -s
         }
     }
 }
@@ -233,6 +256,11 @@ SOURCES += \
     src/misc/serialize.cpp \
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp
+
+contains(DEFINES, QTOX_FILTER_AUDIO) {
+    HEADERS += src/audiofilterer.h
+    SOURCES += src/audiofilterer.cpp
+}
 
 contains(DEFINES, QTOX_PLATFORM_EXT) {
     HEADERS += src/platform/timer.h

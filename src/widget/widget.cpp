@@ -54,7 +54,7 @@
 
 void toxActivateEventHandler(const QByteArray& data)
 {
-    if(data != "$activate")
+    if (data != "$activate")
         return;
     Widget::getInstance()->show();
     Widget::getInstance()->activateWindow();
@@ -96,12 +96,11 @@ void Widget::init()
         statusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
         connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
         statusBusy = new QAction(tr("Busy"), this);
-        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         statusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         actionQuit = new QAction(tr("&Quit"), this);
         connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
         
-        trayMenu->addAction(new QAction(tr("Change status to:"), this));
         trayMenu->addAction(statusOnline);
         trayMenu->addAction(statusAway);
         trayMenu->addAction(statusBusy);
@@ -116,7 +115,7 @@ void Widget::init()
         
         if (Settings::getInstance().getShowSystemTray()){
             icon->show();
-            if(Settings::getInstance().getAutostartInTray() == false)
+            if (Settings::getInstance().getAutostartInTray() == false)
                 this->show();
         }
         else
@@ -149,7 +148,7 @@ void Widget::init()
 
     ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
     
-    if(QStyleFactory::keys().contains(Settings::getInstance().getStyle())
+    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
     {
         ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
@@ -243,6 +242,7 @@ void Widget::init()
     connect(core, &Core::avInvite, this, &Widget::playRingtone);
     connect(core, &Core::blockingClearContacts, this, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
     connect(core, &Core::blockingGetPassword, this, &Widget::getPassword, Qt::BlockingQueuedConnection);
+    connect(core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
 
     connect(core, SIGNAL(messageSentResult(int,QString,int)), this, SLOT(onMessageSendResult(int,QString,int)));
     connect(core, SIGNAL(groupSentResult(int,QString,int)), this, SLOT(onGroupSendResult(int,QString,int)));
@@ -300,14 +300,15 @@ void Widget::updateTrayIcon()
         return;
     QString status = ui->statusButton->property("status").toString();
     QString pic;
+    QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
     if (status == "online")
-        pic = ":img/taskbar/taskbar_online_2x.png";
+        pic = ":img/taskbar/" + color + "/taskbar_online_2x.png";
     else if (status == "away")
-        pic = ":img/taskbar/taskbar_idle_2x.png";
+        pic = ":img/taskbar/" + color + "/taskbar_idle_2x.png";
     else if (status == "busy")
-        pic = ":img/taskbar/taskbar_busy_2x.png";
+        pic = ":img/taskbar/" + color + "/taskbar_busy_2x.png";
     else
-        pic = ":img/taskbar/taskbar_offline_2x.png";
+        pic = ":img/taskbar/" + color + "/taskbar_offline_2x.png";
     icon->setIcon(QIcon(pic));
 }
 
@@ -318,6 +319,7 @@ Widget::~Widget()
     coreThread->wait(500); // In case of deadlock (can happen with QtAudio/PA bugs)
     if (!coreThread->isFinished())
         coreThread->terminate();
+    AutoUpdater::abortUpdates();
     delete core;
     delete settingsWidget;
     delete addFriendForm;
@@ -348,7 +350,7 @@ QThread* Widget::getCoreThread()
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    if(Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)
+    if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)
     {
         event->ignore();
         this->hide();
@@ -365,7 +367,7 @@ void Widget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange)
     {
-        if(isMinimized() && Settings::getInstance().getMinimizeToTray())
+        if (isMinimized() && Settings::getInstance().getMinimizeToTray())
         {
             this->hide();
         }
@@ -415,7 +417,7 @@ QList<QString> Widget::searchProfiles()
     QDir dir(Settings::getSettingsDirPath());
 	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 	dir.setNameFilters(QStringList("*.tox"));
-	for(QFileInfo file : dir.entryInfoList())
+	for (QFileInfo file : dir.entryInfoList())
 		out += file.completeBaseName();
 	return out;
 }
@@ -591,7 +593,7 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
         case QSystemTrayIcon::Trigger:
-        if(this->isHidden() == true)
+        if (this->isHidden() == true)
         {
             this->show();
             this->activateWindow();
@@ -712,7 +714,7 @@ void Widget::addFriend(int friendId, const QString &userId)
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
 {
     QString info = QString(tr("Couldn't request friendship"));
-    if(!errorInfo.isEmpty()) {
+    if (!errorInfo.isEmpty()) {
         info = info + (QString(": ") + errorInfo);
     }
 
@@ -725,7 +727,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (!f)
         return;
 
-    contactListWidget->moveWidget(f->getFriendWidget(), status);
+    contactListWidget->moveWidget(f->getFriendWidget(), status, f->getEventFlag());
 
     bool isActualChange = f->getStatus() != status;
 
@@ -733,7 +735,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     f->getFriendWidget()->updateStatusLight();
     
     //won't print the message if there were no messages before
-    if(!f->getChatForm()->isEmpty()
+    if (!f->getChatForm()->isEmpty()
             && Settings::getInstance().getStatusChangeNotificationEnabled())
     {
         QString fStatus = "";
@@ -1176,6 +1178,14 @@ void Widget::getPassword(QString info, int passtype, uint8_t* salt)
         else
             core->setPassword(pswd, pt, salt);
     }
+}
+
+void Widget::onFriendTypingChanged(int friendId, bool isTyping)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    if (!f)
+        return;
+    f->getChatForm()->setFriendTyping(isTyping);
 }
 
 void Widget::onSetShowSystemTray(bool newValue){

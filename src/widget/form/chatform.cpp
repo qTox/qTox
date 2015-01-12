@@ -54,6 +54,15 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
 
+    isTypingLabel = new QLabel();
+    QFont font = isTypingLabel->font();
+    font.setItalic(true);
+    font.setPixelSize(8);
+    isTypingLabel->setFont(font);
+
+    QVBoxLayout* mainLayout = dynamic_cast<QVBoxLayout*>(layout());
+    mainLayout->insertWidget(1, isTypingLabel);
+
     netcam = new NetCamView();
     timer = nullptr;
 
@@ -71,6 +80,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
+    connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
@@ -103,7 +113,7 @@ void ChatForm::onSendTriggered()
     if (isAction)
         msg = msg = msg.right(msg.length() - 4);
 
-    QList<CString> splittedMsg = Core::splitMessage(msg);
+    QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (CString& c_msg : splittedMsg)
@@ -130,6 +140,21 @@ void ChatForm::onSendTriggered()
     }
 
     msgEdit->clear();
+}
+
+void ChatForm::onTextEditChanged()
+{
+    bool isNowTyping;
+    if (!Settings::getInstance().isTypingNotificationEnabled())
+        isNowTyping = false;
+    else
+        isNowTyping = msgEdit->toPlainText().length() > 0;
+
+    if (isTyping != isNowTyping)
+    {
+        isTyping = isNowTyping;
+        Core::getInstance()->sendTyping(f->getFriendID(), isTyping);
+    }
 }
 
 void ChatForm::onAttachClicked()
@@ -230,9 +255,10 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 
 void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 {
-    qDebug() << "onAvInvite";
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvInvite";
 
     callId = CallId;
     callButton->disconnect();
@@ -267,9 +293,10 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 {
-    qDebug() << "onAvStart";
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvStart";
 
     audioInputFlag = true;
     audioOutputFlag = true;
@@ -301,11 +328,12 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvCancel(int FriendId, int)
 {
-    qDebug() << "onAvCancel";
-    
+
     if (FriendId != f->getFriendID())
         return;
-    
+
+    qDebug() << "onAvCancel";
+
     stopCounter();
 
     audioInputFlag = false;
@@ -330,10 +358,10 @@ void ChatForm::onAvCancel(int FriendId, int)
 
 void ChatForm::onAvEnd(int FriendId, int)
 {
-    qDebug() << "onAvEnd";
-    
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvEnd";
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -357,9 +385,10 @@ void ChatForm::onAvEnd(int FriendId, int)
 
 void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
 {    
-    qDebug() << "onAvRinging";
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvRinging";
 
     callId = CallId;
     callButton->disconnect();
@@ -386,10 +415,10 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
 {
-    qDebug() << "onAvStarting";
-    
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvStarting";
 
     callButton->disconnect();
     videoButton->disconnect();
@@ -417,10 +446,10 @@ void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvEnding(int FriendId, int)
 {
-    qDebug() << "onAvEnding";
-    
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvEnding";
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -446,10 +475,10 @@ void ChatForm::onAvEnding(int FriendId, int)
 
 void ChatForm::onAvRequestTimeout(int FriendId, int)
 {
-    qDebug() << "onAvRequestTimeout";
-    
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvRequestTimeout";
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -473,10 +502,10 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
 
 void ChatForm::onAvPeerTimeout(int FriendId, int)
 {
-    qDebug() << "onAvPeerTimeout";
-    
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvPeerTimeout";
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -500,10 +529,10 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 
 void ChatForm::onAvRejected(int FriendId, int)
 {
-    qDebug() << "onAvRejected";
-    
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvRejected";
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -529,10 +558,10 @@ void ChatForm::onAvRejected(int FriendId, int)
 
 void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 {
-    qDebug() << "onAvMediaChange";
-    
     if (FriendId != f->getFriendID() || CallId != callId)
         return;
+
+    qDebug() << "onAvMediaChange";
 
     if (video)
     {
@@ -554,7 +583,7 @@ void ChatForm::onAnswerCallTriggered()
 }
 
 void ChatForm::onHangupCallTriggered()
-{    
+{
     qDebug() << "onHangupCallTriggered";
     
     audioInputFlag = false;
@@ -590,10 +619,10 @@ void ChatForm::onVideoCallTriggered()
 
 void ChatForm::onAvCallFailed(int FriendId)
 {
-    qDebug() << "onAvCallFailed";
-    
     if (FriendId != f->getFriendID())
         return;
+
+    qDebug() << "onAvCallFailed";
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -793,7 +822,7 @@ void ChatForm::onLoadHistory()
 
 void ChatForm::startCounter()
 {
-    if(!timer)
+    if (!timer)
     {
         timer = new QTimer();
         connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
@@ -805,7 +834,7 @@ void ChatForm::startCounter()
 
 void ChatForm::stopCounter()
 {
-    if(timer)
+    if (timer)
     {
         addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),
                                                               secondsToDHMS(timeElapsed.elapsed()/1000)),
@@ -834,10 +863,10 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     int hours = (int) (duration % 24);
     int days = (int) (duration / 24);
     
-    if(minutes == 0)
+    if (minutes == 0)
         return cD + res.sprintf("%02ds", seconds);
     
-    if(hours == 0 && days == 0)
+    if (hours == 0 && days == 0)
         return cD + res.sprintf("%02dm %02ds", minutes, seconds);
     
     if (days == 0)
@@ -868,6 +897,14 @@ void ChatForm::dischargeReceipt(int receipt)
         }
         receipts.erase(it);
     }
+}
+
+void ChatForm::setFriendTyping(bool isTyping)
+{
+    if (isTyping)
+        isTypingLabel->setText(f->getDisplayedName() + " " + tr("is typing..."));
+    else
+        isTypingLabel->clear();
 }
 
 void ChatForm::clearReciepts()

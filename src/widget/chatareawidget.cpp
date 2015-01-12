@@ -65,7 +65,7 @@ void ChatAreaWidget::mouseReleaseEvent(QMouseEvent * event)
         QTextCursor cursor(document());
         cursor.setPosition(pos);
 
-        if(!cursor.atEnd())
+        if (!cursor.atEnd())
         {
             cursor.setPosition(pos+1);
 

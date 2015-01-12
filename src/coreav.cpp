@@ -17,10 +17,17 @@
 #include "core.h"
 #include "video/camera.h"
 #include "audio.h"
+#ifdef QTOX_FILTER_AUDIO
+#include "audiofilterer.h"
+#endif
+#include "misc/settings.h"
 #include <QDebug>
 #include <QTimer>
 
 ToxCall Core::calls[TOXAV_MAX_CALLS];
+#ifdef QTOX_FILTER_AUDIO
+AudioFilterer * Core::filterer[TOXAV_MAX_CALLS] { nullptr};
+#endif
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
 
@@ -65,6 +72,19 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         calls[callId].sendVideoTimer->start();
         Camera::getInstance()->subscribe();
     }
+
+#ifdef QTOX_FILTER_AUDIO
+    if (Settings::getInstance().getFilterAudio())
+    {
+        Core::filterer[callId] = new AudioFilterer();
+        filterer[callId]->startFilter(48000);
+    }
+    else
+    {
+        delete filterer[callId];
+        filterer[callId] = nullptr;
+    }
+#endif
 }
 
 void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
@@ -194,6 +214,7 @@ void Core::cleanupCall(int callId)
     if (calls[callId].videoEnabled)
         Camera::getInstance()->unsubscribe();
     Audio::unsuscribeInput();
+    toxav_kill_transmission(Core::getInstance()->toxav, callId);
 }
 
 void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint16_t samples, void *user_data)
@@ -207,7 +228,7 @@ void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint1
         alGenSources(1, &calls[callId].alSource);
 
     ToxAvCSettings dest;
-    if(toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &dest) == 0)
+    if (toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &dest) == 0)
         playAudioBuffer(calls[callId].alSource, data, samples, dest.audio_channels, dest.audio_sample_rate);
 }
 
@@ -216,7 +237,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     if (!calls[callId].active)
         return;
 
-    if (calls[callId].muteMic || !Audio::alInDev)
+    if (calls[callId].muteMic || !Audio::isInputReady())
     {
         calls[callId].sendAudioTimer->start();
         return;
@@ -226,28 +247,25 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
     uint8_t buf[bufsize], dest[bufsize];
 
-    bool frame = false;
-    ALint samples;
-    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if(samples >= framesize)
-    {
-        memset(buf, 0, bufsize); // Avoid uninitialized values (Valgrind)
-        alcCaptureSamples(Audio::alInDev, buf, framesize);
-        frame = 1;
-    }
-
-    if(frame)
+    if (Audio::tryCaptureSamples(buf, framesize))
     {
         int r;
-        if((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
+        if ((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
         {
             qDebug() << "Core: toxav_prepare_audio_frame error";
             calls[callId].sendAudioTimer->start();
             return;
         }
 
-        if((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
+#ifdef QTOX_FILTER_AUDIO
+        if (filterer[callId])
+            filterer[callId]->filterAudio((int16_t*) buf, framesize);
+#endif
+
+        if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
+        {
             qDebug() << "Core: toxav_send_audio error";
+        }
     }
     calls[callId].sendAudioTimer->start();
 }
@@ -271,7 +289,7 @@ void Core::sendCallVideo(int callId)
     if (frame.w && frame.h)
     {
         int result;
-        if((result = toxav_prepare_video_frame(toxav, callId, videobuf, videobufsize, &frame)) < 0)
+        if ((result = toxav_prepare_video_frame(toxav, callId, videobuf, videobufsize, &frame)) < 0)
         {
             qDebug() << QString("Core: toxav_prepare_video_frame: error %1").arg(result);
             vpx_img_free(&frame);
@@ -279,7 +297,7 @@ void Core::sendCallVideo(int callId)
             return;
         }
 
-        if((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
+        if ((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
             qDebug() << QString("Core: toxav_send_video error: %1").arg(result);
 
         vpx_img_free(&frame);
@@ -294,14 +312,16 @@ void Core::sendCallVideo(int callId)
 
 void Core::micMuteToggle(int callId)
 {
-    if (calls[callId].active) {
+    if (calls[callId].active)
+    {
         calls[callId].muteMic = !calls[callId].muteMic;
     }
 }
 
 void Core::volMuteToggle(int callId)
 {
-    if (calls[callId].active) {
+    if (calls[callId].active)
+    {
         calls[callId].muteVol = !calls[callId].muteVol;
         alSourcef(calls[callId].alSource, AL_GAIN, calls[callId].muteVol ? 0.f : 1.f);
     }
@@ -320,6 +340,15 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
     qDebug() << QString("Core: AV cancel from %1").arg(friendId);
 
     calls[callId].active = false;
+
+#ifdef QTOX_FILTER_AUDIO
+    if (filterer[callId])
+    {
+        filterer[callId]->closeFilter();
+        delete filterer[callId];
+        filterer[callId] = nullptr;
+    }
+#endif
 
     emit static_cast<Core*>(core)->avCancel(friendId, callId);
 }
@@ -378,59 +407,6 @@ void Core::onAvRinging(void* _toxav, int32_t call_index, void* core)
         emit static_cast<Core*>(core)->avRinging(friendId, call_index, false);
     }
 }
-
-//void Core::onAvStarting(void* _toxav, int32_t call_index, void* core)
-//{
-//    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-//    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-//    if (friendId < 0)
-//    {
-//        qWarning() << "Core: Received invalid AV starting";
-//        return;
-//    }
-
-//    ToxAvCSettings* transSettings = new ToxAvCSettings;
-//    int err = toxav_get_peer_csettings(toxav, call_index, 0, transSettings);
-//    if (err != ErrorNone)
-//    {
-//        qWarning() << "Core::onAvStarting: error getting call type";
-//        delete transSettings;
-//        return;
-//    }
-
-//    if (transSettings->call_type == TypeVideo)
-//    {
-//        qDebug() << QString("Core: AV starting from %1 with video").arg(friendId);
-//        prepareCall(friendId, call_index, toxav, true);
-//        emit static_cast<Core*>(core)->avStarting(friendId, call_index, true);
-//    }
-//    else
-//    {
-//        qDebug() << QString("Core: AV starting from %1 without video").arg(friendId);
-//        prepareCall(friendId, call_index, toxav, false);
-//        emit static_cast<Core*>(core)->avStarting(friendId, call_index, false);
-//    }
-
-//    delete transSettings;
-//}
-
-//void Core::onAvEnding(void* _toxav, int32_t call_index, void* core)
-//{
-//    ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-
-//    int friendId = toxav_get_peer_id(toxav, call_index, 0);
-//    if (friendId < 0)
-//    {
-//        qWarning() << "Core: Received invalid AV ending";
-//        return;
-//    }
-//    qDebug() << QString("Core: AV ending from %1").arg(friendId);
-
-//    cleanupCall(call_index);
-
-//    emit static_cast<Core*>(core)->avEnding(friendId, call_index);
-//}
 
 void Core::onAvRequestTimeout(void* _toxav, int32_t call_index, void* core)
 {
@@ -540,7 +516,7 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
 // This function's logic was shamelessly stolen from uTox
 void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate)
 {
-    if(!channels || channels > 2)
+    if (!channels || channels > 2)
     {
         qWarning() << "Core::playAudioBuffer: trying to play on "<<channels<<" channels! Giving up.";
         return;
@@ -552,14 +528,14 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
     alGetSourcei(alSource, AL_BUFFERS_QUEUED, &queued);
     alSourcei(alSource, AL_LOOPING, AL_FALSE);
 
-    if(processed)
+    if (processed)
     {
         ALuint bufids[processed];
         alSourceUnqueueBuffers(alSource, processed, bufids);
         alDeleteBuffers(processed - 1, bufids + 1);
         bufid = bufids[0];
     }
-    else if(queued < 32)
+    else if (queued < 32)
     {
         alGenBuffers(1, &bufid);
     }
@@ -575,7 +551,7 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
-    if(state != AL_PLAYING)
+    if (state != AL_PLAYING)
     {
         alSourcePlay(alSource);
         //qDebug() << "Core: Starting audio source " << (int)alSource;
@@ -630,7 +606,7 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     if (!groupCalls[groupId].active)
         return;
 
-    if (groupCalls[groupId].muteMic || !Audio::alInDev)
+    if (groupCalls[groupId].muteMic || !Audio::isInputReady())
     {
         groupCalls[groupId].sendAudioTimer->start();
         return;
@@ -640,20 +616,10 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
     uint8_t buf[bufsize];
 
-    bool frame = false;
-    ALint samples;
-    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if(samples >= framesize)
-    {
-        memset(buf, 0, bufsize); // Avoid uninitialized values (Valgrind)
-        alcCaptureSamples(Audio::alInDev, buf, framesize);
-        frame = 1;
-    }
-
-    if(frame)
+    if (Audio::tryCaptureSamples(buf, framesize))
     {
         int r;
-        if((r = toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,
+        if ((r = toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,
                 framesize, av_DefaultSettings.audio_channels, av_DefaultSettings.audio_sample_rate)) < 0)
         {
             qDebug() << "Core: toxav_group_send_audio error";

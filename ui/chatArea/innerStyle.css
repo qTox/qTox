@@ -34,7 +34,7 @@ div.date_me {
 }
 
 span.quote {
-  color: #6bc260;
+  color: #279419;
 }
 
 div.green {
@@ -86,4 +86,8 @@ div.button {
   margin-bottom: 0px;
   margin-left: 0px;
   color: @white;
+}
+
+a {
+    color: blue;
 }

@@ -1034,7 +1034,7 @@ QSplitter:handle{
              <x>0</x>
              <y>0</y>
              <width>284</width>
-             <height>401</height>
+             <height>399</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1665,7 +1665,7 @@ QSplitter:handle{
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>57</height>
+            <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -1775,7 +1775,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

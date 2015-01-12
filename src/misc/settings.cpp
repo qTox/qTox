@@ -130,7 +130,7 @@ void Settings::load()
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();        
         forceTCP = s.value("forceTCP", false).toBool();
-        useProxy = s.value("useProxy", false).toBool();
+        setProxyType(s.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
         currentProfile = s.value("currentProfile", "").toString();
@@ -168,6 +168,7 @@ void Settings::load()
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
+        lightTrayIcon = s.value("lightTrayIcon", false).toBool();
         useNativeStyle = s.value("nativeStyle", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
@@ -189,7 +190,7 @@ void Settings::load()
     s.endGroup();
 
     s.beginGroup("Privacy");
-        typingNotification = s.value("typingNotification", false).toBool();
+        typingNotification = s.value("typingNotification", true).toBool();
         enableLogging = s.value("enableLogging", false).toBool();
         encryptLogs = s.value("encryptLogs", false).toBool();
         encryptTox = s.value("encryptTox", false).toBool();
@@ -198,6 +199,7 @@ void Settings::load()
     s.beginGroup("Audio");
         inDev = s.value("inDev", "").toString();
         outDev = s.value("outDev", "").toString();
+        filterAudio = s.value("filterAudio", false).toBool();
     s.endGroup();
 
     // Read the embedded DHT bootsrap nodes list if needed
@@ -281,7 +283,7 @@ void Settings::save(QString path, bool writeFriends)
         s.setValue("showSystemTray", showSystemTray);
         s.setValue("autostartInTray",autostartInTray);
         s.setValue("closeToTray", closeToTray);
-        s.setValue("useProxy", useProxy);
+        s.setValue("proxyType", static_cast<int>(proxyType));
         s.setValue("forceTCP", forceTCP);
         s.setValue("proxyAddr", proxyAddr);
         s.setValue("proxyPort", proxyPort);
@@ -317,6 +319,7 @@ void Settings::save(QString path, bool writeFriends)
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("minimizeToTray", minimizeToTray);
+        s.setValue("lightTrayIcon", lightTrayIcon);
         s.setValue("nativeStyle", useNativeStyle);
         s.setValue("useEmoticons", useEmoticons);
         s.setValue("themeColor", themeColor);
@@ -340,6 +343,7 @@ void Settings::save(QString path, bool writeFriends)
     s.beginGroup("Audio");
         s.setValue("inDev", inDev);
         s.setValue("outDev", outDev);
+        s.setValue("filterAudio", filterAudio);
     s.endGroup();
 
     if (!writeFriends || currentProfile.isEmpty()) // Core::switchConfiguration
@@ -532,6 +536,16 @@ void Settings::setMinimizeToTray(bool newValue)
     minimizeToTray = newValue;
 }
 
+bool Settings::getLightTrayIcon() const
+{
+    return lightTrayIcon;
+}
+
+void Settings::setLightTrayIcon(bool newValue)
+{
+    lightTrayIcon = newValue;
+}
+
 bool Settings::getStatusChangeNotificationEnabled() const
 {
     return statusChangeNotificationEnabled;
@@ -572,13 +586,17 @@ void Settings::setForceTCP(bool newValue)
     forceTCP = newValue;
 }
 
-bool Settings::getUseProxy() const
+ProxyType Settings::getProxyType() const
 {
-    return useProxy;
+    return proxyType;
 }
-void Settings::setUseProxy(bool newValue)
+
+void Settings::setProxyType(int newValue)
 {
-    useProxy = newValue;
+    if (newValue >= 0 && newValue <= 2)
+        proxyType = static_cast<ProxyType>(newValue);
+    else
+        proxyType = ProxyType::ptNone;
 }
 
 QString Settings::getProxyAddr() const
@@ -886,6 +904,16 @@ QString Settings::getOutDev() const
 void Settings::setOutDev(const QString& deviceSpecifier)
 {
     outDev = deviceSpecifier;
+}
+
+bool Settings::getFilterAudio() const
+{
+    return filterAudio;
+}
+
+void Settings::setFilterAudio(bool newValue)
+{
+    filterAudio = newValue;
 }
 
 QString Settings::getFriendAdress(const QString &publicKey) const
