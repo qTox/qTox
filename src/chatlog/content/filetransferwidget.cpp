@@ -74,7 +74,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
     int number = 0;
 
     QString suffix = QFileInfo(fileInfo.fileName).completeSuffix();
-    QString base = QFileInfo(fileInfo.fileName).completeBaseName();
+    QString base = QFileInfo(fileInfo.fileName).baseName();
 
     do
     {
@@ -83,16 +83,12 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
     }
     while(QFileInfo(filepath).exists());
 
-    if(!isFilePathWritable(filepath))
-    {
-        QMessageBox::warning(0,
-                             tr("Location not writable","Title of permissions popup"),
-                             tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
-        return;
-    }
-
-    //everything ok!
-    Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
+    //Do not automatically accept the file-transfer if the path is not writable.
+    //The user can still accept it manually.
+    if(isFilePathWritable(filepath))
+        Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
+    else
+        qDebug() << "Warning: Cannot write to " << filepath;
 }
 
 void FileTransferWidget::acceptTransfer(const QString &filepath)
