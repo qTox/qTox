@@ -140,7 +140,11 @@ void AVForm::getAudioInDevices()
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
-            QString inDev = QString::fromLocal8Bit(pDeviceList,len);
+#ifdef Q_OS_WIN32			
+            QString inDev = QString::fromUtf8(pDeviceList,len);
+#else
+			QString inDev = QString::fromLocal8Bit(pDeviceList,len);
+#endif
             bodyUI->inDevCombobox->addItem(inDev);
             if (settingsInDev == inDev)
             {
@@ -170,7 +174,11 @@ void AVForm::getAudioOutDevices()
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
-            QString outDev = QString::fromLocal8Bit(pDeviceList,len);
+#ifdef Q_OS_WIN32			
+            QString outDev = QString::fromUtf8(pDeviceList,len);
+#else
+			QString outDev = QString::fromLocal8Bit(pDeviceList,len);
+#endif
             bodyUI->outDevCombobox->addItem(outDev);
             if (settingsOutDev == outDev)
             {
