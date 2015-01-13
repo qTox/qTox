@@ -207,14 +207,12 @@ void ChatLog::partialUpdate()
     checkVisibility();
 
     setViewportUpdateMode(oldUpdateMode);
-    updateSceneRect();
 }
 
 void ChatLog::fullUpdate()
 {
     layout(0, lines.size(), useableWidth());
     checkVisibility();
-    updateSceneRect();
 }
 
 void ChatLog::mousePressEvent(QMouseEvent* ev)
@@ -292,10 +290,8 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
             }
         }
 
-        if(selectionMode != None && ev->pos() != lastPos)
+        if(selectionMode != None)
         {
-            lastPos = ev->pos();
-
             ChatLineContent* content = getContentFromPos(scenePos);
 
             if(content)
@@ -355,7 +351,7 @@ ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
     return nullptr;
 }
 
-bool ChatLog::isOverSelection(QPointF scenePos)
+bool ChatLog::isOverSelection(QPointF scenePos) const
 {
     if(selectionMode == Precise)
     {
@@ -373,7 +369,7 @@ bool ChatLog::isOverSelection(QPointF scenePos)
     return false;
 }
 
-qreal ChatLog::useableWidth()
+qreal ChatLog::useableWidth() const
 {
     return width() - verticalScrollBar()->sizeHint().width() - margins.right() - margins.left();
 }
@@ -398,11 +394,11 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     if(!l.get())
         return;
 
-    l->addToScene(scene);
+    bool stickToBtm = stickToBottom();
 
-    stickToBtm = stickToBottom();
-
+    //insert
     l->setRowIndex(lines.size());
+    l->addToScene(scene);
     lines.append(l);
 
     //partial refresh
@@ -419,6 +415,8 @@ void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
 {
     if(!l.get())
         return;
+
+    bool stickToBtm = stickToBottom();
 
     //move all lines down by 1
     for(ChatLine::Ptr l : lines)
@@ -444,6 +442,8 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     if(newLines.isEmpty())
         return;
 
+    bool stickToBtm = stickToBottom();
+
     //move all lines down by n
     int n = newLines.size();
     for(ChatLine::Ptr l : lines)
@@ -467,16 +467,15 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     checkVisibility();
 }
 
-bool ChatLog::stickToBottom()
+bool ChatLog::stickToBottom() const
 {
     return verticalScrollBar()->value() == verticalScrollBar()->maximum();
 }
 
 void ChatLog::scrollToBottom()
 {
+    updateSceneRect();
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
-    updateGeometry();
-    checkVisibility();
 }
 
 QString ChatLog::getSelectedText() const
@@ -580,6 +579,8 @@ void ChatLog::checkVisibility()
 {
     if(lines.empty())
         return;
+
+    updateSceneRect();
 
     // find first visible row
     QVector<ChatLine::Ptr>::const_iterator upperBound;

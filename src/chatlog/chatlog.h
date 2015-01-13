@@ -58,10 +58,10 @@ protected:
     ChatLineContent* getContentFromPos(QPointF scenePos) const;
 
     qreal layout(int start, int end, qreal width);
-    bool isOverSelection(QPointF scenePos);
-    bool stickToBottom();
+    bool isOverSelection(QPointF scenePos) const;
+    bool stickToBottom() const;
 
-    qreal useableWidth();
+    qreal useableWidth() const;
 
     void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
@@ -100,10 +100,6 @@ private:
     QList<ChatLine::Ptr> visibleLines;
     ChatLine::Ptr typingNotification;
 
-    bool multiLineInsert = false;
-    bool stickToBtm = false;
-    int insertStartIndex = -1;
-
     // selection
     int selClickedRow = -1;
     int selClickedCol = -1;
@@ -111,7 +107,6 @@ private:
     int selLastRow = -1;
     SelectionMode selectionMode = None;
     QPointF clickPos;
-    QPointF lastPos;
     QGraphicsRectItem* selGraphItem = nullptr;
     QTimer* selectionTimer = nullptr;
     QTimer* workerTimer = nullptr;
