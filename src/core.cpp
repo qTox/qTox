@@ -355,7 +355,7 @@ void Core::bootstrapDht()
     }
     static int j = qrand() % listSize;
 
-    qDebug() << "Core: Bootstraping to the DHT ...";
+    qDebug() << "Core: Bootstrapping to the DHT ...";
 
     int i=0;
     while (i < 2) // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
@@ -363,10 +363,10 @@ void Core::bootstrapDht()
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap_from_address(tox, dhtServer.address.toLatin1().data(),
             dhtServer.port, CUserId(dhtServer.userId).data()) == 1)
-            qDebug() << QString("Core: Bootstraping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
+            qDebug() << QString("Core: Bootstrapping from ")+dhtServer.name+QString(", addr ")+dhtServer.address.toLatin1().data()
                         +QString(", port ")+QString().setNum(dhtServer.port);
         else
-            qDebug() << "Core: Error bootstraping from "+dhtServer.name;
+            qDebug() << "Core: Error bootstrapping from "+dhtServer.name;
 
         j++;
         i++;
