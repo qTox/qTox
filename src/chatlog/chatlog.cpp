@@ -76,17 +76,17 @@ ChatLog::ChatLog(QWidget* parent)
     connect(workerTimer, &QTimer::timeout, this, [this] {
         const int stepSize = 400;
 
-        workerDy += layout(lastWorkerIndex, lastWorkerIndex+stepSize, useableWidth());
+        workerDy += layout(workerLastIndex, workerLastIndex+stepSize, useableWidth());
 
         if(!visibleLines.isEmpty())
         {
             int firstVisLineIndex = visibleLines.first()->getRowIndex();
-            int delta = firstVisLineIndex - lastWorkerIndex;
+            int delta = firstVisLineIndex - workerLastIndex;
             if(delta > 0 && delta < stepSize)
             {
-                lastWorkerIndex += delta+1;
+                workerLastIndex += delta+1;
 
-                if(!stickToBottom())
+                if(!workerStb)
                     verticalScrollBar()->setValue(verticalScrollBar()->value() - workerDy);
 
                 workerDy = 0.0;
@@ -94,21 +94,19 @@ ChatLog::ChatLog(QWidget* parent)
             }
             else
             {
-                lastWorkerIndex += stepSize;
+                workerLastIndex += stepSize;
             }
         }
         else
-            lastWorkerIndex += stepSize;
+            workerLastIndex += stepSize;
 
-        if(lastWorkerIndex >= lines.size())
+        if(workerLastIndex >= lines.size())
         {
             workerTimer->stop();
-            lastWorkerIndex = 0;
+            workerLastIndex = 0;
             workerDy = 0.0;
 
-            bool stb = stickToBottom();
-            updateSceneRect();
-            if(stb)
+            if(workerStb)
                 scrollToBottom();
         }
     });
@@ -186,6 +184,8 @@ void ChatLog::partialUpdate()
     if(visibleLines.empty())
         return;
 
+    bool stb = stickToBottom();
+
     auto oldUpdateMode = viewportUpdateMode();
     setViewportUpdateMode(NoViewportUpdate);
 
@@ -207,6 +207,9 @@ void ChatLog::partialUpdate()
     checkVisibility();
 
     setViewportUpdateMode(oldUpdateMode);
+
+    if(stb)
+        scrollToBottom();
 }
 
 void ChatLog::fullUpdate()
@@ -631,6 +634,14 @@ void ChatLog::scrollContentsBy(int dx, int dy)
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
 {
+    if(!workerTimer->isActive())
+    {
+        workerStb = stickToBottom();
+        workerLastIndex = 0;
+        workerDy = 0.0;
+        workerTimer->start();
+    }
+
     bool stb = stickToBottom();
 
     QGraphicsView::resizeEvent(ev);
@@ -644,10 +655,6 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
         scrollToBottom();
 
     updateMultiSelectionRect();
-
-    lastWorkerIndex = 0;
-    workerDy = 0.0;
-    workerTimer->start();
 }
 
 void ChatLog::updateMultiSelectionRect()

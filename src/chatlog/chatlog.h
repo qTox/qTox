@@ -112,8 +112,10 @@ private:
     QTimer* workerTimer = nullptr;
     AutoScrollDirection selectionScrollDir = NoDirection;
 
-    int lastWorkerIndex = 0;
+    //worker vars
+    int workerLastIndex = 0;
     qreal workerDy = 0;
+    bool workerStb = false;
 
     // actions
     QAction* copyAction = nullptr;
