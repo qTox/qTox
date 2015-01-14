@@ -125,7 +125,9 @@ void AVForm::onResProbingFinished(QList<QSize> res)
 	bodyUI->videoModescomboBox->blockSignals(true);
     for (QSize r : res)
         bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())), r);
-	bodyUI->videoModescomboBox->blockSignals(false);
+	//reset index, otherwise cameras with only one resolution won't get initialized
+    bodyUI->videoModescomboBox->setCurrentIndex(-1);
+    bodyUI->videoModescomboBox->blockSignals(false);
 
     bodyUI->videoModescomboBox->setCurrentIndex(bodyUI->videoModescomboBox->count()-1);
 }
