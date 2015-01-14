@@ -188,7 +188,7 @@ qreal ChatLog::layout(int start, int end, qreal width)
     return deltaY;
 }
 
-void ChatLog::partialUpdate()
+void ChatLog::updateVisibleLines()
 {
     checkVisibility();
 
@@ -224,12 +224,6 @@ void ChatLog::partialUpdate()
 
     if(stb)
         scrollToBottom();
-}
-
-void ChatLog::fullUpdate()
-{
-    layout(0, lines.size(), useableWidth());
-    checkVisibility();
 }
 
 void ChatLog::mousePressEvent(QMouseEvent* ev)
@@ -657,7 +651,7 @@ void ChatLog::checkVisibility()
 void ChatLog::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
-    partialUpdate();
+    updateVisibleLines();
 }
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
@@ -673,16 +667,11 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
     bool stb = stickToBottom();
 
     QGraphicsView::resizeEvent(ev);
-
-    if(lines.count() > 300)
-        partialUpdate();
-    else
-        fullUpdate();
+    updateVisibleLines();
+    updateMultiSelectionRect();
 
     if(stb)
         scrollToBottom();
-
-    updateMultiSelectionRect();
 }
 
 void ChatLog::updateMultiSelectionRect()

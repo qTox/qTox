@@ -65,8 +65,7 @@ protected:
 
     void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
-    void partialUpdate();
-    void fullUpdate();
+    void updateVisibleLines();
     void checkVisibility();
     void scrollToBottom();
 
