@@ -135,6 +135,11 @@ void AVForm::hideEvent(QHideEvent *)
     bodyUI->CamVideoSurface->setSource(nullptr);
 }
 
+void AVForm::showEvent(QShowEvent *)
+{
+    bodyUI->CamVideoSurface->setSource(Camera::getInstance());
+}
+
 void AVForm::getAudioInDevices()
 {
     QString settingsInDev = Settings::getInstance().getInDev();

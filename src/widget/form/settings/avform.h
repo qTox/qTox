@@ -59,6 +59,7 @@ private slots:
     void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*);
+    virtual void showEvent(QShowEvent*);
 
 private:
     Ui::AVSettings *bodyUI;
