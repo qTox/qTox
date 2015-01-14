@@ -54,6 +54,7 @@ public:
     ChatLine::Ptr getTypingNotification() const;
 
 protected:
+    QRectF calculateSceneRect() const;
     QRect getVisibleRect() const;
     ChatLineContent* getContentFromPos(QPointF scenePos) const;
 

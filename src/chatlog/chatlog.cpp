@@ -106,7 +106,7 @@ ChatLog::ChatLog(QWidget* parent)
             workerLastIndex = 0;
             workerDy = 0.0;
 
-            if(workerStb)
+            if(stickToBottom())
                 scrollToBottom();
         }
     });
@@ -134,17 +134,12 @@ void ChatLog::clearSelection()
 
 QRect ChatLog::getVisibleRect() const
 {
-    return mapToScene(viewport()->rect()).boundingRect().toRect();
+    return mapToScene(calculateSceneRect().toRect()).boundingRect().toRect();
 }
 
 void ChatLog::updateSceneRect()
 {
-    qreal bottom = (lines.empty() ? 0.0 : lines.last()->boundingSceneRect().bottom());
-
-    if(typingNotification.get() != nullptr)
-        bottom += typingNotification->boundingSceneRect().height() + lineSpacing;
-
-    setSceneRect(QRectF(-margins.left(), -margins.top(), useableWidth(), bottom + margins.bottom() + margins.top()));
+    setSceneRect(calculateSceneRect());
 }
 
 qreal ChatLog::layout(int start, int end, qreal width)
@@ -584,8 +579,6 @@ void ChatLog::checkVisibility()
     if(lines.empty())
         return;
 
-    updateSceneRect();
-
     // find first visible line
     auto lowerBound = std::upper_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), [](const qreal lhs, const ChatLine::Ptr rhs)
     {
@@ -686,6 +679,16 @@ void ChatLog::updateTypingNotification()
         posY = lines.last()->boundingSceneRect().bottom() + lineSpacing;
 
     notification->layout(useableWidth(), QPointF(0.0, posY));
+}
+
+QRectF ChatLog::calculateSceneRect() const
+{
+    qreal bottom = (lines.empty() ? 0.0 : lines.last()->boundingSceneRect().bottom());
+
+    if(typingNotification.get() != nullptr)
+        bottom += typingNotification->boundingSceneRect().height() + lineSpacing;
+
+    return QRectF(-margins.left(), -margins.top(), useableWidth(), bottom + margins.bottom() + margins.top());
 }
 
 void ChatLog::onSelectionTimerTimeout()
