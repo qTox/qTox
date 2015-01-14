@@ -79,6 +79,8 @@ protected:
     void updateMultiSelectionRect();
     void updateTypingNotification();
 
+    ChatLine::Ptr findLineByYPos(qreal yPos) const;
+
 private slots:
     void onSelectionTimerTimeout();
 
@@ -101,7 +103,7 @@ private:
     ChatLine::Ptr typingNotification;
 
     // selection
-    int selClickedRow = -1;
+    int selClickedRow = -1; //These 4 are only valid while selectionMode != None
     int selClickedCol = -1;
     int selFirstRow = -1;
     int selLastRow = -1;
