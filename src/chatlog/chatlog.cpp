@@ -38,24 +38,26 @@ T clamp(T x, T min, T max)
 ChatLog::ChatLog(QWidget* parent)
     : QGraphicsView(parent)
 {
+    // Create the scene
     scene = new QGraphicsScene(this);
-    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    scene->setItemIndexMethod(QGraphicsScene::NoIndex); //Bsp-Tree is actually slower in this case
     setScene(scene);
 
+    // Cfg.
     setInteractive(true);
     setAlignment(Qt::AlignTop | Qt::AlignLeft);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(BoundingRectViewportUpdate);
-    //setRenderHint(QPainter::TextAntialiasing);
     setAcceptDrops(false);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
+    // The selection rect for multi-line selection
     const QColor selGraphColor = QColor(166,225,255);
     selGraphItem = scene->addRect(0,0,0,0,selGraphColor.darker(120),selGraphColor);
     selGraphItem->setZValue(-10.0); //behind all items
 
-    // copy action
+    // copy action (ie. Ctrl+C)
     copyAction = new QAction(this);
     copyAction->setShortcut(QKeySequence::Copy);
     addAction(copyAction);
@@ -64,12 +66,16 @@ ChatLog::ChatLog(QWidget* parent)
         copySelectedText();
     });
 
+    // This timer is used to scroll the view while the user is
+    // moving the mouse past the top/bottom edge of the widget while selecting.
     selectionTimer = new QTimer(this);
     selectionTimer->setInterval(1000/60);
     selectionTimer->setSingleShot(false);
     selectionTimer->start();
     connect(selectionTimer, &QTimer::timeout, this, &ChatLog::onSelectionTimerTimeout);
 
+    // Background worker
+    // Updates the layout of all chat-lines after a resize
     workerTimer = new QTimer(this);
     workerTimer->setSingleShot(false);
     workerTimer->setInterval(100);
@@ -112,14 +118,9 @@ ChatLog::ChatLog(QWidget* parent)
     });
 }
 
-ChatLog::~ChatLog()
-{
-
-}
-
 void ChatLog::clearSelection()
 {
-    for(int i=selFirstRow; i<=selLastRow && i<lines.size() && i >= 0; ++i)
+    for(int i=selFirstRow; i<=selLastRow; ++i)
         lines[i]->selectionCleared();
 
     selFirstRow = -1;
@@ -149,6 +150,8 @@ qreal ChatLog::layout(int start, int end, qreal width)
 
     qreal h = 0.0;
 
+    // Line at start-1 is considered to have the correct position. All following lines are
+    // positioned in respect to this line.
     if(start - 1 >= 0)
         h = lines[start - 1]->boundingSceneRect().bottom() + lineSpacing;
 
@@ -184,6 +187,9 @@ void ChatLog::partialUpdate()
     auto oldUpdateMode = viewportUpdateMode();
     setViewportUpdateMode(NoViewportUpdate);
 
+    // Resize all lines currently visible in the viewport.
+    // If this creates some whitespace underneath the last visible lines
+    // then move the following non visible lines up in order to fill the gap.
     qreal repos;
     do
     {
@@ -328,6 +334,7 @@ ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
     if(lines.empty())
         return nullptr;
 
+    //Much faster than QGraphicsScene::itemAt()!
     //the first visible line
     auto lowerBound = std::upper_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const qreal lhs, const ChatLine::Ptr rhs)
     {
