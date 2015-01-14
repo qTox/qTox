@@ -524,8 +524,11 @@ QString ChatLog::getSelectedText() const
         QString out;
 
         QString lastSender;
-        for(int i=selFirstRow; i<=selLastRow && i>=0 && i<lines.size(); ++i)
+        for(int i=selFirstRow; i<=selLastRow; ++i)
         {
+            if(lines[i]->content[1]->getText().isEmpty())
+                continue;
+
             if(lastSender != lines[i]->content[0]->getText() && !lines[i]->content[0]->getText().isEmpty())
             {
                 //author changed
@@ -534,7 +537,9 @@ QString ChatLog::getSelectedText() const
             }
 
             out += lines[i]->content[1]->getText();
-            out += "\n\n";
+
+            if(i != selLastRow)
+                out += "\n";
         }
 
         return out;
