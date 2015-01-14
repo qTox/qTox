@@ -330,19 +330,20 @@ ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
     if(lines.empty())
         return nullptr;
 
-    QVector<ChatLine::Ptr>::const_iterator upperBound;
-    upperBound = std::upper_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const qreal lhs, const ChatLine::Ptr rhs)
+    //the first visible line
+    auto lowerBound = std::upper_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const qreal lhs, const ChatLine::Ptr rhs)
     {
         return lhs < rhs->boundingSceneRect().bottom();
     });
 
-    QVector<ChatLine::Ptr>::const_iterator lowerBound;
-    lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const ChatLine::Ptr lhs, const qreal rhs)
+    //the last visible line
+    auto upperBound = std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), [](const ChatLine::Ptr lhs, const qreal rhs)
     {
         return lhs->boundingSceneRect().top() < rhs;
     });
 
-    for(auto itr = upperBound; itr != lowerBound; ++itr)
+    //find content
+    for(auto itr = lowerBound; itr != upperBound; ++itr)
     {
         if((*itr)->boundingSceneRect().contains(scenePos))
             return (*itr)->getContent(scenePos);
@@ -582,23 +583,21 @@ void ChatLog::checkVisibility()
 
     updateSceneRect();
 
-    // find first visible row
-    QVector<ChatLine::Ptr>::const_iterator upperBound;
-    upperBound = std::upper_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), [](const qreal lhs, const ChatLine::Ptr rhs)
+    // find first visible line
+    auto lowerBound = std::upper_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), [](const qreal lhs, const ChatLine::Ptr rhs)
     {
         return lhs < rhs->boundingSceneRect().bottom();
     });
 
-    // find last visible row
-    QVector<ChatLine::Ptr>::const_iterator lowerBound;
-    lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), [](const ChatLine::Ptr lhs, const qreal rhs)
+    // find last visible line
+    auto upperBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), [](const ChatLine::Ptr lhs, const qreal rhs)
     {
         return lhs->boundingSceneRect().top() < rhs;
     });
 
     // set visibilty
     QList<ChatLine::Ptr> newVisibleLines;
-    for(auto itr = upperBound; itr != lowerBound; ++itr)
+    for(auto itr = lowerBound; itr != upperBound; ++itr)
     {
         newVisibleLines.append(*itr);
 
@@ -608,6 +607,7 @@ void ChatLog::checkVisibility()
         visibleLines.removeOne(*itr);
     }
 
+    // these lines are no longer visible
     for(ChatLine::Ptr line : visibleLines)
         line->visibilityChanged(false);
 
@@ -627,7 +627,6 @@ void ChatLog::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
     partialUpdate();
-    checkVisibility();
 }
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
