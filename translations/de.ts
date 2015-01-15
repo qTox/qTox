@@ -251,6 +251,11 @@ Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</tr
         <source>Call duration: </source>
         <translation>Anrufdauer: </translation>
     </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="905"/>
+        <source>is typing...</source>
+        <translation>tippt gerade...</translation>
+    </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
@@ -606,6 +611,11 @@ Alias:</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="189"/>
         <source>Faux offline messaging</source>
         <translation>Imitiert Offline Benachrichtigung</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
+        <source>Compact layout</source>
+        <translation>Kompakte Darstellung</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="198"/>

@@ -67,6 +67,10 @@ void AVForm::present()
     Camera::getInstance()->probeProp(Camera::HUE);
 
     Camera::getInstance()->probeResolutions();
+	
+	bodyUI->videoModescomboBox->blockSignals(true);
+	bodyUI->videoModescomboBox->addItem(tr("Initializing Camera..."));
+	bodyUI->videoModescomboBox->blockSignals(false);
 }
 
 void AVForm::on_ContrastSlider_sliderMoved(int position)
@@ -89,7 +93,7 @@ void AVForm::on_HueSlider_sliderMoved(int position)
     Camera::getInstance()->setProp(Camera::HUE, position / 100.0);
 }
 
-void AVForm::on_videoModescomboBox_activated(int index)
+void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 {
     Camera::getInstance()->setResolution(bodyUI->videoModescomboBox->itemData(index).toSize());
 }
@@ -118,8 +122,12 @@ void AVForm::onPropProbingFinished(Camera::Prop prop, double val)
 void AVForm::onResProbingFinished(QList<QSize> res)
 {
     bodyUI->videoModescomboBox->clear();
+	bodyUI->videoModescomboBox->blockSignals(true);
     for (QSize r : res)
         bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())), r);
+	//reset index, otherwise cameras with only one resolution won't get initialized
+    bodyUI->videoModescomboBox->setCurrentIndex(-1);
+    bodyUI->videoModescomboBox->blockSignals(false);
 
     bodyUI->videoModescomboBox->setCurrentIndex(bodyUI->videoModescomboBox->count()-1);
 }
@@ -129,36 +137,47 @@ void AVForm::hideEvent(QHideEvent *)
     bodyUI->CamVideoSurface->setSource(nullptr);
 }
 
+void AVForm::showEvent(QShowEvent *)
+{
+    bodyUI->CamVideoSurface->setSource(Camera::getInstance());
+}
+
 void AVForm::getAudioInDevices()
 {
     QString settingsInDev = Settings::getInstance().getInDev();
-    bool inDevFound = false;
+	int inDevIndex = 0;
     bodyUI->inDevCombobox->clear();
     const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
     if (pDeviceList)
     {
+		//prevent currentIndexChanged to be fired while adding items
+		bodyUI->inDevCombobox->blockSignals(true);
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
-            QString inDev = QString::fromLocal8Bit(pDeviceList,len);
+#ifdef Q_OS_WIN32			
+            QString inDev = QString::fromUtf8(pDeviceList,len);
+#else
+			QString inDev = QString::fromLocal8Bit(pDeviceList,len);
+#endif
             bodyUI->inDevCombobox->addItem(inDev);
             if (settingsInDev == inDev)
             {
-                bodyUI->inDevCombobox->setCurrentIndex(bodyUI->inDevCombobox->count()-1);
-                inDevFound = true;
+				inDevIndex = bodyUI->inDevCombobox->count()-1;
             }
             pDeviceList += len+1;
         }
+		//addItem changes currentIndex -> reset
+		bodyUI->inDevCombobox->setCurrentIndex(-1);
+		bodyUI->inDevCombobox->blockSignals(false);
     }
-
-    if (!inDevFound)
-        Settings::getInstance().setInDev(bodyUI->inDevCombobox->itemText(0));
+	bodyUI->inDevCombobox->setCurrentIndex(inDevIndex);
 }
 
 void AVForm::getAudioOutDevices()
 {
     QString settingsOutDev = Settings::getInstance().getOutDev();
-    bool outDevFound = false;
+	int outDevIndex = 0;
     bodyUI->outDevCombobox->clear();
     const ALchar *pDeviceList;
     if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
@@ -167,22 +186,28 @@ void AVForm::getAudioOutDevices()
         pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
     if (pDeviceList)
     {
+		//prevent currentIndexChanged to be fired while adding items
+		bodyUI->outDevCombobox->blockSignals(true);
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
-            QString outDev = QString::fromLocal8Bit(pDeviceList,len);
+#ifdef Q_OS_WIN32			
+            QString outDev = QString::fromUtf8(pDeviceList,len);
+#else
+			QString outDev = QString::fromLocal8Bit(pDeviceList,len);
+#endif
             bodyUI->outDevCombobox->addItem(outDev);
             if (settingsOutDev == outDev)
             {
-                bodyUI->outDevCombobox->setCurrentIndex(bodyUI->outDevCombobox->count()-1);
-                outDevFound = true;
+                outDevIndex = bodyUI->outDevCombobox->count()-1;
             }
             pDeviceList += len+1;
         }
+		//addItem changes currentIndex -> reset
+		bodyUI->outDevCombobox->setCurrentIndex(-1);
+		bodyUI->outDevCombobox->blockSignals(false);
     }
-
-    if (!outDevFound)
-        Settings::getInstance().setOutDev(bodyUI->outDevCombobox->itemText(0));
+	bodyUI->outDevCombobox->setCurrentIndex(outDevIndex);
 }
 
 void AVForm::onInDevChanged(const QString &deviceDescriptor)

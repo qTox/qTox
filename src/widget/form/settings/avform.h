@@ -47,7 +47,7 @@ private slots:
     void on_SaturationSlider_sliderMoved(int position);
     void on_BrightnessSlider_sliderMoved(int position);
     void on_HueSlider_sliderMoved(int position);
-    void on_videoModescomboBox_activated(int index);
+    void on_videoModescomboBox_currentIndexChanged(int index);
 
     // audio
     void onInDevChanged(const QString& deviceDescriptor);
@@ -59,6 +59,7 @@ private slots:
     void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*);
+    virtual void showEvent(QShowEvent*);
 
 private:
     Ui::AVSettings *bodyUI;

@@ -112,7 +112,7 @@ void CameraWorker::_probeResolutions()
 
             //qDebug() << "PROBING:" << res << " got " << w << h;
 
-            if (!resolutions.contains(QSize(w,h)))
+            if (w>0 && h>0 && !resolutions.contains(QSize(w,h)))
                 resolutions.append(QSize(w,h));
         }
 

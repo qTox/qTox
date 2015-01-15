@@ -22,7 +22,7 @@
 #include <QDebug>
 
 VideoSurface::VideoSurface(QWidget* parent)
-    : QGLWidget(QGLFormat(QGL::SampleBuffers | QGL::SingleBuffer), parent)
+    : QGLWidget(QGLFormat(QGL::SingleBuffer), parent)
     , source(nullptr)
     , pbo{nullptr, nullptr}
     , textureId(0)
@@ -30,7 +30,7 @@ VideoSurface::VideoSurface(QWidget* parent)
     , hasSubscribed(false)
     , pboIndex(0)
 {
-    setAutoBufferSwap(false);
+    
 }
 
 VideoSurface::VideoSurface(VideoSource *source, QWidget* parent)
@@ -65,8 +65,8 @@ void VideoSurface::setSource(VideoSource *src)
 
 void VideoSurface::initializeGL()
 {
+    QGLWidget::initializeGL();
     qDebug() << "VideoSurface: Init";
-
     // pbo
     pbo[0] = new QOpenGLBuffer(QOpenGLBuffer::PixelUnpackBuffer);
     pbo[0]->setUsagePattern(QOpenGLBuffer::StreamDraw);
