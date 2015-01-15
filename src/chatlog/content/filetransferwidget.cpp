@@ -94,7 +94,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
 void FileTransferWidget::acceptTransfer(const QString &filepath)
 {
     //test if writable
-    if(isFilePathWritable(filepath))
+    if(!isFilePathWritable(filepath))
     {
         QMessageBox::warning(0,
                              tr("Location not writable","Title of permissions popup"),
