@@ -150,6 +150,10 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    micButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    volButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     menu.addAction(tr("Save chat log"), this, SLOT(onSaveLogClicked()));
     menu.addAction(tr("Clear displayed messages"), this, SLOT(clearChatArea(bool)));
