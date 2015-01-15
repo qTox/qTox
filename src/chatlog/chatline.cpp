@@ -260,3 +260,18 @@ void ChatLine::moveBy(qreal deltaY)
 
     bbox.moveTop(bbox.top() + deltaY);
 }
+
+bool ChatLine::lessThanBSRectTop(const ChatLine::Ptr lhs, const qreal rhs)
+{
+    return lhs->boundingSceneRect().top() < rhs;
+}
+
+bool ChatLine::lessThanBSRectBottom(const ChatLine::Ptr lhs, const qreal rhs)
+{
+    return lhs->boundingSceneRect().bottom() < rhs;
+}
+
+bool ChatLine::lessThanRowIndex(const ChatLine::Ptr lhs, const ChatLine::Ptr rhs)
+{
+    return lhs->getRowIndex() < rhs->getRowIndex();
+}

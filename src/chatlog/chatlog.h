@@ -78,7 +78,7 @@ protected:
     void updateMultiSelectionRect();
     void updateTypingNotification();
 
-    ChatLine::Ptr findLineByYPos(qreal yPos) const;
+    ChatLine::Ptr findLineByPosY(qreal yPos) const;
 
 private slots:
     void onSelectionTimerTimeout();

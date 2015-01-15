@@ -35,16 +35,6 @@ T clamp(T x, T min, T max)
     return x;
 }
 
-auto compareSmaller = [](const ChatLine::Ptr lhs, const qreal rhs) -> bool
-{
-    return lhs->boundingSceneRect().top() < rhs;
-};
-
-auto compareGreater = [](const qreal lhs, const ChatLine::Ptr rhs) -> bool
-{
-    return lhs < rhs->boundingSceneRect().bottom();
-};
-
 ChatLog::ChatLog(QWidget* parent)
     : QGraphicsView(parent)
 {
@@ -71,7 +61,7 @@ ChatLog::ChatLog(QWidget* parent)
     copyAction = new QAction(this);
     copyAction->setShortcut(QKeySequence::Copy);
     addAction(copyAction);
-    connect(copyAction, &QAction::triggered, this, [ = ](bool)
+    connect(copyAction, &QAction::triggered, this, [this](bool)
     {
         copySelectedText();
     });
@@ -148,7 +138,7 @@ void ChatLog::clearSelection()
 
 QRect ChatLog::getVisibleRect() const
 {
-    return mapToScene(calculateSceneRect().toRect()).boundingRect().toRect();
+    return mapToScene(viewport()->rect()).boundingRect().toRect();
 }
 
 void ChatLog::updateSceneRect()
@@ -282,7 +272,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
         if(selectionMode == None && (clickPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
         {
             QPointF sceneClickPos = mapToScene(clickPos.toPoint());
-            ChatLine::Ptr line = findLineByYPos(scenePos.y());
+            ChatLine::Ptr line = findLineByPosY(scenePos.y());
 
             ChatLineContent* content = getContentFromPos(sceneClickPos);
             if(content)
@@ -313,7 +303,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
         if(selectionMode != None)
         {
             ChatLineContent* content = getContentFromPos(scenePos);
-            ChatLine::Ptr line = findLineByYPos(scenePos.y());
+            ChatLine::Ptr line = findLineByPosY(scenePos.y());
 
             if(!content && !line.get())
                 return;
@@ -369,18 +359,11 @@ ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
     if(lines.empty())
         return nullptr;
 
-    //the first visible line
-    auto lowerBound = std::upper_bound(lines.cbegin(), lines.cend(), scenePos.y(), compareGreater);
-
-    //the last visible line
-    auto upperBound = std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), compareSmaller);
+    auto itr = std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), ChatLine::lessThanBSRectBottom);
 
     //find content
-    for(auto itr = lowerBound; itr != upperBound; ++itr)
-    {
-        if((*itr)->boundingSceneRect().contains(scenePos))
-            return (*itr)->getContent(scenePos);
-    }
+    if(itr != lines.cend() && (*itr)->boundingSceneRect().contains(scenePos))
+        return (*itr)->getContent(scenePos);
 
     return nullptr;
 }
@@ -620,10 +603,10 @@ void ChatLog::checkVisibility()
         return;
 
     // find first visible line
-    auto lowerBound = std::upper_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), compareGreater);
+    auto lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), ChatLine::lessThanBSRectBottom);
 
     // find last visible line
-    auto upperBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), compareSmaller);
+    auto upperBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), ChatLine::lessThanBSRectTop);
 
     // set visibilty
     QList<ChatLine::Ptr> newVisibleLines;
@@ -644,13 +627,10 @@ void ChatLog::checkVisibility()
     visibleLines = newVisibleLines;
 
     // enforce order
-    std::sort(visibleLines.begin(), visibleLines.end(), [](const ChatLine::Ptr lhs, const ChatLine::Ptr rhs)
-    {
-        return lhs->getRowIndex() < rhs->getRowIndex();
-    });
+    std::sort(visibleLines.begin(), visibleLines.end(), ChatLine::lessThanRowIndex);
 
     //if(!visibleLines.empty())
-    //    qDebug() << "visible from " << visibleLines.first()->getRowIndex() << "to " << visibleLines.last()->getRowIndex() << " total " << visibleLines.size();
+    //  qDebug() << "visible from " << visibleLines.first()->getRowIndex() << "to " << visibleLines.last()->getRowIndex() << " total " << visibleLines.size();
 }
 
 void ChatLog::scrollContentsBy(int dx, int dy)
@@ -710,12 +690,12 @@ void ChatLog::updateTypingNotification()
     notification->layout(useableWidth(), QPointF(0.0, posY));
 }
 
-ChatLine::Ptr ChatLog::findLineByYPos(qreal yPos) const
+ChatLine::Ptr ChatLog::findLineByPosY(qreal yPos) const
 {
-    auto lowerBound = std::upper_bound(lines.cbegin(), lines.cend(), yPos, compareGreater);
+    auto itr = std::lower_bound(lines.cbegin(), lines.cend(), yPos, ChatLine::lessThanBSRectBottom);
 
-    if(lowerBound != lines.cend())
-        return *lowerBound;
+    if(itr != lines.cend())
+        return *itr;
 
     return ChatLine::Ptr();
 }

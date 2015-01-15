@@ -94,6 +94,11 @@ protected:
     void setRowIndex(int idx);
     void visibilityChanged(bool visible);
 
+    //comparators
+    static bool lessThanBSRectTop(const ChatLine::Ptr lhs, const qreal rhs);
+    static bool lessThanBSRectBottom(const ChatLine::Ptr lhs, const qreal rhs);
+    static bool lessThanRowIndex(const ChatLine::Ptr lhs, const ChatLine::Ptr rhs);
+
 private:
     int rowIndex = -1;
     std::vector<ChatLineContent*> content; // 3 columns
