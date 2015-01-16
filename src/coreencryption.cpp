@@ -48,20 +48,19 @@ void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
     password.clear();
 }
 
+#include <algorithm>
 void Core::useOtherPassword(PasswordType type)
 {
     clearPassword(type);
-    if (type == ptHistory)
-        pwsaltedkeys[ptHistory] = pwsaltedkeys[ptMain];
-    else if (type == ptMain)
-        pwsaltedkeys[ptMain] = pwsaltedkeys[ptHistory];
+    pwsaltedkeys[type] = new uint8_t[tox_pass_key_length()];
+
+    PasswordType other = (type == ptMain) ? ptHistory : ptMain;
+
+    std::copy(pwsaltedkeys[other], pwsaltedkeys[other]+tox_pass_key_length(), pwsaltedkeys[type]);
 }
 
 void Core::clearPassword(PasswordType passtype)
 {
-    PasswordType other = (passtype == ptMain) ? ptHistory : ptMain;
-    if (pwsaltedkeys[passtype] == pwsaltedkeys[other])
-        pwsaltedkeys[other] = nullptr;
     delete[] pwsaltedkeys[passtype];
     pwsaltedkeys[passtype] = nullptr;
 }
