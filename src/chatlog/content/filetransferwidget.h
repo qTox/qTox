@@ -22,6 +22,8 @@
 #include "../chatlinecontent.h"
 #include "../../corestructs.h"
 
+#define FTW_MEAN_PERIODES 4
+
 namespace Ui {
 class FileTransferWidget;
 }
@@ -64,6 +66,8 @@ private:
     QTime lastTick;
     qint64 lastBytesSent = 0;
 
+    qreal meanData[FTW_MEAN_PERIODES] = {0.0};
+    size_t meanIndex = 0;
 };
 
 #endif // FILETRANSFERWIDGET_H

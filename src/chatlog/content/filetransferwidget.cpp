@@ -43,7 +43,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     ui->progressBar->setValue(0);
     ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
     ui->progressLabel->setText("0kiB/s");
-    ui->etaLabel->setText("-:-");
+    ui->etaLabel->setText("");
 
     setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
     Style::repolish(this);
@@ -116,7 +116,10 @@ bool FileTransferWidget::isFilePathWritable(const QString &filepath)
 
 void FileTransferWidget::onFileTransferInfo(ToxFile file)
 {
-    if(fileInfo != file)
+    QTime now = QTime::currentTime();
+    qint64 dt = lastTick.msecsTo(now); //ms
+
+    if(fileInfo != file || dt < 1000)
         return;
 
     fileInfo = file;
@@ -127,37 +130,41 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
         qreal progress = static_cast<qreal>(file.bytesSent) / static_cast<qreal>(file.filesize);
         ui->progressBar->setValue(static_cast<int>(progress * 100.0));
 
-        // eta, speed
-        QTime now = QTime::currentTime();
-        qreal deltaSecs = lastTick.msecsTo(now) / 1000.0;
+        // ETA, speed
+        qreal deltaSecs = dt / 1000.0;
 
-        if(deltaSecs >= 1.0)
+        qint64 deltaBytes = qMax(file.bytesSent - lastBytesSent, qint64(0));
+        qreal bytesPerSec = static_cast<int>(static_cast<qreal>(deltaBytes) / deltaSecs);
+
+        // calculate mean
+        meanData[(meanIndex++) % FTW_MEAN_PERIODES] = bytesPerSec;
+
+        qreal meanBytesPerSec = 0.0;
+        for(size_t i = 0; i < FTW_MEAN_PERIODES; ++i)
+            meanBytesPerSec += meanData[i];
+
+        meanBytesPerSec /= qMin(meanIndex, static_cast<size_t>(FTW_MEAN_PERIODES));
+
+        // update UI
+        if(meanBytesPerSec > 0)
         {
-            qint64 deltaBytes = file.bytesSent - lastBytesSent;
-            qint64 bytesPerSec = static_cast<int>(static_cast<qreal>(deltaBytes) / deltaSecs);
-
-            if(bytesPerSec > 0)
-            {
-                QTime toGo = QTime(0,0).addSecs(file.filesize / bytesPerSec);
-                ui->etaLabel->setText(toGo.toString("mm:ss"));
-            }
-            else
-            {
-                ui->etaLabel->setText("--:--");
-            }
-
-            ui->progressLabel->setText(getHumanReadableSize(bytesPerSec) + "/s");
-
-            lastTick = now;
-            lastBytesSent = file.bytesSent;
+            // ETA
+            QTime toGo = QTime(0,0).addSecs((file.filesize - file.bytesSent) / meanBytesPerSec);
+            ui->etaLabel->setText(toGo.toString("hh:mm:ss"));
         }
-    }
-    else if(fileInfo.status == ToxFile::PAUSED)
-    {
-        ui->etaLabel->setText("--:--");
-        ui->progressLabel->setText(getHumanReadableSize(0) + "/s");
+        else
+        {
+            ui->etaLabel->setText("");
+        }
+
+        ui->progressLabel->setText(getHumanReadableSize(meanBytesPerSec) + "/s");
+
+        lastBytesSent = file.bytesSent;
     }
 
+    lastTick = now;
+
+    // trigger repaint
     update();
 }
 
@@ -197,8 +204,13 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
     fileInfo = file;
 
-    ui->etaLabel->setText("--:--");
+    ui->etaLabel->setText("");
     ui->progressLabel->setText(getHumanReadableSize(0) + "/s");
+
+    // reset mean
+    meanIndex = 0;
+    for(size_t i=0; i<FTW_MEAN_PERIODES; ++i)
+        meanData[i] = 0.0;
 
     setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
     Style::repolish(this);
@@ -243,7 +255,7 @@ QString FileTransferWidget::getHumanReadableSize(qint64 size)
     if (size > 0)
         exp = std::min( (int) (log(size) / log(1024)), (int) (sizeof(suffix) / sizeof(suffix[0]) - 1));
 
-    return QString().setNum(size / pow(1024, exp),'f',2).append(suffix[exp]);
+    return QString().setNum(size / pow(1024, exp),'f', exp > 2 ? 2 : 0).append(suffix[exp]);
 }
 
 void FileTransferWidget::hideWidgets()
