@@ -426,6 +426,7 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
         scrollToBottom();
 
     checkVisibility();
+    updateTypingNotification();
 }
 
 void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
@@ -464,6 +465,7 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
         scrollToBottom();
 
     checkVisibility();
+    updateTypingNotification();
 }
 
 bool ChatLog::stickToBottom() const
