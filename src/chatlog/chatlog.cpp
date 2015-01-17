@@ -433,25 +433,7 @@ void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
     if(!l.get())
         return;
 
-    bool stickToBtm = stickToBottom();
-
-    //move all lines down by 1
-    for(ChatLine::Ptr l : lines)
-        l->setRowIndex(l->getRowIndex() + 1);
-
-    //add the new line
-    l->addToScene(scene);
-    l->setRowIndex(0);
-    lines.prepend(l);
-
-    //full refresh is required
-    layout(0, lines.size(), useableWidth());
-    updateSceneRect();
-
-    if(stickToBtm)
-        scrollToBottom();
-
-    checkVisibility();
+    insertChatlineOnTop(QList<ChatLine::Ptr>() << l);
 }
 
 void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
