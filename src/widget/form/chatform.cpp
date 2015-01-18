@@ -727,6 +727,20 @@ void ChatForm::dropEvent(QDropEvent *ev)
         {
             QFileInfo info(url.path());
 
+            QFile file(info.absoluteFilePath());
+            if (!file.exists() || !file.open(QIODevice::ReadOnly))
+            {
+                QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to open %1").arg(info.fileName()));
+                continue;
+            }
+            if (file.isSequential())
+            {
+                QMessageBox::critical(0, tr("Bad Idea"), tr("You're trying to send a special (sequential) file, that's not going to work!"));
+                file.close();
+                continue;
+            }
+            file.close();
+
             if (info.exists())
                 Core::getInstance()->sendFile(f->getFriendID(), info.fileName(), info.absoluteFilePath(), info.size());
         }
