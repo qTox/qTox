@@ -638,6 +638,7 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
     QGraphicsView::resizeEvent(ev);
     updateVisibleLines();
     updateMultiSelectionRect();
+    updateTypingNotification();
 
     if(stb)
         scrollToBottom();
