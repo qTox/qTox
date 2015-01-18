@@ -9,8 +9,8 @@ div.action {
 }
 
 div.typing {
-  color: @black;
-  font: @bigBold;
+  color: @mediumGreyLight;
+  font: @big;
 }
 
 span.quote {

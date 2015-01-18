@@ -58,7 +58,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
 
     msg->addColumn(new Text(isAction ? "<div class=action>*</div>" : sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), isAction ? false : true, sender), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(text, Style::getFont(Style::Big), false, isAction ? QString("*%1 %2*").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Spinner(QSizeF(16, 16)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Spinner(":/ui/chatArea/spinner.png", QSizeF(16, 16), 8.0), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     if(!date.isNull())
         msg->markAsSent(date);
@@ -78,7 +78,7 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     case TYPING: img = ":/ui/chatArea/typing.png";   break;
     }
 
-    msg->addColumn(new Image(QSizeF(20, 20), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Image(QSizeF(18, 18), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
     msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
@@ -92,6 +92,16 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
     msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 350, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+
+    return msg;
+}
+
+ChatMessage::Ptr ChatMessage::createTypingNotification()
+{
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
+
+    msg->addColumn(new Spinner(":/ui/chatArea/typing.png", QSizeF(18, 18), 6.0), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text("%1 ...", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
 
     return msg;
 }

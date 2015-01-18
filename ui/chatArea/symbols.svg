@@ -25,6 +25,13 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <rect
+     width="240.94118"
+     height="240.94118"
+     x="419.90225"
+     y="358.90332"
+     id="rect3804"
+     style="fill:#000000;fill-opacity:0;stroke:none" />
   <g
      transform="translate(-19.999993,-14.285714)"
      id="g3864">
@@ -46,7 +53,7 @@
          id="flowPara2994">!</flowPara></flowRoot>  </g>
   <g
      transform="translate(-18.571423,8.5714286)"
-     id="g3857">
+     id="info">
     <path
        d="m 448.57143,603.07648 a 189.28572,189.28572 0 1 1 -378.571445,0 189.28572,189.28572 0 1 1 378.571445,0 z"
        transform="matrix(0.72483708,0,0,0.72483708,16.345817,46.658532)"
@@ -90,7 +97,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;font-family:Aller;-inkscape-font-specification:Aller">i</flowPara></flowRoot>  </g>
   <g
      transform="translate(330.16534,365.19627)"
-     id="g3857-8">
+     id="error">
     <path
        d="m 448.57143,603.07648 a 189.28572,189.28572 0 1 1 -378.571445,0 189.28572,189.28572 0 1 1 378.571445,0 z"
        transform="matrix(0.72483708,0,0,0.72483708,16.345817,46.658532)"
@@ -110,27 +117,41 @@
            style="fill:#1c1c1c;fill-opacity:1" /></flowRegion><flowPara
          id="flowPara2994-4-0"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Aller;-inkscape-font-specification:Aller">i</flowPara></flowRoot>  </g>
+  <path
+     d="m 591.05751,386.8743 36.87891,5.31312 m -55.64044,122.34813 36.87889,5.31308 m -15.45524,-156.42803 -21.93151,152.22907 14.10828,35.26976 23.49041,-29.85297 21.93142,-152.22911 z"
+     id="path3012-0"
+     style="fill:#cccccc;stroke:#6e6e6e;stroke-width:4.51865435;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  <path
+     d="m 494.05192,469.82629 a 2.5618966,2.5618966 0 1 1 -5.1238,0 2.5618966,2.5618966 0 1 1 5.1238,0 z"
+     transform="matrix(4.5186544,0,0,4.5186544,-1726.5774,-1541.9613)"
+     id="path3806"
+     style="fill:#6e6e6e;fill-opacity:1;stroke:#6e6e6e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+  <path
+     d="m 494.05192,469.82629 a 2.5618966,2.5618966 0 1 1 -5.1238,0 2.5618966,2.5618966 0 1 1 5.1238,0 z"
+     transform="matrix(4.5186544,0,0,4.5186544,-1683.834,-1541.9613)"
+     id="path3806-6"
+     style="fill:#6e6e6e;fill-opacity:1;stroke:#6e6e6e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+  <path
+     d="m 494.05192,469.82629 a 2.5618966,2.5618966 0 1 1 -5.1238,0 2.5618966,2.5618966 0 1 1 5.1238,0 z"
+     transform="matrix(4.5186544,0,0,4.5186544,-1638.4193,-1541.9613)"
+     id="path3806-6-2"
+     style="fill:#6e6e6e;fill-opacity:1;stroke:#6e6e6e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
   <g
-     id="g3028">
+     id="notification">
     <path
-       d="m 578.61101,583.89197 -151.31581,0"
-       id="path3020"
-       style="fill:none;stroke:#000000;stroke-width:22.62518883;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    <rect
-       width="56.114246"
-       height="165.16646"
-       x="744.20551"
-       y="12.56288"
-       transform="matrix(0.8660254,0.5,-0.5,0.8660254,0,0)"
-       id="rect3024"
-       style="fill:#000000;fill-opacity:1;stroke:none" />
-    <rect
-       width="23.292706"
-       height="27.527742"
-       x="759.55756"
-       y="174.55305"
-       transform="matrix(0.8660254,0.5,-0.5,0.8660254,0,0)"
-       id="rect3026"
-       style="fill:#000000;fill-opacity:1;stroke:none" />
+       d="m 494.05192,469.82629 a 2.5618966,2.5618966 0 1 1 -5.1238,0 2.5618966,2.5618966 0 1 1 5.1238,0 z"
+       transform="matrix(8.782556,0,0,8.782556,-3756.8812,-3871.6691)"
+       id="path3806-4"
+       style="fill:#6bc260;fill-opacity:1;stroke:none" />
+    <path
+       d="m 494.05192,469.82629 a 2.5618966,2.5618966 0 1 1 -5.1238,0 2.5618966,2.5618966 0 1 1 5.1238,0 z"
+       transform="matrix(8.782556,0,0,8.782556,-3784.3812,-3816.6691)"
+       id="path3806-2"
+       style="fill:#cebf44;fill-opacity:1;stroke:none" />
+    <path
+       d="m 494.05192,469.82629 a 2.5618966,2.5618966 0 1 1 -5.1238,0 2.5618966,2.5618966 0 1 1 5.1238,0 z"
+       transform="matrix(8.782556,0,0,8.782556,-3729.3812,-3816.6688)"
+       id="path3806-6-4"
+       style="fill:#c84e4e;fill-opacity:1;stroke:none" />
   </g>
 </svg>

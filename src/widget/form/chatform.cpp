@@ -59,7 +59,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     netcam = new NetCamView();
     timer = nullptr;
 
-    chatWidget->setTypingNotification(ChatMessage::createChatInfoMessage("", ChatMessage::TYPING, QDateTime()));
+    chatWidget->setTypingNotification(ChatMessage::createTypingNotification());
 
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
