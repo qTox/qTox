@@ -19,10 +19,11 @@
 #include <QPainter>
 #include <QDebug>
 
-Spinner::Spinner(QSizeF Size)
+Spinner::Spinner(const QString &img, QSizeF Size, qreal speed)
     : size(Size)
+    , rotSpeed(speed)
 {
-    pmap.load(":/ui/chatArea/spinner.png");
+    pmap.load(img);
 
     timer.setInterval(33); // 30Hz
     timer.setSingleShot(false);
@@ -77,6 +78,6 @@ qreal Spinner::getAscent() const
 
 void Spinner::timeout()
 {
-    rot += 8;
+    rot += rotSpeed;
     update();
 }

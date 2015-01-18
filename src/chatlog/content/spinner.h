@@ -26,7 +26,7 @@ class Spinner : public QObject, public ChatLineContent
 {
     Q_OBJECT
 public:
-    Spinner(QSizeF size);
+    Spinner(const QString& img, QSizeF size, qreal speed);
 
     virtual QRectF boundingRect() const override;
     virtual QRectF boundingSceneRect() const override;
@@ -41,7 +41,8 @@ private slots:
 private:
     QSizeF size;
     QPixmap pmap;
-    qreal rot;
+    qreal rot = 0.0;
+    qreal rotSpeed;
     QTimer timer;
 
 };
