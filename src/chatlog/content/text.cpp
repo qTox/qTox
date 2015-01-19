@@ -77,36 +77,7 @@ void Text::selectionMouseMove(QPointF scenePos)
     if(cur >= 0)
     {
         selectionEnd = cur;
-        selectedText.clear();
-
-        QTextBlock block = doc->firstBlock();
-        for(QTextBlock::Iterator itr = block.begin(); itr!=block.end(); ++itr)
-        {
-            int pos = itr.fragment().position(); //fragment position -> position of the first character in the fragment
-
-            if(itr.fragment().charFormat().isImageFormat())
-            {
-                QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
-                QString key = imgFmt.name(); //img key (eg. key::D for :D)
-                QString rune = key.mid(4);
-
-                if(pos >= getSelectionStart() && pos < getSelectionEnd())
-                {
-                    selectedText += rune;
-                    pos++;
-                }
-            }
-            else
-            {
-                for(QChar c : itr.fragment().text())
-                {
-                    if(pos >= getSelectionStart() && pos < getSelectionEnd())
-                        selectedText += c;
-
-                    pos++;
-                }
-            }
-        }
+        selectedText = extractSanitizedText(getSelectionStart(), getSelectionEnd());
     }
 
     update();
@@ -148,6 +119,8 @@ void Text::selectionDoubleClick(QPointF scenePos)
 
         selectionAnchor = cursor.selectionStart();
         selectionEnd = cursor.selectionEnd();
+
+        selectedText = extractSanitizedText(getSelectionStart(), getSelectionEnd());
     }
 
     update();
@@ -321,4 +294,43 @@ int Text::getSelectionStart() const
 bool Text::hasSelection() const
 {
     return selectionEnd >= 0;
+}
+
+QString Text::extractSanitizedText(int from, int to) const
+{
+    if(!doc)
+        return "";
+
+    QString txt;
+    QTextBlock block = doc->firstBlock();
+
+    for(QTextBlock::Iterator itr = block.begin(); itr!=block.end(); ++itr)
+    {
+        int pos = itr.fragment().position(); //fragment position -> position of the first character in the fragment
+
+        if(itr.fragment().charFormat().isImageFormat())
+        {
+            QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
+            QString key = imgFmt.name(); //img key (eg. key::D for :D)
+            QString rune = key.mid(4);
+
+            if(pos >= from && pos < to)
+            {
+                txt += rune;
+                pos++;
+            }
+        }
+        else
+        {
+            for(QChar c : itr.fragment().text())
+            {
+                if(pos >= from && pos < to)
+                    txt += c;
+
+                pos++;
+            }
+        }
+    }
+
+    return txt;
 }

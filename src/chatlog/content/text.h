@@ -65,6 +65,7 @@ protected:
     int getSelectionEnd() const;
     int getSelectionStart() const;
     bool hasSelection() const;
+    QString extractSanitizedText(int from, int to) const;
 
 private:
     CustomTextDocument* doc = nullptr;
