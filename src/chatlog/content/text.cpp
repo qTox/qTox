@@ -217,6 +217,9 @@ void Text::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Text::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(!doc)
+        return;
+
     QString anchor = doc->documentLayout()->anchorAt(event->pos());
 
     // open anchors in browser
@@ -231,11 +234,15 @@ QString Text::getText() const
 
 void Text::ensureIntegrity()
 {
-    if(!doc || dirty)
+    if(!doc)
     {
         doc = new CustomTextDocument();
         doc->setDefaultFont(defFont);
+        dirty = true;
+    }
 
+    if(dirty)
+    {
         if(!elide)
         {
             doc->setHtml(text);
