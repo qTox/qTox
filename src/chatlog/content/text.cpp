@@ -36,10 +36,6 @@ Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwTe
 {
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
-
-    ensureIntegrity();
-    freeResources();
-    //setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 }
 
 Text::~Text()
@@ -52,8 +48,7 @@ void Text::setText(const QString& txt)
     text = txt;
     dirty = true;
 
-    ensureIntegrity();
-    freeResources();
+    regenerate();
 }
 
 void Text::setWidth(qreal w)
@@ -62,21 +57,19 @@ void Text::setWidth(qreal w)
         return;
 
     width = w;
+    dirty = true;
 
     if(elide)
     {
         QFontMetrics metrics = QFontMetrics(defFont);
         elidedText = metrics.elidedText(text, Qt::ElideRight, width);
-        dirty = true;
     }
 
-    ensureIntegrity();
-    freeResources();
+    regenerate();
 }
 
 void Text::selectionMouseMove(QPointF scenePos)
 {
-    ensureIntegrity();
     int cur = cursorFromPos(scenePos);
     if(cur >= 0)
     {
@@ -118,29 +111,23 @@ void Text::selectionMouseMove(QPointF scenePos)
 
 void Text::selectionStarted(QPointF scenePos)
 {
-    ensureIntegrity();
     int cur = cursorFromPos(scenePos);
     if(cur >= 0)
         cursor.setPosition(cur);
-
-    selectedText.clear();
-    selectedText.squeeze();
 }
 
 void Text::selectionCleared()
 {
-    ensureIntegrity();
-    cursor.setPosition(0);
+    cursor.clearSelection();
     selectedText.clear();
     selectedText.squeeze();
-    freeResources();
 
     update();
 }
 
 void Text::selectAll()
 {
-    ensureIntegrity();
+    regenerate();
     cursor.select(QTextCursor::Document);
     selectedText = text;
     update();
@@ -194,17 +181,13 @@ void Text::visibilityChanged(bool visible)
 {
     isVisible = visible;
 
-    if(visible)
-        ensureIntegrity();
-    else
-        freeResources();
-
+    regenerate();
     update();
 }
 
 qreal Text::getAscent() const
 {
-    return vOffset;
+    return ascent;
 }
 
 void Text::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -220,7 +203,7 @@ void Text::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     QString anchor = doc->documentLayout()->anchorAt(event->pos());
 
-    // open anchors in browser
+    // open anchor in browser
     if(!anchor.isEmpty())
         QDesktopServices::openUrl(anchor);
 }
@@ -230,7 +213,7 @@ QString Text::getText() const
     return rawText;
 }
 
-void Text::ensureIntegrity()
+void Text::regenerate()
 {
     if(!doc)
     {
@@ -257,26 +240,31 @@ void Text::ensureIntegrity()
         dirty = false;
     }
 
+    // width & layout
     doc->setTextWidth(width);
     doc->documentLayout()->update();
 
+    // update ascent
     if(doc->firstBlock().layout()->lineCount() > 0)
-        vOffset = doc->firstBlock().layout()->lineAt(0).ascent();
+        ascent = doc->firstBlock().layout()->lineAt(0).ascent();
 
+    // let the scene know about our change in size
     if(size != idealSize())
         prepareGeometryChange();
 
+    // get the new width and height
     size = idealSize();
+
+    // if we are not visible -> free mem
+    if(!isVisible && !cursor.hasSelection())
+        freeResources();
 }
 
 void Text::freeResources()
 {
-    if(doc && !isVisible && !cursor.hasSelection())
-    {
-        delete doc;
-        doc = nullptr;
-        cursor = QTextCursor();
-    }
+    delete doc;
+    doc = nullptr;
+    cursor = QTextCursor();
 }
 
 QSizeF Text::idealSize()

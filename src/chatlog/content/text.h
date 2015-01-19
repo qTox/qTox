@@ -55,10 +55,10 @@ public:
 
 protected:
     // dynamic resource management
-    void ensureIntegrity();
+    void regenerate();
     void freeResources();
-    QSizeF idealSize();
 
+    QSizeF idealSize();
     int cursorFromPos(QPointF scenePos) const;
 
 private:
@@ -72,7 +72,7 @@ private:
     bool elide = false;
     bool dirty = false;
     QTextCursor cursor;
-    qreal vOffset = 0.0;
+    qreal ascent = 0.0;
     qreal width = 0.0;
     QFont defFont;
 
