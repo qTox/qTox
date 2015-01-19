@@ -20,6 +20,7 @@
 #include "content/spinner.h"
 #include "content/filetransferwidget.h"
 #include "content/image.h"
+#include "content/notificationicon.h"
 
 #include "src/misc/settings.h"
 #include "src/misc/smileypack.h"
@@ -100,7 +101,7 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
-    msg->addColumn(new Spinner(":/ui/chatArea/typing.png", QSizeF(18, 18), 6.0), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new NotificationIcon(QSizeF(18, 18)), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text("%1 ...", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
 
     return msg;
