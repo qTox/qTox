@@ -69,6 +69,7 @@ protected:
     void checkVisibility();
     void scrollToBottom();
 
+    virtual void mouseDoubleClickEvent(QMouseEvent* ev);
     virtual void mousePressEvent(QMouseEvent* ev);
     virtual void mouseReleaseEvent(QMouseEvent* ev);
     virtual void mouseMoveEvent(QMouseEvent* ev);

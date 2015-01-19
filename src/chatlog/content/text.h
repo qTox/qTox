@@ -27,6 +27,8 @@ class CustomTextDocument;
 class Text : public ChatLineContent
 {
 public:
+    // txt: may contain html code
+    // rawText: does not contain html code
     Text(const QString& txt = "", QFont font = QFont(), bool enableElide = false, const QString& rawText = QString());
     virtual ~Text();
 
@@ -37,6 +39,7 @@ public:
     virtual void selectionMouseMove(QPointF scenePos) override;
     virtual void selectionStarted(QPointF scenePos) override;
     virtual void selectionCleared() override;
+    virtual void selectionDoubleClick(QPointF scenePos) override;
     virtual bool isOverSelection(QPointF scenePos) const override;
     virtual QString getSelectedText() const override;
 

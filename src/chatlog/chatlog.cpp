@@ -479,6 +479,22 @@ void ChatLog::scrollToBottom()
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
 }
 
+void ChatLog::mouseDoubleClickEvent(QMouseEvent *ev)
+{
+    QPointF scenePos = mapToScene(ev->pos());
+    ChatLineContent* content = getContentFromPos(scenePos);
+
+    if(content)
+    {
+        content->selectionDoubleClick(scenePos);
+        selClickedCol = content->getColumn();
+        selClickedRow = content->getRow();
+        selFirstRow = content->getRow();
+        selLastRow = content->getRow();
+        selectionMode = Precise;
+    }
+}
+
 QString ChatLog::getSelectedText() const
 {
     if(selectionMode == Precise)

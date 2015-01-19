@@ -133,6 +133,26 @@ void Text::selectionCleared()
     update();
 }
 
+void Text::selectionDoubleClick(QPointF scenePos)
+{
+    if(!doc)
+        return;
+
+    int cur = cursorFromPos(scenePos);
+
+    if(cur >= 0)
+    {
+        QTextCursor cursor(doc);
+        cursor.setPosition(cur);
+        cursor.select(QTextCursor::WordUnderCursor);
+
+        selectionAnchor = cursor.selectionStart();
+        selectionEnd = cursor.selectionEnd();
+    }
+
+    update();
+}
+
 bool Text::isOverSelection(QPointF scenePos) const
 {
     int cur = cursorFromPos(scenePos);

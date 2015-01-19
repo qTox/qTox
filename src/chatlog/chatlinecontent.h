@@ -38,6 +38,7 @@ public:
     virtual void selectionMouseMove(QPointF scenePos);
     virtual void selectionStarted(QPointF scenePos);
     virtual void selectionCleared();
+    virtual void selectionDoubleClick(QPointF scenePos);
     virtual bool isOverSelection(QPointF scenePos) const;
     virtual QString getSelectedText() const;
 

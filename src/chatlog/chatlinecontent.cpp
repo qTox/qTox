@@ -49,6 +49,12 @@ void ChatLineContent::selectionStarted(QPointF)
 
 void ChatLineContent::selectionCleared()
 {
+
+}
+
+void ChatLineContent::selectionDoubleClick(QPointF)
+{
+
 }
 
 bool ChatLineContent::isOverSelection(QPointF) const
