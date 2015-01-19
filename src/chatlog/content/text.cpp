@@ -70,13 +70,16 @@ void Text::setWidth(qreal w)
 
 void Text::selectionMouseMove(QPointF scenePos)
 {
+    if(!doc)
+        return;
+
     int cur = cursorFromPos(scenePos);
     if(cur >= 0)
     {
-        cursor.setPosition(cur, QTextCursor::KeepAnchor);
+        selectionEnd = cur;
         selectedText.clear();
 
-        QTextBlock block = cursor.block();
+        QTextBlock block = doc->firstBlock();
         for(QTextBlock::Iterator itr = block.begin(); itr!=block.end(); ++itr)
         {
             int pos = itr.fragment().position(); //fragment position -> position of the first character in the fragment
@@ -87,7 +90,7 @@ void Text::selectionMouseMove(QPointF scenePos)
                 QString key = imgFmt.name(); //img key (eg. key::D for :D)
                 QString rune = key.mid(4);
 
-                if(pos >= cursor.selectionStart() && pos < cursor.selectionEnd())
+                if(pos >= getSelectionStart() && pos < getSelectionEnd())
                 {
                     selectedText += rune;
                     pos++;
@@ -97,7 +100,7 @@ void Text::selectionMouseMove(QPointF scenePos)
             {
                 for(QChar c : itr.fragment().text())
                 {
-                    if(pos >= cursor.selectionStart() && pos < cursor.selectionEnd())
+                    if(pos >= getSelectionStart() && pos < getSelectionEnd())
                         selectedText += c;
 
                     pos++;
@@ -113,14 +116,19 @@ void Text::selectionStarted(QPointF scenePos)
 {
     int cur = cursorFromPos(scenePos);
     if(cur >= 0)
-        cursor.setPosition(cur);
+    {
+        selectionEnd = cur;
+        selectionAnchor = cur;
+    }
 }
 
 void Text::selectionCleared()
 {
-    cursor.clearSelection();
     selectedText.clear();
     selectedText.squeeze();
+
+    // Do not reset selectionAnchor!
+    selectionEnd = -1;
 
     update();
 }
@@ -128,7 +136,8 @@ void Text::selectionCleared()
 void Text::selectAll()
 {
     regenerate();
-    cursor.select(QTextCursor::Document);
+    selectionAnchor = 0;
+    selectionEnd = doc->toPlainText().size();
     selectedText = text;
     update();
 }
@@ -136,7 +145,7 @@ void Text::selectAll()
 bool Text::isOverSelection(QPointF scenePos) const
 {
     int cur = cursorFromPos(scenePos);
-    if(cur >= 0 && cursor.selectionStart() < cur && cursor.selectionEnd() >= cur)
+    if(getSelectionStart() < cur && getSelectionEnd() >= cur)
         return true;
 
     return false;
@@ -164,7 +173,14 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         // draw selection
         QAbstractTextDocumentLayout::PaintContext ctx;
         QAbstractTextDocumentLayout::Selection sel;
-        sel.cursor = cursor;
+
+        if(hasSelection())
+        {
+            sel.cursor = QTextCursor(doc);
+            sel.cursor.setPosition(getSelectionStart());
+            sel.cursor.setPosition(getSelectionEnd(), QTextCursor::KeepAnchor);
+        }
+
         sel.format.setBackground(QApplication::palette().color(QPalette::Highlight));
         sel.format.setForeground(QApplication::palette().color(QPalette::HighlightedText));
         ctx.selections.append(sel);
@@ -236,7 +252,6 @@ void Text::regenerate()
             doc->setPlainText(elidedText);
         }
 
-        cursor = QTextCursor(doc);
         dirty = false;
     }
 
@@ -256,7 +271,7 @@ void Text::regenerate()
     size = idealSize();
 
     // if we are not visible -> free mem
-    if(!isVisible && !cursor.hasSelection())
+    if(!isVisible)
         freeResources();
 }
 
@@ -264,7 +279,6 @@ void Text::freeResources()
 {
     delete doc;
     doc = nullptr;
-    cursor = QTextCursor();
 }
 
 QSizeF Text::idealSize()
@@ -281,4 +295,19 @@ int Text::cursorFromPos(QPointF scenePos) const
         return doc->documentLayout()->hitTest(mapFromScene(scenePos), Qt::FuzzyHit);
 
     return -1;
+}
+
+int Text::getSelectionEnd() const
+{
+    return qMax(selectionAnchor, selectionEnd);
+}
+
+int Text::getSelectionStart() const
+{
+    return qMin(selectionAnchor, selectionEnd);
+}
+
+bool Text::hasSelection() const
+{
+    return selectionEnd >= 0;
 }

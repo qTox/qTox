@@ -60,6 +60,9 @@ protected:
 
     QSizeF idealSize();
     int cursorFromPos(QPointF scenePos) const;
+    int getSelectionEnd() const;
+    int getSelectionStart() const;
+    bool hasSelection() const;
 
 private:
     CustomTextDocument* doc = nullptr;
@@ -71,7 +74,8 @@ private:
     bool isVisible = false;
     bool elide = false;
     bool dirty = false;
-    QTextCursor cursor;
+    int selectionEnd = -1;
+    int selectionAnchor = -1;
     qreal ascent = 0.0;
     qreal width = 0.0;
     QFont defFont;
