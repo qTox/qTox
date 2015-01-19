@@ -102,9 +102,7 @@ void Text::selectionMouseMove(QPointF scenePos)
             }
             else
             {
-                text = itr.fragment().text();
-
-                for(QChar c : text)
+                for(QChar c : itr.fragment().text())
                 {
                     if(pos >= cursor.selectionStart() && pos < cursor.selectionEnd())
                         selectedText += c;
