@@ -133,15 +133,6 @@ void Text::selectionCleared()
     update();
 }
 
-void Text::selectAll()
-{
-    regenerate();
-    selectionAnchor = 0;
-    selectionEnd = doc->toPlainText().size();
-    selectedText = text;
-    update();
-}
-
 bool Text::isOverSelection(QPointF scenePos) const
 {
     int cur = cursorFromPos(scenePos);

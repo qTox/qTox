@@ -37,7 +37,6 @@ public:
     virtual void selectionMouseMove(QPointF scenePos) override;
     virtual void selectionStarted(QPointF scenePos) override;
     virtual void selectionCleared() override;
-    virtual void selectAll() override;
     virtual bool isOverSelection(QPointF scenePos) const override;
     virtual QString getSelectedText() const override;
 

@@ -119,18 +119,6 @@ void ChatLine::selectionCleared(int col)
         content[col]->selectionCleared();
 }
 
-void ChatLine::selectAll()
-{
-    for(ChatLineContent* c : content)
-        c->selectAll();
-}
-
-void ChatLine::selectAll(int col)
-{
-    if(col < static_cast<int>(content.size()) && content[col])
-        content[col]->selectAll();
-}
-
 int ChatLine::getColumnCount()
 {
     return content.size();

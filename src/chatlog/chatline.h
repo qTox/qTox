@@ -70,8 +70,6 @@ public:
 
     void selectionCleared();
     void selectionCleared(int col);
-    void selectAll();
-    void selectAll(int col);
 
     int getColumnCount();
     int getRowIndex() const;
