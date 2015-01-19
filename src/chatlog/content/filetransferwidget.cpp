@@ -137,13 +137,14 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
         qreal bytesPerSec = static_cast<int>(static_cast<qreal>(deltaBytes) / deltaSecs);
 
         // calculate mean
-        meanData[(meanIndex++) % FTW_MEAN_PERIODES] = bytesPerSec;
+        meanData[meanIndex] = bytesPerSec;
+        meanIndex = (meanIndex + 1) % TRANSFER_ROLLING_AVG_COUNT;
 
         qreal meanBytesPerSec = 0.0;
-        for(size_t i = 0; i < FTW_MEAN_PERIODES; ++i)
+        for(size_t i = 0; i < TRANSFER_ROLLING_AVG_COUNT; ++i)
             meanBytesPerSec += meanData[i];
 
-        meanBytesPerSec /= qMin(meanIndex, static_cast<size_t>(FTW_MEAN_PERIODES));
+        meanBytesPerSec /= qMin(static_cast<size_t>(meanIndex), static_cast<size_t>(TRANSFER_ROLLING_AVG_COUNT));
 
         // update UI
         if(meanBytesPerSec > 0)
@@ -209,7 +210,7 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
     // reset mean
     meanIndex = 0;
-    for(size_t i=0; i<FTW_MEAN_PERIODES; ++i)
+    for(size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
         meanData[i] = 0.0;
 
     setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
