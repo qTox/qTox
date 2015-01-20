@@ -106,7 +106,7 @@ QByteArray Core::getSaltFromFile(QString filename)
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly))
     {
-        qWarning() << "Core: encrypted history file doesn't exist";
+        qWarning() << "Core: file" << filename << "doesn't exist";
         return QByteArray();
     }
     QByteArray data = file.read(tox_pass_encryption_extra_length());
@@ -172,9 +172,11 @@ bool Core::loadEncryptedSave(QByteArray& data)
 
 void Core::checkEncryptedHistory()
 {
-    QByteArray salt = getSaltFromFile(HistoryKeeper::getHistoryPath());
+    QString path = HistoryKeeper::getHistoryPath();
+    bool exists = QFile::exists(path);
 
-    if (salt.size() == 0)
+    QByteArray salt = getSaltFromFile(path);
+    if (exists && salt.size() == 0)
     {   // maybe we should handle this better
         Widget::getInstance()->showWarningMsgBox(tr("Encrypted History"), tr("No encrypted history file found, or it was corrupted.\nHistory will be disabled!"));
         Settings::getInstance().setEncryptLogs(false);
@@ -188,7 +190,7 @@ void Core::checkEncryptedHistory()
 
     if (pwsaltedkeys[ptHistory])
     {
-        if (HistoryKeeper::checkPassword())
+        if (!exists || HistoryKeeper::checkPassword())
             return;
         dialogtxt = tr("The stored chat log password failed. Please try another:", "used only when pw set before load() doesn't work");
     }
@@ -198,8 +200,11 @@ void Core::checkEncryptedHistory()
     if (pwsaltedkeys[ptMain])
     {
         useOtherPassword(ptHistory);
-        if (HistoryKeeper::checkPassword())
+        if (!exists || HistoryKeeper::checkPassword())
+        {
+            qDebug() << "Core: using main password for history";
             return;
+        }
         clearPassword(ptHistory);
     }
 
@@ -218,7 +223,7 @@ void Core::checkEncryptedHistory()
         else
             setPassword(pw, ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
 
-        error = !HistoryKeeper::checkPassword();
+        error = exists && !HistoryKeeper::checkPassword();
         dialogtxt = a + " " + b;
     } while (error);
 }

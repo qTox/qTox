@@ -73,8 +73,6 @@ QSqlQuery EncryptedDb::exec(const QString &query)
 
 bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
 {
-    qDebug() << "EncryptedDb::pullFileContent()";
-
     QFile dbFile(fname);
     if (!dbFile.open(QIODevice::ReadOnly))
     {
@@ -87,13 +85,13 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
     while (!dbFile.atEnd())
     {
         QByteArray encrChunk = dbFile.read(encryptedChunkSize);
-        qDebug() << "got chunk:" << encrChunk.size();
+        qDebug() << "EncryptedDb::pullFileContent: got chunk:" << encrChunk.size();
         buf = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
         if (buf.size() > 0)
         {
             fileContent += buf;
         } else {
-            qWarning() << "Encrypted history log is corrupted: can't decrypt, will be deleted";
+            qWarning() << "EncryptedDb::pullFileContent: Encrypted history log is corrupted: can't decrypt, will be deleted";
             buf = QByteArray();
             return false;
         }
