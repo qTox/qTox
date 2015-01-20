@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
     if (parser.isSet("P"))
-        Settings::getInstance().setCurrentProfile(parser.value("P"));
+        Settings::getInstance().switchProfile(parser.value("P"));
 
     sodium_init(); // For the auto-updater
 

@@ -126,7 +126,7 @@ void PrivacyForm::onEncryptLogsUpdated()
             tr("Old encrypted chat logs", "title"),
             tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted."),
             QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel,
-            QMessageBox::Ok
+            QMessageBox::Cancel
         );
 
         if (button == QMessageBox::Ok)
