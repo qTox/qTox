@@ -1,5 +1,12 @@
 #!/bin/bash
 
+WINDOWS_VERSION=$(cmd.exe /c ver 2>/dev/null | grep "Microsoft Windows")
+if [ ! -z "$WINDOWS_VERSION" ]; then
+        cd windows
+		./bootstrap.sh
+		exit $?
+fi
+
 ################ parameters ################
 # directory where the script is located
 SCRIPT_DIR=$( cd $(dirname $0); pwd -P)
@@ -67,7 +74,7 @@ while [ $# -ge 1 ] ; do
             echo ""
         fi
     
-		# print help
+        # print help
         echo "Use this script to install/update libsodium and libtoxcore in ${INSTALL_DIR}"
         echo ""
         echo "usage:"
