@@ -256,7 +256,7 @@ QString FileTransferWidget::getHumanReadableSize(qint64 size)
     if (size > 0)
         exp = std::min( (int) (log(size) / log(1024)), (int) (sizeof(suffix) / sizeof(suffix[0]) - 1));
 
-    return QString().setNum(size / pow(1024, exp),'f', exp > 2 ? 2 : 0).append(suffix[exp]);
+    return QString().setNum(size / pow(1024, exp),'f', exp > 1 ? 2 : 0).append(suffix[exp]);
 }
 
 void FileTransferWidget::hideWidgets()
