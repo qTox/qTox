@@ -103,6 +103,7 @@ private:
     QTimer *timer;
     QElapsedTimer timeElapsed;
     QLabel *isTypingLabel;
+    QTimer typingTimer;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     void startCounter();
@@ -110,7 +111,6 @@ private:
     QString secondsToDHMS(quint32 duration);
     QHash<int, int> receipts;
     QMap<int, MessageActionPtr> undeliveredMsgs;
-    bool isTyping;
 };
 
 #endif // CHATFORM_H

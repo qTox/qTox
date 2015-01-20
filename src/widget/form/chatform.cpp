@@ -59,6 +59,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     font.setItalic(true);
     font.setPixelSize(8);
     isTypingLabel->setFont(font);
+    typingTimer.setSingleShot(true);
 
     QVBoxLayout* mainLayout = dynamic_cast<QVBoxLayout*>(layout());
     mainLayout->insertWidget(1, isTypingLabel);
@@ -88,6 +89,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(this, SIGNAL(chatAreaCleared()), this, SLOT(clearReciepts()));
     connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig)
         {if (text != orig) emit aliasChanged(text);} );
+    connect(&typingTimer, &QTimer::timeout, this, [=]{Core::getInstance()->sendTyping(f->getFriendID(), false);});
 
     setAcceptDrops(true);
 }
@@ -150,11 +152,10 @@ void ChatForm::onTextEditChanged()
     else
         isNowTyping = msgEdit->toPlainText().length() > 0;
 
-    if (isTyping != isNowTyping)
-    {
-        isTyping = isNowTyping;
-        Core::getInstance()->sendTyping(f->getFriendID(), isTyping);
-    }
+    if (isNowTyping)
+        typingTimer.start(3000);
+
+    Core::getInstance()->sendTyping(f->getFriendID(), isNowTyping);
 }
 
 void ChatForm::onAttachClicked()
