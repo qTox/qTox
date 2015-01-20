@@ -101,7 +101,7 @@ private:
     std::vector<ChatLineContent*> content;
     std::vector<ColumnFormat> format;
     qreal width = 100.0;
-    qreal cellSplacing = 15.0;
+    qreal columnSpacing = 15.0;
     QRectF bbox;
     bool isVisible = false;
 

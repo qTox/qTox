@@ -167,7 +167,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     width = w;
     bbox.setTopLeft(scenePos);
 
-    qreal fixedWidth = (content.size()-1) * cellSplacing;
+    qreal fixedWidth = (content.size()-1) * columnSpacing;
     qreal varWidth = 0.0; // used for normalisation
 
     for(int i = 0; i < static_cast<int>(format.size()); ++i)
@@ -218,7 +218,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         // reposition
         content[i]->setPos(scenePos.x() + xOffset + xAlign, scenePos.y());
 
-        xOffset += width + cellSplacing;
+        xOffset += width + columnSpacing;
     }
 
     for(int i = 0; i < static_cast<int>(content.size()); ++i)
