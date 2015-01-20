@@ -193,7 +193,7 @@
           <item>
            <widget class="QCheckBox" name="cbCompactLayout">
             <property name="text">
-             <string>Compact contact list (required restart)</string>
+             <string>Compact contact list (restart required)</string>
             </property>
            </widget>
           </item>
