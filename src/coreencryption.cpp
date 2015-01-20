@@ -130,7 +130,7 @@ bool Core::loadEncryptedSave(QByteArray& data)
         Widget::getInstance()->showWarningMsgBox(tr("Encryption error"), tr("The .tox file is encrypted, but encryption was not checked, continuing regardless."));
 
     int error = -1;
-    QString a(tr("Please enter the password for this profile.", "used in load() when no pw is already set"));
+    QString a(tr("Please enter the password for the %1 profile.", "used in load() when no pw is already set").arg(Settings::getInstance().getCurrentProfile()));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
     QString dialogtxt;
 
@@ -184,7 +184,7 @@ void Core::checkEncryptedHistory()
         return;
     }
 
-    QString a(tr("Please enter the password for the chat logs.", "used in load() when no hist pw set"));
+    QString a(tr("Please enter the password for the chat logs for the %1 profile.", "used in load() when no hist pw set").arg(Settings::getInstance().getCurrentProfile()));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
     QString dialogtxt;
 
