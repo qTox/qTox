@@ -121,16 +121,44 @@ void PrivacyForm::onEncryptLogsUpdated()
     }
     else
     {
-        if (Widget::getInstance()->askQuestion(tr("Old encrypted chat logs", "title"), tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted."), true, false))
+        QMessageBox::StandardButton button = QMessageBox::warning(
+            Widget::getInstance(),
+            tr("Old encrypted chat logs", "title"),
+            tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted."),
+            QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel,
+            QMessageBox::Ok
+        );
+
+        if (button == QMessageBox::Ok)
         {
             QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile(true);
             core->clearPassword(Core::ptHistory);
             Settings::getInstance().setEncryptLogs(false);
             HistoryKeeper::getInstance()->importMessages(oldMessages);
         }
+        else if (button == QMessageBox::No)
+        {
+            if (QMessageBox::critical(
+                    Widget::getInstance(),
+                    tr("Old encrypted chat logs", "title"),
+                    tr("Are you sure you want to lose your entire chat history?"),
+                    QMessageBox::No | QMessageBox::Cancel,
+                    QMessageBox::Cancel
+                    )
+                == QMessageBox::No)
+            {
+                HistoryKeeper::removeHistory(true);
+            }
+            else
+            {
+                bodyUI->cbEncryptHistory->setChecked(true);
+                return;
+            }
+        }
         else
         {
-            HistoryKeeper::removeHistory(true);
+            bodyUI->cbEncryptHistory->setChecked(true);
+            return;
         }
     }
 
