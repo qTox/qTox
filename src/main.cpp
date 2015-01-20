@@ -71,7 +71,16 @@ int main(int argc, char *argv[])
 
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
     if (parser.isSet("P"))
-        Settings::getInstance().setCurrentProfile(parser.value("P"));
+    {
+        QString profile = parser.value("P");
+        if (QDir(Settings::getSettingsDirPath()).exists(profile + ".tox"))
+        {
+            qDebug() << "Setting profile to" << profile;
+            Settings::getInstance().setCurrentProfile(profile);
+        }
+        else
+            qWarning() << "Warning: -P profile" << profile + ".tox" << "doesn't exist";
+    }
 
     sodium_init(); // For the auto-updater
 
