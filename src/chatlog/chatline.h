@@ -72,7 +72,7 @@ public:
     void selectionCleared(int col);
 
     int getColumnCount();
-    int getRowIndex() const;
+    int getRow() const;
     ChatLineContent* getContent(int col) const;
     ChatLineContent* getContent(QPointF scenePos) const;
 
@@ -89,7 +89,7 @@ protected:
     void updateBBox();
 
     friend class ChatLog;
-    void setRowIndex(int idx);
+    void setRow(int idx);
     void visibilityChanged(bool visible);
 
     //comparators
@@ -98,7 +98,7 @@ protected:
     static bool lessThanRowIndex(const ChatLine::Ptr lhs, const ChatLine::Ptr rhs);
 
 private:
-    int rowIndex = -1;
+    int row = -1;
     std::vector<ChatLineContent*> content; // 3 columns
     std::vector<ColumnFormat> format;
     qreal width;

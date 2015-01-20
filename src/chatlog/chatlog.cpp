@@ -86,7 +86,7 @@ ChatLog::ChatLog(QWidget* parent)
 
         if(!visibleLines.isEmpty())
         {
-            int firstVisLineIndex = visibleLines.first()->getRowIndex();
+            int firstVisLineIndex = visibleLines.first()->getRow();
             int delta = firstVisLineIndex - workerLastIndex;
             if(delta > 0 && delta < stepSize)
             {
@@ -199,8 +199,8 @@ void ChatLog::updateVisibleLines()
         repos = 0;
         if(!visibleLines.empty())
         {
-            repos = layout(visibleLines.first()->getRowIndex(), visibleLines.last()->getRowIndex(), useableWidth());
-            reposition(visibleLines.last()->getRowIndex()+1, visibleLines.last()->getRowIndex()+10, -repos);
+            repos = layout(visibleLines.first()->getRow(), visibleLines.last()->getRow(), useableWidth());
+            reposition(visibleLines.last()->getRow()+1, visibleLines.last()->getRow()+10, -repos);
             verticalScrollBar()->setValue(verticalScrollBar()->value() - repos);
         }
 
@@ -292,7 +292,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
             }
             else if(line.get())
             {
-                selClickedRow = line->getRowIndex();
+                selClickedRow = line->getRow();
                 selFirstRow = selClickedRow;
                 selLastRow = selClickedRow;
 
@@ -331,7 +331,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
             }
             else if(line.get())
             {
-                row = line->getRowIndex();
+                row = line->getRow();
 
                 if(row != selClickedRow)
                 {
@@ -414,12 +414,12 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     bool stickToBtm = stickToBottom();
 
     //insert
-    l->setRowIndex(lines.size());
+    l->setRow(lines.size());
     l->addToScene(scene);
     lines.append(l);
 
     //partial refresh
-    layout(lines.last()->getRowIndex(), lines.size(), useableWidth());
+    layout(lines.last()->getRow(), lines.size(), useableWidth());
     updateSceneRect();
 
     if(stickToBtm)
@@ -447,13 +447,13 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     //move all lines down by n
     int n = newLines.size();
     for(ChatLine::Ptr l : lines)
-        l->setRowIndex(l->getRowIndex() + n);
+        l->setRow(l->getRow() + n);
 
     //add the new line
     for(ChatLine::Ptr l : newLines)
     {
         l->addToScene(scene);
-        l->setRowIndex(--n);
+        l->setRow(--n);
         lines.prepend(l);
     }
 
