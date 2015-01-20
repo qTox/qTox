@@ -24,6 +24,7 @@
 #include <QClipboard>
 #include <QAction>
 #include <QTimer>
+#include <QMouseEvent>
 
 template<class T>
 T clamp(T x, T min, T max)

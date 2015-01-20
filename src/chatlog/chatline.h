@@ -17,9 +17,10 @@
 #ifndef CHATLINE_H
 #define CHATLINE_H
 
-#include <QMouseEvent>
 #include <memory>
 #include <vector>
+#include <QPointF>
+#include <QRectF>
 
 class ChatLog;
 class ChatLineContent;
@@ -58,37 +59,35 @@ class ChatLine
 public:
     using Ptr = std::shared_ptr<ChatLine>;
 
-    explicit ChatLine();
+    ChatLine();
     virtual ~ChatLine();
 
-    virtual QRectF boundingSceneRect() const;
+    QRectF boundingSceneRect() const;
 
     void replaceContent(int col, ChatLineContent* lineContent);
-
     void layout(qreal width, QPointF scenePos);
     void moveBy(qreal deltaY);
-
+    void removeFromScene();
+    void addToScene(QGraphicsScene* scene);
+    void setVisible(bool visible);
     void selectionCleared();
     void selectionCleared(int col);
 
     int getColumnCount();
     int getRow() const;
+
     ChatLineContent* getContent(int col) const;
     ChatLineContent* getContent(QPointF scenePos) const;
 
     bool isOverSelection(QPointF scenePos);
 
-    void removeFromScene();
-    void addToScene(QGraphicsScene* scene);
-
-    void setVisible(bool visible);
-
 protected:
+    friend class ChatLog;
+
     QPointF mapToContent(ChatLineContent* c, QPointF pos);
+
     void addColumn(ChatLineContent* item, ColumnFormat fmt);
     void updateBBox();
-
-    friend class ChatLog;
     void setRow(int idx);
     void visibilityChanged(bool visible);
 
@@ -99,9 +98,10 @@ protected:
 
 private:
     int row = -1;
-    std::vector<ChatLineContent*> content; // 3 columns
+    std::vector<ChatLineContent*> content;
     std::vector<ColumnFormat> format;
-    qreal width;
+    qreal width = 100.0;
+    qreal cellSplacing = 15.0;
     QRectF bbox;
     bool isVisible = false;
 

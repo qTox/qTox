@@ -26,6 +26,7 @@
 
 class QGraphicsScene;
 class QGraphicsRectItem;
+class QMouseEvent;
 class QTimer;
 class ChatLineContent;
 class ToxFile;

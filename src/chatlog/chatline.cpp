@@ -15,14 +15,10 @@
 */
 
 #include "chatline.h"
-#include "chatlog.h"
 #include "chatlinecontent.h"
 
-#include <QTextLine>
 #include <QDebug>
 #include <QGraphicsScene>
-
-#define CELL_SPACING 15
 
 ChatLine::ChatLine()
 {
@@ -171,7 +167,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     width = w;
     bbox.setTopLeft(scenePos);
 
-    qreal fixedWidth = (content.size()-1) * CELL_SPACING;
+    qreal fixedWidth = (content.size()-1) * cellSplacing;
     qreal varWidth = 0.0; // used for normalisation
 
     for(int i = 0; i < static_cast<int>(format.size()); ++i)
@@ -222,7 +218,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         // reposition
         content[i]->setPos(scenePos.x() + xOffset + xAlign, scenePos.y());
 
-        xOffset += width + CELL_SPACING;
+        xOffset += width + cellSplacing;
     }
 
     for(int i = 0; i < static_cast<int>(content.size()); ++i)
