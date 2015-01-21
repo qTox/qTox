@@ -614,8 +614,8 @@ Alias:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
-        <source>Compact layout</source>
-        <translation>Kompakte Darstellung</translation>
+        <source>Compact contact list (restart required)</source>
+        <translation>Kompakte Darstellung der Kontaktliste (Neustart benötigt)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="198"/>
@@ -729,9 +729,14 @@ Alias:</translation>
         <translation>IPv6 aktivieren (empfohlen)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="497"/>
-        <source>Use proxy (SOCKS5)</source>
-        <translation>Proxy benutzen (SOCKS5)</translation>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="509"/>
+        <source>Proxy type</source>
+        <translation>Proxy Typ</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="523"/>
+        <source>None</source>
+        <translation>Keinen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="509"/>
