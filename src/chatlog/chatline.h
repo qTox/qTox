@@ -71,7 +71,6 @@ public:
     void addToScene(QGraphicsScene* scene);
     void setVisible(bool visible);
     void selectionCleared();
-    void selectionCleared(int col);
 
     int getColumnCount();
     int getRow() const;

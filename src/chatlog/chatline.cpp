@@ -109,12 +109,6 @@ void ChatLine::selectionCleared()
         c->selectionCleared();
 }
 
-void ChatLine::selectionCleared(int col)
-{
-    if(col < static_cast<int>(content.size()) && content[col])
-        content[col]->selectionCleared();
-}
-
 int ChatLine::getColumnCount()
 {
     return content.size();
