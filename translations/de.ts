@@ -1371,6 +1371,15 @@ Es wird beim Neustart von qTox installiert.</translation>
         <comment>Error with the DNS</comment>
         <translation>Der DNS Eintrag enthält keine gültige TOX ID</translation>
     </message>
+    <message>
+        <location filename="../src/toxdns.cpp" line="223"/>
+        <location filename="../src/toxdns.cpp" line="224"/>
+        <source>It appears that qTox has to use the old tox1 protocol.
+Unfortunately tox1 is not secure. Should it be used anyway?</source>
+        <translation>Es scheint, dass qTox das veraltete tox1-Protokoll nutzen muss.
+Dieses Protokoll ist nicht sicher.
+Soll es dennoch genutzt werden?</translation>
+    </message>
 </context>
 <context>
     <name>ToxURIDialog</name>
