@@ -275,6 +275,13 @@
           <string>Chat</string>
          </property>
          <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="groupAlwaysNotify">
+            <property name="text">
+             <string>Group chats always notify</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="QCheckBox" name="statusChanges">
             <property name="text">
@@ -294,6 +301,13 @@
             <property name="topMargin">
              <number>0</number>
             </property>
+            <item>
+             <widget class="QCheckBox" name="showWindow">
+              <property name="text">
+               <string>Show window</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QCheckBox" name="showInFront">
               <property name="text">
@@ -697,6 +711,22 @@
     <hint type="destinationlabel">
      <x>359</x>
      <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showWindow</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>showInFront</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>329</x>
+     <y>349</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>451</x>
+     <y>349</y>
     </hint>
    </hints>
   </connection>

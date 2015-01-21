@@ -54,7 +54,9 @@ private slots:
     void onAutoAcceptFileChange();
     void onAutoSaveDirChange();
     void onCheckUpdateChanged();
+    void onShowWindowChanged();
     void onSetShowInFront();
+    void onSetGroupAlwaysNotify();
     void onFauxOfflineMessaging();
     void onCompactLayout();
     void onThemeColorChanged(int);
