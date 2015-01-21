@@ -96,7 +96,7 @@
           <item>
            <widget class="QGroupBox" name="trayGroup">
             <property name="title">
-             <string>System tray integration</string>
+             <string>System tray</string>
             </property>
             <layout class="QFormLayout" name="formLayout_2">
              <property name="fieldGrowthPolicy">
