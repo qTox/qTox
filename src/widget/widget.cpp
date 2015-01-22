@@ -641,7 +641,7 @@ void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     ui->nameLabel->setToolTip(username);    // for overlength names
-    nameMention = QRegExp("([^a-z]|^)" + QRegExp::escape(username) + "([^a-z]|$)", Qt::CaseInsensitive);
+    nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
