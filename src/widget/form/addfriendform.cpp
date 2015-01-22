@@ -98,8 +98,8 @@ void AddFriendForm::onSendTriggered()
         if (Settings::getInstance().getProxyType() != ProxyType::ptNone)
         {
             QMessageBox::StandardButton btn = QMessageBox::warning(main, "qTox", tr("qTox needs to use the Tox DNS, but can't do it through a proxy.\n\
-Ignore the proxy and connect to the Internet directly?"), QMessageBox::Ok|QMessageBox::No, QMessageBox::No);
-            if (btn != QMessageBox::Ok)
+Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
+            if (btn != QMessageBox::Yes)
                 return;
         }
 
