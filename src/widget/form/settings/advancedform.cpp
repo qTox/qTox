@@ -30,6 +30,7 @@ AdvancedForm::AdvancedForm() :
     bodyUI->dbLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     bodyUI->dbLabel->setOpenExternalLinks(true);
 
+    bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->syncTypeComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
     bodyUI->syncTypeComboBox->addItems({tr("FULL - very safe, slowest (recommended)"),
                                         tr("NORMAL - almost as safe as FULL, about 20% faster than FULL"),
@@ -38,6 +39,7 @@ AdvancedForm::AdvancedForm() :
     int index = 2 - static_cast<int>(Settings::getInstance().getDbSyncType());
     bodyUI->syncTypeComboBox->setCurrentIndex(index);
 
+    connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &AdvancedForm::onMakeToxPortableUpdated);
     connect(bodyUI->syncTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onDbSyncTypeUpdated()));
     connect(bodyUI->resetButton, SIGNAL(clicked()), this, SLOT(resetToDefault()));
 }
@@ -45,6 +47,11 @@ AdvancedForm::AdvancedForm() :
 AdvancedForm::~AdvancedForm()
 {
     delete bodyUI;
+}
+
+void AdvancedForm::onMakeToxPortableUpdated()
+{
+    Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
 }
 
 void AdvancedForm::onDbSyncTypeUpdated()

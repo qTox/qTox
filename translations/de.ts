@@ -614,8 +614,8 @@ Alias:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
-        <source>Compact layout</source>
-        <translation>Kompakte Darstellung</translation>
+        <source>Compact contact list (restart required)</source>
+        <translation>Kompakte Darstellung der Kontaktliste (Neustart benötigt)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="198"/>
@@ -729,9 +729,14 @@ Alias:</translation>
         <translation>IPv6 aktivieren (empfohlen)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="497"/>
-        <source>Use proxy (SOCKS5)</source>
-        <translation>Proxy benutzen (SOCKS5)</translation>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="509"/>
+        <source>Proxy type</source>
+        <translation>Proxy Typ</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="523"/>
+        <source>None</source>
+        <translation>Keinen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="509"/>
@@ -1365,6 +1370,15 @@ Es wird beim Neustart von qTox installiert.</translation>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>Der DNS Eintrag enthält keine gültige TOX ID</translation>
+    </message>
+    <message>
+        <location filename="../src/toxdns.cpp" line="223"/>
+        <location filename="../src/toxdns.cpp" line="224"/>
+        <source>It appears that qTox has to use the old tox1 protocol.
+Unfortunately tox1 is not secure. Should it be used anyway?</source>
+        <translation>Es scheint, dass qTox das veraltete tox1-Protokoll nutzen muss.
+Dieses Protokoll ist nicht sicher.
+Soll es dennoch genutzt werden?</translation>
     </message>
 </context>
 <context>

@@ -633,15 +633,15 @@ void Widget::hideMainForms()
 
 void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
 {
-    ui->nameLabel->setText(oldUsername); // restore old username until Core tells us to set it
-    ui->nameLabel->setToolTip(oldUsername); // for overlength names
+    setUsername(oldUsername);               // restore old username until Core tells us to set it
     core->setUsername(newUsername);
 }
 
 void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
-    ui->nameLabel->setToolTip(username); // for overlength names
+    ui->nameLabel->setToolTip(username);    // for overlength names
+    nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
@@ -806,25 +806,11 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
 
-    if (isAction)
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp, true);
-    else
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, message, f->getToxID().publicKey, timestamp, true);
+    HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, isAction ? "/me " + message : message,
+                                               f->getToxID().publicKey, timestamp, true);
 
-    if (activeChatroomWidget != nullptr)
-    {
-        if ((static_cast<GenericChatroomWidget*>(f->getFriendWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
-        {
-            f->setEventFlag(true);
-            newMessageAlert(f->getFriendWidget());
-        }
-    }
-    else
-    {
-        f->setEventFlag(true);
-        newMessageAlert(f->getFriendWidget());
-    }
-
+    f->setEventFlag(static_cast<GenericChatroomWidget*>(f->getFriendWidget()) != activeChatroomWidget);
+    newMessageAlert(f->getFriendWidget());
     f->getFriendWidget()->updateStatusLight();
 }
 
@@ -839,17 +825,22 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
 
 void Widget::newMessageAlert(GenericChatroomWidget* chat)
 {
+    bool inactiveWindow = isMinimized() || !isActiveWindow();
+    if (!inactiveWindow && activeChatroomWidget != nullptr && chat == activeChatroomWidget)
+        return;
+
     QApplication::alert(this);
 
-    static QFile sndFile(":audio/notification.pcm");
-    if ((isMinimized() || !isActiveWindow()) && Settings::getInstance().getShowInFront())
+    if (Settings::getInstance().getShowWindow())
     {
-        this->show();
-        showNormal();
-        activateWindow();
-        emit chat->chatroomWidgetClicked(chat);
+        show();
+        if (inactiveWindow && Settings::getInstance().getShowInFront())
+            setWindowState(Qt::WindowActive);
     }
+
+    static QFile sndFile(":audio/notification.pcm");
     static QByteArray sndData;
+
     if (sndData.isEmpty())
     {
         sndFile.open(QIODevice::ReadOnly);
@@ -953,24 +944,21 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
 
     ToxID author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
-    QString name = core->getUsername();
-
-    bool targeted = (!author.isMine()) && message.contains(name, Qt::CaseInsensitive);
+    bool targeted = (!author.isMine()) && message.contains(nameMention);
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
         g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
 
-    if ((static_cast<GenericChatroomWidget*>(g->getGroupWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
-    {
-        g->setEventFlag(true);
-        if (targeted)
-        {
-            newMessageAlert(g->getGroupWidget());
-            g->setMentionedFlag(true); // useful for highlighting line or desktop notifications
-        }
-        g->getGroupWidget()->updateStatusLight();
-    }
+    g->setEventFlag(static_cast<GenericChatroomWidget*>(g->getGroupWidget()) != activeChatroomWidget);
+
+    if (targeted || Settings::getInstance().getGroupAlwaysNotify())
+        newMessageAlert(g->getGroupWidget());
+
+    if (targeted)
+        g->setMentionedFlag(true); // useful for highlighting line or desktop notifications
+
+    g->getGroupWidget()->updateStatusLight();
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)

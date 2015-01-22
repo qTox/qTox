@@ -136,7 +136,9 @@ void Settings::load()
         currentProfile = s.value("currentProfile", "").toString();
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", false).toBool();
+        showWindow = s.value("showWindow", true).toBool();
         showInFront = s.value("showInFront", false).toBool();
+        groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
@@ -290,7 +292,9 @@ void Settings::save(QString path, bool writeFriends)
         s.setValue("currentProfile", currentProfile);
         s.setValue("autoAwayTime", autoAwayTime);
         s.setValue("checkUpdates", checkUpdates);
+        s.setValue("showWindow", showWindow);
         s.setValue("showInFront", showInFront);
+        s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("compactLayout", compactLayout);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
@@ -563,7 +567,17 @@ bool Settings::getShowInFront() const
 
 void Settings::setShowInFront(bool newValue)
 {
-   showInFront = newValue;
+    showInFront = newValue;
+}
+
+bool Settings::getGroupAlwaysNotify() const
+{
+    return groupAlwaysNotify;
+}
+
+void Settings::setGroupAlwaysNotify(bool newValue)
+{
+    groupAlwaysNotify = newValue;
 }
 
 QString Settings::getTranslation() const
@@ -854,6 +868,16 @@ bool Settings::getCheckUpdates() const
 void Settings::setCheckUpdates(bool newValue)
 {
     checkUpdates = newValue;
+}
+
+bool Settings::getShowWindow() const
+{
+    return showWindow;
+}
+
+void Settings::setShowWindow(bool newValue)
+{
+    showWindow = newValue;
 }
 
 QByteArray Settings::getSplitterState() const
