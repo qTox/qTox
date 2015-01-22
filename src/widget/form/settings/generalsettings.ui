@@ -64,7 +64,7 @@
                <string>The translation may not load until qTox restarts.</string>
               </property>
               <property name="text">
-               <string>Translation</string>
+               <string>Language:</string>
               </property>
              </widget>
             </item>
@@ -189,7 +189,7 @@
             <item row="1" column="1">
              <widget class="QLabel" name="autoSaveFilesDirLabel">
               <property name="text">
-               <string>Save files in</string>
+               <string>Save to:</string>
               </property>
              </widget>
             </item>
@@ -250,7 +250,7 @@
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Auto away after (0 to disable)</string>
+               <string>Auto away after (0 to disable):</string>
               </property>
              </widget>
             </item>
@@ -370,7 +370,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="smileyPackLabel">
               <property name="text">
-               <string extracomment="Text on smiley pack label">Smiley Pack</string>
+               <string extracomment="Text on smiley pack label">Smiley Pack:</string>
               </property>
              </widget>
             </item>
@@ -442,47 +442,13 @@
              </layout>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="styleLabel">
+             <widget class="QLabel" name="emoticonSizeLabel">
               <property name="text">
-               <string>Style</string>
+               <string>Emoticon size:</string>
               </property>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QComboBox" name="styleBrowser">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="themeColorLabel">
-              <property name="text">
-               <string>Theme color</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QComboBox" name="themeColorCBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="emoticonSizeLabel">
-              <property name="text">
-               <string>Emoticon size</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
              <widget class="QSpinBox" name="emoticonSize">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -507,10 +473,44 @@
               </property>
              </widget>
             </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="styleLabel">
+              <property name="text">
+               <string>Style:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="styleBrowser">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="themeColorLabel">
+              <property name="text">
+               <string>Theme color:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QComboBox" name="themeColorCBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
             <item row="5" column="0">
              <widget class="QLabel" name="timestampLabel">
               <property name="text">
-               <string>Timestamp format</string>
+               <string>Timestamp format:</string>
               </property>
              </widget>
             </item>
@@ -590,14 +590,14 @@
             <item row="1" column="0">
              <widget class="QLabel" name="proxyTypeLabel">
               <property name="text">
-               <string>Proxy type</string>
+               <string>Proxy type:</string>
               </property>
              </widget>
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="proxyAddrLabel">
               <property name="text">
-               <string extracomment="Text on proxy addr label">Address</string>
+               <string extracomment="Text on proxy addr label">Address:</string>
               </property>
              </widget>
             </item>
