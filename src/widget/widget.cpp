@@ -641,7 +641,10 @@ void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
     ui->nameLabel->setToolTip(username);    // for overlength names
-    nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
+    QString sanename = username;
+    sanename.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
+             nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
+    sanitizedNameMention = QRegExp("\\b" + QRegExp::escape(sanename) + "\\b", Qt::CaseInsensitive);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
@@ -944,7 +947,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
 
     ToxID author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
-    bool targeted = (!author.isMine()) && message.contains(nameMention);
+    bool targeted = !author.isMine() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else

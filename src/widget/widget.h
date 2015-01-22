@@ -171,7 +171,7 @@ private:
     Status beforeDisconnect = Status::Offline;
     QTimer* idleTimer;
     QTranslator* translator;
-    QRegExp nameMention;
+    QRegExp nameMention, sanitizedNameMention;
 };
 
 void toxActivateEventHandler(const QByteArray& data);
