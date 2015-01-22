@@ -33,7 +33,6 @@ public:
 private slots:
     void onEnableIPv6Updated();
     void onTranslationUpdated();
-    void onMakeToxPortableUpdated();
     void onSetShowSystemTray();
     void onSetAutostartInTray();
     void onSetCloseToTray();

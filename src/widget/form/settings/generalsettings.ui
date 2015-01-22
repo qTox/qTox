@@ -82,16 +82,6 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="cbMakeToxPortable">
-              <property name="toolTip">
-               <string extracomment="describes makeToxPortable checkbox">Save settings to the working directory instead of the usual conf dir</string>
-              </property>
-              <property name="text">
-               <string>Make Tox portable</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer name="generalSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
