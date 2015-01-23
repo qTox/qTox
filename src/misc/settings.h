@@ -32,6 +32,7 @@ class Settings : public QObject
 public:
     static Settings& getInstance();
     static void resetInstance();
+    void switchProfile(const QString& profile);
     ~Settings() = default;
 
     void executeSettingsDialog(QWidget* parent);
@@ -233,8 +234,8 @@ public:
     void setCompactLayout(bool compact);
 
 public:
-    void save(bool writeFriends = true);
-    void save(QString path, bool writeFriends = true);
+    void save(bool writePersonal = true);
+    void save(QString path, bool writePersonal = true);
     void load();
 
 private:

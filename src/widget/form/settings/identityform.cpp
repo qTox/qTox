@@ -29,7 +29,6 @@
 #include <QClipboard>
 #include <QInputDialog>
 #include <QFileDialog>
-#include <QMessageBox>
 
 IdentityForm::IdentityForm() :
     GenericForm(tr("Identity"), QPixmap(":/img/settings/identity.png"))
@@ -152,7 +151,7 @@ void IdentityForm::onRenameClicked()
         name = Core::sanitize(name);
         QDir dir(Settings::getSettingsDirPath());
         QString file = dir.filePath(name+Core::TOX_EXT);
-        if (!QFile::exists(file) || checkContinue(tr("Profile already exists", "rename confirm title"),
+        if (!QFile::exists(file) || Widget::getInstance()->askQuestion(tr("Profile already exists", "rename confirm title"),
                 tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
         {
             QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
@@ -176,8 +175,6 @@ void IdentityForm::onExportClicked()
         if (QFile::exists(path))
         {
             // should we popup a warning?
-            // if (!checkContinue(tr("Overwriting a file"), tr("Are you sure you want to overwrite %1?").arg(path)))
-            //     return;
             success = QFile::remove(path);
             if (!success)
             {
@@ -199,8 +196,8 @@ void IdentityForm::onDeleteClicked()
     }
     else
     {        
-        if (checkContinue(tr("Deletion imminent!","deletion confirmation title"),
-                          tr("Are you sure you want to delete this profile?\nAssociated friend information and chat logs will be deleted as well.","deletion confirmation text")))
+        if (Widget::getInstance()->askQuestion(tr("Deletion imminent!","deletion confirmation title"),
+                          tr("Are you sure you want to delete this profile?","deletion confirmation text")))
         {
             QString profile = bodyUI->profiles->currentText();
             QDir dir(Settings::getSettingsDirPath());
@@ -238,7 +235,7 @@ void IdentityForm::onImportClicked()
 
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
 
-    if (QFileInfo(profilePath).exists() && !checkContinue(tr("Profile already exists", "import confirm title"),
+    if (QFileInfo(profilePath).exists() && !Widget::getInstance()->askQuestion(tr("Profile already exists", "import confirm title"),
             tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
         return;
 
@@ -249,12 +246,6 @@ void IdentityForm::onImportClicked()
 void IdentityForm::onNewClicked()
 {
     emit Widget::getInstance()->changeProfile(QString());
-}
-
-bool IdentityForm::checkContinue(const QString& title, const QString& msg)
-{
-    QMessageBox::StandardButton resp = QMessageBox::question(this, title, msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-    return resp == QMessageBox::Yes;
 }
 
 void IdentityForm::disableSwitching()

@@ -52,6 +52,8 @@ public:
     static QString sanitize(QString name);
     static QList<CString> splitMessage(const QString &message, int maxLen);
 
+    static QByteArray getSaltFromFile(QString filename);
+
     QString getPeerName(const ToxID& id) const;
 
     int getGroupNumberPeers(int groupId) const; ///< Return the number of peers in the group chat on success, or -1 on failure
@@ -136,6 +138,7 @@ public slots:
     static bool isGroupCallVolEnabled(int groupId);
 
     void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
+    void useOtherPassword(PasswordType type);
     void clearPassword(PasswordType passtype);
     QByteArray encryptData(const QByteArray& data, PasswordType passtype);
     QByteArray decryptData(const QByteArray& data, PasswordType passtype);
@@ -144,7 +147,6 @@ signals:
     void connected();
     void disconnected();
     void blockingClearContacts();
-    void blockingGetPassword(QString info, int passtype, uint8_t* salt = nullptr);
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);
@@ -265,6 +267,8 @@ private:
     bool checkConnection();
 
     bool loadConfiguration(QString path); // Returns false for a critical error, true otherwise
+    bool loadEncryptedSave(QByteArray& data);
+    void checkEncryptedHistory();
     void make_tox();
     void loadFriends();
 
@@ -272,6 +276,8 @@ private:
     static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);
+
+    void deadifyTox();
 
 private slots:
      void onFileTransferFinished(ToxFile file);
