@@ -1269,10 +1269,19 @@ QString Widget::passwordDialog(const QString& cancel, const QString& body)
         dialog.setInputMode(QInputDialog::TextInput);
         dialog.setTextEchoMode(QLineEdit::Password);
         dialog.setLabelText(body);
-        int val = dialog.exec();
-        if (val == QDialog::Accepted)
-            ret = dialog.textValue();
-        return ret;
+        while (true)
+        {
+            int val = dialog.exec();
+            if (val != QDialog::Accepted)
+                return QString();
+            else
+            {
+                ret = dialog.textValue();
+                if (!ret.isEmpty())
+                    return ret;
+            }
+            dialog.setLabelText(body + "\n" + tr("You must enter a non-empty password."));
+        }
     }
 }
 
