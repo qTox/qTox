@@ -1223,7 +1223,7 @@ bool Widget::askQuestion(const QString& title, const QString& msg, bool defaultA
     if (QThread::currentThread() != qApp->thread())
     {
         bool ret;
-        QMetaObject::invokeMethod(this, "askMsgboxQuestion", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(this, "askQuestion", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret),
                                   Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
                                   Q_ARG(bool, defaultAns), Q_ARG(bool, warning));
