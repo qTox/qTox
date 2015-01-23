@@ -224,7 +224,6 @@ void Core::start()
             if (loadPath.isEmpty())
             {
                 qCritical() << "Core: loadConfiguration failed, exiting now";
-                deadifyTox();
                 emit failedToStart();
                 return;
             }
@@ -302,7 +301,7 @@ void Core::start()
 
 void Core::process()
 {
-    if (!tox)
+    if (!isReady())
         return;
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
@@ -1004,7 +1003,7 @@ void Core::acceptFileRecvRequest(int friendId, int fileNum, QString path)
 
 void Core::removeFriend(int friendId, bool fake)
 {
-    if (!tox || fake)
+    if (!isReady() || fake)
         return;
     if (tox_del_friend(tox, friendId) == -1) {
         emit failedToRemoveFriend(friendId);
@@ -1016,7 +1015,7 @@ void Core::removeFriend(int friendId, bool fake)
 
 void Core::removeGroup(int groupId, bool fake)
 {
-    if (!tox || fake)
+    if (!isReady() || fake)
         return;
     tox_del_groupchat(tox, groupId);
 
@@ -1673,7 +1672,7 @@ QString Core::getPeerName(const ToxID& id) const
 
 bool Core::isReady()
 {
-    return ready;
+    return toxav && tox && ready;
 }
 
 void Core::setNospam(uint32_t nospam)
