@@ -1276,7 +1276,8 @@ void Core::switchConfiguration(const QString& profile)
     HistoryKeeper::resetInstance();
 
     start();
-    Widget::getInstance()->setEnabledThreadsafe(true);
+    if (isReady())
+        Widget::getInstance()->setEnabledThreadsafe(true);
 }
 
 void Core::loadFriends()
