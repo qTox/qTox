@@ -230,7 +230,7 @@ void Core::checkEncryptedHistory()
 
 void Core::saveConfiguration(const QString& path)
 {
-    if (!tox)
+    if (!isReady())
     {
         qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
         return;

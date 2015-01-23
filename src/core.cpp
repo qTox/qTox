@@ -1220,6 +1220,9 @@ bool Core::loadConfiguration(QString path)
 
 void Core::saveConfiguration()
 {
+    if (!isReady())
+        return;
+
     QString dir = Settings::getSettingsDirPath();
     QDir directory(dir);
     if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
