@@ -155,6 +155,7 @@ void IdentityForm::onRenameClicked()
                 tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
         {
             QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
+            QFile::rename(dir.filePath(cur+".ini"), dir.filePath(name+".ini"));
             bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
             HistoryKeeper::renameHistory(cur, name);
             Settings::getInstance().setCurrentProfile(name);

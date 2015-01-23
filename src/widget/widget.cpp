@@ -403,7 +403,7 @@ QString Widget::detectProfile()
                 return "";
             else
             {
-                Settings::getInstance().setCurrentProfile(profile);
+                Settings::getInstance().switchProfile(profile);
                 return dir.filePath(profile + Core::TOX_EXT);
             }
         }
