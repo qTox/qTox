@@ -23,13 +23,14 @@ const double SetPasswordDialog::reasonablePasswordLength = 8.;
 SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::SetPasswordDialog)
+    , body(body+"\n")
 {
     ui->setupUi(this);
 
     connect(ui->passwordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
     connect(ui->repasswordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
 
-    ui->body->setText(body + tr("\nTo encourage good habits, qTox requires at least 8 characters."));
+    ui->body->setText(body + "\n" + tr("The passwords don't match."));
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
     if (!extraButton.isEmpty())
@@ -50,9 +51,15 @@ void SetPasswordDialog::onPasswordEdit()
     QString pswd = ui->passwordlineEdit->text();
 
     if (pswd == ui->repasswordlineEdit->text() && pswd.length() > 0)
+    {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+        ui->body->setText(body);
+    }
     else
+    {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+        ui->body->setText(body + tr("The passwords don't match."));
+    }
 
     // Password strength calculator
     // Based on code in the Master Password dialog in Firefox

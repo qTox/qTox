@@ -37,6 +37,7 @@ private slots:
 
 private:
     Ui::SetPasswordDialog *ui;
+    QString body;
     static const double reasonablePasswordLength;
 };
 

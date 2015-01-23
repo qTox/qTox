@@ -68,8 +68,8 @@ public:
     Q_INVOKABLE void setEnabledThreadsafe(bool enabled);
     Q_INVOKABLE bool askQuestion(const QString& title, const QString& msg, bool defaultAns = false, bool warning = true);
     Q_INVOKABLE QString passwordDialog(const QString& cancel, const QString& body);
-    // hooray for threading hacks
     Q_INVOKABLE QString askProfiles();
+    // hooray for threading hacks
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);

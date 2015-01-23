@@ -124,7 +124,7 @@ void PrivacyForm::onEncryptLogsUpdated()
         QMessageBox::StandardButton button = QMessageBox::warning(
             Widget::getInstance(),
             tr("Old encrypted chat logs", "title"),
-            tr("Would you like to un-encrypt your chat logs?\nOtherwise they will be deleted."),
+            tr("Would you like to decrypt your chat logs?\nOtherwise they will be deleted."),
             QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel,
             QMessageBox::Cancel
         );
@@ -204,13 +204,26 @@ void PrivacyForm::onEncryptToxUpdated()
     Core* core = Core::getInstance();
 
     if (bodyUI->cbEncryptTox->isChecked())
+    {
         if (!core->isPasswordSet(Core::ptMain))
+        {
             if (setToxPassword())
             {
                 bodyUI->cbEncryptTox->setChecked(true);
                 bodyUI->changeToxPwButton->setEnabled(true);
                 return;
             }
+        }
+    }
+    else
+    {
+        if (!Widget::getInstance()->askQuestion(tr("Decrypt your data file", "title"), tr("Would you like to decrypt your data file?")))
+        {
+            bodyUI->cbEncryptTox->setChecked(true);
+            return;
+        }
+        // affirmative answer falls through to the catch all below
+    }
 
     bodyUI->cbEncryptTox->setChecked(false);
     Settings::getInstance().setEncryptTox(false);

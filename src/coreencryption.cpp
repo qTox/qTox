@@ -163,7 +163,7 @@ bool Core::loadEncryptedSave(QByteArray& data)
             setPassword(pw, ptMain, salt);
 
         error = tox_encrypted_key_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwsaltedkeys[ptMain]);
-        dialogtxt = a + " " + b;
+        dialogtxt = a + "\n" + b;
     } while (error != 0);
 
     Settings::getInstance().setEncryptTox(true);
@@ -224,7 +224,7 @@ void Core::checkEncryptedHistory()
             setPassword(pw, ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
 
         error = exists && !HistoryKeeper::checkPassword();
-        dialogtxt = a + " " + b;
+        dialogtxt = a + "\n" + b;
     } while (error);
 }
 
