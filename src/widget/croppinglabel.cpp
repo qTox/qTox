@@ -45,11 +45,6 @@ void CroppingLabel::setEditable(bool editable)
         unsetCursor();
 }
 
-void CroppingLabel::setOpenExternalLinks(bool openExternalLinks)
-{
-    setOpenExternalLinks(openExternalLinks);
-}
-
 void CroppingLabel::setElideMode(Qt::TextElideMode elide)
 {
     elideMode = elide;
@@ -123,16 +118,20 @@ bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
 
 void CroppingLabel::setElidedText()
 {
-    QString parsedText = Widget::parseURLs(origText, width());
+    QString elidedText = fontMetrics().elidedText(origText, elideMode, width());
 
-    QString elidedText = fontMetrics().elidedText(parsedText, elideMode, width());
- 
     if (elidedText != origText)
-        setToolTip(origText);
-    else
-        setToolTip(QString());
+    {
+        QString parsedText = Widget::parseURLs(origText, elidedText.length()-1);
+        QLabel::setTextFormat(Qt::RichText);
+        QLabel::setText(parsedText + "&hellip;");
+    } else {
+        QString parsedText = Widget::parseURLs(origText);
+        QLabel::setText(parsedText);
+    }
 
-    QLabel::setText(elidedText);
+    // Don't underline links in tooltips because they are unclickable
+    setToolTip(origText);
 }
 
 void CroppingLabel::hideTextEdit(bool acceptText)

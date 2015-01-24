@@ -28,7 +28,6 @@ public:
     explicit CroppingLabel(QWidget *parent = 0);
 
     void setEditable(bool editable);
-    void setOpenExternalLinks(bool openExternalLinks);
     void setElideMode(Qt::TextElideMode elide);
 
     virtual void setText(const QString& text);

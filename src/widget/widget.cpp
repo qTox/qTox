@@ -1299,21 +1299,22 @@ QString Widget::parseURLs(QString message, int maxLength)
         if (maxLength == -1)
             htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
         else
-            htmledUrl = QString("<a href=\"%1\">%2</a>").arg(url, url.left(maxLength));
+            htmledUrl = QString("<a href=\"%1\">%2</a>").arg(url, url.left(maxLength-offset));
 
         message.replace(offset, exp.cap().length(), htmledUrl);
 
         offset += htmledUrl.length();
 
-        if (maxLength == -1)
-            continue;
+        if (maxLength != -1 && maxLength < offset)
+            maxLength = offset;
+    }
 
-        maxLength -= url.length();
-
-        if (maxLength <= 0)
-            // If we aren't allowed to use any more characters, it makes 
-            // no sense to continue, so just return the message as-is here.
-            return message;
+    if (maxLength != -1 && message.length() != maxLength + 1)
+    {
+        if (maxLength < offset)
+            return message.left(offset);
+        else
+            return message.left(maxLength);
     }
 
     return message;
