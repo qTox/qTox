@@ -64,9 +64,6 @@ public:
     bool hasFriendWithPublicKey(const QString &pubkey) const; ///< Check if we have a friend by public key
     int joinGroupchat(int32_t friendNumber, uint8_t type, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
     void quitGroupChat(int groupId) const; ///< Quit a groupchat
-
-    void saveConfiguration();
-    void saveConfiguration(const QString& path);
     
     QString getIDString() const; ///< Get the 12 first characters of our Tox ID
     
@@ -87,6 +84,9 @@ public slots:
     void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer
     void bootstrapDht(); ///< Connects us to the Tox network
     void switchConfiguration(const QString& profile); ///< Load a different profile and restart the core
+
+    void saveConfiguration();
+    void saveConfiguration(const QString& path);
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);

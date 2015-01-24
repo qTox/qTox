@@ -315,16 +315,18 @@ void Widget::updateTrayIcon()
 Widget::~Widget()
 {
     core->saveConfiguration();
-    coreThread->exit();
-    coreThread->wait(500); // In case of deadlock (can happen with QtAudio/PA bugs)
-    if (!coreThread->isFinished())
-        coreThread->terminate();
     AutoUpdater::abortUpdates();
     delete core;
+    hideMainForms();
     delete settingsWidget;
     delete addFriendForm;
     delete filesForm;
+    delete idleTimer;
 
+    if (ui->mainHead->style())
+        delete ui->mainHead->style();
+    if (ui->mainContent->style())
+        delete ui->mainContent->style();
     FriendList::clear();
     GroupList::clear();
     delete trayMenu;

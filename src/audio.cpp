@@ -64,6 +64,15 @@ Audio& Audio::getInstance()
     return *instance;
 }
 
+Audio::~Audio()
+{
+    audioThread->wait(100);
+    audioThread->terminate();
+    delete audioThread;
+    delete audioInLock;
+    delete audioOutLock;
+}
+
 void Audio::suscribeInput()
 {
     if (!alInDev)

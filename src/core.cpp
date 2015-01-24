@@ -95,6 +95,13 @@ Core::~Core()
     clearPassword(Core::ptMain);
     clearPassword(Core::ptHistory);
 
+    toxTimer->stop();
+    coreThread->exit(0);
+    qApp->processEvents();
+    coreThread->wait(500);
+    if (coreThread->isRunning())
+        coreThread->terminate();
+
     if (tox)
     {
         toxav_kill(toxav);
@@ -1295,6 +1302,9 @@ bool Core::loadConfiguration(QString path)
 
 void Core::saveConfiguration()
 {
+    if (QThread::currentThread() != coreThread)
+        return (void) QMetaObject::invokeMethod(this, "saveConfiguration");
+
     QString dir = Settings::getSettingsDirPath();
     QDir directory(dir);
     if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
@@ -1321,6 +1331,9 @@ void Core::saveConfiguration()
 
 void Core::saveConfiguration(const QString& path)
 {
+    if (QThread::currentThread() != coreThread)
+        return (void) QMetaObject::invokeMethod(this, "saveConfiguration", Q_ARG(const QString&, path));
+
     if (!tox)
     {
         qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
@@ -1330,27 +1343,28 @@ void Core::saveConfiguration(const QString& path)
     Settings::getInstance().save();
 
     QSaveFile configurationFile(path);
-    if (!configurationFile.open(QIODevice::WriteOnly)) {
+    if (!configurationFile.open(QIODevice::WriteOnly))
+    {
         qCritical() << "File " << path << " cannot be opened";
         return;
     }
 
     qDebug() << "Core: writing tox_save to " << path;
 
-    uint32_t fileSize; bool encrypt = Settings::getInstance().getEncryptTox();
+    uint32_t fileSize;
+    bool encrypt = Settings::getInstance().getEncryptTox();
     if (encrypt)
         fileSize = tox_encrypted_size(tox);
     else
         fileSize = tox_size(tox);
 
-    if (fileSize > 0 && fileSize <= INT32_MAX) {
+    if (fileSize > 0 && fileSize <= INT32_MAX)
+    {
         uint8_t *data = new uint8_t[fileSize];
-
         if (encrypt)
         {
             if (!pwsaltedkeys[ptMain])
             {
-                // probably zero chance event
                 Widget::getInstance()->showWarningMsgBox(tr("NO Password"), tr("Will be saved without encryption!"));
                 tox_save(tox, data);
             }
@@ -1365,7 +1379,9 @@ void Core::saveConfiguration(const QString& path)
             }
         }
         else
+        {
             tox_save(tox, data);
+        }
 
         configurationFile.write(reinterpret_cast<char *>(data), fileSize);
         configurationFile.commit();
