@@ -1273,3 +1273,32 @@ void Widget::reloadTheme()
     for (Group* g : GroupList::getAllGroups())
         g->getGroupWidget()->reloadTheme();
 }
+
+QString Widget::parseURLs(QString message)
+{
+    // detect urls
+    QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/|tox:\\/\\/|tox:)\\S+");
+    int offset = 0;
+    while ((offset = exp.indexIn(message, offset)) != -1)
+    {
+        QString url = exp.cap();
+
+        // If there's a trailing " it's a HTML attribute, e.g. a smiley img's title=":tox:"
+        if (url == "tox:\"")
+        {
+            offset += url.length();
+            continue;
+        }
+
+        // add scheme if not specified
+        if (exp.cap(1) == "www.")
+            url.prepend("http://");
+
+        QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
+        message.replace(offset, exp.cap().length(), htmledUrl);
+
+        offset += htmledUrl.length();
+    }
+
+    return message;
+}

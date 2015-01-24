@@ -78,6 +78,8 @@ public:
 
     void reloadTheme();
 
+    static QString parseURLs(QString message);
+
 public slots:
     void onSettingsClicked();
     void setWindowTitle(const QString& title);

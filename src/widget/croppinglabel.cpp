@@ -15,6 +15,7 @@
 */
 
 #include "croppinglabel.h"
+#include "src/widget/widget.h"
 #include <QResizeEvent>
 #include <QLineEdit>
 
@@ -25,6 +26,7 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     , elideMode(Qt::ElideRight)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    setOpenExternalLinks(true);
 
     textEdit = new QLineEdit(this);
     textEdit->hide();
@@ -117,12 +119,13 @@ bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
 void CroppingLabel::setElidedText()
 {
     QString elidedText = fontMetrics().elidedText(origText, elideMode, width());
+ 
     if (elidedText != origText)
         setToolTip(origText);
     else
         setToolTip(QString());
 
-    QLabel::setText(elidedText);
+    QLabel::setText(Widget::parseURLs(elidedText));
 }
 
 void CroppingLabel::hideTextEdit(bool acceptText)
