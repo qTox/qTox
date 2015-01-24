@@ -314,6 +314,7 @@ void Widget::updateTrayIcon()
 
 Widget::~Widget()
 {
+    qDebug() << "Deleting Widget";
     core->saveConfiguration();
     AutoUpdater::abortUpdates();
     delete core;

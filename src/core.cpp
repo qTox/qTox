@@ -84,7 +84,7 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
     }
 
     // OpenAL init
-    QString outDevDescr = Settings::getInstance().getOutDev();                                     ;
+    QString outDevDescr = Settings::getInstance().getOutDev();
     Audio::openOutput(outDevDescr);
     QString inDevDescr = Settings::getInstance().getInDev();
     Audio::openInput(inDevDescr);
@@ -92,13 +92,15 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
 
 Core::~Core()
 {
+    qDebug() << "Deleting Core";
+
     clearPassword(Core::ptMain);
     clearPassword(Core::ptHistory);
 
     toxTimer->stop();
     coreThread->exit(0);
     qApp->processEvents();
-    coreThread->wait(500);
+    coreThread->wait();
     if (coreThread->isRunning())
         coreThread->terminate();
 

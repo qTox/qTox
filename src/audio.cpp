@@ -66,8 +66,11 @@ Audio& Audio::getInstance()
 
 Audio::~Audio()
 {
-    audioThread->wait(100);
-    audioThread->terminate();
+    qDebug() << "Deleting Audio";
+    audioThread->exit(0);
+    audioThread->wait();
+    if (audioThread->isRunning())
+        audioThread->terminate();
     delete audioThread;
     delete audioInLock;
     delete audioOutLock;
