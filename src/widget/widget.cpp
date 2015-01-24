@@ -324,10 +324,6 @@ Widget::~Widget()
     delete filesForm;
     delete idleTimer;
 
-    if (ui->mainHead->style())
-        delete ui->mainHead->style();
-    if (ui->mainContent->style())
-        delete ui->mainContent->style();
     FriendList::clear();
     GroupList::clear();
     delete trayMenu;
