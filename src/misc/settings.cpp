@@ -204,6 +204,10 @@ void Settings::load()
         filterAudio = s.value("filterAudio", false).toBool();
     s.endGroup();
 
+    s.beginGroup("Video");
+        camVideoRes = s.value("camVideoRes",QSize()).toSize();
+    s.endGroup();
+
     // Read the embedded DHT bootsrap nodes list if needed
     if (dhtServerList.isEmpty())
     {
@@ -348,6 +352,10 @@ void Settings::save(QString path, bool writeFriends)
         s.setValue("inDev", inDev);
         s.setValue("outDev", outDev);
         s.setValue("filterAudio", filterAudio);
+    s.endGroup();
+
+    s.beginGroup("Video");
+        s.setValue("camVideoRes",camVideoRes);
     s.endGroup();
 
     if (!writeFriends || currentProfile.isEmpty()) // Core::switchConfiguration
@@ -938,6 +946,16 @@ bool Settings::getFilterAudio() const
 void Settings::setFilterAudio(bool newValue)
 {
     filterAudio = newValue;
+}
+
+QSize Settings::getCamVideoRes() const
+{
+    return camVideoRes;
+}
+
+void Settings::setCamVideoRes(QSize newValue)
+{
+    camVideoRes = newValue;
 }
 
 QString Settings::getFriendAdress(const QString &publicKey) const

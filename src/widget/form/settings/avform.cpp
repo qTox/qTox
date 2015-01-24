@@ -95,7 +95,9 @@ void AVForm::on_HueSlider_sliderMoved(int position)
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 {
-    Camera::getInstance()->setResolution(bodyUI->videoModescomboBox->itemData(index).toSize());
+    QSize res = bodyUI->videoModescomboBox->itemData(index).toSize();
+    Settings::getInstance().setCamVideoRes(res);
+    Camera::getInstance()->setResolution(res);
 }
 
 void AVForm::onPropProbingFinished(Camera::Prop prop, double val)
@@ -121,15 +123,25 @@ void AVForm::onPropProbingFinished(Camera::Prop prop, double val)
 
 void AVForm::onResProbingFinished(QList<QSize> res)
 {
+    QSize savedRes = Settings::getInstance().getCamVideoRes();
+    int savedResIndex = -1;
     bodyUI->videoModescomboBox->clear();
 	bodyUI->videoModescomboBox->blockSignals(true);
-    for (QSize r : res)
+    for (int i=0; i<res.size(); ++i)
+    {
+        QSize& r = res[i];
         bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())), r);
-	//reset index, otherwise cameras with only one resolution won't get initialized
+        if (r == savedRes)
+            savedResIndex = i;
+    }
+    //reset index, otherwise cameras with only one resolution won't get initialized
     bodyUI->videoModescomboBox->setCurrentIndex(-1);
     bodyUI->videoModescomboBox->blockSignals(false);
 
-    bodyUI->videoModescomboBox->setCurrentIndex(bodyUI->videoModescomboBox->count()-1);
+    if (savedResIndex != -1)
+        bodyUI->videoModescomboBox->setCurrentIndex(savedResIndex);
+    else
+        bodyUI->videoModescomboBox->setCurrentIndex(bodyUI->videoModescomboBox->count()-1);
 }
 
 void AVForm::hideEvent(QHideEvent *)

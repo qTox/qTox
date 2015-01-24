@@ -139,6 +139,9 @@ public:
     bool getFilterAudio() const;
     void setFilterAudio(bool newValue);
 
+    QSize getCamVideoRes() const;
+    void setCamVideoRes(QSize newValue);
+
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
     // for some general purpose widgets, such as MainWindows or Splitters,
@@ -316,6 +319,9 @@ private:
     QString inDev;
     QString outDev;
     bool filterAudio;
+
+    // Video
+    QSize camVideoRes;
 
     struct friendProp
     {
