@@ -78,7 +78,7 @@ public:
 
     void reloadTheme();
 
-    static QString parseURLs(QString message);
+    static QString parseURLs(QString message, int maxLength = -1);
 
 public slots:
     void onSettingsClicked();

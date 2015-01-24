@@ -1274,7 +1274,7 @@ void Widget::reloadTheme()
         g->getGroupWidget()->reloadTheme();
 }
 
-QString Widget::parseURLs(QString message)
+QString Widget::parseURLs(QString message, int maxLength)
 {
     // detect urls
     QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/|tox:\\/\\/|tox:)\\S+");
@@ -1294,10 +1294,26 @@ QString Widget::parseURLs(QString message)
         if (exp.cap(1) == "www.")
             url.prepend("http://");
 
-        QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
+        QString htmledUrl;
+
+        if (maxLength == -1)
+            htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
+        else
+            htmledUrl = QString("<a href=\"%1\">%2</a>").arg(url, url.left(maxLength));
+
         message.replace(offset, exp.cap().length(), htmledUrl);
 
         offset += htmledUrl.length();
+
+        if (maxLength == -1)
+            continue;
+
+        maxLength -= url.length();
+
+        if (maxLength <= 0)
+            // If we aren't allowed to use any more characters, it makes 
+            // no sense to continue, so just return the message as-is here.
+            return message;
     }
 
     return message;

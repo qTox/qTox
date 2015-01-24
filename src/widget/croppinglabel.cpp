@@ -45,7 +45,12 @@ void CroppingLabel::setEditable(bool editable)
         unsetCursor();
 }
 
-void CroppingLabel::setEdlideMode(Qt::TextElideMode elide)
+void CroppingLabel::setOpenExternalLinks(bool openExternalLinks)
+{
+    setOpenExternalLinks(openExternalLinks);
+}
+
+void CroppingLabel::setElideMode(Qt::TextElideMode elide)
 {
     elideMode = elide;
 }
@@ -118,14 +123,16 @@ bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
 
 void CroppingLabel::setElidedText()
 {
-    QString elidedText = fontMetrics().elidedText(origText, elideMode, width());
+    QString parsedText = Widget::parseURLs(origText, width());
+
+    QString elidedText = fontMetrics().elidedText(parsedText, elideMode, width());
  
     if (elidedText != origText)
         setToolTip(origText);
     else
         setToolTip(QString());
 
-    QLabel::setText(Widget::parseURLs(elidedText));
+    QLabel::setText(elidedText);
 }
 
 void CroppingLabel::hideTextEdit(bool acceptText)
