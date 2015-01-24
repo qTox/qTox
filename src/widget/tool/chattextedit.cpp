@@ -31,8 +31,6 @@ void ChatTextEdit::keyPressEvent(QKeyEvent * event)
         emit enterPressed();
     else if (key == Qt::Key_Tab)
         emit tabPressed();
-    else if (key == Qt::Key_Backspace) // because of the backspace() hack in tabber, we can't emit on these
-        QTextEdit::keyPressEvent(event);
     else
     {
         emit keyPressed();
