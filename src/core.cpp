@@ -99,10 +99,11 @@ Core::~Core()
 
     toxTimer->stop();
     coreThread->exit(0);
-    qApp->processEvents();
-    coreThread->wait();
-    if (coreThread->isRunning())
-        coreThread->terminate();
+    while (coreThread->isRunning())
+    {
+        qApp->processEvents();
+        coreThread->wait(500);
+    }
 
     if (tox)
     {
