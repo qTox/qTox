@@ -858,6 +858,9 @@ QSplitter:handle{
                  <property name="text">
                   <string>Your name</string>
                  </property>
+                 <property name="openExternalLinks">
+                  <bool>false</bool>
+                 </property>
                 </widget>
                </item>
                <item>

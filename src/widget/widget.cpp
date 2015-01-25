@@ -26,6 +26,8 @@
 #include "src/group.h"
 #include "groupwidget.h"
 #include "form/groupchatform.h"
+#include "src/misc/settings.h"
+#include "src/misc/smileypack.h"
 #include "src/misc/style.h"
 #include "friendlistwidget.h"
 #include "src/video/camera.h"
@@ -1274,11 +1276,30 @@ void Widget::reloadTheme()
         g->getGroupWidget()->reloadTheme();
 }
 
-QString Widget::parseURLs(QString message, int maxLength)
+QString Widget::toHtmlChars(const QString &str)
 {
+    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}};
+    QString res = str;
+
+    for (auto &it : replaceList)
+        res = res.replace(it.first,it.second);
+
+    return res;
+}
+
+QString Widget::parseMessage(QString message, int maxLength)
+{
+    // Smileys!
+    if (Settings::getInstance().getUseEmoticons())
+         message = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
+    else
+         message = toHtmlChars(message);
+
     // detect urls
     QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/|tox:\\/\\/|tox:)\\S+");
     int offset = 0;
+    int lengthLeft = maxLength;
+    bool lengthLeftChanged = false;
     while ((offset = exp.indexIn(message, offset)) != -1)
     {
         QString url = exp.cap();
@@ -1297,9 +1318,16 @@ QString Widget::parseURLs(QString message, int maxLength)
         QString htmledUrl;
 
         if (maxLength == -1)
+        {
             htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
-        else
-            htmledUrl = QString("<a href=\"%1\">%2</a>").arg(url, url.left(maxLength-offset));
+            lengthLeft -= url.length();
+        } else {
+            QString newUrl = url.left(lengthLeft);
+            htmledUrl = QString("<a href=\"%1\">%2</a>").arg(url, newUrl);
+            lengthLeft -= newUrl.length();
+        }
+
+        lengthLeftChanged = true;
 
         message.replace(offset, exp.cap().length(), htmledUrl);
 
@@ -1309,13 +1337,11 @@ QString Widget::parseURLs(QString message, int maxLength)
             maxLength = offset;
     }
 
-    if (maxLength != -1 && message.length() != maxLength + 1)
-    {
-        if (maxLength < offset)
-            return message.left(offset);
-        else
-            return message.left(maxLength);
-    }
-
-    return message;
+    if (maxLength == -1)
+        return message;
+    
+    if (lengthLeftChanged)
+        return message.left(maxLength + lengthLeft);
+    else
+        return message.left(maxLength);
 }

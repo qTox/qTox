@@ -15,8 +15,6 @@
 */
 
 #include "messageaction.h"
-#include "src/misc/smileypack.h"
-#include "src/misc/settings.h"
 #include "src/widget/widget.h"
 #include <QTextTable>
 
@@ -30,13 +28,9 @@ MessageAction::MessageAction(const QString &author, const QString &message, cons
 QString MessageAction::getMessage(QString div)
 {
     QString message_;
-    if (Settings::getInstance().getUseEmoticons())
-         message_ = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
-    else
-         message_ = toHtmlChars(message);
 
-    // parse URL(s)
-    message_ = Widget::parseURLs(message_);
+    // parse message
+    message_ = Widget::parseMessage(message);
 
     // detect text quotes
     QStringList messageLines = message_.split("\n");

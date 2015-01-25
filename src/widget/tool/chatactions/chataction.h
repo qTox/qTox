@@ -47,7 +47,6 @@ protected:
     virtual QString getMessage() = 0;
     virtual QString getDate();
 
-    QString toHtmlChars(const QString &str);
     QString QImage2base64(const QImage &img);
 
 protected:

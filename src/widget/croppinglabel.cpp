@@ -122,10 +122,10 @@ void CroppingLabel::setElidedText()
 
     if (elidedText != origText)
     {
-        QString parsedText = Widget::parseURLs(origText, elidedText.length() - 1);
+        QString parsedText = Widget::parseMessage(origText, elidedText.length() - 1);
         QLabel::setText("<div>" + parsedText.trimmed() + "&hellip;</div>");
     } else {
-        QString parsedText = Widget::parseURLs(origText);
+        QString parsedText = Widget::parseMessage(origText);
         QLabel::setText(parsedText);
     }
 
