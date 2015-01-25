@@ -24,22 +24,23 @@
 #include <QDragEnterEvent>
 #include <QBitmap>
 #include "chatform.h"
-#include "src/historykeeper.h"
-#include "src/widget/form/loadhistorydialog.h"
-#include "src/friend.h"
-#include "src/widget/friendwidget.h"
-#include "src/filetransferinstance.h"
-#include "src/widget/tool/chatactions/filetransferaction.h"
-#include "src/widget/netcamview.h"
-#include "src/widget/chatareawidget.h"
-#include "src/widget/tool/chattextedit.h"
 #include "src/core.h"
-#include "src/widget/widget.h"
-#include "src/widget/maskablepixmapwidget.h"
-#include "src/widget/croppinglabel.h"
+#include "src/friend.h"
+#include "src/filetransferinstance.h"
+#include "src/historykeeper.h"
 #include "src/misc/style.h"
 #include "src/misc/settings.h"
 #include "src/misc/cstring.h"
+#include "src/widget/callconfirmwidget.h"
+#include "src/widget/friendwidget.h"
+#include "src/widget/netcamview.h"
+#include "src/widget/chatareawidget.h"
+#include "src/widget/form/loadhistorydialog.h"
+#include "src/widget/tool/chattextedit.h"
+#include "src/widget/tool/chatactions/filetransferaction.h"
+#include "src/widget/widget.h"
+#include "src/widget/maskablepixmapwidget.h"
+#include "src/widget/croppinglabel.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -53,6 +54,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setObjectName("statusLabel");
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
+
+    callConfirm = nullptr;
 
     isTypingLabel = new QLabel();
     QFont font = isTypingLabel->font();
@@ -97,6 +100,7 @@ ChatForm::ChatForm(Friend* chatFriend)
 ChatForm::~ChatForm()
 {
     delete netcam;
+    delete callConfirm;
 }
 
 void ChatForm::setStatusMessage(QString newMessage)
@@ -261,6 +265,12 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 
     qDebug() << "onAvInvite";
 
+    callConfirm = new CallConfirmWidget(callButton);
+    if (isVisible())
+        callConfirm->show();
+    connect(callConfirm, SIGNAL(accepted()), this, SLOT(onAnswerCallTriggered()));
+    connect(callConfirm, SIGNAL(rejected()), this, SLOT(onRejectCallTriggered()));
+
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
@@ -329,11 +339,13 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
 
 void ChatForm::onAvCancel(int FriendId, int)
 {
-
     if (FriendId != f->getFriendID())
         return;
 
     qDebug() << "onAvCancel";
+
+    delete callConfirm;
+    callConfirm = nullptr;
 
     stopCounter();
 
@@ -363,6 +375,9 @@ void ChatForm::onAvEnd(int FriendId, int)
         return;
 
     qDebug() << "onAvEnd";
+
+    delete callConfirm;
+    callConfirm = nullptr;
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -452,6 +467,9 @@ void ChatForm::onAvEnding(int FriendId, int)
 
     qDebug() << "onAvEnding";
 
+    delete callConfirm;
+    callConfirm = nullptr;
+
     audioInputFlag = false;
     audioOutputFlag = false;
     micButton->setObjectName("green");
@@ -481,6 +499,9 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
 
     qDebug() << "onAvRequestTimeout";
 
+    delete callConfirm;
+    callConfirm = nullptr;
+
     audioInputFlag = false;
     audioOutputFlag = false;
     micButton->setObjectName("green");
@@ -508,6 +529,9 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 
     qDebug() << "onAvPeerTimeout";
 
+    delete callConfirm;
+    callConfirm = nullptr;
+
     audioInputFlag = false;
     audioOutputFlag = false;
     micButton->setObjectName("green");
@@ -534,6 +558,9 @@ void ChatForm::onAvRejected(int FriendId, int)
         return;
 
     qDebug() << "onAvRejected";
+
+    delete callConfirm;
+    callConfirm = nullptr;
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -577,7 +604,13 @@ void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
 void ChatForm::onAnswerCallTriggered()
 {
     qDebug() << "onAnswerCallTriggered";
-        
+
+    if (callConfirm)
+    {
+        delete callConfirm;
+        callConfirm = nullptr;
+    }
+
     audioInputFlag = true;
     audioOutputFlag = true;
     emit answerCall(callId);
@@ -596,10 +629,29 @@ void ChatForm::onHangupCallTriggered()
     volButton->style()->polish(volButton);
 }
 
+void ChatForm::onRejectCallTriggered()
+{
+    qDebug() << "onRejectCallTriggered";
+
+    if (callConfirm)
+    {
+        delete callConfirm;
+        callConfirm = nullptr;
+    }
+
+    audioInputFlag = false;
+    audioOutputFlag = false;
+    emit rejectCall(callId);
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
+}
+
 void ChatForm::onCallTriggered()
 {
     qDebug() << "onCallTriggered";
-    
+
     audioInputFlag = true;
     audioOutputFlag = true;
     callButton->disconnect();
@@ -624,6 +676,9 @@ void ChatForm::onAvCallFailed(int FriendId)
         return;
 
     qDebug() << "onAvCallFailed";
+
+    delete callConfirm;
+    callConfirm = nullptr;
 
     audioInputFlag = false;
     audioOutputFlag = false;
@@ -946,4 +1001,18 @@ void ChatForm::deliverOfflineMsgs()
             rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
         registerReceipt(rec, iter.key(), iter.value());
     }
+}
+
+void ChatForm::show(Ui::MainWindow &ui)
+{
+    GenericChatForm::show(ui);
+
+    if (callConfirm)
+        callConfirm->show();
+}
+
+void ChatForm::hideEvent(QHideEvent*)
+{
+    if (callConfirm)
+        callConfirm->hide();
 }

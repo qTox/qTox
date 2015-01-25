@@ -159,6 +159,13 @@ void Core::hangupCall(int callId)
     toxav_hangup(toxav, callId);
 }
 
+void Core::rejectCall(int callId)
+{
+    qDebug() << QString("Core: rejecting call %1").arg(callId);
+    calls[callId].active = false;
+    toxav_reject(toxav, callId, nullptr);
+}
+
 void Core::startCall(int friendId, bool video)
 {
     int callId;
@@ -201,7 +208,7 @@ void Core::cancelCall(int callId, int friendId)
 {
     qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
     calls[callId].active = false;
-    toxav_cancel(toxav, callId, friendId, 0);
+    toxav_cancel(toxav, callId, friendId, nullptr);
 }
 
 void Core::cleanupCall(int callId)

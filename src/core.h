@@ -117,6 +117,7 @@ public slots:
     void pauseResumeFileRecv(int friendId, int fileNum);
 
     void answerCall(int callId);
+    void rejectCall(int callId);
     void hangupCall(int callId);
     void startCall(int friendId, bool video=false);
     void cancelCall(int callId, int friendId);
