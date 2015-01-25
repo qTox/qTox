@@ -544,6 +544,8 @@ void ChatForm::onHangupCallTriggered()
     audioInputFlag = false;
     audioOutputFlag = false;
     emit hangupCall(callId);
+
+    enableCallButtons();
 }
 
 void ChatForm::onRejectCallTriggered()
@@ -665,8 +667,8 @@ void ChatForm::onEnableCallButtons()
             this, SLOT(onVolMuteToggle()));
     
     disableCallButtonsTimer->stop();
-    disableCallButtonsTimer = nullptr;
     delete disableCallButtonsTimer;
+    disableCallButtonsTimer = nullptr;
 }
 
 void ChatForm::onMicMuteToggle()
@@ -861,16 +863,16 @@ void ChatForm::startCounter()
 void ChatForm::stopCounter()
 {
     if (callDurationTimer)
-    {        
+    {
         addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),
                                                               secondsToDHMS(timeElapsed.elapsed()/1000)),
                              "white", QDateTime::currentDateTime());
         callDurationTimer->stop();
         callDuration->setText("");
         callDuration->hide();
-        callDurationTimer = nullptr;
         
         delete callDurationTimer;
+        callDurationTimer = nullptr;
     }
 }
 
