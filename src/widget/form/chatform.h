@@ -28,6 +28,9 @@ struct Friend;
 class FileTransferInstance;
 class NetCamView;
 class QPixmap;
+class CallConfirmWidget;
+class QHideEvent;
+class QMoveEvent;
 
 class ChatForm : public GenericChatForm
 {
@@ -41,6 +44,8 @@ public:
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
 
+    virtual void show(Ui::MainWindow &ui);
+
 signals:
     void sendFile(int32_t friendId, QString, QString, long long);
     void startCall(int friendId);
@@ -48,6 +53,7 @@ signals:
     void answerCall(int callId);
     void hangupCall(int callId);
     void cancelCall(int callId, int friendId);
+    void rejectCall(int callId);
     void micMuteToggle(int callId);
     void volMuteToggle(int callId);
     void aliasChanged(const QString& alias);
@@ -83,6 +89,7 @@ private slots:
     void onAnswerCallTriggered();
     void onHangupCallTriggered();
     void onCancelCallTriggered();
+    void onRejectCallTriggered();
     void onFileTansBtnClicked(QString widgetName, QString buttonName);
     void onFileSendFailed(int FriendId, const QString &fname);
     void onLoadHistory();
@@ -92,6 +99,7 @@ protected:
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);
+    virtual void hideEvent(QHideEvent* event);
     void registerReceipt(int receipt, int messageID, MessageActionPtr msg);
 
 private:
@@ -111,6 +119,7 @@ private:
     QString secondsToDHMS(quint32 duration);
     QHash<int, int> receipts;
     QMap<int, MessageActionPtr> undeliveredMsgs;
+    CallConfirmWidget *callConfirm;
 };
 
 #endif // CHATFORM_H

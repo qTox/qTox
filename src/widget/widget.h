@@ -90,6 +90,7 @@ signals:
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
     void changeProfile(const QString& profile);
+    void resized();
 
 private slots:
     void onConnected();

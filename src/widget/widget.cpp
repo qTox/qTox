@@ -377,6 +377,8 @@ void Widget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     saveWindowGeometry();
+
+    emit resized();
 }
 
 QString Widget::detectProfile()
@@ -679,6 +681,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), SIGNAL(sendFile(int32_t, QString, QString, long long)), core, SLOT(sendFile(int32_t, QString, QString, long long)));
     connect(newfriend->getChatForm(), SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
     connect(newfriend->getChatForm(), SIGNAL(hangupCall(int)), core, SLOT(hangupCall(int)));
+    connect(newfriend->getChatForm(), SIGNAL(rejectCall(int)), core, SLOT(rejectCall(int)));
     connect(newfriend->getChatForm(), SIGNAL(startCall(int)), core, SLOT(startCall(int)));
     connect(newfriend->getChatForm(), SIGNAL(startVideoCall(int,bool)), core, SLOT(startCall(int,bool)));
     connect(newfriend->getChatForm(), SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
