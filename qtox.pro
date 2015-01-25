@@ -192,7 +192,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/chatlog/customtextdocument.h \
     src/widget/form/settings/advancedform.h \
     src/audio.h \
-    src/chatlog/content/notificationicon.h
+    src/chatlog/content/notificationicon.h \
+    src/chatlog/content/timestamp.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -262,7 +263,8 @@ SOURCES += \
     src/chatlog/customtextdocument.cpp\
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp \
-    src/chatlog/content/notificationicon.cpp
+    src/chatlog/content/notificationicon.cpp \
+    src/chatlog/content/timestamp.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
     HEADERS += src/audiofilterer.h

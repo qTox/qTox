@@ -16,8 +16,11 @@
 
 #include "genericchatform.h"
 #include "ui_mainwindow.h"
+
 #include <QFileDialog>
 #include <QHBoxLayout>
+#include <QDebug>
+
 #include "src/misc/smileypack.h"
 #include "src/widget/emoticonswidget.h"
 #include "src/misc/style.h"
@@ -31,6 +34,7 @@
 #include "src/friendlist.h"
 #include "src/friend.h"
 #include "src/chatlog/chatlog.h"
+#include "src/chatlog/content/timestamp.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent)
@@ -271,7 +275,22 @@ void GenericChatForm::onSaveLogClicked()
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
 
-    file.write(chatWidget->toPlainText().toUtf8());
+    QString plainText;
+    auto lines = chatWidget->getLines();
+    for(ChatLine::Ptr l : lines)
+    {
+        Timestamp* rightCol = dynamic_cast<Timestamp*>(l->getContent(2));
+        ChatLineContent* middleCol = l->getContent(1);
+        ChatLineContent* leftCol = l->getContent(0);
+
+        QString timestamp = (!rightCol || rightCol->getTime().isNull()) ? tr("Not sent") : rightCol->getText();
+        QString nick = leftCol->getText();
+        QString msg = middleCol->getText();
+
+        plainText += QString("[%2] %1\n%3\n\n").arg(nick, timestamp, msg);
+    }
+
+    file.write(plainText.toUtf8());
     file.close();
 }
 

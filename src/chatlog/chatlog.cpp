@@ -463,18 +463,6 @@ QString ChatLog::getSelectedText() const
     return QString();
 }
 
-QString ChatLog::toPlainText() const
-{
-    QString out;
-
-    for(ChatLine::Ptr l : lines)
-    {
-        out += QString("|%1 @%2|\n%3\n\n").arg(l->getContent(0)->getText(),l->getContent(2)->getText(),l->getContent(1)->getText());
-    }
-
-    return out;
-}
-
 bool ChatLog::isEmpty() const
 {
     return lines.isEmpty();
@@ -488,6 +476,11 @@ bool ChatLog::hasTextToBeCopied() const
 ChatLine::Ptr ChatLog::getTypingNotification() const
 {
     return typingNotification;
+}
+
+QVector<ChatLine::Ptr> ChatLog::getLines()
+{
+    return lines;
 }
 
 void ChatLog::clear()

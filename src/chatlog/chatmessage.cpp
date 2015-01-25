@@ -17,6 +17,7 @@
 #include "chatmessage.h"
 #include "chatlinecontentproxy.h"
 #include "content/text.h"
+#include "content/timestamp.h"
 #include "content/spinner.h"
 #include "content/filetransferwidget.h"
 #include "content/image.h"
@@ -81,7 +82,7 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
 
     msg->addColumn(new Image(QSizeF(18, 18), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(rawMessage, Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
-    msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
 }
@@ -92,7 +93,7 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
 
     msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 350, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Text(date.toString(Settings::getInstance().getTimestampFormat()), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
 }
@@ -121,7 +122,7 @@ ChatMessage::Ptr ChatMessage::createBusyNotification()
 void ChatMessage::markAsSent(const QDateTime &time)
 {
     // remove the spinner and replace it by $time
-    replaceContent(2, new Text(time.toString(Settings::getInstance().getTimestampFormat())));
+    replaceContent(2, new Timestamp(time, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)));
 }
 
 QString ChatMessage::toString() const

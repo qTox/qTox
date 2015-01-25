@@ -48,12 +48,12 @@ public:
     void setTypingNotificationVisible(bool visible);
     void scrollToLine(ChatLine::Ptr line);
     QString getSelectedText() const;
-    QString toPlainText() const;
 
     bool isEmpty() const;
     bool hasTextToBeCopied() const;
 
     ChatLine::Ptr getTypingNotification() const;
+    QVector<ChatLine::Ptr> getLines();
 
 protected:
     QRectF calculateSceneRect() const;
