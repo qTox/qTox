@@ -377,6 +377,8 @@ void Widget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     saveWindowGeometry();
+
+    emit resized();
 }
 
 QString Widget::detectProfile()

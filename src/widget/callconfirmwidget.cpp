@@ -10,14 +10,12 @@
 #include <QRect>
 #include <QPalette>
 
-CallConfirmWidget::CallConfirmWidget(QWidget *anchor) :
-    QWidget(Widget::getInstance()),
+CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
+    QWidget(Widget::getInstance()), anchor(Anchor),
     rectW{130}, rectH{90},
     spikeW{30}, spikeH{15},
     roundedFactor{15}
 {
-    Widget* w = Widget::getInstance();
-
     setWindowFlags(Qt::SubWindow);
 
     QPalette palette;
@@ -36,12 +34,23 @@ CallConfirmWidget::CallConfirmWidget(QWidget *anchor) :
     connect(buttonBox, &QDialogButtonBox::accepted, this, &CallConfirmWidget::accepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &CallConfirmWidget::rejected);
 
+    connect(Widget::getInstance(), &Widget::resized, this, &CallConfirmWidget::reposition);
+
     layout->setMargin(12);
     layout->addSpacing(spikeH);
     layout->addWidget(callLabel);
     layout->addWidget(buttonBox);
 
-    QPoint pos = anchor->mapToGlobal({(anchor->width()-width())/2,anchor->height()})-w->mapToGlobal({0,0});
+    setFixedSize(rectW,rectH+spikeH);
+    reposition();
+}
+
+void CallConfirmWidget::reposition()
+{
+    Widget* w = Widget::getInstance();
+    QPoint pos = anchor->mapToGlobal({(anchor->width()-rectW)/2,anchor->height()})-w->mapToGlobal({0,0});
+
+    // We don't want the widget to overflow past the right of the screen
     int xOverflow=0;
     if (pos.x() + rectW > w->width())
         xOverflow = pos.x() + rectW - w->width();
@@ -49,12 +58,12 @@ CallConfirmWidget::CallConfirmWidget(QWidget *anchor) :
 
     mainRect = {0,spikeH,rectW,rectH};
     brush = QBrush(QColor(65,65,65));
-    spikePoly = QPolygon({{(rectW-spikeW+xOverflow)/2,spikeH},
-                          {(rectW+xOverflow)/2,0},
-                          {(rectW+spikeW+xOverflow)/2,spikeH}});
+    spikePoly = QPolygon({{(rectW-spikeW)/2+xOverflow,spikeH},
+                          {rectW/2+xOverflow,0},
+                          {(rectW+spikeW)/2+xOverflow,spikeH}});
 
-    setFixedSize(rectW,rectH+spikeH);
     move(pos);
+    update();
 }
 
 void CallConfirmWidget::paintEvent(QPaintEvent*)
@@ -66,4 +75,10 @@ void CallConfirmWidget::paintEvent(QPaintEvent*)
 
     painter.drawRoundRect(mainRect, roundedFactor, roundedFactor);
     painter.drawPolygon(spikePoly);
+}
+
+void CallConfirmWidget::showEvent(QShowEvent*)
+{
+    reposition();
+    update();
 }
