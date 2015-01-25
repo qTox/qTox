@@ -92,6 +92,8 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
 
     setProperty("active", false);
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/genericChatroomWidget.css"));
+
+    connect(statusMessageLabel, &CroppingLabel::clicked, [&](){emit chatroomWidgetClicked(this);});
 }
 
 bool GenericChatroomWidget::isActive()
