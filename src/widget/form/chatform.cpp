@@ -265,17 +265,17 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
 
     qDebug() << "onAvInvite";
 
-    callConfirm = new CallConfirmWidget(callButton);
-    if (isVisible())
-        callConfirm->show();
-    connect(callConfirm, SIGNAL(accepted()), this, SLOT(onAnswerCallTriggered()));
-    connect(callConfirm, SIGNAL(rejected()), this, SLOT(onRejectCallTriggered()));
-
     callId = CallId;
     callButton->disconnect();
     videoButton->disconnect();
     if (video)
     {
+        callConfirm = new CallConfirmWidget(videoButton);
+        if (isVisible())
+            callConfirm->show();
+        connect(callConfirm, SIGNAL(accepted()), this, SLOT(onAnswerCallTriggered()));
+        connect(callConfirm, SIGNAL(rejected()), this, SLOT(onRejectCallTriggered()));
+
         callButton->setObjectName("grey");
         callButton->style()->polish(callButton);
         videoButton->setObjectName("yellow");
@@ -284,6 +284,12 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     }
     else
     {
+        callConfirm = new CallConfirmWidget(callButton);
+        if (isVisible())
+            callConfirm->show();
+        connect(callConfirm, SIGNAL(accepted()), this, SLOT(onAnswerCallTriggered()));
+        connect(callConfirm, SIGNAL(rejected()), this, SLOT(onRejectCallTriggered()));
+
         callButton->setObjectName("yellow");
         callButton->style()->polish(callButton);
         videoButton->setObjectName("grey");
