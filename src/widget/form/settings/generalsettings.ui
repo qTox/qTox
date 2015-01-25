@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>540</width>
-        <height>779</height>
+        <width>544</width>
+        <height>785</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -177,7 +177,7 @@
           <item>
            <widget class="QCheckBox" name="checkUpdates">
             <property name="text">
-             <string>Check for updates on startup (unstable)</string>
+             <string>Check for updates on startup</string>
             </property>
            </widget>
           </item>
