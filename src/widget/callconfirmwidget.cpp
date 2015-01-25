@@ -41,12 +41,20 @@ CallConfirmWidget::CallConfirmWidget(QWidget *anchor) :
     layout->addWidget(callLabel);
     layout->addWidget(buttonBox);
 
+    QPoint pos = anchor->mapToGlobal({(anchor->width()-width())/2,anchor->height()})-w->mapToGlobal({0,0});
+    int xOverflow=0;
+    if (pos.x() + rectW > w->width())
+        xOverflow = pos.x() + rectW - w->width();
+    pos.rx() -= xOverflow;
+
     mainRect = {0,spikeH,rectW,rectH};
     brush = QBrush(QColor(65,65,65));
-    spikePoly = QPolygon({{(rectW-spikeW)/2,spikeH},{rectW/2,0},{(rectW+spikeW)/2,spikeH}});
+    spikePoly = QPolygon({{(rectW-spikeW+xOverflow)/2,spikeH},
+                          {(rectW+xOverflow)/2,0},
+                          {(rectW+spikeW+xOverflow)/2,spikeH}});
 
     setFixedSize(rectW,rectH+spikeH);
-    move(anchor->mapToGlobal({(anchor->width()-width())/2,anchor->height()})-w->mapToGlobal({0,0}));
+    move(pos);
 }
 
 void CallConfirmWidget::paintEvent(QPaintEvent*)

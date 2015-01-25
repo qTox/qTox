@@ -668,7 +668,7 @@ void ChatForm::onCallTriggered()
 void ChatForm::onVideoCallTriggered()
 {
     qDebug() << "onVideoCallTriggered";
-    
+
     audioInputFlag = true;
     audioOutputFlag = true;
     callButton->disconnect();
