@@ -23,6 +23,16 @@ QPushButton#red
     height: 18px;
 }
 
+QPushButton#grey
+{
+    background-color: transparent;
+    background-image: url(":/ui/volButton/volButtonDisabled.png");
+    background-repeat: none;    
+    border: none;
+    width: 22px;
+    height: 18px;
+}
+
 QPushButton:focus {
     outline: none;
 }
