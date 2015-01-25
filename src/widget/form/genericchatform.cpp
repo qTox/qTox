@@ -130,13 +130,16 @@ GenericChatForm::GenericChatForm(QWidget *parent) :
     headTextLayout->addWidget(nameLabel);
     headTextLayout->addStretch();
     
+    micButtonsLayout->setSpacing(0);
     micButtonsLayout->addWidget(micButton, Qt::AlignTop | Qt::AlignRight);
+    micButtonsLayout->addSpacing(4);
     micButtonsLayout->addWidget(volButton, Qt::AlignTop | Qt::AlignRight);
     
-    buttonsLayout->addLayout(micButtonsLayout, 0, 0, Qt::AlignTop | Qt::AlignRight);
+    buttonsLayout->addLayout(micButtonsLayout, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignRight);
     buttonsLayout->addWidget(callButton, 0, 1, 2, 1, Qt::AlignTop);
     buttonsLayout->addWidget(videoButton, 0, 2, 2, 1, Qt::AlignTop);
-    buttonsLayout->setSpacing(1);
+    buttonsLayout->setVerticalSpacing(0);
+    buttonsLayout->setHorizontalSpacing(4);
         
     headLayout->addWidget(avatar, Qt::AlignTop | Qt::AlignLeft);
     headLayout->addSpacing(5);

@@ -4,7 +4,7 @@ QPushButton#green
     background-image: url(":/ui/volButton/volButton.png");
     background-repeat: none;
     border: none;
-    width: 25px;
+    width: 22px;
     height: 18px;
 }
 
@@ -19,7 +19,7 @@ QPushButton#red
     background-image: url(":/ui/volButton/volButtonPressed.png");
     background-repeat: none; 
     border: none;
-    width: 25px;
+    width: 22px;
     height: 18px;
 }
 
