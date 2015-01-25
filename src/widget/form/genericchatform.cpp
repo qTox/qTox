@@ -56,6 +56,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     headTextLayout = new QVBoxLayout();
 
     chatWidget = new ChatLog(this);
+    chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
 
     msgEdit = new ChatTextEdit();
 

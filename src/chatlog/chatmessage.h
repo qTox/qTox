@@ -41,6 +41,7 @@ public:
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type, const QDateTime& date);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, ToxFile file, bool isMe, const QDateTime& date);
     static ChatMessage::Ptr createTypingNotification();
+    static ChatMessage::Ptr createBusyNotification();
 
     void markAsSent(const QDateTime& time);
     QString toString() const;

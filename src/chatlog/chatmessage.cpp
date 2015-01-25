@@ -101,8 +101,19 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
+    // Note: "[user]..." is just a placeholder. The actual text is set in ChatForm::setFriendTyping()
     msg->addColumn(new NotificationIcon(QSizeF(18, 18)), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text("%1 ...", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
+    msg->addColumn(new Text("[user]...", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
+
+    return msg;
+}
+
+ChatMessage::Ptr ChatMessage::createBusyNotification()
+{
+    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
+
+    // TODO: Bigger font
+    msg->addColumn(new Text(QObject::tr("Busy..."), Style::getFont(Style::ExtraBig), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
 
     return msg;
 }

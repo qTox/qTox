@@ -43,8 +43,10 @@ public:
     void clearSelection();
     void clear();
     void copySelectedText() const;
+    void setBusyNotification(ChatLine::Ptr notification);
     void setTypingNotification(ChatLine::Ptr notification);
     void setTypingNotificationVisible(bool visible);
+    void scrollToLine(ChatLine::Ptr line);
     QString getSelectedText() const;
     QString toPlainText() const;
 
@@ -58,7 +60,7 @@ protected:
     QRect getVisibleRect() const;
     ChatLineContent* getContentFromPos(QPointF scenePos) const;
 
-    qreal layout(int start, int end, qreal width);
+    void layout(int start, int end, qreal width);
     bool isOverSelection(QPointF scenePos) const;
     bool stickToBottom() const;
 
@@ -66,9 +68,9 @@ protected:
 
     void reposition(int start, int end, qreal deltaY);
     void updateSceneRect();
-    void updateVisibleLines();
     void checkVisibility();
     void scrollToBottom();
+    void startResizeWorker();
 
     virtual void mouseDoubleClickEvent(QMouseEvent* ev);
     virtual void mousePressEvent(QMouseEvent* ev);
@@ -79,11 +81,13 @@ protected:
 
     void updateMultiSelectionRect();
     void updateTypingNotification();
+    void updateBusyNotification();
 
     ChatLine::Ptr findLineByPosY(qreal yPos) const;
 
 private slots:
     void onSelectionTimerTimeout();
+    void onWorkerTimeout();
 
 private:
     enum SelectionMode {
@@ -99,9 +103,11 @@ private:
     };
 
     QGraphicsScene* scene = nullptr;
+    QGraphicsScene* busyScene = nullptr;
     QVector<ChatLine::Ptr> lines;
     QList<ChatLine::Ptr> visibleLines;
     ChatLine::Ptr typingNotification;
+    ChatLine::Ptr busyNotification;
 
     // selection
     int selClickedRow = -1; //These 4 are only valid while selectionMode != None
@@ -117,8 +123,8 @@ private:
 
     //worker vars
     int workerLastIndex = 0;
-    qreal workerDy = 0;
     bool workerStb = false;
+    ChatLine::Ptr workerAnchorLine;
 
     // actions
     QAction* copyAction = nullptr;

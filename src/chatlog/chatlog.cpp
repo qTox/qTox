@@ -40,6 +40,7 @@ ChatLog::ChatLog(QWidget* parent)
     : QGraphicsView(parent)
 {
     // Create the scene
+    busyScene = new QGraphicsScene(this);
     scene = new QGraphicsScene(this);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex); //Bsp-Tree is actually slower in this case
     setScene(scene);
@@ -80,43 +81,7 @@ ChatLog::ChatLog(QWidget* parent)
     workerTimer = new QTimer(this);
     workerTimer->setSingleShot(false);
     workerTimer->setInterval(100);
-    connect(workerTimer, &QTimer::timeout, this, [this] {
-        const int stepSize = 400;
-
-        workerDy += layout(workerLastIndex, workerLastIndex+stepSize, useableWidth());
-
-        if(!visibleLines.isEmpty())
-        {
-            int firstVisLineIndex = visibleLines.first()->getRow();
-            int delta = firstVisLineIndex - workerLastIndex;
-            if(delta > 0 && delta < stepSize)
-            {
-                workerLastIndex += delta+1;
-
-                if(!workerStb)
-                    verticalScrollBar()->setValue(verticalScrollBar()->value() - workerDy);
-
-                workerDy = 0.0;
-                checkVisibility();
-            }
-            else
-            {
-                workerLastIndex += stepSize;
-            }
-        }
-        else
-            workerLastIndex += stepSize;
-
-        if(workerLastIndex >= lines.size())
-        {
-            workerTimer->stop();
-            workerLastIndex = 0;
-            workerDy = 0.0;
-
-            if(stickToBottom())
-                scrollToBottom();
-        }
-    });
+    connect(workerTimer, &QTimer::timeout, this, &ChatLog::onWorkerTimeout);
 }
 
 void ChatLog::clearSelection()
@@ -147,10 +112,10 @@ void ChatLog::updateSceneRect()
     setSceneRect(calculateSceneRect());
 }
 
-qreal ChatLog::layout(int start, int end, qreal width)
+void ChatLog::layout(int start, int end, qreal width)
 {
     if(lines.empty())
-        return false;
+        return;
 
     qreal h = 0.0;
 
@@ -162,59 +127,13 @@ qreal ChatLog::layout(int start, int end, qreal width)
     start = clamp<int>(start, 0, lines.size());
     end = clamp<int>(end + 1, 0, lines.size());
 
-    qreal deltaY = 0.0;
     for(int i = start; i < end; ++i)
     {
         ChatLine* l = lines[i].get();
 
-        qreal oldHeight = l->boundingSceneRect().height();
         l->layout(width, QPointF(0.0, h));
-
-        if(oldHeight != l->boundingSceneRect().height())
-            deltaY += oldHeight - l->boundingSceneRect().height();
-
         h += l->boundingSceneRect().height() + lineSpacing;
     }
-
-    return deltaY;
-}
-
-void ChatLog::updateVisibleLines()
-{
-    checkVisibility();
-
-    if(visibleLines.empty())
-        return;
-
-    bool stb = stickToBottom();
-
-    auto oldUpdateMode = viewportUpdateMode();
-    setViewportUpdateMode(NoViewportUpdate);
-
-    // Resize all lines currently visible in the viewport.
-    // If this creates some whitespace underneath the last visible lines
-    // then move the following non visible lines up in order to fill the gap.
-    qreal repos;
-    do
-    {
-        repos = 0;
-        if(!visibleLines.empty())
-        {
-            repos = layout(visibleLines.first()->getRow(), visibleLines.last()->getRow(), useableWidth());
-            reposition(visibleLines.last()->getRow()+1, visibleLines.last()->getRow()+10, -repos);
-            verticalScrollBar()->setValue(verticalScrollBar()->value() - repos);
-        }
-
-        checkVisibility();
-    }
-    while(repos != 0);
-
-    checkVisibility();
-
-    setViewportUpdateMode(oldUpdateMode);
-
-    if(stb)
-        scrollToBottom();
 }
 
 void ChatLog::mousePressEvent(QMouseEvent* ev)
@@ -443,14 +362,12 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     if(newLines.isEmpty())
         return;
 
-    bool stickToBtm = stickToBottom();
-
-    //move all lines down by n
+    // move all lines down by n
     int n = newLines.size();
     for(ChatLine::Ptr l : lines)
         l->setRow(l->getRow() + n);
 
-    //add the new line
+    // add the new line
     for(ChatLine::Ptr l : newLines)
     {
         l->addToScene(scene);
@@ -458,15 +375,8 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
         lines.prepend(l);
     }
 
-    //full refresh is required
-    layout(0, lines.size(), useableWidth());
-    updateSceneRect();
-
-    if(stickToBtm)
-        scrollToBottom();
-
-    checkVisibility();
-    updateTypingNotification();
+    // redo layout
+    startResizeWorker();
 }
 
 bool ChatLog::stickToBottom() const
@@ -478,6 +388,27 @@ void ChatLog::scrollToBottom()
 {
     updateSceneRect();
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+}
+
+void ChatLog::startResizeWorker()
+{
+    // (re)start the worker
+    if(!workerTimer->isActive())
+    {
+        // these values must not be reevaluated while the worker is running
+        workerStb = stickToBottom();
+
+        if(!visibleLines.empty())
+            workerAnchorLine = visibleLines.first();
+    }
+
+    workerLastIndex = 0;
+    workerTimer->start();
+
+    // switch to busy scene displaying the busy notification
+    setScene(busyScene);
+    updateBusyNotification();
+    verticalScrollBar()->hide();
 }
 
 void ChatLog::mouseDoubleClickEvent(QMouseEvent *ev)
@@ -580,6 +511,16 @@ void ChatLog::copySelectedText() const
     clipboard->setText(text);
 }
 
+void ChatLog::setBusyNotification(ChatLine::Ptr notification)
+{
+    if(!notification.get())
+        return;
+
+    busyNotification = notification;
+    busyNotification->addToScene(busyScene);
+    busyNotification->visibilityChanged(true);
+}
+
 void ChatLog::setTypingNotification(ChatLine::Ptr notification)
 {
     typingNotification = notification;
@@ -591,11 +532,20 @@ void ChatLog::setTypingNotification(ChatLine::Ptr notification)
 
 void ChatLog::setTypingNotificationVisible(bool visible)
 {
-    if(typingNotification.get() != nullptr)
+    if(typingNotification.get())
     {
         typingNotification->setVisible(visible);
         updateTypingNotification();
     }
+}
+
+void ChatLog::scrollToLine(ChatLine::Ptr line)
+{
+    if(!line.get())
+        return;
+
+    updateSceneRect();
+    verticalScrollBar()->setValue(line->boundingSceneRect().top());
 }
 
 void ChatLog::checkVisibility()
@@ -637,28 +587,13 @@ void ChatLog::checkVisibility()
 void ChatLog::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
-    updateVisibleLines();
+    checkVisibility();
 }
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
 {
-    if(!workerTimer->isActive())
-    {
-        workerStb = stickToBottom();
-        workerLastIndex = 0;
-        workerDy = 0.0;
-        workerTimer->start();
-    }
-
-    bool stb = stickToBottom();
-
+    startResizeWorker();
     QGraphicsView::resizeEvent(ev);
-    updateVisibleLines();
-    updateMultiSelectionRect();
-    updateTypingNotification();
-
-    if(stb)
-        scrollToBottom();
 }
 
 void ChatLog::updateMultiSelectionRect()
@@ -690,6 +625,15 @@ void ChatLog::updateTypingNotification()
         posY = lines.last()->boundingSceneRect().bottom() + lineSpacing;
 
     notification->layout(useableWidth(), QPointF(0.0, posY));
+}
+
+void ChatLog::updateBusyNotification()
+{
+    if(busyNotification.get())
+    {
+        //repoisition the busy notification (centered)
+        busyNotification->layout(useableWidth(), getVisibleRect().topLeft() + QPointF(0, getVisibleRect().height()/2.0));
+    }
 }
 
 ChatLine::Ptr ChatLog::findLineByPosY(qreal yPos) const
@@ -726,5 +670,42 @@ void ChatLog::onSelectionTimerTimeout()
         break;
     default:
         break;
+    }
+}
+
+void ChatLog::onWorkerTimeout()
+{
+    // Fairly arbitrary but
+    // large values will make the UI unresponsive
+    const int stepSize = 400;
+
+    layout(workerLastIndex, workerLastIndex+stepSize, useableWidth());
+    workerLastIndex += stepSize;
+
+    // done?
+    if(workerLastIndex >= lines.size())
+    {
+        workerTimer->stop();
+
+        // switch back to the scene containing the chat messages
+        setScene(scene);
+
+        // make sure everything gets updated
+        updateSceneRect();
+        checkVisibility();
+        updateTypingNotification();
+        updateMultiSelectionRect();
+
+        // scroll
+        if(workerStb)
+            scrollToBottom();
+        else
+            scrollToLine(workerAnchorLine);
+
+        // don't keep a Ptr to the anchor line
+        workerAnchorLine = ChatLine::Ptr();
+
+        // hidden during busy screen
+        verticalScrollBar()->show();
     }
 }
