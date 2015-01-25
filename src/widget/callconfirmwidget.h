@@ -2,8 +2,11 @@
 #define CALLCONFIRMWIDGET_H
 
 #include <QWidget>
+#include <QRect>
+#include <QPolygon>
+#include <QBrush>
 
-class QMoveEvent;
+class QPaintEvent;
 
 class CallConfirmWidget : public QWidget
 {
@@ -14,6 +17,18 @@ public:
 signals:
     void accepted();
     void rejected();
+
+protected:
+    virtual void paintEvent(QPaintEvent* event) override;
+
+private:
+    QRect mainRect;
+    QPolygon spikePoly;
+    QBrush brush;
+
+    const int rectW, rectH;
+    const int spikeW, spikeH;
+    const int roundedFactor;
 };
 
 #endif // CALLCONFIRMWIDGET_H
