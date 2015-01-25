@@ -51,9 +51,14 @@ void CroppingLabel::setElideMode(Qt::TextElideMode elide)
     elideMode = elide;
 }
 
+void CroppingLabel::setHighlightURLs(bool highlightURLs)
+{
+    this->highlightURLs = highlightURLs;
+}
+
 void CroppingLabel::setClickableURLs(bool clickableURLs)
 {
-    this->highlightURLs = clickableURLs;
+    setHighlightURLs(clickableURLs);
     setOpenExternalLinks(clickableURLs);
 }
 

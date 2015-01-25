@@ -29,6 +29,7 @@ public:
 
     void setEditable(bool editable);
     void setElideMode(Qt::TextElideMode elide);
+    void setHighlightURLs(bool highlightURLs);
     void setClickableURLs(bool clickableURLs);
 
     virtual void setText(const QString& text);
