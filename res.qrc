@@ -227,5 +227,7 @@
         <file>ui/window/applicationIcon.png</file>
         <file>ui/window/statusPanel.css</file>
         <file>ui/window/window.css</file>
+        <file>ui/acceptCall/acceptCall.png</file>
+        <file>ui/rejectCall/rejectCall.png</file>
     </qresource>
 </RCC>

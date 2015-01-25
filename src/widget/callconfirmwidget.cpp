@@ -12,7 +12,7 @@
 
 CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
     QWidget(Widget::getInstance()), anchor(Anchor),
-    rectW{130}, rectH{90},
+    rectW{120}, rectH{85},
     spikeW{30}, spikeH{15},
     roundedFactor{15}
 {
@@ -26,7 +26,15 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
     QLabel *callLabel = new QLabel(tr("Incoming call..."), this);
     callLabel->setAlignment(Qt::AlignHCenter);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
-    QPushButton *accept = new QPushButton("Accept", this), *reject = new QPushButton("Reject", this);
+    QPushButton *accept = new QPushButton(this), *reject = new QPushButton(this);
+    accept->setFlat(true);
+    reject->setFlat(true);
+    accept->setStyleSheet("QPushButton{border:none;}");
+    reject->setStyleSheet("QPushButton{border:none;}");
+    accept->setIcon(QIcon(":/ui/acceptCall/acceptCall.png"));
+    reject->setIcon(QIcon(":/ui/rejectCall/rejectCall.png"));
+    accept->setIconSize(accept->size());
+    reject->setIconSize(reject->size());
 
     buttonBox->addButton(accept, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(reject, QDialogButtonBox::RejectRole);
