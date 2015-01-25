@@ -273,28 +273,28 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         callConfirm = new CallConfirmWidget(videoButton);
         if (isVisible())
             callConfirm->show();
-        connect(callConfirm, SIGNAL(accepted()), this, SLOT(onAnswerCallTriggered()));
-        connect(callConfirm, SIGNAL(rejected()), this, SLOT(onRejectCallTriggered()));
+        connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
+        connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
         callButton->setObjectName("grey");
         callButton->style()->polish(callButton);
         videoButton->setObjectName("yellow");
         videoButton->style()->polish(videoButton);
-        connect(videoButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
+        connect(videoButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
     }
     else
     {
         callConfirm = new CallConfirmWidget(callButton);
         if (isVisible())
             callConfirm->show();
-        connect(callConfirm, SIGNAL(accepted()), this, SLOT(onAnswerCallTriggered()));
-        connect(callConfirm, SIGNAL(rejected()), this, SLOT(onRejectCallTriggered()));
+        connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
+        connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
         callButton->setObjectName("yellow");
         callButton->style()->polish(callButton);
         videoButton->setObjectName("grey");
         videoButton->style()->polish(videoButton);
-        connect(callButton, SIGNAL(clicked()), this, SLOT(onAnswerCallTriggered()));
+        connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
     }
     
     addSystemInfoMessage(tr("%1 is calling").arg(f->getDisplayedName()), "white", QDateTime::currentDateTime());
