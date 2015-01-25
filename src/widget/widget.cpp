@@ -300,16 +300,10 @@ void Widget::updateTrayIcon()
     if (!icon)
         return;
     QString status = ui->statusButton->property("status").toString();
-    QString pic;
+    if (!status.length())
+        status = "offline";
     QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
-    if (status == "online")
-        pic = ":img/taskbar/" + color + "/taskbar_online_2x.png";
-    else if (status == "away")
-        pic = ":img/taskbar/" + color + "/taskbar_idle_2x.png";
-    else if (status == "busy")
-        pic = ":img/taskbar/" + color + "/taskbar_busy_2x.png";
-    else
-        pic = ":img/taskbar/" + color + "/taskbar_offline_2x.png";
+    QString pic = ":img/taskbar/" + color + "/taskbar_" + status + ".svg";
     icon->setIcon(QIcon(pic));
 }
 
