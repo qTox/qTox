@@ -289,8 +289,8 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
         connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
-        callButton->style()->polish(callButton);
-        videoButton->style()->polish(videoButton);
+        callButton->setObjectName("yellow");
+        videoButton->setObjectName("grey");
         connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
     }
     callButton->style()->polish(callButton);
