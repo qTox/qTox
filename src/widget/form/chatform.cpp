@@ -53,6 +53,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setObjectName("statusLabel");
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
+    statusMessageLabel->setClickableURLs(true);
 
     isTypingLabel = new QLabel();
     QFont font = isTypingLabel->font();
