@@ -56,6 +56,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     // status text
     statusMessageLabel = new CroppingLabel(this);
     statusMessageLabel->setObjectName("status");
+    statusMessageLabel->setClickableURLs(true);
 
     // name text
     nameLabel = new CroppingLabel(this);

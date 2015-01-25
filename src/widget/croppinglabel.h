@@ -29,6 +29,7 @@ public:
 
     void setEditable(bool editable);
     void setElideMode(Qt::TextElideMode elide);
+    void setClickableURLs(bool clickableURLs);
 
     virtual void setText(const QString& text);
     virtual void resizeEvent(QResizeEvent *ev);
@@ -54,6 +55,7 @@ private:
     bool blockPaintEvents;
     bool editable;
     Qt::TextElideMode elideMode;
+    bool highlightURLs;
 };
 
 #endif // CROPPINGLABEL_H

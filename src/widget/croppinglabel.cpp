@@ -24,9 +24,10 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     , blockPaintEvents(false)
     , editable(false)
     , elideMode(Qt::ElideRight)
+    , highlightURLs(false)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    setOpenExternalLinks(true);
+    setOpenExternalLinks(false);
 
     textEdit = new QLineEdit(this);
     textEdit->hide();
@@ -48,6 +49,12 @@ void CroppingLabel::setEditable(bool editable)
 void CroppingLabel::setElideMode(Qt::TextElideMode elide)
 {
     elideMode = elide;
+}
+
+void CroppingLabel::setClickableURLs(bool clickableURLs)
+{
+    this->highlightURLs = clickableURLs;
+    setOpenExternalLinks(clickableURLs);
 }
 
 void CroppingLabel::setText(const QString& text)
@@ -122,10 +129,10 @@ void CroppingLabel::setElidedText()
 
     if (elidedText != origText)
     {
-        QString parsedText = Widget::parseMessage(origText, elidedText.length() - 1);
+        QString parsedText = Widget::parseMessage(origText, highlightURLs, elidedText.length() - 1);
         QLabel::setText("<div>" + parsedText.trimmed() + "&hellip;</div>");
     } else {
-        QString parsedText = Widget::parseMessage(origText);
+        QString parsedText = Widget::parseMessage(origText, highlightURLs);
         QLabel::setText(parsedText);
     }
 
