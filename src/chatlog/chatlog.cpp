@@ -393,6 +393,9 @@ void ChatLog::scrollToBottom()
 
 void ChatLog::startResizeWorker()
 {
+    if(lines.empty())
+        return;
+
     // (re)start the worker
     if(!workerTimer->isActive())
     {
