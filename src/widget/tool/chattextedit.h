@@ -31,11 +31,9 @@ signals:
     void enterPressed();
     void tabPressed();
     void keyPressed();
-    
-private:
-    QString lastMessage,
-            currentMessage;
 
+private:
+    QString lastMessage;
 };
 
 #endif // CHATTEXTEDIT_H
