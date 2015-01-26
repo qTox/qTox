@@ -15,6 +15,7 @@
 */
 
 #include "croppinglabel.h"
+#include "src/widget/widget.h"
 #include <QResizeEvent>
 #include <QLineEdit>
 
@@ -23,8 +24,10 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     , blockPaintEvents(false)
     , editable(false)
     , elideMode(Qt::ElideRight)
+    , highlightURLs(false)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    setOpenExternalLinks(false);
 
     textEdit = new QLineEdit(this);
     textEdit->hide();
@@ -43,9 +46,20 @@ void CroppingLabel::setEditable(bool editable)
         unsetCursor();
 }
 
-void CroppingLabel::setEdlideMode(Qt::TextElideMode elide)
+void CroppingLabel::setElideMode(Qt::TextElideMode elide)
 {
     elideMode = elide;
+}
+
+void CroppingLabel::setHighlightURLs(bool highlightURLs)
+{
+    this->highlightURLs = highlightURLs;
+}
+
+void CroppingLabel::setClickableURLs(bool clickableURLs)
+{
+    setHighlightURLs(clickableURLs);
+    setOpenExternalLinks(clickableURLs);
 }
 
 void CroppingLabel::setText(const QString& text)
@@ -117,12 +131,18 @@ bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
 void CroppingLabel::setElidedText()
 {
     QString elidedText = fontMetrics().elidedText(origText, elideMode, width());
-    if (elidedText != origText)
-        setToolTip(origText);
-    else
-        setToolTip(QString());
 
-    QLabel::setText(elidedText);
+    if (elidedText != origText)
+    {
+        QString parsedText = Widget::parseMessage(origText, highlightURLs, elidedText.length() - 1);
+        QLabel::setText("<div>" + parsedText.trimmed() + "&hellip;</div>");
+    } else {
+        QString parsedText = Widget::parseMessage(origText, highlightURLs);
+        QLabel::setText(parsedText);
+    }
+
+    // Don't underline links in tooltips because they are unclickable
+    setToolTip(origText);
 }
 
 void CroppingLabel::hideTextEdit(bool acceptText)

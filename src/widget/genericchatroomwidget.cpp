@@ -56,6 +56,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     // status text
     statusMessageLabel = new CroppingLabel(this);
     statusMessageLabel->setObjectName("status");
+    statusMessageLabel->setClickableURLs(true);
 
     // name text
     nameLabel = new CroppingLabel(this);
@@ -92,6 +93,8 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
 
     setProperty("active", false);
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/genericChatroomWidget.css"));
+
+    connect(statusMessageLabel, &CroppingLabel::clicked, [&](){emit chatroomWidgetClicked(this);});
 }
 
 bool GenericChatroomWidget::isActive()

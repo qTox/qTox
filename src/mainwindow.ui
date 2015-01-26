@@ -940,6 +940,9 @@ QSplitter:handle{
                  <property name="text">
                   <string>Your status</string>
                  </property>
+                 <property name="highlightURLs">
+                  <bool>true</bool>
+                 </property>
                 </widget>
                </item>
               </layout>

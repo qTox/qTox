@@ -26,6 +26,8 @@
 #include "src/group.h"
 #include "groupwidget.h"
 #include "form/groupchatform.h"
+#include "src/misc/settings.h"
+#include "src/misc/smileypack.h"
 #include "src/misc/style.h"
 #include "friendlistwidget.h"
 #include "src/video/camera.h"
@@ -1274,4 +1276,81 @@ void Widget::reloadTheme()
 
     for (Group* g : GroupList::getAllGroups())
         g->getGroupWidget()->reloadTheme();
+}
+
+QString Widget::toHtmlChars(const QString &str)
+{
+    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}};
+    QString res = str;
+
+    for (auto &it : replaceList)
+        res = res.replace(it.first,it.second);
+
+    return res;
+}
+
+QString Widget::parseMessage(QString message, bool parseURLs, int maxLength)
+{
+    // Smileys!
+    if (Settings::getInstance().getUseEmoticons())
+         message = SmileyPack::getInstance().smileyfied(toHtmlChars(message));
+    else
+         message = toHtmlChars(message);
+
+    int lengthLeft = maxLength;
+    bool lengthLeftChanged = false;
+
+    if (parseURLs)
+    {
+        // detect urls
+        QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/|tox:\\/\\/|tox:)\\S+");
+        int offset = 0;
+        while ((offset = exp.indexIn(message, offset)) != -1)
+        {
+            QString url = exp.cap();
+    
+            // If there's a trailing " it's a HTML attribute, e.g. a smiley img's title=":tox:"
+            if (url == "tox:\"")
+            {
+                offset += url.length();
+                continue;
+            }
+    
+            // add scheme if not specified
+            if (exp.cap(1) == "www.")
+                url.prepend("http://");
+    
+            QString htmledUrl;
+    
+            // Shorten visible part of URL if there is little space, while 
+            // ensuring urls remain clickable.
+            // e.g. http://utoxisfinished.info/ -> http://uto
+            if (maxLength == -1)
+            {
+                htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
+                lengthLeft -= url.length();
+            } else {
+                QString newUrl = url.left(lengthLeft);
+                htmledUrl = QString("<a href=\"%1\">%2</a>").arg(url, newUrl);
+                lengthLeft -= newUrl.length();
+            }
+    
+            lengthLeftChanged = true;
+    
+            message.replace(offset, exp.cap().length(), htmledUrl);
+
+            offset += htmledUrl.length();
+
+            if (maxLength != -1 && maxLength < offset)
+                maxLength = offset;
+        }
+    }
+
+    if (maxLength == -1)
+        return message;
+
+    if (lengthLeftChanged)
+        return message.left(maxLength + lengthLeft);
+    else
+        return message.left(maxLength);
 }

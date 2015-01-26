@@ -15,6 +15,7 @@
 */
 
 #include "chataction.h"
+#include "src/widget/widget.h"
 #include <QStringList>
 #include <QBuffer>
 #include <QTextTable>
@@ -22,17 +23,6 @@
 #include <QTextEdit>
 
 QTextBlockFormat ChatAction::nameFormat, ChatAction::dateFormat;
-
-QString ChatAction::toHtmlChars(const QString &str)
-{
-    static QList<QPair<QString, QString>> replaceList = {{"&","&amp;"}, {">","&gt;"}, {"<","&lt;"}};
-    QString res = str;
-
-    for (auto &it : replaceList)
-        res = res.replace(it.first,it.second);
-
-    return res;
-}
 
 QString ChatAction::QImage2base64(const QImage &img)
 {
@@ -46,17 +36,17 @@ QString ChatAction::QImage2base64(const QImage &img)
 QString ChatAction::getName()
 {
     if (isMe)
-        return QString("<div class=%1>%2</div>").arg("name_me").arg(toHtmlChars(name));
+        return QString("<div class=%1>%2</div>").arg("name_me").arg(Widget::toHtmlChars(name));
     else
-        return QString("<div class=%1>%2</div>").arg("name").arg(toHtmlChars(name));
+        return QString("<div class=%1>%2</div>").arg("name").arg(Widget::toHtmlChars(name));
 }
 
 QString ChatAction::getDate()
 {
     if (isMe)
-        return QString("<div class=date_me>" + toHtmlChars(date) + "</div>");
+        return QString("<div class=date_me>" + Widget::toHtmlChars(date) + "</div>");
     else
-        return QString("<div class=date>" + toHtmlChars(date) + "</div>");
+        return QString("<div class=date>" + Widget::toHtmlChars(date) + "</div>");
 }
 
 void ChatAction::assignPlace(QTextTable *position, QTextEdit *te)

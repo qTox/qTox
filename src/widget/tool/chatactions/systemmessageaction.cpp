@@ -15,6 +15,7 @@
 */
 
 #include "systemmessageaction.h"
+#include "src/widget/widget.h"
 
 SystemMessageAction::SystemMessageAction(const QString &message, const QString &type, const QString &date) :
     ChatAction(false, QString(), date),
@@ -25,5 +26,5 @@ SystemMessageAction::SystemMessageAction(const QString &message, const QString &
 
 QString SystemMessageAction::getMessage()
 {
-    return QString("<table width=100%><tr><td align=center><div class=" + type + ">" + toHtmlChars(message) + "</td><tr></div></table>");
+    return QString("<table width=100%><tr><td align=center><div class=" + type + ">" + Widget::toHtmlChars(message) + "</td><tr></div></table>");
 }
