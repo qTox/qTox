@@ -56,8 +56,7 @@ void toxActivateEventHandler(const QByteArray& data)
 {
     if (data != "$activate")
         return;
-    Widget::getInstance()->show();
-    Widget::getInstance()->activateWindow();
+    Widget::getInstance()->forceShow();
 }
 
 Widget *Widget::instance{nullptr};
@@ -113,7 +112,8 @@ void Widget::init()
                 this,
                 SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
         
-        if (Settings::getInstance().getShowSystemTray()){
+        if (Settings::getInstance().getShowSystemTray())
+        {
             icon->show();
             if (Settings::getInstance().getAutostartInTray() == false)
                 this->show();
@@ -570,6 +570,13 @@ void Widget::setWindowTitle(const QString& title)
     QMainWindow::setWindowTitle("qTox - " + title);
 }
 
+void Widget::forceShow()
+{
+    hide();                     // Workaround to force minimized window to be restored
+    show();
+    activateWindow();
+}
+
 void Widget::onAddClicked()
 {
     hideMainForms();
@@ -592,21 +599,30 @@ void Widget::onTransferClicked()
 
 void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
-    switch (reason) {
+    switch (reason)
+    {
         case QSystemTrayIcon::Trigger:
-        if (this->isHidden() == true)
         {
-            this->show();
-            this->activateWindow();
+            if (isHidden())
+            {
+                show();
+                activateWindow();
+            }
+            else if (isMinimized() || !isActiveWindow())
+                forceShow();
+            else
+                hide();
+
+            break;
         }
-        else
-            this->hide();
-        case QSystemTrayIcon::DoubleClick:    
+        case QSystemTrayIcon::DoubleClick:
+            forceShow();
             break;
         case QSystemTrayIcon::MiddleClick:
+            hide();
             break;
         default:
-            ;
+            break;
     }
 }
 
