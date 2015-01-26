@@ -16,7 +16,6 @@
 
 #include "chattextedit.h"
 #include <QKeyEvent>
-#include <QDebug>
 
 ChatTextEdit::ChatTextEdit(QWidget *parent) :
     QTextEdit(parent)
@@ -33,10 +32,7 @@ void ChatTextEdit::keyPressEvent(QKeyEvent * event)
     else if (key == Qt::Key_Tab)
         emit tabPressed();
     else if (key == Qt::Key_Up && this->toPlainText().isEmpty())
-    {
         this->setText(lastMessage);
-        this->setFocus();
-    }
     else if (key == Qt::Key_Up && !this->toPlainText().isEmpty())
     {
         currentMessage = this->toPlainText();
