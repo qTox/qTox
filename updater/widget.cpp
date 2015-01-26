@@ -58,6 +58,7 @@ Widget::~Widget()
 void Widget::setProgress(int value)
 {
     ui->progress->setValue(value);
+    ui->progress->repaint();
     qApp->processEvents();
 }
 
@@ -126,7 +127,7 @@ void Widget::update()
     setProgress(5);
 
     /// 2. Check the update (5-50%)
-    float checkProgressStep = 45/diff.size();
+    float checkProgressStep = 45.0/(float)diff.size();
     float checkProgress = 5;
     for (UpdateFileMeta fileMeta : diff)
     {
@@ -152,21 +153,23 @@ void Widget::update()
     setProgress(50);
 
     /// 3. Install the update (50-95%)
-    float installProgressStep = 45/diff.size();
+    float installProgressStep = 45.0/(float)diff.size();
     float installProgress = 50;
     for (UpdateFileMeta fileMeta : diff)
     {
         // Backup old files
         if (QFile(fileMeta.installpath).exists())
         {
+            QFile(fileMeta.installpath+".bak").remove();
             QFile(fileMeta.installpath).rename(fileMeta.installpath+".bak");
             backups.append(fileMeta.installpath);
         }
 
         // Install new ones
+        QDir().mkpath(QFileInfo(fileMeta.installpath).absolutePath());
         QFile fileFile(updateDirStr+fileMeta.installpath);
         if (!fileFile.copy(fileMeta.installpath))
-            fatalError(tr("Unable to copy the update's files."));
+            fatalError(tr("Unable to copy the update's files from ")+(updateDirStr+fileMeta.installpath)+" to "+fileMeta.installpath);
         installProgress += installProgressStep;
         setProgress(installProgress);
     }
