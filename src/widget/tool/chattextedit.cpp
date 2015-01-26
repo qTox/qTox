@@ -41,7 +41,8 @@ void ChatTextEdit::keyPressEvent(QKeyEvent * event)
       */
     else if (key == Qt::Key_Up && this->toPlainText().isEmpty())
         this->setText(lastMessage);
-    else if (key == Qt::Key_Up && !this->toPlainText().isEmpty())
+    else if (key == Qt::Key_Up && !this->toPlainText().isEmpty()
+             && lastMessage != this->toPlainText())
     {
         currentMessage = this->toPlainText();
         this->setText(lastMessage);
@@ -51,8 +52,6 @@ void ChatTextEdit::keyPressEvent(QKeyEvent * event)
         this->setPlainText(currentMessage);
         currentMessage.clear();
     }
-    else if (key == Qt::Key_Down)
-        this->clear();
     else
     {
         emit keyPressed();
