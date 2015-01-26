@@ -146,7 +146,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
-    menu.addAction(QIcon::fromTheme("edit-copy"), tr("Copy"), this, SLOT(onCopyLogClicked()));
+    menu.addActions(chatWidget->actions());
     menu.addSeparator();
     menu.addAction(QIcon::fromTheme("document-save"), tr("Save chat log"), this, SLOT(onSaveLogClicked()));
     menu.addAction(QIcon::fromTheme("edit-clear"), tr("Clear displayed messages"), this, SLOT(clearChatArea(bool)));
@@ -321,6 +321,11 @@ void GenericChatForm::clearChatArea(bool notinform)
     earliestMessage = QDateTime(); //null
 
     emit chatAreaCleared();
+}
+
+void GenericChatForm::onSelectAllClicked()
+{
+    chatWidget->selectAll();
 }
 
 QString GenericChatForm::resolveToxID(const ToxID &id)

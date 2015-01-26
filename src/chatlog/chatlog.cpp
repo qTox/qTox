@@ -61,13 +61,20 @@ ChatLog::ChatLog(QWidget* parent)
     selGraphItem->setZValue(-10.0); //behind all items
 
     // copy action (ie. Ctrl+C)
-    copyAction = new QAction(this);
+    QAction* copyAction = new QAction(this);
+    copyAction->setIcon(QIcon::fromTheme("edit-copy"));
+    copyAction->setText(tr("Copy"));
     copyAction->setShortcut(QKeySequence::Copy);
+    connect(copyAction, &QAction::triggered, this, [this](bool) { copySelectedText(); });
     addAction(copyAction);
-    connect(copyAction, &QAction::triggered, this, [this](bool)
-    {
-        copySelectedText();
-    });
+
+    // select all action (ie. Ctrl+A)
+    QAction* selectAllAction = new QAction(this);
+    selectAllAction->setIcon(QIcon::fromTheme("edit-select-all"));
+    selectAllAction->setText(tr("Select all"));
+    selectAllAction->setShortcut(QKeySequence::SelectAll);
+    connect(selectAllAction, &QAction::triggered, this, [this](bool) { selectAll(); });
+    addAction(selectAllAction);
 
     // This timer is used to scroll the view while the user is
     // moving the mouse past the top/bottom edge of the widget while selecting.
@@ -542,6 +549,20 @@ void ChatLog::scrollToLine(ChatLine::Ptr line)
 
     updateSceneRect();
     verticalScrollBar()->setValue(line->boundingSceneRect().top());
+}
+
+void ChatLog::selectAll()
+{
+    if(lines.empty())
+        return;
+
+    clearSelection();
+
+    selectionMode = Multi;
+    selFirstRow = 0;
+    selLastRow = lines.size()-1;
+
+    updateMultiSelectionRect();
 }
 
 void ChatLog::checkVisibility()

@@ -73,6 +73,7 @@ protected slots:
     void onSaveLogClicked();
     void onCopyLogClicked();
     void clearChatArea(bool);
+    void onSelectAllClicked();
 
 protected:
     QString resolveToxID(const ToxID &id);

@@ -47,6 +47,8 @@ public:
     void setTypingNotification(ChatLine::Ptr notification);
     void setTypingNotificationVisible(bool visible);
     void scrollToLine(ChatLine::Ptr line);
+    void selectAll();
+
     QString getSelectedText() const;
 
     bool isEmpty() const;
@@ -125,9 +127,6 @@ private:
     int workerLastIndex = 0;
     bool workerStb = false;
     ChatLine::Ptr workerAnchorLine;
-
-    // actions
-    QAction* copyAction = nullptr;
 
     // layout
     QMarginsF margins = QMarginsF(10.0,10.0,10.0,10.0);
