@@ -22,8 +22,8 @@
 #include <QList>
 #include <sodium.h>
 
-/// For now we only support auto updates on Windows, although extending it is not a technical issue.
-/// Linux and Mac users are expected to use their package managers or update manually through official channels.
+/// For now we only support auto updates on Windows and OS X, although extending it is not a technical issue.
+/// Linux users are expected to use their package managers or update manually through official channels.
 #ifdef Q_OS_WIN
 #define AUTOUPDATE_ENABLED 1
 #elif defined(Q_OS_OSX)
