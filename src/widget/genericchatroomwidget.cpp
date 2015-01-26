@@ -27,22 +27,6 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
 {
     setProperty("compact", Settings::getInstance().getCompactLayout());
 
-    if (property("compact").toBool())
-    {
-        setFixedHeight(25);
-    }
-    else
-    {
-        setFixedHeight(55);
-    }
-
-    setLayout(&layout);
-    layout.setSpacing(0);
-    layout.setMargin(0);
-    textLayout.setSpacing(0);
-    textLayout.setMargin(0);
-    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
-
     // avatar
     if (property("compact").toBool())
     {
@@ -60,38 +44,64 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     // name text
     nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("name");
-    
-    if (property("compact").toBool())
-    {
-        layout.addSpacing(18);
-        layout.addWidget(avatar);
-        layout.addSpacing(5);
-        layout.addWidget(nameLabel);
-        layout.addWidget(statusMessageLabel);
-        layout.addSpacing(5);
-        layout.addWidget(&statusPic);
-        layout.addSpacing(5);
-        layout.activate();
-    }
-    else
-    {
-        textLayout.addStretch();
-        textLayout.addWidget(nameLabel);
-        textLayout.addWidget(statusMessageLabel);
-        textLayout.addStretch();
 
-        layout.addSpacing(20);
-        layout.addWidget(avatar);
-        layout.addSpacing(10);
-        layout.addLayout(&textLayout);
-        layout.addSpacing(10);
-        layout.addWidget(&statusPic);
-        layout.addSpacing(10);
-        layout.activate();
-    }
+    onCompactChanged(property("compact").toBool());
 
     setProperty("active", false);
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/genericChatroomWidget.css"));
+}
+
+void GenericChatroomWidget::onCompactChanged(bool _compact)
+{
+    delete textLayout; // has to be first, deleted by layout
+    delete layout;
+
+    setProperty("compact", _compact);
+
+    layout = new QHBoxLayout;
+    textLayout = new QVBoxLayout;
+
+    setLayout(layout);
+    layout->setSpacing(0);
+    layout->setMargin(0);
+    textLayout->setSpacing(0);
+    textLayout->setMargin(0);
+    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
+
+    // avatar
+    if (property("compact").toBool())
+    {
+        setFixedHeight(25);
+        avatar->setSize(QSize(20,20));
+        layout->addSpacing(18);
+        layout->addWidget(avatar);
+        layout->addSpacing(5);
+        layout->addWidget(nameLabel);
+        layout->addWidget(statusMessageLabel);
+        layout->addSpacing(5);
+        layout->addWidget(&statusPic);
+        layout->addSpacing(5);
+        layout->activate();
+    }
+    else
+    {
+        setFixedHeight(55);
+        avatar->setSize(QSize(40,40));
+        textLayout->addStretch();
+        textLayout->addWidget(nameLabel);
+        textLayout->addWidget(statusMessageLabel);
+        textLayout->addStretch();
+        layout->addSpacing(20);
+        layout->addWidget(avatar);
+        layout->addSpacing(10);
+        layout->addLayout(textLayout);
+        layout->addSpacing(10);
+        layout->addWidget(&statusPic);
+        layout->addSpacing(10);
+        layout->activate();
+    }
+
+    Style::repolish(this);
 }
 
 bool GenericChatroomWidget::isActive()

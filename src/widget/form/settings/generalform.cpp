@@ -351,6 +351,7 @@ void GeneralForm::onFauxOfflineMessaging()
 void GeneralForm::onCompactLayout()
 {
     Settings::getInstance().setCompactLayout(bodyUI->cbCompactLayout->isChecked());
+    emit parent->compactToggled(bodyUI->cbCompactLayout->isChecked());
 }
 
 void GeneralForm::onThemeColorChanged(int)

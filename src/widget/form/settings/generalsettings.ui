@@ -330,7 +330,7 @@
           <item row="3" column="1">
            <widget class="QCheckBox" name="cbCompactLayout">
             <property name="text">
-             <string>Compact contact list (restart required)</string>
+             <string>Compact contact list</string>
             </property>
            </widget>
           </item>

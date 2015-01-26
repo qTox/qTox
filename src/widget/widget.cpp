@@ -214,7 +214,7 @@ void Widget::init()
     addFriendForm = new AddFriendForm;
     settingsWidget = new SettingsWidget();
 
-    connect(settingsWidget, SIGNAL(setShowSystemTray(bool)), this, SLOT(onSetShowSystemTray(bool)));
+    connect(settingsWidget, &SettingsWidget::setShowSystemTray, this, &Widget::onSetShowSystemTray);
 
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
@@ -672,6 +672,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     if (Settings::getInstance().getEnableLogging())
         newfriend->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 
+    connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::onCompactChanged);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
