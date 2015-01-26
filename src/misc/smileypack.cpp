@@ -91,7 +91,7 @@ bool SmileyPack::load(const QString& filename)
 {
     // discard old data
     filenameTable.clear();
-    pixmapCache.clear();
+    iconCache.clear();
     emoticons.clear();
     path.clear();
 
@@ -135,7 +135,7 @@ bool SmileyPack::load(const QString& filename)
             
             cacheSmiley(file); // preload all smileys
 
-            if(!getCachedSmiley(emoticon).size().isEmpty())
+            if(!getCachedSmiley(emoticon).isNull())
                 emoticonSet.push_back(emoticon);
             
             stringElement = stringElement.nextSibling().toElement();
@@ -183,28 +183,21 @@ QString SmileyPack::getAsRichText(const QString &key)
     return QString("<img title=\"%1\" src=\"key:%1\"\\>").arg(key);
 }
 
-QPixmap SmileyPack::getAsPixmap(const QString &key)
+QIcon SmileyPack::getAsIcon(const QString &key)
 {
     return getCachedSmiley(key);
 }
 
 void SmileyPack::cacheSmiley(const QString &name)
 {
-    // The -1 is to avoid having the space for descenders under images move the text down
-    // We can't remove it because Qt doesn't support CSS display or vertical-align
-    //TODO: int fontHeight = QFontInfo(Style::getFont(Style::Big)).pixelSize() - 1;
-    QSize size(16, 16);
     QString filename = QDir(path).filePath(name);
-    QImage img(filename);
 
-    if (!img.isNull())
-    {
-        QImage scaledImg = img.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        pixmapCache.insert(name, QPixmap::fromImage(scaledImg));
-    }
+    QIcon icon;
+    icon.addFile(filename);
+    iconCache.insert(name, icon);
 }
 
-QPixmap SmileyPack::getCachedSmiley(const QString &key)
+QIcon SmileyPack::getCachedSmiley(const QString &key)
 {
     // valid key?
     if (!filenameTable.contains(key))
@@ -212,11 +205,11 @@ QPixmap SmileyPack::getCachedSmiley(const QString &key)
 
     // cache it if needed
     QString file = filenameTable.value(key);
-    if (!pixmapCache.contains(file)) {
+    if (!iconCache.contains(file)) {
         cacheSmiley(file);
     }
 
-    return pixmapCache.value(file);
+    return iconCache.value(file);
 }
 
 void SmileyPack::onSmileyPackChanged()

@@ -15,6 +15,7 @@
 */
 
 #include "customtextdocument.h"
+#include "../misc/settings.h"
 #include "../misc/smileypack.h"
 #include "../misc/style.h"
 
@@ -34,7 +35,10 @@ CustomTextDocument::CustomTextDocument(QObject *parent)
 QVariant CustomTextDocument::loadResource(int type, const QUrl &name)
 {
     if (type == QTextDocument::ImageResource && name.scheme() == "key")
-        return SmileyPack::getInstance().getAsPixmap(name.fileName());
+    {
+        QSize size = QSize(Settings::getInstance().getEmojiFontPointSize(),Settings::getInstance().getEmojiFontPointSize());
+        return SmileyPack::getInstance().getAsIcon(name.fileName()).pixmap(size);
+    }
 
     return QTextDocument::loadResource(type, name);
 }

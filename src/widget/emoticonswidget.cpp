@@ -81,7 +81,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     for (const QStringList& set : emoticons)
     {
         QPushButton* button = new QPushButton;
-        button->setIcon(SmileyPack::getInstance().getAsPixmap(set[0]));
+        button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]).pixmap(QSize(18,18)));
         button->setToolTip(set.join(" "));
         button->setProperty("sequence", set[0]);
         button->setCursor(Qt::PointingHandCursor);
