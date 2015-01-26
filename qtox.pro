@@ -277,7 +277,3 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
                src/platform/timer_win.cpp \
                src/platform/timer_x11.cpp
 }
-
-DISTFILES += \
-    ui/fileTransferInstance/background_green.svg
-
