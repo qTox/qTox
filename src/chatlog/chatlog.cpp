@@ -53,6 +53,7 @@ ChatLog::ChatLog(QWidget* parent)
     setViewportUpdateMode(BoundingRectViewportUpdate);
     setAcceptDrops(false);
     setContextMenuPolicy(Qt::CustomContextMenu);
+    setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 
     // The selection rect for multi-line selection
     const QColor selGraphColor = QColor(166,225,255);
