@@ -52,8 +52,11 @@ protected:
     void handleButton(QPushButton* btn);
     void showPreview(const QString& filename);
     void acceptTransfer(const QString& filepath);
+    void setColor(const QColor& c, bool whiteFont);
 
     bool isFilePathWritable(const QString& filepath);
+
+    virtual void paintEvent(QPaintEvent*);
 
 private slots:
     void on_topButton_clicked();
@@ -64,6 +67,7 @@ private:
     ToxFile fileInfo;
     QTime lastTick;
     qint64 lastBytesSent = 0;
+    QColor color;
 
     static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
     uint8_t meanIndex = 0;

@@ -25,6 +25,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QPainter>
 #include <QDebug>
 
 FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
@@ -45,8 +46,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     ui->progressLabel->setText("0kiB/s");
     ui->etaLabel->setText("");
 
-    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
-    Style::repolish(this);
+    setColor(Style::getColor(Style::LightGrey), false);
 
     connect(Core::getInstance(), &Core::fileTransferInfo, this, &FileTransferWidget::onFileTransferInfo);
     connect(Core::getInstance(), &Core::fileTransferAccepted, this, &FileTransferWidget::onFileTransferAccepted);
@@ -60,7 +60,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     if(fileInfo.direction == ToxFile::SENDING)
         showPreview(fileInfo.filePath);
 
-    setFixedHeight(90);
+    setFixedHeight(80);
 }
 
 FileTransferWidget::~FileTransferWidget()
@@ -106,12 +106,37 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
     Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
 }
 
+void FileTransferWidget::setColor(const QColor &c, bool whiteFont)
+{
+    color = c;
+    setProperty("fontColor", whiteFont ? "white" : "black");
+
+    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/filetransferWidget.css"));
+    Style::repolish(this);
+
+    update();
+}
+
 bool FileTransferWidget::isFilePathWritable(const QString &filepath)
 {
     QFile tmp(filepath);
     bool writable = tmp.open(QIODevice::WriteOnly);
     tmp.remove();
     return writable;
+}
+
+void FileTransferWidget::paintEvent(QPaintEvent *)
+{
+    // required by Hi-DPI support as border-image doesn't work.
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setBrush(QBrush(color));
+    painter.setPen(Qt::NoPen);
+
+    qreal s = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
+    int r = 15;
+
+    painter.drawRoundRect(geometry(), r * s, r);
 }
 
 void FileTransferWidget::onFileTransferInfo(ToxFile file)
@@ -176,8 +201,7 @@ void FileTransferWidget::onFileTransferAccepted(ToxFile file)
 
     fileInfo = file;
 
-    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/yellow.css"));
-    Style::repolish(this);
+    setColor(Style::getColor(Style::Yellow), false);
 
     setupButtons();
 }
@@ -189,8 +213,7 @@ void FileTransferWidget::onFileTransferCancelled(ToxFile file)
 
     fileInfo = file;
 
-    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/red.css"));
-    Style::repolish(this);
+    setColor(Style::getColor(Style::Red), true);
 
     setupButtons();
     hideWidgets();
@@ -213,8 +236,7 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
     for(size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
         meanData[i] = 0.0;
 
-    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/grey.css"));
-    Style::repolish(this);
+    setColor(Style::getColor(Style::LightGrey), false);
 
     setupButtons();
 }
@@ -226,8 +248,7 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 
     fileInfo = file;
 
-    setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/green.css"));
-    Style::repolish(this);
+    setColor(Style::getColor(Style::Green), true);
 
     setupButtons();
     hideWidgets();
@@ -236,7 +257,7 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 
     if(openExtensions.contains(QFileInfo(file.fileName).suffix()))
     {
-        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/browse_path.png"));
+        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/browse.svg"));
         ui->bottomButton->setObjectName("browse");
         ui->bottomButton->show();
     }
@@ -273,32 +294,32 @@ void FileTransferWidget::setupButtons()
     switch(fileInfo.status)
     {
     case ToxFile::TRANSMITTING:
-        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no_2x.png"));
+        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->topButton->setObjectName("cancel");
 
-        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause_2x.png"));
+        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
         ui->bottomButton->setObjectName("pause");
         break;
     case ToxFile::PAUSED:
-        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no_2x.png"));
+        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->topButton->setObjectName("cancel");
 
-        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white_2x.png"));
+        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white.svg"));
         ui->bottomButton->setObjectName("resume");
         break;
     case ToxFile::STOPPED:
     case ToxFile::BROKEN: //TODO: ?
-        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no_2x.png"));
+        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->topButton->setObjectName("cancel");
 
         if(fileInfo.direction == ToxFile::SENDING)
         {
-            ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause_2x.png"));
+            ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
             ui->bottomButton->setObjectName("pause");
         }
         else
         {
-            ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/yes_2x.png"));
+            ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
             ui->bottomButton->setObjectName("accept");
         }
         break;

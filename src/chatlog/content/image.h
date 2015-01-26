@@ -19,6 +19,8 @@
 
 #include "../chatlinecontent.h"
 
+#include <QIcon>
+
 class Image : public ChatLineContent
 {
 public:
@@ -32,7 +34,7 @@ public:
 
 private:
     QSizeF size;
-    QPixmap pmap;
+    QIcon icon;
 
 };
 

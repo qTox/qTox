@@ -149,9 +149,6 @@
         <file>ui/chatArea/chatArea.css</file>
         <file>ui/chatArea/chatHead.css</file>
         <file>ui/chatArea/innerStyle.css</file>
-        <file>ui/chatArea/spinner.png</file>
-        <file>ui/chatArea/info.png</file>
-        <file>ui/chatArea/error.png</file>
         <file>ui/chatArea/scrollBarDownArrow.png</file>
         <file>ui/chatArea/scrollBarDownArrowHover.png</file>
         <file>ui/chatArea/scrollBarDownArrowPressed.png</file>
@@ -212,19 +209,6 @@
         <file>ui/videoButton/videoButtonYellow.png</file>
         <file>ui/videoButton/videoButtonYellowHover.png</file>
         <file>ui/videoButton/videoButtonYellowPressed.png</file>
-        <file>ui/fileTransferInstance/red.css</file>
-        <file>ui/fileTransferInstance/green.css</file>
-        <file>ui/fileTransferInstance/grey.css</file>
-        <file>ui/fileTransferInstance/yellow.css</file>
-        <file>ui/fileTransferInstance/background_red.png</file>
-        <file>ui/fileTransferInstance/background_yellow.png</file>
-        <file>ui/fileTransferInstance/background_green.png</file>
-        <file>ui/fileTransferInstance/background_grey.png</file>
-        <file>ui/fileTransferInstance/pause_2x.png</file>
-        <file>ui/fileTransferInstance/no_2x.png</file>
-        <file>ui/fileTransferInstance/yes_2x.png</file>
-        <file>ui/fileTransferInstance/arrow_white_2x.png</file>
-        <file>ui/fileTransferInstance/browse_path.png</file>
         <file>ui/volButton/volButton.png</file>
         <file>ui/volButton/volButtonHover.png</file>
         <file>ui/volButton/volButtonPressed.png</file>
@@ -232,6 +216,15 @@
         <file>ui/window/applicationIcon.png</file>
         <file>ui/window/statusPanel.css</file>
         <file>ui/window/window.css</file>
-        <file>ui/chatArea/typing.png</file>
+        <file>ui/chatArea/info.svg</file>
+        <file>ui/chatArea/spinner.svg</file>
+        <file>ui/chatArea/typing.svg</file>
+        <file>ui/chatArea/error.svg</file>
+        <file>ui/fileTransferInstance/no.svg</file>
+        <file>ui/fileTransferInstance/pause.svg</file>
+        <file>ui/fileTransferInstance/yes.svg</file>
+        <file>ui/fileTransferInstance/arrow_white.svg</file>
+        <file>ui/fileTransferInstance/browse.svg</file>
+        <file>ui/fileTransferInstance/filetransferWidget.css</file>
     </qresource>
 </RCC>

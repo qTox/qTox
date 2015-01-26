@@ -21,6 +21,7 @@
 
 #include <QTimer>
 #include <QObject>
+#include <QIcon>
 
 class Spinner : public QObject, public ChatLineContent
 {
@@ -40,7 +41,7 @@ private slots:
 
 private:
     QSizeF size;
-    QPixmap pmap;
+    QIcon icon;
     qreal rot = 0.0;
     qreal rotSpeed;
     QTimer timer;

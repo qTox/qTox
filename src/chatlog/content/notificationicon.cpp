@@ -22,7 +22,7 @@
 NotificationIcon::NotificationIcon(QSizeF Size)
     : size(Size)
 {
-    pmap.load(":/ui/chatArea/typing.png");
+    icon.addFile(":/ui/chatArea/typing.svg");
 
     updateTimer = new QTimer(this);
     updateTimer->setInterval(1000/60);
@@ -44,7 +44,7 @@ void NotificationIcon::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->translate(-size.width() / 2.0, -size.height() / 2.0);
 
     painter->fillRect(QRect(0, 0, size.width(), size.height()), grad);
-    painter->drawPixmap(0, 0, size.width(), size.height(), pmap);
+    painter->drawPixmap(0, 0, size.width(), size.height(), icon.pixmap(size.toSize() * painter->device()->devicePixelRatio()));
 
     Q_UNUSED(option)
     Q_UNUSED(widget)

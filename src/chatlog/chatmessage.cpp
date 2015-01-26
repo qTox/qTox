@@ -60,7 +60,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
 
     msg->addColumn(new Text(isAction ? "<div class=action>*</div>" : sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), isAction ? false : true, sender), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text(text, Style::getFont(Style::Big), false, isAction ? QString("*%1 %2*").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Spinner(":/ui/chatArea/spinner.png", QSizeF(16, 16), 8.0), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSizeF(16, 16), 8.0), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     if(!date.isNull())
         msg->markAsSent(date);
@@ -76,9 +76,9 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     QString img;
     switch(type)
     {
-    case INFO:   img = ":/ui/chatArea/info.png";     break;
-    case ERROR:  img = ":/ui/chatArea/error.png";    break;
-    case TYPING: img = ":/ui/chatArea/typing.png";   break;
+    case INFO:   img = ":/ui/chatArea/info.svg";     break;
+    case ERROR:  img = ":/ui/chatArea/error.svg";    break;
+    case TYPING: img = ":/ui/chatArea/typing.svg";   break;
     }
 
     msg->addColumn(new Image(QSizeF(18, 18), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));

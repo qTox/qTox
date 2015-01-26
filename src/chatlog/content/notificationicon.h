@@ -20,6 +20,7 @@
 #include "../chatlinecontent.h"
 
 #include <QLinearGradient>
+#include <QIcon>
 
 class QTimer;
 
@@ -40,7 +41,7 @@ private slots:
 
 private:
     QSizeF size;
-    QPixmap pmap;
+    QIcon icon;
     QLinearGradient grad;
     QTimer* updateTimer = nullptr;
 
