@@ -39,6 +39,7 @@ private:
     const int rectW, rectH;
     const int spikeW, spikeH;
     const int roundedFactor; ///< By how much are the corners of the main rect rounded
+    const qreal rectRatio; ///< Used to correct the rounding factors on non-square rects
 };
 
 #endif // CALLCONFIRMWIDGET_H

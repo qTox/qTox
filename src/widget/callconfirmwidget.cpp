@@ -14,7 +14,8 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
     QWidget(Widget::getInstance()), anchor(Anchor),
     rectW{120}, rectH{85},
     spikeW{30}, spikeH{15},
-    roundedFactor{15}
+    roundedFactor{20},
+    rectRatio{static_cast<qreal>(rectH)/static_cast<qreal>(rectW)}
 {
     setWindowFlags(Qt::SubWindow);
 
@@ -81,7 +82,7 @@ void CallConfirmWidget::paintEvent(QPaintEvent*)
     painter.setBrush(brush);
     painter.setPen(Qt::NoPen);
 
-    painter.drawRoundRect(mainRect, roundedFactor, roundedFactor);
+    painter.drawRoundRect(mainRect, roundedFactor*rectRatio, roundedFactor);
     painter.drawPolygon(spikePoly);
 }
 
