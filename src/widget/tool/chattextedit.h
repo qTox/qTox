@@ -25,13 +25,16 @@ class ChatTextEdit : public QTextEdit
 public:
     explicit ChatTextEdit(QWidget *parent = 0);
     virtual void keyPressEvent(QKeyEvent * event) override;
-
+    void setLastMessage(QString lm);
+    
 signals:
     void enterPressed();
     void tabPressed();
     void keyPressed();
-
-public slots:
+    
+private:
+    QString lastMessage,
+            currentMessage;
 
 };
 

@@ -31,9 +31,35 @@ void ChatTextEdit::keyPressEvent(QKeyEvent * event)
         emit enterPressed();
     else if (key == Qt::Key_Tab)
         emit tabPressed();
+    /**
+    If message box is empty, it will paste previous message on arrow up
+    if message box is not empty,
+    it will copy current(2) text and paste previous(1) message,
+    to paste previous message(2) press arrow down,
+    press arrow down twice to clear mesage box,
+    only previous message(1) is available to paste now.
+      */
+    else if (key == Qt::Key_Up && this->toPlainText().isEmpty())
+        this->setText(lastMessage);
+    else if (key == Qt::Key_Up && !this->toPlainText().isEmpty()
+             && lastMessage != this->toPlainText())
+    {
+        currentMessage = this->toPlainText();
+        this->setText(lastMessage);
+    }
+    else if (key == Qt::Key_Down && !currentMessage.isEmpty())
+    {
+        this->setPlainText(currentMessage);
+        currentMessage.clear();
+    }
     else
     {
         emit keyPressed();
         QTextEdit::keyPressEvent(event);
     }
+}
+
+void ChatTextEdit::setLastMessage(QString lm)
+{
+    lastMessage = lm;
 }

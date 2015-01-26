@@ -143,6 +143,8 @@ void ChatForm::onSendTriggered()
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
         registerReceipt(rec, id, ma);
+        
+        msgEdit->setLastMessage(msg); //set last message only when sending it
     }
 
     msgEdit->clear();
