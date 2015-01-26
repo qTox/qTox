@@ -408,7 +408,6 @@ void ChatLog::startResizeWorker()
 
     // switch to busy scene displaying the busy notification
     setScene(busyScene);
-    updateBusyNotification();
     verticalScrollBar()->hide();
 }
 
@@ -588,6 +587,8 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
 {
     startResizeWorker();
     QGraphicsView::resizeEvent(ev);
+
+    updateBusyNotification();
 }
 
 void ChatLog::updateMultiSelectionRect()
