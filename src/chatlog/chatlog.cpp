@@ -728,3 +728,10 @@ void ChatLog::onWorkerTimeout()
         verticalScrollBar()->show();
     }
 }
+
+void ChatLog::showEvent(QShowEvent *)
+{
+    // Empty.
+    // The default implementation calls centerOn - for some reason - causing
+    // the scrollbar to move.
+}

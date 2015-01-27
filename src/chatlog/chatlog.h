@@ -80,6 +80,7 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent* ev);
     virtual void scrollContentsBy(int dx, int dy);
     virtual void resizeEvent(QResizeEvent *ev);
+    virtual void showEvent(QShowEvent *);
 
     void updateMultiSelectionRect();
     void updateTypingNotification();
