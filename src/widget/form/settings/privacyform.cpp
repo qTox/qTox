@@ -142,10 +142,10 @@ void PrivacyForm::onEncryptLogsUpdated()
                     Widget::getInstance(),
                     tr("Old encrypted chat logs", "title"),
                     tr("Are you sure you want to lose your entire chat history?"),
-                    QMessageBox::No | QMessageBox::Cancel,
+                    QMessageBox::Yes | QMessageBox::Cancel,
                     QMessageBox::Cancel
                     )
-                == QMessageBox::No)
+                == QMessageBox::Yes)
             {
                 HistoryKeeper::removeHistory(true);
             }
