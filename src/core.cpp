@@ -178,7 +178,7 @@ void Core::make_tox()
                 {
                     qCritical() << "Core: bad proxy! no toxcore!";
                     emit badProxy();
-                } 
+                }
                 else
                 {
                     qCritical() << "Tox core failed to start";
@@ -223,9 +223,19 @@ void Core::start()
         {
             if (loadPath.isEmpty())
             {
-                qCritical() << "Core: loadConfiguration failed, exiting now";
-                emit failedToStart();
-                return;
+                QString profile;
+                if ((profile = loadOldInformation()).isEmpty())
+                {
+                    qCritical() << "Core: loadConfiguration failed, exiting now";
+                    emit failedToStart();
+                    return;
+                }
+                else
+                {
+                    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
+                    Settings::getInstance().switchProfile(profile);
+                    HistoryKeeper::resetInstance(); // I'm not actually sure if this is necessary
+                }
             }
         }
         // loadPath is meaningless after this
@@ -284,7 +294,7 @@ void Core::start()
     }
     else
         qDebug() << "Core: Error loading self avatar";
-    
+
     ready = true;
 
     process(); // starts its own timer
@@ -1201,7 +1211,7 @@ bool Core::loadConfiguration(QString path)
     QString name = getUsername();
     if (!name.isEmpty())
         emit usernameSet(name);
-    
+
     QString msg = getStatusMessage();
     if (!msg.isEmpty())
         emit statusMessageSet(msg);
@@ -1229,7 +1239,7 @@ void Core::saveConfiguration()
         qCritical() << "Error while creating directory " << dir;
         return;
     }
-    
+
     QString profile = Settings::getInstance().getCurrentProfile();
 
     if (profile == "")
@@ -1241,9 +1251,9 @@ void Core::saveConfiguration()
 
         Settings::getInstance().switchProfile(profile);
     }
-    
+
     QString path = directory.filePath(profile + TOX_EXT);
-    
+
     saveConfiguration(path);
 }
 
@@ -1255,6 +1265,7 @@ void Core::switchConfiguration(const QString& profile)
         qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
 
     saveConfiguration();
+    saveCurrentInformation(); // part of a hack, see core.h
 
     ready = false;
     Widget::getInstance()->setEnabledThreadsafe(false);

@@ -65,6 +65,43 @@ void Core::clearPassword(PasswordType passtype)
     pwsaltedkeys[passtype] = nullptr;
 }
 
+// part of a hack, see core.h
+void Core::saveCurrentInformation()
+{
+    if (pwsaltedkeys[ptMain])
+    {
+        backupkeys[ptMain] = new uint8_t[tox_pass_key_length()];
+        std::copy(pwsaltedkeys[ptMain], pwsaltedkeys[ptMain]+tox_pass_key_length(), backupkeys[ptMain]);
+    }
+    if (pwsaltedkeys[ptHistory])
+    {
+        backupkeys[ptHistory] = new uint8_t[tox_pass_key_length()];
+        std::copy(pwsaltedkeys[ptHistory], pwsaltedkeys[ptHistory]+tox_pass_key_length(), backupkeys[ptHistory]);
+    }
+    backupProfile = new QString(Settings::getInstance().getCurrentProfile());
+}
+
+QString Core::loadOldInformation()
+{
+    QString out;
+    if (backupProfile)
+    {
+        out  = *backupProfile;
+        delete backupProfile;
+        backupProfile = nullptr;
+    }
+    backupProfile = nullptr;
+    clearPassword(ptMain);
+    clearPassword(ptHistory);
+    // we can just copy the pointer, as long as we null out backupkeys
+    // (if backupkeys was null anyways, then this is a null-op)
+    pwsaltedkeys[ptMain]    = backupkeys[ptMain];
+    pwsaltedkeys[ptHistory] = backupkeys[ptHistory];
+    backupkeys[ptMain]    = nullptr;
+    backupkeys[ptHistory] = nullptr;
+    return out;
+}
+
 QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
 {
     if (!pwsaltedkeys[passtype])

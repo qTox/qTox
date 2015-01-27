@@ -46,7 +46,7 @@ public:
     explicit Core(Camera* cam, QThread* coreThread, QString initialLoadPath);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
-    
+
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
@@ -69,9 +69,9 @@ public:
 
     void saveConfiguration();
     void saveConfiguration(const QString& path);
-    
+
     QString getIDString() const; ///< Get the 12 first characters of our Tox ID
-    
+
     QString getUsername() const; ///< Returns our username, or an empty string on failure
     QString getStatusMessage() const; ///< Returns our status message, or an empty string on failure
     ToxID getSelfId() const; ///< Returns our Tox ID
@@ -299,7 +299,17 @@ private:
     QMutex fileSendMutex, messageSendMutex;
     bool ready;
 
-    uint8_t* pwsaltedkeys[PasswordType::ptCounter]; // use the pw's hash as the "pw"
+    uint8_t* pwsaltedkeys[PasswordType::ptCounter] = {nullptr}; // use the pw's hash as the "pw"
+
+    // Hack for reloading current profile if switching to an encrypted one fails.
+    // Testing the passwords before killing the current profile is perfectly doable,
+    // however it would require major refactoring;
+    // the Core class as a whole also requires major refactoring (especially to support multiple IDs at once),
+    // so I'm punting on this until then, when it would get fixed anyways
+    uint8_t* backupkeys[PasswordType::ptCounter] = {nullptr};
+    QString* backupProfile = nullptr;
+    void saveCurrentInformation();
+    QString loadOldInformation();
 
     static const int videobufsize;
     static uint8_t* videobuf;
