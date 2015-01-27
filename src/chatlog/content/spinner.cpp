@@ -19,7 +19,7 @@
 #include <QPainter>
 #include <QDebug>
 
-Spinner::Spinner(const QString &img, QSizeF Size, qreal speed)
+Spinner::Spinner(const QString &img, QSize Size, qreal speed)
     : size(Size)
     , rotSpeed(speed)
 {
@@ -52,7 +52,7 @@ void Spinner::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, Q
     painter->translate(-size.width() / 2.0, -size.height() / 2.0);
     painter->setTransform(rotMat, true);
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
-    painter->drawPixmap(0, 0, size.width(), size.height(), icon.pixmap(size.toSize() * painter->device()->devicePixelRatio()));
+    painter->drawPixmap(0, 0, icon.pixmap(size));
 
     Q_UNUSED(option)
     Q_UNUSED(widget)

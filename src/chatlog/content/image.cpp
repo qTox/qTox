@@ -18,7 +18,7 @@
 
 #include <QPainter>
 
-Image::Image(QSizeF Size, const QString& filename)
+Image::Image(QSize Size, const QString& filename)
     : size(Size)
 {
     icon.addFile(filename);
@@ -43,7 +43,7 @@ void Image::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
 {
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
     painter->translate(-size.width() / 2.0, -size.height() / 2.0);
-    painter->drawPixmap(0, 0, size.width(), size.height(), icon.pixmap(size.toSize()));
+    painter->drawPixmap(0, 0, icon.pixmap(size));
 
     Q_UNUSED(option)
     Q_UNUSED(widget)

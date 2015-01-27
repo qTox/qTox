@@ -24,7 +24,7 @@
 class Image : public ChatLineContent
 {
 public:
-    Image(QSizeF size, const QString &filename);
+    Image(QSize size, const QString &filename);
 
     virtual QRectF boundingRect() const override;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -33,7 +33,7 @@ public:
     virtual qreal getAscent() const override;
 
 private:
-    QSizeF size;
+    QSize size;
     QIcon icon;
 
 };
