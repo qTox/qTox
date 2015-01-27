@@ -10,16 +10,16 @@
 
 QPushButton {
 	margin:0;
+        border: none;
 } 
 
 QProgressBar {
 	border: 2px solid black;
-	border-radius: 0px;
-	color: white;
-	background-color:white;
+	border-radius: 4px;
+	background-color: @mediumGrey;
 }
 
 QProgressBar::chunk {
-	background-color: black;
-	width: 20px;
+	background-color: @lightGrey;
+	width: 1px;
 }

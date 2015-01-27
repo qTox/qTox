@@ -60,7 +60,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     if(fileInfo.direction == ToxFile::SENDING)
         showPreview(fileInfo.filePath);
 
-    setFixedHeight(80);
+    setFixedHeight(60);
 }
 
 FileTransferWidget::~FileTransferWidget()
@@ -134,7 +134,7 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     painter.setPen(Qt::NoPen);
 
     qreal s = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
-    int r = 15;
+    int r = 20;
 
     painter.drawRoundRect(geometry(), r * s, r);
 }
