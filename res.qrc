@@ -229,5 +229,6 @@
         <file>ui/window/window.css</file>
         <file>ui/acceptCall/acceptCall.png</file>
         <file>ui/rejectCall/rejectCall.png</file>
+        <file>ui/volButton/volButtonDisabled.png</file>
     </qresource>
 </RCC>

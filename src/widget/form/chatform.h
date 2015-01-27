@@ -19,10 +19,11 @@
 
 #include "genericchatform.h"
 #include "src/corestructs.h"
+#include <QSet>
 #include <QLabel>
 #include <QTimer>
 #include <QElapsedTimer>
-#include <QSet>
+
 
 struct Friend;
 class FileTransferInstance;
@@ -93,7 +94,8 @@ private slots:
     void onFileTansBtnClicked(QString widgetName, QString buttonName);
     void onFileSendFailed(int FriendId, const QString &fname);
     void onLoadHistory();
-    void updateTime();    
+    void onUpdateTime();
+    void onEnableCallButtons();
 
 protected:
     // drag & drop
@@ -108,10 +110,11 @@ private:
     NetCamView* netcam;
     int callId;
     QLabel *callDuration;
-    QTimer *timer;
+    QTimer *callDurationTimer;
+    QTimer typingTimer;    
+    QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
     QLabel *isTypingLabel;
-    QTimer typingTimer;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     void startCounter();
@@ -120,6 +123,7 @@ private:
     QHash<int, int> receipts;
     QMap<int, MessageActionPtr> undeliveredMsgs;
     CallConfirmWidget *callConfirm;
+    void enableCallButtons();    
 };
 
 #endif // CHATFORM_H
