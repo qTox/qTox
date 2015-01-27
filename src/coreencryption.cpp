@@ -236,8 +236,6 @@ void Core::saveConfiguration(const QString& path)
         return;
     }
 
-    Settings::getInstance().save();
-
     QSaveFile configurationFile(path);
     if (!configurationFile.open(QIODevice::WriteOnly)) {
         qCritical() << "File " << path << " cannot be opened";
@@ -281,4 +279,6 @@ void Core::saveConfiguration(const QString& path)
         configurationFile.commit();
         delete[] data;
     }
+
+    Settings::getInstance().save();
 }
