@@ -55,7 +55,7 @@ void PrivacyForm::onEnableLoggingUpdated()
 {
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     bodyUI->cbEncryptHistory->setEnabled(bodyUI->cbKeepHistory->isChecked());
-    HistoryKeeper::getInstance()->resetInstance();
+    HistoryKeeper::resetInstance();
     Widget::getInstance()->clearAllReceipts();
 }
 
@@ -166,6 +166,7 @@ void PrivacyForm::onEncryptLogsUpdated()
     Settings::getInstance().setEncryptLogs(false);
     bodyUI->cbEncryptHistory->setChecked(false);
     bodyUI->changeLogsPwButton->setEnabled(false);
+    HistoryKeeper::resetInstance();
 }
 
 bool PrivacyForm::setToxPassword()

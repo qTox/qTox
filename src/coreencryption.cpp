@@ -218,6 +218,7 @@ void Core::checkEncryptedHistory()
         Widget::getInstance()->showWarningMsgBox(tr("Encrypted History"), tr("No encrypted history file found, or it was corrupted.\nHistory will be disabled!"));
         Settings::getInstance().setEncryptLogs(false);
         Settings::getInstance().setEnableLogging(false);
+        HistoryKeeper::resetInstance();
         return;
     }
 
@@ -255,6 +256,7 @@ void Core::checkEncryptedHistory()
             clearPassword(ptHistory);
             Settings::getInstance().setEncryptLogs(false);
             Settings::getInstance().setEnableLogging(false);
+            HistoryKeeper::resetInstance();
             return;
         }
         else
