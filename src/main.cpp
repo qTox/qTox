@@ -79,7 +79,10 @@ int main(int argc, char *argv[])
             Settings::getInstance().setCurrentProfile(profile);
         }
         else
-            qWarning() << "Warning: -P profile" << profile + ".tox" << "doesn't exist";
+        {
+            qWarning() << "Error: -P profile" << profile + ".tox" << "doesn't exist";
+            return EXIT_FAILURE;
+        }
     }
 
     sodium_init(); // For the auto-updater
