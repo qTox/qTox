@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     if (logfile.open(QIODevice::Append))
     {
         logFile->setDevice(&logfile);
-        *logFile << QDateTime::currentDateTime().toString("\nyyyy-dd-MM HH:mm:ss' file logger starting\n'");
+        *logFile << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' file logger starting\n'");
         qInstallMessageHandler(myMessageHandler);
     }
     else
