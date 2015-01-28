@@ -23,6 +23,8 @@
 #include "src/widget/widget.h"
 #include "src/widget/form/setpassworddialog.h"
 #include <QMessageBox>
+#include <QFile>
+#include <QDebug>
 
 PrivacyForm::PrivacyForm() :
     GenericForm(tr("Privacy"), QPixmap(":/img/settings/privacy.png"))
@@ -30,10 +32,15 @@ PrivacyForm::PrivacyForm() :
     bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);
 
+    bodyUI->encryptToxHLayout->addStretch();
+    bodyUI->encryptLogsHLayout->addStretch();
+
     connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
     connect(bodyUI->cbEncryptHistory, SIGNAL(clicked()), this, SLOT(onEncryptLogsUpdated()));
+    connect(bodyUI->changeLogsPwButton, &QPushButton::clicked, this, &PrivacyForm::setChatLogsPassword);
     connect(bodyUI->cbEncryptTox, SIGNAL(clicked()), this, SLOT(onEncryptToxUpdated()));
+    connect(bodyUI->changeToxPwButton, &QPushButton::clicked, this, &PrivacyForm::setToxPassword);
     connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
     connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
     connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
@@ -48,7 +55,7 @@ void PrivacyForm::onEnableLoggingUpdated()
 {
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     bodyUI->cbEncryptHistory->setEnabled(bodyUI->cbKeepHistory->isChecked());
-    HistoryKeeper::getInstance()->resetInstance();
+    HistoryKeeper::resetInstance();
     Widget::getInstance()->clearAllReceipts();
 }
 
@@ -57,79 +64,172 @@ void PrivacyForm::onTypingNotificationEnabledUpdated()
     Settings::getInstance().setTypingNotification(bodyUI->cbTypingNotification->isChecked());
 }
 
+bool PrivacyForm::setChatLogsPassword()
+{
+    Core* core = Core::getInstance();
+    SetPasswordDialog* dialog;
+    QString body = tr("Please set your new chat log password.");
+    if (core->isPasswordSet(Core::ptMain))
+        dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), this);
+    else
+        dialog = new SetPasswordDialog(body, QString(), this);
+
+    if (int r = dialog->exec())
+    {
+        QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
+
+        QString newpw = dialog->getPassword();
+        delete dialog;
+
+        if (r == 2)
+            core->useOtherPassword(Core::ptHistory);
+        else
+            core->setPassword(newpw, Core::ptHistory);
+
+        //if (!HistoryKeeper::checkPassword(true))
+        //    if (checkContinue(tr("Old encrypted chat logs", "title"),
+        //                      tr("Would you like to re-encrypt your old chat logs?\nOtherwise they will be deleted.", "body")))
+        // for now, don't bother asking. Why wouldn't you want to reencrypt?
+
+        Settings::getInstance().setEncryptLogs(true);
+        HistoryKeeper::getInstance()->importMessages(oldMessages);
+
+        return true;
+    }
+    else
+    {
+        delete dialog;
+        return false;
+    }
+}
+
 void PrivacyForm::onEncryptLogsUpdated()
 {
-    bool encrytionState = bodyUI->cbEncryptHistory->isChecked();
+    Core* core = Core::getInstance();
 
-    if (encrytionState)
+    if (bodyUI->cbEncryptHistory->isChecked())
     {
-        if (!Core::getInstance()->isPasswordSet(Core::ptHistory))
+        if (!core->isPasswordSet(Core::ptHistory))
         {
-            SetPasswordDialog dialog;
-            if (dialog.exec())
+            if (setChatLogsPassword())
             {
-                QString pswd = dialog.getPassword();
-                if (pswd.size() == 0)
-                    encrytionState = false;
-
-                Core::getInstance()->setPassword(pswd, Core::ptHistory);
-            } else {
-                encrytionState = false;
-                Core::getInstance()->clearPassword(Core::ptHistory);
+                bodyUI->cbEncryptHistory->setChecked(true);
+                bodyUI->changeLogsPwButton->setEnabled(true);
+                return;
             }
         }
     }
-
-    Settings::getInstance().setEncryptLogs(encrytionState);
-    if (encrytionState && !HistoryKeeper::checkPassword())
+    else
     {
-        if (QMessageBox::Ok != QMessageBox::warning(nullptr, tr("Encrypted log"),
-            tr("You already have history log file encrypted with different password\nDo you want to delete old history file?"),
-            QMessageBox::Ok | QMessageBox::Cancel))
+        QMessageBox::StandardButton button = QMessageBox::warning(
+            Widget::getInstance(),
+            tr("Old encrypted chat logs", "title"),
+            tr("Would you like to decrypt your chat logs?\nOtherwise they will be deleted."),
+            QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel,
+            QMessageBox::Cancel
+        );
+
+        if (button == QMessageBox::Ok)
         {
-            // TODO: ask user about reencryption with new password
-            encrytionState = false;
+            QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile(true);
+            core->clearPassword(Core::ptHistory);
+            Settings::getInstance().setEncryptLogs(false);
+            HistoryKeeper::getInstance()->importMessages(oldMessages);
+        }
+        else if (button == QMessageBox::No)
+        {
+            if (QMessageBox::critical(
+                    Widget::getInstance(),
+                    tr("Old encrypted chat logs", "title"),
+                    tr("Are you sure you want to lose your entire chat history?"),
+                    QMessageBox::Yes | QMessageBox::Cancel,
+                    QMessageBox::Cancel
+                    )
+                == QMessageBox::Yes)
+            {
+                HistoryKeeper::removeHistory(true);
+            }
+            else
+            {
+                bodyUI->cbEncryptHistory->setChecked(true);
+                return;
+            }
+        }
+        else
+        {
+            bodyUI->cbEncryptHistory->setChecked(true);
+            return;
         }
     }
 
-    Settings::getInstance().setEncryptLogs(encrytionState);
-    bodyUI->cbEncryptHistory->setChecked(encrytionState);
+    core->clearPassword(Core::ptHistory);
+    Settings::getInstance().setEncryptLogs(false);
+    bodyUI->cbEncryptHistory->setChecked(false);
+    bodyUI->changeLogsPwButton->setEnabled(false);
+    HistoryKeeper::resetInstance();
+}
 
-    if (encrytionState)
-        HistoryKeeper::resetInstance();
+bool PrivacyForm::setToxPassword()
+{
+    Core* core = Core::getInstance();
+    SetPasswordDialog* dialog;
+    QString body = tr("Please set your new data file password.");
+    if (core->isPasswordSet(Core::ptHistory))
+        dialog = new SetPasswordDialog(body, tr("Use chat log password", "pushbutton text"), this);
+    else
+        dialog = new SetPasswordDialog(body, QString(), this);
 
-    if (!Settings::getInstance().getEncryptLogs())
-        Core::getInstance()->clearPassword(Core::ptHistory);
+    if (int r = dialog->exec())
+    {
+        QString newpw = dialog->getPassword();
+        delete dialog;
+
+        if (r == 2)
+            core->useOtherPassword(Core::ptMain);
+        else
+            core->setPassword(newpw, Core::ptMain);
+
+        Settings::getInstance().setEncryptTox(true);
+        core->saveConfiguration();
+        return true;
+    }
+    else
+    {
+        delete dialog;
+        return false;
+    }
 }
 
 void PrivacyForm::onEncryptToxUpdated()
 {
-    bool encrytionState = bodyUI->cbEncryptTox->isChecked();
+    Core* core = Core::getInstance();
 
-    if (encrytionState)
+    if (bodyUI->cbEncryptTox->isChecked())
     {
-        if (!Core::getInstance()->isPasswordSet(Core::ptMain))
+        if (!core->isPasswordSet(Core::ptMain))
         {
-            SetPasswordDialog dialog;
-            if (dialog.exec())
+            if (setToxPassword())
             {
-                QString pswd = dialog.getPassword();
-                if (pswd.size() == 0)
-                    encrytionState = false;
-
-                Core::getInstance()->setPassword(pswd, Core::ptMain);
-            } else {
-                encrytionState = false;
-                Core::getInstance()->clearPassword(Core::ptMain);
+                bodyUI->cbEncryptTox->setChecked(true);
+                bodyUI->changeToxPwButton->setEnabled(true);
+                return;
             }
         }
     }
+    else
+    {
+        if (!Widget::getInstance()->askQuestion(tr("Decrypt your data file", "title"), tr("Would you like to decrypt your data file?")))
+        {
+            bodyUI->cbEncryptTox->setChecked(true);
+            return;
+        }
+        // affirmative answer falls through to the catch all below
+    }
 
-    bodyUI->cbEncryptTox->setChecked(encrytionState);
-    Settings::getInstance().setEncryptTox(encrytionState);
-
-    if (!Settings::getInstance().getEncryptTox())
-        Core::getInstance()->clearPassword(Core::ptMain);
+    bodyUI->cbEncryptTox->setChecked(false);
+    Settings::getInstance().setEncryptTox(false);
+    bodyUI->changeToxPwButton->setEnabled(false);
+    core->clearPassword(Core::ptMain);
 }
 
 void PrivacyForm::setNospam()
@@ -148,8 +248,10 @@ void PrivacyForm::present()
     bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
     bodyUI->cbEncryptHistory->setChecked(Settings::getInstance().getEncryptLogs());
+    bodyUI->changeLogsPwButton->setEnabled(Settings::getInstance().getEncryptLogs());
     bodyUI->cbEncryptHistory->setEnabled(Settings::getInstance().getEnableLogging());
     bodyUI->cbEncryptTox->setChecked(Settings::getInstance().getEncryptTox());
+    bodyUI->changeToxPwButton->setEnabled(Settings::getInstance().getEncryptTox());
 }
 
 void PrivacyForm::generateRandomNospam()

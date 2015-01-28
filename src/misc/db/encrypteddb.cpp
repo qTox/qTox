@@ -24,28 +24,36 @@
 #include <QDebug>
 #include <QSqlError>
 
-qint64 EncryptedDb::plainChunkSize = 4096;
-qint64 EncryptedDb::encryptedChunkSize = EncryptedDb::plainChunkSize + tox_pass_encryption_extra_length();
+qint64 EncryptedDb::encryptedChunkSize = 4096;
+qint64 EncryptedDb::plainChunkSize = EncryptedDb::encryptedChunkSize - tox_pass_encryption_extra_length();
 
 EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
-    PlainDb(":memory:", initList), encrFile(fname)
+    PlainDb(":memory:", initList), fileName(fname)
 {
     QByteArray fileContent;
-    if (pullFileContent())
+    if (pullFileContent(fileName, buffer))
     {
-        chunkPosition = encrFile.size() / encryptedChunkSize;
-
-        encrFile.seek(0);
+        qDebug() << "EncryptedDb: writing old data";
+        encrFile.setFileName(fileName);
+        encrFile.open(QIODevice::ReadOnly);
         fileContent = encrFile.readAll();
-    } else {
-        qWarning() << "corrupted history log file will be wiped!";
-        chunkPosition = 0;
+        chunkPosition = encrFile.size() / encryptedChunkSize;
+        encrFile.close();
     }
+    else
+        chunkPosition = 0;
 
-    encrFile.close();
-    encrFile.open(QIODevice::WriteOnly);
-    encrFile.write(fileContent);
-    encrFile.flush();
+    encrFile.setFileName(fileName);
+
+    if (!encrFile.open(QIODevice::WriteOnly))
+    {
+        qWarning() << "can't open file:" << fileName;
+    }
+    else
+    {
+        encrFile.write(fileContent);
+        encrFile.flush();
+    }
 }
 
 EncryptedDb::~EncryptedDb()
@@ -57,27 +65,34 @@ EncryptedDb::~EncryptedDb()
 QSqlQuery EncryptedDb::exec(const QString &query)
 {
     QSqlQuery retQSqlQuery = PlainDb::exec(query);
-    if (query.startsWith("INSERT", Qt::CaseInsensitive))
+    if (checkCmd(query))
         appendToEncrypted(query);
 
     return retQSqlQuery;
 }
 
-bool EncryptedDb::pullFileContent()
+bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
 {
-    encrFile.open(QIODevice::ReadOnly);
+    QFile dbFile(fname);
+    if (!dbFile.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "EncryptedDb::pullFileContent: file doesn't exist";
+        buf = QByteArray();
+        return false;
+    }
     QByteArray fileContent;
 
-    while (!encrFile.atEnd())
+    while (!dbFile.atEnd())
     {
-        QByteArray encrChunk = encrFile.read(encryptedChunkSize);
-        buffer = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
-        if (buffer.size() > 0)
+        QByteArray encrChunk = dbFile.read(encryptedChunkSize);
+        qDebug() << "EncryptedDb::pullFileContent: got chunk:" << encrChunk.size();
+        buf = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
+        if (buf.size() > 0)
         {
-            fileContent += buffer;
+            fileContent += buf;
         } else {
-            qWarning() << "Encrypted history log is corrupted: can't decrypt";
-            buffer = QByteArray();
+            qWarning() << "EncryptedDb::pullFileContent: Encrypted history log is corrupted: can't decrypt, will be deleted";
+            buf = QByteArray();
             return false;
         }
     }
@@ -88,31 +103,17 @@ bool EncryptedDb::pullFileContent()
     for (auto ba_line : splittedBA)
     {
         QString line = QByteArray::fromBase64(ba_line);
-        if (line.size() == 0)
-            continue;
-
-        bool isGoodLine = false;
-        if (line.startsWith("CREATE", Qt::CaseInsensitive) || line.startsWith("INSERT", Qt::CaseInsensitive))
-        {
-            if (line.endsWith(");"))
-            {
-                sqlCmds.append(line);
-                isGoodLine = true;
-            }
-        }
-
-        if (!isGoodLine)
-        {
-            qWarning() << "Encrypted history log is corrupted: errors in content";
-            buffer = QByteArray();
-            return false;
-        }
+        sqlCmds.append(line);
     }
 
+    PlainDb::exec("BEGIN TRANSACTION;");
     for (auto line : sqlCmds)
     {
         QSqlQuery r = PlainDb::exec(line);
     }
+    PlainDb::exec("COMMIT TRANSACTION;");
+
+    dbFile.close();
 
     return true;
 }
@@ -133,6 +134,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
         if (encr.size() > 0)
         {
             encrFile.write(encr);
+            encrFile.flush();
         }
 
         buffer = buffer.right(buffer.size() - plainChunkSize);
@@ -169,4 +171,15 @@ bool EncryptedDb::check(const QString &fname)
 
     file.close();
     return state;
+}
+
+bool EncryptedDb::checkCmd(const QString &cmd)
+{
+    if (cmd.startsWith("INSERT", Qt::CaseInsensitive) || cmd.startsWith("UPDATE", Qt::CaseInsensitive)
+            || cmd.startsWith("DELETE", Qt::CaseInsensitive))
+    {
+        return true;
+    }
+
+    return false;
 }
