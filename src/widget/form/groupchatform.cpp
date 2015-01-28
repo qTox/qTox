@@ -23,6 +23,8 @@
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/core.h"
 #include "src/misc/style.h"
+#include <QApplication>
+#include <QDesktopServices>
 #include <QPushButton>
 #include <QMimeData>
 #include <QDragEnterEvent>
@@ -52,6 +54,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     }
 
     nameLabel->setText(group->getGroupWidget()->getName());
+    nameLabel->setHighlightURLs(true);
 
     nusersLabel->setFont(Style::getFont(Style::Medium));
     nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->getPeersCount()));
@@ -82,6 +85,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig)
         {if (text != orig) emit groupTitleChanged(group->getGroupId(), text.left(128));} );
+    connect(nameLabel, &QLabel::linkActivated, this, &GroupChatForm::onLinkActivated);
 
     setAcceptDrops(true);
 }
@@ -126,6 +130,14 @@ void GroupChatForm::onUserListChanged()
         nameLabel->setObjectName("peersLabel");
         namesListLayout->addWidget(nameLabel);
     }
+}
+
+void GroupChatForm::onLinkActivated(const QString &link)
+{
+    // Only open links in group chat titles when Ctrl is held, to not block 
+    // normal editing
+    if (QApplication::queryKeyboardModifiers() & Qt::ControlModifier)
+        QDesktopServices::openUrl(link);
 }
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)

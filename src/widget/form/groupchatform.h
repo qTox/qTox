@@ -43,6 +43,7 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onCallClicked();
+    void onLinkActivated(const QString& link);
 
 protected:
     // drag & drop
