@@ -437,10 +437,7 @@ QString Widget::askProfiles()
                                             false, // if the user can enter their own input
                                             &ok);
     if (!ok) // user cancelled
-    {
-        qApp->quit();
         return "";
-    }
     else
         return profile;
 }
