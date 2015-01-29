@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
     }
-    else if (!ipc.isCurrentOwner() && !parser.isSet("P"))
+    else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
     {
         time_t event = ipc.postEvent("$activate");
         ipc.waitUntilProcessed(event);
