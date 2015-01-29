@@ -319,6 +319,7 @@ Widget::~Widget()
     core->saveConfiguration();
     AutoUpdater::abortUpdates();
     delete core;
+    icon->hide();
     hideMainForms();
     delete settingsWidget;
     delete addFriendForm;
@@ -609,10 +610,14 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
                 show();
                 activateWindow();
             }
-            else if (isMinimized() || !isActiveWindow())
+            else if (isMinimized())
+            {
                 forceShow();
+            }
             else
+            {
                 hide();
+            }
 
             break;
         }
