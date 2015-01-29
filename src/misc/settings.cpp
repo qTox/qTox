@@ -29,12 +29,7 @@
 #include <QList>
 #include <QStyleFactory>
 
-
-#ifdef Q_OS_LINUX
-#define SHOW_SYSTEM_TRAY_DEFAULT (bool) false
-#else   // OS is not linux
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
-#endif
 
 const QString Settings::OLDFILENAME = "settings.ini";
 const QString Settings::FILENAME = "qtox.ini";
