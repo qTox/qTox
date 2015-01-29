@@ -8,8 +8,9 @@
 #undef signals
 #endif
 extern "C" {
-  #include <libappindicator/app-indicator.h>
-  #include <gtk/gtk.h>
+    #include <libappindicator/app-indicator.h>
+    #include <gtk/gtk.h>
+    #include <libdbusmenu-glib/server.h>
 }
 #define signals public
 #endif

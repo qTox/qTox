@@ -4,7 +4,6 @@
 #include <QMenu>
 #include <QFile>
 #include <QDebug>
-#include <libdbusmenu-glib/server.h>
 #include "src/misc/settings.h"
 
 SystemTrayIcon::SystemTrayIcon()
@@ -39,12 +38,15 @@ SystemTrayIcon::SystemTrayIcon()
     {
         qtIcon = new QSystemTrayIcon;
         backendType = SystrayBackendType::Qt;
+        connect(qtIcon, &QSystemTrayIcon::activated, this, &SystemTrayIcon::activated);
     }
 }
 
 QString SystemTrayIcon::extractIconToFile(QIcon icon, QString name)
 {
     QString iconPath;
+    (void) icon;
+    (void) name;
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     iconPath = Settings::getSettingsDirPath()+"/"+name+".png";
     QSize iconSize = icon.actualSize(QSize{64,64});
