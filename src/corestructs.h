@@ -16,6 +16,9 @@ enum class Status : int {Online = 0, Away, Busy, Offline};
 
 struct ToxID
 {
+    ToxID()=default;
+    ToxID(const ToxID& other);
+
     QString publicKey;
     QString noSpam;
     QString checkSum;

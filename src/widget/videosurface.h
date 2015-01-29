@@ -44,7 +44,7 @@ protected:
     void unsubscribe();
 
 private slots:
-    void onNewFrameAvailable(const VideoFrame newFrame);
+    void onNewFrameAvailable(const VideoFrame &newFrame);
 
 private:
     VideoSource* source;

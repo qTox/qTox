@@ -32,7 +32,7 @@ public:
     virtual void unsubscribe() = 0;
 
 signals:
-    void frameAvailable(const VideoFrame frame);
+    void frameAvailable(const VideoFrame& frame);
 
 };
 

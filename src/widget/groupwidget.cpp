@@ -99,16 +99,9 @@ void GroupWidget::updateStatusLight()
     Group *g = GroupList::findGroup(groupId);
 
     if (!g->getEventFlag())
-    {
         statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
-    }
     else
-    {
-        if (!g->getMentionedFlag())
-            statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-        else
-            statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
-    }
+        statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
 }
 
 void GroupWidget::setChatForm(Ui::MainWindow &ui)

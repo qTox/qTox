@@ -28,7 +28,8 @@
 const QString TabCompleter::nickSuffix = QString(": ");
 
 TabCompleter::TabCompleter(ChatTextEdit* msgEdit, Group* group)
-    : QObject(msgEdit), msgEdit(msgEdit), group(group), enabled(false)
+    : QObject{msgEdit}, msgEdit{msgEdit}, group{group},
+      enabled{false}, lastCompletionLength{0}
 {
 }
 

@@ -31,7 +31,7 @@ public:
     ~CString();
 
     uint8_t* data();
-    uint16_t size();
+    uint16_t size() const;
 
     static QString toString(const uint8_t* cMessage, const uint16_t cMessageSize);
     static uint16_t fromString(const QString& message, uint8_t* cMessage);
