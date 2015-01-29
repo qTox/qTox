@@ -238,3 +238,23 @@ void AVForm::onFilterAudioToggled(bool filterAudio)
 {
     Settings::getInstance().setFilterAudio(filterAudio);
 }
+
+void AVForm::on_HueSlider_valueChanged(int value)
+{
+    Camera::getInstance()->setProp(Camera::HUE, value / 100.0);
+}
+
+void AVForm::on_BrightnessSlider_valueChanged(int value)
+{
+    Camera::getInstance()->setProp(Camera::BRIGHTNESS, value / 100.0);
+}
+
+void AVForm::on_SaturationSlider_valueChanged(int value)
+{
+    Camera::getInstance()->setProp(Camera::SATURATION, value / 100.0);
+}
+
+void AVForm::on_ContrastSlider_valueChanged(int value)
+{
+    Camera::getInstance()->setProp(Camera::CONTRAST, value / 100.0);
+}

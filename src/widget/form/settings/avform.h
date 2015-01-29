@@ -61,6 +61,14 @@ private slots:
     virtual void hideEvent(QHideEvent*);
     virtual void showEvent(QShowEvent*);
 
+    void on_HueSlider_valueChanged(int value);
+
+    void on_BrightnessSlider_valueChanged(int value);
+
+    void on_SaturationSlider_valueChanged(int value);
+
+    void on_ContrastSlider_valueChanged(int value);
+
 private:
     Ui::AVSettings *bodyUI;
     VideoSurface* camView;
