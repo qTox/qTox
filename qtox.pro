@@ -53,6 +53,23 @@ TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sor
 DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
 
+contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
+	DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
+
+	INCLUDEPATH += "/usr/include/libappindicator-0.1"
+	INCLUDEPATH += "/usr/include/gtk-2.0"
+	INCLUDEPATH += "/usr/include/glib-2.0"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/include/cairo"
+	INCLUDEPATH += "/usr/include/pango-1.0"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+	INCLUDEPATH += "/usr/include/atk-1.0"
+	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
+
+	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
+}
+
 contains(DISABLE_PLATFORM_EXT, YES) {
 
 } else {
@@ -189,7 +206,9 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/misc/serialize.h \
     src/widget/form/settings/advancedform.h \
     src/audio.h \
-    src/widget/callconfirmwidget.h
+    src/widget/callconfirmwidget.h \
+    src/widget/systemtrayicon.h \
+    src/widget/systemtrayicon_private.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -257,7 +276,8 @@ SOURCES += \
     src/misc/serialize.cpp \
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp \
-    src/widget/callconfirmwidget.cpp
+    src/widget/callconfirmwidget.cpp \
+    src/widget/systemtrayicon.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
     HEADERS += src/audiofilterer.h
