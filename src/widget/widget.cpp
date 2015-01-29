@@ -622,6 +622,10 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
         case QSystemTrayIcon::MiddleClick:
             hide();
             break;
+        case QSystemTrayIcon::Unknown:
+            if (isHidden())
+                forceShow();
+            break;
         default:
             break;
     }

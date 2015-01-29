@@ -22,6 +22,9 @@ signals:
     void activated(QSystemTrayIcon::ActivationReason);
 
 private:
+    QString extractIconToFile(QIcon icon, QString name="icon");
+
+private:
     SystrayBackendType backendType;
     QSystemTrayIcon* qtIcon;
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND

@@ -65,9 +65,9 @@ contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
 	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
 	INCLUDEPATH += "/usr/include/atk-1.0"
+	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
 
-	LIBS += -L/usr/lib/x86_64-linux-gnu -lappindicator
-	LIBS += -L/usr/lib/x86_64-linux-gnu -lgtk-x11-2.0
+	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
 }
 
 contains(DISABLE_PLATFORM_EXT, YES) {
