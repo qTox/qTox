@@ -44,6 +44,7 @@ class FriendListWidget;
 class MaskablePixmapWidget;
 class QTimer;
 class QTranslator;
+class SystemTrayIcon;
 
 class Widget : public QMainWindow
 {
@@ -149,7 +150,7 @@ private:
     void saveSplitterGeometry();
     QString askProfiles();
     QString detectProfile();
-    QSystemTrayIcon *icon;
+    SystemTrayIcon *icon;
     QMenu *trayMenu;
     QAction *statusOnline,
             *statusAway,
