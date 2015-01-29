@@ -1251,8 +1251,6 @@ bool Core::loadConfiguration(QString path)
     // tox core is already decrypted
     if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
     {
-        bool error = true;
-        
         // get salt
         QFile file(HistoryKeeper::getHistoryPath());
         file.open(QIODevice::ReadOnly);
@@ -1266,6 +1264,7 @@ bool Core::loadConfiguration(QString path)
         }
         else
         {
+            bool error = true;
             do
             {
                 while (!pwsaltedkeys[ptHistory])

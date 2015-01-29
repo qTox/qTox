@@ -79,7 +79,7 @@ private:
     CameraWorker* worker;
 
 private slots:
-    void onNewFrameAvailable(const VideoFrame frame);
+    void onNewFrameAvailable(const VideoFrame& frame);
 
 };
 

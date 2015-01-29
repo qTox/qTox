@@ -29,6 +29,12 @@ CameraWorker::CameraWorker(int index)
     qRegisterMetaType<QList<QSize>>();
 }
 
+CameraWorker::~CameraWorker()
+{
+    if (clock)
+        delete clock;
+}
+
 void CameraWorker::onStart()
 {
     clock = new QTimer(this);

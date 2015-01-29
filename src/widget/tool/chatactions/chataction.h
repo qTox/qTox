@@ -29,7 +29,8 @@ class ChatAction : public QObject
 {
     Q_OBJECT
 public:
-    ChatAction(const bool &me, const QString &author, const QString &date) : isMe(me), name(author), date(date) {;}
+    ChatAction(const bool &me, const QString &author, const QString &date)
+        : isMe{me}, name{author}, date{date}, textTable{nullptr}, textEdit{nullptr} {;}
     virtual ~ChatAction(){;}
 
     void assignPlace(QTextTable *position, QTextEdit* te);

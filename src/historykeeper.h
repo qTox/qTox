@@ -63,10 +63,10 @@ private:
     void updateAliases();
     QPair<int, ChatType> getChatID(const QString &id_str, ChatType ct);
     int getAliasID(const QString &id_str);
-    QString wrapMessage(const QString &str);
-    QString unWrapMessage(const QString &str);
 
-    ChatType convertToChatType(int);
+    static QString wrapMessage(const QString &str);
+    static QString unWrapMessage(const QString &str);
+    static ChatType convertToChatType(int);
 
     GenericDdInterface *db;
     QMap<QString, int> aliases;

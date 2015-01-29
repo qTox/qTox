@@ -36,7 +36,7 @@ uint8_t* CData::data()
     return cData;
 }
 
-uint16_t CData::size()
+uint16_t CData::size() const
 {
     return cDataSize;
 }

@@ -40,7 +40,7 @@ public slots:
 
 private:
     struct SortableString {
-        inline SortableString(const QString &n) { contents = n; }
+        inline SortableString(const QString &n) : contents{n} {}
         bool operator<(const SortableString &other) const;
         QString contents;
     };
