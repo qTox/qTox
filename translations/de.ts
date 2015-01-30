@@ -11,7 +11,7 @@
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="72"/>
         <source>Initializing Camera...</source>
-        <translation type="unfinished"></translation>
+        <translation>Initialisiert Kamera...</translation>
     </message>
 </context>
 <context>
@@ -172,12 +172,12 @@ Soll der Proxy ignoriert und eine direkte Internetverbindung genutzt werden?</tr
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="35"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation type="unfinished">Speichert die Einstellungen im Arbeits- statt im normalen Konfigurationsverzeichnis</translation>
+        <translation>Speichert die Einstellungen im Arbeits- statt im normalen Konfigurationsverzeichnis</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="38"/>
         <source>Make Tox portable</source>
-        <translation type="unfinished">Macht Tox portabel</translation>
+        <translation>Macht Tox portabel</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="45"/>
@@ -567,41 +567,24 @@ Alias:</translation>
         <translation>Änderung wird erst nach Neustart von qTox aktiv.</translation>
     </message>
     <message>
-        <source>Translation</source>
-        <translation type="vanished">Sprache</translation>
-    </message>
-    <message>
-        <source>Save settings to the working directory instead of the usual conf dir</source>
-        <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation type="vanished">Speichert die Einstellungen im Arbeits- statt im normalen Konfigurationsverzeichnis</translation>
-    </message>
-    <message>
-        <source>Make Tox portable</source>
-        <translation type="vanished">Macht Tox portabel</translation>
-    </message>
-    <message>
-        <source>System tray integration</source>
-        <translation type="vanished">Systemtray Integration</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="111"/>
         <source>Show system tray icon</source>
-        <translation>Im Systemtray zeigen</translation>
+        <translation>In der Systemleiste anzeigen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="131"/>
         <source>Start in tray</source>
-        <translation>Ins Tray starten</translation>
+        <translation>In die Systemleiste starten</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="144"/>
         <source>Close to tray</source>
-        <translation>Ins Tray schließen</translation>
+        <translation>In die Systemleiste schließen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="157"/>
         <source>Minimize to tray</source>
-        <translation>Ins Tray minimieren</translation>
+        <translation>In die Systemleiste minimieren</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="118"/>
@@ -611,37 +594,37 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="67"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="102"/>
         <source>System tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemleiste</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="180"/>
         <source>Check for updates on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Beim Starten auf Updates überprüfen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="192"/>
         <source>Save to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern in:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="253"/>
         <source>Auto away after (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisch abwesend nach (0 zum Deaktivieren):</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
         <source>Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="271"/>
         <source>Group chats always notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Über Gruppenchats immer informieren</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
@@ -649,30 +632,14 @@ Alias:</translation>
         <translation>Zeigt Statusänderungen der Kontakte</translation>
     </message>
     <message>
-        <source>Check for updates on startup (unstable)</source>
-        <translation type="vanished">Prüft beim Start auf Updates (nicht stabil)</translation>
-    </message>
-    <message>
-        <source>Focus qTox when a message is received</source>
-        <translation type="vanished">Bringt qTox in den Vordergrund, wenn eine Nachricht eintrifft</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="326"/>
         <source>Faux offline messaging</source>
         <translation>Imitiert Offline Benachrichtigung</translation>
     </message>
     <message>
-        <source>Compact contact list (restart required)</source>
-        <translation type="vanished">Kompakte Darstellung der Kontaktliste (Neustart benötigt)</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="247"/>
         <source>Provided in minutes</source>
         <translation>Angabe in Minuten</translation>
-    </message>
-    <message>
-        <source>Auto away after (0 to disable)</source>
-        <translation type="vanished">Automatisch abwesend nach (0 deaktiviert)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="228"/>
@@ -691,30 +658,9 @@ Alias:</translation>
         <translation>Emoticons benutzen</translation>
     </message>
     <message>
-        <source>Smiley Pack</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation type="vanished">Emoticon Paket</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="vanished">Stil</translation>
-    </message>
-    <message>
-        <source>Theme color</source>
-        <translation type="vanished">Farbe</translation>
-    </message>
-    <message>
-        <source>Emoticon size</source>
-        <translation type="vanished">Emoticon Größe</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="463"/>
         <source> px</source>
         <translation> Pixel</translation>
-    </message>
-    <message>
-        <source>Timestamp format</source>
-        <translation type="vanished">Zeitformat</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="549"/>
@@ -731,23 +677,23 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="593"/>
         <source>Proxy type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy Typ:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="600"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adresse:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="629"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"></translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="634"/>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="644"/>
@@ -766,10 +712,6 @@ Alias:</translation>
         <translation>Dateien automatisch annehmen</translation>
     </message>
     <message>
-        <source>Save files in</source>
-        <translation type="vanished">Speichern unter</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="215"/>
         <source>PushButton</source>
         <translation>Schaltfläche</translation>
@@ -777,22 +719,22 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="285"/>
         <source>On new message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bei neuer Nachricht:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="297"/>
         <source>Show window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Fenster</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="304"/>
         <source>Focus window</source>
-        <translation type="unfinished"></translation>
+        <translation>Bringe Fenster in den Vordergrund</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="333"/>
         <source>Compact contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakte Kontaktliste</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="349"/>
@@ -803,27 +745,27 @@ Alias:</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="373"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Smiley Paket:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="447"/>
         <source>Emoticon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Emoticon Größe:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="479"/>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="496"/>
         <source>Theme color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fensterfarbe:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="513"/>
         <source>Timestamp format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitformat:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="535"/>
@@ -837,18 +779,9 @@ Alias:</translation>
         <translation>IPv6 aktivieren (empfohlen)</translation>
     </message>
     <message>
-        <source>Proxy type</source>
-        <translation type="vanished">Proxy Typ</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="624"/>
         <source>None</source>
         <translation>Keinen</translation>
-    </message>
-    <message>
-        <source>Address</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation type="vanished">Adresse</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="610"/>
@@ -1340,7 +1273,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/main.cpp" line="69"/>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished">Startet eine neue Instanz und lädt das festgelegte Profil.</translation>
+        <translation>Startet eine neue Instanz und lädt das festgelegte Profil.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="69"/>
@@ -1350,7 +1283,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/misc/style.cpp" line="72"/>
         <source>Default</source>
-        <translation>Default</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../src/misc/style.cpp" line="72"/>
@@ -1415,7 +1348,7 @@ Es wird beim Neustart von qTox installiert.</translation>
     <message>
         <location filename="../src/widget/callconfirmwidget.cpp" line="27"/>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingehender Anruf...</translation>
     </message>
 </context>
 <context>
@@ -1549,10 +1482,6 @@ Soll es dennoch genutzt werden?</translation>
         <location filename="../src/widget/widget.cpp" line="101"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
-    </message>
-    <message>
-        <source>Change status to:</source>
-        <translation type="vanished">Ändert den Status in:</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="174"/>
