@@ -177,6 +177,7 @@ int main(int argc, char *argv[])
     }
 
     // Run
+    a.setQuitOnLastWindowClosed(false);
     Widget* w = Widget::getInstance();
     int errorcode = a.exec();
 
