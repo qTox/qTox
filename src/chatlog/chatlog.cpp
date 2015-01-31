@@ -130,7 +130,7 @@ void ChatLog::layout(int start, int end, qreal width)
     // Line at start-1 is considered to have the correct position. All following lines are
     // positioned in respect to this line.
     if(start - 1 >= 0)
-        h = lines[start - 1]->boundingSceneRect().bottom() + lineSpacing;
+        h = lines[start - 1]->sceneBoundingRect().bottom() + lineSpacing;
 
     start = clamp<int>(start, 0, lines.size());
     end = clamp<int>(end + 1, 0, lines.size());
@@ -140,7 +140,7 @@ void ChatLog::layout(int start, int end, qreal width)
         ChatLine* l = lines[i].get();
 
         l->layout(width, QPointF(0.0, h));
-        h += l->boundingSceneRect().height() + lineSpacing;
+        h += l->sceneBoundingRect().height() + lineSpacing;
     }
 }
 
@@ -290,7 +290,7 @@ ChatLineContent* ChatLog::getContentFromPos(QPointF scenePos) const
     auto itr = std::lower_bound(lines.cbegin(), lines.cend(), scenePos.y(), ChatLine::lessThanBSRectBottom);
 
     //find content
-    if(itr != lines.cend() && (*itr)->boundingSceneRect().contains(scenePos))
+    if(itr != lines.cend() && (*itr)->sceneBoundingRect().contains(scenePos))
         return (*itr)->getContent(scenePos);
 
     return nullptr;
@@ -549,7 +549,7 @@ void ChatLog::scrollToLine(ChatLine::Ptr line)
         return;
 
     updateSceneRect();
-    verticalScrollBar()->setValue(line->boundingSceneRect().top());
+    verticalScrollBar()->setValue(line->sceneBoundingRect().top());
 }
 
 void ChatLog::selectAll()
@@ -621,8 +621,8 @@ void ChatLog::updateMultiSelectionRect()
     if(selectionMode == Multi && selFirstRow >= 0 && selLastRow >= 0)
     {
         QRectF selBBox;
-        selBBox = selBBox.united(lines[selFirstRow]->boundingSceneRect());
-        selBBox = selBBox.united(lines[selLastRow]->boundingSceneRect());
+        selBBox = selBBox.united(lines[selFirstRow]->sceneBoundingRect());
+        selBBox = selBBox.united(lines[selLastRow]->sceneBoundingRect());
 
         selGraphItem->setRect(selBBox);
         selGraphItem->show();
@@ -642,7 +642,7 @@ void ChatLog::updateTypingNotification()
     qreal posY = 0.0;
 
     if(!lines.empty())
-        posY = lines.last()->boundingSceneRect().bottom() + lineSpacing;
+        posY = lines.last()->sceneBoundingRect().bottom() + lineSpacing;
 
     notification->layout(useableWidth(), QPointF(0.0, posY));
 }
@@ -668,10 +668,10 @@ ChatLine::Ptr ChatLog::findLineByPosY(qreal yPos) const
 
 QRectF ChatLog::calculateSceneRect() const
 {
-    qreal bottom = (lines.empty() ? 0.0 : lines.last()->boundingSceneRect().bottom());
+    qreal bottom = (lines.empty() ? 0.0 : lines.last()->sceneBoundingRect().bottom());
 
     if(typingNotification.get() != nullptr)
-        bottom += typingNotification->boundingSceneRect().height() + lineSpacing;
+        bottom += typingNotification->sceneBoundingRect().height() + lineSpacing;
 
     return QRectF(-margins.left(), -margins.top(), useableWidth(), bottom + margins.bottom() + margins.top());
 }

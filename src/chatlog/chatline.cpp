@@ -123,7 +123,7 @@ void ChatLine::updateBBox()
         bbox.setHeight(qMax(c->sceneBoundingRect().height(), bbox.height()));
 }
 
-QRectF ChatLine::boundingSceneRect() const
+QRectF ChatLine::sceneBoundingRect() const
 {
     return bbox;
 }
@@ -241,12 +241,12 @@ void ChatLine::moveBy(qreal deltaY)
 
 bool ChatLine::lessThanBSRectTop(const ChatLine::Ptr lhs, const qreal rhs)
 {
-    return lhs->boundingSceneRect().top() < rhs;
+    return lhs->sceneBoundingRect().top() < rhs;
 }
 
 bool ChatLine::lessThanBSRectBottom(const ChatLine::Ptr lhs, const qreal rhs)
 {
-    return lhs->boundingSceneRect().bottom() < rhs;
+    return lhs->sceneBoundingRect().bottom() < rhs;
 }
 
 bool ChatLine::lessThanRowIndex(const ChatLine::Ptr lhs, const ChatLine::Ptr rhs)

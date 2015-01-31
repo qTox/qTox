@@ -62,7 +62,7 @@ public:
     ChatLine();
     virtual ~ChatLine();
 
-    QRectF boundingSceneRect() const;
+    QRectF sceneBoundingRect() const;
 
     void replaceContent(int col, ChatLineContent* lineContent);
     void layout(qreal width, QPointF scenePos);
