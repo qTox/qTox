@@ -43,7 +43,6 @@ public:
     virtual bool isOverSelection(QPointF scenePos) const override;
     virtual QString getSelectedText() const override;
 
-    virtual QRectF boundingSceneRect() const override;
     virtual QRectF boundingRect() const override;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 

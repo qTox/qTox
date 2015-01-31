@@ -30,7 +30,6 @@ public:
     Spinner(const QString& img, QSize size, qreal speed);
 
     virtual QRectF boundingRect() const override;
-    virtual QRectF boundingSceneRect() const override;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     virtual void setWidth(qreal width) override;
     virtual void visibilityChanged(bool visible) override;

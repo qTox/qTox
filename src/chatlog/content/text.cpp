@@ -140,11 +140,6 @@ QString Text::getSelectedText() const
     return selectedText;
 }
 
-QRectF Text::boundingSceneRect() const
-{
-    return QRectF(scenePos(), size);
-}
-
 QRectF Text::boundingRect() const
 {
     return QRectF(QPointF(0, 0), size);

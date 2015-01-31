@@ -55,11 +55,6 @@ void NotificationIcon::setWidth(qreal width)
     Q_UNUSED(width)
 }
 
-QRectF NotificationIcon::boundingSceneRect() const
-{
-    return QRectF(scenePos(), size);
-}
-
 qreal NotificationIcon::getAscent() const
 {
     return 3.0;

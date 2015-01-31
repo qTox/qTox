@@ -38,11 +38,6 @@ QRectF Spinner::boundingRect() const
     return QRectF(QPointF(-size.width() / 2.0, -size.height() / 2.0), size);
 }
 
-QRectF Spinner::boundingSceneRect() const
-{
-    return QRectF(scenePos(), size);
-}
-
 void Spinner::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     QTransform rotMat;

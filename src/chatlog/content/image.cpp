@@ -29,11 +29,6 @@ QRectF Image::boundingRect() const
     return QRectF(QPointF(-size.width() / 2.0, -size.height() / 2.0), size);
 }
 
-QRectF Image::boundingSceneRect() const
-{
-    return QRectF(scenePos(), size);
-}
-
 qreal Image::getAscent() const
 {
     return 0.0;
