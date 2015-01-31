@@ -117,6 +117,9 @@
                <property name="text">
                 <string>Light icon</string>
                </property>
+               <property name="toolTip">
+                <string comment="toolTip for light icon setting">Enable light tray icon.</string>
+               </property>
               </widget>
              </item>
              <item row="2" column="0">
@@ -129,6 +132,9 @@
                </property>
                <property name="text">
                 <string>Start in tray</string>
+               </property>
+               <property name="toolTip">
+                <string comment="toolTip for Start in tray setting">qTox will start minimized in tray.</string>
                </property>
               </widget>
              </item>
@@ -143,6 +149,10 @@
                <property name="text">
                 <string>Close to tray</string>
                </property>
+               <property name="toolTip">
+                <string comment="toolTip for close to tray setting">After pressing close (X) qTox will minimize to tray,
+instead of closing itself.</string>
+               </property>
               </widget>
              </item>
              <item row="2" column="2">
@@ -155,6 +165,10 @@
                </property>
                <property name="text">
                 <string>Minimize to tray</string>
+               </property>
+               <property name="toolTip">
+                <string comment="toolTip for minimize to tray setting">After pressing minimize (_) qTox will minimize itself to tray,
+instead of system taskbar.</string>
                </property>
               </widget>
              </item>
@@ -191,6 +205,9 @@
               <property name="text">
                <string>Save to:</string>
               </property>
+              <property name="toolTip">
+               <string>Set where files will be saved.</string>
+              </property>
              </widget>
             </item>
             <item row="1" column="0">
@@ -213,6 +230,9 @@
               </property>
               <property name="text">
                <string>PushButton</string>
+              </property>
+              <property name="toolTip">
+               <string>Set where files will be saved.</string>
               </property>
              </widget>
             </item>
@@ -244,7 +264,7 @@
             <item row="0" column="0" colspan="2">
              <widget class="QLabel" name="autoAwayLabel">
               <property name="toolTip">
-               <string>Provided in minutes</string>
+               <string>Your status is changed to Away after set time of inactivity.</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
@@ -267,6 +287,9 @@
          <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
           <item row="3" column="0">
            <widget class="QCheckBox" name="groupAlwaysNotify">
+            <property name="toolTip">
+             <string comment="toolTip for Group chat always notify">Always notify about new messages in groupchats.</string>
+            </property>
             <property name="text">
              <string>Group chats always notify</string>
             </property>
@@ -293,6 +316,9 @@
             </property>
             <item>
              <widget class="QCheckBox" name="showWindow">
+              <property name="toolTip">
+               <string comment="tooltip for Show window setting">Show qTox's window when you receive new message.</string>
+              </property>
               <property name="text">
                <string>Show window</string>
               </property>
@@ -300,6 +326,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="showInFront">
+              <property name="toolTip">
+               <string comment="toolTip for Show window setting">Focus qTox when you receive message.</string>
+              </property>
               <property name="text">
                <string>Focus window</string>
               </property>
@@ -322,6 +351,10 @@
           </item>
           <item row="2" column="1">
            <widget class="QCheckBox" name="cbFauxOfflineMessaging">
+            <property name="toolTip">
+             <string comment="toolTip for Faux offline messaging setting">Messages you are trying to send to your friends when they are not online
+will be sent to them when they will appear online to you.</string>
+            </property>
             <property name="text">
              <string>Faux offline messaging</string>
             </property>
@@ -329,6 +362,10 @@
           </item>
           <item row="3" column="1">
            <widget class="QCheckBox" name="cbCompactLayout">
+            <property name="toolTip">
+             <string comment="toolTip for compact layout setting">Your contact list will be shown in compact mode.
+qTox's restart needed.</string>
+            </property>
             <property name="text">
              <string>Compact contact list</string>
             </property>
