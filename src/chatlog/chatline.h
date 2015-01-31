@@ -80,6 +80,11 @@ public:
 
     bool isOverSelection(QPointF scenePos);
 
+    //comparators
+    static bool lessThanBSRectTop(const ChatLine::Ptr lhs, const qreal rhs);
+    static bool lessThanBSRectBottom(const ChatLine::Ptr lhs, const qreal rhs);
+    static bool lessThanRowIndex(const ChatLine::Ptr lhs, const ChatLine::Ptr rhs);
+
 protected:
     friend class ChatLog;
 
@@ -89,11 +94,6 @@ protected:
     void updateBBox();
     void setRow(int idx);
     void visibilityChanged(bool visible);
-
-    //comparators
-    static bool lessThanBSRectTop(const ChatLine::Ptr lhs, const qreal rhs);
-    static bool lessThanBSRectBottom(const ChatLine::Ptr lhs, const qreal rhs);
-    static bool lessThanRowIndex(const ChatLine::Ptr lhs, const ChatLine::Ptr rhs);
 
 private:
     int row = -1;
