@@ -88,7 +88,7 @@ ChatLog::ChatLog(QWidget* parent)
     // Updates the layout of all chat-lines after a resize
     workerTimer = new QTimer(this);
     workerTimer->setSingleShot(false);
-    workerTimer->setInterval(100);
+    workerTimer->setInterval(5);
     connect(workerTimer, &QTimer::timeout, this, &ChatLog::onWorkerTimeout);
 }
 
@@ -697,7 +697,7 @@ void ChatLog::onWorkerTimeout()
 {
     // Fairly arbitrary but
     // large values will make the UI unresponsive
-    const int stepSize = 400;
+    const int stepSize = 50;
 
     layout(workerLastIndex, workerLastIndex+stepSize, useableWidth());
     workerLastIndex += stepSize;

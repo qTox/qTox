@@ -35,7 +35,7 @@ Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwTe
     , defFont(font)
 {
     setText(txt);
-    setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+    setAcceptedMouseButtons(Qt::LeftButton);
 }
 
 Text::~Text()
