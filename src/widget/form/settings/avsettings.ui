@@ -60,12 +60,20 @@
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
+            <property name="toolTip">
+             <string>Use slider to set volume of your speakers.
+WARNING: slider is not supposed to work yet.</string>
+            </property>
            </widget>
           </item>
           <item row="7" column="1">
            <widget class="QSlider" name="microphoneSlider">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="toolTip">
+             <string>Use slider to set volume of your microphone.
+WARNING: slider is not supposed to work yet.</string>
             </property>
            </widget>
           </item>
@@ -101,6 +109,9 @@
             <property name="text">
              <string>Filter audio</string>
             </property>
+            <property name="toolTip">
+             <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -122,6 +133,13 @@
               <property name="text">
                <string>Resolution</string>
               </property>
+              <property name="toolTip">
+               <string>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note though that with better video quality there is needed better internet connection.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</string>
+              </property>
              </widget>
             </item>
             <item row="0" column="1">
@@ -131,6 +149,13 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note though that with better video quality there is needed better internet connection.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</string>
               </property>
              </widget>
             </item>

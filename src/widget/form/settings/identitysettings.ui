@@ -81,6 +81,10 @@
          <property name="title">
           <string>Tox ID</string>
          </property>
+         <property name="toolTip">
+          <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.</string>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="CroppingLabel" name="toxIdLabel">
@@ -109,6 +113,9 @@
             </item>
             <item>
              <widget class="QComboBox" name="profiles">
+              <property name="toolTip">
+               <string comment="toolTip for currently set profile">Currently selected profile.</string>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -124,7 +131,7 @@
             <item>
              <widget class="QPushButton" name="loadButton">
               <property name="toolTip">
-               <string comment="tooltip">Switching profiles is disabled during calls</string>
+               <string comment="tooltip for loading profile button">Load selected profile and switch to it.</string>
               </property>
               <property name="text">
                <string comment="load profile button">Load</string>
@@ -136,6 +143,9 @@
               <property name="text">
                <string comment="rename profile button">Rename</string>
               </property>
+              <property name="toolTip">
+               <string comment="tooltip for renaming profile button">Rename selected profile.</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -143,12 +153,16 @@
               <property name="text">
                <string comment="export profile button">Export</string>
               </property>
+              <property name="toolTip">
+               <string comment="tooltip for profile exporting button">Allows you to export your Tox profile to a file.
+Profile does not contain your history.</string>
+              </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="deleteButton">
               <property name="toolTip">
-               <string comment="delete profile button tooltip">This is useful to remain safe on public computers</string>
+               <string comment="delete profile button tooltip">Delete selected profile.</string>
               </property>
               <property name="text">
                <string comment="delete profile button">Delete</string>
@@ -164,12 +178,15 @@
               <property name="text">
                <string comment="import profile button">Import a profile</string>
               </property>
+              <property name="toolTip">
+               <string comment="tooltip for importing profile button">Import Tox profile from a .tox file.</string>
+              </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="newButton">
               <property name="toolTip">
-               <string comment="tooltip">Switching profiles is disabled during calls</string>
+               <string comment="tooltip for creating new Tox ID button">Create new Tox ID and switch to it.</string>
               </property>
               <property name="text">
                <string comment="new profile button">New Tox ID</string>

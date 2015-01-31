@@ -44,7 +44,7 @@
        <item>
         <widget class="QCheckBox" name="cbTypingNotification">
          <property name="toolTip">
-          <string extracomment="Your friends will be able to see when you are typing."/>
+          <string comment="tooltip for typing notifications setting">Your friends will be able to see when you are typing.</string>
          </property>
          <property name="text">
           <string>Send Typing Notifications</string>
@@ -58,6 +58,10 @@
          </property>
          <property name="text">
           <string>Keep History (unstable)</string>
+         </property>
+         <property name="toolTip">
+          <string comment="toolTip for history setting">History is available in qTox, but we cannot promise that one day it will not dissapear without a trace :-/
+We will try our best to make sure that this will not happen though!</string>
          </property>
         </widget>
        </item>
@@ -100,6 +104,12 @@
         <widget class="QGroupBox" name="nospamGroup">
          <property name="title">
           <string>Nospam</string>
+         </property>
+         <property name="toolTip">
+          <string comment="toolTip for nospam">Nospam is part of your Tox ID.
+It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
+When you change nospam, your current contacts still can communicate with you,
+but new contacts need to know your new Tox ID to be able to add you.</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
