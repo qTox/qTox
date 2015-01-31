@@ -624,6 +624,8 @@ void ChatLog::updateMultiSelectionRect()
         selBBox = selBBox.united(lines[selFirstRow]->sceneBoundingRect());
         selBBox = selBBox.united(lines[selLastRow]->sceneBoundingRect());
 
+        scene->invalidate(selGraphItem->sceneBoundingRect());
+
         selGraphItem->setRect(selBBox);
         selGraphItem->show();
     }
