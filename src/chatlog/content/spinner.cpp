@@ -28,7 +28,6 @@ Spinner::Spinner(const QString &img, QSize Size, qreal speed)
 
     timer.setInterval(33); // 30Hz
     timer.setSingleShot(false);
-    timer.start();
 
     QObject::connect(&timer, &QTimer::timeout, this, &Spinner::timeout);
 }

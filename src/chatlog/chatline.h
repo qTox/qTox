@@ -102,7 +102,7 @@ private:
     qreal width = 100.0;
     qreal columnSpacing = 15.0;
     QRectF bbox;
-    bool isVisible = true;
+    bool isVisible = false;
 
 };
 

@@ -174,7 +174,7 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 
 void Text::visibilityChanged(bool visible)
 {
-    isVisible = visible;
+    keepInMemory = visible;
 
     regenerate();
     update();
@@ -250,7 +250,7 @@ void Text::regenerate()
     size = idealSize();
 
     // if we are not visible -> free mem
-    if(!isVisible)
+    if(!keepInMemory)
         freeResources();
 }
 

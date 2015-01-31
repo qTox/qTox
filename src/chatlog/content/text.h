@@ -46,7 +46,7 @@ public:
     virtual QRectF boundingRect() const override;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-    virtual void visibilityChanged(bool isVisible) override;
+    virtual void visibilityChanged(bool keepInMemory) override;
 
     virtual qreal getAscent() const override;
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -73,7 +73,7 @@ private:
     QString elidedText;
     QString selectedText;
     QSizeF size;
-    bool isVisible = false;
+    bool keepInMemory = false;
     bool elide = false;
     bool dirty = false;
     int selectionEnd = -1;
