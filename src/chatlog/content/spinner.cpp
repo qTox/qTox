@@ -17,6 +17,7 @@
 #include "spinner.h"
 
 #include <QPainter>
+#include <QGraphicsScene>
 #include <QDebug>
 
 Spinner::Spinner(const QString &img, QSize Size, qreal speed)
@@ -79,5 +80,7 @@ qreal Spinner::getAscent() const
 void Spinner::timeout()
 {
     rot += rotSpeed;
-    update();
+
+    if(scene())
+        scene()->invalidate(sceneBoundingRect());
 }

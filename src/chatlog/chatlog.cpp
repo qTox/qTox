@@ -42,7 +42,7 @@ ChatLog::ChatLog(QWidget* parent)
     // Create the scene
     busyScene = new QGraphicsScene(this);
     scene = new QGraphicsScene(this);
-    scene->setItemIndexMethod(QGraphicsScene::NoIndex); //Bsp-Tree is actually slower in this case
+    scene->setItemIndexMethod(QGraphicsScene::BspTreeIndex);
     setScene(scene);
 
     // Cfg.
@@ -380,6 +380,7 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     {
         l->addToScene(scene);
         l->setRow(--n);
+        l->visibilityChanged(false);
         lines.prepend(l);
     }
 
