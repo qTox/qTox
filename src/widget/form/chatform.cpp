@@ -887,7 +887,7 @@ void ChatForm::setFriendTyping(bool isTyping)
     Text* text = dynamic_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
 
     if(text)
-        text->setText("<div class=typing>" + QString("%1 ...").arg(f->getDisplayedName()) + "</div>");
+        text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
 }
 
 void ChatForm::clearReciepts()
