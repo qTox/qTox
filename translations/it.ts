@@ -17,12 +17,12 @@
 <context>
     <name>AVSettings</name>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="112"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="123"/>
         <source>Video Settings</source>
         <translation>Impostazioni Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="123"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="134"/>
         <source>Resolution</source>
         <translation>Risoluzione</translation>
     </message>
@@ -42,42 +42,75 @@
         <translation>Impostazioni Audio</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="64"/>
+        <source>Use slider to set volume of your speakers.
+WARNING: slider is not supposed to work yet.</source>
+        <translation>Usa lo slider per impostare il volume degli altoparlanti.
+ATTENZIONE: lo slider è ancora non funzionante.</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="75"/>
+        <source>Use slider to set volume of your microphone.
+WARNING: slider is not supposed to work yet.</source>
+        <translation>Usa lo slider per impostare il volume del microfono.
+ATTENZIONE: lo slider è ancora non funzionante.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="83"/>
         <source>Playback device</source>
         <translation>Dispositivo di output</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="82"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="90"/>
         <source>Capture device</source>
         <translation>Dispositivo di input</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="95"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="103"/>
         <source>Rescan audio devices</source>
         <translation>Cerca dispositivi audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="102"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="110"/>
         <source>Filter audio</source>
         <translation>Filtra audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="140"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="113"/>
+        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
+        <translation>Filtra l&apos;audio del microfono, così le persone che chiami ti sentiranno meglio.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="137"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="154"/>
+        <source>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note though that with better video quality there is needed better internet connection.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</source>
+        <translation>Imposta la risoluzione della webcam.
+Più alto il valore, migliore sarà la qualità del video che i tuoi contatti riceveranno.
+NOTA: più alta è la qualità video, più veloce deve essere la connessione ad internet.
+Può capitare che la tua connessione ad internet non sia abbastanza veloce per gestire
+qualità video elevate, questo può causare problemi con le chiamate video.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="165"/>
         <source>Hue</source>
         <translation>Colore</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="154"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="179"/>
         <source>Brightness</source>
         <translation>Luminoistà</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="168"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="193"/>
         <source>Saturation</source>
         <translation>Saturazione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="182"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="207"/>
         <source>Contrast</source>
         <translation>Contrasto</translation>
     </message>
@@ -588,204 +621,271 @@ Soprannome:</translation>
         <translation>Usa icona brillante</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="180"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="121"/>
+        <source>Enable light tray icon.</source>
+        <comment>toolTip for light icon setting</comment>
+        <translation>Abilita icona brillante nella trybar.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="137"/>
+        <source>qTox will start minimized in tray.</source>
+        <comment>toolTip for Start in tray setting</comment>
+        <translation>qTox sarà avviato minimizzato nella traybar.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="153"/>
+        <source>After pressing close (X) qTox will minimize to tray,
+instead of closing itself.</source>
+        <comment>toolTip for close to tray setting</comment>
+        <translation>Premendo l&apos;icona &quot;chiudi&quot; (X) qTox sarà minimizzato
+nella traybar invece che essere chiuso.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="170"/>
+        <source>After pressing minimize (_) qTox will minimize itself to tray,
+instead of system taskbar.</source>
+        <comment>toolTip for minimize to tray setting</comment>
+        <translation>Premendo l&apos;icona &quot;minimizza&quot; (_) qTox sarà minimizzato
+nella traybar invece che nella taskbar.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="194"/>
         <source>Check for updates on startup</source>
         <translation>Controlla aggiornamenti all&apos;avvio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="192"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
         <source>Save to:</source>
         <translation>Salva in:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="228"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="209"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="235"/>
+        <source>Set where files will be saved.</source>
+        <translation>Scegli dove salvare i files ricevuti.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="248"/>
         <source>Set to 0 to disable</source>
         <translation>Imposta 0 per disabilitare</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="253"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
+        <source>Your status is changed to Away after set time of inactivity.</source>
+        <translation>Il tuo stato sarà cambaito in &quot;Assente&quot; dopo l&apos;ammontare di tempo impostato.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="273"/>
         <source>Auto away after (0 to disable):</source>
         <translation>Mostra come assente dopo (0 per disabilitare):</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="285"/>
         <source>Chat</source>
         <translation>Chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="271"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="291"/>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation>Mostra sempre le notifiche per i nuovi messaggi nelle chat di gruppo.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="294"/>
         <source>Group chats always notify</source>
         <translation>Usa notifiche per chat di gruppo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="285"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="308"/>
         <source>On new message:</source>
         <translation>Quando arriva un nuovo messaggio:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="297"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="320"/>
+        <source>Show qTox&apos;s window when you receive new message.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation>Porta la finestra di qTox in primo piano quando arriva un nuovo messaggio.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="323"/>
         <source>Show window</source>
         <translation>Mostra finestra</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="304"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="330"/>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Show window setting</comment>
+        <translation>Dai il focus alla finestra di qTox quando arriva un nuovo messaggio.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="333"/>
         <source>Focus window</source>
         <translation>Dai il focus alla finestra</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="333"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="355"/>
+        <source>Messages you are trying to send to your friends when they are not online
+will be sent to them when they will appear online to you.</source>
+        <comment>toolTip for Faux offline messaging setting</comment>
+        <translation>I messaggi che invii ai contatti offline saranno inviati quando appaiono online.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="366"/>
+        <source>Your contact list will be shown in compact mode.
+qTox&apos;s restart needed.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation>La lista contatti sarà visualizzata in modalità compatta.
+Richiede riavvio.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="370"/>
         <source>Compact contact list</source>
         <translation>Usa lista contatti compatta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="373"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="410"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>Emoticons:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="447"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="484"/>
         <source>Emoticon size:</source>
         <translation>Dimensione:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="479"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="516"/>
         <source>Style:</source>
         <translation>Stile:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="496"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="533"/>
         <source>Theme color:</source>
         <translation>Colore tema:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="513"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="550"/>
         <source>Timestamp format:</source>
         <translation>Formato data/ora:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="535"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="572"/>
         <source>Connection Settings</source>
         <translation>Impostazioni Connessione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="559"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="596"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Abilita IPv6 (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="593"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="630"/>
         <source>Proxy type:</source>
         <translation>Proxy:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="600"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="637"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>Indirizzo:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="131"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="134"/>
         <source>Start in tray</source>
         <translation>Avvia nella traybar</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="144"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="150"/>
         <source>Close to tray</source>
         <translation>Chiudi nella traybar</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="157"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="167"/>
         <source>Minimize to tray</source>
         <translation>Minimizza nella traybar</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="301"/>
         <source>Show contacts&apos; status changes</source>
         <translation>Mostra quando i contatti cambiano stato</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="326"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="359"/>
         <source>Faux offline messaging</source>
         <translation>Usa falsi messaggi offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="247"/>
-        <source>Provided in minutes</source>
-        <translation>Espresso in minuti</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="234"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="254"/>
         <source> minutes</source>
         <translation> minuti</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="199"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="216"/>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
         <translation>Puoi impostare questa preferenza per ogni singolo contatto usando il click destro sul suo nome.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="202"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="219"/>
         <source>Autoaccept files</source>
         <translation>Accetta automaticamente i trasferimenti di files</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="215"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="232"/>
         <source>PushButton</source>
         <translation>Sfoglia</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="349"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="386"/>
         <source>Theme</source>
         <translation>Impostazioni Tema</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="355"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="392"/>
         <source>Use emoticons</source>
         <translation>Usa emoticons</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="463"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="500"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="549"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="586"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Disabilitando questo sarà possibile usare qTox con Tor. Tuttavia verrà aggiunto carico alla rete Tox, quindi disabilitare solo se necessario.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="552"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="589"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Abilita UDP (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="624"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="661"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="629"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="666"/>
         <source>SOCKS5</source>
         <translation>SOCKS 5</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="634"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="671"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="610"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="647"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Porta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="644"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="681"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Riconnetti</translation>
@@ -1052,65 +1152,104 @@ I contatti e i log delle chat associati ad esso, saranno eliminati.</translation
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="88"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="85"/>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.</source>
+        <comment>Tox ID tooltip</comment>
+        <translation>Qesto mucchio di caratteri serve agli altri client Tox per contattarti.
+Condivilo con chi vuoi comunicare.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="92"/>
         <source>Your Tox ID (click to copy)</source>
         <translation>(clicca qui per copiare)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="98"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="102"/>
         <source>Profiles</source>
         <translation>Gestione Profili</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="106"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="110"/>
         <source>Available profiles:</source>
         <translation>Profili disponibili:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="130"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="117"/>
+        <source>Currently selected profile.</source>
+        <comment>toolTip for currently set profile</comment>
+        <translation>Profilo corrente.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="134"/>
+        <source>Load selected profile and switch to it.</source>
+        <comment>tooltip for loading profile button</comment>
+        <translation>Carica il profilo selezionato.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="137"/>
         <source>Load</source>
         <comment>load profile button</comment>
         <translation>Carica</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="127"/>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="172"/>
-        <source>Switching profiles is disabled during calls</source>
-        <comment>tooltip</comment>
-        <translation>Non puoi cambiare profilo durante una chiamata</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="137"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="144"/>
         <source>Rename</source>
         <comment>rename profile button</comment>
         <translation>Rinomina</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="144"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="147"/>
+        <source>Rename selected profile.</source>
+        <comment>tooltip for renaming profile button</comment>
+        <translation>Rinomina il profilo selezionato.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="154"/>
         <source>Export</source>
         <comment>export profile button</comment>
         <translation>Esporta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="154"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="157"/>
+        <source>Allows you to export your Tox profile to a file.
+Profile does not contain your history.</source>
+        <comment>tooltip for profile exporting button</comment>
+        <translation>Esporta il profilo corrente in un file.
+I profili non contengono la cronologia messaggi.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="165"/>
+        <source>Delete selected profile.</source>
+        <comment>delete profile button tooltip</comment>
+        <translation>Elimina il profilo selezionato.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="168"/>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Elimina</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="151"/>
-        <source>This is useful to remain safe on public computers</source>
-        <comment>delete profile button tooltip</comment>
-        <translation>Utile per preservare la tua sicurezza su computer pubblici</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="165"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="179"/>
         <source>Import a profile</source>
         <comment>import profile button</comment>
         <translation>Importa profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identitysettings.ui" line="175"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="182"/>
+        <source>Import Tox profile from a .tox file.</source>
+        <comment>tooltip for importing profile button</comment>
+        <translation>Importa un profilo da un file &quot;.tox&quot;.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="189"/>
+        <source>Create new Tox ID and switch to it.</source>
+        <comment>tooltip for creating new Tox ID button</comment>
+        <translation>Crea un nuovo profilo (Tox ID) e iniza subito ad usarlo.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="192"/>
         <source>New Tox ID</source>
         <comment>new profile button</comment>
         <translation>Nuovo profilo</translation>
@@ -1211,6 +1350,12 @@ Vuoi eliminare il vecchio file?</translation>
 <context>
     <name>PrivacySettings</name>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="47"/>
+        <source>Your friends will be able to see when you are typing.</source>
+        <comment>tooltip for typing notifications setting</comment>
+        <translation>I tuoi contatti potranno vedere se stai digitando un messaggio.</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
         <source>Send Typing Notifications</source>
         <translation>Permetti ai miei contatti di vedere quando sto scrivendo</translation>
@@ -1221,32 +1366,52 @@ Vuoi eliminare il vecchio file?</translation>
         <translation>Salva log delle chat (unstable)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="70"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="63"/>
+        <source>History is available in qTox, but we cannot promise that one day it will not dissapear without a trace :-/
+We will try our best to make sure that this will not happen though!</source>
+        <comment>toolTip for history setting</comment>
+        <translation>La cronologia messaggi è disponibile in qTox, ma non possiamo promettere che un giorno non sparisca senza lasciare tracce :-/
+Faremo del nostro meglio per assicurarci che questo non accada!</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="74"/>
         <source>Encryption</source>
         <translation>Crittografiia</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="83"/>
         <source>Encrypt Tox datafile</source>
         <translation>Cripta Tox datafile</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="89"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="93"/>
         <source>Encrypt History</source>
         <translation>Cripta log delle chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="102"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="106"/>
         <source>Nospam</source>
         <translation>Nospam</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="110"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="109"/>
+        <source>Nospam is part of your Tox ID.
+It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
+When you change nospam, your current contacts still can communicate with you,
+but new contacts need to know your new Tox ID to be able to add you.</source>
+        <comment>toolTip for nospam</comment>
+        <translation>Il valore &quot;nospam&quot; fa parte del tuo Tox ID.
+Lo si deve modificare quando si ritiene che si stanno ricevendo troppe richiste d&apos;amicizia da persone sconosciute.
+Quando modifichi il valore &quot;nospam&quot;, i contatti che hai già aggiunto potranno continuare a comunicare con te,
+ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="120"/>
         <source>HHHHHHHH</source>
         <translation>HHHHHHHH</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="117"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="127"/>
         <source>Generate random nospam</source>
         <translation>Genera valore nospam casuale</translation>
     </message>
@@ -1503,116 +1668,116 @@ Usare comunque il protocollo tox1?</translation>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="434"/>
+        <location filename="../src/widget/widget.cpp" line="435"/>
         <source>Choose a profile</source>
         <translation>Scegli un profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="435"/>
+        <location filename="../src/widget/widget.cpp" line="436"/>
         <source>Please choose which identity to use</source>
         <translation>Per favore scegli quale identità usare</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="456"/>
+        <location filename="../src/widget/widget.cpp" line="457"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="463"/>
-        <location filename="../src/widget/widget.cpp" line="470"/>
-        <location filename="../src/widget/widget.cpp" line="491"/>
+        <location filename="../src/widget/widget.cpp" line="464"/>
+        <location filename="../src/widget/widget.cpp" line="471"/>
+        <location filename="../src/widget/widget.cpp" line="492"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="463"/>
+        <location filename="../src/widget/widget.cpp" line="464"/>
         <source>Unable to open this file</source>
         <translation>Impossibile aprire il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="470"/>
+        <location filename="../src/widget/widget.cpp" line="471"/>
         <source>Unable to read this image</source>
         <translation>Impossibile leggere l&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="491"/>
+        <location filename="../src/widget/widget.cpp" line="492"/>
         <source>This image is too big</source>
         <translation>L&apos;immagine è troppo grande</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="531"/>
+        <location filename="../src/widget/widget.cpp" line="532"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="540"/>
+        <location filename="../src/widget/widget.cpp" line="541"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="586"/>
+        <location filename="../src/widget/widget.cpp" line="587"/>
         <source>Add friend</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="598"/>
+        <location filename="../src/widget/widget.cpp" line="599"/>
         <source>File transfers</source>
         <translation>Files trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="643"/>
+        <location filename="../src/widget/widget.cpp" line="644"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="748"/>
+        <location filename="../src/widget/widget.cpp" line="749"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossibile inviare la richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="776"/>
+        <location filename="../src/widget/widget.cpp" line="777"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="778"/>
+        <location filename="../src/widget/widget.cpp" line="779"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="780"/>
+        <location filename="../src/widget/widget.cpp" line="781"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="782"/>
+        <location filename="../src/widget/widget.cpp" line="783"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="785"/>
+        <location filename="../src/widget/widget.cpp" line="786"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1010"/>
+        <location filename="../src/widget/widget.cpp" line="1011"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1035"/>
+        <location filename="../src/widget/widget.cpp" line="1036"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 ha impostato il titolo in %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1186"/>
+        <location filename="../src/widget/widget.cpp" line="1187"/>
         <source>Message failed to send</source>
         <translation>Impossibile inviare il messaggio</translation>
     </message>
