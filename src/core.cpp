@@ -742,7 +742,7 @@ void Core::acceptFriendRequest(const QString& userId)
 
 void Core::requestFriendship(const QString& friendAddress, const QString& message)
 {
-    const QString userId = friendAddress.mid(0, TOX_CLIENT_ID_SIZE * 2);
+    const QString userId = friendAddress.mid(0, TOX_PUBLIC_KEY_SIZE * 2);
 
     if (hasFriendWithAddress(friendAddress))
     {
@@ -1439,7 +1439,7 @@ void Core::loadFriends()
         // assuming there are not that many friends to fill up the whole stack
         int32_t *ids = new int32_t[friendCount];
         tox_get_friendlist(tox, ids, friendCount);
-        uint8_t clientId[TOX_CLIENT_ID_SIZE];
+        uint8_t clientId[TOX_PUBLIC_KEY_SIZE];
         for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i) {
             if (tox_get_client_id(tox, ids[i], clientId) == 0) {
                 emit friendAdded(ids[i], CUserId::toString(clientId));
@@ -1500,7 +1500,7 @@ ToxID Core::getGroupPeerToxID(int groupId, int peerId) const
 {
     ToxID peerToxID;
 
-    uint8_t rawID[TOX_CLIENT_ID_SIZE];
+    uint8_t rawID[TOX_PUBLIC_KEY_SIZE];
     int res = tox_group_peer_pubkey(tox, groupId, peerId, rawID);
     if (res == -1)
     {
@@ -1706,14 +1706,14 @@ bool Core::hasFriendWithAddress(const QString &addr) const
         return false;
     }
 
-    QString pubkey = addr.left(TOX_CLIENT_ID_SIZE * 2);
+    QString pubkey = addr.left(TOX_PUBLIC_KEY_SIZE * 2);
     return hasFriendWithPublicKey(pubkey);
 }
 
 bool Core::hasFriendWithPublicKey(const QString &pubkey) const
 {
     // Valid length check
-    if (pubkey.length() != (TOX_CLIENT_ID_SIZE * 2))
+    if (pubkey.length() != (TOX_PUBLIC_KEY_SIZE * 2))
     {
         return false;
     }
@@ -1746,9 +1746,9 @@ bool Core::hasFriendWithPublicKey(const QString &pubkey) const
 QString Core::getFriendAddress(int friendNumber) const
 {
     // If we don't know the full address of the client, return just the id, otherwise get the full address
-    uint8_t rawid[TOX_CLIENT_ID_SIZE];
+    uint8_t rawid[TOX_PUBLIC_KEY_SIZE];
     tox_get_client_id(tox, friendNumber, rawid);
-    QByteArray data((char*)rawid,TOX_CLIENT_ID_SIZE);
+    QByteArray data((char*)rawid,TOX_PUBLIC_KEY_SIZE);
     QString id = data.toHex().toUpper();
 
     QString addr = Settings::getInstance().getFriendAdress(id);
