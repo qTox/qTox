@@ -559,6 +559,7 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
+    alSourcef(alSource, AL_GAIN, Audio::outputVolume);
     if (state != AL_PLAYING)
     {
         alSourcePlay(alSource);

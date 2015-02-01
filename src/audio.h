@@ -73,6 +73,7 @@ public:
     static QThread* audioThread;
     static ALCcontext* alContext;
     static ALuint alMainSource;
+    static float outputVolume;
 
 private:
     explicit Audio()=default;

@@ -41,6 +41,7 @@ ALCdevice* Audio::alInDev{nullptr};
 ALCdevice* Audio::alOutDev{nullptr};
 ALCcontext* Audio::alContext{nullptr};
 ALuint Audio::alMainSource{0};
+float Audio::outputVolume{1.0};
 
 void audioDebugLog(QString msg)
 {
@@ -261,7 +262,10 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
         return;
 
     if (!call.alSources.contains(peer))
+    {
         alGenSources(1, &call.alSources[peer]);
+        alSourcef(call.alSources[peer], AL_GAIN, outputVolume);
+    }
 
     playAudioBuffer(call.alSources[peer], data, samples, channels, sample_rate);
 }
@@ -301,6 +305,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
+    alSourcef(alSource, AL_GAIN, outputVolume);
     if (state != AL_PLAYING)
         alSourcePlay(alSource);
 }
