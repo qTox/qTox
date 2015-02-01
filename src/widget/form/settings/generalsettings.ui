@@ -264,7 +264,7 @@ instead of system taskbar.</string>
             <item row="0" column="0" colspan="2">
              <widget class="QLabel" name="autoAwayLabel">
               <property name="toolTip">
-               <string>Your status is changed to Away after set time of inactivity.</string>
+               <string>Your status is changed to Away after set period of inactivity.</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
@@ -327,7 +327,7 @@ instead of system taskbar.</string>
             <item>
              <widget class="QCheckBox" name="showInFront">
               <property name="toolTip">
-               <string comment="toolTip for Show window setting">Focus qTox when you receive message.</string>
+               <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
               </property>
               <property name="text">
                <string>Focus window</string>
