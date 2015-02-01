@@ -47,6 +47,7 @@ AVForm::AVForm() :
     connect(bodyUI->outDevCombobox, qcomboboxIndexChanged, this, &AVForm::onOutDevChanged);
     connect(bodyUI->filterAudio, SIGNAL(toggled(bool)), this, SLOT(onFilterAudioToggled(bool)));
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
+    bodyUI->playbackSlider->setValue(100);
 }
 
 AVForm::~AVForm()
@@ -257,4 +258,9 @@ void AVForm::on_SaturationSlider_valueChanged(int value)
 void AVForm::on_ContrastSlider_valueChanged(int value)
 {
     Camera::getInstance()->setProp(Camera::CONTRAST, value / 100.0);
+}
+
+void AVForm::on_playbackSlider_valueChanged(int value)
+{
+    Audio::getInstance().outputVolume = value / 100.0;
 }

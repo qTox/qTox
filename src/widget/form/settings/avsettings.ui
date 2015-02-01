@@ -61,8 +61,7 @@
              <enum>Qt::Horizontal</enum>
             </property>
             <property name="toolTip">
-             <string>Use slider to set volume of your speakers.
-WARNING: slider is not supposed to work yet.</string>
+             <string>Use slider to set volume of your speakers.</string>
             </property>
            </widget>
           </item>
