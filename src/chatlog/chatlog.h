@@ -79,8 +79,10 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent* ev);
     virtual void mouseMoveEvent(QMouseEvent* ev);
     virtual void scrollContentsBy(int dx, int dy);
-    virtual void resizeEvent(QResizeEvent *ev);
-    virtual void showEvent(QShowEvent *);
+    virtual void resizeEvent(QResizeEvent* ev);
+    virtual void showEvent(QShowEvent*);
+    virtual void focusInEvent(QFocusEvent* ev);
+    virtual void focusOutEvent(QFocusEvent* ev);
 
     void updateMultiSelectionRect();
     void updateTypingNotification();
@@ -105,6 +107,7 @@ private:
         Down,
     };
 
+    QAction* copyAction = nullptr;
     QGraphicsScene* scene = nullptr;
     QGraphicsScene* busyScene = nullptr;
     QVector<ChatLine::Ptr> lines;
@@ -117,6 +120,7 @@ private:
     int selClickedCol = -1;
     int selFirstRow = -1;
     int selLastRow = -1;
+    QColor selectionRectColor = QColor(166,225,255);
     SelectionMode selectionMode = None;
     QPointF clickPos;
     QGraphicsRectItem* selGraphItem = nullptr;

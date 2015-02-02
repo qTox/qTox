@@ -200,9 +200,6 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
     QWidget* sender = (QWidget*)QObject::sender();
     pos = sender->mapToGlobal(pos);
 
-    //copy action
-    menu.actions().first()->setEnabled(chatWidget->hasTextToBeCopied());
-
     menu.exec(pos);
 }
 

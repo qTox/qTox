@@ -56,15 +56,15 @@ ChatLog::ChatLog(QWidget* parent)
     setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 
     // The selection rect for multi-line selection
-    const QColor selGraphColor = QColor(166,225,255);
-    selGraphItem = scene->addRect(0,0,0,0,selGraphColor.darker(120),selGraphColor);
+    selGraphItem = scene->addRect(0,0,0,0,selectionRectColor.darker(120),selectionRectColor);
     selGraphItem->setZValue(-1.0); // behind all other items
 
     // copy action (ie. Ctrl+C)
-    QAction* copyAction = new QAction(this);
+    copyAction = new QAction(this);
     copyAction->setIcon(QIcon::fromTheme("edit-copy"));
     copyAction->setText(tr("Copy"));
     copyAction->setShortcut(QKeySequence::Copy);
+    copyAction->setEnabled(false);
     connect(copyAction, &QAction::triggered, this, [this](bool) { copySelectedText(); });
     addAction(copyAction);
 
@@ -106,6 +106,7 @@ void ChatLog::clearSelection()
     selClickedRow = -1;
 
     selectionMode = None;
+    copyAction->setEnabled(false);
 
     updateMultiSelectionRect();
 }
@@ -213,6 +214,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                 content->selectionStarted(sceneClickPos);
 
                 selectionMode = Precise;
+                copyAction->setEnabled(true);
 
                 // ungrab mouse grabber
                 if(scene->mouseGrabberItem())
@@ -225,6 +227,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                 selLastRow = selClickedRow;
 
                 selectionMode = Multi;
+                copyAction->setEnabled(true);
             }
         }
 
@@ -563,6 +566,7 @@ void ChatLog::selectAll()
     selFirstRow = 0;
     selLastRow = lines.size()-1;
 
+    copyAction->setEnabled(true);
     updateMultiSelectionRect();
 }
 
@@ -733,9 +737,21 @@ void ChatLog::onWorkerTimeout()
     }
 }
 
-void ChatLog::showEvent(QShowEvent *)
+void ChatLog::showEvent(QShowEvent*)
 {
     // Empty.
     // The default implementation calls centerOn - for some reason - causing
     // the scrollbar to move.
+}
+
+void ChatLog::focusInEvent(QFocusEvent* ev)
+{
+    QGraphicsView::focusInEvent(ev);
+    selGraphItem->setBrush(QBrush(selectionRectColor));
+}
+
+void ChatLog::focusOutEvent(QFocusEvent* ev)
+{
+    QGraphicsView::focusOutEvent(ev);
+    selGraphItem->setBrush(QBrush(selectionRectColor.lighter(120)));
 }
