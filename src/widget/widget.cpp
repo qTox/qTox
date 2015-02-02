@@ -675,6 +675,12 @@ void Widget::setStatusMessage(const QString &statusMessage)
     ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
 }
 
+void Widget::reloadHistory()
+{
+    for (auto f : FriendList::getAllFriends())
+        f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+}
+
 void Widget::addFriend(int friendId, const QString &userId)
 {
     //qDebug() << "Widget: Adding friend with id" << userId;

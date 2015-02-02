@@ -77,6 +77,7 @@ public:
     virtual void resizeEvent(QResizeEvent *event);
 
     void clearAllReceipts();
+    void reloadHistory();
 
     void reloadTheme();
 

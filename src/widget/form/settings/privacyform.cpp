@@ -99,7 +99,7 @@ bool PrivacyForm::setChatLogsPassword()
         {
             Settings::getInstance().setEncryptLogs(true);
             HistoryKeeper::getInstance()->importMessages(oldMessages);
-            // TODO: The old encrypted history is loaded, but doesn't appear in the GUI. @apprb ?
+            Widget::getInstance()->reloadHistory();
             delete dialog;
             return true;
         }
