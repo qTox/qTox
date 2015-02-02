@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
+    Copyright (C) 2015 by Project Tox <https://tox.im>
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -14,20 +14,33 @@
     See the COPYING file for more details.
 */
 
-#ifndef AUDIOFILTERER_H
-#define AUDIOFILTERER_H
-#include <cstdint>
+#include "toxaudiofilterer.h"
+extern "C" {
+  #include <filter_audio.h>
+}
 
-class AudioFilterer
+ToxAudioFilterer::~ToxAudioFilterer()
 {
-public:
-    static AudioFilterer* createAudioFilter();
+    closeFilter();
+}
 
-    virtual ~AudioFilterer() {;}
+void ToxAudioFilterer::startFilter(unsigned int fs)
+{
+    closeFilter();
+    filter = new_filter_audio(fs);
+}
 
-    virtual void startFilter(unsigned int) {;}
-    virtual void filterAudio(int16_t*, int) {;}
-    virtual void closeFilter() {;}
-};
+void ToxAudioFilterer::closeFilter()
+{
+    if (filter)
+        kill_filter_audio(filter);
+    filter = nullptr;
+}
 
-#endif // AUDIOFILTERER_H
+void ToxAudioFilterer::filterAudio(int16_t* data, int framesize)
+{
+    if (!filter)
+        return;
+
+    filter_audio(filter, (int16_t*) data, framesize);
+}

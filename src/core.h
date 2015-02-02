@@ -33,9 +33,7 @@ class QTimer;
 class QString;
 class CString;
 class VideoSource;
-#ifdef QTOX_FILTER_AUDIO
 class AudioFilterer;
-#endif
 
 class Core : public QObject
 {
@@ -287,9 +285,7 @@ private:
     int dhtServerId;
     static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[TOXAV_MAX_CALLS];
-#ifdef QTOX_FILTER_AUDIO
     static AudioFilterer * filterer[TOXAV_MAX_CALLS];
-#endif
     static QHash<int, ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
     QMutex fileSendMutex, messageSendMutex;
     bool ready;

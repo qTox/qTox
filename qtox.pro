@@ -208,7 +208,8 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/audio/audio.h \
     src/widget/callconfirmwidget.h \
     src/widget/systemtrayicon.h \
-    src/widget/systemtrayicon_private.h
+    src/widget/systemtrayicon_private.h \
+    src/audio/audiofilterer.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -277,11 +278,12 @@ SOURCES += \
     src/widget/form/settings/advancedform.cpp \
     src/audio/audio.cpp \
     src/widget/callconfirmwidget.cpp \
-    src/widget/systemtrayicon.cpp
+    src/widget/systemtrayicon.cpp \
+    src/audio/audiofilterer.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
-    HEADERS += src/audio/audiofilterer.h
-    SOURCES += src/audio/audiofilterer.cpp
+    HEADERS += src/audio/toxaudiofilterer.h
+    SOURCES += src/audio/toxaudiofilterer.cpp
 }
 
 contains(DEFINES, QTOX_PLATFORM_EXT) {
