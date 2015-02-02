@@ -458,7 +458,7 @@ QString ChatLog::getSelectedText() const
             if(lastSender != lines[i]->content[0]->getText() && !lines[i]->content[0]->getText().isEmpty())
             {
                 //author changed
-                out += lines[i]->content[0]->getText() + ":\n";
+                out += QString(out.isEmpty() ? "%1:\n" : "\n%1:\n").arg(lines[i]->content[0]->getText());
                 lastSender = lines[i]->content[0]->getText();
             }
 
