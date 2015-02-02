@@ -197,7 +197,7 @@ QString ChatMessage::detectQuotes(const QString& str)
     QString quotedText;
     for (int i=0;i<messageLines.size();++i)
     {
-        if (QRegExp("^[ ]*&gt;.*").exactMatch(messageLines[i]))
+        if (QRegExp("^&gt;( |&gt;|[^_\\d\\W]).*").exactMatch(messageLines[i]))
             quotedText += "<span class=quote>" + messageLines[i] + "</span>";
         else
             quotedText += messageLines[i];
