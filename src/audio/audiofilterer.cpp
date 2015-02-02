@@ -14,12 +14,16 @@
     See the COPYING file for more details.
 */
 
+#include "audiofilterer.h"
 
 #ifdef QTOX_FILTER_AUDIO
+extern "C" {
+  #include <filter_audio.h>
+}
 
-#include "audiofilterer.h"
-extern "C"{
-#include <filter_audio.h>
+AudioFilterer::~AudioFilterer()
+{
+    closeFilter();
 }
 
 void AudioFilterer::startFilter(unsigned int fs)
@@ -35,7 +39,6 @@ void AudioFilterer::closeFilter()
     filter = nullptr;
 }
 
-
 void AudioFilterer::filterAudio(int16_t* data, int framesize)
 {
     if (!filter)
@@ -43,11 +46,18 @@ void AudioFilterer::filterAudio(int16_t* data, int framesize)
 
     filter_audio(filter, (int16_t*) data, framesize);
 }
+#else
+AudioFilterer::~AudioFilterer() {  }
+void AudioFilterer::startFilter(unsigned int) {  }
+void AudioFilterer::closeFilter() { }
+void AudioFilterer::filterAudio(int16_t*, int) {  }
+#endif
 
-
-AudioFilterer::~AudioFilterer()
+AudioFilterer* AudioFilterer::createAudioFilter()
 {
-    closeFilter();
+#ifdef QTOX_FILTER_AUDIO
+    return new AudioFilterer();
+#else
+    return nullptr;
+#endif
 }
-
-#endif // QTOX_FILTER_AUDIO

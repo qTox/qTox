@@ -233,6 +233,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/callconfirmwidget.h \
     src/widget/systemtrayicon.h \
     src/widget/systemtrayicon_private.h \
+    src/audio/audiofilterer.h \
     src/nexus.h \
     src/widget/gui.h \
     src/widget/androidgui.h \
@@ -306,15 +307,11 @@ SOURCES += \
     src/audio/audio.cpp \
     src/widget/callconfirmwidget.cpp \
     src/widget/systemtrayicon.cpp \
+    src/audio/audiofilterer.cpp \
     src/nexus.cpp \
     src/widget/gui.cpp \
     src/widget/androidgui.cpp \
     src/offlinemsgengine.cpp
-
-contains(DEFINES, QTOX_FILTER_AUDIO) {
-    HEADERS += src/audio/audiofilterer.h
-    SOURCES += src/audio/audiofilterer.cpp
-}
 
 contains(DEFINES, QTOX_PLATFORM_EXT) {
     HEADERS += src/platform/timer.h

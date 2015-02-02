@@ -17,17 +17,13 @@
 #include "core.h"
 #include "video/camera.h"
 #include "audio/audio.h"
-#ifdef QTOX_FILTER_AUDIO
 #include "audio/audiofilterer.h"
-#endif
 #include "misc/settings.h"
 #include <QDebug>
 #include <QTimer>
 
 ToxCall Core::calls[TOXAV_MAX_CALLS];
-#ifdef QTOX_FILTER_AUDIO
 AudioFilterer * Core::filterer[TOXAV_MAX_CALLS] {nullptr};
-#endif
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
 
@@ -73,10 +69,9 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         Camera::getInstance()->subscribe();
     }
 
-#ifdef QTOX_FILTER_AUDIO
     if (Settings::getInstance().getFilterAudio())
     {
-        Core::filterer[callId] = new AudioFilterer();
+        Core::filterer[callId] = AudioFilterer::createAudioFilter();
         filterer[callId]->startFilter(48000);
     }
     else
@@ -84,7 +79,6 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
         delete filterer[callId];
         filterer[callId] = nullptr;
     }
-#endif
 }
 
 void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
@@ -265,10 +259,8 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
             return;
         }
 
-#ifdef QTOX_FILTER_AUDIO
         if (filterer[callId])
             filterer[callId]->filterAudio((int16_t*) buf, framesize);
-#endif
 
         if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
         {
@@ -349,14 +341,12 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
 
     calls[callId].active = false;
 
-#ifdef QTOX_FILTER_AUDIO
     if (filterer[callId])
     {
         filterer[callId]->closeFilter();
         delete filterer[callId];
         filterer[callId] = nullptr;
     }
-#endif
 
     emit static_cast<Core*>(core)->avCancel(friendId, callId);
 }
