@@ -115,8 +115,14 @@ public:
     bool getCheckUpdates() const;
     void setCheckUpdates(bool newValue);
 
+    bool getShowWindow() const;
+    void setShowWindow(bool newValue);
+
     bool getShowInFront() const;
     void setShowInFront(bool newValue);
+
+    bool getGroupAlwaysNotify() const;
+    void setGroupAlwaysNotify(bool newValue);
 
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
@@ -132,6 +138,9 @@ public:
 
     bool getFilterAudio() const;
     void setFilterAudio(bool newValue);
+
+    QSize getCamVideoRes() const;
+    void setCamVideoRes(QSize newValue);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -223,6 +232,9 @@ public:
     bool getFauxOfflineMessaging() const;
     void setFauxOfflineMessaging(bool value);
 
+    bool getCompactLayout() const;
+    void setCompactLayout(bool compact);
+
 public:
     void save(bool writeFriends = true);
     void save(QString path, bool writeFriends = true);
@@ -246,6 +258,7 @@ private:
     bool dontShowDhtDialog;
 
     bool fauxOfflineMessaging;
+    bool compactLayout;
     bool enableIPv6;
     QString translation;
     static bool makeToxPortable;
@@ -255,7 +268,9 @@ private:
     bool lightTrayIcon;
     bool useEmoticons;
     bool checkUpdates;
+    bool showWindow;
     bool showInFront;
+    bool groupAlwaysNotify;
 
     bool forceTCP;
 
@@ -305,6 +320,9 @@ private:
     QString outDev;
     bool filterAudio;
 
+    // Video
+    QSize camVideoRes;
+
     struct friendProp
     {
         QString alias;
@@ -323,6 +341,7 @@ signals:
     void smileyPackChanged();
     void emojiFontChanged();
     void timestampFormatChanged();
+    void compactLayoutChanged();
 };
 
 #endif // SETTINGS_HPP

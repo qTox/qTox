@@ -21,9 +21,10 @@
 #include <QString>
 #include <QList>
 #include <sodium.h>
+#include <atomic>
 
-/// For now we only support auto updates on Windows, although extending it is not a technical issue.
-/// Linux and Mac users are expected to use their package managers or update manually through official channels.
+/// For now we only support auto updates on Windows and OS X, although extending it is not a technical issue.
+/// Linux users are expected to use their package managers or update manually through official channels.
 #ifdef Q_OS_WIN
 #define AUTOUPDATE_ENABLED 1
 #elif defined(Q_OS_OSX)
@@ -122,6 +123,7 @@ private:
     static const QString updaterBin; ///< Path to the qtox-updater binary
     static unsigned char key[];
     static bool abortFlag; ///< If true, try to abort everything.
+    static std::atomic_bool isDownloadingUpdate; ///< We'll pretend there's no new update available if we're already updating
 };
 
 #endif // AUTOUPDATE_H

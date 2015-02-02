@@ -42,15 +42,15 @@ public:
     void show(Ui::MainWindow &ui);
     void setBodyHeadStyle(QString style);
 
+signals:
+    void setShowSystemTray(bool newValue);
+    void compactToggled(bool compact);
+
 private slots:
     void onTabChanged(int);
 
-signals:
-    void setShowSystemTray(bool newValue);
-
 private:
-    QWidget *head, *body; // keep the others private
-    IdentityForm *ifrm;
+    QWidget *head, *body;
     QTabWidget *settingsWidgets;
     QLabel *nameLabel, *imgLabel;
 };

@@ -47,18 +47,28 @@ private slots:
     void on_SaturationSlider_sliderMoved(int position);
     void on_BrightnessSlider_sliderMoved(int position);
     void on_HueSlider_sliderMoved(int position);
-    void on_videoModescomboBox_activated(int index);
+    void on_videoModescomboBox_currentIndexChanged(int index);
 
     // audio
     void onInDevChanged(const QString& deviceDescriptor);
     void onOutDevChanged(const QString& deviceDescriptor);
     void onFilterAudioToggled(bool filterAudio);
+    void on_playbackSlider_valueChanged(int value);
 
     // camera
     void onPropProbingFinished(Camera::Prop prop, double val);
     void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*);
+    virtual void showEvent(QShowEvent*);
+
+    void on_HueSlider_valueChanged(int value);
+
+    void on_BrightnessSlider_valueChanged(int value);
+
+    void on_SaturationSlider_valueChanged(int value);
+
+    void on_ContrastSlider_valueChanged(int value);
 
 private:
     Ui::AVSettings *bodyUI;

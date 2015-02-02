@@ -99,7 +99,7 @@ double Camera::getProp(Camera::Prop prop)
     return worker->getProp(int(prop));
 }
 
-void Camera::onNewFrameAvailable(const VideoFrame frame)
+void Camera::onNewFrameAvailable(const VideoFrame &frame)
 {
     emit frameAvailable(frame);
 

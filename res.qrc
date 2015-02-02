@@ -124,6 +124,7 @@
         <file>translations/fi.qm</file>
         <file>translations/fr.qm</file>
         <file>translations/it.qm</file>
+        <file>translations/lt.qm</file>
         <file>translations/mannol.qm</file>
         <file>translations/pirate.qm</file>
         <file>translations/pl.qm</file>
@@ -226,5 +227,8 @@
         <file>ui/fileTransferInstance/arrow_white.svg</file>
         <file>ui/fileTransferInstance/browse.svg</file>
         <file>ui/fileTransferInstance/filetransferWidget.css</file>
+        <file>ui/acceptCall/acceptCall.png</file>
+        <file>ui/rejectCall/rejectCall.png</file>
+        <file>ui/volButton/volButtonDisabled.png</file>
     </qresource>
 </RCC>

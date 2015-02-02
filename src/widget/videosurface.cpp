@@ -22,15 +22,17 @@
 #include <QDebug>
 
 VideoSurface::VideoSurface(QWidget* parent)
-    : QGLWidget(QGLFormat(QGL::SampleBuffers | QGL::SingleBuffer), parent)
-    , source(nullptr)
+    : QGLWidget(QGLFormat(QGL::SingleBuffer), parent)
+    , source{nullptr}
     , pbo{nullptr, nullptr}
-    , textureId(0)
-    , pboAllocSize(0)
-    , hasSubscribed(false)
-    , pboIndex(0)
+    , bgrProgramm{nullptr}
+    , yuvProgramm{nullptr}
+    , textureId{0}
+    , pboAllocSize{0}
+    , hasSubscribed{false}
+    , pboIndex{0}
 {
-    setAutoBufferSwap(false);
+    
 }
 
 VideoSurface::VideoSurface(VideoSource *source, QWidget* parent)
@@ -65,8 +67,8 @@ void VideoSurface::setSource(VideoSource *src)
 
 void VideoSurface::initializeGL()
 {
+    QGLWidget::initializeGL();
     qDebug() << "VideoSurface: Init";
-
     // pbo
     pbo[0] = new QOpenGLBuffer(QOpenGLBuffer::PixelUnpackBuffer);
     pbo[0]->setUsagePattern(QOpenGLBuffer::StreamDraw);
@@ -180,14 +182,6 @@ void VideoSurface::paintGL()
         pbo[nextPboIndex]->release();
     }
 
-    // render pbo
-    static float values[] = {
-        -1, -1,
-        1, -1,
-        -1, 1,
-        1, 1
-    };
-
     // background
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -220,6 +214,14 @@ void VideoSurface::paintGL()
 
     if (programm)
     {
+        // render pbo
+        static float values[] = {
+            -1, -1,
+            1, -1,
+            -1, 1,
+            1, 1
+        };
+
         programm->bind();
         programm->setAttributeArray(0, GL_FLOAT, values, 2);
         programm->enableAttributeArray(0);
@@ -259,7 +261,7 @@ void VideoSurface::unsubscribe()
     }
 }
 
-void VideoSurface::onNewFrameAvailable(const VideoFrame newFrame)
+void VideoSurface::onNewFrameAvailable(const VideoFrame& newFrame)
 {
     mutex.lock();
     frame = newFrame;

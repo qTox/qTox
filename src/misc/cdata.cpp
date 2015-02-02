@@ -36,7 +36,7 @@ uint8_t* CData::data()
     return cData;
 }
 
-uint16_t CData::size()
+uint16_t CData::size() const
 {
     return cDataSize;
 }
@@ -56,7 +56,7 @@ uint16_t CData::fromString(const QString& data, uint8_t* cData)
 
 // CUserId
 
-const uint16_t CUserId::SIZE{TOX_CLIENT_ID_SIZE};
+const uint16_t CUserId::SIZE{TOX_PUBLIC_KEY_SIZE};
 
 CUserId::CUserId(const QString &userId) :
     CData(userId, SIZE < userId.size() ? userId.size() : SIZE)

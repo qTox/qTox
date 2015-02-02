@@ -44,6 +44,7 @@ class FriendListWidget;
 class MaskablePixmapWidget;
 class QTimer;
 class QTranslator;
+class SystemTrayIcon;
 
 class Widget : public QMainWindow
 {
@@ -81,6 +82,7 @@ public:
 public slots:
     void onSettingsClicked();
     void setWindowTitle(const QString& title);
+    void forceShow();
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -90,6 +92,7 @@ signals:
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
     void changeProfile(const QString& profile);
+    void resized();
 
 private slots:
     void onConnected();
@@ -147,7 +150,7 @@ private:
     void saveSplitterGeometry();
     QString askProfiles();
     QString detectProfile();
-    QSystemTrayIcon *icon;
+    SystemTrayIcon *icon;
     QMenu *trayMenu;
     QAction *statusOnline,
             *statusAway,
@@ -171,6 +174,7 @@ private:
     Status beforeDisconnect = Status::Offline;
     QTimer* idleTimer;
     QTranslator* translator;
+    QRegExp nameMention, sanitizedNameMention;
 };
 
 void toxActivateEventHandler(const QByteArray& data);

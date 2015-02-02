@@ -33,6 +33,13 @@ bool ToxFile::open(bool write)
     return write ? file->open(QIODevice::ReadWrite) : file->open(QIODevice::ReadOnly);
 }
 
+ToxID::ToxID(const ToxID& other)
+{
+    publicKey = other.publicKey;
+    noSpam = other.noSpam;
+    checkSum = other.checkSum;
+}
+
 QString ToxID::toString() const
 {
     return publicKey + noSpam + checkSum;

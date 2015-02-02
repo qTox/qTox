@@ -1,5 +1,5 @@
-GenericChatroomWidget 
-{ 
+GenericChatroomWidget
+{
   background-color: @themeMedium;
 }
 
@@ -8,30 +8,54 @@ GenericChatroomWidget[active="true"]
   background-color: @white;
 }
 
-GenericChatroomWidget[active="false"]:hover 
-{ 
-  background-color: @themeLight; 
-} 
+GenericChatroomWidget[active="false"]:hover
+{
+  background-color: @themeLight;
+}
 
-GenericChatroomWidget[active="true"] > QLabel#status 
+GenericChatroomWidget[active="true"][compact="true"] > QLabel#status
+{
+  font: @small;
+  color: @mediumGrey;
+}
+
+GenericChatroomWidget[active="false"][compact="true"] > QLabel#status
+{
+  font: @small;
+  color: @lightGrey;
+}
+
+GenericChatroomWidget[active="true"][compact="true"] > QLabel#name
+{
+  font: @medium;
+  color: @darkGrey;
+}
+
+GenericChatroomWidget[active="false"][compact="true"] > QLabel#name
+{
+  font: @medium;
+  color: @white;
+}
+
+GenericChatroomWidget[active="true"][compact="false"] > QLabel#status
 {
   font: @medium;
   color: @mediumGrey;
 }
 
-GenericChatroomWidget[active="false"] > QLabel#status 
+GenericChatroomWidget[active="false"][compact="false"] > QLabel#status
 {
   font: @medium;
   color: @lightGrey;
 }
 
-GenericChatroomWidget[active="true"] > QLabel#name
+GenericChatroomWidget[active="true"][compact="false"] > QLabel#name
 {
   font: @big;
   color: @darkGrey;
 }
 
-GenericChatroomWidget[active="false"] > QLabel#name
+GenericChatroomWidget[active="false"][compact="false"] > QLabel#name
 {
   font: @big;
   color: @white;

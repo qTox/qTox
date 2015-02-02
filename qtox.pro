@@ -54,6 +54,23 @@ TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sor
 DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
 
+contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
+	DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
+
+	INCLUDEPATH += "/usr/include/libappindicator-0.1"
+	INCLUDEPATH += "/usr/include/gtk-2.0"
+	INCLUDEPATH += "/usr/include/glib-2.0"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/include/cairo"
+	INCLUDEPATH += "/usr/include/pango-1.0"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+	INCLUDEPATH += "/usr/include/atk-1.0"
+	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
+
+	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
+}
+
 contains(DISABLE_PLATFORM_EXT, YES) {
 
 } else {
@@ -75,9 +92,9 @@ contains(JENKINS,YES) {
 # Rules for Windows, Mac OSX, and Linux
 win32 {
     RC_FILE = windows/qtox.rc
-    LIBS += -liphlpapi -L$$PWD/libs/lib -lsodium -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lvpx -lpthread
-    LIBS += -L$$PWD/libs/lib -lopencv_core248 -lopencv_highgui248 -lopencv_imgproc248 -lOpenAL32 -lopus
-    LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -ljpeg -ltiff -lpng -ljasper -lIlmImf -lHalf -lws2_32 -lz
+    LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
+    LIBS += -L$$PWD/libs/lib -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249 -lOpenAL32 -lopus
+    LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -lws2_32 -liphlpapi -lz
 
     contains(DEFINES, QTOX_FILTER_AUDIO) {
         contains(STATICPKG, YES) {
@@ -195,7 +212,9 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/chatlog/content/notificationicon.h \
     src/chatlog/content/timestamp.h \
     src/chatlog/documentcache.h \
-    src/chatlog/pixmapcache.h
+    src/chatlog/pixmapcache.h \
+    src/widget/callconfirmwidget.h \
+    src/widget/systemtrayicon.h \
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -268,7 +287,9 @@ SOURCES += \
     src/chatlog/content/notificationicon.cpp \
     src/chatlog/content/timestamp.cpp \
     src/chatlog/documentcache.cpp \
-    src/chatlog/pixmapcache.cpp
+    src/chatlog/pixmapcache.cpp \
+    src/widget/callconfirmwidget.cpp \
+    src/widget/systemtrayicon.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
     HEADERS += src/audiofilterer.h

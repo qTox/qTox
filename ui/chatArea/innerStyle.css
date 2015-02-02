@@ -30,3 +30,8 @@ div.alert_name {
   background-color: @orange;
   font: @bigBold;
 }
+
+a {
+    color: blue;
+}
+

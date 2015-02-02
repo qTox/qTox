@@ -19,7 +19,7 @@
 
 #include "videosource.h"
 
-class vpx_image;
+struct vpx_image;
 
 class NetVideoSource : public VideoSource
 {

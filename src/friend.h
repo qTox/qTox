@@ -27,7 +27,9 @@ struct Friend
 {
 public:
     Friend(int FriendId, const ToxID &UserId);
+    Friend(const Friend& other)=delete;
     ~Friend();
+    Friend& operator=(const Friend& other)=delete;
 
     void setName(QString name);
     void setAlias(QString name);

@@ -28,7 +28,8 @@
 const QString TabCompleter::nickSuffix = QString(": ");
 
 TabCompleter::TabCompleter(ChatTextEdit* msgEdit, Group* group)
-    : QObject(msgEdit), msgEdit(msgEdit), group(group), enabled(false)
+    : QObject{msgEdit}, msgEdit{msgEdit}, group{group},
+      enabled{false}, lastCompletionLength{0}
 {
 }
 
@@ -70,9 +71,11 @@ void TabCompleter::complete()
 
     if (nextCompletion != completionMap.end()) {
         // clear previous completion
-        for (int i = 0; i < lastCompletionLength; i++) {
-            msgEdit->keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier));
-        }
+        auto cur = msgEdit->textCursor();
+        cur.setPosition(cur.selectionEnd());
+        msgEdit->setTextCursor(cur);
+        for (int i = 0; i < lastCompletionLength; i++)
+            msgEdit->textCursor().deletePreviousChar();
 
         // insert completion
         msgEdit->insertPlainText(*nextCompletion);
@@ -94,7 +97,6 @@ void TabCompleter::complete()
         }
     }
 }
-
 
 void TabCompleter::reset()
 {

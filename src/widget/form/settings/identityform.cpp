@@ -46,9 +46,9 @@ IdentityForm::IdentityForm() :
     
     bodyUI->toxGroup->layout()->addWidget(toxId);
 
-    timer.setInterval(1000);
+    timer.setInterval(750);
     timer.setSingleShot(true);
-    connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", ""));});
+    connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", "")); hasCheck = false;});
     
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
@@ -89,7 +89,11 @@ void IdentityForm::copyIdClicked()
     QApplication::clipboard()->setText(txt);
     toxId->setCursorPosition(0);
 
-    bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text() + " ✔");
+    if (!hasCheck)
+    {
+        bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text() + " ✔");
+        hasCheck = true;
+    }
     timer.start();
 }
 

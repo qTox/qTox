@@ -30,8 +30,8 @@
 
 #include "src/autoupdate.h"
 
-static QStringList locales = {"bg", "de", "en", "es", "fr", "it", "mannol", "pirate", "pl", "pt", "ru", "fi", "sv", "uk"};
-static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Italiano", "mannol", "Pirate", "Polski", "Português", "Русский", "Suomi", "Svenska", "Українська"};
+static QStringList locales = {"bg", "de", "en", "es", "fr", "it", "lt", "mannol", "pirate", "pl", "pt", "ru", "fi", "sv", "uk"};
+static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Italiano", "Lietuvių", "mannol", "Pirate", "Polski", "Português", "Русский", "Suomi", "Svenska", "Українська"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 
@@ -45,16 +45,14 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
     bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
-    bodyUI->trayBehavior->addStretch();
 
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
         bodyUI->transComboBox->insertItem(i, langs[i]);
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
-    bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
 
     bool showSystemTray = Settings::getInstance().getShowSystemTray();
-   
+
     bodyUI->showSystemTray->setChecked(showSystemTray);
     bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
     bodyUI->startInTray->setEnabled(showSystemTray);
@@ -68,8 +66,11 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
+    bodyUI->showWindow->setChecked(Settings::getInstance().getShowWindow());
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
+    bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
+    bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
 
     for (auto entry : SmileyPack::listSmileyPacks())
     {
@@ -117,7 +118,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     //general
     connect(bodyUI->checkUpdates, &QCheckBox::stateChanged, this, &GeneralForm::onCheckUpdateChanged);
     connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
-    connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &GeneralForm::onMakeToxPortableUpdated);
     connect(bodyUI->showSystemTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowSystemTray);
     connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
     connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
@@ -125,7 +125,9 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->lightTrayIcon, &QCheckBox::stateChanged, this, &GeneralForm::onSetLightTrayIcon);
     connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
+    connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
+    connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     if (bodyUI->autoacceptFiles->isChecked())
         connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
@@ -144,6 +146,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
+    connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
 
 #ifndef QTOX_PLATFORM_EXT
     bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
@@ -165,11 +168,6 @@ void GeneralForm::onTranslationUpdated()
 {
     Settings::getInstance().setTranslation(locales[bodyUI->transComboBox->currentIndex()]);
     Widget::getInstance()->setTranslation();
-}
-
-void GeneralForm::onMakeToxPortableUpdated()
-{
-    Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
 }
 
 void GeneralForm::onSetShowSystemTray()
@@ -330,14 +328,30 @@ void GeneralForm::onCheckUpdateChanged()
     Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
 }
 
+void GeneralForm::onShowWindowChanged()
+{
+    Settings::getInstance().setShowWindow(bodyUI->showWindow->isChecked());
+}
+
 void GeneralForm::onSetShowInFront()
 {
-   Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
+    Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
+}
+
+void GeneralForm::onSetGroupAlwaysNotify()
+{
+    Settings::getInstance().setGroupAlwaysNotify(bodyUI->groupAlwaysNotify->isChecked());
 }
 
 void GeneralForm::onFauxOfflineMessaging()
 {
     Settings::getInstance().setFauxOfflineMessaging(bodyUI->cbFauxOfflineMessaging->isChecked());
+}
+
+void GeneralForm::onCompactLayout()
+{
+    Settings::getInstance().setCompactLayout(bodyUI->cbCompactLayout->isChecked());
+    emit parent->compactToggled(bodyUI->cbCompactLayout->isChecked());
 }
 
 void GeneralForm::onThemeColorChanged(int)

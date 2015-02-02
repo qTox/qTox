@@ -36,6 +36,7 @@
 #include "src/autoupdate.h"
 #include "src/audio.h"
 #include "src/platform/timer.h"
+#include "systemtrayicon.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -56,8 +57,7 @@ void toxActivateEventHandler(const QByteArray& data)
 {
     if (data != "$activate")
         return;
-    Widget::getInstance()->show();
-    Widget::getInstance()->activateWindow();
+    Widget::getInstance()->forceShow();
 }
 
 Widget *Widget::instance{nullptr};
@@ -85,7 +85,7 @@ void Widget::init()
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
-        icon = new QSystemTrayIcon(this);
+        icon = new SystemTrayIcon;
         updateTrayIcon();
         trayMenu = new QMenu;
         
@@ -113,7 +113,8 @@ void Widget::init()
                 this,
                 SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
         
-        if (Settings::getInstance().getShowSystemTray()){
+        if (Settings::getInstance().getShowSystemTray())
+        {
             icon->show();
             if (Settings::getInstance().getAutostartInTray() == false)
                 this->show();
@@ -214,7 +215,7 @@ void Widget::init()
     addFriendForm = new AddFriendForm;
     settingsWidget = new SettingsWidget();
 
-    connect(settingsWidget, SIGNAL(setShowSystemTray(bool)), this, SLOT(onSetShowSystemTray(bool)));
+    connect(settingsWidget, &SettingsWidget::setShowSystemTray, this, &Widget::onSetShowSystemTray);
 
     connect(core, &Core::connected, this, &Widget::onConnected);
     connect(core, &Core::disconnected, this, &Widget::onDisconnected);
@@ -314,16 +315,16 @@ void Widget::updateTrayIcon()
 
 Widget::~Widget()
 {
+    qDebug() << "Deleting Widget";
     core->saveConfiguration();
-    coreThread->exit();
-    coreThread->wait(500); // In case of deadlock (can happen with QtAudio/PA bugs)
-    if (!coreThread->isFinished())
-        coreThread->terminate();
     AutoUpdater::abortUpdates();
     delete core;
+    icon->hide();
+    hideMainForms();
     delete settingsWidget;
     delete addFriendForm;
     delete filesForm;
+    delete idleTimer;
 
     FriendList::clear();
     GroupList::clear();
@@ -359,6 +360,7 @@ void Widget::closeEvent(QCloseEvent *event)
     {
         saveWindowGeometry();
         saveSplitterGeometry();
+        qApp->exit(0);
         QWidget::closeEvent(event);
     }
 }
@@ -378,6 +380,8 @@ void Widget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     saveWindowGeometry();
+
+    emit resized();
 }
 
 QString Widget::detectProfile()
@@ -569,6 +573,13 @@ void Widget::setWindowTitle(const QString& title)
     QMainWindow::setWindowTitle("qTox - " + title);
 }
 
+void Widget::forceShow()
+{
+    hide();                     // Workaround to force minimized window to be restored
+    show();
+    activateWindow();
+}
+
 void Widget::onAddClicked()
 {
     hideMainForms();
@@ -591,21 +602,38 @@ void Widget::onTransferClicked()
 
 void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
-    switch (reason) {
+    switch (reason)
+    {
         case QSystemTrayIcon::Trigger:
-        if (this->isHidden() == true)
         {
-            this->show();
-            this->activateWindow();
+            if (isHidden())
+            {
+                show();
+                activateWindow();
+            }
+            else if (isMinimized())
+            {
+                forceShow();
+            }
+            else
+            {
+                hide();
+            }
+
+            break;
         }
-        else
-            this->hide();
-        case QSystemTrayIcon::DoubleClick:    
+        case QSystemTrayIcon::DoubleClick:
+            forceShow();
             break;
         case QSystemTrayIcon::MiddleClick:
+            hide();
+            break;
+        case QSystemTrayIcon::Unknown:
+            if (isHidden())
+                forceShow();
             break;
         default:
-            ;
+            break;
     }
 }
 
@@ -633,15 +661,18 @@ void Widget::hideMainForms()
 
 void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
 {
-    ui->nameLabel->setText(oldUsername); // restore old username until Core tells us to set it
-    ui->nameLabel->setToolTip(oldUsername); // for overlength names
+    setUsername(oldUsername);               // restore old username until Core tells us to set it
     core->setUsername(newUsername);
 }
 
 void Widget::setUsername(const QString& username)
 {
     ui->nameLabel->setText(username);
-    ui->nameLabel->setToolTip(username); // for overlength names
+    ui->nameLabel->setToolTip(username);    // for overlength names
+    QString sanename = username;
+    sanename.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
+             nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
+    sanitizedNameMention = QRegExp("\\b" + QRegExp::escape(sanename) + "\\b", Qt::CaseInsensitive);
 }
 
 void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
@@ -665,6 +696,10 @@ void Widget::addFriend(int friendId, const QString &userId)
     QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
     layout->addWidget(newfriend->getFriendWidget());
 
+    if (Settings::getInstance().getEnableLogging())
+        newfriend->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+
+    connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::onCompactChanged);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -674,6 +709,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), SIGNAL(sendFile(int32_t, QString, QString, long long)), core, SLOT(sendFile(int32_t, QString, QString, long long)));
     connect(newfriend->getChatForm(), SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
     connect(newfriend->getChatForm(), SIGNAL(hangupCall(int)), core, SLOT(hangupCall(int)));
+    connect(newfriend->getChatForm(), SIGNAL(rejectCall(int)), core, SLOT(rejectCall(int)));
     connect(newfriend->getChatForm(), SIGNAL(startCall(int)), core, SLOT(startCall(int)));
     connect(newfriend->getChatForm(), SIGNAL(startVideoCall(int,bool)), core, SLOT(startCall(int,bool)));
     connect(newfriend->getChatForm(), SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
@@ -803,25 +839,11 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
 
-    if (isAction)
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, "/me " + message, f->getToxID().publicKey, timestamp, true);
-    else
-        HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, message, f->getToxID().publicKey, timestamp, true);
+    HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, isAction ? "/me " + message : message,
+                                               f->getToxID().publicKey, timestamp, true);
 
-    if (activeChatroomWidget != nullptr)
-    {
-        if ((static_cast<GenericChatroomWidget*>(f->getFriendWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
-        {
-            f->setEventFlag(true);
-            newMessageAlert(f->getFriendWidget());
-        }
-    }
-    else
-    {
-        f->setEventFlag(true);
-        newMessageAlert(f->getFriendWidget());
-    }
-
+    f->setEventFlag(static_cast<GenericChatroomWidget*>(f->getFriendWidget()) != activeChatroomWidget);
+    newMessageAlert(f->getFriendWidget());
     f->getFriendWidget()->updateStatusLight();
 }
 
@@ -836,17 +858,22 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
 
 void Widget::newMessageAlert(GenericChatroomWidget* chat)
 {
+    bool inactiveWindow = isMinimized() || !isActiveWindow();
+    if (!inactiveWindow && activeChatroomWidget != nullptr && chat == activeChatroomWidget)
+        return;
+
     QApplication::alert(this);
 
-    static QFile sndFile(":audio/notification.pcm");
-    if ((isMinimized() || !isActiveWindow()) && Settings::getInstance().getShowInFront())
+    if (Settings::getInstance().getShowWindow())
     {
-        this->show();
-        showNormal();
-        activateWindow();
-        emit chat->chatroomWidgetClicked(chat);
+        show();
+        if (inactiveWindow && Settings::getInstance().getShowInFront())
+            setWindowState(Qt::WindowActive);
     }
+
+    static QFile sndFile(":audio/notification.pcm");
     static QByteArray sndData;
+
     if (sndData.isEmpty())
     {
         sndFile.open(QIODevice::ReadOnly);
@@ -950,24 +977,21 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
 
     ToxID author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
-    QString name = core->getUsername();
-
-    bool targeted = (!author.isMine()) && message.contains(name, Qt::CaseInsensitive);
+    bool targeted = !author.isMine() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
         g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
 
-    if ((static_cast<GenericChatroomWidget*>(g->getGroupWidget()) != activeChatroomWidget) || isMinimized() || !isActiveWindow())
-    {
-        g->setEventFlag(true);
-        if (targeted)
-        {
-            newMessageAlert(g->getGroupWidget());
-            g->setMentionedFlag(true); // useful for highlighting line or desktop notifications
-        }
-        g->getGroupWidget()->updateStatusLight();
-    }
+    g->setEventFlag(static_cast<GenericChatroomWidget*>(g->getGroupWidget()) != activeChatroomWidget);
+
+    if (targeted || Settings::getInstance().getGroupAlwaysNotify())
+        newMessageAlert(g->getGroupWidget());
+
+    if (targeted)
+        g->setMentionedFlag(true); // useful for highlighting line or desktop notifications
+
+    g->getGroupWidget()->updateStatusLight();
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)

@@ -53,18 +53,25 @@ public:
 
     void reloadTheme();
 
+    bool isCompact() const;
+    void setCompact(bool compact);
+
+    Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
+
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
 public slots:
+    void onCompactChanged(bool compact);
 
 protected:
     QColor lastColor;
-    QHBoxLayout layout;
-    QVBoxLayout textLayout;
+    QHBoxLayout* layout = nullptr;
+    QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     QLabel statusPic;
-    CroppingLabel *nameLabel, *statusMessageLabel;
+    CroppingLabel* nameLabel, * statusMessageLabel;
+    bool compact;
 
     friend class Style; ///< To update our stylesheets
 };

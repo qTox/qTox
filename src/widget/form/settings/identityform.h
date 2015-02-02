@@ -74,6 +74,7 @@ private:
     Ui::IdentitySettings* bodyUI;
     Core* core;
     QTimer timer;
+    bool hasCheck = false;
 
     ClickableTE* toxId;
 };

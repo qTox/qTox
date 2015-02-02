@@ -26,7 +26,7 @@
 
 ToxCall Core::calls[TOXAV_MAX_CALLS];
 #ifdef QTOX_FILTER_AUDIO
-AudioFilterer * Core::filterer[TOXAV_MAX_CALLS] { nullptr};
+AudioFilterer * Core::filterer[TOXAV_MAX_CALLS] {nullptr};
 #endif
 const int Core::videobufsize{TOXAV_MAX_VIDEO_WIDTH * TOXAV_MAX_VIDEO_HEIGHT * 4};
 uint8_t* Core::videobuf;
@@ -159,6 +159,13 @@ void Core::hangupCall(int callId)
     toxav_hangup(toxav, callId);
 }
 
+void Core::rejectCall(int callId)
+{
+    qDebug() << QString("Core: rejecting call %1").arg(callId);
+    calls[callId].active = false;
+    toxav_reject(toxav, callId, nullptr);
+}
+
 void Core::startCall(int friendId, bool video)
 {
     int callId;
@@ -201,7 +208,7 @@ void Core::cancelCall(int callId, int friendId)
 {
     qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
     calls[callId].active = false;
-    toxav_cancel(toxav, callId, friendId, 0);
+    toxav_cancel(toxav, callId, friendId, nullptr);
 }
 
 void Core::cleanupCall(int callId)
@@ -245,10 +252,11 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
 
     const int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000 * av_DefaultSettings.audio_channels;
     const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
-    uint8_t buf[bufsize], dest[bufsize];
+    uint8_t buf[bufsize];
 
     if (Audio::tryCaptureSamples(buf, framesize))
     {
+        uint8_t dest[bufsize];
         int r;
         if ((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
         {
@@ -551,6 +559,7 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
+    alSourcef(alSource, AL_GAIN, Audio::outputVolume);
     if (state != AL_PLAYING)
     {
         alSourcePlay(alSource);
@@ -618,9 +627,8 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
 
     if (Audio::tryCaptureSamples(buf, framesize))
     {
-        int r;
-        if ((r = toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,
-                framesize, av_DefaultSettings.audio_channels, av_DefaultSettings.audio_sample_rate)) < 0)
+        if (toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,
+                framesize, av_DefaultSettings.audio_channels, av_DefaultSettings.audio_sample_rate) < 0)
         {
             qDebug() << "Core: toxav_group_send_audio error";
             groupCalls[groupId].sendAudioTimer->start();

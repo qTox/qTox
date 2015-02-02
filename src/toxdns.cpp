@@ -221,8 +221,8 @@ fallbackOnTox1:
     toxIdStr = queryTox1(record, silent);
 #elif TOX1_ASK_FALLBACK
     QMessageBox::StandardButton btn = QMessageBox::warning(nullptr, "qTox", tr("It appears that qTox has to use the old tox1 protocol.\n\
-Unfortunately tox1 is not secure. Should it be used anyway?"), QMessageBox::Ok|QMessageBox::No, QMessageBox::No);
-    if (btn == QMessageBox::Ok)
+Unfortunately tox1 is not secure. Should it be used anyway?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
+    if (btn == QMessageBox::Yes)
         queryTox1(record, silent);
 #endif
     return toxIdStr;

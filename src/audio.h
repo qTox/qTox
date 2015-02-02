@@ -73,9 +73,11 @@ public:
     static QThread* audioThread;
     static ALCcontext* alContext;
     static ALuint alMainSource;
+    static float outputVolume;
 
 private:
     explicit Audio()=default;
+    ~Audio();
     static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
 
 private:

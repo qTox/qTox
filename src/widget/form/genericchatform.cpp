@@ -55,9 +55,12 @@ GenericChatForm::GenericChatForm(QWidget *parent)
             *mainFootLayout = new QHBoxLayout();
     
     QVBoxLayout *mainLayout = new QVBoxLayout(),
-            *footButtonsSmall = new QVBoxLayout(),
-            *volMicLayout = new QVBoxLayout();
-    headTextLayout = new QVBoxLayout();
+                *footButtonsSmall = new QVBoxLayout(),
+                *micButtonsLayout = new QVBoxLayout();
+
+    QGridLayout *buttonsLayout = new QGridLayout();
+    
+    headTextLayout = new QVBoxLayout();    
 
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
@@ -123,28 +126,37 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     mainFootLayout->addWidget(sendButton);
     mainFootLayout->setSpacing(0);
     
-    headTextLayout->addStretch();
+    headTextLayout->addStretch();    
     headTextLayout->addWidget(nameLabel);
-
-    volMicLayout->addWidget(micButton, Qt::AlignTop);
-    volMicLayout->addSpacing(2);
-    volMicLayout->addWidget(volButton, Qt::AlignBottom);
+    headTextLayout->addStretch();
+    
+    micButtonsLayout->setSpacing(0);
+    micButtonsLayout->addWidget(micButton, Qt::AlignTop | Qt::AlignRight);
+    micButtonsLayout->addSpacing(4);
+    micButtonsLayout->addWidget(volButton, Qt::AlignTop | Qt::AlignRight);
+    
+    buttonsLayout->addLayout(micButtonsLayout, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignRight);
+    buttonsLayout->addWidget(callButton, 0, 1, 2, 1, Qt::AlignTop);
+    buttonsLayout->addWidget(videoButton, 0, 2, 2, 1, Qt::AlignTop);
+    buttonsLayout->setVerticalSpacing(0);
+    buttonsLayout->setHorizontalSpacing(4);
+        
+    headLayout->addWidget(avatar, Qt::AlignTop | Qt::AlignLeft);
+    headLayout->addSpacing(5);
+    headLayout->addLayout(headTextLayout,  Qt::AlignTop | Qt::AlignAbsolute);
+    headLayout->addLayout(buttonsLayout, Qt::AlignTop | Qt::AlignRight);
 
     headWidget->setLayout(headLayout);
-    headLayout->addWidget(avatar);
-    headLayout->addSpacing(5);
-    headLayout->addLayout(headTextLayout);
-    headLayout->addLayout(volMicLayout);
-    headLayout->addWidget(callButton);
-    headLayout->addSpacing(3);
-    headLayout->addWidget(videoButton);
-    headLayout->setSpacing(0);
-
+    
     //Fix for incorrect layouts on OS X as per
     //https://bugreports.qt-project.org/browse/QTBUG-14591
     sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    micButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    volButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
 
     menu.addActions(chatWidget->actions());
     menu.addSeparator();

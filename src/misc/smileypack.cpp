@@ -130,7 +130,8 @@ bool SmileyPack::load(const QString& filename)
 
         while (!stringElement.isNull())
         {
-            QString emoticon = stringElement.text();
+            QString emoticon = stringElement.text()
+                                .replace("<","&lt;").replace(">","&gt;");
             filenameTable.insert(emoticon, file);
             
             cacheSmiley(file); // preload all smileys

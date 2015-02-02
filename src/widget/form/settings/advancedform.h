@@ -33,6 +33,7 @@ public:
     virtual ~AdvancedForm();
 
 private slots:
+    void onMakeToxPortableUpdated();
     void onDbSyncTypeUpdated();
     void resetToDefault();
 

@@ -21,7 +21,7 @@
 #include <QList>
 #include <QMutex>
 #include "vpx/vpx_image.h"
-#include "opencv2/opencv.hpp"
+#include "opencv2/highgui/highgui.hpp"
 #include "src/video/videosource.h"
 
 class CameraWorker;
@@ -79,7 +79,7 @@ private:
     CameraWorker* worker;
 
 private slots:
-    void onNewFrameAvailable(const VideoFrame frame);
+    void onNewFrameAvailable(const VideoFrame& frame);
 
 };
 

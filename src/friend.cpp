@@ -23,12 +23,11 @@
 #include "src/misc/settings.h"
 
 Friend::Friend(int FriendId, const ToxID &UserId)
-    : friendId(FriendId)
+    : userName{Core::getInstance()->getPeerName(UserId)},
+      userID{UserId}, friendId{FriendId}
 {
     hasNewEvents = 0;
     friendStatus = Status::Offline;
-    userID = UserId;
-    userName = Core::getInstance()->getPeerName(UserId);
     if (userName.size() == 0)
         userName = UserId.publicKey;
 
