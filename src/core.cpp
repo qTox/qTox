@@ -21,7 +21,7 @@
 #include "misc/settings.h"
 #include "widget/gui.h"
 #include "historykeeper.h"
-#include "src/audio.h"
+#include "src/audio/audio.h"
 
 #include <tox/tox.h>
 

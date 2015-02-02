@@ -16,9 +16,9 @@
 
 #include "core.h"
 #include "video/camera.h"
-#include "audio.h"
+#include "audio/audio.h"
 #ifdef QTOX_FILTER_AUDIO
-#include "audiofilterer.h"
+#include "audio/audiofilterer.h"
 #endif
 #include "misc/settings.h"
 #include <QDebug>

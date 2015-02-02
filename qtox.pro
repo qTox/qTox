@@ -229,7 +229,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/autoupdate.h \
     src/misc/serialize.h \
     src/widget/form/settings/advancedform.h \
-    src/audio.h \
+    src/audio/audio.h \
     src/widget/callconfirmwidget.h \
     src/widget/systemtrayicon.h \
     src/widget/systemtrayicon_private.h \
@@ -303,7 +303,7 @@ SOURCES += \
     src/autoupdate.cpp \
     src/misc/serialize.cpp \
     src/widget/form/settings/advancedform.cpp \
-    src/audio.cpp \
+    src/audio/audio.cpp \
     src/widget/callconfirmwidget.cpp \
     src/widget/systemtrayicon.cpp \
     src/nexus.cpp \
@@ -312,8 +312,8 @@ SOURCES += \
     src/offlinemsgengine.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
-    HEADERS += src/audiofilterer.h
-    SOURCES += src/audiofilterer.cpp
+    HEADERS += src/audio/audiofilterer.h
+    SOURCES += src/audio/audiofilterer.cpp
 }
 
 contains(DEFINES, QTOX_PLATFORM_EXT) {
