@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
+    Copyright (C) 2015 by Project Tox <https://tox.im>
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -14,27 +14,30 @@
     See the COPYING file for more details.
 */
 
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef DOCUMENTCACHE_H
+#define DOCUMENTCACHE_H
 
-#include "../chatlinecontent.h"
+#include <QStack>
 
-#include <QPixmap>
+class QTextDocument;
 
-class Image : public ChatLineContent
+class DocumentCache
 {
 public:
-    Image(QSize size, const QString &filename);
+    ~DocumentCache();
+    static DocumentCache& getInstance();
 
-    virtual QRectF boundingRect() const override;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    virtual void setWidth(qreal width) override;
-    virtual qreal getAscent() const override;
+    QTextDocument* pop();
+    void push(QTextDocument* doc);
+
+protected:
+    DocumentCache() {}
+    DocumentCache(DocumentCache&) = delete;
+    DocumentCache& operator=(const DocumentCache&) = delete;
 
 private:
-    QSize size;
-    QPixmap pmap;
-
+    QStack<QTextDocument*> documents;
+    static DocumentCache instance;
 };
 
-#endif // IMAGE_H
+#endif // DOCUMENTCACHE_H

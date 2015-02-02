@@ -20,7 +20,7 @@
 #include "../chatlinecontent.h"
 
 #include <QLinearGradient>
-#include <QIcon>
+#include <QPixmap>
 
 class QTimer;
 
@@ -28,7 +28,7 @@ class NotificationIcon : public QObject,  public ChatLineContent
 {
     Q_OBJECT
 public:
-    NotificationIcon(QSizeF size);
+    NotificationIcon(QSize size);
 
     virtual QRectF boundingRect() const override;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -39,8 +39,8 @@ private slots:
     void updateGradient();
 
 private:
-    QSizeF size;
-    QIcon icon;
+    QSize size;
+    QPixmap pmap;
     QLinearGradient grad;
     QTimer* updateTimer = nullptr;
 

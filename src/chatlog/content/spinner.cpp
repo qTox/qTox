@@ -15,6 +15,7 @@
 */
 
 #include "spinner.h"
+#include "../pixmapcache.h"
 
 #include <QPainter>
 #include <QGraphicsScene>
@@ -24,9 +25,9 @@ Spinner::Spinner(const QString &img, QSize Size, qreal speed)
     : size(Size)
     , rotSpeed(speed)
 {
-    icon.addFile(img);
+    pmap = PixmapCache::getInstance().get(img, size);
 
-    timer.setInterval(33); // 30Hz
+    timer.setInterval(1000/30); // 30Hz
     timer.setSingleShot(false);
 
     QObject::connect(&timer, &QTimer::timeout, this, &Spinner::timeout);
@@ -47,7 +48,7 @@ void Spinner::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, Q
     painter->translate(-size.width() / 2.0, -size.height() / 2.0);
     painter->setTransform(rotMat, true);
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
-    painter->drawPixmap(0, 0, icon.pixmap(size));
+    painter->drawPixmap(0, 0, pmap);
 
     Q_UNUSED(option)
     Q_UNUSED(widget)

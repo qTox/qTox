@@ -15,17 +15,19 @@
 */
 
 #include "notificationicon.h"
+#include "../pixmapcache.h"
 
 #include <QPainter>
 #include <QTimer>
+#include <QGraphicsScene>
 
-NotificationIcon::NotificationIcon(QSizeF Size)
+NotificationIcon::NotificationIcon(QSize Size)
     : size(Size)
 {
-    icon.addFile(":/ui/chatArea/typing.svg");
+    pmap = PixmapCache::getInstance().get(":/ui/chatArea/typing.svg", size);
 
     updateTimer = new QTimer(this);
-    updateTimer->setInterval(1000/60);
+    updateTimer->setInterval(1000/30);
     updateTimer->setSingleShot(false);
 
     updateTimer->start();
@@ -44,7 +46,7 @@ void NotificationIcon::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->translate(-size.width() / 2.0, -size.height() / 2.0);
 
     painter->fillRect(QRect(0, 0, size.width(), size.height()), grad);
-    painter->drawPixmap(0, 0, size.width(), size.height(), icon.pixmap(size.toSize() * painter->device()->devicePixelRatio()));
+    painter->drawPixmap(0, 0, size.width(), size.height(), pmap);
 
     Q_UNUSED(option)
     Q_UNUSED(widget)
@@ -62,7 +64,7 @@ qreal NotificationIcon::getAscent() const
 
 void NotificationIcon::updateGradient()
 {
-    alpha += 0.005;
+    alpha += 0.01;
 
     if(alpha + dotWidth >= 1.0)
         alpha = 0.0;
@@ -70,9 +72,10 @@ void NotificationIcon::updateGradient()
     grad = QLinearGradient(QPointF(-0.5*size.width(),0), QPointF(3.0/2.0*size.width(),0));
     grad.setColorAt(0, Qt::lightGray);
     grad.setColorAt(qMax(0.0, alpha - dotWidth), Qt::lightGray);
-    grad.setColorAt(alpha, Qt::darkGray);
+    grad.setColorAt(alpha, Qt::black);
     grad.setColorAt(qMin(1.0, alpha + dotWidth), Qt::lightGray);
     grad.setColorAt(1, Qt::lightGray);
 
-    update();
+    if(scene())
+        scene()->invalidate(sceneBoundingRect());
 }

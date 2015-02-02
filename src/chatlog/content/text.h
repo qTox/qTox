@@ -19,10 +19,9 @@
 
 #include "../chatlinecontent.h"
 
-#include <QTextDocument>
-#include <QTextCursor>
+#include <QFont>
 
-class CustomTextDocument;
+class QTextDocument;
 
 class Text : public ChatLineContent
 {
@@ -67,7 +66,7 @@ protected:
     QString extractSanitizedText(int from, int to) const;
 
 private:
-    CustomTextDocument* doc = nullptr;
+    QTextDocument* doc = nullptr;
     QString text;
     QString rawText;
     QString elidedText;

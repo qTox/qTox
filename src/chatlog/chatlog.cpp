@@ -47,18 +47,18 @@ ChatLog::ChatLog(QWidget* parent)
 
     // Cfg.
     setInteractive(true);
+    setAcceptDrops(false);
     setAlignment(Qt::AlignTop | Qt::AlignLeft);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setDragMode(QGraphicsView::NoDrag);
-    setViewportUpdateMode(BoundingRectViewportUpdate);
-    setAcceptDrops(false);
+    setViewportUpdateMode(MinimalViewportUpdate);
     setContextMenuPolicy(Qt::CustomContextMenu);
     setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
 
     // The selection rect for multi-line selection
     const QColor selGraphColor = QColor(166,225,255);
     selGraphItem = scene->addRect(0,0,0,0,selGraphColor.darker(120),selGraphColor);
-    selGraphItem->setZValue(-10.0); //behind all items
+    selGraphItem->setZValue(-1.0); // behind all other items
 
     // copy action (ie. Ctrl+C)
     QAction* copyAction = new QAction(this);
@@ -79,7 +79,7 @@ ChatLog::ChatLog(QWidget* parent)
     // This timer is used to scroll the view while the user is
     // moving the mouse past the top/bottom edge of the widget while selecting.
     selectionTimer = new QTimer(this);
-    selectionTimer->setInterval(1000/60);
+    selectionTimer->setInterval(1000/30);
     selectionTimer->setSingleShot(false);
     selectionTimer->start();
     connect(selectionTimer, &QTimer::timeout, this, &ChatLog::onSelectionTimerTimeout);
@@ -575,7 +575,7 @@ void ChatLog::checkVisibility()
     auto lowerBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().top(), ChatLine::lessThanBSRectBottom);
 
     // find last visible line
-    auto upperBound = std::lower_bound(lines.cbegin(), lines.cend(), getVisibleRect().bottom(), ChatLine::lessThanBSRectTop);
+    auto upperBound = std::lower_bound(lowerBound, lines.cend(), getVisibleRect().bottom(), ChatLine::lessThanBSRectTop);
 
     // set visibilty
     QList<ChatLine::Ptr> newVisibleLines;
@@ -624,7 +624,8 @@ void ChatLog::updateMultiSelectionRect()
         selBBox = selBBox.united(lines[selFirstRow]->sceneBoundingRect());
         selBBox = selBBox.united(lines[selLastRow]->sceneBoundingRect());
 
-        scene->invalidate(selGraphItem->sceneBoundingRect());
+        if(selGraphItem->rect() != selBBox)
+            scene->invalidate(selGraphItem->rect());
 
         selGraphItem->setRect(selBBox);
         selGraphItem->show();

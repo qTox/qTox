@@ -15,8 +15,7 @@
 */
 
 #include "text.h"
-
-#include "../customtextdocument.h"
+#include "../documentcache.h"
 
 #include <QFontMetrics>
 #include <QPainter>
@@ -40,7 +39,8 @@ Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwTe
 
 Text::~Text()
 {
-    delete doc;
+    if(doc)
+        DocumentCache::getInstance().push(doc);
 }
 
 void Text::setText(const QString& txt)
@@ -212,7 +212,7 @@ void Text::regenerate()
 {
     if(!doc)
     {
-        doc = new CustomTextDocument();
+        doc = DocumentCache::getInstance().pop();
         doc->setDefaultFont(defFont);
         dirty = true;
     }
@@ -231,23 +231,23 @@ void Text::regenerate()
             doc->setPlainText(elidedText);
         }
 
+        // width & layout
+        doc->setTextWidth(width);
+        doc->documentLayout()->update();
+
+        // update ascent
+        if(doc->firstBlock().layout()->lineCount() > 0)
+            ascent = doc->firstBlock().layout()->lineAt(0).ascent();
+
+        // let the scene know about our change in size
+        if(size != idealSize())
+            prepareGeometryChange();
+
+        // get the new width and height
+        size = idealSize();
+
         dirty = false;
     }
-
-    // width & layout
-    doc->setTextWidth(width);
-    doc->documentLayout()->update();
-
-    // update ascent
-    if(doc->firstBlock().layout()->lineCount() > 0)
-        ascent = doc->firstBlock().layout()->lineAt(0).ascent();
-
-    // let the scene know about our change in size
-    if(size != idealSize())
-        prepareGeometryChange();
-
-    // get the new width and height
-    size = idealSize();
 
     // if we are not visible -> free mem
     if(!keepInMemory)
@@ -256,7 +256,7 @@ void Text::regenerate()
 
 void Text::freeResources()
 {
-    delete doc;
+    DocumentCache::getInstance().push(doc);
     doc = nullptr;
 }
 
