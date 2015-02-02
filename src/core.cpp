@@ -20,7 +20,7 @@
 #include "misc/settings.h"
 #include "widget/widget.h"
 #include "historykeeper.h"
-#include "src/audio.h"
+#include "src/audio/audio.h"
 
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>

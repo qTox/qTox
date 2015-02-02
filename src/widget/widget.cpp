@@ -34,7 +34,7 @@
 #include "src/historykeeper.h"
 #include "form/inputpassworddialog.h"
 #include "src/autoupdate.h"
-#include "src/audio.h"
+#include "src/audio/audio.h"
 #include "src/platform/timer.h"
 #include "systemtrayicon.h"
 #include <QMessageBox>

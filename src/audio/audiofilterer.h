@@ -27,7 +27,7 @@ class AudioFilterer
 {
 public:
     explicit AudioFilterer() = default;
-    ~AudioFilterer();
+    virtual ~AudioFilterer();
 
     void startFilter(unsigned int fs);
     void filterAudio(int16_t* data, int framesize);
