@@ -74,33 +74,44 @@ bool PrivacyForm::setChatLogsPassword()
     else
         dialog = new SetPasswordDialog(body, QString(), this);
 
-    if (int r = dialog->exec())
-    {
+    // check if an encrypted history exists because it was disabled earlier, and use it if possible
+    QString path = HistoryKeeper::getHistoryPath(QString(), 1);
+    QByteArray salt = core->getSaltFromFile(path);
+    bool haveEncHist = salt.size() > 0;
+
+    do {
+        int r = dialog->exec();
+        if (r == QDialog::Rejected)
+            break;
+
         QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
 
         QString newpw = dialog->getPassword();
-        delete dialog;
 
         if (r == 2)
             core->useOtherPassword(Core::ptHistory);
+        else if (haveEncHist)
+            core->setPassword(newpw, Core::ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
         else
             core->setPassword(newpw, Core::ptHistory);
 
-        //if (!HistoryKeeper::checkPassword(true))
-        //    if (checkContinue(tr("Old encrypted chat logs", "title"),
-        //                      tr("Would you like to re-encrypt your old chat logs?\nOtherwise they will be deleted.", "body")))
-        // for now, don't bother asking. Why wouldn't you want to reencrypt?
+        if (!haveEncHist || HistoryKeeper::checkPassword(1))
+        {
+            Settings::getInstance().setEncryptLogs(true);
+            HistoryKeeper::getInstance()->importMessages(oldMessages);
+            // TODO: The old encrypted history is loaded, but doesn't appear in the GUI. @apprb ?
+            delete dialog;
+            return true;
+        }
+        else
+        {
+            if (!Widget::getInstance()->askQuestion(tr("Old encrypted chat log", "popup title"), tr("There is currently an unused encrypted chat log, but the password you just entered doesn't match.\nWould you like to try again?")))
+                haveEncHist = false; // logically this is really just a `break`, but conceptually this is more accurate
+        }
+    } while (haveEncHist);
 
-        Settings::getInstance().setEncryptLogs(true);
-        HistoryKeeper::getInstance()->importMessages(oldMessages);
-
-        return true;
-    }
-    else
-    {
-        delete dialog;
-        return false;
-    }
+    delete dialog;
+    return false;
 }
 
 void PrivacyForm::onEncryptLogsUpdated()
