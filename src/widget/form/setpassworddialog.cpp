@@ -27,7 +27,7 @@ SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget*
 {
     ui->setupUi(this);
 
-    connect(ui->passwordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
+    connect(ui->  passwordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
     connect(ui->repasswordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
 
     ui->body->setText(body + "\n" + tr("The passwords don't match."));
@@ -37,7 +37,7 @@ SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget*
     {
         QPushButton* third = new QPushButton(extraButton);
         ui->buttonBox->addButton(third, QDialogButtonBox::YesRole);
-        connect(third, &QPushButton::clicked, this, [=](){this->done(2);});
+        connect(third, &QPushButton::clicked, this, [&](){this->done(Tertiary);});
     }
 }
 

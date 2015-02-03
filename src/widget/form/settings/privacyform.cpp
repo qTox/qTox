@@ -88,7 +88,7 @@ bool PrivacyForm::setChatLogsPassword()
 
         QString newpw = dialog->getPassword();
 
-        if (r == 2)
+        if (r == SetPasswordDialog::Tertiary)
             core->useOtherPassword(Core::ptHistory);
         else if (haveEncHist)
             core->setPassword(newpw, Core::ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
@@ -195,7 +195,7 @@ bool PrivacyForm::setToxPassword()
         QString newpw = dialog->getPassword();
         delete dialog;
 
-        if (r == 2)
+        if (r == SetPasswordDialog::Tertiary)
             core->useOtherPassword(Core::ptMain);
         else
             core->setPassword(newpw, Core::ptMain);
