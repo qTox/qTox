@@ -37,6 +37,8 @@ qreal Image::getAscent() const
 
 void Image::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
+    painter->setClipRect(boundingRect());
+
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
     painter->translate(-size.width() / 2.0, -size.height() / 2.0);
     painter->drawPixmap(0, 0, pmap);
