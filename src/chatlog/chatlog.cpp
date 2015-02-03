@@ -614,8 +614,18 @@ void ChatLog::scrollContentsBy(int dx, int dy)
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
 {
-    startResizeWorker();
+    bool stb = stickToBottom();
+
+    if(ev->size().width() != ev->oldSize().width())
+    {
+        startResizeWorker();
+        stb = false; // let the resize worker handle it
+    }
+
     QGraphicsView::resizeEvent(ev);
+
+    if(stb)
+        scrollToBottom();
 
     updateBusyNotification();
 }
