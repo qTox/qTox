@@ -180,7 +180,7 @@ bool Core::loadEncryptedSave(QByteArray& data)
             Settings::getInstance().setEncryptTox(true);
             return true;
         }
-        dialogtxt = tr("The stored profile password failed. Please try another:", "used only when pw set before load() doesn't work");
+        dialogtxt = tr("The profile password failed. Please try another?", "used only when pw set before load() doesn't work");
     }
     else
         dialogtxt = a;
@@ -216,14 +216,14 @@ void Core::checkEncryptedHistory()
     QByteArray salt = getSaltFromFile(path);
     if (exists && salt.size() == 0)
     {   // maybe we should handle this better
-        Widget::getInstance()->showWarningMsgBox(tr("Encrypted History"), tr("No encrypted history file found, or it was corrupted.\nHistory will be disabled!"));
+        Widget::getInstance()->showWarningMsgBox(tr("Encrypted chat history"), tr("No encrypted chat history file found, or it was corrupted.\nHistory will be disabled!"));
         Settings::getInstance().setEncryptLogs(false);
         Settings::getInstance().setEnableLogging(false);
         HistoryKeeper::resetInstance();
         return;
     }
 
-    QString a(tr("Please enter the password for the chat logs for the %1 profile.", "used in load() when no hist pw set").arg(Settings::getInstance().getCurrentProfile()));
+    QString a(tr("Please enter the password for the chat history for the %1 profile.", "used in load() when no hist pw set").arg(Settings::getInstance().getCurrentProfile()));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
     QString dialogtxt;
 
@@ -231,7 +231,7 @@ void Core::checkEncryptedHistory()
     {
         if (!exists || HistoryKeeper::checkPassword())
             return;
-        dialogtxt = tr("The stored chat log password failed. Please try another:", "used only when pw set before load() doesn't work");
+        dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
     }
     else
         dialogtxt = a;
@@ -241,7 +241,7 @@ void Core::checkEncryptedHistory()
         useOtherPassword(ptHistory);
         if (!exists || HistoryKeeper::checkPassword())
         {
-            qDebug() << "Core: using main password for history";
+            qDebug() << "Core: using main password for chat history";
             return;
         }
         clearPassword(ptHistory);
@@ -250,7 +250,7 @@ void Core::checkEncryptedHistory()
     bool error = true;
     do
     {
-        QString pw = Widget::getInstance()->passwordDialog(tr("Disable history"), dialogtxt);
+        QString pw = Widget::getInstance()->passwordDialog(tr("Disable chat history"), dialogtxt);
 
         if (pw.isEmpty())
         {

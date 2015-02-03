@@ -68,7 +68,7 @@ bool PrivacyForm::setChatLogsPassword()
 {
     Core* core = Core::getInstance();
     SetPasswordDialog* dialog;
-    QString body = tr("Please set your new chat log password.");
+    QString body = tr("Please set your new chat history password.");
     if (core->isPasswordSet(Core::ptMain))
         dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), this);
     else
@@ -105,7 +105,7 @@ bool PrivacyForm::setChatLogsPassword()
         }
         else
         {
-            if (!Widget::getInstance()->askQuestion(tr("Old encrypted chat log", "popup title"), tr("There is currently an unused encrypted chat log, but the password you just entered doesn't match.\nWould you like to try again?")))
+            if (!Widget::getInstance()->askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\nWould you like to try again?", "This happens when enabling encryption after previously \"Disabling History\"")))
                 haveEncHist = false; // logically this is really just a `break`, but conceptually this is more accurate
         }
     } while (haveEncHist);
@@ -134,8 +134,8 @@ void PrivacyForm::onEncryptLogsUpdated()
     {
         QMessageBox::StandardButton button = QMessageBox::warning(
             Widget::getInstance(),
-            tr("Old encrypted chat logs", "title"),
-            tr("Would you like to decrypt your chat logs?\nOtherwise they will be deleted."),
+            tr("Old encrypted chat history", "title"),
+            tr("Would you like to decrypt your chat history?\nOtherwise it will be deleted."),
             QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel,
             QMessageBox::Cancel
         );
@@ -151,7 +151,7 @@ void PrivacyForm::onEncryptLogsUpdated()
         {
             if (QMessageBox::critical(
                     Widget::getInstance(),
-                    tr("Old encrypted chat logs", "title"),
+                    tr("Old encrypted chat history", "title"),
                     tr("Are you sure you want to lose your entire chat history?"),
                     QMessageBox::Yes | QMessageBox::Cancel,
                     QMessageBox::Cancel
@@ -186,7 +186,7 @@ bool PrivacyForm::setToxPassword()
     SetPasswordDialog* dialog;
     QString body = tr("Please set your new data file password.");
     if (core->isPasswordSet(Core::ptHistory))
-        dialog = new SetPasswordDialog(body, tr("Use chat log password", "pushbutton text"), this);
+        dialog = new SetPasswordDialog(body, tr("Use chat history password", "pushbutton text"), this);
     else
         dialog = new SetPasswordDialog(body, QString(), this);
 

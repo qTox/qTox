@@ -54,11 +54,11 @@
        <item>
         <widget class="QCheckBox" name="cbKeepHistory">
          <property name="toolTip">
-          <string comment="toolTip for Keep History setting">History keeping is still in development.
+          <string comment="toolTip for Keep History setting">Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</string>
          </property>
          <property name="text">
-          <string>Keep chat logs (mostly stable)</string>
+          <string>Keep chat history (mostly stable)</string>
          </property>
         </widget>
        </item>
@@ -74,7 +74,7 @@ Save format changes are possible, which may result in data loss.</string>
           <item>
            <widget class="QLabel" name="encryptStatement">
             <property name="text">
-             <string>All internet communication is encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</string>
+             <string>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -110,7 +110,7 @@ Save format changes are possible, which may result in data loss.</string>
                <bool>true</bool>
               </property>
               <property name="text">
-               <string>Encrypt chat logs</string>
+               <string>Encrypt chat history</string>
               </property>
               <property name="checkable">
                <bool>true</bool>

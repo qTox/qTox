@@ -65,7 +65,7 @@
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="historyGroup">
          <property name="title">
-          <string>History</string>
+          <string>Chat history</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
