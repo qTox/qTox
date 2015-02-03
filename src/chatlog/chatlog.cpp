@@ -747,11 +747,25 @@ void ChatLog::showEvent(QShowEvent*)
 void ChatLog::focusInEvent(QFocusEvent* ev)
 {
     QGraphicsView::focusInEvent(ev);
-    selGraphItem->setBrush(QBrush(selectionRectColor));
+
+    if(selectionMode != None)
+    {
+        selGraphItem->setBrush(QBrush(selectionRectColor));
+
+        for(int i=selFirstRow; i<=selLastRow; ++i)
+            lines[i]->selectionFocusChanged(true);
+    }
 }
 
 void ChatLog::focusOutEvent(QFocusEvent* ev)
 {
     QGraphicsView::focusOutEvent(ev);
-    selGraphItem->setBrush(QBrush(selectionRectColor.lighter(120)));
+
+    if(selectionMode != None)
+    {
+        selGraphItem->setBrush(QBrush(selectionRectColor.lighter(120)));
+
+        for(int i=selFirstRow; i<=selLastRow; ++i)
+            lines[i]->selectionFocusChanged(false);
+    }
 }

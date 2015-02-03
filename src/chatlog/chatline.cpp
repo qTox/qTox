@@ -109,6 +109,12 @@ void ChatLine::selectionCleared()
         c->selectionCleared();
 }
 
+void ChatLine::selectionFocusChanged(bool focusIn)
+{
+    for(ChatLineContent* c : content)
+        c->selectionFocusChanged(focusIn);
+}
+
 int ChatLine::getColumnCount()
 {
     return content.size();

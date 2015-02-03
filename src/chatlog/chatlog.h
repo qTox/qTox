@@ -120,7 +120,7 @@ private:
     int selClickedCol = -1;
     int selFirstRow = -1;
     int selLastRow = -1;
-    QColor selectionRectColor = QColor(166,225,255);
+    QColor selectionRectColor = QColor::fromRgbF(0.23, 0.68, 0.91).lighter(150);
     SelectionMode selectionMode = None;
     QPointF clickPos;
     QGraphicsRectItem* selGraphItem = nullptr;

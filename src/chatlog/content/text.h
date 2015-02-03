@@ -39,6 +39,7 @@ public:
     virtual void selectionStarted(QPointF scenePos) override;
     virtual void selectionCleared() override;
     virtual void selectionDoubleClick(QPointF scenePos) override;
+    virtual void selectionFocusChanged(bool focusIn) override;
     virtual bool isOverSelection(QPointF scenePos) const override;
     virtual QString getSelectedText() const override;
 
@@ -75,6 +76,7 @@ private:
     bool keepInMemory = false;
     bool elide = false;
     bool dirty = false;
+    bool selectionHasFocus = true;
     int selectionEnd = -1;
     int selectionAnchor = -1;
     qreal ascent = 0.0;

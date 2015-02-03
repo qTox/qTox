@@ -126,6 +126,12 @@ void Text::selectionDoubleClick(QPointF scenePos)
     update();
 }
 
+void Text::selectionFocusChanged(bool focusIn)
+{
+    selectionHasFocus = focusIn;
+    update();
+}
+
 bool Text::isOverSelection(QPointF scenePos) const
 {
     int cur = cursorFromPos(scenePos);
@@ -160,8 +166,9 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
             sel.cursor.setPosition(getSelectionEnd(), QTextCursor::KeepAnchor);
         }
 
-        sel.format.setBackground(QApplication::palette().color(QPalette::Highlight));
-        sel.format.setForeground(QApplication::palette().color(QPalette::HighlightedText));
+        const QColor selectionColor = QColor::fromRgbF(0.23, 0.68, 0.91);
+        sel.format.setBackground(selectionColor.lighter(selectionHasFocus ? 100 : 160));
+        sel.format.setForeground(selectionHasFocus ? Qt::white : Qt::black);
         ctx.selections.append(sel);
 
         // draw text
