@@ -229,16 +229,14 @@ void Text::regenerate()
     if(dirty)
     {
         if(!elide)
-        {
             doc->setHtml(text);
-        }
         else
-        {
-            QTextOption opt;
-            opt.setWrapMode(QTextOption::NoWrap);
-            doc->setDefaultTextOption(opt);
             doc->setPlainText(elidedText);
-        }
+
+        // wrap mode
+        QTextOption opt;
+        opt.setWrapMode(elide ? QTextOption::NoWrap : QTextOption::WrapAtWordBoundaryOrAnywhere);
+        doc->setDefaultTextOption(opt);
 
         // width & layout
         doc->setTextWidth(width);
