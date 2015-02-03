@@ -65,10 +65,12 @@ public:
     void clearContactsList();
     void setTranslation();
     void updateTrayIcon();
-    Q_INVOKABLE QMessageBox::StandardButton showWarningMsgBox(const QString& title, const QString& msg,
-                                              QMessageBox::StandardButtons buttonss = QMessageBox::Ok);
+    Q_INVOKABLE void showWarningMsgBox(const QString& title, const QString& msg);
     Q_INVOKABLE void setEnabledThreadsafe(bool enabled);
-    Q_INVOKABLE bool askMsgboxQuestion(const QString& title, const QString& msg);
+    Q_INVOKABLE bool askQuestion(const QString& title, const QString& msg, bool defaultAns = false, bool warning = true);
+    Q_INVOKABLE QString passwordDialog(const QString& cancel, const QString& body);
+    Q_INVOKABLE QString askProfiles();
+    // hooray for threading hacks
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
@@ -76,6 +78,7 @@ public:
     virtual void resizeEvent(QResizeEvent *event);
 
     void clearAllReceipts();
+    void reloadHistory();
 
     void reloadTheme();
 
@@ -134,7 +137,6 @@ private slots:
     void playRingtone();
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAwayCheck();
-    void getPassword(QString info, int passtype, uint8_t* salt);
     void onFriendTypingChanged(int friendId, bool isTyping);
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
@@ -148,7 +150,6 @@ private:
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();
-    QString askProfiles();
     QString detectProfile();
     SystemTrayIcon *icon;
     QMenu *trayMenu;

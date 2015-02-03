@@ -46,11 +46,13 @@ public:
     explicit Core(Camera* cam, QThread* coreThread, QString initialLoadPath);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
-    
+
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
     static QList<CString> splitMessage(const QString &message, int maxLen);
+
+    static QByteArray getSaltFromFile(QString filename);
 
     QString getPeerName(const ToxID& id) const;
 
@@ -64,9 +66,9 @@ public:
     bool hasFriendWithPublicKey(const QString &pubkey) const; ///< Check if we have a friend by public key
     int joinGroupchat(int32_t friendNumber, uint8_t type, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
     void quitGroupChat(int groupId) const; ///< Quit a groupchat
-    
+
     QString getIDString() const; ///< Get the 12 first characters of our Tox ID
-    
+
     QString getUsername() const; ///< Returns our username, or an empty string on failure
     QString getStatusMessage() const; ///< Returns our status message, or an empty string on failure
     ToxID getSelfId() const; ///< Returns our Tox ID
@@ -83,10 +85,10 @@ public slots:
     void start(); ///< Initializes the core, must be called before anything else
     void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer
     void bootstrapDht(); ///< Connects us to the Tox network
-    void switchConfiguration(const QString& profile); ///< Load a different profile and restart the core
 
     void saveConfiguration();
     void saveConfiguration(const QString& path);
+    void switchConfiguration(const QString& profile); ///< Load a different profile and restart the core
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
@@ -137,6 +139,7 @@ public slots:
     static bool isGroupCallVolEnabled(int groupId);
 
     void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
+    void useOtherPassword(PasswordType type);
     void clearPassword(PasswordType passtype);
     QByteArray encryptData(const QByteArray& data, PasswordType passtype);
     QByteArray decryptData(const QByteArray& data, PasswordType passtype);
@@ -145,7 +148,6 @@ signals:
     void connected();
     void disconnected();
     void blockingClearContacts();
-    void blockingGetPassword(QString info, int passtype, uint8_t* salt = nullptr);
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(int friendId, const QString& message, bool isAction);
@@ -266,6 +268,8 @@ private:
     bool checkConnection();
 
     bool loadConfiguration(QString path); // Returns false for a critical error, true otherwise
+    bool loadEncryptedSave(QByteArray& data);
+    void checkEncryptedHistory();
     void make_tox();
     void loadFriends();
 
@@ -273,6 +277,8 @@ private:
     static void removeFileFromQueue(bool sendQueue, int friendId, int fileId);
 
     void checkLastOnline(int friendId);
+
+    void deadifyTox();
 
 private slots:
      void onFileTransferFinished(ToxFile file);
@@ -294,7 +300,17 @@ private:
     QMutex fileSendMutex, messageSendMutex;
     bool ready;
 
-    uint8_t* pwsaltedkeys[PasswordType::ptCounter]; // use the pw's hash as the "pw"
+    uint8_t* pwsaltedkeys[PasswordType::ptCounter] = {nullptr}; // use the pw's hash as the "pw"
+
+    // Hack for reloading current profile if switching to an encrypted one fails.
+    // Testing the passwords before killing the current profile is perfectly doable,
+    // however it would require major refactoring;
+    // the Core class as a whole also requires major refactoring (especially to support multiple IDs at once),
+    // so I'm punting on this until then, when it would get fixed anyways
+    uint8_t* backupkeys[PasswordType::ptCounter] = {nullptr};
+    QString* backupProfile = nullptr;
+    void saveCurrentInformation();
+    QString loadOldInformation();
 
     static const int videobufsize;
     static uint8_t* videobuf;

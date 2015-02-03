@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         if (QDir(Settings::getSettingsDirPath()).exists(profile + ".tox"))
         {
             qDebug() << "Setting profile to" << profile;
-            Settings::getInstance().setCurrentProfile(profile);
+            Settings::getInstance().switchProfile(profile);
         }
         else
         {

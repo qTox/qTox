@@ -18,14 +18,27 @@
 #include "ui_setpassworddialog.h"
 #include <QPushButton>
 
-SetPasswordDialog::SetPasswordDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::SetPasswordDialog)
+const double SetPasswordDialog::reasonablePasswordLength = 8.;
+
+SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::SetPasswordDialog)
+    , body(body+"\n")
 {
     ui->setupUi(this);
 
-    connect(ui->passwordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
+    connect(ui->  passwordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
     connect(ui->repasswordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
+
+    ui->body->setText(body + "\n" + tr("The passwords don't match."));
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+
+    if (!extraButton.isEmpty())
+    {
+        QPushButton* third = new QPushButton(extraButton);
+        ui->buttonBox->addButton(third, QDialogButtonBox::YesRole);
+        connect(third, &QPushButton::clicked, this, [&](){this->done(Tertiary);});
+    }
 }
 
 SetPasswordDialog::~SetPasswordDialog()
@@ -35,10 +48,53 @@ SetPasswordDialog::~SetPasswordDialog()
 
 void SetPasswordDialog::onPasswordEdit()
 {
-    if (ui->passwordlineEdit->text() == ui->repasswordlineEdit->text())
+    QString pswd = ui->passwordlineEdit->text();
+
+    if (pswd == ui->repasswordlineEdit->text() && pswd.length() > 0)
+    {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+        ui->body->setText(body);
+    }
     else
+    {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+        ui->body->setText(body + tr("The passwords don't match."));
+    }
+
+    // Password strength calculator
+    // Based on code in the Master Password dialog in Firefox
+    // (pref-masterpass.js)
+    // Original code triple-licensed under the MPL, GPL, and LGPL
+    // so is license-compatible with this file
+
+    const double lengthFactor = reasonablePasswordLength / 8.0;
+    int pwlength = (int)(pswd.length() / lengthFactor);
+    if (pwlength > 5)
+        pwlength = 5;
+
+    const QRegExp numRxp("[0-9]", Qt::CaseSensitive, QRegExp::RegExp);
+    int numeric = (int)(pswd.count(numRxp) / lengthFactor);
+    if (numeric > 3)
+        numeric = 3;
+
+    const QRegExp symbRxp("\\W", Qt::CaseInsensitive, QRegExp::RegExp);
+    int numsymbols = (int)(pswd.count(symbRxp) / lengthFactor);
+    if (numsymbols > 3)
+        numsymbols = 3;
+
+    const QRegExp upperRxp("[A-Z]", Qt::CaseSensitive, QRegExp::RegExp);
+    int upper = (int)(pswd.count(upperRxp) / lengthFactor);
+    if (upper > 3)
+        upper = 3;
+
+    int pwstrength=((pwlength*10)-20) + (numeric*10) + (numsymbols*15) + (upper*10);
+    if (pwstrength < 0)
+        pwstrength = 0;
+
+    if (pwstrength > 100)
+        pwstrength = 100;
+
+    ui->strengthBar->setValue(pwstrength);
 }
 
 QString SetPasswordDialog::getPassword()

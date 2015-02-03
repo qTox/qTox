@@ -23,7 +23,6 @@
 #include "src/audio.h"
 
 #include <tox/tox.h>
-#include <tox/toxencryptsave.h>
 
 #include <ctime>
 #include <functional>
@@ -39,7 +38,6 @@
 #include <QDateTime>
 #include <QList>
 #include <QBuffer>
-#include <QMessageBox>
 #include <QMutexLocker>
 
 const QString Core::CONFIG_FILE_NAME = "data";
@@ -90,12 +88,23 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
     Audio::openInput(inDevDescr);
 }
 
+void Core::deadifyTox()
+{
+    if (toxav)
+    {
+        toxav_kill(toxav);
+        toxav = nullptr;
+    }
+    if (tox)
+    {
+        tox_kill(tox);
+        tox = nullptr;
+    }
+}
+
 Core::~Core()
 {
     qDebug() << "Deleting Core";
-
-    clearPassword(Core::ptMain);
-    clearPassword(Core::ptHistory);
 
     toxTimer->stop();
     coreThread->exit(0);
@@ -105,13 +114,7 @@ Core::~Core()
         coreThread->wait(500);
     }
 
-    if (tox)
-    {
-        toxav_kill(toxav);
-        toxav = nullptr;
-        tox_kill(tox);
-        tox = nullptr;
-    }
+    deadifyTox();
 
     if (videobuf)
     {
@@ -183,12 +186,9 @@ void Core::make_tox()
             {
                 if (toxOptions.proxy_type != TOX_PROXY_NONE)
                 {
-                    //QMessageBox::critical(Widget::getInstance(), tr("Proxy failure", "popup title"), 
-                    //tr("toxcore failed to start with your proxy settings. qTox cannot run; please modify your "
-                       //"settings and restart.", "popup text"));
                     qCritical() << "Core: bad proxy! no toxcore!";
                     emit badProxy();
-                } 
+                }
                 else
                 {
                     qCritical() << "Tox core failed to start";
@@ -229,14 +229,26 @@ void Core::start()
 
     if (loadPath != "")
     {
-        if (!loadConfiguration(loadPath)) // loadPath is meaningless after this
-	    {
-            qCritical() << "Core: loadConfiguration failed, exiting now";
-            emit failedToStart();
-            tox_kill(tox);
-            tox = nullptr;
-            return;
+        while (!loadConfiguration(loadPath))
+        {
+            if (loadPath.isEmpty())
+            {
+                QString profile;
+                if ((profile = loadOldInformation()).isEmpty())
+                {
+                    qCritical() << "Core: loadConfiguration failed, exiting now";
+                    emit failedToStart();
+                    return;
+                }
+                else
+                {
+                    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
+                    Settings::getInstance().switchProfile(profile);
+                    HistoryKeeper::resetInstance(); // I'm not actually sure if this is necessary
+                }
+            }
         }
+        // loadPath is meaningless after this
         loadPath = "";
     }
     else // new ID
@@ -292,7 +304,7 @@ void Core::start()
     }
     else
         qDebug() << "Core: Error loading self avatar";
-    
+
     ready = true;
 
     process(); // starts its own timer
@@ -309,7 +321,7 @@ void Core::start()
 
 void Core::process()
 {
-    if (!tox)
+    if (!isReady())
         return;
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
@@ -501,7 +513,6 @@ void Core::onGroupInvite(Tox*, int friendnumber, uint8_t type, const uint8_t *da
 void Core::onGroupMessage(Tox*, int groupnumber, int peernumber, const uint8_t * message, uint16_t length, void *_core)
 {
     Core* core = static_cast<Core*>(_core);
-
     emit core->groupMessageReceived(groupnumber, peernumber, CString::toString(message, length), false);
 }
 
@@ -1012,7 +1023,7 @@ void Core::acceptFileRecvRequest(int friendId, int fileNum, QString path)
 
 void Core::removeFriend(int friendId, bool fake)
 {
-    if (!tox || fake)
+    if (!isReady() || fake)
         return;
     if (tox_del_friend(tox, friendId) == -1) {
         emit failedToRemoveFriend(friendId);
@@ -1024,7 +1035,7 @@ void Core::removeFriend(int friendId, bool fake)
 
 void Core::removeGroup(int groupId, bool fake)
 {
-    if (!tox || fake)
+    if (!isReady() || fake)
         return;
     tox_del_groupchat(tox, groupId);
 
@@ -1162,7 +1173,8 @@ QString Core::sanitize(QString name)
 
 bool Core::loadConfiguration(QString path)
 {
-    // setting the profile is now the responsibility of the caller
+    loadPath = ""; // if not empty upon return, then user forgot a password and is switching
+
     QFile configurationFile(path);
     qDebug() << "Core::loadConfiguration: reading from " << path;
 
@@ -1186,51 +1198,21 @@ bool Core::loadConfiguration(QString path)
         }
         else if (error == 1) // Encrypted data save
         {
-            if (!Settings::getInstance().getEncryptTox())
-                Widget::getInstance()->showWarningMsgBox(tr("Encryption error"), tr("The .tox file is encrypted, but encryption was not checked, continuing regardless."));
-            uint8_t salt[tox_pass_salt_length()];
-            tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-            do
+            if (!loadEncryptedSave(data))
             {
-                while (!pwsaltedkeys[ptMain])
+                configurationFile.close();
+
+                QString profile;
+                QMetaObject::invokeMethod(Widget::getInstance(), "askProfiles", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, profile));
+
+                if (!profile.isEmpty())
                 {
-                    emit blockingGetPassword(tr("Tox datafile decryption password"), ptMain, salt);
-                    if (!pwsaltedkeys[ptMain])
-                        Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
+                    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
+                    Settings::getInstance().switchProfile(profile);
+                    HistoryKeeper::resetInstance();
                 }
-
-                error = tox_encrypted_key_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwsaltedkeys[ptMain]);
-                if (error != 0)
-                {
-                    QMessageBox msgb;
-                    msgb.moveToThread(qApp->thread());
-                    QPushButton *tryAgain = msgb.addButton(tr("Try Again"), QMessageBox::AcceptRole);
-                    QPushButton *cancel = msgb.addButton(tr("Change profile"), QMessageBox::RejectRole);
-                    QPushButton *wipe = msgb.addButton(tr("Reinit current profile"), QMessageBox::ActionRole);
-                    msgb.setDefaultButton(tryAgain);
-                    msgb.setWindowTitle(tr("Password error"));
-                    msgb.setText(tr("Wrong password has been entered"));
-                    // msgb.setInformativeText(tr(""));
-
-                    msgb.exec();
-
-                    if (msgb.clickedButton() == tryAgain)
-                        clearPassword(ptMain);
-                    else if (msgb.clickedButton() == cancel)
-                    {
-                        configurationFile.close();
-                        return false;
-                    }
-                    else if (msgb.clickedButton() == wipe)
-                    {
-                        clearPassword(ptMain);
-                        Settings::getInstance().setEncryptTox(false);
-                        error = 0;
-                    }
-                }
-                else
-                    Settings::getInstance().setEncryptTox(true);
-            } while (error != 0);
+                return false;
+            }
         }
     }
     configurationFile.close();
@@ -1239,7 +1221,7 @@ bool Core::loadConfiguration(QString path)
     QString name = getUsername();
     if (!name.isEmpty())
         emit usernameSet(name);
-    
+
     QString msg = getStatusMessage();
     if (!msg.isEmpty())
         emit statusMessageSet(msg);
@@ -1250,53 +1232,7 @@ bool Core::loadConfiguration(QString path)
 
     // tox core is already decrypted
     if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
-    {
-        // get salt
-        QFile file(HistoryKeeper::getHistoryPath());
-        file.open(QIODevice::ReadOnly);
-        QByteArray data = file.read(tox_pass_encryption_extra_length());
-        file.close();
-        uint8_t salt[tox_pass_salt_length()];
-        int err = tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-        if (err)
-        {   // maybe we should handle this better
-            qWarning() << "Core: history db isn't encrypted, but encryption is set!! No history loaded...";
-        }
-        else
-        {
-            bool error = true;
-            do
-            {
-                while (!pwsaltedkeys[ptHistory])
-                {
-                    emit blockingGetPassword(tr("History Log decryption password"), Core::ptHistory, salt);
-                    if (!pwsaltedkeys[ptHistory])
-                        Widget::getInstance()->showWarningMsgBox(tr("Password error"), tr("Failed to setup password.\nEmpty password."));
-                }
-
-                if (!HistoryKeeper::checkPassword())
-                {
-                    if (QMessageBox::Ok == Widget::getInstance()->showWarningMsgBox(tr("Encrypted log"),
-                                                                tr("Your history is encrypted with different password.\nDo you want to try another password?"),
-                                                                QMessageBox::Ok | QMessageBox::Cancel))
-                    {
-                        error = true;
-                        clearPassword(ptHistory);
-                    }
-                    else
-                    {
-                        error = false;
-                        clearPassword(ptHistory);
-                        Widget::getInstance()->showWarningMsgBox(tr("History"), tr("Due to incorret password history will be disabled."));
-                        Settings::getInstance().setEncryptLogs(false);
-                        Settings::getInstance().setEnableLogging(false);
-                    }
-                } else {
-                    error = false;
-                }
-            } while (error);
-        }
-    }
+        checkEncryptedHistory();
 
     loadFriends();
     return true;
@@ -1307,13 +1243,16 @@ void Core::saveConfiguration()
     if (QThread::currentThread() != coreThread)
         return (void) QMetaObject::invokeMethod(this, "saveConfiguration");
 
+    if (!isReady())
+        return;
+
     QString dir = Settings::getSettingsDirPath();
     QDir directory(dir);
     if (!directory.exists() && !directory.mkpath(directory.absolutePath())) {
         qCritical() << "Error while creating directory " << dir;
         return;
     }
-    
+
     QString profile = Settings::getInstance().getCurrentProfile();
 
     if (profile == "")
@@ -1323,72 +1262,12 @@ void Core::saveConfiguration()
         if (profile == "") // happens on creation of a new Tox ID
             profile = getIDString();
 
-        Settings::getInstance().setCurrentProfile(profile);
+        Settings::getInstance().switchProfile(profile);
     }
-    
+
     QString path = directory.filePath(profile + TOX_EXT);
-    
+
     saveConfiguration(path);
-}
-
-void Core::saveConfiguration(const QString& path)
-{
-    if (QThread::currentThread() != coreThread)
-        return (void) QMetaObject::invokeMethod(this, "saveConfiguration", Q_ARG(const QString&, path));
-
-    if (!tox)
-    {
-        qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
-        return;
-    }
-
-    Settings::getInstance().save();
-
-    QSaveFile configurationFile(path);
-    if (!configurationFile.open(QIODevice::WriteOnly))
-    {
-        qCritical() << "File " << path << " cannot be opened";
-        return;
-    }
-
-    qDebug() << "Core: writing tox_save to " << path;
-
-    uint32_t fileSize;
-    bool encrypt = Settings::getInstance().getEncryptTox();
-    if (encrypt)
-        fileSize = tox_encrypted_size(tox);
-    else
-        fileSize = tox_size(tox);
-
-    if (fileSize > 0 && fileSize <= INT32_MAX)
-    {
-        uint8_t *data = new uint8_t[fileSize];
-        if (encrypt)
-        {
-            if (!pwsaltedkeys[ptMain])
-            {
-                Widget::getInstance()->showWarningMsgBox(tr("NO Password"), tr("Will be saved without encryption!"));
-                tox_save(tox, data);
-            }
-            else
-            {
-                int ret = tox_encrypted_key_save(tox, data, pwsaltedkeys[ptMain]);
-                if (ret == -1)
-                {
-                    qCritical() << "Core::saveConfiguration: encryption of save file failed!!!";
-                    return;
-                }
-            }
-        }
-        else
-        {
-            tox_save(tox, data);
-        }
-
-        configurationFile.write(reinterpret_cast<char *>(data), fileSize);
-        configurationFile.commit();
-        delete[] data;
-    }
 }
 
 void Core::switchConfiguration(const QString& profile)
@@ -1399,19 +1278,15 @@ void Core::switchConfiguration(const QString& profile)
         qDebug() << "Core: switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
 
     saveConfiguration();
+    saveCurrentInformation(); // part of a hack, see core.h
 
     ready = false;
+    Widget::getInstance()->setEnabledThreadsafe(false);
     clearPassword(ptMain);
     clearPassword(ptHistory);
 
     toxTimer->stop();
-    Widget::getInstance()->setEnabledThreadsafe(false);
-    if (tox) {
-        toxav_kill(toxav);
-        toxav = nullptr;
-        tox_kill(tox);
-        tox = nullptr;
-    }
+    deadifyTox();
 
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
     emit blockingClearContacts(); // we need this to block, but signals are required for thread safety
@@ -1421,15 +1296,12 @@ void Core::switchConfiguration(const QString& profile)
     else
         loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
 
-    // the new profile needs to be set before resetting the settings, so that
-    // we don't load the old profile's profile.ini
-    Settings::getInstance().setCurrentProfile(profile);
-    Settings::getInstance().save(false); // save new profile, but don't write old profile info to newprofile.ini
-    Settings::resetInstance();
-    HistoryKeeper::getInstance()->resetInstance();
+    Settings::getInstance().switchProfile(profile);
+    HistoryKeeper::resetInstance();
 
     start();
-    Widget::getInstance()->setEnabledThreadsafe(true);
+    if (isReady())
+        Widget::getInstance()->setEnabledThreadsafe(true);
 }
 
 void Core::loadFriends()
@@ -1794,69 +1666,6 @@ QList<CString> Core::splitMessage(const QString &message, int maxLen)
     return splittedMsgs;
 }
 
-void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
-{
-    if (password.isEmpty())
-    {
-        clearPassword(passtype);
-        return;
-    }
-    if (!pwsaltedkeys[passtype])
-        pwsaltedkeys[passtype] = new uint8_t[tox_pass_key_length()];
-
-    CString str(password);
-    if (salt)
-        tox_derive_key_with_salt(str.data(), str.size(), salt, pwsaltedkeys[passtype]);
-    else
-        tox_derive_key_from_pass(str.data(), str.size(), pwsaltedkeys[passtype]);
-
-    password.clear();
-}
-
-void Core::clearPassword(PasswordType passtype)
-{
-    if (pwsaltedkeys[passtype])
-    {
-        delete[] pwsaltedkeys[passtype];
-        pwsaltedkeys[passtype] = nullptr;
-    }
-}
-
-QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
-{
-    if (!pwsaltedkeys[passtype])
-        return QByteArray();
-    uint8_t encrypted[data.size() + tox_pass_encryption_extra_length()];
-    if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], encrypted) == -1)
-    {
-        qWarning() << "Core::encryptData: encryption failed";
-        return QByteArray();
-    }
-    return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + tox_pass_encryption_extra_length());
-}
-
-QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
-{
-    if (!pwsaltedkeys[passtype])
-        return QByteArray();
-    int sz = data.size() - tox_pass_encryption_extra_length();
-    uint8_t decrypted[sz];
-    if (tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], decrypted) != sz)
-    {
-        qWarning() << "Core::decryptData: decryption failed";
-        return QByteArray();
-    }
-    return QByteArray(reinterpret_cast<char*>(decrypted), sz);
-}
-
-bool Core::isPasswordSet(PasswordType passtype)
-{
-    if (pwsaltedkeys[passtype])
-        return true;
-
-    return false;
-}
-
 QString Core::getPeerName(const ToxID& id) const
 {
     QString name;
@@ -1891,7 +1700,7 @@ QString Core::getPeerName(const ToxID& id) const
 
 bool Core::isReady()
 {
-    return ready;
+    return toxav && tox && ready;
 }
 
 void Core::setNospam(uint32_t nospam)

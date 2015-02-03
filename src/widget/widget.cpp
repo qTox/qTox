@@ -32,7 +32,6 @@
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
 #include "src/historykeeper.h"
-#include "form/inputpassworddialog.h"
 #include "src/autoupdate.h"
 #include "src/audio.h"
 #include "src/platform/timer.h"
@@ -88,7 +87,7 @@ void Widget::init()
         icon = new SystemTrayIcon;
         updateTrayIcon();
         trayMenu = new QMenu;
-        
+
         statusOnline = new QAction(tr("Online"), this);
         statusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
         connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
@@ -100,19 +99,19 @@ void Widget::init()
         connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         actionQuit = new QAction(tr("&Quit"), this);
         connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
-        
+
         trayMenu->addAction(statusOnline);
         trayMenu->addAction(statusAway);
         trayMenu->addAction(statusBusy);
         trayMenu->addSeparator();
         trayMenu->addAction(actionQuit);
         icon->setContextMenu(trayMenu);
-        
+
         connect(icon,
                 SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                 this,
                 SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
-        
+
         if (Settings::getInstance().getShowSystemTray())
         {
             icon->show();
@@ -242,7 +241,6 @@ void Widget::init()
     connect(core, &Core::emptyGroupCreated, this, &Widget::onEmptyGroupCreated);
     connect(core, &Core::avInvite, this, &Widget::playRingtone);
     connect(core, &Core::blockingClearContacts, this, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
-    connect(core, &Core::blockingGetPassword, this, &Widget::getPassword, Qt::BlockingQueuedConnection);
     connect(core, &Core::friendTypingChanged, this, &Widget::onFriendTypingChanged);
 
     connect(core, SIGNAL(messageSentResult(int,QString,int)), this, SLOT(onMessageSendResult(int,QString,int)));
@@ -390,7 +388,7 @@ QString Widget::detectProfile()
     QString path, profile = Settings::getInstance().getCurrentProfile();
     path = dir.filePath(profile + Core::TOX_EXT);
     QFile file(path);
-    if (profile == "" || !file.exists())
+    if (profile.isEmpty() || !file.exists())
     {
         Settings::getInstance().setCurrentProfile("");
 #if 1 // deprecation attempt
@@ -405,10 +403,13 @@ QString Widget::detectProfile()
 #endif
         {
             profile = askProfiles();
-            if (profile != "")
-                return dir.filePath(profile + Core::TOX_EXT);
-            else
+            if (profile.isEmpty())
                 return "";
+            else
+            {
+                Settings::getInstance().switchProfile(profile);
+                return dir.filePath(profile + Core::TOX_EXT);
+            }
         }
     }
     else
@@ -439,10 +440,7 @@ QString Widget::askProfiles()
                                             false, // if the user can enter their own input
                                             &ok);
     if (!ok) // user cancelled
-    {
-        qApp->quit();
         return "";
-    }
     else
         return profile;
 }
@@ -686,6 +684,12 @@ void Widget::setStatusMessage(const QString &statusMessage)
 {
     ui->statusLabel->setText(statusMessage);
     ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
+}
+
+void Widget::reloadHistory()
+{
+    for (auto f : FriendList::getAllFriends())
+        f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)
@@ -1187,20 +1191,6 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
         g->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), "red", QDateTime::currentDateTime());
 }
 
-void Widget::getPassword(QString info, int passtype, uint8_t* salt)
-{
-    Core::PasswordType pt = static_cast<Core::PasswordType>(passtype);
-    InputPasswordDialog dialog(info);
-    if (dialog.exec())
-    {
-        QString pswd = dialog.getPassword();
-        if (pswd.isEmpty())
-            core->clearPassword(pt);
-        else
-            core->setPassword(pswd, pt, salt);
-    }
-}
-
 void Widget::onFriendTypingChanged(int friendId, bool isTyping)
 {
     Friend* f = FriendList::findFriend(friendId);
@@ -1231,21 +1221,17 @@ void Widget::onSplitterMoved(int pos, int index)
     saveSplitterGeometry();
 }
 
-QMessageBox::StandardButton Widget::showWarningMsgBox(const QString& title, const QString& msg, QMessageBox::StandardButtons buttons)
+void Widget::showWarningMsgBox(const QString& title, const QString& msg)
 {
     // We can only display widgets from the GUI thread
     if (QThread::currentThread() != qApp->thread())
     {
-        QMessageBox::StandardButton ret;
         QMetaObject::invokeMethod(this, "showWarningMsgBox", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(QMessageBox::StandardButton, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
-                                  Q_ARG(QMessageBox::StandardButtons, buttons));
-        return ret;
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
     else
     {
-        return QMessageBox::warning(this, title, msg, buttons);
+        QMessageBox::warning(this, title, msg);
     }
 }
 
@@ -1264,20 +1250,71 @@ void Widget::setEnabledThreadsafe(bool enabled)
     }
 }
 
-bool Widget::askMsgboxQuestion(const QString& title, const QString& msg)
+bool Widget::askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning)
 {
     // We can only display widgets from the GUI thread
     if (QThread::currentThread() != qApp->thread())
     {
         bool ret;
-        QMetaObject::invokeMethod(this, "askMsgboxQuestion", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(this, "askQuestion", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
+                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning));
         return ret;
     }
     else
     {
-        return QMessageBox::question(this, title, msg) == QMessageBox::StandardButton::Yes;
+        if (warning)
+        {
+            QMessageBox::StandardButton def = QMessageBox::Cancel;
+            if (defaultAns)
+                def = QMessageBox::Ok;
+            return QMessageBox::warning(this, title, msg, QMessageBox::Ok | QMessageBox::Cancel, def) == QMessageBox::Ok;
+        }
+        else
+        {
+            QMessageBox::StandardButton def = QMessageBox::No;
+            if (defaultAns)
+                def = QMessageBox::Yes;
+            return QMessageBox::question(this, title, msg, QMessageBox::Yes | QMessageBox::No, def) == QMessageBox::Yes;
+        }
+    }
+}
+
+QString Widget::passwordDialog(const QString& cancel, const QString& body)
+{
+    // We can only display widgets from the GUI thread
+    if (QThread::currentThread() != qApp->thread())
+    {
+        QString ret;
+        QMetaObject::invokeMethod(this, "passwordDialog", Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QString, ret),
+                                  Q_ARG(const QString&, cancel), Q_ARG(const QString&, body));
+        return ret;
+    }
+    else
+    {
+        QString ret;
+        QInputDialog dialog;
+        dialog.setWindowTitle(tr("Enter your password"));
+        dialog.setOkButtonText(tr("Decrypt"));
+        dialog.setCancelButtonText(cancel);
+        dialog.setInputMode(QInputDialog::TextInput);
+        dialog.setTextEchoMode(QLineEdit::Password);
+        dialog.setLabelText(body);
+        while (true)
+        {
+            int val = dialog.exec();
+            if (val != QDialog::Accepted)
+                return QString();
+            else
+            {
+                ret = dialog.textValue();
+                if (!ret.isEmpty())
+                    return ret;
+            }
+            dialog.setLabelText(body + "\n" + tr("You must enter a non-empty password."));
+        }
     }
 }
 

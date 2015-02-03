@@ -32,7 +32,6 @@ FORMS    += \
     src/widget/form/settings/identitysettings.ui \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/loadhistorydialog.ui \
-    src/widget/form/inputpassworddialog.ui \
     src/widget/form/setpassworddialog.ui \
     src/widget/form/settings/advancedsettings.ui
     
@@ -116,7 +115,7 @@ win32 {
             target.path = /usr/bin
             INSTALLS += target
             LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
-	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
+	        LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
             LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
         } else {
             LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
@@ -193,7 +192,6 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/misc/db/genericddinterface.h \
     src/misc/db/plaindb.h \
     src/misc/db/encrypteddb.h \
-    src/widget/form/inputpassworddialog.h \
     src/widget/form/setpassworddialog.h \
     src/widget/form/tabcompleter.h \
     src/video/videoframe.h \
@@ -226,6 +224,7 @@ SOURCES += \
     src/widget/groupwidget.cpp \
     src/widget/widget.cpp \
     src/core.cpp \
+    src/coreencryption.cpp \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \
@@ -262,7 +261,6 @@ SOURCES += \
     src/misc/db/genericddinterface.cpp \
     src/misc/db/plaindb.cpp \
     src/misc/db/encrypteddb.cpp \
-    src/widget/form/inputpassworddialog.cpp \
     src/widget/form/setpassworddialog.cpp \
     src/video/netvideosource.cpp \
     src/widget/form/tabcompleter.cpp \
