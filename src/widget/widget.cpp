@@ -1286,7 +1286,7 @@ QString Widget::passwordDialog(const QString& cancel, const QString& body)
         QString ret;
         QInputDialog dialog;
         dialog.setWindowTitle(tr("Enter your password"));
-        dialog.setOkButtonText(tr("Set password"));
+        dialog.setOkButtonText(tr("Decrypt"));
         dialog.setCancelButtonText(cancel);
         dialog.setInputMode(QInputDialog::TextInput);
         dialog.setTextEchoMode(QLineEdit::Password);
