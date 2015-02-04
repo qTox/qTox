@@ -65,7 +65,9 @@ Widget *Widget::instance{nullptr};
 Widget::Widget(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      activeChatroomWidget{nullptr}
+      activeChatroomWidget{nullptr},
+      eventFlag(false),
+      eventIcon(false)
 {   
     translator = new QTranslator;
     setTranslation();
@@ -75,8 +77,8 @@ void Widget::init()
 {
     ui->setupUi(this);
 
-    idleTimer = new QTimer();
-    idleTimer->start(1000);
+    timer = new QTimer();
+    timer->start(1000);
 
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());
@@ -264,7 +266,8 @@ void Widget::init()
     connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
-    connect(idleTimer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
+    connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
+    connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
 
     coreThread->start();
 
@@ -296,19 +299,17 @@ void Widget::setTranslation()
 
 void Widget::updateTrayIcon()
 {
-    if (!icon)
-        return;
-    QString status = ui->statusButton->property("status").toString();
-    QString pic;
-    QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
-    if (status == "online")
-        pic = ":img/taskbar/" + color + "/taskbar_online_2x.png";
-    else if (status == "away")
-        pic = ":img/taskbar/" + color + "/taskbar_idle_2x.png";
-    else if (status == "busy")
-        pic = ":img/taskbar/" + color + "/taskbar_busy_2x.png";
+    QString status;
+    if (eventIcon)
+        status = "event";
     else
-        pic = ":img/taskbar/" + color + "/taskbar_offline_2x.png";
+    {
+        status = ui->statusButton->property("status").toString();
+        if (!status.length())
+            status = "offline";
+    }
+    QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
+    QString pic = ":img/taskbar/" + color + "/taskbar_" + status + ".svg";
     icon->setIcon(QIcon(pic));
 }
 
@@ -323,7 +324,7 @@ Widget::~Widget()
     delete settingsWidget;
     delete addFriendForm;
     delete filesForm;
-    delete idleTimer;
+    delete timer;
 
     FriendList::clear();
     GroupList::clear();
@@ -421,11 +422,11 @@ QList<QString> Widget::searchProfiles()
 {
     QList<QString> out;
     QDir dir(Settings::getSettingsDirPath());
-	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
-	dir.setNameFilters(QStringList("*.tox"));
-	for (QFileInfo file : dir.entryInfoList())
-		out += file.completeBaseName();
-	return out;
+    dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+    dir.setNameFilters(QStringList("*.tox"));
+    for (QFileInfo file : dir.entryInfoList())
+        out += file.completeBaseName();
+    return out;
 }
 
 QString Widget::askProfiles()
@@ -869,6 +870,9 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
 
     QApplication::alert(this);
 
+    if (inactiveWindow)
+        eventFlag = true;
+
     if (Settings::getInstance().getShowWindow())
     {
         show();
@@ -1108,20 +1112,20 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
 
 bool Widget::event(QEvent * e)
 {
-    switch(e->type()) {
+    switch(e->type())
+    {
         case QEvent::WindowActivate:
             if (activeChatroomWidget != nullptr)
             {
                 activeChatroomWidget->resetEventFlags();
                 activeChatroomWidget->updateStatusLight();
             }
-        case QEvent::MouseButtonPress:
-        case QEvent::MouseButtonRelease:
-        case QEvent::Wheel:
-        case QEvent::KeyPress:
-        case QEvent::KeyRelease:
-            if (autoAwayActive)
-                onUserAwayCheck();  // Just so we get back from away faster when interacting with app
+            if (eventFlag)
+            {
+                eventFlag = false;
+                eventIcon = false;
+                updateTrayIcon();
+            }
         default:
             break;
     }
@@ -1155,6 +1159,15 @@ void Widget::onUserAwayCheck()
     else if (autoAwayActive)
         autoAwayActive = false;
 #endif
+}
+
+void Widget::onEventIconTick()
+{
+    if (eventFlag)
+    {
+        eventIcon ^= true;
+        updateTrayIcon();
+    }
 }
 
 void Widget::setStatusOnline()
