@@ -126,7 +126,7 @@ void ChatLine::updateBBox()
     bbox.setWidth(width);
 
     for(ChatLineContent* c : content)
-        bbox.setHeight(qMax(c->sceneBoundingRect().height(), bbox.height()));
+        bbox.setHeight(qMax(c->sceneBoundingRect().top() - bbox.top() + c->sceneBoundingRect().height(), bbox.height()));
 }
 
 QRectF ChatLine::sceneBoundingRect() const
