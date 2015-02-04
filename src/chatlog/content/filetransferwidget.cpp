@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QPainter>
+#include <QPropertyAnimation>
 #include <QDebug>
 
 FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
@@ -46,6 +47,12 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     ui->progressLabel->setText("0kiB/s");
     ui->etaLabel->setText("");
 
+    colorAnimation = new QPropertyAnimation(this, "color");
+    colorAnimation->setDuration(500);
+    colorAnimation->setEasingCurve(QEasingCurve::OutCubic);
+    connect(colorAnimation, &QPropertyAnimation::valueChanged, this, [this] { update(); });
+
+    setProperty("color", Style::getColor(Style::LightGrey));
     setColor(Style::getColor(Style::LightGrey), false);
 
     connect(Core::getInstance(), &Core::fileTransferInfo, this, &FileTransferWidget::onFileTransferInfo);
@@ -108,7 +115,10 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
 
 void FileTransferWidget::setColor(const QColor &c, bool whiteFont)
 {
-    color = c;
+    colorAnimation->setStartValue(property("color").value<QColor>());
+    colorAnimation->setEndValue(c);
+    colorAnimation->start();
+
     setProperty("fontColor", whiteFont ? "white" : "black");
 
     setStyleSheet(Style::getStylesheet(":/ui/fileTransferInstance/filetransferWidget.css"));
@@ -130,7 +140,7 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     // required by Hi-DPI support as border-image doesn't work.
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(QBrush(color));
+    painter.setBrush(QBrush(property("color").value<QColor>()));
     painter.setPen(Qt::NoPen);
 
     qreal s = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());

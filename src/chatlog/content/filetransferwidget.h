@@ -19,6 +19,7 @@
 
 #include <QWidget>
 #include <QTime>
+
 #include "../chatlinecontent.h"
 #include "../../corestructs.h"
 
@@ -27,6 +28,7 @@ namespace Ui {
 class FileTransferWidget;
 }
 
+class QPropertyAnimation;
 class QPushButton;
 
 class FileTransferWidget : public QWidget
@@ -67,7 +69,7 @@ private:
     ToxFile fileInfo;
     QTime lastTick;
     qint64 lastBytesSent = 0;
-    QColor color;
+    QPropertyAnimation* colorAnimation = nullptr;
 
     static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
     uint8_t meanIndex = 0;
