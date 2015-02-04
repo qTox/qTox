@@ -68,16 +68,20 @@ bool PrivacyForm::setChatLogsPassword()
 {
     Core* core = Core::getInstance();
     SetPasswordDialog* dialog;
-    QString body = tr("Please set your new chat history password.");
-    if (core->isPasswordSet(Core::ptMain))
-        dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), this);
-    else
-        dialog = new SetPasswordDialog(body, QString(), this);
 
     // check if an encrypted history exists because it was disabled earlier, and use it if possible
     QString path = HistoryKeeper::getHistoryPath(QString(), 1);
     QByteArray salt = core->getSaltFromFile(path);
     bool haveEncHist = salt.size() > 0;
+
+    QString body = tr("Please set your new chat history password.");
+    if (haveEncHist)
+        body += "\n\n" + tr("It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.");
+
+    if (core->isPasswordSet(Core::ptMain))
+        dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), this);
+    else
+        dialog = new SetPasswordDialog(body, QString(), this);
 
     do {
         int r = dialog->exec();
@@ -99,13 +103,17 @@ bool PrivacyForm::setChatLogsPassword()
         {
             Settings::getInstance().setEncryptLogs(true);
             HistoryKeeper::getInstance()->importMessages(oldMessages);
-            Widget::getInstance()->reloadHistory();
+            if (haveEncHist)
+            {
+                Widget::getInstance()->reloadHistory();
+                Widget::getInstance()->showWarningMsgBox(tr("Successfully decrypted old chat history","popup title"), tr("You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.", "popup text"));
+            }
             delete dialog;
             return true;
         }
         else
         {
-            if (!Widget::getInstance()->askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\nWould you like to try again?", "This happens when enabling encryption after previously \"Disabling History\"")))
+            if (!Widget::getInstance()->askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\nWould you like to try again?\nCanceling will delete the old history and set the password to what you just entered.", "This happens when enabling encryption after previously \"Disabling History\""), true, true))
                 haveEncHist = false; // logically this is really just a `break`, but conceptually this is more accurate
         }
     } while (haveEncHist);
