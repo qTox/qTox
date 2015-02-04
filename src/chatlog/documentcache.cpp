@@ -17,8 +17,6 @@
 #include "documentcache.h"
 #include "customtextdocument.h"
 
-DocumentCache DocumentCache::instance;
-
 DocumentCache::~DocumentCache()
 {
     while(!documents.isEmpty())
@@ -35,10 +33,12 @@ QTextDocument* DocumentCache::pop()
 
 void DocumentCache::push(QTextDocument *doc)
 {
-    documents.push(doc);
+    if(doc)
+        documents.push(doc);
 }
 
 DocumentCache &DocumentCache::getInstance()
 {
+    static DocumentCache instance;
     return instance;
 }

@@ -37,7 +37,6 @@ protected:
 
 private:
     QStack<QTextDocument*> documents;
-    static DocumentCache instance;
 };
 
 #endif // DOCUMENTCACHE_H

@@ -34,7 +34,6 @@ protected:
 
 private:
     QHash<QString, QIcon> cache;
-    static PixmapCache instance;
 };
 
 #endif // ICONCACHE_H
