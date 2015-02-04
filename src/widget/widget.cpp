@@ -1313,6 +1313,7 @@ QString Widget::passwordDialog(const QString& cancel, const QString& body)
                 if (!ret.isEmpty())
                     return ret;
             }
+            dialog.setTextValue("");
             dialog.setLabelText(body + "\n" + tr("You must enter a non-empty password."));
         }
     }
