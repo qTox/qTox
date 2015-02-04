@@ -225,7 +225,7 @@ void Core::checkEncryptedHistory()
 
     QString a(tr("Please enter the password for the chat history for the %1 profile.", "used in load() when no hist pw set").arg(Settings::getInstance().getCurrentProfile()));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
-    QString c(tr("Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.", "part of history password dialog"));
+    QString c(tr("\nDisabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.", "part of history password dialog"));
     QString dialogtxt;
 
     if (pwsaltedkeys[ptHistory])

@@ -47,6 +47,7 @@
 #include <QThread>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QDialogButtonBox>
 #include <QTimer>
 #include <QStyleFactory>
 #include <QTranslator>
@@ -1294,18 +1295,48 @@ QString Widget::passwordDialog(const QString& cancel, const QString& body)
     }
     else
     {
+        // we use a hack. It is considered that closing the dialog without explicitly clicking
+        // disable history is confusing. But we can't distinguish between clicking the cancel
+        // button and closing the dialog. So instead, we reverse the Ok and Cancel roles,
+        // so that nothing but explicitly clicking disable history closes the dialog
         QString ret;
         QInputDialog dialog;
         dialog.setWindowTitle(tr("Enter your password"));
-        dialog.setOkButtonText(tr("Decrypt"));
-        dialog.setCancelButtonText(cancel);
+        dialog.setOkButtonText(cancel);
+        dialog.setCancelButtonText(tr("Decrypt"));
         dialog.setInputMode(QInputDialog::TextInput);
         dialog.setTextEchoMode(QLineEdit::Password);
         dialog.setLabelText(body);
+
+        // problem with previous hack: the default button is disable history, not decrypt.
+        // use another hack to reverse the default buttons.
+        // http://www.qtcentre.org/threads/49924-Change-property-of-QInputDialog-button
+        QList<QDialogButtonBox*> l = dialog.findChildren<QDialogButtonBox*>();
+        if (!l.isEmpty())
+        {
+            QPushButton* ok     = l.first()->button(QDialogButtonBox::Ok);
+            QPushButton* cancel = l.first()->button(QDialogButtonBox::Cancel);
+            if (ok && cancel)
+            {
+                    ok->setAutoDefault(false);
+                    ok->setDefault(false);
+                cancel->setAutoDefault(true);
+                cancel->setDefault(true);
+            }
+            else
+                qWarning() << "PasswordDialog: Missing button!";
+        }
+        else
+            qWarning() << "PasswordDialog: No QDialogButtonBox!";
+
+        // using similar code, set QLabels to wrap
+        for (auto* label : dialog.findChildren<QLabel*>())
+            label->setWordWrap(true);
+
         while (true)
         {
             int val = dialog.exec();
-            if (val != QDialog::Accepted)
+            if (val == QDialog::Accepted)
                 return QString();
             else
             {
@@ -1314,7 +1345,7 @@ QString Widget::passwordDialog(const QString& cancel, const QString& body)
                     return ret;
             }
             dialog.setTextValue("");
-            dialog.setLabelText(body + "\n" + tr("You must enter a non-empty password."));
+            dialog.setLabelText(body + "\n\n" + tr("You must enter a non-empty password:"));
         }
     }
 }
