@@ -17,6 +17,7 @@
 #include "chatlinecontentproxy.h"
 #include <QLayout>
 #include <QWidget>
+#include <QPainter>
 #include <QDebug>
 
 ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, int minWidth, float widthInPercent)
@@ -32,19 +33,15 @@ QRectF ChatLineContentProxy::boundingRect() const
     return proxy->boundingRect();
 }
 
-QRectF ChatLineContentProxy::boundingSceneRect() const
-{
-    return proxy->boundingRect().translated(scenePos());
-}
-
 void ChatLineContentProxy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    painter->setClipRect(boundingRect());
     proxy->paint(painter, option, widget);
 }
 
 qreal ChatLineContentProxy::getAscent() const
 {
-    return proxy->widget()->layout()->contentsMargins().top();
+    return 0;
 }
 
 QWidget *ChatLineContentProxy::getWidget() const
