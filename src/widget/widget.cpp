@@ -311,7 +311,8 @@ void Widget::updateTrayIcon()
     }
     QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
     QString pic = ":img/taskbar/" + color + "/taskbar_" + status + ".svg";
-    icon->setIcon(QIcon(pic));
+    if (icon)
+        icon->setIcon(QIcon(pic));
 }
 
 Widget::~Widget()
