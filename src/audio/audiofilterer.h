@@ -14,40 +14,20 @@
     See the COPYING file for more details.
 */
 
+#ifndef AUDIOFILTERER_H
+#define AUDIOFILTERER_H
+#include <cstdint>
 
-#ifdef QTOX_FILTER_AUDIO
-
-#include "audiofilterer.h"
-extern "C"{
-#include <filter_audio.h>
-}
-
-void AudioFilterer::startFilter(unsigned int fs)
+class AudioFilterer
 {
-    closeFilter();
-    filter = new_filter_audio(fs);
-}
+public:
+    static AudioFilterer* createAudioFilter();
 
-void AudioFilterer::closeFilter()
-{
-    if (filter)
-        kill_filter_audio(filter);
-    filter = nullptr;
-}
+    virtual ~AudioFilterer() {;}
 
+    virtual void startFilter(unsigned int) {;}
+    virtual void filterAudio(int16_t*, int) {;}
+    virtual void closeFilter() {;}
+};
 
-void AudioFilterer::filterAudio(int16_t* data, int framesize)
-{
-    if (!filter)
-        return;
-
-    filter_audio(filter, (int16_t*) data, framesize);
-}
-
-
-AudioFilterer::~AudioFilterer()
-{
-    closeFilter();
-}
-
-#endif // QTOX_FILTER_AUDIO
+#endif // AUDIOFILTERER_H

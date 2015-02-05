@@ -14,28 +14,16 @@
     See the COPYING file for more details.
 */
 
-#ifdef QTOX_FILTER_AUDIO
-#ifndef AUDIOFILTERER_H
-#define AUDIOFILTERER_H
-#include <cstdint>
+#include "audiofilterer.h"
 
-#ifndef _FILTER_AUDIO
-typedef struct Filter_Audio Filter_Audio;
+#ifdef QTOX_FILTER_AUDIO
+  #include "toxaudiofilterer.h"
+  typedef ToxAudioFilterer filterClass;
+#else
+  typedef AudioFilterer filterClass;
 #endif
 
-class AudioFilterer
+AudioFilterer* AudioFilterer::createAudioFilter()
 {
-public:
-    explicit AudioFilterer() = default;
-    ~AudioFilterer();
-
-    void startFilter(unsigned int fs);
-    void filterAudio(int16_t* data, int framesize);
-    void closeFilter();
-
-private:
-    struct Filter_Audio* filter{nullptr};
-};
-
-#endif // AUDIOFILTERER_H
-#endif // QTOX_FILTER_AUDIO
+    return new filterClass();
+}
