@@ -67,7 +67,8 @@ Widget::Widget(QWidget *parent)
       ui(new Ui::MainWindow),
       activeChatroomWidget{nullptr},
       eventFlag(false),
-      eventIcon(false)
+      eventIcon(false),
+      icon{nullptr}
 {   
     translator = new QTranslator;
     setTranslation();
