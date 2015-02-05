@@ -100,6 +100,9 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
 
 void FileTransferWidget::acceptTransfer(const QString &filepath)
 {
+    if(filepath.isEmpty())
+        return;
+
     //test if writable
     if(!isFilePathWritable(filepath))
     {
