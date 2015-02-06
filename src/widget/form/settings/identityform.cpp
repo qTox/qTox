@@ -111,7 +111,7 @@ void IdentityForm::present()
     toxId->setText(Core::getInstance()->getSelfId().toString());
     toxId->setCursorPosition(0);
     bodyUI->profiles->clear();
-    for (QString profile : Widget::searchProfiles())
+    for (QString profile : Settings::getInstance().searchProfiles())
         bodyUI->profiles->addItem(profile);
     QString current = Settings::getInstance().getCurrentProfile();
     if (current != "")

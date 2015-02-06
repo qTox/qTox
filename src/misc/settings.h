@@ -33,6 +33,9 @@ public:
     static Settings& getInstance();
     static void resetInstance();
     void switchProfile(const QString& profile);
+    QString detectProfile();
+    QList<QString> searchProfiles();
+    QString askProfiles();
     ~Settings() = default;
 
     void executeSettingsDialog(QWidget* parent);

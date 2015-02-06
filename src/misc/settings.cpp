@@ -18,6 +18,8 @@
 #include "smileypack.h"
 #include "src/corestructs.h"
 #include "src/misc/db/plaindb.h"
+#include "src/core.h"
+#include "src/widget/gui.h"
 
 #include <QFont>
 #include <QApplication>
@@ -64,6 +66,70 @@ void Settings::switchProfile(const QString& profile)
     save(false);
     resetInstance();
 }
+
+QString Settings::detectProfile()
+{
+    QDir dir(getSettingsDirPath());
+    QString path, profile = getCurrentProfile();
+    path = dir.filePath(profile + Core::TOX_EXT);
+    QFile file(path);
+    if (profile.isEmpty() || !file.exists())
+    {
+        setCurrentProfile("");
+#if 1 // deprecation attempt
+        // if the last profile doesn't exist, fall back to old "data"
+        path = dir.filePath(Core::CONFIG_FILE_NAME);
+        QFile file(path);
+        if (file.exists())
+            return path;
+        else if (QFile(path = dir.filePath("tox_save")).exists()) // also import tox_save if no data
+            return path;
+        else
+#endif
+        {
+            profile = askProfiles();
+            if (profile.isEmpty())
+                return "";
+            else
+            {
+                switchProfile(profile);
+                return dir.filePath(profile + Core::TOX_EXT);
+            }
+        }
+    }
+    else
+        return path;
+}
+
+QList<QString> Settings::searchProfiles()
+{
+    QList<QString> out;
+    QDir dir(getSettingsDirPath());
+    dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+    dir.setNameFilters(QStringList("*.tox"));
+    for (QFileInfo file : dir.entryInfoList())
+        out += file.completeBaseName();
+    return out;
+}
+
+QString Settings::askProfiles()
+{   // TODO: allow user to create new Tox ID, even if a profile already exists
+    QList<QString> profiles = searchProfiles();
+    if (profiles.empty()) return "";
+    bool ok;
+    QString profile = GUI::itemInputDialog(nullptr,
+                                            tr("Choose a profile"),
+                                            tr("Please choose which identity to use"),
+                                            profiles,
+                                            0, // which slot to start on
+                                            false, // if the user can enter their own input
+                                            &ok);
+    if (!ok) // user cancelled
+        return "";
+    else
+        return profile;
+}
+
 
 void Settings::load()
 {

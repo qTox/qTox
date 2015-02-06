@@ -15,6 +15,7 @@
 */
 
 #include "core.h"
+#include "nexus.h"
 #include "misc/cdata.h"
 #include "misc/cstring.h"
 #include "misc/settings.h"
@@ -106,6 +107,7 @@ Core::~Core()
 {
     qDebug() << "Deleting Core";
 
+    saveConfiguration();
     toxTimer->stop();
     coreThread->exit(0);
     while (coreThread->isRunning())
@@ -128,7 +130,7 @@ Core::~Core()
 
 Core* Core::getInstance()
 {
-    return Widget::getInstance()->getCore();
+    return Nexus::getCore();
 }
 
 void Core::make_tox()
@@ -223,6 +225,8 @@ void Core::make_tox()
 
 void Core::start()
 {
+    qDebug() << "Core: Starting up";
+
     make_tox();
 
     qsrand(time(nullptr));
@@ -1202,8 +1206,7 @@ bool Core::loadConfiguration(QString path)
             {
                 configurationFile.close();
 
-                QString profile;
-                QMetaObject::invokeMethod(Widget::getInstance(), "askProfiles", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, profile));
+                QString profile = Settings::getInstance().askProfiles();
 
                 if (!profile.isEmpty())
                 {

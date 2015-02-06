@@ -80,7 +80,8 @@ android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     contains(ANDROID_TARGET_ARCH,armeabi) {
         ANDROID_EXTRA_LIBS = \
-            $$ANDROID_TOOLCHAIN/lib/libopenal.so
+			$$ANDROID_TOOLCHAIN/lib/libopenal.so \
+			$$ANDROID_TOOLCHAIN/lib/libsodium.so
     }
 }
 
@@ -106,7 +107,7 @@ contains(JENKINS,YES) {
 # Rules for Windows, Mac OSX, and Linux
 win32 {
     RC_FILE = windows/qtox.rc
-    LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
+	LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249 -lOpenAL32 -lopus
     LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -lws2_32 -liphlpapi -lz
 
@@ -229,7 +230,10 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/audio.h \
     src/widget/callconfirmwidget.h \
     src/widget/systemtrayicon.h \
-    src/widget/systemtrayicon_private.h
+    src/widget/systemtrayicon_private.h \
+    src/nexus.h \
+    src/widget/gui.h \
+    src/widget/androidgui.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -298,7 +302,10 @@ SOURCES += \
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp \
     src/widget/callconfirmwidget.cpp \
-    src/widget/systemtrayicon.cpp
+    src/widget/systemtrayicon.cpp \
+    src/nexus.cpp \
+    src/widget/gui.cpp \
+    src/widget/androidgui.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
     HEADERS += src/audiofilterer.h
