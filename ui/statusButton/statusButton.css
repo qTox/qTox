@@ -8,26 +8,6 @@ QPushButton
     height: 40px;
 }
 
-QPushButton#online
-{
-  image: url(":ui/statusButton/dot_online.png") center center;
-}
-
-QPushButton#away
-{
-  image: url(":ui/statusButton/dot_idle.png") center center;
-}
-
-QPushButton#busy
-{
-  image: url(":ui/statusButton/dot_busy.png") center center;
-}
-
-QPushButton#offline
-{
-  image: url(":ui/statusButton/dot_away.png") center center;
-}
-
 QPushButton:default 
 {
    background-color: @themeMediumDark;

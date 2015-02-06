@@ -980,6 +980,10 @@ QSplitter:handle{
                <property name="text">
                 <string/>
                </property>
+               <property name="icon">
+                <iconset resource="../res.qrc">
+                 <normaloff>:/img/status/dot_away.png</normaloff>:/img/status/dot_away.png</iconset>
+               </property>
                <property name="iconSize">
                 <size>
                  <width>10</width>
@@ -1775,7 +1779,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
