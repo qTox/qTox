@@ -744,10 +744,6 @@ Alias:</translation>
         <translation>Dateien automatisch annehmen</translation>
     </message>
     <message>
-        <source>Save files in</source>
-        <translation type="vanished">Speichern unter</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="215"/>
         <source>PushButton</source>
         <translation>Schaltfläche</translation>
@@ -1260,24 +1256,119 @@ Soll die alte Historiedatei gelöscht werden?</translation>
         <translation>Tippen anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="60"/>
-        <source>Keep History (unstable)</source>
-        <translation>Historie behalten (instabil)</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
+        <source>Keep chat history (mostly stable)</source>
+        <translation>Chatverlauf speichern (größtenteils stabil)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="70"/>
-        <source>Encryption</source>
-        <translation>Verschlüsselung</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
+        <source>Local file encryption</source>
+        <translation>Lokale Dateien verschlüsseln</translation>
+    </message>
+
+
+
+
+
+
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
+        <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
+        <translation>Die gesamte Tox-Kommunikation über das Internet ist verschlüsselt und kann auch nicht deaktiviert werden. Es ist optional auch möglich, die lokal gespeicherten Tox-Daten mit einem Passwort zu schützen.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
-        <source>Encrypt Tox datafile</source>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
+        <source>Encrypt Tox data file</source>
         <translation>Tox Datendatei verschlüsseln</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="89"/>
-        <source>Encrypt History</source>
-        <translation>Historie verschlüsseln</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="113"/>
+        <source>Encrypt chat history</source>
+        <translation>Chatverlauf verschlüsseln</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="123"/>
+        <source>Change password</source>
+        <translation>Passwort ändern</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="77"/>
+        <source>Please set your new chat history password.</source>
+        <translation>Bitte Passwort zum Verschlüsseln des Chatverlaufs setzen.</translation>
+    </message>    
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="79"/>
+        <source>It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.</source>
+        <translation>Es scheint als gäbe es einen unverschlüsselten Chatverlauf. Wenn die Passwörter übereinstimmen wird dieser zum aktuellen Chatverlauf hinzugefügt.</translation>
+    </message> 
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="82"/>
+        <source>Use data file password</source>
+        <translation>Nutze das Tox-Datendatei Passwort</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="109"/>
+        <source>Successfully decrypted old chat history</source>
+        <translation>Alter Chatverlauf erfolgreich entschlüsselt</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="109"/>
+        <source>You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.</source>
+        <translation>Der alte Chatverlauf wurde erfolgreich entschlüsselt, zum aktuellen Chatverlauf hinzugefügt und wieder verschlüsselt.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="116"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="145"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="162"/>
+        <source>Old encrypted chat history</source>
+        <translation>Alter verschlüsselter Chatverlauf</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="116"/>
+        <source>There is currently an unused encrypted chat history, but the password you just entered doesn't match.\nWould you like to try again?\nCanceling will delete the old history and set the password to what you just entered.</source>
+        <translation>Es gibt aktuell einen ungenutzten verschlüsselten Chatverlauf, aber das eingegebene Passwort stimmt nicht überein.\nMöchten Sie ein anderes probieren?\nWenn Sie abbrechen wird der alte Chatverlauf gelöscht und das soeben eingegebene Passwort verwendet.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="116"/>
+        <source>This happens when enabling encryption after previously \"Disabling History\"</source>
+        <translation>Dies passiert, wenn die Verschlüsselung nach einem vorherigen Deaktivieren des Chatverlaufs wieder aktiviert wird.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="146"/>
+        <source>Would you like to decrypt your chat history?\nOtherwise it will be deleted.</source>
+        <translation>Möchten Sie den Chatverlauf entschlüsseln?\nAnsonsten wird dieser gelöscht.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="163"/>
+        <source>Are you sure you want to lose your entire chat history?</source>
+        <translation>Sind Sie sicher, dass der gesamte Chatverlauf gelöscht werden soll?</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="195"/>
+        <source>Please set your new data file password.</source>
+        <translation>Bitte Passwort zum Verschlüsseln der Datendatei setzen.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="197"/>
+        <source>Use chat history password</source>
+        <translation>Nutze das Chatverlauf-Passwort</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="240"/>
+        <source>Decrypt your data file</source>
+        <translation>Datendatei entschlüsseln</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="240"/>
+        <source>Would you like to decrypt your data file?</source>
+        <translation>Möchten Sie die Datendatei entschlüsseln?</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="33"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="61"/>
+        <source>The passwords don't match.</source>
+        <translation>Die Passwörter stimmen nicht überein.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="102"/>
@@ -1399,14 +1490,24 @@ Es wird beim Neustart von qTox installiert.</translation>
 <context>
     <name>SetPasswordDialog</name>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.ui" line="23"/>
-        <source>Type Password</source>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="14"/>
+        <source>Set your password</source>
+        <translation>Passwort setzen</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="41"/>
+        <source>Type password</source>
         <translation>Passwort eingeben</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.ui" line="37"/>
-        <source>Repeat Password</source>
-        <translation>Passworteingabe wiederholen</translation>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="31"/>
+        <source>Repeat password</source>
+        <translation>Passwort wiederholen</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="65"/>
+        <source>Password strength</source>
+        <translation>Passwortstärke</translation>
     </message>
 </context>
 <context>
