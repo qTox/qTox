@@ -19,6 +19,7 @@
 
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QTime>
 #include <QDebug>
 
 Spinner::Spinner(const QString &img, QSize Size, qreal speed)
@@ -44,7 +45,7 @@ void Spinner::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, Q
 
     QTransform rotMat;
     rotMat.translate(size.width() / 2.0, size.height() / 2.0);
-    rotMat.rotate(rot);
+    rotMat.rotate(QTime::currentTime().msecsSinceStartOfDay() / 1000.0 * rotSpeed);
     rotMat.translate(-size.width() / 2.0, -size.height() / 2.0);
 
     painter->translate(-size.width() / 2.0, -size.height() / 2.0);
@@ -76,8 +77,6 @@ qreal Spinner::getAscent() const
 
 void Spinner::timeout()
 {
-    rot += rotSpeed;
-
     if(scene())
         scene()->invalidate(sceneBoundingRect());
 }

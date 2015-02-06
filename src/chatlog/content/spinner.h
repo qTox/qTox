@@ -41,7 +41,6 @@ private slots:
 private:
     QSize size;
     QPixmap pmap;
-    qreal rot = 0.0;
     qreal rotSpeed;
     QTimer timer;
 
