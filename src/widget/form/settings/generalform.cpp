@@ -359,4 +359,5 @@ void GeneralForm::onThemeColorChanged(int)
     int index = bodyUI->themeColorCBox->currentIndex();
     Settings::getInstance().setThemeColor(index);
     Style::setThemeColor(index);
+    Style::applyTheme();
 }

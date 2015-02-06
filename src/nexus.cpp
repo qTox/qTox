@@ -2,6 +2,7 @@
 #include "core.h"
 #include "misc/settings.h"
 #include "video/camera.h"
+#include "widget/gui.h"
 #include <QThread>
 #include <QDebug>
 
@@ -66,6 +67,7 @@ void Nexus::start()
 #else
     widget = Widget::getInstance();
 #endif
+    GUI::getInstance();
 
     // Connections
 #ifndef Q_OS_ANDROID
@@ -118,4 +120,14 @@ Nexus& Nexus::getInstance()
 Core* Nexus::getCore()
 {
     return getInstance().core;
+}
+
+AndroidGUI* Nexus::getAndroidGUI()
+{
+    return getInstance().androidgui;
+}
+
+Widget* Nexus::getDesktopGUI()
+{
+    return getInstance().widget;
 }

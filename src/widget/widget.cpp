@@ -117,6 +117,9 @@ void Widget::init()
                 this,
                 SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
 
+        icon->show();
+        icon->hide();
+
         if (Settings::getInstance().getShowSystemTray())
         {
             icon->show();
@@ -125,7 +128,6 @@ void Widget::init()
         }
         else
             this->show();
-
     }
     else
     {
@@ -194,7 +196,7 @@ void Widget::init()
     ui->statusButton->setEnabled(false);
 
     Style::setThemeColor(Settings::getInstance().getThemeColor());
-    Style::applyTheme();
+    reloadTheme();
     
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
@@ -264,7 +266,7 @@ void Widget::updateTrayIcon()
 
 Widget::~Widget()
 {
-    qDebug() << "Deleting Widget";
+    qDebug() << "Widget: Deleting Widget";
     AutoUpdater::abortUpdates();
     icon->hide();
     hideMainForms();

@@ -19,7 +19,7 @@
 #include "misc/cdata.h"
 #include "misc/cstring.h"
 #include "misc/settings.h"
-#include "widget/widget.h"
+#include "widget/gui.h"
 #include "historykeeper.h"
 #include "src/audio.h"
 
@@ -259,7 +259,6 @@ void Core::start()
     {
         setStatusMessage(tr("Toxing on qTox")); // this also solves the not updating issue
         setUsername(tr("qTox User"));
-        QMetaObject::invokeMethod(Widget::getInstance(), "onSettingsClicked"); // update ui with new profile
     }
 
     tox_callback_friend_request(tox, onFriendRequest, this);
@@ -1284,7 +1283,7 @@ void Core::switchConfiguration(const QString& profile)
     saveCurrentInformation(); // part of a hack, see core.h
 
     ready = false;
-    Widget::getInstance()->setEnabledThreadsafe(false);
+    GUI::setEnabled(false);
     clearPassword(ptMain);
     clearPassword(ptHistory);
 
@@ -1304,7 +1303,7 @@ void Core::switchConfiguration(const QString& profile)
 
     start();
     if (isReady())
-        Widget::getInstance()->setEnabledThreadsafe(true);
+        GUI::setEnabled(true);
 }
 
 void Core::loadFriends()
