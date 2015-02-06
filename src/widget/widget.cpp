@@ -64,11 +64,11 @@ Widget *Widget::instance{nullptr};
 
 Widget::Widget(QWidget *parent)
     : QMainWindow(parent),
+      icon{nullptr},
       ui(new Ui::MainWindow),
       activeChatroomWidget{nullptr},
       eventFlag(false),
-      eventIcon(false),
-      icon{nullptr}
+      eventIcon(false)
 {   
     translator = new QTranslator;
     setTranslation();

@@ -295,7 +295,7 @@ void Core::saveConfiguration(const QString& path)
     else
         fileSize = tox_size(tox);
 
-    if (fileSize > 0 && fileSize <= INT32_MAX) {
+    if (fileSize > 0 && fileSize <= std::numeric_limits<int32_t>::max()) {
         uint8_t *data = new uint8_t[fileSize];
 
         if (encrypt)

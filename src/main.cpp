@@ -121,6 +121,7 @@ int main(int argc, char *argv[])
         AutoUpdater::installLocalUpdate(); ///< NORETURN
 #endif
 
+#ifndef Q_OS_ANDROID
     // Inter-process communication
     IPC ipc;
     ipc.registerEventHandler(&toxURIEventHandler);
@@ -175,6 +176,7 @@ int main(int argc, char *argv[])
         if (!ipc.isCurrentOwner())
             return EXIT_SUCCESS;
     }
+#endif
 
     // Run
     a.setQuitOnLastWindowClosed(false);
