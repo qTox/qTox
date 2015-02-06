@@ -7,7 +7,7 @@ elif which pacman; then
     sudo pacman -S --needed base-devel qt5 opencv openal opus libvpx libxss qt5-svg
 elif which yum; then
     sudo yum groupinstall "Development Tools"
-    sudo yum install qt-devel qt-doc qt-creator opencv-devel openal-soft-devel libtool autoconf automake check check-devel libXScrnSaver-devel
+    sudo yum install qt-devel qt-doc qt-creator opencv-devel openal-soft-devel libtool autoconf automake check check-devel libXScrnSaver-devel qt5-qtsvg
 else
     echo "Unknown package manager, attempting to compile anyways"
 fi
