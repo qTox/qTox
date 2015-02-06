@@ -1265,12 +1265,6 @@ Soll die alte Historiedatei gelöscht werden?</translation>
         <source>Local file encryption</source>
         <translation>Lokale Dateien verschlüsseln</translation>
     </message>
-
-
-
-
-
-
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
         <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
