@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
         AutoUpdater::installLocalUpdate(); ///< NORETURN
 #endif
 
-Nexus::getInstance().start();
+    Nexus::getInstance().start();
 
 #ifndef Q_OS_ANDROID
     // Inter-process communication
@@ -190,6 +190,8 @@ Nexus::getInstance().start();
     delete logFile;
     logFile = nullptr;
 #endif
+
+    Nexus::destroyInstance();
 
     return errorcode;
 }

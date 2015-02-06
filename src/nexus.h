@@ -18,6 +18,7 @@ public:
     void start(); ///< Will initialise the systems (GUI, Core, ...)
 
     static Nexus& getInstance();
+    static void destroyInstance();
     static Core* getCore(); ///< Will return 0 if not started
     static AndroidGUI* getAndroidGUI(); ///< Will return 0 if not started
     static Widget* getDesktopGUI(); ///< Will return 0 if not started

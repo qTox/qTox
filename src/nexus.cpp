@@ -12,6 +12,8 @@
 #include <src/widget/widget.h>
 #endif
 
+static Nexus* nexus{nullptr};
+
 Nexus::Nexus(QObject *parent) :
     QObject(parent),
     core{nullptr},
@@ -113,8 +115,15 @@ void Nexus::start()
 
 Nexus& Nexus::getInstance()
 {
-    static Nexus nexus;
-    return nexus;
+    if (!nexus)
+        nexus = new Nexus;
+    return *nexus;
+}
+
+void Nexus::destroyInstance()
+{
+    delete nexus;
+    nexus = nullptr;
 }
 
 Core* Nexus::getCore()
