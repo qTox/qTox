@@ -34,7 +34,10 @@ QTextDocument* DocumentCache::pop()
 void DocumentCache::push(QTextDocument *doc)
 {
     if(doc)
+    {
+        doc->clear();
         documents.push(doc);
+    }
 }
 
 DocumentCache &DocumentCache::getInstance()

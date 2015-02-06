@@ -222,12 +222,13 @@ void Text::regenerate()
     if(!doc)
     {
         doc = DocumentCache::getInstance().pop();
-        doc->setDefaultFont(defFont);
         dirty = true;
     }
 
     if(dirty)
     {
+        doc->setDefaultFont(defFont);
+
         if(!elide)
             doc->setHtml(text);
         else
@@ -238,9 +239,8 @@ void Text::regenerate()
         opt.setWrapMode(elide ? QTextOption::NoWrap : QTextOption::WrapAtWordBoundaryOrAnywhere);
         doc->setDefaultTextOption(opt);
 
-        // width & layout
+        // width
         doc->setTextWidth(width);
-        doc->documentLayout()->update();
 
         // update ascent
         if(doc->firstBlock().layout()->lineCount() > 0)
