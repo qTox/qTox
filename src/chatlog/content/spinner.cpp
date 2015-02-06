@@ -20,6 +20,7 @@
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QTime>
+#include <QVariantAnimation>
 #include <QDebug>
 
 Spinner::Spinner(const QString &img, QSize Size, qreal speed)
@@ -30,6 +31,14 @@ Spinner::Spinner(const QString &img, QSize Size, qreal speed)
 
     timer.setInterval(1000/30); // 30Hz
     timer.setSingleShot(false);
+
+    blendAnimation = new QVariantAnimation(this);
+    blendAnimation->setStartValue(0.0);
+    blendAnimation->setEndValue(1.0);
+    blendAnimation->setDuration(350);
+    blendAnimation->setEasingCurve(QEasingCurve::InCubic);
+    blendAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+    connect(blendAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant& val) { alpha = val.toDouble(); });
 
     QObject::connect(&timer, &QTimer::timeout, this, &Spinner::timeout);
 }
@@ -45,7 +54,7 @@ void Spinner::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, Q
 
     QTransform trans = QTransform().rotate(QTime::currentTime().msecsSinceStartOfDay() / 1000.0 * rotSpeed)
                                     .translate(-size.width()/2.0, -size.height()/2.0);
-
+    painter->setOpacity(alpha);
     painter->setTransform(trans, true);
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
     painter->drawPixmap(0, 0, pmap);

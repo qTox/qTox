@@ -23,6 +23,8 @@
 #include <QObject>
 #include <QPixmap>
 
+class QVariantAnimation;
+
 class Spinner : public QObject, public ChatLineContent
 {
     Q_OBJECT
@@ -43,6 +45,8 @@ private:
     QPixmap pmap;
     qreal rotSpeed;
     QTimer timer;
+    qreal alpha = 0.0;
+    QVariantAnimation* blendAnimation;
 
 };
 
