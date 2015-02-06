@@ -43,13 +43,10 @@ void Spinner::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, Q
 {
     painter->setClipRect(boundingRect());
 
-    QTransform rotMat;
-    rotMat.translate(size.width() / 2.0, size.height() / 2.0);
-    rotMat.rotate(QTime::currentTime().msecsSinceStartOfDay() / 1000.0 * rotSpeed);
-    rotMat.translate(-size.width() / 2.0, -size.height() / 2.0);
+    QTransform trans = QTransform().rotate(QTime::currentTime().msecsSinceStartOfDay() / 1000.0 * rotSpeed)
+                                    .translate(-size.width()/2.0, -size.height()/2.0);
 
-    painter->translate(-size.width() / 2.0, -size.height() / 2.0);
-    painter->setTransform(rotMat, true);
+    painter->setTransform(trans, true);
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
     painter->drawPixmap(0, 0, pmap);
 
