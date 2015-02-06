@@ -94,21 +94,22 @@ void Widget::init()
     restoreState(Settings::getInstance().getWindowState());
     ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
 
+    statusOnline = new QAction(tr("Online", "Button to set your status to 'Online'"), this);
+    statusOnline->setIcon(QIcon(":img/status/dot_online.png"));
+    connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
+    statusAway = new QAction(tr("Away", "Button to set your status to 'Away'"), this);
+    statusAway->setIcon(QIcon(":img/status/dot_idle.png"));
+    connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
+    statusBusy = new QAction(tr("Busy", "Button to set your status to 'Busy'"), this);
+    statusBusy->setIcon(QIcon(":img/status/dot_busy.png"));
+    connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
+
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         icon = new SystemTrayIcon;
         updateTrayIcon();
         trayMenu = new QMenu;
 
-        statusOnline = new QAction(tr("Online"), this);
-        statusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
-        connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
-        statusAway = new QAction(tr("Away"), this);
-        statusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
-        connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
-        statusBusy = new QAction(tr("Busy"), this);
-        statusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
-        connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
         actionQuit = new QAction(tr("&Quit"), this);
         connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
@@ -184,12 +185,9 @@ void Widget::init()
     ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 
     QMenu *statusButtonMenu = new QMenu(ui->statusButton);
-    QAction* setStatusOnline = statusButtonMenu->addAction(Widget::tr("Online","Button to set your status to 'Online'"));
-    setStatusOnline->setIcon(QIcon(":ui/statusButton/dot_online.png"));
-    QAction* setStatusAway = statusButtonMenu->addAction(Widget::tr("Away","Button to set your status to 'Away'"));
-    setStatusAway->setIcon(QIcon(":ui/statusButton/dot_idle.png"));
-    QAction* setStatusBusy = statusButtonMenu->addAction(Widget::tr("Busy","Button to set your status to 'Busy'"));
-    setStatusBusy->setIcon(QIcon(":ui/statusButton/dot_busy.png"));
+    statusButtonMenu->addAction(statusOnline);
+    statusButtonMenu->addAction(statusAway);
+    statusButtonMenu->addAction(statusBusy);
     ui->statusButton->setMenu(statusButtonMenu);
 
     // disable proportional scaling
@@ -221,9 +219,6 @@ void Widget::init()
     connect(ui->statusLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onStatusMessageChanged(QString, QString)));
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
-    connect(setStatusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
-    connect(setStatusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
-    connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
@@ -443,19 +438,22 @@ void Widget::onStatusSet(Status status)
     {
     case Status::Online:
         ui->statusButton->setProperty("status" ,"online");
+        ui->statusButton->setIcon(QIcon(":img/status/dot_online.png"));
         break;
     case Status::Away:
         ui->statusButton->setProperty("status" ,"away");
+        ui->statusButton->setIcon(QIcon(":img/status/dot_idle.png"));
         break;
     case Status::Busy:
         ui->statusButton->setProperty("status" ,"busy");
+        ui->statusButton->setIcon(QIcon(":img/status/dot_busy.png"));
         break;
     case Status::Offline:
         ui->statusButton->setProperty("status" ,"offline");
+        ui->statusButton->setIcon(QIcon(":img/status/dot_away.png"));
         break;
     }
     updateTrayIcon();
-    Style::repolish(ui->statusButton);
 }
 
 void Widget::setWindowTitle(const QString& title)
