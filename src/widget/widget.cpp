@@ -37,6 +37,7 @@
 #include "src/platform/timer.h"
 #include "systemtrayicon.h"
 #include "src/nexus.h"
+#include <cassert>
 #include <QMessageBox>
 #include <QDebug>
 #include <QFile>
@@ -53,6 +54,12 @@
 #include <QStyleFactory>
 #include <QTranslator>
 #include <tox/tox.h>
+
+#ifdef Q_OS_ANDROID
+#define IS_ON_DESKTOP_GUI 0
+#else
+#define IS_ON_DESKTOP_GUI 1
+#endif
 
 void toxActivateEventHandler(const QByteArray& data)
 {
@@ -285,6 +292,8 @@ Widget::~Widget()
 
 Widget* Widget::getInstance()
 {
+    assert(IS_ON_DESKTOP_GUI); // Widget must only be used on Desktop platforms
+
     if (!instance)
     {
         instance = new Widget();
