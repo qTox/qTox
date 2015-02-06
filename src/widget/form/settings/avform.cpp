@@ -27,6 +27,10 @@
  #include <AL/al.h>
 #endif
 
+#ifndef ALC_ALL_DEVICES_SPECIFIER
+#define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
+#endif
+
 AVForm::AVForm() :
     GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png"))
 {

@@ -42,6 +42,11 @@ SystemTrayIcon::SystemTrayIcon()
     }
 }
 
+SystemTrayIcon::~SystemTrayIcon()
+{
+    qDebug() << "Deleting SystemTrayIcon";
+}
+
 QString SystemTrayIcon::extractIconToFile(QIcon icon, QString name)
 {
     QString iconPath;

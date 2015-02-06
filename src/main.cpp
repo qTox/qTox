@@ -16,6 +16,7 @@
 
 #include "widget/widget.h"
 #include "misc/settings.h"
+#include "src/nexus.h"
 #include "src/ipc.h"
 #include "src/widget/toxuri.h"
 #include "src/widget/toxsave.h"
@@ -70,6 +71,7 @@ int main(int argc, char *argv[])
     parser.process(a);
 
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
+
     if (parser.isSet("p"))
     {
         QString profile = parser.value("p");
@@ -121,6 +123,9 @@ int main(int argc, char *argv[])
         AutoUpdater::installLocalUpdate(); ///< NORETURN
 #endif
 
+    Nexus::getInstance().start();
+
+#ifndef Q_OS_ANDROID
     // Inter-process communication
     IPC ipc;
     ipc.registerEventHandler(&toxURIEventHandler);
@@ -175,17 +180,18 @@ int main(int argc, char *argv[])
         if (!ipc.isCurrentOwner())
             return EXIT_SUCCESS;
     }
+#endif
 
     // Run
     a.setQuitOnLastWindowClosed(false);
-    Widget* w = Widget::getInstance();
     int errorcode = a.exec();
 
-    delete w;
 #ifdef LOG_TO_FILE
     delete logFile;
     logFile = nullptr;
 #endif
+
+    Nexus::destroyInstance();
 
     return errorcode;
 }

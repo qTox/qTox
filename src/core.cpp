@@ -15,10 +15,11 @@
 */
 
 #include "core.h"
+#include "nexus.h"
 #include "misc/cdata.h"
 #include "misc/cstring.h"
 #include "misc/settings.h"
-#include "widget/widget.h"
+#include "widget/gui.h"
 #include "historykeeper.h"
 #include "src/audio.h"
 
@@ -106,6 +107,7 @@ Core::~Core()
 {
     qDebug() << "Deleting Core";
 
+    saveConfiguration();
     toxTimer->stop();
     coreThread->exit(0);
     while (coreThread->isRunning())
@@ -128,7 +130,7 @@ Core::~Core()
 
 Core* Core::getInstance()
 {
-    return Widget::getInstance()->getCore();
+    return Nexus::getCore();
 }
 
 void Core::make_tox()
@@ -223,6 +225,8 @@ void Core::make_tox()
 
 void Core::start()
 {
+    qDebug() << "Core: Starting up";
+
     make_tox();
 
     qsrand(time(nullptr));
@@ -255,7 +259,6 @@ void Core::start()
     {
         setStatusMessage(tr("Toxing on qTox")); // this also solves the not updating issue
         setUsername(tr("qTox User"));
-        QMetaObject::invokeMethod(Widget::getInstance(), "onSettingsClicked"); // update ui with new profile
     }
 
     tox_callback_friend_request(tox, onFriendRequest, this);
@@ -1202,8 +1205,7 @@ bool Core::loadConfiguration(QString path)
             {
                 configurationFile.close();
 
-                QString profile;
-                QMetaObject::invokeMethod(Widget::getInstance(), "askProfiles", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, profile));
+                QString profile = Settings::getInstance().askProfiles();
 
                 if (!profile.isEmpty())
                 {
@@ -1281,7 +1283,7 @@ void Core::switchConfiguration(const QString& profile)
     saveCurrentInformation(); // part of a hack, see core.h
 
     ready = false;
-    Widget::getInstance()->setEnabledThreadsafe(false);
+    GUI::setEnabled(false);
     clearPassword(ptMain);
     clearPassword(ptHistory);
 
@@ -1301,7 +1303,7 @@ void Core::switchConfiguration(const QString& profile)
 
     start();
     if (isReady())
-        Widget::getInstance()->setEnabledThreadsafe(true);
+        GUI::setEnabled(true);
 }
 
 void Core::loadFriends()

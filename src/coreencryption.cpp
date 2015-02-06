@@ -19,7 +19,7 @@
 /* was permanently moved here to handle encryption */
 
 #include "core.h"
-#include "src/widget/widget.h"
+#include "src/widget/gui.h"
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 #include "src/misc/settings.h"
@@ -165,7 +165,7 @@ QByteArray Core::getSaltFromFile(QString filename)
 bool Core::loadEncryptedSave(QByteArray& data)
 {
     if (!Settings::getInstance().getEncryptTox())
-        Widget::getInstance()->showWarningMsgBox(tr("Encryption error"), tr("The .tox file is encrypted, but encryption was not checked, continuing regardless."));
+        GUI::showWarning(tr("Encryption error"), tr("The .tox file is encrypted, but encryption was not checked, continuing regardless."));
 
     int error = -1;
     QString a(tr("Please enter the password for the %1 profile.", "used in load() when no pw is already set").arg(Settings::getInstance().getCurrentProfile()));
@@ -190,7 +190,7 @@ bool Core::loadEncryptedSave(QByteArray& data)
 
     do
     {
-        QString pw = Widget::getInstance()->passwordDialog(tr("Change profile"), dialogtxt);
+        QString pw = GUI::passwordDialog(tr("Change profile"), dialogtxt);
 
         if (pw.isEmpty())
         {
@@ -216,7 +216,7 @@ void Core::checkEncryptedHistory()
     QByteArray salt = getSaltFromFile(path);
     if (exists && salt.size() == 0)
     {   // maybe we should handle this better
-        Widget::getInstance()->showWarningMsgBox(tr("Encrypted chat history"), tr("No encrypted chat history file found, or it was corrupted.\nHistory will be disabled!"));
+        GUI::showWarning(tr("Encrypted chat history"), tr("No encrypted chat history file found, or it was corrupted.\nHistory will be disabled!"));
         Settings::getInstance().setEncryptLogs(false);
         Settings::getInstance().setEnableLogging(false);
         HistoryKeeper::resetInstance();
@@ -252,7 +252,7 @@ void Core::checkEncryptedHistory()
     bool error = true;
     do
     {
-        QString pw = Widget::getInstance()->passwordDialog(tr("Disable chat history"), dialogtxt);
+        QString pw = GUI::passwordDialog(tr("Disable chat history"), dialogtxt);
 
         if (pw.isEmpty())
         {
@@ -295,7 +295,7 @@ void Core::saveConfiguration(const QString& path)
     else
         fileSize = tox_size(tox);
 
-    if (fileSize > 0 && fileSize <= INT32_MAX) {
+    if (fileSize > 0 && fileSize <= std::numeric_limits<int32_t>::max()) {
         uint8_t *data = new uint8_t[fileSize];
 
         if (encrypt)
@@ -303,7 +303,7 @@ void Core::saveConfiguration(const QString& path)
             if (!pwsaltedkeys[ptMain])
             {
                 // probably zero chance event
-                Widget::getInstance()->showWarningMsgBox(tr("NO Password"), tr("Encryption is enabled, but there is no password! Encryption will be disabled."));
+                GUI::showWarning(tr("NO Password"), tr("Encryption is enabled, but there is no password! Encryption will be disabled."));
                 Settings::getInstance().setEncryptTox(false);
                 tox_save(tox, data);
             }
