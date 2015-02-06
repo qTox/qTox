@@ -21,6 +21,7 @@
 #include "src/historykeeper.h"
 #include "src/core.h"
 #include "src/widget/widget.h"
+#include "src/widget/gui.h"
 #include "src/widget/form/setpassworddialog.h"
 #include <QMessageBox>
 #include <QFile>
@@ -106,14 +107,14 @@ bool PrivacyForm::setChatLogsPassword()
             if (haveEncHist)
             {
                 Widget::getInstance()->reloadHistory();
-                Widget::getInstance()->showWarningMsgBox(tr("Successfully decrypted old chat history","popup title"), tr("You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.", "popup text"));
+                GUI::showWarning(tr("Successfully decrypted old chat history","popup title"), tr("You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.", "popup text"));
             }
             delete dialog;
             return true;
         }
         else
         {
-            if (!Widget::getInstance()->askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\nWould you like to try again?\nCanceling will delete the old history and set the password to what you just entered.", "This happens when enabling encryption after previously \"Disabling History\""), true, true))
+            if (!GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\nWould you like to try again?\nCanceling will delete the old history and set the password to what you just entered.", "This happens when enabling encryption after previously \"Disabling History\""), true, true))
                 haveEncHist = false; // logically this is really just a `break`, but conceptually this is more accurate
         }
     } while (haveEncHist);
@@ -237,7 +238,7 @@ void PrivacyForm::onEncryptToxUpdated()
     }
     else
     {
-        if (!Widget::getInstance()->askQuestion(tr("Decrypt your data file", "title"), tr("Would you like to decrypt your data file?")))
+        if (!GUI::askQuestion(tr("Decrypt your data file", "title"), tr("Would you like to decrypt your data file?")))
         {
             bodyUI->cbEncryptTox->setChecked(true);
             return;
