@@ -1320,8 +1320,12 @@ Soll die alte Historiedatei gelöscht werden?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="116"/>
-        <source>There is currently an unused encrypted chat history, but the password you just entered doesn't match.\nWould you like to try again?\nCanceling will delete the old history and set the password to what you just entered.</source>
-        <translation>Es gibt aktuell einen ungenutzten verschlüsselten Chatverlauf, aber das eingegebene Passwort stimmt nicht überein.\nMöchten Sie ein anderes probieren?\nWenn Sie abbrechen wird der alte Chatverlauf gelöscht und das soeben eingegebene Passwort verwendet.</translation>
+        <source>There is currently an unused encrypted chat history, but the password you just entered doesn't match.
+Would you like to try again?
+Canceling will delete the old history and set the password to what you just entered.</source>
+        <translation>Es gibt aktuell einen ungenutzten verschlüsselten Chatverlauf, aber das eingegebene Passwort stimmt nicht überein.
+Möchten Sie ein anderes probieren?
+Wenn Sie abbrechen wird der alte Chatverlauf gelöscht und das soeben eingegebene Passwort verwendet.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="116"/>
@@ -1330,8 +1334,10 @@ Soll die alte Historiedatei gelöscht werden?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="146"/>
-        <source>Would you like to decrypt your chat history?\nOtherwise it will be deleted.</source>
-        <translation>Möchten Sie den Chatverlauf entschlüsseln?\nAnsonsten wird dieser gelöscht.</translation>
+        <source>Would you like to decrypt your chat history?
+Otherwise it will be deleted.</source>
+        <translation>Möchten Sie den Chatverlauf entschlüsseln?
+Ansonsten wird dieser gelöscht.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="163"/>
