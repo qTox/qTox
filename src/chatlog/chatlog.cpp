@@ -520,9 +520,10 @@ void ChatLog::clear()
 void ChatLog::copySelectedText() const
 {
     QString text = getSelectedText();
-
     QClipboard* clipboard = QApplication::clipboard();
-    clipboard->setText(text);
+
+    if(clipboard && !text.isNull())
+        clipboard->setText(text);
 }
 
 void ChatLog::setBusyNotification(ChatLine::Ptr notification)
