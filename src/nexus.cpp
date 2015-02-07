@@ -72,7 +72,21 @@ void Nexus::start()
     GUI::getInstance();
 
     // Connections
-#ifndef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
+    connect(core, &Core::connected, androidgui, &AndroidGUI::onConnected);
+    connect(core, &Core::disconnected, androidgui, &AndroidGUI::onDisconnected);
+    //connect(core, &Core::failedToStart, androidgui, &AndroidGUI::onFailedToStartCore);
+    //connect(core, &Core::badProxy, androidgui, &AndroidGUI::onBadProxyCore);
+    connect(core, &Core::statusSet, androidgui, &AndroidGUI::onStatusSet);
+    connect(core, &Core::usernameSet, androidgui, &AndroidGUI::setUsername);
+    connect(core, &Core::statusMessageSet, androidgui, &AndroidGUI::setStatusMessage);
+    connect(core, &Core::selfAvatarChanged, androidgui, &AndroidGUI::onSelfAvatarLoaded);
+
+    connect(androidgui, &AndroidGUI::statusSet, core, &Core::setStatus);
+    //connect(androidgui, &AndroidGUI::friendRequested, core, &Core::requestFriendship);
+    //connect(androidgui, &AndroidGUI::friendRequestAccepted, core, &Core::acceptFriendRequest);
+    //connect(androidgui, &AndroidGUI::changeProfile, core, &Core::switchConfiguration);
+#else
     connect(core, &Core::connected, widget, &Widget::onConnected);
     connect(core, &Core::disconnected, widget, &Widget::onDisconnected);
     connect(core, &Core::failedToStart, widget, &Widget::onFailedToStartCore);

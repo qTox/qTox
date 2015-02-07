@@ -1133,8 +1133,10 @@ void Widget::clearAllReceipts()
 
 void Widget::reloadTheme()
 {
+    QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");
     ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
-    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    ui->statusPanel->setStyleSheet(statusPanelStyle);
+    ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
     ui->statusButton->setStyleSheet(Style::getStylesheet(":ui/statusButton/statusButton.css"));
 
