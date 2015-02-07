@@ -28,6 +28,9 @@ CroppingLabel::CroppingLabel(QWidget* parent)
 
     textEdit = new QLineEdit(this);
     textEdit->hide();
+    textEdit->setInputMethodHints(Qt::ImhNoAutoUppercase
+                                  | Qt::ImhNoPredictiveText
+                                  | Qt::ImhPreferLatin);
 
     installEventFilter(this);
     textEdit->installEventFilter(this);

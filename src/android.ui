@@ -524,6 +524,9 @@
                  <bold>true</bold>
                 </font>
                </property>
+               <property name="inputMethodHints">
+                <set>Qt::ImhNoPredictiveText|Qt::ImhPreferLatin</set>
+               </property>
                <property name="text">
                 <string>Your name</string>
                </property>
@@ -605,6 +608,9 @@
                 <font>
                  <pointsize>8</pointsize>
                 </font>
+               </property>
+               <property name="inputMethodHints">
+                <set>Qt::ImhNoPredictiveText|Qt::ImhPreferLatin</set>
                </property>
                <property name="text">
                 <string>Your status</string>
@@ -770,7 +776,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../res.qrc">
+            <iconset>
              <normaloff>:/img/add.png</normaloff>:/img/add.png</iconset>
            </property>
            <property name="checkable">
@@ -805,7 +811,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../res.qrc">
+            <iconset>
              <normaloff>:/img/group_button.png</normaloff>:/img/group_button.png</iconset>
            </property>
            <property name="flat">
@@ -837,7 +843,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../res.qrc">
+            <iconset>
              <normaloff>:/img/transfer.png</normaloff>:/img/transfer.png</iconset>
            </property>
            <property name="flat">
@@ -869,7 +875,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../res.qrc">
+            <iconset>
              <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
            </property>
            <property name="flat">
@@ -898,8 +904,6 @@
    <header>src/widget/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
