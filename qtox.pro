@@ -33,7 +33,8 @@ FORMS    += \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/setpassworddialog.ui \
-    src/widget/form/settings/advancedsettings.ui
+    src/widget/form/settings/advancedsettings.ui \
+    src/android.ui
     
 CONFIG   += c++11
 

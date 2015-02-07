@@ -12,12 +12,19 @@ QLineEdit
   background-color: @themeDark;
 }
 
+#statusPanel > #statusHead
+{
+  background-color: @themeDark;
+}
+
 #statusPanel > #statusHead > #nameLabel {
+  background-color: @themeDark;
   font: @extraBig;
   color: @white;
 }
 
 #statusPanel > #statusHead > #statusLabel {
+  background-color: @themeDark;
   font: @medium;
   color: @lightGrey;
 }

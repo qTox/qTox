@@ -73,6 +73,19 @@ void GUI::reloadTheme()
     }
 }
 
+void GUI::showInfo(const QString& title, const QString& msg)
+{
+    if (QThread::currentThread() == qApp->thread())
+    {
+        getInstance()._showInfo(title, msg);
+    }
+    else
+    {
+        QMetaObject::invokeMethod(&getInstance(), "_showInfo", Qt::BlockingQueuedConnection,
+                        Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
+    }
+}
+
 void GUI::showWarning(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -86,15 +99,15 @@ void GUI::showWarning(const QString& title, const QString& msg)
     }
 }
 
-void GUI::showInfo(const QString& title, const QString& msg)
+void GUI::showError(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
     {
-        getInstance()._showInfo(title, msg);
+        getInstance()._showError(title, msg);
     }
     else
     {
-        QMetaObject::invokeMethod(&getInstance(), "_showInfo", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(&getInstance(), "_showError", Qt::BlockingQueuedConnection,
                         Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
 }
@@ -182,14 +195,19 @@ void GUI::_reloadTheme()
 #endif
 }
 
+void GUI::_showInfo(const QString& title, const QString& msg)
+{
+    QMessageBox::information(getMainWidget(), title, msg);
+}
+
 void GUI::_showWarning(const QString& title, const QString& msg)
 {
     QMessageBox::warning(getMainWidget(), title, msg);
 }
 
-void GUI::_showInfo(const QString& title, const QString& msg)
+void GUI::_showError(const QString& title, const QString& msg)
 {
-    QMessageBox::information(getMainWidget(), title, msg);
+    QMessageBox::critical(getMainWidget(), title, msg);
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
