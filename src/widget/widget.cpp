@@ -37,6 +37,7 @@
 #include "src/platform/timer.h"
 #include "systemtrayicon.h"
 #include "src/nexus.h"
+#include "src/offlinemsgengine.h"
 #include <cassert>
 #include <QMessageBox>
 #include <QDebug>
@@ -88,6 +89,8 @@ void Widget::init()
 
     timer = new QTimer();
     timer->start(1000);
+    offlineMsgTimer = new QTimer();
+    offlineMsgTimer->start(15000);
 
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());
@@ -222,6 +225,7 @@ void Widget::init()
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
+    connect(offlineMsgTimer, &QTimer::timeout, &OfflineMsgEngine::processAllMsgs);
 
     addFriendForm->show(*ui);
 
@@ -276,6 +280,7 @@ Widget::~Widget()
     delete addFriendForm;
     delete filesForm;
     delete timer;
+    delete offlineMsgTimer;
 
     FriendList::clear();
     GroupList::clear();
@@ -684,7 +689,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     if (isActualChange && status != Status::Offline)
     { // wait a little
-        QTimer::singleShot(250, f->getChatForm(), SLOT(deliverOfflineMsgs()));
+        QTimer::singleShot(250, f->getChatForm()->getOfflineMsgEngine(), SLOT(deliverOfflineMsgs()));
     }
 }
 
@@ -748,7 +753,7 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
     if (!f)
         return;
 
-    f->getChatForm()->dischargeReceipt(receipt);
+    f->getChatForm()->getOfflineMsgEngine()->dischargeReceipt(receipt);
 }
 
 void Widget::newMessageAlert(GenericChatroomWidget* chat)
@@ -1125,7 +1130,7 @@ void Widget::clearAllReceipts()
     QList<Friend*> frnds = FriendList::getAllFriends();
     for (Friend *f : frnds)
     {
-        f->getChatForm()->clearReciepts();
+        f->getChatForm()->getOfflineMsgEngine()->removeAllReciepts();
     }
 }
 
