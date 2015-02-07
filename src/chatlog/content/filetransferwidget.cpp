@@ -121,9 +121,12 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
 
 void FileTransferWidget::setColor(const QColor &c, bool whiteFont)
 {
-    colorAnimation->setStartValue(color);
-    colorAnimation->setEndValue(c);
-    colorAnimation->start();
+    if(c != color)
+    {
+        colorAnimation->setStartValue(color);
+        colorAnimation->setEndValue(c);
+        colorAnimation->start();
+    }
 
     setProperty("fontColor", whiteFont ? "white" : "black");
 
