@@ -40,8 +40,8 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
 
     layout.addWidget(pageButtonsContainer);
 
-    const int maxCols = 5;
-    const int maxRows = 3;
+    const int maxCols = 8;
+    const int maxRows = 8;
     const int itemsPerPage = maxRows * maxCols;
 
     const QList<QStringList>& emoticons = SmileyPack::getInstance().getEmoticons();
