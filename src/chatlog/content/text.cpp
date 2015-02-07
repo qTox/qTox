@@ -241,6 +241,7 @@ void Text::regenerate()
 
         // width
         doc->setTextWidth(width);
+        doc->documentLayout()->update();
 
         // update ascent
         if(doc->firstBlock().layout()->lineCount() > 0)
