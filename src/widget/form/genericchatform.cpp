@@ -212,20 +212,21 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString 
     if(isAction)
     {
         msg = ChatMessage::createChatMessage(authorStr, message, true, false, false);
+        previousId.clear();
     }
     else
     {
         msg = ChatMessage::createChatMessage(authorStr, message, false, false, author.isMine());
         if(author == previousId)
             msg->hideSender();
+
+        previousId = author;
     }
 
     insertChatMessage(msg);
 
     if(isSent)
         msg->markAsSent(datetime);
-
-    previousId = author;
 
     return msg;
 }
