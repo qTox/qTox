@@ -41,6 +41,7 @@
 #include "src/widget/widget.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/croppinglabel.h"
+#include "src/offlinemsgengine.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -56,6 +57,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
 
     callConfirm = nullptr;
+
+    offlineEngine = new OfflineMsgEngine(f);
 
     isTypingLabel = new QLabel();
     QFont font = isTypingLabel->font();
@@ -90,7 +93,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(chatWidget, &ChatAreaWidget::onFileTranfertInterract, this, &ChatForm::onFileTansBtnClicked);
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
-    connect(this, SIGNAL(chatAreaCleared()), this, SLOT(clearReciepts()));
+    connect(this, SIGNAL(chatAreaCleared()), getOfflineMsgEngine(), SLOT(removeAllReciepts()));
     connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig)
         {if (text != orig) emit aliasChanged(text);} );
     connect(&typingTimer, &QTimer::timeout, this, [=]{Core::getInstance()->sendTyping(f->getFriendID(), false);});
@@ -143,7 +146,7 @@ void ChatForm::onSendTriggered()
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
-        registerReceipt(rec, id, ma);
+        getOfflineMsgEngine()->registerReceipt(rec, id, ma);
         
         msgEdit->setLastMessage(msg); //set last message only when sending it
     }
@@ -821,7 +824,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                     rec = Core::getInstance()->sendAction(f->getFriendID(), ca->getRawMessage());
                 else
                     rec = Core::getInstance()->sendMessage(f->getFriendID(), ca->getRawMessage());
-                registerReceipt(rec, it.id, ca);
+                getOfflineMsgEngine()->registerReceipt(rec, it.id, ca);
             }
         }
         historyMessages.append(ca);
@@ -906,62 +909,12 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
 }
 
-void ChatForm::registerReceipt(int receipt, int messageID, MessageActionPtr msg)
-{
-    receipts[receipt] = messageID;
-    undeliveredMsgs[messageID] = msg;
-}
-
-void ChatForm::dischargeReceipt(int receipt)
-{
-    auto it = receipts.find(receipt);
-    if (it != receipts.end())
-    {
-        int mID = it.value();
-        auto msgIt = undeliveredMsgs.find(mID);
-        if (msgIt != undeliveredMsgs.end())
-        {
-            HistoryKeeper::getInstance()->markAsSent(mID);
-            msgIt.value()->markAsSent();
-            msgIt.value()->featureUpdate();
-            undeliveredMsgs.erase(msgIt);
-        }
-        receipts.erase(it);
-    }
-}
-
 void ChatForm::setFriendTyping(bool isTyping)
 {
     if (isTyping)
         isTypingLabel->setText(f->getDisplayedName() + " " + tr("is typing..."));
     else
         isTypingLabel->clear();
-}
-
-void ChatForm::clearReciepts()
-{
-    receipts.clear();
-    undeliveredMsgs.clear();
-}
-
-void ChatForm::deliverOfflineMsgs()
-{
-    if (!Settings::getInstance().getFauxOfflineMessaging())
-        return;
-
-    QMap<int, MessageActionPtr> msgs = undeliveredMsgs;
-    clearReciepts();
-
-    for (auto iter = msgs.begin(); iter != msgs.end(); iter++)
-    {
-        QString messageText = iter.value()->getRawMessage();
-        int rec;
-        if (iter.value()->isAction())
-            rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
-        else
-            rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
-        registerReceipt(rec, iter.key(), iter.value());
-    }
 }
 
 void ChatForm::show(Ui::MainWindow &ui)
@@ -976,4 +929,9 @@ void ChatForm::hideEvent(QHideEvent*)
 {
     if (callConfirm)
         callConfirm->hide();
+}
+
+OfflineMsgEngine *ChatForm::getOfflineMsgEngine()
+{
+    return offlineEngine;
 }

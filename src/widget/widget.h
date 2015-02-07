@@ -162,7 +162,7 @@ private:
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
     Status beforeDisconnect = Status::Offline;
-    QTimer* timer;
+    QTimer* timer, *offlineMsgTimer;
     QTranslator* translator;
     QRegExp nameMention, sanitizedNameMention;
     bool eventFlag;
