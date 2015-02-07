@@ -38,6 +38,7 @@ This client runs on Windows, Linux and Mac natively.<br/>
 
 ##Developer overview:
 
+[Contributing](https://github.com/tux3/qTox/wiki#contributing)<br/>
 [GitStats](https://tux3-dev.tox.im/)<br/>
 [Mac & Linux jenkins](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/)<br/>
 [Windows jenkins](https://tux3-dev.tox.im/jenkins)<br/>
