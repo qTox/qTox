@@ -25,6 +25,7 @@
 #include <QAction>
 #include <QTimer>
 #include <QMouseEvent>
+#include <QShortcut>
 
 template<class T>
 T clamp(T x, T min, T max)
@@ -65,15 +66,21 @@ ChatLog::ChatLog(QWidget* parent)
     copyAction->setText(tr("Copy"));
     copyAction->setShortcut(QKeySequence::Copy);
     copyAction->setEnabled(false);
-    connect(copyAction, &QAction::triggered, this, [this](bool) { copySelectedText(); });
+    connect(copyAction, &QAction::triggered, this, [this]() { copySelectedText(); });
     addAction(copyAction);
+
+#ifdef Q_OS_LINUX
+    // Ctrl+Insert shortcut
+    QShortcut* copyCtrlInsShortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Insert), this);
+    connect(copyCtrlInsShortcut, &QShortcut::activated, this, [this]() { copySelectedText(); });
+#endif
 
     // select all action (ie. Ctrl+A)
     QAction* selectAllAction = new QAction(this);
     selectAllAction->setIcon(QIcon::fromTheme("edit-select-all"));
     selectAllAction->setText(tr("Select all"));
     selectAllAction->setShortcut(QKeySequence::SelectAll);
-    connect(selectAllAction, &QAction::triggered, this, [this](bool) { selectAll(); });
+    connect(selectAllAction, &QAction::triggered, this, [this]() { selectAll(); });
     addAction(selectAllAction);
 
     // This timer is used to scroll the view while the user is
