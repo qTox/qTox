@@ -380,8 +380,8 @@ void FileTransferWidget::showPreview(const QString &filename)
 
     if(previewExtensions.contains(QFileInfo(filename).suffix()))
     {
-        //QPixmap pmap = QPixmap(filename).scaled(QSize(ui->previewLabel->maximumWidth(), maximumHeight()), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        QPixmap pmap = QPixmap(filename).scaledToWidth(ui->previewLabel->maximumWidth(), Qt::SmoothTransformation);
+        const int size = qMax(ui->previewLabel->width(), ui->previewLabel->height());
+        QPixmap pmap = QPixmap(filename).scaled(QSize(size, size), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         ui->previewLabel->setPixmap(pmap);
         ui->previewLabel->show();
     }
