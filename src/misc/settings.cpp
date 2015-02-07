@@ -163,10 +163,10 @@ void Settings::load()
 
     s.beginGroup("GUI");
         enableSmoothAnimation = s.value("smoothAnimation", true).toBool();
-        smileyPack = s.value("smileyPack", ":/smileys/cylgom/emoticons.xml").toString();
+        smileyPack = s.value("smileyPack", ":/smileys/TwitterEmojiSVG/emoticons.xml").toString();
         customEmojiFont = s.value("customEmojiFont", true).toBool();
         emojiFontFamily = s.value("emojiFontFamily", "DejaVu Sans").toString();
-        emojiFontPointSize = s.value("emojiFontPointSize", 12).toInt();
+        emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
