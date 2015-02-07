@@ -34,6 +34,12 @@ SystemTrayIcon::SystemTrayIcon()
         app_indicator_set_menu(unityIndicator, GTK_MENU(unityMenu));
     }
     #endif
+    else if (desktop.toLower() == "kde"
+             && getenv("KDE_SESSION_VERSION") == QString("5"))
+    {
+        backendType = SystrayBackendType::KDE5;
+        qWarning() << "SystemTrayIcon: Detected a KDE5 session, disabling the icon";
+    }
     else
     {
         qtIcon = new QSystemTrayIcon;
@@ -104,7 +110,7 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         g_signal_connect(rootMenuItem, "about-to-show", G_CALLBACK(callback), this);
     }
     #endif
-    else
+    else if (backendType == SystrayBackendType::Qt)
     {
         qtIcon->setContextMenu(menu);
     }
@@ -132,7 +138,7 @@ void SystemTrayIcon::setVisible(bool newState)
             app_indicator_set_status(unityIndicator, APP_INDICATOR_STATUS_PASSIVE);
     }
     #endif
-    else
+    else if (backendType == SystrayBackendType::Qt)
     {
         if (newState)
             qtIcon->show();
@@ -160,7 +166,7 @@ void SystemTrayIcon::setIcon(QIcon &&icon)
         }
     }
     #endif
-    else
+    else if (backendType == SystrayBackendType::Qt)
     {
         qtIcon->setIcon(icon);
     }

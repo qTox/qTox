@@ -18,6 +18,7 @@ extern "C" {
 enum class SystrayBackendType
 {
     Qt,
+    KDE5,
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     Unity
 #endif
