@@ -32,6 +32,7 @@ class QPixmap;
 class CallConfirmWidget;
 class QHideEvent;
 class QMoveEvent;
+class OfflineMsgEngine;
 
 class ChatForm : public GenericChatForm
 {
@@ -44,6 +45,7 @@ public:
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
+    OfflineMsgEngine* getOfflineMsgEngine();
 
     virtual void show(Ui::MainWindow &ui);
 
@@ -60,8 +62,6 @@ signals:
     void aliasChanged(const QString& alias);
 
 public slots:
-    void deliverOfflineMsgs();
-    void clearReciepts();
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
     void onAvInvite(int FriendId, int CallId, bool video);
@@ -113,14 +113,12 @@ private:
     QTimer typingTimer;    
     QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
+    OfflineMsgEngine *offlineEngine;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     void startCounter();
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
-    QHash<int, int> receipts;
-    QMap<int, ChatMessage::Ptr> undeliveredMsgs;
-    bool isTyping;
     CallConfirmWidget *callConfirm;
     void enableCallButtons();    
 };

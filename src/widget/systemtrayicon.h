@@ -12,6 +12,7 @@ class SystemTrayIcon : public QObject
     Q_OBJECT
 public:
     SystemTrayIcon();
+    ~SystemTrayIcon();
     void setContextMenu(QMenu* menu);
     void show();
     void hide();

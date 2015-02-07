@@ -54,11 +54,11 @@
        <item>
         <widget class="QCheckBox" name="cbKeepHistory">
          <property name="toolTip">
-          <string comment="toolTip for Keep History setting">History keeping is still in development.
+          <string comment="toolTip for Keep History setting">Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</string>
          </property>
          <property name="text">
-          <string>Keep History (unstable)</string>
+          <string>Keep chat history (mostly stable)</string>
          </property>
         </widget>
        </item>
@@ -68,31 +68,63 @@ Save format changes are possible, which may result in data loss.</string>
           <bool>true</bool>
          </property>
          <property name="title">
-          <string>Encryption</string>
+          <string>Local file encryption</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QCheckBox" name="cbEncryptTox">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+           <widget class="QLabel" name="encryptStatement">
             <property name="text">
-             <string>Encrypt Tox datafile</string>
+             <string>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="cbEncryptHistory">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Encrypt History</string>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="encryptToxHLayout">
+            <item>
+             <widget class="QCheckBox" name="cbEncryptTox">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Encrypt Tox data file</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="changeToxPwButton">
+              <property name="text">
+               <string>Change password</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="encryptLogsHLayout">
+            <item>
+             <widget class="QCheckBox" name="cbEncryptHistory">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Encrypt chat history</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="changeLogsPwButton">
+              <property name="text">
+               <string>Change password</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>

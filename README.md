@@ -29,7 +29,7 @@ This client runs on Windows, Linux and Mac natively.<br/>
 
 <h3>Screenshots</h3>
 <h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
-<img src="https://wiki.tox.im/images/5/5d/ToxGUI_tux3.png"/>
+<img src="https://i.imgur.com/5wSLGSX.png"/>
 <img src="https://i.imgur.com/0XWcqBc.jpg"/>
 
 ##Documentation:
@@ -38,6 +38,7 @@ This client runs on Windows, Linux and Mac natively.<br/>
 
 ##Developer overview:
 
+[Contributing](https://github.com/tux3/qTox/wiki#contributing)<br/>
 [GitStats](https://tux3-dev.tox.im/)<br/>
 [Mac & Linux jenkins](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/)<br/>
 [Windows jenkins](https://tux3-dev.tox.im/jenkins)<br/>

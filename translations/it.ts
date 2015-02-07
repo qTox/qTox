@@ -9,7 +9,7 @@
         <translation>Audio/Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="72"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="73"/>
         <source>Initializing Camera...</source>
         <translation>Inizializzazione Webcam...</translation>
     </message>
@@ -17,12 +17,12 @@
 <context>
     <name>AVSettings</name>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="123"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="122"/>
         <source>Video Settings</source>
         <translation>Impostazioni Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="134"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="133"/>
         <source>Resolution</source>
         <translation>Risoluzione</translation>
     </message>
@@ -43,46 +43,44 @@
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="64"/>
-        <source>Use slider to set volume of your speakers.
-WARNING: slider is not supposed to work yet.</source>
-        <translation>Usa lo slider per impostare il volume degli altoparlanti.
-ATTENZIONE: lo slider è ancora non funzionante.</translation>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation>Usa lo slider per impostare il volume degli altoparlanti.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="75"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="74"/>
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
         <translation>Usa lo slider per impostare il volume del microfono.
 ATTENZIONE: lo slider è ancora non funzionante.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="83"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="82"/>
         <source>Playback device</source>
         <translation>Dispositivo di output</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="90"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="89"/>
         <source>Capture device</source>
         <translation>Dispositivo di input</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="103"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="102"/>
         <source>Rescan audio devices</source>
         <translation>Cerca dispositivi audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="110"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="109"/>
         <source>Filter audio</source>
         <translation>Filtra audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="113"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="112"/>
         <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
         <translation>Filtra l&apos;audio del microfono, così le persone che chiami ti sentiranno meglio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="137"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="154"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="153"/>
         <source>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
@@ -95,22 +93,22 @@ Può capitare che la tua connessione ad internet non sia abbastanza veloce per g
 qualità video elevate, questo può causare problemi con le chiamate video.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="165"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
         <source>Hue</source>
         <translation>Colore</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="179"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="178"/>
         <source>Brightness</source>
         <translation>Luminoistà</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="193"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="192"/>
         <source>Saturation</source>
         <translation>Saturazione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="207"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="206"/>
         <source>Contrast</source>
         <translation>Contrasto</translation>
     </message>
@@ -224,8 +222,8 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="68"/>
-        <source>History</source>
-        <translation>Chat Log</translation>
+        <source>Chat history</source>
+        <translation>Cronologia chat</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
@@ -237,8 +235,8 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     <name>ChatForm</name>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="80"/>
-        <source>Load History...</source>
-        <translation>Carica log...</translation>
+        <source>Load chat history...</source>
+        <translation>Carica cronologia chat...</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="170"/>
@@ -321,107 +319,101 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
 <context>
     <name>Core</name>
     <message>
-        <location filename="../src/core.cpp" line="244"/>
+        <location filename="../src/core.cpp" line="256"/>
         <source>Toxing on qTox</source>
         <translation>Toxing on qTox</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="245"/>
+        <location filename="../src/core.cpp" line="257"/>
         <source>qTox User</source>
         <translation>qTox User</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="749"/>
+        <location filename="../src/core.cpp" line="760"/>
         <source>Friend is already added</source>
         <translation>Questo contatto è già presente nella tua lista</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1190"/>
+        <location filename="../src/coreencryption.cpp" line="168"/>
         <source>Encryption error</source>
         <translation>Errore crittografia</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1190"/>
+        <location filename="../src/coreencryption.cpp" line="168"/>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
         <translation>Il Tox datafile è criptato, ma la crittografia non è abilitata nelle impostazioni.
 Continuo ignorando le impostazioni.</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1197"/>
-        <source>Tox datafile decryption password</source>
-        <translation>Password per decriptare il Tox datafile</translation>
+        <location filename="../src/coreencryption.cpp" line="171"/>
+        <source>Please enter the password for the %1 profile.</source>
+        <comment>used in load() when no pw is already set</comment>
+        <translation>Inserisci la password per il profilo &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1199"/>
-        <location filename="../src/core.cpp" line="1211"/>
-        <location filename="../src/core.cpp" line="1274"/>
-        <source>Password error</source>
-        <translation>Errore password</translation>
+        <location filename="../src/coreencryption.cpp" line="172"/>
+        <location filename="../src/coreencryption.cpp" line="227"/>
+        <source>The previous password is incorrect; please try again:</source>
+        <comment>used on retries in load()</comment>
+        <translation>La password inserita non è corretta, riprova:</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1199"/>
-        <location filename="../src/core.cpp" line="1274"/>
-        <source>Failed to setup password.
-Empty password.</source>
-        <translation>Impossibile impostare la password.
-Password vuota.</translation>
+        <location filename="../src/coreencryption.cpp" line="183"/>
+        <source>The profile password failed. Please try another?</source>
+        <comment>used only when pw set before load() doesn&apos;t work</comment>
+        <translation>La password del profilo ha fallito. Vuoi provarne un&apos;altra?</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1207"/>
-        <source>Try Again</source>
-        <translation>Riprova</translation>
+        <location filename="../src/coreencryption.cpp" line="219"/>
+        <source>Encrypted chat history</source>
+        <translation>Cronologia chat criptata</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1208"/>
+        <location filename="../src/coreencryption.cpp" line="219"/>
+        <source>No encrypted chat history file found, or it was corrupted.
+History will be disabled!</source>
+        <translation>Nessuna cronologia chat criptata trovata, o è stata corrotta.
+La cronologia sarà disabilitata!</translation>
+    </message>
+    <message>
+        <location filename="../src/coreencryption.cpp" line="226"/>
+        <source>Please enter the password for the chat history for the %1 profile.</source>
+        <comment>used in load() when no hist pw set</comment>
+        <translation>Inserisci la password per la cronologia delle chat del profilo &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <location filename="../src/coreencryption.cpp" line="228"/>
+        <source>
+Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
+        <comment>part of history password dialog</comment>
+        <translation>
+Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (ma non usabile); se più avanti ti ricorderai la password, potrai riabilitare la cronologia delle chat criptata dalla scheda &quot;Privacy&quot;.</translation>
+    </message>
+    <message>
+        <location filename="../src/coreencryption.cpp" line="235"/>
+        <source>The chat history password failed. Please try another?</source>
+        <comment>used only when pw set before load() doesn&apos;t work</comment>
+        <translation>La password della cronologia della chat ha fallito. Vuoi provarne un&apos;altra?</translation>
+    </message>
+    <message>
+        <location filename="../src/coreencryption.cpp" line="255"/>
+        <source>Disable chat history</source>
+        <translation>Disabilita cronologia chat</translation>
+    </message>
+    <message>
+        <location filename="../src/coreencryption.cpp" line="306"/>
+        <source>Encryption is enabled, but there is no password! Encryption will be disabled.</source>
+        <translation>La criptazione è abilitata, ma non c&apos;è nessuna password! LA criptazione sarà disabilitata.</translation>
+    </message>
+    <message>
+        <location filename="../src/coreencryption.cpp" line="193"/>
         <source>Change profile</source>
         <translation>Cambia profilo</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="1209"/>
-        <source>Reinit current profile</source>
-        <translation>Reinizializza il profilo corrente</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1212"/>
-        <source>Wrong password has been entered</source>
-        <translation>È stata inserita una password sbagliata</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1272"/>
-        <source>History Log decryption password</source>
-        <translation>Password per decriptare i log</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1279"/>
-        <source>Encrypted log</source>
-        <translation>Log criptato</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1280"/>
-        <source>Your history is encrypted with different password.
-Do you want to try another password?</source>
-        <translation>I log delle chat sono criptati con una password diversa.
-Vuoi provare ad inserire un&apos;altra password?</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1290"/>
-        <source>History</source>
-        <translation>Chat Log</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1290"/>
-        <source>Due to incorret password history will be disabled.</source>
-        <translation>Password errata, i log delle chat non saranno caricati.</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1370"/>
+        <location filename="../src/coreencryption.cpp" line="306"/>
         <source>NO Password</source>
         <translation>Nessuna password</translation>
-    </message>
-    <message>
-        <location filename="../src/core.cpp" line="1370"/>
-        <source>Will be saved without encryption!</source>
-        <translation>Il Tox datafile sarà salvato senza password!</translation>
     </message>
 </context>
 <context>
@@ -670,11 +662,6 @@ nella traybar invece che nella taskbar.</translation>
         <translation>Imposta 0 per disabilitare</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
-        <source>Your status is changed to Away after set time of inactivity.</source>
-        <translation>Il tuo stato sarà cambaito in &quot;Assente&quot; dopo l&apos;ammontare di tempo impostato.</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="273"/>
         <source>Auto away after (0 to disable):</source>
         <translation>Mostra come assente dopo (0 per disabilitare):</translation>
@@ -710,12 +697,6 @@ nella traybar invece che nella taskbar.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="323"/>
         <source>Show window</source>
         <translation>Mostra finestra</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="330"/>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Show window setting</comment>
-        <translation>Dai il focus alla finestra di qTox quando arriva un nuovo messaggio.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="333"/>
@@ -835,6 +816,17 @@ Richiede riavvio.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="232"/>
         <source>PushButton</source>
         <translation>Sfoglia</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
+        <source>Your status is changed to Away after set period of inactivity.</source>
+        <translation>Il tuo stato sarà cambiato in &quot;Assente&quot; dopo il periodo di inattività indicato.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="330"/>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation>Dai il focus alla finestra di qTox quando arriva un nuovo messaggio.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="386"/>
@@ -1000,36 +992,36 @@ Nome gruppo:</translation>
 <context>
     <name>IdentityForm</name>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="35"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="34"/>
         <source>Identity</source>
         <translation>Identità</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="136"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="135"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Chiamata in corso</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="137"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="136"/>
         <source>You can&apos;t switch profiles while a call is active!</source>
         <comment>popup text</comment>
         <translation>Non puoi cambiare profilo durante una chiamata!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="147"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="146"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
         <translation>Rinomina &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="155"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="154"/>
         <source>Profile already exists</source>
         <comment>rename confirm title</comment>
         <translation>Profilo già esistente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="155"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>rename confirm text</comment>
         <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
@@ -1047,83 +1039,81 @@ Nome gruppo:</translation>
         <translation>Tox save file (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="184"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="182"/>
         <source>Failed to remove file</source>
         <translation>Impossibile rimuovere il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="184"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="182"/>
         <source>The file you chose to overwrite could not be removed first.</source>
         <translation>Il file che hai scelto di sovrascrivere non può essere prima rimosso.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="190"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="188"/>
         <source>Failed to copy file</source>
         <translation>Impossibile copiare il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="190"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="188"/>
         <source>The file you chose could not be written to.</source>
         <translation>Il file che hai scelto non può essere copiato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="198"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="196"/>
         <source>Profile currently loaded</source>
         <comment>current profile deletion warning title</comment>
         <translation>Profilo attualmente in uso</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="198"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="196"/>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
         <translation>Questo profilo è attualmente in uso. Per favore carica un profilo differente prima di eliminare questo.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="202"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="200"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
         <translation>Eliminazione imminente!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="203"/>
-        <source>Are you sure you want to delete this profile?
-Associated friend information and chat logs will be deleted as well.</source>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="201"/>
+        <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Sei sicuro di voler eliminare questo profilo?
-I contatti e i log delle chat associati ad esso, saranno eliminati.</translation>
+        <translation>Sei sicuro di voler eliminare questo profilo?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="222"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="220"/>
         <source>Import profile</source>
         <comment>import dialog title</comment>
         <translation>Importa profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="224"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="222"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
         <translation>Tox save file (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="234"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="232"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
         <translation>File ignorato</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="235"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="233"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
         <translation>Attenzione: hai scelto un file che non contiente un profilo Tox.\nQuesto file verrà ignorato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="241"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="239"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
         <translation>Profilo già esistente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/identityform.cpp" line="242"/>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="240"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
@@ -1256,19 +1246,6 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
 </context>
 <context>
-    <name>InputPasswordDialog</name>
-    <message>
-        <location filename="../src/widget/form/inputpassworddialog.ui" line="14"/>
-        <source>Password Dialog</source>
-        <translation>Password richiesta</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/inputpassworddialog.ui" line="23"/>
-        <source>Input password:</source>
-        <translation>Password:</translation>
-    </message>
-</context>
-<context>
     <name>LoadHistoryDialog</name>
     <message>
         <location filename="../src/widget/form/loadhistorydialog.ui" line="14"/>
@@ -1330,21 +1307,94 @@ I profili non contengono la cronologia messaggi.</translation>
 <context>
     <name>PrivacyForm</name>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="28"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="30"/>
         <source>Privacy</source>
         <translation>Privacy</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="86"/>
-        <source>Encrypted log</source>
-        <translation>Log criptato</translation>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="77"/>
+        <source>Please set your new chat history password.</source>
+        <translation>Inserisci la nuova password per la cronologia chat.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="87"/>
-        <source>You already have history log file encrypted with different password
-Do you want to delete old history file?</source>
-        <translation>Hai già un file di log criptato con una password diversa.
-Vuoi eliminare il vecchio file?</translation>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="79"/>
+        <source>It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.</source>
+        <translation>Sembra che tu abbia una cronologia chat criptata non in uso; se la password corrisponde, sarà aggiunta alla tua cronologia attuale.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="82"/>
+        <source>Use data file password</source>
+        <comment>pushbutton text</comment>
+        <translation>Usa la stessa password del file dati</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="109"/>
+        <source>Successfully decrypted old chat history</source>
+        <comment>popup title</comment>
+        <translation>Precedente cronologia chat decriptata con successo</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="109"/>
+        <source>You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.</source>
+        <comment>popup text</comment>
+        <translation>Hai decriptato la vecchia cronologia chat con successo; è stata aggiunta alla tua corrente cronologia chat e ri-criptata.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="116"/>
+        <source>Old encrypted chat history</source>
+        <comment>popup title</comment>
+        <translation>Vecchia cronologia chat</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="116"/>
+        <source>There is currently an unused encrypted chat history, but the password you just entered doesn&apos;t match.
+Would you like to try again?
+Canceling will delete the old history and set the password to what you just entered.</source>
+        <comment>This happens when enabling encryption after previously &quot;Disabling History&quot;</comment>
+        <translation>C&apos;è una cronologia chat criptata non in uso, ma la password che hai inserito non corrisponde.
+Vuoi riprovare?
+Annullando, la vecchia cronologia chat sarà eliminata e la password impostata con quella appena inserita.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="145"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="162"/>
+        <source>Old encrypted chat history</source>
+        <comment>title</comment>
+        <translation>Vecchia cronologia chat</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="146"/>
+        <source>Would you like to decrypt your chat history?
+Otherwise it will be deleted.</source>
+        <translation>Vuoi decriptare la tua cronologia chat?
+Altrimenti sarà eliminata.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="163"/>
+        <source>Are you sure you want to lose your entire chat history?</source>
+        <translation>Sei sicuro di voler perdere tutta la cronologia chat?</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="195"/>
+        <source>Please set your new data file password.</source>
+        <translation>Inserisci la nuova password per il file dati.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="197"/>
+        <source>Use chat history password</source>
+        <comment>pushbutton text</comment>
+        <translation>Usa la password della cronologia chat</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="240"/>
+        <source>Decrypt your data file</source>
+        <comment>title</comment>
+        <translation>Decripta il tuo file dati</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="240"/>
+        <source>Would you like to decrypt your data file?</source>
+        <translation>Vuoi decriptare il tuo file dati?</translation>
     </message>
 </context>
 <context>
@@ -1361,40 +1411,51 @@ Vuoi eliminare il vecchio file?</translation>
         <translation>Permetti ai miei contatti di vedere quando sto scrivendo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="60"/>
-        <source>Keep History (unstable)</source>
-        <translation>Salva log delle chat (unstable)</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="57"/>
+        <source>Chat history keeping is still in development.
+Save format changes are possible, which may result in data loss.</source>
+        <comment>toolTip for Keep History setting</comment>
+        <translation>Il salavataggio della cronologia chat è ancora in sviluppo.
+Il formato del file potrebbe cambiare (questo potrebbe causare perdita di dati).</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="63"/>
-        <source>History is available in qTox, but we cannot promise that one day it will not dissapear without a trace :-/
-We will try our best to make sure that this will not happen though!</source>
-        <comment>toolTip for history setting</comment>
-        <translation>La cronologia messaggi è disponibile in qTox, ma non possiamo promettere che un giorno non sparisca senza lasciare tracce :-/
-Faremo del nostro meglio per assicurarci che questo non accada!</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
+        <source>Keep chat history (mostly stable)</source>
+        <translation>Salva cronologia chat (quasi stabile)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="74"/>
-        <source>Encryption</source>
-        <translation>Crittografiia</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
+        <source>Local file encryption</source>
+        <translation>Criptaggio file locali</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="83"/>
-        <source>Encrypt Tox datafile</source>
-        <translation>Cripta Tox datafile</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
+        <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
+        <translation>Tutte le comunicazioni di Tox attraverso internet sono criptate, e questo non può essere disabilitato. Tuttavia puoi scegliere se proteggere con una password i tuoi file locali di Tox.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="93"/>
-        <source>Encrypt History</source>
-        <translation>Cripta log delle chat</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
+        <source>Encrypt Tox data file</source>
+        <translation>Cripta file dati Tox</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="106"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="123"/>
+        <source>Change password</source>
+        <translation>Cambia password</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="113"/>
+        <source>Encrypt chat history</source>
+        <translation>Cripta cronologia chat</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="135"/>
         <source>Nospam</source>
         <translation>Nospam</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="109"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="138"/>
         <source>Nospam is part of your Tox ID.
 It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
 When you change nospam, your current contacts still can communicate with you,
@@ -1406,12 +1467,12 @@ Quando modifichi il valore &quot;nospam&quot;, i contatti che hai già aggiunto 
 ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="120"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="149"/>
         <source>HHHHHHHH</source>
         <translation>HHHHHHHH</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="127"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="156"/>
         <source>Generate random nospam</source>
         <translation>Genera valore nospam casuale</translation>
     </message>
@@ -1425,36 +1486,36 @@ ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</tra
         <translation>Permettimi di aggiungerti alla mia lista contatti</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="63"/>
+        <location filename="../src/widget/toxsave.cpp" line="57"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
         <translation>File ignorato</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="64"/>
+        <location filename="../src/widget/toxsave.cpp" line="58"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
         <translation>Attenzione: hai scelto un file che non contiente un profilo Tox.\nQuesto file verrà ignorato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="70"/>
+        <location filename="../src/widget/toxsave.cpp" line="64"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
         <translation>Profilo già esistente</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="71"/>
+        <location filename="../src/widget/toxsave.cpp" line="65"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="77"/>
+        <location filename="../src/widget/toxsave.cpp" line="71"/>
         <source>Profile imported</source>
         <translation>Profilo importato</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="77"/>
+        <location filename="../src/widget/toxsave.cpp" line="71"/>
         <source>%1.tox was successfully imported</source>
         <translation>%1.tox è stato importato con successo</translation>
     </message>
@@ -1520,14 +1581,30 @@ Verrà installata al riavvio del programma.</translation>
 <context>
     <name>SetPasswordDialog</name>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.ui" line="23"/>
-        <source>Type Password</source>
-        <translation>Password</translation>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="14"/>
+        <source>Set your password</source>
+        <translation>Imposta password</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.ui" line="37"/>
-        <source>Repeat Password</source>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="31"/>
+        <source>Repeat password</source>
         <translation>Ripeti password</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="41"/>
+        <source>Type password</source>
+        <translation>Inserisci password</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.ui" line="65"/>
+        <source>Password strength</source>
+        <translation>Sicurezza password</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="33"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="61"/>
+        <source>The passwords don&apos;t match.</source>
+        <translation>Le passwords non corrispondono.</translation>
     </message>
 </context>
 <context>
@@ -1630,156 +1707,171 @@ Usare comunque il protocollo tox1?</translation>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="92"/>
+        <location filename="../src/widget/widget.cpp" line="95"/>
         <source>Online</source>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="95"/>
+        <location filename="../src/widget/widget.cpp" line="98"/>
         <source>Away</source>
         <translation>Assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="98"/>
+        <location filename="../src/widget/widget.cpp" line="101"/>
         <source>Busy</source>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="101"/>
+        <location filename="../src/widget/widget.cpp" line="104"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="174"/>
+        <location filename="../src/widget/widget.cpp" line="177"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="176"/>
+        <location filename="../src/widget/widget.cpp" line="179"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="178"/>
+        <location filename="../src/widget/widget.cpp" line="181"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="435"/>
+        <location filename="../src/widget/widget.cpp" line="440"/>
         <source>Choose a profile</source>
         <translation>Scegli un profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="436"/>
+        <location filename="../src/widget/widget.cpp" line="441"/>
         <source>Please choose which identity to use</source>
         <translation>Per favore scegli quale identità usare</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="457"/>
+        <location filename="../src/widget/widget.cpp" line="459"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="464"/>
-        <location filename="../src/widget/widget.cpp" line="471"/>
-        <location filename="../src/widget/widget.cpp" line="492"/>
+        <location filename="../src/widget/widget.cpp" line="466"/>
+        <location filename="../src/widget/widget.cpp" line="473"/>
+        <location filename="../src/widget/widget.cpp" line="494"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="464"/>
+        <location filename="../src/widget/widget.cpp" line="466"/>
         <source>Unable to open this file</source>
         <translation>Impossibile aprire il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="471"/>
+        <location filename="../src/widget/widget.cpp" line="473"/>
         <source>Unable to read this image</source>
         <translation>Impossibile leggere l&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="492"/>
+        <location filename="../src/widget/widget.cpp" line="494"/>
         <source>This image is too big</source>
         <translation>L&apos;immagine è troppo grande</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="532"/>
+        <location filename="../src/widget/widget.cpp" line="534"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="541"/>
+        <location filename="../src/widget/widget.cpp" line="543"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="587"/>
+        <location filename="../src/widget/widget.cpp" line="589"/>
         <source>Add friend</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="599"/>
+        <location filename="../src/widget/widget.cpp" line="601"/>
         <source>File transfers</source>
         <translation>Files trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="644"/>
+        <location filename="../src/widget/widget.cpp" line="646"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="749"/>
+        <location filename="../src/widget/widget.cpp" line="757"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossibile inviare la richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="777"/>
+        <location filename="../src/widget/widget.cpp" line="785"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="779"/>
+        <location filename="../src/widget/widget.cpp" line="787"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="781"/>
+        <location filename="../src/widget/widget.cpp" line="789"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="783"/>
+        <location filename="../src/widget/widget.cpp" line="791"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="786"/>
+        <location filename="../src/widget/widget.cpp" line="794"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1011"/>
+        <location filename="../src/widget/widget.cpp" line="1022"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1036"/>
+        <location filename="../src/widget/widget.cpp" line="1047"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 ha impostato il titolo in %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1187"/>
+        <location filename="../src/widget/widget.cpp" line="1207"/>
         <source>Message failed to send</source>
         <translation>Impossibile inviare il messaggio</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="1319"/>
+        <source>Enter your password</source>
+        <translation>Inserisci password</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="1321"/>
+        <source>Decrypt</source>
+        <translation>Decripta</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="1363"/>
+        <source>You must enter a non-empty password:</source>
+        <translation>Devi inserire una password non vuota:</translation>
     </message>
 </context>
 </TS>

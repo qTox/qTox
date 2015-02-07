@@ -16,10 +16,7 @@
 
 #include "style.h"
 #include "settings.h"
-
-#include "src/widget/widget.h"
-#include "ui_mainwindow.h"
-#include "src/widget/genericchatroomwidget.h"
+#include "src/widget/gui.h"
 
 #include <QFile>
 #include <QDebug>
@@ -198,11 +195,9 @@ void Style::setThemeColor(QColor color)
     dict["@themeMediumDark"] = getColor(ThemeMediumDark).name();
     dict["@themeMedium"] = getColor(ThemeMedium).name();
     dict["@themeLight"] = getColor(ThemeLight).name();
-
-    applyTheme();
 }
 
 void Style::applyTheme()
 {
-    Widget::getInstance()->reloadTheme();
+    GUI::reloadTheme();
 }

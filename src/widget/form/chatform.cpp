@@ -43,6 +43,7 @@
 #include "src/chatlog/chatlinecontentproxy.h"
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
+#include "src/offlinemsgengine.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -58,7 +59,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
 
     callConfirm = nullptr;
-    
+    offlineEngine = new OfflineMsgEngine(f);
+
     typingTimer.setSingleShot(true);
 
     netcam = new NetCamView();
@@ -73,7 +75,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
 
-    menu.addAction(tr("Load History..."), this, SLOT(onLoadHistory()));
+    menu.addAction(tr("Load chat history..."), this, SLOT(onLoadHistory()));
 
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
@@ -85,7 +87,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
-    connect(this, SIGNAL(chatAreaCleared()), this, SLOT(clearReciepts()));
+    connect(this, SIGNAL(chatAreaCleared()), getOfflineMsgEngine(), SLOT(removeAllReciepts()));
     connect(&typingTimer, &QTimer::timeout, this, [=]{Core::getInstance()->sendTyping(f->getFriendID(), false);});
     connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig) {
         if (text != orig) emit aliasChanged(text);
@@ -139,7 +141,7 @@ void ChatForm::onSendTriggered()
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
-        registerReceipt(rec, id, ma);
+        getOfflineMsgEngine()->registerReceipt(rec, id, ma);
         
         msgEdit->setLastMessage(msg); //set last message only when sending it
     }
@@ -806,7 +808,8 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                     rec = Core::getInstance()->sendMessage(f->getFriendID(), msg->toString());
                 else
                     rec = Core::getInstance()->sendAction(f->getFriendID(), msg->toString());
-                registerReceipt(rec, it.id, msg);
+                
+                getOfflineMsgEngine()->registerReceipt(rec, it.id, msg);
             }
         }
         historyMessages.prepend(msg);
@@ -889,29 +892,6 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
 }
 
-void ChatForm::registerReceipt(int receipt, int messageID, ChatMessage::Ptr msg)
-{
-    receipts[receipt] = messageID;
-    undeliveredMsgs[messageID] = msg;
-}
-
-void ChatForm::dischargeReceipt(int receipt)
-{
-    auto it = receipts.find(receipt);
-    if (it != receipts.end())
-    {
-        int mID = it.value();
-        auto msgIt = undeliveredMsgs.find(mID);
-        if (msgIt != undeliveredMsgs.end())
-        {
-            HistoryKeeper::getInstance()->markAsSent(mID);
-            msgIt.value()->markAsSent(QDateTime::currentDateTime());
-            undeliveredMsgs.erase(msgIt);
-        }
-        receipts.erase(it);
-    }
-}
-
 void ChatForm::setFriendTyping(bool isTyping)
 {
     chatWidget->setTypingNotificationVisible(isTyping);
@@ -920,32 +900,6 @@ void ChatForm::setFriendTyping(bool isTyping)
 
     if(text)
         text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
-}
-
-void ChatForm::clearReciepts()
-{
-    receipts.clear();
-    undeliveredMsgs.clear();
-}
-
-void ChatForm::deliverOfflineMsgs()
-{
-    if (!Settings::getInstance().getFauxOfflineMessaging())
-        return;
-
-    QMap<int, ChatMessage::Ptr> msgs = undeliveredMsgs;
-    clearReciepts();
-
-    for (auto iter = msgs.begin(); iter != msgs.end(); iter++)
-    {
-        QString messageText = iter.value()->toString();
-        int rec;
-        if (iter.value()->isAction())
-            rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
-        else
-            rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
-        registerReceipt(rec, iter.key(), iter.value());
-    }
 }
 
 void ChatForm::show(Ui::MainWindow &ui)
@@ -960,4 +914,9 @@ void ChatForm::hideEvent(QHideEvent*)
 {
     if (callConfirm)
         callConfirm->hide();
+}
+
+OfflineMsgEngine *ChatForm::getOfflineMsgEngine()
+{
+    return offlineEngine;
 }

@@ -18,7 +18,7 @@
 #include "friendlist.h"
 #include "widget/friendwidget.h"
 #include "widget/form/chatform.h"
-#include "widget/widget.h"
+#include "widget/gui.h"
 #include "src/core.h"
 #include "src/misc/settings.h"
 
@@ -52,7 +52,7 @@ void Friend::setName(QString name)
         chatForm->setName(name);
 
         if (widget->isActive())
-            Widget::getInstance()->setWindowTitle(name);
+            GUI::setWindowTitle(name);
     }
 }
 
@@ -65,7 +65,7 @@ void Friend::setAlias(QString name)
     chatForm->setName(dispName);
 
     if (widget->isActive())
-            Widget::getInstance()->setWindowTitle(dispName);
+            GUI::setWindowTitle(dispName);
 }
 
 void Friend::setStatusMessage(QString message)

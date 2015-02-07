@@ -32,10 +32,10 @@ FORMS    += \
     src/widget/form/settings/identitysettings.ui \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/loadhistorydialog.ui \
-    src/widget/form/inputpassworddialog.ui \
     src/widget/form/setpassworddialog.ui \
     src/chatlog/content/filetransferwidget.ui \
-    src/widget/form/settings/advancedsettings.ui
+    src/widget/form/settings/advancedsettings.ui \
+    src/android.ui
     
 CONFIG   += c++11
 
@@ -71,6 +71,23 @@ contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
 }
 
+android {
+    ANDROID_TOOLCHAIN=/opt/android/toolchain-r9d-17/
+    INCLUDEPATH += $$ANDROID_TOOLCHAIN/include/
+    LIBS += -L$$ANDROID_TOOLCHAIN/lib
+
+    DISABLE_PLATFORM_EXT=YES
+    DISABLE_FILTER_AUDIO=YES
+
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+    contains(ANDROID_TARGET_ARCH,armeabi) {
+        ANDROID_EXTRA_LIBS = \
+			$$ANDROID_TOOLCHAIN/lib/libopenal.so \
+			$$ANDROID_TOOLCHAIN/lib/libsodium.so
+    }
+}
+
+
 contains(DISABLE_PLATFORM_EXT, YES) {
 
 } else {
@@ -92,7 +109,7 @@ contains(JENKINS,YES) {
 # Rules for Windows, Mac OSX, and Linux
 win32 {
     RC_FILE = windows/qtox.rc
-    LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
+	LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249 -lOpenAL32 -lopus
     LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -lws2_32 -liphlpapi -lz
 
@@ -112,31 +129,38 @@ win32 {
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
     } else {
-        # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
-        contains(STATICPKG, YES) {
-            target.path = /usr/bin
-            INSTALLS += target
-            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
-	    LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
-            LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
+        android {
+            LIBS += -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns
+            LIBS += -lopencv_videoio -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_androidcamera
+            LIBS += -llibjpeg -llibwebp -llibpng -llibtiff -llibjasper -lIlmImf -lopencv_core
+            LIBS += -lopus -lvpx -lsodium -lopenal
         } else {
-            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
-        }
-
-        contains(DEFINES, QTOX_PLATFORM_EXT) {
-            LIBS += -lX11 -lXss
-        }
-
-        contains(DEFINES, QTOX_FILTER_AUDIO) {
+            # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
             contains(STATICPKG, YES) {
-                LIBS += -Wl,-Bstatic -lfilteraudio
+                target.path = /usr/bin
+                INSTALLS += target
+                LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
+                LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
+                LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
             } else {
-                LIBS += -lfilteraudio
+                LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
             }
-        }
 
-        contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -s
+            contains(DEFINES, QTOX_PLATFORM_EXT) {
+                LIBS += -lX11 -lXss
+            }
+
+            contains(DEFINES, QTOX_FILTER_AUDIO) {
+                contains(STATICPKG, YES) {
+                    LIBS += -Wl,-Bstatic -lfilteraudio
+                } else {
+                    LIBS += -lfilteraudio
+                }
+            }
+
+            contains(JENKINS, YES) {
+                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -s
+            }
         }
     }
 }
@@ -186,7 +210,6 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/misc/db/genericddinterface.h \
     src/misc/db/plaindb.h \
     src/misc/db/encrypteddb.h \
-    src/widget/form/inputpassworddialog.h \
     src/widget/form/setpassworddialog.h \
     src/widget/form/tabcompleter.h \
     src/video/videoframe.h \
@@ -215,6 +238,11 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/chatlog/pixmapcache.h \
     src/widget/callconfirmwidget.h \
     src/widget/systemtrayicon.h \
+    src/widget/systemtrayicon_private.h \
+    src/nexus.h \
+    src/widget/gui.h \
+    src/widget/androidgui.h \
+    src/offlinemsgengine.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -232,6 +260,7 @@ SOURCES += \
     src/widget/groupwidget.cpp \
     src/widget/widget.cpp \
     src/core.cpp \
+    src/coreencryption.cpp \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \
@@ -260,7 +289,6 @@ SOURCES += \
     src/misc/db/genericddinterface.cpp \
     src/misc/db/plaindb.cpp \
     src/misc/db/encrypteddb.cpp \
-    src/widget/form/inputpassworddialog.cpp \
     src/widget/form/setpassworddialog.cpp \
     src/video/netvideosource.cpp \
     src/widget/form/tabcompleter.cpp \
@@ -289,7 +317,11 @@ SOURCES += \
     src/chatlog/documentcache.cpp \
     src/chatlog/pixmapcache.cpp \
     src/widget/callconfirmwidget.cpp \
-    src/widget/systemtrayicon.cpp
+    src/widget/systemtrayicon.cpp \
+    src/nexus.cpp \
+    src/widget/gui.cpp \
+    src/widget/androidgui.cpp \
+    src/offlinemsgengine.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
     HEADERS += src/audiofilterer.h

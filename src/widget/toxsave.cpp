@@ -15,7 +15,7 @@
 */
 
 #include "toxsave.h"
-#include "widget.h"
+#include "gui.h"
 #include "src/core.h"
 #include "src/misc/settings.h"
 #include <QCoreApplication>
@@ -28,12 +28,6 @@ void toxSaveEventHandler(const QByteArray& eventData)
         return;
 
     handleToxSave(eventData);
-}
-
-static bool checkContinue(const QString& title, const QString& msg)
-{
-    QMessageBox::StandardButton resp = QMessageBox::question(Widget::getInstance(), title, msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-    return resp == QMessageBox::Yes;
 }
 
 void handleToxSave(const QString& path)
@@ -59,20 +53,19 @@ void handleToxSave(const QString& path)
 
     if (info.suffix() != "tox")
     {
-        QMessageBox::warning(Widget::getInstance(),
-                             QObject::tr("Ignoring non-Tox file", "popup title"),
-                             QObject::tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
+        GUI::showWarning(QObject::tr("Ignoring non-Tox file", "popup title"),
+                         QObject::tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
         return;
     }
 
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
 
-    if (QFileInfo(profilePath).exists() && !checkContinue(QObject::tr("Profile already exists", "import confirm title"),
+    if (QFileInfo(profilePath).exists() && !GUI::askQuestion(QObject::tr("Profile already exists", "import confirm title"),
             QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
         return;
 
     QFile::copy(path, profilePath);
     // no good way to update the ui from here... maybe we need a Widget:refreshUi() function...
     // such a thing would simplify other code as well I believe
-    QMessageBox::information(Widget::getInstance(), QObject::tr("Profile imported"), QObject::tr("%1.tox was successfully imported").arg(profile));
+    GUI::showInfo(QObject::tr("Profile imported"), QObject::tr("%1.tox was successfully imported").arg(profile));
 }

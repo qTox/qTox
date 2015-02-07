@@ -1,5 +1,6 @@
 #include "callconfirmwidget.h"
-#include "widget.h"
+#include "gui.h"
+#include <assert.h>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -11,7 +12,7 @@
 #include <QPalette>
 
 CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
-    QWidget(Widget::getInstance()), anchor(Anchor),
+    QWidget(GUI::getMainWidget()), anchor(Anchor),
     rectW{120}, rectH{85},
     spikeW{30}, spikeH{15},
     roundedFactor{20},
@@ -43,7 +44,7 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
     connect(buttonBox, &QDialogButtonBox::accepted, this, &CallConfirmWidget::accepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &CallConfirmWidget::rejected);
 
-    connect(Widget::getInstance(), &Widget::resized, this, &CallConfirmWidget::reposition);
+    connect(&GUI::getInstance(), &GUI::resized, this, &CallConfirmWidget::reposition);
 
     layout->setMargin(12);
     layout->addSpacing(spikeH);
@@ -56,7 +57,7 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
 
 void CallConfirmWidget::reposition()
 {
-    Widget* w = Widget::getInstance();
+    QWidget* w = GUI::getMainWidget();
     QPoint pos = anchor->mapToGlobal({(anchor->width()-rectW)/2,anchor->height()})-w->mapToGlobal({0,0});
 
     // We don't want the widget to overflow past the right of the screen

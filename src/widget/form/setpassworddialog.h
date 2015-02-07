@@ -28,7 +28,8 @@ class SetPasswordDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SetPasswordDialog(QWidget *parent = 0);
+    enum ReturnCode {Rejected=QDialog::Rejected, Accepted=QDialog::Accepted, Tertiary};
+    explicit SetPasswordDialog(QString body, QString extraButton, QWidget* parent = 0);
     ~SetPasswordDialog();
     QString getPassword();
 
@@ -37,6 +38,8 @@ private slots:
 
 private:
     Ui::SetPasswordDialog *ui;
+    QString body;
+    static const double reasonablePasswordLength;
 };
 
 #endif // SETPASSWORDDIALOG_H

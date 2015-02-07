@@ -37,14 +37,16 @@
         <file>img/status/dot_online.png</file>
         <file>img/status/dot_online_2x.png</file>
         <file>img/status/dot_online_notification.png</file>
-        <file>img/taskbar/dark/taskbar_online_2x.png</file>
-        <file>img/taskbar/dark/taskbar_idle_2x.png</file>
-        <file>img/taskbar/dark/taskbar_busy_2x.png</file>
-        <file>img/taskbar/dark/taskbar_offline_2x.png</file>
-        <file>img/taskbar/light/taskbar_online_2x.png</file>
-        <file>img/taskbar/light/taskbar_idle_2x.png</file>
-        <file>img/taskbar/light/taskbar_busy_2x.png</file>
-        <file>img/taskbar/light/taskbar_offline_2x.png</file>
+        <file>img/taskbar/dark/taskbar_online.svg</file>
+        <file>img/taskbar/dark/taskbar_away.svg</file>
+        <file>img/taskbar/dark/taskbar_busy.svg</file>
+        <file>img/taskbar/dark/taskbar_offline.svg</file>
+        <file>img/taskbar/dark/taskbar_event.svg</file>
+        <file>img/taskbar/light/taskbar_online.svg</file>
+        <file>img/taskbar/light/taskbar_away.svg</file>
+        <file>img/taskbar/light/taskbar_busy.svg</file>
+        <file>img/taskbar/light/taskbar_offline.svg</file>
+        <file>img/taskbar/light/taskbar_event.svg</file>
         <file>img/transfer.png</file>
         <file>smileys/cylgom/angel.png</file>
         <file>smileys/cylgom/angry.png</file>
@@ -189,10 +191,6 @@
         <file>ui/sendButton/sendButtonPressed.png</file>
         <file>ui/settings/mainContent.css</file>
         <file>ui/settings/mainHead.css</file>
-        <file>ui/statusButton/dot_away.png</file>
-        <file>ui/statusButton/dot_busy.png</file>
-        <file>ui/statusButton/dot_idle.png</file>
-        <file>ui/statusButton/dot_online.png</file>
         <file>ui/statusButton/menu_indicator.png</file>
         <file>ui/statusButton/statusButton.css</file>
         <file>ui/stopFileButton/default.png</file>
