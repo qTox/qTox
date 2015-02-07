@@ -28,7 +28,7 @@ namespace Ui {
 class FileTransferWidget;
 }
 
-class QPropertyAnimation;
+class QVariantAnimation;
 class QPushButton;
 
 class FileTransferWidget : public QWidget
@@ -69,7 +69,8 @@ private:
     ToxFile fileInfo;
     QTime lastTick;
     qint64 lastBytesSent = 0;
-    QPropertyAnimation* colorAnimation = nullptr;
+    QVariantAnimation* colorAnimation = nullptr;
+    QColor color;
 
     static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
     uint8_t meanIndex = 0;

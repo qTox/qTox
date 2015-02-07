@@ -26,7 +26,7 @@
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QPainter>
-#include <QPropertyAnimation>
+#include <QVariantAnimation>
 #include <QDebug>
 
 FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
@@ -34,6 +34,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
     , lastTick(QTime::currentTime())
+    , color(Style::getColor(Style::LightGrey))
 {
     ui->setupUi(this);
 
@@ -47,12 +48,14 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     ui->progressLabel->setText("0kiB/s");
     ui->etaLabel->setText("");
 
-    colorAnimation = new QPropertyAnimation(this, "color");
+    colorAnimation = new QVariantAnimation(this);
     colorAnimation->setDuration(500);
     colorAnimation->setEasingCurve(QEasingCurve::OutCubic);
-    connect(colorAnimation, &QPropertyAnimation::valueChanged, this, [this] { update(); });
+    connect(colorAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant& val) {
+        color = val.value<QColor>();
+        update();
+    });
 
-    setProperty("color", Style::getColor(Style::LightGrey));
     setColor(Style::getColor(Style::LightGrey), false);
 
     connect(Core::getInstance(), &Core::fileTransferInfo, this, &FileTransferWidget::onFileTransferInfo);
@@ -118,7 +121,7 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
 
 void FileTransferWidget::setColor(const QColor &c, bool whiteFont)
 {
-    colorAnimation->setStartValue(property("color").value<QColor>());
+    colorAnimation->setStartValue(color);
     colorAnimation->setEndValue(c);
     colorAnimation->start();
 
@@ -143,7 +146,7 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     // required by Hi-DPI support as border-image doesn't work.
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(QBrush(property("color").value<QColor>()));
+    painter.setBrush(QBrush(color));
     painter.setPen(Qt::NoPen);
 
     qreal s = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
