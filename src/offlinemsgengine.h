@@ -21,7 +21,8 @@
 #include <QSet>
 #include <QMutex>
 #include <QDateTime>
-#include "src/widget/tool/chatactions/messageaction.h"
+#include <QMap>
+#include "src/chatlog/chatmessage.h"
 
 struct Friend;
 class QTimer;
@@ -34,7 +35,7 @@ public:
     virtual ~OfflineMsgEngine();
 
     void dischargeReceipt(int receipt);
-    void registerReceipt(int receipt, int messageID, MessageActionPtr msg, const QDateTime &timestamp = QDateTime::currentDateTime());
+    void registerReceipt(int receipt, int messageID, ChatMessage::Ptr msg, const QDateTime &timestamp = QDateTime::currentDateTime());
 
 public slots:
     void deliverOfflineMsgs();
@@ -43,7 +44,7 @@ public slots:
 
 private:
     struct MsgPtr {
-        MessageActionPtr msg;
+        ChatMessage::Ptr msg;
         QDateTime timestamp;
         int receipt;
     };
