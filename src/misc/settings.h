@@ -59,6 +59,9 @@ public:
     bool getMakeToxPortable() const;
     void setMakeToxPortable(bool newValue);
 
+    bool getAutorun() const;
+    void setAutorun(bool newValue);
+
     bool getAutostartInTray() const;
     void setAutostartInTray(bool newValue);
     

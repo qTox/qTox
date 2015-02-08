@@ -114,11 +114,11 @@
              </item>
              <item row="0" column="1">
               <widget class="QCheckBox" name="lightTrayIcon">
-               <property name="text">
-                <string>Light icon</string>
-               </property>
                <property name="toolTip">
                 <string comment="toolTip for light icon setting">Enable light tray icon.</string>
+               </property>
+               <property name="text">
+                <string>Light icon</string>
                </property>
               </widget>
              </item>
@@ -130,11 +130,11 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <property name="text">
-                <string>Start in tray</string>
-               </property>
                <property name="toolTip">
                 <string comment="toolTip for Start in tray setting">qTox will start minimized in tray.</string>
+               </property>
+               <property name="text">
+                <string>Start in tray</string>
                </property>
               </widget>
              </item>
@@ -146,12 +146,12 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <property name="text">
-                <string>Close to tray</string>
-               </property>
                <property name="toolTip">
                 <string comment="toolTip for close to tray setting">After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</string>
+               </property>
+               <property name="text">
+                <string>Close to tray</string>
                </property>
               </widget>
              </item>
@@ -163,12 +163,12 @@ instead of closing itself.</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <property name="text">
-                <string>Minimize to tray</string>
-               </property>
                <property name="toolTip">
                 <string comment="toolTip for minimize to tray setting">After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</string>
+               </property>
+               <property name="text">
+                <string>Minimize to tray</string>
                </property>
               </widget>
              </item>
@@ -189,11 +189,25 @@ instead of system taskbar.</string>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkUpdates">
-            <property name="text">
-             <string>Check for updates on startup</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QCheckBox" name="cbAutorun">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="text">
+               <string>Start automatically</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkUpdates">
+              <property name="text">
+               <string>Check for updates on startup</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QGridLayout" name="autoLayout">
@@ -202,11 +216,11 @@ instead of system taskbar.</string>
             </property>
             <item row="1" column="1">
              <widget class="QLabel" name="autoSaveFilesDirLabel">
-              <property name="text">
-               <string>Save to:</string>
-              </property>
               <property name="toolTip">
                <string>Set where files will be saved.</string>
+              </property>
+              <property name="text">
+               <string>Save to:</string>
               </property>
              </widget>
             </item>
@@ -228,11 +242,11 @@ instead of system taskbar.</string>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
-               <string>PushButton</string>
-              </property>
               <property name="toolTip">
                <string>Set where files will be saved.</string>
+              </property>
+              <property name="text">
+               <string>PushButton</string>
               </property>
              </widget>
             </item>

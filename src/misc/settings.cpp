@@ -20,6 +20,9 @@
 #include "src/misc/db/plaindb.h"
 #include "src/core.h"
 #include "src/widget/gui.h"
+#ifdef QTOX_PLATFORM_EXT
+#include "src/platform/autorun.h"
+#endif
 
 #include <QFont>
 #include <QApplication>
@@ -543,6 +546,22 @@ void Settings::setMakeToxPortable(bool newValue)
     save(FILENAME); // Commit to the portable file that we don't want to use it
     if (!newValue) // Update the new file right now if not already done
         save();
+}
+
+bool Settings::getAutorun() const
+{
+#ifdef QTOX_PLATFORM_EXT
+    return Platform::getAutorun();
+#else
+    return false;
+#endif
+}
+
+void Settings::setAutorun(bool newValue)
+{
+#ifdef QTOX_PLATFORM_EXT
+    Platform::setAutorun(newValue);
+#endif
 }
 
 bool Settings::getAutostartInTray() const
