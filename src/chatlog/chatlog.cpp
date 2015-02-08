@@ -180,6 +180,16 @@ void ChatLog::mousePressEvent(QMouseEvent* ev)
         if(!isOverSelection(scenePos))
             clearSelection();
     }
+
+#ifdef Q_OS_LINUX
+    if(ev->button() == Qt::MiddleButton)
+    {
+        copySelectedText(true);
+
+        if(!isOverSelection(scenePos))
+            clearSelection();
+    }
+#endif
 }
 
 void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
@@ -528,13 +538,13 @@ void ChatLog::clear()
     updateSceneRect();
 }
 
-void ChatLog::copySelectedText() const
+void ChatLog::copySelectedText(bool toSelectionBuffer) const
 {
     QString text = getSelectedText();
     QClipboard* clipboard = QApplication::clipboard();
 
     if(clipboard && !text.isNull())
-        clipboard->setText(text);
+        clipboard->setText(text, toSelectionBuffer ? QClipboard::Selection : QClipboard::Clipboard);
 }
 
 void ChatLog::setBusyNotification(ChatLine::Ptr notification)

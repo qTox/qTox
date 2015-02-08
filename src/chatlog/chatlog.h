@@ -43,7 +43,7 @@ public:
     void insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines);
     void clearSelection();
     void clear();
-    void copySelectedText() const;
+    void copySelectedText(bool toSelectionBuffer = false) const;
     void setBusyNotification(ChatLine::Ptr notification);
     void setTypingNotification(ChatLine::Ptr notification);
     void setTypingNotificationVisible(bool visible);
