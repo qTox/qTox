@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="smileys/">
         <file>cylgom/angel.png</file>
         <file>cylgom/angry.png</file>
         <file>cylgom/beer.png</file>
@@ -689,14 +689,6 @@
         <file>TwitterEmojiSVG/261d.svg</file>
         <file>TwitterEmojiSVG/2648.svg</file>
         <file>TwitterEmojiSVG/2649.svg</file>
-        <file>TwitterEmojiSVG/2648.svg</file>
-        <file>TwitterEmojiSVG/2649.svg</file>
-        <file>TwitterEmojiSVG/264a.svg</file>
-        <file>TwitterEmojiSVG/264b.svg</file>
-        <file>TwitterEmojiSVG/264c.svg</file>
-        <file>TwitterEmojiSVG/264d.svg</file>
-        <file>TwitterEmojiSVG/264e.svg</file>
-        <file>TwitterEmojiSVG/264f.svg</file>
         <file>TwitterEmojiSVG/264a.svg</file>
         <file>TwitterEmojiSVG/264b.svg</file>
         <file>TwitterEmojiSVG/264c.svg</file>
