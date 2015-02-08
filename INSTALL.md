@@ -72,7 +72,7 @@ sudo pacman -S --needed base-devel qt5 opencv openal libxss
 
 Debian:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopencv-dev libxss-dev
+sudo apt-get install build-essential qt5-qmake qt5-default libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev
 ```
 
 Fedora:
