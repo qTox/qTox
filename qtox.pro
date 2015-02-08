@@ -43,7 +43,8 @@ include(translations/i18n.pri)
 # Build all the qm files now, to make RCC happy
 system($$fromfile(translations/i18n.pri, updateallqm))
 
-RESOURCES += res.qrc
+RESOURCES += res.qrc \
+    smileys/smileys.qrc
 
 GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "built without git")
 DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
