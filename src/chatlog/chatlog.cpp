@@ -489,7 +489,9 @@ QString ChatLog::getSelectedText() const
             if(lastSender != lines[i]->content[0]->getText() && !lines[i]->content[0]->getText().isEmpty())
             {
                 //author changed
-                out += QString(out.isEmpty() ? "[%2] %1:\n" : "\n[%2] %1:\n").arg(lines[i]->content[0]->getText(), lines[i]->content[2]->getText());
+                QString timestamp = lines[i]->content[2]->getText().isEmpty() ? tr("pending") : lines[i]->content[2]->getText();
+                QString msg = lines[i]->content[0]->getText();
+                out += QString(out.isEmpty() ? "[%2] %1:\n" : "\n[%2] %1:\n").arg(msg, timestamp);
                 lastSender = lines[i]->content[0]->getText();
             }
 
