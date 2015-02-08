@@ -99,6 +99,17 @@ ChatLog::ChatLog(QWidget* parent)
     connect(workerTimer, &QTimer::timeout, this, &ChatLog::onWorkerTimeout);
 }
 
+ChatLog::~ChatLog()
+{
+    // Drop ownership of items of type ChatLineContentType
+    // as they are owned by ChatLine
+    for(QGraphicsItem* item : items())
+    {
+        if(item->type() == ChatLineContent::ChatLineContentType)
+            scene->removeItem(item);
+    }
+}
+
 void ChatLog::clearSelection()
 {
     if(selectionMode == None)
