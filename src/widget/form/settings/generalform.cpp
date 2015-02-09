@@ -52,7 +52,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());
 #if defined(__APPLE__) && defined(__MACH__)
-    bodyUI->cbAutorun->setEnabled(False);
+    bodyUI->cbAutorun->setEnabled(false);
 #endif
 
     bool showSystemTray = Settings::getInstance().getShowSystemTray();
