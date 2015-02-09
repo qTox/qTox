@@ -185,11 +185,11 @@ void ChatLine::layout(qreal w, QPointF scenePos)
 
     qreal maxVOffset = 0.0;
     qreal xOffset = 0.0;
+    qreal xPos[content.size()];
+
 
     for(int i = 0; i < static_cast<int>(content.size()); ++i)
     {
-        maxVOffset = qMax(maxVOffset, content[i]->getAscent());
-
         // calculate the effective width of the current column
         qreal width;
         if(format[i].policy == ColumnFormat::FixedSize)
@@ -216,21 +216,20 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         }
 
         // reposition
-        content[i]->setPos(scenePos.x() + xOffset + xAlign, scenePos.y());
+        xPos[i] = scenePos.x() + xOffset + xAlign;
 
         xOffset += width + columnSpacing;
+        maxVOffset = qMax(maxVOffset, content[i]->getAscent());
     }
 
     for(int i = 0; i < static_cast<int>(content.size()); ++i)
     {
         // calculate vertical alignment
         // vertical alignment may depend on width, so we do it in a second pass
-        qreal yOffset = 0.0;
-
-        yOffset = maxVOffset - content[i]->getAscent();
+        qreal yOffset = maxVOffset - content[i]->getAscent();
 
         // reposition
-        content[i]->setPos(content[i]->pos().x(), content[i]->pos().y() + yOffset);
+        content[i]->setPos(xPos[i], scenePos.y() + yOffset);
     }
 
     updateBBox();
