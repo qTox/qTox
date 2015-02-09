@@ -101,13 +101,15 @@ ChatLog::ChatLog(QWidget* parent)
 
 ChatLog::~ChatLog()
 {
-    // Drop ownership of items of type ChatLineContentType
-    // as they are owned by ChatLine
-    for(QGraphicsItem* item : items())
-    {
-        if(item->type() == ChatLineContent::ChatLineContentType)
-            scene->removeItem(item);
-    }
+    // Remove chatlines from scene
+    for(ChatLine::Ptr l : lines)
+        l->removeFromScene();
+
+    if(busyNotification)
+        busyNotification->removeFromScene();
+
+    if(typingNotification)
+        typingNotification->removeFromScene();
 }
 
 void ChatLog::clearSelection()
