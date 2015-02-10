@@ -347,7 +347,7 @@ void Widget::onAvatarClicked()
     QString filename = QFileDialog::getOpenFileName(this,
         tr("Choose a profile picture"),
         QDir::homePath(),
-        tr("Images (*.png *.jpg)"));//TODO: cover all types of images QPixmap can use reliably
+        tr("Images (*.bmp *.jpg *.jpeg *.png *.pmb *.pgm *.ppm *.xbm *.xpm)"));
     if (filename.isEmpty())
         return;
     QFile file(filename);
