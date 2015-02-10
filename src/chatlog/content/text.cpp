@@ -47,8 +47,6 @@ void Text::setText(const QString& txt)
 {
     text = txt;
     dirty = true;
-
-    regenerate();
 }
 
 void Text::setWidth(qreal w)

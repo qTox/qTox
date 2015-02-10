@@ -403,19 +403,33 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     if(newLines.isEmpty())
         return;
 
-    // move all lines down by n
-    int n = newLines.size();
-    for(ChatLine::Ptr l : lines)
-        l->setRow(l->getRow() + n);
+    QGraphicsScene::ItemIndexMethod oldIndexMeth = scene->itemIndexMethod();
+    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
-    // add the new line
+    // alloc space for old and new lines
+    QVector<ChatLine::Ptr> combLines;
+    combLines.reserve(newLines.size() + lines.size());
+
+    // add the new lines
+    int i = 0;
     for(ChatLine::Ptr l : newLines)
     {
         l->addToScene(scene);
-        l->setRow(--n);
         l->visibilityChanged(false);
-        lines.prepend(l);
+        l->setRow(i++);
+        combLines.push_back(l);
     }
+
+    // add the old lines
+    for(ChatLine::Ptr l : lines)
+    {
+        l->setRow(i++);
+        combLines.push_back(l);
+    }
+
+    lines = combLines;
+
+    scene->setItemIndexMethod(oldIndexMeth);
 
     // redo layout
     startResizeWorker();
