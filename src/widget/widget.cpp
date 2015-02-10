@@ -344,7 +344,10 @@ QString Widget::getUsername()
 
 void Widget::onAvatarClicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath());
+    QString filename = QFileDialog::getOpenFileName(this,
+        tr("Choose a profile picture"),
+        QDir::homePath(),
+        tr("Images (*.png *.jpg)"));//TODO: cover all types of images QPixmap can use reliably
     if (filename.isEmpty())
         return;
     QFile file(filename);
