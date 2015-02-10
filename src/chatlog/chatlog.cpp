@@ -182,16 +182,6 @@ void ChatLog::mousePressEvent(QMouseEvent* ev)
         if(!isOverSelection(scenePos))
             clearSelection();
     }
-
-#ifdef Q_OS_LINUX
-    if(ev->button() == Qt::MiddleButton)
-    {
-        copySelectedText(true);
-
-        if(!isOverSelection(scenePos))
-            clearSelection();
-    }
-#endif
 }
 
 void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
@@ -312,6 +302,10 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
             updateMultiSelectionRect();
         }
     }
+
+#ifdef Q_OS_LINUX
+    copySelectedText(true);
+#endif
 }
 
 //Much faster than QGraphicsScene::itemAt()!
