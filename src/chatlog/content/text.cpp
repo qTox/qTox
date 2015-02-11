@@ -35,6 +35,7 @@ Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwTe
 {
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton);
+    setAcceptHoverEvents(true);
 }
 
 Text::~Text()
@@ -208,6 +209,16 @@ void Text::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     // open anchor in browser
     if(!anchor.isEmpty())
         QDesktopServices::openUrl(anchor);
+}
+
+void Text::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    QString anchor = doc->documentLayout()->anchorAt(event->pos());
+
+    if(!anchor.isEmpty())
+        setCursor(QCursor(Qt::PointingHandCursor));
+    else
+        setCursor(QCursor());
 }
 
 QString Text::getText() const
