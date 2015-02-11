@@ -245,9 +245,6 @@ instead of system taskbar.</string>
               <property name="toolTip">
                <string>Set where files will be saved.</string>
               </property>
-              <property name="text">
-               <string>PushButton</string>
-              </property>
              </widget>
             </item>
             <item row="0" column="2">

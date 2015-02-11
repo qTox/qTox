@@ -146,7 +146,7 @@ but new contacts need to know your new Tox ID to be able to add you.</string>
             <item>
              <widget class="QLineEdit" name="nospamLineEdit">
               <property name="inputMask">
-               <string>HHHHHHHH</string>
+               <string notr="true">HHHHHHHH</string>
               </property>
              </widget>
             </item>
