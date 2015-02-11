@@ -298,71 +298,71 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <translation>Carica cronologia chat...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="173"/>
+        <location filename="../src/widget/form/chatform.cpp" line="181"/>
         <source>Send a file</source>
         <translation>Invia un file</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="181"/>
-        <location filename="../src/widget/form/chatform.cpp" line="752"/>
+        <location filename="../src/widget/form/chatform.cpp" line="189"/>
+        <location filename="../src/widget/form/chatform.cpp" line="760"/>
         <source>File not read</source>
         <translation>Impossibile leggere il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="181"/>
-        <location filename="../src/widget/form/chatform.cpp" line="752"/>
+        <location filename="../src/widget/form/chatform.cpp" line="189"/>
+        <location filename="../src/widget/form/chatform.cpp" line="760"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translation>qTox non è riuscito ad aprire %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="186"/>
-        <location filename="../src/widget/form/chatform.cpp" line="757"/>
+        <location filename="../src/widget/form/chatform.cpp" line="194"/>
+        <location filename="../src/widget/form/chatform.cpp" line="765"/>
         <source>Bad Idea</source>
         <translation>Pessima idea</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="186"/>
-        <location filename="../src/widget/form/chatform.cpp" line="757"/>
+        <location filename="../src/widget/form/chatform.cpp" line="194"/>
+        <location filename="../src/widget/form/chatform.cpp" line="765"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>Stai cercando di inviare un file speciale (sequenziale), questo non funzionerà!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="304"/>
+        <location filename="../src/widget/form/chatform.cpp" line="312"/>
         <source>%1 is calling</source>
         <translation>%1 ti sta chiamando</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="366"/>
+        <location filename="../src/widget/form/chatform.cpp" line="374"/>
         <source>%1 stopped calling</source>
         <translation>%1 ha fermato la chiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="415"/>
+        <location filename="../src/widget/form/chatform.cpp" line="423"/>
         <source>Calling to %1</source>
         <translation>Stai chiamando %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="724"/>
+        <location filename="../src/widget/form/chatform.cpp" line="732"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Invio del file &quot;%1&quot; fallito</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="872"/>
+        <location filename="../src/widget/form/chatform.cpp" line="880"/>
         <source>Call with %1 ended. %2</source>
         <translation>Chiamata con %1 terminata. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="892"/>
+        <location filename="../src/widget/form/chatform.cpp" line="900"/>
         <source>Call duration: </source>
         <translation>Durata chiamata: </translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="915"/>
+        <location filename="../src/widget/form/chatform.cpp" line="923"/>
         <source>is typing...</source>
         <translation>sta scrivendo...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="508"/>
+        <location filename="../src/widget/form/chatform.cpp" line="516"/>
         <source>Call rejected</source>
         <translation>Chiamata rifiutata</translation>
     </message>
@@ -754,61 +754,61 @@ nella traybar invece che nella taskbar.</translation>
         <translation>Avvia automaticamente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="262"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="259"/>
         <source>Set to 0 to disable</source>
         <translation>Imposta 0 per disabilitare</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="287"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="284"/>
         <source>Auto away after (0 to disable):</source>
         <translation>Mostra come assente dopo (0 per disabilitare):</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="299"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
         <source>Chat</source>
         <translation>Chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="302"/>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
         <translation>Mostra sempre le notifiche per i nuovi messaggi nelle chat di gruppo.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="308"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
         <source>Group chats always notify</source>
         <translation>Usa notifiche per chat di gruppo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="322"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="319"/>
         <source>On new message:</source>
         <translation>Quando arriva un nuovo messaggio:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="334"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="331"/>
         <source>Show qTox&apos;s window when you receive new message.</source>
         <comment>tooltip for Show window setting</comment>
         <translation>Porta la finestra di qTox in primo piano quando arriva un nuovo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="337"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="334"/>
         <source>Show window</source>
         <translation>Mostra finestra</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="347"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
         <source>Focus window</source>
         <translation>Dai il focus alla finestra</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="369"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="366"/>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they will appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
         <translation>I messaggi che invii ai contatti offline saranno inviati quando appaiono online.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
         <source>Your contact list will be shown in compact mode.
 qTox&apos;s restart needed.</source>
         <comment>toolTip for compact layout setting</comment>
@@ -816,54 +816,54 @@ qTox&apos;s restart needed.</source>
 Richiede riavvio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="384"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="381"/>
         <source>Compact contact list</source>
         <translation>Usa lista contatti compatta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="424"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="421"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>Emoticons:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="498"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="495"/>
         <source>Emoticon size:</source>
         <translation>Dimensione:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="530"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="527"/>
         <source>Style:</source>
         <translation>Stile:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="547"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="544"/>
         <source>Theme color:</source>
         <translation>Colore tema:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="564"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="561"/>
         <source>Timestamp format:</source>
         <translation>Formato data/ora:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="586"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="583"/>
         <source>Connection Settings</source>
         <translation>Impostazioni Connessione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="610"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="607"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Abilita IPv6 (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="644"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="641"/>
         <source>Proxy type:</source>
         <translation>Proxy:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="651"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="648"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>Indirizzo:</translation>
@@ -884,17 +884,17 @@ Richiede riavvio.</translation>
         <translation>Minimizza nella traybar</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="315"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="312"/>
         <source>Show contacts&apos; status changes</source>
         <translation>Mostra quando i contatti cambiano stato</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="373"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="370"/>
         <source>Faux offline messaging</source>
         <translation>Usa falsi messaggi offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="268"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
         <source> minutes</source>
         <translation> minuti</translation>
     </message>
@@ -910,71 +910,66 @@ Richiede riavvio.</translation>
         <translation>Accetta automaticamente i trasferimenti di files</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="249"/>
-        <source>PushButton</source>
-        <translation>Sfoglia</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="281"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
         <translation>Il tuo stato sarà cambiato in &quot;Assente&quot; dopo il periodo di inattività indicato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="341"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
         <translation>Dai il focus alla finestra di qTox quando arriva un nuovo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="400"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
         <source>Theme</source>
         <translation>Impostazioni Tema</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="406"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="403"/>
         <source>Use emoticons</source>
         <translation>Usa emoticons</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="514"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="511"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="600"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="597"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Disabilitando questo sarà possibile usare qTox con Tor. Tuttavia verrà aggiunto carico alla rete Tox, quindi disabilitare solo se necessario.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="603"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="600"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Abilita UDP (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="675"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="672"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="680"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="677"/>
         <source>SOCKS5</source>
         <translation>SOCKS 5</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="685"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="682"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="661"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="658"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Porta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="695"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="692"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Riconnetti</translation>
@@ -1438,6 +1433,7 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
         <source>Old encrypted chat history</source>
         <comment>popup title</comment>
         <translation>Vecchia cronologia chat</translation>
@@ -1445,51 +1441,59 @@ I profili non contengono la cronologia messaggi.</translation>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
         <source>There is currently an unused encrypted chat history, but the password you just entered doesn&apos;t match.
-Would you like to try again?
-Canceling will delete the old history and set the password to what you just entered.</source>
+
+If you don&apos;t care about the old history, you may click Ok to delete it and use the password you just entered.
+Otherwise, hit cancel to try again.</source>
         <comment>This happens when enabling encryption after previously &quot;Disabling History&quot;</comment>
         <translation>C&apos;è una cronologia chat criptata non in uso, ma la password che hai inserito non corrisponde.
-Vuoi riprovare?
-Annullando, la vecchia cronologia chat sarà eliminata e la password impostata con quella appena inserita.</translation>
+
+Se non ti interessa della cronologia precedente, puoi scegliere &quot;Ok&quot; per eliminarla ed usare la password che hai appena inserito.
+Scegli &quot;Annulla&quot; per riprovare.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="146"/>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="163"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
+        <source>Are you absolutely sure you want to lose the unused encrypted chat history?</source>
+        <comment>secondary popup</comment>
+        <translation>Sei sicuro di voler eliminare la cronologia chat criptata non in uso?</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="147"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="164"/>
         <source>Old encrypted chat history</source>
         <comment>title</comment>
         <translation>Vecchia cronologia chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="147"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="148"/>
         <source>Would you like to decrypt your chat history?
 Otherwise it will be deleted.</source>
         <translation>Vuoi decriptare la tua cronologia chat?
 Altrimenti sarà eliminata.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="164"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="165"/>
         <source>Are you sure you want to lose your entire chat history?</source>
         <translation>Sei sicuro di voler perdere tutta la cronologia chat?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="196"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="197"/>
         <source>Please set your new data file password.</source>
         <translation>Inserisci la nuova password per il file dati.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="198"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="199"/>
         <source>Use chat history password</source>
         <comment>pushbutton text</comment>
         <translation>Usa la password della cronologia chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="241"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
         <source>Decrypt your data file</source>
         <comment>title</comment>
         <translation>Decripta il tuo file dati</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="241"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
         <source>Would you like to decrypt your data file?</source>
         <translation>Vuoi decriptare il tuo file dati?</translation>
     </message>
@@ -1562,11 +1566,6 @@ but new contacts need to know your new Tox ID to be able to add you.</source>
 Lo si deve modificare quando si ritiene che si stanno ricevendo troppe richiste d&apos;amicizia da persone sconosciute.
 Quando modifichi il valore &quot;nospam&quot;, i contatti che hai già aggiunto potranno continuare a comunicare con te,
 ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="149"/>
-        <source>HHHHHHHH</source>
-        <translation>HHHHHHHH</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="156"/>
