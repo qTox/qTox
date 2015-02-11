@@ -37,6 +37,7 @@ SmileyPack::SmileyPack()
     connect(&Settings::getInstance(), &Settings::smileyPackChanged, this, &SmileyPack::onSmileyPackChanged);
 }
 
+
 SmileyPack& SmileyPack::getInstance()
 {
     static SmileyPack smileyPack;
@@ -198,7 +199,8 @@ void SmileyPack::cacheSmiley(const QString &name)
 {
     // The -1 is to avoid having the space for descenders under images move the text down
     // We can't remove it because Qt doesn't support CSS display or vertical-align
-    int fontHeight = QFontInfo(Style::getFont(Style::Big)).pixelSize() - 1;
+    // int fontHeight = QFontInfo(Style::getFont(Style::Big)).pixelSize() - 1;
+    int fontHeight = Settings::getInstance().getEmojiFontPointSize();
     QSize size(fontHeight, fontHeight);
     QString filename = QDir(path).filePath(name);
     QImage img(filename);
@@ -232,5 +234,7 @@ QByteArray SmileyPack::getCachedSmiley(const QString &key)
 
 void SmileyPack::onSmileyPackChanged()
 {
+  
     load(Settings::getInstance().getSmileyPack());
+    
 }

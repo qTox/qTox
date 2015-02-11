@@ -221,6 +221,7 @@ void GeneralForm::onStyleSelected(QString style)
 void GeneralForm::onEmoticonSizeChanged()
 {
     Settings::getInstance().setEmojiFontPointSize(bodyUI->emoticonSize->value());
+    SmileyPack::getInstance().load(Settings::getInstance().getSmileyPack());
 }
 
 void GeneralForm::onTimestampSelected(int index)
