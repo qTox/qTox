@@ -58,6 +58,9 @@ public:
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
 
+signals:
+    void selectionChanged();
+
 protected:
     QRectF calculateSceneRect() const;
     QRect getVisibleRect() const;

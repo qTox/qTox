@@ -97,6 +97,14 @@ ChatLog::ChatLog(QWidget* parent)
     workerTimer->setSingleShot(false);
     workerTimer->setInterval(5);
     connect(workerTimer, &QTimer::timeout, this, &ChatLog::onWorkerTimeout);
+
+    // selection
+    connect(this, &ChatLog::selectionChanged, this, [this]() {
+        copyAction->setEnabled(hasTextToBeCopied());
+#ifdef Q_OS_LINUX
+        copySelectedText(true);
+#endif
+    });
 }
 
 ChatLog::~ChatLog()
@@ -126,7 +134,7 @@ void ChatLog::clearSelection()
     selClickedRow = -1;
 
     selectionMode = None;
-    copyAction->setEnabled(false);
+    emit selectionChanged();
 
     updateMultiSelectionRect();
 }
@@ -234,7 +242,6 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                 content->selectionStarted(sceneClickPos);
 
                 selectionMode = Precise;
-                copyAction->setEnabled(true);
 
                 // ungrab mouse grabber
                 if(scene->mouseGrabberItem())
@@ -247,7 +254,6 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                 selLastRow = selClickedRow;
 
                 selectionMode = Multi;
-                copyAction->setEnabled(true);
             }
         }
 
@@ -301,11 +307,9 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
             updateMultiSelectionRect();
         }
-    }
 
-#ifdef Q_OS_LINUX
-    copySelectedText(true);
-#endif
+        emit selectionChanged();
+    }
 }
 
 //Much faster than QGraphicsScene::itemAt()!
@@ -476,6 +480,8 @@ void ChatLog::mouseDoubleClickEvent(QMouseEvent *ev)
         selFirstRow = content->getRow();
         selLastRow = content->getRow();
         selectionMode = Precise;
+
+        emit selectionChanged();
     }
 }
 
@@ -607,7 +613,7 @@ void ChatLog::selectAll()
     selFirstRow = 0;
     selLastRow = lines.size()-1;
 
-    copyAction->setEnabled(true);
+    emit selectionChanged();
     updateMultiSelectionRect();
 }
 
@@ -644,7 +650,7 @@ void ChatLog::checkVisibility()
     std::sort(visibleLines.begin(), visibleLines.end(), ChatLine::lessThanRowIndex);
 
     //if(!visibleLines.empty())
-    //  qDebug() << "visible from " << visibleLines.first()->getRowIndex() << "to " << visibleLines.last()->getRowIndex() << " total " << visibleLines.size();
+    //  qDebug() << "visible from " << visibleLines.first()->getRow() << "to " << visibleLines.last()->getRow() << " total " << visibleLines.size();
 }
 
 void ChatLog::scrollContentsBy(int dx, int dy)
