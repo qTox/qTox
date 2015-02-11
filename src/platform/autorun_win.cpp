@@ -18,7 +18,7 @@
 #ifdef Q_OS_WIN32
 #include "src/platform/autorun.h"
 #include "src/misc/settings.h"
-#include <Windows.h>
+#include <windows.h>
 #include <string>
 
 namespace Platform
