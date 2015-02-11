@@ -156,16 +156,24 @@ void ChatForm::onSendTriggered()
 
 void ChatForm::onTextEditChanged()
 {
-    bool isNowTyping;
     if (!Settings::getInstance().isTypingNotificationEnabled())
-        isNowTyping = false;
-    else
-        isNowTyping = msgEdit->toPlainText().length() > 0;
+    {
+        if (isTyping)
+            Core::getInstance()->sendTyping(f->getFriendID(), false);
+        isTyping = false;
+        return;
+    }
 
-    if (isNowTyping)
+    if (msgEdit->toPlainText().length() > 0)
+    {
         typingTimer.start(3000);
-
-    Core::getInstance()->sendTyping(f->getFriendID(), isNowTyping);
+        if (!isTyping)
+            Core::getInstance()->sendTyping(f->getFriendID(), (isTyping = true));
+    }
+    else
+    {
+        Core::getInstance()->sendTyping(f->getFriendID(), (isTyping = false));
+    }
 }
 
 void ChatForm::onAttachClicked()

@@ -122,6 +122,7 @@ private:
     QString secondsToDHMS(quint32 duration);
     CallConfirmWidget *callConfirm;
     void enableCallButtons();    
+    bool isTyping;
 };
 
 #endif // CHATFORM_H
