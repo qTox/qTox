@@ -496,22 +496,16 @@ QString ChatLog::getSelectedText() const
         // build a nicely formatted message
         QString out;
 
-        QString lastSender;
         for(int i=selFirstRow; i<=selLastRow; ++i)
         {
             if(lines[i]->content[1]->getText().isEmpty())
                 continue;
 
-            if(lastSender != lines[i]->content[0]->getText() && !lines[i]->content[0]->getText().isEmpty())
-            {
-                //author changed
-                QString timestamp = lines[i]->content[2]->getText().isEmpty() ? tr("pending") : lines[i]->content[2]->getText();
-                QString msg = lines[i]->content[0]->getText();
-                out += QString(out.isEmpty() ? "[%2] %1:\n" : "\n[%2] %1:\n").arg(msg, timestamp);
-                lastSender = lines[i]->content[0]->getText();
-            }
+            QString timestamp = lines[i]->content[2]->getText().isEmpty() ? tr("pending") : lines[i]->content[2]->getText();
+            QString author = lines[i]->content[0]->getText();
+            QString msg = lines[i]->content[1]->getText();
 
-            out += lines[i]->content[1]->getText();
+            out += QString(out.isEmpty() ? "[%2] %1:\n%3" : "\n[%2] %1:\n%3").arg(author, timestamp, msg);
 
             if(i != selLastRow)
                 out += "\n";
