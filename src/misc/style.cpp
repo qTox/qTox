@@ -25,6 +25,8 @@
 #include <QWidget>
 #include <QStyle>
 #include <QFontInfo>
+#include <QSvgRenderer>
+#include <QPainter>
 
 // helper functions
 QFont appFont(int pixelSize, int weight)
@@ -200,4 +202,14 @@ void Style::setThemeColor(QColor color)
 void Style::applyTheme()
 {
     GUI::reloadTheme();
+}
+
+QPixmap Style::scaleSvgImage(const QString& path, uint32_t width, uint32_t height)
+{
+    QSvgRenderer render(path);
+    QPixmap pixmap(width, height);
+    pixmap.fill(QColor(0, 0, 0, 0));
+    QPainter painter(&pixmap);
+    render.render(&painter, pixmap.rect());
+    return pixmap;
 }

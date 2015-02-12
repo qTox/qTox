@@ -79,7 +79,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     
     bodyUI->toxGroup->layout()->addWidget(toxId);
 
-    profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.png");
+    profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
     profilePicture->setClickable(true);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));

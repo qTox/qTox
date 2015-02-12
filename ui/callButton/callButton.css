@@ -1,72 +1,83 @@
 QPushButton#green
 {
-    background-color: transparent;
-    background-image: url(":/ui/callButton/callButton.png");
-    background-repeat: none;    
+    background-color: #6bc260;
+    background-image: url(":/ui/callButton/callButton.svg");
+    background-repeat: none;
+    background-position: center;
     border: none;
+    border-radius: 5px;
     width: 50px;
     height: 40px;
 }
 
 QPushButton#green:hover
 {
-   background-image: url(":/ui/callButton/callButtonHover.png");
+    background-color: #79c76f;
 }
 
 QPushButton#green:pressed
 {
-   background-image: url(":/ui/callButton/callButtonPressed.png");
+    background-color: #51b244;
 }
 
 QPushButton#red
 {
-    background-color: transparent;
-    background-image: url(":/ui/callButton/callButtonRed.png");
-    background-repeat: none;    
+    background-color: #c84e4e;
+    background-image: url(":/ui/callButton/callButton.svg");
+    background-repeat: none;
+    background-position: center;
     border: none;
+    border-radius: 5px;
     width: 50px;
     height: 40px;
 }
+
 QPushButton#red:hover
 {
-   background-image: url(":/ui/callButton/callButtonRedHover.png");
+    background-color: #e87474;
 }
 
 QPushButton#red:pressed
 {
-   background-image: url(":/ui/callButton/callButtonRedPressed.png");
+    background-color: #df3b3b;
 }
 
 QPushButton#yellow
 {
-    background-color: transparent;
-    background-image: url(":/ui/callButton/callButtonYellow.png");
-    background-repeat: none;    
+    background-color: #e6e465;
+    background-image: url(":/ui/callButton/callButton.svg");
+    background-repeat: none;
+    background-position: center;
     border: none;
+    border-radius: 5px;
     width: 50px;
     height: 40px;
 }
+
 QPushButton#yellow:hover
 {
-   background-image: url(":/ui/callButton/callButtonYellowHover.png");
+    background-color: #e8e774;
 }
 
 QPushButton#yellow:pressed
 {
-   background-image: url(":/ui/callButton/callButtonYellowPressed.png");
+    background-color: #e3e155;
 }
 
 QPushButton#grey
 {
-    background-color: transparent;
-    background-image: url(":/ui/callButton/callButtonDisabled.png");
-    background-repeat: none;    
+    background-color: #919191;
+    background-image: url(":/ui/callButton/callButton.svg");
+    background-repeat: none;
+    background-position: center;
     border: none;
+    border-radius: 5px;
     width: 50px;
     height: 40px;
 }
 
-QPushButton:focus {
+QPushButton:focus
+{
     outline: none;
 }
 
