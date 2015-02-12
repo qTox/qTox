@@ -776,7 +776,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            historyMessages.prepend(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime::currentDateTime()));
+            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime::currentDateTime()));
         }
 
         // Show each messages
@@ -812,7 +812,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                 getOfflineMsgEngine()->registerReceipt(rec, it.id, msg);
             }
         }
-        historyMessages.prepend(msg);
+        historyMessages.append(msg);
     }
 
     previousId = storedPrevId;
