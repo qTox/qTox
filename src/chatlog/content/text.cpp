@@ -213,6 +213,9 @@ void Text::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void Text::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
+    if(!doc)
+        return;
+
     QString anchor = doc->documentLayout()->anchorAt(event->pos());
 
     if(!anchor.isEmpty())
