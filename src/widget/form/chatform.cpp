@@ -105,6 +105,7 @@ ChatForm::~ChatForm()
 {
     delete netcam;
     delete callConfirm;
+    delete offlineEngine;
 }
 
 void ChatForm::setStatusMessage(QString newMessage)

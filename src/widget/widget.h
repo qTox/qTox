@@ -132,6 +132,7 @@ private slots:
     void onEventIconTick();
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
+    void processOfflineMsgs();
 
 private:
     void init();

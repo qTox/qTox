@@ -23,19 +23,16 @@
 #include <QTimer>
 
 const int OfflineMsgEngine::offlineTimeout = 2000;
-QSet<OfflineMsgEngine*> OfflineMsgEngine::engines;
 QMutex OfflineMsgEngine::globalMutex;
 
 OfflineMsgEngine::OfflineMsgEngine(Friend *frnd) :
     mutex(QMutex::Recursive),
     f(frnd)
 {
-    engines.insert(this);
 }
 
 OfflineMsgEngine::~OfflineMsgEngine()
 {
-    engines.remove(this);
 }
 
 void OfflineMsgEngine::dischargeReceipt(int receipt)
@@ -105,17 +102,4 @@ void OfflineMsgEngine::removeAllReciepts()
 
     receipts.clear();
     undeliveredMsgs.clear();
-}
-
-void OfflineMsgEngine::processAllMsgs()
-{
-    if (globalMutex.tryLock())
-    {
-        for (auto &it : engines)
-        {
-            it->deliverOfflineMsgs();
-        }
-
-        globalMutex.unlock();
-    }
 }

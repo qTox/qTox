@@ -225,7 +225,7 @@ void Widget::init()
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
-    connect(offlineMsgTimer, &QTimer::timeout, &OfflineMsgEngine::processAllMsgs);
+    connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
 
     addFriendForm->show(*ui);
 
@@ -1123,6 +1123,20 @@ void Widget::onSplitterMoved(int pos, int index)
     Q_UNUSED(pos);
     Q_UNUSED(index);
     saveSplitterGeometry();
+}
+
+void Widget::processOfflineMsgs()
+{
+    if (OfflineMsgEngine::globalMutex.tryLock())
+    {
+        QList<Friend*> frnds = FriendList::getAllFriends();
+        for (Friend *f : frnds)
+        {
+            f->getChatForm()->getOfflineMsgEngine()->deliverOfflineMsgs();
+        }
+
+        OfflineMsgEngine::globalMutex.unlock();
+    }
 }
 
 void Widget::clearAllReceipts()

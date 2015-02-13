@@ -32,6 +32,7 @@ class OfflineMsgEngine : public QObject
 public:
     OfflineMsgEngine(Friend *);
     virtual ~OfflineMsgEngine();
+    static QMutex globalMutex;
 
     void dischargeReceipt(int receipt);
     void registerReceipt(int receipt, int messageID, MessageActionPtr msg, const QDateTime &timestamp = QDateTime::currentDateTime());
@@ -39,7 +40,6 @@ public:
 public slots:
     void deliverOfflineMsgs();
     void removeAllReciepts();
-    static void processAllMsgs();
 
 private:
     struct MsgPtr {
@@ -53,9 +53,7 @@ private:
     QHash<int, int> receipts;
     QMap<int, MsgPtr> undeliveredMsgs;
 
-    static QSet<OfflineMsgEngine*> engines;
     static const int offlineTimeout;
-    static QMutex globalMutex;
 };
 
 #endif // OFFLINEMSGENGINE_H
