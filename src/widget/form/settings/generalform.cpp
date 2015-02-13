@@ -221,6 +221,7 @@ void GeneralForm::onStyleSelected(QString style)
 void GeneralForm::onEmoticonSizeChanged()
 {
     Settings::getInstance().setEmojiFontPointSize(bodyUI->emoticonSize->value());
+    SmileyPack::getInstance().load(Settings::getInstance().getSmileyPack());
 }
 
 void GeneralForm::onTimestampSelected(int index)
@@ -319,7 +320,7 @@ void GeneralForm::reloadSmiles()
     for (int i = 0; i < emoticons.size(); i++)
         smiles.push_front(emoticons.at(i).first());
 
-    int pixSize = 30;
+    int pixSize = Settings::getInstance().getEmojiFontPointSize();
     bodyUI->smile1->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[0]).pixmap(pixSize, pixSize));
     bodyUI->smile2->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[1]).pixmap(pixSize, pixSize));
     bodyUI->smile3->setPixmap(SmileyPack::getInstance().getAsIcon(smiles[2]).pixmap(pixSize, pixSize));
