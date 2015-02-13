@@ -7,14 +7,14 @@
 <a name="dependencies" />
 ##Dependencies
 
-| Name         | Version     | Modules                                   |
-|--------------|-------------|------------------------------------------ |
-| Qt           | >= 5.2.0    | core, gui, network, sql, svg, widget, xml |
-| GCC/MinGW    | >= 4.8      | C++11 enabled                             |
-| Tox Core     | most recent | core, av                                  |
-| OpenCV       | >= 2.4.9    | core, highgui, imgproc                    |
-| OpenAL Soft  | >= 1.16.0   |                                           |
-| filter_audio | most recent |                                           |
+| Name         | Version     | Modules                                           |
+|--------------|-------------|-------------------------------------------------- |
+| Qt           | >= 5.2.0    | core, gui, network, opengl, sql, svg, widget, xml |
+| GCC/MinGW    | >= 4.8      | C++11 enabled                                     |
+| Tox Core     | most recent | core, av                                          |
+| OpenCV       | >= 2.4.9    | core, highgui, imgproc                            |
+| OpenAL Soft  | >= 1.16.0   |                                                   |
+| filter_audio | most recent |                                                   |
 
 
 <a name="linux" />
@@ -72,13 +72,13 @@ sudo pacman -S --needed base-devel qt5 opencv openal libxss
 
 Debian:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev
+sudo apt-get install build-essential qt5-qmake qt5-default libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev
 ```
 
 Fedora:
 ```bash
 yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator opencv-devel openal-soft-devel libXScrnSaver-devel
+yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel
 ```
 
 Slackware:
