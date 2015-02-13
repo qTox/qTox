@@ -6,6 +6,7 @@ TRANSLATIONS = translations/es.ts \
                translations/fi.ts \
                translations/fr.ts \
                translations/it.ts \
+               translations/nl.ts \
                translations/lt.ts \
                translations/mannol.ts \
                translations/pirate.ts \
