@@ -81,10 +81,5 @@ Friend* FriendList::findFriend(const ToxID& userId)
 
 QList<Friend*> FriendList::getAllFriends()
 {
-    QList<Friend*> res;
-
-    for (auto it : friendList)
-        res.append(it);
-
-    return res;
+    return friendList.values();
 }
