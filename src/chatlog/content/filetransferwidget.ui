@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>532</width>
-    <height>90</height>
+    <height>238</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,6 +78,12 @@
           <width>80</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
         </property>
         <property name="text">
          <string>[preview]</string>
@@ -251,27 +257,14 @@
            </property>
            <property name="iconSize">
             <size>
-             <width>25</width>
-             <height>28</height>
+             <width>32</width>
+             <height>32</height>
             </size>
            </property>
            <property name="flat">
             <bool>true</bool>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>92</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item>
           <widget class="QPushButton" name="bottomButton">
@@ -286,14 +279,27 @@
            </property>
            <property name="iconSize">
             <size>
-             <width>25</width>
-             <height>28</height>
+             <width>32</width>
+             <height>32</height>
             </size>
            </property>
            <property name="flat">
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>

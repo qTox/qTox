@@ -69,8 +69,9 @@ private:
     ToxFile fileInfo;
     QTime lastTick;
     qint64 lastBytesSent = 0;
-    QVariantAnimation* colorAnimation = nullptr;
-    QColor color;
+    QVariantAnimation* backgroundColorAnimation = nullptr;
+    QColor backgroundColor;
+    QColor buttonColor;
 
     static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
     uint8_t meanIndex = 0;

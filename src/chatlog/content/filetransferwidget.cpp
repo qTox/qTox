@@ -34,7 +34,8 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)
     , lastTick(QTime::currentTime())
-    , color(Style::getColor(Style::LightGrey))
+    , backgroundColor(Style::getColor(Style::LightGrey))
+    , buttonColor(Style::getColor(Style::Yellow))
 {
     ui->setupUi(this);
 
@@ -48,11 +49,11 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     ui->progressLabel->setText("0kiB/s");
     ui->etaLabel->setText("");
 
-    colorAnimation = new QVariantAnimation(this);
-    colorAnimation->setDuration(500);
-    colorAnimation->setEasingCurve(QEasingCurve::OutCubic);
-    connect(colorAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant& val) {
-        color = val.value<QColor>();
+    backgroundColorAnimation = new QVariantAnimation(this);
+    backgroundColorAnimation->setDuration(500);
+    backgroundColorAnimation->setEasingCurve(QEasingCurve::OutCubic);
+    connect(backgroundColorAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant& val) {
+        backgroundColor = val.value<QColor>();
         update();
     });
 
@@ -121,11 +122,11 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
 
 void FileTransferWidget::setColor(const QColor &c, bool whiteFont)
 {
-    if(c != color)
+    if(c != backgroundColor)
     {
-        colorAnimation->setStartValue(color);
-        colorAnimation->setEndValue(c);
-        colorAnimation->start();
+        backgroundColorAnimation->setStartValue(backgroundColor);
+        backgroundColorAnimation->setEndValue(c);
+        backgroundColorAnimation->start();
     }
 
     setProperty("fontColor", whiteFont ? "white" : "black");
@@ -149,13 +150,27 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     // required by Hi-DPI support as border-image doesn't work.
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(QBrush(color));
     painter.setPen(Qt::NoPen);
 
-    qreal s = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
-    int r = 20;
+    qreal ratio = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
+    const int r = 20;
+    const int buttonFieldWidth = 34;
+    const int lineWidth = 2;
 
-    painter.drawRoundRect(geometry(), r * s, r);
+    // draw background
+    painter.setBrush(QBrush(backgroundColor));
+    painter.setClipRect(QRect(0,0,width()-buttonFieldWidth,height()));
+    painter.drawRoundRect(geometry(), r * ratio, r);
+
+    // draw button background (top)
+    painter.setBrush(QBrush(buttonColor));
+    painter.setClipRect(QRect(width()-buttonFieldWidth+lineWidth,0,buttonFieldWidth,height()/2-lineWidth/2));
+    painter.drawRoundRect(geometry(), r * ratio, r);
+
+    // draw button background (bottom)
+    painter.setBrush(QBrush(buttonColor));
+    painter.setClipRect(QRect(width()-buttonFieldWidth+lineWidth,height()/2+lineWidth/2,buttonFieldWidth,height()/2));
+    painter.drawRoundRect(geometry(), r * ratio, r);
 }
 
 void FileTransferWidget::onFileTransferInfo(ToxFile file)
