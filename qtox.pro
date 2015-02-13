@@ -103,7 +103,9 @@ contains(DISABLE_FILTER_AUDIO, YES) {
 contains(JENKINS,YES) {
 	INCLUDEPATH += ./libs/include/
 } else {
+contains(SIMPLEMAKE,YES) {
 	INCLUDEPATH += libs/include
+	}
 }
 
 # Rules for Windows, Mac OSX, and Linux
@@ -143,7 +145,11 @@ win32 {
                 LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
                 LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
             } else {
+            contains(SIMPLEMAKE, YES) {
                 LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
+                } else {
+		    LIBS += -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
+                }
             }
 
             contains(DEFINES, QTOX_PLATFORM_EXT) {

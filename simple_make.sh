@@ -13,5 +13,5 @@ else
 fi
 
 ./bootstrap.sh
-qmake
+qmake SIMPLEMAKE=YES
 make
