@@ -1,21 +1,23 @@
 [fontColor="white"] QLabel {
 	color:white;
-	font:@medium;
+	font:@big;
 }
 
 [fontColor="black"] QLabel {
-	color:black;
-	font:@medium;
+	color:@mediumGrey;
+	font:@big;
 }
 
 QPushButton {
 	margin:0;
         border: none;
-} 
+}
+
+
 
 QProgressBar {
-	border: 2px solid black;
-	border-radius: 4px;
+	border: 2px solid @mediumGrey;
+	border-radius: 0px;
 	background-color: @mediumGrey;
 }
 

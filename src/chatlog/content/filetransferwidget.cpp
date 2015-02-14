@@ -57,7 +57,15 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
         update();
     });
 
-    setColor(Style::getColor(Style::LightGrey), false);
+    buttonColorAnimation = new QVariantAnimation(this);
+    buttonColorAnimation->setDuration(500);
+    buttonColorAnimation->setEasingCurve(QEasingCurve::OutCubic);
+    connect(buttonColorAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant& val) {
+        buttonColor = val.value<QColor>();
+        update();
+    });
+
+    setBackgroundColor(Style::getColor(Style::LightGrey), false);
 
     connect(Core::getInstance(), &Core::fileTransferInfo, this, &FileTransferWidget::onFileTransferInfo);
     connect(Core::getInstance(), &Core::fileTransferAccepted, this, &FileTransferWidget::onFileTransferAccepted);
@@ -71,7 +79,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     if(fileInfo.direction == ToxFile::SENDING)
         showPreview(fileInfo.filePath);
 
-    setFixedHeight(64);
+    setFixedHeight(78);
 }
 
 FileTransferWidget::~FileTransferWidget()
@@ -120,7 +128,7 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
     Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
 }
 
-void FileTransferWidget::setColor(const QColor &c, bool whiteFont)
+void FileTransferWidget::setBackgroundColor(const QColor &c, bool whiteFont)
 {
     if(c != backgroundColor)
     {
@@ -137,12 +145,28 @@ void FileTransferWidget::setColor(const QColor &c, bool whiteFont)
     update();
 }
 
-bool FileTransferWidget::isFilePathWritable(const QString &filepath)
+void FileTransferWidget::setButtonColor(const QColor &c)
+{
+    if(c != buttonColor)
+    {
+        buttonColorAnimation->setStartValue(buttonColor);
+        buttonColorAnimation->setEndValue(c);
+        buttonColorAnimation->start();
+    }
+}
+
+bool FileTransferWidget::isFilePathWritable(const QString &filepath) const
 {
     QFile tmp(filepath);
     bool writable = tmp.open(QIODevice::WriteOnly);
     tmp.remove();
     return writable;
+}
+
+bool FileTransferWidget::drawButtonAreaNeeded() const
+{
+    return (ui->bottomButton->isVisible() || ui->topButton->isVisible()) &&
+          !(ui->topButton->isVisible() && ui->topButton->objectName() == "ok");
 }
 
 void FileTransferWidget::paintEvent(QPaintEvent *)
@@ -153,24 +177,28 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     painter.setPen(Qt::NoPen);
 
     qreal ratio = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
-    const int r = 20;
+    const int r = 24;
     const int buttonFieldWidth = 34;
     const int lineWidth = 2;
 
     // draw background
+    if(drawButtonAreaNeeded())
+        painter.setClipRect(QRect(0,0,width()-buttonFieldWidth,height()));
     painter.setBrush(QBrush(backgroundColor));
-    painter.setClipRect(QRect(0,0,width()-buttonFieldWidth,height()));
     painter.drawRoundRect(geometry(), r * ratio, r);
 
-    // draw button background (top)
-    painter.setBrush(QBrush(buttonColor));
-    painter.setClipRect(QRect(width()-buttonFieldWidth+lineWidth,0,buttonFieldWidth,height()/2-lineWidth/2));
-    painter.drawRoundRect(geometry(), r * ratio, r);
+    if(drawButtonAreaNeeded())
+    {
+        // draw button background (top)
+        painter.setBrush(QBrush(buttonColor));
+        painter.setClipRect(QRect(width()-buttonFieldWidth+lineWidth,0,buttonFieldWidth,height()/2-lineWidth/2));
+        painter.drawRoundRect(geometry(), r * ratio, r);
 
-    // draw button background (bottom)
-    painter.setBrush(QBrush(buttonColor));
-    painter.setClipRect(QRect(width()-buttonFieldWidth+lineWidth,height()/2+lineWidth/2,buttonFieldWidth,height()/2));
-    painter.drawRoundRect(geometry(), r * ratio, r);
+        // draw button background (bottom)
+        painter.setBrush(QBrush(buttonColor));
+        painter.setClipRect(QRect(width()-buttonFieldWidth+lineWidth,height()/2+lineWidth/2,buttonFieldWidth,height()/2));
+        painter.drawRoundRect(geometry(), r * ratio, r);
+    }
 }
 
 void FileTransferWidget::onFileTransferInfo(ToxFile file)
@@ -210,7 +238,8 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
         {
             // ETA
             QTime toGo = QTime(0,0).addSecs((file.filesize - file.bytesSent) / meanBytesPerSec);
-            ui->etaLabel->setText(toGo.toString("hh:mm:ss"));
+            QString format = toGo.hour() > 0 ? "hh:mm:ss" : "mm:ss";
+            ui->etaLabel->setText(toGo.toString(format));
         }
         else
         {
@@ -235,7 +264,7 @@ void FileTransferWidget::onFileTransferAccepted(ToxFile file)
 
     fileInfo = file;
 
-    setColor(Style::getColor(Style::Yellow), false);
+    setBackgroundColor(Style::getColor(Style::LightGrey), false);
 
     setupButtons();
 }
@@ -247,7 +276,7 @@ void FileTransferWidget::onFileTransferCancelled(ToxFile file)
 
     fileInfo = file;
 
-    setColor(Style::getColor(Style::Red), true);
+    setBackgroundColor(Style::getColor(Style::Red), true);
 
     setupButtons();
     hideWidgets();
@@ -263,14 +292,14 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
     fileInfo = file;
 
     ui->etaLabel->setText("");
-    ui->progressLabel->setText(getHumanReadableSize(0) + "/s");
+    ui->progressLabel->setText(tr("paused", "file transfer widget"));
 
     // reset mean
     meanIndex = 0;
     for(size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
         meanData[i] = 0.0;
 
-    setColor(Style::getColor(Style::LightGrey), false);
+    setBackgroundColor(Style::getColor(Style::LightGrey), false);
 
     setupButtons();
 }
@@ -282,7 +311,7 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 
     fileInfo = file;
 
-    setColor(Style::getColor(Style::Green), true);
+    setBackgroundColor(Style::getColor(Style::Green), true);
 
     setupButtons();
     hideWidgets();
@@ -291,9 +320,9 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 
     if(openExtensions.contains(QFileInfo(file.fileName).suffix()))
     {
-        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/browse.svg"));
-        ui->bottomButton->setObjectName("browse");
-        ui->bottomButton->show();
+        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
+        ui->topButton->setObjectName("ok");
+        ui->topButton->show();
     }
 
     // preview
@@ -333,6 +362,9 @@ void FileTransferWidget::setupButtons()
 
         ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
         ui->bottomButton->setObjectName("pause");
+
+        setButtonColor(Style::getColor(Style::Green));
+
         break;
     case ToxFile::PAUSED:
         ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
@@ -340,6 +372,9 @@ void FileTransferWidget::setupButtons()
 
         ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white.svg"));
         ui->bottomButton->setObjectName("resume");
+
+        setButtonColor(Style::getColor(Style::LightGrey));
+
         break;
     case ToxFile::STOPPED:
     case ToxFile::BROKEN: //TODO: ?
@@ -386,7 +421,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
         }
     }
 
-    if(btn->objectName() == "browse")
+    if(btn->objectName() == "ok")
     {
         QDesktopServices::openUrl("file://" + fileInfo.filePath);
     }

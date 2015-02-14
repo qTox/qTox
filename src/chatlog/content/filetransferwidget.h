@@ -54,9 +54,11 @@ protected:
     void handleButton(QPushButton* btn);
     void showPreview(const QString& filename);
     void acceptTransfer(const QString& filepath);
-    void setColor(const QColor& c, bool whiteFont);
+    void setBackgroundColor(const QColor& c, bool whiteFont);
+    void setButtonColor(const QColor& c);
 
-    bool isFilePathWritable(const QString& filepath);
+    bool isFilePathWritable(const QString& filepath) const;
+    bool drawButtonAreaNeeded() const;
 
     virtual void paintEvent(QPaintEvent*);
 
@@ -70,6 +72,7 @@ private:
     QTime lastTick;
     qint64 lastBytesSent = 0;
     QVariantAnimation* backgroundColorAnimation = nullptr;
+    QVariantAnimation* buttonColorAnimation = nullptr;
     QColor backgroundColor;
     QColor buttonColor;
 
