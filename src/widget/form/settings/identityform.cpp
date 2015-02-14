@@ -163,7 +163,7 @@ void IdentityForm::onRenameClicked()
             Settings::getInstance().setAutorun(false);
             Settings::getInstance().setCurrentProfile(name);
             if (resetAutorun)
-                Settings::getInstance().setAutorun(true);                   // fixes -P flag in autostart command line
+                Settings::getInstance().setAutorun(true);                   // fixes -p flag in autostart command line
             break;
         }
     } while (true);

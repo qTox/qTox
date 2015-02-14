@@ -35,7 +35,7 @@ namespace Platform
 
     inline QString currentCommandLine()
     {
-        return "\"" + QApplication::applicationFilePath() + "\" -P \"" +
+        return "\"" + QApplication::applicationFilePath() + "\" -p \"" +
                 Settings::getInstance().getCurrentProfile() + "\"";
     }
 }

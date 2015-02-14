@@ -25,7 +25,7 @@ namespace Platform
 {
     inline std::wstring currentCommandLine()
     {
-        return ("\"" + QApplication::applicationFilePath().replace('/', '\\') + "\" -P \"" +
+        return ("\"" + QApplication::applicationFilePath().replace('/', '\\') + "\" -p \"" +
                 Settings::getInstance().getCurrentProfile() + "\"").toStdWString();
     }
 
