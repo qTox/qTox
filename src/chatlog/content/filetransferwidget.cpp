@@ -46,7 +46,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     ui->filenameLabel->setText(file.fileName);
     ui->progressBar->setValue(0);
     ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
-    ui->progressLabel->setText("0kiB/s");
+    ui->progressLabel->setText(tr("unconfirmed", "file transfer widget"));
     ui->etaLabel->setText("");
 
     backgroundColorAnimation = new QVariantAnimation(this);
