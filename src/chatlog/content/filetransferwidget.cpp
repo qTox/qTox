@@ -179,7 +179,7 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     qreal ratio = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
     const int r = 24;
     const int buttonFieldWidth = 34;
-    const int lineWidth = 2;
+    const int lineWidth = 1;
 
     // draw background
     if(drawButtonAreaNeeded())
@@ -191,7 +191,7 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     {
         // draw button background (top)
         painter.setBrush(QBrush(buttonColor));
-        painter.setClipRect(QRect(width()-buttonFieldWidth+lineWidth,0,buttonFieldWidth,height()/2-lineWidth/2));
+        painter.setClipRect(QRect(width()-buttonFieldWidth+lineWidth,0,buttonFieldWidth,height()/2-ceil(lineWidth/2.0)));
         painter.drawRoundRect(geometry(), r * ratio, r);
 
         // draw button background (bottom)
