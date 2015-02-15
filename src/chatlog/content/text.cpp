@@ -53,9 +53,6 @@ void Text::setText(const QString& txt)
 
 void Text::setWidth(qreal w)
 {
-    if(w == width)
-        return;
-
     width = w;
     dirty = true;
 

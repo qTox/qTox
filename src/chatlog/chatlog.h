@@ -49,6 +49,7 @@ public:
     void setTypingNotificationVisible(bool visible);
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
+    void forceRelayout();
 
     QString getSelectedText() const;
 

@@ -65,6 +65,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
 
+    connect(&Settings::getInstance(), &Settings::emojiFontChanged, this, [this]() { chatWidget->forceRelayout(); });
+
     msgEdit = new ChatTextEdit();
 
     sendButton = new QPushButton();
