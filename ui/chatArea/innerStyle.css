@@ -1,4 +1,4 @@
-div.message {
+div.msg {
   color: @black;
   font: @big;
 }

@@ -28,7 +28,7 @@ class Text : public ChatLineContent
 public:
     // txt: may contain html code
     // rawText: does not contain html code
-    Text(const QString& txt = "", QFont font = QFont(), bool enableElide = false, const QString& rawText = QString());
+    Text(const QString& txt = "", QFont font = QFont(), bool enableElide = false, const QString& rawText = QString(), const QColor c = Qt::black);
     virtual ~Text();
 
     void setText(const QString& txt);
@@ -83,6 +83,7 @@ private:
     qreal ascent = 0.0;
     qreal width = 0.0;
     QFont defFont;
+    QColor color;
 
 };
 

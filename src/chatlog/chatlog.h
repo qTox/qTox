@@ -49,6 +49,7 @@ public:
     void setTypingNotificationVisible(bool visible);
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
+    void forceRelayout();
 
     QString getSelectedText() const;
 
@@ -138,7 +139,7 @@ private:
     ChatLine::Ptr workerAnchorLine;
 
     // layout
-    QMargins margins = QMargins(10.0,10.0,10.0,10.0);
+    QMargins margins = QMargins(10,10,10,10);
     qreal lineSpacing = 5.0f;
 
 };

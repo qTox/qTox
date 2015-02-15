@@ -28,10 +28,11 @@
 #include <QDesktopServices>
 #include <QTextFragment>
 
-Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText)
+Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText, const QColor c)
     : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
+    , color(c)
 {
     setText(txt);
     setAcceptedMouseButtons(Qt::LeftButton);
@@ -52,9 +53,6 @@ void Text::setText(const QString& txt)
 
 void Text::setWidth(qreal w)
 {
-    if(w == width)
-        return;
-
     width = w;
     dirty = true;
 
@@ -171,6 +169,7 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         sel.format.setBackground(selectionColor.lighter(selectionHasFocus ? 100 : 160));
         sel.format.setForeground(selectionHasFocus ? Qt::white : Qt::black);
         ctx.selections.append(sel);
+        ctx.palette.setColor(QPalette::Text, color);
 
         // draw text
         doc->documentLayout()->draw(painter, ctx);

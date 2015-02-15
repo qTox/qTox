@@ -35,9 +35,16 @@ public:
         TYPING,
     };
 
+    enum MessageType
+    {
+        NORMAL,
+        ACTION,
+        ALERT,
+    };
+
     ChatMessage();
 
-    static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage, bool isAction, bool alert, bool isMe, const QDateTime& date = QDateTime());
+    static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage, MessageType type, bool isMe, const QDateTime& date = QDateTime());
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type, const QDateTime& date);
     static ChatMessage::Ptr createFileTransferMessage(const QString& sender, ToxFile file, bool isMe, const QDateTime& date);
     static ChatMessage::Ptr createTypingNotification();
@@ -54,6 +61,7 @@ protected:
     static QString detectAnchors(const QString& str);
     static QString detectQuotes(const QString& str);
     static QString toHtmlChars(const QString& str);
+    static QString wrapDiv(const QString& str, const QString& div);
 
 private:
     bool action = false;

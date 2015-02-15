@@ -610,6 +610,11 @@ void ChatLog::selectAll()
     updateMultiSelectionRect();
 }
 
+void ChatLog::forceRelayout()
+{
+    startResizeWorker();
+}
+
 void ChatLog::checkVisibility()
 {
     if(lines.empty())

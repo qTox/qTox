@@ -785,7 +785,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime::currentDateTime()));
+            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime()));
         }
 
         // Show each messages
@@ -795,7 +795,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
         ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
                                                               isAction ? it.message.right(it.message.length() - 4) : it.message,
-                                                              isAction, false,
+                                                              isAction ? ChatMessage::ACTION : ChatMessage::NORMAL,
                                                               authorId.isMine(),
                                                               QDateTime());
 
