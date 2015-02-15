@@ -421,7 +421,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
 
     if(btn->objectName() == "ok")
     {
-        QDesktopServices::openUrl("file://" + fileInfo.filePath);
+        QDesktopServices::openUrl(QUrl("file:///" + fileInfo.filePath, QUrl::TolerantMode));
     }
 }
 
