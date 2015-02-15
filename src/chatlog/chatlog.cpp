@@ -202,8 +202,6 @@ void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
     {
         if(!isOverSelection(scenePos))
             clearSelection();
-
-        emit customContextMenuRequested(ev->pos());
     }
 
     selectionScrollDir = NoDirection;
