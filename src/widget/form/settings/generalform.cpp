@@ -30,8 +30,8 @@
 
 #include "src/autoupdate.h"
 
-static QStringList locales = {"bg", "de", "en", "es", "fr", "it", "lt", "mannol", "pirate", "pl", "pt", "ru", "fi", "sv", "uk"};
-static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Italiano", "Lietuvių", "mannol", "Pirate", "Polski", "Português", "Русский", "Suomi", "Svenska", "Українська"};
+static QStringList locales = {"bg", "de", "en", "es", "fr", "it", "lt", "mannol", "nl", "pirate", "pl", "pt", "ru", "fi", "sv", "uk"};
+static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Italiano", "Lietuvių", "mannol", "Nederlands", "Pirate", "Polski", "Português", "Русский", "Suomi", "Svenska", "Українська"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 
