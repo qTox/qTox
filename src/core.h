@@ -196,12 +196,12 @@ signals:
     void fileSendStarted(ToxFile file);
     void fileReceiveRequested(ToxFile file);
     void fileTransferAccepted(ToxFile file);
-    void fileTransferCancelled(int FriendId, int FileNum, ToxFile::FileDirection direction);
+    void fileTransferCancelled(ToxFile file);
     void fileTransferFinished(ToxFile file);
     void fileUploadFinished(const QString& path);
     void fileDownloadFinished(const QString& path);
-    void fileTransferPaused(int FriendId, int FileNum, ToxFile::FileDirection direction);
-    void fileTransferInfo(int FriendId, int FileNum, int64_t Filesize, int64_t BytesSent, ToxFile::FileDirection direction);
+    void fileTransferPaused(ToxFile file);
+    void fileTransferInfo(ToxFile file);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
     void fileTransferBrokenUnbroken(ToxFile file, bool broken);
 

@@ -592,7 +592,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         qDebug() << QString("Core::onFileControlCallback: Transfer of file %1 cancelled by friend %2")
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
-        emit static_cast<Core*>(core)->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+        emit static_cast<Core*>(core)->fileTransferCancelled(*file);
         // Wait for sendAllFileData to return before deleting the ToxFile, we MUST ensure this or we'll use after free
         if (file->sendTimer)
         {
@@ -619,7 +619,7 @@ void Core::onFileControlCallback(Tox* tox, int32_t friendnumber, uint8_t receive
         qDebug() << QString("Core::onFileControlCallback: Transfer of file %1 cancelled by friend %2")
                     .arg(file->fileNum).arg(file->friendId);
         file->status = ToxFile::STOPPED;
-        emit static_cast<Core*>(core)->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::RECEIVING);
+        emit static_cast<Core*>(core)->fileTransferCancelled(*file);
         removeFileFromQueue((bool)receive_send, file->friendId, file->fileNum);
     }
     else if (receive_send == 0 && control_type == TOX_FILECONTROL_FINISHED)
@@ -694,8 +694,7 @@ void Core::onFileDataCallback(Tox*, int32_t friendnumber, uint8_t filenumber, co
     file->file->write((char*)data,length);
     file->bytesSent += length;
     //qDebug() << QString("Core::onFileDataCallback: received %1/%2 bytes").arg(file->bytesSent).arg(file->filesize);
-    emit static_cast<Core*>(core)->fileTransferInfo(file->friendId, file->fileNum,
-                                            file->filesize, file->bytesSent, ToxFile::RECEIVING);
+    emit static_cast<Core*>(core)->fileTransferInfo(*file);
 }
 
 void Core::onAvatarInfoCallback(Tox*, int32_t friendnumber, uint8_t format,
@@ -889,7 +888,7 @@ void Core::pauseResumeFileSend(int friendId, int fileNum)
     if (file->status == ToxFile::TRANSMITTING)
     {
         file->status = ToxFile::PAUSED;
-        emit fileTransferPaused(file->friendId, file->fileNum, ToxFile::SENDING);
+        emit fileTransferPaused(*file);
         tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_PAUSE, nullptr, 0);
     }
     else if (file->status == ToxFile::PAUSED)
@@ -921,7 +920,7 @@ void Core::pauseResumeFileRecv(int friendId, int fileNum)
     if (file->status == ToxFile::TRANSMITTING)
     {
         file->status = ToxFile::PAUSED;
-        emit fileTransferPaused(file->friendId, file->fileNum, ToxFile::RECEIVING);
+        emit fileTransferPaused(*file);
         tox_file_send_control(tox, file->friendId, 1, file->fileNum, TOX_FILECONTROL_PAUSE, nullptr, 0);
     }
     else if (file->status == ToxFile::PAUSED)
@@ -951,7 +950,7 @@ void Core::cancelFileSend(int friendId, int fileNum)
         return;
     }
     file->status = ToxFile::STOPPED;
-    emit fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+    emit fileTransferCancelled(*file);
     tox_file_send_control(tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
     while (file->sendTimer) QThread::msleep(1); // Wait until sendAllFileData returns before deleting
     removeFileFromQueue(true, friendId, fileNum);
@@ -974,7 +973,7 @@ void Core::cancelFileRecv(int friendId, int fileNum)
         return;
     }
     file->status = ToxFile::STOPPED;
-    emit fileTransferCancelled(file->friendId, file->fileNum, ToxFile::RECEIVING);
+    emit fileTransferCancelled(*file);
     tox_file_send_control(tox, file->friendId, 1, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
     removeFileFromQueue(true, friendId, fileNum);
 }
@@ -996,7 +995,7 @@ void Core::rejectFileRecvRequest(int friendId, int fileNum)
         return;
     }
     file->status = ToxFile::STOPPED;
-    emit fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+    emit fileTransferCancelled(*file);
     tox_file_send_control(tox, file->friendId, 1, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
     removeFileFromQueue(false, friendId, fileNum);
 }
@@ -1095,7 +1094,7 @@ void Core::setAvatar(uint8_t format, const QByteArray& data)
 
 ToxID Core::getSelfId() const
 {
-    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE];
+    uint8_t friendAddress[TOX_FRIEND_ADDRESS_SIZE] = {0};
     tox_get_address(tox, friendAddress);
     return ToxID::fromString(CFriendAddress::toString(friendAddress));
 }
@@ -1489,14 +1488,14 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
         file->sendTimer = nullptr;
         return;
     }
-    emit core->fileTransferInfo(file->friendId, file->fileNum, file->filesize, file->bytesSent, ToxFile::SENDING);
+    emit core->fileTransferInfo(*file);
 //    qApp->processEvents();
     long long chunkSize = tox_file_data_size(core->tox, file->friendId);
     if (chunkSize == -1)
     {
         qWarning("Core::fileHeartbeat: Error getting preffered chunk size, aborting file send");
         file->status = ToxFile::STOPPED;
-        emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+        emit core->fileTransferCancelled(*file);
         tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
         removeFileFromQueue(true, file->friendId, file->fileNum);
         return;
@@ -1511,7 +1510,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
         qWarning() << QString("Core::sendAllFileData: Error reading from file: %1").arg(file->file->errorString());
         delete[] data;
         file->status = ToxFile::STOPPED;
-        emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+        emit core->fileTransferCancelled(*file);
         tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
         removeFileFromQueue(true, file->friendId, file->fileNum);
         return;
@@ -1521,7 +1520,7 @@ void Core::sendAllFileData(Core *core, ToxFile* file)
         qWarning() << QString("Core::sendAllFileData: Nothing to read from file: %1").arg(file->file->errorString());
         delete[] data;
         file->status = ToxFile::STOPPED;
-        emit core->fileTransferCancelled(file->friendId, file->fileNum, ToxFile::SENDING);
+        emit core->fileTransferCancelled(*file);
         tox_file_send_control(core->tox, file->friendId, 0, file->fileNum, TOX_FILECONTROL_KILL, nullptr, 0);
         removeFileFromQueue(true, file->friendId, file->fileNum);
         return;

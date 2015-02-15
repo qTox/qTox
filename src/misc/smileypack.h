@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QIcon>
 
 #define SMILEYPACK_SEARCH_PATHS                                                                                             \
     {                                                                                                                       \
@@ -51,10 +52,10 @@ private:
     SmileyPack& operator=(const SmileyPack&) = delete;
 
     void cacheSmiley(const QString& name);
-    QByteArray getCachedSmiley(const QString& key);
+    QIcon getCachedSmiley(const QString& key);
 
     QHash<QString, QString> filenameTable; // matches an emoticon to its corresponding smiley ie. ":)" -> "happy.png"
-    QHash<QString, QByteArray> imgCache; // (scaled) representation of a smiley ie. "happy.png" -> data
+    QHash<QString, QIcon> iconCache; // representation of a smiley ie. "happy.png" -> data
     QList<QStringList> emoticons; // {{ ":)", ":-)" }, {":(", ...}, ... }
     QString path; // directory containing the cfg and image files
 };

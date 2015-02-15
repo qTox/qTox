@@ -91,7 +91,6 @@ private slots:
     void onHangupCallTriggered();
     void onCancelCallTriggered();
     void onRejectCallTriggered();
-    void onFileTansBtnClicked(QString widgetName, QString buttonName);
     void onFileSendFailed(int FriendId, const QString &fname);
     void onLoadHistory();
     void onUpdateTime();
@@ -101,6 +100,7 @@ protected:
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);
+    void registerReceipt(int receipt, int messageID, ChatMessage::Ptr msg);
     virtual void hideEvent(QHideEvent* event);
 
 private:
@@ -113,7 +113,6 @@ private:
     QTimer typingTimer;    
     QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
-    QLabel *isTypingLabel;
     OfflineMsgEngine *offlineEngine;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;

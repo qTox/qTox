@@ -30,6 +30,7 @@ struct ToxID
     bool operator==(const ToxID& other) const;
     bool operator!=(const ToxID& other) const;
     bool isMine() const;
+    void clear();
 };
 
 struct DhtServer
@@ -59,6 +60,10 @@ struct ToxFile
     ToxFile()=default;
     ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePath, FileDirection Direction);
     ~ToxFile(){}
+
+    bool operator==(const ToxFile& other) const;
+    bool operator!=(const ToxFile& other) const;
+
     void setFilePath(QString path);
     bool open(bool write);
 
@@ -67,8 +72,8 @@ struct ToxFile
     QByteArray fileName;
     QString filePath;
     QFile* file;
-    long long bytesSent;
-    long long filesize;
+    qint64 bytesSent;
+    qint64 filesize;
     FileStatus status;
     FileDirection direction;
     QTimer* sendTimer;

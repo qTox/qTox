@@ -12,6 +12,16 @@ ToxFile::ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePat
 {
 }
 
+bool ToxFile::operator==(const ToxFile &other) const
+{
+    return (fileNum == other.fileNum) && (friendId == other.friendId) && (direction == other.direction);
+}
+
+bool ToxFile::operator!=(const ToxFile &other) const
+{
+    return !(*this == other);
+}
+
 void ToxFile::setFilePath(QString path)
 {
     filePath=path;
@@ -58,6 +68,11 @@ bool ToxID::operator!=(const ToxID& other) const
 bool ToxID::isMine() const
 {
     return *this == Core::getInstance()->getSelfId();
+}
+
+void ToxID::clear()
+{
+    publicKey.clear();
 }
 
 bool ToxID::isToxId(const QString& value)

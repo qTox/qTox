@@ -91,7 +91,7 @@ bool SmileyPack::load(const QString& filename)
 {
     // discard old data
     filenameTable.clear();
-    imgCache.clear();
+    iconCache.clear();
     emoticons.clear();
     path.clear();
 
@@ -135,11 +135,8 @@ bool SmileyPack::load(const QString& filename)
             filenameTable.insert(emoticon, file);
             
             cacheSmiley(file); // preload all smileys
-            
-            QPixmap pm;
-            pm.loadFromData(getCachedSmiley(emoticon), "PNG");
-            
-            if (pm.size().width() > 0) 
+
+            if(!getCachedSmiley(emoticon).isNull())
                 emoticonSet.push_back(emoticon);
             
             stringElement = stringElement.nextSibling().toElement();
@@ -184,50 +181,36 @@ QList<QStringList> SmileyPack::getEmoticons() const
 
 QString SmileyPack::getAsRichText(const QString &key)
 {
-    return "<img title=\""%key%"\" src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
+    return QString("<img title=\"%1\" src=\"key:%1\"\\>").arg(key);
 }
 
 QIcon SmileyPack::getAsIcon(const QString &key)
 {
-    QPixmap pm;
-    pm.loadFromData(getCachedSmiley(key), "PNG");
-    return QIcon(pm);
+    return getCachedSmiley(key);
 }
 
 void SmileyPack::cacheSmiley(const QString &name)
 {
-    // The -1 is to avoid having the space for descenders under images move the text down
-    // We can't remove it because Qt doesn't support CSS display or vertical-align
-    int fontHeight = QFontInfo(Style::getFont(Style::Big)).pixelSize() - 1;
-    QSize size(fontHeight, fontHeight);
     QString filename = QDir(path).filePath(name);
-    QImage img(filename);
 
-    if (!img.isNull())
-    {
-        QImage scaledImg = img.scaled(size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-
-        QByteArray scaledImgData;
-        QBuffer buffer(&scaledImgData);
-        scaledImg.save(&buffer, "PNG");
-
-        imgCache.insert(name, scaledImgData);
-    }
+    QIcon icon;
+    icon.addFile(filename);
+    iconCache.insert(name, icon);
 }
 
-QByteArray SmileyPack::getCachedSmiley(const QString &key)
+QIcon SmileyPack::getCachedSmiley(const QString &key)
 {
     // valid key?
     if (!filenameTable.contains(key))
-        return QByteArray();
+        return QPixmap();
 
     // cache it if needed
     QString file = filenameTable.value(key);
-    if (!imgCache.contains(file)) {
+    if (!iconCache.contains(file)) {
         cacheSmiley(file);
     }
 
-    return imgCache.value(file);
+    return iconCache.value(file);
 }
 
 void SmileyPack::onSmileyPackChanged()

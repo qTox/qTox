@@ -40,6 +40,7 @@
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
     , isDefaultAvatar{true}
+    , historyLoaded{false}
 {
     avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
     statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
@@ -126,6 +127,16 @@ void FriendWidget::setAsActiveChatroom()
 
     if (isDefaultAvatar)
         avatar->setPixmap(QPixmap(":img/contact_dark.png"), Qt::transparent);
+
+    if(!historyLoaded)
+    {
+        Friend* f = FriendList::findFriend(friendId);
+        if (Settings::getInstance().getEnableLogging())
+        {
+            f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+            historyLoaded = true;
+        }
+    }
 }
 
 void FriendWidget::setAsInactiveChatroom()

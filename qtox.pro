@@ -33,6 +33,7 @@ FORMS    += \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/setpassworddialog.ui \
+    src/chatlog/content/filetransferwidget.ui \
     src/widget/form/settings/advancedsettings.ui \
     src/android.ui
     
@@ -198,17 +199,9 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/friendlistwidget.h \
     src/widget/genericchatroomwidget.h \
     src/widget/form/genericchatform.h \
-    src/widget/tool/chatactions/chataction.h \
-    src/widget/chatareawidget.h \
-    src/filetransferinstance.h \
     src/corestructs.h \
     src/coredefines.h \
     src/coreav.h \
-    src/widget/tool/chatactions/messageaction.h \
-    src/widget/tool/chatactions/filetransferaction.h \
-    src/widget/tool/chatactions/systemmessageaction.h \
-    src/widget/tool/chatactions/actionaction.h \
-    src/widget/tool/chatactions/alertaction.h \
     src/widget/maskablepixmapwidget.h \
     src/video/videosource.h \
     src/video/cameraworker.h \
@@ -228,8 +221,22 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/toxsave.h \
     src/autoupdate.h \
     src/misc/serialize.h \
+    src/chatlog/chatlog.h \
+    src/chatlog/chatline.h \
+    src/chatlog/chatlinecontent.h \
+    src/chatlog/chatlinecontentproxy.h \
+    src/chatlog/content/text.h \
+    src/chatlog/content/spinner.h \
+    src/chatlog/content/filetransferwidget.h \
+    src/chatlog/chatmessage.h \
+    src/chatlog/content/image.h \
+    src/chatlog/customtextdocument.h \
     src/widget/form/settings/advancedform.h \
     src/audio.h \
+    src/chatlog/content/notificationicon.h \
+    src/chatlog/content/timestamp.h \
+    src/chatlog/documentcache.h \
+    src/chatlog/pixmapcache.h \
     src/widget/callconfirmwidget.h \
     src/widget/systemtrayicon.h \
     src/widget/systemtrayicon_private.h \
@@ -274,15 +281,7 @@ SOURCES += \
     src/coreav.cpp \
     src/widget/genericchatroomwidget.cpp \
     src/widget/form/genericchatform.cpp \
-    src/widget/tool/chatactions/chataction.cpp \
-    src/widget/chatareawidget.cpp \
-    src/filetransferinstance.cpp \
     src/corestructs.cpp \
-    src/widget/tool/chatactions/messageaction.cpp \
-    src/widget/tool/chatactions/filetransferaction.cpp \
-    src/widget/tool/chatactions/systemmessageaction.cpp \
-    src/widget/tool/chatactions/actionaction.cpp \
-    src/widget/tool/chatactions/alertaction.cpp \
     src/widget/maskablepixmapwidget.cpp \
     src/video/cameraworker.cpp \
     src/widget/videosurface.cpp \
@@ -302,8 +301,22 @@ SOURCES += \
     src/widget/toxsave.cpp \    
     src/autoupdate.cpp \
     src/misc/serialize.cpp \
+    src/chatlog/chatlog.cpp \
+    src/chatlog/chatline.cpp \
+    src/chatlog/chatlinecontent.cpp \
+    src/chatlog/chatlinecontentproxy.cpp \
+    src/chatlog/content/text.cpp \
+    src/chatlog/content/spinner.cpp \
+    src/chatlog/content/filetransferwidget.cpp \
+    src/chatlog/chatmessage.cpp \
+    src/chatlog/content/image.cpp \
+    src/chatlog/customtextdocument.cpp\
     src/widget/form/settings/advancedform.cpp \
     src/audio.cpp \
+    src/chatlog/content/notificationicon.cpp \
+    src/chatlog/content/timestamp.cpp \
+    src/chatlog/documentcache.cpp \
+    src/chatlog/pixmapcache.cpp \
     src/widget/callconfirmwidget.cpp \
     src/widget/systemtrayicon.cpp \
     src/nexus.cpp \

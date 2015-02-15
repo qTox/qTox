@@ -54,6 +54,7 @@ protected:
 public:
     int friendId;
     bool isDefaultAvatar;
+    bool historyLoaded;
     QPoint dragStartPos;
 };
 
