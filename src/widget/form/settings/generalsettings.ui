@@ -196,7 +196,7 @@ instead of system taskbar.</string>
                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="text">
-               <string>Start automatically</string>
+               <string>Autostart</string>
               </property>
              </widget>
             </item>

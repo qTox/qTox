@@ -22,6 +22,7 @@ public:
     static Core* getCore(); ///< Will return 0 if not started
     static AndroidGUI* getAndroidGUI(); ///< Will return 0 if not started
     static Widget* getDesktopGUI(); ///< Will return 0 if not started
+    static QString getSupportedImageFilter();
 
 private:
     explicit Nexus(QObject *parent = 0);

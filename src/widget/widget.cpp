@@ -55,6 +55,10 @@
 #include <QTimer>
 #include <QStyleFactory>
 #include <QTranslator>
+#include <QString>
+#include <QByteArray>
+#include <QImageReader>
+#include <QList>
 #include <tox/tox.h>
 
 #ifdef Q_OS_ANDROID
@@ -345,7 +349,10 @@ QString Widget::getUsername()
 
 void Widget::onAvatarClicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"), QDir::homePath());
+    QString filename = QFileDialog::getOpenFileName(this,
+        tr("Choose a profile picture"),
+        QDir::homePath(),
+        Nexus::getSupportedImageFilter());
     if (filename.isEmpty())
         return;
     QFile file(filename);
