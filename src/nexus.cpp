@@ -5,6 +5,7 @@
 #include "widget/gui.h"
 #include <QThread>
 #include <QDebug>
+#include <QImageReader>
 
 #ifdef Q_OS_ANDROID
 #include <src/widget/androidgui.h>
@@ -153,4 +154,12 @@ AndroidGUI* Nexus::getAndroidGUI()
 Widget* Nexus::getDesktopGUI()
 {
     return getInstance().widget;
+}
+
+QString Nexus::getSupportedImageFilter()
+{
+  QString res;
+  for (auto type : QImageReader::supportedImageFormats())
+    res += QString("*.%1 ").arg(QString(type));
+  return tr("Images (%1)", "filetype filter").arg(res.left(res.size()-1));
 }

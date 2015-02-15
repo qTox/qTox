@@ -348,19 +348,10 @@ QString Widget::getUsername()
 
 void Widget::onAvatarClicked()
 {
-    QList<QByteArray> typeList = QImageReader::supportedImageFormats();
-    QString filter("Images (");
-    for(auto i=typeList.begin(); i!=typeList.end(); i++)
-    {
-        filter.append("*.");
-        filter.append(*i);
-        filter.append(" ");
-    }
-    filter[filter.size()-1] = ')';//take the last space and close the () instead
     QString filename = QFileDialog::getOpenFileName(this,
         tr("Choose a profile picture"),
         QDir::homePath(),
-        filter);
+        Nexus::getSupportedImageFilter());
     if (filename.isEmpty())
         return;
     QFile file(filename);
