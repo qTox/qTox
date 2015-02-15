@@ -21,6 +21,7 @@
 #include "src/friend.h"
 #include "src/friendlist.h"
 #include "tool/friendrequestdialog.h"
+#include "tool/groupinvitedialog.h"
 #include "friendwidget.h"
 #include "src/grouplist.h"
 #include "src/group.h"
@@ -856,11 +857,16 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
-        if (groupId < 0)
+        GroupInviteDialog dialog(Nexus::getCore()->getFriendUsername(friendId));
+
+        if (dialog.exec() == QDialog::Accepted)
         {
-            qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";
-            return;
+            int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
+            if (groupId < 0)
+            {
+                qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";
+                return;
+            }
         }
     }
     else
