@@ -29,7 +29,7 @@ class QGraphicsRectItem;
 class QMouseEvent;
 class QTimer;
 class ChatLineContent;
-class ToxFile;
+struct ToxFile;
 
 class ChatLog : public QGraphicsView
 {

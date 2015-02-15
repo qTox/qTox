@@ -262,9 +262,6 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
             ChatLineContent* content = getContentFromPos(scenePos);
             ChatLine::Ptr line = findLineByPosY(scenePos.y());
 
-            if(!content && !line.get())
-                return;
-
             int row;
 
             if(content)
@@ -298,6 +295,8 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                 }
 
             }
+            else
+                return;
 
             if(row >= selClickedRow)
                 selLastRow = row;
