@@ -21,6 +21,7 @@
 
 #include <QIcon>
 #include <QDebug>
+#include <QUrl>
 
 CustomTextDocument::CustomTextDocument(QObject *parent)
     : QTextDocument(parent)
