@@ -178,6 +178,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/form/filesform.h \
     src/widget/tool/chattextedit.h \
     src/widget/tool/friendrequestdialog.h \
+    src/widget/tool/groupinvitedialog.h \
     src/widget/friendwidget.h \
     src/widget/groupwidget.h \
     src/widget/widget.h \
@@ -257,6 +258,7 @@ SOURCES += \
     src/widget/form/filesform.cpp \
     src/widget/tool/chattextedit.cpp \
     src/widget/tool/friendrequestdialog.cpp \
+    src/widget/tool/groupinvitedialog.cpp \
     src/widget/friendwidget.cpp \
     src/widget/groupwidget.cpp \
     src/widget/widget.cpp \
