@@ -138,7 +138,7 @@ private:
     ChatLine::Ptr workerAnchorLine;
 
     // layout
-    QMarginsF margins = QMarginsF(10.0,10.0,10.0,10.0);
+    QMargins margins = QMargins(10,10,10,10);
     qreal lineSpacing = 5.0f;
 
 };
