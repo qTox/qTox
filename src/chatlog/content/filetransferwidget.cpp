@@ -306,6 +306,8 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
 void FileTransferWidget::onFileTransferFinished(ToxFile file)
 {
+    static const QStringList openExtensions = { "png", "jpeg", "jpg", "gif", "zip", "rar" };
+
     if(fileInfo != file)
         return;
 
@@ -316,14 +318,10 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
     setupButtons();
     hideWidgets();
 
-    static const QStringList openExtensions = { "png", "jpeg", "jpg", "gif", "zip", "rar" };
-
-    if(openExtensions.contains(QFileInfo(file.fileName).suffix()))
-    {
-        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
-        ui->topButton->setObjectName("ok");
-        ui->topButton->show();
-    }
+    ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
+    ui->topButton->setObjectName("ok");
+    ui->topButton->setEnabled(openExtensions.contains(QFileInfo(file.fileName).suffix()));
+    ui->topButton->show();
 
     // preview
     if(fileInfo.direction == ToxFile::RECEIVING)
