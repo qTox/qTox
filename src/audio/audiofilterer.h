@@ -14,7 +14,6 @@
     See the COPYING file for more details.
 */
 
-#ifdef QTOX_FILTER_AUDIO
 #ifndef AUDIOFILTERER_H
 #define AUDIOFILTERER_H
 #include <cstdint>
@@ -26,8 +25,9 @@ typedef struct Filter_Audio Filter_Audio;
 class AudioFilterer
 {
 public:
-    explicit AudioFilterer() = default;
-    ~AudioFilterer();
+    static AudioFilterer* createAudioFilter();
+
+    virtual ~AudioFilterer();
 
     void startFilter(unsigned int fs);
     void filterAudio(int16_t* data, int framesize);
@@ -38,4 +38,3 @@ private:
 };
 
 #endif // AUDIOFILTERER_H
-#endif // QTOX_FILTER_AUDIO

@@ -17,7 +17,8 @@
 #include "avform.h"
 #include "ui_avsettings.h"
 #include "src/misc/settings.h"
-#include "src/audio.h"
+#include "src/audio/audio.h"
+#include "src/audio/audiofilterer.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -37,11 +38,13 @@ AVForm::AVForm() :
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
-#ifdef QTOX_FILTER_AUDIO
-    bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
-#else
-    bodyUI->filterAudio->setDisabled(true);
-#endif
+    if (QSharedPointer<AudioFilterer>(AudioFilterer::createAudioFilter()))
+        bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
+    else
+    {
+        Settings::getInstance().setFilterAudio(false);
+        bodyUI->filterAudio->setDisabled(true);
+    }
 
     connect(Camera::getInstance(), &Camera::propProbingFinished, this, &AVForm::onPropProbingFinished);
     connect(Camera::getInstance(), &Camera::resolutionProbingFinished, this, &AVForm::onResProbingFinished);
