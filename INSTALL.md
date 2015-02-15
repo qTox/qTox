@@ -105,7 +105,6 @@ Arch Linux:
 sudo pacman -S --needed opus vpx
 ```
 
-```
 Debian:
 ```bash
 sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev
