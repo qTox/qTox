@@ -35,11 +35,14 @@ ChatMessage::ChatMessage()
 
 }
 
-ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage, bool isAction, bool alert, bool isMe, const QDateTime &date)
+ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage, MessageType type, bool isMe, const QDateTime &date)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     QString text = toHtmlChars(rawMessage);
+    QString senderText = sender;
+
+    const QColor actionColor = QColor("#1818FF"); // has to match the color in innerStyle.css (div.action)
 
     //smileys
     if(Settings::getInstance().getUseEmoticons())
@@ -48,18 +51,23 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     //quotes (green text)
     text = detectQuotes(detectAnchors(text));
 
-    if(isAction)
+    switch(type)
     {
-        text = QString("<div class=action>%1 %2</div>").arg(sender, text);
+    case ACTION:
+        senderText = "*";
+        text = wrapDiv(QString("%1 %2").arg(sender, text), "action");
         msg->setAsAction();
-    }
-    else if(alert)
-    {
-        text = "<div class=alert>" + text + "</div>";
+        break;
+    case ALERT:
+        text = wrapDiv(text, "alert");
+        break;
+    default:
+        text = wrapDiv(text, "msg");
     }
 
-    msg->addColumn(new Text(isAction ? "<div class=action>*</div>" : sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), isAction ? false : true, sender), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(text, Style::getFont(Style::Big), false, isAction ? QString("*%1 %2*").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
+    msg->addColumn(new Text(senderText, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true, sender, type == ACTION ? actionColor : Qt::black), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(text, Style::getFont(Style::Big), false, type == ACTION ? QString("*%1 %2*").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0/1.6), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     if(!date.isNull())
@@ -218,4 +226,9 @@ QString ChatMessage::toHtmlChars(const QString &str)
         res = res.replace(it.first,it.second);
 
     return res;
+}
+
+QString ChatMessage::wrapDiv(const QString &str, const QString &div)
+{
+    return QString("<div class=%1>%2</div>").arg(div, str);
 }

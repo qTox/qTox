@@ -211,12 +211,12 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString 
     ChatMessage::Ptr msg;
     if(isAction)
     {
-        msg = ChatMessage::createChatMessage(authorStr, message, true, false, false);
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, false);
         previousId.clear();
     }
     else
     {
-        msg = ChatMessage::createChatMessage(authorStr, message, false, false, author.isMine());
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, author.isMine());
         if(author == previousId)
             msg->hideSender();
 
@@ -239,7 +239,7 @@ ChatMessage::Ptr GenericChatForm::addSelfMessage(const QString &message, bool is
 void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
 {
     QString authorStr = resolveToxID(author);
-    ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, false, true, author.isMine(), datetime);
+    ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, author.isMine(), datetime);
     insertChatMessage(msg);
 
     if(author == previousId)
