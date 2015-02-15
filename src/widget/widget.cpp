@@ -37,6 +37,7 @@
 #include "src/platform/timer.h"
 #include "systemtrayicon.h"
 #include "src/nexus.h"
+#include "src/widget/gui.h"
 #include "src/offlinemsgengine.h"
 #include <cassert>
 #include <QMessageBox>
@@ -856,11 +857,14 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
-        if (groupId < 0)
+        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("%1 has invited you to a groupchat. Would you like to join?", "popup text").arg(Nexus::getCore()->getFriendUsername(friendId))))
         {
-            qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";
-            return;
+            int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
+            if (groupId < 0)
+            {
+                qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";
+                return;
+            }
         }
     }
     else
