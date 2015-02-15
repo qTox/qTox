@@ -19,7 +19,7 @@
 
 #include <QGraphicsView>
 #include <QDateTime>
-#include <QMarginsF>
+#include <QMargins>
 
 #include "chatline.h"
 #include "chatmessage.h"
@@ -138,7 +138,7 @@ private:
     ChatLine::Ptr workerAnchorLine;
 
     // layout
-    QMarginsF margins = QMarginsF(10.0,10.0,10.0,10.0);
+    QMargins margins = QMargins(10.0,10.0,10.0,10.0);
     qreal lineSpacing = 5.0f;
 
 };
