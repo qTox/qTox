@@ -336,7 +336,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/core.cpp" line="739"/>
         <source>Friend is already added</source>
-        <translation>已成功添加好友</translation>
+        <translation>此人已被添加为好友</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1180"/>
@@ -346,7 +346,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/core.cpp" line="1180"/>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
-        <translation>.tox文件是加密的，但并没有被激活。这个问题将被忽略。</translation>
+        <translation>.tox文件是加密的，但加密并未被确认，将继续忽略。</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1187"/>
@@ -391,14 +391,14 @@ Empty password.</source>
     <message>
         <location filename="../src/core.cpp" line="1263"/>
         <source>History Log decryption password</source>
-        <translation>历史解密密码记录</translation>
+        <translation>历史记录解密密码</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1271"/>
         <source>Your history is encrypted with different password.
 Do you want to try another password?</source>
-        <translation>您的历史记录文件使用不同的密码加密。
-试试其他密码？</translation>
+        <translation>您的历史记录文件使用了不同的密码加密。
+你要试试其他密码吗？</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1281"/>
@@ -408,7 +408,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/core.cpp" line="1281"/>
         <source>Due to incorret password history will be disabled.</source>
-        <translation>密码错误，密码记录将被禁用</translation>
+        <translation>由于密码错误，历史记录将被禁用</translation>
     </message>
     <message>
         <source>Your history is encrypted with different password
@@ -419,7 +419,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/core.cpp" line="1270"/>
         <source>Encrypted log</source>
-        <translation>加密记录</translation>
+        <translation>加密的记录</translation>
     </message>
     <message>
         <source>Loggin</source>
@@ -437,7 +437,7 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/core.cpp" line="1354"/>
         <source>Will be saved without encryption!</source>
-        <translation>将保存未加密结果 !</translation>
+        <translation>将在未加密的状态下保存 !</translation>
     </message>
 </context>
 <context>
@@ -472,7 +472,7 @@ Do you want to try another password?</source>
         <location filename="../src/widget/form/filesform.cpp" line="30"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Transfers</translation>
+        <translation>已传输的文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="38"/>
@@ -544,7 +544,7 @@ Do you want to try another password?</source>
         <location filename="../src/widget/friendwidget.cpp" line="71"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>自动接收好友发送的文件</translation>
+        <translation>自动接收此好友发送的文件</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="238"/>
@@ -886,7 +886,7 @@ Alias:</source>
     <message>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="vanished">禁止 UDP (不推荐)</translation>
+        <translation type="vanished">禁用 UDP (不推荐)</translation>
     </message>
     <message>
         <source>Use proxy (SOCKS5)</source>
