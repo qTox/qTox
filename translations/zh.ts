@@ -1499,7 +1499,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <location filename="../src/misc/style.cpp" line="72"/>
         <source>Red</source>
-        <translation>Rouge</translation>
+        <translation>红色</translation>
     </message>
     <message>
         <location filename="../src/misc/style.cpp" line="72"/>
@@ -1516,12 +1516,12 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="23"/>
         <source>Type Password</source>
-        <translation>Entrez un mot de passe</translation>
+        <translation>输入密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="37"/>
         <source>Repeat Password</source>
-        <translation>Retapez le mot de passe</translation>
+        <translation>重复输入密码</translation>
     </message>
 </context>
 <context>
@@ -1530,58 +1530,57 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <location filename="../src/toxdns.cpp" line="64"/>
         <source>The connection timed out</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>La connection à expiré</translation>
+        <translation>连接超时</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="70"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Cette adresse n&apos;existe pas</translation>
+        <translation>地址不存在</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="75"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Une erreur s&apos;est produite en consultant le serveur DNS</translation>
+        <translation>在查找DNS时发生了错误</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="82"/>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
-        <translation>Pas d&apos;entée texte trouvée</translation>
+        <translation>未找到TXT记录</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="89"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
-        <translation>Nombre d&apos;entrées numériques dans l&apos;entrée texte innatendu</translation>
+        <translation>在TXT记录中未获得期望值</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="116"/>
         <source>The version of Tox DNS used by this server is not supported</source>
         <comment>Error with the DNS</comment>
-        <translation>La version du DNS Tox utilisée par ce serveur n&apos;est pas supportée</translation>
+        <translation>不支持此服务器所使用的Tox DNS</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="126"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>La réponse DNS ne contient aucun ID Tox</translation>
+        <translation>DNS查询中没有包含任何Tox ID</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="133"/>
         <location filename="../src/toxdns.cpp" line="140"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>La réponse DNS ne contient pas d&apos;ID Tox valide</translation>
+        <translation>DNS查询中未包含有效Tox ID</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="223"/>
         <location filename="../src/toxdns.cpp" line="267"/>
         <source>It appears that qTox has to use the old tox1 protocol.
 Unfortunately tox1 is not secure. Should it be used anyway?</source>
-        <translation>Il semble que qTox a besoin d&apos;utiliser l&apos;ancien protocole tox1.
-Cepandant tox1 n&apos;est pas sécurisé. Voulez-vous l&apos;utiliser tout de même?</translation>
+        <translation>看起来qTox不得不使用较老的tox1协议，这个协议是不安全的，你是否还想使用它？</translation>
     </message>
 </context>
 <context>
@@ -1590,26 +1589,26 @@ Cepandant tox1 n&apos;est pas sécurisé. Voulez-vous l&apos;utiliser tout de m�
         <location filename="../src/widget/toxuri.cpp" line="80"/>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation>Ajouter un contact</translation>
+        <translation>添加好友</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend ?</source>
-        <translation type="vanished">Voulez-vous ajouter %1 à vos contacts ?</translation>
+        <translation type="vanished">你想加 %1 为好友吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="82"/>
         <source>Do you want to add %1 as a friend?</source>
-        <translation>Voulez-vous ajouter %1 à vos contacts?</translation>
+        <translation>你想加 %1 为好友吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="83"/>
         <source>User ID:</source>
-        <translation>ID d&apos;utilisateur:</translation>
+        <translation>用户ID：</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="87"/>
         <source>Friend request message:</source>
-        <translation>Associer un message à cette demande:</translation>
+        <translation>好友请求消息：</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="92"/>
