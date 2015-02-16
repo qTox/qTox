@@ -12,8 +12,6 @@
     </emoticon>
     <emoticon file="1f601">
         <string>😁</string>
-        <string>:-D</string>
-        <string>:D</string>
     </emoticon>
     <emoticon file="1f602">
         <string>😂</string>
@@ -21,6 +19,8 @@
     </emoticon>
     <emoticon file="1f603">
         <string>😃</string>
+	<string>:-D</string>
+        <string>:D</string>
     </emoticon>
     <emoticon file="1f604">
         <string>😄</string>
