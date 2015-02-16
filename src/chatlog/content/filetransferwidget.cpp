@@ -46,7 +46,6 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     ui->filenameLabel->setText(file.fileName);
     ui->progressBar->setValue(0);
     ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
-    ui->progressLabel->setText(tr("Waiting to send...", "file transfer widget"));
     ui->etaLabel->setText("");
 
     backgroundColorAnimation = new QVariantAnimation(this);
@@ -77,7 +76,12 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
 
     //preview
     if(fileInfo.direction == ToxFile::SENDING)
+    {
         showPreview(fileInfo.filePath);
+        ui->progressLabel->setText(tr("Waiting to send...", "file transfer widget"));
+    }
+    else
+        ui->progressLabel->setText(tr("Accept to receive this file", "file transfer widget"));
 
     setFixedHeight(78);
 }
