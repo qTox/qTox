@@ -229,7 +229,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="66"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Ecriture synchronisée à la BDD</translation>
+        <translation>同步写入数据库</translation>
     </message>
 </context>
 <context>
@@ -237,70 +237,70 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="75"/>
         <source>Load History...</source>
-        <translation>Charger l&apos;historique...</translation>
+        <translation>加载历史记录...</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="162"/>
         <source>Send a file</source>
-        <translation>Envoyer un fichier</translation>
+        <translation>发送文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="170"/>
         <location filename="../src/widget/form/chatform.cpp" line="733"/>
         <source>File not read</source>
-        <translation>Fichier non lu</translation>
+        <translation>文件无法读取</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="170"/>
         <location filename="../src/widget/form/chatform.cpp" line="733"/>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>qTox n&apos;as pas pu ouvrir %1</translation>
+        <translation>qTox无法打开 %1</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="175"/>
         <location filename="../src/widget/form/chatform.cpp" line="738"/>
         <source>Bad Idea</source>
-        <translation>Mauvaise idée</translation>
+        <translation>馊主意</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="175"/>
         <location filename="../src/widget/form/chatform.cpp" line="738"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>Vous êtes en train d&apos;essayer d&apos;envoyer un fichier spécial (sequentiel), ?a ne fonctionnera pas !</translation>
+        <translation>你在试图传输一个特殊（有序）的文件，此操作无法完成</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="283"/>
         <source>%1 is calling</source>
-        <translation>%1 appelle</translation>
+        <translation>%1 在呼叫你</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="919"/>
         <source>is typing...</source>
-        <translation>est en train d&apos;écrire...</translation>
+        <translation>正在输入...</translation>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="vanished">%1 appel</translation>
+        <translation type="vanished">%1 呼叫</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="356"/>
         <source>%1 stopped calling</source>
-        <translation>%1 a arreté l&apos;appel</translation>
+        <translation>%1 挂断了电话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="413"/>
         <source>Calling to %1</source>
-        <translation>Appel de %1 en cours</translation>
+        <translation>正在呼叫 %1</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="554"/>
         <source>Call rejected</source>
-        <translation>Appel rejeté</translation>
+        <translation>通话被拒绝</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="705"/>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Impossible d&apos;envoyer &quot;%1&quot;</translation>
+        <translation>文件 &quot;%1&quot; 传输失败</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="853"/>
@@ -1260,12 +1260,12 @@ Les informations des contacts et historique associés vont être perdu.</transla
     <message>
         <location filename="../src/widget/form/inputpassworddialog.ui" line="14"/>
         <source>Password Dialog</source>
-        <translation>Mot de passe</translation>
+        <translation>密码对话框</translation>
     </message>
     <message>
         <location filename="../src/widget/form/inputpassworddialog.ui" line="23"/>
         <source>Input password:</source>
-        <translation>Entrez le mot de passe:</translation>
+        <translation>密码：</translation>
     </message>
 </context>
 <context>
@@ -1273,12 +1273,12 @@ Les informations des contacts et historique associés vont être perdu.</transla
     <message>
         <location filename="../src/widget/form/loadhistorydialog.ui" line="14"/>
         <source>Load History Dialog</source>
-        <translation>Historique</translation>
+        <translation>加载历史记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/loadhistorydialog.ui" line="23"/>
         <source>Load history from:</source>
-        <translation>Charger l&apos;historique du:</translation>
+        <translation>从此处加载历史记录：</translation>
     </message>
 </context>
 <context>
@@ -1290,37 +1290,37 @@ Les informations des contacts et historique associés vont être perdu.</transla
     <message>
         <location filename="../src/mainwindow.ui" line="859"/>
         <source>Your name</source>
-        <translation>Votre nom</translation>
+        <translation>你的名字</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="941"/>
         <source>Your status</source>
-        <translation>Votre status</translation>
+        <translation>你的状态</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1092"/>
         <source>Add friends</source>
-        <translation>Ajouter des contacts</translation>
+        <translation>添加好友</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1130"/>
         <source>Create a group chat</source>
-        <translation>Créer un groupe</translation>
+        <translation>创建聊天群组</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1165"/>
         <source>View completed file transfers</source>
-        <translation>Voir les transfers de fichiers terminés</translation>
+        <translation>查看已完成的文件传输</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1197"/>
         <source>Change your settings</source>
-        <translation>Changer les options</translation>
+        <translation>更改设置</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1785"/>
         <source>Close</source>
-        <translation>Fermer</translation>
+        <translation>Close</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -1332,7 +1332,7 @@ Les informations des contacts et historique associés vont être perdu.</transla
     <message>
         <location filename="../src/widget/netcamview.cpp" line="28"/>
         <source>Tox video</source>
-        <translation>Vidéo Tox</translation>
+        <translation>Tox视频</translation>
     </message>
 </context>
 <context>
@@ -1340,19 +1340,18 @@ Les informations des contacts et historique associés vont être perdu.</transla
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="28"/>
         <source>Privacy</source>
-        <translation>Vie privée</translation>
+        <translation>隐私</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="86"/>
         <source>Encrypted log</source>
-        <translation>Historique chiffré</translation>
+        <translation>历史记录加密</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="87"/>
         <source>You already have history log file encrypted with different password
 Do you want to delete old history file?</source>
-        <translation>Vous avez déjà un historique chiffré avec un autre mot de passe
-Voulez vous supprimer l&apos;ancien historique ?</translation>
+        <translation>你有一个使用不同密码加密的历史记录文件，你想删除此旧文件吗？</translation>
     </message>
 </context>
 <context>
@@ -1363,37 +1362,37 @@ Voulez vous supprimer l&apos;ancien historique ?</translation>
     </message>
     <message>
         <source>Typing Notification</source>
-        <translation type="vanished">Notifications d&apos;écriture</translation>
+        <translation type="vanished">正在输入提示</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
         <source>Send Typing Notifications</source>
-        <translation>Envoyer des notifications d&apos;écriture</translation>
+        <translation>发送“正在输入”提示</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="60"/>
         <source>Keep History (unstable)</source>
-        <translation>Conserver l&apos;historique (instable)</translation>
+        <translation>保留历史记录（不稳定）</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="70"/>
         <source>Encryption</source>
-        <translation>Chiffrement</translation>
+        <translation>加密</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
         <source>Encrypt Tox datafile</source>
-        <translation>Chiffrer les données Tox</translation>
+        <translation>加密Tox数据文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="89"/>
         <source>Encrypt History</source>
-        <translation>Chiffrer l&apos;historique</translation>
+        <translation>加密历史记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="102"/>
         <source>Nospam</source>
-        <translation>Antispam</translation>
+        <translation>反垃圾</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="110"/>
@@ -1403,7 +1402,7 @@ Voulez vous supprimer l&apos;ancien historique ?</translation>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="117"/>
         <source>Generate random nospam</source>
-        <translation>Generer un antispam aléatoire</translation>
+        <translation>生成随机的反垃圾代码</translation>
     </message>
 </context>
 <context>
@@ -1412,41 +1411,41 @@ Voulez vous supprimer l&apos;ancien historique ?</translation>
         <location filename="../src/widget/toxsave.cpp" line="63"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>Fichier non-Tox ignoré</translation>
+        <translation>忽略非Tox的文件</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="64"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention: Vous avez sélectionné un fichier qui n&apos;est pas une sauvegarde Tox, il sera ignoré.</translation>
+        <translation>注意：你选择了一个不是Tox存储的文件，已被忽略</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="70"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation>Ce profil existe déjà</translation>
+        <translation>Profile已存在</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="71"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Un profil appelé &quot;%1&quot; existe déjà. Voulez-vous le supprimer ?</translation>
+        <translation>一个叫&quot;%1&quot;的Profile已经存在，你想要擦除它吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="77"/>
         <source>Profile imported</source>
-        <translation>Profil importé</translation>
+        <translation>Profile已导入</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="77"/>
         <source>%1.tox was successfully imported</source>
-        <translation>%1 à été importé</translation>
+        <translation>%1 已成功导入</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="70"/>
         <source>Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>Je souhaiterais vous ajouter à mes contacts</translation>
+        <translation>想用Tox和我聊天吗？</translation>
     </message>
     <message>
         <location filename="../src/autoupdate.cpp" line="457"/>
@@ -1485,12 +1484,12 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <location filename="../src/misc/style.cpp" line="72"/>
         <source>Default</source>
-        <translation>Defaut</translation>
+        <translation>默认</translation>
     </message>
     <message>
         <location filename="../src/misc/style.cpp" line="72"/>
         <source>Blue</source>
-        <translation>Bleu</translation>
+        <translation>蓝色</translation>
     </message>
     <message>
         <location filename="../src/misc/style.cpp" line="72"/>
@@ -1505,7 +1504,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <location filename="../src/misc/style.cpp" line="72"/>
         <source>Violet</source>
-        <translation>Violet</translation>
+        <translation>紫色</translation>
     </message>
 </context>
 <context>
@@ -1701,99 +1700,99 @@ Cepandant tox1 n&apos;est pas sécurisé. Voulez-vous l&apos;utiliser tout de m�
         <location filename="../src/widget/widget.cpp" line="467"/>
         <location filename="../src/widget/widget.cpp" line="488"/>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="460"/>
         <source>Unable to open this file</source>
-        <translation>Impossible d&apos;ouvrir ce fichier</translation>
+        <translation>无法打开此文件</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="467"/>
         <source>Unable to read this image</source>
-        <translation>Impossible de lire cette image</translation>
+        <translation>无法读取此图片</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="488"/>
         <source>This image is too big</source>
-        <translation>Cette image est trop volumineuse</translation>
+        <translation>这张照片太大了</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="528"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>ToxCore n&apos;as pas pu démarrer correctement, l&apos;application va s&apos;arrêter quand vous fermerez cette alerte.</translation>
+        <translation>核心组件Toxcore启动失败，qTox将在你关闭此消息框后终止运行</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="537"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>ToxCore n&apos;as pas pu démarrer avec ces paramètres proxy. Merci de modifier ou désactiver vos paramètres et redémarrer l&apos;application.</translation>
+        <translation>由于你的代理服务器设置，核心组件Toxcore启动失败，qTox无法运行；请修改你的设置后重启qTox</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="576"/>
         <source>Add friend</source>
-        <translation>Ajouter un contact</translation>
+        <translation>添加好友</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="588"/>
         <source>File transfers</source>
-        <translation>Transfers</translation>
+        <translation>文件传输</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="616"/>
         <source>Settings</source>
-        <translation>Options</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="716"/>
         <source>Couldn&apos;t request friendship</source>
-        <translation>Impossible d&apos;envoyer la demande de contact</translation>
+        <translation>无法添加为好友</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="744"/>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>absent</translation>
+        <translation>离开</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="746"/>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation>occupé</translation>
+        <translation>忙碌</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="748"/>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation>hors ligne</translation>
+        <translation>离线</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="750"/>
         <source>online</source>
         <comment>contact status</comment>
-        <translation>connecté</translation>
+        <translation>在线</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="753"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 est maintenant %2</translation>
+        <translation>%1 %2 了</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="990"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Inconnu&gt;</translation>
+        <translation>&lt;未知名称&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1015"/>
         <source>%1 has set the title to %2</source>
-        <translation>%1 a changé le titre en %2</translation>
+        <translation>%1 已将标题设置为 %2</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1166"/>
         <source>Message failed to send</source>
-        <translation>Le message n&apos;as pu être envoyé</translation>
+        <translation>消息发送失败</translation>
     </message>
 </context>
 </TS>
