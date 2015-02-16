@@ -48,13 +48,14 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="64"/>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment> </translatorcomment>
+        <translation>使用滑块设置扬声器音量</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="74"/>
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>使用滑块来调节麦克风音量（警告：当前不一定会正常工作）</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="82"/>
@@ -79,7 +80,7 @@ WARNING: slider is not supposed to work yet.</source>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="112"/>
         <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation type="unfinished"></translation>
+        <translation>过滤麦克风声音，使对方从你这听到更清晰的声音</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
@@ -89,7 +90,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置摄像头分辨率
+此值越高，你的好友看到的视频质量就越好
+请注意，更好的视频质量需要更好的网络连接来承载
+有时你的网络连接并不足以承载如此高的视频质量
+这有可能导致视频通话的问题</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
@@ -241,12 +246,12 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="35"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation type="unfinished">保存设置到工作目录而不是常用目录。</translation>
+        <translation>保存设置到工作目录而不是通常的配置文件目录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="38"/>
         <source>Make Tox portable</source>
-        <translation type="unfinished">开启简洁Tox</translation>
+        <translation>使Tox可移动化</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="45"/>
@@ -261,7 +266,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="68"/>
         <source>Chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>聊天记录</translation>
     </message>
     <message>
         <source>History</source>
@@ -278,37 +283,37 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/android.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="531"/>
         <source>Your name</source>
-        <translation type="unfinished">你的名字</translation>
+        <translation>你的名字</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="616"/>
         <source>Your status</source>
-        <translation type="unfinished">你的状态</translation>
+        <translation>你的状态</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="767"/>
         <source>Add friends</source>
-        <translation type="unfinished">添加好友</translation>
+        <translation>添加好友</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="805"/>
         <source>Create a group chat</source>
-        <translation type="unfinished">创建聊天群组</translation>
+        <translation>创建聊天群组</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="840"/>
         <source>View completed file transfers</source>
-        <translation type="unfinished">查看已完成的文件传输</translation>
+        <translation>查看已完成的文件传输</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="872"/>
         <source>Change your settings</source>
-        <translation type="unfinished">更改设置</translation>
+        <translation>更改设置</translation>
     </message>
 </context>
 <context>
@@ -317,19 +322,19 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <location filename="../src/widget/androidgui.cpp" line="45"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished">在线</translation>
+        <translation>在线</translation>
     </message>
     <message>
         <location filename="../src/widget/androidgui.cpp" line="47"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished">离开</translation>
+        <translation>离开</translation>
     </message>
     <message>
         <location filename="../src/widget/androidgui.cpp" line="49"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished">忙碌</translation>
+        <translation>忙碌</translation>
     </message>
 </context>
 <context>
@@ -378,7 +383,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="78"/>
         <source>Load chat history...</source>
-        <translation type="unfinished"></translation>
+        <translation>加载聊天历史记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="293"/>
@@ -421,17 +426,17 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="66"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="81"/>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>全选</translation>
     </message>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="501"/>
         <source>pending</source>
-        <translation type="unfinished"></translation>
+        <translation>待定的，直到（只能直译，译者没看懂这里的代码）</translation>
     </message>
 </context>
 <context>
@@ -462,12 +467,12 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/core.cpp" line="778"/>
         <source>/me offers friendship.</source>
-        <translation type="unfinished"></translation>
+        <translation>/me 提供了好友关系</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="780"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>/me 提供了好友关系, &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="168"/>
@@ -483,60 +488,61 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <location filename="../src/coreencryption.cpp" line="171"/>
         <source>Please enter the password for the %1 profile.</source>
         <comment>used in load() when no pw is already set</comment>
-        <translation type="unfinished"></translation>
+        <translation>请为%1用户配置文件输入密码</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="172"/>
         <location filename="../src/coreencryption.cpp" line="227"/>
         <source>The previous password is incorrect; please try again:</source>
         <comment>used on retries in load()</comment>
-        <translation type="unfinished"></translation>
+        <translation>刚才输入的密码是错误的，请重新输入</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="183"/>
         <source>The profile password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation type="unfinished"></translation>
+        <translation>配置文件密码失败，请重试</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="219"/>
         <source>Encrypted chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>加密聊天记录</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="219"/>
         <source>No encrypted chat history file found, or it was corrupted.
 History will be disabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>未找到加密的历史记录文件，或者文件已损坏
+历史记录功能已被关闭</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="226"/>
         <source>Please enter the password for the chat history for the %1 profile.</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation type="unfinished"></translation>
+        <translation>请为%1用户配置文件的聊天记录输入密码</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="228"/>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="235"/>
         <source>The chat history password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation type="unfinished"></translation>
+        <translation>聊天记录密码失败，重试？</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="255"/>
         <source>Disable chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭聊天历史记录</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="306"/>
         <source>Encryption is enabled, but there is no password! Encryption will be disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>加密已启动，但是并没有设置密码！加密将被禁用</translation>
     </message>
     <message>
         <source>Tox datafile decryption password</source>
@@ -642,68 +648,68 @@ Do you want to try another password?</source>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="148"/>
         <source>10Mb</source>
-        <translation type="unfinished"></translation>
+        <translation>10Mb</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="164"/>
         <source>0kb/s</source>
-        <translation type="unfinished"></translation>
+        <translation>0kb/s</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="180"/>
         <source>ETA:10:10</source>
-        <translation type="unfinished"></translation>
+        <translation>ETA:10:10</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="224"/>
         <source>Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>文件名</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="299"/>
         <source>[preview]</source>
-        <translation type="unfinished"></translation>
+        <translation>预览</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="81"/>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>等待发送</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="84"/>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>同意接收此文件</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="126"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished">目录不可写</translation>
+        <translation>目录不可写</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="127"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished">您没有写入此目录的权限。请选择其他目录或取消保存对话。</translation>
+        <translation>您没有写入此目录的权限。请选择其他目录或取消保存对话。</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="299"/>
         <source>paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>暂停</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="421"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished">保存文件</translation>
+        <translation>保存文件</translation>
     </message>
 </context>
 <context>
@@ -835,17 +841,17 @@ Alias:</source>
     <message>
         <location filename="../src/widget/gui.cpp" line="249"/>
         <source>Enter your password</source>
-        <translation type="unfinished"></translation>
+        <translation>输入密码</translation>
     </message>
     <message>
         <location filename="../src/widget/gui.cpp" line="251"/>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>解密</translation>
     </message>
     <message>
         <location filename="../src/widget/gui.cpp" line="293"/>
         <source>You must enter a non-empty password:</source>
-        <translation type="unfinished"></translation>
+        <translation>你必须输入一个非空的密码</translation>
     </message>
 </context>
 <context>
@@ -947,53 +953,53 @@ Alias:</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="67"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>语言：</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="102"/>
         <source>System tray</source>
-        <translation type="unfinished"></translation>
+        <translation>系统设定</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="118"/>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>使用亮色的托盘图标</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="134"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>在状态栏启动</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="150"/>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>关闭按钮将隐藏qTox到状态栏</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="167"/>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>最小化的状态栏</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在系统启动时启动qTox，使用当前配置文件&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="199"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>开机自动启动</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
         <source>Check for updates on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>在启动时检查更新</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="220"/>
@@ -1789,7 +1795,7 @@ Profile does not contain your history.</source>
         <location filename="../src/nexus.cpp" line="164"/>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>图片(%1)</translation>
     </message>
 </context>
 <context>
@@ -2102,12 +2108,12 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/chatlog/chatmessage.cpp" line="126"/>
         <source>Busy...</source>
-        <translation type="unfinished"></translation>
+        <translation>忙...</translation>
     </message>
     <message>
         <location filename="../src/widget/callconfirmwidget.cpp" line="28"/>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
+        <translation>新来电...</translation>
     </message>
 </context>
 <context>
@@ -2127,28 +2133,28 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="14"/>
         <source>Set your password</source>
-        <translation type="unfinished"></translation>
+        <translation>设置密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="31"/>
         <source>Repeat password</source>
-        <translation type="unfinished"></translation>
+        <translation>重复输入密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="41"/>
         <source>Type password</source>
-        <translation type="unfinished"></translation>
+        <translation>输入密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="65"/>
         <source>Password strength</source>
-        <translation type="unfinished"></translation>
+        <translation>密码强度</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.cpp" line="33"/>
         <location filename="../src/widget/form/setpassworddialog.cpp" line="61"/>
         <source>The passwords don&apos;t match.</source>
-        <translation type="unfinished"></translation>
+        <translation>密码不匹配</translation>
     </message>
 </context>
 <context>
@@ -2156,12 +2162,12 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/misc/settings.cpp" line="124"/>
         <source>Choose a profile</source>
-        <translation type="unfinished">选择配置文件</translation>
+        <translation>选择配置文件</translation>
     </message>
     <message>
         <location filename="../src/misc/settings.cpp" line="125"/>
         <source>Please choose which identity to use</source>
-        <translation type="unfinished">请选择使用哪个身份</translation>
+        <translation>请选择使用哪个身份</translation>
     </message>
 </context>
 <context>
@@ -2222,7 +2228,10 @@ It will be installed when qTox restarts.</source>
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
 If unsure, press âNoâ, so that request to ToxDNS service will not be made using unsecure protocol.</source>
-        <translation type="unfinished"></translation>
+        <translation>看起来Tox不得不使用较老的tox1协议来访问你好友的Tox ID的DNS记录
+不幸的是tox1是不安全的，所以你得承受有人监听你和ToxDNS服务器之间通信的风险
+你仍然要坚持使用tox1协议吗
+如果你不确定，按“否”，这样你和ToxDNS服务器之间的通信将不会使用不安全的协议进行</translation>
     </message>
     <message>
         <source>It appears that qTox has to use the old tox1 protocol.
@@ -2423,13 +2432,13 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
         <location filename="../src/widget/widget.cpp" line="867"/>
         <source>Group invite</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>群组邀请</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="867"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1邀请你加入一个群聊，你想加入吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="922"/>
