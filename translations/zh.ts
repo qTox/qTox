@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<TS version="2.0" language="zh_CN">
 <context>
     <name>AVForm</name>
     <message>
@@ -18,7 +18,7 @@
     <name>AVSettings</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="112"/>
@@ -137,12 +137,12 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly ?</source>
-        <translation type="vanished">qTox需要使用Tox DNS,此操作无法通过代理服务器实现，是否要忽略代理服务器并直接连接互联网？</translation>
+        <translation>qTox需要使用Tox DNS,此操作无法通过代理服务器实现，是否要忽略代理服务器并直接连接互联网？</translation>
     </message>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy
 Ignore the proxy and connect to the Internet directly ?</source>
-        <translation type="vanished">qTox需要使用Tox DNS,此操作无法通过代理服务器实现，是否要忽略代理服务器并直接连接互联网？</translation>
+        <translation>qTox需要使用Tox DNS,此操作无法通过代理服务器实现，是否要忽略代理服务器并直接连接互联网？</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
@@ -153,32 +153,32 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="vanished">此地址不存在</translation>
+        <translation>此地址不存在</translation>
     </message>
     <message>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="vanished">在查找DNS时发生了错误</translation>
+        <translation>在查找DNS时发生了错误</translation>
     </message>
     <message>
         <source>Unexpected number of text records</source>
         <comment>Error with the DNS</comment>
-        <translation type="vanished">找到了不正确数量的TXT记录</translation>
+        <translation>找到了不正确数量的TXT记录</translation>
     </message>
     <message>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
-        <translation type="vanished">在TXT记录中未获得期望值</translation>
+        <translation>在TXT记录中未获得期望值</translation>
     </message>
     <message>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation type="vanished">DNS查询中没有包含任何Tox ID</translation>
+        <translation>DNS查询中没有包含任何Tox ID</translation>
     </message>
     <message>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation type="vanished">DNS查询中未包含有效Tox ID</translation>
+        <translation>DNS查询中未包含有效Tox ID</translation>
     </message>
 </context>
 <context>
@@ -280,7 +280,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     </message>
     <message>
         <source>%1 calling</source>
-        <translation type="vanished">%1 呼叫</translation>
+        <translation>%1 呼叫</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="356"/>
@@ -413,7 +413,7 @@ Do you want to try another password?</source>
     <message>
         <source>Your history is encrypted with different password
 Do you want to try another password?</source>
-        <translation type="vanished">您的历史记录文件使用不同的密码加密。
+        <translation>您的历史记录文件使用不同的密码加密。
 试试其他密码？</translation>
     </message>
     <message>
@@ -423,11 +423,11 @@ Do you want to try another password?</source>
     </message>
     <message>
         <source>Loggin</source>
-        <translation type="vanished">登陆</translation>
+        <translation>登陆</translation>
     </message>
     <message>
         <source>Due to incorret password logging will be disabled</source>
-        <translation type="vanished">密码错误，将被限制登录</translation>
+        <translation>密码错误，将被限制登录</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1354"/>
@@ -560,22 +560,22 @@ Alias:</source>
     </message>
     <message>
         <source>Alias:</source>
-        <translation type="vanished">备注名:</translation>
+        <translation>备注名:</translation>
     </message>
     <message>
         <source>Manually accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation type="vanished">手动接收好友发送的文件</translation>
+        <translation>手动接收好友发送的文件</translation>
     </message>
     <message>
         <source>Auto accept files from all friends</source>
         <comment>context menu entry</comment>
-        <translation type="vanished">自动接收好友发送的文件</translation>
+        <translation>自动接收好友发送的文件</translation>
     </message>
     <message>
         <source>Disable global auto accept</source>
         <comment>context menu entry</comment>
-        <translation type="vanished">禁止全局默认同意</translation>
+        <translation>禁止全局默认同意</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="109"/>
@@ -626,7 +626,7 @@ Alias:</source>
     <name>GeneralSettings</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="56"/>
@@ -641,7 +641,7 @@ Alias:</source>
     </message>
     <message>
         <source>Translation:</source>
-        <translation type="vanished">翻译:</translation>
+        <translation>翻译:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="89"/>
@@ -681,7 +681,7 @@ Alias:</source>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation type="vanished">自动在多久以后离开 (0为禁用):</translation>
+        <translation>自动在多久以后离开 (0为禁用):</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="224"/>
@@ -701,31 +701,31 @@ Alias:</source>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="vanished">表情包:</translation>
+        <translation>表情包:</translation>
     </message>
     <message>
         <source>:)</source>
-        <translation type="vanished">:)</translation>
+        <translation>:)</translation>
     </message>
     <message>
         <source>;)</source>
-        <translation type="vanished">:)</translation>
+        <translation>:)</translation>
     </message>
     <message>
         <source>:p</source>
-        <translation type="vanished">:p</translation>
+        <translation>:p</translation>
     </message>
     <message>
         <source>:O</source>
-        <translation type="vanished">:O</translation>
+        <translation>:O</translation>
     </message>
     <message>
         <source>:&apos;(</source>
-        <translation type="vanished">:&apos;(</translation>
+        <translation>:&apos;(</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="vanished">风格:</translation>
+        <translation>风格:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="500"/>
@@ -881,16 +881,16 @@ Alias:</source>
     <message>
         <source>This allows, e.g., toxing over Tor. It adds load to the Tox network however, so use only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="vanished">Permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire car cela ralenti le réseau Tox.</translation>
+        <translation>Permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire car cela ralenti le réseau Tox.</translation>
     </message>
     <message>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="vanished">禁用 UDP (不推荐)</translation>
+        <translation>禁用 UDP (不推荐)</translation>
     </message>
     <message>
         <source>Use proxy (SOCKS5)</source>
-        <translation type="vanished">使用代理 (SOCKS5)</translation>
+        <translation>使用代理 (SOCKS5)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="548"/>
@@ -944,19 +944,19 @@ Alias:</source>
     </message>
     <message>
         <source>Audio call</source>
-        <translation type="vanished">语音通话</translation>
+        <translation>语音通话</translation>
     </message>
     <message>
         <source>Video call</source>
-        <translation type="vanished">视频通话</translation>
+        <translation>视频通话</translation>
     </message>
     <message>
         <source>Toggle speakers volume</source>
-        <translation type="vanished">切换为扬声器</translation>
+        <translation>切换为扬声器</translation>
     </message>
     <message>
         <source>Toggle microphone</source>
-        <translation type="vanished">切换为麦克风</translation>
+        <translation>切换为麦克风</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="158"/>
@@ -1125,7 +1125,7 @@ Associated friend information and chat logs will be deleted as well.</source>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="vanished">你确定要删除这个用户配置文件吗？</translation>
+        <translation>你确定要删除这个用户配置文件吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="218"/>
@@ -1168,7 +1168,7 @@ Associated friend information and chat logs will be deleted as well.</source>
     <name>IdentitySettings</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="53"/>
@@ -1285,7 +1285,7 @@ Associated friend information and chat logs will be deleted as well.</source>
     <name>MainWindow</name>
     <message>
         <source>qTox</source>
-        <translation type="vanished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="859"/>
@@ -1324,7 +1324,7 @@ Associated friend information and chat logs will be deleted as well.</source>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="vanished">Ctrl+Q</translation>
+        <translation>Ctrl+Q</translation>
     </message>
 </context>
 <context>
@@ -1358,11 +1358,11 @@ Do you want to delete old history file?</source>
     <name>PrivacySettings</name>
     <message>
         <source>Form</source>
-        <translation type="vanished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <source>Typing Notification</source>
-        <translation type="vanished">正在输入提示</translation>
+        <translation>正在输入提示</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
@@ -1463,7 +1463,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>An update is available, do you want to download it now ?
 It will be installed when qTox restarts.</source>
-        <translation type="vanished">有新的可用升级, 确定要现在下载吗？
+        <translation>有新的可用升级, 确定要现在下载吗？
 这些更新将在qTox下次启动时被安装。</translation>
     </message>
     <message>
@@ -1511,7 +1511,7 @@ It will be installed when qTox restarts.</source>
     <name>SetPasswordDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="vanished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="23"/>
@@ -1593,7 +1593,7 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
     </message>
     <message>
         <source>Do you want to add %1 as a friend ?</source>
-        <translation type="vanished">你想加 %1 为好友吗？</translation>
+        <translation>你想加 %1 为好友吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="82"/>
@@ -1627,15 +1627,15 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
     <name>Widget</name>
     <message>
         <source>online</source>
-        <translation type="vanished">在线</translation>
+        <translation>在线</translation>
     </message>
     <message>
         <source>away</source>
-        <translation type="vanished">离开</translation>
+        <translation>离开</translation>
     </message>
     <message>
         <source>busy</source>
-        <translation type="vanished">忙碌</translation>
+        <translation>忙碌</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="92"/>
@@ -1659,7 +1659,7 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
     </message>
     <message>
         <source>Change status to:</source>
-        <translation type="vanished">更改状态为:</translation>
+        <translation>更改状态为:</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="173"/>
