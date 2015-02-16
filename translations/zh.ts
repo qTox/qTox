@@ -1005,12 +1005,12 @@ instead of system taskbar.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="220"/>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="246"/>
         <source>Set where files will be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置文件保存位置</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
         <source>Save to:</source>
-        <translation type="unfinished"></translation>
+        <translation>保存到:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
@@ -1020,69 +1020,70 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation type="unfinished"></translation>
+        <translation>你的状态将在设置的分钟无活动后被修改为离开</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
         <source>Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>聊天</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="302"/>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished"></translation>
+        <translation>一直向我提示所有群聊新消息</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
         <source>Group chats always notify</source>
-        <translation type="unfinished"></translation>
+        <translation>提醒所有群聊消息</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="319"/>
         <source>On new message:</source>
-        <translation type="unfinished"></translation>
+        <translation>当收到新消息：</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="331"/>
         <source>Show qTox&apos;s window when you receive new message.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>当收到消息时打开qTox窗口</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="334"/>
         <source>Show window</source>
-        <translation type="unfinished"></translation>
+        <translation>显示窗口</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="341"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>当收到消息时将qTox窗口设为活动窗口</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
         <source>Focus window</source>
-        <translation type="unfinished"></translation>
+        <translation>设为活动窗口</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="366"/>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they will appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>你在好友离线时试图发送的消息将在他们对你显示在线时发送</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
         <source>Your contact list will be shown in compact mode.
 qTox&apos;s restart needed.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>你的联系人列表将被以紧缩格式显示
+qTox重启后生效</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="381"/>
         <source>Compact contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>紧缩显示联系人列表</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
@@ -1098,18 +1099,18 @@ qTox&apos;s restart needed.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="495"/>
         <source>Emoticon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>表情大小</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="641"/>
         <source>Proxy type:</source>
-        <translation type="unfinished"></translation>
+        <translation>代理服务器类型</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="648"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>代理服务器地址</translation>
     </message>
     <message>
         <source>:)</source>
@@ -1139,12 +1140,12 @@ qTox&apos;s restart needed.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="544"/>
         <source>Theme color:</source>
-        <translation type="unfinished"></translation>
+        <translation>主题颜色</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="561"/>
         <source>Timestamp format:</source>
-        <translation type="unfinished"></translation>
+        <translation>时间戳格式</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="600"/>
@@ -1376,7 +1377,7 @@ qTox&apos;s restart needed.</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="298"/>
         <source>Not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>未发送</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="331"/>
@@ -1604,7 +1605,8 @@ Associated friend information and chat logs will be deleted as well.</source>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>这组字符告诉其他Tox客户端如何与你联系
+将它共享给你的朋友来进行Tox通信</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="92"/>
@@ -1625,13 +1627,13 @@ Share it with your friends to communicate.</source>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="117"/>
         <source>Currently selected profile.</source>
         <comment>toolTip for currently set profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>当前选择的配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="134"/>
         <source>Load selected profile and switch to it.</source>
         <comment>tooltip for loading profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>加载选择的配置文件并切换到它</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="137"/>
@@ -1654,7 +1656,7 @@ Share it with your friends to communicate.</source>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="147"/>
         <source>Rename selected profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>重命名选择的配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="154"/>
@@ -1667,13 +1669,14 @@ Share it with your friends to communicate.</source>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation type="unfinished"></translation>
+        <translation>导出你的Tox配置文件到一个独立文件
+配置文件不包含你的历史记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="165"/>
         <source>Delete selected profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>删除配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="168"/>
@@ -1696,13 +1699,13 @@ Profile does not contain your history.</source>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="182"/>
         <source>Import Tox profile from a .tox file.</source>
         <comment>tooltip for importing profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>从一个.tox中导入Tox用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="189"/>
         <source>Create new Tox ID and switch to it.</source>
         <comment>tooltip for creating new Tox ID button</comment>
-        <translation type="unfinished"></translation>
+        <translation>创建一个新的Tox ID并切换至它</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="192"/>
@@ -1808,37 +1811,37 @@ Profile does not contain your history.</source>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="78"/>
         <source>Please set your new chat history password.</source>
-        <translation type="unfinished"></translation>
+        <translation>请设置你的新聊天记录密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="80"/>
         <source>It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.</source>
-        <translation type="unfinished"></translation>
+        <translation>看起来你有一个未被使用的加密聊天记录，如果密码正确，它将被导入你现有的历史记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="83"/>
         <source>Use data file password</source>
         <comment>pushbutton text</comment>
-        <translation type="unfinished"></translation>
+        <translation>使用数据文件密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="110"/>
         <source>Successfully decrypted old chat history</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>成功解密旧的聊天记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="110"/>
         <source>You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>你成功解密了旧的聊天记录，它已被加入你现有的聊天记录并被重新加密</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
         <source>Old encrypted chat history</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>旧的加密聊天记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
@@ -1847,53 +1850,57 @@ Profile does not contain your history.</source>
 If you don&apos;t care about the old history, you may click Ok to delete it and use the password you just entered.
 Otherwise, hit cancel to try again.</source>
         <comment>This happens when enabling encryption after previously &quot;Disabling History&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>现在有一个未被使用的加密聊天记录，但是你输入的密码不正确
+
+如果你不在乎你的旧聊天记录，你可以点Ok来删除它，使用你刚才输入的密码
+否则请点击Cancel以重试</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
         <source>Are you absolutely sure you want to lose the unused encrypted chat history?</source>
         <comment>secondary popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>你确定你想失去未使用的加密聊天记录吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="147"/>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="164"/>
         <source>Old encrypted chat history</source>
         <comment>title</comment>
-        <translation type="unfinished"></translation>
+        <translation>旧的加密聊天记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="148"/>
         <source>Would you like to decrypt your chat history?
 Otherwise it will be deleted.</source>
-        <translation type="unfinished"></translation>
+        <translation>你想要解密你的聊天记录吗？
+否则它将被删除</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="165"/>
         <source>Are you sure you want to lose your entire chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>你确定你想要失去当前的聊天记录吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="197"/>
         <source>Please set your new data file password.</source>
-        <translation type="unfinished"></translation>
+        <translation>请设置新的数据文件密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="199"/>
         <source>Use chat history password</source>
         <comment>pushbutton text</comment>
-        <translation type="unfinished"></translation>
+        <translation>使用聊天记录密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
         <source>Decrypt your data file</source>
         <comment>title</comment>
-        <translation type="unfinished"></translation>
+        <translation>解密你的数据文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
         <source>Would you like to decrypt your data file?</source>
-        <translation type="unfinished"></translation>
+        <translation>你想要解密的数据文件吗</translation>
     </message>
     <message>
         <source>Encrypted log</source>
@@ -1919,7 +1926,7 @@ Do you want to delete old history file?</source>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="47"/>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>你的好友将看到你“正在输入”的提示</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
@@ -1931,38 +1938,39 @@ Do you want to delete old history file?</source>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>聊天记录的保存仍然在开发中
+保存格式的更改是有可能的，这意味着数据丢失</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
         <source>Keep chat history (mostly stable)</source>
-        <translation type="unfinished"></translation>
+        <translation>保存聊天记录（通常是稳定的）</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
         <source>Local file encryption</source>
-        <translation type="unfinished"></translation>
+        <translation>本地文件加密</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
         <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
-        <translation type="unfinished"></translation>
+        <translation>网络上所有的Tox通讯都是加密的，并且这不能被关闭，但是你可以选择是否为本地的Tox文件设置密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
         <source>Encrypt Tox data file</source>
-        <translation type="unfinished"></translation>
+        <translation>加密Tox数据文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="123"/>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation>更改密码</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="113"/>
         <source>Encrypt chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>加密聊天历史记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="138"/>
@@ -1971,7 +1979,10 @@ It is there to help you change your Tox ID when you feel like you are getting to
 When you change nospam, your current contacts still can communicate with you,
 but new contacts need to know your new Tox ID to be able to add you.</source>
         <comment>toolTip for nospam</comment>
-        <translation type="unfinished"></translation>
+        <translation>反垃圾是你Tox ID的一部分
+这将在你收到大量垃圾好友请求是帮助你更改你的Tox ID
+当你修改了反垃圾之后，你当前的好友依然可以与你通信
+但是新的联系人需要得到你新的Tox ID后才能添加你为好友</translation>
     </message>
     <message>
         <source>Keep History (unstable)</source>
