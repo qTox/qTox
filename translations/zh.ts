@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AVForm</name>
     <message>
@@ -305,12 +305,12 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="853"/>
         <source>Call with %1 ended. %2</source>
-        <translation>Appel avec %1 terminé. %2</translation>
+        <translation>与 %1 的通话结束. %2</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="872"/>
         <source>Call duration: </source>
-        <translation>Durée de l&apos;appel:</translation>
+        <translation>通话时长:</translation>
     </message>
 </context>
 <context>
@@ -318,7 +318,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/tool/chattextedit.cpp" line="23"/>
         <source>Type your message here...</source>
-        <translation>Entrez votre message ici...</translation>
+        <translation>在这里输入将要发送的消息...</translation>
     </message>
 </context>
 <context>
@@ -326,118 +326,118 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/core.cpp" line="234"/>
         <source>Toxing on qTox</source>
-        <translation>Je Tox sur qTox</translation>
+        <translation>使用qTox与他人交流</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="235"/>
         <source>qTox User</source>
-        <translation>Utilisateur de qTox</translation>
+        <translation>qTox用户</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="739"/>
         <source>Friend is already added</source>
-        <translation>Ce contact est déjà dans vos contacts</translation>
+        <translation>已成功添加好友</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1180"/>
         <source>Encryption error</source>
-        <translation>Erreur de chiffrement</translation>
+        <translation>加密失败</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1180"/>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
-        <translation>Le fichier .tox est chiffré, mais le chiffrement n&apos;a pas été activé. Le problème sera ignoré.</translation>
+        <translation>.tox文件是加密的，但并没有被激活。这个问题将被忽略。</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1187"/>
         <source>Tox datafile decryption password</source>
-        <translation>Mot de passe des données Tox</translation>
+        <translation>Tox数据文件解密密码</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1189"/>
         <location filename="../src/core.cpp" line="1201"/>
         <location filename="../src/core.cpp" line="1265"/>
         <source>Password error</source>
-        <translation>Mot de passe invalide</translation>
+        <translation>密码错误</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1189"/>
         <location filename="../src/core.cpp" line="1265"/>
         <source>Failed to setup password.
 Empty password.</source>
-        <translation>Impossible de mettre en place le mot de passe.
-Le mot de passe est vide.</translation>
+        <translation>设置密码失败
+密码为空</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1197"/>
         <source>Try Again</source>
-        <translation>Réessayer</translation>
+        <translation>重试</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1198"/>
         <source>Change profile</source>
-        <translation>Changer de profil</translation>
+        <translation>改变用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1199"/>
         <source>Reinit current profile</source>
-        <translation>Réinitialiser le profil courant</translation>
+        <translation>初始化用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1202"/>
         <source>Wrong password has been entered</source>
-        <translation>Un mauvais mot de passe a été entré</translation>
+        <translation>密码输入错误</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1263"/>
         <source>History Log decryption password</source>
-        <translation>Mot de passe de l&apos;historique</translation>
+        <translation>历史解密密码记录</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1271"/>
         <source>Your history is encrypted with different password.
 Do you want to try another password?</source>
-        <translation>Votre historique est chiffré avec un mot de passe différent.
-Voulez-vous essayer un autre mot de passe?</translation>
+        <translation>您的历史记录文件使用不同的密码加密。
+试试其他密码？</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1281"/>
         <source>History</source>
-        <translation>Historique</translation>
+        <translation>历史记录</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1281"/>
         <source>Due to incorret password history will be disabled.</source>
-        <translation>L&apos;historique va être désactivé à cause d&apos;&apos;un mauvais mot de passe.</translation>
+        <translation>密码错误，密码记录将被禁用</translation>
     </message>
     <message>
         <source>Your history is encrypted with different password
 Do you want to try another password?</source>
-        <translation type="vanished">Votre historique de conversation est chiffré avec un autre mot de passe
-Voulez-vous essayer un mot de passe différent?</translation>
+        <translation type="vanished">您的历史记录文件使用不同的密码加密。
+试试其他密码？</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1270"/>
         <source>Encrypted log</source>
-        <translation>Historique chiffré</translation>
+        <translation>加密记录</translation>
     </message>
     <message>
         <source>Loggin</source>
-        <translation type="vanished">Historique</translation>
+        <translation type="vanished">登陆</translation>
     </message>
     <message>
         <source>Due to incorret password logging will be disabled</source>
-        <translation type="vanished">Due à l&apos;utilisation d&apos;un mauvais mot de passe, l&apos;historique sera désactivé</translation>
+        <translation type="vanished">密码错误，将被限制登录</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1354"/>
         <source>NO Password</source>
-        <translation>PAS de mot de passe</translation>
+        <translation>无密码</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="1354"/>
         <source>Will be saved without encryption!</source>
-        <translation>L&apos;historique sera sauvegardé sans être chiffré !</translation>
+        <translation>将保存未加密结果 !</translation>
     </message>
 </context>
 <context>
@@ -446,19 +446,19 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/filetransferinstance.cpp" line="239"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation>Sauvegarder un fichier</translation>
+        <translation>保存文件</translation>
     </message>
     <message>
         <location filename="../src/filetransferinstance.cpp" line="248"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Impossible d&apos;écrire ici</translation>
+        <translation>目录不可写</translation>
     </message>
     <message>
         <location filename="../src/filetransferinstance.cpp" line="249"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Vous n&apos;avez pas la permission d&apos;écrire ici. Choisissez un audre endroit, ou annulez.</translation>
+        <translation>您没有写入此目录的权限。请选择其他目录或取消保存对话。</translation>
     </message>
     <message>
         <location filename="../src/filetransferinstance.cpp" line="425"/>
@@ -477,12 +477,12 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="38"/>
         <source>Downloads</source>
-        <translation>Téléchargements</translation>
+        <translation>下载</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="39"/>
         <source>Uploads</source>
-        <translation>Envois</translation>
+        <translation>上传</translation>
     </message>
 </context>
 <context>
@@ -491,34 +491,34 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="30"/>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Demande de contact</translation>
+        <translation>好友请求</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="32"/>
         <source>Someone wants to make friends with you</source>
-        <translation>Quelqu&apos;un vient de vous ajouter dans sa liste de contacts</translation>
+        <translation>有用户想要添加您为好友</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
         <source>User ID:</source>
-        <translation>ID utilisateur:</translation>
+        <translation>用户ID:</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="37"/>
         <source>Friend request message:</source>
-        <translation>Message au sujet de la demande:</translation>
+        <translation>好友请求信息:</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="44"/>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation>Accepter</translation>
+        <translation>同意</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="45"/>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation>Rejeter</translation>
+        <translation>拒绝</translation>
     </message>
 </context>
 <context>
@@ -527,67 +527,67 @@ Voulez-vous essayer un mot de passe différent?</translation>
         <location filename="../src/widget/friendwidget.cpp" line="55"/>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation>Inviter au groupe</translation>
+        <translation>邀请加入群组</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="56"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
-        <translation>Copier l&apos;ID du contact</translation>
+        <translation>复制好友ID</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="68"/>
         <source>Set alias...</source>
-        <translation>Utiliser un alias...</translation>
+        <translation>添加备注名...</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="71"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Automatiquement accepter les fichiers de ce contact</translation>
+        <translation>自动接收好友发送的文件</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="238"/>
         <source>User alias</source>
-        <translation>Alias utilisateur</translation>
+        <translation>用户备注名</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="238"/>
         <source>You can also set this by clicking the chat form name.
 Alias:</source>
-        <translation>Vous pouvez aussi modifier ceci en cliquant sur le nom dans le chat.
-Alias:</translation>
+        <translation>你可以设置点击名称开始聊天。
+备注名:</translation>
     </message>
     <message>
         <source>Alias:</source>
-        <translation type="vanished">Alias:</translation>
+        <translation type="vanished">备注名:</translation>
     </message>
     <message>
         <source>Manually accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation type="vanished">Accepter les fichiers de ce contact manuellement</translation>
+        <translation type="vanished">手动接收好友发送的文件</translation>
     </message>
     <message>
         <source>Auto accept files from all friends</source>
         <comment>context menu entry</comment>
-        <translation type="vanished">Accepter les fichiers de tous les contacts automatiquement</translation>
+        <translation type="vanished">自动接收好友发送的文件</translation>
     </message>
     <message>
         <source>Disable global auto accept</source>
         <comment>context menu entry</comment>
-        <translation type="vanished">Désactiver le téléchargement automatique de fichiers</translation>
+        <translation type="vanished">禁止全局默认同意</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="109"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Choisir un dossier de téléchargement</translation>
+        <translation>选择默认接收目录</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="76"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Supprimer ce contact</translation>
+        <translation>删除好友</translation>
     </message>
 </context>
 <context>
@@ -595,19 +595,19 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="39"/>
         <source>General</source>
-        <translation>Général</translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="82"/>
         <location filename="../src/widget/form/settings/generalform.cpp" line="88"/>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation>无</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="244"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Choisir un dossier de téléchargement</translation>
+        <translation>选择默认接收目录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="301"/>
@@ -619,7 +619,7 @@ Alias:</translation>
         <location filename="../src/widget/form/settings/generalform.cpp" line="302"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Vous ne pouvez pas vous déconnecter avec un appel en cours !</translation>
+        <translation>你不能再通话期间关闭连接!</translation>
     </message>
 </context>
 <context>
@@ -631,48 +631,48 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="56"/>
         <source>General Settings</source>
-        <translation>Options Générales</translation>
+        <translation>一般设定</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="64"/>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="80"/>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>La traduction peut ne pas prendre effet immédiatement. Redémarrez qTox si ce n&apos;est pas le cas.</translation>
+        <translation>翻译将在qTox重启后生效。</translation>
     </message>
     <message>
         <source>Translation:</source>
-        <translation type="vanished">Traduction:</translation>
+        <translation type="vanished">翻译:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="89"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Sauvegarde les options dans le dossier courant au lieu du dossier de configuration habituel</translation>
+        <translation>保存设置到工作目录而不是常用目录。</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="92"/>
         <source>Make Tox portable</source>
-        <translation>Rendre Tox portable</translation>
+        <translation>开启简洁Tox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="123"/>
         <source>Start in tray</source>
-        <translation>Démarrer dans la barre d&apos;état</translation>
+        <translation>在状态栏启动</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="136"/>
         <source>Close to tray</source>
-        <translation>Fermer dans la barre d&apos;état</translation>
+        <translation>从状态栏关闭</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="149"/>
         <source>Minimize to tray</source>
-        <translation>Minimiser dans la barre d&apos;état</translation>
+        <translation>最小化到状态栏</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="168"/>
         <source>Show contacts&apos; status changes</source>
-        <translation>Montrer les changements de status des contacts</translation>
+        <translation>显示联系人状态变化</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="205"/>
@@ -681,12 +681,12 @@ Alias:</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation type="vanished">Se rendre absent après (0 pour désactiver):</translation>
+        <translation type="vanished">自动在多久以后离开 (0为禁用):</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="224"/>
         <source>Set to 0 to disable</source>
-        <translation>Mettre à 0 pour désactiver</translation>
+        <translation>设置0为禁用</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="230"/>
@@ -696,12 +696,12 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="292"/>
         <source>Theme</source>
-        <translation>Thème</translation>
+        <translation>主题</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="vanished">Pack de smileys:</translation>
+        <translation type="vanished">表情包:</translation>
     </message>
     <message>
         <source>:)</source>
@@ -725,23 +725,23 @@ Alias:</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="vanished">Style:</translation>
+        <translation type="vanished">风格:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="500"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Activer UDP (recommandé)</translation>
+        <translation>允许 UDP (推荐)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="509"/>
         <source>Proxy type</source>
-        <translation>Type de proxy</translation>
+        <translation>代理类型</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="523"/>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation>无</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="528"/>
@@ -757,17 +757,17 @@ Alias:</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="577"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Se reconnecter</translation>
+        <translation>重新连接</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="478"/>
         <source>Connection Settings</source>
-        <translation>Options de réseau</translation>
+        <translation>连接设置</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="67"/>
         <source>Translation</source>
-        <translation>Traduction</translation>
+        <translation>翻译</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="99"/>
@@ -782,79 +782,79 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="158"/>
         <source>Light icon</source>
-        <translation>Ic?ne claire</translation>
+        <translation>点亮图标</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="175"/>
         <source>Check for updates on startup (unstable)</source>
-        <translation>Chercher des mises à jour au démarrage (instable)</translation>
+        <translation>启动时检查更新 (不稳定)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="182"/>
         <source>Focus qTox when a message is received</source>
-        <translation>Montrer la fênetre qTox quand un message est re?u</translation>
+        <translation>收到消息时显示qTox提示</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="189"/>
         <source>Faux offline messaging</source>
-        <translation>Retransmettre les messages en cas d&apos;échec</translation>
+        <translation>伪造离线消息</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
         <source>Compact layout</source>
-        <translation>Agencement compact</translation>
+        <translation>紧凑布局</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="211"/>
         <source>Auto away after (0 to disable)</source>
-        <translation>Indisponible après (0 désactive)</translation>
+        <translation>自动在多久后离开 (0为禁用)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="247"/>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Vous pouvez regler ceci pour chaque contact avec un clique-droit sur leur nom.</translation>
+        <translation>你可以通过右键点击他们来设置。</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="250"/>
         <source>Autoaccept files</source>
-        <translation>Auto-accepter les fichiers</translation>
+        <translation>自动同意文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="259"/>
         <source>Save files in</source>
-        <translation>Sauvegarder les fichiers vers</translation>
+        <translation>保存文件到</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="272"/>
         <source>PushButton</source>
-        <translation>PushButton</translation>
+        <translation>发送按钮</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="298"/>
         <source>Use emoticons</source>
-        <translation>Utiliser les émoticones</translation>
+        <translation>使用表情</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="316"/>
         <source>Smiley Pack</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Pack de smileys</translation>
+        <translation>表情包</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="390"/>
         <source>Style</source>
-        <translation>Style</translation>
+        <translation>风格</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="407"/>
         <source>Theme color</source>
-        <translation>Couleur du thème</translation>
+        <translation>主题颜色</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="424"/>
         <source>Emoticon size</source>
-        <translation>Taille d&apos;émoticone</translation>
+        <translation>表情大小</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="440"/>
@@ -864,13 +864,13 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="456"/>
         <source>Timestamp format</source>
-        <translation>Format de timestamp</translation>
+        <translation>时间格式</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="490"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Activer IPv6 (recommandé)</translation>
+        <translation>允许 IPv6 (推荐)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="497"/>
@@ -886,23 +886,23 @@ Alias:</translation>
     <message>
         <source>Disable UDP (not recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="vanished">Désactiver UDP (non recommandé)</translation>
+        <translation type="vanished">禁止 UDP (不推荐)</translation>
     </message>
     <message>
         <source>Use proxy (SOCKS5)</source>
-        <translation type="vanished">Utiliser un proxy (SOCKS5)</translation>
+        <translation type="vanished">使用代理 (SOCKS5)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="548"/>
         <source>Address</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation>Addresse</translation>
+        <translation>地址</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="558"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Port</translation>
+        <translation>端口</translation>
     </message>
 </context>
 <context>
@@ -910,69 +910,69 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="71"/>
         <source>Send message</source>
-        <translation>Envoyer un message</translation>
+        <translation>发送消息</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="73"/>
         <source>Smileys</source>
-        <translation>émotic?nes</translation>
+        <translation>表情</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="77"/>
         <source>Send file(s)</source>
-        <translation>Envoyer des fichiers</translation>
+        <translation>发送文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
         <source>Audio call: RED means you&apos;re on a call</source>
-        <translation>Appel audio: ROUGE veut dire en cours d&apos;appel</translation>
+        <translation>语音通话： 红色代表正在通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="83"/>
         <source>Video call: RED means you&apos;re on a call</source>
-        <translation>Appel vidéo: ROUGE veut dire en cours d&apos;appel</translation>
+        <translation>视频通话： 红色代表正在通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="86"/>
         <source>Toggle speakers volume: RED is OFF</source>
-        <translation>Changer volume des haut-parleurs: ROUGE veut dire ETEINT</translation>
+        <translation>切换为扬声器：红色为关闭</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="89"/>
         <source>Toggle microphone: RED is OFF</source>
-        <translation>Changer état du micrphone: ROUGE veut dire ETEINT</translation>
+        <translation>切换为麦克风： 红色为关闭</translation>
     </message>
     <message>
         <source>Audio call</source>
-        <translation type="vanished">Appel audio</translation>
+        <translation type="vanished">语音通话</translation>
     </message>
     <message>
         <source>Video call</source>
-        <translation type="vanished">Appel vidéo</translation>
+        <translation type="vanished">视频通话</translation>
     </message>
     <message>
         <source>Toggle speakers volume</source>
-        <translation type="vanished">Couper les haut-parleurs</translation>
+        <translation type="vanished">切换为扬声器</translation>
     </message>
     <message>
         <source>Toggle microphone</source>
-        <translation type="vanished">Couper le microphone</translation>
+        <translation type="vanished">切换为麦克风</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="158"/>
         <location filename="../src/widget/form/genericchatform.cpp" line="201"/>
         <source>Save chat log</source>
-        <translation>Sauvegarder l&apos;historique de conversation</translation>
+        <translation>保存聊天记录</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="159"/>
         <source>Clear displayed messages</source>
-        <translation>Effacer les messages affichés</translation>
+        <translation>清屏</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="306"/>
         <source>Cleared</source>
-        <translation>Effacé</translation>
+        <translation>已清除</translation>
     </message>
 </context>
 <context>
@@ -981,12 +981,12 @@ Alias:</translation>
         <location filename="../src/widget/form/groupchatform.cpp" line="57"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>%1 personnes</translation>
+        <translation>%1 人正在聊天</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="108"/>
         <source>%1 users in chat</source>
-        <translation>%1 personnes</translation>
+        <translation>%1 人正在聊天</translation>
     </message>
 </context>
 <context>
@@ -995,36 +995,36 @@ Alias:</translation>
         <location filename="../src/widget/groupwidget.cpp" line="43"/>
         <location filename="../src/widget/groupwidget.cpp" line="80"/>
         <source>%1 users in chat</source>
-        <translation>%1 personnes</translation>
+        <translation>%1 人正在聊天</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="45"/>
         <location filename="../src/widget/groupwidget.cpp" line="82"/>
         <source>0 users in chat</source>
-        <translation>Le groupe est vide</translation>
+        <translation>没有人在聊天</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="54"/>
         <source>Set title...</source>
-        <translation>Changer le titre...</translation>
+        <translation>设置名称...</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="55"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
-        <translation>Quitter le groupe</translation>
+        <translation>退出群组</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="67"/>
         <source>Group title</source>
-        <translation>Titre du groupe</translation>
+        <translation>群组名称</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="67"/>
         <source>You can also set this by clicking the chat form name.
 Title:</source>
-        <translation>Vous pouvez aussi changer ceci en cliquant sur le nom du chat.
-Titre:</translation>
+        <translation>你也可以通过点击聊天窗口名称来设置。
+标题:</translation>
     </message>
 </context>
 <context>
@@ -1032,7 +1032,7 @@ Titre:</translation>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="35"/>
         <source>Identity</source>
-        <translation>Identité</translation>
+        <translation>身份</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="132"/>
@@ -1044,124 +1044,124 @@ Titre:</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="133"/>
         <source>You can&apos;t switch profiles while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Vous ne pouvez pas changer de profil quand un appel est en cours !</translation>
+        <translation>你不能在通话期间更改用户配置文件!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="143"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation>Renommer &quot;%1&quot;</translation>
+        <translation>重命名 &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="151"/>
         <source>Profile already exists</source>
         <comment>rename confirm title</comment>
-        <translation>Ce profil existe déjà</translation>
+        <translation>用户配置文件已存在</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="152"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>rename confirm text</comment>
-        <translation>Un profil appelé &quot;%1&quot; existe déjà. Voulez-vous le supprimer ?</translation>
+        <translation>用户配置文件 &quot;%1&quot; 已存在。 确定要覆盖它吗 ?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="166"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
-        <translation>Exporter le profil</translation>
+        <translation>导出用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="168"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation>Fichier sauvegarde Tox (*.tox)</translation>
+        <translation>Tox文件 (*.tox)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="180"/>
         <source>Failed to remove file</source>
-        <translation>Impossible de supprimer le fichier</translation>
+        <translation>删除文件失败</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="180"/>
         <source>The file you chose to overwrite could not be removed first.</source>
-        <translation>Le fichier que vous avez choisi d&apos;écraser n&apos;as pas pu être supprimé.</translation>
+        <translation>您选择要覆盖的文件不能被删除。</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
         <source>Failed to copy file</source>
-        <translation>Impossible de copier le fichier</translation>
+        <translation>复制文件失败</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="186"/>
         <source>The file you chose could not be written to.</source>
-        <translation>Le fichier que vous avez choisi n&apos;es pas disponible en écriture.</translation>
+        <translation>您选择的文件不可被写入。</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="194"/>
         <source>Profile currently loaded</source>
         <comment>current profile deletion warning title</comment>
-        <translation>Profil en cours d&apos;utilisation</translation>
+        <translation>用户配置文件已载入</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="194"/>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
-        <translation>Ce profil est en cours d&apos;utilisation. Merci de choisir un autre profil avant de supprimer celui-ci.</translation>
+        <translation>此用户配置文件正被使用。请在删除前载入另一用户配置文件。</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="198"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation>Suppression imminente !</translation>
+        <translation>确认删除吗！</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="199"/>
         <source>Are you sure you want to delete this profile?
 Associated friend information and chat logs will be deleted as well.</source>
         <comment>deletion confirmation text</comment>
-        <translation>êtes-vous sur de vouloir supprimer ce profil ?
-Les informations des contacts et historique associés vont être perdu.</translation>
+        <translation>你确定要删除这个用户配置文件吗？
+相关的好友信息和聊天记录也将被删除。</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="vanished">êtes-vous sur de vouloir supprimer ce profil ?</translation>
+        <translation type="vanished">你确定要删除这个用户配置文件吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="218"/>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation>Importer un profil</translation>
+        <translation>导入用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="220"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation>Fichier sauvegarde Tox (*.tox)</translation>
+        <translation>Tox文件 (*.tox)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="230"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>Fichier incompatible avec Tox ignoré</translation>
+        <translation>忽略非Tox文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="231"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attention: Vous avez sélectionné un fichier qui n&apos;est pas une sauvegarde Tox, il sera ignoré.</translation>
+        <translation>警告: 您当前选择的文件不是Tox文件；忽略。</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="237"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation>Ce profil existe déjà</translation>
+        <translation>用户配置文件已存在</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="238"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Un profil appelé &quot;%1&quot; existe déjà. Voulez-vous le supprimer ?</translation>
+        <translation>用户配置文件 &quot;%1&quot; 已存在. 你确定要覆盖它吗？</translation>
     </message>
 </context>
 <context>
@@ -1173,86 +1173,86 @@ Les informations des contacts et historique associés vont être perdu.</transla
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="53"/>
         <source>Public Information</source>
-        <translation>Informations Publiques</translation>
+        <translation>公开信息</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="59"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="69"/>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation>状态</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="82"/>
         <source>Tox ID</source>
-        <translation>ID Tox</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="88"/>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Votre Tox ID (cliquez pour copier)</translation>
+        <translation>你的 Tox ID (点击复制)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="98"/>
         <source>Profiles</source>
-        <translation>Profils</translation>
+        <translation>用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="106"/>
         <source>Available profiles:</source>
-        <translation>Profils disponibles:</translation>
+        <translation>可用用户配置文件:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="130"/>
         <source>Load</source>
         <comment>load profile button</comment>
-        <translation>Charger</translation>
+        <translation>加载</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="127"/>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="172"/>
         <source>Switching profiles is disabled during calls</source>
         <comment>tooltip</comment>
-        <translation>Changement de profil désactivé pendant un appel</translation>
+        <translation>通话期间不能更改用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="137"/>
         <source>Rename</source>
         <comment>rename profile button</comment>
-        <translation>Renommer</translation>
+        <translation>重命名</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="144"/>
         <source>Export</source>
         <comment>export profile button</comment>
-        <translation>Exporter</translation>
+        <translation>导出</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="154"/>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation>Supprimer</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="151"/>
         <source>This is useful to remain safe on public computers</source>
         <comment>delete profile button tooltip</comment>
-        <translation>Utile pour rester en sécurité sur un ordinateur public</translation>
+        <translation>在公用电脑上保证安全</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="165"/>
         <source>Import a profile</source>
         <comment>import profile button</comment>
-        <translation>Importer un profil</translation>
+        <translation>导入用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="175"/>
         <source>New Tox ID</source>
         <comment>new profile button</comment>
-        <translation>Nouvel Tox ID</translation>
+        <translation>新 Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1429,7 +1429,7 @@ Do you want to delete old history file?</source>
         <location filename="../src/widget/toxsave.cpp" line="71"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>一个叫&quot;%1&quot;的Profile已经存在，你想要擦除它吗？</translation>
+        <translation>一个叫&quot;%1&quot;的用户配置文件已经存在，你想要擦除它吗？</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="77"/>
@@ -1451,30 +1451,30 @@ Do you want to delete old history file?</source>
         <location filename="../src/autoupdate.cpp" line="457"/>
         <source>Update</source>
         <comment>The title of a message box</comment>
-        <translation>Mise à jour</translation>
+        <translation>升级</translation>
     </message>
     <message>
         <location filename="../src/autoupdate.cpp" line="458"/>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
-        <translation>Une mise à jour est disponible, voulez vous la télécharger maintenant?
-Elle sera installée au prochain démarrage de qTox.</translation>
+        <translation>有新的可用升级, 确定要现在下载吗？
+这些更新将在qTox下次启动时被安装。</translation>
     </message>
     <message>
         <source>An update is available, do you want to download it now ?
 It will be installed when qTox restarts.</source>
-        <translation type="vanished">Une mise à jour est disponible, voulez vous la télécharger maintenant ?
-Elle sera installée au prochain démarrage de qTox.</translation>
+        <translation type="vanished">有新的可用升级, 确定要现在下载吗？
+这些更新将在qTox下次启动时被安装。</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="68"/>
         <source>Tox URI to parse</source>
-        <translation>URL Tox à utiliser</translation>
+        <translation>Tox URI 解析</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="69"/>
         <source>Starts new instance and loads specified profile.</source>
-        <translation>Démarrer une nouvelle instance et charger le profil spécifié.</translation>
+        <translation>开始一个新的实例并加载指定的配置文件。</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="69"/>
@@ -1614,85 +1614,85 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
         <location filename="../src/widget/toxuri.cpp" line="92"/>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation>Envoyer</translation>
+        <translation>发送</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="93"/>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation>Annuler</translation>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
         <source>online</source>
-        <translation type="vanished">connecté</translation>
+        <translation type="vanished">在线</translation>
     </message>
     <message>
         <source>away</source>
-        <translation type="vanished">absent</translation>
+        <translation type="vanished">离开</translation>
     </message>
     <message>
         <source>busy</source>
-        <translation type="vanished">occupé</translation>
+        <translation type="vanished">忙碌</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="92"/>
         <source>Online</source>
-        <translation>Connecté</translation>
+        <translation>在线</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="95"/>
         <source>Away</source>
-        <translation>Absent</translation>
+        <translation>离开</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="98"/>
         <source>Busy</source>
-        <translation>Occupé</translation>
+        <translation>忙碌</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="101"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Quitter</translation>
+        <translation>&amp;退出</translation>
     </message>
     <message>
         <source>Change status to:</source>
-        <translation type="vanished">Changer le status par:</translation>
+        <translation type="vanished">更改状态为:</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="173"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>Connecté</translation>
+        <translation>在线</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="175"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Absent</translation>
+        <translation>离开</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="177"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Occupé</translation>
+        <translation>忙碌</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="431"/>
         <source>Choose a profile</source>
-        <translation>Choisir un profil</translation>
+        <translation>选择配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="432"/>
         <source>Please choose which identity to use</source>
-        <translation>Merci de choisir l&apos;identité à utiliser</translation>
+        <translation>请选择使用哪个身份</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="453"/>
         <source>Choose a profile picture</source>
-        <translation>Choisissez une image de profil</translation>
+        <translation>选择头像</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="460"/>
