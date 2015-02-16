@@ -91,6 +91,7 @@ protected:
     QPushButton *sendButton;
     ChatLog *chatWidget;
     QDateTime earliestMessage;
+    QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
     bool audioInputFlag;
     bool audioOutputFlag;
 };
