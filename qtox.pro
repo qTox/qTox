@@ -62,9 +62,11 @@ contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 	INCLUDEPATH += "/usr/include/gtk-2.0"
 	INCLUDEPATH += "/usr/include/glib-2.0"
 	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
 	INCLUDEPATH += "/usr/include/cairo"
 	INCLUDEPATH += "/usr/include/pango-1.0"
 	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
 	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
 	INCLUDEPATH += "/usr/include/atk-1.0"
 	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
@@ -160,7 +162,7 @@ win32 {
             }
 
             contains(JENKINS, YES) {
-                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -s
+                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -lgobject-2.0 -lappindicator -lgtk-x11-2.0 -s
             }
         }
     }
