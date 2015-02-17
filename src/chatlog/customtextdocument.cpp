@@ -38,7 +38,7 @@ QVariant CustomTextDocument::loadResource(int type, const QUrl &name)
     if (type == QTextDocument::ImageResource && name.scheme() == "key")
     {
         QSize size = QSize(Settings::getInstance().getEmojiFontPointSize(),Settings::getInstance().getEmojiFontPointSize());
-        QString fileName = name.toString().mid(4);
+        QString fileName = QUrl::fromPercentEncoding(name.toEncoded()).mid(4).toHtmlEscaped();
 
         return SmileyPack::getInstance().getAsIcon(fileName).pixmap(size);
     }

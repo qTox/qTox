@@ -897,5 +897,6 @@
         <file>TwitterEmojiSVG/1f1f7-1f1fa.svg</file>
         <file>TwitterEmojiSVG/1f1fa-1f1f8.svg</file>
         <file>TwitterEmojiSVG/emoticons.xml</file>
+	<file>TwitterEmojiSimple/emoticons.xml</file>
     </qresource>
 </RCC>

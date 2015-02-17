@@ -753,7 +753,7 @@ void ChatForm::onAvatarRemoved(int FriendId)
 
 void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 {
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime now = historyBaselineDate.addMSecs(-1);
 
     if (since > now)
         return;

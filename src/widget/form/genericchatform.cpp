@@ -331,6 +331,7 @@ void GenericChatForm::clearChatArea(bool notinform)
         addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
 
     earliestMessage = QDateTime(); //null
+    historyBaselineDate = QDateTime::currentDateTime();
 
     emit chatAreaCleared();
 }

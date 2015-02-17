@@ -60,7 +60,6 @@ public:
 protected:
     static QString detectAnchors(const QString& str);
     static QString detectQuotes(const QString& str);
-    static QString toHtmlChars(const QString& str);
     static QString wrapDiv(const QString& str, const QString& div);
 
 private:
