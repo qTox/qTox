@@ -327,6 +327,10 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
     ui->topButton->setEnabled(openExtensions.contains(QFileInfo(file.fileName).suffix()));
     ui->topButton->show();
 
+    ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/dir.svg"));
+    ui->bottomButton->setObjectName("dir");
+    ui->bottomButton->show();
+
     // preview
     if(fileInfo.direction == ToxFile::RECEIVING)
         showPreview(fileInfo.filePath);
@@ -427,6 +431,13 @@ void FileTransferWidget::handleButton(QPushButton *btn)
     {
         QDesktopServices::openUrl(QUrl("file:///" + fileInfo.filePath, QUrl::TolerantMode));
     }
+    else if (btn->objectName() == "dir")
+    {
+        QString dirName = fileInfo.filePath;
+        dirName.chop(fileInfo.fileName.length());
+        QDesktopServices::openUrl(QUrl("file:///" + dirName, QUrl::TolerantMode));
+    }
+
 }
 
 void FileTransferWidget::showPreview(const QString &filename)
