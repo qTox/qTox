@@ -1,6 +1,6 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <messaging-emoticon-map>
-    <emoticon file="../TwitterEmojiSVG/../TwitterEmojiSVG/263a">
+    <emoticon file="../TwitterEmojiSVG/263a">
         <string>☺</string>
 	<string>:smile:</string>
     </emoticon>
