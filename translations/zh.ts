@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN" sourcelanguage="en">
+<TS version="2.1" language="zh_CN" sourcelanguage="en">
 <context>
     <name>AVForm</name>
     <message>
@@ -1074,40 +1074,45 @@ will be sent to them when they will appear online to you.</source>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Your contact list will be shown in compact mode.
 qTox&apos;s restart needed.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>你的联系人列表将被以紧缩格式显示
+        <translation type="vanished">你的联系人列表将被以紧缩格式显示
 qTox重启后生效</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="381"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>Compact contact list</source>
         <translation>紧缩显示联系人列表</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="396"/>
         <source>Theme</source>
         <translation>主题</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="421"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="420"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>表情包:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="495"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="494"/>
         <source>Emoticon size:</source>
         <translation>表情大小</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="641"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="640"/>
         <source>Proxy type:</source>
         <translation>代理服务器类型</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="648"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="647"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>代理服务器地址</translation>
@@ -1133,22 +1138,22 @@ qTox重启后生效</translation>
         <translation type="obsolete">:&apos;(</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="527"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
         <source>Style:</source>
         <translation>风格:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="544"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="543"/>
         <source>Theme color:</source>
         <translation>主题颜色</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="561"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="560"/>
         <source>Timestamp format:</source>
         <translation>时间戳格式</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="600"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="599"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>允许 UDP (推荐)</translation>
@@ -1158,28 +1163,28 @@ qTox重启后生效</translation>
         <translation type="obsolete">代理类型</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="672"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="671"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="677"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="676"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="682"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="681"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="692"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="691"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>重新连接</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="583"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="582"/>
         <source>Connection Settings</source>
         <translation>连接设置</translation>
     </message>
@@ -1242,7 +1247,7 @@ qTox重启后生效</translation>
         <translation type="obsolete">发送按钮</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="403"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="402"/>
         <source>Use emoticons</source>
         <translation>使用表情</translation>
     </message>
@@ -1264,7 +1269,7 @@ qTox重启后生效</translation>
         <translation type="obsolete">表情大小</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="511"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="510"/>
         <source> px</source>
         <translation>px</translation>
     </message>
@@ -1273,13 +1278,13 @@ qTox重启后生效</translation>
         <translation type="obsolete">时间格式</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="607"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="606"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>允许 IPv6 (推荐)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="597"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="596"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Désactiver ceci permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire, car cela ralenti le réseau Tox.</translation>
@@ -1304,7 +1309,7 @@ qTox重启后生效</translation>
         <translation type="obsolete">地址</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="658"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="657"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>端口</translation>
@@ -2238,8 +2243,15 @@ It will be installed when qTox restarts.</source>
         <source>It appears that qTox has to use the old tox1 protocol to access DNS record of your friend&apos;s Tox ID.
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
+If unsure, press “No”, so that request to ToxDNS service will not be made using unsecure protocol.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It appears that qTox has to use the old tox1 protocol to access DNS record of your friend&apos;s Tox ID.
+Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
+Should tox1 be used anyway?
 If unsure, press âNoâ, so that request to ToxDNS service will not be made using unsecure protocol.</source>
-        <translation>看起来Tox不得不使用较老的tox1协议来访问你好友的Tox ID的DNS记录
+        <translation type="vanished">看起来Tox不得不使用较老的tox1协议来访问你好友的Tox ID的DNS记录
 不幸的是tox1是不安全的，所以你得承受有人监听你和ToxDNS服务器之间通信的风险
 你仍然要坚持使用tox1协议吗
 如果你不确定，按“否”，这样你和ToxDNS服务器之间的通信将不会使用不安全的协议进行</translation>
