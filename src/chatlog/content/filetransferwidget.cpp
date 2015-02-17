@@ -429,13 +429,12 @@ void FileTransferWidget::handleButton(QPushButton *btn)
 
     if(btn->objectName() == "ok")
     {
-        QDesktopServices::openUrl(QUrl("file:///" + fileInfo.filePath, QUrl::TolerantMode));
+        QDesktopServices::openUrl(QUrl("file://" + fileInfo.filePath, QUrl::TolerantMode));
     }
     else if (btn->objectName() == "dir")
     {
-        QString dirName = fileInfo.filePath;
-        dirName.chop(fileInfo.fileName.length());
-        QDesktopServices::openUrl(QUrl("file:///" + dirName, QUrl::TolerantMode));
+        QString dirPath = QDir(QFileInfo(fileInfo.filePath).dir()).path();
+        QDesktopServices::openUrl(QUrl("file://" + dirPath, QUrl::TolerantMode));
     }
 
 }
