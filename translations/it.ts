@@ -859,62 +859,61 @@ will be sent to them when they will appear online to you.</source>
         <translation>I messaggi che invii ai contatti offline saranno inviati quando appaiono online.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
         <source>Your contact list will be shown in compact mode.
 qTox&apos;s restart needed.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>La lista contatti sarà visualizzata in modalità compatta.
+        <translation type="vanished">La lista contatti sarà visualizzata in modalità compatta.
 Richiede riavvio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="381"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>Compact contact list</source>
         <translation>Usa lista contatti compatta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="421"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="420"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>Emoticons:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="495"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="494"/>
         <source>Emoticon size:</source>
         <translation>Dimensione:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="527"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
         <source>Style:</source>
         <translation>Stile:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="544"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="543"/>
         <source>Theme color:</source>
         <translation>Colore tema:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="561"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="560"/>
         <source>Timestamp format:</source>
         <translation>Formato data/ora:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="583"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="582"/>
         <source>Connection Settings</source>
         <translation>Impostazioni Connessione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="607"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="606"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Abilita IPv6 (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="641"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="640"/>
         <source>Proxy type:</source>
         <translation>Proxy:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="648"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="647"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>Indirizzo:</translation>
@@ -977,55 +976,61 @@ Richiede riavvio.</translation>
         <translation>Dai il focus alla finestra di qTox quando arriva un nuovo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="396"/>
         <source>Theme</source>
         <translation>Impostazioni Tema</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="403"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="402"/>
         <source>Use emoticons</source>
         <translation>Usa emoticons</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="511"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="510"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="597"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="596"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Disabilitando questo sarà possibile usare qTox con Tor. Tuttavia verrà aggiunto carico alla rete Tox, quindi disabilitare solo se necessario.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="600"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="599"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Abilita UDP (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="672"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="671"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="677"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="676"/>
         <source>SOCKS5</source>
         <translation>SOCKS 5</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="682"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="681"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="658"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="657"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Porta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="692"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="691"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Riconnetti</translation>
