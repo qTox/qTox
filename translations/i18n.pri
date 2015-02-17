@@ -14,6 +14,7 @@ TRANSLATIONS = translations/es.ts \
                translations/ru.ts \
                translations/sv.ts \
                translations/uk.ts \
+               translations/zh.ts \
                translations/pt.ts
 
 #rules to generate ts

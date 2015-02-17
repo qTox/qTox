@@ -63,6 +63,7 @@
         <file>translations/ru.qm</file>
         <file>translations/sv.qm</file>
         <file>translations/uk.qm</file>
+        <file>translations/zh.qm</file>
         <file>ui/acceptFileButton/default.png</file>
         <file>ui/acceptFileButton/hover.png</file>
         <file>ui/acceptFileButton/pressed.png</file>
