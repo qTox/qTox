@@ -1015,7 +1015,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
         <source> minutes</source>
-        <translation> minutes</translation>
+        <translation>分钟</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
@@ -1076,7 +1076,7 @@ will be sent to them when they will appear online to you.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>你的联系人列表将以紧缩格式显示</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.
@@ -1199,12 +1199,12 @@ qTox重启后生效</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="111"/>
         <source>Show system tray icon</source>
-        <translation>Montrer l&apos;ic?ne de barre d&apos;état</translation>
+        <translation>显示系统托盘图标</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="121"/>
         <source>Light icon</source>
-        <translation>点亮图标</translation>
+        <translation>使用亮色图标</translation>
     </message>
     <message>
         <source>Check for updates on startup (unstable)</source>
@@ -1236,7 +1236,7 @@ qTox重启后生效</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="233"/>
         <source>Autoaccept files</source>
-        <translation>自动同意文件</translation>
+        <translation>自动同意接收文件</translation>
     </message>
     <message>
         <source>Save files in</source>
