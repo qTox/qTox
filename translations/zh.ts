@@ -256,7 +256,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="45"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;重要提示&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;除非你 &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;真的&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; 知道你在干什么， 请 &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;不要&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; 修改这里的任何设置。 修改这里的设置可能导致qTox出现问题，甚至导致数据丢失，例如你的聊天记录。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="61"/>
@@ -877,7 +877,7 @@ Alias:</source>
         <location filename="../src/widget/form/settings/generalform.cpp" line="307"/>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation>Appel en cours</translation>
+        <translation>通话处于活动状态</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="308"/>
@@ -989,7 +989,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在系统启动时启动qTox，使用当前配置文件&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在系统启动时启动qTox（使用当前配置文件）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="199"/>
@@ -2038,7 +2038,7 @@ but new contacts need to know your new Tox ID to be able to add you.</source>
         <location filename="../src/widget/toxsave.cpp" line="63"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation>Profile已存在</translation>
+        <translation>用户配置文件已存在</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="64"/>
@@ -2049,7 +2049,7 @@ but new contacts need to know your new Tox ID to be able to add you.</source>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="70"/>
         <source>Profile imported</source>
-        <translation>Profile已导入</translation>
+        <translation>已导入用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="70"/>
@@ -2094,7 +2094,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/main.cpp" line="70"/>
         <source>profile</source>
-        <translation>profil</translation>
+        <translation>用户配置文件</translation>
     </message>
     <message>
         <location filename="../src/misc/style.cpp" line="69"/>
@@ -2109,7 +2109,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/misc/style.cpp" line="69"/>
         <source>Olive</source>
-        <translation>Olive</translation>
+        <translation>橄榄绿</translation>
     </message>
     <message>
         <location filename="../src/misc/style.cpp" line="69"/>
