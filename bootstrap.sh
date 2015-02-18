@@ -17,7 +17,7 @@ INSTALL_DIR=libs
 # just for convenience
 BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 
-SODIUM_VER=1.0.0
+SODIUM_VER=1.0.2
 
 # directory names of cloned repositories
 SODIUM_DIR=libsodium-$SODIUM_VER
@@ -136,10 +136,13 @@ if [[ $TOX_ONLY = "false" ]]; then
     
     popd
 
-    if [[ $GLOBAL = "false" ]]; then
-        ./install_libfilteraudio.sh ${BASE_DIR}/${FILTER_AUDIO_DIR} ${BASE_DIR}
+    git clone https://github.com/irungentoo/filter_audio.git ${BASE_DIR}/${FILTER_AUDIO_DIR}
+    pushd ${BASE_DIR}/${FILTER_AUDIO_DIR}
+    make
+    if [[ $GLOBAL = "false" || $EUID -eq 0 ]]; then
+        cp filter_audio.h libfilteraudio.* ${BASE_DIR}
     else
-        ./install_libfilteraudio.sh ${BASE_DIR}/${FILTER_AUDIO_DIR}
+        sudo make install
     fi
 fi
 
