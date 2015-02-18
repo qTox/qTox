@@ -3,8 +3,8 @@ QPushButton
     background-color: transparent;
     background-repeat: none;    
     border: none;
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
 }
 
 QRadioButton::indicator
