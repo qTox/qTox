@@ -502,10 +502,7 @@ QString ChatLog::getSelectedText() const
             QString author = lines[i]->content[0]->getText();
             QString msg = lines[i]->content[1]->getText();
 
-            out += QString(out.isEmpty() ? "[%2] %1:\n%3" : "\n[%2] %1:\n%3").arg(author, timestamp, msg);
-
-            if(i != selLastRow)
-                out += "\n";
+            out += QString(out.isEmpty() ? "[%2] %1: %3" : "\n[%2] %1: %3").arg(author, timestamp, msg);
         }
 
         return out;
