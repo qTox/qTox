@@ -1,6 +1,6 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <messaging-emoticon-map>
-    <emoticon file="../TwitterEmojiSVG/../TwitterEmojiSVG/263a">
+    <emoticon file="../TwitterEmojiSVG/263a">
         <string>☺</string>
 	<string>:smile:</string>
     </emoticon>
@@ -62,11 +62,9 @@
     </emoticon>
     <emoticon file="../TwitterEmojiSVG/1f611">
         <string>😑</string>
-        <string>-_-</string>
     </emoticon>
     <emoticon file="../TwitterEmojiSVG/1f612">
         <string>😒</string>
-	<string>ಠ_ಠ</string>
     </emoticon>
     <emoticon file="../TwitterEmojiSVG/1f613">
         <string>😓</string>
@@ -104,8 +102,6 @@
     </emoticon>
     <emoticon file="../TwitterEmojiSVG/1f61e">
         <string>😞</string>
-        <string>:-(</string>
-        <string>:(</string>
 	<string>:sad:</string>
     </emoticon>
     <emoticon file="../TwitterEmojiSVG/1f61f">
@@ -1193,10 +1189,6 @@
     <emoticon file="../TwitterEmojiSVG/1f47c">
 	<string>👼</string>
 	<string>:angel:</string>
-	<string>0:)</string>
-	<string>O:)</string>
-	<string>0:-)</string>
-	<string>O:-)</string>
     </emoticon>
     <emoticon file="../TwitterEmojiSVG/1f47d">
 	<string>👽</string>
@@ -1208,11 +1200,6 @@
 	<string>👿</string>
 	<string>:devil:</string>
 	<string>:666:</string>
-	<string>}:-)</string>
-	<string>}:-&gt;</string>
-	<string>]:-)</string>
-	<string>]:-&gt;</string>
-	<string>&gt;:-&gt;</string>
     </emoticon>
     <emoticon file="../TwitterEmojiSVG/1f480">
 	<string>💀</string>
