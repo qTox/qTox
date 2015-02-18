@@ -162,7 +162,7 @@ win32 {
             }
 
             contains(JENKINS, YES) {
-                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lopenal -lX11 -lXss -lgobject-2.0 -lappindicator -lgtk-x11-2.0 -s
+                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lX11 -lXss -lgobject-2.0 -lappindicator -lgtk-x11-2.0 -s
             }
         }
     }
