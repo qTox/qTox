@@ -152,6 +152,7 @@
         <file>ui/fileTransferInstance/no.svg</file>
         <file>ui/fileTransferInstance/pause.svg</file>
         <file>ui/fileTransferInstance/yes.svg</file>
+        <file>ui/fileTransferInstance/dir.svg</file>
         <file>ui/fileTransferInstance/arrow_white.svg</file>
         <file>ui/fileTransferInstance/browse.svg</file>
         <file>ui/fileTransferInstance/filetransferWidget.css</file>

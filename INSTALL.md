@@ -40,7 +40,7 @@ Arch Linux:
 sudo pacman -S --needed git
 ```
 
-Debian:
+Debian / Ubuntu:
 ```bash
 sudo apt-get install git
 ```
@@ -50,10 +50,6 @@ Fedora:
 yum install git
 ```
 
-Ubuntu:
-```bash
-sudo apt-get install git
-```
 
 Afterwards open a new Terminal, change to a directory of your choice and clone the repository:
 ```bash
@@ -70,9 +66,9 @@ Arch Linux:
 sudo pacman -S --needed base-devel qt5 opencv openal libxss
 ```
 
-Debian:
+Debian / Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev
 ```
 
 Fedora:
@@ -91,10 +87,6 @@ http://slackbuilds.org/repository/14.1/libraries/qt5/
 
 http://slackbuilds.org/repository/14.1/libraries/opencv/
 
-Ubuntu:
-```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libopenal-dev libopencv-dev libxss-dev
-```
 
 ###Tox Core
 
@@ -105,7 +97,7 @@ Arch Linux:
 sudo pacman -S --needed opus vpx
 ```
 
-Debian:
+Debian / Ubuntu:
 ```bash
 sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev
 ```
@@ -113,11 +105,6 @@ sudo apt-get install libtool autotools-dev automake checkinstall check libopus-d
 Fedora:
 ```bash
 yum install libtool autoconf automake check check-devel
-```
-
-Ubuntu:
-```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev
 ```
 
 Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
