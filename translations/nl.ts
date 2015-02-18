@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nl_NL">
+<TS version="2.1" language="nl_NL">
 <context>
     <name>AVForm</name>
     <message>
@@ -293,99 +293,78 @@ Proxy omzeilen en een directe internetverbinding gebruiken?</translation>
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="78"/>
+        <location filename="../src/widget/form/chatform.cpp" line="83"/>
         <source>Load chat history...</source>
         <translation>Laad chatgeschiedenis...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="177"/>
+        <location filename="../src/widget/form/chatform.cpp" line="181"/>
         <source>Send a file</source>
         <translation>Verstuur een bestand</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="185"/>
-        <location filename="../src/widget/form/chatform.cpp" line="729"/>
+        <location filename="../src/widget/form/chatform.cpp" line="189"/>
+        <location filename="../src/widget/form/chatform.cpp" line="760"/>
         <source>File not read</source>
         <translation>Bestand niet gelezen</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="185"/>
-        <location filename="../src/widget/form/chatform.cpp" line="729"/>
+        <location filename="../src/widget/form/chatform.cpp" line="189"/>
+        <location filename="../src/widget/form/chatform.cpp" line="760"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translation>qTox kan %1 niet openen</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="190"/>
-        <location filename="../src/widget/form/chatform.cpp" line="734"/>
+        <location filename="../src/widget/form/chatform.cpp" line="194"/>
+        <location filename="../src/widget/form/chatform.cpp" line="765"/>
         <source>Bad Idea</source>
         <translation>Slecht idee</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="190"/>
-        <location filename="../src/widget/form/chatform.cpp" line="734"/>
+        <location filename="../src/widget/form/chatform.cpp" line="194"/>
+        <location filename="../src/widget/form/chatform.cpp" line="765"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>Je probeert een speciaal (sequentieel) bestand te versturen, dat zal niet werken!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="293"/>
-        <source>%1 calling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="312"/>
         <source>%1 is calling</source>
-        <translation type="obsolete">%1 belt je</translation>
+        <translation>%1 belt je</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="355"/>
+        <location filename="../src/widget/form/chatform.cpp" line="374"/>
         <source>%1 stopped calling</source>
         <translation>%1 heeft opgelegd</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="404"/>
+        <location filename="../src/widget/form/chatform.cpp" line="423"/>
         <source>Calling to %1</source>
         <translation>%1 bellen</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="497"/>
+        <location filename="../src/widget/form/chatform.cpp" line="516"/>
         <source>Call rejected</source>
         <translation>Gesprek geweigerd</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="701"/>
+        <location filename="../src/widget/form/chatform.cpp" line="732"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Kon bestand %1 niet verzenden</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="865"/>
+        <location filename="../src/widget/form/chatform.cpp" line="880"/>
         <source>Call with %1 ended. %2</source>
         <translation>Gesprek met %1 beëindigd. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="884"/>
+        <location filename="../src/widget/form/chatform.cpp" line="900"/>
         <source>Call duration: </source>
         <translation>Gesprekstijd: </translation>
     </message>
     <message>
+        <location filename="../src/widget/form/chatform.cpp" line="923"/>
         <source>is typing...</source>
-        <translation type="obsolete">is aan het typen...</translation>
-    </message>
-</context>
-<context>
-    <name>ChatLog</name>
-    <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="66"/>
-        <source>Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="81"/>
-        <source>Select all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="501"/>
-        <source>pending</source>
-        <translation type="unfinished"></translation>
+        <translation>is aan het typen...</translation>
     </message>
 </context>
 <context>
@@ -409,17 +388,17 @@ Proxy omzeilen en een directe internetverbinding gebruiken?</translation>
         <translation>qTox gebruiker</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="762"/>
+        <location filename="../src/core.cpp" line="763"/>
         <source>Friend is already added</source>
         <translation>Vriend is al toegevoegd</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="778"/>
+        <location filename="../src/core.cpp" line="779"/>
         <source>/me offers friendship.</source>
         <translation>/me bied vriendschap aan.</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="780"/>
+        <location filename="../src/core.cpp" line="781"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me bied vriendschap aap, &quot;%1&quot;</translation>
     </message>
@@ -510,93 +489,28 @@ Het uitschakelen van de chatgeschiedenis zal de versleutelde geschiedenis beware
 <context>
     <name>FileTransferInstance</name>
     <message>
+        <location filename="../src/filetransferinstance.cpp" line="239"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="obsolete">Sla een bestand op</translation>
+        <translation>Sla een bestand op</translation>
     </message>
     <message>
+        <location filename="../src/filetransferinstance.cpp" line="248"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="obsolete">Locatie niet schrijfbaar</translation>
+        <translation>Locatie niet schrijfbaar</translation>
     </message>
     <message>
+        <location filename="../src/filetransferinstance.cpp" line="249"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="obsolete">Je hebt geen toepassing om een bestand op deze locatie op te slaan. Kies een andere locatie of annuleer het opslaan.</translation>
+        <translation>Je hebt geen toepassing om een bestand op deze locatie op te slaan. Kies een andere locatie of annuleer het opslaan.</translation>
     </message>
     <message>
+        <location filename="../src/filetransferinstance.cpp" line="425"/>
         <source>ETA</source>
         <translatorcomment>NOTE: I couldn&apos;t think of a short Dutch word for this. Do we have one?</translatorcomment>
-        <translation type="obsolete">ETA</translation>
-    </message>
-</context>
-<context>
-    <name>FileTransferWidget</name>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished">Formulier</translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.ui" line="148"/>
-        <source>10Mb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.ui" line="164"/>
-        <source>0kb/s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.ui" line="180"/>
-        <source>ETA:10:10</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.ui" line="224"/>
-        <source>Filename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.ui" line="299"/>
-        <source>[preview]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="81"/>
-        <source>Waiting to send...</source>
-        <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="84"/>
-        <source>Accept to receive this file</source>
-        <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="126"/>
-        <source>Location not writable</source>
-        <comment>Title of permissions popup</comment>
-        <translation type="unfinished">Locatie niet schrijfbaar</translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="127"/>
-        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
-        <comment>text of permissions popup</comment>
-        <translation type="unfinished">Je hebt geen toepassing om een bestand op deze locatie op te slaan. Kies een andere locatie of annuleer het opslaan.</translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="299"/>
-        <source>paused</source>
-        <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="421"/>
-        <source>Save a file</source>
-        <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished">Sla een bestand op</translation>
+        <translation>ETA</translation>
     </message>
 </context>
 <context>
@@ -657,47 +571,47 @@ Het uitschakelen van de chatgeschiedenis zal de versleutelde geschiedenis beware
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="56"/>
+        <location filename="../src/widget/friendwidget.cpp" line="55"/>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
         <translation>Stuur uitnodiging voor groep</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="57"/>
+        <location filename="../src/widget/friendwidget.cpp" line="56"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Kopieer vriend ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="69"/>
+        <location filename="../src/widget/friendwidget.cpp" line="68"/>
         <source>Set alias...</source>
         <translation>Stel alias in...</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="72"/>
+        <location filename="../src/widget/friendwidget.cpp" line="71"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>Accepteer bestandsoverdrachten van deze vriend automatisch</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="77"/>
+        <location filename="../src/widget/friendwidget.cpp" line="76"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Verwijder vriend</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="110"/>
+        <location filename="../src/widget/friendwidget.cpp" line="109"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Kies een locatie om automatisch geaccepteerde bestanden op te slaan</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="249"/>
+        <location filename="../src/widget/friendwidget.cpp" line="238"/>
         <source>User alias</source>
         <translation>Gebruikersalias</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="249"/>
+        <location filename="../src/widget/friendwidget.cpp" line="238"/>
         <source>You can also set this by clicking the chat form name.
 Alias:</source>
         <translation>Je kan dit ook instellen door op de naam in het chatvenster te klikken.
@@ -836,8 +750,9 @@ in plaats van naar de taakbalk.</translation>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox als het besturingssysteem op start (met het huidige profiel).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="199"/>
         <source>Start automatically</source>
-        <translation type="obsolete">Start automatisch</translation>
+        <translation>Start automatisch</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
@@ -867,80 +782,81 @@ in plaats van naar de taakbalk.</translation>
         <translation>Accepteer bestanden automatisch</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="249"/>
         <source>PushButton</source>
         <translatorcomment>NOTE: Does it even make sense to translate this?</translatorcomment>
-        <translation type="obsolete">DrukKnop</translation>
+        <translation>DrukKnop</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="259"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="262"/>
         <source>Set to 0 to disable</source>
         <translation>Zet naar 0 om uit te schakelen</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="268"/>
         <source> minutes</source>
         <translation> minuten</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="281"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
         <translation>Je status zal automatisch naar afwezig gezet worden na een bepaalde periode van inactiviteit.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="284"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="287"/>
         <source>Auto away after (0 to disable):</source>
         <translation>Automatisch afwezig na (0 om uit te schakelen):</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="299"/>
         <source>Chat</source>
         <translation>Chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="302"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
         <translation>Stuur altijd een notificatie voor nieuwe berichten in een groepsgesprek.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="308"/>
         <source>Group chats always notify</source>
         <translation>Notificatie voor alle berichten in een groepsgesprek</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="312"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="315"/>
         <source>Show contacts&apos; status changes</source>
         <translation>Laat statusverandering van contacten zien</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="319"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="322"/>
         <source>On new message:</source>
         <translation>Bij een nieuw bericht:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="331"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="334"/>
         <source>Show qTox&apos;s window when you receive new message.</source>
         <comment>tooltip for Show window setting</comment>
         <translation>Laat qTox&apos; venster zijn bij het ontvangen van een nieuw bericht.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="334"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="337"/>
         <source>Show window</source>
         <translation>Laat venster zien</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="341"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
         <translation>Focus qTox&apos; venster zijn bij het ontvangen van een nieuw bericht.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="347"/>
         <source>Focus window</source>
         <translation>Focus venster</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="366"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="369"/>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they will appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
@@ -948,131 +864,121 @@ will be sent to them when they will appear online to you.</source>
 zullen naar ze verstuurd worden zodra deze online komen.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="370"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="373"/>
         <source>Faux offline messaging</source>
         <translation>Faux offline berichten</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>Your contact list will be shown in compact mode.
 qTox&apos;s restart needed.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="obsolete">De vriendenlist zal in compacte modus getoond worden.
+        <translation>De vriendenlist zal in compacte modus getoond worden.
 qTox herstart benodigd.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="199"/>
-        <source>Autostart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="384"/>
         <source>Compact contact list</source>
         <translation>Compacte vriendenlijst</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="396"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="400"/>
         <source>Theme</source>
         <translation>Thema</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="402"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="406"/>
         <source>Use emoticons</source>
         <translation>Gebruik emoticons</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="420"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="424"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>Smiley pakket:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="494"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="498"/>
         <source>Emoticon size:</source>
         <translation>Emoticon grootte:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="510"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="514"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="530"/>
         <source>Style:</source>
         <translation>Stijl:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="543"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="547"/>
         <source>Theme color:</source>
         <translation>Themakleur:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="560"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="564"/>
         <source>Timestamp format:</source>
         <translation>Tijdsaanduiding:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="582"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="586"/>
         <source>Connection Settings</source>
         <translation>Verbindingsinstellingen</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="596"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="600"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Door dit uit te schakelen kun je bijvoorbeeld Tox via Tor gebruiken. Het is wel zwaarder voor het Tox netwerk, dus schakeld dit alleen uit indeen noodzakelijk.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="599"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="603"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Gebruik UDP (aanbevolen)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="606"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="610"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Gebruik IPv6 (aanbevolen)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="640"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="644"/>
         <source>Proxy type:</source>
         <translation>Proxy type:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="647"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="651"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>Adres:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="657"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="661"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Poort</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="671"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="675"/>
         <source>None</source>
         <translation>Geen</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="676"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="680"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="681"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="685"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="691"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="695"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Opnieuw verbinden</translation>
@@ -1081,58 +987,53 @@ qTox herstart benodigd.</translation>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="73"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="71"/>
         <source>Send message</source>
         <translation>Verstuur bericht</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="75"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="73"/>
         <source>Smileys</source>
         <translation>Smileys</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="79"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="77"/>
         <source>Send file(s)</source>
         <translation>Verstuur bestand(en)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="82"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
         <source>Audio call: RED means you&apos;re on a call</source>
         <translation>Audio gesprek: ROOD betekend in gesprek</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="85"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="83"/>
         <source>Video call: RED means you&apos;re on a call</source>
         <translation>Video gesprek: ROOD betekend in gesprek</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="88"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="86"/>
         <source>Toggle speakers volume: RED is OFF</source>
         <translation>Schakel speakers in of uit: ROOD is UIT</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="91"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="89"/>
         <source>Toggle microphone: RED is OFF</source>
         <translation>Schakel microfoon in of uit: ROOD is UIT</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="165"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="282"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="161"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="204"/>
         <source>Save chat log</source>
         <translation>Sla chatgeschiedenis op</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="166"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="162"/>
         <source>Clear displayed messages</source>
         <translation>Verwijder getoonde berichten</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="298"/>
-        <source>Not sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="331"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="309"/>
         <source>Cleared</source>
         <translatorcomment>FIXME: Weird translation</translatorcomment>
         <translation>Geleegd</translation>
@@ -1506,15 +1407,6 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
     </message>
 </context>
 <context>
-    <name>Nexus</name>
-    <message>
-        <location filename="../src/nexus.cpp" line="164"/>
-        <source>Images (%1)</source>
-        <comment>filetype filter</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PrivacyForm</name>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="31"/>
@@ -1687,9 +1579,10 @@ Wanneer je nospam veranderd, kunnen huidige vrienden nog met je communiceren,
 maar nieuwe vrienden zullen je nieuwe Tox ID moeten wete om te toe te kunnen voegen.</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="149"/>
         <source>HHHHHHHH</source>
         <translatorcomment>Note: WHAT?!</translatorcomment>
-        <translation type="obsolete">HHHHHHHH</translation>
+        <translation>HHHHHHHH</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="156"/>
@@ -1796,11 +1689,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Tox met me!</translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/chatmessage.cpp" line="126"/>
-        <source>Busy...</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1948,142 +1836,130 @@ Indien onzeker, druk op &quot;Nee&quot;, zo dat er geen onveilig verzoek naar de
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="105"/>
+        <location filename="../src/widget/widget.cpp" line="100"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="108"/>
+        <location filename="../src/widget/widget.cpp" line="103"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Afwezig</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="111"/>
+        <location filename="../src/widget/widget.cpp" line="106"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Bezet</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="121"/>
+        <location filename="../src/widget/widget.cpp" line="116"/>
         <source>&amp;Quit</source>
         <translatorcomment>NOTE: Can this be safely translated like this?</translatorcomment>
         <translation>&amp;Sluit</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="353"/>
+        <location filename="../src/widget/widget.cpp" line="347"/>
         <source>Choose a profile picture</source>
         <translation>Kies een profielfoto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="362"/>
-        <location filename="../src/widget/widget.cpp" line="369"/>
-        <location filename="../src/widget/widget.cpp" line="390"/>
+        <location filename="../src/widget/widget.cpp" line="354"/>
+        <location filename="../src/widget/widget.cpp" line="361"/>
+        <location filename="../src/widget/widget.cpp" line="382"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="362"/>
+        <location filename="../src/widget/widget.cpp" line="354"/>
         <source>Unable to open this file</source>
         <translation>Kon dit bestand niet openen</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="369"/>
+        <location filename="../src/widget/widget.cpp" line="361"/>
         <source>Unable to read this image</source>
         <translation>Kon deze afbeelding niet lezen</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="390"/>
+        <location filename="../src/widget/widget.cpp" line="382"/>
         <source>This image is too big</source>
         <translation>Deze afbeelding is te groot</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="430"/>
+        <location filename="../src/widget/widget.cpp" line="422"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Toxcore kon niet opstarten, de applicatie zal afsluiten nadat dit bericht wordt gesloten.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="439"/>
+        <location filename="../src/widget/widget.cpp" line="431"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Toxcore kon niet opstarten met deze proxyinstellingen. Hierdoor kan qTox niet starten. Verander je instellingen en herstart.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="488"/>
+        <location filename="../src/widget/widget.cpp" line="480"/>
         <source>Add friend</source>
         <translation>Voeg vriend toe</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="500"/>
+        <location filename="../src/widget/widget.cpp" line="492"/>
         <source>File transfers</source>
         <translation>Bestandsoverdrachten</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="545"/>
+        <location filename="../src/widget/widget.cpp" line="537"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="654"/>
+        <location filename="../src/widget/widget.cpp" line="649"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Kon geen vriendschapsverzoek maken</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="682"/>
+        <location filename="../src/widget/widget.cpp" line="677"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>afwezig</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="684"/>
+        <location filename="../src/widget/widget.cpp" line="679"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>bezet</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="686"/>
+        <location filename="../src/widget/widget.cpp" line="681"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="688"/>
+        <location filename="../src/widget/widget.cpp" line="683"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="691"/>
+        <location filename="../src/widget/widget.cpp" line="686"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 is nu %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="867"/>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="867"/>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="922"/>
+        <location filename="../src/widget/widget.cpp" line="914"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Onbekend&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="948"/>
+        <location filename="../src/widget/widget.cpp" line="939"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 heeft de titel naar %2 gezet</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1104"/>
+        <location filename="../src/widget/widget.cpp" line="1095"/>
         <source>Message failed to send</source>
         <translation>Bericht kon niet verstuurd worden</translation>
     </message>
