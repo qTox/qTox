@@ -336,7 +336,11 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 
 #ifdef QTOX_FILTER_AUDIO
 #include "audiofilterer.h"
+
+/* include for compatibility with older versions of OpenAL */
+#ifndef ALC_ALL_DEVICES_SPECIFIER
 #include <AL/alext.h>
+#endif
 
 void Audio::getEchoesToFilter(AudioFilterer* filterer, int framesize)
 {

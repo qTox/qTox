@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl_NL">
+<TS version="2.0" language="nl_NL">
 <context>
     <name>AVForm</name>
     <message>
@@ -563,37 +563,37 @@ Het uitschakelen van de chatgeschiedenis zal de versleutelde geschiedenis beware
         <translation>[voorbeeld]</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="81"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="83"/>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
         <translation>Wachten op gesprekspartner...</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="84"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="86"/>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
         <translation>Accepteer om dit bestand te ontvangen</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="126"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="128"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Locatie niet schrijfbaar</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="127"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="129"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Je hebt geen toepassing om een bestand op deze locatie op te slaan. Kies een andere locatie of annuleer het opslaan.</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="299"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="301"/>
         <source>paused</source>
         <comment>file transfer widget</comment>
         <translation>gepauzeerd</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="421"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="427"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Sla een bestand op</translation>
@@ -2083,7 +2083,7 @@ Indien onzeker, druk op &quot;Nee&quot;, zo dat er geen onveilig verzoek naar de
         <translation>%1 heeft de titel naar %2 gezet</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1104"/>
+        <location filename="../src/widget/widget.cpp" line="1105"/>
         <source>Message failed to send</source>
         <translation>Bericht kon niet verstuurd worden</translation>
     </message>
