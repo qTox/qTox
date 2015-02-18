@@ -32,6 +32,10 @@
 
 #include <sodium.h>
 
+#ifdef QTOX_FILTER_AUDIO
+#include <AL/alext.h>
+#endif
+
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
 static QTextStream* logFile {nullptr};
@@ -113,6 +117,15 @@ int main(int argc, char *argv[])
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
+
+
+#ifdef QTOX_FILTER_AUDIO
+    QString tmp = "Built with audio filtering";
+#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
+    tmp += " and echo cancelling";
+#endif
+    qDebug() << tmp;
+#endif
 
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
