@@ -35,15 +35,28 @@ void AudioFilterer::closeFilter()
     filter = nullptr;
 }
 
-
-void AudioFilterer::filterAudio(int16_t* data, int framesize)
+bool AudioFilterer::filterAudio(int16_t* data, int framesize)
 {
-    if (!filter)
-        return;
-
-    filter_audio(filter, (int16_t*) data, framesize);
+    return filter && 0 == filter_audio(filter, (int16_t*) data, framesize);
 }
 
+/* Enable/disable filters. 1 to enable, 0 to disable. */
+bool AudioFilterer::enableDisableFilters(int echo, int noise, int gain)
+{
+    return filter && 0 == enable_disable_filters(filter, echo, noise, gain);
+}
+
+/* Give the audio output from your software to this function so it knows what echo to cancel from the frame */
+bool AudioFilterer::passAudioOutput(const int16_t *data, int samples)
+{
+    return filter && 0 == pass_audio_output(filter, data, samples);
+}
+
+/* Tell the echo canceller how much time in ms it takes for audio to be played and recorded back after. */
+bool AudioFilterer::setEchoDelayMs(int16_t msInSndCardBuf)
+{
+    return filter && 0 == set_echo_delay_ms(filter, msInSndCardBuf);
+}
 
 AudioFilterer::~AudioFilterer()
 {

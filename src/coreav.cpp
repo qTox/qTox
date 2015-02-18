@@ -256,6 +256,16 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
 
     if (Audio::tryCaptureSamples(buf, framesize))
     {
+#ifdef QTOX_FILTER_AUDIO
+        if (filterer[callId])
+        {
+            // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
+            Audio::getEchoesToFilter(filterer[callId], framesize);
+
+            filterer[callId]->filterAudio((int16_t*) buf, framesize);
+        }
+#endif
+
         uint8_t dest[bufsize];
         int r;
         if ((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
@@ -264,11 +274,6 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
             calls[callId].sendAudioTimer->start();
             return;
         }
-
-#ifdef QTOX_FILTER_AUDIO
-        if (filterer[callId])
-            filterer[callId]->filterAudio((int16_t*) buf, framesize);
-#endif
 
         if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
         {
