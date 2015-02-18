@@ -258,7 +258,12 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     {
 #ifdef QTOX_FILTER_AUDIO
         if (filterer[callId])
+        {
+            // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
+            Audio::getEchoesToFilter(filterer[callId], framesize);
+
             filterer[callId]->filterAudio((int16_t*) buf, framesize);
+        }
 #endif
 
         uint8_t dest[bufsize];

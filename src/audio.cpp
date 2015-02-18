@@ -333,3 +333,23 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
     alcCaptureSamples(Audio::alInDev, buf, framesize);
     return true;
 }
+
+#ifdef QTOX_FILTER_AUDIO
+#include "audiofilterer.h"
+#include <AL/alext.h>
+
+void Audio::getEchoesToFilter(AudioFilterer* filterer, int framesize)
+{
+#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
+    ALint samples;
+    alcGetIntegerv(Audio::alOutDev, ALC_LOOPBACK_CAPTURE_SAMPLES, sizeof(samples), &samples);
+    if (samples >= framesize)
+    {
+        int16_t buf[framesize];
+        alcCaptureSamplesLoopback(Audio::alOutDev, buf, framesize);
+        filterer->passAudioOutput(buf, framesize);
+        filterer->setEchoDelayMs(5); // This 5ms is configurable I believe
+    }
+#endif
+}
+#endif

@@ -28,10 +28,19 @@ class AudioFilterer
 public:
     explicit AudioFilterer() = default;
     ~AudioFilterer();
-
     void startFilter(unsigned int fs);
-    void filterAudio(int16_t* data, int framesize);
     void closeFilter();
+
+    /* Enable/disable filters. 1 to enable, 0 to disable. */
+    bool enableDisableFilters(int echo, int noise, int gain);
+
+    bool filterAudio(int16_t* data, int samples);
+
+    /* Give the audio output from your software to this function so it knows what echo to cancel from the frame */
+    bool passAudioOutput(const int16_t *data, int samples);
+
+    /* Tell the echo canceller how much time in ms it takes for audio to be played and recorded back after. */
+    bool setEchoDelayMs(int16_t msInSndCardBuf);
 
 private:
     struct Filter_Audio* filter{nullptr};

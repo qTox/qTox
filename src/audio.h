@@ -36,6 +36,7 @@ class QTimer;
 class QThread;
 class QMutex;
 struct Tox;
+class AudioFilterer;
 
 class Audio : QObject
 {
@@ -63,6 +64,11 @@ public:
     /// The first and last argument are ignored, but allow direct compatibility with toxcore
     static void playGroupAudioQueued(Tox*, int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void*);
+
+#ifdef QTOX_FILTER_AUDIO
+    static void getEchoesToFilter(AudioFilterer* filter, int framesize);
+    // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
+#endif
 
 public slots:
     /// Must be called from the audio thread, plays a group call's received audio
