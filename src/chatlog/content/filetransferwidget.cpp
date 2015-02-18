@@ -29,6 +29,8 @@
 #include <QVariantAnimation>
 #include <QDebug>
 
+#include <math.h>
+
 FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     : QWidget(parent)
     , ui(new Ui::FileTransferWidget)
