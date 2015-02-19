@@ -502,7 +502,7 @@ bool Widget::confirmExecutableOpen(const QFileInfo file)
 {
     if (file.isExecutable())
     {
-        if(!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
+        if(!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, false))
         {
             return false;
         }
