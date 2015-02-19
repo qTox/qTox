@@ -28,9 +28,20 @@ if [ ! -d "include/tox" ]; then
    $QTOX_DIR/tools/unzip -o libtoxcore-win32-i686.zip -d ./
 fi
 
+
 ## filter_audio
+if [ ! -d $QTOX_DIR/libs/filter_audio ]; then
+    git clone https://github.com/irungentoo/filter_audio.git $QTOX_DIR/libs/filter_audio
+else
+    pushd $QTOX_DIR/libs/filter_audio
+    git pull
+    popd
+fi
+
 if [ ! -f "bin/libfilteraudio.dll" ]; then
-   $QTOX_DIR/install_libfilteraudio.sh $QTOX_DIR/libs/filter_audio $QTOX_DIR/libs
+    pushd $QTOX_DIR/libs/filter_audio
+    PREFIX="$QTOX_DIR/libs" CC="gcc.exe" make install
+    popd
 fi
 
 
