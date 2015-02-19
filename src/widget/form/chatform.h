@@ -44,7 +44,6 @@ public:
     void loadHistory(QDateTime since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
-    bool getIsTyping();
     void setFriendTyping(bool isTyping);
     OfflineMsgEngine* getOfflineMsgEngine();
 
