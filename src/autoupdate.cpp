@@ -35,7 +35,11 @@
 #endif
 
 #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN64
+const QString AutoUpdater::platform = "win64";
+#else
 const QString AutoUpdater::platform = "win32";
+#endif
 const QString AutoUpdater::updaterBin = "qtox-updater.exe";
 const QString AutoUpdater::updateServer = "https://s3.amazonaws.com/qtox-updater";
 
