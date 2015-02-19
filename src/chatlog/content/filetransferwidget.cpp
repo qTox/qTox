@@ -313,8 +313,6 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
 void FileTransferWidget::onFileTransferFinished(ToxFile file)
 {
-    static const QStringList openExtensions = { "png", "jpeg", "jpg", "gif", "zip", "rar" };
-
     if(fileInfo != file)
         return;
 
