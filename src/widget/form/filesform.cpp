@@ -16,6 +16,7 @@
 
 #include "filesform.h"
 #include "ui_mainwindow.h"
+#include "src/widget/widget.h"
 #include <QFileInfo>
 #include <QUrl>
 #include <QDebug>
@@ -80,6 +81,10 @@ void FilesForm::onFileUploadComplete(const QString& path)
 void FilesForm::onFileActivated(QListWidgetItem* item)
 {
     ListWidgetItem* tmp = dynamic_cast<ListWidgetItem*> (item);
+
+    if (!Widget::confirmExecutableOpen(QFileInfo(tmp->path)))
+        return;
+
     QUrl url = QUrl::fromLocalFile(tmp->path);
     qDebug() << "Opening '" << url << "'";
     QDesktopServices::openUrl(url);
