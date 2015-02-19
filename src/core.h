@@ -72,6 +72,7 @@ public:
     QString getUsername() const; ///< Returns our username, or an empty string on failure
     QString getStatusMessage() const; ///< Returns our status message, or an empty string on failure
     ToxID getSelfId() const; ///< Returns our Tox ID
+    QPair<QByteArray, QByteArray> getKeypair() const; ///< Returns our public and private keys
 
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
 

@@ -1107,6 +1107,19 @@ QString Core::getIDString() const
     // 16^n > 10^10 (which is roughly the planet's population)
 }
 
+QPair<QByteArray, QByteArray> Core::getKeypair() const
+{
+    QPair<QByteArray, QByteArray> keypair;
+    if (!tox)
+        return keypair;
+
+    char buf[2*TOX_PUBLIC_KEY_SIZE];
+    tox_get_keys(tox, (uint8_t*)buf, (uint8_t*)buf+TOX_PUBLIC_KEY_SIZE);
+    keypair.first = QByteArray(buf, TOX_PUBLIC_KEY_SIZE);
+    keypair.second = QByteArray(buf+TOX_PUBLIC_KEY_SIZE, TOX_PUBLIC_KEY_SIZE);
+    return keypair;
+}
+
 QString Core::getStatusMessage() const
 {
     QString sname;

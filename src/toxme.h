@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QMutex>
+#include <memory>
 #include "corestructs.h"
 
 class QNetworkAccessManager;
@@ -25,10 +26,11 @@ private:
     Toxme()=delete;
     static QByteArray makeJsonRequest(QString json);
     static QByteArray prepareEncryptedJson(int action, QString payload);
-    static void incrementNonce(unsigned char nonce[]);
+    static int extractError(QString json);
 
 private:
     static const QString apiUrl;
+    static const unsigned char pinnedPk[];
 };
 
 #endif // TOXME_H

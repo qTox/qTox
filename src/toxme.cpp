@@ -1,39 +1,16 @@
 #include "toxme.h"
+#include "core.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QCoreApplication>
 #include <sodium/crypto_box.h>
+#include <sodium/randombytes.h>
 #include <string>
 
 const QString Toxme::apiUrl{"https://toxme.se/api"};
 
-void Toxme::incrementNonce(unsigned char nonce[])
-{
-    auto nonceSize = crypto_box_NONCEBYTES;
-    for (decltype(nonceSize) i=0; i<nonceSize; ++i)
-    {
-        if (nonce[i]==0xFFU)
-        {
-            if (i==nonceSize-1)
-            {
-                // Shouldn't matter, since we don't reuse keys
-                // But still gets a warning because that's exceedingly unlikely to happen
-                qWarning() << "Toxme::incrementNonce: Nonce overflow!";
-                memset(nonce,0,nonceSize);
-                return;
-            }
-            else
-            {
-                nonce[i]=0;
-            }
-        }
-        else
-        {
-            nonce[i]++;
-            return;
-        }
-    }
-}
+const unsigned char Toxme::pinnedPk[] = {0x5D, 0x72, 0xC5, 0x17, 0xDF, 0x6A, 0xEC, 0x54, 0xF1, 0xE9, 0x77, 0xA6, 0xB6, 0xF2, 0x59, 0x14,
+                0xEA, 0x4C, 0xF7, 0x27, 0x7A, 0x85, 0x02, 0x7C, 0xD9, 0xF5, 0x19, 0x6D, 0xF1, 0x7E, 0x0B, 0x13};
 
 QByteArray Toxme::makeJsonRequest(QString json)
 {
@@ -50,30 +27,29 @@ QByteArray Toxme::makeJsonRequest(QString json)
 
 QByteArray Toxme::prepareEncryptedJson(int action, QString payload)
 {
-    static unsigned char nonce[crypto_box_NONCEBYTES]={0};
+    QPair<QByteArray, QByteArray> keypair = Core::getInstance()->getKeypair();
+    if (keypair.first.isEmpty() || keypair.second.isEmpty())
+    {
+        qWarning() << "Toxme::prepareEncryptedJson: Couldn't get our keypair, aborting";
+        return QByteArray();
+    }
 
-    unsigned char pk[crypto_box_PUBLICKEYBYTES];
-    unsigned char sk[crypto_box_SECRETKEYBYTES];
-    crypto_box_keypair(pk,sk);
+    QByteArray nonce(crypto_box_NONCEBYTES, 0);
+    randombytes((uint8_t*)nonce.data(), crypto_box_NONCEBYTES);
 
     QByteArray payloadData = payload.toUtf8();
-    const size_t mlen = crypto_box_ZEROBYTES+payloadData.size();
-    unsigned char* payloadMsg = new unsigned char[mlen];
-    unsigned char* payloadEnc = new unsigned char[mlen];
-    memcpy(payloadMsg+crypto_box_ZEROBYTES,payloadData.data(),payloadData.size());
+    const size_t cypherlen = crypto_box_MACBYTES+payloadData.size();
+    unsigned char* payloadEnc = new unsigned char[cypherlen];
 
-    crypto_box(payloadEnc,payloadMsg,mlen,nonce,pk,sk);
-    QByteArray payloadEncData(reinterpret_cast<char*>(payloadEnc), mlen);
-    delete[] payloadMsg;
+    crypto_box_easy(payloadEnc,(uint8_t*)payloadData.data(),payloadData.size(),
+                    (uint8_t*)nonce.data(),pinnedPk,(uint8_t*)keypair.second.data());
+    QByteArray payloadEncData(reinterpret_cast<char*>(payloadEnc), cypherlen);
     delete[] payloadEnc;
 
     const QString json{"{\"action\":"+QString().setNum(action)+","
-                       "\"public_key\":\""+QByteArray(reinterpret_cast<char*>(pk),
-                                                      crypto_box_PUBLICKEYBYTES)+"\","
-                       "\"encrypted\":\""+payloadEncData+"\","
-                       "\"nonce\":\""+QByteArray(reinterpret_cast<char*>(nonce),
-                                                 crypto_box_NONCEBYTES)+"\"}"};
-    incrementNonce(nonce);
+                       "\"public_key\":\""+keypair.first.toHex()+"\","
+                       "\"encrypted\":\""+payloadEncData.toBase64()+"\","
+                       "\"nonce\":\""+nonce.toBase64()+"\"}"};
     return json.toUtf8();
 }
 
@@ -107,6 +83,28 @@ ToxID Toxme::lookup(QString address)
     return id;
 }
 
+int Toxme::extractError(QString json)
+{
+    static const QByteArray pattern{"c\":"};
+
+    json = json.remove(' ');
+    const int index = json.indexOf(pattern);
+    if (index == -1)
+        return INT_MIN;
+    json = json.mid(index+pattern.size());
+
+    const int end = json.indexOf('}');
+    if (end == -1)
+        return INT_MIN;
+    json.truncate(end);
+
+    bool ok;
+    int r = json.toInt(&ok);
+    if (!ok)
+        return INT_MIN;
+    return r;
+}
+
 bool Toxme::createAddress(ToxID id, QString address,
                               bool keepPrivate, QString bio)
 {
@@ -124,8 +122,6 @@ bool Toxme::createAddress(ToxID id, QString address,
                           "\"timestamp\":"+QString().setNum(time(0))+"}"};
 
     QByteArray response = makeJsonRequest(prepareEncryptedJson(1,payload));
-    qDebug() << "payload:"<<payload;
-    qDebug() << "response:"<<response;
 
-    return true;
+    return (extractError(response) == 0);
 }

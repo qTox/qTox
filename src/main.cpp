@@ -185,10 +185,6 @@ int main(int argc, char *argv[])
 #endif
 
     // Run
-    Toxme::lookup("tux3@toxme.se");
-    Toxme::createAddress(ToxID::fromString("95B6B3A34C82FC449D1F1CA9A7F621DE6A7516D0AA1183E128A5467590BD8913B8C5D287D924"),
-                         "testToxmeAPI@toxme.se",false,"This is a test");
-
     a.setQuitOnLastWindowClosed(false);
     int errorcode = a.exec();
 
