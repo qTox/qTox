@@ -172,12 +172,17 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
     }
-    else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
+    else if (!ipc.isCurrentOwner())
     {
-        time_t event = ipc.postEvent("activate");
-        ipc.waitUntilProcessed(event);
-        if (!ipc.isCurrentOwner())
-            return EXIT_SUCCESS;
+        uint32_t dest = 0;
+        if (parser.isSet("p"))
+            dest = Settings::getInstance().getCurrentProfileId();
+        time_t event = ipc.postEvent("activate", QByteArray(), dest);
+        if (ipc.waitUntilProcessed(event, 2) && ipc.isEventAccepted(event))
+        {
+            if (!ipc.isCurrentOwner())
+                return EXIT_SUCCESS;
+        }
     }
 #endif
 
