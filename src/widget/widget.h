@@ -131,6 +131,7 @@ private slots:
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAwayCheck();
     void onEventIconTick();
+    void onTryCreateTrayIcon();
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
