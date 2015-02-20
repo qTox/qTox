@@ -33,6 +33,8 @@
 #include <QDebug>
 #include <QList>
 #include <QStyleFactory>
+#include <QCryptographicHash>
+
 
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
 
@@ -42,7 +44,7 @@ Settings* Settings::settings{nullptr};
 bool Settings::makeToxPortable{false};
 
 Settings::Settings() :
-    loaded(false), useCustomDhtList{false}
+    loaded(false), useCustomDhtList{false}, currentProfileId(0)
 {
     load();
 }
@@ -54,20 +56,16 @@ Settings& Settings::getInstance()
     return *settings;
 }
 
-void Settings::resetInstance()
-{
-    if (settings)
-    {
-        delete settings;
-        settings = nullptr;
-    }
-}
-
 void Settings::switchProfile(const QString& profile)
 {
+    // Saves current profile as main profile if this instance is main instance
     setCurrentProfile(profile);
     save(false);
-    resetInstance();
+
+    // If this instance is not main instance previous save did not happen therefore
+    // we manually set profile again and load profile settings
+    setCurrentProfile(profile);
+    load();
 }
 
 QString Settings::detectProfile()
@@ -205,6 +203,7 @@ void Settings::load()
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
         currentProfile = s.value("currentProfile", "").toString();
+        currentProfileId = makeProfileId(currentProfile);
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", false).toBool();
         showWindow = s.value("showWindow", true).toBool();
@@ -446,6 +445,13 @@ void Settings::save(QString path, bool writePersonal)
             ps.setValue("encryptTox", encryptTox);
         ps.endGroup();
     }
+}
+
+uint32_t Settings::makeProfileId(const QString& profile)
+{
+    QByteArray data = QCryptographicHash::hash(profile.toUtf8(), QCryptographicHash::Md5);
+    const uint32_t* dwords = (uint32_t*)data.constData();
+    return dwords[0] ^ dwords[1] ^ dwords[2] ^ dwords[3];
 }
 
 QString Settings::getSettingsDirPath()
@@ -733,9 +739,15 @@ QString Settings::getCurrentProfile() const
     return currentProfile;
 }
 
+uint32_t Settings::getCurrentProfileId() const
+{
+    return currentProfileId;
+}
+
 void Settings::setCurrentProfile(QString profile)
 {
     currentProfile = profile;
+    currentProfileId = makeProfileId(currentProfile);
 }
 
 bool Settings::getEnableLogging() const

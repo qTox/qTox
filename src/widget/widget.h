@@ -170,6 +170,6 @@ private:
     bool eventIcon;
 };
 
-void toxActivateEventHandler(const QByteArray& data);
+bool toxActivateEventHandler(const QByteArray& data);
 
 #endif // WIDGET_H

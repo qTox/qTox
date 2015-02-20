@@ -21,9 +21,9 @@ class QString;
 class QByteArray;
 
 /// Will wait until the core is ready first
-void handleToxSave(const QString& path);
+bool handleToxSave(const QString& path);
 
 // Internals
-void toxSaveEventHandler(const QByteArray& eventData);
+bool toxSaveEventHandler(const QByteArray& eventData);
 
 #endif

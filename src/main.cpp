@@ -123,14 +123,13 @@ int main(int argc, char *argv[])
         AutoUpdater::installLocalUpdate(); ///< NORETURN
 #endif
 
-    Nexus::getInstance().start();
 
 #ifndef Q_OS_ANDROID
     // Inter-process communication
     IPC ipc;
-    ipc.registerEventHandler(&toxURIEventHandler);
-    ipc.registerEventHandler(&toxSaveEventHandler);
-    ipc.registerEventHandler(&toxActivateEventHandler);
+    ipc.registerEventHandler("uri", &toxURIEventHandler);
+    ipc.registerEventHandler("save", &toxSaveEventHandler);
+    ipc.registerEventHandler("activate", &toxActivateEventHandler);
 
     if (parser.positionalArguments().size() > 0)
     {
@@ -145,7 +144,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                time_t event = ipc.postEvent(firstParam.toUtf8());
+                time_t event = ipc.postEvent("uri", firstParam.toUtf8());
                 ipc.waitUntilProcessed(event);
                 // If someone else processed it, we're done here, no need to actually start qTox
                 if (!ipc.isCurrentOwner())
@@ -160,7 +159,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                time_t event = ipc.postEvent(firstParam.toUtf8());
+                time_t event = ipc.postEvent("save", firstParam.toUtf8());
                 ipc.waitUntilProcessed(event);
                 // If someone else processed it, we're done here, no need to actually start qTox
                 if (!ipc.isCurrentOwner())
@@ -175,12 +174,14 @@ int main(int argc, char *argv[])
     }
     else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
     {
-        time_t event = ipc.postEvent("$activate");
+        time_t event = ipc.postEvent("activate");
         ipc.waitUntilProcessed(event);
         if (!ipc.isCurrentOwner())
             return EXIT_SUCCESS;
     }
 #endif
+
+    Nexus::getInstance().start();
 
     // Run
     a.setQuitOnLastWindowClosed(false);
