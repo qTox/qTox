@@ -354,6 +354,9 @@ void Audio::getEchoesToFilter(AudioFilterer* filterer, int framesize)
         filterer->passAudioOutput(buf, framesize);
         filterer->setEchoDelayMs(5); // This 5ms is configurable I believe
     }
+#else
+    Q_UNUSED(filterer);
+    Q_UNUSED(framesize);
 #endif
 }
 #endif
