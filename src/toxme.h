@@ -21,6 +21,8 @@ public:
     /// The bio is a short optional description of yourself if you want to publish your address.
     static bool createAddress(ToxID id, QString address,
                               bool keepPrivate=true, QString bio=QString());
+    /// Deletes the address associated with your current Tox ID
+    static bool deleteAddress(ToxID id);
 
 private:
     Toxme()=delete;

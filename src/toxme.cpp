@@ -125,3 +125,13 @@ bool Toxme::createAddress(ToxID id, QString address,
 
     return (extractError(response) == 0);
 }
+
+bool Toxme::deleteAddress(ToxID id)
+{
+    const QString payload{"{\"public_key\":\""+id.toString().left(64)+"\","
+                          "\"timestamp\":"+QString().setNum(time(0))+"}"};
+
+    QByteArray response = makeJsonRequest(prepareEncryptedJson(2,payload));
+
+    return (extractError(response) == 0);
+}
