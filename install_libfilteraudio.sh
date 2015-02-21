@@ -41,16 +41,16 @@ rm *.o
 muhcmd="cp libfilteraudio.$EXT $BIN_DIR"
 [ -z "$2" ] && muhcmd="sudo $muhcmd"
 echo "Installing libfilteraudio.so with $muhcmd"
-$muhcmd
+$muhcmd || exit 1
 
 muhcmd="cp libfilteraudio.$STATIC_EXT $LIB_DIR"
 [ -z "$2" ] && muhcmd="sudo $muhcmd"
 echo "Installing libfilteraudio.$STATIC_EXT with $muhcmd"
-$muhcmd
+$muhcmd || exit 1
 
 muhcmd="cp *.h $INCLUDE_DIR"
 [ -z "$2" ] && muhcmd="sudo $muhcmd"
 echo "Installing include files with $muhcmd"
-$muhcmd
+$muhcmd || exit 1
 
 echo "Finished."
