@@ -34,6 +34,7 @@ using IPCEventHandler = std::function<bool (const QByteArray&)>;
 class IPC : public QThread
 {
     Q_OBJECT
+    IPC();
 protected:
     static const int EVENT_TIMER_MS = 1000;
     static const int EVENT_GC_TIMEOUT = 5;
@@ -41,8 +42,9 @@ protected:
     static const int OWNERSHIP_TIMEOUT_S = 5;
 
 public:
-    IPC();
     ~IPC();
+
+    static IPC& getInstance();
 
     struct IPCEvent
     {

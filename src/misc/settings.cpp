@@ -23,6 +23,7 @@
 #ifdef QTOX_PLATFORM_EXT
 #include "src/platform/autorun.h"
 #endif
+#include "src/ipc.h"
 
 #include <QFont>
 #include <QApplication>
@@ -333,7 +334,18 @@ void Settings::save(bool writePersonal)
 
 void Settings::save(QString path, bool writePersonal)
 {
-    qDebug() << "Settings: Saving in "<<path;
+#ifndef Q_OS_ANDROID
+    if (IPC::getInstance().isCurrentOwner())
+#endif
+        saveGlobal(path);
+
+    if (writePersonal) // Core::switchConfiguration
+        savePersonal(path);
+}
+
+void Settings::saveGlobal(QString path)
+{
+    qDebug() << "Settings: Saving in " << path;
 
     QSettings s(path, QSettings::IniFormat);
 
@@ -420,31 +432,39 @@ void Settings::save(QString path, bool writePersonal)
     s.beginGroup("Video");
         s.setValue("camVideoRes",camVideoRes);
     s.endGroup();
+}
 
-    if (writePersonal && !currentProfile.isEmpty()) // Core::switchConfiguration
+void Settings::savePersonal(QString path)
+{
+    if (currentProfile.isEmpty())
     {
-        QSettings ps(QFileInfo(path).dir().filePath(currentProfile + ".ini"), QSettings::IniFormat);
-        ps.beginGroup("Friends");
-            ps.beginWriteArray("Friend", friendLst.size());
-            int index = 0;
-            for (auto& frnd : friendLst)
-            {
-                ps.setArrayIndex(index);
-                ps.setValue("addr", frnd.addr);
-                ps.setValue("alias", frnd.alias);
-                ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
-                index++;
-            }
-            ps.endArray();
-        ps.endGroup();
-
-        ps.beginGroup("Privacy");
-            ps.setValue("typingNotification", typingNotification);
-            ps.setValue("enableLogging", enableLogging);
-            ps.setValue("encryptLogs", encryptLogs);
-            ps.setValue("encryptTox", encryptTox);
-        ps.endGroup();
+        qDebug() << "Settings: could not save personal settings because currentProfile profile is empty";
+        return;
     }
+
+    qDebug() << "Settings: Saving personal in " << path;
+
+    QSettings ps(QFileInfo(path).dir().filePath(currentProfile + ".ini"), QSettings::IniFormat);
+    ps.beginGroup("Friends");
+        ps.beginWriteArray("Friend", friendLst.size());
+        int index = 0;
+        for (auto& frnd : friendLst)
+        {
+            ps.setArrayIndex(index);
+            ps.setValue("addr", frnd.addr);
+            ps.setValue("alias", frnd.alias);
+            ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
+            index++;
+        }
+        ps.endArray();
+    ps.endGroup();
+
+    ps.beginGroup("Privacy");
+        ps.setValue("typingNotification", typingNotification);
+        ps.setValue("enableLogging", enableLogging);
+        ps.setValue("encryptLogs", encryptLogs);
+        ps.setValue("encryptTox", encryptTox);
+    ps.endGroup();
 }
 
 uint32_t Settings::makeProfileId(const QString& profile)

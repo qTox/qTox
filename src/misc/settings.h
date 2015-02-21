@@ -254,6 +254,8 @@ private:
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
     static uint32_t makeProfileId(const QString& profile);
+    void saveGlobal(QString path);
+    void savePersonal(QString path);
 
     static const QString FILENAME;
     static const QString OLDFILENAME;

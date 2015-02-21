@@ -81,6 +81,15 @@ IPC::~IPC()
     }
 }
 
+IPC& IPC::getInstance()
+{
+#ifdef Q_OS_ANDROID
+    Q_ASSERT(0 && "IPC can not be used on android");
+#endif
+    static IPC instance;
+    return instance;
+}
+
 time_t IPC::postEvent(const QString &name, const QByteArray& data/*=QByteArray()*/, uint32_t dest/*=0*/)
 {
     QByteArray binName = name.toUtf8();

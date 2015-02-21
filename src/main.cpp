@@ -70,6 +70,9 @@ int main(int argc, char *argv[])
     parser.addOption(QCommandLineOption("p", QObject::tr("Starts new instance and loads specified profile."), QObject::tr("profile")));
     parser.process(a);
 
+#ifndef Q_OS_ANDROID
+    IPC::getInstance();
+#endif
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
 
     if (parser.isSet("p"))
@@ -126,7 +129,7 @@ int main(int argc, char *argv[])
 
 #ifndef Q_OS_ANDROID
     // Inter-process communication
-    IPC ipc;
+    IPC& ipc = IPC::getInstance();
     ipc.registerEventHandler("uri", &toxURIEventHandler);
     ipc.registerEventHandler("save", &toxSaveEventHandler);
     ipc.registerEventHandler("activate", &toxActivateEventHandler);
