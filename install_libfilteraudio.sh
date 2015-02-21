@@ -27,13 +27,24 @@ fi
 
 echo "Cloning filter_audio from GitHub.com"
 git clone https://github.com/irungentoo/filter_audio.git $SOURCE_DIR
+[ $? -eq 0 ] || exit 1
 
 echo "Compiling filter_audio"
 cd $SOURCE_DIR
 gcc -c -fPIC filter_audio.c aec/*.c agc/*.c ns/*.c other/*.c  -lm -lpthread
+[ $? -eq 0 ] || exit 1
 
 echo "Creating shared object file"
-gcc *.o -shared -o libfilteraudio.$EXT -Wl,--out-implib,libfilteraudio.$STATIC_EXT
+if [ ! -z "$WINDOWS_VERSION" ]; then
+  # This is for MingGW:
+  gcc *.o -shared -o libfilteraudio.$EXT -Wl,--out-implib,libfilteraudio.$STATIC_EXT
+  [ $? -eq 0 ] || exit 1
+else
+  # This is for rest of the world:
+  make
+  [ $? -eq 0 ] || exit 1
+  ln libfilteraudio.$EXT.* libfilteraudio.so
+fi
 
 echo "Cleaning up"
 rm *.o
