@@ -114,10 +114,19 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
                 item = gtk_menu_item_new_with_label(aText.toStdString().c_str());
             else
             {
-                QString iconPath = extractIconToFile(a->icon(),"iconmenu"+a->icon().name());
-                GtkWidget* image = gtk_image_new_from_file(iconPath.toStdString().c_str());
+                void (*callbackFreeImage)(guchar*, gpointer) =
+                        [](guchar*, gpointer image)
+                {
+                    delete reinterpret_cast<QImage*>(image);
+                };
+                QImage* image = new QImage(a->icon().pixmap(64, 64).toImage());
+                if (image->format() != QImage::Format_ARGB32_Premultiplied)
+                *image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
+                                         8, image->width(), image->height(),
+                                         image->bytesPerLine(), callbackFreeImage, image);
                 item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
-                gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), image);
+                gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
             }
             gtk_menu_shell_append(GTK_MENU_SHELL(snMenu), item);
