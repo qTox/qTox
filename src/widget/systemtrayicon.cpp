@@ -15,7 +15,6 @@ SystemTrayIcon::SystemTrayIcon()
     {
         backendType = SystrayBackendType::StatusNotifier;
         gtk_init(nullptr, nullptr);
-        GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
         snMenu = gtk_menu_new();
         QString settingsDir = Settings::getSettingsDirPath();
         QFile iconFile(settingsDir+"/icon.png");
@@ -132,7 +131,6 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         void (*callbackMenu)(StatusNotifier*, gint, gint, gpointer) =
                 [](StatusNotifier*, gint, gint, gpointer data)
         {
-            qDebug() << "Context menu clicked";
             gtk_widget_show_all(((SystemTrayIcon*)data)->snMenu);
             gtk_menu_popup(GTK_MENU(((SystemTrayIcon*)data)->snMenu), 0, 0, 0, 0, 3, gtk_get_current_event_time());
         };
@@ -231,9 +229,17 @@ void SystemTrayIcon::setIcon(QIcon &&icon)
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     else if (backendType == SystrayBackendType::StatusNotifier)
     {
-        QString path = Settings::getSettingsDirPath()+"/icon.png";
-        extractIconToFile(icon,"icon");
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(path.toStdString().c_str(), 0);
+        void (*callbackFreeImage)(guchar*, gpointer) =
+                [](guchar*, gpointer image)
+        {
+            delete reinterpret_cast<QImage*>(image);
+        };
+        QImage* image = new QImage(icon.pixmap(64, 64).toImage());
+        if (image->format() != QImage::Format_ARGB32_Premultiplied)
+        *image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
+                                 8, image->width(), image->height(),
+                                 image->bytesPerLine(), callbackFreeImage, image);
         status_notifier_set_from_pixbuf(statusNotifier, STATUS_NOTIFIER_ICON, pixbuf);
     }
     #endif
