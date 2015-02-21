@@ -341,6 +341,7 @@ void Core::process()
     else if (!(--tolerance))
     {
         bootstrapDht();
+        tolerance = CORE_DISCONNECT_TOLERANCE;
     }
 
     toxTimer->start(qMin(tox_do_interval(tox), toxav_do_interval(toxav)));
