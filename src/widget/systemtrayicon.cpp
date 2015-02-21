@@ -120,8 +120,8 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
                     delete reinterpret_cast<QImage*>(image);
                 };
                 QImage* image = new QImage(a->icon().pixmap(64, 64).toImage());
-                if (image->format() != QImage::Format_ARGB32_Premultiplied)
-                *image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+                if (image->format() != QImage::Format_RGBA8888_Premultiplied)
+                *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
                 GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                          8, image->width(), image->height(),
                                          image->bytesPerLine(), callbackFreeImage, image);
@@ -244,8 +244,8 @@ void SystemTrayIcon::setIcon(QIcon &&icon)
             delete reinterpret_cast<QImage*>(image);
         };
         QImage* image = new QImage(icon.pixmap(64, 64).toImage());
-        if (image->format() != QImage::Format_ARGB32_Premultiplied)
-        *image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+        if (image->format() != QImage::Format_RGBA8888_Premultiplied)
+        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
