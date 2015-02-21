@@ -34,6 +34,7 @@ private:
 #endif
 #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     StatusNotifier* statusNotifier;
+    GtkWidget* snMenu;
 #endif
 };
 

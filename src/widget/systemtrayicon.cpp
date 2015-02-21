@@ -13,9 +13,27 @@ SystemTrayIcon::SystemTrayIcon()
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     else if (true)
     {
+        backendType = SystrayBackendType::StatusNotifier;
+        gtk_init(nullptr, nullptr);
+        GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        snMenu = gtk_menu_new();
+        QString settingsDir = Settings::getSettingsDirPath();
+        QFile iconFile(settingsDir+"/icon.png");
+        if (iconFile.open(QIODevice::Truncate | QIODevice::WriteOnly))
+        {
+            QFile resIconFile(":/img/icon.png");
+            if (resIconFile.open(QIODevice::ReadOnly))
+                iconFile.write(resIconFile.readAll());
+            resIconFile.close();
+            iconFile.close();
+        }
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file((settingsDir+"/icon.png").toStdString().c_str(), 0);
         statusNotifier = status_notifier_new_from_pixbuf("qtox",
-                            STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, 0);
+                            STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, pixbuf);
         status_notifier_register(statusNotifier);
+        GtkWidget* item = gtk_menu_item_new_with_label("Test");
+        gtk_menu_shell_append(GTK_MENU_SHELL(snMenu), item);
+        gtk_widget_show(item);
     }
     #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
@@ -78,14 +96,47 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
 {
     if (false);
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-    else if (true)
+    else if (backendType == SystrayBackendType::StatusNotifier)
     {
-        void (*callback)(StatusNotifier*, gint, gint, gpointer) =
+        void (*callbackClick)(StatusNotifier*, gint, gint, gpointer) =
                 [](StatusNotifier*, gint, gint, gpointer data)
         {
             ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::Trigger);
         };
-        g_signal_connect(statusNotifier, "activate", G_CALLBACK(callback), this);
+        g_signal_connect(statusNotifier, "activate", G_CALLBACK(callbackClick), this);
+
+        for (QAction* a : menu->actions())
+        {
+            QString aText = a->text().replace('&',"");
+            GtkWidget* item;
+            if (a->isSeparator())
+                item = gtk_menu_item_new();
+            else if (a->icon().isNull())
+                item = gtk_menu_item_new_with_label(aText.toStdString().c_str());
+            else
+            {
+                QString iconPath = extractIconToFile(a->icon(),"iconmenu"+a->icon().name());
+                GtkWidget* image = gtk_image_new_from_file(iconPath.toStdString().c_str());
+                item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
+                gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), image);
+                gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
+            }
+            gtk_menu_shell_append(GTK_MENU_SHELL(snMenu), item);
+            void (*callback)(GtkMenu*, gpointer data) = [](GtkMenu*, gpointer a)
+            {
+                ((QAction*)a)->activate(QAction::Trigger);
+            };
+            g_signal_connect(item, "activate", G_CALLBACK(callback), a);
+            gtk_widget_show(item);
+        }
+        void (*callbackMenu)(StatusNotifier*, gint, gint, gpointer) =
+                [](StatusNotifier*, gint, gint, gpointer data)
+        {
+            qDebug() << "Context menu clicked";
+            gtk_widget_show_all(((SystemTrayIcon*)data)->snMenu);
+            gtk_menu_popup(GTK_MENU(((SystemTrayIcon*)data)->snMenu), 0, 0, 0, 0, 3, gtk_get_current_event_time());
+        };
+        g_signal_connect(statusNotifier, "context-menu", G_CALLBACK(callbackMenu), this);
     }
     #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
@@ -93,7 +144,6 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
     {
         for (QAction* a : menu->actions())
         {
-            gtk_image_menu_item_new();
             QString aText = a->text().replace('&',"");
             GtkWidget* item;
             if (a->isSeparator())
@@ -149,7 +199,7 @@ void SystemTrayIcon::setVisible(bool newState)
 {
     if (false);
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-    else if (true)
+    else if (backendType == SystrayBackendType::StatusNotifier)
     {
         if (newState)
             status_notifier_set_status(statusNotifier, STATUS_NOTIFIER_STATUS_ACTIVE);
@@ -179,7 +229,7 @@ void SystemTrayIcon::setIcon(QIcon &&icon)
 {
     if (false);
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-    else if (true)
+    else if (backendType == SystrayBackendType::StatusNotifier)
     {
         QString path = Settings::getSettingsDirPath()+"/icon.png";
         extractIconToFile(icon,"icon");

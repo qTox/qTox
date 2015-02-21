@@ -86,8 +86,9 @@ contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, YES) {
 	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
 	INCLUDEPATH += "/usr/include/cairo"
 	INCLUDEPATH += "/usr/include/pango-1.0"
+	INCLUDEPATH += "/usr/include/atk-1.0"
 
-	LIBS += -lglib-2.0 -lgdk-3 -lgdk_pixbuf-2.0 -lgobject-2.0 -lappindicator -lgtk-x11-2.0 -lgio-2.0 -lcairo
+	LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
 }
 
 android {
