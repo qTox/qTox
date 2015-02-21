@@ -10,6 +10,14 @@ SystemTrayIcon::SystemTrayIcon()
 {
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (false);
+    #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+    else if (true)
+    {
+        statusNotifier = status_notifier_new_from_pixbuf("qtox",
+                            STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, 0);
+        status_notifier_register(statusNotifier);
+    }
+    #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (desktop.toLower() == "unity")
     {
@@ -69,6 +77,17 @@ QString SystemTrayIcon::extractIconToFile(QIcon icon, QString name)
 void SystemTrayIcon::setContextMenu(QMenu* menu)
 {
     if (false);
+    #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+    else if (true)
+    {
+        void (*callback)(StatusNotifier*, gint, gint, gpointer) =
+                [](StatusNotifier*, gint, gint, gpointer data)
+        {
+            ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::Trigger);
+        };
+        g_signal_connect(statusNotifier, "activate", G_CALLBACK(callback), this);
+    }
+    #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (backendType == SystrayBackendType::Unity)
     {
@@ -129,6 +148,15 @@ void SystemTrayIcon::hide()
 void SystemTrayIcon::setVisible(bool newState)
 {
     if (false);
+    #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+    else if (true)
+    {
+        if (newState)
+            status_notifier_set_status(statusNotifier, STATUS_NOTIFIER_STATUS_ACTIVE);
+        else
+            status_notifier_set_status(statusNotifier, STATUS_NOTIFIER_STATUS_PASSIVE);
+    }
+    #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (backendType == SystrayBackendType::Unity)
     {
@@ -150,6 +178,15 @@ void SystemTrayIcon::setVisible(bool newState)
 void SystemTrayIcon::setIcon(QIcon &&icon)
 {
     if (false);
+    #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+    else if (true)
+    {
+        QString path = Settings::getSettingsDirPath()+"/icon.png";
+        extractIconToFile(icon,"icon");
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(path.toStdString().c_str(), 0);
+        status_notifier_set_from_pixbuf(statusNotifier, STATUS_NOTIFIER_ICON, pixbuf);
+    }
+    #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (backendType == SystrayBackendType::Unity)
     {

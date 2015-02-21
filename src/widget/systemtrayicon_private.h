@@ -3,6 +3,20 @@
 
 #include <QSystemTrayIcon>
 
+#ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+#ifdef signals
+#undef signals
+#endif
+extern "C" {
+    #include <glib.h>
+    #include <glib-object.h>
+    #include <gio/gio.h>
+    #include <gdk-pixbuf/gdk-pixbuf.h>
+    #include "src/platform/statusnotifier/statusnotifier.h"
+}
+#define signals public
+#endif
+
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
 #ifdef signals
 #undef signals
@@ -20,7 +34,10 @@ enum class SystrayBackendType
     Qt,
     KDE5,
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
-    Unity
+    Unity,
+#endif
+#ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+    StatusNotifier,
 #endif
 };
 
