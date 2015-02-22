@@ -111,8 +111,7 @@ android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     contains(ANDROID_TARGET_ARCH,armeabi) {
         ANDROID_EXTRA_LIBS = \
-			$$ANDROID_TOOLCHAIN/lib/libopenal.so \
-			$$ANDROID_TOOLCHAIN/lib/libsodium.so
+            $$ANDROID_TOOLCHAIN/lib/libopenal.so
     }
 }
 
