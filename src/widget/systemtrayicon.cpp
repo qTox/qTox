@@ -13,6 +13,7 @@ SystemTrayIcon::SystemTrayIcon()
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (desktop.toLower() == "unity")
     {
+        qDebug() << "SystemTrayIcon: Using Unity backend";
         QString settingsDir = Settings::getSettingsDirPath();
         QFile iconFile(settingsDir+"/icon.png");
         if (iconFile.open(QIODevice::Truncate | QIODevice::WriteOnly))
@@ -37,6 +38,7 @@ SystemTrayIcon::SystemTrayIcon()
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     else if (true)
     {
+        qDebug() << "SystemTrayIcon: Using Status Notifier backend";
         backendType = SystrayBackendType::StatusNotifier;
         gtk_init(nullptr, nullptr);
         snMenu = gtk_menu_new();
@@ -65,6 +67,7 @@ SystemTrayIcon::SystemTrayIcon()
     }
     else
     {
+        qDebug() << "SystemTrayIcon: Using Qt backend";
         qtIcon = new QSystemTrayIcon;
         backendType = SystrayBackendType::Qt;
         connect(qtIcon, &QSystemTrayIcon::activated, this, &SystemTrayIcon::activated);
