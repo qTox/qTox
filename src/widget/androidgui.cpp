@@ -12,6 +12,8 @@
 #include "src/nexus.h"
 #include "src/widget/friendwidget.h"
 #include "src/widget/groupwidget.h"
+#include <QDebug>
+#include <QKeyEvent>
 #include <QLabel>
 #include <QMenu>
 
@@ -167,3 +169,15 @@ void AndroidGUI::onStatusSet(Status status)
     Style::repolish(ui->statusButton);
 }
 
+void AndroidGUI::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Back)
+    {
+        qDebug() << "AndroidGUI: Back key pressed, quitting";
+        qApp->exit(0);
+    }
+    else if (event->key() == Qt::Key_Menu)
+    {
+        qDebug() << "AndroidGUI: Menu key pressed";
+    }
+}

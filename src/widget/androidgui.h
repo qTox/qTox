@@ -6,6 +6,7 @@
 
 class MaskablePixmapWidget;
 class FriendListWidget;
+class QKeyEvent;
 
 namespace Ui {
 class Android;
@@ -36,6 +37,7 @@ signals:
 
 private:
     void reloadTheme();
+    virtual void keyPressEvent(QKeyEvent* event) final;
 
 private slots:
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
