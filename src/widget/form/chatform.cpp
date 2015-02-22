@@ -272,7 +272,9 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
         callButton->setObjectName("grey");
+        callButton->setToolTip("");
         videoButton->setObjectName("yellow");
+        videoButton->setToolTip(tr("Accept video call"));
         connect(videoButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
     }
     else
@@ -284,7 +286,9 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
         callButton->setObjectName("yellow");
+        callButton->setToolTip(tr("Accept audio call"));
         videoButton->setObjectName("grey");
+        videoButton->setToolTip("");
         connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
     }
     callButton->style()->polish(callButton);
@@ -317,7 +321,9 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
     if (video)
     {
         callButton->setObjectName("grey");
+        callButton->setToolTip("");
         videoButton->setObjectName("red");
+        videoButton->setToolTip(tr("End video call"));
         connect(videoButton, SIGNAL(clicked()),
                 this, SLOT(onHangupCallTriggered()));
 
@@ -326,12 +332,26 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
     else
     {
         callButton->setObjectName("red");
+        callButton->setToolTip(tr("End audio call"));
         videoButton->setObjectName("grey");
+        videoButton->setToolTip("");
         connect(callButton, SIGNAL(clicked()),
                 this, SLOT(onHangupCallTriggered()));
     }
     callButton->style()->polish(callButton);
     videoButton->style()->polish(videoButton);
+
+    micButton->setObjectName("green");
+    micButton->style()->polish(micButton);
+    micButton->setToolTip(tr("Mute microphone"));
+    volButton->setObjectName("green");
+    volButton->style()->polish(volButton);
+    volButton->setToolTip(tr("Mute call"));
+
+    connect(micButton, SIGNAL(clicked()),
+            this, SLOT(onMicMuteToggle()));
+    connect(volButton, SIGNAL(clicked()),
+            this, SLOT(onVolMuteToggle()));
     
     startCounter();
 }
@@ -386,8 +406,10 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
     {
         callButton->setObjectName("grey");
         callButton->style()->polish(callButton);
+        callButton->setToolTip("");
         videoButton->setObjectName("yellow");
         videoButton->style()->polish(videoButton);
+        videoButton->setToolTip(tr("Cancel video call"));
         connect(videoButton, SIGNAL(clicked()),
                 this, SLOT(onCancelCallTriggered()));
     }
@@ -395,8 +417,10 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
     {
         callButton->setObjectName("yellow");
         callButton->style()->polish(callButton);
+        callButton->setToolTip(tr("Cancel audio call"));
         videoButton->setObjectName("grey");
         videoButton->style()->polish(videoButton);
+        videoButton->setToolTip("");
         connect(callButton, SIGNAL(clicked()),
                 this, SLOT(onCancelCallTriggered()));
     }
@@ -417,8 +441,10 @@ void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
     {
         callButton->setObjectName("grey");
         callButton->style()->polish(callButton);
+        callButton->setToolTip("");
         videoButton->setObjectName("red");
         videoButton->style()->polish(videoButton);
+        videoButton->setToolTip(tr("End video call"));
         connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
 
         netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getDisplayedName());
@@ -427,8 +453,10 @@ void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
     {
         callButton->setObjectName("red");
         callButton->style()->polish(callButton);
+        callButton->setToolTip(tr("End audio call"));
         videoButton->setObjectName("grey");
         videoButton->style()->polish(videoButton);
+        videoButton->setToolTip("");
         connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
     }
     
@@ -614,16 +642,20 @@ void ChatForm::enableCallButtons()
     
     micButton->setObjectName("grey");
     micButton->style()->polish(micButton);
+    micButton->setToolTip("");
     micButton->disconnect();    
     volButton->setObjectName("grey");
     volButton->style()->polish(volButton);
+    volButton->setToolTip("");
     volButton->disconnect();
     
     callButton->setObjectName("grey");
     callButton->style()->polish(callButton);
+    callButton->setToolTip("");
     callButton->disconnect();
     videoButton->setObjectName("grey");
     videoButton->style()->polish(videoButton);
+    videoButton->setToolTip("");
     videoButton->disconnect();
     
     if(disableCallButtonsTimer == nullptr)
@@ -642,24 +674,19 @@ void ChatForm::onEnableCallButtons()
     qDebug() << "onEnableCallButtons";
     audioInputFlag = false;
     audioOutputFlag = false;
-    micButton->setObjectName("green");
-    micButton->style()->polish(micButton);
-    volButton->setObjectName("green");
-    volButton->style()->polish(volButton);
+
     callButton->setObjectName("green");
     callButton->style()->polish(callButton);
+    callButton->setToolTip(tr("Start audio call"));
     videoButton->setObjectName("green");
     videoButton->style()->polish(videoButton);
+    videoButton->setToolTip(tr("Start video call"));
     
     connect(callButton, SIGNAL(clicked()),
             this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()),
             this, SLOT(onVideoCallTriggered()));
-    connect(micButton, SIGNAL(clicked()),
-            this, SLOT(onMicMuteToggle()));
-    connect(volButton, SIGNAL(clicked()),
-            this, SLOT(onVolMuteToggle()));
-    
+
     disableCallButtonsTimer->stop();
     delete disableCallButtonsTimer;
     disableCallButtonsTimer = nullptr;
@@ -671,9 +698,15 @@ void ChatForm::onMicMuteToggle()
     {
         emit micMuteToggle(callId);
         if (micButton->objectName() == "red")
+        {
             micButton->setObjectName("green");
+            micButton->setToolTip(tr("Mute microphone"));
+        }
         else
+        {
             micButton->setObjectName("red");
+            micButton->setToolTip(tr("Unmute microphone"));
+        }
 
         Style::repolish(micButton);
     }
@@ -685,9 +718,15 @@ void ChatForm::onVolMuteToggle()
     {
         emit volMuteToggle(callId);
         if (volButton->objectName() == "red")
+        {
             volButton->setObjectName("green");
+            volButton->setToolTip(tr("Mute call"));
+        }
         else
+        {
             volButton->setObjectName("red");
+            volButton->setToolTip(tr("Unmute call"));
+        }
 
         Style::repolish(volButton);
     }

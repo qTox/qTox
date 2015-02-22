@@ -79,16 +79,16 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileButton->setToolTip(tr("Send file(s)"));
     callButton = new QPushButton();
     callButton->setFixedSize(50,40);
-    callButton->setToolTip(tr("Audio call: RED means you're on a call"));
+    callButton->setToolTip(tr("Start an audio call"));
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
-    videoButton->setToolTip(tr("Video call: RED means you're on a call"));
+    videoButton->setToolTip(tr("Start a video call"));
     volButton = new QPushButton();
     //volButton->setFixedSize(25,20);
-    volButton->setToolTip(tr("Toggle speakers volume: RED is OFF"));
+    volButton->setToolTip("");
     micButton = new QPushButton();
     // micButton->setFixedSize(25,20);
-    micButton->setToolTip(tr("Toggle microphone: RED is OFF"));
+    micButton->setToolTip("");
 
     footButtonsSmall->setSpacing(2);
 
@@ -107,11 +107,11 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     videoButton->setStyleSheet(Style::getStylesheet(":/ui/videoButton/videoButton.css"));
 
     QString volButtonStylesheet = Style::getStylesheet(":/ui/volButton/volButton.css");
-    volButton->setObjectName("green");
+    volButton->setObjectName("grey");
     volButton->setStyleSheet(volButtonStylesheet);
 
     QString micButtonStylesheet = Style::getStylesheet(":/ui/micButton/micButton.css");
-    micButton->setObjectName("green");
+    micButton->setObjectName("grey");
     micButton->setStyleSheet(micButtonStylesheet);
 
     setLayout(mainLayout);
