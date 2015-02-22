@@ -110,9 +110,16 @@ android {
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     contains(ANDROID_TARGET_ARCH,armeabi) {
-        ANDROID_EXTRA_LIBS = \
-            $$ANDROID_TOOLCHAIN/lib/libopenal.so
+        exists($$ANDROID_TOOLCHAIN/lib/libopenal.so) {
+            ANDROID_EXTRA_LIBS = $$ANDROID_TOOLCHAIN/lib/libopenal.so
+        } else {
+        exists($$PWD/libs/lib/libopenal.so) {
+            ANDROID_EXTRA_LIBS = $$PWD/libs/lib/libopenal.so
+        } else {
+            error(Can\'t find libopenal.so)
+        }}
     }
+
 }
 
 
