@@ -101,6 +101,12 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
             ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::Trigger);
         };
         g_signal_connect(statusNotifier, "activate", G_CALLBACK(callbackClick), this);
+        void (*callbackMiddleClick)(StatusNotifier*, gint, gint, gpointer) =
+                [](StatusNotifier*, gint, gint, gpointer data)
+        {
+            ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::MiddleClick);
+        };
+        g_signal_connect(statusNotifier, "secondary_activate", G_CALLBACK(callbackMiddleClick), this);
 
         for (QAction* a : menu->actions())
         {
