@@ -121,6 +121,10 @@ android {
     }
 
     RESOURCES += android.qrc
+
+    HEADERS += src/widget/androidgui.h
+
+    SOURCES += src/widget/androidgui.cpp
 }
 
 
@@ -281,7 +285,6 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/systemtrayicon_private.h \
     src/nexus.h \
     src/widget/gui.h \
-    src/widget/androidgui.h \
     src/offlinemsgengine.h
 
 SOURCES += \
@@ -360,7 +363,6 @@ SOURCES += \
     src/widget/systemtrayicon.cpp \
     src/nexus.cpp \
     src/widget/gui.cpp \
-    src/widget/androidgui.cpp \
     src/offlinemsgengine.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
