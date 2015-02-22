@@ -274,7 +274,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         callButton->setObjectName("grey");
         callButton->setToolTip("");
         videoButton->setObjectName("yellow");
-        videoButton->setToolTip(tr("Accept/Decline video call"));
+        videoButton->setToolTip(tr("Accept video call"));
         connect(videoButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
     }
     else
@@ -286,7 +286,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
         connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
         callButton->setObjectName("yellow");
-        callButton->setToolTip(tr("Accept/Decline audio call"));
+        callButton->setToolTip(tr("Accept audio call"));
         videoButton->setObjectName("grey");
         videoButton->setToolTip("");
         connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
