@@ -89,6 +89,15 @@ contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, YES) {
 	INCLUDEPATH += "/usr/include/atk-1.0"
 
 	LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
+
+    SOURCES +=     src/platform/statusnotifier/closures.c \
+    src/platform/statusnotifier/enums.c \
+    src/platform/statusnotifier/statusnotifier.c
+
+    HEADERS += src/platform/statusnotifier/closures.h \
+    src/platform/statusnotifier/enums.h \
+    src/platform/statusnotifier/interfaces.h \
+    src/platform/statusnotifier/statusnotifier.h
 }
 
 android {
@@ -266,11 +275,7 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/nexus.h \
     src/widget/gui.h \
     src/widget/androidgui.h \
-    src/offlinemsgengine.h \
-    src/platform/statusnotifier/closures.h \
-    src/platform/statusnotifier/enums.h \
-    src/platform/statusnotifier/interfaces.h \
-    src/platform/statusnotifier/statusnotifier.h
+    src/offlinemsgengine.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -349,10 +354,7 @@ SOURCES += \
     src/nexus.cpp \
     src/widget/gui.cpp \
     src/widget/androidgui.cpp \
-    src/offlinemsgengine.cpp \
-    src/platform/statusnotifier/closures.c \
-    src/platform/statusnotifier/enums.c \
-    src/platform/statusnotifier/statusnotifier.c
+    src/offlinemsgengine.cpp
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
     HEADERS += src/audiofilterer.h
