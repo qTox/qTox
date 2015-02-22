@@ -842,7 +842,7 @@ dbus_notify (StatusNotifier *sn, guint prop)
     {
         case PROP_STATUS:
             {
-                const gchar const *s_status[] = {
+                const gchar *s_status[] = {
                     "Passive",
                     "Active",
                     "NeedsAttention"
@@ -1449,6 +1449,10 @@ method_call (GDBusConnection        *conn,
              GDBusMethodInvocation  *invocation,
              gpointer                data)
 {
+    (void)conn;
+    (void)sender;
+    (void)object;
+    (void)interface;
     StatusNotifier *sn = (StatusNotifier *) data;
     guint signal;
     gint x, y;
@@ -1543,6 +1547,11 @@ get_prop (GDBusConnection        *conn,
           GError                **error,
           gpointer                data)
 {
+    (void)conn;
+    (void)sender;
+    (void)object;
+    (void)interface;
+    (void)error;
     StatusNotifier *sn = (StatusNotifier *) data;
     StatusNotifierPrivate *priv = sn->priv;
 
@@ -1550,7 +1559,7 @@ get_prop (GDBusConnection        *conn,
         return g_variant_new ("s", priv->id);
     else if (!g_strcmp0 (property, "Category"))
     {
-        const gchar const *s_category[] = {
+        const gchar *s_category[] = {
             "ApplicationStatus",
             "Communications",
             "SystemServices",
@@ -1562,7 +1571,7 @@ get_prop (GDBusConnection        *conn,
         return g_variant_new ("s", (priv->title) ? priv->title : "");
     else if (!g_strcmp0 (property, "Status"))
     {
-        const gchar const *s_status[] = {
+        const gchar *s_status[] = {
             "Passive",
             "Active",
             "NeedsAttention"
@@ -1644,6 +1653,7 @@ dbus_failed (StatusNotifier *sn, GError *error, gboolean fatal)
 static void
 bus_acquired (GDBusConnection *conn, const gchar *name, gpointer data)
 {
+    (void)name;
     GError *err = NULL;
     StatusNotifier *sn = (StatusNotifier *) data;
     StatusNotifierPrivate *priv = sn->priv;
@@ -1694,6 +1704,7 @@ register_item_cb (GObject *sce, GAsyncResult *result, gpointer data)
 static void
 name_acquired (GDBusConnection *conn, const gchar *name, gpointer data)
 {
+    (void)conn;
     StatusNotifier *sn = (StatusNotifier *) data;
     StatusNotifierPrivate *priv = sn->priv;
 
@@ -1712,6 +1723,7 @@ name_acquired (GDBusConnection *conn, const gchar *name, gpointer data)
 static void
 name_lost (GDBusConnection *conn, const gchar *name, gpointer data)
 {
+    (void)name;
     GError *err = NULL;
     StatusNotifier *sn = (StatusNotifier *) data;
 
@@ -1754,6 +1766,9 @@ watcher_signal (GDBusProxy      *proxy,
                 GVariant        *params,
                 StatusNotifier  *sn)
 {
+    (void)proxy;
+    (void)sender;
+    (void)params;
     StatusNotifierPrivate *priv = sn->priv;
 
     if (!g_strcmp0 (signal, "StatusNotifierHostRegistered"))
@@ -1768,6 +1783,7 @@ watcher_signal (GDBusProxy      *proxy,
 static void
 proxy_cb (GObject *sce, GAsyncResult *result, gpointer data)
 {
+    (void)sce;
     GError *err = NULL;
     StatusNotifier *sn = (StatusNotifier *) data;
     StatusNotifierPrivate *priv = sn->priv;
@@ -1814,6 +1830,9 @@ watcher_appeared (GDBusConnection   *conn,
                   const gchar       *owner,
                   gpointer           data)
 {
+    (void)conn;
+    (void)name;
+    (void)owner;
     StatusNotifier *sn = data;
     StatusNotifierPrivate *priv = sn->priv;
     GDBusNodeInfo *info;
@@ -1839,6 +1858,8 @@ watcher_vanished (GDBusConnection   *conn,
                   const gchar       *name,
                   gpointer           data)
 {
+    (void)conn;
+    (void)name;
     GError *err = NULL;
     StatusNotifier *sn = data;
     StatusNotifierPrivate *priv = sn->priv;
