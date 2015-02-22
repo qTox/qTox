@@ -120,6 +120,7 @@ android {
         }}
     }
 
+    RESOURCES += android.qrc
 }
 
 
@@ -378,3 +379,12 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
                src/platform/autorun_xdg.cpp \
                src/platform/autorun_osx.cpp
 }
+
+DISTFILES += \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/AndroidManifest.xml \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew
