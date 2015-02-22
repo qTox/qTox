@@ -694,10 +694,6 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (isActualChange && status != Status::Offline)
     { // wait a little
         QTimer::singleShot(250, f->getChatForm()->getOfflineMsgEngine(), SLOT(deliverOfflineMsgs()));
-
-        // Send another typing notification if the contact comes back online
-        if (f->getChatForm()->getIsTyping() && Settings::getInstance().isTypingNotificationEnabled())
-            Core::getInstance()->sendTyping(f->getFriendID(), true);
     }
 }
 
