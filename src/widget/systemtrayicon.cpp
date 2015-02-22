@@ -40,23 +40,21 @@ SystemTrayIcon::SystemTrayIcon()
         backendType = SystrayBackendType::StatusNotifier;
         gtk_init(nullptr, nullptr);
         snMenu = gtk_menu_new();
-        QString settingsDir = Settings::getSettingsDirPath();
-        QFile iconFile(settingsDir+"/icon.png");
-        if (iconFile.open(QIODevice::Truncate | QIODevice::WriteOnly))
+        void (*callbackFreeImage)(guchar*, gpointer) =
+                [](guchar*, gpointer image)
         {
-            QFile resIconFile(":/img/icon.png");
-            if (resIconFile.open(QIODevice::ReadOnly))
-                iconFile.write(resIconFile.readAll());
-            resIconFile.close();
-            iconFile.close();
-        }
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file((settingsDir+"/icon.png").toStdString().c_str(), 0);
+            delete reinterpret_cast<QImage*>(image);
+        };
+        QImage* image = new QImage(":/img/icon.png");
+        if (image->format() != QImage::Format_RGBA8888_Premultiplied)
+        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
+                                 8, image->width(), image->height(),
+                                 image->bytesPerLine(), callbackFreeImage, image);
+
         statusNotifier = status_notifier_new_from_pixbuf("qtox",
                             STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, pixbuf);
         status_notifier_register(statusNotifier);
-        GtkWidget* item = gtk_menu_item_new_with_label("Test");
-        gtk_menu_shell_append(GTK_MENU_SHELL(snMenu), item);
-        gtk_widget_show(item);
     }
     #endif
     else if (desktop.toLower() == "kde"
