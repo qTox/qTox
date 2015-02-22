@@ -70,7 +70,7 @@ public:
     virtual void changeEvent(QEvent *event);
     virtual void resizeEvent(QResizeEvent *event);
 
-    static bool confirmExecutableOpen(const QFileInfo file);
+    static void confirmExecutableOpen(const QFileInfo file);
 
     void clearAllReceipts();
     void reloadHistory();
