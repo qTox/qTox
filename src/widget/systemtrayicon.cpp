@@ -10,6 +10,30 @@ SystemTrayIcon::SystemTrayIcon()
 {
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (false);
+    #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
+    else if (desktop.toLower() == "unity")
+    {
+        QString settingsDir = Settings::getSettingsDirPath();
+        QFile iconFile(settingsDir+"/icon.png");
+        if (iconFile.open(QIODevice::Truncate | QIODevice::WriteOnly))
+        {
+            QFile resIconFile(":/img/icon.png");
+            if (resIconFile.open(QIODevice::ReadOnly))
+                iconFile.write(resIconFile.readAll());
+            resIconFile.close();
+            iconFile.close();
+        }
+        backendType = SystrayBackendType::Unity;
+        unityMenu = gtk_menu_new();
+        unityIndicator = app_indicator_new_with_path(
+            "qTox",
+            "icon",
+            APP_INDICATOR_CATEGORY_APPLICATION_STATUS,
+            settingsDir.toStdString().c_str()
+        );
+        app_indicator_set_menu(unityIndicator, GTK_MENU(unityMenu));
+    }
+    #endif
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     else if (true)
     {
@@ -33,30 +57,6 @@ SystemTrayIcon::SystemTrayIcon()
         GtkWidget* item = gtk_menu_item_new_with_label("Test");
         gtk_menu_shell_append(GTK_MENU_SHELL(snMenu), item);
         gtk_widget_show(item);
-    }
-    #endif
-    #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
-    else if (desktop.toLower() == "unity")
-    {
-        QString settingsDir = Settings::getSettingsDirPath();
-        QFile iconFile(settingsDir+"/icon.png");
-        if (iconFile.open(QIODevice::Truncate | QIODevice::WriteOnly))
-        {
-            QFile resIconFile(":/img/icon.png");
-            if (resIconFile.open(QIODevice::ReadOnly))
-                iconFile.write(resIconFile.readAll());
-            resIconFile.close();
-            iconFile.close();
-        }
-        backendType = SystrayBackendType::Unity;
-        unityMenu = gtk_menu_new();
-        unityIndicator = app_indicator_new_with_path(
-            "qTox",
-            "icon",
-            APP_INDICATOR_CATEGORY_APPLICATION_STATUS,
-            settingsDir.toStdString().c_str()
-        );
-        app_indicator_set_menu(unityIndicator, GTK_MENU(unityMenu));
     }
     #endif
     else if (desktop.toLower() == "kde"
