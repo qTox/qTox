@@ -32,6 +32,10 @@ private:
     AppIndicator *unityIndicator;
     GtkWidget *unityMenu;
 #endif
+#ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+    StatusNotifier* statusNotifier;
+    GtkWidget* snMenu;
+#endif
 };
 
 #endif // SYSTEMTRAYICON_H

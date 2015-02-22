@@ -74,6 +74,23 @@ contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
 }
 
+contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, YES) {
+	DEFINES += ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+
+	INCLUDEPATH += "/usr/include/gtk-2.0"
+	INCLUDEPATH += "/usr/include/glib-2.0"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+	INCLUDEPATH += "/usr/include/cairo"
+	INCLUDEPATH += "/usr/include/pango-1.0"
+	INCLUDEPATH += "/usr/include/atk-1.0"
+
+	LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
+}
+
 android {
     ANDROID_TOOLCHAIN=/opt/android/toolchain-r9d-17/
     INCLUDEPATH += $$ANDROID_TOOLCHAIN/include/
@@ -249,7 +266,11 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/nexus.h \
     src/widget/gui.h \
     src/widget/androidgui.h \
-    src/offlinemsgengine.h
+    src/offlinemsgengine.h \
+    src/platform/statusnotifier/closures.h \
+    src/platform/statusnotifier/enums.h \
+    src/platform/statusnotifier/interfaces.h \
+    src/platform/statusnotifier/statusnotifier.h
 
 SOURCES += \
     src/widget/form/addfriendform.cpp \
@@ -328,7 +349,10 @@ SOURCES += \
     src/nexus.cpp \
     src/widget/gui.cpp \
     src/widget/androidgui.cpp \
-    src/offlinemsgengine.cpp
+    src/offlinemsgengine.cpp \
+    src/platform/statusnotifier/closures.c \
+    src/platform/statusnotifier/enums.c \
+    src/platform/statusnotifier/statusnotifier.c
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
     HEADERS += src/audiofilterer.h
