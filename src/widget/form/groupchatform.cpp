@@ -151,11 +151,13 @@ void GroupChatForm::onMicMuteToggle()
         {
             Core::getInstance()->enableGroupCallMic(group->getGroupId());
             micButton->setObjectName("green");
+            micButton->setToolTip(tr("Mute microphone"));
         }
         else
         {
             Core::getInstance()->disableGroupCallMic(group->getGroupId());
             micButton->setObjectName("red");
+            micButton->setToolTip(tr("Unmute microphone"));
         }
 
         Style::repolish(micButton);
@@ -170,11 +172,13 @@ void GroupChatForm::onVolMuteToggle()
         {
             Core::getInstance()->enableGroupCallVol(group->getGroupId());
             volButton->setObjectName("green");
+            volButton->setToolTip(tr("Mute call"));
         }
         else
         {
             Core::getInstance()->disableGroupCallVol(group->getGroupId());
             volButton->setObjectName("red");
+            volButton->setToolTip(tr("Unmute call"));
         }
 
         Style::repolish(volButton);
@@ -190,6 +194,13 @@ void GroupChatForm::onCallClicked()
         audioOutputFlag = true;
         callButton->setObjectName("red");
         callButton->style()->polish(callButton);
+        callButton->setToolTip(tr("End audio call"));
+        micButton->setObjectName("green");
+        micButton->style()->polish(micButton);
+        micButton->setToolTip(tr("Mute microphone"));
+        volButton->setObjectName("green");
+        volButton->style()->polish(volButton);
+        volButton->setToolTip(tr("Mute call"));
         inCall = true;
     }
     else
@@ -197,12 +208,15 @@ void GroupChatForm::onCallClicked()
         Core::getInstance()->leaveGroupCall(group->getGroupId());
         audioInputFlag = false;
         audioOutputFlag = false;
-        micButton->setObjectName("green");
-        micButton->style()->polish(micButton);
-        volButton->setObjectName("green");
-        volButton->style()->polish(volButton);
         callButton->setObjectName("green");
         callButton->style()->polish(callButton);
+        callButton->setToolTip(tr("Start audio call"));
+        micButton->setObjectName("grey");
+        micButton->style()->polish(micButton);
+        micButton->setToolTip("");
+        volButton->setObjectName("grey");
+        volButton->style()->polish(volButton);
+        volButton->setToolTip("");
         inCall = false;
     }
 }
