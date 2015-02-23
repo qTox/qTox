@@ -561,6 +561,8 @@ void Settings::setAutorun(bool newValue)
 {
 #ifdef QTOX_PLATFORM_EXT
     Platform::setAutorun(newValue);
+#else
+    Q_UNUSED(newValue);
 #endif
 }
 

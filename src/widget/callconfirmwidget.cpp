@@ -26,6 +26,7 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     QLabel *callLabel = new QLabel(QObject::tr("Incoming call..."), this);
+    callLabel->setWordWrap(true);
     callLabel->setAlignment(Qt::AlignHCenter);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
     QPushButton *accept = new QPushButton(this), *reject = new QPushButton(this);

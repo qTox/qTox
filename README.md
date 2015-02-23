@@ -30,6 +30,7 @@ This client runs on Windows, Linux and Mac natively.<br/>
 <h3>Screenshots</h3>
 <h5>Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features</h5>
 <img src="http://i.imgur.com/hwGmDeK.png"/>
+<img src="http://i.imgur.com/tmX8z9s.png"/>
 
 ##Documentation:
 

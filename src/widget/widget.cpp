@@ -300,10 +300,7 @@ Widget* Widget::getInstance()
     assert(IS_ON_DESKTOP_GUI); // Widget must only be used on Desktop platforms
 
     if (!instance)
-    {
         instance = new Widget();
-        instance->init();
-    }
     return instance;
 }
 
@@ -683,7 +680,9 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
         case Status::Busy:
             fStatus = tr("busy", "contact status"); break;
         case Status::Offline:
-            fStatus = tr("offline", "contact status"); break;
+            fStatus = tr("offline", "contact status");
+            f->getChatForm()->setFriendTyping(false); // Hide the "is typing" message when a friend goes offline
+            break;
         default:
             fStatus = tr("online", "contact status"); break;
         }

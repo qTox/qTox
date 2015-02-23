@@ -52,6 +52,7 @@ class Widget : public QMainWindow
 
 public:
     explicit Widget(QWidget *parent = 0);
+    void init();
     void setCentralWidget(QWidget *widget, const QString &widgetName);
     QString getUsername();
     Camera* getCamera();
@@ -135,7 +136,6 @@ private slots:
     void processOfflineMsgs();
 
 private:
-    void init();
     void hideMainForms();
     virtual bool event(QEvent * e);
     Group* createGroup(int groupId);

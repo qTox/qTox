@@ -336,7 +336,11 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 
 #ifdef QTOX_FILTER_AUDIO
 #include "audiofilterer.h"
+
+/* include for compatibility with older versions of OpenAL */
+#ifndef ALC_ALL_DEVICES_SPECIFIER
 #include <AL/alext.h>
+#endif
 
 void Audio::getEchoesToFilter(AudioFilterer* filterer, int framesize)
 {
@@ -350,6 +354,9 @@ void Audio::getEchoesToFilter(AudioFilterer* filterer, int framesize)
         filterer->passAudioOutput(buf, framesize);
         filterer->setEchoDelayMs(5); // This 5ms is configurable I believe
     }
+#else
+    Q_UNUSED(filterer);
+    Q_UNUSED(framesize);
 #endif
 }
 #endif

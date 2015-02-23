@@ -55,6 +55,11 @@ void Nexus::start()
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
     qRegisterMetaType<Core::PasswordType>("Core::PasswordType");
 
+    // Create GUI
+#ifndef Q_OS_ANDROID
+    widget = Widget::getInstance();
+#endif
+
     // Create Core
     QString profilePath = Settings::getInstance().detectProfile();
     coreThread = new QThread(this);
@@ -68,7 +73,7 @@ void Nexus::start()
     androidgui = new AndroidGUI;
     androidgui->show();
 #else
-    widget = Widget::getInstance();
+    widget->init();
 #endif
     GUI::getInstance();
 
