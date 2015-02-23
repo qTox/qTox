@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nl_NL">
+<TS version="2.1" language="nl_NL">
 <context>
     <name>AVForm</name>
     <message>
@@ -239,55 +239,91 @@ Proxy omzeilen en een directe internetverbinding gebruiken?</translation>
         <translation>Formulier</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="531"/>
+        <location filename="../src/android.ui" line="252"/>
+        <source>qTox</source>
+        <translation>qTox</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="343"/>
+        <source>Someone</source>
+        <translation>Iemand</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="348"/>
+        <source>Someone else</source>
+        <translation>Iemand anders</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="353"/>
+        <source>Groupbot</source>
+        <translation>Groupbot</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="358"/>
+        <source>That guy who I don&apos;t remember adding</source>
+        <translation>Degene die ik me niet kan herinneren toegevoegd te hebben</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="363"/>
+        <source>NASA manager</source>
+        <translation>NASA manager</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="368"/>
+        <source>Lorem</source>
+        <translation>Lorem</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="373"/>
+        <source>Ipsum</source>
+        <translation>Ipsum</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="378"/>
+        <source>Dolor</source>
+        <translation>Dolor</translation>
+    </message>
+    <message>
         <source>Your name</source>
-        <translation>Naam</translation>
+        <translation type="obsolete">Naam</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="616"/>
         <source>Your status</source>
-        <translation>Status</translation>
+        <translation type="obsolete">Status</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="767"/>
         <source>Add friends</source>
-        <translation>Voeg vrienden toe</translation>
+        <translation type="obsolete">Voeg vrienden toe</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="805"/>
         <source>Create a group chat</source>
-        <translation>Maak een groepsgesprek aan</translation>
+        <translation type="obsolete">Maak een groepsgesprek aan</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="840"/>
         <source>View completed file transfers</source>
-        <translation>Bekijk voltooide bestandsoverdrachten</translation>
+        <translation type="obsolete">Bekijk voltooide bestandsoverdrachten</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="872"/>
         <source>Change your settings</source>
-        <translation>Verander je instellingen</translation>
+        <translation type="obsolete">Verander je instellingen</translation>
     </message>
 </context>
 <context>
     <name>AndroidGUI</name>
     <message>
-        <location filename="../src/widget/androidgui.cpp" line="45"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>Online</translation>
+        <translation type="obsolete">Online</translation>
     </message>
     <message>
-        <location filename="../src/widget/androidgui.cpp" line="47"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Afwezig</translation>
+        <translation type="obsolete">Afwezig</translation>
     </message>
     <message>
-        <location filename="../src/widget/androidgui.cpp" line="49"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>Bezet</translation>
+        <translation type="obsolete">Bezet</translation>
     </message>
 </context>
 <context>
@@ -304,64 +340,128 @@ Proxy omzeilen en een directe internetverbinding gebruiken?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="185"/>
-        <location filename="../src/widget/form/chatform.cpp" line="729"/>
+        <location filename="../src/widget/form/chatform.cpp" line="768"/>
         <source>File not read</source>
         <translation>Bestand niet gelezen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="185"/>
-        <location filename="../src/widget/form/chatform.cpp" line="729"/>
+        <location filename="../src/widget/form/chatform.cpp" line="768"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translation>qTox kan %1 niet openen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="190"/>
-        <location filename="../src/widget/form/chatform.cpp" line="734"/>
+        <location filename="../src/widget/form/chatform.cpp" line="773"/>
         <source>Bad Idea</source>
         <translation>Slecht idee</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="190"/>
-        <location filename="../src/widget/form/chatform.cpp" line="734"/>
+        <location filename="../src/widget/form/chatform.cpp" line="773"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>Je probeert een speciaal (sequentieel) bestand te versturen, dat zal niet werken!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="293"/>
+        <location filename="../src/widget/form/chatform.cpp" line="277"/>
+        <source>Accept video call</source>
+        <translation>Accepteer videogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="289"/>
+        <source>Accept audio call</source>
+        <translation>Accepteer audiogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="297"/>
         <source>%1 calling</source>
         <translation>%1 belt</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="326"/>
+        <location filename="../src/widget/form/chatform.cpp" line="447"/>
+        <source>End video call</source>
+        <translation>Beëindig videogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="335"/>
+        <location filename="../src/widget/form/chatform.cpp" line="456"/>
+        <source>End audio call</source>
+        <translation>Beëindig audiogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="346"/>
+        <location filename="../src/widget/form/chatform.cpp" line="703"/>
+        <source>Mute microphone</source>
+        <translation>Schakel microfoon uit</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="349"/>
+        <location filename="../src/widget/form/chatform.cpp" line="723"/>
+        <source>Mute call</source>
+        <translation>Maak gesprek stil</translation>
     </message>
     <message>
         <source>%1 is calling</source>
         <translation type="obsolete">%1 belt je</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="355"/>
+        <location filename="../src/widget/form/chatform.cpp" line="375"/>
         <source>%1 stopped calling</source>
         <translation>%1 heeft opgelegd</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="404"/>
+        <location filename="../src/widget/form/chatform.cpp" line="412"/>
+        <source>Cancel video call</source>
+        <translation>Annuleer het starten van een videogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="420"/>
+        <source>Cancel audio call</source>
+        <translation>Annuleer het starten van een audiogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="428"/>
         <source>Calling to %1</source>
         <translation>%1 bellen</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="497"/>
+        <location filename="../src/widget/form/chatform.cpp" line="525"/>
         <source>Call rejected</source>
         <translation>Gesprek geweigerd</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="701"/>
+        <location filename="../src/widget/form/chatform.cpp" line="680"/>
+        <source>Start audio call</source>
+        <translation>Start audiogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="683"/>
+        <source>Start video call</source>
+        <translation>Start videogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="708"/>
+        <source>Unmute microphone</source>
+        <translation>Schakel microfoon in</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="728"/>
+        <source>Unmute call</source>
+        <translation>Maak gesprek hoorbaar</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="740"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Kon bestand %1 niet verzenden</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="865"/>
+        <location filename="../src/widget/form/chatform.cpp" line="904"/>
         <source>Call with %1 ended. %2</source>
         <translation>Gesprek met %1 beëindigd. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="884"/>
+        <location filename="../src/widget/form/chatform.cpp" line="923"/>
         <source>Call duration: </source>
         <translation>Gesprekstijd: </translation>
     </message>
@@ -409,17 +509,17 @@ Proxy omzeilen en een directe internetverbinding gebruiken?</translation>
         <translation>qTox gebruiker</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="762"/>
+        <location filename="../src/core.cpp" line="763"/>
         <source>Friend is already added</source>
         <translation>Vriend is al toegevoegd</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="778"/>
+        <location filename="../src/core.cpp" line="779"/>
         <source>/me offers friendship.</source>
         <translation>/me bied vriendschap aan.</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="780"/>
+        <location filename="../src/core.cpp" line="781"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me bied vriendschap aap, &quot;%1&quot;</translation>
     </message>
@@ -1096,24 +1196,30 @@ qTox herstart benodigd.</translation>
         <translation>Verstuur bestand(en)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="82"/>
         <source>Audio call: RED means you&apos;re on a call</source>
-        <translation>Audio gesprek: ROOD betekend in gesprek</translation>
+        <translation type="obsolete">Audio gesprek: ROOD betekend in gesprek</translation>
+    </message>
+    <message>
+        <source>Video call: RED means you&apos;re on a call</source>
+        <translation type="obsolete">Video gesprek: ROOD betekend in gesprek</translation>
+    </message>
+    <message>
+        <source>Toggle speakers volume: RED is OFF</source>
+        <translation type="obsolete">Schakel speakers in of uit: ROOD is UIT</translation>
+    </message>
+    <message>
+        <source>Toggle microphone: RED is OFF</source>
+        <translation type="obsolete">Schakel microfoon in of uit: ROOD is UIT</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="82"/>
+        <source>Start an audio call</source>
+        <translation>Start audiogesprek</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="85"/>
-        <source>Video call: RED means you&apos;re on a call</source>
-        <translation>Video gesprek: ROOD betekend in gesprek</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="88"/>
-        <source>Toggle speakers volume: RED is OFF</source>
-        <translation>Schakel speakers in of uit: ROOD is UIT</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="91"/>
-        <source>Toggle microphone: RED is OFF</source>
-        <translation>Schakel microfoon in of uit: ROOD is UIT</translation>
+        <source>Start a video call</source>
+        <translation>Start videogesprek</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="165"/>
@@ -1150,6 +1256,38 @@ qTox herstart benodigd.</translation>
         <location filename="../src/widget/form/groupchatform.cpp" line="108"/>
         <source>%1 users in chat</source>
         <translation>%1 gebruikers in de chat</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="154"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="200"/>
+        <source>Mute microphone</source>
+        <translation>Schakel microfoon uit</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="160"/>
+        <source>Unmute microphone</source>
+        <translation>Schakel microfoon in</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="175"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="203"/>
+        <source>Mute call</source>
+        <translation>Maak gesprek stil</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="181"/>
+        <source>Unmute call</source>
+        <translation>Maak gesprek hoorbaar</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="197"/>
+        <source>End audio call</source>
+        <translation>Beëindig audiogesprek</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="213"/>
+        <source>Start audio call</source>
+        <translation>Start audiogesprek</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1646,7 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
 <context>
     <name>Nexus</name>
     <message>
-        <location filename="../src/nexus.cpp" line="164"/>
+        <location filename="../src/nexus.cpp" line="169"/>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>Afbeeldingen (%1)</translation>
@@ -1700,13 +1838,13 @@ maar nieuwe vrienden zullen je nieuwe Tox ID moeten wete om te toe te kunnen voe
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/autoupdate.cpp" line="494"/>
+        <location filename="../src/autoupdate.cpp" line="498"/>
         <source>Update</source>
         <comment>The title of a message box</comment>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../src/autoupdate.cpp" line="495"/>
+        <location filename="../src/autoupdate.cpp" line="499"/>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
         <translation>Een update is beschikbaar, wil je deze nu downloaden?
@@ -1972,118 +2110,118 @@ Indien onzeker, druk op &quot;Nee&quot;, zo dat er geen onveilig verzoek naar de
         <translation>&amp;Sluit</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="353"/>
+        <location filename="../src/widget/widget.cpp" line="350"/>
         <source>Choose a profile picture</source>
         <translation>Kies een profielfoto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="362"/>
-        <location filename="../src/widget/widget.cpp" line="369"/>
-        <location filename="../src/widget/widget.cpp" line="390"/>
+        <location filename="../src/widget/widget.cpp" line="359"/>
+        <location filename="../src/widget/widget.cpp" line="366"/>
+        <location filename="../src/widget/widget.cpp" line="387"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="362"/>
+        <location filename="../src/widget/widget.cpp" line="359"/>
         <source>Unable to open this file</source>
         <translation>Kon dit bestand niet openen</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="369"/>
+        <location filename="../src/widget/widget.cpp" line="366"/>
         <source>Unable to read this image</source>
         <translation>Kon deze afbeelding niet lezen</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="390"/>
+        <location filename="../src/widget/widget.cpp" line="387"/>
         <source>This image is too big</source>
         <translation>Deze afbeelding is te groot</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="430"/>
+        <location filename="../src/widget/widget.cpp" line="427"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Toxcore kon niet opstarten, de applicatie zal afsluiten nadat dit bericht wordt gesloten.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="439"/>
+        <location filename="../src/widget/widget.cpp" line="436"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Toxcore kon niet opstarten met deze proxyinstellingen. Hierdoor kan qTox niet starten. Verander je instellingen en herstart.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="488"/>
+        <location filename="../src/widget/widget.cpp" line="485"/>
         <source>Add friend</source>
         <translation>Voeg vriend toe</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="500"/>
+        <location filename="../src/widget/widget.cpp" line="497"/>
         <source>File transfers</source>
         <translation>Bestandsoverdrachten</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="545"/>
+        <location filename="../src/widget/widget.cpp" line="542"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="654"/>
+        <location filename="../src/widget/widget.cpp" line="651"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Kon geen vriendschapsverzoek maken</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="682"/>
+        <location filename="../src/widget/widget.cpp" line="679"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>afwezig</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="684"/>
+        <location filename="../src/widget/widget.cpp" line="681"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>bezet</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="686"/>
+        <location filename="../src/widget/widget.cpp" line="683"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="688"/>
+        <location filename="../src/widget/widget.cpp" line="687"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="691"/>
+        <location filename="../src/widget/widget.cpp" line="690"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 is nu %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="867"/>
+        <location filename="../src/widget/widget.cpp" line="866"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>Uitnodiging tot groepsgesprek</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="867"/>
+        <location filename="../src/widget/widget.cpp" line="866"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1 nodigd je uit tot een groepsgesprek. Wil je binnentreden?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="922"/>
+        <location filename="../src/widget/widget.cpp" line="921"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Onbekend&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="948"/>
+        <location filename="../src/widget/widget.cpp" line="947"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 heeft de titel naar %2 gezet</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1105"/>
+        <location filename="../src/widget/widget.cpp" line="1104"/>
         <source>Message failed to send</source>
         <translation>Bericht kon niet verstuurd worden</translation>
     </message>
