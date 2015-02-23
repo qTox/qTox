@@ -55,25 +55,6 @@ TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sor
 DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
 
-contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
-	DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
-
-	INCLUDEPATH += "/usr/include/libappindicator-0.1"
-	INCLUDEPATH += "/usr/include/gtk-2.0"
-	INCLUDEPATH += "/usr/include/glib-2.0"
-	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-	INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
-	INCLUDEPATH += "/usr/include/cairo"
-	INCLUDEPATH += "/usr/include/pango-1.0"
-	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
-	INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
-	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
-	INCLUDEPATH += "/usr/include/atk-1.0"
-	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
-
-	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
-}
-
 android {
     ANDROID_TOOLCHAIN=/opt/android/toolchain-r9d-17/
     INCLUDEPATH += $$ANDROID_TOOLCHAIN/include/
@@ -199,6 +180,30 @@ win32 {
     }
 }
 
+# The systray Unity backend implements the system tray icon on Unity (Ubuntu) and GNOME desktops.
+unix:!macx:!android {
+contains(ENABLE_SYSTRAY_UNITY_BACKEND, NO) {
+} else {
+	DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
+
+	INCLUDEPATH += "/usr/include/libappindicator-0.1"
+	INCLUDEPATH += "/usr/include/gtk-2.0"
+	INCLUDEPATH += "/usr/include/glib-2.0"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/include/cairo"
+	INCLUDEPATH += "/usr/include/pango-1.0"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+	INCLUDEPATH += "/usr/include/atk-1.0"
+	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
+
+	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
+}
+}
+
+# The systray Status Notifier backend implements the system tray icon on KDE and compatible desktops
 unix:!macx:!android {
 contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
 } else {
