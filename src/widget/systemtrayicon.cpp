@@ -37,30 +37,6 @@ SystemTrayIcon::SystemTrayIcon()
         app_indicator_set_menu(unityIndicator, GTK_MENU(unityMenu));
     }
     #endif
-    #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-    else if (desktop == "kde")
-    {
-        qDebug() << "SystemTrayIcon: Using Status Notifier backend";
-        backendType = SystrayBackendType::StatusNotifier;
-        gtk_init(nullptr, nullptr);
-        snMenu = gtk_menu_new();
-        void (*callbackFreeImage)(guchar*, gpointer) =
-                [](guchar*, gpointer image)
-        {
-            delete reinterpret_cast<QImage*>(image);
-        };
-        QImage* image = new QImage(":/img/icon.png");
-        if (image->format() != QImage::Format_RGBA8888_Premultiplied)
-        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
-                                 8, image->width(), image->height(),
-                                 image->bytesPerLine(), callbackFreeImage, image);
-
-        statusNotifier = status_notifier_new_from_pixbuf("qtox",
-                            STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, pixbuf);
-        status_notifier_register(statusNotifier);
-    }
-    #endif
     else if (desktop == "kde"
              && getenv("KDE_SESSION_VERSION") == QString("5"))
     {
