@@ -286,55 +286,91 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <translation>qTox</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="531"/>
+        <location filename="../src/android.ui" line="252"/>
+        <source>qTox</source>
+        <translation type="unfinished">qTox</translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="343"/>
+        <source>Someone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="348"/>
+        <source>Someone else</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="353"/>
+        <source>Groupbot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="358"/>
+        <source>That guy who I don&apos;t remember adding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="363"/>
+        <source>NASA manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="368"/>
+        <source>Lorem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="373"/>
+        <source>Ipsum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/android.ui" line="378"/>
+        <source>Dolor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Your name</source>
-        <translation>你的名字</translation>
+        <translation type="obsolete">你的名字</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="616"/>
         <source>Your status</source>
-        <translation>你的状态</translation>
+        <translation type="obsolete">你的状态</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="767"/>
         <source>Add friends</source>
-        <translation>添加好友</translation>
+        <translation type="obsolete">添加好友</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="805"/>
         <source>Create a group chat</source>
-        <translation>创建聊天群组</translation>
+        <translation type="obsolete">创建聊天群组</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="840"/>
         <source>View completed file transfers</source>
-        <translation>查看已完成的文件传输</translation>
+        <translation type="obsolete">查看已完成的文件传输</translation>
     </message>
     <message>
-        <location filename="../src/android.ui" line="872"/>
         <source>Change your settings</source>
-        <translation>更改设置</translation>
+        <translation type="obsolete">更改设置</translation>
     </message>
 </context>
 <context>
     <name>AndroidGUI</name>
     <message>
-        <location filename="../src/widget/androidgui.cpp" line="45"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation>在线</translation>
+        <translation type="obsolete">在线</translation>
     </message>
     <message>
-        <location filename="../src/widget/androidgui.cpp" line="47"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>离开</translation>
+        <translation type="obsolete">离开</translation>
     </message>
     <message>
-        <location filename="../src/widget/androidgui.cpp" line="49"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation>忙碌</translation>
+        <translation type="obsolete">忙碌</translation>
     </message>
 </context>
 <context>
@@ -350,25 +386,25 @@ Ignore the proxy and connect to the Internet directly ?</source>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="185"/>
-        <location filename="../src/widget/form/chatform.cpp" line="729"/>
+        <location filename="../src/widget/form/chatform.cpp" line="768"/>
         <source>File not read</source>
         <translation>文件无法读取</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="185"/>
-        <location filename="../src/widget/form/chatform.cpp" line="729"/>
+        <location filename="../src/widget/form/chatform.cpp" line="768"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translation>qTox无法打开 %1</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="190"/>
-        <location filename="../src/widget/form/chatform.cpp" line="734"/>
+        <location filename="../src/widget/form/chatform.cpp" line="773"/>
         <source>Bad Idea</source>
         <translation>馊主意</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="190"/>
-        <location filename="../src/widget/form/chatform.cpp" line="734"/>
+        <location filename="../src/widget/form/chatform.cpp" line="773"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>你在试图传输一个特殊（有序）的文件，此操作无法完成</translation>
     </message>
@@ -386,37 +422,101 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <translation>加载聊天历史记录</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="293"/>
+        <location filename="../src/widget/form/chatform.cpp" line="277"/>
+        <source>Accept video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="289"/>
+        <source>Accept audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="297"/>
         <source>%1 calling</source>
         <translation>%1 呼叫</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="355"/>
+        <location filename="../src/widget/form/chatform.cpp" line="326"/>
+        <location filename="../src/widget/form/chatform.cpp" line="447"/>
+        <source>End video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="335"/>
+        <location filename="../src/widget/form/chatform.cpp" line="456"/>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="346"/>
+        <location filename="../src/widget/form/chatform.cpp" line="703"/>
+        <source>Mute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="349"/>
+        <location filename="../src/widget/form/chatform.cpp" line="723"/>
+        <source>Mute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="375"/>
         <source>%1 stopped calling</source>
         <translation>%1 挂断了电话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="404"/>
+        <location filename="../src/widget/form/chatform.cpp" line="412"/>
+        <source>Cancel video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="420"/>
+        <source>Cancel audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="428"/>
         <source>Calling to %1</source>
         <translation>正在呼叫 %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="497"/>
+        <location filename="../src/widget/form/chatform.cpp" line="525"/>
         <source>Call rejected</source>
         <translation>通话被拒绝</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="701"/>
+        <location filename="../src/widget/form/chatform.cpp" line="680"/>
+        <source>Start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="683"/>
+        <source>Start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="708"/>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="728"/>
+        <source>Unmute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="740"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>文件 &quot;%1&quot; 传输失败</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="865"/>
+        <location filename="../src/widget/form/chatform.cpp" line="904"/>
         <source>Call with %1 ended. %2</source>
         <translation>与 %1 的通话结束. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="884"/>
+        <location filename="../src/widget/form/chatform.cpp" line="923"/>
         <source>Call duration: </source>
         <translation>通话时长:</translation>
     </message>
@@ -460,17 +560,17 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <translation>qTox用户</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="762"/>
+        <location filename="../src/core.cpp" line="763"/>
         <source>Friend is already added</source>
         <translation>此人已被添加为好友</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="778"/>
+        <location filename="../src/core.cpp" line="779"/>
         <source>/me offers friendship.</source>
         <translation>/me 提供了好友关系</translation>
     </message>
     <message>
-        <location filename="../src/core.cpp" line="780"/>
+        <location filename="../src/core.cpp" line="781"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me 提供了好友关系, &quot;%1&quot;</translation>
     </message>
@@ -1333,24 +1433,20 @@ qTox重启后生效</translation>
         <translation>发送文件</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="82"/>
         <source>Audio call: RED means you&apos;re on a call</source>
-        <translation>语音通话： 红色代表正在通话</translation>
+        <translation type="obsolete">语音通话： 红色代表正在通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="85"/>
         <source>Video call: RED means you&apos;re on a call</source>
-        <translation>视频通话： 红色代表正在通话</translation>
+        <translation type="obsolete">视频通话： 红色代表正在通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="88"/>
         <source>Toggle speakers volume: RED is OFF</source>
-        <translation>切换为扬声器：红色为关闭</translation>
+        <translation type="obsolete">切换为扬声器：红色为关闭</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="91"/>
         <source>Toggle microphone: RED is OFF</source>
-        <translation>切换为麦克风： 红色为关闭</translation>
+        <translation type="obsolete">切换为麦克风： 红色为关闭</translation>
     </message>
     <message>
         <source>Audio call</source>
@@ -1367,6 +1463,16 @@ qTox重启后生效</translation>
     <message>
         <source>Toggle microphone</source>
         <translation type="obsolete">切换为麦克风</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="82"/>
+        <source>Start an audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="85"/>
+        <source>Start a video call</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="165"/>
@@ -1402,6 +1508,38 @@ qTox重启后生效</translation>
         <location filename="../src/widget/form/groupchatform.cpp" line="108"/>
         <source>%1 users in chat</source>
         <translation>%1 人正在聊天</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="154"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="200"/>
+        <source>Mute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="160"/>
+        <source>Unmute microphone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="175"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="203"/>
+        <source>Mute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="181"/>
+        <source>Unmute call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="197"/>
+        <source>End audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="213"/>
+        <source>Start audio call</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1800,7 +1938,7 @@ Profile does not contain your history.</source>
 <context>
     <name>Nexus</name>
     <message>
-        <location filename="../src/nexus.cpp" line="164"/>
+        <location filename="../src/nexus.cpp" line="169"/>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>图片(%1)</translation>
@@ -2063,13 +2201,13 @@ but new contacts need to know your new Tox ID to be able to add you.</source>
         <translation>想用Tox和我聊天吗？</translation>
     </message>
     <message>
-        <location filename="../src/autoupdate.cpp" line="494"/>
+        <location filename="../src/autoupdate.cpp" line="498"/>
         <source>Update</source>
         <comment>The title of a message box</comment>
         <translation>升级</translation>
     </message>
     <message>
-        <location filename="../src/autoupdate.cpp" line="495"/>
+        <location filename="../src/autoupdate.cpp" line="499"/>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
         <translation>有新的可用升级, 确定要现在下载吗？
@@ -2357,118 +2495,118 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
         <translation type="obsolete">请选择使用哪个身份</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="353"/>
+        <location filename="../src/widget/widget.cpp" line="350"/>
         <source>Choose a profile picture</source>
         <translation>选择头像</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="362"/>
-        <location filename="../src/widget/widget.cpp" line="369"/>
-        <location filename="../src/widget/widget.cpp" line="390"/>
+        <location filename="../src/widget/widget.cpp" line="359"/>
+        <location filename="../src/widget/widget.cpp" line="366"/>
+        <location filename="../src/widget/widget.cpp" line="387"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="362"/>
+        <location filename="../src/widget/widget.cpp" line="359"/>
         <source>Unable to open this file</source>
         <translation>无法打开此文件</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="369"/>
+        <location filename="../src/widget/widget.cpp" line="366"/>
         <source>Unable to read this image</source>
         <translation>无法读取此图片</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="390"/>
+        <location filename="../src/widget/widget.cpp" line="387"/>
         <source>This image is too big</source>
         <translation>这张照片太大了</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="430"/>
+        <location filename="../src/widget/widget.cpp" line="427"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>核心组件Toxcore启动失败，qTox将在你关闭此消息框后终止运行</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="439"/>
+        <location filename="../src/widget/widget.cpp" line="436"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>由于你的代理服务器设置，核心组件Toxcore启动失败，qTox无法运行；请修改你的设置后重启qTox</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="488"/>
+        <location filename="../src/widget/widget.cpp" line="485"/>
         <source>Add friend</source>
         <translation>添加好友</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="500"/>
+        <location filename="../src/widget/widget.cpp" line="497"/>
         <source>File transfers</source>
         <translation>文件传输</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="545"/>
+        <location filename="../src/widget/widget.cpp" line="542"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="654"/>
+        <location filename="../src/widget/widget.cpp" line="651"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>无法添加为好友</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="682"/>
+        <location filename="../src/widget/widget.cpp" line="679"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>离开</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="684"/>
+        <location filename="../src/widget/widget.cpp" line="681"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>忙碌</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="686"/>
+        <location filename="../src/widget/widget.cpp" line="683"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>离线</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="688"/>
+        <location filename="../src/widget/widget.cpp" line="687"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>在线</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="691"/>
+        <location filename="../src/widget/widget.cpp" line="690"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 %2 了</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="867"/>
+        <location filename="../src/widget/widget.cpp" line="866"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>群组邀请</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="867"/>
+        <location filename="../src/widget/widget.cpp" line="866"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1邀请你加入一个群聊，你想加入吗？</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="922"/>
+        <location filename="../src/widget/widget.cpp" line="921"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;未知名称&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="948"/>
+        <location filename="../src/widget/widget.cpp" line="947"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 已将标题设置为 %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1105"/>
+        <location filename="../src/widget/widget.cpp" line="1104"/>
         <source>Message failed to send</source>
         <translation>消息发送失败</translation>
     </message>
