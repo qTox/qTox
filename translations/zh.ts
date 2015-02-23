@@ -288,7 +288,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/android.ui" line="252"/>
         <source>qTox</source>
-        <translation type="unfinished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="343"/>
@@ -303,7 +303,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/android.ui" line="353"/>
         <source>Groupbot</source>
-        <translation type="unfinished"></translation>
+        <translation>#群聊机器人</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="358"/>
@@ -424,12 +424,12 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="277"/>
         <source>Accept video call</source>
-        <translation type="unfinished"></translation>
+        <translation>接听视频通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="289"/>
         <source>Accept audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>接听音频通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="297"/>
@@ -440,25 +440,25 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <location filename="../src/widget/form/chatform.cpp" line="326"/>
         <location filename="../src/widget/form/chatform.cpp" line="447"/>
         <source>End video call</source>
-        <translation type="unfinished"></translation>
+        <translation>结束视频通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="335"/>
         <location filename="../src/widget/form/chatform.cpp" line="456"/>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>结束音频童话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="346"/>
         <location filename="../src/widget/form/chatform.cpp" line="703"/>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>静音麦克风</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="349"/>
         <location filename="../src/widget/form/chatform.cpp" line="723"/>
         <source>Mute call</source>
-        <translation type="unfinished"></translation>
+        <translation>静音通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="375"/>
@@ -468,12 +468,12 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="412"/>
         <source>Cancel video call</source>
-        <translation type="unfinished"></translation>
+        <translation>取消视频通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="420"/>
         <source>Cancel audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>取消音频童话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="428"/>
@@ -488,22 +488,22 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="680"/>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>开始音频通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="683"/>
         <source>Start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>开始视频通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="708"/>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>取消麦克风静音</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="728"/>
         <source>Unmute call</source>
-        <translation type="unfinished"></translation>
+        <translation>取消通话静音</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="740"/>
@@ -1467,12 +1467,12 @@ qTox重启后生效</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="82"/>
         <source>Start an audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>开始音频童话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="85"/>
         <source>Start a video call</source>
-        <translation type="unfinished"></translation>
+        <translation>开始视频通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="165"/>
@@ -1513,33 +1513,33 @@ qTox重启后生效</translation>
         <location filename="../src/widget/form/groupchatform.cpp" line="154"/>
         <location filename="../src/widget/form/groupchatform.cpp" line="200"/>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>静音麦克风</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="160"/>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>取消麦克风静音</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="175"/>
         <location filename="../src/widget/form/groupchatform.cpp" line="203"/>
         <source>Mute call</source>
-        <translation type="unfinished"></translation>
+        <translation>静音通话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="181"/>
         <source>Unmute call</source>
-        <translation type="unfinished"></translation>
+        <translation>取消通话静音</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="197"/>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>结束音频童话</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="213"/>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>结束视频通话</translation>
     </message>
 </context>
 <context>
