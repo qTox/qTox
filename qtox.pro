@@ -101,7 +101,6 @@ android {
     SOURCES += src/widget/androidgui.cpp
 }
 
-
 contains(DISABLE_PLATFORM_EXT, YES) {
 
 } else {
@@ -118,6 +117,23 @@ contains(JENKINS,YES) {
 	INCLUDEPATH += ./libs/include/
 } else {
 	INCLUDEPATH += libs/include
+}
+
+contains(DEFINES, QTOX_FILTER_AUDIO) {
+    HEADERS += src/audiofilterer.h
+    SOURCES += src/audiofilterer.cpp
+}
+
+contains(DEFINES, QTOX_PLATFORM_EXT) {
+    HEADERS += src/platform/timer.h
+    SOURCES += src/platform/timer_osx.cpp \
+               src/platform/timer_win.cpp \
+               src/platform/timer_x11.cpp
+
+    HEADERS += src/platform/autorun.h
+    SOURCES += src/platform/autorun_win.cpp \
+               src/platform/autorun_xdg.cpp \
+               src/platform/autorun_osx.cpp
 }
 
 # Rules for Windows, Mac OSX, and Linux
@@ -212,7 +228,39 @@ contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
 }
 }
 
-HEADERS  += src/widget/form/addfriendform.h \
+!android {
+HEADERS  += \
+    src/friend.h \
+    src/group.h \
+    src/grouplist.h \
+    src/friendlist.h \
+    src/misc/smileypack.h \
+    src/widget/emoticonswidget.h \
+    src/misc/style.h \
+    src/widget/croppinglabel.h \
+    src/widget/maskablepixmapwidget.h \
+    src/widget/videosurface.h \
+    src/widget/toxuri.h \
+    src/toxdns.h \
+    src/widget/toxsave.h \
+    src/misc/serialize.h \
+    src/chatlog/chatlog.h \
+    src/chatlog/chatline.h \
+    src/chatlog/chatlinecontent.h \
+    src/chatlog/chatlinecontentproxy.h \
+    src/chatlog/content/text.h \
+    src/chatlog/content/spinner.h \
+    src/chatlog/content/filetransferwidget.h \
+    src/chatlog/chatmessage.h \
+    src/chatlog/content/image.h \
+    src/chatlog/customtextdocument.h \
+    src/widget/form/settings/advancedform.h \
+    src/chatlog/content/notificationicon.h \
+    src/chatlog/content/timestamp.h \
+    src/chatlog/documentcache.h \
+    src/chatlog/pixmapcache.h \
+    src/offlinemsgengine.h \
+    src/widget/form/addfriendform.h \
     src/widget/form/chatform.h \
     src/widget/form/groupchatform.h \
     src/widget/form/settingswidget.h \
@@ -227,73 +275,23 @@ HEADERS  += src/widget/form/addfriendform.h \
     src/widget/friendwidget.h \
     src/widget/groupwidget.h \
     src/widget/widget.h \
-    src/friend.h \
-    src/group.h \
-    src/grouplist.h \
-    src/misc/settings.h \
-    src/core.h \
-    src/friendlist.h \
-    src/misc/cdata.h \
-    src/misc/cstring.h \
-    src/video/camera.h \
     src/widget/netcamview.h \
-    src/misc/smileypack.h \
-    src/widget/emoticonswidget.h \
-    src/misc/style.h \
-    src/widget/adjustingscrollarea.h \
-    src/widget/croppinglabel.h \
     src/widget/friendlistwidget.h \
     src/widget/genericchatroomwidget.h \
     src/widget/form/genericchatform.h \
-    src/corestructs.h \
-    src/coredefines.h \
-    src/coreav.h \
-    src/widget/maskablepixmapwidget.h \
-    src/video/videosource.h \
-    src/video/cameraworker.h \
-    src/widget/videosurface.h \
+    src/widget/adjustingscrollarea.h \
     src/widget/form/loadhistorydialog.h \
-    src/historykeeper.h \
-    src/misc/db/genericddinterface.h \
-    src/misc/db/plaindb.h \
-    src/misc/db/encrypteddb.h \
     src/widget/form/setpassworddialog.h \
     src/widget/form/tabcompleter.h \
-    src/video/videoframe.h \
     src/misc/flowlayout.h \
     src/ipc.h \
-    src/widget/toxuri.h \
-    src/toxdns.h \
-    src/widget/toxsave.h \
     src/autoupdate.h \
-    src/misc/serialize.h \
-    src/chatlog/chatlog.h \
-    src/chatlog/chatline.h \
-    src/chatlog/chatlinecontent.h \
-    src/chatlog/chatlinecontentproxy.h \
-    src/chatlog/content/text.h \
-    src/chatlog/content/spinner.h \
-    src/chatlog/content/filetransferwidget.h \
-    src/chatlog/chatmessage.h \
-    src/chatlog/content/image.h \
-    src/chatlog/customtextdocument.h \
-    src/widget/form/settings/advancedform.h \
-    src/audio.h \
-    src/chatlog/content/notificationicon.h \
-    src/chatlog/content/timestamp.h \
-    src/chatlog/documentcache.h \
-    src/chatlog/pixmapcache.h \
     src/widget/callconfirmwidget.h \
     src/widget/systemtrayicon.h \
-    src/widget/systemtrayicon_private.h \
-    src/nexus.h \
-    src/widget/gui.h \
-    src/offlinemsgengine.h
+    src/widget/systemtrayicon_private.h
 
-SOURCES += \
+    SOURCES += \
     src/widget/form/addfriendform.cpp \
-    src/widget/form/chatform.cpp \
-    src/widget/form/groupchatform.cpp \
     src/widget/form/settingswidget.cpp \
     src/widget/form/settings/generalform.cpp \
     src/widget/form/settings/identityform.cpp \
@@ -302,49 +300,36 @@ SOURCES += \
     src/widget/form/filesform.cpp \
     src/widget/tool/chattextedit.cpp \
     src/widget/tool/friendrequestdialog.cpp \
-    src/widget/friendwidget.cpp \
-    src/widget/groupwidget.cpp \
     src/widget/widget.cpp \
-    src/core.cpp \
-    src/coreencryption.cpp \
+    src/widget/netcamview.cpp \
+    src/widget/friendlistwidget.cpp \
+    src/widget/adjustingscrollarea.cpp \
+    src/widget/form/loadhistorydialog.cpp \
+    src/widget/form/setpassworddialog.cpp \
+    src/widget/form/tabcompleter.cpp \
+    src/misc/flowlayout.cpp \
+    src/ipc.cpp \
+    src/autoupdate.cpp \
+    src/widget/callconfirmwidget.cpp \
+    src/widget/systemtrayicon.cpp \
+    src/widget/groupwidget.cpp \
+    src/widget/friendwidget.cpp \
+    src/widget/form/chatform.cpp \
+    src/widget/form/groupchatform.cpp \
+    src/widget/form/genericchatform.cpp \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \
     src/grouplist.cpp \
-    src/main.cpp \
-    src/misc/settings.cpp \
-    src/misc/cdata.cpp \
-    src/misc/cstring.cpp \
-    src/video/camera.cpp \
-    src/widget/netcamview.cpp \
     src/misc/smileypack.cpp \
     src/widget/emoticonswidget.cpp \
     src/misc/style.cpp \
-    src/widget/adjustingscrollarea.cpp \
     src/widget/croppinglabel.cpp \
-    src/widget/friendlistwidget.cpp \
-    src/coreav.cpp \
-    src/widget/genericchatroomwidget.cpp \
-    src/widget/form/genericchatform.cpp \
-    src/corestructs.cpp \
     src/widget/maskablepixmapwidget.cpp \
-    src/video/cameraworker.cpp \
     src/widget/videosurface.cpp \
-    src/widget/form/loadhistorydialog.cpp \
-    src/historykeeper.cpp \
-    src/misc/db/genericddinterface.cpp \
-    src/misc/db/plaindb.cpp \
-    src/misc/db/encrypteddb.cpp \
-    src/widget/form/setpassworddialog.cpp \
-    src/video/netvideosource.cpp \
-    src/widget/form/tabcompleter.cpp \
-    src/video/videoframe.cpp \
-    src/misc/flowlayout.cpp \
     src/widget/toxuri.cpp \
     src/toxdns.cpp \
-    src/ipc.cpp \
-    src/widget/toxsave.cpp \    
-    src/autoupdate.cpp \
+    src/widget/toxsave.cpp \
     src/misc/serialize.cpp \
     src/chatlog/chatlog.cpp \
     src/chatlog/chatline.cpp \
@@ -357,33 +342,54 @@ SOURCES += \
     src/chatlog/content/image.cpp \
     src/chatlog/customtextdocument.cpp\
     src/widget/form/settings/advancedform.cpp \
-    src/audio.cpp \
     src/chatlog/content/notificationicon.cpp \
     src/chatlog/content/timestamp.cpp \
     src/chatlog/documentcache.cpp \
     src/chatlog/pixmapcache.cpp \
-    src/widget/callconfirmwidget.cpp \
-    src/widget/systemtrayicon.cpp \
+    src/offlinemsgengine.cpp \
+    src/widget/genericchatroomwidget.cpp
+}
+
+SOURCES += \
+    src/audio.cpp \
+    src/core.cpp \
+    src/coreav.cpp \
+    src/coreencryption.cpp \
+    src/corestructs.cpp \
+    src/historykeeper.cpp \
+    src/main.cpp \
     src/nexus.cpp \
+    src/misc/cdata.cpp \
+    src/misc/cstring.cpp \
+    src/misc/settings.cpp \
+    src/misc/db/genericddinterface.cpp \
+    src/misc/db/plaindb.cpp \
+    src/misc/db/encrypteddb.cpp \
+    src/video/camera.cpp \
+    src/video/cameraworker.cpp \
+    src/video/netvideosource.cpp \
+    src/video/videoframe.cpp \
     src/widget/gui.cpp \
-    src/offlinemsgengine.cpp
 
-contains(DEFINES, QTOX_FILTER_AUDIO) {
-    HEADERS += src/audiofilterer.h
-    SOURCES += src/audiofilterer.cpp
-}
-
-contains(DEFINES, QTOX_PLATFORM_EXT) {
-    HEADERS += src/platform/timer.h
-    SOURCES += src/platform/timer_osx.cpp \
-               src/platform/timer_win.cpp \
-               src/platform/timer_x11.cpp
-
-    HEADERS += src/platform/autorun.h
-    SOURCES += src/platform/autorun_win.cpp \
-               src/platform/autorun_xdg.cpp \
-               src/platform/autorun_osx.cpp
-}
+HEADERS += \
+    src/audio.h \
+    src/core.h \
+    src/corestructs.h \
+    src/coredefines.h \
+    src/coreav.h \
+    src/historykeeper.h \
+    src/nexus.h \
+    src/misc/cdata.h \
+    src/misc/cstring.h \
+    src/misc/settings.h \
+    src/misc/db/genericddinterface.h \
+    src/misc/db/plaindb.h \
+    src/misc/db/encrypteddb.h \
+    src/video/camera.h \
+    src/video/cameraworker.h \
+    src/video/videoframe.h \
+    src/video/videosource.h \
+    src/widget/gui.h \
 
 DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.jar \
