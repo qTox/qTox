@@ -9,11 +9,13 @@
 SystemTrayIcon::SystemTrayIcon()
 {
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    desktop = desktop.toLower();
     if (false);
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
-    else if (desktop.toLower() == "unity")
+    else if (desktop == "unity" || desktop.contains("gnome"))
     {
         qDebug() << "SystemTrayIcon: Using Unity backend";
+        gtk_init(nullptr, nullptr);
         QString settingsDir = Settings::getSettingsDirPath();
         QFile iconFile(settingsDir+"/icon.png");
         if (iconFile.open(QIODevice::Truncate | QIODevice::WriteOnly))
