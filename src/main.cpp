@@ -32,6 +32,8 @@
 
 #include <sodium.h>
 
+#include "toxme.h"
+
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
 static QTextStream* logFile {nullptr};
