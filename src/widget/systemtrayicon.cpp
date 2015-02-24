@@ -38,7 +38,8 @@ SystemTrayIcon::SystemTrayIcon()
     }
     #endif
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-    else if (desktop == "kde")
+    else if (desktop == "kde"
+            && getenv("KDE_SESSION_VERSION") == QString("5"))
     {
         qDebug() << "SystemTrayIcon: Using Status Notifier backend";
         backendType = SystrayBackendType::StatusNotifier;
