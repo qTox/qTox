@@ -136,7 +136,8 @@ win32 {
         BUNDLEID = im.tox.qtox
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lopencv_core -lopencv_highgui
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lopencv_core -lopencv_highgui -mmacosx-version-min=10.7
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
     } else {
