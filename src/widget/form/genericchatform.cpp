@@ -51,16 +51,16 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     nameLabel->setEditable(true);
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
-    QHBoxLayout *headLayout = new QHBoxLayout(),
-            *mainFootLayout = new QHBoxLayout();
+    QHBoxLayout *mainFootLayout = new QHBoxLayout(),
+                *headLayout = new QHBoxLayout();
     
     QVBoxLayout *mainLayout = new QVBoxLayout(),
                 *footButtonsSmall = new QVBoxLayout(),
                 *micButtonsLayout = new QVBoxLayout();
-
+                headTextLayout = new QVBoxLayout();    
+    
     QGridLayout *buttonsLayout = new QGridLayout();
     
-    headTextLayout = new QVBoxLayout();    
 
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
@@ -143,10 +143,10 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     buttonsLayout->setVerticalSpacing(0);
     buttonsLayout->setHorizontalSpacing(4);
         
-    headLayout->addWidget(avatar, Qt::AlignTop | Qt::AlignLeft);
+    headLayout->addWidget(avatar);
     headLayout->addSpacing(5);
-    headLayout->addLayout(headTextLayout,  Qt::AlignTop | Qt::AlignAbsolute);
-    headLayout->addLayout(buttonsLayout, Qt::AlignTop | Qt::AlignRight);
+    headLayout->addLayout(headTextLayout);
+    headLayout->addLayout(buttonsLayout);
 
     headWidget->setLayout(headLayout);
     
