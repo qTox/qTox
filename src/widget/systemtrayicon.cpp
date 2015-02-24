@@ -37,6 +37,42 @@ SystemTrayIcon::SystemTrayIcon()
         app_indicator_set_menu(unityIndicator, GTK_MENU(unityMenu));
     }
     #endif
+    #ifdef ENABLE_SYSTRAY_GTK_BACKEND
+    else if (desktop == "xfce" || (desktop == "kde"
+                                   && getenv("KDE_SESSION_VERSION") == QString("4")))
+    {
+        qDebug() << "SystemTrayIcon: Using GTK backend";
+        backendType = SystrayBackendType::GTK;
+        gtk_init(nullptr, nullptr);
+        void (*callbackFreeImage)(guchar*, gpointer) =
+                [](guchar*, gpointer image)
+        {
+            delete reinterpret_cast<QImage*>(image);
+        };
+        QImage* image = new QImage(":/img/icon.png");
+        if (image->format() != QImage::Format_RGBA8888_Premultiplied)
+        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
+                                 8, image->width(), image->height(),
+                                 image->bytesPerLine(), callbackFreeImage, image);
+        gtkIcon = gtk_status_icon_new_from_pixbuf(pixbuf);
+        gtkMenu = gtk_menu_new();
+
+        void (*callbackTrigger)(GtkStatusIcon*, gpointer) =
+                [](GtkStatusIcon*, gpointer data)
+        {
+            ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::Trigger);
+        };
+        g_signal_connect(gtkIcon, "activate", G_CALLBACK(callbackTrigger), this);
+        void (*callbackButtonClick)(GtkStatusIcon*, GdkEvent*, gpointer) =
+                [](GtkStatusIcon*, GdkEvent* event, gpointer data)
+        {
+            if (event->button.button == 2)
+                ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::MiddleClick);
+        };
+        g_signal_connect(gtkIcon, "button-release-event", G_CALLBACK(callbackButtonClick), this);
+    }
+    #endif
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     else if (desktop == "kde"
             && getenv("KDE_SESSION_VERSION") == QString("5"))
@@ -156,6 +192,51 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         g_signal_connect(statusNotifier, "context-menu", G_CALLBACK(callbackMenu), this);
     }
     #endif
+    #ifdef ENABLE_SYSTRAY_GTK_BACKEND
+    else if (backendType == SystrayBackendType::GTK)
+    {
+        for (QAction* a : menu->actions())
+        {
+            QString aText = a->text().replace('&',"");
+            GtkWidget* item;
+            if (a->isSeparator())
+                item = gtk_menu_item_new();
+            else if (a->icon().isNull())
+                item = gtk_menu_item_new_with_label(aText.toStdString().c_str());
+            else
+            {
+                void (*callbackFreeImage)(guchar*, gpointer) =
+                        [](guchar*, gpointer image)
+                {
+                    delete reinterpret_cast<QImage*>(image);
+                };
+                QImage* image = new QImage(a->icon().pixmap(64, 64).toImage());
+                if (image->format() != QImage::Format_RGBA8888_Premultiplied)
+                *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
+                                         8, image->width(), image->height(),
+                                         image->bytesPerLine(), callbackFreeImage, image);
+                item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
+                gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), gtk_image_new_from_pixbuf(pixbuf));
+                gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
+            }
+            gtk_menu_shell_append(GTK_MENU_SHELL(gtkMenu), item);
+            void (*callback)(GtkMenu*, gpointer data) = [](GtkMenu*, gpointer a)
+            {
+                ((QAction*)a)->activate(QAction::Trigger);
+            };
+            g_signal_connect(item, "activate", G_CALLBACK(callback), a);
+            gtk_widget_show(item);
+        }
+        void (*callbackMenu)(StatusNotifier*, gint, gint, gpointer) =
+                [](StatusNotifier*, gint, gint, gpointer data)
+        {
+            gtk_widget_show_all(((SystemTrayIcon*)data)->gtkMenu);
+            gtk_menu_popup(GTK_MENU(((SystemTrayIcon*)data)->gtkMenu), 0, 0, 0, 0, 3, gtk_get_current_event_time());
+        };
+        g_signal_connect(gtkIcon, "popup-menu", G_CALLBACK(callbackMenu), this);
+    }
+    #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (backendType == SystrayBackendType::Unity)
     {
@@ -224,6 +305,15 @@ void SystemTrayIcon::setVisible(bool newState)
             status_notifier_set_status(statusNotifier, STATUS_NOTIFIER_STATUS_PASSIVE);
     }
     #endif
+    #ifdef ENABLE_SYSTRAY_GTK_BACKEND
+    else if (backendType == SystrayBackendType::GTK)
+    {
+        if (newState)
+            gtk_status_icon_set_visible(gtkIcon, true);
+        else
+            gtk_status_icon_set_visible(gtkIcon, false);
+    }
+    #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (backendType == SystrayBackendType::Unity)
     {
@@ -260,6 +350,23 @@ void SystemTrayIcon::setIcon(QIcon &&icon)
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
         status_notifier_set_from_pixbuf(statusNotifier, STATUS_NOTIFIER_ICON, pixbuf);
+    }
+    #endif
+    #ifdef ENABLE_SYSTRAY_GTK_BACKEND
+    else if (backendType == SystrayBackendType::GTK)
+    {
+        void (*callbackFreeImage)(guchar*, gpointer) =
+                [](guchar*, gpointer image)
+        {
+            delete reinterpret_cast<QImage*>(image);
+        };
+        QImage* image = new QImage(icon.pixmap(64, 64).toImage());
+        if (image->format() != QImage::Format_RGBA8888_Premultiplied)
+        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
+                                 8, image->width(), image->height(),
+                                 image->bytesPerLine(), callbackFreeImage, image);
+        gtk_status_icon_set_from_pixbuf(gtkIcon, pixbuf);
     }
     #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND

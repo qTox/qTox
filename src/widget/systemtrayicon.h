@@ -36,6 +36,10 @@ private:
     StatusNotifier* statusNotifier;
     GtkWidget* snMenu;
 #endif
+#ifdef ENABLE_SYSTRAY_GTK_BACKEND
+    GtkStatusIcon* gtkIcon;
+    GtkWidget* gtkMenu;
+#endif
 };
 
 #endif // SYSTEMTRAYICON_H

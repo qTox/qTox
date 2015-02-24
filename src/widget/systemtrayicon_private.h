@@ -30,6 +30,17 @@ extern "C" {
 #define signals public
 #endif
 
+#ifdef ENABLE_SYSTRAY_GTK_BACKEND
+#ifdef signals
+#undef signals
+#endif
+extern "C" {
+    #include <libappindicator/app-indicator.h>
+    #include <gtk/gtk.h>
+}
+#define signals public
+#endif
+
 enum class SystrayBackendType
 {
     Qt,
@@ -40,15 +51,9 @@ enum class SystrayBackendType
 #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     StatusNotifier,
 #endif
-};
-
-union SystrayBackend
-{
-    QSystemTrayIcon *qt;
-#ifdef ENABLE_SYSTRAY_UNITY_BACKEND
-    AppIndicator *unity;
+#ifdef ENABLE_SYSTRAY_GTK_BACKEND
+    GTK,
 #endif
 };
-
 
 #endif // SYSTEMTRAYICON_PRIVATE_H
