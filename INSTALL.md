@@ -117,7 +117,10 @@ cd /home/user/qTox
 ###filter_audio
 You also need to install filter_audio library separately if you did not run ``./bootstrap.sh``.
 ```bash
-./install_libfilteraudio.sh
+git clone https://github.com/irungentoo/filter_audio
+cd filter_audio
+make
+sudo make install
 ```
 
 After all the dependencies are thus reeady to go, compiling should be as simple as 
