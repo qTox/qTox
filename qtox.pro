@@ -403,6 +403,7 @@ SOURCES += \
     src/video/netvideosource.cpp \
     src/video/videoframe.cpp \
     src/widget/gui.cpp \
+    src/toxme.cpp
 
 HEADERS += \
     src/audio.h \
@@ -423,6 +424,7 @@ HEADERS += \
     src/video/videoframe.h \
     src/video/videosource.h \
     src/widget/gui.h \
+    src/toxme.h
 
 DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.jar \
