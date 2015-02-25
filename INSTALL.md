@@ -63,18 +63,18 @@ The following steps assumes that you cloned the repository at "/home/user/qTox".
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed base-devel qt5 opencv openal libxss
+sudo pacman -S --needed base-devel qt5 opencv openal libxss libappindicator-devel
 ```
 
 Debian / Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev libappindicator-dev
 ```
 
 Fedora:
 ```bash
 yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel
+yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel libappindicator-devel
 ```
 
 Slackware:
