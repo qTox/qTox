@@ -38,8 +38,7 @@ SystemTrayIcon::SystemTrayIcon()
     }
     #endif
     #ifdef ENABLE_SYSTRAY_GTK_BACKEND
-    else if (desktop == "xfce" || desktop.contains("gnome") || (desktop == "kde"
-                                   && getenv("KDE_SESSION_VERSION") == QString("4")))
+    else if (desktop == "xfce" || desktop.contains("gnome"))
     {
         qDebug() << "SystemTrayIcon: Using GTK backend";
         backendType = SystrayBackendType::GTK;
