@@ -201,6 +201,7 @@ contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 
 	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
 }
+}
 
 # The systray Status Notifier backend implements the system tray icon on KDE and compatible desktops
 unix:!macx:!android {
