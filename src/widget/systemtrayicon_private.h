@@ -35,7 +35,6 @@ extern "C" {
 #undef signals
 #endif
 extern "C" {
-    #include <libappindicator/app-indicator.h>
     #include <gtk/gtk.h>
 }
 #define signals public
