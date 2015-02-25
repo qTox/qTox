@@ -6,6 +6,7 @@
 #include <sodium/crypto_box.h>
 #include <sodium/randombytes.h>
 #include <string>
+#include <ctime>
 
 const QString Toxme::apiUrl{"https://toxme.se/api"};
 
