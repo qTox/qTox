@@ -72,6 +72,9 @@ int main(int argc, char *argv[])
     parser.addOption(QCommandLineOption("p", QObject::tr("Starts new instance and loads specified profile."), QObject::tr("profile")));
     parser.process(a);
 
+#ifndef Q_OS_ANDROID
+    IPC::getInstance();
+#endif
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
 
     if (parser.isSet("p"))
@@ -125,14 +128,13 @@ int main(int argc, char *argv[])
         AutoUpdater::installLocalUpdate(); ///< NORETURN
 #endif
 
-    Nexus::getInstance().start();
 
 #ifndef Q_OS_ANDROID
     // Inter-process communication
-    IPC ipc;
-    ipc.registerEventHandler(&toxURIEventHandler);
-    ipc.registerEventHandler(&toxSaveEventHandler);
-    ipc.registerEventHandler(&toxActivateEventHandler);
+    IPC& ipc = IPC::getInstance();
+    ipc.registerEventHandler("uri", &toxURIEventHandler);
+    ipc.registerEventHandler("save", &toxSaveEventHandler);
+    ipc.registerEventHandler("activate", &toxActivateEventHandler);
 
     if (parser.positionalArguments().size() > 0)
     {
@@ -147,7 +149,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                time_t event = ipc.postEvent(firstParam.toUtf8());
+                time_t event = ipc.postEvent("uri", firstParam.toUtf8());
                 ipc.waitUntilProcessed(event);
                 // If someone else processed it, we're done here, no need to actually start qTox
                 if (!ipc.isCurrentOwner())
@@ -162,7 +164,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                time_t event = ipc.postEvent(firstParam.toUtf8());
+                time_t event = ipc.postEvent("save", firstParam.toUtf8());
                 ipc.waitUntilProcessed(event);
                 // If someone else processed it, we're done here, no need to actually start qTox
                 if (!ipc.isCurrentOwner())
@@ -175,14 +177,21 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
     }
-    else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
+    else if (!ipc.isCurrentOwner())
     {
-        time_t event = ipc.postEvent("$activate");
-        ipc.waitUntilProcessed(event);
-        if (!ipc.isCurrentOwner())
-            return EXIT_SUCCESS;
+        uint32_t dest = 0;
+        if (parser.isSet("p"))
+            dest = Settings::getInstance().getCurrentProfileId();
+        time_t event = ipc.postEvent("activate", QByteArray(), dest);
+        if (ipc.waitUntilProcessed(event, 2) && ipc.isEventAccepted(event))
+        {
+            if (!ipc.isCurrentOwner())
+                return EXIT_SUCCESS;
+        }
     }
 #endif
+
+    Nexus::getInstance().start();
 
     // Run
     a.setQuitOnLastWindowClosed(false);

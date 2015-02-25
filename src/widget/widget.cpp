@@ -69,11 +69,11 @@
 #define IS_ON_DESKTOP_GUI 1
 #endif
 
-void toxActivateEventHandler(const QByteArray& data)
+bool toxActivateEventHandler(const QByteArray&)
 {
-    if (data != "$activate")
-        return;
-    Widget::getInstance()->forceShow();
+    if (!Widget::getInstance()->isActiveWindow())
+        Widget::getInstance()->forceShow();
+    return true;
 }
 
 Widget *Widget::instance{nullptr};

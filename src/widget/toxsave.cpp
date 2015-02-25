@@ -22,15 +22,16 @@
 #include <QDir>
 #include <QFileInfo>
 
-void toxSaveEventHandler(const QByteArray& eventData)
+bool toxSaveEventHandler(const QByteArray& eventData)
 {
     if (!eventData.endsWith(".tox"))
-        return;
+        return false;
 
     handleToxSave(eventData);
+    return true;
 }
 
-void handleToxSave(const QString& path)
+bool handleToxSave(const QString& path)
 {
     Core* core = Core::getInstance();
 
@@ -47,7 +48,7 @@ void handleToxSave(const QString& path)
 
     QFileInfo info(path);
     if (!info.exists())
-        return;
+        return false;
 
     QString profile = info.completeBaseName();
 
@@ -55,17 +56,18 @@ void handleToxSave(const QString& path)
     {
         GUI::showWarning(QObject::tr("Ignoring non-Tox file", "popup title"),
                          QObject::tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
-        return;
+        return false;
     }
 
     QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
 
     if (QFileInfo(profilePath).exists() && !GUI::askQuestion(QObject::tr("Profile already exists", "import confirm title"),
             QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
-        return;
+        return false;
 
     QFile::copy(path, profilePath);
     // no good way to update the ui from here... maybe we need a Widget:refreshUi() function...
     // such a thing would simplify other code as well I believe
     GUI::showInfo(QObject::tr("Profile imported"), QObject::tr("%1.tox was successfully imported").arg(profile));
+    return true;
 }
