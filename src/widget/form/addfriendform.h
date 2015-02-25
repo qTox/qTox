@@ -41,6 +41,9 @@ signals:
 protected:
     void showWarning(const QString& message) const;
 
+public slots:
+    void onUsernameSet(const QString& userName);
+
 private slots:
     void onSendTriggered();
 
