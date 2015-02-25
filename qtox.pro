@@ -183,8 +183,7 @@ win32 {
 
 # The systray Unity backend implements the system tray icon on Unity (Ubuntu) and GNOME desktops.
 unix:!macx:!android {
-contains(ENABLE_SYSTRAY_UNITY_BACKEND, NO) {
-} else {
+contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 	DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
 
 	INCLUDEPATH += "/usr/include/libappindicator-0.1"
@@ -201,7 +200,6 @@ contains(ENABLE_SYSTRAY_UNITY_BACKEND, NO) {
 	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
 
 	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
-}
 }
 
 # The systray Status Notifier backend implements the system tray icon on KDE and compatible desktops
