@@ -33,7 +33,8 @@ public:
     /// If warning is true, we will use a special warning style.
     /// Returns the answer.
     static bool askQuestion(const QString& title, const QString& msg,
-                            bool defaultAns = false, bool warning = true);
+                            bool defaultAns = false, bool warning = true,
+                            bool yesno = true);
     /// Asks the user to input text and returns the answer.
     /// The interface is equivalent to QInputDialog::getItem()
     static QString itemInputDialog(QWidget * parent, const QString & title,
@@ -63,7 +64,8 @@ private slots:
     void _showWarning(const QString& title, const QString& msg);
     void _showError(const QString& title, const QString& msg);
     bool _askQuestion(const QString& title, const QString& msg,
-                                bool defaultAns = false, bool warning = true);
+                                bool defaultAns = false, bool warning = true,
+                                bool yesno = true);
     QString _itemInputDialog(QWidget * parent, const QString & title,
                         const QString & label, const QStringList & items,
                         int current = 0, bool editable = true, bool * ok = 0,

@@ -59,6 +59,8 @@
 #include <QByteArray>
 #include <QImageReader>
 #include <QList>
+#include <QDesktopServices>
+#include <QProcess>
 #include <tox/tox.h>
 
 #ifdef Q_OS_ANDROID
@@ -496,6 +498,27 @@ void Widget::onTransferClicked()
     filesForm->show(*ui);
     setWindowTitle(tr("File transfers"));
     activeChatroomWidget = nullptr;
+}
+
+void Widget::confirmExecutableOpen(const QFileInfo file)
+{
+    static const QStringList dangerousExtensions = { "app", "bat", "com", "cpl", "dmg", "exe", "hta", "jar", "js", "jse", "lnk", "msc", "msh", "msh1", "msh1xml", "msh2", "msh2xml", "mshxml", "msi", "msp", "pif", "ps1", "ps1xml", "ps2", "ps2xml", "psc1", "psc2", "py", "reg", "scf", "sh", "src", "vb", "vbe", "vbs", "ws", "wsc", "wsf", "wsh" };
+
+    if (dangerousExtensions.contains(file.suffix()))
+    {
+        if(!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
+        {
+            return;
+        }
+        
+        // The user wants to run this file, so make it executable and run it
+        QFile(file.filePath()).setPermissions(file.permissions() | QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup | QFile::ExeOther);
+        QProcess::startDetached(file.filePath());
+    }
+    else
+    {
+        QDesktopServices::openUrl(QUrl("file://" + file.filePath(), QUrl::TolerantMode));
+    }
 }
 
 void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)

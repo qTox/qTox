@@ -19,6 +19,7 @@
 
 #include "src/core.h"
 #include "src/misc/style.h"
+#include "src/widget/widget.h"
 
 #include <QMouseEvent>
 #include <QFileDialog>
@@ -312,8 +313,6 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
 void FileTransferWidget::onFileTransferFinished(ToxFile file)
 {
-    static const QStringList openExtensions = { "png", "jpeg", "jpg", "gif", "zip", "rar" };
-
     if(fileInfo != file)
         return;
 
@@ -326,7 +325,6 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 
     ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
     ui->topButton->setObjectName("ok");
-    ui->topButton->setEnabled(openExtensions.contains(QFileInfo(file.fileName).suffix()));
     ui->topButton->show();
 
     ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/dir.svg"));
@@ -431,11 +429,11 @@ void FileTransferWidget::handleButton(QPushButton *btn)
 
     if(btn->objectName() == "ok")
     {
-        QDesktopServices::openUrl(QUrl("file://" + fileInfo.filePath, QUrl::TolerantMode));
+        Widget::confirmExecutableOpen(QFileInfo(fileInfo.filePath));
     }
     else if (btn->objectName() == "dir")
     {
-        QString dirPath = QDir(QFileInfo(fileInfo.filePath).dir()).path();
+        QString dirPath = QFileInfo(fileInfo.filePath).dir().path();
         QDesktopServices::openUrl(QUrl("file://" + dirPath, QUrl::TolerantMode));
     }
 

@@ -113,11 +113,12 @@ void GUI::showError(const QString& title, const QString& msg)
 }
 
 bool GUI::askQuestion(const QString& title, const QString& msg,
-                            bool defaultAns, bool warning)
+                            bool defaultAns, bool warning,
+                            bool yesno)
 {
     if (QThread::currentThread() == qApp->thread())
     {
-        return getInstance()._askQuestion(title, msg, defaultAns, warning);
+        return getInstance()._askQuestion(title, msg, defaultAns, warning, yesno);
     }
     else
     {
@@ -125,7 +126,8 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
         QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret),
                                   Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
-                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning));
+                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning),
+                                  Q_ARG(bool, yesno));
         return ret;
     }
 }
@@ -211,22 +213,18 @@ void GUI::_showError(const QString& title, const QString& msg)
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
-                            bool defaultAns, bool warning)
+                            bool defaultAns, bool warning,
+                            bool yesno)
 {
+    QMessageBox::StandardButton positiveButton = yesno ? QMessageBox::Yes : QMessageBox::Ok;
+    QMessageBox::StandardButton negativeButton = yesno ? QMessageBox::No : QMessageBox::Cancel;
+
+    QMessageBox::StandardButton defButton = defaultAns ? positiveButton : negativeButton;
+
     if (warning)
-    {
-        QMessageBox::StandardButton def = QMessageBox::Cancel;
-        if (defaultAns)
-            def = QMessageBox::Ok;
-        return QMessageBox::warning(getMainWidget(), title, msg, QMessageBox::Ok | QMessageBox::Cancel, def) == QMessageBox::Ok;
-    }
+        return QMessageBox::warning(getMainWidget(), title, msg, positiveButton | negativeButton, defButton) == positiveButton;
     else
-    {
-        QMessageBox::StandardButton def = QMessageBox::No;
-        if (defaultAns)
-            def = QMessageBox::Yes;
-        return QMessageBox::question(getMainWidget(), title, msg, QMessageBox::Yes | QMessageBox::No, def) == QMessageBox::Yes;
-    }
+        return QMessageBox::question(getMainWidget(), title, msg, positiveButton | negativeButton, defButton) == positiveButton;
 }
 
 QString GUI::_itemInputDialog(QWidget * parent, const QString & title,
