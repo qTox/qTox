@@ -366,9 +366,8 @@ void ChatForm::onAvCancel(int FriendId, int)
     delete callConfirm;
     callConfirm = nullptr;
 
-    stopCounter();
-
     enableCallButtons();
+    stopCounter();
 
     netcam->hide();
     
@@ -386,10 +385,9 @@ void ChatForm::onAvEnd(int FriendId, int)
     callConfirm = nullptr;
 
     enableCallButtons();
+    stopCounter();
     
     netcam->hide();
-    
-    stopCounter();
 }
 
 void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
@@ -474,10 +472,9 @@ void ChatForm::onAvEnding(int FriendId, int)
     callConfirm = nullptr;
 
     enableCallButtons();
+    stopCounter();
     
     netcam->hide();
-
-    stopCounter();
 }
 
 void ChatForm::onAvRequestTimeout(int FriendId, int)
@@ -491,6 +488,7 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
     callConfirm = nullptr;
 
     enableCallButtons();
+    stopCounter();
     
     netcam->hide();
 }
@@ -506,7 +504,8 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
     callConfirm = nullptr;
     
     enableCallButtons();
-
+    stopCounter();
+    
     netcam->hide();
 }
 
