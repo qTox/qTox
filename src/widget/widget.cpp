@@ -470,7 +470,8 @@ void Widget::onStatusSet(Status status)
 
 void Widget::setWindowTitle(const QString& title)
 {
-    QMainWindow::setWindowTitle("qTox - " + title);
+    QString tmp = title;
+    QMainWindow::setWindowTitle("qTox - " + tmp.remove(QRegExp("<[^>]*>")));
 }
 
 void Widget::forceShow()
