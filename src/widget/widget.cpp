@@ -471,6 +471,7 @@ void Widget::onStatusSet(Status status)
 void Widget::setWindowTitle(const QString& title)
 {
     QString tmp = title;
+    /// <[^>]*> Regexp to remove HTML tags, in case someone used them in title
     QMainWindow::setWindowTitle("qTox - " + tmp.remove(QRegExp("<[^>]*>")));
 }
 
