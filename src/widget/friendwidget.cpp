@@ -45,6 +45,8 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
     statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
     nameLabel->setText(id);
+    nameLabel->setTextFormat(Qt::PlainText);
+    statusMessageLabel->setTextFormat(Qt::PlainText);
 }
 
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)

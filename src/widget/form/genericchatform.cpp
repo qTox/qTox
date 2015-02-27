@@ -49,10 +49,11 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     nameLabel->setObjectName("nameLabel");
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     nameLabel->setEditable(true);
+    nameLabel->setTextFormat(Qt::PlainText);   
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
     QHBoxLayout *headLayout = new QHBoxLayout(),
-            *mainFootLayout = new QHBoxLayout();
+                *mainFootLayout = new QHBoxLayout();
     
     QVBoxLayout *mainLayout = new QVBoxLayout(),
                 *footButtonsSmall = new QVBoxLayout(),
