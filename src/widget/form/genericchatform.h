@@ -74,6 +74,7 @@ protected slots:
     void onSaveLogClicked();
     void onCopyLogClicked();
     void clearChatArea(bool);
+    void clearChatArea();
     void onSelectAllClicked();
     void previousContact();
     void nextContact();
