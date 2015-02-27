@@ -63,9 +63,15 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     namesListLayout = new FlowLayout(0,5,0);
     QStringList names(group->getPeerList());
+    QLabel *l;
+    
     for (const QString& name : names)
-        namesListLayout->addWidget(new QLabel(name));
-
+    {
+        l = new QLabel(name);
+        l->setTextFormat(Qt::PlainText);
+        namesListLayout->addWidget(l);
+    }
+    
     headTextLayout->addWidget(nusersLabel);
     headTextLayout->addLayout(namesListLayout);
     headTextLayout->addStretch();
@@ -124,6 +130,7 @@ void GroupChatForm::onUserListChanged()
             nameStr+=", ";
         QLabel* nameLabel = new QLabel(nameStr);
         nameLabel->setObjectName("peersLabel");
+        nameLabel->setTextFormat(Qt::PlainText);
         namesListLayout->addWidget(nameLabel);
     }
 }
