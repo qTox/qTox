@@ -44,6 +44,8 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     // name text
     nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("name");
+    nameLabel->setTextFormat(Qt::PlainText);
+    statusMessageLabel->setTextFormat(Qt::PlainText);
 
     onCompactChanged(property("compact").toBool());
 
