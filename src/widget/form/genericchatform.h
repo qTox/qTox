@@ -34,6 +34,7 @@ class CroppingLabel;
 class ChatTextEdit;
 class ChatLog;
 class MaskablePixmapWidget;
+class Widget;
 struct ToxID;
 
 namespace Ui {
@@ -74,12 +75,15 @@ protected slots:
     void onCopyLogClicked();
     void clearChatArea(bool);
     void onSelectAllClicked();
+    void previousContact();
+    void nextContact();
 
 protected:
     QString resolveToxID(const ToxID &id);
     void insertChatMessage(ChatMessage::Ptr msg);
 
     ToxID previousId;
+    Widget *parent;
     QMenu menu;
     int curRow;
     CroppingLabel *nameLabel;

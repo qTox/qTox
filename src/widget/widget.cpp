@@ -746,6 +746,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 {
+    qDebug() << "active chat";
     hideMainForms();
     widget->setChatForm(*ui);
     if (activeChatroomWidget != nullptr)
@@ -1196,4 +1197,15 @@ void Widget::reloadTheme()
 
     for (Group* g : GroupList::getAllGroups())
         g->getGroupWidget()->reloadTheme();
+}
+
+void Widget::nextContact()
+{
+    // dont know how to get current/previous/next contact from friendlistwidget
+    qDebug() << "next contact";
+}
+
+void Widget::previousContact()
+{
+    qDebug() << "previous contact";
 }

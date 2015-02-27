@@ -20,6 +20,7 @@
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QDebug>
+#include <QShortcut>
 
 #include "src/misc/smileypack.h"
 #include "src/widget/emoticonswidget.h"
@@ -42,7 +43,6 @@ GenericChatForm::GenericChatForm(QWidget *parent)
   , audioOutputFlag(false)
 {
     curRow = 0;
-
     headWidget = new QWidget();
 
     nameLabel = new CroppingLabel();
@@ -169,8 +169,21 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     connect(emoteButton, &QPushButton::clicked, this, &GenericChatForm::onEmoteButtonClicked);
     connect(chatWidget, &ChatLog::customContextMenuRequested, this, &GenericChatForm::onChatContextMenuRequested);
 
+    new QShortcut(QKeySequence(Qt::Key_PageUp), this, SLOT(previousContact()));    
+    new QShortcut(QKeySequence(Qt::Key_PageDown), this, SLOT(nextContact()));
+        
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
+}
+
+void GenericChatForm::previousContact()
+{
+    parent->previousContact();
+}
+
+void GenericChatForm::nextContact()
+{
+    parent->nextContact();
 }
 
 bool GenericChatForm::isEmpty()
