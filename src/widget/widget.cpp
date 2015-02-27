@@ -343,7 +343,7 @@ void Widget::resizeEvent(QResizeEvent *event)
         this->setMinimumWidth(540);
         ui->statusPanel->hide();
     } else {
-        this->setMinimumWidth(775);
+        this->setMinimumWidth(775); //this was in .ui file
         ui->statusPanel->show();
     }
     
