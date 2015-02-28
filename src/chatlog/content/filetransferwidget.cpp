@@ -26,6 +26,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QPainter>
 #include <QVariantAnimation>
 #include <QDebug>
@@ -449,6 +450,23 @@ void FileTransferWidget::showPreview(const QString &filename)
         QPixmap pmap = QPixmap(filename).scaled(QSize(size, size), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         ui->previewLabel->setPixmap(pmap);
         ui->previewLabel->show();
+
+        // Show preview, but make sure it's not larger than 50% of the screen width/height
+        QRect maxSize = QApplication::desktop()->screenGeometry();
+        maxSize.setWidth(0.5*maxSize.width());
+        maxSize.setHeight(0.5*maxSize.height());
+
+        QImage image = QImage(filename);
+        QSize imageSize(image.width(), image.height());
+        if (imageSize.width() > maxSize.width() || imageSize.height() > maxSize.height())
+        {
+            imageSize.scale(maxSize.width(), maxSize.height(), Qt::KeepAspectRatio);
+            ui->previewLabel->setToolTip("<html><img src="+filename+" width="+QString::number(imageSize.width())+" height="+QString::number(imageSize.height())+"/></html>");
+        }
+        else
+        {
+            ui->previewLabel->setToolTip("<html><img src"+filename+"/></html>");
+        }
     }
 }
 
