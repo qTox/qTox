@@ -36,6 +36,16 @@
 #include <QBuffer>
 
 
+void ProfileForm::refreshProfiles()
+{
+    bodyUI->profiles->clear();
+    for (QString profile : Settings::getInstance().searchProfiles())
+        bodyUI->profiles->addItem(profile);
+    QString current = Settings::getInstance().getCurrentProfile();
+    if (current != "")
+        bodyUI->profiles->setCurrentText(current);
+}
+
 ProfileForm::ProfileForm(QWidget *parent) :
     QWidget(parent)
 {
@@ -317,4 +327,10 @@ void ProfileForm::enableSwitching()
         bodyUI->loadButton->setEnabled(true);
         bodyUI->newButton->setEnabled(true);
     }
+}
+
+void ProfileForm::showEvent(QShowEvent *event)
+{
+    refreshProfiles();
+    QWidget::showEvent(event);
 }

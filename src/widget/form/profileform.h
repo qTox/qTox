@@ -69,7 +69,11 @@ private slots:
     void disableSwitching();
     void enableSwitching();
 
+protected:
+    virtual void showEvent(QShowEvent *);
+
 private:
+    void refreshProfiles();
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
     Core* core;
