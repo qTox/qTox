@@ -23,7 +23,7 @@
 #include <QFileInfo>
 #include "form/addfriendform.h"
 #include "form/settingswidget.h"
-#include "form/settings/identityform.h"
+#include "form/profileform.h"
 #include "form/filesform.h"
 #include "src/corestructs.h"
 
@@ -77,6 +77,7 @@ public:
 
     void reloadTheme();
 
+    void showProfile();
 public slots:
     void onSettingsClicked();
     void setWindowTitle(const QString& title);
@@ -120,6 +121,7 @@ private slots:
     void onGroupClicked();
     void onTransferClicked();
     void onAvatarClicked();
+    void onUsernameClicked();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
     void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
@@ -157,6 +159,7 @@ private:
     QSplitter *centralLayout;
     QPoint dragPosition;
     AddFriendForm* addFriendForm;
+    ProfileForm* profileForm;
     SettingsWidget* settingsWidget;
     FilesForm* filesForm;
     static Widget* instance;

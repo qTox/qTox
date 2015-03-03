@@ -855,6 +855,9 @@ QSplitter:handle{
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="text">
                   <string>Your name</string>
                  </property>
@@ -1037,8 +1040,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>284</width>
-             <height>399</height>
+             <width>285</width>
+             <height>381</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1779,7 +1782,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

@@ -17,15 +17,13 @@
 #ifndef IDENTITYFORM_H
 #define IDENTITYFORM_H
 
-#include "genericsettings.h"
-#include <QGroupBox>
-#include <QTextEdit>
 #include <QLineEdit>
 #include <QLabel>
 #include <QTimer>
 
 class CroppingLabel;
 class Core;
+class MaskablePixmapWidget;
 
 namespace Ui {
 class IdentitySettings;
@@ -42,22 +40,24 @@ protected:
     void mouseReleaseEvent(QMouseEvent*) {emit clicked();}    
 };
 
-class IdentityForm : public GenericForm
+class ProfileForm : public QWidget
 {
     Q_OBJECT
 public:
-    IdentityForm();
-    ~IdentityForm();
-
-    virtual void present();
+    ProfileForm(QWidget *parent = nullptr);
+    ~ProfileForm();
 
 signals:
     void userNameChanged(QString);
     void statusMessageChanged(QString);
 
+public slots:
+    void onSelfAvatarLoaded(const QPixmap &pic);
+
 private slots:
     void setToxId(const QString& id);
     void copyIdClicked();
+    void onAvatarClicked();
     void onUserNameEdited();
     void onStatusMessageEdited();
     void onLoadClicked();
@@ -71,6 +71,7 @@ private slots:
 
 private:
     Ui::IdentitySettings* bodyUI;
+    MaskablePixmapWidget* profilePicture;
     Core* core;
     QTimer timer;
     bool hasCheck = false;

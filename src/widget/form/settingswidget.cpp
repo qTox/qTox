@@ -19,7 +19,6 @@
 #include "ui_mainwindow.h"
 #include "src/video/camera.h"
 #include "src/widget/form/settings/generalform.h"
-#include "src/widget/form/settings/identityform.h"
 #include "src/widget/form/settings/privacyform.h"
 #include "src/widget/form/settings/avform.h"
 #include "src/widget/form/settings/advancedform.h"
@@ -52,12 +51,11 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     bodyLayout->addWidget(settingsWidgets);
 
     GeneralForm* gfrm = new GeneralForm(this);
-    IdentityForm* ifrm = new IdentityForm;
     PrivacyForm* pfrm = new PrivacyForm;
     AVForm* avfrm = new AVForm;
     AdvancedForm *expfrm = new AdvancedForm;
 
-    GenericForm* cfgForms[] = { gfrm, ifrm, pfrm, avfrm, expfrm };
+    GenericForm* cfgForms[] = { gfrm, pfrm, avfrm, expfrm };
     for (GenericForm* cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
 

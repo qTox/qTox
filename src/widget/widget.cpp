@@ -49,8 +49,6 @@
 #include <QMouseEvent>
 #include <QClipboard>
 #include <QThread>
-#include <QFileDialog>
-#include <QInputDialog>
 #include <QDialogButtonBox>
 #include <QTimer>
 #include <QStyleFactory>
@@ -189,7 +187,6 @@ void Widget::init()
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
 
-    ui->nameLabel->setEditable(true);
     ui->statusLabel->setEditable(true);
 
     ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
@@ -215,17 +212,19 @@ void Widget::init()
     
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
+    profileForm = new ProfileForm();
     settingsWidget = new SettingsWidget();
 
     Core* core = Nexus::getCore();
     connect(core, SIGNAL(fileDownloadFinished(const QString&)), filesForm, SLOT(onFileDownloadComplete(const QString&)));
     connect(core, SIGNAL(fileUploadFinished(const QString&)), filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(settingsWidget, &SettingsWidget::setShowSystemTray, this, &Widget::onSetShowSystemTray);
+    connect(core, SIGNAL(selfAvatarChanged(QPixmap)), profileForm, SLOT(onSelfAvatarLoaded(QPixmap)));
     connect(ui->addButton, SIGNAL(clicked()), this, SLOT(onAddClicked()));
     connect(ui->groupButton, SIGNAL(clicked()), this, SLOT(onGroupClicked()));
     connect(ui->transferButton, SIGNAL(clicked()), this, SLOT(onTransferClicked()));
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
-    connect(ui->nameLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onUsernameChanged(QString, QString)));
+    connect(ui->nameLabel, SIGNAL(clicked()), this, SLOT(onUsernameClicked()));
     connect(ui->statusLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onStatusMessageChanged(QString, QString)));
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
@@ -283,6 +282,7 @@ Widget::~Widget()
     AutoUpdater::abortUpdates();
     icon->hide();
     hideMainForms();
+    delete profileForm;
     delete settingsWidget;
     delete addFriendForm;
     delete filesForm;
@@ -348,49 +348,7 @@ QString Widget::getUsername()
 
 void Widget::onAvatarClicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this,
-        tr("Choose a profile picture"),
-        QDir::homePath(),
-        Nexus::getSupportedImageFilter());
-    if (filename.isEmpty())
-        return;
-    QFile file(filename);
-    file.open(QIODevice::ReadOnly);
-    if (!file.isOpen())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to open this file"));
-        return;
-    }
-
-    QPixmap pic;
-    if (!pic.loadFromData(file.readAll()))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to read this image"));
-        return;
-    }
-
-    QByteArray bytes;
-    QBuffer buffer(&bytes);
-    buffer.open(QIODevice::WriteOnly);
-    pic.save(&buffer, "PNG");
-    buffer.close();
-
-    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
-    {
-        pic = pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        bytes.clear();
-        buffer.open(QIODevice::WriteOnly);
-        pic.save(&buffer, "PNG");
-        buffer.close();
-    }
-
-    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
-    {
-        QMessageBox::critical(this, tr("Error"), tr("This image is too big"));
-        return;
-    }
-
-    Nexus::getCore()->setAvatar(TOX_AVATAR_FORMAT_PNG, bytes);
+    showProfile();
 }
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
@@ -586,6 +544,20 @@ void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUse
 {
     setUsername(oldUsername);               // restore old username until Core tells us to set it
     Nexus::getCore()->setUsername(newUsername);
+}
+
+void Widget::showProfile()
+{
+    hideMainForms();
+    ui->mainContent->layout()->addWidget(profileForm);
+    profileForm->show();
+    setWindowTitle(tr("Profile"));
+    activeChatroomWidget = nullptr;
+}
+
+void Widget::onUsernameClicked()
+{
+    showProfile();
 }
 
 void Widget::setUsername(const QString& username)
