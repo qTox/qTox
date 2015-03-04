@@ -141,65 +141,67 @@ packages necessary for building .debs, so be prepared to type your password for 
 
 <a name="osx" />
 ##OS X
+Please be aware that if you've tried an earlier version of this set of instructions you may have 
+installed broken libraries and packages in the proces. Please delete them before continuing.
 
-###OSX Easy Install
+Also, if you want to use qTox and are an end user download it by clicking the download button on tox.im, 
+as the copy you'll make by following this guide is only suitable for testing.
 
-Since https://github.com/ReDetection/homebrew-qtox you can easily install qtox with homebrew 
-```bash
-brew install --HEAD ReDetection/qtox/qtox
+Compiling qTox on OS X for development requires 3 tools, [Xcode](https://developer.apple.com/xcode/) and [Qt 5.4+](http://www.qt.io/qt5-4/), and [homebrew](http://brew.sh).
+
+###Required tools
+
+First, let's install the dependencies
+* ```brew install git wget```
+* ``git clone https://github.com/tux3/qTox``
+* ```cd qTox```
+
+###Libraries required to compile
+
+Now we are in the qTox folder and need our library dependencies to actually build it.
+
+We've taken the time to prepare them automatically with our CI system so if you ever have issues redownload them.
+
+* ```wget https://jenkins.libtoxcore.so/job/qTox%20OS%20X/lastSuccessfulBuild/artifact/dep.zip```
+* ```unzip dep.zip```
+
+If you do not want to download our binaries, you must compile [opencv2](http://opencv.org), [toxcore](https://github.com/irungentoo/toxcore), [opus](https://www.opus-codec.org), [vpx](http://www.webmproject.org/tools/), [filteraudio](https://github.com/irungentoo/filter_audio), and our fork of [openal](https://github.com/irungentoo/openal-soft-tox) yourself with the prefix to the libs folder.
+
+Please be aware that no one has ever successfully got this working outside of on our CI system, but we encourage you to try and provide instructions on how you did so if you do.
+
+Please be aware that you shouldn't do this on your main Mac, as it's fairly hard to successfully do this without ruining a bunch of things in the process.
+
+Everything from opencv2 to filter_audio has now been installed in this library and is ready to go.
+
+###Compiling
+
+Either open Qt creator and hit build or run qmake && make in your qTox folder and it'll just work™
+
+Note that if you use the CLI to build you'll need to add Qt5's bins to your path.
+```export PATH=$PATH:~/Qt/5.4/clang_64/bin/```
+
+###Fixing things up
+
+The bad news is that Qt breaks our linker paths so we need to fix those.
+First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
+
+Install qTox so we can copy its libraries and shove the following in a script somewhere:
+
 ```
-
-
-###OSX Full Install Guide
-
-This guide is intended for people who wish to use an existing or new ProjectTox-Core installation separate to the bundled installation with qTox, if you do not wish to use a separate installation you can skip to the section titled 'Final Steps'.
-
-Installation on OSX, isn't quite straight forward, here is a quick guide on how to install;
-
-Note that qTox now requires OpenCV and OpenAL for video and audio.
-
-The first thing you need to do is install ProjectTox-Core with a/v support. Refer to the INSTALL guide in the PrjectTox-Core github repo.
-
-Next you need to download QtTools (http://qt-project.org/downloads), at the time of writing this is at version .3.0.
-Make sure you deselect all the unnecessary components from the 5.3 checkbox (iOS/Android libs) otherwise you will end up with a very large download.
-
-Once that is installed you will most likely need to set the path for qmake. To do this, open up terminal and paste in the following;
-
-```bash
-export PATH=/location/to/qmake/binary:$PATH
+~macdeployqt qtox.app
+cp -r /Applications/qtox.app qtox_old.app
+cp qtox.app/Contents/MacOS/qtox qtox_old.app/Contents/MacOS/qtox
+rm -rf qtox.app
+mv qtox_old.app qtox.app
 ```
+* Give it a name like ~/deploy.qtox.sh
+* cd in to the folder with qtox.app
+* run ```bash ~/deploy.qtox.sh```
 
-For myself, the qmake binary was located in /Users/mouseym/Qt/5.3/clang_64/bin/.
-
-This is not a permanent change, it will revert when you close the terminal window, to add it permanently you will need to add echo the above line to your .profile/.bash_profile.
-
-Once this is installed, do the following;
-
-```bash
-git clone https://github.com/tux3/qTox
-cd toxgui
-qmake
-```
-
-Now, we need to create a symlink to /usr/local/lib/ and /usr/local/include/
-```
-mkdir -p $HOME/qTox/libs
-sudo ln -s /usr/local/lib $HOME/qTox/libs/lib
-sudo ln -s /usr/local/include  $HOME/qTox/libs/include
-```
-####Final Steps
-
-The final step is to run 
-```bash
-make
-``` 
-in the qTox directory, or if you are using the bundled tox core installation, you can use 
-```bash
-./bootstrap.sh
-make
-```
-Assuming all went well you should now have a qTox.app file within the directory. Double click and it should open!
-
+###Running qTox
+You've got 2 choices, either click on the qTox app that suddenly exists, or do the following:
+* ``qtox.app/Contents/MacOS/qtox`` 
+* Enjoy the snazzy CLI output as your friends and family congratulate you on becoming a hacker
 
 <a name="windows" />
 ##Windows
