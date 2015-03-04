@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
         AskInstall.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
         AskInstall.setDefaultButton(QMessageBox::Yes);
 
-        int AskInstallAttempt = AskInstall.exec(); //Check if user sucks
+        int AskInstallAttempt = AskInstall.exec(); //Actually ask the user
 
         if (AskInstallAttempt == QMessageBox::Yes) {
             qDebug() << "Installing";
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
             QString sudo = bindir + "/qtox_sudo rsync -avzh --remove-source-file " + appdir + " /Applications/qtox.app";
             QString qtox = "open /Applications/qtox.app";
 
-            if (fork() != 0) { //uTox grade cheap hack
+            if (fork() != 0) { //cheap hack
                 return EXIT_UPDATE_MACX; //Note that if we don't do this the update process will get killed. Also, errors just crash it
             }
 
