@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 
-#    Copyright (C) 2014 by Project Tox <https://tox.im>
+#    Copyright (C) 2015 by Project Tox <https://tox.im>
 #
 #    This file is part of qTox, a Qt-based graphical interface for Tox.
 #
@@ -44,9 +44,6 @@ include(translations/i18n.pri)
 # Build all the qm files now, to make RCC happy
 system($$fromfile(translations/i18n.pri, updateallqm))
 
-RESOURCES += res.qrc \
-    smileys/smileys.qrc
-
 GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "built without git")
 DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
 # date works on linux/mac, but it would hangs qmake on windows
@@ -80,6 +77,15 @@ android {
     HEADERS += src/widget/androidgui.h
 
     SOURCES += src/widget/androidgui.cpp
+
+    DISTFILES += \
+        android/gradle/wrapper/gradle-wrapper.jar \
+        android/AndroidManifest.xml \
+        android/gradlew.bat \
+        android/res/values/libs.xml \
+        android/build.gradle \
+        android/gradle/wrapper/gradle-wrapper.properties \
+        android/gradlew
 }
 
 contains(DISABLE_PLATFORM_EXT, YES) {
@@ -92,6 +98,11 @@ contains(DISABLE_FILTER_AUDIO, YES) {
 
 } else {
      DEFINES += QTOX_FILTER_AUDIO
+}
+
+contains(HIGH_DPI, YES) {
+    QT_DEVICE_PIXEL_RATIO= auto
+    DEFINES += HIGH_DPI
 }
 
 contains(JENKINS,YES) {
@@ -183,22 +194,25 @@ win32 {
 
 # The systray Unity backend implements the system tray icon on Unity (Ubuntu) and GNOME desktops.
 unix:!macx:!android {
-contains(ENABLE_SYSTRAY_UNITY_BACKEND, NO) {
-} else {
+contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 	DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
 
-	INCLUDEPATH += "/usr/include/libappindicator-0.1"
-	INCLUDEPATH += "/usr/include/gtk-2.0"
 	INCLUDEPATH += "/usr/include/glib-2.0"
-	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib64/glib-2.0/include"
 	INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
-	INCLUDEPATH += "/usr/include/cairo"
-	INCLUDEPATH += "/usr/include/pango-1.0"
-	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/include/gtk-2.0"
+	INCLUDEPATH += "/usr/lib/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
 	INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
-	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
 	INCLUDEPATH += "/usr/include/atk-1.0"
+	INCLUDEPATH += "/usr/include/cairo"
+	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+	INCLUDEPATH += "/usr/include/libappindicator-0.1"
 	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
+	INCLUDEPATH += "/usr/include/pango-1.0"
 
 	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
 }
@@ -210,17 +224,19 @@ contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
 } else {
 	DEFINES += ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
 
-	INCLUDEPATH += "/usr/include/gtk-2.0"
 	INCLUDEPATH += "/usr/include/glib-2.0"
 	INCLUDEPATH += "/usr/lib/glib-2.0/include"
-	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib64/glib-2.0/include"
 	INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/include/gtk-2.0"
 	INCLUDEPATH += "/usr/lib/gtk-2.0/include"
-	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
 	INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
 	INCLUDEPATH += "/usr/include/atk-1.0"
-	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
 	INCLUDEPATH += "/usr/include/cairo"
+	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
 	INCLUDEPATH += "/usr/include/pango-1.0"
 
 
@@ -243,14 +259,16 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
 } else {
 	DEFINES += ENABLE_SYSTRAY_GTK_BACKEND
 
-	INCLUDEPATH += "/usr/include/gtk-2.0"
 	INCLUDEPATH += "/usr/include/glib-2.0"
 	INCLUDEPATH += "/usr/lib/glib-2.0/include"
-	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib64/glib-2.0/include"
 	INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+	INCLUDEPATH += "/usr/include/gtk-2.0"
 	INCLUDEPATH += "/usr/lib/gtk-2.0/include"
-	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
 	INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+	INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
 	INCLUDEPATH += "/usr/include/atk-1.0"
 	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
 	INCLUDEPATH += "/usr/include/cairo"
@@ -262,125 +280,128 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
 }
 
 !android {
-HEADERS  += \
-    src/friend.h \
-    src/group.h \
-    src/grouplist.h \
-    src/friendlist.h \
-    src/misc/smileypack.h \
-    src/widget/emoticonswidget.h \
-    src/misc/style.h \
-    src/widget/croppinglabel.h \
-    src/widget/maskablepixmapwidget.h \
-    src/widget/videosurface.h \
-    src/widget/toxuri.h \
-    src/toxdns.h \
-    src/widget/toxsave.h \
-    src/misc/serialize.h \
-    src/chatlog/chatlog.h \
-    src/chatlog/chatline.h \
-    src/chatlog/chatlinecontent.h \
-    src/chatlog/chatlinecontentproxy.h \
-    src/chatlog/content/text.h \
-    src/chatlog/content/spinner.h \
-    src/chatlog/content/filetransferwidget.h \
-    src/chatlog/chatmessage.h \
-    src/chatlog/content/image.h \
-    src/chatlog/customtextdocument.h \
-    src/widget/form/settings/advancedform.h \
-    src/chatlog/content/notificationicon.h \
-    src/chatlog/content/timestamp.h \
-    src/chatlog/documentcache.h \
-    src/chatlog/pixmapcache.h \
-    src/offlinemsgengine.h \
-    src/widget/form/addfriendform.h \
-    src/widget/form/chatform.h \
-    src/widget/form/groupchatform.h \
-    src/widget/form/settingswidget.h \
-    src/widget/form/settings/genericsettings.h \
-    src/widget/form/settings/generalform.h \
-    src/widget/form/settings/identityform.h \
-    src/widget/form/settings/privacyform.h \
-    src/widget/form/settings/avform.h \
-    src/widget/form/filesform.h \
-    src/widget/tool/chattextedit.h \
-    src/widget/tool/friendrequestdialog.h \
-    src/widget/friendwidget.h \
-    src/widget/groupwidget.h \
-    src/widget/widget.h \
-    src/widget/netcamview.h \
-    src/widget/friendlistwidget.h \
-    src/widget/genericchatroomwidget.h \
-    src/widget/form/genericchatform.h \
-    src/widget/adjustingscrollarea.h \
-    src/widget/form/loadhistorydialog.h \
-    src/widget/form/setpassworddialog.h \
-    src/widget/form/tabcompleter.h \
-    src/misc/flowlayout.h \
-    src/ipc.h \
-    src/autoupdate.h \
-    src/widget/callconfirmwidget.h \
-    src/widget/systemtrayicon.h \
-    src/widget/systemtrayicon_private.h
+    RESOURCES += res.qrc \
+        smileys/smileys.qrc
 
-    SOURCES += \
-    src/widget/form/addfriendform.cpp \
-    src/widget/form/settingswidget.cpp \
-    src/widget/form/settings/generalform.cpp \
-    src/widget/form/settings/identityform.cpp \
-    src/widget/form/settings/privacyform.cpp \
-    src/widget/form/settings/avform.cpp \
-    src/widget/form/filesform.cpp \
-    src/widget/tool/chattextedit.cpp \
-    src/widget/tool/friendrequestdialog.cpp \
-    src/widget/widget.cpp \
-    src/widget/netcamview.cpp \
-    src/widget/friendlistwidget.cpp \
-    src/widget/adjustingscrollarea.cpp \
-    src/widget/form/loadhistorydialog.cpp \
-    src/widget/form/setpassworddialog.cpp \
-    src/widget/form/tabcompleter.cpp \
-    src/misc/flowlayout.cpp \
-    src/ipc.cpp \
-    src/autoupdate.cpp \
-    src/widget/callconfirmwidget.cpp \
-    src/widget/systemtrayicon.cpp \
-    src/widget/groupwidget.cpp \
-    src/widget/friendwidget.cpp \
-    src/widget/form/chatform.cpp \
-    src/widget/form/groupchatform.cpp \
-    src/widget/form/genericchatform.cpp \
-    src/friend.cpp \
-    src/friendlist.cpp \
-    src/group.cpp \
-    src/grouplist.cpp \
-    src/misc/smileypack.cpp \
-    src/widget/emoticonswidget.cpp \
-    src/misc/style.cpp \
-    src/widget/croppinglabel.cpp \
-    src/widget/maskablepixmapwidget.cpp \
-    src/widget/videosurface.cpp \
-    src/widget/toxuri.cpp \
-    src/toxdns.cpp \
-    src/widget/toxsave.cpp \
-    src/misc/serialize.cpp \
-    src/chatlog/chatlog.cpp \
-    src/chatlog/chatline.cpp \
-    src/chatlog/chatlinecontent.cpp \
-    src/chatlog/chatlinecontentproxy.cpp \
-    src/chatlog/content/text.cpp \
-    src/chatlog/content/spinner.cpp \
-    src/chatlog/content/filetransferwidget.cpp \
-    src/chatlog/chatmessage.cpp \
-    src/chatlog/content/image.cpp \
-    src/chatlog/customtextdocument.cpp\
-    src/widget/form/settings/advancedform.cpp \
-    src/chatlog/content/notificationicon.cpp \
-    src/chatlog/content/timestamp.cpp \
-    src/chatlog/documentcache.cpp \
-    src/chatlog/pixmapcache.cpp \
-    src/offlinemsgengine.cpp \
-    src/widget/genericchatroomwidget.cpp
+    HEADERS  += \
+        src/friend.h \
+        src/group.h \
+        src/grouplist.h \
+        src/friendlist.h \
+        src/misc/smileypack.h \
+        src/widget/emoticonswidget.h \
+        src/misc/style.h \
+        src/widget/croppinglabel.h \
+        src/widget/maskablepixmapwidget.h \
+        src/widget/videosurface.h \
+        src/widget/toxuri.h \
+        src/toxdns.h \
+        src/widget/toxsave.h \
+        src/misc/serialize.h \
+        src/chatlog/chatlog.h \
+        src/chatlog/chatline.h \
+        src/chatlog/chatlinecontent.h \
+        src/chatlog/chatlinecontentproxy.h \
+        src/chatlog/content/text.h \
+        src/chatlog/content/spinner.h \
+        src/chatlog/content/filetransferwidget.h \
+        src/chatlog/chatmessage.h \
+        src/chatlog/content/image.h \
+        src/chatlog/customtextdocument.h \
+        src/widget/form/settings/advancedform.h \
+        src/chatlog/content/notificationicon.h \
+        src/chatlog/content/timestamp.h \
+        src/chatlog/documentcache.h \
+        src/chatlog/pixmapcache.h \
+        src/offlinemsgengine.h \
+        src/widget/form/addfriendform.h \
+        src/widget/form/chatform.h \
+        src/widget/form/groupchatform.h \
+        src/widget/form/settingswidget.h \
+        src/widget/form/settings/genericsettings.h \
+        src/widget/form/settings/generalform.h \
+        src/widget/form/settings/identityform.h \
+        src/widget/form/settings/privacyform.h \
+        src/widget/form/settings/avform.h \
+        src/widget/form/filesform.h \
+        src/widget/tool/chattextedit.h \
+        src/widget/tool/friendrequestdialog.h \
+        src/widget/friendwidget.h \
+        src/widget/groupwidget.h \
+        src/widget/widget.h \
+        src/widget/netcamview.h \
+        src/widget/friendlistwidget.h \
+        src/widget/genericchatroomwidget.h \
+        src/widget/form/genericchatform.h \
+        src/widget/adjustingscrollarea.h \
+        src/widget/form/loadhistorydialog.h \
+        src/widget/form/setpassworddialog.h \
+        src/widget/form/tabcompleter.h \
+        src/misc/flowlayout.h \
+        src/ipc.h \
+        src/autoupdate.h \
+        src/widget/callconfirmwidget.h \
+        src/widget/systemtrayicon.h \
+        src/widget/systemtrayicon_private.h
+
+        SOURCES += \
+        src/widget/form/addfriendform.cpp \
+        src/widget/form/settingswidget.cpp \
+        src/widget/form/settings/generalform.cpp \
+        src/widget/form/settings/identityform.cpp \
+        src/widget/form/settings/privacyform.cpp \
+        src/widget/form/settings/avform.cpp \
+        src/widget/form/filesform.cpp \
+        src/widget/tool/chattextedit.cpp \
+        src/widget/tool/friendrequestdialog.cpp \
+        src/widget/widget.cpp \
+        src/widget/netcamview.cpp \
+        src/widget/friendlistwidget.cpp \
+        src/widget/adjustingscrollarea.cpp \
+        src/widget/form/loadhistorydialog.cpp \
+        src/widget/form/setpassworddialog.cpp \
+        src/widget/form/tabcompleter.cpp \
+        src/misc/flowlayout.cpp \
+        src/ipc.cpp \
+        src/autoupdate.cpp \
+        src/widget/callconfirmwidget.cpp \
+        src/widget/systemtrayicon.cpp \
+        src/widget/groupwidget.cpp \
+        src/widget/friendwidget.cpp \
+        src/widget/form/chatform.cpp \
+        src/widget/form/groupchatform.cpp \
+        src/widget/form/genericchatform.cpp \
+        src/friend.cpp \
+        src/friendlist.cpp \
+        src/group.cpp \
+        src/grouplist.cpp \
+        src/misc/smileypack.cpp \
+        src/widget/emoticonswidget.cpp \
+        src/misc/style.cpp \
+        src/widget/croppinglabel.cpp \
+        src/widget/maskablepixmapwidget.cpp \
+        src/widget/videosurface.cpp \
+        src/widget/toxuri.cpp \
+        src/toxdns.cpp \
+        src/widget/toxsave.cpp \
+        src/misc/serialize.cpp \
+        src/chatlog/chatlog.cpp \
+        src/chatlog/chatline.cpp \
+        src/chatlog/chatlinecontent.cpp \
+        src/chatlog/chatlinecontentproxy.cpp \
+        src/chatlog/content/text.cpp \
+        src/chatlog/content/spinner.cpp \
+        src/chatlog/content/filetransferwidget.cpp \
+        src/chatlog/chatmessage.cpp \
+        src/chatlog/content/image.cpp \
+        src/chatlog/customtextdocument.cpp\
+        src/widget/form/settings/advancedform.cpp \
+        src/chatlog/content/notificationicon.cpp \
+        src/chatlog/content/timestamp.cpp \
+        src/chatlog/documentcache.cpp \
+        src/chatlog/pixmapcache.cpp \
+        src/offlinemsgengine.cpp \
+        src/widget/genericchatroomwidget.cpp
 }
 
 SOURCES += \
@@ -403,6 +424,7 @@ SOURCES += \
     src/video/netvideosource.cpp \
     src/video/videoframe.cpp \
     src/widget/gui.cpp \
+    src/toxme.cpp
 
 HEADERS += \
     src/audio.h \
@@ -423,12 +445,4 @@ HEADERS += \
     src/video/videoframe.h \
     src/video/videosource.h \
     src/widget/gui.h \
-
-DISTFILES += \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/AndroidManifest.xml \
-    android/gradlew.bat \
-    android/res/values/libs.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew
+    src/toxme.h

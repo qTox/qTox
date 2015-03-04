@@ -29,10 +29,16 @@
 #include <QFile>
 #include <QFontDatabase>
 #include <QMutexLocker>
+#include <QProcess>
+#include <opencv2/core/core.hpp>
 
 #include <sodium.h>
 
 #include "toxme.h"
+
+#include <unistd.h>
+
+#define EXIT_UPDATE_MACX 218 //We track our state using unique exit codes when debugging
 
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
@@ -56,12 +62,24 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QStr
 }
 #endif
 
+int opencvErrorHandler(int status, const char* func_name, const char* err_msg,
+                   const char* file_name, int line, void*)
+{
+    qWarning() << "OpenCV: ERROR ("<<status<<") in "
+               <<file_name<<":"<<line<<":"<<func_name<<": "<<err_msg;
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
+    
+#ifdef HIGH_DPI
+    a.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+#endif
 
     // Process arguments
     QCommandLineParser parser;
@@ -72,6 +90,9 @@ int main(int argc, char *argv[])
     parser.addOption(QCommandLineOption("p", QObject::tr("Starts new instance and loads specified profile."), QObject::tr("profile")));
     parser.process(a);
 
+#ifndef Q_OS_ANDROID
+    IPC::getInstance();
+#endif
     Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
 
     if (parser.isSet("p"))
@@ -103,7 +124,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        fprintf(stderr, "Couldn't open log file!!!\n");
+        fprintf(stderr, "Couldn't open log file!\n");
         delete logFile;
         logFile = nullptr;
     }
@@ -116,6 +137,46 @@ int main(int argc, char *argv[])
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
 
+    cv::redirectError(opencvErrorHandler);
+
+#ifdef Q_OS_MACX
+    if (qApp->applicationDirPath() != "/Applications/qtox.app/Contents/MacOS") {
+        qDebug() << "OS X: Not in Applications folder";
+
+        QMessageBox AskInstall;
+        AskInstall.setIcon(QMessageBox::Question);
+        AskInstall.setWindowModality(Qt::ApplicationModal);
+        AskInstall.setText("Move to Applications folder?");
+        AskInstall.setInformativeText("I can move myself to the Applications folder, keeping your downloads folder less cluttered.\r\n");
+        AskInstall.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+        AskInstall.setDefaultButton(QMessageBox::Yes);
+
+        int AskInstallAttempt = AskInstall.exec(); //Actually ask the user
+
+        if (AskInstallAttempt == QMessageBox::Yes) {
+            qDebug() << "Installing";
+            QProcess *sudoprocess = new QProcess;
+            QProcess *qtoxprocess = new QProcess;
+
+            QString bindir = qApp->applicationDirPath();
+            QString appdir = bindir;
+            appdir.chop(15);
+            QString sudo = bindir + "/qtox_sudo rsync -avzh --remove-source-file " + appdir + " /Applications/qtox.app";
+            QString qtox = "open /Applications/qtox.app";
+
+            if (fork() != 0) { //cheap hack
+                return EXIT_UPDATE_MACX; //Note that if we don't do this the update process will get killed. Also, errors just crash it
+            }
+
+            sudoprocess->start(sudo);
+            sudoprocess->waitForFinished();
+            qtoxprocess->start(qtox);
+
+            return 0; //Actually kills it
+        }
+    }
+#endif
+
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
 
@@ -125,14 +186,13 @@ int main(int argc, char *argv[])
         AutoUpdater::installLocalUpdate(); ///< NORETURN
 #endif
 
-    Nexus::getInstance().start();
 
 #ifndef Q_OS_ANDROID
     // Inter-process communication
-    IPC ipc;
-    ipc.registerEventHandler(&toxURIEventHandler);
-    ipc.registerEventHandler(&toxSaveEventHandler);
-    ipc.registerEventHandler(&toxActivateEventHandler);
+    IPC& ipc = IPC::getInstance();
+    ipc.registerEventHandler("uri", &toxURIEventHandler);
+    ipc.registerEventHandler("save", &toxSaveEventHandler);
+    ipc.registerEventHandler("activate", &toxActivateEventHandler);
 
     if (parser.positionalArguments().size() > 0)
     {
@@ -147,7 +207,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                time_t event = ipc.postEvent(firstParam.toUtf8());
+                time_t event = ipc.postEvent("uri", firstParam.toUtf8());
                 ipc.waitUntilProcessed(event);
                 // If someone else processed it, we're done here, no need to actually start qTox
                 if (!ipc.isCurrentOwner())
@@ -162,7 +222,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                time_t event = ipc.postEvent(firstParam.toUtf8());
+                time_t event = ipc.postEvent("save", firstParam.toUtf8());
                 ipc.waitUntilProcessed(event);
                 // If someone else processed it, we're done here, no need to actually start qTox
                 if (!ipc.isCurrentOwner())
@@ -175,14 +235,21 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
     }
-    else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
+    else if (!ipc.isCurrentOwner())
     {
-        time_t event = ipc.postEvent("$activate");
-        ipc.waitUntilProcessed(event);
-        if (!ipc.isCurrentOwner())
-            return EXIT_SUCCESS;
+        uint32_t dest = 0;
+        if (parser.isSet("p"))
+            dest = Settings::getInstance().getCurrentProfileId();
+        time_t event = ipc.postEvent("activate", QByteArray(), dest);
+        if (ipc.waitUntilProcessed(event, 2) && ipc.isEventAccepted(event))
+        {
+            if (!ipc.isCurrentOwner())
+                return EXIT_SUCCESS;
+        }
     }
 #endif
+
+    Nexus::getInstance().start();
 
     // Run
     a.setQuitOnLastWindowClosed(false);

@@ -59,6 +59,8 @@
 #include <QByteArray>
 #include <QImageReader>
 #include <QList>
+#include <QDesktopServices>
+#include <QProcess>
 #include <tox/tox.h>
 
 #ifdef Q_OS_ANDROID
@@ -67,11 +69,11 @@
 #define IS_ON_DESKTOP_GUI 1
 #endif
 
-void toxActivateEventHandler(const QByteArray& data)
+bool toxActivateEventHandler(const QByteArray&)
 {
-    if (data != "$activate")
-        return;
-    Widget::getInstance()->forceShow();
+    if (!Widget::getInstance()->isActiveWindow())
+        Widget::getInstance()->forceShow();
+    return true;
 }
 
 Widget *Widget::instance{nullptr};
@@ -111,46 +113,6 @@ void Widget::init()
     statusBusy = new QAction(tr("Busy", "Button to set your status to 'Busy'"), this);
     statusBusy->setIcon(QIcon(":img/status/dot_busy.png"));
     connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
-
-    if (QSystemTrayIcon::isSystemTrayAvailable())
-    {
-        icon = new SystemTrayIcon;
-        updateTrayIcon();
-        trayMenu = new QMenu;
-
-        actionQuit = new QAction(tr("&Quit"), this);
-        connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
-
-        trayMenu->addAction(statusOnline);
-        trayMenu->addAction(statusAway);
-        trayMenu->addAction(statusBusy);
-        trayMenu->addSeparator();
-        trayMenu->addAction(actionQuit);
-        icon->setContextMenu(trayMenu);
-
-        connect(icon,
-                SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-                this,
-                SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
-
-        icon->show();
-        icon->hide();
-
-        if (Settings::getInstance().getShowSystemTray())
-        {
-            icon->show();
-            if (Settings::getInstance().getAutostartInTray() == false)
-                this->show();
-        }
-        else
-            this->show();
-    }
-    else
-    {
-        qWarning() << "Widget: No system tray detected!";
-        icon = nullptr;
-        this->show();
-    }
 
     ui->statusbar->hide();
     ui->menubar->hide();
@@ -230,6 +192,7 @@ void Widget::init()
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
+    connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
     connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
 
     addFriendForm->show(*ui);
@@ -238,6 +201,8 @@ void Widget::init()
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
 #endif
+    if (!Settings::getInstance().getShowSystemTray())
+        show();
 }
 
 void Widget::setTranslation()
@@ -279,7 +244,8 @@ Widget::~Widget()
 {
     qDebug() << "Widget: Deleting Widget";
     AutoUpdater::abortUpdates();
-    icon->hide();
+    if (icon)
+        icon->hide();
     hideMainForms();
     delete settingsWidget;
     delete addFriendForm;
@@ -468,7 +434,9 @@ void Widget::onStatusSet(Status status)
 
 void Widget::setWindowTitle(const QString& title)
 {
-    QMainWindow::setWindowTitle("qTox - " + title);
+    QString tmp = title;
+    /// <[^>]*> Regexp to remove HTML tags, in case someone used them in title
+    QMainWindow::setWindowTitle("qTox - " + tmp.remove(QRegExp("<[^>]*>")));
 }
 
 void Widget::forceShow()
@@ -496,6 +464,27 @@ void Widget::onTransferClicked()
     filesForm->show(*ui);
     setWindowTitle(tr("File transfers"));
     activeChatroomWidget = nullptr;
+}
+
+void Widget::confirmExecutableOpen(const QFileInfo file)
+{
+    static const QStringList dangerousExtensions = { "app", "bat", "com", "cpl", "dmg", "exe", "hta", "jar", "js", "jse", "lnk", "msc", "msh", "msh1", "msh1xml", "msh2", "msh2xml", "mshxml", "msi", "msp", "pif", "ps1", "ps1xml", "ps2", "ps2xml", "psc1", "psc2", "py", "reg", "scf", "sh", "src", "vb", "vbe", "vbs", "ws", "wsc", "wsf", "wsh" };
+
+    if (dangerousExtensions.contains(file.suffix()))
+    {
+        if(!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
+        {
+            return;
+        }
+        
+        // The user wants to run this file, so make it executable and run it
+        QFile(file.filePath()).setPermissions(file.permissions() | QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup | QFile::ExeOther);
+        QProcess::startDetached(file.filePath());
+    }
+    else
+    {
+        QDesktopServices::openUrl(QUrl("file://" + file.filePath(), QUrl::TolerantMode));
+    }
 }
 
 void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
@@ -721,6 +710,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 {
+    qDebug() << "active chat";
     hideMainForms();
     widget->setChatForm(*ui);
     if (activeChatroomWidget != nullptr)
@@ -1069,6 +1059,52 @@ void Widget::onEventIconTick()
     }
 }
 
+void Widget::onTryCreateTrayIcon()
+{
+    static int32_t tries = 15;
+    if (!icon && tries--)
+    {
+        if (QSystemTrayIcon::isSystemTrayAvailable())
+        {
+            icon = new SystemTrayIcon;
+            updateTrayIcon();
+            trayMenu = new QMenu;
+
+            actionQuit = new QAction(tr("&Quit"), this);
+            connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+            trayMenu->addAction(statusOnline);
+            trayMenu->addAction(statusAway);
+            trayMenu->addAction(statusBusy);
+            trayMenu->addSeparator();
+            trayMenu->addAction(actionQuit);
+            icon->setContextMenu(trayMenu);
+
+            connect(icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                    this, SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
+
+            if (Settings::getInstance().getShowSystemTray())
+            {
+                icon->show();
+                setHidden(Settings::getInstance().getAutostartInTray());
+            }
+            else
+                show();
+        }
+        else if (!isVisible())
+            show();
+    }
+    else
+    {
+        disconnect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
+        if (!icon)
+        {
+            qWarning() << "Widget: No system tray detected!";
+            show();
+        }
+    }
+}
+
 void Widget::setStatusOnline()
 {
     Nexus::getCore()->setStatus(Status::Online);
@@ -1112,8 +1148,10 @@ void Widget::onFriendTypingChanged(int friendId, bool isTyping)
     f->getChatForm()->setFriendTyping(isTyping);
 }
 
-void Widget::onSetShowSystemTray(bool newValue){
-    icon->setVisible(newValue);
+void Widget::onSetShowSystemTray(bool newValue)
+{
+    if (icon)
+        icon->setVisible(newValue);
 }
 
 void Widget::saveWindowGeometry()
@@ -1171,4 +1209,15 @@ void Widget::reloadTheme()
 
     for (Group* g : GroupList::getAllGroups())
         g->getGroupWidget()->reloadTheme();
+}
+
+void Widget::nextContact()
+{
+    // dont know how to get current/previous/next contact from friendlistwidget
+    qDebug() << "next contact";
+}
+
+void Widget::previousContact()
+{
+    qDebug() << "previous contact";
 }

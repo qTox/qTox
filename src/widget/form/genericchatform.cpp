@@ -20,6 +20,7 @@
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QDebug>
+#include <QShortcut>
 
 #include "src/misc/smileypack.h"
 #include "src/widget/emoticonswidget.h"
@@ -42,25 +43,24 @@ GenericChatForm::GenericChatForm(QWidget *parent)
   , audioOutputFlag(false)
 {
     curRow = 0;
-
     headWidget = new QWidget();
 
     nameLabel = new CroppingLabel();
     nameLabel->setObjectName("nameLabel");
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     nameLabel->setEditable(true);
+    nameLabel->setTextFormat(Qt::PlainText);   
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
-    QHBoxLayout *headLayout = new QHBoxLayout(),
-            *mainFootLayout = new QHBoxLayout();
+    QHBoxLayout *mainFootLayout = new QHBoxLayout(),
+                *headLayout = new QHBoxLayout();
     
     QVBoxLayout *mainLayout = new QVBoxLayout(),
                 *footButtonsSmall = new QVBoxLayout(),
                 *micButtonsLayout = new QVBoxLayout();
-
-    QGridLayout *buttonsLayout = new QGridLayout();
+                headTextLayout = new QVBoxLayout();    
     
-    headTextLayout = new QVBoxLayout();    
+    QGridLayout *buttonsLayout = new QGridLayout();
 
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
@@ -143,10 +143,10 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     buttonsLayout->setVerticalSpacing(0);
     buttonsLayout->setHorizontalSpacing(4);
         
-    headLayout->addWidget(avatar, Qt::AlignTop | Qt::AlignLeft);
+    headLayout->addWidget(avatar);
     headLayout->addSpacing(5);
-    headLayout->addLayout(headTextLayout,  Qt::AlignTop | Qt::AlignAbsolute);
-    headLayout->addLayout(buttonsLayout, Qt::AlignTop | Qt::AlignRight);
+    headLayout->addLayout(headTextLayout);
+    headLayout->addLayout(buttonsLayout);
 
     headWidget->setLayout(headLayout);
     
@@ -169,8 +169,22 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     connect(emoteButton, &QPushButton::clicked, this, &GenericChatForm::onEmoteButtonClicked);
     connect(chatWidget, &ChatLog::customContextMenuRequested, this, &GenericChatForm::onChatContextMenuRequested);
 
+    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L, this, SLOT(clearChatArea()));
+
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
+}
+
+void GenericChatForm::previousContact()
+{
+    parent->previousContact();
+}
+
+void GenericChatForm::nextContact()
+{
+    parent->nextContact();
 }
 
 bool GenericChatForm::isEmpty()
@@ -320,6 +334,11 @@ void GenericChatForm::addSystemInfoMessage(const QString &message, ChatMessage::
 {
     previousId.clear();
     insertChatMessage(ChatMessage::createChatInfoMessage(message, type, datetime));
+}
+
+void GenericChatForm::clearChatArea()
+{
+    clearChatArea(true);
 }
 
 void GenericChatForm::clearChatArea(bool notinform)

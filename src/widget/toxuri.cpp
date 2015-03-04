@@ -18,6 +18,7 @@
 #include "src/widget/toxuri.h"
 #include "src/toxdns.h"
 #include "src/widget/tool/friendrequestdialog.h"
+#include "src/nexus.h"
 #include "src/core.h"
 #include <QByteArray>
 #include <QString>
@@ -30,15 +31,16 @@
 #include <QPushButton>
 #include <QCoreApplication>
 
-void toxURIEventHandler(const QByteArray& eventData)
+bool toxURIEventHandler(const QByteArray& eventData)
 {
     if (!eventData.startsWith("tox:"))
-        return;
+        return false;
 
     handleToxURI(eventData);
+    return true;
 }
 
-void handleToxURI(const QString &toxURI)
+bool handleToxURI(const QString &toxURI)
 {
     Core* core = Core::getInstance();
 
@@ -67,10 +69,11 @@ void handleToxURI(const QString &toxURI)
     }
     else
     {
-        ToxURIDialog dialog(0, toxaddr, QObject::tr("Tox me maybe?","Default message in Tox URI friend requests. Write something appropriate!"));
+        ToxURIDialog dialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?","Default message in Tox URI friend requests. Write something appropriate!").arg(Nexus::getCore()->getUsername()));
         if (dialog.exec() == QDialog::Accepted)
             Core::getInstance()->requestFriendship(toxid, dialog.getRequestMessage());
     }
+    return true;
 }
 
 ToxURIDialog::ToxURIDialog(QWidget *parent, const QString &userId, const QString &message) :

@@ -19,12 +19,14 @@
 
 #include "src/core.h"
 #include "src/misc/style.h"
+#include "src/widget/widget.h"
 
 #include <QMouseEvent>
 #include <QFileDialog>
 #include <QFile>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QPainter>
 #include <QVariantAnimation>
 #include <QDebug>
@@ -312,8 +314,6 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
 void FileTransferWidget::onFileTransferFinished(ToxFile file)
 {
-    static const QStringList openExtensions = { "png", "jpeg", "jpg", "gif", "zip", "rar" };
-
     if(fileInfo != file)
         return;
 
@@ -326,7 +326,6 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 
     ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
     ui->topButton->setObjectName("ok");
-    ui->topButton->setEnabled(openExtensions.contains(QFileInfo(file.fileName).suffix()));
     ui->topButton->show();
 
     ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/dir.svg"));
@@ -431,11 +430,11 @@ void FileTransferWidget::handleButton(QPushButton *btn)
 
     if(btn->objectName() == "ok")
     {
-        QDesktopServices::openUrl(QUrl("file://" + fileInfo.filePath, QUrl::TolerantMode));
+        Widget::confirmExecutableOpen(QFileInfo(fileInfo.filePath));
     }
     else if (btn->objectName() == "dir")
     {
-        QString dirPath = QDir(QFileInfo(fileInfo.filePath).dir()).path();
+        QString dirPath = QFileInfo(fileInfo.filePath).dir().path();
         QDesktopServices::openUrl(QUrl("file://" + dirPath, QUrl::TolerantMode));
     }
 
@@ -451,6 +450,23 @@ void FileTransferWidget::showPreview(const QString &filename)
         QPixmap pmap = QPixmap(filename).scaled(QSize(size, size), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         ui->previewLabel->setPixmap(pmap);
         ui->previewLabel->show();
+
+        // Show preview, but make sure it's not larger than 50% of the screen width/height
+        QRect maxSize = QApplication::desktop()->screenGeometry();
+        maxSize.setWidth(0.5*maxSize.width());
+        maxSize.setHeight(0.5*maxSize.height());
+
+        QImage image = QImage(filename);
+        QSize imageSize(image.width(), image.height());
+        if (imageSize.width() > maxSize.width() || imageSize.height() > maxSize.height())
+        {
+            imageSize.scale(maxSize.width(), maxSize.height(), Qt::KeepAspectRatio);
+            ui->previewLabel->setToolTip("<html><img src="+QUrl::toPercentEncoding(filename)+" width="+QString::number(imageSize.width())+" height="+QString::number(imageSize.height())+"/></html>");
+        }
+        else
+        {
+            ui->previewLabel->setToolTip("<html><img src"+QUrl::toPercentEncoding(filename)+"/></html>");
+        }
     }
 }
 

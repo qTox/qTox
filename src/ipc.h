@@ -23,62 +23,73 @@
 #include <QObject>
 #include <QThread>
 #include <QVector>
+#include <QMap>
 #include <functional>
 #include <ctime>
 
-/// Handles an IPC event, must filter out and ignore events it doesn't recognize
-using IPCEventHandler = std::function<void (const QByteArray&)>;
+using IPCEventHandler = std::function<bool (const QByteArray&)>;
 
-/// Class used for inter-process communication with other qTox instances
-/// IPC event handlers will be called from the GUI thread after its event loop starts
+#define IPC_PROTOCOL_VERSION "2"
+
 class IPC : public QThread
 {
     Q_OBJECT
+    IPC();
+protected:
+    static const int EVENT_TIMER_MS = 1000;
+    static const int EVENT_GC_TIMEOUT = 5;
+    static const int EVENT_QUEUE_SIZE = 32;
+    static const int OWNERSHIP_TIMEOUT_S = 5;
 
 public:
-    IPC();
     ~IPC();
-    /// Posts an event to the global shared memory, returns the time at wich it was posted
-    time_t postEvent(const QByteArray& data);
-    bool isCurrentOwner(); ///< Returns whether we're responsible for event processing of the global shared memory
-    void registerEventHandler(IPCEventHandler handler); ///< Registers a function to be called whenever an event is received
-    bool isEventProcessed(time_t postTime); ///< Returns wether a previously posted event was already processed
-    void waitUntilProcessed(time_t postTime); ///< Blocks until a previously posted event is processed
+
+    static IPC& getInstance();
+
+    struct IPCEvent
+    {
+        uint32_t dest;
+        int32_t sender;
+        char name[16];
+        char data[128];
+        time_t posted;
+        time_t processed;
+        uint32_t flags;
+        bool accepted;
+        bool global;
+    };
+
+    struct IPCMemory
+    {
+        uint64_t globalId;
+        // When last event was posted
+        time_t lastEvent;
+        // When processEvents() ran last time
+        time_t lastProcessed;
+        IPCEvent events[IPC::EVENT_QUEUE_SIZE];
+    };
+
+    // dest: Settings::getCurrentProfileId() or 0 (main instance).
+    time_t postEvent(const QString& name, const QByteArray &data=QByteArray(), uint32_t dest=0);
+    bool isCurrentOwner();
+    void registerEventHandler(const QString& name, IPCEventHandler handler);
+    bool isEventProcessed(time_t time);
+    bool isEventAccepted(time_t time);
+    bool waitUntilProcessed(time_t time, int32_t timeout=-1);
 
 protected slots:
     void processEvents();
 
-private:
-    /// Runs an IPC event handler from the main (GUI) thread, will block until the handler returns
-    Q_INVOKABLE void runEventHandler(IPCEventHandler handler, const QByteArray& arg);
-    /// Assumes that the memory IS LOCKED
-    /// Returns a pointer to the first free chunk of shared memory or a nullptr on error
-    char* getFirstFreeChunk();
-    /// Assumes that the memory IS LOCKED
-    /// Returns a pointer to the last used chunk of shared memory or a nullptr on error
-    char* getLastUsedChunk();
-    /// Assumes that the memory IS LOCKED
-    /// Removes the last event from the shared memory and returns its data, or an empty object on error
-    QByteArray fetchEvent();
-    /// Assumes that the memory IS LOCKED
-    /// Updates the global shared timestamp
-    void updateGlobalTimestamp();
-    /// Assumes that the memory IS LOCKED
-    /// Returns the global shared timestamp
-    time_t getGlobalTimestamp();
+protected:
+    IPCMemory* global();
+    bool runEventHandler(IPCEventHandler handler, const QByteArray& arg);
+    // Only called when global memory IS LOCKED, returns 0 if no evnts present
+    IPCEvent* fetchEvent();
 
-private:
-    QSharedMemory globalMemory;
+    QTimer timer;
     uint64_t globalId;
-    QTimer ownerTimer;
-    QVector<IPCEventHandler> eventHandlers;
-    time_t lastSeenTimestamp;
-
-    // Constants
-    static const int MEMORY_SIZE = 4096;
-    static const int MEMORY_HEADER_SIZE = sizeof(globalId) + sizeof(time_t);
-    static const int EVENT_TIMER_MS = 1000;
-    static const int OWNERSHIP_TIMEOUT_S = 5;
+    QSharedMemory globalMemory;
+    QMap<QString, IPCEventHandler> eventHandlers;
 };
 
 #endif // IPC_H

@@ -31,7 +31,6 @@ class Settings : public QObject
     Q_OBJECT
 public:
     static Settings& getInstance();
-    static void resetInstance();
     void switchProfile(const QString& profile);
     QString detectProfile();
     QList<QString> searchProfiles();
@@ -84,6 +83,7 @@ public:
     void setUseEmoticons(bool newValue);
 
     QString getCurrentProfile() const;
+    uint32_t getCurrentProfileId() const;
     void setCurrentProfile(QString profile);
 
     QString getTranslation() const;
@@ -253,6 +253,9 @@ private:
     Settings();
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
+    static uint32_t makeProfileId(const QString& profile);
+    void saveGlobal(QString path);
+    void savePersonal(QString path);
 
     static const QString FILENAME;
     static const QString OLDFILENAME;
@@ -286,6 +289,7 @@ private:
     int proxyPort;
 
     QString currentProfile;
+    uint32_t currentProfileId;
 
     bool enableLogging;
     bool encryptLogs;
