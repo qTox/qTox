@@ -171,7 +171,7 @@ Please be aware that no one has ever successfully got this working outside of on
 
 Please be aware that you shouldn't do this on your main Mac, as it's fairly hard to successfully do this without ruining a bunch of things in the process.
 
-As everything from toxcore to filter audio to our special openal fork with echo cancelation is now installed.
+Everything from opencv2 to filter_audio has now been installed in this library and is ready to go.
 
 ###Compiling
 
