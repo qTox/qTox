@@ -165,14 +165,13 @@ I've taken the time to prepare them automatically with our CI system so if you e
 * ```wget https://jenkins.libtoxcore.so/job/qTox%20OS%20X/lastSuccessfulBuild/artifact/dep.zip```
 * ```unzip dep.zip```
 
-If you do not want to download our binaries, you must compile opencv2, toxcore, opus, vpx, filteraudio, and our fork of openal yourself with the prefix to the libs folder.
+If you do not want to download our binaries, you must compile [opencv2](http://opencv.org), [toxcore](https://github.com/irungentoo/toxcore), [opus](https://www.opus-codec.org), [vpx](http://www.webmproject.org/tools/), [filteraudio](https://github.com/irungentoo/filteraudio), and our fork of [openal](https://github.com/irungentoo/openal-soft-tox) yourself with the prefix to the libs folder.
 
-This is something that we can not provide instructions for because it's fairly difficult to reproduce off our CI system correctly.
+Please be aware that no one has ever successfully got this working outside of on our CI system, but we encourage you to try and provide instructions on how you did so if you do.
 
 Please be aware that you shouldn't do this on your main Mac, as it's fairly hard to successfully do this without ruining a bunch of things in the process.
 
-As everything from toxcore to filter audio to our special openal fork with echo cancelation is now installed, 
-laugh at some Linux users waiting for a package manager to catch up and figure out what things are called.
+As everything from toxcore to filter audio to our special openal fork with echo cancelation is now installed.
 
 ###Compiling
 
