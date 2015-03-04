@@ -30,6 +30,7 @@
 #include <QFontDatabase>
 #include <QMutexLocker>
 #include <QProcess>
+#include <opencv2/core/core.hpp>
 
 #include <sodium.h>
 
@@ -60,6 +61,14 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QStr
     logFile->flush();
 }
 #endif
+
+int opencvErrorHandler(int status, const char* func_name, const char* err_msg,
+                   const char* file_name, int line, void*)
+{
+    qWarning() << "OpenCV: ERROR ("<<status<<") in "
+               <<file_name<<":"<<line<<":"<<func_name<<": "<<err_msg;
+    return 0;
+}
 
 int main(int argc, char *argv[])
 {
@@ -127,6 +136,8 @@ int main(int argc, char *argv[])
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
+
+    cv::redirectError(opencvErrorHandler);
 
 #ifdef Q_OS_MACX
     if (qApp->applicationDirPath() != "/Applications/qtox.app/Contents/MacOS") {
