@@ -160,12 +160,12 @@ First, let's install the dependencies
 
 Now we are in the qTox folder and need our library dependencies to actually build it.
 
-I've taken the time to prepare them automatically with our CI system so if you ever have issues redownload them.
+We've taken the time to prepare them automatically with our CI system so if you ever have issues redownload them.
 
 * ```wget https://jenkins.libtoxcore.so/job/qTox%20OS%20X/lastSuccessfulBuild/artifact/dep.zip```
 * ```unzip dep.zip```
 
-If you do not want to download our binaries, you must compile [opencv2](http://opencv.org), [toxcore](https://github.com/irungentoo/toxcore), [opus](https://www.opus-codec.org), [vpx](http://www.webmproject.org/tools/), [filteraudio](https://github.com/irungentoo/filteraudio), and our fork of [openal](https://github.com/irungentoo/openal-soft-tox) yourself with the prefix to the libs folder.
+If you do not want to download our binaries, you must compile [opencv2](http://opencv.org), [toxcore](https://github.com/irungentoo/toxcore), [opus](https://www.opus-codec.org), [vpx](http://www.webmproject.org/tools/), [filteraudio](https://github.com/irungentoo/filter_audio), and our fork of [openal](https://github.com/irungentoo/openal-soft-tox) yourself with the prefix to the libs folder.
 
 Please be aware that no one has ever successfully got this working outside of on our CI system, but we encourage you to try and provide instructions on how you did so if you do.
 
