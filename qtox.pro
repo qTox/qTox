@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 
-#    Copyright (C) 2014 by Project Tox <https://tox.im>
+#    Copyright (C) 2015 by Project Tox <https://tox.im>
 #
 #    This file is part of qTox, a Qt-based graphical interface for Tox.
 #
@@ -98,6 +98,11 @@ contains(DISABLE_FILTER_AUDIO, YES) {
 
 } else {
      DEFINES += QTOX_FILTER_AUDIO
+}
+
+contains(HIGH_DPI, YES) {
+    QT_DEVICE_PIXEL_RATIO= auto
+    DEFINES += HIGH_DPI
 }
 
 contains(JENKINS,YES) {

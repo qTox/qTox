@@ -105,6 +105,8 @@ public slots:
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void playRingtone();
     void onFriendTypingChanged(int friendId, bool isTyping);
+    void nextContact();
+    void previousContact();
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -136,6 +138,7 @@ private slots:
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAwayCheck();
     void onEventIconTick();
+    void onTryCreateTrayIcon();
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
@@ -143,7 +146,7 @@ private slots:
 private:
     void hideMainForms();
     virtual bool event(QEvent * e);
-    Group* createGroup(int groupId);
+    Group *createGroup(int groupId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
@@ -158,18 +161,18 @@ private:
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
-    AddFriendForm* addFriendForm;
-    ProfileForm* profileForm;
-    SettingsWidget* settingsWidget;
-    FilesForm* filesForm;
-    static Widget* instance;
-    GenericChatroomWidget* activeChatroomWidget;
-    FriendListWidget* contactListWidget;
-    MaskablePixmapWidget* profilePicture;
+    AddFriendForm *addFriendForm;
+    ProfileForm *profileForm;
+    SettingsWidget *settingsWidget;
+    FilesForm *filesForm;
+    static Widget *instance;
+    GenericChatroomWidget *activeChatroomWidget;
+    FriendListWidget *contactListWidget;
+    MaskablePixmapWidget *profilePicture;
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
     Status beforeDisconnect = Status::Offline;
-    QTimer* timer, *offlineMsgTimer;
+    QTimer *timer, *offlineMsgTimer;
     QTranslator* translator;
     QRegExp nameMention, sanitizedNameMention;
     bool eventFlag;

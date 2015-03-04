@@ -62,6 +62,10 @@ int main(int argc, char *argv[])
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
+    
+#ifdef HIGH_DPI
+    a.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+#endif
 
     // Process arguments
     QCommandLineParser parser;
