@@ -461,11 +461,11 @@ void FileTransferWidget::showPreview(const QString &filename)
         if (imageSize.width() > maxSize.width() || imageSize.height() > maxSize.height())
         {
             imageSize.scale(maxSize.width(), maxSize.height(), Qt::KeepAspectRatio);
-            ui->previewLabel->setToolTip("<html><img src="+filename+" width="+QString::number(imageSize.width())+" height="+QString::number(imageSize.height())+"/></html>");
+            ui->previewLabel->setToolTip("<html><img src="+QUrl::toPercentEncoding(filename)+" width="+QString::number(imageSize.width())+" height="+QString::number(imageSize.height())+"/></html>");
         }
         else
         {
-            ui->previewLabel->setToolTip("<html><img src"+filename+"/></html>");
+            ui->previewLabel->setToolTip("<html><img src"+QUrl::toPercentEncoding(filename)+"/></html>");
         }
     }
 }
