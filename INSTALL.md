@@ -141,8 +141,8 @@ packages necessary for building .debs, so be prepared to type your password for 
 
 <a name="osx" />
 ##OS X
-Before we start, be aware that this section had a large guide that succeeded in only confusing.
-I've thrown it entirely out for something actually useful and helpful.
+Please be aware that if you've tried an earlier version of this set of instructions you may have 
+ruined installed library versions and packages from the proces. Please delete them before continuing.
 
 Also, if you want to use qTox and are an end user download it by clicking the download button on tox.im, 
 as the copy you'll make by following this guide is only suitable for testing.
