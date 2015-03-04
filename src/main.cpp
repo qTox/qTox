@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
         AskInstall.setIcon(QMessageBox::Question);
         AskInstall.setWindowModality(Qt::ApplicationModal);
         AskInstall.setText("Move to Applications folder?");
-        AskInstall.setInformativeText("I can move myself to the Applications folder, keeping your downloads folder less cluttered\r\n");
+        AskInstall.setInformativeText("I can move myself to the Applications folder, keeping your downloads folder less cluttered.\r\n");
         AskInstall.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
         AskInstall.setDefaultButton(QMessageBox::Yes);
 
@@ -146,20 +146,18 @@ int main(int argc, char *argv[])
             QString bindir = qApp->applicationDirPath();
             QString appdir = bindir;
             appdir.chop(15);
-            QString sudo = bindir + "/qtox_sudo mv " + appdir + " /Applications/qtox.app";
+            QString sudo = bindir + "/qtox_sudo rsync -avzh --remove-source-file " + appdir + " /Applications/qtox.app";
             QString qtox = "open /Applications/qtox.app";
 
             if (fork() != 0) { //uTox grade cheap hack
-                return EXIT_UPDATE_MACX;
+                return EXIT_UPDATE_MACX; //Note that if we don't do this the update process will get killed. Also, errors just crash it
             }
 
             sudoprocess->start(sudo);
             sudoprocess->waitForFinished();
             qtoxprocess->start(qtox);
 
-            qApp->quit(); //stop it from exiting by crashing rofl
-            qApp->exit();
-            return 0;
+            return 0; //Actually kills it
         }
     }
 #endif
