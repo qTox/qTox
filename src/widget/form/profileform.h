@@ -20,6 +20,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QTimer>
+#include <QVBoxLayout>
 
 class CroppingLabel;
 class Core;
@@ -27,6 +28,7 @@ class MaskablePixmapWidget;
 
 namespace Ui {
 class IdentitySettings;
+class MainWindow;
 }
 
 class ClickableTE : public QLineEdit
@@ -46,6 +48,7 @@ class ProfileForm : public QWidget
 public:
     ProfileForm(QWidget *parent = nullptr);
     ~ProfileForm();
+    void show(Ui::MainWindow &ui);
 
 signals:
     void userNameChanged(QString);
@@ -76,6 +79,9 @@ private:
     void refreshProfiles();
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
+    QWidget *head;
+    QLabel headLabel;
+    QVBoxLayout headLayout;
     Core* core;
     QTimer timer;
     bool hasCheck = false;

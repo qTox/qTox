@@ -550,7 +550,7 @@ void Widget::showProfile()
 {
     hideMainForms();
     ui->mainContent->layout()->addWidget(profileForm);
-    profileForm->show();
+    profileForm->show(*ui);
     setWindowTitle(tr("Profile"));
     activeChatroomWidget = nullptr;
 }

@@ -18,6 +18,7 @@
 #include "src/nexus.h"
 #include "ui_identitysettings.h"
 #include "profileform.h"
+#include "ui_mainwindow.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/misc/settings.h"
@@ -52,6 +53,14 @@ ProfileForm::ProfileForm(QWidget *parent) :
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
     core = Core::getInstance();
+
+    head = new QWidget();
+    QFont bold;
+    bold.setBold(true);
+    head->setLayout(&headLayout);
+    headLabel.setText(tr("User Profile"));
+    headLabel.setFont(bold);
+    headLayout.addWidget(&headLabel);
 
     // tox
     toxId = new ClickableTE();
@@ -102,6 +111,14 @@ ProfileForm::ProfileForm(QWidget *parent) :
 ProfileForm::~ProfileForm()
 {
     delete bodyUI;
+    delete head;
+}
+
+void ProfileForm::show(Ui::MainWindow &ui)
+{
+    ui.mainHead->layout()->addWidget(head);
+    head->show();
+    QWidget::show();
 }
 
 void ProfileForm::copyIdClicked()
