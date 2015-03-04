@@ -29,10 +29,15 @@
 #include <QFile>
 #include <QFontDatabase>
 #include <QMutexLocker>
+#include <QProcess>
 
 #include <sodium.h>
 
 #include "toxme.h"
+
+#include <unistd.h>
+
+#define EXIT_UPDATE_MACX 218 //We track our state using unique exit codes when debugging
 
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
@@ -106,7 +111,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        fprintf(stderr, "Couldn't open log file!!!\n");
+        fprintf(stderr, "Couldn't open log file!\n");
         delete logFile;
         logFile = nullptr;
     }
@@ -118,6 +123,46 @@ int main(int argc, char *argv[])
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
+
+#ifdef Q_OS_MACX
+    if (qApp->applicationDirPath() != "/Applications/qtox.app/Contents/MacOS") {
+        qDebug() << "OS X: Not in Applications folder";
+
+        QMessageBox AskInstall;
+        AskInstall.setIcon(QMessageBox::Question);
+        AskInstall.setWindowModality(Qt::ApplicationModal);
+        AskInstall.setText("Move to Applications folder?");
+        AskInstall.setInformativeText("I can move myself to the Applications folder, keeping your downloads folder less cluttered\r\n");
+        AskInstall.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+        AskInstall.setDefaultButton(QMessageBox::Yes);
+
+        int AskInstallAttempt = AskInstall.exec(); //Check if user sucks
+
+        if (AskInstallAttempt == QMessageBox::Yes) {
+            qDebug() << "Installing";
+            QProcess *sudoprocess = new QProcess;
+            QProcess *qtoxprocess = new QProcess;
+
+            QString bindir = qApp->applicationDirPath();
+            QString appdir = bindir;
+            appdir.chop(15);
+            QString sudo = bindir + "/qtox_sudo mv " + appdir + " /Applications/qtox.app";
+            QString qtox = "open /Applications/qtox.app";
+
+            if (fork() != 0) { //uTox grade cheap hack
+                return EXIT_UPDATE_MACX;
+            }
+
+            sudoprocess->start(sudo);
+            sudoprocess->waitForFinished();
+            qtoxprocess->start(qtox);
+
+            qApp->quit(); //stop it from exiting by crashing rofl
+            qApp->exit();
+            return 0;
+        }
+    }
+#endif
 
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
