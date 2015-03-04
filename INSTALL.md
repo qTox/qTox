@@ -144,8 +144,8 @@ packages necessary for building .debs, so be prepared to type your password for 
 Before we start, be aware that this section had a large guide that succeeded in only confusing.
 I've thrown it entirely out for something actually useful and helpful.
 
-Also, if you want to use qTox download it by clicking the download button on tox.im, compiling is a pain
-that I don't want you to ever deal with and your finished project will have a couple issues.
+Also, if you want to use qTox and are an end user download it by clicking the download button on tox.im, 
+as the copy you'll make by following this guide is only suitable for testing.
 
 Compiling qTox on OS X for development requires 3 tools, [Xcode](https://developer.apple.com/xcode/) and [Qt 5.4+](http://www.qt.io/qt5-4/), and [homebrew](http://brew.sh).
 
@@ -165,6 +165,12 @@ I've taken the time to prepare them automatically with our CI system so if you e
 * ```wget https://jenkins.libtoxcore.so/job/qTox%20OS%20X/lastSuccessfulBuild/artifact/dep.zip```
 * ```unzip dep.zip```
 
+If you do not want to download our binaries, you must compile opencv2, toxcore, opus, vpx, filteraudio, and our fork of openal yourself with the prefix to the libs folder.
+
+This is something that we can not provide instructions for because it's fairly difficult to reproduce off our CI system correctly.
+
+Please be aware that you shouldn't do this on your main Mac, as it's fairly hard to successfully do this without ruining a bunch of things in the process.
+
 As everything from toxcore to filter audio to our special openal fork with echo cancelation is now installed, 
 laugh at some Linux users waiting for a package manager to catch up and figure out what things are called.
 
@@ -177,7 +183,7 @@ Note that if you use the CLI to build you'll need to add Qt5's bins to your path
 
 ###Fixing things up
 
-The bad news is that Qt sucks and breaks our linker paths so we need to fix those.
+The bad news is that Qt breaks our linker paths so we need to fix those.
 First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
 
 Install qTox so we can copy its libraries and shove the following in a script somewhere:
