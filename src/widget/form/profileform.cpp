@@ -327,7 +327,7 @@ void ProfileForm::onImportClicked()
     bodyUI->profiles->addItem(profile);
 }
 
-void ProfileForm::onStatusSet(Status status)
+void ProfileForm::onStatusSet(Status)
 {
     refreshProfiles();
 }
