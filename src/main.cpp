@@ -38,6 +38,7 @@
 #include <unistd.h>
 
 #define EXIT_UPDATE_MACX 218 //We track our state using unique exit codes when debugging
+#define EXIT_UPDATE_MACX_FAIL 216
 
 #ifdef LOG_TO_FILE
 static QtMessageHandler dflt;
@@ -143,22 +144,39 @@ int main(int argc, char *argv[])
         int AskInstallAttempt = AskInstall.exec(); //Actually ask the user
 
         if (AskInstallAttempt == QMessageBox::Yes) {
-            qDebug() << "Installing";
             QProcess *sudoprocess = new QProcess;
             QProcess *qtoxprocess = new QProcess;
 
             QString bindir = qApp->applicationDirPath();
             QString appdir = bindir;
             appdir.chop(15);
-            QString sudo = bindir + "/qtox_sudo rsync -avzh --remove-source-file " + appdir + " /Applications/qtox.app";
+            QString sudo = bindir + "/qtox_sudo rsync -avzhpltK " + appdir + " /Applications";
             QString qtox = "open /Applications/qtox.app";
 
-            if (fork() != 0) { //cheap hack
-                return EXIT_UPDATE_MACX; //Note that if we don't do this the update process will get killed. Also, errors just crash it
+            QString appdir_noqtox = appdir;
+            appdir_noqtox.chop(8);
+
+            if ((appdir_noqtox + "qtox.app") != appdir) //quick safety check
+            {
+                qDebug() << "OS X: Attmepted to delete non qTox directory!";
+                return EXIT_UPDATE_MACX_FAIL;
             }
 
-            sudoprocess->start(sudo);
+            QDir old_app(appdir);
+
+            sudoprocess->start(sudo); //Where the magic actually happens, safety checks ^
             sudoprocess->waitForFinished();
+
+            if (old_app.removeRecursively()) { //We've just deleted the running program
+                qDebug() << "OS X: Cleaned up old directory";
+            } else {
+                qDebug() << "OS X: This should never happen, the directory failed to delete";
+            }
+
+            if (fork() != 0) { //Forking is required otherwise it won't actually cleanly launch
+                return EXIT_UPDATE_MACX;
+            }
+
             qtoxprocess->start(qtox);
 
             return 0; //Actually kills it
