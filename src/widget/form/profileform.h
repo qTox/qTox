@@ -21,6 +21,7 @@
 #include <QLabel>
 #include <QTimer>
 #include <QVBoxLayout>
+#include "src/core.h"
 
 class CroppingLabel;
 class Core;
@@ -56,6 +57,7 @@ signals:
 
 public slots:
     void onSelfAvatarLoaded(const QPixmap &pic);
+    void onStatusSet(Status status);
 
 private slots:
     void setToxId(const QString& id);

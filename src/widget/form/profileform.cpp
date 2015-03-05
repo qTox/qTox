@@ -85,6 +85,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(core, &Core::idSet, this, &ProfileForm::setToxId);
+    connect(core, &Core::statusSet, this, &ProfileForm::onStatusSet);
     connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
     connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
     connect(bodyUI->loadButton, &QPushButton::clicked, this, &ProfileForm::onLoadClicked);
@@ -324,6 +325,11 @@ void ProfileForm::onImportClicked()
 
     QFile::copy(path, profilePath);
     bodyUI->profiles->addItem(profile);
+}
+
+void ProfileForm::onStatusSet(Status status)
+{
+    refreshProfiles();
 }
 
 void ProfileForm::onNewClicked()
