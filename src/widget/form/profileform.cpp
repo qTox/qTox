@@ -111,7 +111,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
 ProfileForm::~ProfileForm()
 {
     delete bodyUI;
-    delete head;
+    head->deleteLater();
 }
 
 void ProfileForm::show(Ui::MainWindow &ui)
