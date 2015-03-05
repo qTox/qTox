@@ -30,7 +30,7 @@
 #include <QFontDatabase>
 #include <QMutexLocker>
 #include <QProcess>
-#include <opencv2/core/core.hpp>
+#include <opencv2/core/core_c.h>
 
 #include <sodium.h>
 
@@ -138,7 +138,8 @@ int main(int argc, char *argv[])
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
 
-    cv::redirectError(opencvErrorHandler);
+    cvSetErrMode(CV_ErrModeParent);
+    cvRedirectError(opencvErrorHandler);
 
 #ifdef Q_OS_MACX
     if (qApp->applicationDirPath() != "/Applications/qtox.app/Contents/MacOS") {
