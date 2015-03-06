@@ -414,19 +414,19 @@ void Widget::onStatusSet(Status status)
     {
     case Status::Online:
         ui->statusButton->setProperty("status" ,"online");
-        ui->statusButton->setIcon(QIcon(":img/status/dot_online.png"));
+        ui->statusButton->setIcon(QIcon(":img/status/dot_online_2x.png"));
         break;
     case Status::Away:
         ui->statusButton->setProperty("status" ,"away");
-        ui->statusButton->setIcon(QIcon(":img/status/dot_idle.png"));
+        ui->statusButton->setIcon(QIcon(":img/status/dot_idle_2x.png"));
         break;
     case Status::Busy:
         ui->statusButton->setProperty("status" ,"busy");
-        ui->statusButton->setIcon(QIcon(":img/status/dot_busy.png"));
+        ui->statusButton->setIcon(QIcon(":img/status/dot_busy_2x.png"));
         break;
     case Status::Offline:
         ui->statusButton->setProperty("status" ,"offline");
-        ui->statusButton->setIcon(QIcon(":img/status/dot_away.png"));
+        ui->statusButton->setIcon(QIcon(":img/status/dot_away_2x.png"));
         break;
     }
     updateTrayIcon();

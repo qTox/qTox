@@ -982,7 +982,7 @@ QSplitter:handle{
                </property>
                <property name="icon">
                 <iconset resource="../res.qrc">
-                 <normaloff>:/img/status/dot_away.png</normaloff>:/img/status/dot_away.png</iconset>
+                 <normaloff>:/img/status/dot_away_2x.png</normaloff>:/img/status/dot_away_2x.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
