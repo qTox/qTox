@@ -14,7 +14,6 @@
     See the COPYING file for more details.
 */
 
-#include <QApplication>
 #include <QDebug>
 #include <QScrollBar>
 #include <QFileDialog>
