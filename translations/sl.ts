@@ -758,7 +758,7 @@ Vzdevek:</translation>
         <location filename="../src/widget/form/settings/generalform.cpp" line="86"/>
         <location filename="../src/widget/form/settings/generalform.cpp" line="92"/>
         <source>None</source>
-        <translation>Nič</translation>
+        <translation>Brez</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="250"/>
@@ -827,14 +827,14 @@ Vzdevek:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="137"/>
         <source>Start in tray</source>
-        <translation>Začeni v orodni vrstici</translation>
+        <translation>Zaženi v orodni vrstici</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="150"/>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Po kliku na izhod (X) bo qTox se pomanjšal v orodno vrstico,
+        <translation>Po kliku na izhod (X) se bo qTox pomanjšal v orodno vrstico,
 namesto da bi se čisto zaprl.</translation>
     </message>
     <message>
@@ -880,7 +880,7 @@ namesto da bi ostal med programi.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
         <source>Save to:</source>
-        <translation>Shrani na:</translation>
+        <translation>Shrani v:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="230"/>
@@ -985,7 +985,7 @@ bodo poslana ko se ponovno vpišejo med tem ko si ti dosegljiv.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>Compact contact list</source>
-        <translation>Zgočen prikaz stikov</translation>
+        <translation>Zgoščen prikaz stikov</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="396"/>
@@ -1073,7 +1073,7 @@ bodo poslana ko se ponovno vpišejo med tem ko si ti dosegljiv.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="671"/>
         <source>None</source>
-        <translation>Nič</translation>
+        <translation>Brez</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="676"/>
@@ -1418,7 +1418,7 @@ Deli jo z ljudmi, ki jih želiš dodati med stike.</translation>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="137"/>
         <source>Load</source>
         <comment>load profile button</comment>
-        <translation>Naloži</translation>
+        <translation>Potrdi izbiro</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="144"/>
