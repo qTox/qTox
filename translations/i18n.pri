@@ -13,6 +13,7 @@ TRANSLATIONS = translations/es.ts \
                translations/pirate.ts \
                translations/pl.ts \
                translations/ru.ts \
+               translations/sl.ts \
                translations/sv.ts \
                translations/uk.ts \
                translations/zh.ts \
