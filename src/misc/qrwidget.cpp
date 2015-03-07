@@ -7,7 +7,8 @@
 #include "qrencode.h"
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
-//Note: The encoding fails with empty string so I just default to something else. Use the setQRData() call to change this.
+//Note: The encoding fails with empty string so I just default to something else.
+//Use the setQRData() call to change this.
 {
     //size of the qimage might be problematic in the future, but it works for me
     size.setWidth(480);
@@ -17,7 +18,7 @@ QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
 
 void QRWidget::setQRData(QString data)
 {
-    this->data = data;
+    this->data = "tox:" + data;
     paintImage();    
 }
 
@@ -30,7 +31,8 @@ QString QRWidget::getImageAsText()
     image->save(&buffer, "PNG"); // writes the image in PNG format inside the buffer
     
     QString iconBase64 = QString::fromLatin1(ba.toBase64().data());
-    QString base64Image  = "<img width=\"350\" heigth=\"350\" src=\"data:image/png;base64," + iconBase64 +"\" />";
+    QString base64Image  = "<img width=\"300\" heigth=\"300\" src=\"data:image/png;base64," + iconBase64 +"\" />";
+    qDebug() << base64Image;
     
  	return QString(base64Image);
 }
@@ -40,7 +42,8 @@ void QRWidget::paintImage()
 {
     QPainter painter(image);
     //NOTE: I have hardcoded some parameters here that would make more sense as variables.
-    QRcode *qr = QRcode_encodeString(data.toStdString().c_str(), 1, QR_ECLEVEL_L, QR_MODE_8, 0);
+    // ECLEVEL_M is much faster recognizable by barcodescanner any any other type
+    QRcode *qr = QRcode_encodeString(data.toStdString().c_str(), 1, QR_ECLEVEL_M, QR_MODE_8, 0);
     
     if(0 != qr)
     {
@@ -50,7 +53,7 @@ void QRWidget::paintImage()
         painter.setPen(Qt::NoPen);
         painter.drawRect(0, 0, size.width(), size.height());
         painter.setBrush(fg);
-        const int s = qr->width>0 ? qr->width : 1;
+        const int s = qr->width > 0 ? qr->width : 1;
         const double w = width();
         const double h = height();
         const double aspect = w / h;

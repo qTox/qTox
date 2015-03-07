@@ -59,22 +59,22 @@ git clone https://github.com/tux3/qTox.git qTox
 
 The following steps assumes that you cloned the repository at "/home/user/qTox". If you decided to choose another location, replace corresponding parts.
 
-###GCC, Qt, OpenCV and OpanAL Soft
+###GCC, Qt, OpenCV, OpanAL Soft and QRCode
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed base-devel qt5 opencv openal libxss
+sudo pacman -S --needed base-devel qt5 opencv openal libxss qrencode
 ```
 
 Debian / Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev qrencode
 ```
 
 Fedora:
 ```bash
 yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel
+yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode
 ```
 
 Slackware:
@@ -86,6 +86,8 @@ http://slackbuilds.org/repository/14.1/libraries/OpenAL/
 http://slackbuilds.org/repository/14.1/libraries/qt5/
 
 http://slackbuilds.org/repository/14.1/libraries/opencv/
+
+http://slackbuilds.org/slackbuilds/14.1/graphics/qrencode/
 
 
 ###Tox Core
