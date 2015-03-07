@@ -30,6 +30,8 @@
 #include <QClipboard>
 #include <QInputDialog>
 #include <QFileDialog>
+#include "src/misc/qrwidget.h"
+#include "qrencode.h"
 
 IdentityForm::IdentityForm() :
     GenericForm(tr("Identity"), QPixmap(":/img/settings/identity.png"))
@@ -126,6 +128,11 @@ void IdentityForm::setToxId(const QString& id)
 {
     toxId->setText(id);
     toxId->setCursorPosition(0);
+    
+    QRWidget *qrcode = new QRWidget();
+    qrcode->setQRData(id);
+    
+    toxId->setToolTip(qrcode->getImageAsText());
 }
 
 void IdentityForm::onLoadClicked()
