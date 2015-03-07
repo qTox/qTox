@@ -134,7 +134,7 @@ win32 {
 	LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249 -lOpenAL32 -lopus
     LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -lws2_32 -liphlpapi -lz
-
+    LIBS += -lqrencode
     contains(DEFINES, QTOX_FILTER_AUDIO) {
         contains(STATICPKG, YES) {
             LIBS += -Wl,-Bstatic -lfilteraudio
@@ -149,6 +149,7 @@ win32 {
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lopencv_core -lopencv_highgui -mmacosx-version-min=10.7
+        LIBS += -lqrencode
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
     } else {
@@ -165,8 +166,10 @@ win32 {
                 LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
                 LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
                 LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
+                LIBS += -lqrencode
             } else {
                 LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
+                LIBS += -lqrencode
             }
 
             contains(DEFINES, QTOX_PLATFORM_EXT) {
@@ -424,7 +427,8 @@ SOURCES += \
     src/video/netvideosource.cpp \
     src/video/videoframe.cpp \
     src/widget/gui.cpp \
-    src/toxme.cpp
+    src/toxme.cpp \
+    src/misc/qrwidget.cpp
 
 HEADERS += \
     src/audio.h \
@@ -445,4 +449,5 @@ HEADERS += \
     src/video/videoframe.h \
     src/video/videosource.h \
     src/widget/gui.h \
-    src/toxme.h
+    src/toxme.h \
+    src/misc/qrwidget.h
