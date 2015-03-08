@@ -98,6 +98,7 @@ void GroupChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
 
+    msgEdit->setLastMessage(msg);
     msgEdit->clear();
 
     if (msg.startsWith("/me "))
