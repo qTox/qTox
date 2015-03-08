@@ -13,6 +13,8 @@ public:
     explicit QRWidget(QWidget *parent = 0);
     void setQRData(QString data);
     QString getImageAsText();
+    QImage* getImage();
+    bool saveImage(QString path);    
   
 private:
     QString data;

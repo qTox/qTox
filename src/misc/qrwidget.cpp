@@ -19,7 +19,22 @@ QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
 void QRWidget::setQRData(QString data)
 {
     this->data = "tox:" + data;
-    paintImage();    
+    paintImage();
+}
+
+QImage* QRWidget::getImage()
+{
+    return image;
+}
+
+/**
+ * @brief QRWidget::saveImage
+ * @param path Full path to the file with extension.
+ * @return indicate if saving was successful.
+ */
+bool QRWidget::saveImage(QString path)
+{
+    return image->save(path, 0, 75); //0 - image format same as file extension, 75-quality, png file is ~6.3kb
 }
 
 QString QRWidget::getImageAsText()
@@ -32,7 +47,6 @@ QString QRWidget::getImageAsText()
     
     QString iconBase64 = QString::fromLatin1(ba.toBase64().data());
     QString base64Image  = "<img width=\"300\" heigth=\"300\" src=\"data:image/png;base64," + iconBase64 +"\" />";
-    qDebug() << base64Image;
     
  	return QString(base64Image);
 }
