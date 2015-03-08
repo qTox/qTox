@@ -123,7 +123,7 @@ ChatMessage::Ptr ChatMessage::createBusyNotification()
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     // TODO: Bigger font
-    msg->addColumn(new Text(QObject::tr("Busy..."), Style::getFont(Style::ExtraBig), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
+    msg->addColumn(new Text(QObject::tr("Resizing"), Style::getFont(Style::ExtraBig), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
 
     return msg;
 }
