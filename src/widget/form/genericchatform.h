@@ -29,6 +29,7 @@
 
 class QLabel;
 class QVBoxLayout;
+class QAbstractButton;
 class QPushButton;
 class CroppingLabel;
 class ChatTextEdit;
@@ -90,7 +91,9 @@ protected:
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;
-    QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QAbstractButton *fileButton;
+    QPushButton *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QAction *screenshotAction;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;

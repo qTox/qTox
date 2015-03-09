@@ -23,6 +23,9 @@
 #include <QFileInfo>
 #include <QDragEnterEvent>
 #include <QBitmap>
+#include <QScreen>
+#include <QTemporaryFile>
+#include <QGuiApplication>
 #include "chatform.h"
 #include "src/core.h"
 #include "src/friend.h"
@@ -44,6 +47,9 @@
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
 #include "src/offlinemsgengine.h"
+#include "src/widget/tool/screenshotdialog.h"
+
+#include <QDebug>
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -58,7 +64,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     statusMessageLabel->setTextFormat(Qt::PlainText);
-    
+
     callConfirm = nullptr;
     offlineEngine = new OfflineMsgEngine(f);
 
@@ -81,6 +87,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
+    connect(screenshotAction, &QAction::triggered, this, &ChatForm::onScreenshotCreate);
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
@@ -144,7 +151,7 @@ void ChatForm::onSendTriggered()
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
         getOfflineMsgEngine()->registerReceipt(rec, id, ma);
-        
+
         msgEdit->setLastMessage(msg); //set last message only when sending it
     }
 
@@ -195,6 +202,9 @@ void ChatForm::onAttachClicked()
         long long filesize = file.size();
         file.close();
         QFileInfo fi(path);
+
+        qDebug() << fi.fileName();
+        qDebug() << path;
 
         emit sendFile(f->getFriendID(), fi.fileName(), path, filesize);
     }
@@ -294,7 +304,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     }
     callButton->style()->polish(callButton);
     videoButton->style()->polish(videoButton);
-    
+
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("%1 calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime()));
 
     Widget* w = Widget::getInstance();
@@ -353,7 +363,7 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
             this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()),
             this, SLOT(onVolMuteToggle()));
-    
+
     startCounter();
 }
 
@@ -371,7 +381,7 @@ void ChatForm::onAvCancel(int FriendId, int)
     stopCounter();
 
     netcam->hide();
-    
+
     addSystemInfoMessage(tr("%1 stopped calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
@@ -391,7 +401,7 @@ void ChatForm::onAvEnd(int FriendId, int)
 }
 
 void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
-{    
+{
     if (FriendId != f->getFriendID())
         return;
 
@@ -422,7 +432,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
         connect(callButton, SIGNAL(clicked()),
                 this, SLOT(onCancelCallTriggered()));
     }
-    
+
     addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
@@ -457,7 +467,7 @@ void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
         videoButton->setToolTip("");
         connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
     }
-    
+
     startCounter();
 }
 
@@ -473,7 +483,7 @@ void ChatForm::onAvEnding(int FriendId, int)
 
     enableCallButtons();
     stopCounter();
-    
+
     netcam->hide();
 }
 
@@ -489,7 +499,7 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
 
     enableCallButtons();
     stopCounter();
-    
+
     netcam->hide();
 }
 
@@ -502,10 +512,10 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 
     delete callConfirm;
     callConfirm = nullptr;
-    
+
     enableCallButtons();
     stopCounter();
-    
+
     netcam->hide();
 }
 
@@ -520,7 +530,7 @@ void ChatForm::onAvRejected(int FriendId, int)
     callConfirm = nullptr;
 
     enableCallButtons();
-    
+
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("Call rejected"), ChatMessage::INFO, QDateTime::currentDateTime()));
 
     netcam->hide();
@@ -567,7 +577,7 @@ void ChatForm::onHangupCallTriggered()
     {
         netcam->showNormal();
     }
-    
+
     audioInputFlag = false;
     audioOutputFlag = false;
     emit hangupCall(callId);
@@ -588,7 +598,7 @@ void ChatForm::onRejectCallTriggered()
     audioInputFlag = false;
     audioOutputFlag = false;
     emit rejectCall(callId);
-    
+
     enableCallButtons();
 
 }
@@ -631,7 +641,7 @@ void ChatForm::onAvCallFailed(int FriendId)
 void ChatForm::onCancelCallTriggered()
 {
     qDebug() << "onCancelCallTriggered";
-    
+
     enableCallButtons();
 
     netcam->hide();
@@ -641,19 +651,19 @@ void ChatForm::onCancelCallTriggered()
 void ChatForm::enableCallButtons()
 {
     qDebug() << "enableCallButtons";
-    
+
     audioInputFlag = false;
     audioOutputFlag = false;
-    
+
     micButton->setObjectName("grey");
     micButton->style()->polish(micButton);
     micButton->setToolTip("");
-    micButton->disconnect();    
+    micButton->disconnect();
     volButton->setObjectName("grey");
     volButton->style()->polish(volButton);
     volButton->setToolTip("");
     volButton->disconnect();
-    
+
     callButton->setObjectName("grey");
     callButton->style()->polish(callButton);
     callButton->setToolTip("");
@@ -662,7 +672,7 @@ void ChatForm::enableCallButtons()
     videoButton->style()->polish(videoButton);
     videoButton->setToolTip("");
     videoButton->disconnect();
-    
+
     if(disableCallButtonsTimer == nullptr)
     {
         disableCallButtonsTimer = new QTimer();
@@ -671,7 +681,7 @@ void ChatForm::enableCallButtons()
         disableCallButtonsTimer->start(1500); // 1.5sec
         qDebug() << "timer started!!";
     }
-    
+
 }
 
 void ChatForm::onEnableCallButtons()
@@ -686,7 +696,7 @@ void ChatForm::onEnableCallButtons()
     videoButton->setObjectName("green");
     videoButton->style()->polish(videoButton);
     videoButton->setToolTip(tr("Start video call"));
-    
+
     connect(callButton, SIGNAL(clicked()),
             this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()),
@@ -861,7 +871,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                     rec = Core::getInstance()->sendMessage(f->getFriendID(), msg->toString());
                 else
                     rec = Core::getInstance()->sendAction(f->getFriendID(), msg->toString());
-                
+
                 getOfflineMsgEngine()->registerReceipt(rec, it.id, msg);
             }
         }
@@ -877,6 +887,52 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
     savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
     chatWidget->verticalScrollBar()->setValue(savedSliderPos);
+}
+
+void ChatForm::onScreenshotCreate()
+{
+    QRect region;
+    int result = 0;
+
+    {
+        ScreenshotDialog screenshot(region);
+        result = screenshot.exec();
+    }
+
+    if (result == QDialog::Accepted)
+    {
+        QScreen *screen = QGuiApplication::primaryScreen();
+        if (screen)
+        {
+            // Have to wait for the rubber band to disappear.
+            // Using flush, sendPostedEvents and processEvents does not work.
+            QTimer::singleShot(100, this, [=]()
+            {
+                QTemporaryFile file("qTox-Screeshot-XXXXXXXX.png");
+
+                if (!file.open())
+                {
+                    QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to save the screenshot"));
+                    return;
+                }
+                file.setAutoRemove(false);
+                // QPixmap is copy-on-write. We have to copy to crop anyway.
+                (screen->grabWindow(0).copy(region)).save(&file, "PNG");
+                if (file.isSequential())
+                {
+                    QMessageBox::critical(0, tr("Bad Idea"), tr("You're trying to send a special (sequential) file, that's not going to work!"));
+                    file.close();
+                    return;
+                }
+                long long filesize = file.size();
+                file.close();
+                QFileInfo fi(file);
+
+                qDebug() << region;
+                emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+            });
+        }
+    }
 }
 
 void ChatForm::onLoadHistory()
@@ -911,7 +967,7 @@ void ChatForm::stopCounter()
         callDurationTimer->stop();
         callDuration->setText("");
         callDuration->hide();
-        
+
         delete callDurationTimer;
         callDurationTimer = nullptr;
     }
@@ -932,13 +988,13 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     duration /= 60;
     int hours = (int) (duration % 24);
     int days = (int) (duration / 24);
-    
+
     if (minutes == 0)
         return cD + res.sprintf("%02ds", seconds);
-    
+
     if (hours == 0 && days == 0)
         return cD + res.sprintf("%02dm %02ds", minutes, seconds);
-    
+
     if (days == 0)
         return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
     //I assume no one will ever have call longer than ~30days

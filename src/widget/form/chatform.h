@@ -80,6 +80,7 @@ public slots:
     void onVolMuteToggle();
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
+    void onScreenshotCreate();
 
 private slots:
     void onSendTriggered();
@@ -110,7 +111,7 @@ private:
     int callId;
     QLabel *callDuration;
     QTimer *callDurationTimer;
-    QTimer typingTimer;    
+    QTimer typingTimer;
     QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
     OfflineMsgEngine *offlineEngine;
