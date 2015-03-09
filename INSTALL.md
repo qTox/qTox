@@ -15,7 +15,7 @@
 | OpenCV       | >= 2.4.9    | core, highgui, imgproc                            |
 | OpenAL Soft  | >= 1.16.0   |                                                   |
 | filter_audio | most recent |                                                   |
-
+| qrcode       | most recent |                                                   |
 
 <a name="linux" />
 ##Linux
