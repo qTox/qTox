@@ -90,6 +90,7 @@ protected:
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;
     QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QAction *screenshotAction;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;

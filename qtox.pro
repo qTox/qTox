@@ -407,7 +407,6 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/offlinemsgengine.cpp \
         src/misc/qrwidget.cpp \
         src/widget/genericchatroomwidget.cpp
-
 }
 
 SOURCES += \
@@ -434,6 +433,11 @@ SOURCES += \
     src/core/corestructs.cpp \
     src/profilelocker.cpp \
     src/avatarbroadcaster.cpp
+    src/widget/tool/screenshotgrabber.cpp \
+    src/widget/tool/screengrabberchooserrectitem.cpp \
+    src/widget/tool/screengrabberoverlayitem.cpp \
+    src/widget/tool/toolboxgraphicsitem.cpp
+
 
 HEADERS += \
     src/audio.h \
@@ -458,4 +462,9 @@ HEADERS += \
     src/widget/gui.h \
     src/toxme.h \
     src/profilelocker.h \
-    src/avatarbroadcaster.h
+    src/avatarbroadcaster.h \
+    src/widget/tool/screenshotgrabber.h \
+    src/widget/tool/screengrabberchooserrectitem.hpp \
+    src/widget/tool/screengrabberoverlayitem.hpp \
+    src/widget/tool/toolboxgraphicsitem.hpp
+

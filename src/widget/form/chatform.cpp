@@ -23,6 +23,9 @@
 #include <QFileInfo>
 #include <QDragEnterEvent>
 #include <QBitmap>
+#include <QScreen>
+#include <QTemporaryFile>
+#include <QGuiApplication>
 #include "chatform.h"
 #include "src/core/core.h"
 #include "src/friend.h"
@@ -44,6 +47,7 @@
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
 #include "src/offlinemsgengine.h"
+#include "src/widget/tool/screenshotgrabber.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -81,6 +85,9 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
+    fileButton->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(fileButton, &QPushButton::customContextMenuRequested, this, &ChatForm::onAttachContext);
+    connect(screenshotAction, &QAction::triggered, this, &ChatForm::onScreenshotCreate);
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
@@ -856,6 +863,45 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
     savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
     chatWidget->verticalScrollBar()->setValue(savedSliderPos);
+}
+
+void ChatForm::onScreenshotCreate()
+{
+    ScreenshotGrabber *screenshotGrabber = new ScreenshotGrabber (this);
+    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
+    
+    // Try to not grab the context-menu
+    QTimer::singleShot(200, screenshotGrabber, &ScreenshotGrabber::showGrabber);
+}
+
+void ChatForm::onScreenshotTaken (const QPixmap &pixmap) {
+	QTemporaryFile file("qTox-Screenshot-XXXXXXXX.png");
+	
+	if (!file.open())
+	{
+	    QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
+	                         tr("qTox wasn't able to save the screenshot"));
+	    return;
+	}
+	
+	file.setAutoRemove(false);
+	
+	pixmap.save(&file, "PNG");
+	
+	long long filesize = file.size();
+	file.close();
+	QFileInfo fi(file);
+	
+	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+        
+}
+
+void ChatForm::onAttachContext(const QPoint &pos)
+{
+    QMenu* context = new QMenu(fileButton);
+    context->addAction(screenshotAction);
+
+    context->exec(fileButton->mapToGlobal(pos));
 }
 
 void ChatForm::onLoadHistory()
