@@ -10,7 +10,7 @@ QPushButton
     height: 24px;
 }
 
-QPushButton:hover
+QAbstractButton:hover
 {
     background-color: #79c76f;
 }
@@ -25,7 +25,6 @@ QPushButton[enabled="false"]
     background-color: #919191;
 }
 
-QPushButton:focus
-{
+QPushButton:focus {
     outline: none;
 }

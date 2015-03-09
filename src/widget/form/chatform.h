@@ -80,6 +80,7 @@ public slots:
     void onVolMuteToggle();
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
+    void onAttachContext(const QPoint &pos);
 
 private slots:
     void onSendTriggered();
@@ -95,6 +96,8 @@ private slots:
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();
+    void onScreenshotCreate();
+    void onScreenshotTaken(const QPixmap &pixmap);
 
 protected:
     // drag & drop
@@ -110,7 +113,7 @@ private:
     int callId;
     QLabel *callDuration;
     QTimer *callDurationTimer;
-    QTimer typingTimer;    
+    QTimer typingTimer;
     QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
     OfflineMsgEngine *offlineEngine;
