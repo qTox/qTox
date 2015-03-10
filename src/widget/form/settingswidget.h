@@ -24,7 +24,6 @@
 class Camera;
 class GenericForm;
 class GeneralForm;
-class IdentityForm;
 class PrivacyForm;
 class AVForm;
 class QLabel;

@@ -47,43 +47,47 @@
        <property name="spacing">
         <number>9</number>
        </property>
-       <item alignment="Qt::AlignTop">
+       <item>
         <widget class="QGroupBox" name="publicGroup">
          <property name="title">
           <string>Public Information</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLabel" name="userNameLabel">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="userName"/>
-          </item>
-          <item>
-           <widget class="QLabel" name="statusMessageLabel">
-            <property name="text">
-             <string>Status</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="statusMessage"/>
+           <layout class="QVBoxLayout" name="publicFieldsLayout">
+            <item>
+             <widget class="QLabel" name="userNameLabel">
+              <property name="text">
+               <string>Name</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="userName"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="statusMessageLabel">
+              <property name="text">
+               <string>Status</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="statusMessage"/>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
        </item>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="toxGroup">
-         <property name="title">
-          <string>Tox ID</string>
-         </property>
          <property name="toolTip">
           <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</string>
+         </property>
+         <property name="title">
+          <string>Tox ID</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
@@ -113,14 +117,14 @@ Share it with your friends to communicate.</string>
             </item>
             <item>
              <widget class="QComboBox" name="profiles">
-              <property name="toolTip">
-               <string comment="toolTip for currently set profile">Currently selected profile.</string>
-              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string comment="toolTip for currently set profile">Currently selected profile.</string>
               </property>
              </widget>
             </item>
@@ -140,22 +144,22 @@ Share it with your friends to communicate.</string>
             </item>
             <item>
              <widget class="QPushButton" name="renameButton">
-              <property name="text">
-               <string comment="rename profile button">Rename</string>
-              </property>
               <property name="toolTip">
                <string comment="tooltip for renaming profile button">Rename selected profile.</string>
+              </property>
+              <property name="text">
+               <string comment="rename profile button">Rename</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="exportButton">
-              <property name="text">
-               <string comment="export profile button">Export</string>
-              </property>
               <property name="toolTip">
                <string comment="tooltip for profile exporting button">Allows you to export your Tox profile to a file.
 Profile does not contain your history.</string>
+              </property>
+              <property name="text">
+               <string comment="export profile button">Export</string>
               </property>
              </widget>
             </item>
@@ -175,11 +179,11 @@ Profile does not contain your history.</string>
            <layout class="QHBoxLayout" name="profilesButtonsLayout2">
             <item>
              <widget class="QPushButton" name="importButton">
-              <property name="text">
-               <string comment="import profile button">Import a profile</string>
-              </property>
               <property name="toolTip">
                <string comment="tooltip for importing profile button">Import Tox profile from a .tox file.</string>
+              </property>
+              <property name="text">
+               <string comment="import profile button">Import a profile</string>
               </property>
              </widget>
             </item>
