@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
+    Copyright (C) 2015 by Project Tox <https://tox.im>
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -29,14 +29,14 @@ public:
     ~ScreenshotDialog();
 
 protected:
-    void mousePressEvent(QMouseEvent *mouseEvent) override;
-    void mouseReleaseEvent(QMouseEvent *mouseEvent) override;
-    void mouseMoveEvent(QMouseEvent *mouseEvent) override;
+    void mousePressEvent(QMouseEvent* mouseEvent) override;
+    void mouseReleaseEvent(QMouseEvent* mouseEvent) override;
+    void mouseMoveEvent(QMouseEvent* mouseEvent) override;
 
 private:
-    void calculateRect(QMouseEvent *mouseEvent, QRect &rect);
+    void calculateRect(QMouseEvent* mouseEvent, QRect &rect);
     QRect &region;
-    QRubberBand *rubberBand;
+    QRubberBand* rubberBand;
     QPoint point;
     enum Status
     {

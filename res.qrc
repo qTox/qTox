@@ -161,6 +161,5 @@
         <file>ui/acceptCall/acceptCall.png</file>
         <file>ui/rejectCall/rejectCall.png</file>
         <file>ui/volButton/volButtonDisabled.png</file>
-        <file>ui/fileButton/fileButtonArrow.png</file>
     </qresource>
 </RCC>

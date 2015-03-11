@@ -49,8 +49,6 @@
 #include "src/offlinemsgengine.h"
 #include "src/widget/tool/screenshotdialog.h"
 
-#include <QDebug>
-
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
     , callId(0)
@@ -87,6 +85,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
+    fileButton->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(fileButton, &QPushButton::customContextMenuRequested, this, &ChatForm::onAttachContext);
     connect(screenshotAction, &QAction::triggered, this, &ChatForm::onScreenshotCreate);
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
@@ -202,9 +202,6 @@ void ChatForm::onAttachClicked()
         long long filesize = file.size();
         file.close();
         QFileInfo fi(path);
-
-        qDebug() << fi.fileName();
-        qDebug() << path;
 
         emit sendFile(f->getFriendID(), fi.fileName(), path, filesize);
     }
@@ -918,12 +915,7 @@ void ChatForm::onScreenshotCreate()
                 file.setAutoRemove(false);
                 // QPixmap is copy-on-write. We have to copy to crop anyway.
                 (screen->grabWindow(0).copy(region)).save(&file, "PNG");
-                if (file.isSequential())
-                {
-                    QMessageBox::critical(0, tr("Bad Idea"), tr("You're trying to send a special (sequential) file, that's not going to work!"));
-                    file.close();
-                    return;
-                }
+
                 long long filesize = file.size();
                 file.close();
                 QFileInfo fi(file);
@@ -933,6 +925,14 @@ void ChatForm::onScreenshotCreate()
             });
         }
     }
+}
+
+void ChatForm::onAttachContext(const QPoint &pos)
+{
+    QMenu* context = new QMenu(fileButton);
+    context->addAction(screenshotAction);
+
+    context->exec(fileButton->mapToGlobal(pos));
 }
 
 void ChatForm::onLoadHistory()

@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
+    Copyright (C) 2015 by Project Tox <https://tox.im>
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -37,7 +37,7 @@ ScreenshotDialog::~ScreenshotDialog()
 
 }
 
-void ScreenshotDialog::mousePressEvent(QMouseEvent *mouseEvent)
+void ScreenshotDialog::mousePressEvent(QMouseEvent* mouseEvent)
 {
     if (mouseEvent->button() == Qt::LeftButton)
     {
@@ -46,7 +46,7 @@ void ScreenshotDialog::mousePressEvent(QMouseEvent *mouseEvent)
     }
 }
 
-void ScreenshotDialog::mouseReleaseEvent(QMouseEvent *mouseEvent)
+void ScreenshotDialog::mouseReleaseEvent(QMouseEvent* mouseEvent)
 {
     if (rubberBand != nullptr)
     {
@@ -67,7 +67,7 @@ void ScreenshotDialog::mouseReleaseEvent(QMouseEvent *mouseEvent)
     accept();
 }
 
-void ScreenshotDialog::mouseMoveEvent(QMouseEvent *mouseEvent)
+void ScreenshotDialog::mouseMoveEvent(QMouseEvent* mouseEvent)
 {
     if (rubberBand != nullptr)
     {
@@ -90,7 +90,7 @@ void ScreenshotDialog::mouseMoveEvent(QMouseEvent *mouseEvent)
     }
 }
 
-void ScreenshotDialog::calculateRect(QMouseEvent *mouseEvent, QRect &rect)
+void ScreenshotDialog::calculateRect(QMouseEvent* mouseEvent, QRect &rect)
 {
     // Must normalize, since Qt doesn't support negative sizes.
     int w, h, x, y;

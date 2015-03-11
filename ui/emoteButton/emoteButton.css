@@ -4,7 +4,7 @@ QPushButton
     background-image: url(":/ui/emoteButton/emoteButton.png");
     background-repeat: none;    
     border: none;
-    width: 40px;
+    width: 24px;
     height: 24px;
 }
 QPushButton:hover

@@ -1,43 +1,27 @@
-QAbstractButton
+QPushButton
 {
     background-color: transparent;
     background-image: url(":/ui/fileButton/fileButton.png");
     background-repeat: none;    
     border: none;
-    width: 40px;
+    width: 24px;
     height: 24px;
 }
-QAbstractButton:hover
+QPushButton:hover
 {
    background-image: url(":/ui/fileButton/fileButtonHover.png");
 }
 
-QAbstractButton:pressed
+QPushButton:pressed
 {
    background-image: url(":/ui/fileButton/fileButtonPressed.png");
 }
 
-QAbstractButton[enabled="false"]
+QPushButton[enabled="false"]
 {
    background-image: url(":/ui/fileButton/fileButtonDisabled.png");
 }
 
-QAbstractButton:focus
-{
+QPushButton:focus {
     outline: none;
-}
-
-QToolButton::menu-button
-{
-    width: 22px;
-}
-
-QToolButton::menu-arrow
-{
-    image: url(":/ui/fileButton/fileButtonArrow.png");
-}
-
-QToolButton::menu-arrow:open
-{
-    top: 1px;
 }

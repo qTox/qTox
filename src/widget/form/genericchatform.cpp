@@ -22,8 +22,6 @@
 #include <QDebug>
 #include <QShortcut>
 
-#include <QToolButton>
-
 #include "src/misc/smileypack.h"
 #include "src/widget/emoticonswidget.h"
 #include "src/misc/style.h"
@@ -77,8 +75,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     emoteButton->setToolTip(tr("Smileys"));
 
     // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
-    QToolButton *fileToolButton = new QToolButton();
-    fileButton = fileToolButton;
+    fileButton = new QPushButton();
     fileButton->setToolTip(tr("Send file(s)"));
     callButton = new QPushButton();
     callButton->setFixedSize(50,40);
@@ -93,10 +90,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     // micButton->setFixedSize(25,20);
     micButton->setToolTip("");
 
-    QMenu *fileMenu = new QMenu(fileButton);
-    screenshotAction = fileMenu->addAction(tr("Send screenshot"));
-    fileToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-    fileToolButton->setMenu(fileMenu);
+    screenshotAction = new QAction(tr("Send screenshot"), nullptr);
 
     footButtonsSmall->setSpacing(2);
 
