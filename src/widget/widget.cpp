@@ -92,6 +92,10 @@ void Widget::init()
 {
     ui->setupUi(this);
 
+    QIcon themeIcon = QIcon::fromTheme("qtox");
+    if (!themeIcon.isNull())
+        setWindowIcon(themeIcon);
+
     timer = new QTimer();
     timer->start(1000);
     offlineMsgTimer = new QTimer();
@@ -224,6 +228,9 @@ void Widget::setTranslation()
 
 void Widget::updateTrayIcon()
 {
+    if (!icon)
+        return;
+
     QString status;
     if (eventIcon)
         status = "event";
@@ -233,10 +240,15 @@ void Widget::updateTrayIcon()
         if (!status.length())
             status = "offline";
     }
-    QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
-    QString pic = ":img/taskbar/" + color + "/taskbar_" + status + ".svg";
-    if (icon)
-        icon->setIcon(QIcon(pic));
+
+    QIcon ico = QIcon::fromTheme("qtox-" + status);
+    if (ico.isNull())
+    {
+        QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
+        ico = QIcon(":img/taskbar/" + color + "/taskbar_" + status + ".svg");
+    }
+
+    icon->setIcon(ico);
 }
 
 Widget::~Widget()

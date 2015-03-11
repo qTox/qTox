@@ -17,7 +17,7 @@ public:
     void show();
     void hide();
     void setVisible(bool);
-    void setIcon(QIcon&& icon);
+    void setIcon(QIcon &icon);
 
 signals:
     void activated(QSystemTrayIcon::ActivationReason);
