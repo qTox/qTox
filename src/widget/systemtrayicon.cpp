@@ -331,7 +331,7 @@ void SystemTrayIcon::setVisible(bool newState)
     }
 }
 
-void SystemTrayIcon::setIcon(QIcon &&icon)
+void SystemTrayIcon::setIcon(QIcon &icon)
 {
     if (false);
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
