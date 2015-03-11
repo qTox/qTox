@@ -92,10 +92,6 @@ void Widget::init()
 {
     ui->setupUi(this);
 
-    QIcon themeIcon = QIcon::fromTheme("qtox");
-    if (!themeIcon.isNull())
-        setWindowIcon(themeIcon);
-
     timer = new QTimer();
     timer->start(1000);
     offlineMsgTimer = new QTimer();
@@ -173,6 +169,7 @@ void Widget::init()
 
     Style::setThemeColor(Settings::getInstance().getThemeColor());
     reloadTheme();
+    updateIcons();
     
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
@@ -226,11 +223,8 @@ void Widget::setTranslation()
     QCoreApplication::installTranslator(translator);
 }
 
-void Widget::updateTrayIcon()
+void Widget::updateIcons()
 {
-    if (!icon)
-        return;
-
     QString status;
     if (eventIcon)
         status = "event";
@@ -248,7 +242,9 @@ void Widget::updateTrayIcon()
         ico = QIcon(":img/taskbar/" + color + "/taskbar_" + status + ".svg");
     }
 
-    icon->setIcon(ico);
+    setWindowIcon(ico);
+    if (icon)
+        icon->setIcon(ico);
 }
 
 Widget::~Widget()
@@ -394,7 +390,7 @@ void Widget::onStatusSet(Status status)
         ui->statusButton->setIcon(QIcon(":img/status/dot_away_2x.png"));
         break;
     }
-    updateTrayIcon();
+    updateIcons();
 }
 
 void Widget::setWindowTitle(const QString& title)
@@ -986,7 +982,7 @@ bool Widget::event(QEvent * e)
             {
                 eventFlag = false;
                 eventIcon = false;
-                updateTrayIcon();
+                updateIcons();
             }
         default:
             break;
@@ -1028,7 +1024,7 @@ void Widget::onEventIconTick()
     if (eventFlag)
     {
         eventIcon ^= true;
-        updateTrayIcon();
+        updateIcons();
     }
 }
 
@@ -1040,7 +1036,7 @@ void Widget::onTryCreateTrayIcon()
         if (QSystemTrayIcon::isSystemTrayAvailable())
         {
             icon = new SystemTrayIcon;
-            updateTrayIcon();
+            updateIcons();
             trayMenu = new QMenu;
 
             actionQuit = new QAction(tr("&Quit"), this);
