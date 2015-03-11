@@ -16,7 +16,7 @@
 
 #include "src/core.h"
 #include "src/nexus.h"
-#include "ui_identitysettings.h"
+#include "ui_profileform.h"
 #include "profileform.h"
 #include "ui_mainwindow.h"
 #include "src/widget/form/settingswidget.h"

@@ -29,8 +29,8 @@ FORMS    += \
     src/mainwindow.ui \
     src/widget/form/settings/generalsettings.ui \
     src/widget/form/settings/avsettings.ui \
-    src/widget/form/settings/identitysettings.ui \
     src/widget/form/settings/privacysettings.ui \
+    src/widget/form/profileform.ui \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/setpassworddialog.ui \
     src/chatlog/content/filetransferwidget.ui \
