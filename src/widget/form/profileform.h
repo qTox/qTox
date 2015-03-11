@@ -82,8 +82,6 @@ private:
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
     QWidget *head;
-    QLabel headLabel;
-    QVBoxLayout headLayout;
     Core* core;
     QTimer timer;
     bool hasCheck = false;

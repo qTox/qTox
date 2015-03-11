@@ -184,10 +184,10 @@ void Widget::init()
     connect(ui->groupButton, SIGNAL(clicked()), this, SLOT(onGroupClicked()));
     connect(ui->transferButton, SIGNAL(clicked()), this, SLOT(onTransferClicked()));
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
-    connect(ui->nameLabel, SIGNAL(clicked()), this, SLOT(onUsernameClicked()));
+    connect(profilePicture, &MaskablePixmapWidget::clicked, this, &Widget::showProfile);
+    connect(ui->nameLabel, &CroppingLabel::clicked, this, &Widget::showProfile);
     connect(ui->statusLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onStatusMessageChanged(QString, QString)));
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
-    connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
@@ -308,11 +308,6 @@ void Widget::resizeEvent(QResizeEvent *event)
 QString Widget::getUsername()
 {
     return Nexus::getCore()->getUsername();
-}
-
-void Widget::onAvatarClicked()
-{
-    showProfile();
 }
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
@@ -490,6 +485,14 @@ void Widget::onSettingsClicked()
     activeChatroomWidget = nullptr;
 }
 
+void Widget::showProfile() // onAvatarClicked, onUsernameClicked
+{
+    hideMainForms();
+    profileForm->show(*ui);
+    setWindowTitle(tr("Profile"));
+    activeChatroomWidget = nullptr;
+}
+
 void Widget::hideMainForms()
 {
     QLayoutItem* item;
@@ -508,20 +511,6 @@ void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUse
 {
     setUsername(oldUsername);               // restore old username until Core tells us to set it
     Nexus::getCore()->setUsername(newUsername);
-}
-
-void Widget::showProfile()
-{
-    hideMainForms();
-    ui->mainContent->layout()->addWidget(profileForm);
-    profileForm->show(*ui);
-    setWindowTitle(tr("Profile"));
-    activeChatroomWidget = nullptr;
-}
-
-void Widget::onUsernameClicked()
-{
-    showProfile();
 }
 
 void Widget::setUsername(const QString& username)

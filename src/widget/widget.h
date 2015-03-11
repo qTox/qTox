@@ -77,7 +77,6 @@ public:
 
     void reloadTheme();
 
-    void showProfile();
 public slots:
     void onSettingsClicked();
     void setWindowTitle(const QString& title);
@@ -122,8 +121,7 @@ private slots:
     void onAddClicked();
     void onGroupClicked();
     void onTransferClicked();
-    void onAvatarClicked();
-    void onUsernameClicked();
+    void showProfile();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
     void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
