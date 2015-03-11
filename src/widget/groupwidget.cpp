@@ -71,6 +71,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
                 emit g->getChatForm()->groupTitleChanged(groupId, alias.left(128));
         }
     }
+    this->repaint();
 }
 
 void GroupWidget::onUserListChanged()
