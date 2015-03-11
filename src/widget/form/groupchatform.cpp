@@ -101,11 +101,9 @@ void GroupChatForm::onSendTriggered()
     msgEdit->setLastMessage(msg);
     msgEdit->clear();
 
-    bool isAction = msg.startsWith("/me ");
-
     if (group->getPeersCount() != 1)
     {
-        if (isAction)
+        if (msg.startsWith("/me "))
         {
             msg = msg.right(msg.length() - 4);
             emit sendAction(group->getGroupId(), msg);
@@ -114,10 +112,7 @@ void GroupChatForm::onSendTriggered()
             emit sendMessage(group->getGroupId(), msg);
     }
     else
-    {
-        QDateTime timestamp = QDateTime::currentDateTime();
-        addSelfMessage(msg, isAction, timestamp, true);
-    }
+        addSelfMessage(msg, msg.startsWith("/me "), QDateTime::currentDateTime(), true);
 }
 
 void GroupChatForm::onUserListChanged()
