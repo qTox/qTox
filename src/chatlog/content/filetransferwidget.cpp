@@ -436,7 +436,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
     else if (btn->objectName() == "dir")
     {
         QString dirPath = QFileInfo(fileInfo.filePath).dir().path();
-        QDesktopServices::openUrl(QUrl("file://" + dirPath, QUrl::TolerantMode));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(dirPath));
     }
 
 }

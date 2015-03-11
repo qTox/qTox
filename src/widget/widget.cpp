@@ -448,7 +448,7 @@ void Widget::confirmExecutableOpen(const QFileInfo file)
     }
     else
     {
-        QDesktopServices::openUrl(QUrl("file://" + file.filePath(), QUrl::TolerantMode));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
     }
 }
 

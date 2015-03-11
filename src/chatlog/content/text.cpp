@@ -221,6 +221,9 @@ void Text::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
         setCursor(QCursor(Qt::PointingHandCursor));
     else
         setCursor(QCursor());
+
+    // tooltip
+    setToolTip(extractImgTooltip(cursorFromPos(event->scenePos(), false)));
 }
 
 QString Text::getText() const
@@ -287,10 +290,10 @@ QSizeF Text::idealSize()
     return size;
 }
 
-int Text::cursorFromPos(QPointF scenePos) const
+int Text::cursorFromPos(QPointF scenePos, bool fuzzy) const
 {
     if(doc)
-        return doc->documentLayout()->hitTest(mapFromScene(scenePos), Qt::FuzzyHit);
+        return doc->documentLayout()->hitTest(mapFromScene(scenePos), fuzzy ? Qt::FuzzyHit : Qt::ExactHit);
 
     return -1;
 }
@@ -347,4 +350,18 @@ QString Text::extractSanitizedText(int from, int to) const
     }
 
     return txt;
+}
+
+QString Text::extractImgTooltip(int pos) const
+{
+    for(QTextBlock::Iterator itr = doc->firstBlock().begin(); itr!=doc->firstBlock().end(); ++itr)
+    {
+        if(itr.fragment().contains(pos) && itr.fragment().charFormat().isImageFormat())
+        {
+            QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
+            return imgFmt.toolTip();
+        }
+    }
+
+    return QString();
 }
