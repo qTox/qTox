@@ -293,7 +293,7 @@ private:
 
     bool enableLogging;
     bool encryptLogs;
-    bool encryptTox;
+    bool encryptTox = false;
 
     int autoAwayTime;
 
