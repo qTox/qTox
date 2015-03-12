@@ -76,7 +76,7 @@ void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled
 #ifdef QTOX_FILTER_AUDIO
     if (Settings::getInstance().getFilterAudio())
     {
-        Core::filterer[callId] = new AudioFilterer();
+        filterer[callId] = new AudioFilterer();
         filterer[callId]->startFilter(48000);
     }
     else
@@ -257,12 +257,22 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
     if (Audio::tryCaptureSamples(buf, framesize))
     {
 #ifdef QTOX_FILTER_AUDIO
-        if (filterer[callId])
+        if (Settings::getInstance().getFilterAudio())
         {
+            if (!filterer[callId])
+            {
+                filterer[callId] = new AudioFilterer();
+                filterer[callId]->startFilter(48000);
+            }
             // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
             Audio::getEchoesToFilter(filterer[callId], framesize);
 
             filterer[callId]->filterAudio((int16_t*) buf, framesize);
+        }
+        else if (filterer[callId])
+        {
+            delete filterer[callId];
+            filterer[callId] = nullptr;
         }
 #endif
 
