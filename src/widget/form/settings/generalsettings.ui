@@ -381,6 +381,16 @@ will be sent to them when they will appear online to you.</string>
             </property>
            </widget>
           </item>
+          <item row="2" column="2">
+           <widget class="QCheckBox" name="cbGroupchatPosition">
+            <property name="toolTip">
+             <string comment="toolTip for groupchat positioning">If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed at the bottom.</string>
+            </property>
+            <property name="text">
+             <string>Place groupchats at top of friend list</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

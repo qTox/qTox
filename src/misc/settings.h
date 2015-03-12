@@ -242,6 +242,9 @@ public:
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
+    bool getGroupchatPosition() const;
+    void setGroupchatPosition(bool value);
+
 public:
     void save(bool writePersonal = true);
     void save(QString path, bool writePersonal = true);
@@ -269,6 +272,7 @@ private:
 
     bool fauxOfflineMessaging;
     bool compactLayout;
+    bool groupchatPosition;
     bool enableIPv6;
     QString translation;
     static bool makeToxPortable;
@@ -353,6 +357,7 @@ signals:
     void emojiFontChanged();
     void timestampFormatChanged();
     void compactLayoutChanged();
+    void groupchatPositionChanged();
 };
 
 #endif // SETTINGS_HPP

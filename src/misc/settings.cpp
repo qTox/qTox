@@ -216,6 +216,7 @@ void Settings::load()
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
         compactLayout = s.value("compactLayout", false).toBool();
+        groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -383,6 +384,7 @@ void Settings::saveGlobal(QString path)
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("compactLayout", compactLayout);
+        s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
     s.endGroup();
@@ -1160,6 +1162,17 @@ void Settings::setCompactLayout(bool value)
 {
     compactLayout = value;
     emit compactLayoutChanged();
+}
+
+bool Settings::getGroupchatPosition() const
+{
+    return groupchatPosition;
+}
+
+void Settings::setGroupchatPosition(bool value)
+{
+    groupchatPosition = value;
+    emit groupchatPositionChanged();
 }
 
 int Settings::getThemeColor() const

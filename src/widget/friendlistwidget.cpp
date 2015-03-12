@@ -20,7 +20,7 @@
 #include "src/friendlist.h"
 #include "src/widget/friendwidget.h"
 
-FriendListWidget::FriendListWidget(QWidget *parent) :
+FriendListWidget::FriendListWidget(QWidget *parent, bool groupchatPosition) :
     QWidget(parent)
 {
     mainLayout = new QGridLayout();
@@ -42,11 +42,16 @@ FriendListWidget::FriendListWidget(QWidget *parent) :
         layouts[static_cast<int>(s)] = l;
     }
 
-    mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
-    mainLayout->addLayout(groupLayout, 1, 0);
-    mainLayout->addLayout(layouts[static_cast<int>(Status::Away)], 2, 0);
-    mainLayout->addLayout(layouts[static_cast<int>(Status::Busy)], 3, 0);
-    mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 4, 0);
+    if(groupchatPosition){
+        mainLayout->addLayout(groupLayout, 0, 0);
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 1, 0);
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 2, 0);
+    }
+    else{
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
+        mainLayout->addLayout(groupLayout, 1, 0);
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 2, 0);
+    }
 }
 
 QVBoxLayout* FriendListWidget::getGroupLayout()
@@ -62,6 +67,20 @@ QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
 
     //qDebug() << "Friend Status: " << static_cast<int>(s) << " not found!";
     return layouts[static_cast<int>(Status::Online)];
+}
+
+void FriendListWidget::onGroupchatPositionChanged(bool top)
+{
+    mainLayout->removeItem(groupLayout);
+    mainLayout->removeItem(getFriendLayout(Status::Online));
+    if(top){
+        mainLayout->addLayout(groupLayout, 0, 0);
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 1, 0);
+    }
+    else{
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
+        mainLayout->addLayout(groupLayout, 1, 0);
+    }
 }
 
 void FriendListWidget::moveWidget(QWidget *w, Status s, int hasNewEvents)
