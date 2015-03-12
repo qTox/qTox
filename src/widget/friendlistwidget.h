@@ -33,11 +33,11 @@ public:
 
     QVBoxLayout* getGroupLayout();
     QVBoxLayout* getFriendLayout(Status s);
-    void moveWidget(QWidget *w, Status s, int hasNewEvents);
 
 signals:
 
 public slots:
+    void moveWidget(QWidget *w, Status s, int hasNewEvents);
 
 private:
     QHash<int, QVBoxLayout*> layouts;

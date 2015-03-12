@@ -16,6 +16,9 @@
 #include "friendlistwidget.h"
 #include <QDebug>
 #include <QGridLayout>
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/widget/friendwidget.h"
 
 FriendListWidget::FriendListWidget(QWidget *parent) :
     QWidget(parent)
@@ -63,9 +66,18 @@ QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
 
 void FriendListWidget::moveWidget(QWidget *w, Status s, int hasNewEvents)
 {
-    mainLayout->removeWidget(w);
-    if (hasNewEvents == 0)
-        getFriendLayout(s)->addWidget(w);
-    else
-        getFriendLayout(s)->insertWidget(0, w);
+    getFriendLayout(s)->removeWidget(w);
+    QVBoxLayout* l = getFriendLayout(s);
+    Friend* g = FriendList::findFriend(dynamic_cast<FriendWidget*>(w)->friendId);
+    for(int i = 0; i < l->count(); i++){
+        FriendWidget* w1 = dynamic_cast<FriendWidget*>(l->itemAt(i)->widget());
+        if(w1 != NULL){
+            Friend* f = FriendList::findFriend(w1->friendId);
+            if(f->getDisplayedName().localeAwareCompare(g->getDisplayedName()) > 0){
+                l->insertWidget(i,w);
+                return;
+            }
+        }
+    }
+    l->addWidget(w);
 }

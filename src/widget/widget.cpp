@@ -559,10 +559,10 @@ void Widget::addFriend(int friendId, const QString &userId)
     //qDebug() << "Widget: Adding friend with id" << userId;
     ToxID userToxId = ToxID::fromString(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
-    QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
-    layout->addWidget(newfriend->getFriendWidget());
+    contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline,0);
 
     Core* core = Nexus::getCore();
+    connect(newfriend, &Friend::displayedNameChanged, contactListWidget, &FriendListWidget::moveWidget);
     connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::onCompactChanged);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
