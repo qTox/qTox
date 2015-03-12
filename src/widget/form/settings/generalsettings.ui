@@ -363,8 +363,8 @@ instead of system taskbar.</string>
           <item row="2" column="1">
            <widget class="QCheckBox" name="cbFauxOfflineMessaging">
             <property name="toolTip">
-             <string comment="toolTip for Faux offline messaging setting">Messages you are trying to send to your friends when they are not online
-will be sent to them when they will appear online to you.</string>
+             <string comment="toolTip for Faux offline messaging setting">Messages you are trying to send your friends when they are not online
+will be sent to them when they appear online to you.</string>
             </property>
             <property name="text">
              <string>Faux offline messaging</string>
