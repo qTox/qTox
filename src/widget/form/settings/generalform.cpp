@@ -199,7 +199,7 @@ void GeneralForm::onSetCloseToTray()
 void GeneralForm::onSetLightTrayIcon()
 {
     Settings::getInstance().setLightTrayIcon(bodyUI->lightTrayIcon->isChecked());
-    Widget::getInstance()->updateTrayIcon();
+    Widget::getInstance()->updateIcons();
 }
 
 void GeneralForm::onSetMinimizeToTray()

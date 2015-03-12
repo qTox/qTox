@@ -303,7 +303,7 @@ void Core::saveConfiguration(const QString& path)
             if (!pwsaltedkeys[ptMain])
             {
                 // probably zero chance event
-                GUI::showWarning(tr("NO Password"), tr("Encryption is enabled, but there is no password! Encryption will be disabled."));
+                GUI::showWarning(tr("NO Password"), tr("Local file encryption is enabled, but there is no password! It will be disabled."));
                 Settings::getInstance().setEncryptTox(false);
                 tox_save(tox, data);
             }

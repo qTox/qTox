@@ -26,6 +26,7 @@
 #include "src/misc/cdata.h"
 #include "src/toxdns.h"
 #include "src/misc/settings.h"
+#include "src/widget/gui.h"
 
 AddFriendForm::AddFriendForm()
 {
@@ -73,15 +74,6 @@ QString AddFriendForm::getMessage() const
     return !msg.isEmpty() ? msg : message.placeholderText();
 }
 
-void AddFriendForm::showWarning(const QString &message) const
-{
-    QMessageBox warning(main);
-    warning.setWindowTitle("Tox");
-    warning.setText(message);
-    warning.setIcon(QMessageBox::Warning);
-    warning.exec();
-}
-
 void AddFriendForm::onUsernameSet(const QString& username)
 {
     message.setPlaceholderText(tr("%1 here! Tox me maybe?","Default message in friend requests if the field is left blank. Write something appropriate!").arg(username));
@@ -92,10 +84,10 @@ void AddFriendForm::onSendTriggered()
     QString id = toxId.text().trimmed();
 
     if (id.isEmpty()) {
-        showWarning(tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
+        GUI::showWarning(tr("Couldn't add friend"), tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
     } else if (ToxID::isToxId(id)) {
         if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
-            showWarning(tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
+            GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
         else
             emit friendRequested(id, getMessage());
         this->toxId.clear();
@@ -113,7 +105,7 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
 
         if (toxId.toString().isEmpty())
         {
-            showWarning(tr("This Tox ID does not exist","DNS error"));
+            GUI::showWarning(tr("Couldn't add friend"), tr("This Tox ID does not exist","DNS error"));
             return;
         }
 

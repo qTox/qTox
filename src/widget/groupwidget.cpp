@@ -51,7 +51,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
     QMenu menu;
-    QAction* setAlias = menu.addAction(tr("Set title..."));
+    QAction* setTitle = menu.addAction(tr("Set title..."));
     QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
 
     QAction* selectedItem = menu.exec(pos);
@@ -59,7 +59,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
     {
         if (selectedItem == quitGroup)
             emit removeGroup(groupId);
-        else if (selectedItem == setAlias)
+        else if (selectedItem == setTitle)
         {
             bool ok;
             Group* g = GroupList::findGroup(groupId);
@@ -69,6 +69,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 
             if (ok && alias != nameLabel->fullText())
                 emit g->getChatForm()->groupTitleChanged(groupId, alias.left(128));
+            this->repaint();            
         }
     }
 }

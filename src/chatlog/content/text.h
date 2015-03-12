@@ -61,11 +61,12 @@ protected:
     void freeResources();
 
     QSizeF idealSize();
-    int cursorFromPos(QPointF scenePos) const;
+    int cursorFromPos(QPointF scenePos, bool fuzzy = true) const;
     int getSelectionEnd() const;
     int getSelectionStart() const;
     bool hasSelection() const;
     QString extractSanitizedText(int from, int to) const;
+    QString extractImgTooltip(int pos) const;
 
 private:
     QTextDocument* doc = nullptr;
