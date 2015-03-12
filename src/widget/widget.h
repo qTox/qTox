@@ -63,7 +63,7 @@ public:
     bool getIsWindowMinimized();
     void clearContactsList();
     void setTranslation();
-    void updateTrayIcon();
+    void updateIcons();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
