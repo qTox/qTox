@@ -623,10 +623,17 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     Friend* f = FriendList::findFriend(friendId);
     if (!f)
         return;
-
-    contactListWidget->moveWidget(f->getFriendWidget(), status, f->getEventFlag());
-
+    
     bool isActualChange = f->getStatus() != status;
+
+    if(isActualChange){
+        if(f->getStatus() == Status::Offline){
+            contactListWidget->moveWidget(f->getFriendWidget(), Status::Online, f->getEventFlag());
+        }
+        else if(status == Status::Offline){
+            contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline, f->getEventFlag());
+        }
+    }
 
     f->setStatus(status);
     f->getFriendWidget()->updateStatusLight();

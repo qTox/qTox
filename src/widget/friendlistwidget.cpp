@@ -33,7 +33,7 @@ FriendListWidget::FriendListWidget(QWidget *parent) :
     groupLayout->setSpacing(0);
     groupLayout->setMargin(0);
 
-    for (Status s : {Status::Online, Status::Away, Status::Busy, Status::Offline})
+    for (Status s : {Status::Online, Status::Offline})
     {
         QVBoxLayout *l = new QVBoxLayout();
         l->setSpacing(0);
@@ -60,7 +60,7 @@ QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
     if (res != layouts.end())
         return res.value();
 
-    qDebug() << "Friend Status: " << static_cast<int>(s) << " not found!";
+    //qDebug() << "Friend Status: " << static_cast<int>(s) << " not found!";
     return layouts[static_cast<int>(Status::Online)];
 }
 
