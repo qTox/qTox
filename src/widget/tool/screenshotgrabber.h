@@ -17,35 +17,41 @@
 #ifndef SCREENSHODIALOG_H
 #define SCREENSHODIALOG_H
 
-#include <QDialog>
+#include <QObject>
+#include <QPixmap>
+#include <QPoint>
 
+class QEventLoop;
 class QRubberBand;
 
-class ScreenshotDialog : public QDialog
+class ScreenshotGrabber : public QObject
 {
     Q_OBJECT
 public:
-    ScreenshotDialog(QRect &region);
-    ~ScreenshotDialog();
-
-protected:
-    void mousePressEvent(QMouseEvent* mouseEvent) override;
-    void mouseReleaseEvent(QMouseEvent* mouseEvent) override;
-    void mouseMoveEvent(QMouseEvent* mouseEvent) override;
-
+    enum
+    {
+        Rejected = 0,
+        Accepted = 1
+    };
+    ScreenshotGrabber(QWidget* parent);
+    bool eventFilter(QObject*, QEvent* event);
+    int exec();
+signals:
+    void screenshotTaken(QPixmap pixmap);
 private:
-    void calculateRect(QMouseEvent* mouseEvent, QRect &rect);
-    QRect &region;
-    QRubberBand* rubberBand;
-    QPoint point;
-    enum Status
+    void takeScreenshot(const QRect &selection);
+    enum Status : uint8_t
     {
         Dead,
-        Check, // To check whether mouse moved far enough.
-        Alive
+        Check, // Checking whether mouse moved far enough.
+        Alive,
+        Finished // Already submitted screenshot.
     };
+    QWidget* parentWidget;
+    QEventLoop* eventLoop;
+    QRubberBand* rubberBand;
+    QPoint point;
     Status status;
 };
-
 #endif // SCREENSHODIALOG_H
 

@@ -47,7 +47,7 @@
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
 #include "src/offlinemsgengine.h"
-#include "src/widget/tool/screenshotdialog.h"
+#include "src/widget/tool/screenshotgrabber.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -888,43 +888,27 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
 void ChatForm::onScreenshotCreate()
 {
-    QRect region;
-    int result = 0;
-
+    ScreenshotGrabber screenshotGrabber(this);
+    connect(&screenshotGrabber, &ScreenshotGrabber::screenshotTaken, [&](const QPixmap &pixmap)
     {
-        ScreenshotDialog screenshot(region);
-        result = screenshot.exec();
-    }
+        QTemporaryFile file("qTox-Screeshot-XXXXXXXX.png");
 
-    if (result == QDialog::Accepted)
-    {
-        QScreen *screen = QGuiApplication::primaryScreen();
-        if (screen)
+        if (!file.open())
         {
-            // Have to wait for the rubber band to disappear.
-            // Using flush, sendPostedEvents and processEvents does not work.
-            QTimer::singleShot(100, this, [=]()
-            {
-                QTemporaryFile file("qTox-Screeshot-XXXXXXXX.png");
-
-                if (!file.open())
-                {
-                    QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to save the screenshot"));
-                    return;
-                }
-                file.setAutoRemove(false);
-                // QPixmap is copy-on-write. We have to copy to crop anyway.
-                (screen->grabWindow(0).copy(region)).save(&file, "PNG");
-
-                long long filesize = file.size();
-                file.close();
-                QFileInfo fi(file);
-
-                qDebug() << region;
-                emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
-            });
+            QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to save the screenshot"));
+            return;
         }
-    }
+        file.setAutoRemove(false);
+
+        pixmap.save(&file, "PNG");
+
+        long long filesize = file.size();
+        file.close();
+        QFileInfo fi(file);
+
+        emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+    });
+    screenshotGrabber.exec();
 }
 
 void ChatForm::onAttachContext(const QPoint &pos)
