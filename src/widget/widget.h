@@ -102,6 +102,7 @@ public slots:
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
+    void onGroupPeerAudioPlaying(int groupnumber, int peernumber);
     void playRingtone();
     void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();

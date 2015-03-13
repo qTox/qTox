@@ -171,6 +171,7 @@ signals:
     void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
+    void groupPeerAudioPlaying(int groupnumber, int peernumber);
 
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);

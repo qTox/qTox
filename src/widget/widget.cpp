@@ -906,6 +906,15 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
+void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
+{
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g)
+        return;
+
+    g->getChatForm()->peerAudioPlaying(peernumber);
+}
+
 void Widget::removeGroup(Group* g, bool fake)
 {
     g->getGroupWidget()->setAsInactiveChatroom();

@@ -242,11 +242,12 @@ void Audio::playMono16Sound(const QByteArray& data)
 }
 
 void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
-                        unsigned samples, uint8_t channels, unsigned sample_rate,void*)
+                        unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
     QMetaObject::invokeMethod(instance, "playGroupAudio", Qt::BlockingQueuedConnection,
                               Q_ARG(int,group), Q_ARG(int,peer), Q_ARG(const int16_t*,data),
                               Q_ARG(unsigned,samples), Q_ARG(uint8_t,channels), Q_ARG(unsigned,sample_rate));
+    emit static_cast<Core*>(core)->groupPeerAudioPlaying(group, peer);
 }
 
 void Audio::playGroupAudio(int group, int peer, const int16_t* data,
