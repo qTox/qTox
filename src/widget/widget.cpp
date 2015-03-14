@@ -459,23 +459,30 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
             {
                 show();
                 activateWindow();
+                showNormal();
             }
             else if (isMinimized())
             {
                 forceShow();
+                activateWindow();
+                showNormal();
             }
             else
             {
-                hide();
+                if (Settings::getInstance().getMinimizeToTray())
+                    hide();
+                else
+                    showMinimized();
+                break;
             }
 
             break;
         }
-        case QSystemTrayIcon::DoubleClick:
-            forceShow();
-            break;
         case QSystemTrayIcon::MiddleClick:
-            hide();
+            if (Settings::getInstance().getMinimizeToTray())
+                hide();
+            else
+                showMinimized();
             break;
         case QSystemTrayIcon::Unknown:
             if (isHidden())
