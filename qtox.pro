@@ -29,8 +29,8 @@ FORMS    += \
     src/mainwindow.ui \
     src/widget/form/settings/generalsettings.ui \
     src/widget/form/settings/avsettings.ui \
-    src/widget/form/settings/identitysettings.ui \
     src/widget/form/settings/privacysettings.ui \
+    src/widget/form/profileform.ui \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/setpassworddialog.ui \
     src/chatlog/content/filetransferwidget.ui \
@@ -323,10 +323,10 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/settingswidget.h \
         src/widget/form/settings/genericsettings.h \
         src/widget/form/settings/generalform.h \
-        src/widget/form/settings/identityform.h \
         src/widget/form/settings/privacyform.h \
         src/widget/form/settings/avform.h \
         src/widget/form/filesform.h \
+        src/widget/form/profileform.h \
         src/widget/tool/chattextedit.h \
         src/widget/tool/friendrequestdialog.h \
         src/widget/friendwidget.h \
@@ -351,9 +351,9 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/addfriendform.cpp \
         src/widget/form/settingswidget.cpp \
         src/widget/form/settings/generalform.cpp \
-        src/widget/form/settings/identityform.cpp \
         src/widget/form/settings/privacyform.cpp \
         src/widget/form/settings/avform.cpp \
+        src/widget/form/profileform.cpp \
         src/widget/form/filesform.cpp \
         src/widget/tool/chattextedit.cpp \
         src/widget/tool/friendrequestdialog.cpp \

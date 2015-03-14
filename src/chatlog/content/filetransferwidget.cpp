@@ -24,6 +24,7 @@
 #include <QMouseEvent>
 #include <QFileDialog>
 #include <QFile>
+#include <QBuffer>
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QDesktopWidget>
@@ -435,7 +436,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
     else if (btn->objectName() == "dir")
     {
         QString dirPath = QFileInfo(fileInfo.filePath).dir().path();
-        QDesktopServices::openUrl(QUrl("file://" + dirPath, QUrl::TolerantMode));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(dirPath));
     }
 
 }
@@ -451,22 +452,13 @@ void FileTransferWidget::showPreview(const QString &filename)
         ui->previewLabel->setPixmap(pmap);
         ui->previewLabel->show();
 
-        // Show preview, but make sure it's not larger than 50% of the screen width/height
-        QRect maxSize = QApplication::desktop()->screenGeometry();
-        maxSize.setWidth(0.5*maxSize.width());
-        maxSize.setHeight(0.5*maxSize.height());
-
-        QImage image = QImage(filename);
-        QSize imageSize(image.width(), image.height());
-        if (imageSize.width() > maxSize.width() || imageSize.height() > maxSize.height())
-        {
-            imageSize.scale(maxSize.width(), maxSize.height(), Qt::KeepAspectRatio);
-            ui->previewLabel->setToolTip("<html><img src="+QUrl::toPercentEncoding(filename)+" width="+QString::number(imageSize.width())+" height="+QString::number(imageSize.height())+"/></html>");
-        }
-        else
-        {
-            ui->previewLabel->setToolTip("<html><img src"+QUrl::toPercentEncoding(filename)+"/></html>");
-        }
+        // Show mouseover preview, but make sure it's not larger than 50% of the screen width/height
+        QRect desktopSize = QApplication::desktop()->screenGeometry();
+        QImage image = QImage(filename).scaled(0.5*desktopSize.width(), 0.5*desktopSize.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QByteArray imageData;
+        QBuffer buffer(&imageData);
+        image.save(&buffer, "PNG");
+        ui->previewLabel->setToolTip("<img src=data:image/png;base64," + imageData.toBase64() + "/>");
     }
 }
 

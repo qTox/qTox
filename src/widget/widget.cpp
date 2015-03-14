@@ -49,8 +49,6 @@
 #include <QMouseEvent>
 #include <QClipboard>
 #include <QThread>
-#include <QFileDialog>
-#include <QInputDialog>
 #include <QDialogButtonBox>
 #include <QTimer>
 #include <QStyleFactory>
@@ -149,7 +147,6 @@ void Widget::init()
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
 
-    ui->nameLabel->setEditable(true);
     ui->statusLabel->setEditable(true);
 
     ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
@@ -172,23 +169,26 @@ void Widget::init()
 
     Style::setThemeColor(Settings::getInstance().getThemeColor());
     reloadTheme();
+    updateIcons();
     
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
+    profileForm = new ProfileForm();
     settingsWidget = new SettingsWidget();
 
     Core* core = Nexus::getCore();
     connect(core, SIGNAL(fileDownloadFinished(const QString&)), filesForm, SLOT(onFileDownloadComplete(const QString&)));
     connect(core, SIGNAL(fileUploadFinished(const QString&)), filesForm, SLOT(onFileUploadComplete(const QString&)));
     connect(settingsWidget, &SettingsWidget::setShowSystemTray, this, &Widget::onSetShowSystemTray);
+    connect(core, SIGNAL(selfAvatarChanged(QPixmap)), profileForm, SLOT(onSelfAvatarLoaded(QPixmap)));
     connect(ui->addButton, SIGNAL(clicked()), this, SLOT(onAddClicked()));
     connect(ui->groupButton, SIGNAL(clicked()), this, SLOT(onGroupClicked()));
     connect(ui->transferButton, SIGNAL(clicked()), this, SLOT(onTransferClicked()));
     connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
-    connect(ui->nameLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onUsernameChanged(QString, QString)));
+    connect(profilePicture, &MaskablePixmapWidget::clicked, this, &Widget::showProfile);
+    connect(ui->nameLabel, &CroppingLabel::clicked, this, &Widget::showProfile);
     connect(ui->statusLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onStatusMessageChanged(QString, QString)));
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
-    connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
@@ -223,7 +223,7 @@ void Widget::setTranslation()
     QCoreApplication::installTranslator(translator);
 }
 
-void Widget::updateTrayIcon()
+void Widget::updateIcons()
 {
     QString status;
     if (eventIcon)
@@ -234,10 +234,17 @@ void Widget::updateTrayIcon()
         if (!status.length())
             status = "offline";
     }
-    QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
-    QString pic = ":img/taskbar/" + color + "/taskbar_" + status + ".svg";
+
+    QIcon ico = QIcon::fromTheme("qtox-" + status);
+    if (ico.isNull())
+    {
+        QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
+        ico = QIcon(":img/taskbar/" + color + "/taskbar_" + status + ".svg");
+    }
+
+    setWindowIcon(ico);
     if (icon)
-        icon->setIcon(QIcon(pic));
+        icon->setIcon(ico);
 }
 
 Widget::~Widget()
@@ -247,6 +254,7 @@ Widget::~Widget()
     if (icon)
         icon->hide();
     hideMainForms();
+    delete profileForm;
     delete settingsWidget;
     delete addFriendForm;
     delete filesForm;
@@ -308,53 +316,6 @@ void Widget::resizeEvent(QResizeEvent *event)
 QString Widget::getUsername()
 {
     return Nexus::getCore()->getUsername();
-}
-
-void Widget::onAvatarClicked()
-{
-    QString filename = QFileDialog::getOpenFileName(this,
-        tr("Choose a profile picture"),
-        QDir::homePath(),
-        Nexus::getSupportedImageFilter());
-    if (filename.isEmpty())
-        return;
-    QFile file(filename);
-    file.open(QIODevice::ReadOnly);
-    if (!file.isOpen())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to open this file"));
-        return;
-    }
-
-    QPixmap pic;
-    if (!pic.loadFromData(file.readAll()))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to read this image"));
-        return;
-    }
-
-    QByteArray bytes;
-    QBuffer buffer(&bytes);
-    buffer.open(QIODevice::WriteOnly);
-    pic.save(&buffer, "PNG");
-    buffer.close();
-
-    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
-    {
-        pic = pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        bytes.clear();
-        buffer.open(QIODevice::WriteOnly);
-        pic.save(&buffer, "PNG");
-        buffer.close();
-    }
-
-    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
-    {
-        QMessageBox::critical(this, tr("Error"), tr("This image is too big"));
-        return;
-    }
-
-    Nexus::getCore()->setAvatar(TOX_AVATAR_FORMAT_PNG, bytes);
 }
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
@@ -429,7 +390,7 @@ void Widget::onStatusSet(Status status)
         ui->statusButton->setIcon(QIcon(":img/status/dot_away_2x.png"));
         break;
     }
-    updateTrayIcon();
+    updateIcons();
 }
 
 void Widget::setWindowTitle(const QString& title)
@@ -483,7 +444,7 @@ void Widget::confirmExecutableOpen(const QFileInfo file)
     }
     else
     {
-        QDesktopServices::openUrl(QUrl("file://" + file.filePath(), QUrl::TolerantMode));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
     }
 }
 
@@ -529,6 +490,14 @@ void Widget::onSettingsClicked()
     hideMainForms();
     settingsWidget->show(*ui);
     setWindowTitle(tr("Settings"));
+    activeChatroomWidget = nullptr;
+}
+
+void Widget::showProfile() // onAvatarClicked, onUsernameClicked
+{
+    hideMainForms();
+    profileForm->show(*ui);
+    setWindowTitle(tr("Profile"));
     activeChatroomWidget = nullptr;
 }
 
@@ -937,6 +906,15 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
+void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
+{
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g)
+        return;
+
+    g->getChatForm()->peerAudioPlaying(peernumber);
+}
+
 void Widget::removeGroup(Group* g, bool fake)
 {
     g->getGroupWidget()->setAsInactiveChatroom();
@@ -1013,7 +991,7 @@ bool Widget::event(QEvent * e)
             {
                 eventFlag = false;
                 eventIcon = false;
-                updateTrayIcon();
+                updateIcons();
             }
         default:
             break;
@@ -1055,7 +1033,7 @@ void Widget::onEventIconTick()
     if (eventFlag)
     {
         eventIcon ^= true;
-        updateTrayIcon();
+        updateIcons();
     }
 }
 
@@ -1067,7 +1045,7 @@ void Widget::onTryCreateTrayIcon()
         if (QSystemTrayIcon::isSystemTrayAvailable())
         {
             icon = new SystemTrayIcon;
-            updateTrayIcon();
+            updateIcons();
             trayMenu = new QMenu;
 
             actionQuit = new QAction(tr("&Quit"), this);

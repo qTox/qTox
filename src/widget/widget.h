@@ -23,7 +23,7 @@
 #include <QFileInfo>
 #include "form/addfriendform.h"
 #include "form/settingswidget.h"
-#include "form/settings/identityform.h"
+#include "form/profileform.h"
 #include "form/filesform.h"
 #include "src/corestructs.h"
 
@@ -63,7 +63,7 @@ public:
     bool getIsWindowMinimized();
     void clearContactsList();
     void setTranslation();
-    void updateTrayIcon();
+    void updateIcons();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
@@ -102,6 +102,7 @@ public slots:
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
+    void onGroupPeerAudioPlaying(int groupnumber, int peernumber);
     void playRingtone();
     void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();
@@ -121,7 +122,7 @@ private slots:
     void onAddClicked();
     void onGroupClicked();
     void onTransferClicked();
-    void onAvatarClicked();
+    void showProfile();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
     void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
@@ -160,6 +161,7 @@ private:
     QSplitter *centralLayout;
     QPoint dragPosition;
     AddFriendForm *addFriendForm;
+    ProfileForm *profileForm;
     SettingsWidget *settingsWidget;
     FilesForm *filesForm;
     static Widget *instance;

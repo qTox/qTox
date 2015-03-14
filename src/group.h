@@ -19,6 +19,7 @@
 
 #include <QMap>
 #include <QObject>
+#include <QStringList>
 
 #define RETRY_PEER_INFO_INTERVAL 500
 
@@ -39,6 +40,7 @@ public:
     int getPeersCount() const;
     void regeneratePeerList();
     QStringList getPeerList() const;
+    bool isSelfPeerNumber(int peernumber) const;
 
     GroupChatForm *getChatForm();
     GroupWidget *getGroupWidget();
@@ -62,11 +64,12 @@ public:
 private:
     GroupWidget* widget;
     GroupChatForm* chatForm;
-    QMap<int, QString> peers;
+    QStringList peers;
     QMap<QString, QString> toxids;
     int hasNewMessages, userWasMentioned;
     int groupId;
     int nPeers;
+    int selfPeerNum = -1;
     bool avGroupchat;
 
 };

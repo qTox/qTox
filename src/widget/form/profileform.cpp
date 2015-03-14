@@ -15,30 +15,63 @@
 */
 
 #include "src/core.h"
-#include "ui_identitysettings.h"
-#include "identityform.h"
+#include "src/nexus.h"
+#include "ui_profileform.h"
+#include "profileform.h"
+#include "ui_mainwindow.h"
 #include "src/widget/form/settingswidget.h"
+#include "src/widget/maskablepixmapwidget.h"
 #include "src/misc/settings.h"
 #include "src/widget/croppinglabel.h"
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
 #include "src/historykeeper.h"
 #include "src/misc/style.h"
+#include "src/misc/qrwidget.h"
+#include "qrencode.h"
 #include <QLabel>
 #include <QLineEdit>
+#include <QGroupBox>
 #include <QApplication>
 #include <QClipboard>
 #include <QInputDialog>
 #include <QFileDialog>
-#include "src/misc/qrwidget.h"
-#include "qrencode.h"
+#include <QBuffer>
 
-IdentityForm::IdentityForm() :
-    GenericForm(tr("Identity"), QPixmap(":/img/settings/identity.png"))
+
+void ProfileForm::refreshProfiles()
+{
+    bodyUI->profiles->clear();
+    for (QString profile : Settings::getInstance().searchProfiles())
+        bodyUI->profiles->addItem(profile);
+    QString current = Settings::getInstance().getCurrentProfile();
+    if (current != "")
+        bodyUI->profiles->setCurrentText(current);
+}
+
+ProfileForm::ProfileForm(QWidget *parent) :
+    QWidget(parent)
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
     core = Core::getInstance();
+
+    head = new QWidget(this);
+    QHBoxLayout* headLayout = new QHBoxLayout();
+    head->setLayout(headLayout);
+
+    QLabel* imgLabel = new QLabel();
+    headLayout->addWidget(imgLabel);
+
+    QLabel* nameLabel = new QLabel();
+    QFont bold;
+    bold.setBold(true);
+    nameLabel->setFont(bold);
+    headLayout->addWidget(nameLabel);
+    headLayout->addStretch(1);
+
+    nameLabel->setText(tr("User Profile"));
+    imgLabel->setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(40, Qt::SmoothTransformation));
 
     // tox
     toxId = new ClickableTE();
@@ -48,42 +81,62 @@ IdentityForm::IdentityForm() :
     
     bodyUI->toxGroup->layout()->addWidget(toxId);
 
+    profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.png");
+    profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
+    profilePicture->setClickable(true);
+    connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
+    QHBoxLayout *publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
+    publicGrouplayout->insertWidget(0, profilePicture);
+    publicGrouplayout->insertSpacing(1, 7);
+
     timer.setInterval(750);
     timer.setSingleShot(true);
     connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", "")); hasCheck = false;});
     
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(core, &Core::idSet, this, &IdentityForm::setToxId);
+    connect(core, &Core::idSet, this, &ProfileForm::setToxId);
+    connect(core, &Core::statusSet, this, &ProfileForm::onStatusSet);
     connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
     connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
-    connect(bodyUI->loadButton, &QPushButton::clicked, this, &IdentityForm::onLoadClicked);
-    connect(bodyUI->renameButton, &QPushButton::clicked, this, &IdentityForm::onRenameClicked);
-    connect(bodyUI->exportButton, &QPushButton::clicked, this, &IdentityForm::onExportClicked);
-    connect(bodyUI->deleteButton, &QPushButton::clicked, this, &IdentityForm::onDeleteClicked);
-    connect(bodyUI->importButton, &QPushButton::clicked, this, &IdentityForm::onImportClicked);
-    connect(bodyUI->newButton, &QPushButton::clicked, this, &IdentityForm::onNewClicked);
+    connect(bodyUI->loadButton, &QPushButton::clicked, this, &ProfileForm::onLoadClicked);
+    connect(bodyUI->renameButton, &QPushButton::clicked, this, &ProfileForm::onRenameClicked);
+    connect(bodyUI->exportButton, &QPushButton::clicked, this, &ProfileForm::onExportClicked);
+    connect(bodyUI->deleteButton, &QPushButton::clicked, this, &ProfileForm::onDeleteClicked);
+    connect(bodyUI->importButton, &QPushButton::clicked, this, &ProfileForm::onImportClicked);
+    connect(bodyUI->newButton, &QPushButton::clicked, this, &ProfileForm::onNewClicked);
 
-    connect(core, &Core::avStart, this, &IdentityForm::disableSwitching);
-    connect(core, &Core::avStarting, this, &IdentityForm::disableSwitching);
-    connect(core, &Core::avInvite, this, &IdentityForm::disableSwitching);
-    connect(core, &Core::avRinging, this, &IdentityForm::disableSwitching);
-    connect(core, &Core::avCancel, this, &IdentityForm::enableSwitching);
-    connect(core, &Core::avEnd, this, &IdentityForm::enableSwitching);
-    connect(core, &Core::avEnding, this, &IdentityForm::enableSwitching);
-    connect(core, &Core::avPeerTimeout, this, &IdentityForm::enableSwitching);
-    connect(core, &Core::avRequestTimeout, this, &IdentityForm::enableSwitching);
+    connect(core, &Core::avStart, this, &ProfileForm::disableSwitching);
+    connect(core, &Core::avStarting, this, &ProfileForm::disableSwitching);
+    connect(core, &Core::avInvite, this, &ProfileForm::disableSwitching);
+    connect(core, &Core::avRinging, this, &ProfileForm::disableSwitching);
+    connect(core, &Core::avCancel, this, &ProfileForm::enableSwitching);
+    connect(core, &Core::avEnd, this, &ProfileForm::enableSwitching);
+    connect(core, &Core::avEnding, this, &ProfileForm::enableSwitching);
+    connect(core, &Core::avPeerTimeout, this, &ProfileForm::enableSwitching);
+    connect(core, &Core::avRequestTimeout, this, &ProfileForm::enableSwitching);
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
 }
 
-IdentityForm::~IdentityForm()
+ProfileForm::~ProfileForm()
 {
     delete bodyUI;
+    head->deleteLater();
 }
 
-void IdentityForm::copyIdClicked()
+void ProfileForm::show(Ui::MainWindow &ui)
+{
+    ui.mainHead->layout()->addWidget(head);
+    ui.mainContent->layout()->addWidget(this);
+    head->show();
+    QWidget::show();
+    bodyUI->userName->setFocus(Qt::OtherFocusReason);
+    bodyUI->userName->selectAll();
+}
+
+void ProfileForm::copyIdClicked()
 {
     toxId->selectAll();
     QString txt = toxId->text();
@@ -99,32 +152,22 @@ void IdentityForm::copyIdClicked()
     timer.start();
 }
 
-void IdentityForm::onUserNameEdited()
+void ProfileForm::onUserNameEdited()
 {
     Core::getInstance()->setUsername(bodyUI->userName->text());
 }
 
-void IdentityForm::onStatusMessageEdited()
+void ProfileForm::onStatusMessageEdited()
 {
     Core::getInstance()->setStatusMessage(bodyUI->statusMessage->text());
 }
 
-void IdentityForm::present()
+void ProfileForm::onSelfAvatarLoaded(const QPixmap& pic)
 {
-    toxId->setText(Core::getInstance()->getSelfId().toString());
-    toxId->setCursorPosition(0);
-    bodyUI->profiles->clear();
-    for (QString profile : Settings::getInstance().searchProfiles())
-        bodyUI->profiles->addItem(profile);
-    QString current = Settings::getInstance().getCurrentProfile();
-    if (current != "")
-        bodyUI->profiles->setCurrentText(current);
-
-    bodyUI->userName->setText(Core::getInstance()->getUsername());
-    bodyUI->statusMessage->setText(Core::getInstance()->getStatusMessage());
+    profilePicture->setPixmap(pic);
 }
 
-void IdentityForm::setToxId(const QString& id)
+void ProfileForm::setToxId(const QString& id)
 {
     toxId->setText(id);
     toxId->setCursorPosition(0);
@@ -135,7 +178,54 @@ void IdentityForm::setToxId(const QString& id)
     toxId->setToolTip(qrcode->getImageAsText());
 }
 
-void IdentityForm::onLoadClicked()
+void ProfileForm::onAvatarClicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+        tr("Choose a profile picture"),
+        QDir::homePath(),
+        Nexus::getSupportedImageFilter());
+    if (filename.isEmpty())
+        return;
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    if (!file.isOpen())
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to open this file"));
+        return;
+    }
+
+    QPixmap pic;
+    if (!pic.loadFromData(file.readAll()))
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to read this image"));
+        return;
+    }
+
+    QByteArray bytes;
+    QBuffer buffer(&bytes);
+    buffer.open(QIODevice::WriteOnly);
+    pic.save(&buffer, "PNG");
+    buffer.close();
+
+    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
+    {
+        pic = pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        bytes.clear();
+        buffer.open(QIODevice::WriteOnly);
+        pic.save(&buffer, "PNG");
+        buffer.close();
+    }
+
+    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
+    {
+        QMessageBox::critical(this, tr("Error"), tr("This image is too big"));
+        return;
+    }
+
+    Nexus::getCore()->setAvatar(TOX_AVATAR_FORMAT_PNG, bytes);
+}
+
+void ProfileForm::onLoadClicked()
 {
     if (bodyUI->profiles->currentText() != Settings::getInstance().getCurrentProfile())
     {
@@ -148,7 +238,7 @@ void IdentityForm::onLoadClicked()
     }
 }
 
-void IdentityForm::onRenameClicked()
+void ProfileForm::onRenameClicked()
 {
     QString cur = bodyUI->profiles->currentText();
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
@@ -176,7 +266,7 @@ void IdentityForm::onRenameClicked()
     } while (true);
 }
 
-void IdentityForm::onExportClicked()
+void ProfileForm::onExportClicked()
 {
     QString current = bodyUI->profiles->currentText() + Core::TOX_EXT;
     QString path = QFileDialog::getSaveFileName(this, tr("Export profile", "save dialog title"),
@@ -201,7 +291,7 @@ void IdentityForm::onExportClicked()
     }
 }
 
-void IdentityForm::onDeleteClicked()
+void ProfileForm::onDeleteClicked()
 {
     if (Settings::getInstance().getCurrentProfile() == bodyUI->profiles->currentText())
     {
@@ -226,7 +316,7 @@ void IdentityForm::onDeleteClicked()
     }
 }
 
-void IdentityForm::onImportClicked()
+void ProfileForm::onImportClicked()
 {
     QString path = QFileDialog::getOpenFileName(this,
                                                 tr("Import profile", "import dialog title"),
@@ -256,22 +346,33 @@ void IdentityForm::onImportClicked()
     bodyUI->profiles->addItem(profile);
 }
 
-void IdentityForm::onNewClicked()
+void ProfileForm::onStatusSet(Status)
+{
+    refreshProfiles();
+}
+
+void ProfileForm::onNewClicked()
 {
     emit Widget::getInstance()->changeProfile(QString());
 }
 
-void IdentityForm::disableSwitching()
+void ProfileForm::disableSwitching()
 {
     bodyUI->loadButton->setEnabled(false);
     bodyUI->newButton->setEnabled(false);
 }
 
-void IdentityForm::enableSwitching()
+void ProfileForm::enableSwitching()
 {
     if (!core->anyActiveCalls())
     {
         bodyUI->loadButton->setEnabled(true);
         bodyUI->newButton->setEnabled(true);
     }
+}
+
+void ProfileForm::showEvent(QShowEvent *event)
+{
+    refreshProfiles();
+    QWidget::showEvent(event);
 }

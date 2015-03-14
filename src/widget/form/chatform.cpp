@@ -387,7 +387,6 @@ void ChatForm::onAvEnd(int FriendId, int)
 
     enableCallButtons();
     stopCounter();
-    
     netcam->hide();
 }
 
@@ -562,6 +561,12 @@ void ChatForm::onAnswerCallTriggered()
 void ChatForm::onHangupCallTriggered()
 {
     qDebug() << "onHangupCallTriggered";
+
+    //Fixes an OS X bug with ending a call while in full screen
+    if(netcam->isFullScreen())
+    {
+        netcam->showNormal();
+    }
     
     audioInputFlag = false;
     audioOutputFlag = false;
