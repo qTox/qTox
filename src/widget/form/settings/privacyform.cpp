@@ -114,8 +114,8 @@ bool PrivacyForm::setChatLogsPassword()
         }
         else
         {
-            if (GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\n\nIf you don't care about the old history, you may click Ok to delete it and use the password you just entered.\nOtherwise, hit cancel to try again.", "This happens when enabling encryption after previously \"Disabling History\""), false, true, false))
-                if (GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("Are you absolutely sure you want to lose the unused encrypted chat history?", "secondary popup")))
+            if (GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\n\nIf you don't care about the old history, you may delete it and use the password you just entered.\nOtherwise, hit Cancel to try again.", "This happens when enabling encryption after previously \"Disabling History\""), tr("Delete"), tr("Cancel")))
+                if (GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("Are you absolutely sure you want to lose the unused encrypted chat history?", "secondary popup"), tr("Delete"), tr("Cancel")))
                     haveEncHist = false; // logically this is really just a `break`, but conceptually this is more accurate
         }
     } while (haveEncHist);
@@ -142,31 +142,38 @@ void PrivacyForm::onEncryptLogsUpdated()
     }
     else
     {
-        QMessageBox::StandardButton button = QMessageBox::warning(
-            Widget::getInstance(),
+        QMessageBox box(QMessageBox::Warning,
             tr("Old encrypted chat history", "title"),
             tr("Would you like to decrypt your chat history?\nOtherwise it will be deleted."),
-            QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel,
-            QMessageBox::Cancel
-        );
+            QMessageBox::NoButton, Widget::getInstance());
+        QPushButton* decryptBtn = box.addButton(tr("Decrypt"), QMessageBox::YesRole);
+        QPushButton* deleteBtn = box.addButton(tr("Delete"), QMessageBox::NoRole);
+        QPushButton* cancelBtn = box.addButton(tr("Cancel"), QMessageBox::RejectRole);
+        box.setDefaultButton(cancelBtn);
+        box.setEscapeButton(cancelBtn);
 
-        if (button == QMessageBox::Ok)
+        box.exec();
+
+        if (box.clickedButton() == decryptBtn)
         {
             QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile(true);
             core->clearPassword(Core::ptHistory);
             Settings::getInstance().setEncryptLogs(false);
             HistoryKeeper::getInstance()->importMessages(oldMessages);
         }
-        else if (button == QMessageBox::No)
+        else if (box.clickedButton() == deleteBtn)
         {
-            if (QMessageBox::critical(
-                    Widget::getInstance(),
-                    tr("Old encrypted chat history", "title"),
-                    tr("Are you sure you want to lose your entire chat history?"),
-                    QMessageBox::Yes | QMessageBox::Cancel,
-                    QMessageBox::Cancel
-                    )
-                == QMessageBox::Yes)
+            QMessageBox box2(QMessageBox::Critical,
+                tr("Old encrypted chat history", "title"),
+                tr("Are you sure you want to lose your entire chat history?"),
+                QMessageBox::NoButton, Widget::getInstance());
+            QPushButton* deleteBtn2 = box2.addButton(tr("Delete"), QMessageBox::AcceptRole);
+            QPushButton* cancelBtn2 = box2.addButton(tr("Cancel"), QMessageBox::RejectRole);
+            box2.setDefaultButton(cancelBtn2);
+            box2.setEscapeButton(cancelBtn2);
+            box2.exec();
+
+            if (box2.clickedButton() == deleteBtn2)
             {
                 HistoryKeeper::removeHistory(true);
             }
@@ -239,7 +246,9 @@ void PrivacyForm::onEncryptToxUpdated()
     }
     else
     {
-        if (!GUI::askQuestion(tr("Decrypt your data file", "title"), tr("Would you like to decrypt your data file?")))
+        if (!GUI::askQuestion(tr("Decrypt your data file", "title"),
+            tr("Would you like to decrypt your data file?"),
+            tr("Decrypt"), tr("Cancel")))
         {
             bodyUI->cbEncryptTox->setChecked(true);
             return;
