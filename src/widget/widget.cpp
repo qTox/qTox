@@ -679,7 +679,6 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 {
-    qDebug() << "active chat";
     hideMainForms();
     widget->setChatForm(*ui);
     if (activeChatroomWidget != nullptr)
