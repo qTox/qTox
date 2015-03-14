@@ -152,6 +152,22 @@ void GroupChatForm::onUserListChanged()
             label->setText(label->text() + ", ");
         namesListLayout->addWidget(label);
     }
+
+    // Enable or disable call button
+    if (group->getPeersCount() != 1)
+    {
+        callButton->setEnabled(true);
+        callButton->setObjectName("green");
+        callButton->style()->polish(callButton);
+        callButton->setToolTip(tr("Start audio call"));
+    }
+    else
+    {
+        callButton->setEnabled(false);
+        callButton->setObjectName("grey");
+        callButton->style()->polish(callButton);
+        callButton->setToolTip("");
+    }
 }
 
 void GroupChatForm::peerAudioPlaying(int peer)
