@@ -34,7 +34,6 @@ static QStringList locales = {"bg", "de", "en", "es", "fr", "hr", "hu", "it", "l
 static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "mannol", "Nederlands", "Pirate", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
-
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
 {
@@ -66,6 +65,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->minimizeToTray->setEnabled(showSystemTray);
     bodyUI->lightTrayIcon->setChecked(Settings::getInstance().getLightTrayIcon());
     bodyUI->lightTrayIcon->setEnabled(showSystemTray);
+    
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
@@ -82,10 +82,10 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     }
     bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
     reloadSmiles();
+    bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 
     bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
-
     if (QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
         bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
     else
@@ -107,7 +107,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(),
                                                              QTime::currentTime().toString(Settings::getInstance().getTimestampFormat()))
                                       ); //idiot proof enough?
-
     bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
 
     bodyUI->cbEnableUDP->setChecked(!Settings::getInstance().getForceTCP());
@@ -152,6 +151,20 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
     connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
+    
+    // prevent stealing mouse whell scroll
+    // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
+    // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
+    // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
+    Q_FOREACH(QComboBox *cb, findChildren<QComboBox*>() ) {
+            cb->installEventFilter(this);
+            cb->setFocusPolicy(Qt::StrongFocus);
+    }
+    
+    Q_FOREACH(QSpinBox *sp, findChildren<QSpinBox*>() ) {
+            sp->installEventFilter(this);
+            sp->setFocusPolicy(Qt::WheelFocus);
+    }
 
 #ifndef QTOX_PLATFORM_EXT
     bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
@@ -184,6 +197,7 @@ void GeneralForm::onSetShowSystemTray()
 {
     Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
     emit parent->setShowSystemTray(bodyUI->showSystemTray->isChecked());
+    bodyUI->lightTrayIcon->setEnabled(bodyUI->showSystemTray->isChecked());
 }
 
 void GeneralForm::onSetAutostartInTray()
@@ -247,7 +261,8 @@ void GeneralForm::onAutoAcceptFileChange()
 void GeneralForm::onAutoSaveDirChange()
 {
     QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
-    QString directory = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"));
+    QString directory = QFileDialog::getExistingDirectory(0,
+                                                          tr("Choose an auto accept directory","popup title"));
     if (directory.isEmpty())
         directory = previousDir;
 
@@ -258,6 +273,7 @@ void GeneralForm::onAutoSaveDirChange()
 void GeneralForm::onUseEmoticonsChange()
 {
     Settings::getInstance().setUseEmoticons(bodyUI->useEmoticons->isChecked());
+    bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 }
 
 void GeneralForm::onSetStatusChange()
@@ -314,8 +330,6 @@ void GeneralForm::reloadSmiles()
 {
     QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
     QStringList smiles;
-    smiles << ":)" << ";)" << ":p" << ":O" << ":["; //just in case...
-
     for (int i = 0; i < emoticons.size(); i++)
         smiles.push_front(emoticons.at(i).first());
 
@@ -370,4 +384,15 @@ void GeneralForm::onThemeColorChanged(int)
     Settings::getInstance().setThemeColor(index);
     Style::setThemeColor(index);
     Style::applyTheme();
+}
+
+bool GeneralForm::eventFilter(QObject *o, QEvent *e)
+{
+    if ((e->type() == QEvent::Wheel) &&
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+    {
+        e->ignore();
+        return true;
+    }
+    return QWidget::eventFilter(o, e);
 }
