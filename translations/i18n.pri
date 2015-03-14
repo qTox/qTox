@@ -5,6 +5,7 @@ TRANSLATIONS = translations/es.ts \
                translations/de.ts \
                translations/fi.ts \
                translations/fr.ts \
+               translations/hr.ts \
                translations/hu.ts \
                translations/it.ts \
                translations/nl.ts \
