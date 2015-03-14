@@ -69,6 +69,12 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 
             if (ok && alias != nameLabel->fullText())
                 emit g->getChatForm()->groupTitleChanged(groupId, alias.left(128));
+            /* according to agilob:
+	     * “Moving mouse pointer over groupwidget results in CSS effect
+	     * mouse-over(?). Changing group title repaints only changed
+	     * element - title, the rest of the widget stays in the same CSS as it
+	     * was on mouse over. Repainting whole widget fixes style problem.”
+	     */
             this->repaint();            
         }
     }
