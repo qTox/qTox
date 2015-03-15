@@ -156,12 +156,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
     // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
     // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
-    Q_FOREACH(QComboBox *cb, findChildren<QComboBox*>() ) {
+    foreach(QComboBox *cb, findChildren<QComboBox*>() ) {
             cb->installEventFilter(this);
             cb->setFocusPolicy(Qt::StrongFocus);
     }
     
-    Q_FOREACH(QSpinBox *sp, findChildren<QSpinBox*>() ) {
+    foreach(QSpinBox *sp, findChildren<QSpinBox*>() ) {
             sp->installEventFilter(this);
             sp->setFocusPolicy(Qt::WheelFocus);
     }

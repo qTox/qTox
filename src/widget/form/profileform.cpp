@@ -116,6 +116,11 @@ ProfileForm::ProfileForm(QWidget *parent) :
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
+    
+    foreach(QComboBox *cb, findChildren<QComboBox*>() ) {
+            cb->installEventFilter(this);
+            cb->setFocusPolicy(Qt::StrongFocus);
+    }
 }
 
 ProfileForm::~ProfileForm()
@@ -368,4 +373,15 @@ void ProfileForm::showEvent(QShowEvent *event)
 {
     refreshProfiles();
     QWidget::showEvent(event);
+}
+
+bool ProfileForm::eventFilter(QObject *o, QEvent *e)
+{
+    if ((e->type() == QEvent::Wheel) &&
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+    {
+        e->ignore();
+        return true;
+    }
+    return QWidget::eventFilter(o, e);
 }
