@@ -225,7 +225,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="68"/>
         <source>Chat history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">История переписки</translation>
     </message>
     <message>
         <source>History</source>
@@ -900,7 +900,7 @@ Alias:</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="67"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Язык:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="102"/>
@@ -946,7 +946,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
         <source>Check for updates on startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Проверять на наличие обновлений</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="220"/>
@@ -957,7 +957,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
         <source>Save to:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранять в:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
@@ -967,7 +967,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="284"/>
         <source>Auto away after (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Статус "Отошел" после (0 - выключено):</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
@@ -978,7 +978,7 @@ instead of system taskbar.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="302"/>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сообщать обо всех сообщениях в групповых чатах.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
@@ -1028,7 +1028,7 @@ will be sent to them when they will appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>Compact contact list</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Компактный список контактов</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="402"/>
@@ -1038,13 +1038,13 @@ will be sent to them when they will appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="640"/>
         <source>Proxy type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тип proxy:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="647"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Адресс:</translation>
     </message>
     <message>
         <source>Smiley Pack</source>
@@ -1094,7 +1094,7 @@ will be sent to them when they will appear online to you.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="420"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">>Набор смайликов:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="494"/>
@@ -1104,17 +1104,17 @@ will be sent to them when they will appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Дизайн:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="543"/>
         <source>Theme color:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Цветовая схема:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="560"/>
         <source>Timestamp format:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Формат времени:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="599"/>
@@ -1805,7 +1805,7 @@ Do you want to delete old history file?</source>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
         <source>Send Typing Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сообщать о Вашем наборе текста</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="57"/>
@@ -1817,33 +1817,33 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
         <source>Keep chat history (mostly stable)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сохранять историю переписки (наиболее стабильно)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
         <source>Local file encryption</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Локальная шифрация файлов</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
         <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Все сообщения внутри сети Tox шифруются, и это невозможно отключить. Кроме того вы можете защитить паролем локальные файлы Tox.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
         <source>Encrypt Tox data file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Шифровать служебные файлы Tox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="123"/>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сменить пароль</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="113"/>
         <source>Encrypt chat history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Шифровать историю переписки Tox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="135"/>
