@@ -313,6 +313,8 @@ void GeneralForm::onReconnectClicked()
 void GeneralForm::reloadSmiles()
 {
     QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
+    if(!emoticons.isEmpty())
+    {
     QStringList smiles;
     smiles << ":)" << ";)" << ":p" << ":O" << ":["; //just in case...
 
@@ -331,6 +333,7 @@ void GeneralForm::reloadSmiles()
     bodyUI->smile3->setToolTip(smiles[2]);
     bodyUI->smile4->setToolTip(smiles[3]);
     bodyUI->smile5->setToolTip(smiles[4]);
+    }
 }
 
 void GeneralForm::onCheckUpdateChanged()
