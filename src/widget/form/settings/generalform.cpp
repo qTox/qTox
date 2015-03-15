@@ -27,6 +27,7 @@
 #include <QTime>
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QDebug>
 
 #include "src/autoupdate.h"
 
@@ -313,6 +314,11 @@ void GeneralForm::onReconnectClicked()
 void GeneralForm::reloadSmiles()
 {
     QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
+    if (emoticons.isEmpty())
+    // sometimes there are no emoticons available, don't crash in this case
+    {
+        qDebug() << "Settings GeneralForm: No emoticons found";
+    } else {
     QStringList smiles;
     smiles << ":)" << ";)" << ":p" << ":O" << ":["; //just in case...
 
@@ -331,6 +337,7 @@ void GeneralForm::reloadSmiles()
     bodyUI->smile3->setToolTip(smiles[2]);
     bodyUI->smile4->setToolTip(smiles[3]);
     bodyUI->smile5->setToolTip(smiles[4]);
+    }
 }
 
 void GeneralForm::onCheckUpdateChanged()
