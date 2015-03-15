@@ -388,7 +388,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="81"/>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Выбрать всё</translation>
     </message>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="501"/>
@@ -905,7 +905,7 @@ Alias:</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="102"/>
         <source>System tray</source>
-        <translation type="unfinished">Системный трей</translation>
+        <translation type="unfinished">Трей</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="118"/>
@@ -1005,7 +1005,7 @@ instead of system taskbar.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="341"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Активизировать окно</translation>
+        <translation type="unfinished">Передать фокус окну.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
@@ -1038,13 +1038,13 @@ will be sent to them when they will appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="640"/>
         <source>Proxy type:</source>
-        <translation type="unfinished">Тип proxy:</translation>
+        <translation type="unfinished">Прокси:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="647"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Адресс:</translation>
+        <translation type="unfinished">Адрес:</translation>
     </message>
     <message>
         <source>Smiley Pack</source>
@@ -1104,7 +1104,7 @@ will be sent to them when they will appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
         <source>Style:</source>
-        <translation type="unfinished">Дизайн:</translation>
+        <translation type="unfinished">Стиль:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="543"/>
@@ -1817,17 +1817,17 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
         <source>Keep chat history (mostly stable)</source>
-        <translation type="unfinished">Сохранять историю переписки (наиболее стабильно)</translation>
+        <translation type="unfinished">Сохранять историю переписки (в целом стабильно)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
         <source>Local file encryption</source>
-        <translation type="unfinished">Локальная шифрация файлов</translation>
+        <translation type="unfinished">Шифрование локальных файлов</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
         <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
-        <translation type="unfinished">Все сообщения внутри сети Tox шифруются, и это невозможно отключить. Кроме того вы можете защитить паролем локальные файлы Tox.</translation>
+        <translation type="unfinished">Все сообщения внутри сети Tox шифруются, и это невозможно отключить. Однако, вы можете дополнительно защитить паролем локальные файлы Tox.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
