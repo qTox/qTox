@@ -31,6 +31,8 @@
 #include <QMutexLocker>
 #include <QProcess>
 #include <opencv2/core/core_c.h>
+#include <QTranslator>
+#include <qlibraryinfo.h>
 
 #include <sodium.h>
 
@@ -77,6 +79,12 @@ int main(int argc, char *argv[])
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
+
+    // system menu translation
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(),
+    QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&qtTranslator);
     
 #ifdef HIGH_DPI
     a.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
