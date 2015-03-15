@@ -905,7 +905,7 @@ Alias:</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="102"/>
         <source>System tray</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Системный трей</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="118"/>
@@ -941,7 +941,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="199"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автозапуск</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
@@ -983,12 +983,12 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
         <source>Group chats always notify</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сообщать о всех сообщениях в групповых чатах</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="319"/>
         <source>On new message:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">При получении нового сообщения:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="331"/>
@@ -999,18 +999,18 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="334"/>
         <source>Show window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показывать окно</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="341"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Активизировать окно</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
         <source>Focus window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Активизировать окно</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="366"/>
@@ -1094,12 +1094,12 @@ will be sent to them when they will appear online to you.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="420"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">>Набор смайликов:</translation>
+        <translation type="unfinished">Набор смайликов:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="494"/>
         <source>Emoticon size:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Размер смайликов:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
