@@ -126,14 +126,14 @@ Share it with your friends to communicate.</string>
                 <item alignment="Qt::AlignVCenter">
                  <widget class="QPushButton" name="saveQr">
                   <property name="text">
-                   <string>Save</string>
+                   <string>Save image</string>
                   </property>
                  </widget>
                 </item>
                 <item alignment="Qt::AlignVCenter">
                  <widget class="QPushButton" name="copyQr">
                   <property name="text">
-                   <string>Copy</string>
+                   <string>Copy image</string>
                   </property>
                  </widget>
                 </item>

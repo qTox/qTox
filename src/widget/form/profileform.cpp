@@ -378,7 +378,7 @@ void ProfileForm::showEvent(QShowEvent *event)
 
 void ProfileForm::on_copyQr_clicked()
 {
-
+    QApplication::clipboard()->setImage(*qr->getImage());
 }
 
 void ProfileForm::on_saveQr_clicked()
