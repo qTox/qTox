@@ -110,14 +110,14 @@ QScrollBar::handle:vertical:pressed  {
 }
 
 QScrollBar::add-line:vertical {
-    background: url(":ui/chatArea/scrollBarDownArrow.png") center;
+    background: url(":ui/chatArea/scrollBarDownArrow.svg") center;
     height: 0px;
     subcontrol-position: bottom;
     subcontrol-origin: margin;
 }
 
 QScrollBar::sub-line:vertical {
-    background: url(":ui/chatArea/scrollBarUpArrow.png") center;
+    background: url(":ui/chatArea/scrollBarUpArrow.svg") center;
     height: 0px;
     subcontrol-position: top;
     subcontrol-origin: margin;
@@ -161,14 +161,14 @@ QScrollBar::handle:horizontal:pressed  {
 }
 
 QScrollBar::add-line:horizontal {
-    background: url(":ui/chatArea/scrollBarRightArrow.png") center;
+    background: url(":ui/chatArea/scrollBarRightArrow.svg") center;
     width: 0px;
     subcontrol-position: right;
     subcontrol-origin: margin;
 }
 
 QScrollBar::sub-line:horizontal {
-    background: url(":ui/chatArea/scrollBarLeftArrow.png") center;
+    background: url(":ui/chatArea/scrollBarLeftArrow.svg") center;
     width: 0px;
     subcontrol-position: left;
     subcontrol-origin: margin;

@@ -1307,7 +1307,7 @@ void Core::switchConfiguration(const QString& profile)
     toxTimer->stop();
     deadifyTox();
 
-    emit selfAvatarChanged(QPixmap(":/img/contact_dark.png"));
+    emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
     emit blockingClearContacts(); // we need this to block, but signals are required for thread safety
 
     if (profile.isEmpty())

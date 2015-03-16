@@ -57,7 +57,6 @@ protected:
     void setBackgroundColor(const QColor& c, bool whiteFont);
     void setButtonColor(const QColor& c);
 
-    bool isFilePathWritable(const QString& filepath) const;
     bool drawButtonAreaNeeded() const;
 
     virtual void paintEvent(QPaintEvent*);
