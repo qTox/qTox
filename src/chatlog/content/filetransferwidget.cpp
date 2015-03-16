@@ -17,6 +17,7 @@
 #include "filetransferwidget.h"
 #include "ui_filetransferwidget.h"
 
+#include "src/nexus.h"
 #include "src/core.h"
 #include "src/misc/style.h"
 #include "src/widget/widget.h"
@@ -113,7 +114,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
 
     //Do not automatically accept the file-transfer if the path is not writable.
     //The user can still accept it manually.
-    if(isFilePathWritable(filepath))
+    if (Nexus::isFilePathWritable(filepath))
         Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
     else
         qDebug() << "Warning: Cannot write to " << filepath;
@@ -125,7 +126,7 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
         return;
 
     //test if writable
-    if(!isFilePathWritable(filepath))
+    if(!Nexus::isFilePathWritable(filepath))
     {
         QMessageBox::warning(0,
                              tr("Location not writable","Title of permissions popup"),
@@ -162,14 +163,6 @@ void FileTransferWidget::setButtonColor(const QColor &c)
         buttonColorAnimation->setEndValue(c);
         buttonColorAnimation->start();
     }
-}
-
-bool FileTransferWidget::isFilePathWritable(const QString &filepath) const
-{
-    QFile tmp(filepath);
-    bool writable = tmp.open(QIODevice::WriteOnly);
-    tmp.remove();
-    return writable;
 }
 
 bool FileTransferWidget::drawButtonAreaNeeded() const

@@ -169,3 +169,11 @@ QString Nexus::getSupportedImageFilter()
     res += QString("*.%1 ").arg(QString(type));
   return tr("Images (%1)", "filetype filter").arg(res.left(res.size()-1));
 }
+
+bool Nexus::isFilePathWritable(const QString& filepath)
+{
+    QFile tmp(filepath);
+    bool writable = tmp.open(QIODevice::WriteOnly);
+    tmp.remove();
+    return writable;
+}
