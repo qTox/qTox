@@ -75,6 +75,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     toxId->setReadOnly(true);
     toxId->setFrame(false);
     toxId->setFont(Style::getFont(Style::Small));
+    toxId->setToolTip(bodyUI->toxId->toolTip());
 
     QVBoxLayout *toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
     toxIdGroup->replaceWidget(bodyUI->toxId, toxId);
@@ -268,7 +269,7 @@ void ProfileForm::onExportClicked()
 {
     QString current = bodyUI->profiles->currentText() + Core::TOX_EXT;
     QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"),
-                    QDir::home().filePath(current), 
+                    QDir::home().filePath(current),
                     tr("Tox save file (*.tox)", "save dialog filter"));
     if (!path.isEmpty())
     {
@@ -296,7 +297,7 @@ void ProfileForm::onDeleteClicked()
         QMessageBox::warning(this, tr("Profile currently loaded","current profile deletion warning title"), tr("This profile is currently in use. Please load a different profile before deleting this one.","current profile deletion warning text"));
     }
     else
-    {        
+    {
         if (GUI::askQuestion(tr("Deletion imminent!","deletion confirmation title"),
                           tr("Are you sure you want to delete this profile?","deletion confirmation text")))
         {

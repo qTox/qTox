@@ -82,23 +82,28 @@
        </item>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="toxGroup">
-         <property name="toolTip">
-          <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</string>
-         </property>
          <property name="title">
           <string>Tox ID</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="CroppingLabel" name="toxIdLabel">
+            <property name="toolTip">
+             <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.</string>
+            </property>
             <property name="text">
              <string>Your Tox ID (click to copy)</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="toxId"/>
+           <widget class="QLineEdit" name="toxId">
+            <property name="toolTip">
+             <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QFrame" name="verticalFrame">
@@ -119,7 +124,7 @@ Share it with your friends to communicate.</string>
                 <item alignment="Qt::AlignTop">
                  <widget class="QLabel" name="label">
                   <property name="text">
-                   <string>Share this code, so friends can add you</string>
+                   <string>This QR code contains your Tox ID. You may share this with your friends as well.</string>
                   </property>
                  </widget>
                 </item>
