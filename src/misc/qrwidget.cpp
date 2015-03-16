@@ -3,7 +3,8 @@
 #include <QDebug>
 #include <QBuffer>
 #include <QImage>
-#include "qrencode.h"
+#include <qrencode.h>
+#include <sys/errno.h>
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
 //Note: The encoding fails with empty string so I just default to something else.
@@ -15,9 +16,9 @@ QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
     image = new QImage(size, QImage::Format_RGB32);
 }
 
-void QRWidget::setQRData(QString data)
+void QRWidget::setQRData(const QString& data)
 {
-    this->data = "tox:" + data;
+    this->data = data;
     paintImage();
 }
 
@@ -36,29 +37,17 @@ bool QRWidget::saveImage(QString path)
     return image->save(path, 0, 75); //0 - image format same as file extension, 75-quality, png file is ~6.3kb
 }
 
-QString QRWidget::getImageAsText()
-{
-    paintImage();
- 	QByteArray ba;
- 	QBuffer buffer(&ba);
- 	buffer.open(QIODevice::WriteOnly);
-    image->save(&buffer, "PNG"); // writes the image in PNG format inside the buffer
-    
-    QString iconBase64 = QString::fromLatin1(ba.toBase64().data());
-    QString base64Image  = "<img width=\"300\" heigth=\"300\" src=\"data:image/png;base64," + iconBase64 +"\" />";
-    
- 	return QString(base64Image);
-}
-
 //http://stackoverflow.com/questions/21400254/how-to-draw-a-qr-code-with-qt-in-native-c-c
 void QRWidget::paintImage()
 {
     QPainter painter(image);
     //NOTE: I have hardcoded some parameters here that would make more sense as variables.
     // ECLEVEL_M is much faster recognizable by barcodescanner any any other type
-    QRcode *qr = QRcode_encodeString(data.toStdString().c_str(), 1, QR_ECLEVEL_M, QR_MODE_8, 0);
-    
-    if(0 != qr)
+    // https://fukuchi.org/works/qrencode/manual/qrencode_8h.html#a4cebc3c670efe1b8866b14c42737fc8f
+    // any mode other than QR_MODE_8 or QR_MODE_KANJI results in EINVAL. First 1 is version, second is case sensitivity
+    QRcode* qr = QRcode_encodeString(data.toStdString().c_str(), 1, QR_ECLEVEL_M, QR_MODE_8, 1);
+
+    if (qr != nullptr)
     {
         QColor fg("black");
         QColor bg("white");
@@ -71,15 +60,15 @@ void QRWidget::paintImage()
         const double h = height();
         const double aspect = w / h;
         const double scale = ((aspect > 1.0) ? h : w) / s;
-        
-        for(int y = 0; y < s; y++)
+
+        for (int y = 0; y < s; y++)
         {
             const int yy = y * s;
-            for(int x = 0; x < s; x++)
+            for (int x = 0; x < s; x++)
             {
                 const int xx = yy + x;
                 const unsigned char b = qr->data[xx];
-                if(b & 0x01)
+                if (b & 0x01)
                 {
                     const double rx1 = x * scale,
                                  ry1 = y * scale;
@@ -98,6 +87,6 @@ void QRWidget::paintImage()
         painter.drawRect(0, 0, width(), height());
         qDebug() << "QR FAIL: " << strerror(errno);
     }
-    
-    qr = 0;
+
+    qr = nullptr;
 }

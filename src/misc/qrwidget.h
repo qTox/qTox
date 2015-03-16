@@ -8,18 +8,17 @@
 class QRWidget : public QWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit QRWidget(QWidget *parent = 0);
-    void setQRData(QString data);
-    QString getImageAsText();
+    void setQRData(const QString& data);
     QImage* getImage();
-    bool saveImage(QString path);    
-  
+    bool saveImage(QString path);
+
 private:
     QString data;
     void paintImage();
-    QImage *image;
+    QImage* image;
     QSize size;
 };
 

@@ -75,11 +75,11 @@ ProfileForm::ProfileForm(QWidget *parent) :
     toxId->setReadOnly(true);
     toxId->setFrame(false);
     toxId->setFont(Style::getFont(Style::Small));
-        
+
     QVBoxLayout *toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
     toxIdGroup->replaceWidget(bodyUI->toxId, toxId);
     bodyUI->toxId->hide();
-    
+
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.png");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
     profilePicture->setClickable(true);
@@ -91,7 +91,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     timer.setInterval(750);
     timer.setSingleShot(true);
     connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", "")); hasCheck = false;});
-    
+
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(core, &Core::idSet, this, &ProfileForm::setToxId);
@@ -170,11 +170,10 @@ void ProfileForm::setToxId(const QString& id)
 {
     toxId->setText(id);
     toxId->setCursorPosition(0);
-    
-    qr = new QRWidget();    
-    qr->setQRData(id);
+
+    qr = new QRWidget();
+    qr->setQRData("tox:"+id);
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
-    bodyUI->qrCode->setToolTip(qr->getImageAsText());
 }
 
 void ProfileForm::onAvatarClicked()

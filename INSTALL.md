@@ -68,13 +68,13 @@ sudo pacman -S --needed base-devel qt5 opencv openal libxss qrencode
 
 Debian / Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev qrencode
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev qrencode libqrencode-dev
 ```
 
 Fedora:
 ```bash
 yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode
+yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
 ```
 
 Slackware:
