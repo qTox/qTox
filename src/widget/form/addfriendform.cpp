@@ -50,6 +50,7 @@ AddFriendForm::AddFriendForm()
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
 
+    connect(&toxId,&QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 }
