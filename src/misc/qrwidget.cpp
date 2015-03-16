@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QBuffer>
 #include <QImage>
-#include "qrcodewindow.h"
 #include "qrencode.h"
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
