@@ -742,17 +742,17 @@ Soprannome:</translation>
 <context>
     <name>GUI</name>
     <message>
-        <location filename="../src/widget/gui.cpp" line="247"/>
+        <location filename="../src/widget/gui.cpp" line="281"/>
         <source>Enter your password</source>
         <translation>Inserisci password</translation>
     </message>
     <message>
-        <location filename="../src/widget/gui.cpp" line="249"/>
+        <location filename="../src/widget/gui.cpp" line="283"/>
         <source>Decrypt</source>
         <translation>Decripta</translation>
     </message>
     <message>
-        <location filename="../src/widget/gui.cpp" line="291"/>
+        <location filename="../src/widget/gui.cpp" line="325"/>
         <source>You must enter a non-empty password:</source>
         <translation>Devi inserire una password non vuota:</translation>
     </message>
@@ -760,30 +760,30 @@ Soprannome:</translation>
 <context>
     <name>GeneralForm</name>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="39"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="38"/>
         <source>General</source>
         <translation>Generale</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="86"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="87"/>
         <location filename="../src/widget/form/settings/generalform.cpp" line="92"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="250"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="265"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Scegli dove salvare i files accettati automaticamente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="307"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="323"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Chiamata in corso</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="308"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="324"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>Non puoi disconnetterti mentre c&apos;è una chiamata in corso!</translation>
@@ -1159,34 +1159,35 @@ will be sent to them when they will appear online to you.</source>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="194"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="240"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="210"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="256"/>
         <source>Mute microphone</source>
         <translation>Disattiva microfono</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="200"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="216"/>
         <source>Unmute microphone</source>
         <translation>Attiva microfono</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="215"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="243"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="231"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="259"/>
         <source>Mute call</source>
         <translation>Disattiva audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="221"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="237"/>
         <source>Unmute call</source>
         <translation>Attiva audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="237"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="253"/>
         <source>End audio call</source>
         <translation>Termina chiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="253"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="162"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="269"/>
         <source>Start audio call</source>
         <translation>Avvia chiamata</translation>
     </message>
@@ -1195,13 +1196,13 @@ will be sent to them when they will appear online to you.</source>
     <name>GroupWidget</name>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="43"/>
-        <location filename="../src/widget/groupwidget.cpp" line="81"/>
+        <location filename="../src/widget/groupwidget.cpp" line="87"/>
         <source>%1 users in chat</source>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="45"/>
-        <location filename="../src/widget/groupwidget.cpp" line="83"/>
+        <location filename="../src/widget/groupwidget.cpp" line="89"/>
         <source>0 users in chat</source>
         <translation>0 utenti in chat</translation>
     </message>
@@ -1469,13 +1470,30 @@ I profili non contengono la cronologia messaggi.</translation>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
         <source>There is currently an unused encrypted chat history, but the password you just entered doesn&apos;t match.
 
-If you don&apos;t care about the old history, you may click Ok to delete it and use the password you just entered.
-Otherwise, hit cancel to try again.</source>
+If you don&apos;t care about the old history, you may delete it and use the password you just entered.
+Otherwise, hit Cancel to try again.</source>
         <comment>This happens when enabling encryption after previously &quot;Disabling History&quot;</comment>
         <translation>C&apos;è una cronologia chat criptata non in uso, ma la password che hai inserito non corrisponde.
 
-Se non ti interessa della cronologia precedente, puoi scegliere &quot;Ok&quot; per eliminarla ed usare la password che hai appena inserito.
+Se non ti interessa della cronologia precedente, puoi scegliere &quot;Elimina&quot; per eliminarla ed usare la password che hai appena inserito.
 Scegli &quot;Annulla&quot; per riprovare.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="150"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="170"/>
+        <source>Delete</source>
+        <translation>Elimina</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="151"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="171"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="251"/>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
@@ -1484,43 +1502,49 @@ Scegli &quot;Annulla&quot; per riprovare.</translation>
         <translation>Sei sicuro di voler eliminare la cronologia chat criptata non in uso?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="147"/>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="164"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="146"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="167"/>
         <source>Old encrypted chat history</source>
         <comment>title</comment>
         <translation>Vecchia cronologia chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="148"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="147"/>
         <source>Would you like to decrypt your chat history?
 Otherwise it will be deleted.</source>
         <translation>Vuoi decriptare la tua cronologia chat?
 Altrimenti sarà eliminata.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="165"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="149"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="251"/>
+        <source>Decrypt</source>
+        <translation>Decripta</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="168"/>
         <source>Are you sure you want to lose your entire chat history?</source>
         <translation>Sei sicuro di voler perdere tutta la cronologia chat?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="197"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="204"/>
         <source>Please set your new data file password.</source>
         <translation>Inserisci la nuova password per il file dati.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="199"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="206"/>
         <source>Use chat history password</source>
         <comment>pushbutton text</comment>
         <translation>Usa la password della cronologia chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="249"/>
         <source>Decrypt your data file</source>
         <comment>title</comment>
         <translation>Decripta il tuo file dati</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="250"/>
         <source>Would you like to decrypt your data file?</source>
         <translation>Vuoi decriptare il tuo file dati?</translation>
     </message>
@@ -2048,63 +2072,63 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="426"/>
+        <location filename="../src/widget/widget.cpp" line="427"/>
         <source>File transfers</source>
         <translation>Files trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="436"/>
+        <location filename="../src/widget/widget.cpp" line="437"/>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>File eseguibile</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="436"/>
+        <location filename="../src/widget/widget.cpp" line="437"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Hai chiesto a qTox di aprire un file eseguibile. I files eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="492"/>
+        <location filename="../src/widget/widget.cpp" line="493"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="500"/>
+        <location filename="../src/widget/widget.cpp" line="501"/>
         <source>Profile</source>
         <translation>Profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="609"/>
+        <location filename="../src/widget/widget.cpp" line="610"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossibile inviare la richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="637"/>
+        <location filename="../src/widget/widget.cpp" line="638"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="639"/>
+        <location filename="../src/widget/widget.cpp" line="640"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="641"/>
+        <location filename="../src/widget/widget.cpp" line="642"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="645"/>
+        <location filename="../src/widget/widget.cpp" line="646"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="648"/>
+        <location filename="../src/widget/widget.cpp" line="649"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
