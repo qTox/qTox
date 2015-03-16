@@ -92,10 +92,6 @@ void Widget::init()
 {
     ui->setupUi(this);
 
-    QIcon themeIcon = QIcon::fromTheme("qtox");
-    if (!themeIcon.isNull())
-        setWindowIcon(themeIcon);
-
     timer = new QTimer();
     timer->start(1000);
     offlineMsgTimer = new QTimer();
@@ -173,6 +169,7 @@ void Widget::init()
 
     Style::setThemeColor(Settings::getInstance().getThemeColor());
     reloadTheme();
+    updateIcons();
     
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
@@ -227,11 +224,8 @@ void Widget::setTranslation()
     QCoreApplication::installTranslator(translator);
 }
 
-void Widget::updateTrayIcon()
+void Widget::updateIcons()
 {
-    if (!icon)
-        return;
-
     QString status;
     if (eventIcon)
         status = "event";
@@ -249,7 +243,9 @@ void Widget::updateTrayIcon()
         ico = QIcon(":img/taskbar/" + color + "/taskbar_" + status + ".svg");
     }
 
-    icon->setIcon(ico);
+    setWindowIcon(ico);
+    if (icon)
+        icon->setIcon(ico);
 }
 
 Widget::~Widget()
@@ -395,7 +391,7 @@ void Widget::onStatusSet(Status status)
         ui->statusButton->setIcon(QIcon(":img/status/dot_away_2x.png"));
         break;
     }
-    updateTrayIcon();
+    updateIcons();
 }
 
 void Widget::setWindowTitle(const QString& title)
@@ -417,6 +413,7 @@ void Widget::onAddClicked()
     hideMainForms();
     addFriendForm->show(*ui);
     setWindowTitle(tr("Add friend"));
+    activeChatroomWidget = nullptr;
 }
 
 void Widget::onGroupClicked()
@@ -449,7 +446,7 @@ void Widget::confirmExecutableOpen(const QFileInfo file)
     }
     else
     {
-        QDesktopServices::openUrl(QUrl("file://" + file.filePath(), QUrl::TolerantMode));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
     }
 }
 
@@ -691,7 +688,6 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 {
-    qDebug() << "active chat";
     hideMainForms();
     widget->setChatForm(*ui);
     if (activeChatroomWidget != nullptr)
@@ -717,7 +713,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, isAction ? "/me " + message : message,
                                                f->getToxID().publicKey, timestamp, true);
 
-    f->setEventFlag(static_cast<GenericChatroomWidget*>(f->getFriendWidget()) != activeChatroomWidget);
+    f->setEventFlag(f->getFriendWidget() != activeChatroomWidget);
     newMessageAlert(f->getFriendWidget());
     f->getFriendWidget()->updateStatusLight();
 }
@@ -918,6 +914,15 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
+void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
+{
+    Group* g = GroupList::findGroup(groupnumber);
+    if (!g)
+        return;
+
+    g->getChatForm()->peerAudioPlaying(peernumber);
+}
+
 void Widget::removeGroup(Group* g, bool fake)
 {
     g->getGroupWidget()->setAsInactiveChatroom();
@@ -994,7 +999,7 @@ bool Widget::event(QEvent * e)
             {
                 eventFlag = false;
                 eventIcon = false;
-                updateTrayIcon();
+                updateIcons();
             }
         default:
             break;
@@ -1036,7 +1041,7 @@ void Widget::onEventIconTick()
     if (eventFlag)
     {
         eventIcon ^= true;
-        updateTrayIcon();
+        updateIcons();
     }
 }
 
@@ -1048,7 +1053,7 @@ void Widget::onTryCreateTrayIcon()
         if (QSystemTrayIcon::isSystemTrayAvailable())
         {
             icon = new SystemTrayIcon;
-            updateTrayIcon();
+            updateIcons();
             trayMenu = new QMenu;
 
             actionQuit = new QAction(tr("&Quit"), this);

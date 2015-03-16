@@ -18,11 +18,13 @@
 #define GROUPCHATFORM_H
 
 #include "genericchatform.h"
+#include <QMap>
 
 namespace Ui {class MainWindow;}
 class Group;
 class TabCompleter;
 class FlowLayout;
+class QTimer;
 
 class GroupChatForm : public GenericChatForm
 {
@@ -31,6 +33,7 @@ public:
     GroupChatForm(Group* chatGroup);
 
     void onUserListChanged();
+    void peerAudioPlaying(int peer);
 
     void keyPressEvent(QKeyEvent* ev);
     void keyReleaseEvent(QKeyEvent* ev);
@@ -51,6 +54,8 @@ protected:
 
 private:
     Group* group;
+    QList<QLabel*> peerLabels; // maps peernumbers to the QLabels in namesListLayout
+    QMap<int, QTimer*> peerAudioTimers; // timeout = peer stopped sending audio
     FlowLayout* namesListLayout;
     QLabel *nusersLabel;
     TabCompleter* tabber;

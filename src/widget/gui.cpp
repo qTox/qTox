@@ -113,8 +113,8 @@ void GUI::showError(const QString& title, const QString& msg)
 }
 
 bool GUI::askQuestion(const QString& title, const QString& msg,
-                            bool defaultAns, bool warning,
-                            bool yesno)
+                      bool defaultAns, bool warning,
+                      bool yesno)
 {
     if (QThread::currentThread() == qApp->thread())
     {
@@ -128,6 +128,25 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
                                   Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
                                   Q_ARG(bool, defaultAns), Q_ARG(bool, warning),
                                   Q_ARG(bool, yesno));
+        return ret;
+    }
+}
+
+bool GUI::askQuestion(const QString& title, const QString& msg,
+                      const QString& button1, const QString& button2,
+                      bool defaultAns, bool warning)
+{
+    if (QThread::currentThread() == qApp->thread())
+    {
+        return getInstance()._askQuestion(title, msg, button1, button2, defaultAns, warning);
+    }
+    else
+    {
+        bool ret;
+        QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(bool, ret),
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
+                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning));
         return ret;
     }
 }
@@ -213,8 +232,8 @@ void GUI::_showError(const QString& title, const QString& msg)
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
-                            bool defaultAns, bool warning,
-                            bool yesno)
+                       bool defaultAns, bool warning,
+                       bool yesno)
 {
     QMessageBox::StandardButton positiveButton = yesno ? QMessageBox::Yes : QMessageBox::Ok;
     QMessageBox::StandardButton negativeButton = yesno ? QMessageBox::No : QMessageBox::Cancel;
@@ -225,6 +244,21 @@ bool GUI::_askQuestion(const QString& title, const QString& msg,
         return QMessageBox::warning(getMainWidget(), title, msg, positiveButton | negativeButton, defButton) == positiveButton;
     else
         return QMessageBox::question(getMainWidget(), title, msg, positiveButton | negativeButton, defButton) == positiveButton;
+}
+
+bool GUI::_askQuestion(const QString& title, const QString& msg,
+                       const QString& button1, const QString& button2,
+                       bool defaultAns, bool warning)
+{
+    QMessageBox box(warning ? QMessageBox::Warning : QMessageBox::Question,
+        title, msg, QMessageBox::NoButton, getMainWidget());
+    QPushButton* pushButton1 = box.addButton(button1, QMessageBox::AcceptRole);
+    QPushButton* pushButton2 = box.addButton(button2, QMessageBox::RejectRole);
+    box.setDefaultButton(defaultAns ? pushButton1 : pushButton2);
+    box.setEscapeButton(pushButton2);
+
+    box.exec();
+    return box.clickedButton() == pushButton1;
 }
 
 QString GUI::_itemInputDialog(QWidget * parent, const QString & title,

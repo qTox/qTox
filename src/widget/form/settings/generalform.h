@@ -66,6 +66,9 @@ private:
     Ui::GeneralSettings *bodyUI;
     void reloadSmiles();
     SettingsWidget *parent;
+
+protected:
+    bool eventFilter(QObject *o, QEvent *e);
 };
 
 #endif

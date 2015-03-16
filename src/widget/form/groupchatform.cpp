@@ -29,6 +29,7 @@
 #include "src/historykeeper.h"
 #include "src/misc/flowlayout.h"
 #include <QDebug>
+#include <QTimer>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), inCall{false}
@@ -126,19 +127,61 @@ void GroupChatForm::onUserListChanged()
         delete child->widget();
         delete child;
     }
+    peerLabels.clear();
 
-    QStringList names(group->getPeerList());
+    // the list needs peers in peernumber order, nameLayout needs alphabetical
+    QMap<QString, QLabel*> orderizer;
+
+    // first traverse in peer number order, storing the QLabels as necessary
+    QStringList names = group->getPeerList();
     unsigned nNames = names.size();
     for (unsigned i=0; i<nNames; ++i)
     {
-        QString nameStr = names[i];
-        if (i!=nNames-1)
-            nameStr+=", ";
-        QLabel* nameLabel = new QLabel(nameStr);
-        nameLabel->setObjectName("peersLabel");
-        nameLabel->setTextFormat(Qt::PlainText);
-        namesListLayout->addWidget(nameLabel);
+        peerLabels.append(new QLabel(names[i]));
+        peerLabels[i]->setTextFormat(Qt::PlainText);
+        orderizer[names[i]] = peerLabels[i];
+        if (group->isSelfPeerNumber(i))
+            peerLabels[i]->setStyleSheet("QLabel {color : green;}");
     }
+    // now alphabetize and add to layout
+    names.sort(Qt::CaseInsensitive);
+    for (unsigned i=0; i<nNames; ++i)
+    {
+        QLabel* label = orderizer[names[i]];
+        if (i != nNames - 1)
+            label->setText(label->text() + ", ");
+        namesListLayout->addWidget(label);
+    }
+
+    // Enable or disable call button
+    if (group->getPeersCount() != 1)
+    {
+        callButton->setEnabled(true);
+        callButton->setObjectName("green");
+        callButton->style()->polish(callButton);
+        callButton->setToolTip(tr("Start audio call"));
+    }
+    else
+    {
+        callButton->setEnabled(false);
+        callButton->setObjectName("grey");
+        callButton->style()->polish(callButton);
+        callButton->setToolTip("");
+    }
+}
+
+void GroupChatForm::peerAudioPlaying(int peer)
+{
+    peerLabels[peer]->setStyleSheet("QLabel {color : red;}");
+    if (!peerAudioTimers[peer])
+    {
+        peerAudioTimers[peer] = new QTimer(this);
+        peerAudioTimers[peer]->setSingleShot(true);
+        connect(peerAudioTimers[peer], &QTimer::timeout, [=]{this->peerLabels[peer]->setStyleSheet("");
+                                                             delete this->peerAudioTimers[peer];
+                                                             this->peerAudioTimers[peer] = nullptr;});
+    }
+    peerAudioTimers[peer]->start(500);
 }
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)

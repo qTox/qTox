@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>544</width>
-        <height>785</height>
+        <y>-214</y>
+        <width>539</width>
+        <height>838</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -711,6 +711,38 @@ will be sent to them when they appear online to you.</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>transComboBox</tabstop>
+  <tabstop>showSystemTray</tabstop>
+  <tabstop>lightTrayIcon</tabstop>
+  <tabstop>startInTray</tabstop>
+  <tabstop>closeToTray</tabstop>
+  <tabstop>minimizeToTray</tabstop>
+  <tabstop>cbAutorun</tabstop>
+  <tabstop>checkUpdates</tabstop>
+  <tabstop>autoacceptFiles</tabstop>
+  <tabstop>autoSaveFilesDir</tabstop>
+  <tabstop>autoAwaySpinBox</tabstop>
+  <tabstop>groupAlwaysNotify</tabstop>
+  <tabstop>statusChanges</tabstop>
+  <tabstop>showWindow</tabstop>
+  <tabstop>showInFront</tabstop>
+  <tabstop>cbFauxOfflineMessaging</tabstop>
+  <tabstop>cbCompactLayout</tabstop>
+  <tabstop>useEmoticons</tabstop>
+  <tabstop>smileyPackBrowser</tabstop>
+  <tabstop>emoticonSize</tabstop>
+  <tabstop>styleBrowser</tabstop>
+  <tabstop>themeColorCBox</tabstop>
+  <tabstop>timestamp</tabstop>
+  <tabstop>cbEnableUDP</tabstop>
+  <tabstop>cbEnableIPv6</tabstop>
+  <tabstop>proxyType</tabstop>
+  <tabstop>proxyAddr</tabstop>
+  <tabstop>proxyPort</tabstop>
+  <tabstop>reconnectButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

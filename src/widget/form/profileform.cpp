@@ -130,6 +130,8 @@ void ProfileForm::show(Ui::MainWindow &ui)
     ui.mainContent->layout()->addWidget(this);
     head->show();
     QWidget::show();
+    bodyUI->userName->setFocus(Qt::OtherFocusReason);
+    bodyUI->userName->selectAll();
 }
 
 void ProfileForm::copyIdClicked()
@@ -260,7 +262,7 @@ void ProfileForm::onRenameClicked()
 void ProfileForm::onExportClicked()
 {
     QString current = bodyUI->profiles->currentText() + Core::TOX_EXT;
-    QString path = QFileDialog::getSaveFileName(this, tr("Export profile", "save dialog title"),
+    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"),
                     QDir::home().filePath(current), 
                     tr("Tox save file (*.tox)", "save dialog filter"));
     if (!path.isEmpty())
@@ -309,7 +311,7 @@ void ProfileForm::onDeleteClicked()
 
 void ProfileForm::onImportClicked()
 {
-    QString path = QFileDialog::getOpenFileName(this,
+    QString path = QFileDialog::getOpenFileName(0,
                                                 tr("Import profile", "import dialog title"),
                                                 QDir::homePath(),
                                                 tr("Tox save file (*.tox)", "import dialog filter"));

@@ -30,7 +30,9 @@ ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, int minWidth, float 
 
 QRectF ChatLineContentProxy::boundingRect() const
 {
-    return proxy->boundingRect();
+    QRectF result = proxy->boundingRect();
+    result.setHeight(result.height() + 5);
+    return result;
 }
 
 void ChatLineContentProxy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -41,7 +43,7 @@ void ChatLineContentProxy::paint(QPainter *painter, const QStyleOptionGraphicsIt
 
 qreal ChatLineContentProxy::getAscent() const
 {
-    return 0;
+    return 7.0;
 }
 
 QWidget *ChatLineContentProxy::getWidget() const
