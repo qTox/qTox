@@ -36,7 +36,6 @@
 #include <QFileDialog>
 #include <QBuffer>
 
-
 void ProfileForm::refreshProfiles()
 {
     bodyUI->profiles->clear();
@@ -76,9 +75,11 @@ ProfileForm::ProfileForm(QWidget *parent) :
     toxId->setReadOnly(true);
     toxId->setFrame(false);
     toxId->setFont(Style::getFont(Style::Small));
+        
+    QVBoxLayout *toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
+    toxIdGroup->replaceWidget(bodyUI->toxId, toxId);
+    bodyUI->toxId->hide();
     
-    bodyUI->toxGroup->layout()->addWidget(toxId);
-
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.png");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
     profilePicture->setClickable(true);
@@ -169,6 +170,11 @@ void ProfileForm::setToxId(const QString& id)
 {
     toxId->setText(id);
     toxId->setCursorPosition(0);
+    
+    qr = new QRWidget();    
+    qr->setQRData(id);
+    bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
+    bodyUI->qrCode->setToolTip(qr->getImageAsText());
 }
 
 void ProfileForm::onAvatarClicked()
@@ -368,4 +374,33 @@ void ProfileForm::showEvent(QShowEvent *event)
 {
     refreshProfiles();
     QWidget::showEvent(event);
+}
+
+void ProfileForm::on_copyQr_clicked()
+{
+    QApplication::clipboard()->setImage(*qr->getImage());
+}
+
+void ProfileForm::on_saveQr_clicked()
+{
+    QString current = bodyUI->profiles->currentText() + ".png";
+    QString path = QFileDialog::getSaveFileName(0, tr("Save", "save qr image"),
+                   QDir::home().filePath(current), 
+                   tr("Save QrCode (*.png)", "save dialog filter"));
+    if (!path.isEmpty())
+    {
+        bool success;
+        if (QFile::exists(path))
+        {
+            success = QFile::remove(path);
+            if (!success)
+            {
+                QMessageBox::warning(this, tr("Failed to remove file"), tr("The file you chose to overwrite could not be removed first."));
+                return;
+            }
+        }
+        success = qr->saveImage(path);
+        if (!success)
+            QMessageBox::warning(this, tr("Failed to copy file"), tr("The file you chose could not be written to."));
+    }
 }
