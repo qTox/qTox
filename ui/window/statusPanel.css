@@ -39,26 +39,6 @@ QLineEdit
     height: 40px;
 }
 
-#statusPanel > #statusHead > #statusButton[status="online"]
-{
-  image: url(":ui/statusButton/dot_online.png") center center;
-}
-
-#statusPanel > #statusHead > #statusButton[status="away"]
-{
-  image: url(":ui/statusButton/dot_idle.png") center center;
-}
-
-#statusPanel > #statusHead > #statusButton[status="busy"]
-{
-  image: url(":ui/statusButton/dot_busy.png") center center;
-}
-
-#statusPanel > #statusHead > #statusButton[status="offline"]
-{
-  image: url(":ui/statusButton/dot_away.png") center center;
-}
-
 /*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
 #statusPanel > #statusHead > #statusButton:hover 
 {

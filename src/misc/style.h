@@ -63,6 +63,7 @@ public:
     static void setThemeColor(int color);
     static void setThemeColor(QColor color); ///< Pass an invalid QColor to reset to defaults
     static void applyTheme(); ///< Reloads some CCS
+    static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
 
     static QStringList themeColorNames;
     static QList<QColor> themeColorColors;

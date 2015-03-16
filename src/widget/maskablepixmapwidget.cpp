@@ -78,7 +78,7 @@ void MaskablePixmapWidget::setPixmap(const QPixmap &pmap, QColor background)
     if (!pmap.isNull())
     {
         unscaled = pmap;
-        pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         backgroundColor = background;
         manualColor = true;
         update();
@@ -90,7 +90,7 @@ void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
     if (!pmap.isNull())
     {
         unscaled = pmap;
-        pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         autopickBackground();
         update();
     }
@@ -113,7 +113,7 @@ void MaskablePixmapWidget::setSize(QSize size)
 
     if (!unscaled.isNull())
     {
-        pixmap = unscaled.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        pixmap = unscaled.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         if (!manualColor)
             autopickBackground();
         update();

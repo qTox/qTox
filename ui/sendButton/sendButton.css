@@ -1,22 +1,26 @@
 QPushButton
 {
-    background-color: transparent;
-    background-image: url(":/ui/sendButton/sendButton.png");
-    background-repeat: none;    
+    background-color: #6bc260;
+    background-image: url(":/ui/sendButton/sendButton.svg");
+    background-repeat: none;
+    background-position: center;
     border: none;
+    border-radius: 5px;
     width: 50px;
     height: 50px;
 }
+
 QPushButton:hover
 {
-   background-image: url(":/ui/sendButton/sendButtonHover.png");
+    background-color: #79c76f;
 }
 
 QPushButton:pressed
 {
-   background-image: url(":/ui/sendButton/sendButtonPressed.png");
+    background-color: #51b244;
 }
 
-QPushButton:focus {
+QPushButton:focus
+{
     outline: none;
 }

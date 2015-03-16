@@ -34,8 +34,8 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor) :
     reject->setFlat(true);
     accept->setStyleSheet("QPushButton{border:none;}");
     reject->setStyleSheet("QPushButton{border:none;}");
-    accept->setIcon(QIcon(":/ui/acceptCall/acceptCall.png"));
-    reject->setIcon(QIcon(":/ui/rejectCall/rejectCall.png"));
+    accept->setIcon(QIcon(":/ui/acceptCall/acceptCall.svg"));
+    reject->setIcon(QIcon(":/ui/rejectCall/rejectCall.svg"));
     accept->setIconSize(accept->size());
     reject->setIconSize(reject->size());
 
