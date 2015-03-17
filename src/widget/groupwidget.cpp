@@ -37,6 +37,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
 {
     avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()), Qt::transparent);
     statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
+    statusPic.setMargin(3);
     nameLabel->setText(Name);
 
     Group* g = GroupList::findGroup(groupId);
@@ -107,9 +108,15 @@ void GroupWidget::updateStatusLight()
     Group *g = GroupList::findGroup(groupId);
 
     if (!g->getEventFlag())
+    {
         statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
+        statusPic.setMargin(3);
+    }
     else
+    {
         statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.svg"));
+        statusPic.setMargin(0);
+    }
 }
 
 void GroupWidget::setChatForm(Ui::MainWindow &ui)

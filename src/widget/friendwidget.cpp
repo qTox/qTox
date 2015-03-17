@@ -172,7 +172,7 @@ void FriendWidget::updateStatusLight()
     else if (status == Status::Offline && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_offline_notification.svg"));
 
-    if (f->getEventFlag() == 0)
+    if (!f->getEventFlag())
         statusPic.setMargin(3);
     else
         statusPic.setMargin(0);
