@@ -44,6 +44,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 {
     avatar->setPixmap(QPixmap(":img/contact.svg"), Qt::transparent);
     statusPic.setPixmap(QPixmap(":img/status/dot_offline.svg"));
+    statusPic.setMargin(3);
     nameLabel->setText(id);
     nameLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setTextFormat(Qt::PlainText);
@@ -170,6 +171,11 @@ void FriendWidget::updateStatusLight()
         statusPic.setPixmap(QPixmap(":img/status/dot_offline.svg"));
     else if (status == Status::Offline && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_offline_notification.svg"));
+
+    if (f->getEventFlag() == 0)
+        statusPic.setMargin(3);
+    else
+        statusPic.setMargin(0);
 }
 
 void FriendWidget::setChatForm(Ui::MainWindow &ui)
