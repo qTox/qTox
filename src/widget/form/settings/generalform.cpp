@@ -152,17 +152,19 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
     connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
-    
+
     // prevent stealing mouse whell scroll
     // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
     // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
     // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
-    Q_FOREACH(QComboBox *cb, findChildren<QComboBox*>() ) {
+    for (QComboBox* cb : findChildren<QComboBox*>())
+    {
             cb->installEventFilter(this);
             cb->setFocusPolicy(Qt::StrongFocus);
     }
-    
-    Q_FOREACH(QSpinBox *sp, findChildren<QSpinBox*>() ) {
+
+    for (QSpinBox* sp : findChildren<QSpinBox*>())
+    {
             sp->installEventFilter(this);
             sp->setFocusPolicy(Qt::WheelFocus);
     }

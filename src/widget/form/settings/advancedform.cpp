@@ -42,6 +42,12 @@ AdvancedForm::AdvancedForm() :
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &AdvancedForm::onMakeToxPortableUpdated);
     connect(bodyUI->syncTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onDbSyncTypeUpdated()));
     connect(bodyUI->resetButton, SIGNAL(clicked()), this, SLOT(resetToDefault()));
+
+    for (QComboBox* cb : findChildren<QComboBox*>())
+    {
+            cb->installEventFilter(this);
+            cb->setFocusPolicy(Qt::StrongFocus);
+    }
 }
 
 AdvancedForm::~AdvancedForm()
@@ -66,4 +72,15 @@ void AdvancedForm::resetToDefault()
     int index = 2 - static_cast<int>(Db::syncType::stFull);
     bodyUI->syncTypeComboBox->setCurrentIndex(index);
     onDbSyncTypeUpdated();
+}
+
+bool AdvancedForm::eventFilter(QObject *o, QEvent *e)
+{
+    if ((e->type() == QEvent::Wheel) &&
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+    {
+        e->ignore();
+        return true;
+    }
+    return QWidget::eventFilter(o, e);
 }

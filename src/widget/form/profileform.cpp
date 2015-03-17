@@ -120,6 +120,12 @@ ProfileForm::ProfileForm(QWidget *parent) :
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
+
+    for (QComboBox* cb : findChildren<QComboBox*>())
+    {
+            cb->installEventFilter(this);
+            cb->setFocusPolicy(Qt::StrongFocus);
+    }
 }
 
 ProfileForm::~ProfileForm()
@@ -391,4 +397,15 @@ void ProfileForm::on_saveQr_clicked()
         if (!qr->saveImage(path))
             GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
     }
+}
+
+bool ProfileForm::eventFilter(QObject *o, QEvent *e)
+{
+    if ((e->type() == QEvent::Wheel) &&
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+    {
+        e->ignore();
+        return true;
+    }
+    return QWidget::eventFilter(o, e);
 }

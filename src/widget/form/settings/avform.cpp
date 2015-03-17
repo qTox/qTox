@@ -52,6 +52,12 @@ AVForm::AVForm() :
     connect(bodyUI->filterAudio, SIGNAL(toggled(bool)), this, SLOT(onFilterAudioToggled(bool)));
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
     bodyUI->playbackSlider->setValue(100);
+
+    for (QComboBox* cb : findChildren<QComboBox*>())
+    {
+            cb->installEventFilter(this);
+            cb->setFocusPolicy(Qt::StrongFocus);
+    }
 }
 
 AVForm::~AVForm()
@@ -267,4 +273,15 @@ void AVForm::on_ContrastSlider_valueChanged(int value)
 void AVForm::on_playbackSlider_valueChanged(int value)
 {
     Audio::getInstance().outputVolume = value / 100.0;
+}
+
+bool AVForm::eventFilter(QObject *o, QEvent *e)
+{
+    if ((e->type() == QEvent::Wheel) &&
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+    {
+        e->ignore();
+        return true;
+    }
+    return QWidget::eventFilter(o, e);
 }

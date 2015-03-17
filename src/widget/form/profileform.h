@@ -80,6 +80,7 @@ private slots:
     
 protected:
     virtual void showEvent(QShowEvent *);
+    bool eventFilter(QObject *o, QEvent *e);
 
 private:
     void refreshProfiles();
