@@ -122,7 +122,7 @@ Share it with your friends to communicate.</string>
               <widget class="QFrame" name="horizontalFrame">
                <layout class="QVBoxLayout" name="qrButtons">
                 <item alignment="Qt::AlignTop">
-                 <widget class="QLabel" name="label">
+                 <widget class="QLabel" name="qrLabel">
                   <property name="text">
                    <string>This QR code contains your Tox ID. You may share this with your friends as well.</string>
                   </property>
