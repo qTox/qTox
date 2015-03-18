@@ -257,6 +257,9 @@ void Core::start()
     }
     else // new ID
     {
+        QString id = getSelfId().toString();
+        if (!id.isEmpty())
+            emit idSet(id);
         setStatusMessage(tr("Toxing on qTox")); // this also solves the not updating issue
         setUsername(tr("qTox User"));
     }
