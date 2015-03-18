@@ -704,6 +704,8 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
     bool inactiveWindow = isMinimized() || !isActiveWindow();
     if (!inactiveWindow && activeChatroomWidget != nullptr && chat == activeChatroomWidget)
         return;
+    if (ui->statusButton->property("status").toString() == "busy")
+        return;
 
     QApplication::alert(this);
 
@@ -732,6 +734,8 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
 
 void Widget::playRingtone()
 {
+    if (ui->statusButton->property("status").toString() == "busy")
+        return;
     QApplication::alert(this);
 
     static QFile sndFile1(":audio/ToxicIncomingCall.pcm"); // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever

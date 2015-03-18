@@ -9,7 +9,7 @@
         <translation>Audio/Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="77"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="83"/>
         <source>Initializing Camera...</source>
         <translation>Inizializzazione Webcam...</translation>
     </message>
@@ -138,40 +138,40 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <translation>Invia richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="79"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="80"/>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>Ciao, sono %1.
 Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="87"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="88"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
         <translation>Inserisci un Tox ID valido</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="87"/>
-        <location filename="../src/widget/form/addfriendform.cpp" line="90"/>
-        <location filename="../src/widget/form/addfriendform.cpp" line="108"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="88"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="91"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="109"/>
         <source>Couldn&apos;t add friend</source>
         <translation>Impossibile aggiungere il contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="90"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="91"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Non puoi aggiungere te stesso come contatto!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="98"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="99"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly?</source>
         <translation>qTox deve usare Tox DNS, ma non può farlo attraverso un proxy.
 Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="108"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="109"/>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>Questo Tox ID non esiste</translation>
@@ -441,7 +441,7 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <translation>Seleziona tutto</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="501"/>
+        <location filename="../src/chatlog/chatlog.cpp" line="512"/>
         <source>pending</source>
         <translation>in attesa</translation>
     </message>
@@ -598,37 +598,37 @@ Per questo motivo sarà disabilitata.</translation>
         <translation>[anteprima]</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="86"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="87"/>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
         <translation>In attesa di inviare...</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="89"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="90"/>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
         <translation>Accetta la ricezione di questo file</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="131"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="132"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="132"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="133"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Non hai sufficienti permessi per scrivere in questa locazione. Scegli un&apos;altra posizione, o annulla il salvataggio.</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="304"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="297"/>
         <source>paused</source>
         <comment>file transfer widget</comment>
         <translation>in pausa</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="427"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="420"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Salva file</translation>
@@ -637,18 +637,18 @@ Per questo motivo sarà disabilitata.</translation>
 <context>
     <name>FilesForm</name>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="30"/>
+        <location filename="../src/widget/form/filesform.cpp" line="31"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
         <translation>Files Trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="38"/>
+        <location filename="../src/widget/form/filesform.cpp" line="39"/>
         <source>Downloads</source>
         <translation>Files Ricevuti</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="39"/>
+        <location filename="../src/widget/form/filesform.cpp" line="40"/>
         <source>Uploads</source>
         <translation>Files Inviati</translation>
     </message>
@@ -760,30 +760,30 @@ Soprannome:</translation>
 <context>
     <name>GeneralForm</name>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="38"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="39"/>
         <source>General</source>
         <translation>Generale</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="87"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="92"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="88"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="93"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="265"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="268"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Scegli dove salvare i files accettati automaticamente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="323"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="326"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Chiamata in corso</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="324"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="327"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>Non puoi disconnetterti mentre c&apos;è una chiamata in corso!</translation>
@@ -1195,35 +1195,35 @@ will be sent to them when they will appear online to you.</source>
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="43"/>
-        <location filename="../src/widget/groupwidget.cpp" line="87"/>
+        <location filename="../src/widget/groupwidget.cpp" line="44"/>
+        <location filename="../src/widget/groupwidget.cpp" line="88"/>
         <source>%1 users in chat</source>
         <translation>%1 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="45"/>
-        <location filename="../src/widget/groupwidget.cpp" line="89"/>
+        <location filename="../src/widget/groupwidget.cpp" line="46"/>
+        <location filename="../src/widget/groupwidget.cpp" line="90"/>
         <source>0 users in chat</source>
         <translation>0 utenti in chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="55"/>
+        <location filename="../src/widget/groupwidget.cpp" line="56"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Esci dal gruppo</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="54"/>
+        <location filename="../src/widget/groupwidget.cpp" line="55"/>
         <source>Set title...</source>
         <translation>Imposta nome gruppo...</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="67"/>
+        <location filename="../src/widget/groupwidget.cpp" line="68"/>
         <source>Group title</source>
         <translation>Nome gruppo</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="67"/>
+        <location filename="../src/widget/groupwidget.cpp" line="68"/>
         <source>You can also set this by clicking the chat form name.
 Title:</source>
         <translation>Per impostare un nome puoi anche cliccare sul gruppo direttamente dalla chat.
@@ -1248,12 +1248,13 @@ Nome gruppo:</translation>
         <translation>Stato</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="90"/>
+        <location filename="../src/widget/form/profileform.ui" line="86"/>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="86"/>
+        <location filename="../src/widget/form/profileform.ui" line="92"/>
+        <location filename="../src/widget/form/profileform.ui" line="103"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
@@ -1263,56 +1264,77 @@ Condivilo con chi vuoi comunicare.</translation>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="96"/>
         <source>Your Tox ID (click to copy)</source>
-        <translation>(clicca qui per copiare)</translation>
+        <translation>Il tuo Tox ID (clicca per copiare)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="106"/>
+        <location filename="../src/widget/form/profileform.ui" line="114"/>
+        <source>QRCODE</source>
+        <translation>QRCODE</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.ui" line="127"/>
+        <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
+        <translation>Questo codice QR contiene il tuo Tox ID.
+Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.ui" line="134"/>
+        <source>Save image</source>
+        <translation>Salva immagine</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.ui" line="141"/>
+        <source>Copy image</source>
+        <translation>Copia immagine</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.ui" line="157"/>
         <source>Profiles</source>
         <translation>Gestione Profili</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="114"/>
+        <location filename="../src/widget/form/profileform.ui" line="165"/>
         <source>Available profiles:</source>
         <translation>Profili disponibili:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="127"/>
+        <location filename="../src/widget/form/profileform.ui" line="178"/>
         <source>Currently selected profile.</source>
         <comment>toolTip for currently set profile</comment>
         <translation>Profilo corrente.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="138"/>
+        <location filename="../src/widget/form/profileform.ui" line="189"/>
         <source>Load selected profile and switch to it.</source>
         <comment>tooltip for loading profile button</comment>
         <translation>Carica il profilo selezionato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="141"/>
+        <location filename="../src/widget/form/profileform.ui" line="192"/>
         <source>Load</source>
         <comment>load profile button</comment>
         <translation>Carica</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="151"/>
+        <location filename="../src/widget/form/profileform.ui" line="202"/>
         <source>Rename</source>
         <comment>rename profile button</comment>
         <translation>Rinomina</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="148"/>
+        <location filename="../src/widget/form/profileform.ui" line="199"/>
         <source>Rename selected profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation>Rinomina il profilo selezionato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="162"/>
+        <location filename="../src/widget/form/profileform.ui" line="213"/>
         <source>Export</source>
         <comment>export profile button</comment>
         <translation>Esporta</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="158"/>
+        <location filename="../src/widget/form/profileform.ui" line="209"/>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
@@ -1320,37 +1342,37 @@ Profile does not contain your history.</source>
 I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="169"/>
+        <location filename="../src/widget/form/profileform.ui" line="220"/>
         <source>Delete selected profile.</source>
         <comment>delete profile button tooltip</comment>
         <translation>Elimina il profilo selezionato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="172"/>
+        <location filename="../src/widget/form/profileform.ui" line="223"/>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Elimina</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="186"/>
+        <location filename="../src/widget/form/profileform.ui" line="237"/>
         <source>Import a profile</source>
         <comment>import profile button</comment>
         <translation>Importa profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="183"/>
+        <location filename="../src/widget/form/profileform.ui" line="234"/>
         <source>Import Tox profile from a .tox file.</source>
         <comment>tooltip for importing profile button</comment>
         <translation>Importa un profilo da un file &quot;.tox&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="193"/>
+        <location filename="../src/widget/form/profileform.ui" line="244"/>
         <source>Create new Tox ID and switch to it.</source>
         <comment>tooltip for creating new Tox ID button</comment>
         <translation>Crea un nuovo profilo (Tox ID) e iniza subito ad usarlo.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="196"/>
+        <location filename="../src/widget/form/profileform.ui" line="247"/>
         <source>New Tox ID</source>
         <comment>new profile button</comment>
         <translation>Nuovo profilo</translation>
@@ -1382,27 +1404,27 @@ I profili non contengono la cronologia messaggi.</translation>
         <translation>Toxing on qTox</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1099"/>
+        <location filename="../src/mainwindow.ui" line="1095"/>
         <source>Add friends</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1137"/>
+        <location filename="../src/mainwindow.ui" line="1139"/>
         <source>Create a group chat</source>
         <translation>Crea un gruppo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1172"/>
+        <location filename="../src/mainwindow.ui" line="1180"/>
         <source>View completed file transfers</source>
         <translation>Visualizza i trasferimenti completati</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1204"/>
+        <location filename="../src/mainwindow.ui" line="1218"/>
         <source>Change your settings</source>
         <translation>Cambia le impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1792"/>
+        <location filename="../src/mainwindow.ui" line="1812"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
@@ -1627,155 +1649,173 @@ ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</tra
 <context>
     <name>ProfileForm</name>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="71"/>
+        <location filename="../src/widget/form/profileform.cpp" line="70"/>
         <source>User Profile</source>
         <translation>Profilo Utente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="177"/>
+        <location filename="../src/widget/form/profileform.cpp" line="191"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="186"/>
-        <location filename="../src/widget/form/profileform.cpp" line="193"/>
-        <location filename="../src/widget/form/profileform.cpp" line="214"/>
+        <location filename="../src/widget/form/profileform.cpp" line="200"/>
+        <location filename="../src/widget/form/profileform.cpp" line="207"/>
+        <location filename="../src/widget/form/profileform.cpp" line="228"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="186"/>
+        <location filename="../src/widget/form/profileform.cpp" line="200"/>
         <source>Unable to open this file</source>
         <translation>Impossibile aprire il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="193"/>
+        <location filename="../src/widget/form/profileform.cpp" line="207"/>
         <source>Unable to read this image</source>
         <translation>Impossibile leggere l&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="214"/>
+        <location filename="../src/widget/form/profileform.cpp" line="228"/>
         <source>This image is too big</source>
         <translation>L&apos;immagine è troppo grande</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="226"/>
+        <location filename="../src/widget/form/profileform.cpp" line="240"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Chiamata in corso</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="227"/>
+        <location filename="../src/widget/form/profileform.cpp" line="241"/>
         <source>You can&apos;t switch profiles while a call is active!</source>
         <comment>popup text</comment>
         <translation>Non puoi cambiare profilo durante una chiamata!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="237"/>
+        <location filename="../src/widget/form/profileform.cpp" line="251"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
         <translation>Rinomina &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="245"/>
+        <location filename="../src/widget/form/profileform.cpp" line="259"/>
         <source>Profile already exists</source>
         <comment>rename confirm title</comment>
         <translation>Profilo già esistente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="246"/>
+        <location filename="../src/widget/form/profileform.cpp" line="260"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>rename confirm text</comment>
         <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="265"/>
+        <location filename="../src/widget/form/profileform.cpp" line="279"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
         <translation>Esporta profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="267"/>
+        <location filename="../src/widget/form/profileform.cpp" line="281"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
         <translation>Tox save file (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="277"/>
-        <source>Failed to remove file</source>
-        <translation>Impossibile rimuovere il file</translation>
+        <location filename="../src/widget/form/profileform.cpp" line="286"/>
+        <location filename="../src/widget/form/profileform.cpp" line="394"/>
+        <source>Location not writable</source>
+        <comment>Title of permissions popup</comment>
+        <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="277"/>
-        <source>The file you chose to overwrite could not be removed first.</source>
-        <translation>Il file che hai scelto di sovrascrivere non può essere prima rimosso.</translation>
+        <location filename="../src/widget/form/profileform.cpp" line="286"/>
+        <location filename="../src/widget/form/profileform.cpp" line="394"/>
+        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
+        <comment>text of permissions popup</comment>
+        <translation>Non hai sufficienti permessi per scrivere in questa locazione. Scegli un&apos;altra posizione, o annulla il salvataggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="283"/>
+        <location filename="../src/widget/form/profileform.cpp" line="387"/>
+        <source>Save</source>
+        <comment>save qr image</comment>
+        <translation>Salva</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.cpp" line="389"/>
+        <source>Save QrCode (*.png)</source>
+        <comment>save dialog filter</comment>
+        <translation>Salva Codice QR (*.png)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.cpp" line="290"/>
+        <location filename="../src/widget/form/profileform.cpp" line="398"/>
         <source>Failed to copy file</source>
         <translation>Impossibile copiare il file</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="283"/>
+        <location filename="../src/widget/form/profileform.cpp" line="290"/>
+        <location filename="../src/widget/form/profileform.cpp" line="398"/>
         <source>The file you chose could not be written to.</source>
         <translation>Il file che hai scelto non può essere copiato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="291"/>
+        <location filename="../src/widget/form/profileform.cpp" line="298"/>
         <source>Profile currently loaded</source>
         <comment>current profile deletion warning title</comment>
         <translation>Profilo attualmente in uso</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="291"/>
+        <location filename="../src/widget/form/profileform.cpp" line="298"/>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
         <translation>Questo profilo è attualmente in uso. Per favore carica un profilo differente prima di eliminare questo.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="295"/>
+        <location filename="../src/widget/form/profileform.cpp" line="302"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
         <translation>Eliminazione imminente!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="296"/>
+        <location filename="../src/widget/form/profileform.cpp" line="303"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Sei sicuro di voler eliminare questo profilo?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="315"/>
+        <location filename="../src/widget/form/profileform.cpp" line="322"/>
         <source>Import profile</source>
         <comment>import dialog title</comment>
         <translation>Importa profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="317"/>
+        <location filename="../src/widget/form/profileform.cpp" line="324"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
         <translation>Tox save file (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="327"/>
+        <location filename="../src/widget/form/profileform.cpp" line="333"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
         <translation>File ignorato</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="328"/>
+        <location filename="../src/widget/form/profileform.cpp" line="334"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
         <translation>Attenzione: hai scelto un file che non contiente un profilo Tox.\nQuesto file verrà ignorato.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="334"/>
+        <location filename="../src/widget/form/profileform.cpp" line="340"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
         <translation>Profilo già esistente</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="335"/>
+        <location filename="../src/widget/form/profileform.cpp" line="341"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
@@ -1846,27 +1886,27 @@ Verrà installata al riavvio del programma.</translation>
         <translation>profilo</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/misc/style.cpp" line="71"/>
         <source>Default</source>
         <translation>Default</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/misc/style.cpp" line="71"/>
         <source>Blue</source>
         <translation>Blu</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/misc/style.cpp" line="71"/>
         <source>Olive</source>
         <translation>Oliva</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/misc/style.cpp" line="71"/>
         <source>Red</source>
         <translation>Rosso</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/misc/style.cpp" line="71"/>
         <source>Violet</source>
         <translation>Viola</translation>
     </message>
@@ -1876,16 +1916,16 @@ Verrà installata al riavvio del programma.</translation>
         <translation>Chiamata in arrivo...</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/chatmessage.cpp" line="126"/>
-        <source>Busy...</source>
-        <translation>Occupato...</translation>
-    </message>
-    <message>
         <location filename="../src/widget/toxuri.cpp" line="72"/>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Ciao, sono %1.
 Permettimi di aggiungerti alla mia lista contatti.</translation>
+    </message>
+    <message>
+        <location filename="../src/chatlog/chatmessage.cpp" line="126"/>
+        <source>Resizing</source>
+        <translation>Ridimensiona</translation>
     </message>
 </context>
 <context>
@@ -2033,7 +2073,7 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1051"/>
+        <location filename="../src/widget/widget.cpp" line="1031"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
@@ -2056,108 +2096,108 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="354"/>
+        <location filename="../src/widget/widget.cpp" line="347"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="363"/>
+        <location filename="../src/widget/widget.cpp" line="356"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="414"/>
+        <location filename="../src/widget/widget.cpp" line="388"/>
         <source>Add friend</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="427"/>
+        <location filename="../src/widget/widget.cpp" line="401"/>
         <source>File transfers</source>
         <translation>Files trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="437"/>
+        <location filename="../src/widget/widget.cpp" line="411"/>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>File eseguibile</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="437"/>
+        <location filename="../src/widget/widget.cpp" line="411"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Hai chiesto a qTox di aprire un file eseguibile. I files eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="493"/>
+        <location filename="../src/widget/widget.cpp" line="473"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="501"/>
+        <location filename="../src/widget/widget.cpp" line="481"/>
         <source>Profile</source>
         <translation>Profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="610"/>
+        <location filename="../src/widget/widget.cpp" line="590"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossibile inviare la richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="638"/>
+        <location filename="../src/widget/widget.cpp" line="618"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="640"/>
+        <location filename="../src/widget/widget.cpp" line="620"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="642"/>
+        <location filename="../src/widget/widget.cpp" line="622"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="646"/>
+        <location filename="../src/widget/widget.cpp" line="626"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="649"/>
+        <location filename="../src/widget/widget.cpp" line="629"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="825"/>
+        <location filename="../src/widget/widget.cpp" line="805"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>Invito chat di gruppo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="825"/>
+        <location filename="../src/widget/widget.cpp" line="805"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1 ti ha invitato in una chat di gruppo. Vuoi partecipare?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="880"/>
+        <location filename="../src/widget/widget.cpp" line="860"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="906"/>
+        <location filename="../src/widget/widget.cpp" line="886"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 ha impostato il titolo in %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1118"/>
+        <location filename="../src/widget/widget.cpp" line="1098"/>
         <source>Message failed to send</source>
         <translation>Impossibile inviare il messaggio</translation>
     </message>
