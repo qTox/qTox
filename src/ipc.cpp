@@ -150,7 +150,7 @@ void IPC::registerEventHandler(const QString &name, IPCEventHandler handler)
     eventHandlers[name] = handler;
 }
 
-bool IPC::isEventProcessed(time_t time)
+bool IPC::isEventAccepted(time_t time)
 {
     bool result = false;
     if (globalMemory.lock())
@@ -161,32 +161,6 @@ bool IPC::isEventProcessed(time_t time)
             for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; i++)
             {
                 if (mem->events[i].posted == time && mem->events[i].processed)
-                {
-                    result = true;
-                    break;
-                }
-            }
-        }
-        globalMemory.unlock();
-    }
-    else
-    {
-        qWarning() << "IPC: isEventProcessed failed to lock, returning false";
-    }
-    return result;
-}
-
-bool IPC::isEventAccepted(time_t time)
-{
-    bool result = false;
-    if (globalMemory.lock())
-    {
-        // if (difftime(global()->lastProcessed, time) > 0)
-        {
-            IPCMemory* mem = global();
-            for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; i++)
-            {
-                if (mem->events[i].posted == time)
                 {
                     result = mem->events[i].accepted;
                     break;
@@ -202,11 +176,11 @@ bool IPC::isEventAccepted(time_t time)
     return result;
 }
 
-bool IPC::waitUntilProcessed(time_t postTime, int32_t timeout/*=-1*/)
+bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout/*=-1*/)
 {
     bool result = false;
     time_t start = time(0);
-    while (!(result = isEventProcessed(postTime)))
+    while (!(result = isEventAccepted(postTime)))
     {
         qApp->processEvents();
         if (timeout > 0 && difftime(time(0), start) >= timeout)
@@ -232,10 +206,7 @@ IPC::IPCEvent *IPC::fetchEvent()
         if (evt->posted && !evt->processed && evt->sender != getpid())
         {
             if (evt->dest == Settings::getInstance().getCurrentProfileId() || (evt->dest == 0 && isCurrentOwner()))
-            {
-                evt->processed = time(0);
                 return evt;
-            }
         }
     }
     return 0;
@@ -291,9 +262,19 @@ void IPC::processEvents()
             auto it = eventHandlers.find(name);
             if (it != eventHandlers.end())
             {
-                evt->accepted = runEventHandler(it.value(), evt->data);
                 qDebug() << "IPC: Processing event: " << name << ":" << evt->posted << "=" << evt->accepted;
+                evt->accepted = runEventHandler(it.value(), evt->data);
+                if (evt->dest == 0)
+                {
+                    // Global events should be processed only by instance that accepted event. Otherwise global
+                    // event would be consumed by very first instance that gets to check it.
+                    if (evt->accepted)
+                        evt->processed = time(0);
+                }
+                else
+                    evt->processed = time(0);
             }
+
         }
 
         globalMemory.unlock();
