@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
             else
             {
                 time_t event = ipc.postEvent("uri", firstParam.toUtf8());
-                ipc.waitUntilProcessed(event);
+                ipc.waitUntilAccepted(event);
                 // If someone else processed it, we're done here, no need to actually start qTox
                 if (!ipc.isCurrentOwner())
                     return EXIT_SUCCESS;
@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
             else
             {
                 time_t event = ipc.postEvent("save", firstParam.toUtf8());
-                ipc.waitUntilProcessed(event);
+                ipc.waitUntilAccepted(event);
                 // If someone else processed it, we're done here, no need to actually start qTox
                 if (!ipc.isCurrentOwner())
                     return EXIT_SUCCESS;
@@ -260,7 +260,7 @@ int main(int argc, char *argv[])
         if (parser.isSet("p"))
             dest = Settings::getInstance().getCurrentProfileId();
         time_t event = ipc.postEvent("activate", QByteArray(), dest);
-        if (ipc.waitUntilProcessed(event, 2) && ipc.isEventAccepted(event))
+        if (ipc.waitUntilAccepted(event, 2))
         {
             if (!ipc.isCurrentOwner())
                 return EXIT_SUCCESS;
