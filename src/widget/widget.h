@@ -51,6 +51,9 @@ class Widget : public QMainWindow
 {
     Q_OBJECT
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 public:
     explicit Widget(QWidget *parent = 0);
     void init();
@@ -176,6 +179,7 @@ private:
     QRegExp nameMention, sanitizedNameMention;
     bool eventFlag;
     bool eventIcon;
+    bool wasMaximized = false;
 };
 
 bool toxActivateEventHandler(const QByteArray& data);

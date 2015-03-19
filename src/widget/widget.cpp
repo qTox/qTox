@@ -84,6 +84,7 @@ Widget::Widget(QWidget *parent)
       eventFlag(false),
       eventIcon(false)
 {   
+    installEventFilter(this);
     translator = new QTranslator;
     setTranslation();
 }
@@ -221,6 +222,23 @@ void Widget::setTranslation()
     else
         qDebug() << "Error loading translation" << locale;
     QCoreApplication::installTranslator(translator);
+}
+
+bool Widget::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::WindowStateChange && obj != NULL)
+    {
+           QWindowStateChangeEvent * ce = static_cast<QWindowStateChangeEvent*>(event);
+           if (windowState() & Qt::WindowMinimized)
+           {
+                if (ce->oldState() & Qt::WindowMaximized)
+                    wasMaximized = true;
+                else
+                    wasMaximized = false;
+           }
+    }
+    event->accept();
+    return false;
 }
 
 void Widget::updateIcons()
@@ -459,16 +477,23 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
             {
                 show();
                 activateWindow();
-                showNormal();
+                if (wasMaximized)
+                    showMaximized();
+                else
+                    showNormal();
             }
             else if (isMinimized())
             {
                 forceShow();
                 activateWindow();
-                showNormal();
+                if (wasMaximized)
+                    showMaximized();
+                else
+                    showNormal();
             }
             else
             {
+                wasMaximized = isMaximized();
                 if (Settings::getInstance().getMinimizeToTray())
                     hide();
                 else
@@ -479,6 +504,7 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
             break;
         }
         case QSystemTrayIcon::MiddleClick:
+            wasMaximized = isMaximized();
             if (Settings::getInstance().getMinimizeToTray())
                 hide();
             else
