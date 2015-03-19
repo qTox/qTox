@@ -96,7 +96,7 @@ First of all install the dependencies of Tox Core.
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed opus vpx
+sudo pacman -S --needed opus libvpx
 ```
 
 Debian / Ubuntu:
