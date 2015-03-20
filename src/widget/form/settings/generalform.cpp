@@ -33,9 +33,9 @@
 static QStringList locales = {"bg", "de", "en", "es", "fr", "hr", "hu", "it", "lt", "mannol", "nl", "pirate", "pl", "pt", "ru", "sl", "fi", "sv", "uk", "zh"};
 static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "mannol", "Nederlands", "Pirate", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
 
-static const QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
+static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
-static const QStringList dateFormats = {"dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
+static QStringList dateFormats = {"dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
@@ -106,7 +106,13 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     }
     bodyUI->timestamp->addItems(timestamps);
     
+    QLocale ql;
     QStringList datestamps;
+    dateFormats.append(ql.dateFormat());
+    dateFormats.removeDuplicates();
+    timeFormats.append(ql.timeFormat());
+    timeFormats.removeDuplicates();
+    
     foreach (QString datestamp, dateFormats) {
         datestamps << QString("%1 - %2").arg(datestamp, QDate::currentDate().toString(datestamp));
     }
