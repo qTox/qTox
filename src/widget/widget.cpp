@@ -225,7 +225,7 @@ void Widget::setTranslation()
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
 {
-    if(event->type() == QEvent::WindowStateChange && obj != NULL)
+    if (event->type() == QEvent::WindowStateChange && obj != NULL)
     {
            QWindowStateChangeEvent * ce = static_cast<QWindowStateChangeEvent*>(event);
            if (windowState() & Qt::WindowMinimized)
@@ -426,7 +426,7 @@ void Widget::confirmExecutableOpen(const QFileInfo file)
 
     if (dangerousExtensions.contains(file.suffix()))
     {
-        if(!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
+        if (!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
         {
             return;
         }

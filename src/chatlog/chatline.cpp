@@ -27,9 +27,9 @@ ChatLine::ChatLine()
 
 ChatLine::~ChatLine()
 {
-    for(ChatLineContent* c : content)
+    for (ChatLineContent* c : content)
     {
-        if(c->scene())
+        if (c->scene())
             c->scene()->removeItem(c);
 
         delete c;
@@ -40,15 +40,15 @@ void ChatLine::setRow(int idx)
 {
     row = idx;
 
-    for(int c = 0; c < static_cast<int>(content.size()); ++c)
+    for (int c = 0; c < static_cast<int>(content.size()); ++c)
         content[c]->setIndex(row, c);
 }
 
 void ChatLine::visibilityChanged(bool visible)
 {
-    if(isVisible != visible)
+    if (isVisible != visible)
     {
-        for(ChatLineContent* c : content)
+        for (ChatLineContent* c : content)
             c->visibilityChanged(visible);
     }
 
@@ -62,7 +62,7 @@ int ChatLine::getRow() const
 
 ChatLineContent *ChatLine::getContent(int col) const
 {
-    if(col < static_cast<int>(content.size()) && col >= 0)
+    if (col < static_cast<int>(content.size()) && col >= 0)
         return content[col];
 
     return nullptr;
@@ -70,9 +70,9 @@ ChatLineContent *ChatLine::getContent(int col) const
 
 ChatLineContent *ChatLine::getContent(QPointF scenePos) const
 {
-    for(ChatLineContent* c: content)
+    for (ChatLineContent* c: content)
     {
-        if(c->sceneBoundingRect().contains(scenePos))
+        if (c->sceneBoundingRect().contains(scenePos))
             return c;
     }
 
@@ -81,37 +81,37 @@ ChatLineContent *ChatLine::getContent(QPointF scenePos) const
 
 void ChatLine::removeFromScene()
 {
-    for(ChatLineContent* c : content)
+    for (ChatLineContent* c : content)
     {
-        if(c->scene())
+        if (c->scene())
             c->scene()->removeItem(c);
     }
 }
 
 void ChatLine::addToScene(QGraphicsScene *scene)
 {
-    if(!scene)
+    if (!scene)
         return;
 
-    for(ChatLineContent* c : content)
+    for (ChatLineContent* c : content)
         scene->addItem(c);
 }
 
 void ChatLine::setVisible(bool visible)
 {
-    for(ChatLineContent* c : content)
+    for (ChatLineContent* c : content)
         c->setVisible(visible);
 }
 
 void ChatLine::selectionCleared()
 {
-    for(ChatLineContent* c : content)
+    for (ChatLineContent* c : content)
         c->selectionCleared();
 }
 
 void ChatLine::selectionFocusChanged(bool focusIn)
 {
-    for(ChatLineContent* c : content)
+    for (ChatLineContent* c : content)
         c->selectionFocusChanged(focusIn);
 }
 
@@ -125,7 +125,7 @@ void ChatLine::updateBBox()
     bbox.setHeight(0);
     bbox.setWidth(width);
 
-    for(ChatLineContent* c : content)
+    for (ChatLineContent* c : content)
         bbox.setHeight(qMax(c->sceneBoundingRect().top() - bbox.top() + c->sceneBoundingRect().height(), bbox.height()));
 }
 
@@ -136,7 +136,7 @@ QRectF ChatLine::sceneBoundingRect() const
 
 void ChatLine::addColumn(ChatLineContent* item, ColumnFormat fmt)
 {
-    if(!item)
+    if (!item)
         return;
 
     format.push_back(fmt);
@@ -145,7 +145,7 @@ void ChatLine::addColumn(ChatLineContent* item, ColumnFormat fmt)
 
 void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
 {
-    if(col >= 0 && col < static_cast<int>(content.size()) && lineContent)
+    if (col >= 0 && col < static_cast<int>(content.size()) && lineContent)
     {
         QGraphicsScene* scene = content[col]->scene();
         delete content[col];
@@ -153,7 +153,7 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
         content[col] = lineContent;
         lineContent->setIndex(row, col);
 
-        if(scene)
+        if (scene)
             scene->addItem(content[col]);
 
         layout(width, bbox.topLeft());
@@ -170,15 +170,15 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal fixedWidth = (content.size()-1) * columnSpacing;
     qreal varWidth = 0.0; // used for normalisation
 
-    for(int i = 0; i < static_cast<int>(format.size()); ++i)
+    for (int i = 0; i < static_cast<int>(format.size()); ++i)
     {
-        if(format[i].policy == ColumnFormat::FixedSize)
+        if (format[i].policy == ColumnFormat::FixedSize)
             fixedWidth += format[i].size;
         else
             varWidth += format[i].size;
     }
 
-    if(varWidth == 0.0)
+    if (varWidth == 0.0)
         varWidth = 1.0;
 
     qreal leftover = qMax(0.0, width - fixedWidth);
@@ -188,11 +188,11 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal xPos[content.size()];
 
 
-    for(int i = 0; i < static_cast<int>(content.size()); ++i)
+    for (int i = 0; i < static_cast<int>(content.size()); ++i)
     {
         // calculate the effective width of the current column
         qreal width;
-        if(format[i].policy == ColumnFormat::FixedSize)
+        if (format[i].policy == ColumnFormat::FixedSize)
             width = format[i].size;
         else
             width = format[i].size / varWidth * leftover;
@@ -222,7 +222,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         maxVOffset = qMax(maxVOffset, content[i]->getAscent());
     }
 
-    for(int i = 0; i < static_cast<int>(content.size()); ++i)
+    for (int i = 0; i < static_cast<int>(content.size()); ++i)
     {
         // calculate vertical alignment
         // vertical alignment may depend on width, so we do it in a second pass
@@ -238,7 +238,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
 void ChatLine::moveBy(qreal deltaY)
 {
     // reposition only
-    for(ChatLineContent* c : content)
+    for (ChatLineContent* c : content)
         c->moveBy(0, deltaY);
 
     bbox.moveTop(bbox.top() + deltaY);

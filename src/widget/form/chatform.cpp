@@ -244,11 +244,11 @@ void ChatForm::onFileRecvRequest(ToxFile file)
             || Settings::getInstance().getAutoSaveEnabled())
     {
         ChatLineContentProxy* proxy = dynamic_cast<ChatLineContentProxy*>(msg->getContent(1));
-        if(proxy)
+        if (proxy)
         {
             FileTransferWidget* tfWidget = dynamic_cast<FileTransferWidget*>(proxy->getWidget());
 
-            if(tfWidget)
+            if (tfWidget)
                 tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxID()));
         }
     }
@@ -563,7 +563,7 @@ void ChatForm::onHangupCallTriggered()
     qDebug() << "onHangupCallTriggered";
 
     //Fixes an OS X bug with ending a call while in full screen
-    if(netcam->isFullScreen())
+    if (netcam->isFullScreen())
     {
         netcam->showNormal();
     }
@@ -663,7 +663,7 @@ void ChatForm::enableCallButtons()
     videoButton->setToolTip("");
     videoButton->disconnect();
     
-    if(disableCallButtonsTimer == nullptr)
+    if (disableCallButtonsTimer == nullptr)
     {
         disableCallButtonsTimer = new QTimer();
         connect(disableCallButtonsTimer, SIGNAL(timeout()),
@@ -843,7 +843,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                                                               authorId.isMine(),
                                                               QDateTime());
 
-        if(!isAction && prevId == authorId)
+        if (!isAction && prevId == authorId)
             msg->hideSender();
 
         prevId = authorId;
@@ -951,7 +951,7 @@ void ChatForm::setFriendTyping(bool isTyping)
 
     Text* text = dynamic_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
 
-    if(text)
+    if (text)
         text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
 }
 

@@ -19,13 +19,13 @@
 
 DocumentCache::~DocumentCache()
 {
-    while(!documents.isEmpty())
+    while (!documents.isEmpty())
         delete documents.pop();
 }
 
 QTextDocument* DocumentCache::pop()
 {
-    if(documents.empty())
+    if (documents.empty())
         documents.push(new CustomTextDocument);
 
     return documents.pop();
@@ -33,7 +33,7 @@ QTextDocument* DocumentCache::pop()
 
 void DocumentCache::push(QTextDocument *doc)
 {
-    if(doc)
+    if (doc)
     {
         doc->clear();
         documents.push(doc);

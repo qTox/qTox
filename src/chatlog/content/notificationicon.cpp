@@ -68,7 +68,7 @@ void NotificationIcon::updateGradient()
 {
     alpha += 0.01;
 
-    if(alpha + dotWidth >= 1.0)
+    if (alpha + dotWidth >= 1.0)
         alpha = 0.0;
 
     grad = QLinearGradient(QPointF(-0.5*size.width(),0), QPointF(3.0/2.0*size.width(),0));
@@ -78,6 +78,6 @@ void NotificationIcon::updateGradient()
     grad.setColorAt(qMin(1.0, alpha + dotWidth), Qt::lightGray);
     grad.setColorAt(1, Qt::lightGray);
 
-    if(scene() && isVisible())
+    if (scene() && isVisible())
         scene()->invalidate(sceneBoundingRect());
 }

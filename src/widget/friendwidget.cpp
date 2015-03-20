@@ -131,7 +131,7 @@ void FriendWidget::setAsActiveChatroom()
     if (isDefaultAvatar)
         avatar->setPixmap(QPixmap(":img/contact_dark.svg"), Qt::transparent);
 
-    if(!historyLoaded)
+    if (!historyLoaded)
     {
         Friend* f = FriendList::findFriend(friendId);
         if (Settings::getInstance().getEnableLogging())
