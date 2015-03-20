@@ -96,7 +96,7 @@ First of all install the dependencies of Tox Core.
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed opus vpx
+sudo pacman -S --needed opus libvpx
 ```
 
 Debian / Ubuntu:
@@ -221,6 +221,11 @@ Download the MinGW installer for Windows from [sourceforge.net](http://sourcefor
 Make sure to install MSYS (a set of Unix tools for Windows).
 The following steps assume that MinGW is installed at "C:\MinGW". If you decided to choose another location, replace corresponding parts.
 
+###qrencode
+Download the qrencode from http://fukuchi.org/works/qrencode/ or direct from https://code.google.com/p/qrencode-win32/source/checkout ,
+build project "..\qrencode-win32\vc8\qrcodelib\", you must copy files from release in: "qrcodelib.dll" to \qTox\libs\bin\qrcodelib.dll";
+"qrencode.h" to \qTox\libs\include\qrencode.h"; "qrcodelib.lib" to "\qTox\libs\lib\qrencode.lib" with rename!!!
+
 ###Setting up Path
 
 Add MinGW/MSYS/CMake binaries to the system path to make them globally accessible. 
@@ -232,7 +237,7 @@ The very first semicolon must only be added if it is missing. CMake may be added
 
 ###Cloning the Repository
 
-Clone the repository (https://github.com/tux3/qTox.git) with your preferred  Git client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task.
+Clone the repository (https://github.com/tux3/qTox.git) with your preferred  Git client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task (you may need to add the path to the git.exe system variable Path).
 The following steps assume that you cloned the repository at "C:\qTox". If you decided to choose another location, replace corresponding parts.
 
 ### Getting dependencies
