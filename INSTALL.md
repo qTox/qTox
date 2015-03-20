@@ -125,7 +125,7 @@ make
 sudo make install
 ```
 
-After all the dependencies are thus reeady to go, compiling should be as simple as 
+After all the dependencies are installed, compiling should be as simple as:
 ```bash
 qmake
 make
