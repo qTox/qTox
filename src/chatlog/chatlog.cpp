@@ -64,7 +64,6 @@ ChatLog::ChatLog(QWidget* parent)
     copyAction = new QAction(this);
     copyAction->setIcon(QIcon::fromTheme("edit-copy"));
     copyAction->setText(tr("Copy"));
-    copyAction->setShortcut(QKeySequence::Copy);
     copyAction->setEnabled(false);
     connect(copyAction, &QAction::triggered, this, [this]() { copySelectedText(); });
     addAction(copyAction);
@@ -76,10 +75,9 @@ ChatLog::ChatLog(QWidget* parent)
 #endif
 
     // select all action (ie. Ctrl+A)
-    QAction* selectAllAction = new QAction(this);
+    selectAllAction = new QAction(this);
     selectAllAction->setIcon(QIcon::fromTheme("edit-select-all"));
     selectAllAction->setText(tr("Select all"));
-    selectAllAction->setShortcut(QKeySequence::SelectAll);
     connect(selectAllAction, &QAction::triggered, this, [this]() { selectAll(); });
     addAction(selectAllAction);
 
@@ -829,4 +827,17 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
         for(int i=selFirstRow; i<=selLastRow; ++i)
             lines[i]->selectionFocusChanged(false);
     }
+}
+
+void ChatLog::keyPressEvent(QKeyEvent * event)
+{
+    if (event->matches(QKeySequence::Copy))
+    {
+        if(copyAction->isEnabled())
+            copyAction->trigger();
+    }
+    if (event->matches(QKeySequence::SelectAll))
+        selectAllAction->trigger();
+
+    QGraphicsView::keyPressEvent(event);
 }

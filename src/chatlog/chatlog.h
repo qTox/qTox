@@ -79,6 +79,7 @@ protected:
     void scrollToBottom();
     void startResizeWorker();
 
+    virtual void keyPressEvent(QKeyEvent * event);
     virtual void mouseDoubleClickEvent(QMouseEvent* ev);
     virtual void mousePressEvent(QMouseEvent* ev);
     virtual void mouseReleaseEvent(QMouseEvent* ev);
@@ -113,6 +114,7 @@ private:
     };
 
     QAction* copyAction = nullptr;
+    QAction* selectAllAction = nullptr;
     QGraphicsScene* scene = nullptr;
     QGraphicsScene* busyScene = nullptr;
     QVector<ChatLine::Ptr> lines;
