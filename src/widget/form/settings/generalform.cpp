@@ -109,8 +109,10 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     QLocale ql;
     QStringList datestamps;
     dateFormats.append(ql.dateFormat());
+    dateFormats.append(ql.dateFormat(QLocale::LongFormat));
     dateFormats.removeDuplicates();
     timeFormats.append(ql.timeFormat());
+    timeFormats.append(ql.timeFormat(QLocale::LongFormat));
     timeFormats.removeDuplicates();
     
     foreach (QString datestamp, dateFormats) {
