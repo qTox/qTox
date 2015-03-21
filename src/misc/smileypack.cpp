@@ -206,9 +206,8 @@ QIcon SmileyPack::getCachedSmiley(const QString &key)
 
     // cache it if needed
     QString file = filenameTable.value(key);
-    if (!iconCache.contains(file)) {
+    if (!iconCache.contains(file))
         cacheSmiley(file);
-    }
 
     return iconCache.value(file);
 }

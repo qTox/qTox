@@ -64,12 +64,14 @@ void TabCompleter::buildCompletionList()
 
 void TabCompleter::complete()
 {
-    if (!enabled) {
+    if (!enabled)
+    {
         buildCompletionList();
         enabled = true;
     }
 
-    if (nextCompletion != completionMap.end()) {
+    if (nextCompletion != completionMap.end())
+    {
         // clear previous completion
         auto cur = msgEdit->textCursor();
         cur.setPosition(cur.selectionEnd());
@@ -85,13 +87,16 @@ void TabCompleter::complete()
         nextCompletion++;
 
         // we're completing the first word of the line
-        if (msgEdit->textCursor().position() == lastCompletionLength) {
+        if (msgEdit->textCursor().position() == lastCompletionLength)
+        {
             msgEdit->insertPlainText(nickSuffix);
             lastCompletionLength += nickSuffix.length();
         }
     }
-    else { // we're at the end of the list -> start over again
-        if (!completionMap.isEmpty()) {
+    else
+    { // we're at the end of the list -> start over again
+        if (!completionMap.isEmpty())
+        {
             nextCompletion = completionMap.begin();
             complete();
         }

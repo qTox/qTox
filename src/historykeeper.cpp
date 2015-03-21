@@ -372,7 +372,8 @@ void HistoryKeeper::setSyncType(Db::syncType sType)
 {
     QString syncCmd;
 
-    switch (sType) {
+    switch (sType)
+    {
     case Db::syncType::stFull:
         syncCmd = "FULL";
         break;

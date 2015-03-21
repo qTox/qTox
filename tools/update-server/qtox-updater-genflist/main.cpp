@@ -21,7 +21,8 @@ QList<QString> scanDir(QDir dir)
     QList<QString> files;
     QStack<QString> stack;
     stack.push(dir.absolutePath());
-    while (!stack.isEmpty()) {
+    while (!stack.isEmpty())
+    {
       QString sSubdir = stack.pop();
       QDir subdir(sSubdir);
 
@@ -29,11 +30,13 @@ QList<QString> scanDir(QDir dir)
       QList<QString> sublist = subdir.entryList(QDir::Files);
       for (QString& file : sublist)
           file = dir.relativeFilePath(sSubdir + '/' + file);
+
       files += sublist;
 
       QFileInfoList infoEntries = subdir.entryInfoList(QStringList(),
                                                        QDir::AllDirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-      for (int i = 0; i < infoEntries.size(); i++) {
+      for (int i = 0; i < infoEntries.size(); i++)
+      {
          QFileInfo& item = infoEntries[i];
          stack.push(item.absoluteFilePath());
       }
@@ -131,4 +134,3 @@ int main(int argc, char* argv[])
     flistFile.close();
     return 0;
 }
-

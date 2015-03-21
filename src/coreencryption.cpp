@@ -107,6 +107,7 @@ QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
 {
     if (!pwsaltedkeys[passtype])
         return QByteArray();
+
     uint8_t encrypted[data.size() + tox_pass_encryption_extra_length()];
     if (tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], encrypted) == -1)
     {
@@ -120,6 +121,7 @@ QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
 {
     if (!pwsaltedkeys[passtype])
         return QByteArray();
+
     int sz = data.size() - tox_pass_encryption_extra_length();
     uint8_t decrypted[sz];
     int decr_size = tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(), pwsaltedkeys[passtype], decrypted);
@@ -183,7 +185,9 @@ bool Core::loadEncryptedSave(QByteArray& data)
         dialogtxt = tr("The profile password failed. Please try another?", "used only when pw set before load() doesn't work");
     }
     else
+    {
         dialogtxt = a;
+    }
 
     uint8_t salt[tox_pass_salt_length()];
     tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
@@ -198,11 +202,14 @@ bool Core::loadEncryptedSave(QByteArray& data)
             return false;
         }
         else
+        {
             setPassword(pw, ptMain, salt);
+        }
 
         error = tox_encrypted_key_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size(), pwsaltedkeys[ptMain]);
         dialogtxt = a + "\n" + b;
-    } while (error != 0);
+    }
+    while (error != 0);
 
     Settings::getInstance().setEncryptTox(true);
     return true;
@@ -232,10 +239,12 @@ void Core::checkEncryptedHistory()
     {
         if (!exists || HistoryKeeper::checkPassword())
             return;
+
         dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
     }
     else
         dialogtxt = a;
+
     dialogtxt += "\n" + c;
 
     if (pwsaltedkeys[ptMain])
@@ -263,11 +272,14 @@ void Core::checkEncryptedHistory()
             return;
         }
         else
+        {
             setPassword(pw, ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
+        }
 
         error = exists && !HistoryKeeper::checkPassword();
         dialogtxt = a + "\n" + c + "\n" + b;
-    } while (error);
+    }
+    while (error);
 }
 
 void Core::saveConfiguration(const QString& path)
@@ -282,7 +294,8 @@ void Core::saveConfiguration(const QString& path)
     }
 
     QSaveFile configurationFile(path);
-    if (!configurationFile.open(QIODevice::WriteOnly)) {
+    if (!configurationFile.open(QIODevice::WriteOnly))
+    {
         qCritical() << "File " << path << " cannot be opened";
         return;
     }
@@ -318,7 +331,9 @@ void Core::saveConfiguration(const QString& path)
             }
         }
         else
+        {
             tox_save(tox, data);
+        }
 
         configurationFile.write(reinterpret_cast<char *>(data), fileSize);
         configurationFile.commit();

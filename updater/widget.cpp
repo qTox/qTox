@@ -43,9 +43,7 @@ Widget::Widget(QWidget *parent) :
 
     // Updates only for supported platforms
     if (!supported)
-    {
         fatalError(tr("The qTox updater is not supported on this platform."));
-    }
 
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
 }
@@ -107,6 +105,7 @@ void Widget::update()
     QFile updateFlistFile(updateDirStr+"flist");
     if (!updateFlistFile.open(QIODevice::ReadOnly))
         fatalError(tr("The update is incomplete."));
+
     QByteArray updateFlistData = updateFlistFile.readAll();
     updateFlistFile.close();
 
@@ -120,9 +119,8 @@ void Widget::update()
         if (!QFile::exists(updateDirStr+fileMeta.installpath))
             fatalError(tr("The update is incomplete."));
 
-    if (diff.size() == 0){
+    if (diff.size() == 0)
        fatalError(tr("The diff list is empty."));
-    }
 
     setProgress(5);
 
@@ -137,6 +135,7 @@ void Widget::update()
         QFile fileFile(updateDirStr+fileMeta.installpath);
         if (!fileFile.open(QIODevice::ReadOnly))
             fatalError(tr("Update files are unreadable."));
+
         file.data = fileFile.readAll();
         fileFile.close();
 

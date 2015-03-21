@@ -110,7 +110,9 @@ void GroupChatForm::onSendTriggered()
             emit sendAction(group->getGroupId(), msg);
         }
         else
+        {
             emit sendMessage(group->getGroupId(), msg);
+        }
     }
     else
         addSelfMessage(msg, msg.startsWith("/me "), QDateTime::currentDateTime(), true);
@@ -150,6 +152,7 @@ void GroupChatForm::onUserListChanged()
         QLabel* label = orderizer[names[i]];
         if (i != nNames - 1)
             label->setText(label->text() + ", ");
+
         namesListLayout->addWidget(label);
     }
 
