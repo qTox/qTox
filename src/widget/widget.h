@@ -158,6 +158,7 @@ private:
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();
+    void cycleContacts(int offset);
     SystemTrayIcon *icon;
     QMenu *trayMenu;
     QAction *statusOnline,
