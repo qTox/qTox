@@ -80,20 +80,37 @@ void FriendListWidget::onGroupchatPositionChanged(bool top)
         mainLayout->addLayout(groupLayout, 0, 0);
         mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 1, 0);
     }
-
-    return friends;
-}
-
-void FriendListWidget::moveWidget(QWidget *w, Status s, int hasNewEvents)
-{
-    mainLayout->removeWidget(w);
-    if (hasNewEvents == 0)
-        getFriendLayout(s)->addWidget(w);
     else
     {
         mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
         mainLayout->addLayout(groupLayout, 1, 0);
     }
+}
+
+QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
+{
+    QList<GenericChatroomWidget*> friends;
+
+    for (int i = 0; i < mainLayout->count(); ++i)
+    {
+        QLayout* subLayout = mainLayout->itemAt(i)->layout();
+
+        if(!subLayout)
+            continue;
+
+        for (int j = 0; j < subLayout->count(); ++j)
+        {
+            GenericChatroomWidget* widget =
+                reinterpret_cast<GenericChatroomWidget*>(subLayout->itemAt(j)->widget());
+
+            if(!widget)
+                continue;
+
+            friends.append(widget);
+        }
+    }
+
+    return friends;
 }
 
 void FriendListWidget::moveWidget(QWidget *w, Status s)
