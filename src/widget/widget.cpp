@@ -47,6 +47,7 @@
 #include <QBuffer>
 #include <QPainter>
 #include <QMouseEvent>
+#include <QShortcut>
 #include <QClipboard>
 #include <QThread>
 #include <QDialogButtonBox>
@@ -196,6 +197,12 @@ void Widget::init()
     connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
 
     addFriendForm->show(*ui);
+
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(previousContact()));
+    new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
+
+    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
 #if (AUTOUPDATE_ENABLED)
     if (Settings::getInstance().getCheckUpdates())

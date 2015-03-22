@@ -169,22 +169,10 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     connect(emoteButton, &QPushButton::clicked, this, &GenericChatForm::onEmoteButtonClicked);
     connect(chatWidget, &ChatLog::customContextMenuRequested, this, &GenericChatForm::onChatContextMenuRequested);
 
-    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
-    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L, this, SLOT(clearChatArea()));
 
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
-}
-
-void GenericChatForm::previousContact()
-{
-    parent->previousContact();
-}
-
-void GenericChatForm::nextContact()
-{
-    parent->nextContact();
 }
 
 bool GenericChatForm::isEmpty()
