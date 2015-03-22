@@ -128,6 +128,9 @@ public:
     bool getShowInFront() const;
     void setShowInFront(bool newValue);
 
+    bool getNotifySound() const;
+    void setNotifySound(bool newValue);
+
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
@@ -280,6 +283,7 @@ private:
     bool checkUpdates;
     bool showWindow;
     bool showInFront;
+    bool notifySound;
     bool groupAlwaysNotify;
 
     bool forceTCP;
