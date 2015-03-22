@@ -237,7 +237,6 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
                     wasMaximized = false;
            }
     }
-    event->accept();
     return false;
 }
 
