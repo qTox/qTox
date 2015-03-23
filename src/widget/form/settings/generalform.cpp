@@ -73,6 +73,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
     bodyUI->showWindow->setChecked(Settings::getInstance().getShowWindow());
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
+    bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
@@ -133,6 +134,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
     connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
+    connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     if (bodyUI->autoacceptFiles->isChecked())
@@ -371,6 +373,11 @@ void GeneralForm::onShowWindowChanged()
 void GeneralForm::onSetShowInFront()
 {
     Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
+}
+
+void GeneralForm::onSetNotifySound()
+{
+    Settings::getInstance().setNotifySound(bodyUI->notifySound->isChecked());
 }
 
 void GeneralForm::onSetGroupAlwaysNotify()

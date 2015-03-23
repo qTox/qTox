@@ -209,6 +209,7 @@ void Settings::load()
         checkUpdates = s.value("checkUpdates", false).toBool();
         showWindow = s.value("showWindow", true).toBool();
         showInFront = s.value("showInFront", false).toBool();
+        notifySound = s.value("notifySound", true).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
@@ -381,6 +382,7 @@ void Settings::saveGlobal(QString path)
         s.setValue("checkUpdates", checkUpdates);
         s.setValue("showWindow", showWindow);
         s.setValue("showInFront", showInFront);
+        s.setValue("notifySound", notifySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("compactLayout", compactLayout);
@@ -693,6 +695,16 @@ bool Settings::getShowInFront() const
 void Settings::setShowInFront(bool newValue)
 {
     showInFront = newValue;
+}
+
+bool Settings::getNotifySound() const
+{
+   return notifySound;
+}
+
+void Settings::setNotifySound(bool newValue)
+{
+    notifySound = newValue;
 }
 
 bool Settings::getGroupAlwaysNotify() const

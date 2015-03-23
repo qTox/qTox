@@ -237,7 +237,6 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
                     wasMaximized = false;
            }
     }
-    event->accept();
     return false;
 }
 
@@ -753,17 +752,20 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
             setWindowState(Qt::WindowActive);
     }
 
-    static QFile sndFile(":audio/notification.pcm");
-    static QByteArray sndData;
-
-    if (sndData.isEmpty())
+    if (Settings::getInstance().getNotifySound())
     {
-        sndFile.open(QIODevice::ReadOnly);
-        sndData = sndFile.readAll();
-        sndFile.close();
-    }
+        static QFile sndFile(":audio/notification.pcm");
+        static QByteArray sndData;
 
-    Audio::playMono16Sound(sndData);
+        if (sndData.isEmpty())
+        {
+            sndFile.open(QIODevice::ReadOnly);
+            sndData = sndFile.readAll();
+            sndFile.close();
+        }
+
+        Audio::playMono16Sound(sndData);
+    }
 }
 
 void Widget::playRingtone()

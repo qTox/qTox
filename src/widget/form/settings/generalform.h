@@ -56,6 +56,7 @@ private slots:
     void onCheckUpdateChanged();
     void onShowWindowChanged();
     void onSetShowInFront();
+    void onSetNotifySound();
     void onSetGroupAlwaysNotify();
     void onFauxOfflineMessaging();
     void onCompactLayout();
