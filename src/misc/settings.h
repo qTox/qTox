@@ -361,7 +361,6 @@ signals:
     void emojiFontChanged();
     void timestampFormatChanged();
     void compactLayoutChanged();
-    void groupchatPositionChanged();
 };
 
 #endif // SETTINGS_HPP

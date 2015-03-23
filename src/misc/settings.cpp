@@ -1184,7 +1184,6 @@ bool Settings::getGroupchatPosition() const
 void Settings::setGroupchatPosition(bool value)
 {
     groupchatPosition = value;
-    emit groupchatPositionChanged();
 }
 
 int Settings::getThemeColor() const
