@@ -49,17 +49,17 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     nameLabel->setObjectName("nameLabel");
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     nameLabel->setEditable(true);
-    nameLabel->setTextFormat(Qt::PlainText);   
+    nameLabel->setTextFormat(Qt::PlainText);
 
     avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.svg");
     QHBoxLayout *mainFootLayout = new QHBoxLayout(),
                 *headLayout = new QHBoxLayout();
-    
+
     QVBoxLayout *mainLayout = new QVBoxLayout(),
                 *footButtonsSmall = new QVBoxLayout(),
                 *micButtonsLayout = new QVBoxLayout();
-                headTextLayout = new QVBoxLayout();    
-    
+                headTextLayout = new QVBoxLayout();
+
     QGridLayout *buttonsLayout = new QGridLayout();
 
     chatWidget = new ChatLog(this);
@@ -89,6 +89,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     micButton = new QPushButton();
     // micButton->setFixedSize(25,20);
     micButton->setToolTip("");
+
+    screenshotAction = new QAction(tr("Send screenshot"), nullptr);
 
     footButtonsSmall->setSpacing(2);
 
@@ -127,29 +129,29 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     mainFootLayout->addSpacing(5);
     mainFootLayout->addWidget(sendButton);
     mainFootLayout->setSpacing(0);
-    
-    headTextLayout->addStretch();    
+
+    headTextLayout->addStretch();
     headTextLayout->addWidget(nameLabel);
     headTextLayout->addStretch();
-    
+
     micButtonsLayout->setSpacing(0);
     micButtonsLayout->addWidget(micButton, Qt::AlignTop | Qt::AlignRight);
     micButtonsLayout->addSpacing(4);
     micButtonsLayout->addWidget(volButton, Qt::AlignTop | Qt::AlignRight);
-    
+
     buttonsLayout->addLayout(micButtonsLayout, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignRight);
     buttonsLayout->addWidget(callButton, 0, 1, 2, 1, Qt::AlignTop);
     buttonsLayout->addWidget(videoButton, 0, 2, 2, 1, Qt::AlignTop);
     buttonsLayout->setVerticalSpacing(0);
     buttonsLayout->setHorizontalSpacing(4);
-        
+
     headLayout->addWidget(avatar);
     headLayout->addSpacing(5);
     headLayout->addLayout(headTextLayout);
     headLayout->addLayout(buttonsLayout);
 
     headWidget->setLayout(headLayout);
-    
+
     //Fix for incorrect layouts on OS X as per
     //https://bugreports.qt-project.org/browse/QTBUG-14591
     sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);

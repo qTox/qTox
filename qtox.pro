@@ -428,7 +428,8 @@ SOURCES += \
     src/video/videoframe.cpp \
     src/widget/gui.cpp \
     src/toxme.cpp \
-    src/misc/qrwidget.cpp
+    src/misc/qrwidget.cpp \
+    src/widget/tool/screenshotgrabber.cpp
 
 HEADERS += \
     src/audio.h \
@@ -450,4 +451,5 @@ HEADERS += \
     src/video/videosource.h \
     src/widget/gui.h \
     src/toxme.h \
-    src/misc/qrwidget.h
+    src/misc/qrwidget.h \
+    src/widget/tool/screenshotgrabber.h
