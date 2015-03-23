@@ -629,11 +629,14 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     
     bool isActualChange = f->getStatus() != status;
 
-    if(isActualChange){
-        if(f->getStatus() == Status::Offline){
+    if(isActualChange)
+    {
+        if(f->getStatus() == Status::Offline)
+        {
             contactListWidget->moveWidget(f->getFriendWidget(), Status::Online, f->getEventFlag());
         }
-        else if(status == Status::Offline){
+        else if(status == Status::Offline)
+        {
             contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline, f->getEventFlag());
         }
     }
