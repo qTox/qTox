@@ -30,11 +30,11 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     // avatar
     if (property("compact").toBool())
     {
-        avatar = new MaskablePixmapWidget(this, QSize(20,20), ":/img/avatar_mask.png");
+        avatar = new MaskablePixmapWidget(this, QSize(20,20), ":/img/avatar_mask.svg");
     }
     else
     {
-        avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
+        avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.svg");
     }
 
     // status text

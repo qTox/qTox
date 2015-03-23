@@ -20,6 +20,7 @@
 #include <QFileInfo>
 #include <QUrl>
 #include <QDebug>
+#include <QPainter>
 
 FilesForm::FilesForm()
     : QObject()
@@ -60,14 +61,14 @@ void FilesForm::show(Ui::MainWindow& ui)
 
 void FilesForm::onFileDownloadComplete(const QString& path)
 {
-    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/acceptFileButton/default.png"), QFileInfo(path).fileName());
+    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/fileTransferWidget/fileDone.svg"), QFileInfo(path).fileName());
     tmp->path = path;
     recvd->addItem(tmp);
 }
 
 void FilesForm::onFileUploadComplete(const QString& path)
 {
-    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/acceptFileButton/default.png"), QFileInfo(path).fileName());
+    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/fileTransferWidget/fileDone.svg"), QFileInfo(path).fileName());
     tmp->path = path;
     sent->addItem(tmp);
 }

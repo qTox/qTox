@@ -22,6 +22,7 @@
 #include <QTimer>
 #include <QVBoxLayout>
 #include "src/core.h"
+#include "src/misc/qrwidget.h"
 
 class CroppingLabel;
 class Core;
@@ -36,7 +37,7 @@ class ClickableTE : public QLineEdit
 {
     Q_OBJECT
 public:
-    
+
 signals:
     void clicked();
 protected:
@@ -73,9 +74,13 @@ private slots:
     void onNewClicked();
     void disableSwitching();
     void enableSwitching();
-
+    void on_copyQr_clicked();
+    
+    void on_saveQr_clicked();
+    
 protected:
     virtual void showEvent(QShowEvent *);
+    bool eventFilter(QObject *o, QEvent *e);
 
 private:
     void refreshProfiles();
@@ -85,6 +90,7 @@ private:
     Core* core;
     QTimer timer;
     bool hasCheck = false;
+    QRWidget *qr;
 
     ClickableTE* toxId;
 };

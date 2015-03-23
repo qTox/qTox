@@ -31,11 +31,13 @@
 
 #include "ui_mainwindow.h"
 
+
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
-    avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
-    statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+    avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()), Qt::transparent);
+    statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
+    statusPic.setMargin(3);
     nameLabel->setText(Name);
 
     Group* g = GroupList::findGroup(groupId);
@@ -92,13 +94,13 @@ void GroupWidget::onUserListChanged()
 void GroupWidget::setAsActiveChatroom()
 {
     setActive(true);
-    avatar->setPixmap(QPixmap(":img/group_dark.png"), Qt::transparent);
+    avatar->setPixmap(Style::scaleSvgImage(":img/group_dark.svg", avatar->width(), avatar->height()), Qt::transparent);
 }
 
 void GroupWidget::setAsInactiveChatroom()
 {
     setActive(false);
-    avatar->setPixmap(QPixmap(":img/group.png"), Qt::transparent);
+    avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()), Qt::transparent);
 }
 
 void GroupWidget::updateStatusLight()
@@ -106,9 +108,15 @@ void GroupWidget::updateStatusLight()
     Group *g = GroupList::findGroup(groupId);
 
     if (!g->getEventFlag())
-        statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+    {
+        statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
+        statusPic.setMargin(3);
+    }
     else
-        statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+    {
+        statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.svg"));
+        statusPic.setMargin(0);
+    }
 }
 
 void GroupWidget::setChatForm(Ui::MainWindow &ui)

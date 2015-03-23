@@ -58,7 +58,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->getPeersCount()));
     nusersLabel->setObjectName("statusLabel");
 
-    avatar->setPixmap(QPixmap(":/img/group_dark.png"), Qt::transparent);
+    avatar->setPixmap(Style::scaleSvgImage(":/img/group_dark.svg", avatar->width(), avatar->height()), Qt::transparent);
 
     msgEdit->setObjectName("group");
 

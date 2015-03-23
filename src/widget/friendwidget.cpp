@@ -42,8 +42,9 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     , isDefaultAvatar{true}
     , historyLoaded{false}
 {
-    avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
-    statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
+    avatar->setPixmap(QPixmap(":img/contact.svg"), Qt::transparent);
+    statusPic.setPixmap(QPixmap(":img/status/dot_offline.svg"));
+    statusPic.setMargin(3);
     nameLabel->setText(id);
     nameLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setTextFormat(Qt::PlainText);
@@ -128,7 +129,7 @@ void FriendWidget::setAsActiveChatroom()
     setActive(true);
 
     if (isDefaultAvatar)
-        avatar->setPixmap(QPixmap(":img/contact_dark.png"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":img/contact_dark.svg"), Qt::transparent);
 
     if(!historyLoaded)
     {
@@ -146,7 +147,7 @@ void FriendWidget::setAsInactiveChatroom()
     setActive(false);
 
     if (isDefaultAvatar)
-        avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":img/contact.svg"), Qt::transparent);
 }
 
 void FriendWidget::updateStatusLight()
@@ -155,21 +156,26 @@ void FriendWidget::updateStatusLight()
     Status status = f->getStatus();
 
     if (status == Status::Online && f->getEventFlag() == 0)
-        statusPic.setPixmap(QPixmap(":img/status/dot_online.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
     else if (status == Status::Online && f->getEventFlag() == 1)
-        statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.svg"));
     else if (status == Status::Away && f->getEventFlag() == 0)
-        statusPic.setPixmap(QPixmap(":img/status/dot_idle.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_away.svg"));
     else if (status == Status::Away && f->getEventFlag() == 1)
-        statusPic.setPixmap(QPixmap(":img/status/dot_idle_notification.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.svg"));
     else if (status == Status::Busy && f->getEventFlag() == 0)
-        statusPic.setPixmap(QPixmap(":img/status/dot_busy.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_busy.svg"));
     else if (status == Status::Busy && f->getEventFlag() == 1)
-        statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.svg"));
     else if (status == Status::Offline && f->getEventFlag() == 0)
-        statusPic.setPixmap(QPixmap(":img/status/dot_away.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_offline.svg"));
     else if (status == Status::Offline && f->getEventFlag() == 1)
-        statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.png"));
+        statusPic.setPixmap(QPixmap(":img/status/dot_offline_notification.svg"));
+
+    if (!f->getEventFlag())
+        statusPic.setMargin(3);
+    else
+        statusPic.setMargin(0);
 }
 
 void FriendWidget::setChatForm(Ui::MainWindow &ui)
@@ -202,9 +208,9 @@ void FriendWidget::onAvatarRemoved(int FriendId)
     isDefaultAvatar = true;
 
     if (isActive())
-        avatar->setPixmap(QPixmap(":img/contact_dark.png"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":img/contact_dark.svg"), Qt::transparent);
     else
-        avatar->setPixmap(QPixmap(":img/contact.png"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":img/contact.svg"), Qt::transparent);
 }
 
 void FriendWidget::mousePressEvent(QMouseEvent *ev)

@@ -15,7 +15,7 @@
 | OpenCV       | >= 2.4.9    | core, highgui, imgproc                            |
 | OpenAL Soft  | >= 1.16.0   |                                                   |
 | filter_audio | most recent |                                                   |
-
+| qrencode     | >= 3.0.3    |                                                   |
 
 <a name="linux" />
 ##Linux
@@ -59,22 +59,22 @@ git clone https://github.com/tux3/qTox.git qTox
 
 The following steps assumes that you cloned the repository at "/home/user/qTox". If you decided to choose another location, replace corresponding parts.
 
-###GCC, Qt, OpenCV and OpanAL Soft
+###GCC, Qt, OpenCV, OpanAL Soft and QRCode
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed base-devel qt5 opencv openal libxss
+sudo pacman -S --needed base-devel qt5 opencv openal libxss qrencode
 ```
 
 Debian / Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev qrencode libqrencode-dev
 ```
 
 Fedora:
 ```bash
 yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel
+yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
 ```
 
 Slackware:
@@ -87,6 +87,8 @@ http://slackbuilds.org/repository/14.1/libraries/qt5/
 
 http://slackbuilds.org/repository/14.1/libraries/opencv/
 
+http://slackbuilds.org/slackbuilds/14.1/graphics/qrencode/
+
 
 ###Tox Core
 
@@ -94,7 +96,7 @@ First of all install the dependencies of Tox Core.
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed opus vpx
+sudo pacman -S --needed opus libvpx
 ```
 
 Debian / Ubuntu:
@@ -123,7 +125,7 @@ make
 sudo make install
 ```
 
-After all the dependencies are thus reeady to go, compiling should be as simple as 
+After all the dependencies are installed, compiling should be as simple as:
 ```bash
 qmake
 make
@@ -219,6 +221,11 @@ Download the MinGW installer for Windows from [sourceforge.net](http://sourcefor
 Make sure to install MSYS (a set of Unix tools for Windows).
 The following steps assume that MinGW is installed at "C:\MinGW". If you decided to choose another location, replace corresponding parts.
 
+###qrencode
+Download the qrencode from http://fukuchi.org/works/qrencode/ or direct from https://code.google.com/p/qrencode-win32/source/checkout ,
+build project "..\qrencode-win32\vc8\qrcodelib\", you must copy files from release in: "qrcodelib.dll" to \qTox\libs\bin\qrcodelib.dll";
+"qrencode.h" to \qTox\libs\include\qrencode.h"; "qrcodelib.lib" to "\qTox\libs\lib\qrencode.lib" with rename!!!
+
 ###Setting up Path
 
 Add MinGW/MSYS/CMake binaries to the system path to make them globally accessible. 
@@ -230,7 +237,7 @@ The very first semicolon must only be added if it is missing. CMake may be added
 
 ###Cloning the Repository
 
-Clone the repository (https://github.com/tux3/qTox.git) with your preferred  Git client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task.
+Clone the repository (https://github.com/tux3/qTox.git) with your preferred  Git client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task (you may need to add the path to the git.exe system variable Path).
 The following steps assume that you cloned the repository at "C:\qTox". If you decided to choose another location, replace corresponding parts.
 
 ### Getting dependencies

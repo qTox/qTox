@@ -1,27 +1,31 @@
 QPushButton
 {
-    background-color: transparent;
-    background-image: url(":/ui/fileButton/fileButton.png");
-    background-repeat: none;    
+    background-color: #6bc260;
+    background-image: url(":/ui/fileButton/fileButton.svg");
+    background-repeat: none;
+    background-position: center;
+    border-bottom-right-radius: 5px;
     border: none;
     width: 24px;
     height: 24px;
 }
+
 QPushButton:hover
 {
-   background-image: url(":/ui/fileButton/fileButtonHover.png");
+    background-color: #79c76f;
 }
 
 QPushButton:pressed
 {
-   background-image: url(":/ui/fileButton/fileButtonPressed.png");
+    background-color: #51b244;
 }
 
 QPushButton[enabled="false"]
 {
-   background-image: url(":/ui/fileButton/fileButtonDisabled.png");
+    background-color: #919191;
 }
 
-QPushButton:focus {
+QPushButton:focus
+{
     outline: none;
 }

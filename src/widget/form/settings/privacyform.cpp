@@ -80,9 +80,9 @@ bool PrivacyForm::setChatLogsPassword()
         body += "\n\n" + tr("It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.");
 
     if (core->isPasswordSet(Core::ptMain))
-        dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), this);
+        dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), 0);
     else
-        dialog = new SetPasswordDialog(body, QString(), this);
+        dialog = new SetPasswordDialog(body, QString(), 0);
 
     do {
         int r = dialog->exec();
@@ -203,9 +203,9 @@ bool PrivacyForm::setToxPassword()
     SetPasswordDialog* dialog;
     QString body = tr("Please set your new data file password.");
     if (core->isPasswordSet(Core::ptHistory))
-        dialog = new SetPasswordDialog(body, tr("Use chat history password", "pushbutton text"), this);
+        dialog = new SetPasswordDialog(body, tr("Use chat history password", "pushbutton text"), 0);
     else
-        dialog = new SetPasswordDialog(body, QString(), this);
+        dialog = new SetPasswordDialog(body, QString(), 0);
 
     if (int r = dialog->exec())
     {

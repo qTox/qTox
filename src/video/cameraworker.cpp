@@ -146,7 +146,21 @@ void CameraWorker::subscribe()
         if (!cam.isOpened())
         {
             queue.clear();
-            cam.open(camIndex);
+            bool bSuccess = false;
+
+            try
+            {
+                bSuccess = cam.open(camIndex);
+            }
+            catch( cv::Exception& e )
+            {
+                qDebug() << "CameraWorker:" << "OpenCV exception caught: " << e.what();
+            }
+
+            if(!bSuccess)
+            {
+                qDebug() << "CameraWorker: Could not open camera";
+            }
             applyProps(); // restore props
         }
     }
@@ -166,7 +180,20 @@ void CameraWorker::doWork()
     if (!cam.isOpened())
         return;
 
-    if (!cam.read(frame))
+    bool bSuccess = false;
+
+    try
+    {
+            bSuccess = cam.read(frame);
+    }
+    catch( cv::Exception& e )
+    {
+        qDebug() << "CameraWorker:" << "OpenCV exception caught: " << e.what();;
+        this->clock->stop(); // prevent log spamming
+        qDebug() << "CameraWorker: stopped clock";
+    }
+
+    if (!bSuccess)
     {
         qDebug() << "CameraWorker: Cannot read frame";
         return;

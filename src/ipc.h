@@ -73,9 +73,8 @@ public:
     time_t postEvent(const QString& name, const QByteArray &data=QByteArray(), uint32_t dest=0);
     bool isCurrentOwner();
     void registerEventHandler(const QString& name, IPCEventHandler handler);
-    bool isEventProcessed(time_t time);
     bool isEventAccepted(time_t time);
-    bool waitUntilProcessed(time_t time, int32_t timeout=-1);
+    bool waitUntilAccepted(time_t time, int32_t timeout=-1);
 
 protected slots:
     void processEvents();

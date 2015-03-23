@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>472</height>
+    <width>442</width>
+    <height>659</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>419</width>
-        <height>452</height>
+        <width>422</width>
+        <height>639</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -82,19 +82,70 @@
        </item>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="toxGroup">
-         <property name="toolTip">
-          <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</string>
-         </property>
          <property name="title">
           <string>Tox ID</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="CroppingLabel" name="toxIdLabel">
+            <property name="toolTip">
+             <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.</string>
+            </property>
             <property name="text">
              <string>Your Tox ID (click to copy)</string>
             </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="toxId">
+            <property name="toolTip">
+             <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="verticalFrame">
+            <layout class="QHBoxLayout" name="qrGroup">
+             <item>
+              <widget class="QLabel" name="qrCode">
+               <property name="text">
+                <string>QRCODE</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="horizontalFrame">
+               <layout class="QVBoxLayout" name="qrButtons">
+                <item alignment="Qt::AlignTop">
+                 <widget class="QLabel" name="qrLabel">
+                  <property name="text">
+                   <string>This QR code contains your Tox ID. You may share this with your friends as well.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignVCenter">
+                 <widget class="QPushButton" name="saveQr">
+                  <property name="text">
+                   <string>Save image</string>
+                  </property>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignVCenter">
+                 <widget class="QPushButton" name="copyQr">
+                  <property name="text">
+                   <string>Copy image</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -212,7 +263,7 @@ Profile does not contain your history.</string>
   <customwidget>
    <class>CroppingLabel</class>
    <extends>QLabel</extends>
-   <header>src/widget/croppinglabel.h</header>
+   <header location="global">src/widget/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

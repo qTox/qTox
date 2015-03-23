@@ -51,7 +51,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     nameLabel->setEditable(true);
     nameLabel->setTextFormat(Qt::PlainText);   
 
-    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.png");
+    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.svg");
     QHBoxLayout *mainFootLayout = new QHBoxLayout(),
                 *headLayout = new QHBoxLayout();
     

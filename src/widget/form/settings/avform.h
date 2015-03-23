@@ -63,12 +63,12 @@ private slots:
     virtual void showEvent(QShowEvent*);
 
     void on_HueSlider_valueChanged(int value);
-
     void on_BrightnessSlider_valueChanged(int value);
-
     void on_SaturationSlider_valueChanged(int value);
-
     void on_ContrastSlider_valueChanged(int value);
+    
+protected:
+    bool eventFilter(QObject *o, QEvent *e);    
 
 private:
     Ui::AVSettings *bodyUI;

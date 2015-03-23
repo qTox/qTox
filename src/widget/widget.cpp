@@ -84,6 +84,7 @@ Widget::Widget(QWidget *parent)
       eventFlag(false),
       eventIcon(false)
 {   
+    installEventFilter(this);
     translator = new QTranslator;
     setTranslation();
 }
@@ -103,13 +104,13 @@ void Widget::init()
     ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
 
     statusOnline = new QAction(tr("Online", "Button to set your status to 'Online'"), this);
-    statusOnline->setIcon(QIcon(":img/status/dot_online.png"));
+    statusOnline->setIcon(getStatusIcon(Status::Online, 10, 10));
     connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
     statusAway = new QAction(tr("Away", "Button to set your status to 'Away'"), this);
-    statusAway->setIcon(QIcon(":img/status/dot_idle.png"));
+    statusAway->setIcon(getStatusIcon(Status::Away, 10, 10));
     connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
     statusBusy = new QAction(tr("Busy", "Button to set your status to 'Busy'"), this);
-    statusBusy->setIcon(QIcon(":img/status/dot_busy.png"));
+    statusBusy->setIcon(getStatusIcon(Status::Busy, 10, 10));
     connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
 
     ui->statusbar->hide();
@@ -118,8 +119,8 @@ void Widget::init()
     layout()->setContentsMargins(0, 0, 0, 0);
     ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
 
-    profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.png");
-    profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
+    profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
+    profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setClickable(true);
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
@@ -161,8 +162,7 @@ void Widget::init()
     ui->mainSplitter->setStretchFactor(0,0);
     ui->mainSplitter->setStretchFactor(1,1);
 
-    ui->statusButton->setProperty("status", "offline");
-    Style::repolish(ui->statusButton);
+    onStatusSet(Status::Offline);
 
     // Disable some widgets until we're connected to the DHT
     ui->statusButton->setEnabled(false);
@@ -224,8 +224,28 @@ void Widget::setTranslation()
     QCoreApplication::installTranslator(translator);
 }
 
+bool Widget::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::WindowStateChange && obj != NULL)
+    {
+           QWindowStateChangeEvent * ce = static_cast<QWindowStateChangeEvent*>(event);
+           if (windowState() & Qt::WindowMinimized)
+           {
+                if (ce->oldState() & Qt::WindowMaximized)
+                    wasMaximized = true;
+                else
+                    wasMaximized = false;
+           }
+    }
+    event->accept();
+    return false;
+}
+
 void Widget::updateIcons()
 {
+    if (!icon)
+        return;
+
     QString status;
     if (eventIcon)
         status = "event";
@@ -335,16 +355,7 @@ void Widget::onConnected()
 
 void Widget::onDisconnected()
 {
-    QString stat = ui->statusButton->property("status").toString();
-    if      (stat == "online")
-        beforeDisconnect = Status::Online;
-    else if (stat == "busy")
-        beforeDisconnect = Status::Busy;
-    else if (stat == "away")
-        beforeDisconnect = Status::Away;
-    else
-        beforeDisconnect = Status::Offline;
-
+    beforeDisconnect = getStatusFromString(ui->statusButton->property("status").toString());
     ui->statusButton->setEnabled(false);
     emit statusSet(Status::Offline);
 }
@@ -370,27 +381,8 @@ void Widget::onBadProxyCore()
 
 void Widget::onStatusSet(Status status)
 {
-    //We have to use stylesheets here, there's no way to
-    //prevent the button icon from moving when pressed otherwise
-    switch (status)
-    {
-    case Status::Online:
-        ui->statusButton->setProperty("status" ,"online");
-        ui->statusButton->setIcon(QIcon(":img/status/dot_online_2x.png"));
-        break;
-    case Status::Away:
-        ui->statusButton->setProperty("status" ,"away");
-        ui->statusButton->setIcon(QIcon(":img/status/dot_idle_2x.png"));
-        break;
-    case Status::Busy:
-        ui->statusButton->setProperty("status" ,"busy");
-        ui->statusButton->setIcon(QIcon(":img/status/dot_busy_2x.png"));
-        break;
-    case Status::Offline:
-        ui->statusButton->setProperty("status" ,"offline");
-        ui->statusButton->setIcon(QIcon(":img/status/dot_away_2x.png"));
-        break;
-    }
+    ui->statusButton->setProperty("status", getStatusTitle(status));
+    ui->statusButton->setIcon(getStatusIcon(status, 10, 10));
     updateIcons();
 }
 
@@ -460,23 +452,37 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
             {
                 show();
                 activateWindow();
+                if (wasMaximized)
+                    showMaximized();
+                else
+                    showNormal();
             }
             else if (isMinimized())
             {
                 forceShow();
+                activateWindow();
+                if (wasMaximized)
+                    showMaximized();
+                else
+                    showNormal();
             }
             else
             {
-                hide();
+                wasMaximized = isMaximized();
+                if (Settings::getInstance().getMinimizeToTray())
+                    hide();
+                else
+                    showMinimized();
             }
 
             break;
         }
-        case QSystemTrayIcon::DoubleClick:
-            forceShow();
-            break;
         case QSystemTrayIcon::MiddleClick:
-            hide();
+            wasMaximized = isMaximized();
+            if (Settings::getInstance().getMinimizeToTray())
+                hide();
+            else
+                showMinimized();
             break;
         case QSystemTrayIcon::Unknown:
             if (isHidden())
@@ -732,6 +738,8 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
     bool inactiveWindow = isMinimized() || !isActiveWindow();
     if (!inactiveWindow && activeChatroomWidget != nullptr && chat == activeChatroomWidget)
         return;
+    if (ui->statusButton->property("status").toString() == "busy")
+        return;
 
     QApplication::alert(this);
 
@@ -760,6 +768,8 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
 
 void Widget::playRingtone()
 {
+    if (ui->statusButton->property("status").toString() == "busy")
+        return;
     QApplication::alert(this);
 
     static QFile sndFile1(":audio/ToxicIncomingCall.pcm"); // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
@@ -1206,4 +1216,63 @@ void Widget::nextContact()
 void Widget::previousContact()
 {
     qDebug() << "previous contact";
+}
+
+QString Widget::getStatusIconPath(Status status)
+{
+    switch (status)
+    {
+    case Status::Online:
+        return ":img/status/dot_online.svg";
+    case Status::Away:
+        return ":img/status/dot_away.svg";
+    case Status::Busy:
+        return ":img/status/dot_busy.svg";
+    case Status::Offline:
+    default:
+        return ":img/status/dot_offline.svg";
+    }
+}
+
+inline QIcon Widget::getStatusIcon(Status status, uint32_t w/*=0*/, uint32_t h/*=0*/)
+{
+    if (w > 0 && h > 0)
+        return getStatusIconPixmap(status, w, h);
+    else
+        return QIcon(getStatusIconPath(status));
+}
+
+QPixmap Widget::getStatusIconPixmap(Status status, uint32_t w, uint32_t h)
+{
+    QPixmap pix(w, h);
+    pix.load(getStatusIconPath(status));
+    return pix;
+}
+
+QString Widget::getStatusTitle(Status status)
+{
+    switch (status)
+    {
+    case Status::Online:
+        return "online";
+    case Status::Away:
+        return "away";
+    case Status::Busy:
+        return "busy";
+    case Status::Offline:
+    default:
+        return "offline";
+    }
+}
+
+Status Widget::getStatusFromString(QString status)
+{
+    if (status == "online")
+        return Status::Online;
+    else if (status == "busy")
+        return Status::Busy;
+    else if (status == "away")
+        return Status::Away;
+    else
+        return Status::Offline;
 }

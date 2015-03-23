@@ -51,6 +51,9 @@ class Widget : public QMainWindow
 {
     Q_OBJECT
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 public:
     explicit Widget(QWidget *parent = 0);
     void init();
@@ -76,6 +79,11 @@ public:
     void reloadHistory();
 
     void reloadTheme();
+    static QString getStatusIconPath(Status status);
+    static inline QIcon getStatusIcon(Status status, uint32_t w=0, uint32_t h=0);
+    static QPixmap getStatusIconPixmap(Status status, uint32_t w, uint32_t h);
+    static QString getStatusTitle(Status status);
+    static Status getStatusFromString(QString status);
 
 public slots:
     void onSettingsClicked();
@@ -176,6 +184,7 @@ private:
     QRegExp nameMention, sanitizedNameMention;
     bool eventFlag;
     bool eventIcon;
+    bool wasMaximized = false;
 };
 
 bool toxActivateEventHandler(const QByteArray& data);

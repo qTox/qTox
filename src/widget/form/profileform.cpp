@@ -36,7 +36,6 @@
 #include <QFileDialog>
 #include <QBuffer>
 
-
 void ProfileForm::refreshProfiles()
 {
     bodyUI->profiles->clear();
@@ -76,11 +75,16 @@ ProfileForm::ProfileForm(QWidget *parent) :
     toxId->setReadOnly(true);
     toxId->setFrame(false);
     toxId->setFont(Style::getFont(Style::Small));
-    
-    bodyUI->toxGroup->layout()->addWidget(toxId);
+    toxId->setToolTip(bodyUI->toxId->toolTip());
 
-    profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.png");
-    profilePicture->setPixmap(QPixmap(":/img/contact_dark.png"));
+    QVBoxLayout *toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
+    toxIdGroup->replaceWidget(bodyUI->toxId, toxId);
+    bodyUI->toxId->hide();
+
+    bodyUI->qrLabel->setWordWrap(true);
+
+    profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
+    profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setClickable(true);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     QHBoxLayout *publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
@@ -90,7 +94,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     timer.setInterval(750);
     timer.setSingleShot(true);
     connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", "")); hasCheck = false;});
-    
+
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(core, &Core::idSet, this, &ProfileForm::setToxId);
@@ -116,6 +120,12 @@ ProfileForm::ProfileForm(QWidget *parent) :
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
+
+    for (QComboBox* cb : findChildren<QComboBox*>())
+    {
+            cb->installEventFilter(this);
+            cb->setFocusPolicy(Qt::StrongFocus);
+    }
 }
 
 ProfileForm::~ProfileForm()
@@ -169,6 +179,10 @@ void ProfileForm::setToxId(const QString& id)
 {
     toxId->setText(id);
     toxId->setCursorPosition(0);
+
+    qr = new QRWidget();
+    qr->setQRData("tox:"+id);
+    bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
 }
 
 void ProfileForm::onAvatarClicked()
@@ -183,14 +197,14 @@ void ProfileForm::onAvatarClicked()
     file.open(QIODevice::ReadOnly);
     if (!file.isOpen())
     {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to open this file"));
+        GUI::showError(tr("Error"), tr("Unable to open this file"));
         return;
     }
 
     QPixmap pic;
     if (!pic.loadFromData(file.readAll()))
     {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to read this image"));
+        GUI::showError(tr("Error"), tr("Unable to read this image"));
         return;
     }
 
@@ -211,7 +225,7 @@ void ProfileForm::onAvatarClicked()
 
     if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
     {
-        QMessageBox::critical(this, tr("Error"), tr("This image is too big"));
+        GUI::showError(tr("Error"), tr("This image is too big"));
         return;
     }
 
@@ -223,7 +237,7 @@ void ProfileForm::onLoadClicked()
     if (bodyUI->profiles->currentText() != Settings::getInstance().getCurrentProfile())
     {
         if (Core::getInstance()->anyActiveCalls())
-            QMessageBox::warning(this, tr("Call active", "popup title"),
+            GUI::showWarning(tr("Call active", "popup title"),
                 tr("You can't switch profiles while a call is active!", "popup text"));
         else
             emit Widget::getInstance()->changeProfile(bodyUI->profiles->currentText());
@@ -263,24 +277,17 @@ void ProfileForm::onExportClicked()
 {
     QString current = bodyUI->profiles->currentText() + Core::TOX_EXT;
     QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"),
-                    QDir::home().filePath(current), 
+                    QDir::home().filePath(current),
                     tr("Tox save file (*.tox)", "save dialog filter"));
     if (!path.isEmpty())
     {
-        bool success;
-        if (QFile::exists(path))
+        if (!Nexus::isFilePathWritable(path))
         {
-            // should we popup a warning?
-            success = QFile::remove(path);
-            if (!success)
-            {
-                QMessageBox::warning(this, tr("Failed to remove file"), tr("The file you chose to overwrite could not be removed first."));
-                return;
-            }
+            GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+            return;
         }
-        success = QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path);
-        if (!success)
-            QMessageBox::warning(this, tr("Failed to copy file"), tr("The file you chose could not be written to."));
+        if (!QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path))
+            GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
     }
 }
 
@@ -288,10 +295,10 @@ void ProfileForm::onDeleteClicked()
 {
     if (Settings::getInstance().getCurrentProfile() == bodyUI->profiles->currentText())
     {
-        QMessageBox::warning(this, tr("Profile currently loaded","current profile deletion warning title"), tr("This profile is currently in use. Please load a different profile before deleting this one.","current profile deletion warning text"));
+        GUI::showWarning(tr("Profile currently loaded","current profile deletion warning title"), tr("This profile is currently in use. Please load a different profile before deleting this one.","current profile deletion warning text"));
     }
     else
-    {        
+    {
         if (GUI::askQuestion(tr("Deletion imminent!","deletion confirmation title"),
                           tr("Are you sure you want to delete this profile?","deletion confirmation text")))
         {
@@ -323,9 +330,8 @@ void ProfileForm::onImportClicked()
 
     if (info.suffix() != "tox")
     {
-        QMessageBox::warning(this,
-                             tr("Ignoring non-Tox file", "popup title"),
-                             tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
+        GUI::showWarning(tr("Ignoring non-Tox file", "popup title"),
+                         tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
         return;
     }
 
@@ -368,4 +374,38 @@ void ProfileForm::showEvent(QShowEvent *event)
 {
     refreshProfiles();
     QWidget::showEvent(event);
+}
+
+void ProfileForm::on_copyQr_clicked()
+{
+    QApplication::clipboard()->setImage(*qr->getImage());
+}
+
+void ProfileForm::on_saveQr_clicked()
+{
+    QString current = bodyUI->profiles->currentText() + ".png";
+    QString path = QFileDialog::getSaveFileName(0, tr("Save", "save qr image"),
+                   QDir::home().filePath(current),
+                   tr("Save QrCode (*.png)", "save dialog filter"));
+    if (!path.isEmpty())
+    {
+        if (!Nexus::isFilePathWritable(path))
+        {
+            GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+            return;
+        }
+        if (!qr->saveImage(path))
+            GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
+    }
+}
+
+bool ProfileForm::eventFilter(QObject *o, QEvent *e)
+{
+    if ((e->type() == QEvent::Wheel) &&
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+    {
+        e->ignore();
+        return true;
+    }
+    return QWidget::eventFilter(o, e);
 }

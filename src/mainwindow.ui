@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../res.qrc">
-    <normaloff>:/img/icon.png</normaloff>:/img/icon.png</iconset>
+    <normaloff>:/img/icons/qtox.svg</normaloff>:/img/icons/qtox.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -983,10 +983,6 @@ QSplitter:handle{
                <property name="text">
                 <string/>
                </property>
-               <property name="icon">
-                <iconset resource="../res.qrc">
-                 <normaloff>:/img/status/dot_away_2x.png</normaloff>:/img/status/dot_away_2x.png</iconset>
-               </property>
                <property name="iconSize">
                 <size>
                  <width>10</width>
@@ -1109,7 +1105,13 @@ QSplitter:handle{
              </property>
              <property name="icon">
               <iconset resource="../res.qrc">
-               <normaloff>:/img/add.png</normaloff>:/img/add.png</iconset>
+               <normaloff>:/img/add.svg</normaloff>:/img/add.svg</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>15</width>
+               <height>15</height>
+              </size>
              </property>
              <property name="checkable">
               <bool>false</bool>
@@ -1144,7 +1146,13 @@ QSplitter:handle{
              </property>
              <property name="icon">
               <iconset resource="../res.qrc">
-               <normaloff>:/img/group_button.png</normaloff>:/img/group_button.png</iconset>
+               <normaloff>:/img/group.svg</normaloff>:/img/group.svg</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>15</width>
+               <height>15</height>
+              </size>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -1176,7 +1184,13 @@ QSplitter:handle{
              </property>
              <property name="icon">
               <iconset resource="../res.qrc">
-               <normaloff>:/img/transfer.png</normaloff>:/img/transfer.png</iconset>
+               <normaloff>:/img/transfer.svg</normaloff>:/img/transfer.svg</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>15</width>
+               <height>15</height>
+              </size>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -1208,7 +1222,13 @@ QSplitter:handle{
              </property>
              <property name="icon">
               <iconset resource="../res.qrc">
-               <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
+               <normaloff>:/img/settings.svg</normaloff>:/img/settings.svg</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>15</width>
+               <height>15</height>
+              </size>
              </property>
              <property name="flat">
               <bool>true</bool>
