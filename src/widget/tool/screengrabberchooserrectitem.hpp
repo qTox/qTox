@@ -17,24 +17,22 @@
 #ifndef SCREENGRABBERCHOOSERRECTITEM_HPP
 #define SCREENGRABBERCHOOSERRECTITEM_HPP
 
-#include <QGraphicsObject>
+#include <QGraphicsItemGroup>
 
-class ScreenGrabberChooserRectItem : public QGraphicsObject
+class ScreenGrabberChooserRectItem : public QObject, public QGraphicsItemGroup
 {
     Q_OBJECT
 public:
-    ScreenGrabberChooserRectItem();
+    ScreenGrabberChooserRectItem(QGraphicsScene *scene);
     ~ScreenGrabberChooserRectItem();
     
-    int width() const;
-    int height() const;
-    
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
     void beginResize();
     
     QRect chosenRect() const;
+    
+    void showHandles();
+    void hideHandles();
     
 signals:
     
@@ -42,22 +40,47 @@ signals:
     void regionChosen(QRect rect);
     
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
     
 private:
     
     enum State {
         None,
         Resizing,
+        HandleResizing,
         Moving,
     };
     
     State state = None;
     int rectWidth = 0;
     int rectHeight = 0;
+    
+    void forwardMainRectEvent(QEvent *event);
+    void forwardHandleEvent(QGraphicsItem *watched, QEvent *event);
+    
+    void mousePress(QGraphicsSceneMouseEvent *event);
+    void mouseMove(QGraphicsSceneMouseEvent *event);
+    void mouseRelease(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClick(QGraphicsSceneMouseEvent *event);
+    
+    void mousePressHandle(int x, int y, QGraphicsSceneMouseEvent *event);
+    void mouseMoveHandle(int x, int y, QGraphicsSceneMouseEvent *event);
+    void mouseReleaseHandle(int x, int y, QGraphicsSceneMouseEvent *event);
+    
+    QPoint getHandleMultiplier(QGraphicsItem *handle);
+    
+    void updateHandlePositions();
+    QGraphicsRectItem *createHandleItem(QGraphicsScene *scene);
+    
+    QGraphicsRectItem *mainRect;
+    QGraphicsRectItem *topLeft;
+    QGraphicsRectItem *topCenter;
+    QGraphicsRectItem *topRight;
+    QGraphicsRectItem *rightCenter;
+    QGraphicsRectItem *bottomRight;
+    QGraphicsRectItem *bottomCenter;
+    QGraphicsRectItem *bottomLeft;
+    QGraphicsRectItem *leftCenter;
     
 };
 

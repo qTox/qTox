@@ -109,13 +109,12 @@ void ScreenshotGrabber::setupWindow()
 void ScreenshotGrabber::setupScene(QGraphicsScene *scene)
 {
     this->overlay = new ScreenGrabberOverlayItem(this);
-    this->chooserRect = new ScreenGrabberChooserRectItem;
     this->helperToolbox = new ToolBoxGraphicsItem;
     
     this->screenGrabDisplay = scene->addPixmap(this->screenGrab);
     this->helperTooltip = scene->addText(QString());
     scene->addItem(this->overlay);
-    scene->addItem(this->chooserRect);
+    this->chooserRect = new ScreenGrabberChooserRectItem(scene);
     scene->addItem(this->helperToolbox);
     
     this->helperToolbox->addToGroup(this->helperTooltip);
