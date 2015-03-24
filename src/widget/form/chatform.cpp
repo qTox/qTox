@@ -888,27 +888,33 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
 void ChatForm::onScreenshotCreate()
 {
-    ScreenshotGrabber screenshotGrabber(this);
-    connect(&screenshotGrabber, &ScreenshotGrabber::screenshotTaken, [&](const QPixmap &pixmap)
-    {
-        QTemporaryFile file("qTox-Screeshot-XXXXXXXX.png");
+    ScreenshotGrabber *screenshotGrabber = new ScreenshotGrabber (this);
+    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
+    
+    // Try to not grab the context-menu
+    QTimer::singleShot(200, screenshotGrabber, &ScreenshotGrabber::showGrabber);
+}
 
-        if (!file.open())
-        {
-            QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to save the screenshot"));
-            return;
-        }
-        file.setAutoRemove(false);
-
-        pixmap.save(&file, "PNG");
-
-        long long filesize = file.size();
-        file.close();
-        QFileInfo fi(file);
-
-        emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
-    });
-    screenshotGrabber.exec();
+void ChatForm::onScreenshotTaken (const QPixmap &pixmap) {
+	QTemporaryFile file("qTox-Screenshot-XXXXXXXX.png");
+	
+	if (!file.open())
+	{
+	    QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
+	                         tr("qTox wasn't able to save the screenshot"));
+	    return;
+	}
+	
+	file.setAutoRemove(false);
+	
+	pixmap.save(&file, "PNG");
+	
+	long long filesize = file.size();
+	file.close();
+	QFileInfo fi(file);
+	
+	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+        
 }
 
 void ChatForm::onAttachContext(const QPoint &pos)

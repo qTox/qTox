@@ -16,154 +16,125 @@
 
 #include "screenshotgrabber.h"
 
-#include <QEvent>
-#include <QMouseEvent>
-#include <QEventLoop>
-#include <QRubberBand>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsRectItem>
+#include <QDesktopWidget>
+#include <QGraphicsView>
 #include <QApplication>
+#include <QMouseEvent>
 #include <QScreen>
-#include <QTimer>
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
 
-#include <cassert>
-
-void normalizeRect(const QPoint &position, QPoint &point, QRect &rect)
-{
-    int w, h, x, y;
-    w = position.x() - point.x();
-    h = position.y() - point.y();
-
-    if (w >= 0)
-    {
-        x = point.x();
-    }
-    else
-    {
-        x = point.x() + w;
-        w = -w;
-    }
-    if (h >= 0)
-    {
-        y = point.y();
-    }
-    else
-    {
-        y = point.y() + h;
-        h = -h;
-    }
-    rect.setRect(x, y, w, h);
-}
+#include "screengrabberchooserrectitem.hpp"
+#include "screengrabberoverlayitem.hpp"
 
 ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
-    : QObject(parent),
-    parentWidget(parent),
-    rubberBand(nullptr),
-    status(Dead)
+    : QWidget(parent)
 {
-    assert(parent != nullptr);
+    
+    QGraphicsScene *scene = new QGraphicsScene;
+    
+    this->window = new QGraphicsView (scene); // Top-level widget
+    
+    this->window->setWindowFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
+    this->window->setAttribute(Qt::WA_DeleteOnClose);
+    this->window->setContentsMargins(0, 0, 0, 0);
+    this->window->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->window->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->window->setFrameShape(QFrame::NoFrame);
+    
+    connect(this->window, &QObject::destroyed, this, &QObject::deleteLater);
+    
+    this->overlay = new ScreenGrabberOverlayItem(this);
+    this->chooserRect = new ScreenGrabberChooserRectItem;
+    
+    this->screenGrabDisplay = scene->addPixmap(this->screenGrab);
+    scene->addItem(this->overlay);
+    scene->addItem(this->chooserRect);
+    
+    this->window->installEventFilter(this);
+    installEventFilter(this);
 }
 
-int ScreenshotGrabber::exec()
+ScreenshotGrabber::~ScreenshotGrabber()
 {
-    if (parentWidget == nullptr)
-    {
-        return Rejected;
-    }
-    parentWidget->grabMouse();
-
-    QApplication::setOverrideCursor(Qt::CrossCursor);
-
-    parentWidget->installEventFilter(this);
-    QEventLoop loop(this);
-    eventLoop = &loop;
-    parentWidget->setMouseTracking(true);
-    int result = eventLoop->exec();
-    parentWidget->removeEventFilter(this);
-
-    QApplication::setOverrideCursor(Qt::ArrowCursor);
-    return result;
 }
 
-bool ScreenshotGrabber::eventFilter(QObject* , QEvent* event)
+bool ScreenshotGrabber::eventFilter(QObject *object, QEvent *event)
 {
-    switch (event->type())
-    {
-    case QEvent::MouseButtonPress:
-    {
-        QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
-        if (mouseEvent->button() == Qt::LeftButton && status != Finished)
-        {
-            point = parentWidget->mapToGlobal(QPoint(mouseEvent->x(), mouseEvent->y()));
-            status = Check;
-        }
-        break;
+    if (event->type () == QEvent::KeyPress) {
+        return handleKeyPress(static_cast<QKeyEvent *>(event));
     }
-    case QEvent::MouseButtonRelease:
-    {
-        QRect rekt;
-        if (rubberBand != nullptr)
-        {
-            rekt = rubberBand->geometry();
-            delete rubberBand;
-            rubberBand = nullptr;
-            QGuiApplication::processEvents();
-        }
-        QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
-        if (mouseEvent->button() != Qt::LeftButton)
-        {
-            parentWidget->releaseMouse();
-            eventLoop->exit(Rejected);
-        }
-        if (status != Alive || mouseEvent->pos() == point)
-        {
-            status = Dead;
-            break;
-        }
-
-        parentWidget->releaseMouse();
-
-        QTimer::singleShot(100, this, [=]()
-        {
-            takeScreenshot(rekt);
-        });
-
-        break;
-    }
-    case QEvent::MouseMove:
-    {
-        QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
-        if (rubberBand != nullptr)
-        {
-            assert(status == Alive);
-
-            QRect rect;
-            normalizeRect(parentWidget->mapToGlobal(mouseEvent->pos()), point, rect);
-
-            rubberBand->setGeometry(rect);
-            QGuiApplication::processEvents();
-        }
-        else if (status == Check)
-        {
-            if (mouseEvent->pos() != point)
-            {
-                rubberBand = new QRubberBand(QRubberBand::Rectangle);
-                rubberBand->setGeometry(QRect(parentWidget->mapToGlobal(mouseEvent->pos()), QPoint(0, 0)));
-                rubberBand->show();
-                QGuiApplication::processEvents();
-                status = Alive;
-            }
-        }
-        break;
-    }
-    default:
-        break;
-    }
-    return false;
+    
+    return QWidget::eventFilter(object, event);
 }
 
-void ScreenshotGrabber::takeScreenshot(const QRect &selection)
+void ScreenshotGrabber::showGrabber()
 {
-    QScreen* screen = QApplication::primaryScreen();
-    emit screenshotTaken(screen->grabWindow(0, selection.x(), selection.y(), selection.width(), selection.height()));
+    this->screenGrab = grabScreen();
+    this->screenGrabDisplay->setPixmap(this->screenGrab);
+    this->window->show();
+    this->window->setFocus();
+    adjustWindowSize();
+}
 
-    eventLoop->exit(Accepted);
+bool ScreenshotGrabber::handleKeyPress(QKeyEvent *event)
+{
+    if (event->key () == Qt::Key_Escape) {
+        reject();
+    } else if (event->key () == Qt::Key_Return || event->key () == Qt::Key_Enter) {
+        acceptRegion();
+    } else {
+        return false;
+    }
+    
+    return true;
+}
+
+void ScreenshotGrabber::acceptRegion()
+{
+    QRect rect = this->chooserRect->chosenRect();
+    if (rect.width () < 1 || rect.height() < 1) {
+        return;
+    }
+    
+    // 
+    qDebug() << "Screenshot accepted, chosen region" << rect;
+    emit screenshotTaken(this->screenGrab.copy(rect));
+    this->window->close();
+}
+
+void ScreenshotGrabber::reject()
+{
+    qDebug() << "Rejected screenshot";
+    this->window->close();
+    
+}
+
+QRect ScreenshotGrabber::getSystemScreenRect()
+{
+    return QApplication::primaryScreen()->virtualGeometry();
+}
+
+void ScreenshotGrabber::adjustWindowSize()
+{
+    QRect systemScreenRect = getSystemScreenRect();
+    qDebug() << "adjusting grabber size to" << systemScreenRect;
+    
+    this->window->setGeometry(systemScreenRect);
+    this->window->scene()->setSceneRect(systemScreenRect);
+    this->overlay->setRect(systemScreenRect);
+}
+
+QPixmap ScreenshotGrabber::grabScreen() {
+    return QApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
+}
+
+void ScreenshotGrabber::beginRectChooser(QGraphicsSceneMouseEvent *event)
+{
+    QPointF pos = event->scenePos();
+    this->chooserRect->setX(pos.x());
+    this->chooserRect->setY(pos.y());
+    this->chooserRect->beginResize();
 }

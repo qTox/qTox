@@ -429,7 +429,9 @@ SOURCES += \
     src/widget/gui.cpp \
     src/toxme.cpp \
     src/misc/qrwidget.cpp \
-    src/widget/tool/screenshotgrabber.cpp
+    src/widget/tool/screenshotgrabber.cpp \
+    src/widget/tool/screengrabberchooserrectitem.cpp \
+    src/widget/tool/screengrabberoverlayitem.cpp
 
 HEADERS += \
     src/audio.h \
@@ -452,4 +454,6 @@ HEADERS += \
     src/widget/gui.h \
     src/toxme.h \
     src/misc/qrwidget.h \
-    src/widget/tool/screenshotgrabber.h
+    src/widget/tool/screenshotgrabber.h \
+    src/widget/tool/screengrabberchooserrectitem.hpp \
+    src/widget/tool/screengrabberoverlayitem.hpp

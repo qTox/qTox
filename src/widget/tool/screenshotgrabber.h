@@ -14,44 +14,59 @@
     See the COPYING file for more details.
 */
 
-#ifndef SCREENSHODIALOG_H
-#define SCREENSHODIALOG_H
+#ifndef SCREENSHOTGRABBER_H
+#define SCREENSHOTGRABBER_H
 
-#include <QObject>
+#include <QWidget>
 #include <QPixmap>
 #include <QPoint>
 
-class QEventLoop;
-class QRubberBand;
+class ScreenGrabberChooserRectItem;
+class QGraphicsSceneMouseEvent;
+class ScreenGrabberOverlayItem;
+class QGraphicsPixmapItem;
+class QGraphicsRectItem;
+class QGraphicsView;
 
-class ScreenshotGrabber : public QObject
+class ScreenshotGrabber : public QWidget
 {
     Q_OBJECT
 public:
-    enum
-    {
-        Rejected = 0,
-        Accepted = 1
-    };
+	
     ScreenshotGrabber(QWidget* parent);
-    bool eventFilter(QObject*, QEvent* event);
-    int exec();
+    ~ScreenshotGrabber() override;
+    
+    bool eventFilter(QObject *object, QEvent *event);
+    
+public slots:
+    
+    void showGrabber();
+    void acceptRegion();
+    
 signals:
-    void screenshotTaken(QPixmap pixmap);
+    void screenshotTaken(const QPixmap &pixmap);
+    void rejected();
+    
 private:
-    void takeScreenshot(const QRect &selection);
-    enum Status : uint8_t
-    {
-        Dead,
-        Check, // Checking whether mouse moved far enough.
-        Alive,
-        Finished // Already submitted screenshot.
-    };
-    QWidget* parentWidget;
-    QEventLoop* eventLoop;
-    QRubberBand* rubberBand;
-    QPoint point;
-    Status status;
+    friend class ScreenGrabberOverlayItem;
+    
+    bool handleKeyPress(QKeyEvent *event);
+    void reject();
+    
+    QRect getSystemScreenRect();
+    void adjustWindowSize();
+    QPixmap grabScreen();
+    
+    void beginRectChooser(QGraphicsSceneMouseEvent *event);
+    
+    QPixmap screenGrab;
+    QGraphicsView *window;
+    QGraphicsPixmapItem *screenGrabDisplay;
+    ScreenGrabberOverlayItem *overlay;
+    ScreenGrabberChooserRectItem *chooserRect;
+    
 };
-#endif // SCREENSHODIALOG_H
+
+
+#endif // SCREENSHOTGRABBER_H
 
