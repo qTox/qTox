@@ -160,7 +160,6 @@ void ScreenGrabberChooserRectItem::mousePressHandle(int x, int y, QGraphicsScene
     
 }
 
-#include <QDebug>
 void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneMouseEvent *event)
 {
     if (this->state != HandleResizing) {
@@ -175,8 +174,6 @@ void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneM
     // We increase if the multiplier and the delta have the same sign
     bool increaseX = ((x < 0) == (delta.x() < 0));
     bool increaseY = ((y < 0) == (delta.y() < 0));
-    
-    qDebug() << "Resize" << delta << x << y << increaseX << increaseY;
     
     if((delta.x() < 0 && increaseX) || (delta.x() >= 0 && !increaseX)) {
         moveBy(delta.x(), 0);
