@@ -25,12 +25,17 @@ ChatTextEdit::ChatTextEdit(QWidget *parent) :
 }
 
 void ChatTextEdit::keyPressEvent(QKeyEvent * event)
-{    
+{
     int key = event->key();
     if ((key == Qt::Key_Enter || key == Qt::Key_Return) && !(event->modifiers() & Qt::ShiftModifier))
         emit enterPressed();
     else if (key == Qt::Key_Tab)
-        emit tabPressed();
+    {
+        if (event->modifiers())
+            event->ignore();
+        else
+            emit tabPressed();
+    }
     else if (key == Qt::Key_Up && this->toPlainText().isEmpty())
     {
         this->setText(lastMessage);

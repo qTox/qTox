@@ -19,7 +19,9 @@
 
 #include <QWidget>
 #include <QHash>
+#include <QList>
 #include "src/corestructs.h"
+#include "src/widget/genericchatroomwidget.h"
 
 class QVBoxLayout;
 class QGridLayout;
@@ -34,6 +36,8 @@ public:
     QVBoxLayout* getGroupLayout();
     QVBoxLayout* getFriendLayout(Status s);
     void moveWidget(QWidget *w, Status s, int hasNewEvents);
+
+    QList<GenericChatroomWidget*> getAllFriends();
 
 signals:
 
