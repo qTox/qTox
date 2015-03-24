@@ -39,7 +39,7 @@ public:
 signals:
     
     void doubleClicked();
-    void regionChosen();
+    void regionChosen(QRect rect);
     
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

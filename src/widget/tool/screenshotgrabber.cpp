@@ -124,6 +124,7 @@ void ScreenshotGrabber::setupScene(QGraphicsScene *scene)
     
     connect(this->chooserRect, &ScreenGrabberChooserRectItem::doubleClicked, this, &ScreenshotGrabber::acceptRegion);
     connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this, &ScreenshotGrabber::useRegionSelectedTooltip);
+    connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this->overlay, &ScreenGrabberOverlayItem::setChosenRect);
 }
 
 void ScreenshotGrabber::useNothingSelectedTooltip()

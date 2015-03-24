@@ -44,7 +44,6 @@ private:
     qreal activeOpacity = 1.0f;
     int fadeTimeMs = 300;
     
-    
 };
 
 #endif // TOOLBOXGRAPHICSITEM_HPP

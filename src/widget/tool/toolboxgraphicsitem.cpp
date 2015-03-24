@@ -20,7 +20,7 @@
 
 ToolBoxGraphicsItem::ToolBoxGraphicsItem()
 {
-    this->opacityAnimation = new QPropertyAnimation(this, "opacity", this);
+    this->opacityAnimation = new QPropertyAnimation(this, QByteArrayLiteral("opacity"), this);
     
     this->opacityAnimation->setKeyValueAt(0, this->idleOpacity);
     this->opacityAnimation->setKeyValueAt(1, this->activeOpacity);

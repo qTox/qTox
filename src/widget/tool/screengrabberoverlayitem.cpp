@@ -17,6 +17,7 @@
 #include "screengrabberoverlayitem.hpp"
 
 #include <QGraphicsSceneMouseEvent>
+#include <QPainter>
 #include <QPen>
 
 #include "screenshotgrabber.h"
@@ -38,10 +39,43 @@ ScreenGrabberOverlayItem::~ScreenGrabberOverlayItem()
     
 }
 
+void ScreenGrabberOverlayItem::setChosenRect(QRect rect)
+{
+    this->chosenRect = rect;
+    update();
+}
+
 void ScreenGrabberOverlayItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         this->screnshootGrabber->beginRectChooser(event);
     }
     
+}
+
+void ScreenGrabberOverlayItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    if (!this->chosenRect.isValid()) {
+        QGraphicsRectItem::paint(painter, option, widget);
+        return;
+    }
+    
+    // 
+    painter->save();
+    
+    painter->setBrush(brush());
+    painter->setPen(pen());
+    
+    QRectF self = rect();
+    qreal leftX = chosenRect.x();
+    qreal rightX = chosenRect.x() + chosenRect.width();
+    qreal topY = chosenRect.y();
+    qreal bottomY = chosenRect.y() + chosenRect.height();
+    
+    painter->drawRect(0, 0, leftX, self.height()); // Left of chosen
+    painter->drawRect(rightX, 0, self.width() - rightX, self.height()); // Right of chosen
+    painter->drawRect(leftX, 0, chosenRect.width(), topY); // Top of chosen
+    painter->drawRect(leftX, bottomY, chosenRect.width(), self.height() - bottomY); // Bottom of chosen
+    
+    painter->restore();
 }
