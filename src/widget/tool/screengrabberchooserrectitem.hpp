@@ -17,10 +17,11 @@
 #ifndef SCREENGRABBERCHOOSERRECTITEM_HPP
 #define SCREENGRABBERCHOOSERRECTITEM_HPP
 
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 
-class ScreenGrabberChooserRectItem : public QGraphicsItem
+class ScreenGrabberChooserRectItem : public QGraphicsObject
 {
+    Q_OBJECT
 public:
     ScreenGrabberChooserRectItem();
     ~ScreenGrabberChooserRectItem();
@@ -35,10 +36,15 @@ public:
     
     QRect chosenRect() const;
     
+signals:
+    
+    void doubleClicked();
+    
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     
 private:
     
@@ -52,7 +58,8 @@ private:
     int rectWidth = 0;
     int rectHeight = 0;
     
-    
 };
+
+
 
 #endif // SCREENGRABBERCHOOSERRECTITEM_HPP

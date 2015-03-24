@@ -108,3 +108,8 @@ void ScreenGrabberChooserRectItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *e
     }
     
 }
+
+void ScreenGrabberChooserRectItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit doubleClicked();
+}

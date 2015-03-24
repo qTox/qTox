@@ -44,7 +44,6 @@ ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
     this->window->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->window->setFrameShape(QFrame::NoFrame);
     
-    connect(this->window, &QObject::destroyed, this, &QObject::deleteLater);
     
     this->overlay = new ScreenGrabberOverlayItem(this);
     this->chooserRect = new ScreenGrabberChooserRectItem;
@@ -55,6 +54,9 @@ ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
     
     this->window->installEventFilter(this);
     installEventFilter(this);
+    
+    connect(this->window, &QObject::destroyed, this, &QObject::deleteLater);
+    connect(this->chooserRect, &ScreenGrabberChooserRectItem::doubleClicked, this, &ScreenshotGrabber::acceptRegion);
 }
 
 ScreenshotGrabber::~ScreenshotGrabber()
