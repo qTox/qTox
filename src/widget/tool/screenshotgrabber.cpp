@@ -28,35 +28,19 @@
 
 #include "screengrabberchooserrectitem.hpp"
 #include "screengrabberoverlayitem.hpp"
+#include "toolboxgraphicsitem.hpp"
 
 ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
     : QWidget(parent)
 {
     
     QGraphicsScene *scene = new QGraphicsScene;
-    
     this->window = new QGraphicsView (scene); // Top-level widget
+    setupWindow();
+    setupScene(scene);
     
-    this->window->setWindowFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
-    this->window->setAttribute(Qt::WA_DeleteOnClose);
-    this->window->setContentsMargins(0, 0, 0, 0);
-    this->window->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->window->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->window->setFrameShape(QFrame::NoFrame);
-    
-    
-    this->overlay = new ScreenGrabberOverlayItem(this);
-    this->chooserRect = new ScreenGrabberChooserRectItem;
-    
-    this->screenGrabDisplay = scene->addPixmap(this->screenGrab);
-    scene->addItem(this->overlay);
-    scene->addItem(this->chooserRect);
-    
-    this->window->installEventFilter(this);
     installEventFilter(this);
     
-    connect(this->window, &QObject::destroyed, this, &QObject::deleteLater);
-    connect(this->chooserRect, &ScreenGrabberChooserRectItem::doubleClicked, this, &ScreenshotGrabber::acceptRegion);
 }
 
 ScreenshotGrabber::~ScreenshotGrabber()
@@ -78,7 +62,9 @@ void ScreenshotGrabber::showGrabber()
     this->screenGrabDisplay->setPixmap(this->screenGrab);
     this->window->show();
     this->window->setFocus();
+    this->window->grabKeyboard();
     adjustWindowSize();
+    adjustTooltipPosition();
 }
 
 bool ScreenshotGrabber::handleKeyPress(QKeyEvent *event)
@@ -105,6 +91,64 @@ void ScreenshotGrabber::acceptRegion()
     qDebug() << "Screenshot accepted, chosen region" << rect;
     emit screenshotTaken(this->screenGrab.copy(rect));
     this->window->close();
+}
+
+void ScreenshotGrabber::setupWindow()
+{
+    this->window->setWindowFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
+    this->window->setAttribute(Qt::WA_DeleteOnClose);
+    this->window->setContentsMargins(0, 0, 0, 0);
+    this->window->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->window->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->window->setFrameShape(QFrame::NoFrame);
+    
+    connect(this->window, &QObject::destroyed, this, &QObject::deleteLater);
+    this->window->installEventFilter(this);
+}
+
+void ScreenshotGrabber::setupScene(QGraphicsScene *scene)
+{
+    this->overlay = new ScreenGrabberOverlayItem(this);
+    this->chooserRect = new ScreenGrabberChooserRectItem;
+    this->helperToolbox = new ToolBoxGraphicsItem;
+    
+    this->screenGrabDisplay = scene->addPixmap(this->screenGrab);
+    this->helperTooltip = scene->addText(QString());
+    scene->addItem(this->overlay);
+    scene->addItem(this->chooserRect);
+    scene->addItem(this->helperToolbox);
+    
+    this->helperToolbox->addToGroup(this->helperTooltip);
+    this->helperTooltip->setDefaultTextColor(Qt::black);
+    useNothingSelectedTooltip();
+    
+    connect(this->chooserRect, &ScreenGrabberChooserRectItem::doubleClicked, this, &ScreenshotGrabber::acceptRegion);
+    connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this, &ScreenshotGrabber::useRegionSelectedTooltip);
+}
+
+void ScreenshotGrabber::useNothingSelectedTooltip()
+{
+    this->helperTooltip->setHtml(tr("Click and drag to select a region to select it. Press <b>ESC</b> to cancel.",
+                                    "Help text shown when no region has been selected yet"));
+    adjustTooltipPosition();
+}
+
+void ScreenshotGrabber::useRegionSelectedTooltip()
+{
+    this->helperTooltip->setHtml(tr("Press <b>Return</b> to accept, or move and resize the selected region.",
+                                    "Help text shown when a region has been selected"));
+    adjustTooltipPosition();
+}
+
+void ScreenshotGrabber::adjustTooltipPosition()
+{
+    QRectF size = this->helperToolbox->childrenBoundingRect();
+    QRect screenRect = QApplication::desktop()->screen()->rect();
+    
+    // Align the toolbox center-top.
+    this->helperToolbox->setX(screenRect.x () + (screenRect.width() - size.width () + size.x ()) / 2);
+    this->helperToolbox->setY(screenRect.y ());
+    
 }
 
 void ScreenshotGrabber::reject()

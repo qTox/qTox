@@ -102,9 +102,14 @@ void ScreenGrabberChooserRectItem::mouseMoveEvent(QGraphicsSceneMouseEvent *even
 void ScreenGrabberChooserRectItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
+        if (this->state == Resizing) {
+            emit regionChosen();
+        }
+        
         setCursor(QCursor(Qt::OpenHandCursor));
         this->state = None;
         ungrabMouse();
+        
     }
     
 }

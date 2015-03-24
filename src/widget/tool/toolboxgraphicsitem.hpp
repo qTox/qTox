@@ -14,53 +14,37 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENGRABBERCHOOSERRECTITEM_HPP
-#define SCREENGRABBERCHOOSERRECTITEM_HPP
+#ifndef TOOLBOXGRAPHICSITEM_HPP
+#define TOOLBOXGRAPHICSITEM_HPP
 
-#include <QGraphicsObject>
+#include <QGraphicsItemGroup>
+#include <QPropertyAnimation>
+#include <QObject>
 
-class ScreenGrabberChooserRectItem : public QGraphicsObject
+class ToolBoxGraphicsItem : public QObject, public QGraphicsItemGroup
 {
     Q_OBJECT
+    Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
 public:
-    ScreenGrabberChooserRectItem();
-    ~ScreenGrabberChooserRectItem();
+    ToolBoxGraphicsItem();
+    ~ToolBoxGraphicsItem();
     
-    int width() const;
-    int height() const;
-    
-    QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    void beginResize();
-    
-    QRect chosenRect() const;
-    
-signals:
-    
-    void doubleClicked();
-    void regionChosen();
     
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     
 private:
     
-    enum State {
-        None,
-        Resizing,
-        Moving,
-    };
+    void startAnimation(QAbstractAnimation::Direction direction);
     
-    State state = None;
-    int rectWidth = 0;
-    int rectHeight = 0;
+    QPropertyAnimation *opacityAnimation;
+    qreal idleOpacity = 0.7f;
+    qreal activeOpacity = 1.0f;
+    int fadeTimeMs = 300;
+    
     
 };
 
-
-
-#endif // SCREENGRABBERCHOOSERRECTITEM_HPP
+#endif // TOOLBOXGRAPHICSITEM_HPP

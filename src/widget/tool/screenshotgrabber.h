@@ -25,7 +25,10 @@ class ScreenGrabberChooserRectItem;
 class QGraphicsSceneMouseEvent;
 class ScreenGrabberOverlayItem;
 class QGraphicsPixmapItem;
+class ToolBoxGraphicsItem;
 class QGraphicsRectItem;
+class QGraphicsTextItem;
+class QGraphicsScene;
 class QGraphicsView;
 
 class ScreenshotGrabber : public QWidget
@@ -50,6 +53,13 @@ signals:
 private:
     friend class ScreenGrabberOverlayItem;
     
+    void setupWindow();
+    void setupScene(QGraphicsScene *scene);
+    
+    void useNothingSelectedTooltip();
+    void useRegionSelectedTooltip();
+    void adjustTooltipPosition();
+    
     bool handleKeyPress(QKeyEvent *event);
     void reject();
     
@@ -64,6 +74,8 @@ private:
     QGraphicsPixmapItem *screenGrabDisplay;
     ScreenGrabberOverlayItem *overlay;
     ScreenGrabberChooserRectItem *chooserRect;
+    ToolBoxGraphicsItem *helperToolbox;
+    QGraphicsTextItem *helperTooltip;
     
 };
 
