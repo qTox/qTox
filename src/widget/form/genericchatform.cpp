@@ -374,6 +374,15 @@ QString GenericChatForm::resolveToxID(const ToxID &id)
                 return res;
         }
     }
+    // try load alias from settings
+    QString lastTry = Settings::getInstance().getFriendAlias(id);
+    if (!lastTry.isEmpty())
+        return lastTry;
+
+    // try load name from tox
+    lastTry = Core::getInstance()->getPeerName(id);
+    if (!lastTry.isEmpty())
+        return lastTry;
 
     return QString();
 }
