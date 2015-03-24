@@ -1,18 +1,18 @@
-/* Copyright (c) 2014-2015, The Nuria Project
- * The NuriaProject Framework is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the License,
- * or (at your option) any later version.
- * 
- * The NuriaProject Framework is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with The NuriaProject Framework.
- * If not, see <http://www.gnu.org/licenses/>.
- */
+/*
+    Copyright (C) 2014 by Project Tox <https://tox.im>
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    This program is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+    See the COPYING file for more details.
+*/
 
 #include "screengrabberoverlayitem.hpp"
 
@@ -22,7 +22,7 @@
 
 #include "screenshotgrabber.h"
 
-ScreenGrabberOverlayItem::ScreenGrabberOverlayItem(ScreenshotGrabber *grabber)
+ScreenGrabberOverlayItem::ScreenGrabberOverlayItem(ScreenshotGrabber* grabber)
     : screnshootGrabber(grabber)
 {
     
@@ -45,17 +45,17 @@ void ScreenGrabberOverlayItem::setChosenRect(QRect rect)
     update();
 }
 
-void ScreenGrabberOverlayItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void ScreenGrabberOverlayItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton) {
+    if (event->button() == Qt::LeftButton)
         this->screnshootGrabber->beginRectChooser(event);
-    }
     
 }
 
-void ScreenGrabberOverlayItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void ScreenGrabberOverlayItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    if (!this->chosenRect.isValid()) {
+    if (!this->chosenRect.isValid())
+    {
         QGraphicsRectItem::paint(painter, option, widget);
         return;
     }

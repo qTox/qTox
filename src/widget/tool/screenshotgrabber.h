@@ -39,7 +39,7 @@ public:
     ScreenshotGrabber(QWidget* parent);
     ~ScreenshotGrabber() override;
     
-    bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject* object, QEvent* event);
     
 public slots:
     
@@ -54,28 +54,28 @@ private:
     friend class ScreenGrabberOverlayItem;
     
     void setupWindow();
-    void setupScene(QGraphicsScene *scene);
+    void setupScene(QGraphicsScene* scene);
     
     void useNothingSelectedTooltip();
     void useRegionSelectedTooltip();
     void adjustTooltipPosition();
     
-    bool handleKeyPress(QKeyEvent *event);
+    bool handleKeyPress(QKeyEvent* event);
     void reject();
     
     QRect getSystemScreenRect();
     void adjustWindowSize();
     QPixmap grabScreen();
     
-    void beginRectChooser(QGraphicsSceneMouseEvent *event);
+    void beginRectChooser(QGraphicsSceneMouseEvent* event);
     
     QPixmap screenGrab;
-    QGraphicsView *window;
-    QGraphicsPixmapItem *screenGrabDisplay;
-    ScreenGrabberOverlayItem *overlay;
-    ScreenGrabberChooserRectItem *chooserRect;
-    ToolBoxGraphicsItem *helperToolbox;
-    QGraphicsTextItem *helperTooltip;
+    QGraphicsView* window;
+    QGraphicsPixmapItem* screenGrabDisplay;
+    ScreenGrabberOverlayItem* overlay;
+    ScreenGrabberChooserRectItem* chooserRect;
+    ToolBoxGraphicsItem* helperToolbox;
+    QGraphicsTextItem* helperTooltip;
     
 };
 

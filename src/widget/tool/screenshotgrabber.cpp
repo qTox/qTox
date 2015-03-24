@@ -16,6 +16,7 @@
 
 #include "screenshotgrabber.h"
 
+#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsRectItem>
 #include <QDesktopWidget>
@@ -24,7 +25,6 @@
 #include <QMouseEvent>
 #include <QScreen>
 #include <QDebug>
-#include <QGraphicsSceneMouseEvent>
 
 #include "screengrabberchooserrectitem.hpp"
 #include "screengrabberoverlayitem.hpp"
@@ -34,7 +34,7 @@ ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
     : QWidget(parent)
 {
     
-    QGraphicsScene *scene = new QGraphicsScene;
+    QGraphicsScene* scene = new QGraphicsScene;
     this->window = new QGraphicsView (scene); // Top-level widget
     setupWindow();
     setupScene(scene);
@@ -47,11 +47,10 @@ ScreenshotGrabber::~ScreenshotGrabber()
 {
 }
 
-bool ScreenshotGrabber::eventFilter(QObject *object, QEvent *event)
+bool ScreenshotGrabber::eventFilter(QObject* object, QEvent* event)
 {
-    if (event->type () == QEvent::KeyPress) {
-        return handleKeyPress(static_cast<QKeyEvent *>(event));
-    }
+    if (event->type() == QEvent::KeyPress)
+        return handleKeyPress(static_cast<QKeyEvent*>(event));
     
     return QWidget::eventFilter(object, event);
 }
@@ -67,15 +66,14 @@ void ScreenshotGrabber::showGrabber()
     adjustTooltipPosition();
 }
 
-bool ScreenshotGrabber::handleKeyPress(QKeyEvent *event)
+bool ScreenshotGrabber::handleKeyPress(QKeyEvent* event)
 {
-    if (event->key () == Qt::Key_Escape) {
+    if (event->key() == Qt::Key_Escape)
         reject();
-    } else if (event->key () == Qt::Key_Return || event->key () == Qt::Key_Enter) {
+    else if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
         acceptRegion();
-    } else {
+    else
         return false;
-    }
     
     return true;
 }
@@ -83,9 +81,8 @@ bool ScreenshotGrabber::handleKeyPress(QKeyEvent *event)
 void ScreenshotGrabber::acceptRegion()
 {
     QRect rect = this->chooserRect->chosenRect();
-    if (rect.width () < 1 || rect.height() < 1) {
+    if (rect.width() < 1 || rect.height() < 1)
         return;
-    }
     
     // 
     qDebug() << "Screenshot accepted, chosen region" << rect;
@@ -106,7 +103,7 @@ void ScreenshotGrabber::setupWindow()
     this->window->installEventFilter(this);
 }
 
-void ScreenshotGrabber::setupScene(QGraphicsScene *scene)
+void ScreenshotGrabber::setupScene(QGraphicsScene* scene)
 {
     this->overlay = new ScreenGrabberOverlayItem(this);
     this->helperToolbox = new ToolBoxGraphicsItem;
@@ -146,8 +143,8 @@ void ScreenshotGrabber::adjustTooltipPosition()
     QRect screenRect = QApplication::desktop()->screen()->rect();
     
     // Align the toolbox center-top.
-    this->helperToolbox->setX(screenRect.x () + (screenRect.width() - size.width () + size.x ()) / 2);
-    this->helperToolbox->setY(screenRect.y ());
+    this->helperToolbox->setX(screenRect.x() + (screenRect.width() - size.width() + size.x()) / 2);
+    this->helperToolbox->setY(screenRect.y());
     
 }
 
@@ -177,7 +174,7 @@ QPixmap ScreenshotGrabber::grabScreen() {
     return QApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
 }
 
-void ScreenshotGrabber::beginRectChooser(QGraphicsSceneMouseEvent *event)
+void ScreenshotGrabber::beginRectChooser(QGraphicsSceneMouseEvent* event)
 {
     QPointF pos = event->scenePos();
     this->chooserRect->setX(pos.x());
