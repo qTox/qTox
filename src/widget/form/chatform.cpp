@@ -123,6 +123,10 @@ void ChatForm::onSendTriggered()
     QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
+    msgEdit->setLastMessage(msg); //set last message only when sending it
+
+    bool status = !Settings::getInstance().getFauxOfflineMessaging();
+
     for (CString& c_msg : splittedMsg)
     {
         QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
@@ -130,12 +134,10 @@ void ChatForm::onSendTriggered()
         if (isAction)
             qt_msg_hist = "/me " + qt_msg;
 
-        bool status = !Settings::getInstance().getFauxOfflineMessaging();
-
         int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
                                                             Core::getInstance()->getSelfId().publicKey, timestamp, status);
 
-        ChatMessage::Ptr ma = addSelfMessage(msg, isAction, timestamp, false);
+        ChatMessage::Ptr ma = addSelfMessage(qt_msg, isAction, timestamp, false);
 
         int rec;
         if (isAction)
@@ -144,8 +146,6 @@ void ChatForm::onSendTriggered()
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
         getOfflineMsgEngine()->registerReceipt(rec, id, ma);
-        
-        msgEdit->setLastMessage(msg); //set last message only when sending it
     }
 
     msgEdit->clear();
