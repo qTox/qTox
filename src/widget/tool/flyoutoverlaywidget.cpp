@@ -88,12 +88,6 @@ void FlyoutOverlayWidget::animateHide()
     animation->start();
 }
 
-void FlyoutOverlayWidget::leaveEvent(QEvent* event)
-{
-    Q_UNUSED(event);
-    animateHide();
-}
-
 void FlyoutOverlayWidget::finishedAnimation()
 {
     bool hide = (animation->direction() == QAbstractAnimation::Backward);

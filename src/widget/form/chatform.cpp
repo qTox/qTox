@@ -874,13 +874,13 @@ void ChatForm::doScreenshot()
 {
     disconnect(fileFlyout, &FlyoutOverlayWidget::hidden, this, &ChatForm::doScreenshot);
     
-    ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber (this);
+    ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber(this);
     connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
     screenshotGrabber->showGrabber();
     
 }
 
-void ChatForm::onScreenshotTaken (const QPixmap &pixmap) {
+void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
 	QTemporaryFile file("qTox-Screenshot-XXXXXXXX.png");
 	
 	if (!file.open())
