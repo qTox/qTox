@@ -121,6 +121,16 @@ void GroupWidget::updateStatusLight()
     }
 }
 
+QString GroupWidget::getStatusString()
+{
+    Group *g = GroupList::findGroup(groupId);
+
+    if (!g->getEventFlag())
+        return "Online";
+    else
+        return "New Message";
+}
+
 void GroupWidget::setChatForm(Ui::MainWindow &ui)
 {
     Group* g = GroupList::findGroup(groupId);

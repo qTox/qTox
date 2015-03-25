@@ -33,6 +33,7 @@ public:
     void setChatForm(Ui::MainWindow &);
     void resetEventFlags();
     void setName(const QString& name);
+    QString getStatusString();
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
