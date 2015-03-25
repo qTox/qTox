@@ -174,7 +174,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
     connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
     connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
-    
+
     // prevent stealing mouse whell scroll
     // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
     // you can scroll through general settings without accidentially chaning theme/skin/icons etc.

@@ -168,6 +168,24 @@ void FriendWidget::updateStatusLight()
         statusPic.setMargin(0);
 }
 
+QString FriendWidget::getStatusString()
+{
+    Friend* f = FriendList::findFriend(friendId);
+    Status status = f->getStatus();
+
+    if (f->getEventFlag() == 1)
+        return tr("New message");
+    else if (status == Status::Online)
+        return tr("Online");
+    else if (status == Status::Away)
+        return tr("Away");
+    else if (status == Status::Busy)
+        return tr("Busy");
+    else if (status == Status::Offline)
+        return tr("Offline");
+    return QString::null;
+}
+
 void FriendWidget::setChatForm(Ui::MainWindow &ui)
 {
     Friend* f = FriendList::findFriend(friendId);

@@ -661,7 +661,14 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     f->setStatus(status);
     f->getFriendWidget()->updateStatusLight();
-    
+    if(f->getFriendWidget()->isActive())
+    {
+        QString windowTitle = f->getFriendWidget()->getName();
+        if (!f->getFriendWidget()->getStatusString().isNull())
+            windowTitle += " (" + f->getFriendWidget()->getStatusString() + ")";
+        setWindowTitle(windowTitle);
+    }
+
     //won't print the message if there were no messages before
     if (!f->getChatForm()->isEmpty()
             && Settings::getInstance().getStatusChangeNotificationEnabled())
@@ -722,9 +729,13 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
     }
     activeChatroomWidget = widget;
     widget->setAsActiveChatroom();
-    setWindowTitle(widget->getName());
     widget->resetEventFlags();
     widget->updateStatusLight();
+    QString windowTitle = widget->getName();
+    if (!widget->getStatusString().isNull())
+        windowTitle += " (" + widget->getStatusString() + ")";
+    setWindowTitle(windowTitle);
+
 }
 
 void Widget::onFriendMessageReceived(int friendId, const QString& message, bool isAction)
@@ -742,6 +753,13 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     f->setEventFlag(f->getFriendWidget() != activeChatroomWidget);
     newMessageAlert(f->getFriendWidget());
     f->getFriendWidget()->updateStatusLight();
+    if (f->getFriendWidget()->isActive())
+    {
+        QString windowTitle = f->getFriendWidget()->getName();
+        if (!f->getFriendWidget()->getStatusString().isNull())
+            windowTitle += " (" + f->getFriendWidget()->getStatusString() + ")";
+        setWindowTitle(windowTitle);
+    }
 }
 
 void Widget::onReceiptRecieved(int friendId, int receipt)
@@ -902,6 +920,13 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         g->setMentionedFlag(true); // useful for highlighting line or desktop notifications
 
     g->getGroupWidget()->updateStatusLight();
+    if (g->getGroupWidget()->isActive())
+    {
+        QString windowTitle = g->getGroupWidget()->getName();
+        if (!g->getGroupWidget()->getStatusString().isNull())
+            windowTitle += " (" + g->getGroupWidget()->getStatusString() + ")";
+        setWindowTitle(windowTitle);
+    }
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
@@ -1027,6 +1052,10 @@ bool Widget::event(QEvent * e)
             {
                 activeChatroomWidget->resetEventFlags();
                 activeChatroomWidget->updateStatusLight();
+                QString windowTitle = activeChatroomWidget->getName();
+                if (!activeChatroomWidget->getStatusString().isNull())
+                    windowTitle += " (" + activeChatroomWidget->getStatusString() + ")";
+                setWindowTitle(windowTitle);
             }
             if (eventFlag)
             {
