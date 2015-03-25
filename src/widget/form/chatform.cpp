@@ -843,10 +843,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                                                               authorId.isMine(),
                                                               QDateTime());
 
-        if(!isAction && prevId == authorId)
+        if(!isAction && (prevId == authorId) && (prevMsgDateTime.secsTo(msgDateTime) < getChatLog()->repNameAfter) )
             msg->hideSender();
 
         prevId = authorId;
+        prevMsgDateTime = msgDateTime;
 
         if (it.isSent || !authorId.isMine())
         {
