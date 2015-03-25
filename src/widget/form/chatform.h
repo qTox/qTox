@@ -80,7 +80,6 @@ public slots:
     void onVolMuteToggle();
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
-    void onAttachContext(const QPoint &pos);
 
 private slots:
     void onSendTriggered();
@@ -96,7 +95,7 @@ private slots:
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();
-    void onScreenshotCreate();
+    void onScreenshotClicked();
     void onScreenshotTaken(const QPixmap &pixmap);
 
 protected:

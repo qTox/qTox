@@ -26,9 +26,9 @@
 #include <QScreen>
 #include <QDebug>
 
-#include "screengrabberchooserrectitem.hpp"
-#include "screengrabberoverlayitem.hpp"
-#include "toolboxgraphicsitem.hpp"
+#include "screengrabberchooserrectitem.h"
+#include "screengrabberoverlayitem.h"
+#include "toolboxgraphicsitem.h"
 
 ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
     : QWidget(parent)
