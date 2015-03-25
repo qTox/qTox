@@ -134,7 +134,6 @@ void ScreenGrabberChooserRectItem::mouseMove(QGraphicsSceneMouseEvent* event)
     }
     
     emit regionChosen(chosenRect());
-    scene()->update();
 }
 
 void ScreenGrabberChooserRectItem::mouseRelease(QGraphicsSceneMouseEvent* event)
