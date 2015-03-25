@@ -826,10 +826,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         // Show the date every new day
         QDateTime msgDateTime = it.timestamp.toLocalTime();
         QDate msgDate = msgDateTime.date();
+        
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime()));
+            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime()));
         }
 
         // Show each messages

@@ -241,6 +241,7 @@ void Settings::load()
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm").toString();
+        dateFormat = s.value("dateFormat", "dd-MM-yyyy").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
@@ -411,6 +412,7 @@ void Settings::saveGlobal(QString path)
         s.setValue("firstColumnHandlePos", firstColumnHandlePos);
         s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
         s.setValue("timestampFormat", timestampFormat);
+        s.setValue("dateFormat", dateFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("lightTrayIcon", lightTrayIcon);
@@ -961,6 +963,18 @@ void Settings::setTimestampFormat(const QString &format)
     timestampFormat = format;
     emit timestampFormatChanged();
 }
+
+const QString &Settings::getDateFormat() const
+{
+    return dateFormat;
+}
+
+void Settings::setDateFormat(const QString &format)
+{
+    dateFormat = format;
+    emit dateFormatChanged();
+}
+
 
 QString Settings::getEmojiFontFamily() const
 {

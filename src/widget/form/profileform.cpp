@@ -187,7 +187,7 @@ void ProfileForm::setToxId(const QString& id)
 
 void ProfileForm::onAvatarClicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this,
+    QString filename = QFileDialog::getOpenFileName(0,
         tr("Choose a profile picture"),
         QDir::homePath(),
         Nexus::getSupportedImageFilter());

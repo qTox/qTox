@@ -207,6 +207,9 @@ public:
 
     const QString &getTimestampFormat() const;
     void setTimestampFormat(const QString &format);
+    
+    const QString &getDateFormat() const;
+    void setDateFormat(const QString &format);
 
     bool isMinimizeOnCloseEnabled() const;
     void setMinimizeOnClose(bool newValue);
@@ -328,6 +331,7 @@ private:
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
     QString timestampFormat;
+    QString dateFormat;
     bool statusChangeNotificationEnabled;
 
     // Privacy
@@ -360,6 +364,7 @@ signals:
     void smileyPackChanged();
     void emojiFontChanged();
     void timestampFormatChanged();
+    void dateFormatChanged();
     void compactLayoutChanged();
 };
 

@@ -46,6 +46,7 @@ private slots:
     void onEmoticonSizeChanged();
     void onStyleSelected(QString style);  
     void onTimestampSelected(int index);
+    void onDateFormatSelected(int index);
     void onSetStatusChange();
     void onAutoAwayChanged();
     void onUseEmoticonsChange();

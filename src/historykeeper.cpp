@@ -104,11 +104,11 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     */
 
     // for old tables:
-    QSqlQuery ans = db->exec("select seq from sqlite_sequence where name=\"history\";");
+    QSqlQuery ans = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"history\";");
     if (ans.first())
     {
         int idMax = ans.value(0).toInt();
-        QSqlQuery ret = db->exec("select seq from sqlite_sequence where name=\"sent_status\";");
+        QSqlQuery ret = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"sent_status\";");
         int idCur = 0;
         if (ret.first())
         {
@@ -128,7 +128,7 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     setSyncType(Settings::getInstance().getDbSyncType());
 
     messageID = 0;
-    QSqlQuery sqlAnswer = db->exec("select seq from sqlite_sequence where name=\"history\";");
+    QSqlQuery sqlAnswer = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"history\";");
     if (sqlAnswer.first())
         messageID = sqlAnswer.value(0).toLongLong();
 }
