@@ -14,7 +14,7 @@
     See the COPYING file for more details.
 */
 
-#include "screengrabberchooserrectitem.hpp"
+#include "screengrabberchooserrectitem.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsScene>

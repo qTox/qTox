@@ -14,7 +14,7 @@
     See the COPYING file for more details.
 */
 
-#include "screengrabberoverlayitem.hpp"
+#include "screengrabberoverlayitem.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>

@@ -14,7 +14,7 @@
     See the COPYING file for more details.
 */
 
-#include "toolboxgraphicsitem.hpp"
+#include "toolboxgraphicsitem.h"
 
 #include <QPainter>
 

@@ -36,6 +36,7 @@ class ChatLog;
 class MaskablePixmapWidget;
 class Widget;
 struct ToxID;
+class FlyoutOverlayWidget;
 
 namespace Ui {
     class MainWindow;
@@ -59,6 +60,7 @@ public:
 
     ChatLog* getChatLog() const;
 
+    bool eventFilter(QObject* object, QEvent* event);
 signals:
     void sendMessage(int, QString);
     void sendAction(int, QString);
@@ -78,11 +80,13 @@ protected slots:
     void onSelectAllClicked();
     void previousContact();
     void nextContact();
+    void showFileMenu();
+    void hideFileMenu();
 
 protected:
     QString resolveToxID(const ToxID &id);
     void insertChatMessage(ChatMessage::Ptr msg);
-
+    
     ToxID previousId;
     Widget *parent;
     QMenu menu;
@@ -90,8 +94,8 @@ protected:
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;
-    QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
-    QAction *screenshotAction;
+    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    FlyoutOverlayWidget *fileFlyout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
@@ -100,6 +104,7 @@ protected:
     QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
     bool audioInputFlag;
     bool audioOutputFlag;
+    
 };
 
 #endif // GENERICCHATFORM_H
