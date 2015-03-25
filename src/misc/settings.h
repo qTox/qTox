@@ -63,22 +63,22 @@ public:
 
     bool getAutostartInTray() const;
     void setAutostartInTray(bool newValue);
-    
+
     bool getCloseToTray() const;
     void setCloseToTray(bool newValue);
-    
+
     bool getMinimizeToTray() const;
     void setMinimizeToTray(bool newValue);
 
     bool getLightTrayIcon() const;
     void setLightTrayIcon(bool newValue);
-    
+
     QString getStyle() const;
     void setStyle(const QString& newValue);
 
     bool getShowSystemTray() const;
     void setShowSystemTray(const bool& newValue);
-    
+
     bool getUseEmoticons() const;
     void setUseEmoticons(bool newValue);
 
@@ -88,7 +88,7 @@ public:
 
     QString getTranslation() const;
     void setTranslation(QString newValue);
-    
+
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
 
@@ -205,11 +205,11 @@ public:
     int getSecondColumnHandlePosFromRight() const;
     void setSecondColumnHandlePosFromRight(const int pos);
 
-    const QString &getTimestampFormat() const;
-    void setTimestampFormat(const QString &format);
-    
-    const QString &getDateFormat() const;
-    void setDateFormat(const QString &format);
+    const QString& getTimestampFormat() const;
+    void setTimestampFormat(const QString& format);
+
+    const QString& getDateFormat() const;
+    void setDateFormat(const QString& format);
 
     bool isMinimizeOnCloseEnabled() const;
     void setMinimizeOnClose(bool newValue);
@@ -310,7 +310,7 @@ private:
 
     QHash<QString, QByteArray> widgetSettings;
     QHash<QString, QString> autoAccept;
-    bool autoSaveEnabled;    
+    bool autoSaveEnabled;
     QString globalAutoAcceptDir;
 
     // GUI
@@ -363,8 +363,6 @@ signals:
     void logStorageOptsChanged();
     void smileyPackChanged();
     void emojiFontChanged();
-    void timestampFormatChanged();
-    void dateFormatChanged();
     void compactLayoutChanged();
 };
 

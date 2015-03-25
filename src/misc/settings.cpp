@@ -240,8 +240,8 @@ void Settings::load()
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
-        timestampFormat = s.value("timestampFormat", "hh:mm").toString();
-        dateFormat = s.value("dateFormat", "dd-MM-yyyy").toString();
+        timestampFormat = s.value("timestampFormat", "hh:mm:ss").toString();
+        dateFormat = s.value("dateFormat", "dddd, MMMM d, yyyy").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
@@ -608,7 +608,7 @@ QString Settings::getStyle() const
     return style;
 }
 
-void Settings::setStyle(const QString& newStyle) 
+void Settings::setStyle(const QString& newStyle)
 {
     style = newStyle;
 }
@@ -953,7 +953,7 @@ void Settings::setSecondColumnHandlePosFromRight(const int pos)
     secondColumnHandlePosFromRight = pos;
 }
 
-const QString &Settings::getTimestampFormat() const
+const QString& Settings::getTimestampFormat() const
 {
     return timestampFormat;
 }
@@ -961,10 +961,9 @@ const QString &Settings::getTimestampFormat() const
 void Settings::setTimestampFormat(const QString &format)
 {
     timestampFormat = format;
-    emit timestampFormatChanged();
 }
 
-const QString &Settings::getDateFormat() const
+const QString& Settings::getDateFormat() const
 {
     return dateFormat;
 }
@@ -972,7 +971,6 @@ const QString &Settings::getDateFormat() const
 void Settings::setDateFormat(const QString &format)
 {
     dateFormat = format;
-    emit dateFormatChanged();
 }
 
 

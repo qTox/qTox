@@ -104,11 +104,11 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
 
     QStringList timestamps;
-    foreach (QString timestamp, timeFormats) {
+    for (QString timestamp : timeFormats)
         timestamps << QString("%1 - %2").arg(timestamp, QTime::currentTime().toString(timestamp));
-    }
+
     bodyUI->timestamp->addItems(timestamps);
-    
+
     QLocale ql;
     QStringList datestamps;
     dateFormats.append(ql.dateFormat());
@@ -117,20 +117,16 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     timeFormats.append(ql.timeFormat());
     timeFormats.append(ql.timeFormat(QLocale::LongFormat));
     timeFormats.removeDuplicates();
-    
-    foreach (QString datestamp, dateFormats) {
+
+    for (QString datestamp : dateFormats)
         datestamps << QString("%1 - %2").arg(datestamp, QDate::currentDate().toString(datestamp));
-    }
+
     bodyUI->dateFormats->addItems(datestamps);
 
-    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(),
-                                                             QTime::currentTime().toString(Settings::getInstance().getTimestampFormat()))
-                                      );
-        
-    bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getDateFormat(),
-                                                             QDate::currentDate().toString(Settings::getInstance().getDateFormat()))
-                                      );
-    
+    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(), QTime::currentTime().toString(Settings::getInstance().getTimestampFormat())));
+
+    bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getDateFormat(), QDate::currentDate().toString(Settings::getInstance().getDateFormat())));
+
     bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
 
     bodyUI->cbEnableUDP->setChecked(!Settings::getInstance().getForceTCP());
