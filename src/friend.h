@@ -24,7 +24,7 @@
 struct FriendWidget;
 class ChatForm;
 
-struct Friend : QObject
+class Friend : public QObject
 {
     Q_OBJECT
 public:
