@@ -866,18 +866,17 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
 void ChatForm::onScreenshotClicked()
 {
-    connect(fileFlyout, &FlyoutOverlayWidget::hidden, this, &ChatForm::doScreenshot);
-    hideFileMenu();
+    doScreenshot();
+    
+    // Give the window manager a moment to open the fullscreen grabber window
+    QTimer::singleShot(500, this, &ChatForm::hideFileMenu);
 }
 
 void ChatForm::doScreenshot()
 {
-    disconnect(fileFlyout, &FlyoutOverlayWidget::hidden, this, &ChatForm::doScreenshot);
-    
     ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber(this);
     connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
     screenshotGrabber->showGrabber();
-    
 }
 
 void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
