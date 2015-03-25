@@ -48,6 +48,7 @@
 #include "src/chatlog/chatlog.h"
 #include "src/offlinemsgengine.h"
 #include "src/widget/tool/screenshotgrabber.h"
+#include "src/widget/tool/flyoutoverlaywidget.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -865,11 +866,18 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
 void ChatForm::onScreenshotClicked()
 {
-    ScreenshotGrabber *screenshotGrabber = new ScreenshotGrabber (this);
-    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
+    connect(fileFlyout, &FlyoutOverlayWidget::hidden, this, &ChatForm::doScreenshot);
+    hideFileMenu();
+}
+
+void ChatForm::doScreenshot()
+{
+    disconnect(fileFlyout, &FlyoutOverlayWidget::hidden, this, &ChatForm::doScreenshot);
     
-    // Try to not grab the context-menu
-    QTimer::singleShot(200, screenshotGrabber, &ScreenshotGrabber::showGrabber);
+    ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber (this);
+    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
+    screenshotGrabber->showGrabber();
+    
 }
 
 void ChatForm::onScreenshotTaken (const QPixmap &pixmap) {

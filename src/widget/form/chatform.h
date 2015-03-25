@@ -97,6 +97,7 @@ private slots:
     void onEnableCallButtons();
     void onScreenshotClicked();
     void onScreenshotTaken(const QPixmap &pixmap);
+    void doScreenshot();
 
 protected:
     // drag & drop
