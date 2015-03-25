@@ -58,6 +58,8 @@ void Friend::setName(QString name)
 
         if (widget->isActive())
             GUI::setWindowTitle(name);
+        
+        emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
     }
 }
 
@@ -71,6 +73,8 @@ void Friend::setAlias(QString name)
 
     if (widget->isActive())
             GUI::setWindowTitle(dispName);
+    
+    emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
 }
 
 void Friend::setStatusMessage(QString message)

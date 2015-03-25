@@ -17,14 +17,16 @@
 #ifndef FRIEND_H
 #define FRIEND_H
 
+#include <QObject>
 #include <QString>
 #include "corestructs.h"
 
 struct FriendWidget;
 class ChatForm;
 
-struct Friend
+struct Friend : QObject
 {
+    Q_OBJECT
 public:
     Friend(int FriendId, const ToxID &UserId);
     Friend(const Friend& other)=delete;
@@ -48,6 +50,9 @@ public:
 
     ChatForm *getChatForm();
     FriendWidget *getFriendWidget();
+
+signals:
+    void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
 
 private:
     QString userAlias, userName;

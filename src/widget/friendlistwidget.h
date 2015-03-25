@@ -29,15 +29,15 @@ class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FriendListWidget(QWidget *parent = 0);
-
+    explicit FriendListWidget(QWidget *parent = 0, bool groupchatPosition = true);
     QVBoxLayout* getGroupLayout();
     QVBoxLayout* getFriendLayout(Status s);
-    void moveWidget(QWidget *w, Status s, int hasNewEvents);
 
 signals:
 
 public slots:
+    void onGroupchatPositionChanged(bool top);
+    void moveWidget(QWidget *w, Status s, int hasNewEvents);
 
 private:
     QHash<int, QVBoxLayout*> layouts;

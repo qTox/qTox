@@ -374,7 +374,7 @@ instead of system taskbar.</string>
            <widget class="QCheckBox" name="cbFauxOfflineMessaging">
             <property name="toolTip">
              <string comment="toolTip for Faux offline messaging setting">Messages you are trying to send to your friends when they are not online
-will be sent to them when they will appear online to you.</string>
+will be sent to them when they appear online to you.</string>
             </property>
             <property name="text">
              <string>Faux offline messaging</string>
@@ -388,6 +388,16 @@ will be sent to them when they will appear online to you.</string>
             </property>
             <property name="text">
              <string>Compact contact list</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QCheckBox" name="cbGroupchatPosition">
+            <property name="toolTip">
+             <string comment="toolTip for groupchat positioning">If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</string>
+            </property>
+            <property name="text">
+             <string>Place groupchats at top of friend list</string>
             </property>
            </widget>
           </item>

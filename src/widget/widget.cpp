@@ -144,7 +144,7 @@ void Widget::init()
     
     ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 
-    contactListWidget = new FriendListWidget();
+    contactListWidget = new FriendListWidget(0, Settings::getInstance().getGroupchatPosition());
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
 
@@ -197,6 +197,7 @@ void Widget::init()
 
     addFriendForm->show(*ui);
 
+    connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
 #if (AUTOUPDATE_ENABLED)
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
@@ -561,10 +562,10 @@ void Widget::addFriend(int friendId, const QString &userId)
     //qDebug() << "Widget: Adding friend with id" << userId;
     ToxID userToxId = ToxID::fromString(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
-    QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
-    layout->addWidget(newfriend->getFriendWidget());
+    contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline,0);
 
     Core* core = Nexus::getCore();
+    connect(newfriend, &Friend::displayedNameChanged, contactListWidget, &FriendListWidget::moveWidget);
     connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::onCompactChanged);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
@@ -625,10 +626,20 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     Friend* f = FriendList::findFriend(friendId);
     if (!f)
         return;
-
-    contactListWidget->moveWidget(f->getFriendWidget(), status, f->getEventFlag());
-
+    
     bool isActualChange = f->getStatus() != status;
+
+    if(isActualChange)
+    {
+        if(f->getStatus() == Status::Offline)
+        {
+            contactListWidget->moveWidget(f->getFriendWidget(), Status::Online, f->getEventFlag());
+        }
+        else if(status == Status::Offline)
+        {
+            contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline, f->getEventFlag());
+        }
+    }
 
     f->setStatus(status);
     f->getFriendWidget()->updateStatusLight();
