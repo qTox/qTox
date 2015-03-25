@@ -44,9 +44,6 @@ signals:
     
     void hidden();
     
-protected:
-    void leaveEvent(QEvent* event);
-    
 private:
     
     void finishedAnimation();

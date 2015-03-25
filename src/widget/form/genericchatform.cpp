@@ -191,6 +191,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileFlyout->setFixedSize(24, 24);
     fileFlyout->setParent(this);
     fileButton->installEventFilter(this);
+    fileFlyout->installEventFilter(this);
 }
 
 void GenericChatForm::previousContact()
@@ -419,7 +420,7 @@ void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
 
 bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
 {
-    if (object != this->fileButton)
+    if (object != this->fileButton && object != this->fileFlyout)
         return false;
     
     switch(event->type())
@@ -430,9 +431,10 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
         
     case QEvent::Leave: {
         QPoint pos = mapFromGlobal(QCursor::pos());
-        QRect rect (fileFlyout->pos(), fileFlyout->size());
+        QRect fileRect(fileFlyout->pos(), fileFlyout->size());
+        fileRect = fileRect.united(QRect(fileButton->pos(), fileButton->size()));
         
-        if (!rect.contains(pos))
+        if (!fileRect.contains(pos))
             hideFileMenu();
     } break;
         
