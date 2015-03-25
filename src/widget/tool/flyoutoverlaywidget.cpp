@@ -20,6 +20,7 @@
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QBitmap>
+#include <QTimer>
 
 FlyoutOverlayWidget::FlyoutOverlayWidget(QWidget *parent)
     : QWidget(parent)
@@ -97,4 +98,9 @@ void FlyoutOverlayWidget::finishedAnimation()
 {
     bool hide = (animation->direction() == QAbstractAnimation::Backward);
     setAttribute(Qt::WA_TransparentForMouseEvents, hide);
+    
+    // Delay it by a few frames to let the system catch up on rendering
+    if (hide)
+        QTimer::singleShot(50, this, &FlyoutOverlayWidget::hidden);
+    
 }
