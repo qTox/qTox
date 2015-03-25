@@ -436,7 +436,8 @@ SOURCES += \
     src/widget/tool/screenshotgrabber.cpp \
     src/widget/tool/screengrabberchooserrectitem.cpp \
     src/widget/tool/screengrabberoverlayitem.cpp \
-    src/widget/tool/toolboxgraphicsitem.cpp
+    src/widget/tool/toolboxgraphicsitem.cpp \
+    src/widget/tool/flyoutoverlaywidget.cpp
 
 
 HEADERS += \
@@ -464,7 +465,7 @@ HEADERS += \
     src/profilelocker.h \
     src/avatarbroadcaster.h \
     src/widget/tool/screenshotgrabber.h \
-    src/widget/tool/screengrabberchooserrectitem.hpp \
-    src/widget/tool/screengrabberoverlayitem.hpp \
-    src/widget/tool/toolboxgraphicsitem.hpp
-
+    src/widget/tool/screengrabberchooserrectitem.h \
+    src/widget/tool/screengrabberoverlayitem.h \
+    src/widget/tool/toolboxgraphicsitem.h \
+    src/widget/tool/flyoutoverlaywidget.h

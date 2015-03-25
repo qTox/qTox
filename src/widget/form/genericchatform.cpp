@@ -36,6 +36,7 @@
 #include "src/friend.h"
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/timestamp.h"
+#include "src/widget/tool/flyoutoverlaywidget.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent)
@@ -77,6 +78,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
     fileButton = new QPushButton();
     fileButton->setToolTip(tr("Send file(s)"));
+    screenshotButton = new QPushButton;
+    screenshotButton->setToolTip(tr("Send a screenshot"));
     callButton = new QPushButton();
     callButton->setFixedSize(50,40);
     callButton->setToolTip(tr("Start an audio call"));
@@ -89,10 +92,15 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     micButton = new QPushButton();
     // micButton->setFixedSize(25,20);
     micButton->setToolTip("");
-
-    screenshotAction = new QAction(tr("Send screenshot"), nullptr);
+    
+    fileFlyout = new FlyoutOverlayWidget;
+    QHBoxLayout *fileLayout = new QHBoxLayout(fileFlyout);
+    fileLayout->addWidget(screenshotButton);
+    fileLayout->setContentsMargins(0, 0, 0, 0);
 
     footButtonsSmall->setSpacing(2);
+    fileLayout->setSpacing(0);
+    fileLayout->setMargin(0);
 
     msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css"));
     msgEdit->setFixedHeight(50);
@@ -100,6 +108,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
     sendButton->setStyleSheet(Style::getStylesheet(":/ui/sendButton/sendButton.css"));
     fileButton->setStyleSheet(Style::getStylesheet(":/ui/fileButton/fileButton.css"));
+    screenshotButton->setStyleSheet(Style::getStylesheet(":/ui/screenshotButton/screenshotButton.css"));
     emoteButton->setStyleSheet(Style::getStylesheet(":/ui/emoteButton/emoteButton.css"));
 
     callButton->setObjectName("green");
@@ -156,6 +165,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     //https://bugreports.qt-project.org/browse/QTBUG-14591
     sendButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     fileButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    screenshotButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     emoteButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     micButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     volButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
@@ -175,6 +185,28 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
+    
+    fileFlyout->setFixedSize(24, 24);
+    fileFlyout->setParent(this);
+    fileButton->installEventFilter(this);
+}
+
+void GenericChatForm::showFileMenu()
+{
+    if (!fileFlyout->isShown()) {
+        QPoint pos = fileButton->pos();
+        QSize size = fileFlyout->size();
+        fileFlyout->move(pos.x() - size.width(), pos.y());
+        fileFlyout->animateShow();
+    }
+    
+}
+
+void GenericChatForm::hideFileMenu()
+{
+    if(fileFlyout->isShown())
+        fileFlyout->animateHide();
+    
 }
 
 bool GenericChatForm::isEmpty()
@@ -377,4 +409,32 @@ void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
     chatWidget->insertChatlineAtBottom(std::dynamic_pointer_cast<ChatLine>(msg));
 }
 
-
+bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
+{
+    if (object != this->fileButton)
+        return false;
+    
+    switch(event->type())
+    {
+    case QEvent::Enter:
+        showFileMenu();
+        break;
+        
+    case QEvent::Leave: {
+        QPoint pos = mapFromGlobal(QCursor::pos());
+        QRect rect (fileFlyout->pos(), fileFlyout->size());
+        
+        if (!rect.contains(pos))
+            hideFileMenu();
+    } break;
+        
+    case QEvent::MouseButtonPress:
+        hideFileMenu();
+        break;
+        
+    default:
+        break;
+    }
+    
+    return false;
+}

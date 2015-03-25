@@ -85,9 +85,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
-    fileButton->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(fileButton, &QPushButton::customContextMenuRequested, this, &ChatForm::onAttachContext);
-    connect(screenshotAction, &QAction::triggered, this, &ChatForm::onScreenshotCreate);
+    connect(screenshotButton, &QPushButton::clicked, this, &ChatForm::onScreenshotClicked);
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
@@ -865,7 +863,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     chatWidget->verticalScrollBar()->setValue(savedSliderPos);
 }
 
-void ChatForm::onScreenshotCreate()
+void ChatForm::onScreenshotClicked()
 {
     ScreenshotGrabber *screenshotGrabber = new ScreenshotGrabber (this);
     connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
@@ -894,14 +892,6 @@ void ChatForm::onScreenshotTaken (const QPixmap &pixmap) {
 	
 	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
         
-}
-
-void ChatForm::onAttachContext(const QPoint &pos)
-{
-    QMenu* context = new QMenu(fileButton);
-    context->addAction(screenshotAction);
-
-    context->exec(fileButton->mapToGlobal(pos));
 }
 
 void ChatForm::onLoadHistory()

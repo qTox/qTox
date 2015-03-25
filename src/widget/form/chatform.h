@@ -95,7 +95,7 @@ private slots:
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();
-    void onScreenshotCreate();
+    void onScreenshotClicked();
     void onScreenshotTaken(const QPixmap &pixmap);
 
 protected:
