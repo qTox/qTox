@@ -179,5 +179,5 @@ void ScreenshotGrabber::beginRectChooser(QGraphicsSceneMouseEvent* event)
     QPointF pos = event->scenePos();
     this->chooserRect->setX(pos.x());
     this->chooserRect->setY(pos.y());
-    this->chooserRect->beginResize();
+    this->chooserRect->beginResize(event->scenePos());
 }
