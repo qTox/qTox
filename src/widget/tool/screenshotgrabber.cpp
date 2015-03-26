@@ -119,22 +119,31 @@ void ScreenshotGrabber::setupScene(QGraphicsScene* scene)
     useNothingSelectedTooltip();
     
     connect(this->chooserRect, &ScreenGrabberChooserRectItem::doubleClicked, this, &ScreenshotGrabber::acceptRegion);
-    connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this, &ScreenshotGrabber::useRegionSelectedTooltip);
+    connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this, &ScreenshotGrabber::chooseHelperTooltipText);
     connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this->overlay, &ScreenGrabberOverlayItem::setChosenRect);
 }
 
 void ScreenshotGrabber::useNothingSelectedTooltip()
 {
-    this->helperTooltip->setHtml(tr("Click and drag to select a region. Press <b>Escape</b> to cancel.",
-                                    "Help text shown when no region has been selected yet"));
+    helperTooltip->setHtml(tr("Click and drag to select a region. Press <b>Escape</b> to cancel.",
+                              "Help text shown when no region has been selected yet"));
     adjustTooltipPosition();
 }
 
 void ScreenshotGrabber::useRegionSelectedTooltip()
 {
-    this->helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selected region or select a new region. Press <b>Escape</b> to cancel.",
-                                    "Help text shown when a region has been selected"));
+    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selected region or select a new region. Press <b>Escape</b> to cancel.",
+                              "Help text shown when a region has been selected"));
     adjustTooltipPosition();
+}
+
+void ScreenshotGrabber::chooseHelperTooltipText(QRect rect)
+{
+    if (rect.size().isNull())
+        useNothingSelectedTooltip();
+    else
+        useRegionSelectedTooltip();
+    
 }
 
 void ScreenshotGrabber::adjustTooltipPosition()
@@ -143,8 +152,8 @@ void ScreenshotGrabber::adjustTooltipPosition()
     QRect screenRect = QApplication::desktop()->screen()->rect();
     
     // Align the toolbox center-top.
-    this->helperToolbox->setX(screenRect.x() + (screenRect.width() - size.width() + size.x()) / 2);
-    this->helperToolbox->setY(screenRect.y());
+    helperToolbox->setX(screenRect.x() + (screenRect.width() - size.width() + size.x()) / 2);
+    helperToolbox->setY(screenRect.y());
     
 }
 
