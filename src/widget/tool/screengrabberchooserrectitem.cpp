@@ -21,7 +21,10 @@
 #include <QPainter>
 #include <QCursor>
 
-enum { HandleSize = 10 };
+enum {
+    HandleSize = 10,
+    MinRectSize = 2,
+};
 
 ScreenGrabberChooserRectItem::ScreenGrabberChooserRectItem(QGraphicsScene* scene)
 {
@@ -62,13 +65,16 @@ QRectF ScreenGrabberChooserRectItem::boundingRect() const
     return QRectF(0, 0, this->rectWidth, this->rectHeight);
 }
 
-void ScreenGrabberChooserRectItem::beginResize()
+void ScreenGrabberChooserRectItem::beginResize(QPointF mousePos)
 {
-    this->rectWidth = this->rectHeight = 0;
-    this->state = Resizing;
+    rectWidth = this->rectHeight = 0;
+    mainRect->setRect(QRect());
+    state = Resizing;
+    startPos = mousePos;
+    
     setCursor(QCursor(Qt::CrossCursor));
     hideHandles();
-    this->mainRect->grabMouse();
+    mainRect->grabMouse();
 }
 
 QRect ScreenGrabberChooserRectItem::chosenRect() const
@@ -122,9 +128,9 @@ void ScreenGrabberChooserRectItem::mouseMove(QGraphicsSceneMouseEvent* event)
     {
         prepareGeometryChange();
         QPointF size = event->scenePos() - scenePos();
-        this->mainRect->setRect (0, 0, size.x(), size.y());
-        this->rectWidth = size.x();
-        this->rectHeight = size.y();
+        mainRect->setRect (0, 0, size.x(), size.y());
+        rectWidth = size.x();
+        rectHeight = size.y();
         
         updateHandlePositions();
     }
@@ -141,10 +147,21 @@ void ScreenGrabberChooserRectItem::mouseRelease(QGraphicsSceneMouseEvent* event)
     if (event->button() == Qt::LeftButton)
     {
         setCursor(QCursor(Qt::OpenHandCursor));
+        
+        QPointF delta = (event->scenePos() - startPos);
+        if (qAbs(delta.x()) < MinRectSize || qAbs(delta.y()) < MinRectSize)
+        {
+            rectWidth = rectHeight = 0;
+            mainRect->setRect(QRect());
+        }
+        else
+        {
+            showHandles();
+        }
+        
         emit regionChosen(chosenRect());
         this->state = None;
         this->mainRect->ungrabMouse();
-        showHandles();
     }
     
 }
