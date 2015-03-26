@@ -62,7 +62,8 @@ ScreenGrabberChooserRectItem::~ScreenGrabberChooserRectItem()
 
 QRectF ScreenGrabberChooserRectItem::boundingRect() const
 {
-    return QRectF(0, 0, this->rectWidth, this->rectHeight);
+    return QRectF(-HandleSize - 1, -HandleSize - 1,
+                  rectWidth + HandleSize + 1, rectHeight + HandleSize + 1);
 }
 
 void ScreenGrabberChooserRectItem::beginResize(QPointF mousePos)
@@ -79,8 +80,20 @@ void ScreenGrabberChooserRectItem::beginResize(QPointF mousePos)
 
 QRect ScreenGrabberChooserRectItem::chosenRect() const
 {
-    QRect rect (x(), y(), this->rectWidth, this->rectHeight);
-    return rect.normalized();
+    QRect rect (x(), y(), rectWidth, rectHeight);
+    if (rectWidth < 0)
+    {
+        rect.setX(rect.x() + rectWidth);
+        rect.setWidth(-rectWidth);
+    }
+    
+    if (rectHeight < 0)
+    {
+        rect.setY(rect.y() + rectHeight);
+        rect.setHeight(-rectHeight);
+    }
+    
+    return rect;
 }
 
 void ScreenGrabberChooserRectItem::showHandles()
