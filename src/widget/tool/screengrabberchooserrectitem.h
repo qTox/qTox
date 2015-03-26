@@ -27,7 +27,7 @@ public:
     ~ScreenGrabberChooserRectItem();
     
     QRectF boundingRect() const;
-    void beginResize();
+    void beginResize(QPointF mousePos);
     
     QRect chosenRect() const;
     
@@ -54,6 +54,7 @@ private:
     State state = None;
     int rectWidth = 0;
     int rectHeight = 0;
+    QPointF startPos;
     
     void forwardMainRectEvent(QEvent* event);
     void forwardHandleEvent(QGraphicsItem* watched, QEvent* event);
