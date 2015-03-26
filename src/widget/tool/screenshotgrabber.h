@@ -58,6 +58,7 @@ private:
     
     void useNothingSelectedTooltip();
     void useRegionSelectedTooltip();
+    void chooseHelperTooltipText(QRect rect);
     void adjustTooltipPosition();
     
     bool handleKeyPress(QKeyEvent* event);
