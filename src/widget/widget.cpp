@@ -42,6 +42,7 @@
 #include <QThread>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QShortcut>
 #include <QTimer>
 #include <QStyleFactory>
 #include <QTranslator>
@@ -194,6 +195,9 @@ void Widget::init()
     connect(setStatusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
     connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
     connect(idleTimer, &QTimer::timeout, this, &Widget::onUserAway);
+
+    // keyboard shortcuts
+    new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
 
     coreThread->start();
 
