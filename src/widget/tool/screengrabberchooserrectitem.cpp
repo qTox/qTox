@@ -169,12 +169,20 @@ void ScreenGrabberChooserRectItem::mouseRelease(QGraphicsSceneMouseEvent* event)
         }
         else
         {
+            QRect normalized = chosenRect();
+            
+            rectWidth = normalized.width();
+            rectHeight = normalized.height();
+            setPos(normalized.x(), normalized.y());
+            mainRect->setRect(0, 0, rectWidth, rectHeight);
+            
+            updateHandlePositions();
             showHandles();
         }
         
         emit regionChosen(chosenRect());
-        this->state = None;
-        this->mainRect->ungrabMouse();
+        state = None;
+        mainRect->ungrabMouse();
     }
     
 }
