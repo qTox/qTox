@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 if which apt-get; then
     sudo apt-get install build-essential qt5-qmake qt5-default libopenal-dev libopencv-dev \
