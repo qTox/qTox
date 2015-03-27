@@ -140,7 +140,7 @@ void ProfileForm::show(Ui::MainWindow &ui)
     ui.mainContent->layout()->addWidget(this);
     head->show();
     QWidget::show();
-    bodyUI->userName->setFocus(Qt::OtherFocusReason);
+    bodyUI->userName->setFocus();
     bodyUI->userName->selectAll();
 }
 
