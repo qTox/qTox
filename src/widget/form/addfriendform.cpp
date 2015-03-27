@@ -67,6 +67,7 @@ void AddFriendForm::show(Ui::MainWindow &ui)
     ui.mainHead->layout()->addWidget(head);
     main->show();
     head->show();
+    toxId.setFocus();
 }
 
 QString AddFriendForm::getMessage() const

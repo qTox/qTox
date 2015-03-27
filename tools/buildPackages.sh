@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Config (Update me if needed !)
 VERSION_UPSTREAM="1.0"
