@@ -59,7 +59,7 @@
 #include <QList>
 #include <QDesktopServices>
 #include <QProcess>
-#include <qlibraryinfo.h>
+#include <QLibraryInfo>
 #include <tox/tox.h>
 
 #ifdef Q_OS_ANDROID
@@ -84,7 +84,7 @@ Widget::Widget(QWidget *parent)
       activeChatroomWidget{nullptr},
       eventFlag(false),
       eventIcon(false)
-{   
+{
     installEventFilter(this);
     translator = new QTranslator;
     setTranslation();
@@ -214,7 +214,7 @@ void Widget::setTranslation()
     QString locale;
     if ((locale = Settings::getInstance().getTranslation()).isEmpty())
         locale = QLocale::system().name().section('_', 0, 0);
-    
+
     if (locale == "en")
         return;
 
@@ -225,16 +225,20 @@ void Widget::setTranslation()
         // system menu translation
         QTranslator *qtTranslator = new QTranslator();
         QString s_locale = "qt_"+locale;
-        if ( qtTranslator->load(s_locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)) )
+        if (qtTranslator->load(s_locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
         {
             QApplication::installTranslator(qtTranslator);
             qDebug() << "System translation loaded" << locale;
         }
         else
+        {
             qDebug() << "System translation not loaded" << locale;
+        }
     }
     else
+    {
         qDebug() << "Error loading translation" << locale;
+    }
     QCoreApplication::installTranslator(translator);
 }
 
