@@ -19,6 +19,7 @@
 #include <QFont>
 #include <QMessageBox>
 #include <QErrorMessage>
+#include <QClipboard>
 #include <tox/tox.h>
 #include "ui_mainwindow.h"
 #include "src/nexus.h"
@@ -67,6 +68,7 @@ void AddFriendForm::show(Ui::MainWindow &ui)
     ui.mainHead->layout()->addWidget(head);
     main->show();
     head->show();
+    setIdFromClipboard();
 }
 
 QString AddFriendForm::getMessage() const
@@ -113,5 +115,15 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
         emit friendRequested(toxId.toString(), getMessage());
         this->toxId.clear();
         this->message.clear();
+    }
+}
+
+void AddFriendForm::setIdFromClipboard()
+{
+    QClipboard* clipboard = QApplication::clipboard();
+    QString id = clipboard->text().trimmed();
+    if (Core::getInstance()->isReady() && !id.isEmpty() && ToxID::isToxId(id)) {
+        if (!ToxID::fromString(id).isMine())
+            toxId.setText(id);
     }
 }

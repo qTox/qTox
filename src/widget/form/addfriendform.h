@@ -45,6 +45,7 @@ private slots:
     void onSendTriggered();
 
 private:
+    void setIdFromClipboard();
     QLabel headLabel, toxIdLabel, messageLabel;
     QPushButton sendButton;
     QLineEdit toxId;
