@@ -770,8 +770,13 @@ void ChatForm::dropEvent(QDropEvent *ev)
             QFile file(info.absoluteFilePath());
             if (!file.exists() || !file.open(QIODevice::ReadOnly))
             {
-                QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to open %1").arg(info.fileName()));
-                continue;
+                info.setFile(url.toLocalFile());
+                file.setFileName(info.absoluteFilePath());
+                if (!file.exists() || !file.open(QIODevice::ReadOnly))
+                {
+                    QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to open %1").arg(info.fileName()));
+                    continue;
+                }
             }
             if (file.isSequential())
             {
