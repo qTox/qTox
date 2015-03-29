@@ -54,6 +54,7 @@ public:
     static bool removeHistory(int encrypted = -1);
     static QList<HistMessage> exportMessagesDeleteFile(int encrypted = -1);
 
+    void removeFriendHistory(const QString& chat);
     qint64 addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent);
     qint64 addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
