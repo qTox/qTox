@@ -89,6 +89,7 @@ void FriendListWidget::onGroupchatPositionChanged(bool top)
 
 void FriendListWidget::moveWidget(QWidget *w, Status s, int hasNewEvents)
 {
+    Q_UNUSED(hasNewEvents);
     QVBoxLayout* l = getFriendLayout(s);
     l->removeWidget(w);
     Friend* g = FriendList::findFriend(dynamic_cast<FriendWidget*>(w)->friendId);
