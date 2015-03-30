@@ -63,6 +63,8 @@ private slots:
     void onCompactLayout();
     void onGroupchatPositionChanged();
     void onThemeColorChanged(int);
+    void updateTimeStamps();
+    void updateDateStamps();
 
 private:
     Ui::GeneralSettings *bodyUI;

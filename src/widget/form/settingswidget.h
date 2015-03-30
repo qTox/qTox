@@ -40,6 +40,8 @@ public:
 
     void show(Ui::MainWindow &ui);
     void setBodyHeadStyle(QString style);
+    void stopTimeStampTimer();
+    void startTimeStampTimer(int seconds = 1000);
 
 signals:
     void setShowSystemTray(bool newValue);
@@ -53,6 +55,7 @@ private:
     QWidget *head, *body;
     QTabWidget *settingsWidgets;
     QLabel *nameLabel, *imgLabel;
+    QTimer* timeStampTimer;
 };
 
 #endif // SETTINGSWIDGET_H
