@@ -89,7 +89,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
     connect(Core::getInstance(), &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(this, SIGNAL(chatAreaCleared()), getOfflineMsgEngine(), SLOT(removeAllReciepts()));
-    connect(&typingTimer, &QTimer::timeout, this, [=]{Core::getInstance()->sendTyping(f->getFriendID(), false);});
+    connect(&typingTimer, &QTimer::timeout, this, [=]{
+        Core::getInstance()->sendTyping(f->getFriendID(), false);
+        isTyping = false;
+    } );
     connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig) {
         if (text != orig) emit aliasChanged(text);
     } );
