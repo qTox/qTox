@@ -151,6 +151,14 @@ private slots:
     void processOfflineMsgs();
 
 private:
+    enum ActiveToolMenuButton {
+        AddButton,
+        GroupButton,
+        TransferButton,
+        SettingButton,
+        None,
+    };
+    void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     void hideMainForms();
     virtual bool event(QEvent * e);
     Group *createGroup(int groupId);

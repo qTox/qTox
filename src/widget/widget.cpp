@@ -131,8 +131,11 @@ void Widget::init()
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
 
-    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
-    
+    ui->addButton->setCheckable(true);
+    ui->groupButton->setCheckable(false);
+    ui->transferButton->setCheckable(true);
+    ui->settingsButton->setCheckable(true);
+
     if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
     {
@@ -197,6 +200,7 @@ void Widget::init()
     connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
 
     addFriendForm->show(*ui);
+    setActiveToolMenuButton(Widget::AddButton);
 
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
 #if (AUTOUPDATE_ENABLED)
@@ -422,6 +426,7 @@ void Widget::onAddClicked()
     hideMainForms();
     addFriendForm->show(*ui);
     setWindowTitle(tr("Add friend"));
+    setActiveToolMenuButton(Widget::AddButton);
     activeChatroomWidget = nullptr;
 }
 
@@ -435,6 +440,7 @@ void Widget::onTransferClicked()
     hideMainForms();
     filesForm->show(*ui);
     setWindowTitle(tr("File transfers"));
+    setActiveToolMenuButton(Widget::TransferButton);
     activeChatroomWidget = nullptr;
 }
 
@@ -515,6 +521,7 @@ void Widget::onSettingsClicked()
     hideMainForms();
     settingsWidget->show(*ui);
     setWindowTitle(tr("Settings"));
+    setActiveToolMenuButton(Widget::SettingButton);
     activeChatroomWidget = nullptr;
 }
 
@@ -715,6 +722,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 {
     hideMainForms();
+    setActiveToolMenuButton(Widget::None);
     widget->setChatForm(*ui);
     if (activeChatroomWidget != nullptr)
     {
@@ -1217,7 +1225,7 @@ void Widget::clearAllReceipts()
 void Widget::reloadTheme()
 {
     QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");
-    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}"));
+    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}QPushButton:checked{background-color:@themeMedium;border:none;}QPushButton:pressed{background-color:@themeMediumLight;border:none;}"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
@@ -1298,4 +1306,16 @@ Status Widget::getStatusFromString(QString status)
         return Status::Away;
     else
         return Status::Offline;
+}
+
+void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
+{
+    ui->addButton->setChecked(newActiveButton == Widget::AddButton);
+    ui->addButton->setDisabled(newActiveButton == Widget::AddButton);
+    ui->groupButton->setChecked(newActiveButton == Widget::GroupButton);
+    ui->groupButton->setDisabled(newActiveButton == Widget::GroupButton);
+    ui->transferButton->setChecked(newActiveButton == Widget::TransferButton);
+    ui->transferButton->setDisabled(newActiveButton == Widget::TransferButton);
+    ui->settingsButton->setChecked(newActiveButton == Widget::SettingButton);
+    ui->settingsButton->setDisabled(newActiveButton == Widget::SettingButton);
 }
