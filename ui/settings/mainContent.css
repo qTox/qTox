@@ -26,11 +26,12 @@ QMessageBox
 QCheckBox
 {
     background: white;
-    color: black;    
+    color: black;
 }
 
 QCheckBox:disabled
 {
+    background: white;
     color: grey;
 }
 
@@ -39,9 +40,21 @@ QSpinBox
     background: white;
 }
 
+QSpinBox:disabled
+{
+    background: white;
+    color: grey;
+}
+
 QPushButton
 {
     background: white;
+}
+
+QPushButton:disabled
+{
+    background: white;
+    color: grey;
 }
 
 QGroupBox
@@ -49,11 +62,28 @@ QGroupBox
     color: black;
     background-color: white;
     font: @bigBold;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin-top: 1.2em;
+}
+
+QGroupBox::title
+{
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    background-color: white;
+    color: black;
 }
 
 QComboBox
 {
     color: black;
+    background: white;
+}
+
+QComboBox:disabled
+{
+    color: grey;
     background: white;
 }
 
@@ -66,25 +96,59 @@ QLineEdit
     background-color: white;
 }
 
+QLineEdit:disabled
+{
+    background-color: white;
+    color: grey;
+}
+
 QTabWidget
 {
     background-color: white;
+    border: 1px;
 }
 
-QTabBar
+QTabBar::tab
 {
+    background-color:@themeMedium;
+    color: white;
+    padding: 10px;
+}
+
+QTabBar::tab:selected
+{
+    background-color:@themeDark;
+}
+
+QTabBar::tab:hover
+{
+    background-color:@themeLight;
+}
+
+QTabBar::tab:selected:hover
+{
+    background-color:@themeDark;
+}
+
+QToolTip
+{
+    color: black;
     background-color: white;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding: 1 2 0.5ex;
+    opacity: 200;
 }
 
 QScrollArea
 {
     background-color: white;
-    background: transparent; 
+    background: transparent;
 }
 
-QScrollArea > QWidget > QWidget 
-{ 
-  background: transparent; 
+QScrollArea > QWidget > QWidget
+{
+  background: transparent;
 }
 
 QScrollBar:vertical  {
@@ -134,7 +198,7 @@ QScrollBar:QScrollBar::up-arrow:vertical  {
     height: 10px;
     background: white;
 }
- 
+
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical  {
     background: none;
 }
@@ -185,7 +249,7 @@ QScrollBar:QScrollBar::up-arrow:horizontal  {
     height: 10px;
     background: white;
 }
- 
+
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal  {
     background: none;
 }

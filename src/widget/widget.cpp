@@ -171,7 +171,7 @@ void Widget::init()
     Style::setThemeColor(Settings::getInstance().getThemeColor());
     reloadTheme();
     updateIcons();
-    
+
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
     profileForm = new ProfileForm();
@@ -1222,6 +1222,7 @@ void Widget::reloadTheme()
     ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
     ui->statusButton->setStyleSheet(Style::getStylesheet(":ui/statusButton/statusButton.css"));
+    ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
 
     for (Friend* f : FriendList::getAllFriends())
         f->getFriendWidget()->reloadTheme();
