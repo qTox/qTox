@@ -415,6 +415,9 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
     if (object != this->fileButton && object != this->fileFlyout)
         return false;
     
+    if (!qobject_cast<QWidget*>(object)->isEnabled())
+        return false;
+    
     switch(event->type())
     {
     case QEvent::Enter:
