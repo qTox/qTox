@@ -34,7 +34,7 @@ FlyoutOverlayWidget::FlyoutOverlayWidget(QWidget *parent)
     
     connect(animation, &QAbstractAnimation::finished, this, &FlyoutOverlayWidget::finishedAnimation);
     setFlyoutPercent(0);
-    show();
+    hide();
     
 }
 
