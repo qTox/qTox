@@ -59,6 +59,7 @@
 #include <QList>
 #include <QDesktopServices>
 #include <QProcess>
+#include <QLibraryInfo>
 #include <tox/tox.h>
 
 #ifdef Q_OS_ANDROID
@@ -83,7 +84,8 @@ Widget::Widget(QWidget *parent)
       activeChatroomWidget{nullptr},
       eventFlag(false),
       eventIcon(false)
-{   
+{
+    installEventFilter(this);
     translator = new QTranslator;
     setTranslation();
 }
@@ -143,7 +145,7 @@ void Widget::init()
     
     ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 
-    contactListWidget = new FriendListWidget();
+    contactListWidget = new FriendListWidget(0, Settings::getInstance().getGroupchatPosition());
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
 
@@ -196,6 +198,7 @@ void Widget::init()
 
     addFriendForm->show(*ui);
 
+    connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
 #if (AUTOUPDATE_ENABLED)
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
@@ -211,15 +214,48 @@ void Widget::setTranslation()
     QString locale;
     if ((locale = Settings::getInstance().getTranslation()).isEmpty())
         locale = QLocale::system().name().section('_', 0, 0);
-    
+
     if (locale == "en")
         return;
 
     if (translator->load(locale, ":translations/"))
+    {
         qDebug() << "Loaded translation" << locale;
+
+        // system menu translation
+        QTranslator *qtTranslator = new QTranslator();
+        QString s_locale = "qt_"+locale;
+        if (qtTranslator->load(s_locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+        {
+            QApplication::installTranslator(qtTranslator);
+            qDebug() << "System translation loaded" << locale;
+        }
+        else
+        {
+            qDebug() << "System translation not loaded" << locale;
+        }
+    }
     else
+    {
         qDebug() << "Error loading translation" << locale;
+    }
     QCoreApplication::installTranslator(translator);
+}
+
+bool Widget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange && obj != NULL)
+    {
+           QWindowStateChangeEvent * ce = static_cast<QWindowStateChangeEvent*>(event);
+           if (windowState() & Qt::WindowMinimized)
+           {
+                if (ce->oldState() & Qt::WindowMaximized)
+                    wasMaximized = true;
+                else
+                    wasMaximized = false;
+           }
+    }
+    return false;
 }
 
 void Widget::updateIcons()
@@ -408,7 +444,7 @@ void Widget::confirmExecutableOpen(const QFileInfo file)
 
     if (dangerousExtensions.contains(file.suffix()))
     {
-        if(!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
+        if (!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
         {
             return;
         }
@@ -433,16 +469,23 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
             {
                 show();
                 activateWindow();
-                showNormal();
+                if (wasMaximized)
+                    showMaximized();
+                else
+                    showNormal();
             }
             else if (isMinimized())
             {
                 forceShow();
                 activateWindow();
-                showNormal();
+                if (wasMaximized)
+                    showMaximized();
+                else
+                    showNormal();
             }
             else
             {
+                wasMaximized = isMaximized();
                 if (Settings::getInstance().getMinimizeToTray())
                     hide();
                 else
@@ -452,6 +495,7 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
             break;
         }
         case QSystemTrayIcon::MiddleClick:
+            wasMaximized = isMaximized();
             if (Settings::getInstance().getMinimizeToTray())
                 hide();
             else
@@ -536,10 +580,10 @@ void Widget::addFriend(int friendId, const QString &userId)
     //qDebug() << "Widget: Adding friend with id" << userId;
     ToxID userToxId = ToxID::fromString(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
-    QLayout* layout = contactListWidget->getFriendLayout(Status::Offline);
-    layout->addWidget(newfriend->getFriendWidget());
+    contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline,0);
 
     Core* core = Nexus::getCore();
+    connect(newfriend, &Friend::displayedNameChanged, contactListWidget, &FriendListWidget::moveWidget);
     connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::onCompactChanged);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
@@ -601,9 +645,19 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (!f)
         return;
 
-    contactListWidget->moveWidget(f->getFriendWidget(), status, f->getEventFlag());
-
     bool isActualChange = f->getStatus() != status;
+
+    if (isActualChange)
+    {
+        if (f->getStatus() == Status::Offline)
+        {
+            contactListWidget->moveWidget(f->getFriendWidget(), Status::Online, f->getEventFlag());
+        }
+        else if (status == Status::Offline)
+        {
+            contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline, f->getEventFlag());
+        }
+    }
 
     f->setStatus(status);
     f->getFriendWidget()->updateStatusLight();
@@ -719,17 +773,20 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
             setWindowState(Qt::WindowActive);
     }
 
-    static QFile sndFile(":audio/notification.pcm");
-    static QByteArray sndData;
-
-    if (sndData.isEmpty())
+    if (Settings::getInstance().getNotifySound())
     {
-        sndFile.open(QIODevice::ReadOnly);
-        sndData = sndFile.readAll();
-        sndFile.close();
-    }
+        static QFile sndFile(":audio/notification.pcm");
+        static QByteArray sndData;
 
-    Audio::playMono16Sound(sndData);
+        if (sndData.isEmpty())
+        {
+            sndFile.open(QIODevice::ReadOnly);
+            sndData = sndFile.readAll();
+            sndFile.close();
+        }
+
+        Audio::playMono16Sound(sndData);
+    }
 }
 
 void Widget::playRingtone()

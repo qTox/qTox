@@ -44,6 +44,7 @@ public:
 signals:
     void setShowSystemTray(bool newValue);
     void compactToggled(bool compact);
+    void groupchatPositionToggled(bool groupchatPosition);
 
 private slots:
     void onTabChanged(int);

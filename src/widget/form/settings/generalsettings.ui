@@ -345,6 +345,16 @@ instead of system taskbar.</string>
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="notifySound">
+              <property name="toolTip">
+               <string comment="toolTip for Notify sound setting">Play a sound when you recieve message.</string>
+              </property>
+              <property name="text">
+               <string>Play sound</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item row="1" column="2">
@@ -364,7 +374,7 @@ instead of system taskbar.</string>
            <widget class="QCheckBox" name="cbFauxOfflineMessaging">
             <property name="toolTip">
              <string comment="toolTip for Faux offline messaging setting">Messages you are trying to send to your friends when they are not online
-will be sent to them when they will appear online to you.</string>
+will be sent to them when they appear online to you.</string>
             </property>
             <property name="text">
              <string>Faux offline messaging</string>
@@ -378,6 +388,16 @@ will be sent to them when they will appear online to you.</string>
             </property>
             <property name="text">
              <string>Compact contact list</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="cbGroupchatPosition">
+            <property name="toolTip">
+             <string comment="toolTip for groupchat positioning">If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</string>
+            </property>
+            <property name="text">
+             <string>Place groupchats at top of friend list</string>
             </property>
            </widget>
           </item>
@@ -570,6 +590,16 @@ will be sent to them when they will appear online to you.</string>
                </sizepolicy>
               </property>
              </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="dateformatLabel">
+              <property name="text">
+               <string>Date format:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QComboBox" name="dateFormats"/>
             </item>
            </layout>
           </item>

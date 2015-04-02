@@ -209,6 +209,7 @@ void Settings::load()
         checkUpdates = s.value("checkUpdates", false).toBool();
         showWindow = s.value("showWindow", true).toBool();
         showInFront = s.value("showInFront", false).toBool();
+        notifySound = s.value("notifySound", true).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
@@ -216,6 +217,7 @@ void Settings::load()
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
         compactLayout = s.value("compactLayout", false).toBool();
+        groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -238,7 +240,8 @@ void Settings::load()
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
-        timestampFormat = s.value("timestampFormat", "hh:mm").toString();
+        timestampFormat = s.value("timestampFormat", "hh:mm:ss").toString();
+        dateFormat = s.value("dateFormat", "dddd, MMMM d, yyyy").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
@@ -380,9 +383,11 @@ void Settings::saveGlobal(QString path)
         s.setValue("checkUpdates", checkUpdates);
         s.setValue("showWindow", showWindow);
         s.setValue("showInFront", showInFront);
+        s.setValue("notifySound", notifySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("compactLayout", compactLayout);
+        s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
     s.endGroup();
@@ -407,6 +412,7 @@ void Settings::saveGlobal(QString path)
         s.setValue("firstColumnHandlePos", firstColumnHandlePos);
         s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
         s.setValue("timestampFormat", timestampFormat);
+        s.setValue("dateFormat", dateFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("lightTrayIcon", lightTrayIcon);
@@ -602,7 +608,7 @@ QString Settings::getStyle() const
     return style;
 }
 
-void Settings::setStyle(const QString& newStyle) 
+void Settings::setStyle(const QString& newStyle)
 {
     style = newStyle;
 }
@@ -691,6 +697,16 @@ bool Settings::getShowInFront() const
 void Settings::setShowInFront(bool newValue)
 {
     showInFront = newValue;
+}
+
+bool Settings::getNotifySound() const
+{
+   return notifySound;
+}
+
+void Settings::setNotifySound(bool newValue)
+{
+    notifySound = newValue;
 }
 
 bool Settings::getGroupAlwaysNotify() const
@@ -937,7 +953,7 @@ void Settings::setSecondColumnHandlePosFromRight(const int pos)
     secondColumnHandlePosFromRight = pos;
 }
 
-const QString &Settings::getTimestampFormat() const
+const QString& Settings::getTimestampFormat() const
 {
     return timestampFormat;
 }
@@ -945,8 +961,18 @@ const QString &Settings::getTimestampFormat() const
 void Settings::setTimestampFormat(const QString &format)
 {
     timestampFormat = format;
-    emit timestampFormatChanged();
 }
+
+const QString& Settings::getDateFormat() const
+{
+    return dateFormat;
+}
+
+void Settings::setDateFormat(const QString &format)
+{
+    dateFormat = format;
+}
+
 
 QString Settings::getEmojiFontFamily() const
 {
@@ -1160,6 +1186,16 @@ void Settings::setCompactLayout(bool value)
 {
     compactLayout = value;
     emit compactLayoutChanged();
+}
+
+bool Settings::getGroupchatPosition() const
+{
+    return groupchatPosition;
+}
+
+void Settings::setGroupchatPosition(bool value)
+{
+    groupchatPosition = value;
 }
 
 int Settings::getThemeColor() const

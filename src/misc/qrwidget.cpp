@@ -4,7 +4,12 @@
 #include <QBuffer>
 #include <QImage>
 #include <qrencode.h>
-#include <sys/errno.h>
+
+#ifdef Q_OS_WIN32
+    #include <errno.h>
+#else
+    #include <sys/errno.h>
+#endif
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
 //Note: The encoding fails with empty string so I just default to something else.

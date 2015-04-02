@@ -35,6 +35,9 @@ static QStringList locales = {"bg", "de", "en", "es", "fr", "hr", "hu", "it", "l
 static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "mannol", "Nederlands", "Pirate", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
+// http://doc.qt.io/qt-4.8/qdate.html#fromString
+static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
+
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
 {
@@ -73,9 +76,11 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
     bodyUI->showWindow->setChecked(Settings::getInstance().getShowWindow());
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
+    bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
+    bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
 
     for (auto entry : SmileyPack::listSmileyPacks())
     {
@@ -99,15 +104,29 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
 
     QStringList timestamps;
-    timestamps << QString("%1 - %2").arg(timeFormats[0],QTime::currentTime().toString(timeFormats[0]))
-               << QString("%1 - %2").arg(timeFormats[1],QTime::currentTime().toString(timeFormats[1]))
-               << QString("%1 - %2").arg(timeFormats[2],QTime::currentTime().toString(timeFormats[2]))
-               << QString("%1 - %2").arg(timeFormats[3],QTime::currentTime().toString(timeFormats[3]));
+    for (QString timestamp : timeFormats)
+        timestamps << QString("%1 - %2").arg(timestamp, QTime::currentTime().toString(timestamp));
+
     bodyUI->timestamp->addItems(timestamps);
 
-    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(),
-                                                             QTime::currentTime().toString(Settings::getInstance().getTimestampFormat()))
-                                      ); //idiot proof enough?
+    QLocale ql;
+    QStringList datestamps;
+    dateFormats.append(ql.dateFormat());
+    dateFormats.append(ql.dateFormat(QLocale::LongFormat));
+    dateFormats.removeDuplicates();
+    timeFormats.append(ql.timeFormat());
+    timeFormats.append(ql.timeFormat(QLocale::LongFormat));
+    timeFormats.removeDuplicates();
+
+    for (QString datestamp : dateFormats)
+        datestamps << QString("%1 - %2").arg(datestamp, QDate::currentDate().toString(datestamp));
+
+    bodyUI->dateFormats->addItems(datestamps);
+
+    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(), QTime::currentTime().toString(Settings::getInstance().getTimestampFormat())));
+
+    bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getDateFormat(), QDate::currentDate().toString(Settings::getInstance().getDateFormat())));
+
     bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
 
     bodyUI->cbEnableUDP->setChecked(!Settings::getInstance().getForceTCP());
@@ -132,6 +151,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
     connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
+    connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     if (bodyUI->autoacceptFiles->isChecked())
@@ -143,6 +163,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->themeColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onThemeColorChanged(int)));
     connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));
     connect(bodyUI->timestamp, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimestampSelected(int)));
+    connect(bodyUI->dateFormats, SIGNAL(currentIndexChanged(int)), this, SLOT(onDateFormatSelected(int)));
     //connection
     connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
     connect(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
@@ -152,7 +173,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
     connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
-
+    connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
+    
     // prevent stealing mouse whell scroll
     // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
     // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
@@ -243,6 +265,11 @@ void GeneralForm::onEmoticonSizeChanged()
 void GeneralForm::onTimestampSelected(int index)
 {
     Settings::getInstance().setTimestampFormat(timeFormats.at(index));
+}
+
+void GeneralForm::onDateFormatSelected(int index)
+{
+    Settings::getInstance().setDateFormat(dateFormats.at(index));
 }
 
 void GeneralForm::onAutoAwayChanged()
@@ -371,6 +398,11 @@ void GeneralForm::onSetShowInFront()
     Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
 }
 
+void GeneralForm::onSetNotifySound()
+{
+    Settings::getInstance().setNotifySound(bodyUI->notifySound->isChecked());
+}
+
 void GeneralForm::onSetGroupAlwaysNotify()
 {
     Settings::getInstance().setGroupAlwaysNotify(bodyUI->groupAlwaysNotify->isChecked());
@@ -385,6 +417,12 @@ void GeneralForm::onCompactLayout()
 {
     Settings::getInstance().setCompactLayout(bodyUI->cbCompactLayout->isChecked());
     emit parent->compactToggled(bodyUI->cbCompactLayout->isChecked());
+}
+
+void GeneralForm::onGroupchatPositionChanged()
+{
+    Settings::getInstance().setGroupchatPosition(bodyUI->cbGroupchatPosition->isChecked());
+    emit parent->groupchatPositionToggled(bodyUI->cbGroupchatPosition->isChecked());
 }
 
 void GeneralForm::onThemeColorChanged(int)

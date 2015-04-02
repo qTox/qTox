@@ -35,6 +35,11 @@ Friend::Friend(int FriendId, const ToxID &UserId)
 
     widget = new FriendWidget(friendId, getDisplayedName());
     chatForm = new ChatForm(this);
+    if (Settings::getInstance().getEnableLogging())
+    {
+        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+        widget->historyLoaded = true;
+    }
 }
 
 Friend::~Friend()
@@ -53,6 +58,8 @@ void Friend::setName(QString name)
 
         if (widget->isActive())
             GUI::setWindowTitle(name);
+        
+        emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
     }
 }
 
@@ -66,6 +73,8 @@ void Friend::setAlias(QString name)
 
     if (widget->isActive())
             GUI::setWindowTitle(dispName);
+    
+    emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
 }
 
 void Friend::setStatusMessage(QString message)

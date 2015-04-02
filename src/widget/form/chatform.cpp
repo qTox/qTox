@@ -129,6 +129,10 @@ void ChatForm::onSendTriggered()
     QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
+    msgEdit->setLastMessage(msg); //set last message only when sending it
+
+    bool status = !Settings::getInstance().getFauxOfflineMessaging();
+
     for (CString& c_msg : splittedMsg)
     {
         QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
@@ -136,12 +140,10 @@ void ChatForm::onSendTriggered()
         if (isAction)
             qt_msg_hist = "/me " + qt_msg;
 
-        bool status = !Settings::getInstance().getFauxOfflineMessaging();
-
         int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
                                                             Core::getInstance()->getSelfId().publicKey, timestamp, status);
 
-        ChatMessage::Ptr ma = addSelfMessage(msg, isAction, timestamp, false);
+        ChatMessage::Ptr ma = addSelfMessage(qt_msg, isAction, timestamp, false);
 
         int rec;
         if (isAction)
@@ -150,8 +152,6 @@ void ChatForm::onSendTriggered()
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
         getOfflineMsgEngine()->registerReceipt(rec, id, ma);
-
-        msgEdit->setLastMessage(msg); //set last message only when sending it
     }
 
     msgEdit->clear();
@@ -832,10 +832,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         // Show the date every new day
         QDateTime msgDateTime = it.timestamp.toLocalTime();
         QDate msgDate = msgDateTime.date();
+        
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(), ChatMessage::INFO, QDateTime()));
+            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime()));
         }
 
         // Show each messages

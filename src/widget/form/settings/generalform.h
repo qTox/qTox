@@ -46,6 +46,7 @@ private slots:
     void onEmoticonSizeChanged();
     void onStyleSelected(QString style);  
     void onTimestampSelected(int index);
+    void onDateFormatSelected(int index);
     void onSetStatusChange();
     void onAutoAwayChanged();
     void onUseEmoticonsChange();
@@ -56,9 +57,11 @@ private slots:
     void onCheckUpdateChanged();
     void onShowWindowChanged();
     void onSetShowInFront();
+    void onSetNotifySound();
     void onSetGroupAlwaysNotify();
     void onFauxOfflineMessaging();
     void onCompactLayout();
+    void onGroupchatPositionChanged();
     void onThemeColorChanged(int);
 
 private:
