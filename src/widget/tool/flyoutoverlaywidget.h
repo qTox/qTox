@@ -36,6 +36,8 @@ public:
     void setFlyoutPercent(qreal progress);
     
     bool isShown() const;
+    bool isBeingAnimated() const;
+    bool isBeingShown() const;
     
     void animateShow();
     void animateHide();
@@ -47,6 +49,7 @@ signals:
 private:
     
     void finishedAnimation();
+    void startAnimation(bool forward);
     
     QWidget *container;
     QPropertyAnimation *animation;

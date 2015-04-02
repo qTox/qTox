@@ -194,18 +194,18 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
 void GenericChatForm::showFileMenu()
 {
-    if (!fileFlyout->isShown()) {
+    if (!fileFlyout->isShown() && !fileFlyout->isBeingShown()) {
         QPoint pos = fileButton->pos();
         QSize size = fileFlyout->size();
         fileFlyout->move(pos.x() - size.width(), pos.y());
-        fileFlyout->animateShow();
     }
     
+    fileFlyout->animateShow();
 }
 
 void GenericChatForm::hideFileMenu()
 {
-    if(fileFlyout->isShown())
+    if(fileFlyout->isShown() || fileFlyout->isBeingShown())
         fileFlyout->animateHide();
     
 }
@@ -431,6 +431,7 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
         
         if (!fileRect.contains(pos))
             hideFileMenu();
+        
     } break;
         
     case QEvent::MouseButtonPress:

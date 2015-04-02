@@ -74,18 +74,33 @@ bool FlyoutOverlayWidget::isShown() const
     return (percent == 1);
 }
 
+bool FlyoutOverlayWidget::isBeingAnimated() const
+{
+    return (animation->state() == QAbstractAnimation::Running);
+}
+
+bool FlyoutOverlayWidget::isBeingShown() const
+{
+    return (isBeingAnimated() && animation->direction() == QAbstractAnimation::Forward);
+}
+
 void FlyoutOverlayWidget::animateShow()
 {
-    this->startPos = pos();
-    animation->setDirection(QAbstractAnimation::Forward);
-    animation->start();
+    if (percent == 1.0f)
+        return;
+    
+    if (animation->state() != QAbstractAnimation::Running)
+        this->startPos = pos();
+    
+    startAnimation(true);
 }
 
 void FlyoutOverlayWidget::animateHide()
 {
-    this->startPos = pos();
-    animation->setDirection(QAbstractAnimation::Backward);
-    animation->start();
+    if (animation->state() != QAbstractAnimation::Running)
+        this->startPos = pos();
+    
+    startAnimation(false);
 }
 
 void FlyoutOverlayWidget::finishedAnimation()
@@ -96,5 +111,13 @@ void FlyoutOverlayWidget::finishedAnimation()
     // Delay it by a few frames to let the system catch up on rendering
     if (hide)
         QTimer::singleShot(50, this, &FlyoutOverlayWidget::hidden);
+    
+}
+
+void FlyoutOverlayWidget::startAnimation(bool forward)
+{
+    animation->setDirection(forward ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
+    animation->start();
+    animation->setCurrentTime(animation->duration() * percent);
     
 }
