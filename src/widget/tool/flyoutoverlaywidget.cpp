@@ -106,7 +106,6 @@ void FlyoutOverlayWidget::animateHide()
 void FlyoutOverlayWidget::finishedAnimation()
 {
     bool hide = (animation->direction() == QAbstractAnimation::Backward);
-    setAttribute(Qt::WA_TransparentForMouseEvents, hide);
     
     // Delay it by a few frames to let the system catch up on rendering
     if (hide)
@@ -116,6 +115,7 @@ void FlyoutOverlayWidget::finishedAnimation()
 
 void FlyoutOverlayWidget::startAnimation(bool forward)
 {
+    setAttribute(Qt::WA_TransparentForMouseEvents, !forward);
     animation->setDirection(forward ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
     animation->start();
     animation->setCurrentTime(animation->duration() * percent);
