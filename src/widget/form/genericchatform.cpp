@@ -410,6 +410,12 @@ void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
     chatWidget->insertChatlineAtBottom(std::dynamic_pointer_cast<ChatLine>(msg));
 }
 
+void GenericChatForm::hideEvent(QHideEvent* event)
+{
+    hideFileMenu();
+    QWidget::hideEvent(event);
+}
+
 bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
 {
     if (object != this->fileButton && object != this->fileFlyout)

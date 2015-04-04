@@ -84,6 +84,7 @@ protected slots:
 protected:
     QString resolveToxID(const ToxID &id);
     void insertChatMessage(ChatMessage::Ptr msg);
+    void hideEvent(QHideEvent* event);
 
     ToxID previousId;
     QDateTime prevMsgDateTime;

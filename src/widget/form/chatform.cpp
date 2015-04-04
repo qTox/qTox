@@ -985,10 +985,12 @@ void ChatForm::show(Ui::MainWindow &ui)
         callConfirm->show();
 }
 
-void ChatForm::hideEvent(QHideEvent*)
+void ChatForm::hideEvent(QHideEvent* event)
 {
     if (callConfirm)
         callConfirm->hide();
+    
+    GenericChatForm::hideEvent(event);
 }
 
 OfflineMsgEngine *ChatForm::getOfflineMsgEngine()
