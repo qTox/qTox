@@ -87,6 +87,8 @@ protected:
     QString resolveToxID(const ToxID &id);
     void insertChatMessage(ChatMessage::Ptr msg);
     void hideEvent(QHideEvent* event);
+    void resizeEvent(QResizeEvent* event);
+    void adjustFileMenuPosition();
     
     ToxID previousId;
     Widget *parent;
