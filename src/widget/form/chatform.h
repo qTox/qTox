@@ -79,7 +79,6 @@ public slots:
     void onVolMuteToggle();
     void onAvatarChange(uint32_t FriendId, const QPixmap& pic);
     void onAvatarRemoved(uint32_t FriendId);
-    void onAttachContext(const QPoint &pos);
 
 private slots:
     void onSendTriggered();

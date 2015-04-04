@@ -192,12 +192,17 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileFlyout->installEventFilter(this);
 }
 
+void GenericChatForm::adjustFileMenuPosition()
+{
+    QPoint pos = fileButton->pos();
+    QSize size = fileFlyout->size();
+    fileFlyout->move(pos.x() - size.width(), pos.y());
+}
+
 void GenericChatForm::showFileMenu()
 {
     if (!fileFlyout->isShown() && !fileFlyout->isBeingShown()) {
-        QPoint pos = fileButton->pos();
-        QSize size = fileFlyout->size();
-        fileFlyout->move(pos.x() - size.width(), pos.y());
+        adjustFileMenuPosition();
     }
     
     fileFlyout->animateShow();
@@ -414,6 +419,12 @@ void GenericChatForm::hideEvent(QHideEvent* event)
 {
     hideFileMenu();
     QWidget::hideEvent(event);
+}
+
+void GenericChatForm::resizeEvent(QResizeEvent* event)
+{
+    adjustFileMenuPosition();
+    QWidget::resizeEvent(event);
 }
 
 bool GenericChatForm::eventFilter(QObject* object, QEvent* event)

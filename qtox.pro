@@ -432,7 +432,7 @@ SOURCES += \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
     src/profilelocker.cpp \
-    src/avatarbroadcaster.cpp
+    src/avatarbroadcaster.cpp \
     src/widget/tool/screenshotgrabber.cpp \
     src/widget/tool/screengrabberchooserrectitem.cpp \
     src/widget/tool/screengrabberoverlayitem.cpp \
