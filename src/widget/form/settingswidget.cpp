@@ -59,6 +59,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     for (GenericForm* cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
 
+    timeStampTimer = new QTimer(this);
+    connect(timeStampTimer, SIGNAL(timeout()), gfrm, SLOT(updateTimeStamps()));
     connect(settingsWidgets, &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
 }
 
@@ -86,6 +88,22 @@ void SettingsWidget::onTabChanged(int index)
     this->settingsWidgets->setCurrentIndex(index);
     GenericForm* currentWidget = static_cast<GenericForm*>(this->settingsWidgets->widget(index));
     currentWidget->present();
+
+    if (index == 0)
+        startTimeStampTimer(1000);
+    else
+        stopTimeStampTimer();
+
     nameLabel->setText(currentWidget->getFormName());
     imgLabel->setPixmap(currentWidget->getFormIcon().scaledToHeight(40, Qt::SmoothTransformation));
+}
+
+void SettingsWidget::stopTimeStampTimer()
+{
+    timeStampTimer->stop();
+}
+
+void SettingsWidget::startTimeStampTimer(int seconds)
+{
+    timeStampTimer->start(seconds);
 }

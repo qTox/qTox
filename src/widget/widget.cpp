@@ -538,6 +538,7 @@ void Widget::hideMainForms()
     {
         activeChatroomWidget->setAsInactiveChatroom();
     }
+    settingsWidget->stopTimeStampTimer();
 }
 
 void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)

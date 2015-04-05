@@ -122,6 +122,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
         datestamps << QString("%1 - %2").arg(datestamp, QDate::currentDate().toString(datestamp));
 
     bodyUI->dateFormats->addItems(datestamps);
+    updateDateStamps();
 
     bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(), QTime::currentTime().toString(Settings::getInstance().getTimestampFormat())));
 
@@ -431,6 +432,29 @@ void GeneralForm::onThemeColorChanged(int)
     Settings::getInstance().setThemeColor(index);
     Style::setThemeColor(index);
     Style::applyTheme();
+}
+
+void GeneralForm::updateTimeStamps()
+{
+    int index = 0;
+    for (QString timestamp : timeFormats)
+    {
+        bodyUI->timestamp->setItemText(index, QString("%1 - %2").arg(timestamp, QTime::currentTime().toString(timestamp)));
+        index++;
+    }
+}
+
+void GeneralForm::updateDateStamps()
+{
+    int index = 0;
+    for (QString datestamp : dateFormats)
+    {
+        bodyUI->dateFormats->setItemText(index, QString("%1 - %2").arg(datestamp, QDate::currentDate().toString(datestamp)));
+        index++;
+    }
+
+    int timeRemaining = ((23 - QTime::currentTime().hour()) * 60 * 60) + ((59 - QTime::currentTime().minute()) * 60) + (60 - QTime::currentTime().second());
+    QTimer::singleShot(timeRemaining*1000, this, SLOT(updateDateStamps));
 }
 
 bool GeneralForm::eventFilter(QObject *o, QEvent *e)
