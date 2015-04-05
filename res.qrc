@@ -80,6 +80,8 @@
         <file>ui/emoticonWidget/emoticonWidget.css</file>
         <file>ui/fileButton/fileButton.css</file>
         <file>ui/fileButton/fileButton.svg</file>
+        <file>ui/screenshotButton/screenshotButton.css</file>
+        <file>ui/screenshotButton/screenshotButton.svg</file>
         <file>ui/fileTransferWidget/fileTransferWidget.css</file>
         <file>ui/friendList/friendList.css</file>
         <file>ui/micButton/micButton.css</file>

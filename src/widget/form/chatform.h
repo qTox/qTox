@@ -95,6 +95,9 @@ private slots:
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();
+    void onScreenshotClicked();
+    void onScreenshotTaken(const QPixmap &pixmap);
+    void doScreenshot();
 
 protected:
     // drag & drop
@@ -110,7 +113,7 @@ private:
     int callId;
     QLabel *callDuration;
     QTimer *callDurationTimer;
-    QTimer typingTimer;    
+    QTimer typingTimer;
     QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
     OfflineMsgEngine *offlineEngine;
