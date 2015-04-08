@@ -368,7 +368,7 @@ QSplitter:handle{
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -1009,6 +1009,42 @@ QSplitter:handle{
          </widget>
         </item>
         <item>
+         <widget class="QWidget" name="searchContactsContainer" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLineEdit" name="searchContactText">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                 <horstretch>1</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="searchContactFilterCBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
          <widget class="AdjustingScrollArea" name="friendList">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -1036,8 +1072,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>285</width>
-             <height>381</height>
+             <width>284</width>
+             <height>348</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1802,7 +1838,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -1818,15 +1854,15 @@ QSplitter:handle{
  </widget>
  <customwidgets>
   <customwidget>
+   <class>CroppingLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">src/widget/croppinglabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>AdjustingScrollArea</class>
    <extends>QScrollArea</extends>
    <header>src/widget/adjustingscrollarea.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CroppingLabel</class>
-   <extends>QLabel</extends>
-   <header>src/widget/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>
