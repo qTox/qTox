@@ -177,32 +177,16 @@ void ChatLog::mousePressEvent(QMouseEvent* ev)
 {
     QGraphicsView::mousePressEvent(ev);
 
-    QPointF scenePos = mapToScene(ev->pos());
-
     if(ev->button() == Qt::LeftButton)
     {
         clickPos = ev->pos();
         clearSelection();
-    }
-
-    if(ev->button() == Qt::RightButton)
-    {
-        if(!isOverSelection(scenePos))
-            clearSelection();
     }
 }
 
 void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
 {
     QGraphicsView::mouseReleaseEvent(ev);
-
-    QPointF scenePos = mapToScene(ev->pos());
-
-    if(ev->button() == Qt::RightButton)
-    {
-        if(!isOverSelection(scenePos))
-            clearSelection();
-    }
 
     selectionScrollDir = NoDirection;
 }
