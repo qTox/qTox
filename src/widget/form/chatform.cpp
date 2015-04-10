@@ -58,7 +58,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     statusMessageLabel->setTextFormat(Qt::PlainText);
-    
+
     callConfirm = nullptr;
     offlineEngine = new OfflineMsgEngine(f);
 
@@ -116,14 +116,14 @@ void ChatForm::onSendTriggered()
     if (msg.isEmpty())
         return;
 
+    msgEdit->setLastMessage(msg); //set last message only when sending it
+
     bool isAction = msg.startsWith("/me ");
     if (isAction)
         msg = msg = msg.right(msg.length() - 4);
 
     QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
-
-    msgEdit->setLastMessage(msg); //set last message only when sending it
 
     bool status = !Settings::getInstance().getFauxOfflineMessaging();
 
@@ -294,7 +294,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     }
     callButton->style()->polish(callButton);
     videoButton->style()->polish(videoButton);
-    
+
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("%1 calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime()));
 
     Widget* w = Widget::getInstance();
@@ -353,7 +353,7 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
             this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()),
             this, SLOT(onVolMuteToggle()));
-    
+
     startCounter();
 }
 
@@ -371,7 +371,7 @@ void ChatForm::onAvCancel(int FriendId, int)
     stopCounter();
 
     netcam->hide();
-    
+
     addSystemInfoMessage(tr("%1 stopped calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
@@ -391,7 +391,7 @@ void ChatForm::onAvEnd(int FriendId, int)
 }
 
 void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
-{    
+{
     if (FriendId != f->getFriendID())
         return;
 
@@ -422,7 +422,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
         connect(callButton, SIGNAL(clicked()),
                 this, SLOT(onCancelCallTriggered()));
     }
-    
+
     addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
@@ -457,7 +457,7 @@ void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
         videoButton->setToolTip("");
         connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
     }
-    
+
     startCounter();
 }
 
@@ -473,7 +473,7 @@ void ChatForm::onAvEnding(int FriendId, int)
 
     enableCallButtons();
     stopCounter();
-    
+
     netcam->hide();
 }
 
@@ -489,7 +489,7 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
 
     enableCallButtons();
     stopCounter();
-    
+
     netcam->hide();
 }
 
@@ -502,10 +502,10 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
 
     delete callConfirm;
     callConfirm = nullptr;
-    
+
     enableCallButtons();
     stopCounter();
-    
+
     netcam->hide();
 }
 
@@ -520,7 +520,7 @@ void ChatForm::onAvRejected(int FriendId, int)
     callConfirm = nullptr;
 
     enableCallButtons();
-    
+
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("Call rejected"), ChatMessage::INFO, QDateTime::currentDateTime()));
 
     netcam->hide();
@@ -567,7 +567,7 @@ void ChatForm::onHangupCallTriggered()
     {
         netcam->showNormal();
     }
-    
+
     audioInputFlag = false;
     audioOutputFlag = false;
     emit hangupCall(callId);
@@ -588,7 +588,7 @@ void ChatForm::onRejectCallTriggered()
     audioInputFlag = false;
     audioOutputFlag = false;
     emit rejectCall(callId);
-    
+
     enableCallButtons();
 
 }
@@ -631,7 +631,7 @@ void ChatForm::onAvCallFailed(int FriendId)
 void ChatForm::onCancelCallTriggered()
 {
     qDebug() << "onCancelCallTriggered";
-    
+
     enableCallButtons();
 
     netcam->hide();
@@ -641,19 +641,19 @@ void ChatForm::onCancelCallTriggered()
 void ChatForm::enableCallButtons()
 {
     qDebug() << "enableCallButtons";
-    
+
     audioInputFlag = false;
     audioOutputFlag = false;
-    
+
     micButton->setObjectName("grey");
     micButton->style()->polish(micButton);
     micButton->setToolTip("");
-    micButton->disconnect();    
+    micButton->disconnect();
     volButton->setObjectName("grey");
     volButton->style()->polish(volButton);
     volButton->setToolTip("");
     volButton->disconnect();
-    
+
     callButton->setObjectName("grey");
     callButton->style()->polish(callButton);
     callButton->setToolTip("");
@@ -662,7 +662,7 @@ void ChatForm::enableCallButtons()
     videoButton->style()->polish(videoButton);
     videoButton->setToolTip("");
     videoButton->disconnect();
-    
+
     if(disableCallButtonsTimer == nullptr)
     {
         disableCallButtonsTimer = new QTimer();
@@ -671,7 +671,7 @@ void ChatForm::enableCallButtons()
         disableCallButtonsTimer->start(1500); // 1.5sec
         qDebug() << "timer started!!";
     }
-    
+
 }
 
 void ChatForm::onEnableCallButtons()
@@ -686,7 +686,7 @@ void ChatForm::onEnableCallButtons()
     videoButton->setObjectName("green");
     videoButton->style()->polish(videoButton);
     videoButton->setToolTip(tr("Start video call"));
-    
+
     connect(callButton, SIGNAL(clicked()),
             this, SLOT(onCallTriggered()));
     connect(videoButton, SIGNAL(clicked()),
@@ -826,7 +826,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         // Show the date every new day
         QDateTime msgDateTime = it.timestamp.toLocalTime();
         QDate msgDate = msgDateTime.date();
-        
+
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
@@ -862,7 +862,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                     rec = Core::getInstance()->sendMessage(f->getFriendID(), msg->toString());
                 else
                     rec = Core::getInstance()->sendAction(f->getFriendID(), msg->toString());
-                
+
                 getOfflineMsgEngine()->registerReceipt(rec, it.id, msg);
             }
         }
@@ -912,7 +912,7 @@ void ChatForm::stopCounter()
         callDurationTimer->stop();
         callDuration->setText("");
         callDuration->hide();
-        
+
         delete callDurationTimer;
         callDurationTimer = nullptr;
     }
@@ -933,13 +933,13 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     duration /= 60;
     int hours = (int) (duration % 24);
     int days = (int) (duration / 24);
-    
+
     if (minutes == 0)
         return cD + res.sprintf("%02ds", seconds);
-    
+
     if (hours == 0 && days == 0)
         return cD + res.sprintf("%02dm %02ds", minutes, seconds);
-    
+
     if (days == 0)
         return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
     //I assume no one will ever have call longer than ~30days
