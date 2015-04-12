@@ -64,11 +64,10 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     namesListLayout = new FlowLayout(0,5,0);
     QStringList names(group->getPeerList());
-    QLabel *l;
     
     for (const QString& name : names)
     {
-        l = new QLabel(name);
+        QLabel *l = new QLabel(name);
         l->setTextFormat(Qt::PlainText);
         namesListLayout->addWidget(l);
     }
