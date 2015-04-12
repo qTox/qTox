@@ -121,6 +121,7 @@ private:
     CallConfirmWidget *callConfirm;
     void enableCallButtons();
     bool isTyping;
+    void SendMessageStr(QString msg);
 };
 
 #endif // CHATFORM_H
