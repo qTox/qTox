@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
+    <width>719</width>
     <height>644</height>
    </rect>
   </property>
@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-214</y>
-        <width>539</width>
-        <height>838</height>
+        <y>-229</y>
+        <width>702</width>
+        <height>837</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -296,6 +296,19 @@ instead of system taskbar.</string>
           <string>Chat</string>
          </property>
          <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
+          <item row="1" column="2">
+           <spacer name="chatSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="3" column="0">
            <widget class="QCheckBox" name="groupAlwaysNotify">
             <property name="toolTip">
@@ -303,13 +316,6 @@ instead of system taskbar.</string>
             </property>
             <property name="text">
              <string>Group chats always notify</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="statusChanges">
-            <property name="text">
-             <string>Show contacts' status changes</string>
             </property>
            </widget>
           </item>
@@ -357,18 +363,12 @@ instead of system taskbar.</string>
             </item>
            </layout>
           </item>
-          <item row="1" column="2">
-           <spacer name="chatSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="statusChanges">
+            <property name="text">
+             <string>Show contacts' status changes</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item row="2" column="1">
            <widget class="QCheckBox" name="cbFauxOfflineMessaging">
@@ -391,7 +391,7 @@ will be sent to them when they appear online to you.</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="4" column="0">
            <widget class="QCheckBox" name="cbGroupchatPosition">
             <property name="toolTip">
              <string comment="toolTip for groupchat positioning">If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</string>
@@ -732,7 +732,6 @@ will be sent to them when they appear online to you.</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>scrollArea</tabstop>
   <tabstop>transComboBox</tabstop>
   <tabstop>showSystemTray</tabstop>
   <tabstop>lightTrayIcon</tabstop>
@@ -741,27 +740,31 @@ will be sent to them when they appear online to you.</string>
   <tabstop>minimizeToTray</tabstop>
   <tabstop>cbAutorun</tabstop>
   <tabstop>checkUpdates</tabstop>
+  <tabstop>autoAwaySpinBox</tabstop>
   <tabstop>autoacceptFiles</tabstop>
   <tabstop>autoSaveFilesDir</tabstop>
-  <tabstop>autoAwaySpinBox</tabstop>
-  <tabstop>groupAlwaysNotify</tabstop>
-  <tabstop>statusChanges</tabstop>
   <tabstop>showWindow</tabstop>
   <tabstop>showInFront</tabstop>
+  <tabstop>notifySound</tabstop>
+  <tabstop>statusChanges</tabstop>
   <tabstop>cbFauxOfflineMessaging</tabstop>
+  <tabstop>groupAlwaysNotify</tabstop>
   <tabstop>cbCompactLayout</tabstop>
+  <tabstop>cbGroupchatPosition</tabstop>
   <tabstop>useEmoticons</tabstop>
   <tabstop>smileyPackBrowser</tabstop>
   <tabstop>emoticonSize</tabstop>
   <tabstop>styleBrowser</tabstop>
   <tabstop>themeColorCBox</tabstop>
   <tabstop>timestamp</tabstop>
+  <tabstop>dateFormats</tabstop>
   <tabstop>cbEnableUDP</tabstop>
   <tabstop>cbEnableIPv6</tabstop>
   <tabstop>proxyType</tabstop>
   <tabstop>proxyAddr</tabstop>
   <tabstop>proxyPort</tabstop>
   <tabstop>reconnectButton</tabstop>
+  <tabstop>scrollArea</tabstop>
  </tabstops>
  <resources/>
  <connections>

@@ -154,8 +154,11 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
+    connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     if (bodyUI->autoacceptFiles->isChecked())
-        connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+        bodyUI->autoSaveFilesDir->setEnabled(true);
+    else
+        bodyUI->autoSaveFilesDir->setEnabled(false);
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
@@ -283,9 +286,9 @@ void GeneralForm::onAutoAcceptFileChange()
     Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
 
     if (bodyUI->autoacceptFiles->isChecked() == true)
-        connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+        bodyUI->autoSaveFilesDir->setEnabled(true);
     else
-        disconnect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()),this, SLOT(onAutoSaveDirChange()));
+        bodyUI->autoSaveFilesDir->setEnabled(false);
 }
 
 void GeneralForm::onAutoSaveDirChange()
