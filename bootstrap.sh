@@ -149,8 +149,11 @@ fi
 # clone current master of libtoxcore
 # make sure to compile with libsodium we just installed to INSTALL_DIR
 # afterwards install libtoxcore to INSTALL_DIR
-git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
+# NOTE: will checkout latest working core version, see
+# https://lists.tox.im/pipermail/general/2015-April/000028.html
+git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR} # --depth 1
 pushd ${BASE_DIR}/${TOX_CORE_DIR}
+git checkout 4ad76497881ee2a623acdedcf0ac10406208b716
 ./autogen.sh
 if [[ $GLOBAL = "false" ]]; then
     ./configure --prefix=${BASE_DIR}/ --with-libsodium-headers=${BASE_DIR}/include --with-libsodium-libs=${BASE_DIR}/lib
