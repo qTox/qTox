@@ -19,8 +19,8 @@ struct ToxCall
 {
     ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer, *sendVideoTimer;
-    int callId;
-    int friendId;
+    int32_t callId;
+    uint32_t friendId;
     bool videoEnabled;
     bool active;
     bool muteMic;

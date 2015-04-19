@@ -214,22 +214,7 @@ void ProfileForm::onAvatarClicked()
     pic.save(&buffer, "PNG");
     buffer.close();
 
-    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
-    {
-        pic = pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        bytes.clear();
-        buffer.open(QIODevice::WriteOnly);
-        pic.save(&buffer, "PNG");
-        buffer.close();
-    }
-
-    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
-    {
-        GUI::showError(tr("Error"), tr("This image is too big"));
-        return;
-    }
-
-    Nexus::getCore()->setAvatar(TOX_AVATAR_FORMAT_PNG, bytes);
+    Nexus::getCore()->setAvatar(bytes);
 }
 
 void ProfileForm::onLoadClicked()

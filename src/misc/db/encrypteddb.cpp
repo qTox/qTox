@@ -25,7 +25,7 @@
 #include <QSqlError>
 
 qint64 EncryptedDb::encryptedChunkSize = 4096;
-qint64 EncryptedDb::plainChunkSize = EncryptedDb::encryptedChunkSize - tox_pass_encryption_extra_length();
+qint64 EncryptedDb::plainChunkSize = EncryptedDb::encryptedChunkSize - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
 
 EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
     PlainDb(":memory:", initList), fileName(fname)

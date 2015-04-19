@@ -254,7 +254,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     }
 }
 
-void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
+void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -306,7 +306,7 @@ void ChatForm::onAvInvite(int FriendId, int CallId, bool video)
     }
 }
 
-void ChatForm::onAvStart(int FriendId, int CallId, bool video)
+void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -357,7 +357,7 @@ void ChatForm::onAvStart(int FriendId, int CallId, bool video)
     startCounter();
 }
 
-void ChatForm::onAvCancel(int FriendId, int)
+void ChatForm::onAvCancel(uint32_t FriendId, int)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -375,7 +375,7 @@ void ChatForm::onAvCancel(int FriendId, int)
     addSystemInfoMessage(tr("%1 stopped calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
-void ChatForm::onAvEnd(int FriendId, int)
+void ChatForm::onAvEnd(uint32_t FriendId, int)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -390,7 +390,7 @@ void ChatForm::onAvEnd(int FriendId, int)
     netcam->hide();
 }
 
-void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
+void ChatForm::onAvRinging(uint32_t FriendId, int CallId, bool video)
 {    
     if (FriendId != f->getFriendID())
         return;
@@ -426,7 +426,7 @@ void ChatForm::onAvRinging(int FriendId, int CallId, bool video)
     addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
-void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
+void ChatForm::onAvStarting(uint32_t FriendId, int CallId, bool video)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -461,7 +461,7 @@ void ChatForm::onAvStarting(int FriendId, int CallId, bool video)
     startCounter();
 }
 
-void ChatForm::onAvEnding(int FriendId, int)
+void ChatForm::onAvEnding(uint32_t FriendId, int)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -477,7 +477,7 @@ void ChatForm::onAvEnding(int FriendId, int)
     netcam->hide();
 }
 
-void ChatForm::onAvRequestTimeout(int FriendId, int)
+void ChatForm::onAvRequestTimeout(uint32_t FriendId, int)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -493,7 +493,7 @@ void ChatForm::onAvRequestTimeout(int FriendId, int)
     netcam->hide();
 }
 
-void ChatForm::onAvPeerTimeout(int FriendId, int)
+void ChatForm::onAvPeerTimeout(uint32_t FriendId, int)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -509,7 +509,7 @@ void ChatForm::onAvPeerTimeout(int FriendId, int)
     netcam->hide();
 }
 
-void ChatForm::onAvRejected(int FriendId, int)
+void ChatForm::onAvRejected(uint32_t FriendId, int)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -526,7 +526,7 @@ void ChatForm::onAvRejected(int FriendId, int)
     netcam->hide();
 }
 
-void ChatForm::onAvMediaChange(int FriendId, int CallId, bool video)
+void ChatForm::onAvMediaChange(uint32_t FriendId, int CallId, bool video)
 {
     if (FriendId != f->getFriendID() || CallId != callId)
         return;
@@ -601,7 +601,7 @@ void ChatForm::onCallTriggered()
     audioOutputFlag = true;
     callButton->disconnect();
     videoButton->disconnect();
-    emit startCall(f->getFriendID());
+    emit startCall(f->getFriendID(), false);
 }
 
 void ChatForm::onVideoCallTriggered()
@@ -612,10 +612,10 @@ void ChatForm::onVideoCallTriggered()
     audioOutputFlag = true;
     callButton->disconnect();
     videoButton->disconnect();
-    emit startVideoCall(f->getFriendID(), true);
+    emit startCall(f->getFriendID(), true);
 }
 
-void ChatForm::onAvCallFailed(int FriendId)
+void ChatForm::onAvCallFailed(uint32_t FriendId)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -737,7 +737,7 @@ void ChatForm::onVolMuteToggle()
     }
 }
 
-void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
+void ChatForm::onFileSendFailed(uint32_t FriendId, const QString &fname)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -745,7 +745,7 @@ void ChatForm::onFileSendFailed(int FriendId, const QString &fname)
     addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR, QDateTime::currentDateTime());
 }
 
-void ChatForm::onAvatarChange(int FriendId, const QPixmap &pic)
+void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
 {
     if (FriendId != f->getFriendID())
         return;
@@ -787,7 +787,7 @@ void ChatForm::dropEvent(QDropEvent *ev)
     }
 }
 
-void ChatForm::onAvatarRemoved(int FriendId)
+void ChatForm::onAvatarRemoved(uint32_t FriendId)
 {
     if (FriendId != f->getFriendID())
         return;

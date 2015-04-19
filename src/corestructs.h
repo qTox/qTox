@@ -58,7 +58,7 @@ struct ToxFile
     };
 
     ToxFile()=default;
-    ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePath, FileDirection Direction);
+    ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString FilePath, FileDirection Direction);
     ~ToxFile(){}
 
     bool operator==(const ToxFile& other) const;
@@ -67,8 +67,8 @@ struct ToxFile
     void setFilePath(QString path);
     bool open(bool write);
 
-    int fileNum;
-    int friendId;
+    uint32_t fileNum;
+    uint32_t friendId;
     QByteArray fileName;
     QString filePath;
     QFile* file;

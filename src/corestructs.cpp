@@ -4,9 +4,9 @@
 #include <QFile>
 #include <QRegularExpression>
 
-#define TOX_ID_LENGTH 2*TOX_FRIEND_ADDRESS_SIZE
+#define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
 
-ToxFile::ToxFile(int FileNum, int FriendId, QByteArray FileName, QString FilePath, FileDirection Direction)
+ToxFile::ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString FilePath, FileDirection Direction)
     : fileNum(FileNum), friendId(FriendId), fileName{FileName}, filePath{FilePath}, file{new QFile(filePath)},
     bytesSent{0}, filesize{0}, status{STOPPED}, direction{Direction}, sendTimer{nullptr}
 {
@@ -78,5 +78,5 @@ void ToxID::clear()
 bool ToxID::isToxId(const QString& value)
 {
     const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");
-    return value.length() == TOX_ID_LENGTH && value.contains(hexRegExp);
+    return value.length() == TOX_HEX_ID_LENGTH && value.contains(hexRegExp);
 }

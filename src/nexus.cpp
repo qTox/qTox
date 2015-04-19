@@ -47,6 +47,7 @@ void Nexus::start()
     qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<uint16_t>("uint16_t");
+    qRegisterMetaType<uint32_t>("uint32_t");
     qRegisterMetaType<const int16_t*>("const int16_t*");
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
@@ -119,8 +120,8 @@ void Nexus::start()
     connect(core, &Core::blockingClearContacts, widget, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
     connect(core, &Core::friendTypingChanged, widget, &Widget::onFriendTypingChanged);
 
-    connect(core, SIGNAL(messageSentResult(int,QString,int)), widget, SLOT(onMessageSendResult(int,QString,int)));
-    connect(core, SIGNAL(groupSentResult(int,QString,int)), widget, SLOT(onGroupSendResult(int,QString,int)));
+    connect(core, &Core::messageSentResult, widget, &Widget::onMessageSendResult);
+    connect(core, &Core::groupSentResult, widget, &Widget::onGroupSendResult);
 
     connect(widget, &Widget::statusSet, core, &Core::setStatus);
     connect(widget, &Widget::friendRequested, core, &Core::requestFriendship);

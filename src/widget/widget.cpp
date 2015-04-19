@@ -580,7 +580,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     //qDebug() << "Widget: Adding friend with id" << userId;
     ToxID userToxId = ToxID::fromString(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
-    contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline,0);
+    contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline);
 
     Core* core = Nexus::getCore();
     connect(newfriend, &Friend::displayedNameChanged, contactListWidget, &FriendListWidget::moveWidget);
@@ -589,17 +589,16 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newfriend->getChatForm(), SLOT(focusInput()));
-    connect(newfriend->getChatForm(), SIGNAL(sendMessage(int,QString)), core, SLOT(sendMessage(int,QString)));
+    connect(newfriend->getChatForm(), &GenericChatForm::sendMessage, core, &Core::sendMessage);
     connect(newfriend->getChatForm(), &GenericChatForm::sendAction, core, &Core::sendAction);
-    connect(newfriend->getChatForm(), SIGNAL(sendFile(int32_t, QString, QString, long long)), core, SLOT(sendFile(int32_t, QString, QString, long long)));
-    connect(newfriend->getChatForm(), SIGNAL(answerCall(int)), core, SLOT(answerCall(int)));
-    connect(newfriend->getChatForm(), SIGNAL(hangupCall(int)), core, SLOT(hangupCall(int)));
-    connect(newfriend->getChatForm(), SIGNAL(rejectCall(int)), core, SLOT(rejectCall(int)));
-    connect(newfriend->getChatForm(), SIGNAL(startCall(int)), core, SLOT(startCall(int)));
-    connect(newfriend->getChatForm(), SIGNAL(startVideoCall(int,bool)), core, SLOT(startCall(int,bool)));
-    connect(newfriend->getChatForm(), SIGNAL(cancelCall(int,int)), core, SLOT(cancelCall(int,int)));
-    connect(newfriend->getChatForm(), SIGNAL(micMuteToggle(int)), core, SLOT(micMuteToggle(int)));
-    connect(newfriend->getChatForm(), SIGNAL(volMuteToggle(int)), core, SLOT(volMuteToggle(int)));
+    connect(newfriend->getChatForm(), &ChatForm::sendFile, core, &Core::sendFile);
+    connect(newfriend->getChatForm(), &ChatForm::answerCall, core, &Core::answerCall);
+    connect(newfriend->getChatForm(), &ChatForm::hangupCall, core, &Core::hangupCall);
+    connect(newfriend->getChatForm(), &ChatForm::rejectCall, core, &Core::rejectCall);
+    connect(newfriend->getChatForm(), &ChatForm::startCall, core, &Core::startCall);
+    connect(newfriend->getChatForm(), &ChatForm::cancelCall, core, &Core::cancelCall);
+    connect(newfriend->getChatForm(), &ChatForm::micMuteToggle, core, &Core::micMuteToggle);
+    connect(newfriend->getChatForm(), &ChatForm::volMuteToggle, core, &Core::volMuteToggle);
     connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
     connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
@@ -651,11 +650,11 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     {
         if (f->getStatus() == Status::Offline)
         {
-            contactListWidget->moveWidget(f->getFriendWidget(), Status::Online, f->getEventFlag());
+            contactListWidget->moveWidget(f->getFriendWidget(), Status::Online);
         }
         else if (status == Status::Offline)
         {
-            contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline, f->getEventFlag());
+            contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline);
         }
     }
 
@@ -999,8 +998,8 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->getChatForm(), SLOT(focusInput()));
-    connect(newgroup->getChatForm(), SIGNAL(sendMessage(int,QString)), core, SLOT(sendGroupMessage(int,QString)));
-    connect(newgroup->getChatForm(), SIGNAL(sendAction(int,QString)), core, SLOT(sendGroupAction(int,QString)));
+    connect(newgroup->getChatForm(), &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
+    connect(newgroup->getChatForm(), &GroupChatForm::sendAction, core, &Core::sendGroupAction);
     connect(newgroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
     return newgroup;
 }
@@ -1139,7 +1138,7 @@ void Widget::setStatusBusy()
     Nexus::getCore()->setStatus(Status::Busy);
 }
 
-void Widget::onMessageSendResult(int friendId, const QString& message, int messageId)
+void Widget::onMessageSendResult(uint32_t friendId, const QString& message, int messageId)
 {
     Q_UNUSED(message)
     Q_UNUSED(messageId)

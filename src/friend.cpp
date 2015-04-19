@@ -22,7 +22,7 @@
 #include "src/core.h"
 #include "src/misc/settings.h"
 
-Friend::Friend(int FriendId, const ToxID &UserId)
+Friend::Friend(uint32_t FriendId, const ToxID &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)},
       userID{UserId}, friendId{FriendId}
 {
@@ -95,7 +95,7 @@ const ToxID &Friend::getToxID() const
     return userID;
 }
 
-int Friend::getFriendID() const
+uint32_t Friend::getFriendID() const
 {
     return friendId;
 }

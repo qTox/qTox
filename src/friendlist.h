@@ -19,7 +19,7 @@
 
 template <class T> class QList;
 template <class A, class B> class QHash;
-struct Friend;
+class Friend;
 class QString;
 struct ToxID;
 

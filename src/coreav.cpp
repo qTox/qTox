@@ -39,7 +39,7 @@ bool Core::anyActiveCalls()
     return false;
 }
 
-void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled)
+void Core::prepareCall(uint32_t friendId, int32_t callId, ToxAv* toxav, bool videoEnabled)
 {
     qDebug() << QString("Core: preparing call %1").arg(callId);
     calls[callId].callId = callId;
@@ -120,9 +120,9 @@ fail: // Centralized error handling
     return;
 }
 
-void Core::answerCall(int callId)
+void Core::answerCall(int32_t callId)
 {
-    int friendId = toxav_get_peer_id(toxav, callId, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, callId, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV answer peer ID";
@@ -152,23 +152,23 @@ void Core::answerCall(int callId)
     delete transSettings;
 }
 
-void Core::hangupCall(int callId)
+void Core::hangupCall(int32_t callId)
 {
     qDebug() << QString("Core: hanging up call %1").arg(callId);
     calls[callId].active = false;
     toxav_hangup(toxav, callId);
 }
 
-void Core::rejectCall(int callId)
+void Core::rejectCall(int32_t callId)
 {
     qDebug() << QString("Core: rejecting call %1").arg(callId);
     calls[callId].active = false;
     toxav_reject(toxav, callId, nullptr);
 }
 
-void Core::startCall(int friendId, bool video)
+void Core::startCall(uint32_t friendId, bool video)
 {
-    int callId;
+    int32_t callId;
     ToxAvCSettings cSettings = av_DefaultSettings;
     cSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
     cSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
@@ -204,14 +204,14 @@ void Core::startCall(int friendId, bool video)
     }
 }
 
-void Core::cancelCall(int callId, int friendId)
+void Core::cancelCall(int32_t callId, uint32_t friendId)
 {
     qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
     calls[callId].active = false;
     toxav_cancel(toxav, callId, friendId, nullptr);
 }
 
-void Core::cleanupCall(int callId)
+void Core::cleanupCall(int32_t callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
     calls[callId].active = false;
@@ -239,7 +239,7 @@ void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint1
         playAudioBuffer(calls[callId].alSource, data, samples, dest.audio_channels, dest.audio_sample_rate);
 }
 
-void Core::sendCallAudio(int callId, ToxAv* toxav)
+void Core::sendCallAudio(int32_t callId, ToxAv* toxav)
 {
     if (!calls[callId].active)
         return;
@@ -303,7 +303,7 @@ void Core::playCallVideo(void*, int32_t callId, const vpx_image_t* img, void *us
     calls[callId].videoSource.pushVPXFrame(img);
 }
 
-void Core::sendCallVideo(int callId)
+void Core::sendCallVideo(int32_t callId)
 {
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
@@ -333,7 +333,7 @@ void Core::sendCallVideo(int callId)
     calls[callId].sendVideoTimer->start();
 }
 
-void Core::micMuteToggle(int callId)
+void Core::micMuteToggle(int32_t callId)
 {
     if (calls[callId].active)
     {
@@ -341,7 +341,7 @@ void Core::micMuteToggle(int callId)
     }
 }
 
-void Core::volMuteToggle(int callId)
+void Core::volMuteToggle(int32_t callId)
 {
     if (calls[callId].active)
     {
@@ -354,7 +354,7 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, callId, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, callId, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV cancel";
@@ -379,7 +379,7 @@ void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
 void Core::onAvReject(void* _toxav, int32_t callId, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
-    int friendId = toxav_get_peer_id(toxav, callId, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, callId, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV reject";
@@ -395,7 +395,7 @@ void Core::onAvEnd(void* _toxav, int32_t call_index, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, call_index, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV end";
@@ -412,7 +412,7 @@ void Core::onAvRinging(void* _toxav, int32_t call_index, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, call_index, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV ringing";
@@ -435,7 +435,7 @@ void Core::onAvRequestTimeout(void* _toxav, int32_t call_index, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, call_index, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV request timeout";
@@ -452,7 +452,7 @@ void Core::onAvPeerTimeout(void* _toxav, int32_t call_index, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, call_index, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV peer timeout";
@@ -470,7 +470,7 @@ void Core::onAvInvite(void* _toxav, int32_t call_index, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, call_index, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV invite";
@@ -504,7 +504,7 @@ void Core::onAvStart(void* _toxav, int32_t call_index, void* core)
 {
     ToxAv* toxav = static_cast<ToxAv*>(_toxav);
 
-    int friendId = toxav_get_peer_id(toxav, call_index, 0);
+    uint32_t friendId = toxav_get_peer_id(toxav, call_index, 0);
     if (friendId < 0)
     {
         qWarning() << "Core: Received invalid AV start";

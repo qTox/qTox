@@ -60,8 +60,8 @@ public:
     ChatLog* getChatLog() const;
 
 signals:
-    void sendMessage(int, QString);
-    void sendAction(int, QString);
+    void sendMessage(uint32_t, QString);
+    void sendAction(uint32_t, QString);
     void chatAreaCleared();
 
 public slots:
