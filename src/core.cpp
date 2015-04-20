@@ -147,8 +147,10 @@ void Core::make_tox(QByteArray savedata)
         qWarning() << "Core starting with IPv6 disabled. LAN discovery may not work properly.";
 
     Tox_Options toxOptions;
+    tox_options_default(&toxOptions);
     toxOptions.ipv6_enabled = enableIPv6;
     toxOptions.udp_enabled = !forceTCP;
+    toxOptions.start_port = toxOptions.end_port = 0;
 
     // No proxy by default
     toxOptions.proxy_type = TOX_PROXY_TYPE_NONE;
@@ -439,6 +441,7 @@ void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cUserId,
 void Core::onFriendMessage(Tox*/* tox*/, uint32_t friendId, TOX_MESSAGE_TYPE type,
                            const uint8_t* cMessage, size_t cMessageSize, void* core)
 {
+    /// TODO: Emit action or message depending on type
     emit static_cast<Core*>(core)->friendMessageReceived(friendId,CString::toString(cMessage, cMessageSize), false);
 }
 
