@@ -107,6 +107,7 @@ QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
 {
     if (!pwsaltedkeys[passtype])
         return QByteArray();
+
     uint8_t encrypted[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
     if (!tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
                             pwsaltedkeys[passtype], encrypted, nullptr))
@@ -121,6 +122,7 @@ QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
 {
     if (!pwsaltedkeys[passtype])
         return QByteArray();
+
     int sz = data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
     uint8_t decrypted[sz];
     if (!tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
@@ -237,10 +239,12 @@ void Core::checkEncryptedHistory()
     {
         if (!exists || HistoryKeeper::checkPassword())
             return;
+
         dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
     }
     else
         dialogtxt = a;
+
     dialogtxt += "\n" + c;
 
     if (pwsaltedkeys[ptMain])
@@ -287,7 +291,8 @@ void Core::saveConfiguration(const QString& path)
     }
 
     QSaveFile configurationFile(path);
-    if (!configurationFile.open(QIODevice::WriteOnly)) {
+    if (!configurationFile.open(QIODevice::WriteOnly))
+    {
         qCritical() << "File " << path << " cannot be opened";
         return;
     }
@@ -304,7 +309,8 @@ void Core::saveConfiguration(const QString& path)
     else
         fileSize = tox_get_savedata_size(tox);
 
-    if (fileSize > 0 && fileSize <= std::numeric_limits<int32_t>::max()) {
+    if (fileSize > 0 && fileSize <= std::numeric_limits<int32_t>::max())
+    {
         uint8_t *data = new uint8_t[fileSize];
 
         if (encrypt)
