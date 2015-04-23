@@ -160,7 +160,7 @@ QByteArray Core::getSaltFromFile(QString filename)
         return QByteArray();
     }
 
-    QByteArray res = QByteArray::fromRawData(reinterpret_cast<const char*>(salt), TOX_PASS_SALT_LENGTH);
+    QByteArray res(reinterpret_cast<const char*>(salt), TOX_PASS_SALT_LENGTH);
     delete[] salt;
     return res;
 }
