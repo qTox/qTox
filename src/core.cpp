@@ -251,37 +251,6 @@ void Core::start()
 
     qsrand(time(nullptr));
 
-    /** TODO: Review this mess. Actually rewrite it all
-     * I have no idea what the whole fooling around with loadPath bussiness means anymore.
-     * Let's write something clear that doesn't rely on magic global state instead
-     * We need to: 1) Find a qTox profile, create if needed 2) Find a tox save, decrypt/create if needed
-     * Not sure about the order tho. Look into this.
-     *
-     * Okay we fixed encrypted profiles at least partially (needs testing wrt profile switching, corruption?)
-     * Need to make sure history encrypted and not is handled correctly
-    if (true)
-    {
-        if (loadPath.isEmpty())
-        {
-            QString profile;
-            if ((profile = loadOldInformation()).isEmpty())
-            {
-                qCritical() << "Core: loadConfiguration failed, exiting now";
-                emit failedToStart();
-                return;
-            }
-            else
-            {
-                loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
-                Settings::getInstance().switchProfile(profile);
-                HistoryKeeper::resetInstance(); // I'm not actually sure if this is necessary
-            }
-        }
-        // loadPath is meaningless after this
-        loadPath = "";
-    }
-    */
-
     // set GUI with user and statusmsg
     QString name = getUsername();
     if (!name.isEmpty())
