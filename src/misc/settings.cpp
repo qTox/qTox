@@ -297,7 +297,6 @@ void Settings::load()
 
     loaded = true;
 
-    if (!currentProfile.isEmpty()) // new profile in Core::switchConfiguration
     {
         // load from a profile specific friend data list if possible
         QString tmp = dir.filePath(currentProfile + ".ini");

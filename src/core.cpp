@@ -52,7 +52,7 @@ QThread* Core::coreThread{nullptr};
 #define MAX_GROUP_MESSAGE_LEN 1024
 
 Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
-    tox(nullptr), camera(cam), loadPath(loadPath), ready{false}
+    tox(nullptr), toxav(nullptr), camera(cam), loadPath(loadPath), ready{false}
 {
     qDebug() << "Core: loading Tox from" << loadPath;
 
@@ -238,6 +238,13 @@ void Core::start()
 
     QByteArray savedata = loadToxSave(loadPath);
 
+    // Do we need to create a new save & profile?
+    if (savedata.isNull())
+    {
+        qDebug() << "Save file not found, creating a new profile";
+        Settings::getInstance().load();
+    }
+
     make_tox(savedata);
 
     qsrand(time(nullptr));
@@ -247,6 +254,9 @@ void Core::start()
      * Let's write something clear that doesn't rely on magic global state instead
      * We need to: 1) Find a qTox profile, create if needed 2) Find a tox save, decrypt/create if needed
      * Not sure about the order tho. Look into this.
+     *
+     * Okay we fixed encrypted profiles at least partially (needs testing wrt profile switching, corruption?)
+     * Need to make sure history encrypted and not is handled correctly
     if (true)
     {
         if (loadPath.isEmpty())
@@ -1280,14 +1290,7 @@ QByteArray Core::loadToxSave(QString path)
     if (fileSize > 0)
     {
         data = configurationFile.readAll();
-        /* TODO: Clean this up
-        int error = tox_load(tox, reinterpret_cast<uint8_t *>(data.data()), data.size());
-        if (error < 0)
-        {
-            qWarning() << "Core: tox_load failed with error "<< error;
-        }
-        else if (error == 1) // Encrypted data save
-        {
+        if (tox_is_data_encrypted((uint8_t*)data.data())) {
             if (!loadEncryptedSave(data))
             {
                 configurationFile.close();
@@ -1300,10 +1303,9 @@ QByteArray Core::loadToxSave(QString path)
                     Settings::getInstance().switchProfile(profile);
                     HistoryKeeper::resetInstance();
                 }
-                return false;
+                return QByteArray();
             }
         }
-        */
     }
     configurationFile.close();
 
