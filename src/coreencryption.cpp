@@ -154,8 +154,7 @@ QByteArray Core::getSaltFromFile(QString filename)
     file.close();
 
     uint8_t *salt = new uint8_t[TOX_PASS_SALT_LENGTH];
-    int err = tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-    if (err)
+    if (!tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt))
     {
         qWarning() << "Core: can't get salt from" << filename << "header";
         return QByteArray();
