@@ -183,6 +183,7 @@ void ProfileForm::setToxId(const QString& id)
     qr = new QRWidget();
     qr->setQRData("tox:"+id);
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
+    refreshProfiles();
 }
 
 void ProfileForm::onAvatarClicked()

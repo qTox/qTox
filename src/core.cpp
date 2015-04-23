@@ -238,14 +238,16 @@ void Core::start()
 
     QByteArray savedata = loadToxSave(loadPath);
 
+    make_tox(savedata);
+
     // Do we need to create a new save & profile?
     if (savedata.isNull())
     {
         qDebug() << "Save file not found, creating a new profile";
         Settings::getInstance().load();
+        setStatusMessage(tr("Toxing on qTox"));
+        setUsername(tr("qTox User"));
     }
-
-    make_tox(savedata);
 
     qsrand(time(nullptr));
 
@@ -277,14 +279,6 @@ void Core::start()
         }
         // loadPath is meaningless after this
         loadPath = "";
-    }
-    else // new ID
-    {
-        QString id = getSelfId().toString();
-        if (!id.isEmpty())
-            emit idSet(id);
-        setStatusMessage(tr("Toxing on qTox")); // this also solves the not updating issue
-        setUsername(tr("qTox User"));
     }
     */
 
@@ -356,6 +350,15 @@ void Core::start()
     }
 
     ready = true;
+
+    // If we created a new profile earlier,
+    // now that we're ready save it and ONLY THEN broadcast the new ID.
+    // This is useful for e.g. the profileForm that searches for saves.
+    if (savedata.isNull())
+    {
+        saveConfiguration();
+        emit idSet(getSelfId().toString());
+    }
 
     process(); // starts its own timer
 }
