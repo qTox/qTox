@@ -66,6 +66,7 @@ void Settings::switchProfile(const QString& profile)
     // If this instance is not main instance previous save did not happen therefore
     // we manually set profile again and load profile settings
     setCurrentProfile(profile);
+    loaded = false;
     load();
 }
 
