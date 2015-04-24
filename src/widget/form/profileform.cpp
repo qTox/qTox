@@ -27,6 +27,7 @@
 #include "src/widget/gui.h"
 #include "src/historykeeper.h"
 #include "src/misc/style.h"
+#include "src/profilelocker.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>
@@ -247,6 +248,13 @@ void ProfileForm::onRenameClicked()
         if (!QFile::exists(file) || GUI::askQuestion(tr("Profile already exists", "rename confirm title"),
                 tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
         {
+            if (!ProfileLocker::lock(name))
+            {
+                GUI::showWarning(tr("Profile already exists", "rename failed title"),
+                                 tr("A profile named \"%1\" already exists and is in use.").arg(cur));
+                break;
+            }
+
             QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
             QFile::rename(dir.filePath(cur+".ini"), dir.filePath(name+".ini"));
             bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
