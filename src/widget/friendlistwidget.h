@@ -19,7 +19,7 @@
 
 #include <QWidget>
 #include <QHash>
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 
 class QVBoxLayout;
 class QGridLayout;

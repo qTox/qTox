@@ -21,7 +21,7 @@
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/croppinglabel.h"
 #include "src/widget/maskablepixmapwidget.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/misc/style.h"
 #include <QPushButton>
 #include <QMimeData>

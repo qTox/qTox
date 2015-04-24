@@ -2,7 +2,7 @@
 #include "ui_android.h"
 #include "friendlistwidget.h"
 #include "maskablepixmapwidget.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/friend.h"
 #include "src/friendlist.h"
 #include "src/group.h"

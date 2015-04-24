@@ -24,7 +24,7 @@
 #define FIX_SND_PCM_PREPARE_BUG 0
 
 #include "audio.h"
-#include "src/core.h"
+#include "src/core/core.h"
 
 #include <QDebug>
 #include <QThread>

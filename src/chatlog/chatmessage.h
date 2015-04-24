@@ -18,7 +18,7 @@
 #define CHATMESSAGE_H
 
 #include "chatline.h"
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 #include <QDateTime>
 
 class QGraphicsScene;

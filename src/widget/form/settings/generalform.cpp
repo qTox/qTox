@@ -20,7 +20,7 @@
 #include "src/widget/widget.h"
 #include "src/misc/settings.h"
 #include "src/misc/smileypack.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/misc/style.h"
 #include <QMessageBox>
 #include <QStyleFactory>

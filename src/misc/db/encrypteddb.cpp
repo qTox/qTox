@@ -16,7 +16,7 @@
 
 #include "encrypteddb.h"
 #include "src/misc/settings.h"
-#include "src/core.h"
+#include "src/core/core.h"
 
 #include <tox/toxencryptsave.h>
 

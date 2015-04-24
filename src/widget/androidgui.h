@@ -1,7 +1,7 @@
 #ifndef ANDROIDGUI_H
 #define ANDROIDGUI_H
 
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 #include <QWidget>
 
 class MaskablePixmapWidget;

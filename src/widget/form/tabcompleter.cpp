@@ -19,7 +19,7 @@
    was greatly simplified for use in qTox. */
 
 #include "tabcompleter.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/group.h"
 #include "src/widget/tool/chattextedit.h"
 #include <QRegExp>

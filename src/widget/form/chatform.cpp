@@ -24,7 +24,7 @@
 #include <QDragEnterEvent>
 #include <QBitmap>
 #include "chatform.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/friend.h"
 #include "src/historykeeper.h"
 #include "src/misc/style.h"

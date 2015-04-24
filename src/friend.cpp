@@ -19,7 +19,7 @@
 #include "widget/friendwidget.h"
 #include "widget/form/chatform.h"
 #include "widget/gui.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/misc/settings.h"
 
 Friend::Friend(uint32_t FriendId, const ToxID &UserId)

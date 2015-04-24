@@ -19,7 +19,7 @@
 #include "src/toxdns.h"
 #include "src/widget/tool/friendrequestdialog.h"
 #include "src/nexus.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include <QByteArray>
 #include <QString>
 #include <QMessageBox>

@@ -29,7 +29,7 @@
 #include "src/misc/settings.h"
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/maskablepixmapwidget.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/grouplist.h"
 #include "src/group.h"
 #include "src/friendlist.h"

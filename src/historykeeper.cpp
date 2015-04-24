@@ -16,7 +16,7 @@
 
 #include "historykeeper.h"
 #include "misc/settings.h"
-#include "core.h"
+#include "src/core/core.h"
 
 #include <QSqlError>
 #include <QFile>

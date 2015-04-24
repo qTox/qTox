@@ -1,5 +1,5 @@
 #include "toxme.h"
-#include "core.h"
+#include "src/core/core.h"
 #include <QtDebug>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>

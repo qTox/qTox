@@ -18,7 +18,7 @@
 #ifndef QTOXDNS_H
 #define QTOXDNS_H
 
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 #include <QDnsLookup>
 #include <QObject>
 

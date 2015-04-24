@@ -18,7 +18,7 @@
 #define CHATFORM_H
 
 #include "genericchatform.h"
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 #include <QSet>
 #include <QLabel>
 #include <QTimer>

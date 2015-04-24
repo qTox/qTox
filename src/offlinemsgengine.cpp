@@ -18,7 +18,7 @@
 #include "src/friend.h"
 #include "src/historykeeper.h"
 #include "src/misc/settings.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include <QMutexLocker>
 #include <QTimer>
 

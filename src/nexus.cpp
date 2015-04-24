@@ -1,5 +1,5 @@
 #include "nexus.h"
-#include "core.h"
+#include "src/core/core.h"
 #include "misc/settings.h"
 #include "video/camera.h"
 #include "widget/gui.h"

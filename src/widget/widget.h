@@ -25,7 +25,7 @@
 #include "form/settingswidget.h"
 #include "form/profileform.h"
 #include "form/filesform.h"
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 
 #define PIXELS_TO_ACT 7
 

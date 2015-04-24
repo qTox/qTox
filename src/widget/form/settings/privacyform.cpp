@@ -19,7 +19,7 @@
 #include "src/widget/form/settingswidget.h"
 #include "src/misc/settings.h"
 #include "src/historykeeper.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
 #include "src/widget/form/setpassworddialog.h"

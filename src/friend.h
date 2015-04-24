@@ -19,7 +19,7 @@
 
 #include <QObject>
 #include <QString>
-#include "corestructs.h"
+#include "src/core/corestructs.h"
 
 struct FriendWidget;
 class ChatForm;

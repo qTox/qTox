@@ -16,7 +16,7 @@
 
 #include "toxsave.h"
 #include "gui.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/misc/settings.h"
 #include <QCoreApplication>
 #include <QDir>

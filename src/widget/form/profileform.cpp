@@ -14,7 +14,7 @@
     See the COPYING file for more details.
 */
 
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/nexus.h"
 #include "ui_profileform.h"
 #include "profileform.h"

@@ -21,7 +21,7 @@
 #include "form/groupchatform.h"
 #include "maskablepixmapwidget.h"
 #include "src/misc/style.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>

@@ -18,7 +18,7 @@
 #include "ui_filetransferwidget.h"
 
 #include "src/nexus.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/misc/style.h"
 #include "src/widget/widget.h"
 

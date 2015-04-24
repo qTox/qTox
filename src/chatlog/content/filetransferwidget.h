@@ -20,8 +20,8 @@
 #include <QWidget>
 #include <QTime>
 
-#include "../chatlinecontent.h"
-#include "../../corestructs.h"
+#include "src/chatlog/chatlinecontent.h"
+#include "src/core/corestructs.h"
 
 
 namespace Ui {

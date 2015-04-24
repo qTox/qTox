@@ -21,8 +21,8 @@
 #include "core.h"
 #include "src/widget/gui.h"
 #include "src/misc/settings.h"
-#include "misc/cstring.h"
-#include "historykeeper.h"
+#include "src/misc/cstring.h"
+#include "src/historykeeper.h"
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 #include <QApplication>

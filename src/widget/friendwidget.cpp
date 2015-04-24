@@ -20,7 +20,7 @@
 #include "groupwidget.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
 #include "croppinglabel.h"
