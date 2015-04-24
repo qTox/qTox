@@ -67,13 +67,14 @@ struct ToxFile
     void setFilePath(QString path);
     bool open(bool write);
 
+    uint8_t fileKind; ///< Data file (default) or avatar
     uint32_t fileNum;
     uint32_t friendId;
     QByteArray fileName;
     QString filePath;
     QFile* file;
-    qint64 bytesSent;
-    qint64 filesize;
+    quint64 bytesSent;
+    quint64 filesize;
     FileStatus status;
     FileDirection direction;
     QTimer* sendTimer;

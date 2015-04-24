@@ -278,8 +278,6 @@ private:
     void make_tox(QByteArray savedata);
     void loadFriends();
 
-    static void removeFileFromQueue(bool sendQueue, uint32_t friendId, uint32_t fileId);
-
     void checkLastOnline(uint32_t friendId);
 
     void deadifyTox();
@@ -292,13 +290,12 @@ private:
     QString loadPath; // meaningless after start() is called
     QList<DhtServer> dhtServerList;
     int dhtServerId;
-    static QList<ToxFile> fileSendQueue, fileRecvQueue;
     static ToxCall calls[TOXAV_MAX_CALLS];
 #ifdef QTOX_FILTER_AUDIO
     static AudioFilterer * filterer[TOXAV_MAX_CALLS];
 #endif
     static QHash<int, ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
-    QMutex fileSendMutex, messageSendMutex;
+    QMutex messageSendMutex;
     bool ready;
 
     TOX_PASS_KEY* pwsaltedkeys[PasswordType::ptCounter] = {nullptr}; // use the pw's hash as the "pw"
@@ -319,6 +316,7 @@ private:
     static QThread *coreThread;
 
     friend class Audio; ///< Audio can access our calls directly to reduce latency
+    friend class CoreFile; ///< CoreFile can access tox* and emit our signals
 };
 
 #endif // CORE_HPP

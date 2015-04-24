@@ -7,8 +7,9 @@
 #define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
 
 ToxFile::ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString FilePath, FileDirection Direction)
-    : fileNum(FileNum), friendId(FriendId), fileName{FileName}, filePath{FilePath}, file{new QFile(filePath)},
-    bytesSent{0}, filesize{0}, status{STOPPED}, direction{Direction}, sendTimer{nullptr}
+    : fileKind{TOX_FILE_KIND_DATA}, fileNum(FileNum), friendId(FriendId), fileName{FileName},
+      filePath{FilePath}, file{new QFile(filePath)}, bytesSent{0}, filesize{0},
+      status{STOPPED}, direction{Direction}, sendTimer{nullptr}
 {
 }
 

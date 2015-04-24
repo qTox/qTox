@@ -77,6 +77,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     connect(Core::getInstance(), &Core::fileTransferCancelled, this, &FileTransferWidget::onFileTransferCancelled);
     connect(Core::getInstance(), &Core::fileTransferPaused, this, &FileTransferWidget::onFileTransferPaused);
     connect(Core::getInstance(), &Core::fileTransferFinished, this, &FileTransferWidget::onFileTransferFinished);
+    connect(Core::getInstance(), &Core::fileTransferRemotePausedUnpaused, this, &FileTransferWidget::fileTransferRemotePausedUnpaused);
 
     setupButtons();
 
@@ -222,7 +223,10 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
         // ETA, speed
         qreal deltaSecs = dt / 1000.0;
 
-        qint64 deltaBytes = qMax(file.bytesSent - lastBytesSent, qint64(0));
+        // (can't use ::abs or ::max on unsigned types substraction, they'd just overflow)
+        quint64 deltaBytes = file.bytesSent > lastBytesSent
+                                    ? file.bytesSent - lastBytesSent
+                                    : lastBytesSent - file.bytesSent;
         qreal bytesPerSec = static_cast<int>(static_cast<qreal>(deltaBytes) / deltaSecs);
 
         // calculate mean
@@ -306,6 +310,26 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
     setupButtons();
 }
 
+void FileTransferWidget::onFileTransferResumed(ToxFile file)
+{
+    if(fileInfo != file)
+        return;
+
+    fileInfo = file;
+
+    ui->etaLabel->setText("");
+    ui->progressLabel->setText(tr("Resuming...", "file transfer widget"));
+
+    // reset mean
+    meanIndex = 0;
+    for(size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
+        meanData[i] = 0.0;
+
+    setBackgroundColor(Style::getColor(Style::LightGrey), false);
+
+    setupButtons();
+}
+
 void FileTransferWidget::onFileTransferFinished(ToxFile file)
 {
     if(fileInfo != file)
@@ -331,6 +355,14 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
         showPreview(fileInfo.filePath);
 
     disconnect(Core::getInstance(), 0, this, 0);
+}
+
+void FileTransferWidget::fileTransferRemotePausedUnpaused(ToxFile file, bool paused)
+{
+    if (paused)
+        onFileTransferPaused(file);
+    else
+        onFileTransferResumed(file);
 }
 
 QString FileTransferWidget::getHumanReadableSize(qint64 size)

@@ -45,7 +45,9 @@ protected slots:
     void onFileTransferAccepted(ToxFile file);
     void onFileTransferCancelled(ToxFile file);
     void onFileTransferPaused(ToxFile file);
+    void onFileTransferResumed(ToxFile file);
     void onFileTransferFinished(ToxFile file);
+    void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
 
 protected:
     QString getHumanReadableSize(qint64 size);
@@ -69,7 +71,7 @@ private:
     Ui::FileTransferWidget *ui;
     ToxFile fileInfo;
     QTime lastTick;
-    qint64 lastBytesSent = 0;
+    quint64 lastBytesSent = 0;
     QVariantAnimation* backgroundColorAnimation = nullptr;
     QVariantAnimation* buttonColorAnimation = nullptr;
     QColor backgroundColor;

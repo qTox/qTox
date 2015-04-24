@@ -134,6 +134,7 @@ bool IPC::isCurrentOwner()
 {
     if (globalMemory.lock())
     {
+        /// TODO: Segfault on exit on "mov rdx,QWORD PTR [rax]" w/ rax=0.
         bool isOwner = ((*(uint64_t*)globalMemory.data()) == globalId);
         globalMemory.unlock();
         return isOwner;
