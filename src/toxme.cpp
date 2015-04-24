@@ -69,16 +69,19 @@ ToxID Toxme::lookup(QString address)
     const int index = response.indexOf(pattern);
     if (index == -1)
         return id;
+
     response = response.mid(index+pattern.size());
 
     const int idStart = response.indexOf('"');
     if (idStart == -1)
         return id;
+
     response = response.mid(idStart+1);
 
     const int idEnd = response.indexOf('"');
     if (idEnd == -1)
         return id;
+
     response.truncate(idEnd);
 
     id = ToxID::fromString(response);
@@ -93,17 +96,20 @@ int Toxme::extractError(QString json)
     const int index = json.indexOf(pattern);
     if (index == -1)
         return INT_MIN;
+
     json = json.mid(index+pattern.size());
 
     const int end = json.indexOf('}');
     if (end == -1)
         return INT_MIN;
+
     json.truncate(end);
 
     bool ok;
     int r = json.toInt(&ok);
     if (!ok)
         return INT_MIN;
+
     return r;
 }
 

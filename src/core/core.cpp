@@ -457,7 +457,8 @@ void Core::onStatusMessageChanged(Tox*/* tox*/, uint32_t friendId, const uint8_t
 void Core::onUserStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_USER_STATUS userstatus, void* core)
 {
     Status status;
-    switch (userstatus) {
+    switch (userstatus)
+    {
         case TOX_USER_STATUS_NONE:
             status = Status::Online;
             break;
@@ -611,6 +612,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
             QString inviteStr = tr("/me offers friendship.");
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);
+
             HistoryKeeper::getInstance()->addChatEntry(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true);
             emit friendAdded(friendId, userId);
         }
@@ -826,7 +828,8 @@ void Core::setStatusMessage(const QString& message)
 {
     CString cMessage(message);
 
-    if (tox_self_set_status_message(tox, cMessage.data(), cMessage.size(), nullptr) == false) {
+    if (tox_self_set_status_message(tox, cMessage.data(), cMessage.size(), nullptr) == false)
+    {
         emit failedToSetStatusMessage(message);
     }
     else
@@ -900,7 +903,8 @@ QByteArray Core::loadToxSave(QString path)
     if (fileSize > 0)
     {
         data = configurationFile.readAll();
-        if (tox_is_data_encrypted((uint8_t*)data.data())) {
+        if (tox_is_data_encrypted((uint8_t*)data.data()))
+        {
             if (!loadEncryptedSave(data))
             {
                 configurationFile.close();

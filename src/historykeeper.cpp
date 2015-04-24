@@ -56,7 +56,9 @@ HistoryKeeper *HistoryKeeper::getInstance()
 
                 historyInstance = new HistoryKeeper(dbIntf);
                 return historyInstance;
-            } else {
+            }
+            else
+            {
                 path = getHistoryPath();
             }
         }
@@ -111,9 +113,7 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
         QSqlQuery ret = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"sent_status\";");
         int idCur = 0;
         if (ret.first())
-        {
             idCur = ret.value(0).toInt();
-        }
 
         if (idCur != idMax)
         {
@@ -145,6 +145,7 @@ qint64 HistoryKeeper::addChatEntry(const QString& chat, const QString& message, 
     db->exec("BEGIN TRANSACTION;");
     for (auto &it : cmds)
         db->exec(it);
+
     db->exec("COMMIT TRANSACTION;");
 
     messageID++;
@@ -167,7 +168,9 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
         dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
                             QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;")
                             .arg(time64_from).arg(time64_to).arg(chat_id));
-    } else {
+    }
+    else
+    {
         // no groupchats yet
     }
 
@@ -372,7 +375,8 @@ void HistoryKeeper::setSyncType(Db::syncType sType)
 {
     QString syncCmd;
 
-    switch (sType) {
+    switch (sType)
+    {
     case Db::syncType::stFull:
         syncCmd = "FULL";
         break;
@@ -413,5 +417,6 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile(int en
     qDebug() << "HistoryKeeper: count" << msgs.size() << "messages exported";
     if (!removeHistory(encrypted))
         qWarning() << "HistoryKeeper: couldn't delete old log file!";
+
     return msgs;
 }

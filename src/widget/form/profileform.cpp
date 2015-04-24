@@ -41,6 +41,7 @@ void ProfileForm::refreshProfiles()
     bodyUI->profiles->clear();
     for (QString profile : Settings::getInstance().searchProfiles())
         bodyUI->profiles->addItem(profile);
+
     QString current = Settings::getInstance().getCurrentProfile();
     if (current != "")
         bodyUI->profiles->setCurrentText(current);
@@ -194,6 +195,7 @@ void ProfileForm::onAvatarClicked()
         Nexus::getSupportedImageFilter());
     if (filename.isEmpty())
         return;
+
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
     if (!file.isOpen())
@@ -254,6 +256,7 @@ void ProfileForm::onRenameClicked()
             Settings::getInstance().setCurrentProfile(name);
             if (resetAutorun)
                 Settings::getInstance().setAutorun(true);                   // fixes -p flag in autostart command line
+
             break;
         }
     } while (true);

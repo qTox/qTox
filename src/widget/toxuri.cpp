@@ -51,9 +51,7 @@ bool handleToxURI(const QString &toxURI)
     }
 
     while (!core->isReady())
-    {
         qApp->processEvents();
-    }
 
     QString toxaddr;
     if (toxURI.startsWith("tox://"))
