@@ -22,6 +22,7 @@
 #include "src/widget/gui.h"
 #include "src/historykeeper.h"
 #include "src/audio.h"
+#include "src/profilelocker.h"
 #include "corefile.h"
 
 #include <tox/tox.h>
@@ -884,6 +885,17 @@ QByteArray Core::loadToxSave(QString path)
     QByteArray data;
     loadPath = ""; // if not empty upon return, then user forgot a password and is switching
 
+    // If we can't get a lock, then another instance is already using that profile
+    while (!ProfileLocker::lock(QFileInfo(path).baseName()))
+    {
+        qWarning() << "Profile "<<QFileInfo(path).baseName()<<" is already in use, pick another";
+        GUI::showWarning(tr("Profile already in use"),
+                         tr("Your profile is already used by another qTox\n"
+                            "Please select another profile"));
+        path = Settings::getInstance().askProfiles();
+        qWarning() << "New profile is "<<QFileInfo(path).baseName();
+    }
+
     QFile configurationFile(path);
     qDebug() << "Core::loadConfiguration: reading from " << path;
 
@@ -913,9 +925,9 @@ QByteArray Core::loadToxSave(QString path)
 
                 if (!profile.isEmpty())
                 {
-                    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
                     Settings::getInstance().switchProfile(profile);
                     HistoryKeeper::resetInstance();
+                    return loadToxSave(QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT));
                 }
                 return QByteArray();
             }
