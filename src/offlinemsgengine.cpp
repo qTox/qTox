@@ -91,6 +91,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
             rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
+
         registerReceipt(rec, iter.key(), iter.value().msg);
     }
 }

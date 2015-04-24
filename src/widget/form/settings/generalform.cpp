@@ -52,6 +52,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
         bodyUI->transComboBox->insertItem(i, langs[i]);
+
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());
 #if defined(__APPLE__) && defined(__MACH__)
@@ -69,7 +70,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->minimizeToTray->setEnabled(showSystemTray);
     bodyUI->lightTrayIcon->setChecked(Settings::getInstance().getLightTrayIcon());
     bodyUI->lightTrayIcon->setEnabled(showSystemTray);
-    
+
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
@@ -83,9 +84,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
 
     for (auto entry : SmileyPack::listSmileyPacks())
-    {
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
-    }
+
     bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
     reloadSmiles();
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
@@ -99,6 +99,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     for (QString color : Style::themeColorNames)
         bodyUI->themeColorCBox->addItem(color);
+
     bodyUI->themeColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
 
     bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
@@ -174,7 +175,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
     connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
     connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
-    
+
     // prevent stealing mouse whell scroll
     // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
     // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
@@ -331,11 +332,9 @@ void GeneralForm::onProxyAddrEdited()
 void GeneralForm::onProxyPortEdited(int port)
 {
     if (port > 0)
-    {
         Settings::getInstance().setProxyPort(port);
-    } else {
+    else
         Settings::getInstance().setProxyPort(-1);
-    }
 }
 
 void GeneralForm::onUseProxyUpdated()

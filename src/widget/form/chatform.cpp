@@ -157,6 +157,7 @@ void ChatForm::onTextEditChanged()
     {
         if (isTyping)
             Core::getInstance()->sendTyping(f->getFriendID(), false);
+
         isTyping = false;
         return;
     }
@@ -178,6 +179,7 @@ void ChatForm::onAttachClicked()
     QStringList paths = QFileDialog::getOpenFileNames(0,tr("Send a file"));
     if (paths.isEmpty())
         return;
+
     for (QString path : paths)
     {
         QFile file(path);
@@ -269,6 +271,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
         callConfirm = new CallConfirmWidget(videoButton);
         if (isVisible())
             callConfirm->show();
+
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
         connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
@@ -283,6 +286,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
         callConfirm = new CallConfirmWidget(callButton);
         if (isVisible())
             callConfirm->show();
+
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
         connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
@@ -534,13 +538,9 @@ void ChatForm::onAvMediaChange(uint32_t FriendId, int CallId, bool video)
     qDebug() << "onAvMediaChange";
 
     if (video)
-    {
         netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getDisplayedName());
-    }
     else
-    {
         netcam->hide();
-    }
 }
 
 void ChatForm::onAnswerCallTriggered()
@@ -564,10 +564,8 @@ void ChatForm::onHangupCallTriggered()
 
     //Fixes an OS X bug with ending a call while in full screen
     if(netcam->isFullScreen())
-    {
         netcam->showNormal();
-    }
-    
+
     audioInputFlag = false;
     audioOutputFlag = false;
     emit hangupCall(callId);
@@ -588,9 +586,8 @@ void ChatForm::onRejectCallTriggered()
     audioInputFlag = false;
     audioOutputFlag = false;
     emit rejectCall(callId);
-    
+ 
     enableCallButtons();
-
 }
 
 void ChatForm::onCallTriggered()
@@ -631,7 +628,7 @@ void ChatForm::onAvCallFailed(uint32_t FriendId)
 void ChatForm::onCancelCallTriggered()
 {
     qDebug() << "onCancelCallTriggered";
-    
+
     enableCallButtons();
 
     netcam->hide();
@@ -806,6 +803,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     {
         if (earliestMessage < since)
             return;
+
         if (earliestMessage < now)
         {
             now = earliestMessage;

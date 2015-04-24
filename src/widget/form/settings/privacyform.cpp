@@ -115,8 +115,10 @@ bool PrivacyForm::setChatLogsPassword()
         else
         {
             if (GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\n\nIf you don't care about the old history, you may delete it and use the password you just entered.\nOtherwise, hit Cancel to try again.", "This happens when enabling encryption after previously \"Disabling History\""), tr("Delete"), tr("Cancel")))
+            {
                 if (GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("Are you absolutely sure you want to lose the unused encrypted chat history?", "secondary popup"), tr("Delete"), tr("Cancel")))
                     haveEncHist = false; // logically this is really just a `break`, but conceptually this is more accurate
+            }
         }
     } while (haveEncHist);
 
