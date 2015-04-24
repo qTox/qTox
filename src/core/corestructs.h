@@ -78,6 +78,7 @@ struct ToxFile
     FileStatus status;
     FileDirection direction;
     QTimer* sendTimer;
+    QByteArray avatarData;
 };
 
 #endif // CORESTRUCTS_H

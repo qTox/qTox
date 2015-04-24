@@ -484,39 +484,16 @@ void Core::onConnectionStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_CONNEC
     if (friendStatus == Status::Offline)
     {
         static_cast<Core*>(core)->checkLastOnline(friendId);
-
-        /** TODO: Review file sending breaking/resuming
-        for (ToxFile& f : fileSendQueue)
-        {
-            if (f.friendId == friendId && f.status == ToxFile::TRANSMITTING)
-            {
-                f.status = ToxFile::BROKEN;
-                emit static_cast<Core*>(core)->fileTransferBrokenUnbroken(f, true);
-            }
-        }
-        for (ToxFile& f : fileRecvQueue)
-        {
-            if (f.friendId == friendId && f.status == ToxFile::TRANSMITTING)
-            {
-                f.status = ToxFile::BROKEN;
-                emit static_cast<Core*>(core)->fileTransferBrokenUnbroken(f, true);
-            }
-        }
-        */
     }
     else
     {
-        /**
-        for (ToxFile& f : fileRecvQueue)
-        {
-            if (f.friendId == friendId && f.status == ToxFile::BROKEN)
-            {
-                qDebug() << QString("Core::onConnectionStatusChanged: %1: resuming broken filetransfer from position: %2").arg(f.file->fileName()).arg(f.bytesSent);
-                tox_file_control(static_cast<Core*>(core)->tox, friendId, f.fileNum, TOX_FILE_CONTROL_RESUME, nullptr);
-                emit static_cast<Core*>(core)->fileTransferBrokenUnbroken(f, false);
-            }
-        }
-        */
+        QPixmap pic = Settings::getInstance().getSavedAvatar(static_cast<Core*>(core)->getSelfId().toString());
+        QByteArray bytes;
+        QBuffer buffer(&bytes);
+        buffer.open(QIODevice::WriteOnly);
+        pic.save(&buffer, "PNG");
+        buffer.close();
+        CoreFile::sendAvatarFile(static_cast<Core*>(core), friendId, bytes);
     }
 }
 
@@ -772,8 +749,6 @@ void Core::setUsername(const QString& username)
 
 void Core::setAvatar(const QByteArray& data)
 {
-    /// TODO: Review this function, toxcore doesn't handle avatars anymore apparently. Good.
-
     QPixmap pic;
     pic.loadFromData(data);
     Settings::getInstance().saveAvatar(pic, getSelfId().toString());
@@ -783,7 +758,7 @@ void Core::setAvatar(const QByteArray& data)
     // according to tox.h, we need not broadcast this ourselves, but initial testing indicated elsewise
     const uint32_t friendCount = tox_self_get_friend_list_size(tox);
     for (unsigned i=0; i<friendCount; i++)
-        ;/// TODO: Send avatar info as a file
+        CoreFile::sendAvatarFile(this, i, data);
 }
 
 ToxID Core::getSelfId() const
