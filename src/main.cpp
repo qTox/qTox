@@ -262,7 +262,7 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
     }
-    else if (!ipc.isCurrentOwner())
+    else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
     {
         uint32_t dest = 0;
         if (parser.isSet("p"))
