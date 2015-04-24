@@ -67,3 +67,33 @@ void ProfileLocker::clearAllLocks()
         file.remove();
     }
 }
+
+void ProfileLocker::assertLock()
+{
+    if (!lockfile)
+    {
+        qCritical() << "ProfileLocker::assertLock: We don't seem to own any lock!";
+        deathByBrokenLock();
+    }
+
+    if (!QFile(lockPathFromName(curLockName)).exists())
+    {
+        QString tmp = curLockName;
+        unlock();
+        if (lock(tmp))
+        {
+            qCritical() << "ProfileLocker::assertLock: Lock file was lost, but could be restored";
+        }
+        else
+        {
+            qCritical() << "ProfileLocker::assertLock: Lock file was lost, and could *NOT* be restored";
+            deathByBrokenLock();
+        }
+    }
+}
+
+void ProfileLocker::deathByBrokenLock()
+{
+    qCritical() << "ProfileLocker: Lock is *BROKEN*, exiting immediately";
+    abort();
+}

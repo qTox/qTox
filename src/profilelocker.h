@@ -28,9 +28,15 @@ public:
     /// DO NOT call unless all we're the only qTox instance
     /// and we don't hold any lock yet.
     static void clearAllLocks();
+    /// Check that we actually own the lock
+    /// In case the file was deleted on disk, restore it
+    /// If we can't get a lock, exit qTox immediately
+    /// If we never had a lock in the firt place, exit immediately
+    static void assertLock();
 
 private:
     static QString lockPathFromName(const QString& name);
+    static void deathByBrokenLock(); ///< Print an error then exit immediately
 
 private:
     static std::unique_ptr<QLockFile> lockfile;

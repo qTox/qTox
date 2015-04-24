@@ -947,6 +947,8 @@ void Core::saveConfiguration()
     if (!isReady())
         return;
 
+    ProfileLocker::assertLock();
+
     QString dir = Settings::getSettingsDirPath();
     QDir directory(dir);
     if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
