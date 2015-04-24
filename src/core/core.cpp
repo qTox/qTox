@@ -1035,7 +1035,7 @@ void Core::loadFriends()
                 emit friendAdded(ids[i], CUserId::toString(clientId));
 
                 const size_t nameSize = tox_friend_get_name_size(tox, ids[i], nullptr);
-                if (nameSize != SIZE_MAX)
+                if (nameSize && nameSize != SIZE_MAX)
                 {
                     uint8_t *name = new uint8_t[nameSize];
                     if (tox_friend_get_name(tox, ids[i], name, nullptr))
