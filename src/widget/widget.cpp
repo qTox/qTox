@@ -202,6 +202,7 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
 
     addFriendForm->show(*ui);
+    setWindowTitle(tr("Add friend"));
 
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
 #if (AUTOUPDATE_ENABLED)
