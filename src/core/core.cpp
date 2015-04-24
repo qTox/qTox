@@ -433,8 +433,8 @@ void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cUserId,
 void Core::onFriendMessage(Tox*/* tox*/, uint32_t friendId, TOX_MESSAGE_TYPE type,
                            const uint8_t* cMessage, size_t cMessageSize, void* core)
 {
-    /// TODO: Emit action or message depending on type
-    emit static_cast<Core*>(core)->friendMessageReceived(friendId,CString::toString(cMessage, cMessageSize), false);
+    bool isAction = (type == TOX_MESSAGE_TYPE_ACTION);
+    emit static_cast<Core*>(core)->friendMessageReceived(friendId,CString::toString(cMessage, cMessageSize), isAction);
 }
 
 void Core::onFriendNameChange(Tox*/* tox*/, uint32_t friendId,
