@@ -397,11 +397,11 @@ void FileTransferWidget::setupButtons()
     case ToxFile::TRANSMITTING:
         ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->topButton->setObjectName("cancel");
-        ui->topButton->setToolTip(tr("Cancel transmit."));
+        ui->topButton->setToolTip(tr("Cancel transfer"));
 
         ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
         ui->bottomButton->setObjectName("pause");
-        ui->bottomButton->setToolTip(tr("Pause transmit."));
+        ui->bottomButton->setToolTip(tr("Pause transfer"));
 
         setButtonColor(Style::getColor(Style::Green));
 
@@ -409,11 +409,11 @@ void FileTransferWidget::setupButtons()
     case ToxFile::PAUSED:
         ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->topButton->setObjectName("cancel");
-        ui->topButton->setToolTip(tr("Cancel transmit."));
+        ui->topButton->setToolTip(tr("Cancel transfer"));
 
         ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white.svg"));
         ui->bottomButton->setObjectName("resume");
-        ui->bottomButton->setToolTip(tr("Resume transmit."));
+        ui->bottomButton->setToolTip(tr("Resume transfer"));
 
         setButtonColor(Style::getColor(Style::LightGrey));
 
@@ -422,19 +422,19 @@ void FileTransferWidget::setupButtons()
     case ToxFile::BROKEN: //TODO: ?
         ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->topButton->setObjectName("cancel");
-        ui->topButton->setToolTip(tr("Cancel transmit."));
+        ui->topButton->setToolTip(tr("Cancel transfer"));
 
         if(fileInfo.direction == ToxFile::SENDING)
         {
             ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
             ui->bottomButton->setObjectName("pause");
-            ui->bottomButton->setToolTip(tr("Pause transmit."));
+            ui->bottomButton->setToolTip(tr("Pause transfer"));
         }
         else
         {
             ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
             ui->bottomButton->setObjectName("accept");
-            ui->bottomButton->setToolTip(tr("Accept transmit"));
+            ui->bottomButton->setToolTip(tr("Accept transfer"));
         }
         break;
     }
