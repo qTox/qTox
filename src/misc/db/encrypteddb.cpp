@@ -41,7 +41,9 @@ EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
         encrFile.close();
     }
     else
+    {
         chunkPosition = 0;
+    }
 
     encrFile.setFileName(fileName);
 
@@ -90,7 +92,9 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
         if (buf.size() > 0)
         {
             fileContent += buf;
-        } else {
+        }
+        else
+        {
             qWarning() << "EncryptedDb::pullFileContent: Encrypted history log is corrupted: can't decrypt, will be deleted";
             buf = QByteArray();
             return false;
@@ -108,9 +112,8 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
 
     PlainDb::exec("BEGIN TRANSACTION;");
     for (auto line : sqlCmds)
-    {
         QSqlQuery r = PlainDb::exec(line);
-    }
+
     PlainDb::exec("COMMIT TRANSACTION;");
 
     dbFile.close();
@@ -144,9 +147,8 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
 
     QByteArray encr = Core::getInstance()->encryptData(buffer, Core::ptHistory);
     if (encr.size() > 0)
-    {
         encrFile.write(encr);
-    }
+
     encrFile.flush();
 }
 
@@ -161,10 +163,10 @@ bool EncryptedDb::check(const QString &fname)
         QByteArray encrChunk = file.read(encryptedChunkSize);
         QByteArray buf = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
         if (buf.size() == 0)
-        {
             state = false;
-        }
-    } else {
+    }
+    else
+    {
         file.close();
         file.open(QIODevice::WriteOnly);
     }

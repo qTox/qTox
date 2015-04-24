@@ -102,6 +102,7 @@ void Group::regeneratePeerList()
         ToxID id = Core::getInstance()->getGroupPeerToxID(groupId, i);
         if (id.isMine())
             selfPeerNum = i;
+
         QString toxid = id.publicKey;
         toxids[toxid] = peers[i];
         Friend *f = FriendList::findFriend(id);
@@ -177,9 +178,7 @@ QString Group::resolveToxID(const ToxID &id) const
     auto it = toxids.find(key);
 
     if (it != toxids.end())
-    {
         return *it;
-    }
 
     return QString();
 }

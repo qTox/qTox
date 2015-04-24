@@ -190,7 +190,9 @@ bool Core::loadEncryptedSave(QByteArray& data)
         dialogtxt = tr("The profile password failed. Please try another?", "used only when pw set before load() doesn't work");
     }
     else
+    {
         dialogtxt = a;
+    }
 
     uint8_t salt[TOX_PASS_SALT_LENGTH];
     tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
@@ -205,7 +207,9 @@ bool Core::loadEncryptedSave(QByteArray& data)
             return false;
         }
         else
+        {
             setPassword(pw, ptMain, salt);
+        }
 
         QByteArray newData(fileSize-TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0);
         error = !tox_pass_key_decrypt((uint8_t*)data.data(), data.size(), pwsaltedkeys[ptMain],
@@ -248,7 +252,9 @@ void Core::checkEncryptedHistory()
         dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
     }
     else
+    {
         dialogtxt = a;
+    }
 
     dialogtxt += "\n" + c;
 
@@ -341,7 +347,9 @@ void Core::saveConfiguration(const QString& path)
             }
         }
         else
+        {
             tox_get_savedata(tox, data);
+        }
 
         configurationFile.write(reinterpret_cast<char *>(data), fileSize);
         configurationFile.commit();

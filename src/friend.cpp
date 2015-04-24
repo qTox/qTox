@@ -87,6 +87,7 @@ QString Friend::getDisplayedName() const
 {
     if (userAlias.size() == 0)
         return userName;
+
     return userAlias;
 }
 

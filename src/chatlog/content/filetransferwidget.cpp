@@ -88,7 +88,9 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
         ui->progressLabel->setText(tr("Waiting to send...", "file transfer widget"));
     }
     else
+    {
         ui->progressLabel->setText(tr("Accept to receive this file", "file transfer widget"));
+    }
 
     setFixedHeight(78);
 }
@@ -187,6 +189,7 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     // draw background
     if(drawButtonAreaNeeded())
         painter.setClipRect(QRect(0,0,width()-buttonFieldWidth,height()));
+
     painter.setBrush(QBrush(backgroundColor));
     painter.drawRoundRect(geometry(), r * ratio, r);
 

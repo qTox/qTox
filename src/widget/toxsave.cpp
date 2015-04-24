@@ -42,9 +42,7 @@ bool handleToxSave(const QString& path)
     }
 
     while (!core->isReady())
-    {
         qApp->processEvents();
-    }
 
     QFileInfo info(path);
     if (!info.exists())
