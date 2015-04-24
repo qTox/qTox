@@ -22,6 +22,7 @@
 #include "src/widget/gui.h"
 #include "src/historykeeper.h"
 #include "src/audio.h"
+#include "src/profilelocker.h"
 #include "corefile.h"
 
 #include <tox/tox.h>
@@ -884,6 +885,18 @@ QByteArray Core::loadToxSave(QString path)
     QByteArray data;
     loadPath = ""; // if not empty upon return, then user forgot a password and is switching
 
+    // If we can't get a lock, then another instance is already using that profile
+    while (!ProfileLocker::lock(QFileInfo(path).baseName()))
+    {
+        qWarning() << "Profile "<<QFileInfo(path).baseName()<<" is already in use, pick another";
+        GUI::showWarning(tr("Profile already in use"),
+                         tr("Your profile is already used by another qTox\n"
+                            "Please select another profile"));
+        path = Settings::getInstance().askProfiles();
+        Settings::getInstance().switchProfile(QFileInfo(path).baseName());
+        HistoryKeeper::resetInstance();
+    }
+
     QFile configurationFile(path);
     qDebug() << "Core::loadConfiguration: reading from " << path;
 
@@ -959,8 +972,19 @@ void Core::saveConfiguration()
     saveConfiguration(path);
 }
 
-void Core::switchConfiguration(const QString& profile)
+void Core::switchConfiguration(const QString& _profile)
 {
+    QString profile = QFileInfo(_profile).baseName();
+    // If we can't get a lock, then another instance is already using that profile
+    while (!profile.isEmpty() && !ProfileLocker::lock(profile))
+    {
+        qWarning() << "Profile "<<profile<<" is already in use, pick another";
+        GUI::showWarning(tr("Profile already in use"),
+                         tr("Your profile is already used by another qTox instance\n"
+                            "Please select another profile"));
+        profile = QFileInfo(Settings::getInstance().askProfiles()).baseName();
+    }
+
     if (profile.isEmpty())
         qDebug() << "Core: creating new Id";
     else

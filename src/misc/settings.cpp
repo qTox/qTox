@@ -215,8 +215,11 @@ void Settings::load()
         setProxyType(s.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
-        currentProfile = s.value("currentProfile", "").toString();
-        currentProfileId = makeProfileId(currentProfile);
+        if (currentProfile.isEmpty())
+        {
+            currentProfile = s.value("currentProfile", "").toString();
+            currentProfileId = makeProfileId(currentProfile);
+        }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", false).toBool();
         showWindow = s.value("showWindow", true).toBool();
