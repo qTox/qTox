@@ -244,17 +244,17 @@ void ChatLine::moveBy(qreal deltaY)
     bbox.moveTop(bbox.top() + deltaY);
 }
 
-bool ChatLine::lessThanBSRectTop(const ChatLine::Ptr lhs, const qreal rhs)
+bool ChatLine::lessThanBSRectTop(const ChatLine::Ptr& lhs, const qreal& rhs)
 {
     return lhs->sceneBoundingRect().top() < rhs;
 }
 
-bool ChatLine::lessThanBSRectBottom(const ChatLine::Ptr lhs, const qreal rhs)
+bool ChatLine::lessThanBSRectBottom(const ChatLine::Ptr& lhs, const qreal& rhs)
 {
     return lhs->sceneBoundingRect().bottom() < rhs;
 }
 
-bool ChatLine::lessThanRowIndex(const ChatLine::Ptr lhs, const ChatLine::Ptr rhs)
+bool ChatLine::lessThanRowIndex(const ChatLine::Ptr& lhs, const ChatLine::Ptr& rhs)
 {
     return lhs->getRow() < rhs->getRow();
 }
