@@ -737,7 +737,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     f->getChatForm()->addMessage(f->getToxID(), message, isAction, timestamp, true);
 
-    HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, isAction ? "/me " + message : message,
+    HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
                                                f->getToxID().publicKey, timestamp, true);
 
     f->setEventFlag(f->getFriendWidget() != activeChatroomWidget);
