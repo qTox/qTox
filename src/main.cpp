@@ -83,6 +83,8 @@ int main(int argc, char *argv[])
     a.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 #endif
 
+    qsrand(time(0));
+
     // Process arguments
     QCommandLineParser parser;
     parser.setApplicationDescription("qTox, version: " + QString(GIT_VERSION) + "\nBuilt: " + __TIME__ + " " + __DATE__);

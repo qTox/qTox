@@ -20,6 +20,7 @@
 #include "src/misc/db/plaindb.h"
 #include "src/core/core.h"
 #include "src/widget/gui.h"
+#include "src/profilelocker.h"
 #ifdef QTOX_PLATFORM_EXT
 #include "src/platform/autorun.h"
 #endif
@@ -71,6 +72,19 @@ void Settings::switchProfile(const QString& profile)
     load();
 }
 
+QString Settings::genRandomProfileName()
+{
+    QDir dir(getSettingsDirPath());
+    QString basename = "imported_";
+    QString randname;
+    do {
+        randname = QString().setNum(qrand()*qrand()*qrand(), 16);
+        randname.truncate(6);
+        randname = basename + randname;
+    } while (QFile(dir.filePath(randname)).exists());
+    return randname;
+}
+
 QString Settings::detectProfile()
 {
     QDir dir(getSettingsDirPath());
@@ -85,9 +99,19 @@ QString Settings::detectProfile()
         path = dir.filePath(Core::CONFIG_FILE_NAME);
         QFile file(path);
         if (file.exists())
-            return path;
+        {
+            profile = genRandomProfileName();
+            setCurrentProfile(profile);
+            file.rename(profile + Core::TOX_EXT);
+            return profile;
+        }
         else if (QFile(path = dir.filePath("tox_save")).exists()) // also import tox_save if no data
-            return path;
+        {
+            profile = genRandomProfileName();
+            setCurrentProfile(profile);
+            QFile(path).rename(profile + Core::TOX_EXT);
+            return profile;
+        }
         else
 #endif
         {

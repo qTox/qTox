@@ -257,6 +257,9 @@ public:
     void load();
 
 private:
+    static QString genRandomProfileName();
+
+private:
     static Settings* settings;
 
     Settings();
