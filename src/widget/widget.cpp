@@ -50,6 +50,7 @@
 #include <QClipboard>
 #include <QThread>
 #include <QDialogButtonBox>
+#include <QShortcut>
 #include <QTimer>
 #include <QStyleFactory>
 #include <QTranslator>
@@ -196,6 +197,9 @@ void Widget::init()
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
     connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
+
+    // keyboard shortcuts
+    new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
 
     addFriendForm->show(*ui);
 
