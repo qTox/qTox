@@ -1147,6 +1147,11 @@ void Core::createGroup(uint8_t type)
     }
 }
 
+bool Core::isGroupAvEnabled(int groupId)
+{
+    return tox_group_get_type(tox, groupId) == TOX_GROUPCHAT_TYPE_AV;
+}
+
 bool Core::hasFriendWithAddress(const QString &addr) const
 {
     // Valid length check

@@ -994,13 +994,14 @@ Group *Widget::createGroup(int groupId)
         return g;
     }
 
+    Core* core = Nexus::getCore();
+
     QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, true);
+    Group* newgroup = GroupList::addGroup(groupId, groupName, core->isGroupAvEnabled(groupId));
     QLayout* layout = contactListWidget->getGroupLayout();
     layout->addWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();
 
-    Core* core = Nexus::getCore();
     connect(settingsWidget, &SettingsWidget::compactToggled, newgroup->getGroupWidget(), &GenericChatroomWidget::onCompactChanged);
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));

@@ -131,6 +131,8 @@ public slots:
 
     void setNospam(uint32_t nospam);
 
+    bool isGroupAvEnabled(int groupId); ///< True for AV groups, false for text-only groups
+
     static void joinGroupCall(int groupId); ///< Starts a call in an existing AV groupchat. Call from the GUI thread.
     static void leaveGroupCall(int groupId); ///< Will not leave the group, just stop the call. Call from the GUI thread.
     static void disableGroupCallMic(int groupId);
