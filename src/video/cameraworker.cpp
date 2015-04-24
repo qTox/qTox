@@ -37,14 +37,14 @@ CameraWorker::~CameraWorker()
 
 void CameraWorker::onStart()
 {
-	if (!clock)
-	{
-		clock = new QTimer(this);
-		clock->setSingleShot(false);
-		clock->setInterval(1000/60);
+    if (!clock)
+    {
+        clock = new QTimer(this);
+        clock->setSingleShot(false);
+        clock->setInterval(1000/60);
 
-		connect(clock, &QTimer::timeout, this, &CameraWorker::doWork);
-	}
+        connect(clock, &QTimer::timeout, this, &CameraWorker::doWork);
+    }
     emit started();
 }
 
