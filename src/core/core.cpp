@@ -913,9 +913,9 @@ QByteArray Core::loadToxSave(QString path)
 
                 if (!profile.isEmpty())
                 {
-                    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
                     Settings::getInstance().switchProfile(profile);
                     HistoryKeeper::resetInstance();
+                    return loadToxSave(QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT));
                 }
                 return QByteArray();
             }
