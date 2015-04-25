@@ -561,7 +561,15 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
 {
     const QString userId = friendAddress.mid(0, TOX_PUBLIC_KEY_SIZE * 2);
 
-    if (hasFriendWithAddress(friendAddress))
+    if (message.isEmpty())
+    {
+        emit failedToAddFriend(userId, QString(tr("You need to write a message with you request")));
+    }
+    else if (message.size() > TOX_MAX_FRIEND_REQUEST_LENGTH)
+    {
+        emit failedToAddFriend(userId, QString(tr("Your message is too long!")));
+    }
+    else if (hasFriendWithAddress(friendAddress))
     {
         emit failedToAddFriend(userId, QString(tr("Friend is already added")));
     }
