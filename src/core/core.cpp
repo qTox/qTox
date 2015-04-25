@@ -830,6 +830,7 @@ void Core::setStatus(Status status)
             userstatus = TOX_USER_STATUS_BUSY;
             break;
         default:
+            return;
             break;
     }
 
