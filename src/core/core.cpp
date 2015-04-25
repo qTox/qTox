@@ -863,10 +863,11 @@ QByteArray Core::loadToxSave(QString path)
         GUI::showWarning(tr("Profile already in use"),
                          tr("Your profile is already used by another qTox\n"
                             "Please select another profile"));
-        path = Settings::getInstance().askProfiles();
-        if (path.isEmpty())
+        QString tmppath = Settings::getInstance().askProfiles();
+        if (tmppath.isEmpty())
             continue;
-        Settings::getInstance().switchProfile(QFileInfo(path).baseName());
+        Settings::getInstance().switchProfile(tmppath);
+        path = QDir(Settings::getSettingsDirPath()).filePath(tmppath + TOX_EXT);
         HistoryKeeper::resetInstance();
     }
 
@@ -875,7 +876,7 @@ QByteArray Core::loadToxSave(QString path)
 
     if (!configurationFile.exists())
     {
-        qWarning() << "The Tox configuration file was not found";
+        qWarning() << "The Tox configuration file "<<path<<" was not found";
         return data;
     }
 
@@ -960,7 +961,9 @@ void Core::switchConfiguration(const QString& _profile)
         GUI::showWarning(tr("Profile already in use"),
                          tr("Your profile is already used by another qTox instance\n"
                             "Please select another profile"));
-        profile = QFileInfo(Settings::getInstance().askProfiles()).baseName();
+        do {
+            profile = Settings::getInstance().askProfiles();
+        } while (profile.isEmpty());
     }
 
     if (profile.isEmpty())
