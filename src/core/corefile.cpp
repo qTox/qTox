@@ -389,3 +389,15 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
     if (file->fileKind != TOX_FILE_KIND_AVATAR)
         emit static_cast<Core*>(core)->fileTransferInfo(*file);
 }
+
+void CoreFile::onConnectionStatusChanged(Core* core, uint32_t friendId, bool online)
+{
+    ToxFile::FileStatus status = online ? ToxFile::TRANSMITTING : ToxFile::BROKEN;
+    for (uint64_t key : fileMap.keys())
+    {
+        if (key>>32 != friendId)
+            continue;
+        fileMap[key].status = status;
+        emit core->fileTransferBrokenUnbroken(fileMap[key], !online);
+    }
+}
