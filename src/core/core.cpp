@@ -861,6 +861,8 @@ QByteArray Core::loadToxSave(QString path)
                          tr("Your profile is already used by another qTox\n"
                             "Please select another profile"));
         path = Settings::getInstance().askProfiles();
+        if (path.isEmpty())
+            continue;
         Settings::getInstance().switchProfile(QFileInfo(path).baseName());
         HistoryKeeper::resetInstance();
     }
@@ -890,7 +892,10 @@ QByteArray Core::loadToxSave(QString path)
             {
                 configurationFile.close();
 
-                QString profile = Settings::getInstance().askProfiles();
+                QString profile;
+                do {
+                    profile = Settings::getInstance().askProfiles();
+                } while (profile.isEmpty());
 
                 if (!profile.isEmpty())
                 {
