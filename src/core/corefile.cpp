@@ -27,7 +27,7 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
         qWarning() << "CoreFile::sendAvatarFile: Can't create the Tox file sender";
         return;
     }
-    qDebug() << QString("CoreFile::sendAvatarFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
+    //qDebug() << QString("CoreFile::sendAvatarFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
 
     ToxFile file{fileNum, friendId, "", "", ToxFile::SENDING};
     file.filesize = filesize;
@@ -293,7 +293,7 @@ void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
     // If we reached EOF, ack and cleanup the transfer
     if (!length)
     {
-        qDebug("CoreFile::onFileDataCallback: File sending completed");
+        //qDebug("CoreFile::onFileDataCallback: File sending completed");
         if (file->fileKind != TOX_FILE_KIND_AVATAR)
             emit static_cast<Core*>(core)->fileTransferFinished(*file);
         removeFile(friendId, fileId);
@@ -336,8 +336,8 @@ void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
 void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fileId, uint64_t position,
                                     const uint8_t *data, size_t length, void *core)
 {
-    qDebug() << QString("CoreFile: Received chunk for %1:%2 pos %3 size %4")
-                        .arg(friendId).arg(fileId).arg(position).arg(length);
+    //qDebug() << QString("CoreFile: Received chunk for %1:%2 pos %3 size %4")
+    //                    .arg(friendId).arg(fileId).arg(position).arg(length);
 
     ToxFile* file = findFile(friendId, fileId);
     if (!file)
