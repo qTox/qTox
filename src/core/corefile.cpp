@@ -34,6 +34,8 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
     file.fileName = QByteArray((char*)filename, TOX_HASH_LENGTH);
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.avatarData = data;
+    file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
+    tox_file_get_file_id(core->tox, friendId, fileNum, (uint8_t*)file.resumeFileId.data(), nullptr);
     addFile(friendId, fileNum, file);
 }
 
@@ -54,6 +56,8 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString Filename, QString
 
     ToxFile file{fileNum, friendId, fileName, FilePath, ToxFile::SENDING};
     file.filesize = filesize;
+    file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
+    tox_file_get_file_id(core->tox, friendId, fileNum, (uint8_t*)file.resumeFileId.data(), nullptr);
     if (!file.open(false))
     {
         qWarning() << QString("CoreFile::sendFile: Can't open file, error: %1").arg(file.file->errorString());
@@ -240,6 +244,8 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
                 CString::toString(fname,fnameLen).toUtf8(), "", ToxFile::RECEIVING};
     file.filesize = filesize;
     file.fileKind = kind;
+    file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
+    tox_file_get_file_id(core->tox, friendId, fileId, (uint8_t*)file.resumeFileId.data(), nullptr);
     addFile(friendId, fileId, file);
     if (kind != TOX_FILE_KIND_AVATAR)
         emit core->fileReceiveRequested(file);
@@ -392,6 +398,12 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
 
 void CoreFile::onConnectionStatusChanged(Core* core, uint32_t friendId, bool online)
 {
+    /// TODO: Actually resume broken file transfers
+    /// We need to:
+    /// - Start a new file transfer with the same 32byte file ID with toxcore
+    /// - Seek to the correct position again
+    /// - Update the fileNum in our ToxFile
+    /// - Update the users of our signals to check the 32byte tox file ID, not the uint32_t file_num (fileId)
     ToxFile::FileStatus status = online ? ToxFile::TRANSMITTING : ToxFile::BROKEN;
     for (uint64_t key : fileMap.keys())
     {

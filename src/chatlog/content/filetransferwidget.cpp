@@ -78,6 +78,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     connect(Core::getInstance(), &Core::fileTransferPaused, this, &FileTransferWidget::onFileTransferPaused);
     connect(Core::getInstance(), &Core::fileTransferFinished, this, &FileTransferWidget::onFileTransferFinished);
     connect(Core::getInstance(), &Core::fileTransferRemotePausedUnpaused, this, &FileTransferWidget::fileTransferRemotePausedUnpaused);
+    connect(Core::getInstance(), &Core::fileTransferBrokenUnbroken, this, &FileTransferWidget::fileTransferBrokenUnbroken);
 
     setupButtons();
 
@@ -368,6 +369,13 @@ void FileTransferWidget::fileTransferRemotePausedUnpaused(ToxFile file, bool pau
         onFileTransferPaused(file);
     else
         onFileTransferResumed(file);
+}
+
+void FileTransferWidget::fileTransferBrokenUnbroken(ToxFile file, bool broken)
+{
+    /// TODO: Handle broken transfer differently once we have resuming code
+    if (broken)
+        onFileTransferCancelled(file);
 }
 
 QString FileTransferWidget::getHumanReadableSize(qint64 size)

@@ -48,6 +48,7 @@ protected slots:
     void onFileTransferResumed(ToxFile file);
     void onFileTransferFinished(ToxFile file);
     void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
+    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
 
 protected:
     QString getHumanReadableSize(qint64 size);
