@@ -327,6 +327,9 @@ void Core::start()
         emit idSet(getSelfId().toString());
     }
 
+    if (isReady())
+        GUI::setEnabled(true);
+
     process(); // starts its own timer
 }
 
@@ -988,8 +991,6 @@ void Core::switchConfiguration(const QString& _profile)
     HistoryKeeper::resetInstance();
 
     start();
-    if (isReady())
-        GUI::setEnabled(true);
 }
 
 void Core::loadFriends()
