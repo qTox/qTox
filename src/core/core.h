@@ -57,15 +57,17 @@ public:
 
     QString getPeerName(const ToxID& id) const;
 
+    QVector<uint32_t> getFriendList() const; ///< Returns the list of friendIds in our friendlist, an empty list on error
     int getGroupNumberPeers(int groupId) const; ///< Return the number of peers in the group chat on success, or -1 on failure
     QString getGroupPeerName(int groupId, int peerId) const; ///< Get the name of a peer of a group
     ToxID getGroupPeerToxID(int groupId, int peerId) const; ///< Get the ToxID of a peer of a group
     QList<QString> getGroupPeerNames(int groupId) const; ///< Get the names of the peers of a group
-    QString getFriendAddress(uint32_t friendNumber) const; ///< Get the full address if known, or Tox ID of a friend
-    QString getFriendUsername(uint32_t friendNumber) const; ///< Get the username of a friend
+    QString getFriendAddress(uint32_t friendId) const; ///< Get the full address if known, or Tox ID of a friend
+    QString getFriendUsername(uint32_t friendId) const; ///< Get the username of a friend
+    bool isFriendOnline(uint32_t friendId) const; ///< Check if a friend is online. Unknown friends are considered offline.
     bool hasFriendWithAddress(const QString &addr) const; ///< Check if we have a friend by address
     bool hasFriendWithPublicKey(const QString &pubkey) const; ///< Check if we have a friend by public key
-    int joinGroupchat(int32_t friendNumber, uint8_t type, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
+    int joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
     void quitGroupChat(int groupId) const; ///< Quit a groupchat
 
     QString getIDString() const; ///< Get the 12 first characters of our Tox ID
@@ -113,6 +115,7 @@ public slots:
     void sendTyping(uint32_t friendId, bool typing);
 
     void sendFile(uint32_t friendId, QString Filename, QString FilePath, long long filesize);
+    void sendAvatarFile(uint32_t friendId, const QByteArray& data);
     void cancelFileSend(uint32_t friendId, uint32_t fileNum);
     void cancelFileRecv(uint32_t friendId, uint32_t fileNum);
     void rejectFileRecvRequest(uint32_t friendId, uint32_t fileNum);
@@ -170,7 +173,7 @@ signals:
     void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(uint32_t friendNumber, uint8_t type, QByteArray publicKey);
+    void groupInviteReceived(uint32_t friendId, uint8_t type, QByteArray publicKey);
     void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
@@ -241,14 +244,14 @@ private:
     static void onConnectionStatusChanged(Tox* tox, uint32_t friendId, TOX_CONNECTION status, void* core);
     static void onGroupAction(Tox* tox, int groupnumber, int peernumber, const uint8_t * action,
                               uint16_t length, void* core);
-    static void onGroupInvite(Tox *tox, int32_t friendNumber, uint8_t type, const uint8_t *data,
+    static void onGroupInvite(Tox *tox, int32_t friendId, uint8_t type, const uint8_t *data,
                               uint16_t length, void *userdata);
     static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber,
                                const uint8_t * message, uint16_t length, void *userdata);
     static void onGroupNamelistChange(Tox *tox, int groupId, int peerId, uint8_t change, void *core);
     static void onGroupTitleChange(Tox*, int groupnumber, int peernumber,
                                    const uint8_t* title, uint8_t len, void* _core);
-    static void onReadReceiptCallback(Tox *tox, uint32_t friendnumber, uint32_t receipt, void *core);
+    static void onReadReceiptCallback(Tox *tox, uint32_t friendId, uint32_t receipt, void *core);
 
     static void onAvInvite(void* toxav, int32_t call_index, void* core);
     static void onAvStart(void* toxav, int32_t call_index, void* core);

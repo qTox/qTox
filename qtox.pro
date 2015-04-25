@@ -430,7 +430,8 @@ SOURCES += \
     src/core/coreencryption.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
-    src/profilelocker.cpp
+    src/profilelocker.cpp \
+    src/avatarbroadcaster.cpp
 
 HEADERS += \
     src/audio.h \
@@ -455,4 +456,5 @@ HEADERS += \
     src/widget/gui.h \
     src/toxme.h \
     src/misc/qrwidget.h \
-    src/profilelocker.h
+    src/profilelocker.h \
+    src/avatarbroadcaster.h

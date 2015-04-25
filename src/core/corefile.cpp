@@ -178,7 +178,7 @@ ToxFile* CoreFile::findFile(uint32_t friendId, uint32_t fileId)
     uint64_t key = ((uint64_t)friendId<<32) + (uint64_t)fileId;
     if (!fileMap.contains(key))
     {
-        qWarning() << "CoreFile::addFile: File transfer with ID "<<friendId<<':'<<fileId<<" doesn't exist";
+        qWarning() << "CoreFile::findFile: File transfer with ID "<<friendId<<':'<<fileId<<" doesn't exist";
         return nullptr;
     }
     else
@@ -196,8 +196,13 @@ void CoreFile::addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file)
 void CoreFile::removeFile(uint32_t friendId, uint32_t fileId)
 {
     uint64_t key = ((uint64_t)friendId<<32) + (uint64_t)fileId;
-    if (!fileMap.remove(key))
+    if (!fileMap.contains(key))
+    {
         qWarning() << "CoreFile::removeFile: No such file in queue";
+        return;
+    }
+    fileMap[key].file->close();
+    fileMap.remove(key);
 }
 
 void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, uint32_t kind,
@@ -331,7 +336,8 @@ void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
 void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fileId, uint64_t position,
                                     const uint8_t *data, size_t length, void *core)
 {
-    //qDebug() << QString("CoreFile: Received file chunk for request %1:%2").arg(friendId).arg(fileId);
+    qDebug() << QString("CoreFile: Received chunk for %1:%2 pos %3 size %4")
+                        .arg(friendId).arg(fileId).arg(position).arg(length);
 
     ToxFile* file = findFile(friendId, fileId);
     if (!file)
@@ -352,13 +358,7 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
         return;
     }
 
-    if (file->fileKind == TOX_FILE_KIND_AVATAR)
-        file->avatarData.append((char*)data, length);
-    else
-        file->file->write((char*)data,length);
-    file->bytesSent += length;
-
-    if (file->bytesSent == file->filesize)
+    if (!length)
     {
         if (file->fileKind == TOX_FILE_KIND_AVATAR)
         {
@@ -376,9 +376,16 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
         {
             emit static_cast<Core*>(core)->fileTransferFinished(*file);
         }
+        removeFile(friendId, fileId);
+        return;
     }
-    else if (file->fileKind != TOX_FILE_KIND_AVATAR)
-    {
+
+    if (file->fileKind == TOX_FILE_KIND_AVATAR)
+        file->avatarData.append((char*)data, length);
+    else
+        file->file->write((char*)data,length);
+    file->bytesSent += length;
+
+    if (file->fileKind != TOX_FILE_KIND_AVATAR)
         emit static_cast<Core*>(core)->fileTransferInfo(*file);
-    }
 }

@@ -5,6 +5,7 @@
 // They should include this file directly instead to reduce compilation times
 
 #include <QString>
+#include <memory>
 class QFile;
 class QTimer;
 
@@ -72,7 +73,7 @@ struct ToxFile
     uint32_t friendId;
     QByteArray fileName;
     QString filePath;
-    QFile* file;
+    std::shared_ptr<QFile> file;
     quint64 bytesSent;
     quint64 filesize;
     FileStatus status;

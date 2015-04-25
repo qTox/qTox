@@ -23,6 +23,7 @@
 #include "src/historykeeper.h"
 #include "src/audio.h"
 #include "src/profilelocker.h"
+#include "src/avatarbroadcaster.h"
 #include "corefile.h"
 
 #include <tox/tox.h>
@@ -479,22 +480,10 @@ void Core::onUserStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_USER_STATUS 
 
 void Core::onConnectionStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_CONNECTION status, void* core)
 {
-    Status friendStatus = status ? Status::Online : Status::Offline;
+    Status friendStatus = status != TOX_CONNECTION_NONE ? Status::Online : Status::Offline;
     emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
     if (friendStatus == Status::Offline)
-    {
         static_cast<Core*>(core)->checkLastOnline(friendId);
-    }
-    else
-    {
-        QPixmap pic = Settings::getInstance().getSavedAvatar(static_cast<Core*>(core)->getSelfId().toString());
-        QByteArray bytes;
-        QBuffer buffer(&bytes);
-        buffer.open(QIODevice::WriteOnly);
-        pic.save(&buffer, "PNG");
-        buffer.close();
-        CoreFile::sendAvatarFile(static_cast<Core*>(core), friendId, bytes);
-    }
 }
 
 void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *action, uint16_t length, void* _core)
@@ -664,6 +653,11 @@ void Core::sendFile(uint32_t friendId, QString Filename, QString FilePath, long 
     CoreFile::sendFile(this, friendId, Filename, FilePath, filesize);
 }
 
+void Core::sendAvatarFile(uint32_t friendId, const QByteArray& data)
+{
+    CoreFile::sendAvatarFile(this, friendId, data);
+}
+
 void Core::pauseResumeFileSend(uint32_t friendId, uint32_t fileNum)
 {
     CoreFile::pauseResumeFileSend(this, friendId, fileNum);
@@ -754,11 +748,8 @@ void Core::setAvatar(const QByteArray& data)
     Settings::getInstance().saveAvatar(pic, getSelfId().toString());
     emit selfAvatarChanged(pic);
     
-    // Broadcast our new avatar!
-    // according to tox.h, we need not broadcast this ourselves, but initial testing indicated elsewise
-    const uint32_t friendCount = tox_self_get_friend_list_size(tox);
-    for (unsigned i=0; i<friendCount; i++)
-        CoreFile::sendAvatarFile(this, i, data);
+    AvatarBroadcaster::setAvatar(data);
+    AvatarBroadcaster::enableAutoBroadcast();
 }
 
 ToxID Core::getSelfId() const
@@ -1044,6 +1035,14 @@ void Core::checkLastOnline(uint32_t friendId) {
         emit friendLastSeenChanged(friendId, QDateTime::fromTime_t(lastOnline));
 }
 
+QVector<uint32_t> Core::getFriendList() const
+{
+    QVector<uint32_t> friends;
+    friends.resize(tox_self_get_friend_list_size(tox));
+    tox_self_get_friend_list(tox, friends.data());
+    return friends;
+}
+
 int Core::getGroupNumberPeers(int groupId) const
 {
     return tox_group_number_peers(tox, groupId);
@@ -1151,6 +1150,11 @@ void Core::createGroup(uint8_t type)
 bool Core::isGroupAvEnabled(int groupId)
 {
     return tox_group_get_type(tox, groupId) == TOX_GROUPCHAT_TYPE_AV;
+}
+
+bool Core::isFriendOnline(uint32_t friendId) const
+{
+    return tox_friend_get_connection_status(tox, friendId, nullptr) != TOX_CONNECTION_NONE;
 }
 
 bool Core::hasFriendWithAddress(const QString &addr) const
