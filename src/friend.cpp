@@ -35,17 +35,21 @@ Friend::Friend(uint32_t FriendId, const ToxID &UserId)
 
     widget = new FriendWidget(friendId, getDisplayedName());
     chatForm = new ChatForm(this);
-    if (Settings::getInstance().getEnableLogging())
-    {
-        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
-        widget->historyLoaded = true;
-    }
 }
 
 Friend::~Friend()
 {
     delete chatForm;
     delete widget;
+}
+
+void Friend::loadHistory()
+{
+    if (Settings::getInstance().getEnableLogging())
+    {
+        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+        widget->historyLoaded = true;
+    }
 }
 
 void Friend::setName(QString name)
