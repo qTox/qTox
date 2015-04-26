@@ -23,7 +23,7 @@ public:
     static AndroidGUI* getAndroidGUI(); ///< Will return 0 if not started
     static Widget* getDesktopGUI(); ///< Will return 0 if not started
     static QString getSupportedImageFilter();
-    static bool isFilePathWritable(const QString& filepath); // WARNING: Tests by brute force, i.e. removes the file in question
+    static bool tryRemoveFile(const QString& filepath); ///< Dangerous way to find out if a path is writable
 
 private:
     explicit Nexus(QObject *parent = 0);

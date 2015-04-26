@@ -180,7 +180,7 @@ QString Nexus::getSupportedImageFilter()
   return tr("Images (%1)", "filetype filter").arg(res.left(res.size()-1));
 }
 
-bool Nexus::isFilePathWritable(const QString& filepath)
+bool Nexus::tryRemoveFile(const QString& filepath)
 {
     QFile tmp(filepath);
     bool writable = tmp.open(QIODevice::WriteOnly);

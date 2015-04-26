@@ -278,7 +278,7 @@ void ProfileForm::onExportClicked()
                     tr("Tox save file (*.tox)", "save dialog filter"));
     if (!path.isEmpty())
     {
-        if (!Nexus::isFilePathWritable(path))
+        if (!Nexus::tryRemoveFile(path))
         {
             GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
             return;
@@ -386,7 +386,7 @@ void ProfileForm::on_saveQr_clicked()
                    tr("Save QrCode (*.png)", "save dialog filter"));
     if (!path.isEmpty())
     {
-        if (!Nexus::isFilePathWritable(path))
+        if (!Nexus::tryRemoveFile(path))
         {
             GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
             return;

@@ -118,7 +118,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
 
     //Do not automatically accept the file-transfer if the path is not writable.
     //The user can still accept it manually.
-    if (Nexus::isFilePathWritable(filepath))
+    if (Nexus::tryRemoveFile(filepath))
         Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
     else
         qDebug() << "Warning: Cannot write to " << filepath;
@@ -130,7 +130,7 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
         return;
 
     //test if writable
-    if(!Nexus::isFilePathWritable(filepath))
+    if(!Nexus::tryRemoveFile(filepath))
     {
         QMessageBox::warning(0,
                              tr("Location not writable","Title of permissions popup"),
