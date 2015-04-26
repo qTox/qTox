@@ -18,7 +18,7 @@
 #include "src/friend.h"
 #include "src/historykeeper.h"
 #include "src/misc/settings.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include <QMutexLocker>
 #include <QTimer>
 
@@ -91,6 +91,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
             rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
+
         registerReceipt(rec, iter.key(), iter.value().msg);
     }
 }

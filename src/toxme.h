@@ -4,7 +4,7 @@
 #include <QString>
 #include <QMutex>
 #include <memory>
-#include "corestructs.h"
+#include "src/core/corestructs.h"
 
 class QNetworkAccessManager;
 

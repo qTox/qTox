@@ -23,7 +23,7 @@
 
 #define RETRY_PEER_INFO_INTERVAL 500
 
-struct Friend;
+class Friend;
 class GroupWidget;
 class GroupChatForm;
 struct ToxID;

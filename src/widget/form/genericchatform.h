@@ -21,7 +21,7 @@
 #include <QPoint>
 #include <QDateTime>
 #include <QMenu>
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 #include "src/chatlog/chatmessage.h"
 
 // Spacing in px inserted when the author of the last message changes
@@ -60,8 +60,8 @@ public:
     ChatLog* getChatLog() const;
 
 signals:
-    void sendMessage(int, QString);
-    void sendAction(int, QString);
+    void sendMessage(uint32_t, QString);
+    void sendAction(uint32_t, QString);
     void chatAreaCleared();
 
 public slots:

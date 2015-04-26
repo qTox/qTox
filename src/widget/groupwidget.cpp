@@ -21,7 +21,7 @@
 #include "form/groupchatform.h"
 #include "maskablepixmapwidget.h"
 #include "src/misc/style.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -60,7 +60,9 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
     if (selectedItem)
     {
         if (selectedItem == quitGroup)
+        {
             emit removeGroup(groupId);
+        }
         else if (selectedItem == setTitle)
         {
             bool ok;
@@ -77,7 +79,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
 	     * element - title, the rest of the widget stays in the same CSS as it
 	     * was on mouse over. Repainting whole widget fixes style problem.”
 	     */
-            this->repaint();            
+            this->repaint();
         }
     }
 }

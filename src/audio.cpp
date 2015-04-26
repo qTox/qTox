@@ -24,7 +24,7 @@
 #define FIX_SND_PCM_PREPARE_BUG 0
 
 #include "audio.h"
-#include "src/core.h"
+#include "src/core/core.h"
 
 #include <QDebug>
 #include <QThread>
@@ -72,6 +72,7 @@ Audio::~Audio()
     audioThread->wait();
     if (audioThread->isRunning())
         audioThread->terminate();
+
     delete audioThread;
     delete audioInLock;
     delete audioOutLock;
@@ -123,6 +124,7 @@ void Audio::openInput(const QString& inDevDescr)
     alInDev = nullptr;
     if (tmp)
         alcCaptureCloseDevice(tmp);
+
     int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     if (inDevDescr.isEmpty())
         alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
@@ -163,6 +165,7 @@ void Audio::openOutput(const QString& outDevDescr)
         alOutDev = alcOpenDevice(nullptr);
     else
         alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
+
     if (!alOutDev)
     {
         qWarning() << "Audio: Cannot open output audio device";
@@ -171,8 +174,10 @@ void Audio::openOutput(const QString& outDevDescr)
     {
         if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
             alcDestroyContext(alContext);
+
         if (tmp)
             alcCloseDevice(tmp);
+
         alContext=alcCreateContext(alOutDev,nullptr);
         if (!alcMakeContextCurrent(alContext))
         {
@@ -180,7 +185,9 @@ void Audio::openOutput(const QString& outDevDescr)
             alcCloseDevice(alOutDev);
         }
         else
+        {
             alGenSources(1, &alMainSource);
+        }
 
 
         qDebug() << "Audio: Opening audio output "<<outDevDescr;
@@ -217,13 +224,9 @@ void Audio::closeOutput()
     if (alOutDev)
     {
         if (alcCloseDevice(alOutDev) == ALC_TRUE)
-        {
             alOutDev = nullptr;
-        }
         else
-        {
             qWarning() << "Audio: Failed to close output";
-        }
     }
 }
 

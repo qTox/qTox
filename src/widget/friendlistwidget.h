@@ -19,7 +19,7 @@
 
 #include <QWidget>
 #include <QHash>
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 
 class QVBoxLayout;
 class QGridLayout;
@@ -37,7 +37,7 @@ signals:
 
 public slots:
     void onGroupchatPositionChanged(bool top);
-    void moveWidget(QWidget *w, Status s, int hasNewEvents);
+    void moveWidget(QWidget *w, Status s);
 
 private:
     QHash<int, QVBoxLayout*> layouts;

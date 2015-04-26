@@ -23,7 +23,7 @@
 #include <tox/tox.h>
 #include "ui_mainwindow.h"
 #include "src/nexus.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/misc/cdata.h"
 #include "src/toxdns.h"
 #include "src/misc/settings.h"
@@ -87,16 +87,22 @@ void AddFriendForm::onSendTriggered()
 {
     QString id = toxId.text().trimmed();
 
-    if (id.isEmpty()) {
+    if (id.isEmpty())
+    {
         GUI::showWarning(tr("Couldn't add friend"), tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
-    } else if (ToxID::isToxId(id)) {
+    }
+    else if (ToxID::isToxId(id))
+    {
         if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
             GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
         else
             emit friendRequested(id, getMessage());
+
         this->toxId.clear();
         this->message.clear();
-    } else {
+    }
+    else
+    {
         if (Settings::getInstance().getProxyType() != ProxyType::ptNone)
         {
             QMessageBox::StandardButton btn = QMessageBox::warning(main, "qTox", tr("qTox needs to use the Tox DNS, but can't do it through a proxy.\n\
@@ -123,7 +129,8 @@ void AddFriendForm::setIdFromClipboard()
 {
     QClipboard* clipboard = QApplication::clipboard();
     QString id = clipboard->text().trimmed();
-    if (Core::getInstance()->isReady() && !id.isEmpty() && ToxID::isToxId(id)) {
+    if (Core::getInstance()->isReady() && !id.isEmpty() && ToxID::isToxId(id))
+    {
         if (!ToxID::fromString(id).isMine())
             toxId.setText(id);
     }

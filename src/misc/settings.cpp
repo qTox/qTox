@@ -16,10 +16,11 @@
 
 #include "settings.h"
 #include "smileypack.h"
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 #include "src/misc/db/plaindb.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/widget/gui.h"
+#include "src/profilelocker.h"
 #ifdef QTOX_PLATFORM_EXT
 #include "src/platform/autorun.h"
 #endif
@@ -54,6 +55,7 @@ Settings& Settings::getInstance()
 {
     if (!settings)
         settings = new Settings();
+
     return *settings;
 }
 
@@ -66,7 +68,21 @@ void Settings::switchProfile(const QString& profile)
     // If this instance is not main instance previous save did not happen therefore
     // we manually set profile again and load profile settings
     setCurrentProfile(profile);
+    loaded = false;
     load();
+}
+
+QString Settings::genRandomProfileName()
+{
+    QDir dir(getSettingsDirPath());
+    QString basename = "imported_";
+    QString randname;
+    do {
+        randname = QString().setNum(qrand()*qrand()*qrand(), 16);
+        randname.truncate(6);
+        randname = basename + randname;
+    } while (QFile(dir.filePath(randname)).exists());
+    return randname;
 }
 
 QString Settings::detectProfile()
@@ -83,15 +99,27 @@ QString Settings::detectProfile()
         path = dir.filePath(Core::CONFIG_FILE_NAME);
         QFile file(path);
         if (file.exists())
-            return path;
+        {
+            profile = genRandomProfileName();
+            setCurrentProfile(profile);
+            file.rename(profile + Core::TOX_EXT);
+            return profile;
+        }
         else if (QFile(path = dir.filePath("tox_save")).exists()) // also import tox_save if no data
-            return path;
+        {
+            profile = genRandomProfileName();
+            setCurrentProfile(profile);
+            QFile(path).rename(profile + Core::TOX_EXT);
+            return profile;
+        }
         else
 #endif
         {
             profile = askProfiles();
             if (profile.isEmpty())
+            {
                 return "";
+            }
             else
             {
                 switchProfile(profile);
@@ -100,7 +128,9 @@ QString Settings::detectProfile()
         }
     }
     else
+    {
         return path;
+    }
 }
 
 QList<QString> Settings::searchProfiles()
@@ -111,6 +141,7 @@ QList<QString> Settings::searchProfiles()
     dir.setNameFilters(QStringList("*.tox"));
     for (QFileInfo file : dir.entryInfoList())
         out += file.completeBaseName();
+
     return out;
 }
 
@@ -153,7 +184,9 @@ void Settings::load()
         ps.endGroup();
     }
     else
+    {
         makeToxPortable = false;
+    }
 
     QDir dir(getSettingsDirPath());
     QString filePath = dir.filePath(FILENAME);
@@ -177,7 +210,8 @@ void Settings::load()
             useCustomDhtList = true;
             qDebug() << "Using custom bootstrap nodes list";
             int serverListSize = s.beginReadArray("dhtServerList");
-            for (int i = 0; i < serverListSize; i ++) {
+            for (int i = 0; i < serverListSize; i ++)
+            {
                 s.setArrayIndex(i);
                 DhtServer server;
                 server.name = s.value("name").toString();
@@ -189,7 +223,9 @@ void Settings::load()
             s.endArray();
         }
         else
+        {
             useCustomDhtList=false;
+        }
     s.endGroup();
 
     s.beginGroup("General");
@@ -203,8 +239,11 @@ void Settings::load()
         setProxyType(s.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
         proxyPort = s.value("proxyPort", 0).toInt();
-        currentProfile = s.value("currentProfile", "").toString();
-        currentProfileId = makeProfileId(currentProfile);
+        if (currentProfile.isEmpty())
+        {
+            currentProfile = s.value("currentProfile", "").toString();
+            currentProfileId = makeProfileId(currentProfile);
+        }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", false).toBool();
         showWindow = s.value("showWindow", true).toBool();
@@ -227,9 +266,9 @@ void Settings::load()
 
     s.beginGroup("Widgets");
         QList<QString> objectNames = s.childKeys();
-        for (const QString& name : objectNames) {
+        for (const QString& name : objectNames)
             widgetSettings[name] = s.value(name).toByteArray();
-        }
+
     s.endGroup();
 
     s.beginGroup("GUI");
@@ -282,7 +321,8 @@ void Settings::load()
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
         rcs.beginGroup("DHT Server");
             int serverListSize = rcs.beginReadArray("dhtServerList");
-            for (int i = 0; i < serverListSize; i ++) {
+            for (int i = 0; i < serverListSize; i ++)
+            {
                 rcs.setArrayIndex(i);
                 DhtServer server;
                 server.name = rcs.value("name").toString();
@@ -297,7 +337,6 @@ void Settings::load()
 
     loaded = true;
 
-    if (!currentProfile.isEmpty()) // new profile in Core::switchConfiguration
     {
         // load from a profile specific friend data list if possible
         QString tmp = dir.filePath(currentProfile + ".ini");
@@ -357,7 +396,8 @@ void Settings::saveGlobal(QString path)
     s.beginGroup("DHT Server");
         s.setValue("useCustomList", useCustomDhtList);
         s.beginWriteArray("dhtServerList", dhtServerList.size());
-        for (int i = 0; i < dhtServerList.size(); i ++) {
+        for (int i = 0; i < dhtServerList.size(); i ++)
+        {
             s.setArrayIndex(i);
             s.setValue("name", dhtServerList[i].name);
             s.setValue("userId", dhtServerList[i].userId);
@@ -398,9 +438,9 @@ void Settings::saveGlobal(QString path)
 
     s.beginGroup("Widgets");
     const QList<QString> widgetNames = widgetSettings.keys();
-    for (const QString& name : widgetNames) {
+    for (const QString& name : widgetNames)
         s.setValue(name, widgetSettings.value(name));
-    }
+
     s.endGroup();
 
     s.beginGroup("GUI");
@@ -505,12 +545,15 @@ QPixmap Settings::getSavedAvatar(const QString &ownerId)
         QString filePath = dir.filePath("avatar_"+ownerId.left(64));
         if (!QFileInfo(filePath).exists()) // try without truncation, for old self avatars
             filePath = dir.filePath("avatar_"+ownerId);
+
         pic.load(filePath);
         saveAvatar(pic, ownerId);
         QFile::remove(filePath);
     }
     else
+    {
         pic.load(filePath);
+    }
     return pic;
 }
 
@@ -530,6 +573,7 @@ void Settings::saveAvatarHash(const QByteArray& hash, const QString& ownerId)
     QFile file(dir.filePath("avatars/"+ownerId.left(64)+".hash"));
     if (!file.open(QIODevice::WriteOnly))
         return;
+
     file.write(hash);
     file.close();
 }
@@ -541,6 +585,7 @@ QByteArray Settings::getAvatarHash(const QString& ownerId)
     QFile file(dir.filePath("avatars/"+ownerId.left(64)+".hash"));
     if (!file.open(QIODevice::ReadOnly))
         return QByteArray();
+
     QByteArray out = file.readAll();
     file.close();
     return out;
@@ -840,6 +885,7 @@ void Settings::setAutoAwayTime(int newValue)
 {
     if (newValue < 0)
         newValue = 10;
+
     autoAwayTime = newValue;
 }
 
@@ -849,9 +895,7 @@ QString Settings::getAutoAcceptDir(const ToxID& id) const
 
     auto it = friendLst.find(key);
     if (it != friendLst.end())
-    {
         return it->autoAcceptDir;
-    }
 
     return QString();
 }
@@ -1110,9 +1154,7 @@ QString Settings::getFriendAdress(const QString &publicKey) const
     QString key = ToxID::fromString(publicKey).publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
-    {
         return it->addr;
-    }
 
     return QString();
 }
@@ -1124,7 +1166,9 @@ void Settings::updateFriendAdress(const QString &newAddr)
     if (it != friendLst.end())
     {
         it->addr = newAddr;
-    } else {
+    }
+    else
+    {
         friendProp fp;
         fp.addr = newAddr;
         fp.alias = "";
@@ -1138,9 +1182,7 @@ QString Settings::getFriendAlias(const ToxID &id) const
     QString key = id.publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
-    {
         return it->alias;
-    }
 
     return QString();
 }
@@ -1152,7 +1194,9 @@ void Settings::setFriendAlias(const ToxID &id, const QString &alias)
     if (it != friendLst.end())
     {
         it->alias = alias;
-    } else {
+    }
+    else
+    {
         friendProp fp;
         fp.addr = key;
         fp.alias = alias;

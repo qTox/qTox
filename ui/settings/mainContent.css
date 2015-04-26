@@ -84,108 +84,132 @@ QScrollArea
 
 QScrollArea > QWidget > QWidget 
 { 
-  background: transparent; 
+    background: transparent;
 }
 
-QScrollBar:vertical  {
+QScrollArea::corner
+{
+    background: white;
+    border: none;
+}
+
+QScrollBar:vertical
+{
     background: transparent;
     width: 12px;
     margin-top: 2px;
     margin-bottom: 2px;
 }
 
-QScrollBar::handle:vertical  {
+QScrollBar::handle:vertical
+{
     background: #d1d1d1;
     min-height: 20px;
     border-radius: 3px;
     margin-left: 2px;
 }
 
-QScrollBar::handle:vertical:hover  {
+QScrollBar::handle:vertical:hover
+{
     background: #e3e3e3;
 }
 
-QScrollBar::handle:vertical:pressed  {
+QScrollBar::handle:vertical:pressed
+{
     background: #b1b1b1;
 }
 
-QScrollBar::add-line:vertical {
-    background: url(":ui/chatArea/scrollBarDownArrow.svg") center;
+QScrollBar::add-line:vertical
+{
+    background: white;
     height: 0px;
     subcontrol-position: bottom;
     subcontrol-origin: margin;
 }
 
-QScrollBar::sub-line:vertical {
-    background: url(":ui/chatArea/scrollBarUpArrow.svg") center;
+QScrollBar::sub-line:vertical
+{
+    background: white;
     height: 0px;
     subcontrol-position: top;
     subcontrol-origin: margin;
 }
 
-QScrollBar:QScrollBar::down-arrow:vertical  {
+QScrollBar:QScrollBar::down-arrow:vertical
+{
     width: 10;
     height: 10px;
     background: white;
 }
 
-QScrollBar:QScrollBar::up-arrow:vertical  {
+QScrollBar:QScrollBar::up-arrow:vertical
+{
     width: 10px;
     height: 10px;
     background: white;
 }
  
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical  {
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
     background: none;
 }
 
 
-QScrollBar:horizontal  {
+QScrollBar:horizontal
+{
     background: white;
     height: 10px;
     margin: 0 2px 0 2px;
 }
 
-QScrollBar::handle:horizontal  {
+QScrollBar::handle:horizontal
+{
     background: #d1d1d1;
     min-width: 20px;
     border-radius: 2px;
 }
 
-QScrollBar::handle:horizontal:hover  {
+QScrollBar::handle:horizontal:hover
+{
     background: #e3e3e3;
 }
 
-QScrollBar::handle:horizontal:pressed  {
+QScrollBar::handle:horizontal:pressed
+{
     background: #b1b1b1;
 }
 
-QScrollBar::add-line:horizontal {
-    background: url(":ui/chatArea/scrollBarRightArrow.svg") center;
+QScrollBar::add-line:horizontal
+{
+    background: white;
     width: 0px;
     subcontrol-position: right;
     subcontrol-origin: margin;
 }
 
-QScrollBar::sub-line:horizontal {
-    background: url(":ui/chatArea/scrollBarLeftArrow.svg") center;
+QScrollBar::sub-line:horizontal
+{
+    background: white;
     width: 0px;
     subcontrol-position: left;
     subcontrol-origin: margin;
 }
 
-QScrollBar:QScrollBar::down-arrow:horizontal  {
+QScrollBar:QScrollBar::down-arrow:horizontal
+{
     width: 10;
     height: 10px;
     background: white;
 }
 
-QScrollBar:QScrollBar::up-arrow:horizontal  {
+QScrollBar:QScrollBar::up-arrow:horizontal
+{
     width: 10px;
     height: 10px;
     background: white;
 }
  
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal  {
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
+{
     background: none;
 }

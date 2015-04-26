@@ -24,7 +24,7 @@
 #include <tox/tox.h>
 #include <tox/toxdns.h>
 
-#define TOX_ID_LENGTH 2*TOX_FRIEND_ADDRESS_SIZE
+#define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
 
 const ToxDNS::tox3_server ToxDNS::pinnedServers[]
 {
@@ -58,35 +58,45 @@ QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
         qApp->processEvents();
         QThread::msleep(100);
     }
-    if (timeout >= 30) {
+    if (timeout >= 30)
+    {
         dns.abort();
         if (!silent)
             showWarning(tr("The connection timed out","The DNS gives the Tox ID associated to toxme.se addresses"));
+
         return result;
     }
 
-    if (dns.error() == QDnsLookup::NotFoundError) {
+    if (dns.error() == QDnsLookup::NotFoundError)
+    {
         if (!silent)
             showWarning(tr("This address does not exist","The DNS gives the Tox ID associated to toxme.se addresses"));
+
         return result;
     }
-    else if (dns.error() != QDnsLookup::NoError) {
+    else if (dns.error() != QDnsLookup::NoError)
+    {
         if (!silent)
             showWarning(tr("Error while looking up DNS","The DNS gives the Tox ID associated to toxme.se addresses"));
+
         return result;
     }
 
     const QList<QDnsTextRecord> textRecords = dns.textRecords();
-    if (textRecords.isEmpty()) {
+    if (textRecords.isEmpty())
+    {
         if (!silent)
             showWarning(tr("No text record found", "Error with the DNS"));
+
         return result;
     }
 
     const QList<QByteArray> textRecordValues = textRecords.last().values();
-    if (textRecordValues.length() != 1) {
+    if (textRecordValues.length() != 1)
+    {
         if (!silent)
             showWarning(tr("Unexpected number of values in text record", "Error with the DNS"));
+
         return result;
     }
 
@@ -104,7 +114,8 @@ QString ToxDNS::queryTox1(const QString& record, bool silent)
 
     // Check toxdns protocol version
     int verx = entry.indexOf("v=");
-    if (verx) {
+    if (verx)
+    {
         verx += 2;
         int verend = entry.indexOf(';', verx);
         if (verend)
@@ -114,6 +125,7 @@ QString ToxDNS::queryTox1(const QString& record, bool silent)
             {
                 if (!silent)
                     showWarning(tr("The version of Tox DNS used by this server is not supported", "Error with the DNS"));
+
                 return toxId;
             }
         }
@@ -121,23 +133,29 @@ QString ToxDNS::queryTox1(const QString& record, bool silent)
 
     // Get the tox id
     int idx = entry.indexOf("id=");
-    if (idx < 0) {
+    if (idx < 0)
+    {
         if (!silent)
             showWarning(tr("The DNS lookup does not contain any Tox ID", "Error with the DNS"));
+
         return toxId;
     }
 
     idx += 3;
-    if (entry.length() < idx + static_cast<int>(TOX_ID_LENGTH)) {
+    if (entry.length() < idx + static_cast<int>(TOX_HEX_ID_LENGTH))
+    {
         if (!silent)
             showWarning(tr("The DNS lookup does not contain a valid Tox ID", "Error with the DNS"));
+
         return toxId;
     }
 
-    toxId = entry.mid(idx, TOX_ID_LENGTH);
-    if (!ToxID::isToxId(toxId)) {
+    toxId = entry.mid(idx, TOX_HEX_ID_LENGTH);
+    if (!ToxID::isToxId(toxId))
+    {
         if (!silent)
             showWarning(tr("The DNS lookup does not contain a valid Tox ID", "Error with the DNS"));
+
         return toxId;
     }
 
@@ -178,7 +196,8 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
 
     // Check toxdns protocol version
     verx = entry.indexOf("v=");
-    if (verx!=-1) {
+    if (verx!=-1)
+    {
         verx += 2;
         int verend = entry.indexOf(';', verx);
         if (verend!=-1)
@@ -194,14 +213,15 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
 
     // Get and decrypt the tox id
     idx = entry.indexOf("id=");
-    if (idx < 0) {
+    if (idx < 0)
+    {
         qWarning() << "queryTox3: Server "<<server.name<<" returned an empty id, using tox1 as a fallback";
         goto fallbackOnTox1;
     }
 
     idx += 3;
     id = entry.mid(idx).toUtf8();
-    uint8_t toxId[TOX_FRIEND_ADDRESS_SIZE];
+    uint8_t toxId[TOX_ADDRESS_SIZE];
     toxIdSize = tox_decrypt_dns3_TXT(tox_dns3, toxId, (uint8_t*)id.data(), id.size(), request_id);
     if (toxIdSize < 0) // We can always fallback on tox1 if toxdns3 fails
     {
@@ -217,6 +237,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
 fallbackOnTox1:
     if (tox_dns3)
         tox_dns3_kill(tox_dns3);
+
 #if TOX1_SILENT_FALLBACK
     toxIdStr = queryTox1(record, silent);
 #elif TOX1_ASK_FALLBACK
@@ -226,6 +247,7 @@ Should tox1 be used anyway?\n\
 If unsure, press “No”, so that request to ToxDNS service will not be made using unsecure protocol."), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
     if (btn == QMessageBox::Yes)
         queryTox1(record, silent);
+
 #endif
     return toxIdStr;
 }
@@ -234,12 +256,17 @@ ToxID ToxDNS::resolveToxAddress(const QString &address, bool silent)
 {
     ToxID toxId;
 
-    if (address.isEmpty()) {
+    if (address.isEmpty())
+    {
         return toxId;
-    } else if (ToxID::isToxId(address)) {
+    }
+    else if (ToxID::isToxId(address))
+    {
         toxId = ToxID::fromString(address);
         return toxId;
-    } else {
+    }
+    else
+    {
         // If we're querying one of our pinned server, do a tox3 request directly
         QString servname = address.mid(address.indexOf('@')+1);
         for (const ToxDNS::tox3_server& pin : ToxDNS::pinnedServers)
@@ -272,6 +299,7 @@ Should tox1 be used anyway?\n\
 If unsure, press “No”, so that request to ToxDNS service will not be made using unsecure protocol."), QMessageBox::Ok|QMessageBox::No, QMessageBox::No);
             if (btn == QMessageBox::Ok)
                 toxId = ToxID::fromString(queryTox1(address, silent));
+
 #else
             return toxId;
 #endif

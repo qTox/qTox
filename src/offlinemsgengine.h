@@ -24,7 +24,7 @@
 #include <QMap>
 #include "src/chatlog/chatmessage.h"
 
-struct Friend;
+class Friend;
 class QTimer;
 
 class OfflineMsgEngine : public QObject

@@ -3,7 +3,7 @@
 
 #include <QHash>
 #include <tox/toxav.h>
-#include "video/netvideosource.h"
+#include "src/video/netvideosource.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -19,8 +19,8 @@ struct ToxCall
 {
     ToxAvCSettings codecSettings;
     QTimer *sendAudioTimer, *sendVideoTimer;
-    int callId;
-    int friendId;
+    int32_t callId;
+    uint32_t friendId;
     bool videoEnabled;
     bool active;
     bool muteMic;

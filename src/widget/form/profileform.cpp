@@ -14,7 +14,7 @@
     See the COPYING file for more details.
 */
 
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/nexus.h"
 #include "ui_profileform.h"
 #include "profileform.h"
@@ -27,6 +27,7 @@
 #include "src/widget/gui.h"
 #include "src/historykeeper.h"
 #include "src/misc/style.h"
+#include "src/profilelocker.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>
@@ -41,6 +42,7 @@ void ProfileForm::refreshProfiles()
     bodyUI->profiles->clear();
     for (QString profile : Settings::getInstance().searchProfiles())
         bodyUI->profiles->addItem(profile);
+
     QString current = Settings::getInstance().getCurrentProfile();
     if (current != "")
         bodyUI->profiles->setCurrentText(current);
@@ -183,6 +185,7 @@ void ProfileForm::setToxId(const QString& id)
     qr = new QRWidget();
     qr->setQRData("tox:"+id);
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
+    refreshProfiles();
 }
 
 void ProfileForm::onAvatarClicked()
@@ -193,6 +196,7 @@ void ProfileForm::onAvatarClicked()
         Nexus::getSupportedImageFilter());
     if (filename.isEmpty())
         return;
+
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
     if (!file.isOpen())
@@ -214,22 +218,7 @@ void ProfileForm::onAvatarClicked()
     pic.save(&buffer, "PNG");
     buffer.close();
 
-    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
-    {
-        pic = pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        bytes.clear();
-        buffer.open(QIODevice::WriteOnly);
-        pic.save(&buffer, "PNG");
-        buffer.close();
-    }
-
-    if (bytes.size() >= TOX_AVATAR_MAX_DATA_LENGTH)
-    {
-        GUI::showError(tr("Error"), tr("This image is too big"));
-        return;
-    }
-
-    Nexus::getCore()->setAvatar(TOX_AVATAR_FORMAT_PNG, bytes);
+    Nexus::getCore()->setAvatar(bytes);
 }
 
 void ProfileForm::onLoadClicked()
@@ -259,6 +248,13 @@ void ProfileForm::onRenameClicked()
         if (!QFile::exists(file) || GUI::askQuestion(tr("Profile already exists", "rename confirm title"),
                 tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
         {
+            if (!ProfileLocker::lock(name))
+            {
+                GUI::showWarning(tr("Profile already exists", "rename failed title"),
+                                 tr("A profile named \"%1\" already exists and is in use.").arg(cur));
+                break;
+            }
+
             QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
             QFile::rename(dir.filePath(cur+".ini"), dir.filePath(name+".ini"));
             bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
@@ -268,6 +264,7 @@ void ProfileForm::onRenameClicked()
             Settings::getInstance().setCurrentProfile(name);
             if (resetAutorun)
                 Settings::getInstance().setAutorun(true);                   // fixes -p flag in autostart command line
+
             break;
         }
     } while (true);
@@ -281,7 +278,7 @@ void ProfileForm::onExportClicked()
                     tr("Tox save file (*.tox)", "save dialog filter"));
     if (!path.isEmpty())
     {
-        if (!Nexus::isFilePathWritable(path))
+        if (!Nexus::tryRemoveFile(path))
         {
             GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
             return;
@@ -389,7 +386,7 @@ void ProfileForm::on_saveQr_clicked()
                    tr("Save QrCode (*.png)", "save dialog filter"));
     if (!path.isEmpty())
     {
-        if (!Nexus::isFilePathWritable(path))
+        if (!Nexus::tryRemoveFile(path))
         {
             GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
             return;

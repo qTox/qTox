@@ -1,5 +1,5 @@
 #include "nexus.h"
-#include "core.h"
+#include "src/core/core.h"
 #include "misc/settings.h"
 #include "video/camera.h"
 #include "widget/gui.h"
@@ -40,6 +40,7 @@ void Nexus::start()
 {
     if (started)
         return;
+
     qDebug() << "Nexus: Starting up";
 
     // Setup the environment
@@ -47,6 +48,7 @@ void Nexus::start()
     qRegisterMetaType<vpx_image>("vpx_image");
     qRegisterMetaType<uint8_t>("uint8_t");
     qRegisterMetaType<uint16_t>("uint16_t");
+    qRegisterMetaType<uint32_t>("uint32_t");
     qRegisterMetaType<const int16_t*>("const int16_t*");
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
@@ -76,6 +78,12 @@ void Nexus::start()
     widget->init();
 #endif
     GUI::getInstance();
+
+    // Zetok protection
+    // There are small instants on startup during which no
+    // profile is loaded but the GUI could still receive events,
+    // e.g. between two modal windows. Disable the GUI to prevent that.
+    GUI::setEnabled(false);
 
     // Connections
 #ifdef Q_OS_ANDROID
@@ -119,8 +127,8 @@ void Nexus::start()
     connect(core, &Core::blockingClearContacts, widget, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
     connect(core, &Core::friendTypingChanged, widget, &Widget::onFriendTypingChanged);
 
-    connect(core, SIGNAL(messageSentResult(int,QString,int)), widget, SLOT(onMessageSendResult(int,QString,int)));
-    connect(core, SIGNAL(groupSentResult(int,QString,int)), widget, SLOT(onGroupSendResult(int,QString,int)));
+    connect(core, &Core::messageSentResult, widget, &Widget::onMessageSendResult);
+    connect(core, &Core::groupSentResult, widget, &Widget::onGroupSendResult);
 
     connect(widget, &Widget::statusSet, core, &Core::setStatus);
     connect(widget, &Widget::friendRequested, core, &Core::requestFriendship);
@@ -138,6 +146,7 @@ Nexus& Nexus::getInstance()
 {
     if (!nexus)
         nexus = new Nexus;
+
     return *nexus;
 }
 
@@ -167,10 +176,11 @@ QString Nexus::getSupportedImageFilter()
   QString res;
   for (auto type : QImageReader::supportedImageFormats())
     res += QString("*.%1 ").arg(QString(type));
+
   return tr("Images (%1)", "filetype filter").arg(res.left(res.size()-1));
 }
 
-bool Nexus::isFilePathWritable(const QString& filepath)
+bool Nexus::tryRemoveFile(const QString& filepath)
 {
     QFile tmp(filepath);
     bool writable = tmp.open(QIODevice::WriteOnly);

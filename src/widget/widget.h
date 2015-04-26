@@ -25,7 +25,7 @@
 #include "form/settingswidget.h"
 #include "form/profileform.h"
 #include "form/filesform.h"
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -35,7 +35,7 @@ class MainWindow;
 
 class GenericChatroomWidget;
 class Group;
-struct Friend;
+class Friend;
 class QSplitter;
 class VideoSurface;
 class QMenu;
@@ -104,6 +104,7 @@ public slots:
     void onFriendUsernameChanged(int friendId, const QString& username);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
+    void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
@@ -111,6 +112,7 @@ public slots:
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void onGroupPeerAudioPlaying(int groupnumber, int peernumber);
+    void onGroupSendResult(int groupId, const QString& message, int result);
     void playRingtone();
     void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();
@@ -140,8 +142,6 @@ private slots:
     void setStatusOnline();
     void setStatusAway();
     void setStatusBusy();
-    void onMessageSendResult(int friendId, const QString& message, int messageId);
-    void onGroupSendResult(int groupId, const QString& message, int result);
     void onIconClick(QSystemTrayIcon::ActivationReason);
     void onUserAwayCheck();
     void onEventIconTick();

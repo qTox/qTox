@@ -21,7 +21,7 @@
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/croppinglabel.h"
 #include "src/widget/maskablepixmapwidget.h"
-#include "src/core.h"
+#include "src/core/core.h"
 #include "src/misc/style.h"
 #include <QPushButton>
 #include <QMimeData>
@@ -64,11 +64,10 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     namesListLayout = new FlowLayout(0,5,0);
     QStringList names(group->getPeerList());
-    QLabel *l;
     
     for (const QString& name : names)
     {
-        l = new QLabel(name);
+        QLabel *l = new QLabel(name);
         l->setTextFormat(Qt::PlainText);
         namesListLayout->addWidget(l);
     }
@@ -110,10 +109,17 @@ void GroupChatForm::onSendTriggered()
             emit sendAction(group->getGroupId(), msg);
         }
         else
+        {
             emit sendMessage(group->getGroupId(), msg);
+        }
     }
     else
-        addSelfMessage(msg, msg.startsWith("/me "), QDateTime::currentDateTime(), true);
+    {
+        if (msg.startsWith("/me "))
+            addSelfMessage(msg.right(msg.length() - 4), true, QDateTime::currentDateTime(), true);
+        else
+            addSelfMessage(msg, false, QDateTime::currentDateTime(), true);
+    }
 }
 
 void GroupChatForm::onUserListChanged()
@@ -150,6 +156,7 @@ void GroupChatForm::onUserListChanged()
         QLabel* label = orderizer[names[i]];
         if (i != nNames - 1)
             label->setText(label->text() + ", ");
+
         namesListLayout->addWidget(label);
     }
 

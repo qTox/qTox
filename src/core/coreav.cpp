@@ -15,12 +15,12 @@
 */
 
 #include "core.h"
-#include "video/camera.h"
-#include "audio.h"
+#include "src/video/camera.h"
+#include "src/audio.h"
 #ifdef QTOX_FILTER_AUDIO
-#include "audiofilterer.h"
+#include "src/audiofilterer.h"
 #endif
-#include "misc/settings.h"
+#include "src/misc/settings.h"
 #include <QDebug>
 #include <QTimer>
 
@@ -34,12 +34,14 @@ uint8_t* Core::videobuf;
 bool Core::anyActiveCalls()
 {
     for (auto& call : calls)
+    {
         if (call.active)
             return true;
+    }
     return false;
 }
 
-void Core::prepareCall(int friendId, int callId, ToxAv* toxav, bool videoEnabled)
+void Core::prepareCall(uint32_t friendId, int32_t callId, ToxAv* toxav, bool videoEnabled)
 {
     qDebug() << QString("Core: preparing call %1").arg(callId);
     calls[callId].callId = callId;
@@ -93,6 +95,7 @@ void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
     int friendId;
     if (toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &settings) < 0)
         goto fail;
+
     friendId = toxav_get_peer_id((ToxAv*)toxav, callId, 0);
     if (friendId < 0)
         goto fail;
@@ -120,7 +123,7 @@ fail: // Centralized error handling
     return;
 }
 
-void Core::answerCall(int callId)
+void Core::answerCall(int32_t callId)
 {
     int friendId = toxav_get_peer_id(toxav, callId, 0);
     if (friendId < 0)
@@ -152,23 +155,23 @@ void Core::answerCall(int callId)
     delete transSettings;
 }
 
-void Core::hangupCall(int callId)
+void Core::hangupCall(int32_t callId)
 {
     qDebug() << QString("Core: hanging up call %1").arg(callId);
     calls[callId].active = false;
     toxav_hangup(toxav, callId);
 }
 
-void Core::rejectCall(int callId)
+void Core::rejectCall(int32_t callId)
 {
     qDebug() << QString("Core: rejecting call %1").arg(callId);
     calls[callId].active = false;
     toxav_reject(toxav, callId, nullptr);
 }
 
-void Core::startCall(int friendId, bool video)
+void Core::startCall(uint32_t friendId, bool video)
 {
-    int callId;
+    int32_t callId;
     ToxAvCSettings cSettings = av_DefaultSettings;
     cSettings.max_video_width = TOXAV_MAX_VIDEO_WIDTH;
     cSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
@@ -204,14 +207,14 @@ void Core::startCall(int friendId, bool video)
     }
 }
 
-void Core::cancelCall(int callId, int friendId)
+void Core::cancelCall(int32_t callId, uint32_t friendId)
 {
     qDebug() << QString("Core: Cancelling call with %1").arg(friendId);
     calls[callId].active = false;
     toxav_cancel(toxav, callId, friendId, nullptr);
 }
 
-void Core::cleanupCall(int callId)
+void Core::cleanupCall(int32_t callId)
 {
     qDebug() << QString("Core: cleaning up call %1").arg(callId);
     calls[callId].active = false;
@@ -220,6 +223,7 @@ void Core::cleanupCall(int callId)
     calls[callId].sendVideoTimer->stop();
     if (calls[callId].videoEnabled)
         Camera::getInstance()->unsubscribe();
+
     Audio::unsuscribeInput();
     toxav_kill_transmission(Core::getInstance()->toxav, callId);
 }
@@ -239,7 +243,7 @@ void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint1
         playAudioBuffer(calls[callId].alSource, data, samples, dest.audio_channels, dest.audio_sample_rate);
 }
 
-void Core::sendCallAudio(int callId, ToxAv* toxav)
+void Core::sendCallAudio(int32_t callId, ToxAv* toxav)
 {
     if (!calls[callId].active)
         return;
@@ -286,9 +290,7 @@ void Core::sendCallAudio(int callId, ToxAv* toxav)
         }
 
         if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
-        {
             qDebug() << "Core: toxav_send_audio error";
-        }
     }
     calls[callId].sendAudioTimer->start();
 }
@@ -303,7 +305,7 @@ void Core::playCallVideo(void*, int32_t callId, const vpx_image_t* img, void *us
     calls[callId].videoSource.pushVPXFrame(img);
 }
 
-void Core::sendCallVideo(int callId)
+void Core::sendCallVideo(int32_t callId)
 {
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
@@ -333,15 +335,13 @@ void Core::sendCallVideo(int callId)
     calls[callId].sendVideoTimer->start();
 }
 
-void Core::micMuteToggle(int callId)
+void Core::micMuteToggle(int32_t callId)
 {
     if (calls[callId].active)
-    {
         calls[callId].muteMic = !calls[callId].muteMic;
-    }
 }
 
-void Core::volMuteToggle(int callId)
+void Core::volMuteToggle(int32_t callId)
 {
     if (calls[callId].active)
     {

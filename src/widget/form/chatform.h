@@ -18,14 +18,14 @@
 #define CHATFORM_H
 
 #include "genericchatform.h"
-#include "src/corestructs.h"
+#include "src/core/corestructs.h"
 #include <QSet>
 #include <QLabel>
 #include <QTimer>
 #include <QElapsedTimer>
 
 
-struct Friend;
+class Friend;
 class FileTransferInstance;
 class NetCamView;
 class QPixmap;
@@ -50,12 +50,11 @@ public:
     virtual void show(Ui::MainWindow &ui);
 
 signals:
-    void sendFile(int32_t friendId, QString, QString, long long);
-    void startCall(int friendId);
-    void startVideoCall(int friendId, bool video);
+    void sendFile(uint32_t friendId, QString, QString, long long);
+    void startCall(uint32_t FriendId, bool video);
     void answerCall(int callId);
     void hangupCall(int callId);
-    void cancelCall(int callId, int friendId);
+    void cancelCall(int callId, uint32_t FriendId);
     void rejectCall(int callId);
     void micMuteToggle(int callId);
     void volMuteToggle(int callId);
@@ -64,22 +63,22 @@ signals:
 public slots:
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
-    void onAvInvite(int FriendId, int CallId, bool video);
-    void onAvStart(int FriendId, int CallId, bool video);
-    void onAvCancel(int FriendId, int CallId);
-    void onAvEnd(int FriendId, int CallId);
-    void onAvRinging(int FriendId, int CallId, bool video);
-    void onAvStarting(int FriendId, int CallId, bool video);
-    void onAvEnding(int FriendId, int CallId);
-    void onAvRequestTimeout(int FriendId, int CallId);
-    void onAvPeerTimeout(int FriendId, int CallId);
-    void onAvMediaChange(int FriendId, int CallId, bool video);
-    void onAvCallFailed(int FriendId);
-    void onAvRejected(int FriendId, int CallId);
+    void onAvInvite(uint32_t FriendId, int CallId, bool video);
+    void onAvStart(uint32_t FriendId, int CallId, bool video);
+    void onAvCancel(uint32_t FriendId, int CallId);
+    void onAvEnd(uint32_t FriendId, int CallId);
+    void onAvRinging(uint32_t FriendId, int CallId, bool video);
+    void onAvStarting(uint32_t FriendId, int CallId, bool video);
+    void onAvEnding(uint32_t FriendId, int CallId);
+    void onAvRequestTimeout(uint32_t FriendId, int CallId);
+    void onAvPeerTimeout(uint32_t FriendId, int CallId);
+    void onAvMediaChange(uint32_t FriendId, int CallId, bool video);
+    void onAvCallFailed(uint32_t FriendId);
+    void onAvRejected(uint32_t FriendId, int CallId);
     void onMicMuteToggle();
     void onVolMuteToggle();
-    void onAvatarChange(int FriendId, const QPixmap& pic);
-    void onAvatarRemoved(int FriendId);
+    void onAvatarChange(uint32_t FriendId, const QPixmap& pic);
+    void onAvatarRemoved(uint32_t FriendId);
 
 private slots:
     void onSendTriggered();
@@ -91,7 +90,7 @@ private slots:
     void onHangupCallTriggered();
     void onCancelCallTriggered();
     void onRejectCallTriggered();
-    void onFileSendFailed(int FriendId, const QString &fname);
+    void onFileSendFailed(uint32_t FriendId, const QString &fname);
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();

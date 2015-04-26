@@ -134,7 +134,14 @@ bool IPC::isCurrentOwner()
 {
     if (globalMemory.lock())
     {
-        bool isOwner = ((*(uint64_t*)globalMemory.data()) == globalId);
+        void* data = globalMemory.data();
+        if (!data)
+        {
+            qWarning() << "IPC: isCurrentOwner failed to access the memory, returning false";
+            globalMemory.unlock();
+            return false;
+        }
+        bool isOwner = ((*(uint64_t*)data) == globalId);
         globalMemory.unlock();
         return isOwner;
     }

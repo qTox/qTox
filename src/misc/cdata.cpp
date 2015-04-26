@@ -72,7 +72,7 @@ QString CUserId::toString(const uint8_t* cUserId)
 
 // CFriendAddress
 
-const uint16_t CFriendAddress::SIZE{TOX_FRIEND_ADDRESS_SIZE};
+const uint16_t CFriendAddress::SIZE{TOX_ADDRESS_SIZE};
 
 CFriendAddress::CFriendAddress(const QString &friendAddress) :
     CData(friendAddress, SIZE)
