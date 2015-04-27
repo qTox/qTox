@@ -563,7 +563,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
 
     if (message.isEmpty())
     {
-        emit failedToAddFriend(userId, QString(tr("You need to write a message with you request")));
+        emit failedToAddFriend(userId, QString(tr("You need to write a message with your request")));
     }
     else if (message.size() > TOX_MAX_FRIEND_REQUEST_LENGTH)
     {
