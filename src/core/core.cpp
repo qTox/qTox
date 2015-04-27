@@ -29,8 +29,8 @@
 #include <tox/tox.h>
 
 #include <ctime>
+#include <limits>
 #include <functional>
-#include <cassert>
 
 #include <QDebug>
 #include <QDir>
@@ -546,7 +546,7 @@ void Core::onReadReceiptCallback(Tox*, uint32_t friendnumber, uint32_t receipt, 
 void Core::acceptFriendRequest(const QString& userId)
 {
     uint32_t friendId = tox_friend_add_norequest(tox, CUserId(userId).data(), nullptr);
-    if (friendId == UINT32_MAX)
+    if (friendId == std::numeric_limits<uint32_t>::max())
     {
         emit failedToAddFriend(userId);
     }
@@ -580,7 +580,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
 
         uint32_t friendId = tox_friend_add(tox, CFriendAddress(friendAddress).data(),
                                       cMessage.data(), cMessage.size(), nullptr);
-        if (friendId == UINT32_MAX)
+        if (friendId == std::numeric_limits<uint32_t>::max())
         {
             emit failedToAddFriend(userId);
         }
@@ -1049,7 +1049,7 @@ void Core::loadFriends()
 
 void Core::checkLastOnline(uint32_t friendId) {
     const uint64_t lastOnline = tox_friend_get_last_online(tox, friendId, nullptr);
-    if (lastOnline != UINT64_MAX)
+    if (lastOnline != std::numeric_limits<uint64_t>::max())
         emit friendLastSeenChanged(friendId, QDateTime::fromTime_t(lastOnline));
 }
 
@@ -1287,7 +1287,7 @@ QString Core::getPeerName(const ToxID& id) const
     CUserId cid(id.toString());
 
     uint32_t friendId = tox_friend_by_public_key(tox, (uint8_t*)cid.data(), nullptr);
-    if (friendId == UINT32_MAX)
+    if (friendId == std::numeric_limits<uint32_t>::max())
     {
         qWarning() << "Core::getPeerName: No such peer "+id.toString();
         return name;

@@ -22,7 +22,7 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
     uint64_t filesize = data.size();
     uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
                                      nullptr, filename, TOX_HASH_LENGTH, nullptr);
-    if (fileNum == UINT32_MAX)
+    if (fileNum == std::numeric_limits<uint32_t>::max())
     {
         qWarning() << "CoreFile::sendAvatarFile: Can't create the Tox file sender";
         return;
@@ -46,7 +46,7 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString Filename, QString
     QByteArray fileName = Filename.toUtf8();
     uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_DATA, filesize, nullptr,
                                 (uint8_t*)fileName.data(), fileName.size(), nullptr);
-    if (fileNum == UINT32_MAX)
+    if (fileNum == std::numeric_limits<uint32_t>::max())
     {
         qWarning() << "CoreFile::sendFile: Can't create the Tox file sender";
         emit core->fileSendFailed(friendId, Filename);

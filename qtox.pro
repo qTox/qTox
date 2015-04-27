@@ -345,6 +345,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/autoupdate.h \
         src/widget/callconfirmwidget.h \
         src/widget/systemtrayicon.h \
+        src/misc/qrwidget.h \
         src/widget/systemtrayicon_private.h
 
         SOURCES += \
@@ -404,7 +405,9 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/chatlog/documentcache.cpp \
         src/chatlog/pixmapcache.cpp \
         src/offlinemsgengine.cpp \
+        src/misc/qrwidget.cpp \
         src/widget/genericchatroomwidget.cpp
+
 }
 
 SOURCES += \
@@ -424,7 +427,6 @@ SOURCES += \
     src/video/videoframe.cpp \
     src/widget/gui.cpp \
     src/toxme.cpp \
-    src/misc/qrwidget.cpp \
     src/core/core.cpp \
     src/core/coreav.cpp \
     src/core/coreencryption.cpp \
@@ -455,6 +457,5 @@ HEADERS += \
     src/video/netvideosource.h \
     src/widget/gui.h \
     src/toxme.h \
-    src/misc/qrwidget.h \
     src/profilelocker.h \
     src/avatarbroadcaster.h

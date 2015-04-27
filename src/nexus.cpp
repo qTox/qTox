@@ -6,6 +6,7 @@
 #include <QThread>
 #include <QDebug>
 #include <QImageReader>
+#include <QFile>
 
 #ifdef Q_OS_ANDROID
 #include <src/widget/androidgui.h>
