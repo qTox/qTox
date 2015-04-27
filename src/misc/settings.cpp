@@ -169,6 +169,10 @@ void Settings::load()
     if (loaded)
         return;
 
+    QDir dir(getSettingsDirPath());
+    if (!dir.exists())
+        dir.mkpath(".");
+
     if (QFile(FILENAME).exists())
     {
         QSettings ps(FILENAME, QSettings::IniFormat);
@@ -188,7 +192,6 @@ void Settings::load()
         makeToxPortable = false;
     }
 
-    QDir dir(getSettingsDirPath());
     QString filePath = dir.filePath(FILENAME);
 
     //if no settings file exist -- use the default one
