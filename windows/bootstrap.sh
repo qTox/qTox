@@ -32,6 +32,7 @@ fi
 ## filter_audio
 if [ ! -d $QTOX_DIR/libs/filter_audio ]; then
     git clone https://github.com/irungentoo/filter_audio.git $QTOX_DIR/libs/filter_audio
+	rm bin/libfilteraudio.dll
 else
     pushd $QTOX_DIR/libs/filter_audio
     git pull
@@ -41,7 +42,31 @@ fi
 if [ ! -f "bin/libfilteraudio.dll" ]; then
     pushd $QTOX_DIR/libs/filter_audio
     PREFIX="$QTOX_DIR/libs" CC="gcc.exe" make install
+	mv libfilteraudio.dll.a $QTOX_DIR/libs/lib
     popd
+	if [ -f "lib/libfilteraudio.dll" ]; then
+		mv lib/libfilteraudio.dll bin/
+	fi
+fi
+
+
+## qrencode
+if [ ! -f "qrencode-3.4.4.tar.gz" ]; then
+	wget http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+fi
+
+if [ ! -d "$QTOX_DIR/libs/qrencode-3.4.4" ]; then
+	tar -xvf qrencode-3.4.4.tar.gz
+	rm -rf lib/qrcodelib.dll
+fi
+
+if [ ! -f "lib/libqrencode.a" ]; then
+    pushd $QTOX_DIR/libs/qrencode-3.4.4
+	./autogen.sh
+	./configure --prefix=$QTOX_DIR/libs --without-tests --without-libiconv-prefix --without-tools
+	make
+	make install
+	popd
 fi
 
 
