@@ -9,6 +9,8 @@
 SystemTrayIcon::SystemTrayIcon()
 {
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    if (desktop.isEmpty())
+        desktop = getenv("DESKTOP_SESSION");
     desktop = desktop.toLower();
     if (false);
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
