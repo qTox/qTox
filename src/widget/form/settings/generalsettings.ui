@@ -406,12 +406,6 @@ will be sent to them when they appear online to you.</string>
        </item>
        <item>
         <widget class="QGroupBox" name="themeGroup">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>232</height>
-          </size>
-         </property>
          <property name="title">
           <string>Theme</string>
          </property>
