@@ -17,6 +17,7 @@
 #include "emoticonswidget.h"
 #include "src/misc/smileypack.h"
 #include "src/misc/style.h"
+#include "src/misc/settings.h"
 
 #include <QPushButton>
 #include <QRadioButton>
@@ -52,6 +53,10 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     int row = 0;
     int col = 0;
 
+    // respect configured emoticon size
+    const int px = Settings::getInstance().getEmojiFontPointSize();
+    const QSize size(px, px);
+
     // create pages
     buttonLayout->addStretch();
     for (int i = 0; i < pageCount; i++)
@@ -81,11 +86,13 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     for (const QStringList& set : emoticons)
     {
         QPushButton* button = new QPushButton;
-        button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]).pixmap(QSize(24,24)));
+        button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]).pixmap(size));
         button->setToolTip(set.join(" "));
         button->setProperty("sequence", set[0]);
         button->setCursor(Qt::PointingHandCursor);
         button->setFlat(true);
+        button->setIconSize(size);
+        button->setFixedSize(size);
 
         connect(button, &QPushButton::clicked, this, &EmoticonsWidget::onSmileyClicked);
 
