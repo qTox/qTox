@@ -23,6 +23,9 @@
 #include <QFileInfo>
 #include <QDragEnterEvent>
 #include <QBitmap>
+#include <QScreen>
+#include <QTemporaryFile>
+#include <QGuiApplication>
 #include "chatform.h"
 #include "src/core/core.h"
 #include "src/friend.h"
@@ -44,6 +47,8 @@
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
 #include "src/offlinemsgengine.h"
+#include "src/widget/tool/screenshotgrabber.h"
+#include "src/widget/tool/flyoutoverlaywidget.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -81,6 +86,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
+    connect(screenshotButton, &QPushButton::clicked, this, &ChatForm::onScreenshotClicked);
     connect(callButton, &QPushButton::clicked, this, &ChatForm::onCallTriggered);
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
@@ -858,6 +864,43 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     chatWidget->verticalScrollBar()->setValue(savedSliderPos);
 }
 
+void ChatForm::onScreenshotClicked()
+{
+    doScreenshot();
+    
+    // Give the window manager a moment to open the fullscreen grabber window
+    QTimer::singleShot(500, this, &ChatForm::hideFileMenu);
+}
+
+void ChatForm::doScreenshot()
+{
+    ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber(this);
+    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
+    screenshotGrabber->showGrabber();
+}
+
+void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
+	QTemporaryFile file("qTox-Screenshot-XXXXXXXX.png");
+	
+	if (!file.open())
+	{
+	    QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
+	                         tr("qTox wasn't able to save the screenshot"));
+	    return;
+	}
+	
+	file.setAutoRemove(false);
+	
+	pixmap.save(&file, "PNG");
+	
+	long long filesize = file.size();
+	file.close();
+	QFileInfo fi(file);
+	
+	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+        
+}
+
 void ChatForm::onLoadHistory()
 {
     LoadHistoryDialog dlg;
@@ -942,10 +985,12 @@ void ChatForm::show(Ui::MainWindow &ui)
         callConfirm->show();
 }
 
-void ChatForm::hideEvent(QHideEvent*)
+void ChatForm::hideEvent(QHideEvent* event)
 {
     if (callConfirm)
         callConfirm->hide();
+    
+    GenericChatForm::hideEvent(event);
 }
 
 OfflineMsgEngine *ChatForm::getOfflineMsgEngine()

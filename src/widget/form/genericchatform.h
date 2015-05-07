@@ -36,6 +36,7 @@ class ChatLog;
 class MaskablePixmapWidget;
 class Widget;
 struct ToxID;
+class FlyoutOverlayWidget;
 
 namespace Ui {
     class MainWindow;
@@ -59,6 +60,7 @@ public:
 
     ChatLog* getChatLog() const;
 
+    bool eventFilter(QObject* object, QEvent* event);
 signals:
     void sendMessage(uint32_t, QString);
     void sendAction(uint32_t, QString);
@@ -76,10 +78,15 @@ protected slots:
     void clearChatArea(bool);
     void clearChatArea();
     void onSelectAllClicked();
+    void showFileMenu();
+    void hideFileMenu();
 
 protected:
     QString resolveToxID(const ToxID &id);
     void insertChatMessage(ChatMessage::Ptr msg);
+    void hideEvent(QHideEvent* event);
+    void resizeEvent(QResizeEvent* event);
+    void adjustFileMenuPosition();
 
     ToxID previousId;
     QDateTime prevMsgDateTime;
@@ -89,7 +96,8 @@ protected:
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;
-    QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    FlyoutOverlayWidget *fileFlyout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;

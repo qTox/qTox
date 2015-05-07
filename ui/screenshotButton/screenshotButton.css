@@ -1,16 +1,16 @@
 QPushButton
 {
     background-color: #6bc260;
-    background-image: url(":/ui/fileButton/fileButton.svg");
+    background-image: url(":/ui/screenshotButton/screenshotButton.svg");
     background-repeat: none;
     background-position: center;
-    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
     border: none;
     width: 24px;
     height: 24px;
 }
 
-QAbstractButton:hover
+QPushButton:hover
 {
     background-color: #79c76f;
 }
@@ -25,6 +25,7 @@ QPushButton[enabled="false"]
     background-color: #919191;
 }
 
-QPushButton:focus {
+QPushButton:focus
+{
     outline: none;
 }
