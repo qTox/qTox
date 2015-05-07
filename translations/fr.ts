@@ -1952,7 +1952,7 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
         <source>Encrypt Tox data file</source>
-        <translatio>Chiffrer votre profil Tox</translation>
+        <translation>Chiffrer votre profil Tox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
