@@ -1022,7 +1022,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
         <source>Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="302"/>
@@ -1033,29 +1033,29 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
         <source>Group chats always notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Etre averti des nouveaux messages dans les groupes</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="319"/>
         <source>On new message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lors d'un nouveau message:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="331"/>
         <source>Show qTox&apos;s window when you receive new message.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Affiche la fenêtre de qTox lorsque vous recevez un message</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="334"/>
         <source>Show window</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher la fenêtre</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="341"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mettre le focus sur qTox quand vous recevez un message</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
@@ -1067,18 +1067,19 @@ instead of system taskbar.</source>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they will appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Les messages que vous enverez à vos amis quand ils ne sont pas en ligne
+seront renvoyés lorsqu'ils seront de nouveau en ligne</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Votre liste de contacts sera affichée en mode compacte</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>Compact contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste de contacts compacte</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="396"/>
@@ -1094,18 +1095,18 @@ will be sent to them when they will appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="494"/>
         <source>Emoticon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille des smileys:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="640"/>
         <source>Proxy type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de proxy:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="647"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adresse IP:</translation>
     </message>
     <message>
         <source>:)</source>
@@ -1135,12 +1136,12 @@ will be sent to them when they will appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="543"/>
         <source>Theme color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleur du thème:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="560"/>
         <source>Timestamp format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Format des dates:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="599"/>
@@ -1372,7 +1373,7 @@ will be sent to them when they will appear online to you.</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="298"/>
         <source>Not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Envoi échoué</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="331"/>
@@ -1479,7 +1480,7 @@ Titre:</translation>
         <location filename="../src/widget/form/settings/identityform.cpp" line="177"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation>Fichier sauvegarde Tox (*.tox)</translation>
+        <translation>Fichier de sauvegarde Tox (*.tox)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="187"/>
@@ -1542,7 +1543,7 @@ Les informations des contacts et historique associés vont être perdu.</transla
         <location filename="../src/widget/form/settings/identityform.cpp" line="227"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation>Fichier sauvegarde Tox (*.tox)</translation>
+        <translation>Fichier de sauvegarde Tox (*.tox)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identityform.cpp" line="237"/>
@@ -1600,7 +1601,8 @@ Les informations des contacts et historique associés vont être perdu.</transla
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cette suite de caractères permet à vos amis de vous contacter.
+Partagez le avec vos amis pour pouvoir communiquer avec eux.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="92"/>
@@ -1621,13 +1623,13 @@ Share it with your friends to communicate.</source>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="117"/>
         <source>Currently selected profile.</source>
         <comment>toolTip for currently set profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>Profil sélectionné</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="134"/>
         <source>Load selected profile and switch to it.</source>
         <comment>tooltip for loading profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Charge le profil sélectionné</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="137"/>
@@ -1650,7 +1652,7 @@ Share it with your friends to communicate.</source>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="147"/>
         <source>Rename selected profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Renommer le profil sélectionné</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="154"/>
@@ -1663,13 +1665,14 @@ Share it with your friends to communicate.</source>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vous permet d'exporter votre profil Tox dans un fichier.
+Ce fichier ne contient pas l'historique de vos messages.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="165"/>
         <source>Delete selected profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le profil sélectionné.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="168"/>
@@ -1692,19 +1695,19 @@ Profile does not contain your history.</source>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="182"/>
         <source>Import Tox profile from a .tox file.</source>
         <comment>tooltip for importing profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Importer un profil depuis un fichier .tox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="189"/>
         <source>Create new Tox ID and switch to it.</source>
         <comment>tooltip for creating new Tox ID button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Créé un nouveau Tox ID et le charge.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/identitysettings.ui" line="192"/>
         <source>New Tox ID</source>
         <comment>new profile button</comment>
-        <translation>Nouvel Tox ID</translation>
+        <translation>Nouveau Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1804,37 +1807,37 @@ Profile does not contain your history.</source>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="78"/>
         <source>Please set your new chat history password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Merci de définir un nouveau mot de passe pour l'historique de vos messages.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="80"/>
         <source>It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il semblerait que vous ayez un historique chiffré inutilisé ; si le mot de passe correspond il sera ajouté à votre historique actuel.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="83"/>
         <source>Use data file password</source>
         <comment>pushbutton text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser le mot de passe du profil</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="110"/>
         <source>Successfully decrypted old chat history</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>L'ancien historique a été déchiffré avec succès</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="110"/>
         <source>You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vous avez déchiffré l'ancien historique des messages avec succès, il a été ajouté à votre historique actuel et de nouveau chiffré.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
         <source>Old encrypted chat history</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ancien historique chiffré</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
@@ -1849,7 +1852,7 @@ Otherwise, hit cancel to try again.</source>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
         <source>Are you absolutely sure you want to lose the unused encrypted chat history?</source>
         <comment>secondary popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous absolument sur de vouloir supprimer l'historique des ancients messages?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="147"/>
@@ -1862,34 +1865,35 @@ Otherwise, hit cancel to try again.</source>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="148"/>
         <source>Would you like to decrypt your chat history?
 Otherwise it will be deleted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous déchiffrer l'historique des messages?
+Autrement il serra supprimé.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="165"/>
         <source>Are you sure you want to lose your entire chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sur de vouloir supprimer l'historique complet?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="197"/>
         <source>Please set your new data file password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Merci de définir un nouveau mot de passe pour votre profil.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="199"/>
         <source>Use chat history password</source>
         <comment>pushbutton text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser le mot de passe de l'historique</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
         <source>Decrypt your data file</source>
         <comment>title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Déchiffrez votre profil</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
         <source>Would you like to decrypt your data file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Aimeriez-vous déchiffrer votre profil?</translation>
     </message>
     <message>
         <source>Encrypted log</source>
@@ -1916,7 +1920,7 @@ Voulez vous supprimer l&apos;ancien historique ?</translation>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="47"/>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vos amis pourront voir que vous êtes entrain d'écrire.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
@@ -1933,7 +1937,7 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
         <source>Keep chat history (mostly stable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Garder l'historique des messages (pratiquement stable)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
@@ -1948,18 +1952,18 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
         <source>Encrypt Tox data file</source>
-        <translation type="unfinished"></translation>
+        <translatio>Chiffrer votre profil Tox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="123"/>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer de mot de passe</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="113"/>
         <source>Encrypt chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiffrer l'historique des messages</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="138"/>
@@ -2035,7 +2039,7 @@ but new contacts need to know your new Tox ID to be able to add you.</source>
     <message>
         <location filename="../src/widget/toxsave.cpp" line="70"/>
         <source>%1.tox was successfully imported</source>
-        <translation>%1 à été importé</translation>
+        <translation>%1.tox à été importé avec succès</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="70"/>
@@ -2105,12 +2109,12 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <location filename="../src/chatlog/chatmessage.cpp" line="126"/>
         <source>Busy...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement...</translation>
     </message>
     <message>
         <location filename="../src/widget/callconfirmwidget.cpp" line="28"/>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
+        <translation>Appel entrant...</translation>
     </message>
 </context>
 <context>
@@ -2130,28 +2134,28 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="14"/>
         <source>Set your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez un mot de passe</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="31"/>
         <source>Repeat password</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmez le mot de passe</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="41"/>
         <source>Type password</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrez votre mot de passe</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="65"/>
         <source>Password strength</source>
-        <translation type="unfinished"></translation>
+        <translation>Force du mot de passe</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.cpp" line="33"/>
         <location filename="../src/widget/form/setpassworddialog.cpp" line="61"/>
         <source>The passwords don&apos;t match.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les mots de passe ne correspondent pas.</translation>
     </message>
 </context>
 <context>
@@ -2159,12 +2163,12 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <location filename="../src/misc/settings.cpp" line="124"/>
         <source>Choose a profile</source>
-        <translation type="unfinished">Choisir un profil</translation>
+        <translation>Choisir un profil</translation>
     </message>
     <message>
         <location filename="../src/misc/settings.cpp" line="125"/>
         <source>Please choose which identity to use</source>
-        <translation type="unfinished">Merci de choisir l&apos;identité à utiliser</translation>
+        <translation>Merci de choisir l&apos;identité à utiliser</translation>
     </message>
 </context>
 <context>
@@ -2225,7 +2229,10 @@ Elle sera installée au prochain démarrage de qTox.</translation>
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
 If unsure, press âNoâ, so that request to ToxDNS service will not be made using unsecure protocol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il semble que qTox a besoin d&apos;utiliser l&apos;ancien protocole tox1 pour accéder au enregistrements DNS du Tox ID de votre ami.
+Malheureusement tox1 n'est pas sécurisé, et vous risquez de compromettre votre anonnymat à cause des données envoyées entre vous et le service ToxDNS.
+Voulez-vous quand même utiliser le protocol tox1?
+Si vous n'êtes pas certain, cliquez sur âNonâ afin de ne pas soumettre la requete en utilisant un protocol non sécurisé.</translation>
     </message>
     <message>
         <source>It appears that qTox has to use the old tox1 protocol.
@@ -2381,7 +2388,7 @@ Cepandant tox1 n&apos;est pas sécurisé. Voulez-vous l&apos;utiliser tout de m�
     <message>
         <location filename="../src/widget/widget.cpp" line="500"/>
         <source>File transfers</source>
-        <translation>Transfers</translation>
+        <translation>Transfers de fichiers</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="545"/>
@@ -2427,13 +2434,13 @@ Cepandant tox1 n&apos;est pas sécurisé. Voulez-vous l&apos;utiliser tout de m�
         <location filename="../src/widget/widget.cpp" line="867"/>
         <source>Group invite</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Inviter dans le groupe</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="867"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 vous a invité dans un group. Voulez-vous le rejoindre?</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="922"/>
