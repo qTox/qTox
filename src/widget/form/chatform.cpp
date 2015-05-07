@@ -115,41 +115,7 @@ void ChatForm::setStatusMessage(QString newMessage)
 
 void ChatForm::onSendTriggered()
 {
-    QString msg = msgEdit->toPlainText();
-    if (msg.isEmpty())
-        return;
-
-    msgEdit->setLastMessage(msg); //set last message only when sending it
-
-    bool isAction = msg.startsWith("/me ");
-    if (isAction)
-        msg = msg = msg.right(msg.length() - 4);
-
-    QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
-    QDateTime timestamp = QDateTime::currentDateTime();
-
-    bool status = !Settings::getInstance().getFauxOfflineMessaging();
-
-    for (CString& c_msg : splittedMsg)
-    {
-        QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
-        QString qt_msg_hist = qt_msg;
-        if (isAction)
-            qt_msg_hist = "/me " + qt_msg;
-
-        int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
-                                                            Core::getInstance()->getSelfId().publicKey, timestamp, status);
-
-        ChatMessage::Ptr ma = addSelfMessage(qt_msg, isAction, timestamp, false);
-
-        int rec;
-        if (isAction)
-            rec = Core::getInstance()->sendAction(f->getFriendID(), qt_msg);
-        else
-            rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
-
-        getOfflineMsgEngine()->registerReceipt(rec, id, ma);
-    }
+    SendMessageStr(msgEdit->toPlainText());
 
     msgEdit->clear();
 }
@@ -768,10 +734,20 @@ void ChatForm::dropEvent(QDropEvent *ev)
             QFileInfo info(url.path());
 
             QFile file(info.absoluteFilePath());
+            if (url.isValid() && !url.isLocalFile() && (url.toString().length() < TOX_MAX_MESSAGE_LENGTH))
+            {
+                SendMessageStr(url.toString());
+                continue;
+            }
             if (!file.exists() || !file.open(QIODevice::ReadOnly))
             {
-                QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to open %1").arg(info.fileName()));
-                continue;
+                info.setFile(url.toLocalFile());
+                file.setFileName(info.absoluteFilePath());
+                if (!file.exists() || !file.open(QIODevice::ReadOnly))
+                {
+                    QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to open %1").arg(info.fileName()));
+                    continue;
+                }
             }
             if (file.isSequential())
             {
@@ -975,4 +951,42 @@ void ChatForm::hideEvent(QHideEvent*)
 OfflineMsgEngine *ChatForm::getOfflineMsgEngine()
 {
     return offlineEngine;
+}
+
+void ChatForm::SendMessageStr(QString msg)
+{
+    if (msg.isEmpty())
+        return;
+
+    bool isAction = msg.startsWith("/me ");
+    if (isAction)
+        msg = msg = msg.right(msg.length() - 4);
+
+    QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
+    QDateTime timestamp = QDateTime::currentDateTime();
+
+    for (CString& c_msg : splittedMsg)
+    {
+        QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
+        QString qt_msg_hist = qt_msg;
+        if (isAction)
+            qt_msg_hist = "/me " + qt_msg;
+
+        bool status = !Settings::getInstance().getFauxOfflineMessaging();
+
+        int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxID().publicKey, qt_msg_hist,
+                                                            Core::getInstance()->getSelfId().publicKey, timestamp, status);
+
+        ChatMessage::Ptr ma = addSelfMessage(msg, isAction, timestamp, false);
+
+        int rec;
+        if (isAction)
+            rec = Core::getInstance()->sendAction(f->getFriendID(), qt_msg);
+        else
+            rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
+
+        getOfflineMsgEngine()->registerReceipt(rec, id, ma);
+
+        msgEdit->setLastMessage(msg); //set last message only when sending it
+    }
 }
