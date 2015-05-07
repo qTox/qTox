@@ -547,6 +547,7 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
 
 void Widget::hideMainForms()
 {
+    setActiveToolMenuButton(Widget::None);
     QLayoutItem* item;
     while ((item = ui->mainHead->layout()->takeAt(0)) != 0)
         item->widget()->hide();
@@ -736,7 +737,6 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 {
     hideMainForms();
-    setActiveToolMenuButton(Widget::None);
     widget->setChatForm(*ui);
     if (activeChatroomWidget != nullptr)
         activeChatroomWidget->setAsInactiveChatroom();
