@@ -133,10 +133,13 @@ void Widget::init()
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
 
-    ui->addButton->setCheckable(true);
-    ui->groupButton->setCheckable(false);
-    ui->transferButton->setCheckable(true);
-    ui->settingsButton->setCheckable(true);
+    ui->searchContactFilterCBox->addItem(tr("All"));
+    ui->searchContactFilterCBox->addItem(tr("Online"));
+    ui->searchContactFilterCBox->addItem(tr("Offline"));
+    ui->searchContactFilterCBox->addItem(tr("Friends"));
+    ui->searchContactFilterCBox->addItem(tr("Groups"));
+
+    ui->searchContactText->setPlaceholderText("Search Contacts");
 
     if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
@@ -200,6 +203,8 @@ void Widget::init()
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
     connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
+    connect(ui->searchContactText, &QLineEdit::textChanged, this, &Widget::searchContacts);
+    connect(ui->searchContactFilterCBox, &QComboBox::currentTextChanged, this, &Widget::searchContacts);
 
     // keyboard shortcuts
     new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
@@ -645,6 +650,8 @@ void Widget::addFriend(int friendId, const QString &userId)
         newfriend->getChatForm()->onAvatarChange(friendId, avatar);
         newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
     }
+
+    searchContacts();
 }
 
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
@@ -732,6 +739,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     QString str = username; str.replace('\n', ' ');
     str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
     f->setName(str);
+    searchContacts();
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
@@ -989,6 +997,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
     g->setName(title);
     if (!author.isEmpty())
         g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
+    searchContacts();
 }
 
 void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
@@ -1047,6 +1056,7 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->getChatForm(), &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
     connect(newgroup->getChatForm(), &GroupChatForm::sendAction, core, &Core::sendGroupAction);
     connect(newgroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
+    searchContacts();
     return newgroup;
 }
 
@@ -1365,6 +1375,85 @@ Status Widget::getStatusFromString(QString status)
         return Status::Away;
     else
         return Status::Offline;
+}
+
+void Widget::searchContacts()
+{
+    QString searchString = ui->searchContactText->text();
+    int filter = ui->searchContactFilterCBox->currentIndex();
+
+    switch(filter)
+    {
+        case FilterCriteria::All:
+            hideFriends(searchString, Status::Online);
+            hideFriends(searchString, Status::Offline);
+
+            hideGroups(searchString);
+            break;
+        case FilterCriteria::Online:
+            hideFriends(searchString, Status::Online);
+            hideFriends(QString(), Status::Offline, true);
+
+            hideGroups(searchString);
+            break;
+        case FilterCriteria::Offline:
+            hideFriends(QString(), Status::Online, true);
+            hideFriends(searchString, Status::Offline);
+
+            hideGroups(QString(), true);
+            break;
+        case FilterCriteria::Friends:
+            hideFriends(searchString, Status::Online);
+            hideFriends(searchString, Status::Offline);
+
+            hideGroups(QString(), true);
+            break;
+        case FilterCriteria::Groups:
+            hideFriends(QString(), Status::Online, true);
+            hideFriends(QString(), Status::Offline, true);
+
+            hideGroups(searchString);
+            break;
+        default:
+            return;
+    }
+
+    contactListWidget->hide();
+    contactListWidget->show();
+}
+
+void Widget::hideFriends(QString searchString, Status status, bool hideAll)
+{
+    QVBoxLayout* friends = contactListWidget->getFriendLayout(status);
+    int friendCount = friends->count(), index;
+
+    for (index = 0; index<friendCount; index++)
+    {
+        FriendWidget* friendWidget = static_cast<FriendWidget*>(friends->itemAt(index)->widget());
+        QString friendName = friendWidget->getName();
+
+        if (!friendName.contains(searchString, Qt::CaseInsensitive) | hideAll)
+            friendWidget->setVisible(false);
+        else
+            friendWidget->setVisible(true);
+    }
+}
+
+void Widget::hideGroups(QString searchString, bool hideAll)
+{
+    QVBoxLayout* groups = contactListWidget->getGroupLayout();
+    int groupCount = groups->count(), index;
+
+    for (index = 0; index<groupCount; index++)
+    {
+        GroupWidget* groupWidget = static_cast<GroupWidget*>(groups->itemAt(index)->widget());
+        QString groupName = groupWidget->getName();
+
+        if (!groupName.contains(searchString, Qt::CaseInsensitive) | hideAll)
+            groupWidget->setVisible(false);
+        else
+            groupWidget->setVisible(true);
+    }
 }
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
