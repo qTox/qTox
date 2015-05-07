@@ -869,7 +869,7 @@ void ChatForm::onScreenshotClicked()
     doScreenshot();
     
     // Give the window manager a moment to open the fullscreen grabber window
-    QTimer::singleShot(500, this, &ChatForm::hideFileMenu);
+    QTimer::singleShot(500, this, SLOT(hideFileMenu()));
 }
 
 void ChatForm::doScreenshot()

@@ -109,7 +109,7 @@ void FlyoutOverlayWidget::finishedAnimation()
     
     // Delay it by a few frames to let the system catch up on rendering
     if (hide)
-        QTimer::singleShot(50, this, &FlyoutOverlayWidget::hidden);
+        QTimer::singleShot(50, this, SIGNAL(hidden()));
     
 }
 
