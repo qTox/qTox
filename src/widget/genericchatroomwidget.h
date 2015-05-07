@@ -41,6 +41,7 @@ public:
     virtual void updateStatusLight(){;}
     virtual void setChatForm(Ui::MainWindow &){;}
     virtual void resetEventFlags(){;}
+    virtual QString getStatusString(){return QString::null;}
 
     bool isActive();
     void setActive(bool active);

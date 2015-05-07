@@ -35,6 +35,7 @@ public:
     void updateStatusLight();
     void setChatForm(Ui::MainWindow &);
     void resetEventFlags();
+    QString getStatusString();
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
