@@ -19,7 +19,9 @@
 
 #include <QWidget>
 #include <QHash>
+#include <QList>
 #include "src/core/corestructs.h"
+#include "src/widget/genericchatroomwidget.h"
 
 class QVBoxLayout;
 class QGridLayout;
@@ -32,6 +34,8 @@ public:
     explicit FriendListWidget(QWidget *parent = 0, bool groupchatPosition = true);
     QVBoxLayout* getGroupLayout();
     QVBoxLayout* getFriendLayout(Status s);
+
+    QList<GenericChatroomWidget*> getAllFriends();
 
 signals:
 

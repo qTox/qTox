@@ -200,6 +200,10 @@ void Widget::init()
 
     // keyboard shortcuts
     new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(previousContact()));
+    new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
     addFriendForm->show(*ui);
     setWindowTitle(tr("Add friend"));
@@ -1235,6 +1239,23 @@ void Widget::onSplitterMoved(int pos, int index)
     saveSplitterGeometry();
 }
 
+void Widget::cycleContacts(int offset)
+{
+    if (!activeChatroomWidget)
+        return;
+
+    FriendListWidget* friendList = static_cast<FriendListWidget*>(ui->friendList->widget());
+    QList<GenericChatroomWidget*> friends = friendList->getAllFriends();
+
+    int activeIndex = friends.indexOf(activeChatroomWidget);
+    int bounded = (activeIndex + offset) % friends.length();
+
+    if(bounded < 0)
+        bounded += friends.length();
+
+    emit friends[bounded]->chatroomWidgetClicked(friends[bounded]);
+}
+
 void Widget::processOfflineMsgs()
 {
     if (OfflineMsgEngine::globalMutex.tryLock())
@@ -1271,13 +1292,12 @@ void Widget::reloadTheme()
 
 void Widget::nextContact()
 {
-    // dont know how to get current/previous/next contact from friendlistwidget
-    qDebug() << "next contact";
+    cycleContacts(1);
 }
 
 void Widget::previousContact()
 {
-    qDebug() << "previous contact";
+    cycleContacts(-1);
 }
 
 QString Widget::getStatusIconPath(Status status)

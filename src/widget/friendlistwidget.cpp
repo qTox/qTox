@@ -87,6 +87,32 @@ void FriendListWidget::onGroupchatPositionChanged(bool top)
     }
 }
 
+QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
+{
+    QList<GenericChatroomWidget*> friends;
+
+    for (int i = 0; i < mainLayout->count(); ++i)
+    {
+        QLayout* subLayout = mainLayout->itemAt(i)->layout();
+
+        if(!subLayout)
+            continue;
+
+        for (int j = 0; j < subLayout->count(); ++j)
+        {
+            GenericChatroomWidget* widget =
+                reinterpret_cast<GenericChatroomWidget*>(subLayout->itemAt(j)->widget());
+
+            if(!widget)
+                continue;
+
+            friends.append(widget);
+        }
+    }
+
+    return friends;
+}
+
 void FriendListWidget::moveWidget(QWidget *w, Status s)
 {
     QVBoxLayout* l = getFriendLayout(s);

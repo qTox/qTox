@@ -76,8 +76,6 @@ protected slots:
     void clearChatArea(bool);
     void clearChatArea();
     void onSelectAllClicked();
-    void previousContact();
-    void nextContact();
 
 protected:
     QString resolveToxID(const ToxID &id);
