@@ -16,7 +16,7 @@
 
 #include "screengrabberchooserrectitem.h"
 
-#include <complex>
+#include <cstdlib>
 
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsScene>
