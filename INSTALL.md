@@ -78,17 +78,14 @@ dnf install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel 
 ```
 
 Slackware:
-
-You can grab slackbuilds of the needed dependencies here:
+```bash
+You can grab SlackBuilds of the needed dependencies here:
 
 http://slackbuilds.org/repository/14.1/libraries/OpenAL/
-
 http://slackbuilds.org/repository/14.1/libraries/qt5/
-
 http://slackbuilds.org/repository/14.1/libraries/opencv/
-
-http://slackbuilds.org/slackbuilds/14.1/graphics/qrencode/
-
+http://slackbuilds.org/repository/14.1/graphics/qrencode/
+```
 
 ###Tox Core
 
@@ -107,6 +104,14 @@ sudo apt-get install libtool autotools-dev automake checkinstall check libopus-d
 Fedora:
 ```bash
 sudo dnf install libtool autoconf automake check check-devel
+```
+
+Slackware:
+```bash
+You can grab SlackBuilds of the needed dependencies here:
+
+http://slackbuilds.org/repository/14.1/audio/opus/
+http://slackbuilds.org/repository/14.1/libraries/libvpx/
 ```
 
 Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
