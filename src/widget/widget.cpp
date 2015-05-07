@@ -731,7 +731,6 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 
     activeChatroomWidget = widget;
     widget->setAsActiveChatroom();
-    setWindowTitle(widget->getName());
     widget->resetEventFlags();
     widget->updateStatusLight();
     QString windowTitle = widget->getName();
