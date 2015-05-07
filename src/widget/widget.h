@@ -194,6 +194,7 @@ private:
     bool eventFlag;
     bool eventIcon;
     bool wasMaximized = false;
+    uint32_t continousActivity = 0;
 };
 
 bool toxActivateEventHandler(const QByteArray& data);

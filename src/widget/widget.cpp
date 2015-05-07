@@ -1102,11 +1102,17 @@ void Widget::onUserAwayCheck()
             qDebug() << "Widget: auto away activated at" << QTime::currentTime().toString();
             emit statusSet(Status::Away);
             autoAwayActive = true;
+            continousActivity = 0;
         }
     }
-    else if (ui->statusButton->property("status").toString() == "away")
+    else if (autoAwayActive && ui->statusButton->property("status").toString() == "away")
     {
-        if (autoAwayActive && (!autoAwayTime || Platform::getIdleTime() < autoAwayTime))
+        uint32_t idleTime = Platform::getIdleTime();
+        if (idleTime < 1000)
+            continousActivity++;
+        else if (continousActivity > 0)
+            continousActivity = 0;
+        if ((!autoAwayTime || idleTime < autoAwayTime) && continousActivity > 1)
         {
             qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
             emit statusSet(Status::Online);
