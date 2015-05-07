@@ -136,7 +136,7 @@ bool SmileyPack::load(const QString& filename)
             
             cacheSmiley(file); // preload all smileys
 
-            if(!getCachedSmiley(emoticon).isNull())
+            if (!getCachedSmiley(emoticon).isNull())
                 emoticonSet.push_back(emoticon);
             
             stringElement = stringElement.nextSibling().toElement();
@@ -206,9 +206,8 @@ QIcon SmileyPack::getCachedSmiley(const QString &key)
 
     // cache it if needed
     QString file = filenameTable.value(key);
-    if (!iconCache.contains(file)) {
+    if (!iconCache.contains(file))
         cacheSmiley(file);
-    }
 
     return iconCache.value(file);
 }

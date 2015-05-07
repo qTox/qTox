@@ -283,7 +283,9 @@ void Core::checkEncryptedHistory()
             return;
         }
         else
+        {
             setPassword(pw, ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
+        }
 
         error = exists && !HistoryKeeper::checkPassword();
         dialogtxt = a + "\n" + c + "\n" + b;

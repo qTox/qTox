@@ -253,7 +253,7 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString 
     QString authorStr = author.isMine() ? Core::getInstance()->getUsername() : resolveToxID(author);
 
     ChatMessage::Ptr msg;
-    if(isAction)
+    if (isAction)
     {
         msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, false);
         previousId.clear();
@@ -270,7 +270,7 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString 
 
     insertChatMessage(msg);
 
-    if(isSent)
+    if (isSent)
         msg->markAsSent(datetime);
 
     return msg;
@@ -287,7 +287,7 @@ void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDat
     ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, author.isMine(), datetime);
     insertChatMessage(msg);
 
-    if( (author == previousId) && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter) )
+    if ((author == previousId) && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter))
         msg->hideSender();
 
     previousId = author;
@@ -333,7 +333,7 @@ void GenericChatForm::onSaveLogClicked()
 
     QString plainText;
     auto lines = chatWidget->getLines();
-    for(ChatLine::Ptr l : lines)
+    for (ChatLine::Ptr l : lines)
     {
         Timestamp* rightCol = dynamic_cast<Timestamp*>(l->getContent(2));
         ChatLineContent* middleCol = l->getContent(1);

@@ -159,7 +159,7 @@ void CameraWorker::subscribe()
                 qDebug() << "CameraWorker:" << "OpenCV exception caught: " << e.what();
             }
 
-            if(!bSuccess)
+            if (!bSuccess)
             {
                 qDebug() << "CameraWorker: Could not open camera";
             }

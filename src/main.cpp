@@ -182,15 +182,17 @@ int main(int argc, char *argv[])
             sudoprocess->start(sudo); //Where the magic actually happens, safety checks ^
             sudoprocess->waitForFinished();
 
-            if (old_app.removeRecursively()) { //We've just deleted the running program
+            if (old_app.removeRecursively()) //We've just deleted the running program
+            {
                 qDebug() << "OS X: Cleaned up old directory";
-            } else {
+            }
+            else
+            {
                 qDebug() << "OS X: This should never happen, the directory failed to delete";
             }
 
-            if (fork() != 0) { //Forking is required otherwise it won't actually cleanly launch
+            if (fork() != 0) //Forking is required otherwise it won't actually cleanly launch
                 return EXIT_UPDATE_MACX;
-            }
 
             qtoxprocess->start(qtox);
 
@@ -269,6 +271,7 @@ int main(int argc, char *argv[])
         uint32_t dest = 0;
         if (parser.isSet("p"))
             dest = Settings::getInstance().getCurrentProfileId();
+
         time_t event = ipc.postEvent("activate", QByteArray(), dest);
         if (ipc.waitUntilAccepted(event, 2))
         {

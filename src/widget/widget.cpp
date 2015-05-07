@@ -468,9 +468,7 @@ void Widget::confirmExecutableOpen(const QFileInfo file)
     if (dangerousExtensions.contains(file.suffix()))
     {
         if (!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
-        {
             return;
-        }
 
         // The user wants to run this file, so make it executable and run it
         QFile(file.filePath()).setPermissions(file.permissions() | QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup | QFile::ExeOther);
@@ -695,7 +693,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
             && Settings::getInstance().getStatusChangeNotificationEnabled())
     {
         QString fStatus = "";
-        switch(f->getStatus())
+        switch (f->getStatus())
         {
         case Status::Away:
             fStatus = tr("away", "contact status"); break;
@@ -1075,7 +1073,7 @@ bool Widget::isFriendWidgetCurActiveWidget(Friend* f)
 
 bool Widget::event(QEvent * e)
 {
-    switch(e->type())
+    switch (e->type())
     {
         case QEvent::WindowActivate:
             if (activeChatroomWidget != nullptr)
@@ -1292,6 +1290,7 @@ void Widget::clearAllReceipts()
     for (Friend *f : frnds)
         f->getChatForm()->getOfflineMsgEngine()->removeAllReciepts();
 }
+
 void Widget::reloadTheme()
 {
     QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");

@@ -20,7 +20,7 @@ QPixmap PixmapCache::get(const QString &filename, QSize size)
 {
     auto itr = cache.find(filename);
 
-    if(itr == cache.end())
+    if (itr == cache.end())
     {
         QIcon icon;
         icon.addFile(filename);

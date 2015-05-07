@@ -83,7 +83,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     setupButtons();
 
     //preview
-    if(fileInfo.direction == ToxFile::SENDING)
+    if (fileInfo.direction == ToxFile::SENDING)
     {
         showPreview(fileInfo.filePath);
         ui->progressLabel->setText(tr("Waiting to send...", "file transfer widget"));
@@ -114,7 +114,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
         filepath = QString("%1/%2%3.%4").arg(path, base, number > 0 ? QString(" (%1)").arg(QString::number(number)) : QString(), suffix);
         number++;
     }
-    while(QFileInfo(filepath).exists());
+    while (QFileInfo(filepath).exists());
 
     //Do not automatically accept the file-transfer if the path is not writable.
     //The user can still accept it manually.
@@ -126,11 +126,11 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
 
 void FileTransferWidget::acceptTransfer(const QString &filepath)
 {
-    if(filepath.isEmpty())
+    if (filepath.isEmpty())
         return;
 
     //test if writable
-    if(!Nexus::tryRemoveFile(filepath))
+    if (!Nexus::tryRemoveFile(filepath))
     {
         QMessageBox::warning(0,
                              tr("Location not writable","Title of permissions popup"),
@@ -144,7 +144,7 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
 
 void FileTransferWidget::setBackgroundColor(const QColor &c, bool whiteFont)
 {
-    if(c != backgroundColor)
+    if (c != backgroundColor)
     {
         backgroundColorAnimation->setStartValue(backgroundColor);
         backgroundColorAnimation->setEndValue(c);
@@ -161,7 +161,7 @@ void FileTransferWidget::setBackgroundColor(const QColor &c, bool whiteFont)
 
 void FileTransferWidget::setButtonColor(const QColor &c)
 {
-    if(c != buttonColor)
+    if (c != buttonColor)
     {
         buttonColorAnimation->setStartValue(buttonColor);
         buttonColorAnimation->setEndValue(c);
@@ -188,13 +188,13 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
     const int lineWidth = 1;
 
     // draw background
-    if(drawButtonAreaNeeded())
+    if (drawButtonAreaNeeded())
         painter.setClipRect(QRect(0,0,width()-buttonFieldWidth,height()));
 
     painter.setBrush(QBrush(backgroundColor));
     painter.drawRoundRect(geometry(), r * ratio, r);
 
-    if(drawButtonAreaNeeded())
+    if (drawButtonAreaNeeded())
     {
         // draw button background (top)
         painter.setBrush(QBrush(buttonColor));
@@ -213,12 +213,12 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
     QTime now = QTime::currentTime();
     qint64 dt = lastTick.msecsTo(now); //ms
 
-    if(fileInfo != file || dt < 1000)
+    if (fileInfo != file || dt < 1000)
         return;
 
     fileInfo = file;
 
-    if(fileInfo.status == ToxFile::TRANSMITTING)
+    if (fileInfo.status == ToxFile::TRANSMITTING)
     {
         // update progress
         qreal progress = static_cast<qreal>(file.bytesSent) / static_cast<qreal>(file.filesize);
@@ -238,13 +238,13 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
         meanData[meanIndex++] = bytesPerSec;
 
         qreal meanBytesPerSec = 0.0;
-        for(size_t i = 0; i < TRANSFER_ROLLING_AVG_COUNT; ++i)
+        for (size_t i = 0; i < TRANSFER_ROLLING_AVG_COUNT; ++i)
             meanBytesPerSec += meanData[i];
 
         meanBytesPerSec /= static_cast<qreal>(TRANSFER_ROLLING_AVG_COUNT);
 
         // update UI
-        if(meanBytesPerSec > 0)
+        if (meanBytesPerSec > 0)
         {
             // ETA
             QTime toGo = QTime(0,0).addSecs((file.filesize - file.bytesSent) / meanBytesPerSec);
@@ -269,7 +269,7 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
 
 void FileTransferWidget::onFileTransferAccepted(ToxFile file)
 {
-    if(fileInfo != file)
+    if (fileInfo != file)
         return;
 
     fileInfo = file;
@@ -281,7 +281,7 @@ void FileTransferWidget::onFileTransferAccepted(ToxFile file)
 
 void FileTransferWidget::onFileTransferCancelled(ToxFile file)
 {
-    if(fileInfo != file)
+    if (fileInfo != file)
         return;
 
     fileInfo = file;
@@ -296,7 +296,7 @@ void FileTransferWidget::onFileTransferCancelled(ToxFile file)
 
 void FileTransferWidget::onFileTransferPaused(ToxFile file)
 {
-    if(fileInfo != file)
+    if (fileInfo != file)
         return;
 
     fileInfo = file;
@@ -306,7 +306,7 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
     // reset mean
     meanIndex = 0;
-    for(size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
+    for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
         meanData[i] = 0.0;
 
     setBackgroundColor(Style::getColor(Style::LightGrey), false);
@@ -316,7 +316,7 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
 void FileTransferWidget::onFileTransferResumed(ToxFile file)
 {
-    if(fileInfo != file)
+    if (fileInfo != file)
         return;
 
     fileInfo = file;
@@ -326,7 +326,7 @@ void FileTransferWidget::onFileTransferResumed(ToxFile file)
 
     // reset mean
     meanIndex = 0;
-    for(size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
+    for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
         meanData[i] = 0.0;
 
     setBackgroundColor(Style::getColor(Style::LightGrey), false);
@@ -336,7 +336,7 @@ void FileTransferWidget::onFileTransferResumed(ToxFile file)
 
 void FileTransferWidget::onFileTransferFinished(ToxFile file)
 {
-    if(fileInfo != file)
+    if (fileInfo != file)
         return;
 
     fileInfo = file;
@@ -357,7 +357,7 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
     ui->bottomButton->show();
 
     // preview
-    if(fileInfo.direction == ToxFile::RECEIVING)
+    if (fileInfo.direction == ToxFile::RECEIVING)
         showPreview(fileInfo.filePath);
 
     disconnect(Core::getInstance(), 0, this, 0);
@@ -432,7 +432,7 @@ void FileTransferWidget::setupButtons()
         ui->topButton->setObjectName("cancel");
         ui->topButton->setToolTip(tr("Cancel transfer"));
 
-        if(fileInfo.direction == ToxFile::SENDING)
+        if (fileInfo.direction == ToxFile::SENDING)
         {
             ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
             ui->bottomButton->setObjectName("pause");
@@ -450,31 +450,31 @@ void FileTransferWidget::setupButtons()
 
 void FileTransferWidget::handleButton(QPushButton *btn)
 {
-    if(fileInfo.direction == ToxFile::SENDING)
+    if (fileInfo.direction == ToxFile::SENDING)
     {
-        if(btn->objectName() == "cancel")
+        if (btn->objectName() == "cancel")
             Core::getInstance()->cancelFileSend(fileInfo.friendId, fileInfo.fileNum);
-        else if(btn->objectName() == "pause")
+        else if (btn->objectName() == "pause")
             Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
-        else if(btn->objectName() == "resume")
+        else if (btn->objectName() == "resume")
             Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
     }
     else
     {
-        if(btn->objectName() == "cancel")
+        if (btn->objectName() == "cancel")
             Core::getInstance()->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        else if(btn->objectName() == "pause")
+        else if (btn->objectName() == "pause")
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        else if(btn->objectName() == "resume")
+        else if (btn->objectName() == "resume")
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
-        else if(btn->objectName() == "accept")
+        else if (btn->objectName() == "accept")
         {
             QString path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(fileInfo.fileName));
             acceptTransfer(path);
         }
     }
 
-    if(btn->objectName() == "ok")
+    if (btn->objectName() == "ok")
     {
         Widget::confirmExecutableOpen(QFileInfo(fileInfo.filePath));
     }
@@ -490,7 +490,7 @@ void FileTransferWidget::showPreview(const QString &filename)
 {
     static const QStringList previewExtensions = { "png", "jpeg", "jpg", "gif" };
 
-    if(previewExtensions.contains(QFileInfo(filename).suffix()))
+    if (previewExtensions.contains(QFileInfo(filename).suffix()))
     {
         const int size = qMax(ui->previewLabel->width(), ui->previewLabel->height());
         QPixmap pmap = QPixmap(filename).scaled(QSize(size, size), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);

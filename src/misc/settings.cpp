@@ -911,7 +911,9 @@ void Settings::setAutoAcceptDir(const ToxID &id, const QString& dir)
     if (it != friendLst.end())
     {
         it->autoAcceptDir = dir;
-    } else {
+    }
+    else
+    {
         updateFriendAdress(id.toString());
         setAutoAcceptDir(id, dir);
     }
