@@ -221,10 +221,11 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString 
     else
     {
         msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, author.isMine());
-        if(author == previousId)
+        if ( (author == previousId) && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter) )
             msg->hideSender();
 
         previousId = author;
+        prevMsgDateTime = QDateTime::currentDateTime();
     }
 
     insertChatMessage(msg);
@@ -246,10 +247,11 @@ void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDat
     ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, author.isMine(), datetime);
     insertChatMessage(msg);
 
-    if(author == previousId)
+    if( (author == previousId) && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter) )
         msg->hideSender();
 
     previousId = author;
+    prevMsgDateTime = QDateTime::currentDateTime();
 }
 
 void GenericChatForm::onEmoteButtonClicked()
@@ -372,3 +374,5 @@ void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
 {
     chatWidget->insertChatlineAtBottom(std::dynamic_pointer_cast<ChatLine>(msg));
 }
+
+

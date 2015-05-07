@@ -82,6 +82,7 @@ protected:
     void insertChatMessage(ChatMessage::Ptr msg);
 
     ToxID previousId;
+    QDateTime prevMsgDateTime;
     Widget *parent;
     QMenu menu;
     int curRow;

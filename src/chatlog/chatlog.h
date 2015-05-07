@@ -58,6 +58,8 @@ public:
 
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
+    // repetition interval sender name (sec)
+    const uint repNameAfter = 5*60;
 
 signals:
     void selectionChanged();
@@ -141,6 +143,8 @@ private:
     // layout
     QMargins margins = QMargins(10,10,10,10);
     qreal lineSpacing = 5.0f;
+
+
 
 };
 
