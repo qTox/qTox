@@ -45,9 +45,9 @@ Debian / Ubuntu:
 sudo apt-get install git
 ```
 
-Fedora:
+Fedora: (yum is now officially deprecated by dnf using yum will redirect to dnf on Fedora 21 and fail on future versions)
 ```bash
-yum install git
+sudo dnf install git
 ```
 
 
@@ -73,8 +73,8 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 
 Fedora:
 ```bash
-yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
+dnf group install "Development Tools"
+dnf install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
 ```
 
 Slackware:
@@ -106,7 +106,7 @@ sudo apt-get install libtool autotools-dev automake checkinstall check libopus-d
 
 Fedora:
 ```bash
-yum install libtool autoconf automake check check-devel
+sudo dnf install libtool autoconf automake check check-devel
 ```
 
 Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
