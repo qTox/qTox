@@ -23,7 +23,7 @@ This client runs on Windows, Linux and Mac natively.<br/>
 
 <a href="https://tux3-dev.tox.im/jenkins/job/qTox-win64-nsis/lastSuccessfulBuild/artifact/setup-qtox64.exe">Windows 64 bit download</a><br/>
 <a href="https://tux3-dev.tox.im/jenkins/job/qTox-win32-nsis/lastSuccessfulBuild/artifact/setup-qtox32.exe">Windows 32 bit download (for older hardware)</a><br/>
-<a href="https://jenkins.libtoxcore.so/job/qTox%20OS%20X/lastSuccessfulBuild/artifact/qtox.dmg">Mac OS X download </a><br/>
+<a href="https://dist-build.tox.im/qtox/osx/qtox.zip">OS X download </a><br/>
 <a href="https://jenkins.libtoxcore.so/job/qTox-linux-amd64/lastSuccessfulBuild/artifact/qt/qtox.xz">Linux binary download</a><br/>
 <a href="https://jenkins.libtoxcore.so/job/qTox-Linux-pkg/lastSuccessfulBuild/artifact/">Linux packages</a><br/>
 
