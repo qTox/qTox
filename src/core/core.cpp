@@ -61,7 +61,7 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
 
     Audio::getInstance();
 
-    videobuf = new uint8_t[videobufsize];
+    videobuf = nullptr;
 
     for (int i = 0; i < ptCounter; i++)
         pwsaltedkeys[i] = nullptr;
@@ -118,11 +118,8 @@ Core::~Core()
 
     deadifyTox();
 
-    if (videobuf)
-    {
-        delete[] videobuf;
-        videobuf=nullptr;
-    }
+    delete[] videobuf;
+    videobuf=nullptr;
 
     Audio::closeInput();
     Audio::closeOutput();

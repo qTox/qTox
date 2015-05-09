@@ -32,7 +32,8 @@
 #endif
 
 AVForm::AVForm() :
-    GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png"))
+    GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png")),
+    CamVideoSurface{nullptr}
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
@@ -70,7 +71,8 @@ void AVForm::present()
     getAudioOutDevices();
     getAudioInDevices();
 
-    bodyUI->CamVideoSurface->setSource(Camera::getInstance());
+    createVideoSurface();
+    CamVideoSurface->setSource(Camera::getInstance());
 
     Camera::getInstance()->probeProp(Camera::SATURATION);
     Camera::getInstance()->probeProp(Camera::CONTRAST);
@@ -157,12 +159,17 @@ void AVForm::onResProbingFinished(QList<QSize> res)
 
 void AVForm::hideEvent(QHideEvent *)
 {
-    bodyUI->CamVideoSurface->setSource(nullptr);
+    if (CamVideoSurface)
+    {
+        CamVideoSurface->setSource(nullptr);
+        killVideoSurface();
+    }
 }
 
 void AVForm::showEvent(QShowEvent *)
 {
-    bodyUI->CamVideoSurface->setSource(Camera::getInstance());
+    createVideoSurface();
+    CamVideoSurface->setSource(Camera::getInstance());
 }
 
 void AVForm::getAudioInDevices()
@@ -284,4 +291,26 @@ bool AVForm::eventFilter(QObject *o, QEvent *e)
         return true;
     }
     return QWidget::eventFilter(o, e);
+}
+
+void AVForm::createVideoSurface()
+{
+    if (CamVideoSurface)
+        return;
+    CamVideoSurface = new VideoSurface(bodyUI->CamFrame);
+    CamVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
+    CamVideoSurface->setMinimumSize(QSize(160, 120));
+    bodyUI->gridLayout->addWidget(CamVideoSurface, 0, 0, 1, 1);
+}
+
+void AVForm::killVideoSurface()
+{
+    if (!CamVideoSurface)
+        return;
+    QLayoutItem *child;
+    while ((child = bodyUI->gridLayout->takeAt(0)) != 0) {
+        delete child;
+    }
+    delete CamVideoSurface;
+    CamVideoSurface = nullptr;
 }

@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>808</width>
-        <height>618</height>
+        <width>824</width>
+        <height>489</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -57,22 +57,22 @@
           </item>
           <item row="2" column="1">
            <widget class="QSlider" name="playbackSlider">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
             <property name="toolTip">
              <string>Use slider to set volume of your speakers.</string>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
           <item row="7" column="1">
            <widget class="QSlider" name="microphoneSlider">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
             <property name="toolTip">
              <string>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</string>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -105,11 +105,11 @@ WARNING: slider is not supposed to work yet.</string>
           </item>
           <item row="8" column="0">
            <widget class="QCheckBox" name="filterAudio">
-            <property name="text">
-             <string>Filter audio</string>
-            </property>
             <property name="toolTip">
              <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
+            </property>
+            <property name="text">
+             <string>Filter audio</string>
             </property>
            </widget>
           </item>
@@ -129,15 +129,15 @@ WARNING: slider is not supposed to work yet.</string>
             </property>
             <item row="0" column="0">
              <widget class="QLabel" name="resolutionLabel">
-              <property name="text">
-               <string>Resolution</string>
-              </property>
               <property name="toolTip">
                <string>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</string>
+              </property>
+              <property name="text">
+               <string>Resolution</string>
               </property>
              </widget>
             </item>
@@ -230,18 +230,7 @@ which may lead to problems with video calls.</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <widget class="VideoSurface" name="CamVideoSurface" native="true">
-               <property name="minimumSize">
-                <size>
-                 <width>160</width>
-                 <height>120</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <layout class="QGridLayout" name="gridLayout"/>
            </widget>
           </item>
          </layout>
@@ -253,14 +242,6 @@ which may lead to problems with video calls.</string>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>VideoSurface</class>
-   <extends>QWidget</extends>
-   <header>src/widget/videosurface.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

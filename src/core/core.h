@@ -79,7 +79,7 @@ public:
 
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
 
-    bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
+    static bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
     bool isPasswordSet(PasswordType passtype);
     bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
 

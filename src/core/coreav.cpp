@@ -44,6 +44,10 @@ bool Core::anyActiveCalls()
 void Core::prepareCall(uint32_t friendId, int32_t callId, ToxAv* toxav, bool videoEnabled)
 {
     qDebug() << QString("Core: preparing call %1").arg(callId);
+
+    if (!videobuf)
+        videobuf = new uint8_t[videobufsize];
+
     calls[callId].callId = callId;
     calls[callId].friendId = friendId;
     calls[callId].muteMic = false;
@@ -228,6 +232,12 @@ void Core::cleanupCall(int32_t callId)
 
     Audio::unsuscribeInput();
     toxav_kill_transmission(Core::getInstance()->toxav, callId);
+
+    if (!anyActiveCalls())
+    {
+        delete[] videobuf;
+        videobuf = nullptr;
+    }
 }
 
 void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint16_t samples, void *user_data)

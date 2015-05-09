@@ -42,6 +42,9 @@ private:
     void getAudioInDevices();
     void getAudioOutDevices();
 
+    void createVideoSurface();
+    void killVideoSurface();
+
 private slots:
     void on_ContrastSlider_sliderMoved(int position);
     void on_SaturationSlider_sliderMoved(int position);
@@ -72,7 +75,7 @@ protected:
 
 private:
     Ui::AVSettings *bodyUI;
-    VideoSurface* camView;
+    VideoSurface* CamVideoSurface;
 };
 
 #endif
