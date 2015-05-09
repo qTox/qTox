@@ -372,7 +372,8 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
             pic.loadFromData(file->avatarData);
             if (!pic.isNull())
             {
-                qDebug() << "Core: Got avatar data from" << static_cast<Core*>(core)->getFriendUsername(friendId);
+                qDebug() << "Core: Got"<<file->avatarData.size()<<"bytes of avatar data from"
+                         << static_cast<Core*>(core)->getFriendUsername(friendId);
                 Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendId));
                 Settings::getInstance().saveAvatarHash(file->fileName, static_cast<Core*>(core)->getFriendAddress(friendId));
                 emit static_cast<Core*>(core)->friendAvatarChanged(friendId, pic);
