@@ -91,31 +91,33 @@ void Core::prepareCall(uint32_t friendId, int32_t callId, ToxAv* toxav, bool vid
 
 void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
 {
-    ToxAvCSettings settings;
     int friendId;
-    if (toxav_get_peer_csettings((ToxAv*)toxav, callId, 0, &settings) < 0)
+    int cap = toxav_capability_supported((ToxAv*)toxav, callId,
+                        (ToxAvCapabilities)(av_VideoEncoding|av_VideoDecoding));
+    if (!cap)
         goto fail;
 
-    friendId = toxav_get_peer_id((ToxAv*)toxav, callId, 0);
+    friendId  = toxav_get_peer_id((ToxAv*)toxav, callId, 0);
     if (friendId < 0)
         goto fail;
 
     qDebug() << "Core: Received media change from friend "<<friendId;
 
-    if (settings.call_type == av_TypeAudio)
-    {
-        calls[callId].videoEnabled = false;
-        calls[callId].sendVideoTimer->stop();
-        Camera::getInstance()->unsubscribe();
-        emit ((Core*)core)->avMediaChange(friendId, callId, false);
-    }
-    else
+    if (cap == (av_VideoEncoding|av_VideoDecoding)) // Video call
     {
         Camera::getInstance()->subscribe();
         calls[callId].videoEnabled = true;
         calls[callId].sendVideoTimer->start();
         emit ((Core*)core)->avMediaChange(friendId, callId, true);
     }
+    else // Audio call
+    {
+        calls[callId].videoEnabled = false;
+        calls[callId].sendVideoTimer->stop();
+        Camera::getInstance()->unsubscribe();
+        emit ((Core*)core)->avMediaChange(friendId, callId, false);
+    }
+
     return;
 
 fail: // Centralized error handling
