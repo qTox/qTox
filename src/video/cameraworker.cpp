@@ -173,6 +173,8 @@ void CameraWorker::unsubscribe()
     if (--refCount <= 0)
     {
         cam.release();
+        frame = cv::Mat3b();
+        queue.clear();
         refCount = 0;
     }
 }
@@ -201,7 +203,7 @@ void CameraWorker::doWork()
         return;
     }
 
-    QByteArray frameData(reinterpret_cast<char*>(frame.data), frame.total() * frame.channels());
+    QByteArray frameData = QByteArray::fromRawData(reinterpret_cast<char*>(frame.data), frame.total() * frame.channels());
 
     emit newFrameAvailable(VideoFrame{frameData, QSize(frame.cols, frame.rows), VideoFrame::BGR});
 }
