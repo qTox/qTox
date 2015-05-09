@@ -26,6 +26,11 @@ MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString 
     setSize(size);
 }
 
+MaskablePixmapWidget::~MaskablePixmapWidget()
+{
+    delete renderTarget;
+}
+
 void MaskablePixmapWidget::autopickBackground()
 {
     QImage pic = pixmap.toImage();

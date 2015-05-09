@@ -49,7 +49,7 @@ void ProfileForm::refreshProfiles()
 }
 
 ProfileForm::ProfileForm(QWidget *parent) :
-    QWidget(parent)
+    QWidget{parent}, qr{nullptr}
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
@@ -132,6 +132,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
 
 ProfileForm::~ProfileForm()
 {
+    delete qr;
     delete bodyUI;
     head->deleteLater();
 }
@@ -182,6 +183,7 @@ void ProfileForm::setToxId(const QString& id)
     toxId->setText(id);
     toxId->setCursorPosition(0);
 
+    delete qr;
     qr = new QRWidget();
     qr->setQRData("tox:"+id);
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));

@@ -99,6 +99,8 @@ private slots:
     void doScreenshot();
 
 protected:
+    void showNetcam();
+    void hideNetcam();
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);

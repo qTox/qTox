@@ -21,6 +21,11 @@ QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
     image = new QImage(size, QImage::Format_RGB32);
 }
 
+QRWidget::~QRWidget()
+{
+    delete image;
+}
+
 void QRWidget::setQRData(const QString& data)
 {
     this->data = data;

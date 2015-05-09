@@ -71,13 +71,13 @@ private:
     void beginRectChooser(QGraphicsSceneMouseEvent* event);
     
     QPixmap screenGrab;
+    QGraphicsScene* scene;
     QGraphicsView* window;
     QGraphicsPixmapItem* screenGrabDisplay;
     ScreenGrabberOverlayItem* overlay;
     ScreenGrabberChooserRectItem* chooserRect;
     ToolBoxGraphicsItem* helperToolbox;
     QGraphicsTextItem* helperTooltip;
-    
 };
 
 

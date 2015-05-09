@@ -69,7 +69,7 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     typingTimer.setSingleShot(true);
 
-    netcam = new NetCamView();
+    netcam = nullptr;
     callDurationTimer = nullptr;
     disableCallButtonsTimer = nullptr;
 
@@ -307,7 +307,7 @@ void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
         connect(videoButton, SIGNAL(clicked()),
                 this, SLOT(onHangupCallTriggered()));
 
-        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getDisplayedName());
+        showNetcam();
     }
     else
     {
@@ -349,7 +349,7 @@ void ChatForm::onAvCancel(uint32_t FriendId, int)
     enableCallButtons();
     stopCounter();
 
-    netcam->hide();
+    hideNetcam();
 
     addSystemInfoMessage(tr("%1 stopped calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
@@ -366,7 +366,7 @@ void ChatForm::onAvEnd(uint32_t FriendId, int)
 
     enableCallButtons();
     stopCounter();
-    netcam->hide();
+    hideNetcam();
 }
 
 void ChatForm::onAvRinging(uint32_t FriendId, int CallId, bool video)
@@ -424,7 +424,7 @@ void ChatForm::onAvStarting(uint32_t FriendId, int CallId, bool video)
         videoButton->setToolTip(tr("End video call"));
         connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
 
-        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getDisplayedName());
+        showNetcam();
     }
     else
     {
@@ -453,7 +453,7 @@ void ChatForm::onAvEnding(uint32_t FriendId, int)
     enableCallButtons();
     stopCounter();
 
-    netcam->hide();
+    hideNetcam();
 }
 
 void ChatForm::onAvRequestTimeout(uint32_t FriendId, int)
@@ -469,7 +469,7 @@ void ChatForm::onAvRequestTimeout(uint32_t FriendId, int)
     enableCallButtons();
     stopCounter();
 
-    netcam->hide();
+    hideNetcam();
 }
 
 void ChatForm::onAvPeerTimeout(uint32_t FriendId, int)
@@ -485,7 +485,7 @@ void ChatForm::onAvPeerTimeout(uint32_t FriendId, int)
     enableCallButtons();
     stopCounter();
 
-    netcam->hide();
+    hideNetcam();
 }
 
 void ChatForm::onAvRejected(uint32_t FriendId, int)
@@ -502,7 +502,7 @@ void ChatForm::onAvRejected(uint32_t FriendId, int)
 
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("Call rejected"), ChatMessage::INFO, QDateTime::currentDateTime()));
 
-    netcam->hide();
+    hideNetcam();
 }
 
 void ChatForm::onAvMediaChange(uint32_t FriendId, int CallId, bool video)
@@ -513,9 +513,9 @@ void ChatForm::onAvMediaChange(uint32_t FriendId, int CallId, bool video)
     qDebug() << "onAvMediaChange";
 
     if (video)
-        netcam->show(Core::getInstance()->getVideoSourceFromCall(CallId), f->getDisplayedName());
+        showNetcam();
     else
-        netcam->hide();
+        hideNetcam();
 }
 
 void ChatForm::onAnswerCallTriggered()
@@ -538,7 +538,7 @@ void ChatForm::onHangupCallTriggered()
     qDebug() << "onHangupCallTriggered";
 
     //Fixes an OS X bug with ending a call while in full screen
-    if (netcam->isFullScreen())
+    if (netcam && netcam->isFullScreen())
         netcam->showNormal();
 
     audioInputFlag = false;
@@ -606,7 +606,7 @@ void ChatForm::onCancelCallTriggered()
 
     enableCallButtons();
 
-    netcam->hide();
+    hideNetcam();
     emit cancelCall(callId, f->getFriendID());
 }
 
@@ -1034,4 +1034,20 @@ void ChatForm::SendMessageStr(QString msg)
 
         msgEdit->setLastMessage(msg); //set last message only when sending it
     }
+}
+
+void ChatForm::showNetcam()
+{
+    if (!netcam)
+        netcam = new NetCamView();
+    netcam->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
+}
+
+void ChatForm::hideNetcam()
+{
+    if (!netcam)
+        return;
+    netcam->hide();
+    delete netcam;
+    netcam = nullptr;
 }

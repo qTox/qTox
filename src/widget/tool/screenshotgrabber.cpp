@@ -34,8 +34,8 @@ ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
     : QWidget(parent)
 {
     
-    QGraphicsScene* scene = new QGraphicsScene;
-    this->window = new QGraphicsView (scene); // Top-level widget
+    scene = new QGraphicsScene;
+    window = new QGraphicsView (scene); // Top-level widget
     setupWindow();
     setupScene(scene);
     
@@ -45,6 +45,7 @@ ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
 
 ScreenshotGrabber::~ScreenshotGrabber()
 {
+    delete scene;
 }
 
 bool ScreenshotGrabber::eventFilter(QObject* object, QEvent* event)

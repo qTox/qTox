@@ -1248,7 +1248,7 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
     uint8_t* name = new uint8_t[namesize];
     tox_friend_get_name(tox, friendnumber, name, nullptr);
     QString sname = CString::toString(name, namesize);
-    delete name;
+    delete[] name;
     return sname;
 }
 
