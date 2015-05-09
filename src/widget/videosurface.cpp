@@ -52,6 +52,9 @@ VideoSurface::~VideoSurface()
     if (textureId != 0)
         glDeleteTextures(1, &textureId);
 
+    delete bgrProgramm;
+    delete yuvProgramm;
+
     unsubscribe();
 }
 
