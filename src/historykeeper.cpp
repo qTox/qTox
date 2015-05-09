@@ -138,6 +138,24 @@ HistoryKeeper::~HistoryKeeper()
     delete db;
 }
 
+void HistoryKeeper::removeFriendHistory(const QString& chat)
+{
+    int chat_id = getChatID(chat, ctSingle).first;
+
+    db->exec("BEGIN TRANSACTION;");
+
+    QString cmd = QString("DELETE FROM chats WHERE name = '%1';").arg(chat);
+    db->exec(cmd);
+    cmd = QString("DELETE FROM aliases WHERE user_id = '%1';").arg(chat);
+    db->exec(cmd);
+    cmd = QString("DELETE FROM sent_status WHERE id IN (SELECT id FROM history WHERE chat_id = '%1');").arg(chat_id);
+    db->exec(cmd);
+    cmd = QString("DELETE FROM history WHERE chat_id = '%1';").arg(chat_id);
+    db->exec(cmd);
+
+    db->exec("COMMIT TRANSACTION;");
+}
+
 qint64 HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)
 {
     QList<QString> cmds = generateAddChatEntryCmd(chat, message, sender, dt, isSent);
