@@ -121,7 +121,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
     if (Nexus::tryRemoveFile(filepath))
         Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
     else
-        qDebug() << "Warning: Cannot write to " << filepath;
+        qWarning() << "Warning: Cannot write to " << filepath;
 }
 
 void FileTransferWidget::acceptTransfer(const QString &filepath)
@@ -488,15 +488,16 @@ void FileTransferWidget::handleButton(QPushButton *btn)
 
 void FileTransferWidget::showPreview(const QString &filename)
 {
-    static const QStringList previewExtensions = { "png", "jpeg", "jpg", "gif" };
+    static const QStringList previewExtensions = { "png", "jpeg", "jpg", "gif", "PNG", "JPEG", "JPG", "GIF" };
 
     if (previewExtensions.contains(QFileInfo(filename).suffix()))
     {
         const int size = qMax(ui->previewLabel->width(), ui->previewLabel->height());
+
         QPixmap pmap = QPixmap(filename).scaled(QSize(size, size), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         ui->previewLabel->setPixmap(pmap);
         ui->previewLabel->show();
-
+        ui->previewLabel->setCursor(Qt::PointingHandCursor);
         // Show mouseover preview, but make sure it's not larger than 50% of the screen width/height
         QRect desktopSize = QApplication::desktop()->screenGeometry();
         QImage image = QImage(filename).scaled(0.5*desktopSize.width(), 0.5*desktopSize.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
