@@ -4,6 +4,8 @@
 #include <QMenu>
 #include <QFile>
 #include <QDebug>
+#include <QPainter>
+#include <QBitmap>
 #include "src/misc/settings.h"
 
 SystemTrayIcon::SystemTrayIcon()
@@ -388,6 +390,16 @@ void SystemTrayIcon::setIcon(QIcon &icon)
     #endif
     else if (backendType == SystrayBackendType::Qt)
     {
+        #ifdef Q_OS_MAC
+            // Since Qt doesn't render SVG tray icons for OSX
+            // we are forced to do this sort of a workaround!
+            QPixmap quirk(64, 64);
+            quirk.fill(Qt::transparent);
+            QPainter quirker(&quirk);
+            icon.paint(&quirker, 0, 0, 64, 64);
+            icon = QIcon(quirk);
+        #endif
+
         qtIcon->setIcon(icon);
     }
 }
