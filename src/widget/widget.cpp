@@ -857,16 +857,27 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 }
 
 void Widget::removeFriend(Friend* f, bool fake)
-{
+{    
+    QMessageBox::StandardButton removeFriendMB;
+    removeFriendMB = QMessageBox::question(this,
+                                tr("Remove history"),
+                                tr("Do you want to remove history as well?"), 
+                                QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    if (removeFriendMB == QMessageBox::Cancel)
+           return;
+    else if (removeFriendMB == QMessageBox::Yes)
+        HistoryKeeper::getInstance()->removeFriendHistory(f->getToxID().publicKey);
+        
     f->getFriendWidget()->setAsInactiveChatroom();
     if (static_cast<GenericChatroomWidget*>(f->getFriendWidget()) == activeChatroomWidget)
     {
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
+    
     FriendList::removeFriend(f->getFriendID(), fake);
     Nexus::getCore()->removeFriend(f->getFriendID(), fake);
-    HistoryKeeper::getInstance()->removeFriendHistory(f->getToxID().publicKey);
+    
     delete f;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
