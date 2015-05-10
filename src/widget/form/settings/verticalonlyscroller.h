@@ -20,6 +20,7 @@
 #include <QScrollArea>
 
 class QResizeEvent;
+class QShowEvent;
 
 class VerticalOnlyScroller : public QScrollArea
 {
@@ -29,6 +30,7 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event);
+    void showEvent(QShowEvent *event);
 };
 
 #endif // VERTICALONLYSCROLLER_H

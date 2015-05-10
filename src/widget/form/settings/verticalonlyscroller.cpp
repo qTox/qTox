@@ -15,6 +15,7 @@
 */
 
 #include <QResizeEvent>
+#include <QShowEvent>
 
 #include "verticalonlyscroller.h"
 
@@ -28,4 +29,11 @@ void VerticalOnlyScroller::resizeEvent(QResizeEvent *event)
     QScrollArea::resizeEvent(event);
     if (widget())
         widget()->setMaximumWidth(event->size().width());
+}
+
+void VerticalOnlyScroller::showEvent(QShowEvent *event)
+{
+    QScrollArea::showEvent(event);
+    if (widget())
+        widget()->setMaximumWidth(size().width());
 }

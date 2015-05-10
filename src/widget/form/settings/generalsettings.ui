@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>653</width>
-        <height>1080</height>
+        <height>1154</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -106,7 +106,7 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_6">
+              <layout class="QVBoxLayout" name="trayOptionsLayout">
                <item>
                 <widget class="QCheckBox" name="startInTray">
                  <property name="sizePolicy">
@@ -193,49 +193,8 @@ instead of system taskbar.</string>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QHBoxLayout" name="autoAwayLayout">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_8">
-              <item>
-               <widget class="QCheckBox" name="cbAutorun">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="text">
-                 <string>Autostart</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkUpdates">
-                <property name="text">
-                 <string>Check for updates on startup</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="autoLayout">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <item row="0" column="0" colspan="2">
              <widget class="QLabel" name="autoAwayLabel">
               <property name="toolTip">
                <string>Your status is changed to Away after set period of inactivity.</string>
@@ -248,7 +207,7 @@ instead of system taskbar.</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item>
              <widget class="QSpinBox" name="autoAwaySpinBox">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -273,7 +232,35 @@ instead of system taskbar.</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="startupLayout">
+            <item>
+             <widget class="QCheckBox" name="cbAutorun">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="text">
+               <string>Autostart</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkUpdates">
+              <property name="text">
+               <string>Check for updates on startup</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="autoacceptLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <item>
              <widget class="QCheckBox" name="autoacceptFiles">
               <property name="toolTip">
                <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking them.</string>
@@ -283,7 +270,7 @@ instead of system taskbar.</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
+            <item>
              <widget class="QPushButton" name="autoSaveFilesDir">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -308,58 +295,53 @@ instead of system taskbar.</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <layout class="QHBoxLayout" name="onMessageLayout">
+           <layout class="QVBoxLayout" name="newMessagesLayout">
             <property name="topMargin">
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
+             <widget class="QGroupBox" name="newMessages">
+              <property name="title">
                <string>On new message:</string>
               </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="showWindow">
-              <property name="toolTip">
-               <string comment="tooltip for Show window setting">Show qTox's window when you receive new message.</string>
-              </property>
-              <property name="text">
-               <string>Show window</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="showInFront">
-              <property name="toolTip">
-               <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
-              </property>
-              <property name="text">
-               <string>Focus window</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="notifySound">
-              <property name="toolTip">
-               <string comment="toolTip for Notify sound setting">Play a sound when you recieve message.</string>
-              </property>
-              <property name="text">
-               <string>Play sound</string>
-              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item>
+                <widget class="QCheckBox" name="notifySound">
+                 <property name="toolTip">
+                  <string comment="toolTip for Notify sound setting">Play a sound when you recieve message.</string>
+                 </property>
+                 <property name="text">
+                  <string>Play sound</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="showInFront">
+                 <property name="toolTip">
+                  <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
+                 </property>
+                 <property name="text">
+                  <string>Focus window</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="showWindow">
+                 <property name="toolTip">
+                  <string comment="tooltip for Show window setting">Show qTox's window when you receive new message.</string>
+                 </property>
+                 <property name="text">
+                  <string>Show window</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+              <zorder>showWindow</zorder>
+              <zorder>showInFront</zorder>
+              <zorder>notifySound</zorder>
+              <zorder>showWindow</zorder>
+              <zorder>showInFront</zorder>
+              <zorder>notifySound</zorder>
              </widget>
             </item>
            </layout>
@@ -457,10 +439,26 @@ will be sent to them when they appear online to you.</string>
              </widget>
             </item>
             <item row="1" column="0" colspan="2">
-             <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
+             <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0">
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>120</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
               <item alignment="Qt::AlignTop">
                <widget class="QLabel" name="smile1">
                 <property name="toolTip">
@@ -468,6 +466,9 @@ will be sent to them when they appear online to you.</string>
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -479,6 +480,9 @@ will be sent to them when they appear online to you.</string>
                 <property name="text">
                  <string/>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                </widget>
               </item>
               <item alignment="Qt::AlignTop">
@@ -488,6 +492,9 @@ will be sent to them when they appear online to you.</string>
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -499,6 +506,9 @@ will be sent to them when they appear online to you.</string>
                 <property name="text">
                  <string/>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                </widget>
               </item>
               <item alignment="Qt::AlignTop">
@@ -508,6 +518,9 @@ will be sent to them when they appear online to you.</string>
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -764,13 +777,8 @@ will be sent to them when they appear online to you.</string>
  <tabstops>
   <tabstop>scrollArea</tabstop>
   <tabstop>transComboBox</tabstop>
-  <tabstop>autoacceptFiles</tabstop>
-  <tabstop>autoSaveFilesDir</tabstop>
-  <tabstop>autoAwaySpinBox</tabstop>
   <tabstop>groupAlwaysNotify</tabstop>
   <tabstop>statusChanges</tabstop>
-  <tabstop>showWindow</tabstop>
-  <tabstop>showInFront</tabstop>
   <tabstop>useEmoticons</tabstop>
   <tabstop>smileyPackBrowser</tabstop>
   <tabstop>emoticonSize</tabstop>
@@ -786,18 +794,18 @@ will be sent to them when they appear online to you.</string>
  <resources/>
  <connections>
   <connection>
-   <sender>showSystemTray</sender>
+   <sender>showWindow</sender>
    <signal>toggled(bool)</signal>
-   <receiver>startInTray</receiver>
+   <receiver>showInFront</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>144</y>
+     <x>329</x>
+     <y>349</y>
     </hint>
     <hint type="destinationlabel">
-     <x>119</x>
-     <y>177</y>
+     <x>451</x>
+     <y>349</y>
     </hint>
    </hints>
   </connection>
@@ -834,18 +842,18 @@ will be sent to them when they appear online to you.</string>
    </hints>
   </connection>
   <connection>
-   <sender>showWindow</sender>
+   <sender>showSystemTray</sender>
    <signal>toggled(bool)</signal>
-   <receiver>showInFront</receiver>
+   <receiver>startInTray</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>329</x>
-     <y>349</y>
+     <x>105</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
-     <x>451</x>
-     <y>349</y>
+     <x>119</x>
+     <y>177</y>
     </hint>
    </hints>
   </connection>
