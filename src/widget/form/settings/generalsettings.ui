@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>653</width>
-        <height>1154</height>
+        <height>1150</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -339,9 +339,6 @@ instead of system taskbar.</string>
               <zorder>showWindow</zorder>
               <zorder>showInFront</zorder>
               <zorder>notifySound</zorder>
-              <zorder>showWindow</zorder>
-              <zorder>showInFront</zorder>
-              <zorder>notifySound</zorder>
              </widget>
             </item>
            </layout>
@@ -438,94 +435,6 @@ will be sent to them when they appear online to you.</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0" colspan="2">
-             <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0">
-              <property name="sizeConstraint">
-               <enum>QLayout::SetDefaultConstraint</enum>
-              </property>
-              <item>
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>120</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile1">
-                <property name="toolTip">
-                 <string notr="true">:)</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile2">
-                <property name="toolTip">
-                 <string notr="true">;)</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile3">
-                <property name="toolTip">
-                 <string notr="true">:p</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile4">
-                <property name="toolTip">
-                 <string notr="true">:O</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile5">
-                <property name="toolTip">
-                 <string notr="true">:'(</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
             <item row="2" column="0">
              <widget class="QLabel" name="emoticonSizeLabel">
               <property name="text">
@@ -618,6 +527,91 @@ will be sent to them when they appear online to you.</string>
             </item>
             <item row="6" column="1">
              <widget class="QComboBox" name="dateFormats"/>
+            </item>
+            <item row="1" column="0">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>80</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile1">
+                <property name="toolTip">
+                 <string notr="true">:)</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile2">
+                <property name="toolTip">
+                 <string notr="true">;)</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile3">
+                <property name="toolTip">
+                 <string notr="true">:p</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile4">
+                <property name="toolTip">
+                 <string notr="true">:O</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="smile5">
+                <property name="toolTip">
+                 <string notr="true">:'(</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>

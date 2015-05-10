@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
+    Copyright (C) 2015 by Project Tox <https://tox.im>
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
