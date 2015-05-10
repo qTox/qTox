@@ -92,9 +92,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         }
         else if (selectedItem == removeFriendAction)
         {
-            hide();
-            show(); //Toggle visibility to work around bug of repaintEvent() not being fired on parent widget when this is hidden
-            hide();
             emit removeFriend(friendId);
             return;
         }
