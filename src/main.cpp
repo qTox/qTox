@@ -43,26 +43,49 @@
 #define EXIT_UPDATE_MACX_FAIL 216
 
 #ifdef LOG_TO_FILE
-static QtMessageHandler dflt;
 static QTextStream* logFile {nullptr};
 static QMutex mutex;
+#endif
 
-void myMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
+void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
 {
-    if (!logFile)
-        return;
-
     // Silence qWarning spam due to bug in QTextBrowser (trying to open a file for base64 images)
     if (ctxt.function == QString("virtual bool QFSFileEngine::open(QIODevice::OpenMode)")
             && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
+    QString LogMsg = QString("[%1] %2:%3 : ")
+            .arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(ctxt.file).arg(ctxt.line);
+    switch (type)
+    {
+        case QtDebugMsg:
+            LogMsg += "Debug";
+            break;
+        case QtWarningMsg:
+            LogMsg += "Warning";
+            break;
+        case QtCriticalMsg:
+            LogMsg += "Critical";
+            break;
+        case QtFatalMsg:
+            LogMsg += "Fatal";
+            break;
+    }
+
+    LogMsg += ": " + msg + "\n";
+
+    QTextStream out(stderr, QIODevice::WriteOnly);
+    out << LogMsg;
+
+#ifdef LOG_TO_FILE
+    if (!logFile)
+        return;
+
     QMutexLocker locker(&mutex);
-    dflt(type, ctxt, msg);
-    *logFile << QTime::currentTime().toString("HH:mm:ss' '") << msg << '\n';
+    *logFile << LogMsg;
     logFile->flush();
-}
 #endif
+}
 
 int opencvErrorHandler(int status, const char* func_name, const char* err_msg,
                    const char* file_name, int line, void*)
@@ -74,6 +97,7 @@ int opencvErrorHandler(int status, const char* func_name, const char* err_msg,
 
 int main(int argc, char *argv[])
 {
+    qInstallMessageHandler(logMessageHandler); // Enable log as early as possible
     QApplication a(argc, argv);
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
@@ -118,17 +142,15 @@ int main(int argc, char *argv[])
 
 #ifdef LOG_TO_FILE
     logFile = new QTextStream;
-    dflt = qInstallMessageHandler(nullptr);
     QFile logfile(QDir(Settings::getSettingsDirPath()).filePath("qtox.log"));
     if (logfile.open(QIODevice::Append))
     {
         logFile->setDevice(&logfile);
         *logFile << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' file logger starting\n'");
-        qInstallMessageHandler(myMessageHandler);
     }
     else
     {
-        fprintf(stderr, "Couldn't open log file!\n");
+        qWarning() << "Couldn't open log file!\n";
         delete logFile;
         logFile = nullptr;
     }
