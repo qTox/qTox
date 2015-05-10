@@ -215,6 +215,9 @@ void Widget::init()
 
     addFriendForm->show(*ui);
     setWindowTitle(tr("Add friend"));
+    ui->addButton->setCheckable(true);
+    ui->transferButton->setCheckable(true);
+    ui->settingsButton->setCheckable(true);
     setActiveToolMenuButton(Widget::AddButton);
 
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
