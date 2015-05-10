@@ -502,7 +502,9 @@ void FileTransferWidget::showPreview(const QString &filename)
         QImage image = QImage(filename).scaled(0.5*desktopSize.width(), 0.5*desktopSize.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         QByteArray imageData;
         QBuffer buffer(&imageData);
+        buffer.open(QIODevice::WriteOnly);
         image.save(&buffer, "PNG");
+        buffer.close();
         ui->previewLabel->setToolTip("<img src=data:image/png;base64," + imageData.toBase64() + "/>");
     }
 }
