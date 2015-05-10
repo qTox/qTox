@@ -866,7 +866,6 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
     FriendList::removeFriend(f->getFriendID(), fake);
     Nexus::getCore()->removeFriend(f->getFriendID(), fake);
-    HistoryKeeper::getInstance()->removeFriendHistory(f->getToxID().publicKey);
     delete f;
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
