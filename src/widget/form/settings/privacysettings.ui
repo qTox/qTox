@@ -27,7 +27,7 @@
     <number>9</number>
    </property>
    <item>
-    <widget class="QScrollArea" name="scrollArea">
+    <widget class="VerticalOnlyScroller" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -37,7 +37,7 @@
         <x>0</x>
         <y>0</y>
         <width>380</width>
-        <height>280</height>
+        <height>391</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -131,14 +131,14 @@ Save format changes are possible, which may result in data loss.</string>
        </item>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="nospamGroup">
-         <property name="title">
-          <string>Nospam</string>
-         </property>
          <property name="toolTip">
           <string comment="toolTip for nospam">Nospam is part of your Tox ID.
 It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
 When you change nospam, your current contacts still can communicate with you,
 but new contacts need to know your new Tox ID to be able to add you.</string>
+         </property>
+         <property name="title">
+          <string>Nospam</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
@@ -181,6 +181,14 @@ but new contacts need to know your new Tox ID to be able to add you.</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>VerticalOnlyScroller</class>
+   <extends>QScrollArea</extends>
+   <header>src/widget/form/settings/verticalonlyscroller.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
