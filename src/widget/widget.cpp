@@ -859,7 +859,7 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 void Widget::removeFriend(Friend* f, bool fake)
 {    
     QMessageBox::StandardButton removeFriendMB;
-    removeFriendMB = QMessageBox::question(this,
+    removeFriendMB = QMessageBox::question(0,
                                 tr("Remove history"),
                                 tr("Do you want to remove history as well?"), 
                                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
