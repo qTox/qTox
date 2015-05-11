@@ -232,6 +232,7 @@ void Audio::playMono16Sound(const QByteArray& data)
     ALuint buffer;
     alGenBuffers(1, &buffer);
     alBufferData(buffer, AL_FORMAT_MONO16, data.data(), data.size(), 44100);
+    alSourcef(alMainSource, AL_GAIN, outputVolume);    
     alSourcei(alMainSource, AL_BUFFER, buffer);
     alSourcePlay(alMainSource);
     alDeleteBuffers(1, &buffer);
