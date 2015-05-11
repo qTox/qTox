@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>422</width>
-        <height>639</height>
+        <width>565</width>
+        <height>617</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -52,27 +52,27 @@
          <property name="title">
           <string>Public Information</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <layout class="QVBoxLayout" name="publicFieldsLayout">
-            <item>
+           <layout class="QFormLayout" name="publicFieldsLayout">
+            <item row="0" column="0">
              <widget class="QLabel" name="userNameLabel">
               <property name="text">
-               <string>Name</string>
+               <string>Name:</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="0" column="1">
              <widget class="QLineEdit" name="userName"/>
             </item>
-            <item>
+            <item row="1" column="0">
              <widget class="QLabel" name="statusMessageLabel">
               <property name="text">
-               <string>Status</string>
+               <string>Status:</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="1" column="1">
              <widget class="QLineEdit" name="statusMessage"/>
             </item>
            </layout>
