@@ -172,7 +172,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     void* tox_dns3 = tox_dns3_new(server.pubkey);
     if (!tox_dns3)
     {
-        qWarning() << "queryTox3: failed to create a tox_dns3 object for "<<server.name<<", using tox1 as a fallback";
+        qWarning() << "failed to create a tox_dns3 object for "<<server.name<<", using tox1 as a fallback";
         goto fallbackOnTox1;
     }
     uint32_t request_id;
@@ -182,7 +182,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
 
     if (dns_string_len < 0) // We can always fallback on tox1 if toxdns3 fails
     {
-        qWarning() << "queryTox3: failed to generate dns3 string for "<<server.name<<", using tox1 as a fallback";
+        qWarning() << "failed to generate dns3 string for "<<server.name<<", using tox1 as a fallback";
         goto fallbackOnTox1;
     }
 
@@ -190,7 +190,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     entry = fetchLastTextRecord(realRecord, silent);
     if (entry.isEmpty())
     {
-        qWarning() << "queryTox3: Server "<<server.name<<" returned no record, using tox1 as a fallback";
+        qWarning() << "Server "<<server.name<<" returned no record, using tox1 as a fallback";
         goto fallbackOnTox1;
     }
 
@@ -205,7 +205,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
             QString ver = entry.mid(verx, verend-verx);
             if (ver != "tox3")
             {
-                qWarning() << "queryTox3: Server "<<server.name<<" returned a bad version ("<<ver<<"), using tox1 as a fallback";
+                qWarning() << "Server "<<server.name<<" returned a bad version ("<<ver<<"), using tox1 as a fallback";
                 goto fallbackOnTox1;
             }
         }
@@ -215,7 +215,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     idx = entry.indexOf("id=");
     if (idx < 0)
     {
-        qWarning() << "queryTox3: Server "<<server.name<<" returned an empty id, using tox1 as a fallback";
+        qWarning() << "Server "<<server.name<<" returned an empty id, using tox1 as a fallback";
         goto fallbackOnTox1;
     }
 
@@ -225,7 +225,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     toxIdSize = tox_decrypt_dns3_TXT(tox_dns3, toxId, (uint8_t*)id.data(), id.size(), request_id);
     if (toxIdSize < 0) // We can always fallback on tox1 if toxdns3 fails
     {
-        qWarning() << "queryTox3: failed to decrypt dns3 reply for "<<server.name<<", using tox1 as a fallback";
+        qWarning() << "Failed to decrypt dns3 reply for "<<server.name<<", using tox1 as a fallback";
         goto fallbackOnTox1;
     }
 

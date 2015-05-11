@@ -101,7 +101,7 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
 
     if (reply->error() != QNetworkReply::NoError)
     {
-        qWarning() << "AutoUpdater: getUpdateVersion: network error: "<<reply->errorString();
+        qWarning() << "getUpdateVersion: network error: " + reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
         return versionInfo;
@@ -116,7 +116,7 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
     // Check updater protocol version
     if ((int)data[0] != '2')
     {
-        qWarning() << "AutoUpdater: getUpdateVersion: Bad version "<<(uint8_t)data[0];
+        qWarning() << "getUpdateVersion: Bad version " << (uint8_t)data[0];
         return versionInfo;
     }
 
@@ -128,7 +128,7 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
 
     if (crypto_sign_verify_detached(sig, msg, msgData.size(), key) != 0)
     {
-        qCritical() << "AutoUpdater: getUpdateVersion: RECEIVED FORGED VERSION FILE FROM "<<updateServer;
+        qCritical() << "getUpdateVersion: RECEIVED FORGED VERSION FILE FROM "<<updateServer;
         return versionInfo;
     }
 
@@ -147,14 +147,14 @@ QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
 
     if (flistData.isEmpty())
     {
-        qWarning() << "AutoUpdater::parseflist: Empty data";
+        qWarning() << "parseflist: Empty data";
         return flist;
     }
 
     // Check version
     if (flistData[0] != '1')
     {
-        qWarning() << "AutoUpdater: parseflist: Bad version "<<(uint8_t)flistData[0];
+        qWarning() << "parseflist: Bad version "<<(uint8_t)flistData[0];
         return flist;
     }
     flistData = flistData.mid(1);
@@ -162,7 +162,7 @@ QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
     // Check signature
     if (flistData.size() < (int)(crypto_sign_BYTES))
     {
-        qWarning() << "AutoUpdater::parseflist: Truncated data";
+        qWarning() << "parseflist: Truncated data";
         return flist;
     }
     else
@@ -171,7 +171,7 @@ QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
         unsigned char* msg = (unsigned char*)msgData.data();
         if (crypto_sign_verify_detached((unsigned char*)flistData.data(), msg, msgData.size(), key) != 0)
         {
-            qCritical() << "AutoUpdater: parseflist: FORGED FLIST FILE";
+            qCritical() << "parseflist: FORGED FLIST FILE";
             return flist;
         }
         flistData = flistData.mid(crypto_sign_BYTES);
@@ -211,7 +211,7 @@ QByteArray AutoUpdater::getUpdateFlist()
 
     if (reply->error() != QNetworkReply::NoError)
     {
-        qWarning() << "AutoUpdater: getUpdateFlist: network error: "<<reply->errorString();
+        qWarning() << "getUpdateFlist: network error: " + reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
         return flist;
@@ -231,7 +231,7 @@ QByteArray AutoUpdater::getLocalFlist()
     QFile flistFile("flist");
     if (!flistFile.open(QIODevice::ReadOnly))
     {
-        qWarning() << "AutoUpdater::getLocalFlist: Can't open local flist";
+        qWarning() << "getLocalFlist: Can't open local flist";
         return flist;
     }
 
@@ -269,7 +269,7 @@ AutoUpdater::UpdateFile AutoUpdater::getUpdateFile(UpdateFileMeta fileMeta)
 
     if (reply->error() != QNetworkReply::NoError)
     {
-        qWarning() << "AutoUpdater: getUpdateFile: network error: "<<reply->errorString();
+        qWarning() << "getUpdateFile: network error: " + reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
         return file;
@@ -304,7 +304,7 @@ bool AutoUpdater::downloadUpdate()
         return false;
     }
 
-    qDebug() << "AutoUpdater: Need to update "<<diff.size()<<" files";
+    qDebug() << "Need to update " << diff.size() << " files";
 
     // Create an empty directory to download updates into
     QString updateDirStr = Settings::getInstance().getSettingsDirPath() + "/update/";
@@ -314,7 +314,7 @@ bool AutoUpdater::downloadUpdate()
     updateDir = QDir(updateDirStr);
     if (!updateDir.exists())
     {
-        qWarning() << "AutoUpdater::downloadUpdate: Can't create update directory, aborting...";
+        qWarning() << "downloadUpdate: Can't create update directory, aborting...";
         isDownloadingUpdate = false;
         return false;
     }
@@ -323,7 +323,7 @@ bool AutoUpdater::downloadUpdate()
     QFile newFlistFile(updateDirStr+"flist");
     if (!newFlistFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        qWarning() << "AutoUpdater::downloadUpdate: Can't save new flist file, aborting...";
+        qWarning() << "downloadUpdate: Can't save new flist file, aborting...";
         isDownloadingUpdate = false;
         return false;
     }
@@ -343,12 +343,12 @@ bool AutoUpdater::downloadUpdate()
         QFile fileFile(updateDirStr+fileMeta.installpath);
         if (fileFile.open(QIODevice::ReadOnly) && fileFile.size() == (qint64)fileMeta.size)
         {
-            qDebug() << "AutoUpdater: Skipping already downloaded file  '"+fileMeta.installpath+"'";
+            qDebug() << "Skipping already downloaded file   '" + fileMeta.installpath+ "'";
             fileFile.close();
             continue;
         }
 
-        qDebug() << "AutoUpdater: Downloading '"+fileMeta.installpath+"' ...";
+        qDebug() << "Downloading '" + fileMeta.installpath + "' ...";
 
         // Create subdirs if necessary
         QString fileDirStr{QFileInfo(updateDirStr+fileMeta.installpath).absolutePath()};
@@ -364,7 +364,7 @@ bool AutoUpdater::downloadUpdate()
         }
         if (file.data.isNull())
         {
-            qWarning() << "AutoUpdater::downloadUpdate: Error downloading a file, aborting...";
+            qCritical() << "downloadUpdate: Error downloading a file, aborting...";
             isDownloadingUpdate = false;
             return false;
         }
@@ -373,7 +373,7 @@ bool AutoUpdater::downloadUpdate()
         if (crypto_sign_verify_detached(file.metadata.sig, (unsigned char*)file.data.data(),
                                         file.data.size(), key) != 0)
         {
-            qCritical() << "AutoUpdater: downloadUpdate: RECEIVED FORGED FILE, aborting...";
+            qCritical() << "downloadUpdate: RECEIVED FORGED FILE, aborting...";
             isDownloadingUpdate = false;
             return false;
         }
@@ -381,7 +381,7 @@ bool AutoUpdater::downloadUpdate()
         // Save
         if (!fileFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
         {
-            qWarning() << "AutoUpdater::downloadUpdate: Can't save new update file, aborting...";
+            qCritical() << "downloadUpdate: Can't save new update file, aborting...";
             isDownloadingUpdate = false;
             return false;
         }
@@ -389,7 +389,7 @@ bool AutoUpdater::downloadUpdate()
         fileFile.close();
     }
 
-    qDebug() << "AutoUpdater::downloadUpdate: The update is ready, it'll be installed on the next restart";
+    qDebug() << "downloadUpdate: The update is ready, it'll be installed on the next restart";
 
     isDownloadingUpdate = false;
     return true;
@@ -436,14 +436,14 @@ bool AutoUpdater::isLocalUpdateReady()
 
 void AutoUpdater::installLocalUpdate()
 {
-    qDebug() << "AutoUpdater: About to start the qTox updater to install a local update";
+    qDebug() << "About to start the qTox updater to install a local update";
 
     // Delete the update if we fail so we don't fail again.
 
     // Updates only for supported platforms.
     if (platform.isEmpty())
     {
-        qCritical() << "AutoUpdater: Failed to start the qTox updater, removing the update and exiting";
+        qCritical() << "Failed to start the qTox updater, removing the update and exiting";
         QString updateDirStr = Settings::getInstance().getSettingsDirPath() + "/update/";
         QDir(updateDirStr).removeRecursively();
         exit(-1);
@@ -471,7 +471,7 @@ void AutoUpdater::installLocalUpdate()
 
     // Centralized error handling
 fail:
-    qCritical() << "AutoUpdater: Failed to start the qTox updater, removing the update and exiting";
+    qCritical() << "Failed to start the qTox updater, removing the update and exiting";
     QString updateDirStr = Settings::getInstance().getSettingsDirPath() + "/update/";
     QDir(updateDirStr).removeRecursively();
     exit(-1);

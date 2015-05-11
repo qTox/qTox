@@ -80,7 +80,7 @@ QString Style::getStylesheet(const QString &filename)
         if (file.open(QFile::ReadOnly | QFile::Text))
             return resolve(file.readAll());
         else
-            qWarning() << "Style: Stylesheet " << filename << " not found";
+            qWarning() << "Stylesheet " << filename << " not found";
     }
 
     return QString();

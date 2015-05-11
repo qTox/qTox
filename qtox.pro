@@ -51,6 +51,7 @@ DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
 TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sorry
 DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
+DEFINES += QT_MESSAGELOGCONTEXT
 
 android {
     ANDROID_TOOLCHAIN=/opt/android/toolchain-r9d-17/

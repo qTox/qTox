@@ -47,7 +47,7 @@ Group::~Group()
 void Group::addPeer(int peerId, QString name)
 {
     if (peers.contains(peerId))
-        qWarning() << "Group::addPeer: peerId already used, overwriting anyway";
+        qWarning() << "addPeer: peerId already used, overwriting anyway";
     if (name.isEmpty())
         peers[peerId] = "<Unknown>";
     else

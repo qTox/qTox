@@ -121,7 +121,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
     if (Nexus::tryRemoveFile(filepath))
         Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
     else
-        qWarning() << "Warning: Cannot write to " << filepath;
+        qWarning() << "Cannot write to " << filepath;
 }
 
 void FileTransferWidget::acceptTransfer(const QString &filepath)

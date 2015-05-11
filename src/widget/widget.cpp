@@ -313,7 +313,7 @@ void Widget::updateIcons()
 
 Widget::~Widget()
 {
-    qDebug() << "Widget: Deleting Widget";
+    qDebug() << "Deleting Widget";
     AutoUpdater::abortUpdates();
     if (icon)
         icon->hide();
@@ -609,7 +609,7 @@ void Widget::reloadHistory()
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-    //qDebug() << "Widget: Adding friend with id" << userId;
+    //qDebug() << "Adding friend with id" << userId;
     ToxID userToxId = ToxID::fromString(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
     contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline);
@@ -654,7 +654,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);
     if (!avatar.isNull())
     {
-        //qWarning() << "Widget: loadded avatar for id" << userId;
+        //qWarning() << "loadded avatar for id" << userId;
         newfriend->getChatForm()->onAvatarChange(friendId, avatar);
         newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
     }
@@ -931,14 +931,14 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
             int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
             if (groupId < 0)
             {
-                qWarning() << "Widget::onGroupInviteReceived: Unable to accept  group invite";
+                qWarning() << "onGroupInviteReceived: Unable to accept  group invite";
                 return;
             }
         }
     }
     else
     {
-        qWarning() << "Widget::onGroupInviteReceived: Unknown groupchat type:"<<type;
+        qWarning() << "onGroupInviteReceived: Unknown groupchat type:"<<type;
         return;
     }
 }
@@ -979,7 +979,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
     {
-        qDebug() << "Widget::onGroupNamelistChanged: Group "<<groupnumber<<" not found, creating it";
+        qDebug() << "onGroupNamelistChanged: Group "<<groupnumber<<" not found, creating it";
         g = createGroup(groupnumber);
     }
 
@@ -1057,7 +1057,7 @@ Group *Widget::createGroup(int groupId)
     Group* g = GroupList::findGroup(groupId);
     if (g)
     {
-        qWarning() << "Widget::createGroup: Group already exists";
+        qWarning() << "createGroup: Group already exists";
         return g;
     }
 
@@ -1129,7 +1129,7 @@ void Widget::onUserAwayCheck()
     {
         if (autoAwayTime && Platform::getIdleTime() >= autoAwayTime)
         {
-            qDebug() << "Widget: auto away activated at" << QTime::currentTime().toString();
+            qDebug() << "auto away activated at" << QTime::currentTime().toString();
             emit statusSet(Status::Away);
             autoAwayActive = true;
         }
@@ -1138,7 +1138,7 @@ void Widget::onUserAwayCheck()
     {
         if (autoAwayActive && (!autoAwayTime || Platform::getIdleTime() < autoAwayTime))
         {
-            qDebug() << "Widget: auto away deactivated at" << QTime::currentTime().toString();
+            qDebug() << "auto away deactivated at" << QTime::currentTime().toString();
             emit statusSet(Status::Online);
             autoAwayActive = false;
         }
@@ -1203,7 +1203,7 @@ void Widget::onTryCreateTrayIcon()
         disconnect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
         if (!icon)
         {
-            qWarning() << "Widget: No system tray detected!";
+            qWarning() << "No system tray detected!";
             show();
         }
     }

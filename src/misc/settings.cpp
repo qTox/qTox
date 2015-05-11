@@ -204,7 +204,7 @@ void Settings::load()
         }
     }
 
-    qDebug() << "Settings: Loading from "<<filePath;
+    qDebug() << "Loading settings from " + filePath;
 
     QSettings s(filePath, QSettings::IniFormat);
     s.beginGroup("DHT Server");
@@ -390,7 +390,7 @@ void Settings::save(QString path, bool writePersonal)
 
 void Settings::saveGlobal(QString path)
 {
-    qDebug() << "Settings: Saving in " << path;
+    qDebug() << "Saving settings in " + path;
 
     QSettings s(path, QSettings::IniFormat);
 
@@ -487,11 +487,11 @@ void Settings::savePersonal(QString path)
 {
     if (currentProfile.isEmpty())
     {
-        qDebug() << "Settings: could not save personal settings because currentProfile profile is empty";
+        qDebug() << "could not save personal settings because currentProfile profile is empty";
         return;
     }
 
-    qDebug() << "Settings: Saving personal in " << path;
+    qDebug() << "Saving personal settings in " << path;
 
     QSettings ps(QFileInfo(path).dir().filePath(currentProfile + ".ini"), QSettings::IniFormat);
     ps.beginGroup("Friends");

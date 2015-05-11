@@ -32,7 +32,7 @@ QByteArray Toxme::prepareEncryptedJson(int action, QString payload)
     QPair<QByteArray, QByteArray> keypair = Core::getInstance()->getKeypair();
     if (keypair.first.isEmpty() || keypair.second.isEmpty())
     {
-        qWarning() << "Toxme::prepareEncryptedJson: Couldn't get our keypair, aborting";
+        qWarning() << "prepareEncryptedJson: Couldn't get our keypair, aborting";
         return QByteArray();
     }
 

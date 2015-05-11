@@ -50,14 +50,14 @@ void CameraWorker::onStart()
 
 void CameraWorker::_suspend()
 {
-    qDebug() << "CameraWorker: Suspend";
+    qDebug() << "Suspend";
     clock->stop();
     unsubscribe();
 }
 
 void CameraWorker::_resume()
 {
-    qDebug() << "CameraWorker: Resume";
+    qDebug() << "Resume";
     subscribe();
     clock->start();
 }
@@ -126,7 +126,7 @@ void CameraWorker::_probeResolutions()
 
         unsubscribe();
 
-        qDebug() << "CameraWorker: Resolutions" <<resolutions;
+        qDebug() << "Resolutions" <<resolutions;
     }
 
     emit resProbingFinished(resolutions);
@@ -156,12 +156,12 @@ void CameraWorker::subscribe()
             }
             catch( cv::Exception& e )
             {
-                qDebug() << "CameraWorker:" << "OpenCV exception caught: " << e.what();
+                qDebug() << "OpenCV exception caught: " << e.what();
             }
 
             if (!bSuccess)
             {
-                qDebug() << "CameraWorker: Could not open camera";
+                qDebug() << "Could not open camera";
             }
             applyProps(); // restore props
         }
@@ -192,14 +192,14 @@ void CameraWorker::doWork()
     }
     catch( cv::Exception& e )
     {
-        qDebug() << "CameraWorker:" << "OpenCV exception caught: " << e.what();;
+        qDebug() << "OpenCV exception caught: " << e.what();;
         this->clock->stop(); // prevent log spamming
-        qDebug() << "CameraWorker: stopped clock";
+        qDebug() << "stopped clock";
     }
 
     if (!bSuccess)
     {
-        qDebug() << "CameraWorker: Cannot read frame";
+        qDebug() << "Cannot read frame";
         return;
     }
 

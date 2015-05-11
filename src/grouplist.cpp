@@ -25,7 +25,7 @@ Group* GroupList::addGroup(int groupId, const QString& name, bool isAvGroupchat)
 {
     auto checker = groupList.find(groupId);
     if (checker != groupList.end())
-        qWarning() << "GroupList::addGroup: groupId already taken";
+        qWarning() << "addGroup: groupId already taken";
 
     Group* newGroup = new Group(groupId, name, isAvGroupchat);
     groupList[groupId] = newGroup;
