@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>818</width>
-        <height>510</height>
+        <width>824</width>
+        <height>489</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -40,8 +40,15 @@
          <property name="title">
           <string>Audio Settings</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <item row="7" column="0">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="2" column="3">
+           <widget class="QLabel" name="playbackMax">
+            <property name="text">
+             <string>100</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
            <widget class="QLabel" name="microphoneLabel">
             <property name="text">
              <string>Microphone</string>
@@ -55,17 +62,14 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QSlider" name="playbackSlider">
-            <property name="toolTip">
-             <string>Use slider to set volume of your speakers.</string>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="3" column="0">
+           <widget class="QLabel" name="inDevLabel">
+            <property name="text">
+             <string>Capture device</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
+          <item row="4" column="2">
            <widget class="QSlider" name="microphoneSlider">
             <property name="toolTip">
              <string>Use slider to set volume of your microphone.
@@ -76,34 +80,17 @@ WARNING: slider is not supposed to work yet.</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="outDevLabel">
-            <property name="text">
-             <string>Playback device</string>
+          <item row="2" column="2">
+           <widget class="QSlider" name="playbackSlider">
+            <property name="toolTip">
+             <string>Use slider to set volume of your speakers.</string>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="inDevLabel">
-            <property name="text">
-             <string>Capture device</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QComboBox" name="inDevCombobox"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="outDevCombobox"/>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="rescanButton">
-            <property name="text">
-             <string>Rescan audio devices</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
+          <item row="5" column="0">
            <widget class="QCheckBox" name="filterAudio">
             <property name="toolTip">
              <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
@@ -112,6 +99,47 @@ WARNING: slider is not supposed to work yet.</string>
              <string>Filter audio</string>
             </property>
            </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="outDevLabel">
+            <property name="text">
+             <string>Playback device</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="playbackMin">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="rescanButton">
+            <property name="text">
+             <string>Rescan audio devices</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="microphoneMin">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QLabel" name="microphoneMax">
+            <property name="text">
+             <string>100</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="inDevCombobox"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QComboBox" name="outDevCombobox"/>
           </item>
          </layout>
         </widget>
@@ -123,25 +151,22 @@ WARNING: slider is not supposed to work yet.</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <layout class="QFormLayout" name="formLayout">
-            <property name="fieldGrowthPolicy">
-             <enum>QFormLayout::ExpandingFieldsGrow</enum>
-            </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="resolutionLabel">
-              <property name="toolTip">
-               <string>Set resolution of your camera.
-The higher values, the better video quality your friends may get.
-Note though that with better video quality there is needed better internet connection.
-Sometimes your connection may not be good enough to handle higher video quality,
-which may lead to problems with video calls.</string>
-              </property>
-              <property name="text">
-               <string>Resolution</string>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="4" column="2">
+             <widget class="QSlider" name="ContrastSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item row="1" column="2">
+             <widget class="QSlider" name="HueSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
              <widget class="QComboBox" name="videoModescomboBox">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -158,45 +183,10 @@ which may lead to problems with video calls.</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="hueLabel">
+            <item row="4" column="1">
+             <widget class="QLabel" name="contrastMin">
               <property name="text">
-               <string>Hue</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QSlider" name="HueSlider">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="brightnessLabel">
-              <property name="text">
-               <string>Brightness</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QSlider" name="BrightnessSlider">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="saturationLabel">
-              <property name="text">
-               <string>Saturation</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QSlider" name="SaturationSlider">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <string>0</string>
               </property>
              </widget>
             </item>
@@ -207,10 +197,101 @@ which may lead to problems with video calls.</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1">
-             <widget class="QSlider" name="ContrastSlider">
+            <item row="1" column="1">
+             <widget class="QLabel" name="hueMin">
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QSlider" name="SaturationSlider">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="hueLabel">
+              <property name="text">
+               <string>Hue</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="resolutionLabel">
+              <property name="toolTip">
+               <string>Set resolution of your camera.
+The higher values, the better video quality your friends may get.
+Note though that with better video quality there is needed better internet connection.
+Sometimes your connection may not be good enough to handle higher video quality,
+which may lead to problems with video calls.</string>
+              </property>
+              <property name="text">
+               <string>Resolution</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="saturationMin">
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QSlider" name="BrightnessSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="brightnessMin">
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="saturationLabel">
+              <property name="text">
+               <string>Saturation</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="brightnessLabel">
+              <property name="text">
+               <string>Brightness</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLabel" name="hueMax">
+              <property name="text">
+               <string>100</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QLabel" name="brightnessMax">
+              <property name="text">
+               <string>100</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QLabel" name="saturationMax">
+              <property name="text">
+               <string>100</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <widget class="QLabel" name="contrastMax">
+              <property name="text">
+               <string>100</string>
               </property>
              </widget>
             </item>

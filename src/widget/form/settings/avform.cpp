@@ -50,14 +50,17 @@ AVForm::AVForm() :
     auto qcomboboxIndexChanged = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
     connect(bodyUI->inDevCombobox, qcomboboxIndexChanged, this, &AVForm::onInDevChanged);
     connect(bodyUI->outDevCombobox, qcomboboxIndexChanged, this, &AVForm::onOutDevChanged);
-    connect(bodyUI->filterAudio, SIGNAL(toggled(bool)), this, SLOT(onFilterAudioToggled(bool)));
+    connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
     bodyUI->playbackSlider->setValue(100);
+    bodyUI->microphoneSlider->setValue(100);
+    bodyUI->playbackSlider->setEnabled(false);
+    bodyUI->microphoneSlider->setEnabled(false);
 
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
-            cb->installEventFilter(this);
-            cb->setFocusPolicy(Qt::StrongFocus);
+        cb->installEventFilter(this);
+        cb->setFocusPolicy(Qt::StrongFocus);
     }
 }
 
@@ -78,7 +81,6 @@ void AVForm::present()
     Camera::getInstance()->probeProp(Camera::CONTRAST);
     Camera::getInstance()->probeProp(Camera::BRIGHTNESS);
     Camera::getInstance()->probeProp(Camera::HUE);
-
     Camera::getInstance()->probeResolutions();
 	
 	bodyUI->videoModescomboBox->blockSignals(true);
@@ -260,26 +262,37 @@ void AVForm::onFilterAudioToggled(bool filterAudio)
 void AVForm::on_HueSlider_valueChanged(int value)
 {
     Camera::getInstance()->setProp(Camera::HUE, value / 100.0);
+    bodyUI->hueMax->setText(QString::number(value));
 }
 
 void AVForm::on_BrightnessSlider_valueChanged(int value)
 {
     Camera::getInstance()->setProp(Camera::BRIGHTNESS, value / 100.0);
+    bodyUI->brightnessMax->setText(QString::number(value));
 }
 
 void AVForm::on_SaturationSlider_valueChanged(int value)
 {
     Camera::getInstance()->setProp(Camera::SATURATION, value / 100.0);
+    bodyUI->saturationMax->setText(QString::number(value));
 }
 
 void AVForm::on_ContrastSlider_valueChanged(int value)
 {
     Camera::getInstance()->setProp(Camera::CONTRAST, value / 100.0);
+    bodyUI->contrastMax->setText(QString::number(value));
 }
 
 void AVForm::on_playbackSlider_valueChanged(int value)
 {
     Audio::getInstance().outputVolume = value / 100.0;
+    bodyUI->playbackMax->setText(QString::number(value));
+}
+
+void AVForm::on_microphoneSlider_valueChanged(int value)
+{
+    Audio::getInstance().outputVolume = value / 100.0;
+    bodyUI->microphoneMax->setText(QString::number(value));
 }
 
 bool AVForm::eventFilter(QObject *o, QEvent *e)
@@ -308,9 +321,9 @@ void AVForm::killVideoSurface()
     if (!CamVideoSurface)
         return;
     QLayoutItem *child;
-    while ((child = bodyUI->gridLayout->takeAt(0)) != 0) {
+    while ((child = bodyUI->gridLayout->takeAt(0)) != 0)
         delete child;
-    }
+    
     delete CamVideoSurface;
     CamVideoSurface = nullptr;
 }
