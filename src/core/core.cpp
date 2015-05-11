@@ -363,7 +363,9 @@ void Core::process()
         tolerance = 3*CORE_DISCONNECT_TOLERANCE;
     }
 
-    toxTimer->start(qMin(tox_iteration_interval(tox), toxav_do_interval(toxav)));
+    unsigned sleeptime = qMin(tox_iteration_interval(tox), toxav_do_interval(toxav));
+    sleeptime = qMin(sleeptime, CoreFile::corefileIterationInterval());
+    toxTimer->start(sleeptime);
 }
 
 bool Core::checkConnection()

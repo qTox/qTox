@@ -13,6 +13,25 @@ QMutex CoreFile::fileSendMutex;
 QHash<uint64_t, ToxFile> CoreFile::fileMap;
 using namespace std;
 
+unsigned CoreFile::corefileIterationInterval()
+{
+    /// Sleep at most 1000ms if we have no FT, 10 for user FTs, 50 for the rest (avatars, ...)
+    constexpr unsigned fastFileInterval=10, slowFileInterval=50, idleInterval=1000;
+    unsigned interval = idleInterval;
+
+    for (ToxFile& file : fileMap)
+    {
+        if (file.status == ToxFile::TRANSMITTING)
+        {
+            if (file.fileKind == TOX_FILE_KIND_DATA)
+                return fastFileInterval;
+            else
+                interval = slowFileInterval;
+        }
+    }
+    return interval;
+}
+
 void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data)
 {
     QMutexLocker mlocker(&fileSendMutex);

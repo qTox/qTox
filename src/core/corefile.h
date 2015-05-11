@@ -24,6 +24,7 @@ class CoreFile
 private:
     CoreFile()=delete;
 
+    // Internal file sending APIs, used by Core. Public API in core.h
 private:
     static void sendFile(Core *core, uint32_t friendId, QString Filename, QString FilePath, long long filesize);
     static void sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data);
@@ -36,6 +37,9 @@ private:
     static ToxFile *findFile(uint32_t friendId, uint32_t fileId);
     static void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
     static void removeFile(uint32_t friendId, uint32_t fileId);
+    /// Returns the maximum amount of time in ms that Core should wait between two
+    /// tox_iterate calls to get good file transfer performances
+    static unsigned corefileIterationInterval();
 
 private:
     static void onFileReceiveCallback(Tox*, uint32_t friendnumber, uint32_t fileId, uint32_t kind,
