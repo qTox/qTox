@@ -437,7 +437,8 @@ SOURCES += \
     src/widget/tool/screengrabberchooserrectitem.cpp \
     src/widget/tool/screengrabberoverlayitem.cpp \
     src/widget/tool/toolboxgraphicsitem.cpp \
-    src/widget/tool/flyoutoverlaywidget.cpp
+    src/widget/tool/flyoutoverlaywidget.cpp \
+    src/widget/form/settings/verticalonlyscroller.cpp
 
 
 HEADERS += \
@@ -468,4 +469,5 @@ HEADERS += \
     src/widget/tool/screengrabberchooserrectitem.h \
     src/widget/tool/screengrabberoverlayitem.h \
     src/widget/tool/toolboxgraphicsitem.h \
-    src/widget/tool/flyoutoverlaywidget.h
+    src/widget/tool/flyoutoverlaywidget.h \
+    src/widget/form/settings/verticalonlyscroller.h

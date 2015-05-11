@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
     cvSetErrMode(CV_ErrModeParent);
     cvRedirectError(opencvErrorHandler);
 
-#ifdef Q_OS_MACX
+#if defined(Q_OS_MACX) && defined(QT_RELEASE)
     if (qApp->applicationDirPath() != "/Applications/qtox.app/Contents/MacOS") {
         qDebug() << "OS X: Not in Applications folder";
 

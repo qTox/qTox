@@ -46,7 +46,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     headLayout->addStretch(1);
 
     settingsWidgets = new QTabWidget(this);
-    settingsWidgets->setTabPosition(QTabWidget::South);
+    settingsWidgets->setTabPosition(QTabWidget::North);
 
     bodyLayout->addWidget(settingsWidgets);
 

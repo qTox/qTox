@@ -148,10 +148,12 @@ void Widget::init()
         ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
     }
 
+#ifndef Q_OS_MAC
     ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
     ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
-
     ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+#endif
 
     contactListWidget = new FriendListWidget(0, Settings::getInstance().getGroupchatPosition());
     ui->friendList->setWidget(contactListWidget);
