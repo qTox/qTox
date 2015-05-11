@@ -28,7 +28,7 @@ Friend* FriendList::addFriend(int friendId, const ToxID& userId)
 {
     auto friendChecker = friendList.find(friendId);
     if (friendChecker != friendList.end())
-        qWarning() << "FriendList::addFriend: friendId already taken";
+        qWarning() << "addFriend: friendId already taken";
 
     Friend* newfriend = new Friend(friendId, userId);
     friendList[friendId] = newfriend;

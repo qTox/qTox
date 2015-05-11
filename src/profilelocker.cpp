@@ -53,7 +53,7 @@ void ProfileLocker::unlock()
 
 void ProfileLocker::clearAllLocks()
 {
-    qDebug() << "ProfileLocker::clearAllLocks: Wiping out all lock files";
+    qDebug() << "clearAllLocks: Wiping out all lock files";
     if (lockfile)
         unlock();
 
@@ -72,7 +72,7 @@ void ProfileLocker::assertLock()
 {
     if (!lockfile)
     {
-        qCritical() << "ProfileLocker::assertLock: We don't seem to own any lock!";
+        qCritical() << "assertLock: We don't seem to own any lock!";
         deathByBrokenLock();
     }
 
@@ -82,11 +82,11 @@ void ProfileLocker::assertLock()
         unlock();
         if (lock(tmp))
         {
-            qCritical() << "ProfileLocker::assertLock: Lock file was lost, but could be restored";
+            qCritical() << "assertLock: Lock file was lost, but could be restored";
         }
         else
         {
-            qCritical() << "ProfileLocker::assertLock: Lock file was lost, and could *NOT* be restored";
+            qCritical() << "assertLock: Lock file was lost, and could *NOT* be restored";
             deathByBrokenLock();
         }
     }
@@ -94,6 +94,6 @@ void ProfileLocker::assertLock()
 
 void ProfileLocker::deathByBrokenLock()
 {
-    qCritical() << "ProfileLocker: Lock is *BROKEN*, exiting immediately";
+    qCritical() << "Lock is *BROKEN*, exiting immediately";
     abort();
 }

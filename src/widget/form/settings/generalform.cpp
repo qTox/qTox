@@ -360,7 +360,7 @@ void GeneralForm::reloadSmiles()
     QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
     if (emoticons.isEmpty())
     { // sometimes there are no emoticons available, don't crash in this case
-        qDebug() << "GeneralForm::reloadSmilies: No emoticons found";
+        qDebug() << "reloadSmilies: No emoticons found";
         return;
     }
 

@@ -112,7 +112,7 @@ QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
     if (!tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
                             pwsaltedkeys[passtype], encrypted, nullptr))
     {
-        qWarning() << "Core::encryptData: encryption failed";
+        qWarning() << "encryptData: encryption failed";
         return QByteArray();
     }
     return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
@@ -128,7 +128,7 @@ QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
     if (!tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
                               pwsaltedkeys[passtype], decrypted, nullptr))
     {
-        qWarning() << "Core::decryptData: decryption failed";
+        qWarning() << "decryptData: decryption failed";
         return QByteArray();
     }
     return QByteArray(reinterpret_cast<char*>(decrypted), sz);
@@ -147,7 +147,7 @@ QByteArray Core::getSaltFromFile(QString filename)
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly))
     {
-        qWarning() << "Core: file" << filename << "doesn't exist";
+        qWarning() << "file" << filename << "doesn't exist";
         return QByteArray();
     }
     QByteArray data = file.read(TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
@@ -156,7 +156,7 @@ QByteArray Core::getSaltFromFile(QString filename)
     uint8_t *salt = new uint8_t[TOX_PASS_SALT_LENGTH];
     if (!tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt))
     {
-        qWarning() << "Core: can't get salt from" << filename << "header";
+        qWarning() << "can't get salt from" << filename << "header";
         return QByteArray();
     }
 
@@ -263,7 +263,7 @@ void Core::checkEncryptedHistory()
         useOtherPassword(ptHistory);
         if (!exists || HistoryKeeper::checkPassword())
         {
-            qDebug() << "Core: using main password for chat history";
+            qDebug() << "using main password for chat history";
             return;
         }
         clearPassword(ptHistory);
@@ -299,7 +299,7 @@ void Core::saveConfiguration(const QString& path)
 
     if (!isReady())
     {
-        qWarning() << "Core::saveConfiguration: Tox not started, aborting!";
+        qWarning() << "saveConfiguration: Tox not started, aborting!";
         return;
     }
 
@@ -310,7 +310,7 @@ void Core::saveConfiguration(const QString& path)
         return;
     }
 
-    qDebug() << "Core: writing tox_save to " << path;
+    qDebug() << "writing tox_save to " << path;
 
     uint32_t fileSize = tox_get_savedata_size(tox);
     bool encrypt = Settings::getInstance().getEncryptTox();

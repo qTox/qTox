@@ -109,7 +109,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             {
                 dir = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"), dir);
                 autoAccept->setChecked(true);
-                qDebug() << "FriendWidget: setting auto accept dir for" << friendId << "to" << dir;
+                qDebug() << "setting auto accept dir for" << friendId << "to" << dir;
                 Settings::getInstance().setAutoAcceptDir(id, dir);
             }
         }

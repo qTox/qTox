@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            qWarning() << "Error: -p profile" << profile + ".tox" << "doesn't exist";
+            qCritical() << "-p profile" << profile + ".tox" << "doesn't exist";
             return EXIT_FAILURE;
         }
     }
