@@ -48,6 +48,10 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     settingsWidgets = new QTabWidget(this);
     settingsWidgets->setTabPosition(QTabWidget::North);
 
+    // Originally had some CSS for this (QTabBar { background-color: white; }), but it removed
+    // borders and didn't look quite right.
+    const_cast<QTabBar*>(settingsWidgets->tabBar())->setPalette(QPalette(Qt::white));
+
     bodyLayout->addWidget(settingsWidgets);
 
     GeneralForm* gfrm = new GeneralForm(this);
