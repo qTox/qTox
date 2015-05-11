@@ -54,8 +54,6 @@ AVForm::AVForm() :
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
     bodyUI->playbackSlider->setValue(100);
     bodyUI->microphoneSlider->setValue(100);
-    bodyUI->playbackSlider->setEnabled(false);
-    bodyUI->microphoneSlider->setEnabled(false);
 
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
@@ -285,13 +283,13 @@ void AVForm::on_ContrastSlider_valueChanged(int value)
 
 void AVForm::on_playbackSlider_valueChanged(int value)
 {
-    Audio::getInstance().outputVolume = value / 100.0;
+    Audio::setOutputVolume(value / 100.0);
     bodyUI->playbackMax->setText(QString::number(value));
 }
 
 void AVForm::on_microphoneSlider_valueChanged(int value)
 {
-    Audio::getInstance().outputVolume = value / 100.0;
+    Audio::setOutputVolume(value / 100.0);
     bodyUI->microphoneMax->setText(QString::number(value));
 }
 

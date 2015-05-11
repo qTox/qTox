@@ -45,6 +45,9 @@ class Audio : QObject
 public:
     static Audio& getInstance(); ///< Returns the singleton's instance. Will construct on first call.
 
+    static float getOutputVolume(); ///< Returns the current output volume, between 0 and 1
+    static void setOutputVolume(float volume); ///< The volume must be between 0 and 1
+
     static void suscribeInput(); ///< Call when you need to capture sound from the open input device.
     static void unsuscribeInput(); ///< Call once you don't need to capture on the open input device anymore.
 
@@ -75,12 +78,6 @@ public slots:
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
 
-public:
-    static QThread* audioThread;
-    static ALCcontext* alContext;
-    static ALuint alMainSource;
-    static float outputVolume;
-
 private:
     explicit Audio()=default;
     ~Audio();
@@ -91,6 +88,10 @@ private:
     static std::atomic<int> userCount;
     static ALCdevice* alOutDev, *alInDev;
     static QMutex* audioInLock, *audioOutLock;
+    static float outputVolume;
+    static ALuint alMainSource;
+    static QThread* audioThread;
+    static ALCcontext* alContext;
 };
 
 #endif // AUDIO_H

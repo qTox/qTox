@@ -75,6 +75,9 @@
              <string>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</string>
             </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -84,6 +87,9 @@ WARNING: slider is not supposed to work yet.</string>
            <widget class="QSlider" name="playbackSlider">
             <property name="toolTip">
              <string>Use slider to set volume of your speakers.</string>
+            </property>
+            <property name="maximum">
+             <number>100</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>

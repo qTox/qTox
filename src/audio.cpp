@@ -71,6 +71,32 @@ Audio::~Audio()
     delete audioOutLock;
 }
 
+float Audio::getOutputVolume()
+{
+    return outputVolume;
+}
+
+void Audio::setOutputVolume(float volume)
+{
+    outputVolume = volume;
+    alSourcef(alMainSource, AL_GAIN, outputVolume);
+
+    for (const ToxGroupCall& call : Core::groupCalls)
+    {
+        if (!call.active)
+            continue;
+        for (ALuint source : call.alSources)
+            alSourcef(source, AL_GAIN, outputVolume);
+    }
+
+    for (const ToxCall& call : Core::calls)
+    {
+        if (!call.active)
+            continue;
+        alSourcef(call.alSource, AL_GAIN, outputVolume);
+    }
+}
+
 void Audio::suscribeInput()
 {
     if (!alInDev)
