@@ -224,6 +224,7 @@ void GeneralForm::onSetShowSystemTray()
     Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
     emit parent->setShowSystemTray(bodyUI->showSystemTray->isChecked());
     bodyUI->lightTrayIcon->setEnabled(bodyUI->showSystemTray->isChecked());
+    Settings::getInstance().save();
 }
 
 void GeneralForm::onSetAutostartInTray()
@@ -284,9 +285,9 @@ void GeneralForm::onAutoAcceptFileChange()
     Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
 
     if (bodyUI->autoacceptFiles->isChecked() == true)
-        connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+        connect(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
     else
-        disconnect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()),this, SLOT(onAutoSaveDirChange()));
+        disconnect(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
 }
 
 void GeneralForm::onAutoSaveDirChange()

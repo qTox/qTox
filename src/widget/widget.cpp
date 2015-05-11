@@ -188,19 +188,19 @@ void Widget::init()
     settingsWidget = new SettingsWidget();
 
     Core* core = Nexus::getCore();
-    connect(core, SIGNAL(fileDownloadFinished(const QString&)), filesForm, SLOT(onFileDownloadComplete(const QString&)));
-    connect(core, SIGNAL(fileUploadFinished(const QString&)), filesForm, SLOT(onFileUploadComplete(const QString&)));
+    connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
+    connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
     connect(settingsWidget, &SettingsWidget::setShowSystemTray, this, &Widget::onSetShowSystemTray);
-    connect(core, SIGNAL(selfAvatarChanged(QPixmap)), profileForm, SLOT(onSelfAvatarLoaded(QPixmap)));
-    connect(ui->addButton, SIGNAL(clicked()), this, SLOT(onAddClicked()));
-    connect(ui->groupButton, SIGNAL(clicked()), this, SLOT(onGroupClicked()));
-    connect(ui->transferButton, SIGNAL(clicked()), this, SLOT(onTransferClicked()));
-    connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsClicked()));
+    connect(core, &Core::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
+    connect(ui->addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
+    connect(ui->groupButton, &QPushButton::clicked, this, &Widget::onGroupClicked);
+    connect(ui->transferButton, &QPushButton::clicked, this, &Widget::onTransferClicked);
+    connect(ui->settingsButton, &QPushButton::clicked, this, &Widget::onSettingsClicked);
     connect(profilePicture, &MaskablePixmapWidget::clicked, this, &Widget::showProfile);
     connect(ui->nameLabel, &CroppingLabel::clicked, this, &Widget::showProfile);
-    connect(ui->statusLabel, SIGNAL(textChanged(QString, QString)), this, SLOT(onStatusMessageChanged(QString, QString)));
+    connect(ui->statusLabel, &CroppingLabel::textChanged, this, &Widget::onStatusMessageChanged);
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
-    connect(addFriendForm, SIGNAL(friendRequested(QString, QString)), this, SIGNAL(friendRequested(QString, QString)));
+    connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequested);
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
@@ -364,7 +364,9 @@ void Widget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange)
     {
-        if (isMinimized() && Settings::getInstance().getMinimizeToTray())
+        if (isMinimized() &&
+                Settings::getInstance().getShowSystemTray() &&
+                Settings::getInstance().getMinimizeToTray())
             this->hide();
     }
 }
