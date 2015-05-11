@@ -235,6 +235,7 @@ void Audio::playMono16Sound(const QByteArray& data)
     alSourcei(alMainSource, AL_BUFFER, buffer);
     alSourcePlay(alMainSource);
     alDeleteBuffers(1, &buffer);
+    alSourcef(alMainSource, AL_GAIN, outputVolume);
 }
 
 void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
