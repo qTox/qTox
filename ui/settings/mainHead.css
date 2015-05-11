@@ -2,5 +2,4 @@ QWidget .QLabel, QWidget .QLineEdit
 {
     color: black;
     background: white;
-    font: @bigBold;
 }
