@@ -1214,16 +1214,25 @@ void Widget::onTryCreateTrayIcon()
 
 void Widget::setStatusOnline()
 {
+    if (!ui->statusButton->isEnabled())
+        return;
+
     Nexus::getCore()->setStatus(Status::Online);
 }
 
 void Widget::setStatusAway()
 {
+    if (!ui->statusButton->isEnabled())
+        return;
+
     Nexus::getCore()->setStatus(Status::Away);
 }
 
 void Widget::setStatusBusy()
 {
+    if (!ui->statusButton->isEnabled())
+        return;
+
     Nexus::getCore()->setStatus(Status::Busy);
 }
 
