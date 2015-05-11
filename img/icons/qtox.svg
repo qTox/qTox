@@ -1,4 +1,80 @@
-<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 256 256" xmlns:dc="http://purl.org/dc/elements/1.1/">
- <path d="m80 31 48-15 42 15v205h-90z" fill="#FFF" fill-opacity="0.33"/>
- <path d="m128.06-0.25c-31.017-0.0007-62.06 20.75-62.06 62.25v30h-16c-17.944 0-29 12.35-29 30v104c0 18.08 11.941 29.94 30 30l154 0.5c17.98 0.06 30-12.48 30-30.5v-104c0-17.94-12.07-30.583-30-30h-15l0.03-30c0.05-41.497-30.95-62.249-61.97-62.25zm-0.06 25.25c21.06 0 36 15.484 36 35 0 20.467-8 40-36 50 5-8 7-11 8-19-29 3-44-12.2-44-31s14.94-35 36-35zm0 96c14.86 0 27 11.87 27 27s-11 22.98-17.44 25.25 25.44 7.75 25.44 34.75v11c0 6-4 10-10 10h-51c-6 0-10-4-10-10v-11c0-27 26.38-34.72 26.38-34.72-5.39-1.27-17.38-10.28-17.38-25.28s12.14-27 27-27z" fill="#252325"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   viewBox="0 0 256 256"
+   id="svg2"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="qtox.svg"
+   inkscape:export-filename="/home/agilob/Projects/qTox/img/icons/qtox-512x512.png"
+   inkscape:export-xdpi="3291.4285"
+   inkscape:export-ydpi="3291.4285">
+  <title
+     id="title3340">qTox Icon</title>
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>qTox Icon</dc:title>
+        <cc:license
+           rdf:resource="GNU GPL v3" />
+        <dc:source>https://github.com/tux3/qTox</dc:source>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>qtox</rdf:li>
+            <rdf:li>tox</rdf:li>
+            <rdf:li></rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>GNU GPL v3</dc:title>
+          </cc:Agent>
+        </dc:rights>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1221"
+     inkscape:window-height="705"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="0.921875"
+     inkscape:cx="128"
+     inkscape:cy="128"
+     inkscape:window-x="75"
+     inkscape:window-y="172"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <path
+     d="M 0.81355932,17.317412 138.48587,-0.27118644 258.94915,17.317412 l 0,240.377508 -258.13559068,0 z"
+     id="path4"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:0.33000004"
+     inkscape:export-xdpi="12.55979"
+     inkscape:export-ydpi="12.55979" />
+  <path
+     d="m128.06-0.25c-31.017-0.0007-62.06 20.75-62.06 62.25v30h-16c-17.944 0-29 12.35-29 30v104c0 18.08 11.941 29.94 30 30l154 0.5c17.98 0.06 30-12.48 30-30.5v-104c0-17.94-12.07-30.583-30-30h-15l0.03-30c0.05-41.497-30.95-62.249-61.97-62.25zm-0.06 25.25c21.06 0 36 15.484 36 35 0 20.467-8 40-36 50 5-8 7-11 8-19-29 3-44-12.2-44-31s14.94-35 36-35zm0 96c14.86 0 27 11.87 27 27s-11 22.98-17.44 25.25 25.44 7.75 25.44 34.75v11c0 6-4 10-10 10h-51c-6 0-10-4-10-10v-11c0-27 26.38-34.72 26.38-34.72-5.39-1.27-17.38-10.28-17.38-25.28s12.14-27 27-27z"
+     fill="#252325"
+     id="path6" />
 </svg>
