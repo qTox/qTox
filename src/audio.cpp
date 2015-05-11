@@ -43,13 +43,6 @@ ALCcontext* Audio::alContext{nullptr};
 ALuint Audio::alMainSource{0};
 float Audio::outputVolume{1.0};
 
-void audioDebugLog(QString msg)
-{
-#if (AUDIO_DEBUG)
-    qDebug()<<"Audio: "<<msg;
-#endif
-}
-
 Audio& Audio::getInstance()
 {
     if (!instance)
@@ -82,16 +75,16 @@ void Audio::suscribeInput()
 {
     if (!alInDev)
     {
-        qWarning()<<"Audio::suscribeInput: input device is closed";
+        qWarning()<<"input device is closed";
         return;
     }
 
-    audioDebugLog("suscribing");
+    qDebug() << "suscribing input";
     QMutexLocker lock(audioInLock);
     if (!userCount++ && alInDev)
     {
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        audioDebugLog("starting capture");
+        qDebug() << "starting capture";
         alcCaptureStart(alInDev);
 #endif
     }
@@ -101,16 +94,16 @@ void Audio::unsuscribeInput()
 {
     if (!alInDev)
     {
-        qWarning()<<"Audio::unsuscribeInput: input device is closed";
+        qWarning()<<"input device is closed";
         return;
     }
 
-    audioDebugLog("unsuscribing");
+    qDebug() << "unsuscribing input";
     QMutexLocker lock(audioInLock);
     if (!--userCount && alInDev)
     {
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        audioDebugLog("stopping capture");
+        qDebug() << "stopping capture";
         alcCaptureStop(alInDev);
 #endif
     }
@@ -118,7 +111,7 @@ void Audio::unsuscribeInput()
 
 void Audio::openInput(const QString& inDevDescr)
 {
-    audioDebugLog("Trying to open input "+inDevDescr);
+    qDebug() << "Trying to open input "+inDevDescr;
     QMutexLocker lock(audioInLock);
     auto* tmp = alInDev;
     alInDev = nullptr;
@@ -135,9 +128,9 @@ void Audio::openInput(const QString& inDevDescr)
             (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
                                        / 1000 * av_DefaultSettings.audio_channels);
     if (!alInDev)
-        qWarning() << "Audio: Cannot open input audio device";
+        qWarning() << "Cannot open input audio device " + inDevDescr;
     else
-        qDebug() << "Audio: Opening audio input "<<inDevDescr;
+        qDebug() << "Opening audio input "<<inDevDescr;
 
     Core::getInstance()->resetCallSources(); // Force to regen each group call's sources
 
@@ -157,7 +150,7 @@ void Audio::openInput(const QString& inDevDescr)
 
 void Audio::openOutput(const QString& outDevDescr)
 {
-    audioDebugLog("Trying to open output "+outDevDescr);
+    qDebug() << "Trying to open output " + outDevDescr;
     QMutexLocker lock(audioOutLock);
     auto* tmp = alOutDev;
     alOutDev = nullptr;
@@ -168,7 +161,7 @@ void Audio::openOutput(const QString& outDevDescr)
 
     if (!alOutDev)
     {
-        qWarning() << "Audio: Cannot open output audio device";
+        qWarning() << "Cannot open output audio device " + outDevDescr;
     }
     else
     {
@@ -181,7 +174,7 @@ void Audio::openOutput(const QString& outDevDescr)
         alContext=alcCreateContext(alOutDev,nullptr);
         if (!alcMakeContextCurrent(alContext))
         {
-            qWarning() << "Audio: Cannot create output audio context";
+            qWarning() << "Cannot create output audio context";
             alcCloseDevice(alOutDev);
         }
         else
@@ -190,7 +183,7 @@ void Audio::openOutput(const QString& outDevDescr)
         }
 
 
-        qDebug() << "Audio: Opening audio output "<<outDevDescr;
+        qDebug() << "Opening audio output " + outDevDescr;
     }
 
     Core::getInstance()->resetCallSources(); // Force to regen each group call's sources
@@ -198,7 +191,7 @@ void Audio::openOutput(const QString& outDevDescr)
 
 void Audio::closeInput()
 {
-    audioDebugLog("Closing input");
+    qDebug() << "Closing input";
     QMutexLocker lock(audioInLock);
     if (alInDev)
     {
@@ -209,14 +202,14 @@ void Audio::closeInput()
         }
         else
         {
-            qWarning() << "Audio: Failed to close input";
+            qWarning() << "Failed to close input";
         }
     }
 }
 
 void Audio::closeOutput()
 {
-    audioDebugLog("Closing output");
+    qDebug() << "Closing output";
     QMutexLocker lock(audioOutLock);
     if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
         alcDestroyContext(alContext);
@@ -226,7 +219,7 @@ void Audio::closeOutput()
         if (alcCloseDevice(alOutDev) == ALC_TRUE)
             alOutDev = nullptr;
         else
-            qWarning() << "Audio: Failed to close output";
+            qWarning() << "Failed to close output";
     }
 }
 
@@ -299,7 +292,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
     }
     else
     {
-        qDebug() << "Audio: Dropped frame";
+        qDebug() << "Dropped frame";
         return;
     }
 

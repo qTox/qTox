@@ -28,7 +28,7 @@ void AvatarBroadcaster::sendAvatarTo(uint32_t friendId)
         return;
     if (!Core::getInstance()->isFriendOnline(friendId))
         return;
-    qDebug() << "AvatarBroadcaster: Sending avatar to "<<friendId;
+    qDebug() << "Sending avatar to " << friendId;
     Core::getInstance()->sendAvatarFile(friendId, avatarData);
     friendsSentTo[friendId] = true;
 }

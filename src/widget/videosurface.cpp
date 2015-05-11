@@ -71,7 +71,7 @@ void VideoSurface::setSource(VideoSource *src)
 void VideoSurface::initializeGL()
 {
     QGLWidget::initializeGL();
-    qDebug() << "VideoSurface: Init";
+    qDebug() << "Init";
     // pbo
     pbo[0] = new QOpenGLBuffer(QOpenGLBuffer::PixelUnpackBuffer);
     pbo[0]->setUsagePattern(QOpenGLBuffer::StreamDraw);
@@ -156,7 +156,7 @@ void VideoSurface::paintGL()
 
         if (pboAllocSize != currFrame.frameData.size())
         {
-            qDebug() << "VideoSurface: Resize pbo " << currFrame.frameData.size() << "(" << currFrame.resolution << ")" << "bytes (before" << pboAllocSize << ")";
+            qDebug() << "Resize pbo " << currFrame.frameData.size() << "(" << currFrame.resolution << ")" << "bytes (before" << pboAllocSize << ")";
 
             pbo[0]->bind();
             pbo[0]->allocate(currFrame.frameData.size());

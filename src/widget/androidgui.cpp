@@ -94,11 +94,11 @@ void AndroidGUI::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Back)
     {
-        qDebug() << "AndroidGUI: Back key pressed, quitting";
+        qDebug() << "Back key pressed, quitting";
         qApp->exit(0);
     }
     else if (event->key() == Qt::Key_Menu)
     {
-        qDebug() << "AndroidGUI: Menu key pressed";
+        qDebug() << "Menu key pressed";
     }
 }

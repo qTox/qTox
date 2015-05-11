@@ -42,7 +42,7 @@ void Nexus::start()
     if (started)
         return;
 
-    qDebug() << "Nexus: Starting up";
+    qDebug() << "Starting up";
 
     // Setup the environment
     qRegisterMetaType<Status>("Status");
