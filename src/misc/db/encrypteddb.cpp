@@ -87,7 +87,6 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
     while (!dbFile.atEnd())
     {
         QByteArray encrChunk = dbFile.read(encryptedChunkSize);
-        qDebug() << "pullFileContent: got chunk:" << encrChunk.size();
         buf = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
         if (buf.size() > 0)
         {

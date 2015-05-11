@@ -609,7 +609,6 @@ void Widget::reloadHistory()
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-    //qDebug() << "Adding friend with id" << userId;
     ToxID userToxId = ToxID::fromString(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
     contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline);
@@ -654,7 +653,6 @@ void Widget::addFriend(int friendId, const QString &userId)
     QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);
     if (!avatar.isNull())
     {
-        //qWarning() << "loadded avatar for id" << userId;
         newfriend->getChatForm()->onAvatarChange(friendId, avatar);
         newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
     }

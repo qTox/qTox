@@ -527,7 +527,6 @@ void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t 
 
 void Core::onGroupTitleChange(Tox*, int groupnumber, int peernumber, const uint8_t* title, uint8_t len, void* _core)
 {
-    qDebug() << "group" << groupnumber << "title changed by" << peernumber;
     Core* core = static_cast<Core*>(_core);
     QString author;
     if (peernumber >= 0)
@@ -573,17 +572,18 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
     }
     else
     {
-        qDebug() << "requesting friendship of "+friendAddress;
         CString cMessage(message);
 
         uint32_t friendId = tox_friend_add(tox, CFriendAddress(friendAddress).data(),
                                       cMessage.data(), cMessage.size(), nullptr);
         if (friendId == std::numeric_limits<uint32_t>::max())
         {
+            qDebug() << "Failed to request friendship";
             emit failedToAddFriend(userId);
         }
         else
         {
+            qDebug() << "Requested friendship of "<<friendId;
             // Update our friendAddresses
             Settings::getInstance().updateFriendAdress(friendAddress);
             QString inviteStr = tr("/me offers friendship.");
@@ -1287,21 +1287,18 @@ QString Core::getPeerName(const ToxID& id) const
     uint32_t friendId = tox_friend_by_public_key(tox, (uint8_t*)cid.data(), nullptr);
     if (friendId == std::numeric_limits<uint32_t>::max())
     {
-        qWarning() << "getPeerName: No such peer "+id.toString();
+        qWarning() << "getPeerName: No such peer";
         return name;
     }
 
     const size_t nameSize = tox_friend_get_name_size(tox, friendId, nullptr);
     if (nameSize == SIZE_MAX)
-    {
-        //qDebug() << "getPeerName: Can't get name of friend "+QString().setNum(friendId)+" ("+id.toString()+")";
         return name;
-    }
 
     uint8_t* cname = new uint8_t[nameSize<TOX_MAX_NAME_LENGTH ? TOX_MAX_NAME_LENGTH : nameSize];
     if (tox_friend_get_name(tox, friendId, cname, nullptr) == false)
     {
-        qWarning() << "getPeerName: Can't get name of friend "+QString().setNum(friendId)+" ("+id.toString()+")";
+        qWarning() << "getPeerName: Can't get name of friend "+QString().setNum(friendId);
         delete[] cname;
         return name;
     }

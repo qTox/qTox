@@ -432,7 +432,7 @@ bool HistoryKeeper::removeHistory(int encrypted)
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile(int encrypted)
 {
     auto msgs = getInstance()->exportMessages();
-    qDebug() << "count" << msgs.size() << "messages exported";
+    qDebug() << "Messages exported";
     if (!removeHistory(encrypted))
         qWarning() << "couldn't delete old log file!";
 
