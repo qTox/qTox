@@ -250,6 +250,7 @@ void FriendWidget::setAlias(const QString& _alias)
     Friend* f = FriendList::findFriend(friendId);
     f->setAlias(alias);
     Settings::getInstance().setFriendAlias(f->getToxID(), alias);
+    Settings::getInstance().save(true);
     hide();
     show();
 }
