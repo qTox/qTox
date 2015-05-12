@@ -1,6 +1,6 @@
 /*
-    Copyright (C) 2005-2014 by the Quassel Project and Project Tox
-    devel@quassel-irc.org and https://tox.im
+    Copyright (C) 2005-2014 by the Quassel Project
+    devel@quassel-irc.org
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 

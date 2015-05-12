@@ -4,8 +4,6 @@
     source distribution (which can be found at
     <https://hg.pidgin.im/pidgin/main/file/13e4ae613a6a/COPYRIGHT> ).
 
-    Additional Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
