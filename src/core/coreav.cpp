@@ -244,7 +244,7 @@ void Core::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint1
 {
     Q_UNUSED(user_data);
 
-    if (!calls[callId].active)
+    if (!calls[callId].active || calls[callId].muteVol)
         return;
 
     if (!calls[callId].alSource)
@@ -356,10 +356,7 @@ void Core::micMuteToggle(int32_t callId)
 void Core::volMuteToggle(int32_t callId)
 {
     if (calls[callId].active)
-    {
         calls[callId].muteVol = !calls[callId].muteVol;
-        alSourcef(calls[callId].alSource, AL_GAIN, calls[callId].muteVol ? 0.f : 1.f);
-    }
 }
 
 void Core::onAvCancel(void* _toxav, int32_t callId, void* core)
