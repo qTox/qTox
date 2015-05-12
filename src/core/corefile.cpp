@@ -320,7 +320,10 @@ void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
     {
         //qDebug("onFileDataCallback: File sending completed");
         if (file->fileKind != TOX_FILE_KIND_AVATAR)
+        {
             emit static_cast<Core*>(core)->fileTransferFinished(*file);
+            emit static_cast<Core*>(core)->fileUploadFinished(file->filePath);
+        }
         removeFile(friendId, fileId);
         return;
     }
@@ -401,6 +404,7 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
         else
         {
             emit static_cast<Core*>(core)->fileTransferFinished(*file);
+            emit static_cast<Core*>(core)->fileDownloadFinished(file->filePath);
         }
         removeFile(friendId, fileId);
         return;
