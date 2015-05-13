@@ -79,17 +79,13 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     screenshotButton = new QPushButton;
     screenshotButton->setToolTip(tr("Send a screenshot"));
     callButton = new QPushButton();
-    callButton->setFixedSize(50,40);
+    callButton->setFixedSize(50, 40);
     callButton->setToolTip(tr("Start an audio call"));
     videoButton = new QPushButton();
-    videoButton->setFixedSize(50,40);
+    videoButton->setFixedSize(50, 40);
     videoButton->setToolTip(tr("Start a video call"));
     volButton = new QPushButton();
-    //volButton->setFixedSize(25,20);
-    volButton->setToolTip("");
     micButton = new QPushButton();
-    // micButton->setFixedSize(25,20);
-    micButton->setToolTip("");
     
     fileFlyout = new FlyoutOverlayWidget;
     QHBoxLayout *fileLayout = new QHBoxLayout(fileFlyout);

@@ -1339,6 +1339,9 @@ void Widget::reloadTheme()
 
     for (Group* g : GroupList::getAllGroups())
         g->getGroupWidget()->reloadTheme();
+    
+    ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" + 
+                                                       Settings::getInstance().getTheme() + ".css"));
 }
 
 void Widget::nextContact()

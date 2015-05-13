@@ -439,6 +439,7 @@ void GeneralForm::onThemeChanged(QString currentTheme)
 {
     Settings::getInstance().setTheme(currentTheme);
     Settings::getInstance().save();
+    Widget::getInstance()->reloadTheme();
 }
 
 bool GeneralForm::eventFilter(QObject *o, QEvent *e)

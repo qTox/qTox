@@ -71,6 +71,11 @@ QTabWidget
     background-color: white;
 }
 
+QTabWidget::tab-bar
+{
+    alignment: center;
+}
+
 QTabBar
 {
     background-color: white;
@@ -79,7 +84,7 @@ QTabBar
 QScrollArea
 {
     background-color: white;
-    background: transparent; 
+    background: transparent;
 }
 
 QScrollArea > QWidget > QWidget 
@@ -212,4 +217,21 @@ QScrollBar:QScrollBar::up-arrow:horizontal
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 {
     background: none;
+}
+
+QSplitter
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    alternate-background-color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    gridline-color: rgb(255, 255, 255);
+    selection-color: rgb(255, 255, 255);
+    selection-background-color: rgb(255, 255, 255);
+}
+
+QSplitter:handle
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
 }

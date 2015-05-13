@@ -6,6 +6,7 @@
         <file alias="DejaVuSans.ttf">res/DejaVuSans.ttf</file>
     </qresource>
     <qresource prefix="css">
+        <file>ui/css/light.css</file>
         <file>ui/css/darkblue.css</file>
         <file>ui/css/wombat.css</file>
     </qresource>
@@ -102,7 +103,6 @@
         <file>ui/msgEdit/msgEdit.css</file>
         <file>ui/sendButton/sendButton.css</file>
         <file>ui/sendButton/sendButton.svg</file>
-        <file>ui/settings/mainContent.css</file>
         <file>ui/settings/mainHead.css</file>
         <file>ui/statusButton/statusButton.css</file>
         <file>ui/statusButton/menu_indicator.svg</file>
