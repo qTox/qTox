@@ -66,19 +66,34 @@ QLineEdit
     background-color: white;
 }
 
-QTabWidget
-{
+QTabBar {
     background-color: white;
+    background: gray;
+    color: black;
 }
 
-QTabWidget::tab-bar
-{
-    alignment: center;
-}
-
-QTabBar
+QTabBar::tab
 {
     background-color: white;
+    background: gray;
+    color: black;
+    padding: 8px;
+}
+
+QTabWidget::tab-bar {
+    background-color: white;
+    background: gray;
+}
+
+QTabBar::tab:selected
+{
+    background: white;
+}
+
+QTabWidget::pane {
+  border-top: 2px solid black;
+  background-color: white;
+  background: white;
 }
 
 QScrollArea
@@ -158,7 +173,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
     background: none;
 }
-
 
 QScrollBar:horizontal
 {

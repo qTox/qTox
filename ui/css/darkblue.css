@@ -39,7 +39,7 @@ QMenu::item:selected {
 
 QMenu::item {
   background-color: #1b1b1c;
-  border-color: #333337;
+  border-color: #33337;
   padding: 2px 25px 2px 20px;
 }
 
@@ -109,10 +109,49 @@ QComboBox:drop-down {
   border-style:none;
 }
 
-/*Needs fix*/
+QWidget:disabled
+{
+  color: grey;
+}
+
 QScrollBar {
   background: #3e3e42;
   border-style: none;
+}
+
+QScrollBar::add-line:vertical
+{
+    background: white;
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical
+{
+    background: white;
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:QScrollBar::down-arrow:vertical
+{
+    width: 10;
+    height: 10px;
+    background: white;
+}
+
+QScrollBar:QScrollBar::up-arrow:vertical
+{
+    width: 10px;
+    height: 10px;
+    background: white;
+}
+ 
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
+    background: none;
 }
 
 QScrollbar::horizontal {
@@ -212,4 +251,3 @@ QListView {
   background-color: #252526;
   border-style: none;
 }
-

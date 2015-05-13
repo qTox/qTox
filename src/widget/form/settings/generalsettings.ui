@@ -70,11 +70,17 @@
             </item>
             <item>
              <widget class="QComboBox" name="transComboBox">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="mouseTracking">
+               <bool>true</bool>
               </property>
               <property name="toolTip">
                <string>The translation may not load until qTox restarts.</string>
