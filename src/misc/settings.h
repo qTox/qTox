@@ -258,7 +258,6 @@ public:
     void setTheme(const QString &value);
     
     QStringList getThemesAvailable() const;
-    void setThemesAvailable(const QStringList &value);
     
 private:
     static QString genRandomProfileName();

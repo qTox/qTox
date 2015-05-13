@@ -96,10 +96,13 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
         bodyUI->styleBrowser->setCurrentText(tr("None"));
 
     for (QString color : Style::themeColorNames)
-        bodyUI->themeColorCBox->addItem(color);
+        bodyUI->styleColorCBox->addItem(color);
+    bodyUI->styleColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
 
-    bodyUI->themeColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
-
+    // light, darkblue, wombat...
+    bodyUI->themeComboBox->addItems(Settings::getInstance().getThemesAvailable());
+    bodyUI->themeComboBox->setCurrentText(Settings::getInstance().getTheme()); //current theme
+    
     bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
 
     QStringList timestamps;
@@ -159,7 +162,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
     connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
-    connect(bodyUI->themeColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onThemeColorChanged(int)));
+    connect(bodyUI->styleColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onStyleColorChanged(int)));
+    connect(bodyUI->themeComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onThemeChanged);
     connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));
     connect(bodyUI->timestamp, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimestampSelected(int)));
     connect(bodyUI->dateFormats, SIGNAL(currentIndexChanged(int)), this, SLOT(onDateFormatSelected(int)));
@@ -423,12 +427,18 @@ void GeneralForm::onGroupchatPositionChanged()
     emit parent->groupchatPositionToggled(bodyUI->cbGroupchatPosition->isChecked());
 }
 
-void GeneralForm::onThemeColorChanged(int)
+void GeneralForm::onStyleColorChanged(int)
 {
-    int index = bodyUI->themeColorCBox->currentIndex();
+    int index = bodyUI->styleColorCBox->currentIndex();
     Settings::getInstance().setThemeColor(index);
     Style::setThemeColor(index);
     Style::applyTheme();
+}
+
+void GeneralForm::onThemeChanged(QString currentTheme)
+{
+    Settings::getInstance().setTheme(currentTheme);
+    Settings::getInstance().save();
 }
 
 bool GeneralForm::eventFilter(QObject *o, QEvent *e)

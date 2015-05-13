@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>653</width>
-        <height>1150</height>
+        <y>-83</y>
+        <width>639</width>
+        <height>1191</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -108,6 +108,23 @@
              <item>
               <layout class="QVBoxLayout" name="trayOptionsLayout">
                <item>
+                <widget class="QCheckBox" name="showSystemTray">
+                 <property name="text">
+                  <string>Show system tray icon</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="lightTrayIcon">
+                 <property name="toolTip">
+                  <string comment="toolTip for light icon setting">Enable light tray icon.</string>
+                 </property>
+                 <property name="text">
+                  <string>Light icon</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QCheckBox" name="startInTray">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -120,13 +137,6 @@
                  </property>
                  <property name="text">
                   <string>Start in tray</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="showSystemTray">
-                 <property name="text">
-                  <string>Show system tray icon</string>
                  </property>
                 </widget>
                </item>
@@ -144,16 +154,6 @@ instead of closing itself.</string>
                  </property>
                  <property name="text">
                   <string>Close to tray</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="lightTrayIcon">
-                 <property name="toolTip">
-                  <string comment="toolTip for light icon setting">Enable light tray icon.</string>
-                 </property>
-                 <property name="text">
-                  <string>Light icon</string>
                  </property>
                 </widget>
                </item>
@@ -316,16 +316,6 @@ instead of system taskbar.</string>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="showInFront">
-                 <property name="toolTip">
-                  <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
-                 </property>
-                 <property name="text">
-                  <string>Focus window</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QCheckBox" name="showWindow">
                  <property name="toolTip">
                   <string comment="tooltip for Show window setting">Show qTox's window when you receive new message.</string>
@@ -335,13 +325,34 @@ instead of system taskbar.</string>
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QCheckBox" name="showInFront">
+                 <property name="toolTip">
+                  <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
+                 </property>
+                 <property name="text">
+                  <string>Focus window</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
-              <zorder>showWindow</zorder>
               <zorder>showInFront</zorder>
               <zorder>notifySound</zorder>
+              <zorder>showWindow</zorder>
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbFauxOfflineMessaging">
+            <property name="toolTip">
+             <string comment="toolTip for Faux offline messaging setting">Messages you are trying to send to your friends when they are not online
+will be sent to them when they appear online to you.</string>
+            </property>
+            <property name="text">
+             <string>Faux offline messaging</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="statusChanges">
@@ -367,17 +378,6 @@ instead of system taskbar.</string>
             </property>
             <property name="text">
              <string>Place groupchats at top of friend list</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cbFauxOfflineMessaging">
-            <property name="toolTip">
-             <string comment="toolTip for Faux offline messaging setting">Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</string>
-            </property>
-            <property name="text">
-             <string>Faux offline messaging</string>
             </property>
            </widget>
           </item>
@@ -434,99 +434,6 @@ will be sent to them when they appear online to you.</string>
                </sizepolicy>
               </property>
              </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="emoticonSizeLabel">
-              <property name="text">
-               <string>Emoticon size:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QSpinBox" name="emoticonSize">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="specialValueText">
-               <string/>
-              </property>
-              <property name="suffix">
-               <string> px</string>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>2147483647</number>
-              </property>
-              <property name="value">
-               <number>25</number>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="styleLabel">
-              <property name="text">
-               <string>Style:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QComboBox" name="styleBrowser">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="themeColorLabel">
-              <property name="text">
-               <string>Theme color:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QComboBox" name="themeColorCBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="timestampLabel">
-              <property name="text">
-               <string>Timestamp format:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QComboBox" name="timestamp">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="dateformatLabel">
-              <property name="text">
-               <string>Date format:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QComboBox" name="dateFormats"/>
             </item>
             <item row="1" column="0">
              <spacer name="horizontalSpacer_2">
@@ -612,6 +519,109 @@ will be sent to them when they appear online to you.</string>
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="emoticonSizeLabel">
+              <property name="text">
+               <string>Emoticon size:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="emoticonSize">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="specialValueText">
+               <string/>
+              </property>
+              <property name="suffix">
+               <string> px</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>2147483647</number>
+              </property>
+              <property name="value">
+               <number>25</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="styleLabel">
+              <property name="text">
+               <string>Style:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="styleBrowser">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="themeColorLabel">
+              <property name="text">
+               <string>Style color:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QComboBox" name="styleColorCBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="themeLabel">
+              <property name="text">
+               <string>Theme:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="timestampLabel">
+              <property name="text">
+               <string>Time format:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QComboBox" name="timestamp">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="dateformatLabel">
+              <property name="text">
+               <string>Date format:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QComboBox" name="dateFormats"/>
+            </item>
+            <item row="5" column="1">
+             <widget class="QComboBox" name="themeComboBox"/>
             </item>
            </layout>
           </item>
@@ -777,7 +787,7 @@ will be sent to them when they appear online to you.</string>
   <tabstop>smileyPackBrowser</tabstop>
   <tabstop>emoticonSize</tabstop>
   <tabstop>styleBrowser</tabstop>
-  <tabstop>themeColorCBox</tabstop>
+  <tabstop>styleColorCBox</tabstop>
   <tabstop>timestamp</tabstop>
   <tabstop>cbEnableUDP</tabstop>
   <tabstop>cbEnableIPv6</tabstop>
