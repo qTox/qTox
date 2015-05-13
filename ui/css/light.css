@@ -4,6 +4,12 @@ QWidget
     font: @big;
 }
 
+QWidget:disabled
+{
+    color: grey;
+    background: white;
+}
+
 QTextEdit
 {
     border-color: @lightGrey;
@@ -29,11 +35,6 @@ QCheckBox
     color: black;    
 }
 
-QCheckBox:disabled
-{
-    color: grey;
-}
-
 QSpinBox
 {
     background: white;
@@ -49,6 +50,17 @@ QGroupBox
     color: black;
     background-color: white;
     font: @bigBold;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin-top: 1.2em;
+}
+
+QGroupBox::title
+{
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    background-color: white;
+    color: black;
 }
 
 QComboBox
@@ -94,6 +106,16 @@ QTabWidget::pane {
   border-top: 2px solid black;
   background-color: white;
   background: white;
+}
+
+QToolTip
+{
+    color: black;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding: 1 2 0.5ex;
+    opacity: 200;
 }
 
 QScrollArea
