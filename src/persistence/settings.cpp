@@ -464,6 +464,16 @@ void Settings::savePersonal(QString profileName, QString password)
 
     ps.save();
 }
+QStringList Settings::getThemesAvailable() const
+{
+    return themesAvailable;
+}
+
+void Settings::setThemesAvailable(const QStringList &value)
+{
+    themesAvailable = value;
+}
+
 QString Settings::getTheme() const
 {
     return theme;
