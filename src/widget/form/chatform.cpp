@@ -815,7 +815,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         // Show each messages
         ToxID authorId = ToxID::fromString(it.sender);
         QString authorStr = authorId.isMine() ? Core::getInstance()->getUsername() : resolveToxID(authorId);
-        bool isAction = it.message.startsWith("/me ");
+        bool isAction = it.message.startsWith("/me ") || it.message.startsWith("/ME ");
 
         ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
                                                               isAction ? it.message.right(it.message.length() - 4) : it.message,
@@ -999,7 +999,7 @@ void ChatForm::SendMessageStr(QString msg)
     if (msg.isEmpty())
         return;
 
-    bool isAction = msg.startsWith("/me ");
+    bool isAction = msg.startsWith("/me ") || msg.startsWith("/ME ");
     if (isAction)
         msg = msg = msg.right(msg.length() - 4);
 
