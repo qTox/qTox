@@ -257,6 +257,9 @@ public:
     QString getTheme() const;
     void setTheme(const QString &value);
     
+    QStringList getThemesAvailable() const;
+    void setThemesAvailable(const QStringList &value);
+    
 private:
     static QString genRandomProfileName();
     
@@ -327,8 +330,9 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
-    QString style;
-    QString theme;
+    QString style; //Qt style, like Fustion, GTK, Windows98
+    QStringList themesAvailable = {"light", "darkblue", "wombat"}; //list of css files
+    QString theme; //style loaded from CSS, darkblue, light
     bool showSystemTray;
 
     // ChatView

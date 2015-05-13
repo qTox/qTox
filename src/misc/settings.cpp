@@ -513,6 +513,16 @@ void Settings::savePersonal(QString path)
         ps.setValue("encryptTox", encryptTox);
     ps.endGroup();
 }
+QStringList Settings::getThemesAvailable() const
+{
+    return themesAvailable;
+}
+
+void Settings::setThemesAvailable(const QStringList &value)
+{
+    themesAvailable = value;
+}
+
 QString Settings::getTheme() const
 {
     return theme;
