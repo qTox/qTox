@@ -12,10 +12,11 @@
     See the COPYING file for more details.
 */
 
+#include <QtCore/qsystemdetection.h>
 #if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
+#include <QDebug>
 #include "src/platform/timer.h"
 #include <X11/extensions/scrnsaver.h>
-
 
 uint32_t Platform::getIdleTime()
 {

@@ -17,11 +17,11 @@
     See the COPYING file for more details.
 */
 
+#include <QtCore/qsystemdetection.h>
 #if defined(__APPLE__) && defined(__MACH__)
 #include "src/platform/timer.h"
 #include <IOKit/IOKitLib.h>
 #include <CoreFoundation/CoreFoundation.h>
-
 
 uint32_t Platform::getIdleTime()
 {
