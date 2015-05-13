@@ -110,12 +110,12 @@ QComboBox:drop-down {
 }
 
 /*Needs fix*/
-QScrollBar{
+QScrollBar {
   background:#3e3e42;
   border-style:none;
 }
 
-QScrollbar::horizontal{
+QScrollbar::horizontal {
      height: 15px;
      margin: 0px 20px 0 20px;
 }
@@ -150,12 +150,12 @@ QToolButton:pressed {
   background:#3e3e42;
 }
 
-QDoubleSpinBox, QSpinBox, QTimeEdit, QNumberSpinBox,
+QDoubleSpinBox, QSplitter::handle, QSplitter, QSpinBox, QTimeEdit, QNumberSpinBox,
 QListBox, QDateEdit, QDateTime, QDateTimeEdit, QComboBox, QLineEdit {
     padding: 2px;
     border-width: 1px;
     border-color: black;
-    background-color:#3f3f46;    
+    background-color:#3f3f46;
 }
 
 QLabel {
