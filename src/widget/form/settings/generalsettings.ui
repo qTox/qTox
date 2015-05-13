@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>653</width>
-        <height>1150</height>
+        <width>639</width>
+        <height>1163</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -108,6 +108,32 @@
              <item>
               <layout class="QVBoxLayout" name="trayOptionsLayout">
                <item>
+                <widget class="QCheckBox" name="showSystemTray">
+                 <property name="mouseTracking">
+                  <bool>false</bool>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Show system tray icon</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="lightTrayIcon">
+                 <property name="toolTip">
+                  <string comment="toolTip for light icon setting">Enable light tray icon.</string>
+                 </property>
+                 <property name="text">
+                  <string>Light icon</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QCheckBox" name="startInTray">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -120,13 +146,6 @@
                  </property>
                  <property name="text">
                   <string>Start in tray</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="showSystemTray">
-                 <property name="text">
-                  <string>Show system tray icon</string>
                  </property>
                 </widget>
                </item>
@@ -144,16 +163,6 @@ instead of closing itself.</string>
                  </property>
                  <property name="text">
                   <string>Close to tray</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="lightTrayIcon">
-                 <property name="toolTip">
-                  <string comment="toolTip for light icon setting">Enable light tray icon.</string>
-                 </property>
-                 <property name="text">
-                  <string>Light icon</string>
                  </property>
                 </widget>
                </item>

@@ -52,10 +52,10 @@ ProfileForm::ProfileForm(QWidget *parent) :
     core = Core::getInstance();
 
     head = new QWidget(this);
-    QHBoxLayout* headLayout = new QHBoxLayout();
+    QHBoxLayout* headLayout = new QHBoxLayout(this);
     head->setLayout(headLayout);
 
-    QLabel* imgLabel = new QLabel();
+    QLabel* imgLabel = new QLabel(this);
     headLayout->addWidget(imgLabel);
 
     nameLabel = new QLabel();

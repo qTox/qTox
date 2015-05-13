@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
+    <width>627</width>
     <height>659</height>
    </rect>
   </property>
@@ -39,8 +39,6 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>585</width>
-        <height>625</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -69,7 +67,11 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="userName"/>
+             <widget class="QLineEdit" name="userName">
+              <property name="acceptDrops">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="statusMessageLabel">
@@ -79,7 +81,14 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="statusMessage"/>
+             <widget class="QLineEdit" name="statusMessage">
+              <property name="acceptDrops">
+               <bool>false</bool>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>

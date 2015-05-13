@@ -40,10 +40,7 @@
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
 
-AVForm::AVForm() :
-    GenericForm(QPixmap(":/img/settings/av.png")),
-    camVideoSurface{nullptr}, camera{nullptr}
-{
+AVForm::AVForm(SettingsWidget *parent) : GenericForm(QPixmap(":/img/settings/av.png")) {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 

@@ -1057,21 +1057,6 @@ void Settings::setEmojiFontFamily(const QString &value)
     emit emojiFontChanged();
 }
 
-<<<<<<< HEAD:src/persistence/settings.cpp
-bool Settings::getUseNativeStyle() const
-{
-    QMutexLocker locker{&bigLock};
-    return useNativeStyle;
-}
-
-void Settings::setUseNativeStyle(bool value)
-{
-    QMutexLocker locker{&bigLock};
-    useNativeStyle = value;
-}
-
-=======
->>>>>>> 939a130... removed unused setting systemtheme:src/misc/settings.cpp
 QByteArray Settings::getWindowGeometry() const
 {
     QMutexLocker locker{&bigLock};
