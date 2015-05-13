@@ -202,7 +202,6 @@ void Settings::loadGlobal()
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
-        useNativeStyle = s.value("nativeStyle", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
         themeColor = s.value("themeColor", 0).toInt();
@@ -388,7 +387,6 @@ void Settings::saveGlobal()
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("lightTrayIcon", lightTrayIcon);
-        s.setValue("nativeStyle", useNativeStyle);
         s.setValue("useEmoticons", useEmoticons);
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
@@ -466,6 +464,16 @@ void Settings::savePersonal(QString profileName, QString password)
 
     ps.save();
 }
+QString Settings::getTheme() const
+{
+    return theme;
+}
+
+void Settings::setTheme(const QString &value)
+{
+    theme = value;
+}
+
 
 uint32_t Settings::makeProfileId(const QString& profile)
 {
@@ -1039,6 +1047,7 @@ void Settings::setEmojiFontFamily(const QString &value)
     emit emojiFontChanged();
 }
 
+<<<<<<< HEAD:src/persistence/settings.cpp
 bool Settings::getUseNativeStyle() const
 {
     QMutexLocker locker{&bigLock};
@@ -1051,6 +1060,8 @@ void Settings::setUseNativeStyle(bool value)
     useNativeStyle = value;
 }
 
+=======
+>>>>>>> 939a130... removed unused setting systemtheme:src/misc/settings.cpp
 QByteArray Settings::getWindowGeometry() const
 {
     QMutexLocker locker{&bigLock};

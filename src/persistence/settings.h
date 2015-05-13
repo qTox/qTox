@@ -36,6 +36,7 @@ enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
 class Settings : public QObject
 {
     Q_OBJECT
+
 public:
     static Settings& getInstance();
     static void destroyInstance();
@@ -210,9 +211,6 @@ public:
     void setTypingNotification(bool enabled);
 
     // State
-    bool getUseNativeStyle() const;
-    void setUseNativeStyle(bool value);
-
     QByteArray getWindowGeometry() const;
     void setWindowGeometry(const QByteArray &value);
 
@@ -264,7 +262,12 @@ public:
         setWidgetData(widget->objectName() + "State", widget->saveState());
     }
 
+    QString getTheme() const;
+    void setTheme(const QString &value);
+
 private:
+    static QString genRandomProfileName();
+
     Settings();
     ~Settings();
     Settings(Settings &settings) = delete;
@@ -323,13 +326,13 @@ private:
     QString smileyPack;
     bool customEmojiFont;
     QString emojiFontFamily;
-    int     emojiFontPointSize;
+    int emojiFontPointSize;
     bool minimizeOnClose;
-    bool useNativeStyle;
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
     QString style;
+    QString theme;
     bool showSystemTray;
 
     // ChatView
