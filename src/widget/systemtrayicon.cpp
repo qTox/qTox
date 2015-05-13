@@ -42,7 +42,7 @@ SystemTrayIcon::SystemTrayIcon()
     }
     #endif
     #ifdef ENABLE_SYSTRAY_GTK_BACKEND
-    else if (desktop == "xfce" || desktop.contains("gnome"))
+    else if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate")
     {
         qDebug() << "Using GTK backend";
         backendType = SystrayBackendType::GTK;
