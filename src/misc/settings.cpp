@@ -287,7 +287,6 @@ void Settings::load()
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
-        useNativeStyle = s.value("nativeStyle", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
         themeColor = s.value("themeColor", 0).toInt();
@@ -459,7 +458,6 @@ void Settings::saveGlobal(QString path)
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("lightTrayIcon", lightTrayIcon);
-        s.setValue("nativeStyle", useNativeStyle);
         s.setValue("useEmoticons", useEmoticons);
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
@@ -515,6 +513,16 @@ void Settings::savePersonal(QString path)
         ps.setValue("encryptTox", encryptTox);
     ps.endGroup();
 }
+QString Settings::getTheme() const
+{
+    return theme;
+}
+
+void Settings::setTheme(const QString &value)
+{
+    theme = value;
+}
+
 
 uint32_t Settings::makeProfileId(const QString& profile)
 {
@@ -1032,16 +1040,6 @@ void Settings::setEmojiFontFamily(const QString &value)
 {
     emojiFontFamily = value;
     emit emojiFontChanged();
-}
-
-bool Settings::getUseNativeStyle() const
-{
-    return useNativeStyle;
-}
-
-void Settings::setUseNativeStyle(bool value)
-{
-    useNativeStyle = value;
 }
 
 QByteArray Settings::getWindowGeometry() const
