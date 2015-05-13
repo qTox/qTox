@@ -147,7 +147,7 @@ QDateEdit::drop-down, QComboBox::drop-down {
 
 QDateEdit::down-arrow, QComboBox::down-arrow
 {
-    image: url(:/icons/down_arrow.png);
+    image: url(ui/css/down_arrow.png);
 }
 
 QTextEdit:focus
@@ -158,6 +158,18 @@ QTextEdit:focus
 /* ==================================================================================== */
 /* SCROLL BAR                                                                           */
 /* ==================================================================================== */
+
+QScrollBar::down-arrow:vertical {
+   image: url(ui/css/down_arrow.png);
+}
+
+QScrollBar::up-arrow:vertical {
+   image: url(ui/css/up_arrow.png);                     
+}
+
+QScrollBar {
+  border-style: none;
+}
 
 QScrollBar:horizontal {
     background-color: #333;
@@ -194,7 +206,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     background: transparent;
 }
 
-
 QTextEdit
 {
     background-color: #242424;
@@ -215,8 +226,7 @@ QHeaderView::section
 QDockWidget::title
 {
     text-align: center;
-    spacing: 3px; /* spacing between items in the tool bar */
-    /*background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #323232, stop: 0.5 #242424, stop:1 #323232);*/
+    spacing: 3px;
 }
 
 QDockWidget::close-button, QDockWidget::float-button
@@ -238,7 +248,6 @@ QDockWidget::close-button:pressed, QDockWidget::float-button:pressed
 
 QMainWindow::separator
 {
-    /*background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #161616, stop: 0.5 #151515, stop: 0.6 #212121, stop:1 #343434);*/
     color: #fff;
     padding-left: 4px;
     border: 1px solid #4c4c4c;
@@ -247,8 +256,6 @@ QMainWindow::separator
 
 QMainWindow::separator:hover
 {
-
-    /*background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:0 #d7801a, stop:0.5 #b56c17 stop:1 #ffa02f);*/
     color: #fff;
     padding-left: 4px;
     border: 1px solid #6c6c6c;
@@ -263,7 +270,7 @@ QToolBar {
 QToolBar::handle
 {
      spacing: 3px; /* spacing between items in the tool bar */
-     background: url(:/images/handle.png);
+     background: url(ui/css/handle.png);
 }
 
 QMenu::separator
@@ -382,13 +389,13 @@ QTreeView::item:selected, QTreeView::branch:selected {
 QTreeView::branch:has-children:!has-siblings:closed,
 QTreeView::branch:closed:has-children:has-siblings {
     border-image: none;
-    image: url(:/icons/caret-right_ffffff_14.png);
+    image: url(ui/css/caret-right_ffffff_14.png);
 }
 
 QTreeView::branch:open:has-children:!has-siblings,
 QTreeView::branch:open:has-children:has-siblings {
      border-image: none;
-     image: url(:/icons/caret-down_ffffff_14.png);
+     image: url(ui/css/caret-down_ffffff_14.png);
 }
 
 /* ==================================================================================== */
