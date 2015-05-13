@@ -116,22 +116,21 @@ QScrollBar {
 }
 
 QScrollbar::horizontal {
-     height: 15px;
-     margin: 0px 20px 0 20px;
+  height: 15px;
+  margin: 0px 20px 0 20px;
 }
 
 QScrollBar:handle {
-  border-style:none;
-  background:#9d9d9d;
+  border-style: none;
+  background: #9d9d9d;
   margin: inherited;
 }
 
 QPushButton {
   border-style:none;
   border-bottom:1px solid #007acc;
-  color:#f1f1f1;
-  background:#3e3e42;
-  padding:5px;
+  color: #f1f1f1;
+  background: #3e3e42;
 }
 
 QPushButton::pressed {
@@ -152,31 +151,30 @@ QToolButton:pressed {
 
 QDoubleSpinBox, QSplitter::handle, QSplitter, QSpinBox, QTimeEdit, QNumberSpinBox,
 QListBox, QDateEdit, QDateTime, QDateTimeEdit, QComboBox, QLineEdit {
-    padding: 2px;
     border-width: 1px;
     border-color: black;
     background-color:#3f3f46;
 }
 
 QLabel {
-  color:#f1f1f1;
+  color: #f1f1f1;
 }
 
 QLineEdit:selected {
-  border-color:#007acc;
+  border-color: #007acc;
 }
 
 QToolBar {
-  background:#2d2d30;
-  border-style:none;
+  background: #2d2d30;
+  border-style: none;
 }
 
 QToolBox{
-  background:#2d2d30;
+  background: #2d2d30;
 }
 
 QToolBox::tab{
-  background:#2d2d30;
+  background: #2d2d30;
   color:#f1f1f1;
   border-style:none;
   border-bottom-style: solid;
