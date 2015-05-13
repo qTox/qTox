@@ -12,7 +12,6 @@
     See the COPYING file for more details.
 */
 
-#include <QDebug>
 #ifdef Q_OS_WIN32
 #include "src/platform/timer.h"
 #include <windows.h>

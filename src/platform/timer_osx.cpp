@@ -19,7 +19,6 @@
 
 #if defined(__APPLE__) && defined(__MACH__)
 #include "src/platform/timer.h"
-#include <QDebug>
 #include <IOKit/IOKitLib.h>
 #include <CoreFoundation/CoreFoundation.h>
 
@@ -27,7 +26,7 @@
 uint32_t Platform::getIdleTime()
 {
     // https://hg.pidgin.im/pidgin/main/file/13e4ae613a6a/pidgin/gtkidle.c
-    static io_service_t service = NULL;
+    static io_service_t service = 0;
     CFTypeRef property;
     uint64_t idleTime_ns = 0;
 
