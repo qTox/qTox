@@ -29,7 +29,7 @@
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
 
-AVForm::AVForm() :
+AVForm::AVForm(SettingsWidget *parent) :
     GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png")),
     CamVideoSurface{nullptr}
 {

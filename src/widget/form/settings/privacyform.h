@@ -25,7 +25,7 @@ class PrivacyForm : public GenericForm
 {
     Q_OBJECT
 public:
-    PrivacyForm();
+    PrivacyForm(SettingsWidget *parent);
     ~PrivacyForm();
 
     virtual void present();

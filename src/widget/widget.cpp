@@ -126,8 +126,8 @@ void Widget::init()
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
 
-    ui->mainContent->setLayout(new QVBoxLayout());
-    ui->mainHead->setLayout(new QVBoxLayout());
+    ui->mainContent->setLayout(new QVBoxLayout(this));
+    ui->mainHead->setLayout(new QVBoxLayout(this));
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
 
@@ -139,19 +139,18 @@ void Widget::init()
 
     ui->searchContactText->setPlaceholderText("Search Contacts");
 
-    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
-            && Settings::getInstance().getStyle() != "None")
-    {
-        ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-        ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-    }
+//    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
+//            && Settings::getInstance().getStyle() != "None")
+//    {
+//        //ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
+//    }
 
-#ifndef Q_OS_MAC
-    ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
-    ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
-    ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
-    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
-#endif
+//#ifndef Q_OS_MAC
+    //ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
+    //ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
+    //ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    //ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+//#endif
 
     contactListWidget = new FriendListWidget(0, Settings::getInstance().getGroupchatPosition());
     ui->friendList->setWidget(contactListWidget);
@@ -159,9 +158,14 @@ void Widget::init()
 
     ui->statusLabel->setEditable(true);
 
-    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    //ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    
+    qDebug() << "Loading theme: " << Settings::getInstance().getTheme();
+    //ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));    
+    ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" + 
+                                                       Settings::getInstance().getTheme() + ".css"));
 
-    QMenu *statusButtonMenu = new QMenu(ui->statusButton);
+    QMenu *statusButtonMenu = new QMenu(this);//ui->statusButton);
     statusButtonMenu->addAction(statusOnline);
     statusButtonMenu->addAction(statusAway);
     statusButtonMenu->addAction(statusBusy);
@@ -181,7 +185,7 @@ void Widget::init()
     updateIcons();
 
     filesForm = new FilesForm();
-    addFriendForm = new AddFriendForm;
+    addFriendForm = new AddFriendForm();
     profileForm = new ProfileForm();
     settingsWidget = new SettingsWidget();
 
@@ -544,7 +548,7 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 void Widget::onSettingsClicked()
 {
     hideMainForms();
-    settingsWidget->show(*ui);
+    settingsWidget->show(*ui);                    
     setWindowTitle(tr("Settings"));
     setActiveToolMenuButton(Widget::SettingButton);
     activeChatroomWidget = nullptr;
@@ -1326,6 +1330,7 @@ void Widget::clearAllReceipts()
 void Widget::reloadTheme()
 {
     QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");
+    // css for menu below contacs, filetransfers, settings buttons etc.
     ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}QPushButton:checked{background-color:@themeMedium;border:none;}QPushButton:pressed{background-color:@themeMediumLight;border:none;}"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);

@@ -49,9 +49,9 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     bodyLayout->addWidget(settingsWidgets);
 
     GeneralForm* gfrm = new GeneralForm(this);
-    PrivacyForm* pfrm = new PrivacyForm;
-    AVForm* avfrm = new AVForm;
-    AdvancedForm *expfrm = new AdvancedForm;
+    PrivacyForm* pfrm = new PrivacyForm(this);
+    AVForm* avfrm = new AVForm(this);
+    AdvancedForm *expfrm = new AdvancedForm(this);
 
     GenericForm* cfgForms[] = { gfrm, pfrm, avfrm, expfrm };
     for (GenericForm* cfgForm : cfgForms)

@@ -32,7 +32,7 @@ class AVForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AVForm();
+    AVForm(SettingsWidget *parent);
     ~AVForm();
     virtual void present();
 

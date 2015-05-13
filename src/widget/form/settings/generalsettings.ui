@@ -38,7 +38,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-83</y>
+        <y>0</y>
         <width>639</width>
         <height>1191</height>
        </rect>
@@ -109,6 +109,15 @@
               <layout class="QVBoxLayout" name="trayOptionsLayout">
                <item>
                 <widget class="QCheckBox" name="showSystemTray">
+                 <property name="mouseTracking">
+                  <bool>false</bool>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>Show system tray icon</string>
                  </property>

@@ -27,7 +27,7 @@ class AdvancedForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AdvancedForm();
+    AdvancedForm(SettingsWidget *parent);
     virtual ~AdvancedForm();
     
 protected:

@@ -54,13 +54,13 @@ ProfileForm::ProfileForm(QWidget *parent) :
     core = Core::getInstance();
 
     head = new QWidget(this);
-    QHBoxLayout* headLayout = new QHBoxLayout();
+    QHBoxLayout* headLayout = new QHBoxLayout(this);
     head->setLayout(headLayout);
 
-    QLabel* imgLabel = new QLabel();
+    QLabel* imgLabel = new QLabel(this);
     headLayout->addWidget(imgLabel);
 
-    QLabel* nameLabel = new QLabel();
+    QLabel* nameLabel = new QLabel(this);
     QFont bold;
     bold.setBold(true);
     nameLabel->setFont(bold);
@@ -289,7 +289,7 @@ void ProfileForm::onRenameClicked()
             Settings::getInstance().setAutorun(false);
             Settings::getInstance().setCurrentProfile(name);
             if (resetAutorun)
-                Settings::getInstance().setAutorun(true);                   // fixes -p flag in autostart command line
+                Settings::getInstance().setAutorun(true); // fixes -p flag in autostart command line
 
             break;
         }

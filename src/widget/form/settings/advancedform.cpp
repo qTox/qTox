@@ -19,7 +19,7 @@
 #include "src/misc/settings.h"
 #include "src/misc/db/plaindb.h"
 
-AdvancedForm::AdvancedForm() :
+AdvancedForm::AdvancedForm(SettingsWidget *parent) :
     GenericForm(tr("Advanced"), QPixmap(":/img/settings/general.png"))
 {
     bodyUI = new Ui::AdvancedSettings;
