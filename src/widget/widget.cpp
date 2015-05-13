@@ -114,9 +114,6 @@ void Widget::init()
     statusBusy->setIcon(getStatusIcon(Status::Busy, 10, 10));
     connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
 
-    ui->statusbar->hide();
-    ui->menubar->hide();
-
     layout()->setContentsMargins(0, 0, 0, 0);
     ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
 
@@ -164,7 +161,7 @@ void Widget::init()
     //ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));    
     ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" + 
                                                        Settings::getInstance().getTheme() + ".css"));
-
+    
     QMenu *statusButtonMenu = new QMenu(this);//ui->statusButton);
     statusButtonMenu->addAction(statusOnline);
     statusButtonMenu->addAction(statusAway);
