@@ -17,20 +17,13 @@ INSTALL_DIR=libs
 # just for convenience
 BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 
+# the sodium version to use
 SODIUM_VER=1.0.2
 
 # directory names of cloned repositories
 SODIUM_DIR=libsodium-$SODIUM_VER
 TOX_CORE_DIR=libtoxcore-latest
-FILTER_AUDIO_DIR=filter_audio
-
-# this boolean describes whether the installation of
-# libsodium should be skipped or not
-# the default value is 'false' and will be set to 'true'
-# if this script gets the parameter -t or --tox
-TOX_ONLY=false
-GLOBAL=true
-KEEP=false
+FILTER_AUDIO_DIR=libfilteraudio-latest
 
 if [ -z "$BASE_DIR" ]; then
     echo "internal error detected!"
@@ -56,17 +49,39 @@ if [ -z "$FILTER_AUDIO_DIR" ]; then
     exit 1
 fi
 
+# default values for user given parameters
+INSTALL_SODIUM=true
+INSTALL_TOX=true
+INSTALL_FILTER_AUDIO=true
+SYSTEM_WIDE=true
+KEEP_BUILD_FILES=false
 
-########## check input parameters ##########
+
+########## parse input parameters ##########
 while [ $# -ge 1 ] ; do
-    if [ ${1} = "-t" -o ${1} = "--tox" ] ; then
-        TOX_ONLY=true
+    if [ ${1} = "--with-sodium" ] ; then
+        INSTALL_SODIUM=true
+        shift
+    elif [ ${1} = "--without-sodium" ] ; then
+        INSTALL_SODIUM=false
+        shift
+    elif [ ${1} = "--with-tox" ] ; then
+        INSTALL_TOX=true
+        shift
+    elif [ ${1} = "--without-tox" ] ; then
+        INSTALL_TOX=false
+        shift
+    elif [ ${1} = "--with-filter-audio" ] ; then
+        INSTALL_FILTER_AUDIO=true
+        shift
+    elif [ ${1} = "--without-filter-audio" ] ; then
+        INSTALL_FILTER_AUDIO=false
         shift
     elif [ ${1} = "-l" -o ${1} = "--local" ] ; then
-        GLOBAL=false
+        SYSTEM_WIDE=false
         shift
     elif [ ${1} = "-k" -o ${1} = "--keep" ]; then
-        KEEP=true
+        KEEP_BUILD_FILES=true
         shift
     else
         if [ ${1} != "-h" -a ${1} != "--help" ] ; then
@@ -75,29 +90,36 @@ while [ $# -ge 1 ] ; do
         fi
     
         # print help
-        echo "Use this script to install/update libsodium and libtoxcore in ${INSTALL_DIR}"
+        echo "Use this script to install/update libsodium, libtoxcore and libfilteraudio"
         echo ""
         echo "usage:"
-        echo "    ${0} [-t|--tox|-h|--help|-g|--global|-k|--keep]"
+        echo "    ${0} PARAMETERS"
         echo ""
         echo "parameters:"
-        echo "    -h|--help  : displays this help"
-        echo "    -t|--tox   : only install/update libtoxcore"
-        echo "                 requires an already installed libsodium"
-        echo "    -l|--local : installs libtox* and libsodium in the current directory,"
-        echo "                 as opposed to the system directories"
-        echo "    -k|--keep  : does not delete the build directories afterwards"
+        echo "    --with-sodium          : install/update libsodium"
+        echo "    --without-sodium       : do not install/update libsodium"
+        echo "    --with-tox             : install/update libtoxcore"
+        echo "    --without-tox          : do not install/update libtoxcore"
+        echo "    --with-filter-audio    : install/update libfilteraudio"
+        echo "    --without-filter-audio : do not install/update libfilteraudio"
+        echo "    -h|--help              : displays this help"
+        echo "    -l|--local             : install packages into ${INSTALL_DIR}"
+        echo "    -k|--keep              : keep build files after installation/update"
         echo ""
         echo "example usages:"
-        echo "    ${0}    -- to install libsodium and libtoxcore"
-        echo "    ${0} -t -- to update already installed libtoxcore"
+        echo "    ${0}    -- install libsodium, libtoxcore and libfilteraudio"
         exit 1
 	fi
 done
 
-echo "Tox only: $TOX_ONLY"
-echo "Global  : $GLOBAL"
-echo "Keep    : $KEEP"
+
+########## print debug output ##########
+echo "with sodium                 : ${INSTALL_SODIUM}"
+echo "with tox                    : ${INSTALL_TOX}"
+echo "with filter-audio           : ${INSTALL_FILTER_AUDIO}"
+echo "install into ${INSTALL_DIR} : ${SYSTEM_WIDE}"
+echo "keep build files            : ${KEEP_BUILD_FILES}"
+
 
 ############### prepare step ###############
 # create BASE_DIR directory if necessary
@@ -112,69 +134,68 @@ rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
 
 
 ############### install step ###############
-# clone current master of libsodium and switch to version $SODIUM_VER
-# afterwards install libsodium to INSTALL_DIR
-# skip the installation if TOX_ONLY is true
-if [[ $TOX_ONLY = "false" ]]; then
-    git clone --branch $SODIUM_VER git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR} --depth 1
-    pushd ${BASE_DIR}/${SODIUM_DIR}
-    ./autogen.sh
-
-    if [[ $GLOBAL = "false" ]]; then
-        ./configure --prefix=${BASE_DIR}/
-    else
-        ./configure
-    fi
-
-    make -j2 check
-    
-    if [[ $GLOBAL = "false" || $EUID -eq 0 ]]; then
+# install libsodium
+if [[ $INSTALL_SODIUM = "true" ]]; then
+	git clone --branch $SODIUM_VER git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR} --depth 1
+	pushd ${BASE_DIR}/${SODIUM_DIR}
+	./autogen.sh
+	
+	if [[ $SYSTEM_WIDE = "false" ]]; then
+        ./configure --prefix=${BASE_DIR}
+        make -j2 check
         make install
     else
+        ./configure
+        make -j2 check
         sudo make install
+        sudo ldconfig
     fi
     
     popd
+fi
 
-    git clone https://github.com/irungentoo/filter_audio.git ${BASE_DIR}/${FILTER_AUDIO_DIR}
-    pushd ${BASE_DIR}/${FILTER_AUDIO_DIR}
-    make
-    if [[ $GLOBAL = "false" || $EUID -eq 0 ]]; then
-        cp filter_audio.h libfilteraudio.* ${BASE_DIR}
+#install libtoxcore
+if [[ $INSTALL_TOX = "true" ]]; then
+	git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
+	pushd ${BASE_DIR}/${TOX_CORE_DIR}
+	./autogen.sh
+	
+	if [[ $SYSTEM_WIDE = "false" ]]; then
+        ./configure --prefix=${BASE_DIR} --with-libsodium-headers=${BASE_DIR}/include --with-libsodium-libs=${BASE_DIR}/lib
+        make -j2
+        make install
     else
+        ./configure
+        make -j2
         sudo make install
+        sudo ldconfig
     fi
+    
+    popd
 fi
 
-# clone current master of libtoxcore
-# make sure to compile with libsodium we just installed to INSTALL_DIR
-# afterwards install libtoxcore to INSTALL_DIR
-git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
-pushd ${BASE_DIR}/${TOX_CORE_DIR}
-./autogen.sh
-if [[ $GLOBAL = "false" ]]; then
-    ./configure --prefix=${BASE_DIR}/ --with-libsodium-headers=${BASE_DIR}/include --with-libsodium-libs=${BASE_DIR}/lib
-else
-    ./configure
+#install libfilteraudio
+if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
+	git clone https://github.com/irungentoo/filter_audio.git ${BASE_DIR}/${FILTER_AUDIO_DIR} --depth 1
+	pushd ${BASE_DIR}/${FILTER_AUDIO_DIR}
+	
+	if [[ $SYSTEM_WIDE = "false" ]]; then
+		PREFIX=${BASE_DIR} make -j2
+		PREFIX=${BASE_DIR} make install
+	else
+		make -j2
+		sudo make install
+		sudo ldconfig
+	fi
+	
+	popd
 fi
 
-make -j2
-
-if [[ $GLOBAL = "false" || $EUID -eq 0 ]]; then
-    make install
-else
-    sudo make install
-fi
-
-popd
-
-if [[ $GLOBAL = "true" ]]; then
-    sudo ldconfig
-fi
 
 ############### cleanup step ###############
 # remove cloned repositories
-if [[ $KEEP = "false" ]]; then
+if [[ $KEEP_BUILD_FILES = "false" ]]; then
     rm -rf ${BASE_DIR}/${SODIUM_DIR}
     rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
+    rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
 fi
