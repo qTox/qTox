@@ -1,7 +1,7 @@
 #include "nexus.h"
 #include "src/core/core.h"
 #include "misc/settings.h"
-#include "video/camera.h"
+#include "video/camerasource.h"
 #include "widget/gui.h"
 #include <QThread>
 #include <QDebug>
@@ -57,6 +57,7 @@ void Nexus::start()
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
     qRegisterMetaType<Core::PasswordType>("Core::PasswordType");
+    qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
 
     // Create GUI
 #ifndef Q_OS_ANDROID
@@ -67,7 +68,7 @@ void Nexus::start()
     QString profilePath = Settings::getInstance().detectProfile();
     coreThread = new QThread(this);
     coreThread->setObjectName("qTox Core");
-    core = new Core(Camera::getInstance(), coreThread, profilePath);
+    core = new Core(coreThread, profilePath);
     core->moveToThread(coreThread);
     connect(coreThread, &QThread::started, core, &Core::start);
 

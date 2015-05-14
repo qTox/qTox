@@ -16,6 +16,9 @@
 #include "ui_avsettings.h"
 #include "src/misc/settings.h"
 #include "src/audio.h"
+#include "src/video/camerasource.h"
+#include "src/video/cameradevice.h"
+#include "src/widget/videosurface.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -25,13 +28,15 @@
  #include <AL/al.h>
 #endif
 
+#include <QDebug>
+
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
 
 AVForm::AVForm() :
     GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png")),
-    CamVideoSurface{nullptr}
+    camVideoSurface{nullptr}, camera{nullptr}
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
@@ -42,12 +47,11 @@ AVForm::AVForm() :
     bodyUI->filterAudio->setDisabled(true);
 #endif
 
-    connect(Camera::getInstance(), &Camera::propProbingFinished, this, &AVForm::onPropProbingFinished);
-    connect(Camera::getInstance(), &Camera::resolutionProbingFinished, this, &AVForm::onResProbingFinished);
-
-    auto qcomboboxIndexChanged = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
-    connect(bodyUI->inDevCombobox, qcomboboxIndexChanged, this, &AVForm::onInDevChanged);
-    connect(bodyUI->outDevCombobox, qcomboboxIndexChanged, this, &AVForm::onOutDevChanged);
+    auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
+    auto qcbxIndexChangedInt = (void(QComboBox::*)(int)) &QComboBox::currentIndexChanged;
+    connect(bodyUI->inDevCombobox, qcbxIndexChangedStr, this, &AVForm::onInDevChanged);
+    connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
+    connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
     connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
     bodyUI->playbackSlider->setValue(100);
@@ -63,6 +67,11 @@ AVForm::AVForm() :
 AVForm::~AVForm()
 {
     delete bodyUI;
+    if (camera)
+    {
+        delete camera;
+        camera = nullptr;
+    }
 }
 
 void AVForm::present()
@@ -71,65 +80,30 @@ void AVForm::present()
     getAudioInDevices();
 
     createVideoSurface();
-    CamVideoSurface->setSource(Camera::getInstance());
-
-    Camera::getInstance()->probeProp(Camera::SATURATION);
-    Camera::getInstance()->probeProp(Camera::CONTRAST);
-    Camera::getInstance()->probeProp(Camera::BRIGHTNESS);
-    Camera::getInstance()->probeProp(Camera::HUE);
-    Camera::getInstance()->probeResolutions();
 	
 	bodyUI->videoModescomboBox->blockSignals(true);
 	bodyUI->videoModescomboBox->addItem(tr("Initializing Camera..."));
 	bodyUI->videoModescomboBox->blockSignals(false);
 }
 
-void AVForm::on_ContrastSlider_sliderMoved(int position)
-{
-    Camera::getInstance()->setProp(Camera::CONTRAST, position / 100.0);
-}
-
-void AVForm::on_SaturationSlider_sliderMoved(int position)
-{
-    Camera::getInstance()->setProp(Camera::SATURATION, position / 100.0);
-}
-
-void AVForm::on_BrightnessSlider_sliderMoved(int position)
-{
-    Camera::getInstance()->setProp(Camera::BRIGHTNESS, position / 100.0);
-}
-
-void AVForm::on_HueSlider_sliderMoved(int position)
-{
-    Camera::getInstance()->setProp(Camera::HUE, position / 100.0);
-}
-
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 {
     QSize res = bodyUI->videoModescomboBox->itemData(index).toSize();
     Settings::getInstance().setCamVideoRes(res);
-    Camera::getInstance()->setResolution(res);
 }
 
-void AVForm::onPropProbingFinished(Camera::Prop prop, double val)
+void AVForm::onVideoDevChanged(int index)
 {
-    switch (prop)
+    if (index<0 || index>=videoDeviceList.size())
     {
-    case Camera::BRIGHTNESS:
-        bodyUI->BrightnessSlider->setValue(val*100);
-        break;
-    case Camera::CONTRAST:
-        bodyUI->ContrastSlider->setValue(val*100);
-        break;
-    case Camera::SATURATION:
-        bodyUI->SaturationSlider->setValue(val*100);
-        break;
-    case Camera::HUE:
-        bodyUI->HueSlider->setValue(val*100);
-        break;
-    default:
-        break;
+        qWarning() << "Invalid index";
+        return;
     }
+    camVideoSurface->setSource(nullptr);
+    if (camera)
+        delete camera;
+    camera = new CameraSource(videoDeviceList[index].first);
+    camVideoSurface->setSource(camera);
 }
 
 void AVForm::onResProbingFinished(QList<QSize> res)
@@ -157,17 +131,43 @@ void AVForm::onResProbingFinished(QList<QSize> res)
 
 void AVForm::hideEvent(QHideEvent *)
 {
-    if (CamVideoSurface)
+    if (camVideoSurface)
     {
-        CamVideoSurface->setSource(nullptr);
+        camVideoSurface->setSource(nullptr);
         killVideoSurface();
     }
+    if (camera)
+    {
+        delete camera;
+        camera = nullptr;
+    }
+    videoDeviceList.clear();
 }
 
 void AVForm::showEvent(QShowEvent *)
 {
     createVideoSurface();
-    CamVideoSurface->setSource(Camera::getInstance());
+    getVideoDevices();
+}
+
+void AVForm::getVideoDevices()
+{
+    QString settingsInDev = Settings::getInstance().getVideoDev();
+    int videoDevIndex = 0;
+    videoDeviceList = CameraDevice::getDeviceList();
+    bodyUI->videoDevCombobox->clear();
+    //prevent currentIndexChanged to be fired while adding items
+    bodyUI->videoDevCombobox->blockSignals(true);
+    for (QPair<QString, QString> device : videoDeviceList)
+    {
+        bodyUI->videoDevCombobox->addItem(device.second);
+        if (device.first == settingsInDev)
+            videoDevIndex = bodyUI->videoDevCombobox->count()-1;
+    }
+    //addItem changes currentIndex -> reset
+    bodyUI->videoDevCombobox->setCurrentIndex(-1);
+    bodyUI->videoDevCombobox->blockSignals(false);
+    bodyUI->videoDevCombobox->setCurrentIndex(videoDevIndex);
 }
 
 void AVForm::getAudioInDevices()
@@ -190,9 +190,7 @@ void AVForm::getAudioInDevices()
 #endif
             bodyUI->inDevCombobox->addItem(inDev);
             if (settingsInDev == inDev)
-            {
 				inDevIndex = bodyUI->inDevCombobox->count()-1;
-            }
             pDeviceList += len+1;
         }
 		//addItem changes currentIndex -> reset
@@ -255,30 +253,6 @@ void AVForm::onFilterAudioToggled(bool filterAudio)
     Settings::getInstance().setFilterAudio(filterAudio);
 }
 
-void AVForm::on_HueSlider_valueChanged(int value)
-{
-    Camera::getInstance()->setProp(Camera::HUE, value / 100.0);
-    bodyUI->hueMax->setText(QString::number(value));
-}
-
-void AVForm::on_BrightnessSlider_valueChanged(int value)
-{
-    Camera::getInstance()->setProp(Camera::BRIGHTNESS, value / 100.0);
-    bodyUI->brightnessMax->setText(QString::number(value));
-}
-
-void AVForm::on_SaturationSlider_valueChanged(int value)
-{
-    Camera::getInstance()->setProp(Camera::SATURATION, value / 100.0);
-    bodyUI->saturationMax->setText(QString::number(value));
-}
-
-void AVForm::on_ContrastSlider_valueChanged(int value)
-{
-    Camera::getInstance()->setProp(Camera::CONTRAST, value / 100.0);
-    bodyUI->contrastMax->setText(QString::number(value));
-}
-
 void AVForm::on_playbackSlider_valueChanged(int value)
 {
     Audio::setOutputVolume(value / 100.0);
@@ -304,22 +278,22 @@ bool AVForm::eventFilter(QObject *o, QEvent *e)
 
 void AVForm::createVideoSurface()
 {
-    if (CamVideoSurface)
+    if (camVideoSurface)
         return;
-    CamVideoSurface = new VideoSurface(bodyUI->CamFrame);
-    CamVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
-    CamVideoSurface->setMinimumSize(QSize(160, 120));
-    bodyUI->gridLayout->addWidget(CamVideoSurface, 0, 0, 1, 1);
+    camVideoSurface = new VideoSurface(bodyUI->CamFrame);
+    camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
+    camVideoSurface->setMinimumSize(QSize(160, 120));
+    bodyUI->gridLayout->addWidget(camVideoSurface, 0, 0, 1, 1);
 }
 
 void AVForm::killVideoSurface()
 {
-    if (!CamVideoSurface)
+    if (!camVideoSurface)
         return;
     QLayoutItem *child;
     while ((child = bodyUI->gridLayout->takeAt(0)) != 0)
         delete child;
     
-    delete CamVideoSurface;
-    CamVideoSurface = nullptr;
+    delete camVideoSurface;
+    camVideoSurface = nullptr;
 }

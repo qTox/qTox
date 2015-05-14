@@ -15,14 +15,12 @@
 #ifndef SELFCAMVIEW_H
 #define SELFCAMVIEW_H
 
-#include <QGLWidget>
-#include <QMutex>
+#include <QWidget>
+#include <memory>
+#include <atomic>
 #include "src/video/videosource.h"
 
-class QOpenGLBuffer;
-class QOpenGLShaderProgram;
-
-class VideoSurface : public QGLWidget
+class VideoSurface : public QWidget
 {
     Q_OBJECT
 
@@ -33,30 +31,20 @@ public:
 
     void setSource(VideoSource* src); //NULL is a valid option
 
-    // QGLWidget interface
 protected:
-    virtual void initializeGL();
-    virtual void paintGL();
-
     void subscribe();
     void unsubscribe();
 
+    virtual void paintEvent(QPaintEvent * event) override;
+
 private slots:
-    void onNewFrameAvailable(const VideoFrame &newFrame);
+    void onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame);
 
 private:
     VideoSource* source;
-    QOpenGLBuffer* pbo[2];
-    QOpenGLShaderProgram* bgrProgramm;
-    QOpenGLShaderProgram* yuvProgramm;
-    GLuint textureId;
-    int pboAllocSize;
-    QSize res;
+    std::shared_ptr<VideoFrame> lastFrame;
+    std::atomic_bool frameLock; ///< Fast lock for lastFrame
     bool hasSubscribed;
-
-    QMutex mutex;
-    VideoFrame frame;
-    int pboIndex;
 };
 
 #endif // SELFCAMVIEW_H

@@ -149,6 +149,9 @@ public:
     bool getFilterAudio() const;
     void setFilterAudio(bool newValue);
 
+    QString getVideoDev() const;
+    void setVideoDev(const QString& deviceSpecifier);
+
     QSize getCamVideoRes() const;
     void setCamVideoRes(QSize newValue);
 
@@ -347,6 +350,7 @@ private:
     bool filterAudio;
 
     // Video
+    QString videoDev;
     QSize camVideoRes;
 
     struct friendProp

@@ -408,6 +408,8 @@ void ChatForm::onAvStarting(uint32_t FriendId, int, bool video)
 
     qDebug() << "onAvStarting";
 
+    callId = CallId;
+
     callButton->disconnect();
     videoButton->disconnect();
     if (video)

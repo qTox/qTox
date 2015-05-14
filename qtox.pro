@@ -130,7 +130,7 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
 win32 {
     RC_FILE = windows/qtox.rc
 	LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
-    LIBS += -L$$PWD/libs/lib -lopencv_core249 -lopencv_highgui249 -lopencv_imgproc249 -lOpenAL32 -lopus
+	LIBS += -L$$PWD/libs/lib -lavformat -lavdevice -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
     LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -lws2_32 -liphlpapi -lz
     LIBS += -lqrencode
     contains(DEFINES, QTOX_FILTER_AUDIO) {
@@ -146,27 +146,26 @@ win32 {
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lopencv_core -lopencv_highgui -mmacosx-version-min=10.7
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -mmacosx-version-min=10.7
         LIBS += -lqrencode
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
     } else {
         android {
             LIBS += -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns
-            LIBS += -lopencv_videoio -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_androidcamera
-            LIBS += -llibjpeg -llibwebp -llibpng -llibtiff -llibjasper -lIlmImf -lopencv_core
+            LIBS += -llibjpeg -llibwebp -llibpng -llibtiff -llibjasper -lIlmImf
             LIBS += -lopus -lvpx -lsodium -lopenal
         } else {
             # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
             contains(STATICPKG, YES) {
                 target.path = /usr/bin
                 INSTALLS += target
-                LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lopencv_highgui -lopencv_imgproc -lopencv_core -lz -Wl,-Bdynamic
+                LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lavformat -lavdevice -lavcodec -lavutil -lswscale -lz -Wl,-Bdynamic
                 LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
                 LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
                 LIBS += -lqrencode
             } else {
-                LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lopencv_core -lopencv_highgui -lopencv_imgproc
+                LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lavformat -lavdevice -lavcodec -lavutil -lswscale
                 LIBS += -lqrencode
             }
 
@@ -183,7 +182,7 @@ win32 {
             }
 
             contains(JENKINS, YES) {
-                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a /usr/lib/libopencv_core.so /usr/lib/libopencv_highgui.so /usr/lib/libopencv_imgproc.so -lX11 -lXss -lqrencode
+                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a -lX11 -lXss -lqrencode
                 contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
                     LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
                 }
@@ -430,9 +429,6 @@ SOURCES += \
     src/misc/db/genericddinterface.cpp \
     src/misc/db/plaindb.cpp \
     src/misc/db/encrypteddb.cpp \
-    src/video/camera.cpp \
-    src/video/cameraworker.cpp \
-    src/video/netvideosource.cpp \
     src/video/videoframe.cpp \
     src/widget/gui.cpp \
     src/toxme.cpp \
@@ -449,6 +445,9 @@ SOURCES += \
     src/widget/tool/toolboxgraphicsitem.cpp \
     src/widget/tool/flyoutoverlaywidget.cpp \
     src/widget/form/settings/verticalonlyscroller.cpp \
+    src/video/cameradevice.cpp \
+    src/video/camerasource.cpp \
+    src/video/corevideosource.cpp \
     src/core/toxid.cpp
 
 
@@ -467,11 +466,8 @@ HEADERS += \
     src/misc/db/genericddinterface.h \
     src/misc/db/plaindb.h \
     src/misc/db/encrypteddb.h \
-    src/video/camera.h \
-    src/video/cameraworker.h \
     src/video/videoframe.h \
     src/video/videosource.h \
-    src/video/netvideosource.h \
     src/widget/gui.h \
     src/toxme.h \
     src/profilelocker.h \
@@ -482,4 +478,7 @@ HEADERS += \
     src/widget/tool/toolboxgraphicsitem.h \
     src/widget/tool/flyoutoverlaywidget.h \
     src/widget/form/settings/verticalonlyscroller.h \
+    src/video/cameradevice.h \
+    src/video/camerasource.h \
+    src/video/corevideosource.h \
     src/core/toxid.h

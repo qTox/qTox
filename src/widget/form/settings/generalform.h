@@ -21,6 +21,8 @@ namespace Ui {
 class GeneralSettings;
 }
 
+class SettingsWidget;
+
 class GeneralForm : public GenericForm
 {
     Q_OBJECT

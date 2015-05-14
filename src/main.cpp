@@ -29,7 +29,6 @@
 #include <QFontDatabase>
 #include <QMutexLocker>
 #include <QProcess>
-#include <opencv2/core/core_c.h>
 
 #include <sodium.h>
 
