@@ -88,7 +88,6 @@ void QRWidget::paintImage()
             }
         }
         QRcode_free(qr);
-        painter.save();
     }
     else
     {
