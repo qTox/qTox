@@ -18,7 +18,7 @@ INSTALL_DIR=libs
 BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 
 # the sodium version to use
-SODIUM_VER=1.0.2
+SODIUM_VER=1.0.3
 
 # directory names of cloned repositories
 SODIUM_DIR=libsodium-$SODIUM_VER
