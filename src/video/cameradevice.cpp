@@ -70,9 +70,47 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     if (!getDefaultInputFormat())
         return devices;
 
-    AVDeviceInfoList* devlist;
-    avdevice_list_input_sources(iformat, nullptr, nullptr, &devlist);
+    // Alloc an input device context
+    AVFormatContext *s;
+    if (!(s = avformat_alloc_context()))
+        return devices;
+    if (!iformat->priv_class || !AV_IS_INPUT_DEVICE(iformat->priv_class->category))
+    {
+        avformat_free_context(s);
+        return devices;
+    }
+    s->iformat = iformat;
+    if (s->iformat->priv_data_size > 0)
+    {
+        s->priv_data = av_mallocz(s->iformat->priv_data_size);
+        if (!s->priv_data)
+        {
+            avformat_free_context(s);
+            return devices;
+        }
+        if (s->iformat->priv_class)
+        {
+            *(const AVClass**)s->priv_data= s->iformat->priv_class;
+            av_opt_set_defaults(s->priv_data);
+        }
+    }
+    else
+    {
+        s->priv_data = NULL;
+    }
 
+    // List the devices for this context
+    AVDeviceInfoList* devlist;
+    AVDictionary *tmp = nullptr;
+    av_dict_copy(&tmp, nullptr, 0);
+    if (av_opt_set_dict2(s, &tmp, AV_OPT_SEARCH_CHILDREN) < 0)
+    {
+        av_dict_free(&tmp);
+        avformat_free_context(s);
+    }
+    avdevice_list_devices(s, &devlist);
+
+    // Convert the list to a QVector
     devices.resize(devlist->nb_devices);
     for (int i=0; i<devlist->nb_devices; i++)
     {
@@ -80,6 +118,7 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
         devices[i].first = dev->device_name;
         devices[i].second = dev->device_description;
     }
+    avdevice_free_list_devices(&devlist);
 
     return devices;
 }

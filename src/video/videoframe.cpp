@@ -151,7 +151,7 @@ bool VideoFrame::convertToYUV420()
     }
     else if (frameRGB24)
     {
-        sourceFrame = frameOther;
+        sourceFrame = frameRGB24;
     }
     else
     {

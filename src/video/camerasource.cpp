@@ -216,6 +216,7 @@ void CameraSource::stream()
                 while (!freelistLock.compare_exchange_weak(expected, true))
                     expected = false;
             }
+
             int freeFreelistSlot = getFreelistSlotLockless();
             auto frameFreeCb = std::bind(&CameraSource::freelistCallback, this, freeFreelistSlot);
             std::shared_ptr<VideoFrame> vframe = std::make_shared<VideoFrame>(frame, frameFreeCb);
