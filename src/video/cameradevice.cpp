@@ -63,21 +63,21 @@ bool CameraDevice::close()
     }
 }
 
-QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
+AVDeviceInfoList* CameraDevice::getRawDeviceList()
 {
-    QVector<QPair<QString, QString>> devices;
+    AVDeviceInfoList* devlist = nullptr;
 
     if (!getDefaultInputFormat())
-        return devices;
+        return devlist;
 
     // Alloc an input device context
     AVFormatContext *s;
     if (!(s = avformat_alloc_context()))
-        return devices;
+        return devlist;
     if (!iformat->priv_class || !AV_IS_INPUT_DEVICE(iformat->priv_class->category))
     {
         avformat_free_context(s);
-        return devices;
+        return devlist;
     }
     s->iformat = iformat;
     if (s->iformat->priv_data_size > 0)
@@ -86,7 +86,7 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
         if (!s->priv_data)
         {
             avformat_free_context(s);
-            return devices;
+            return devlist;
         }
         if (s->iformat->priv_class)
         {
@@ -100,7 +100,6 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     }
 
     // List the devices for this context
-    AVDeviceInfoList* devlist;
     AVDictionary *tmp = nullptr;
     av_dict_copy(&tmp, nullptr, 0);
     if (av_opt_set_dict2(s, &tmp, AV_OPT_SEARCH_CHILDREN) < 0)
@@ -109,6 +108,16 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
         avformat_free_context(s);
     }
     avdevice_list_devices(s, &devlist);
+    return devlist;
+}
+
+QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
+{
+    QVector<QPair<QString, QString>> devices;
+
+    AVDeviceInfoList* devlist = getRawDeviceList();
+    if (!devlist)
+        return devices;
 
     // Convert the list to a QVector
     devices.resize(devlist->nb_devices);
@@ -130,10 +139,11 @@ QString CameraDevice::getDefaultDeviceName()
     if (!getDefaultInputFormat())
         return device;
 
-    bool actuallyExists = false;
-    AVDeviceInfoList* devlist;
-    avdevice_list_input_sources(iformat, nullptr, nullptr, &devlist);
+    AVDeviceInfoList* devlist = getRawDeviceList();
+    if (!devlist)
+        return device;
 
+    bool actuallyExists = false;
     for (int i=0; i<devlist->nb_devices; i++)
     {
         if (device == devlist->devices[i]->device_name)
@@ -143,13 +153,22 @@ QString CameraDevice::getDefaultDeviceName()
         }
     }
     if (actuallyExists)
+    {
+        avdevice_free_list_devices(&devlist);
         return device;
+    }
 
     if (!devlist->nb_devices)
-        return QString();
-
-    int defaultDev = devlist->default_device == -1 ? 0 : devlist->default_device;
-    return QString(devlist->devices[defaultDev]->device_name);
+    {
+        device.clear();
+    }
+    else
+    {
+        int defaultDev = devlist->default_device == -1 ? 0 : devlist->default_device;
+        device = QString(devlist->devices[defaultDev]->device_name);
+    }
+    avdevice_free_list_devices(&devlist);
+    return device;
 }
 
 bool CameraDevice::getDefaultInputFormat()

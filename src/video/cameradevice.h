@@ -9,6 +9,7 @@
 
 struct AVFormatContext;
 struct AVInputFormat;
+struct AVDeviceInfoList;
 
 /// Maintains an FFmpeg context for open camera devices,
 /// takes care of sharing the context accross users
@@ -36,6 +37,7 @@ public:
 private:
     CameraDevice(const QString devName, AVFormatContext *context);
     static bool getDefaultInputFormat(); ///< Sets CameraDevice::iformat, returns success/failure
+    static AVDeviceInfoList* getRawDeviceList();
 
 public:
     const QString devName; ///< Short name of the device
