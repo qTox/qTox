@@ -40,8 +40,8 @@ void NetVideoSource::pushVPXFrame(const vpx_image *image)
     frame.format = VideoFrame::YUV;
 
     const uint8_t* yData = image->planes[VPX_PLANE_Y];
-    const uint8_t* uData = image->planes[VPX_PLANE_V];
-    const uint8_t* vData = image->planes[VPX_PLANE_U];
+    const uint8_t* uData = image->planes[VPX_PLANE_U];
+    const uint8_t* vData = image->planes[VPX_PLANE_V];
 
     // convert from planar to packed
     for (int y = 0; y < dh; ++y)

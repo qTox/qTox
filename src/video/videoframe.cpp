@@ -44,8 +44,8 @@ vpx_image_t VideoFrame::createVpxImage() const
                 const int i = x / (1 << img.x_chroma_shift);
                 const int j = y / (1 << img.y_chroma_shift);
 
-                img.planes[VPX_PLANE_U][i + j * img.stride[VPX_PLANE_U]] = ((112 * r + -94 * g + -18 * b) >> 8) + 128;
-                img.planes[VPX_PLANE_V][i + j * img.stride[VPX_PLANE_V]] = ((-38 * r + -74 * g + 112 * b) >> 8) + 128;
+                img.planes[VPX_PLANE_V][i + j * img.stride[VPX_PLANE_V]] = ((112 * r + -94 * g + -18 * b) >> 8) + 128;
+                img.planes[VPX_PLANE_U][i + j * img.stride[VPX_PLANE_U]] = ((-38 * r + -74 * g + 112 * b) >> 8) + 128;
             }
         }
     }
