@@ -9,13 +9,9 @@
 #error "This file is only meant to be compiled for Windows targets"
 #endif
 
-class DirectShow
+namespace DirectShow
 {
-public:
-    static QVector<QPair<QString,QString>> getDeviceList();
-
-private:
-    DirectShow()=delete;
-};
+    QVector<QPair<QString,QString>> getDeviceList();
+}
 
 #endif // DIRECTSHOW_H
