@@ -133,8 +133,9 @@ win32 {
     RC_FILE = windows/qtox.rc
 	LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
 	LIBS += -L$$PWD/libs/lib -lavformat -lavdevice -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
-    LIBS += -lopengl32 -lole32 -loleaut32 -luuid -lvfw32 -lws2_32 -liphlpapi -lz
+    LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lz -luuid
     LIBS += -lqrencode
+    LIBS += -lstrmiids # For DirectShow
     contains(DEFINES, QTOX_FILTER_AUDIO) {
         contains(STATICPKG, YES) {
             LIBS += -Wl,-Bstatic -lfilteraudio
@@ -359,7 +360,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/misc/qrwidget.h \
         src/widget/systemtrayicon_private.h
 
-        SOURCES += \
+    SOURCES += \
         src/widget/form/addfriendform.cpp \
         src/widget/form/settingswidget.cpp \
         src/widget/form/settings/generalform.cpp \
@@ -418,6 +419,14 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/offlinemsgengine.cpp \
         src/misc/qrwidget.cpp \
         src/widget/genericchatroomwidget.cpp
+}
+
+win32 {
+    HEADERS += \
+        src/platform/camera/directshow.h
+
+    SOURCES += \
+        src/platform/camera/directshow.cpp
 }
 
 SOURCES += \
