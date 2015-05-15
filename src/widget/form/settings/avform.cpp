@@ -102,7 +102,9 @@ void AVForm::onVideoDevChanged(int index)
     camVideoSurface->setSource(nullptr);
     if (camera)
         delete camera;
-    camera = new CameraSource(videoDeviceList[index].first);
+    QString dev = videoDeviceList[index].first;
+    Settings::getInstance().setVideoDev(dev);
+    camera = new CameraSource(dev);
     camVideoSurface->setSource(camera);
 }
 
