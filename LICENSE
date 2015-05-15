@@ -11,30 +11,30 @@
 software and other kinds of works.
 
   The licenses for most software and other practical works are designed
-to take away your freedom to share and change the works. By contrast,
+to take away your freedom to share and change the works.  By contrast,
 the GNU General Public License is intended to guarantee your freedom to
 share and change all versions of a program--to make sure it remains free
-software for all its users. We, the Free Software Foundation, use the
+software for all its users.  We, the Free Software Foundation, use the
 GNU General Public License for most of our software; it applies also to
-any other work released this way by its authors. You can apply it to
+any other work released this way by its authors.  You can apply it to
 your programs, too.
 
   When we speak of free software, we are referring to freedom, not
-price. Our General Public Licenses are designed to make sure that you
+price.  Our General Public Licenses are designed to make sure that you
 have the freedom to distribute copies of free software (and charge for
 them if you wish), that you receive source code or can get it if you
 want it, that you can change the software or use pieces of it in new
 free programs, and that you know you can do these things.
 
   To protect your rights, we need to prevent others from denying you
-these rights or asking you to surrender the rights. Therefore, you have
+these rights or asking you to surrender the rights.  Therefore, you have
 certain responsibilities if you distribute copies of the software, or if
 you modify it: responsibilities to respect the freedom of others.
 
   For example, if you distribute copies of such a program, whether
 gratis or for a fee, you must pass on to the recipients the same
-freedoms that you received. You must make sure that they, too, receive
-or can get the source code. And you must show them these terms so they
+freedoms that you received.  You must make sure that they, too, receive
+or can get the source code.  And you must show them these terms so they
 know their rights.
 
   Developers that use the GNU GPL protect your rights with two steps:
@@ -42,19 +42,19 @@ know their rights.
 giving you legal permission to copy, distribute and/or modify it.
 
   For the developers' and authors' protection, the GPL clearly explains
-that there is no warranty for this free software. For both users' and
+that there is no warranty for this free software.  For both users' and
 authors' sake, the GPL requires that modified versions be marked as
 changed, so that their problems will not be attributed erroneously to
 authors of previous versions.
 
   Some devices are designed to deny users access to install or run
 modified versions of the software inside them, although the manufacturer
-can do so. This is fundamentally incompatible with the aim of
-protecting users' freedom to change the software. The systematic
+can do so.  This is fundamentally incompatible with the aim of
+protecting users' freedom to change the software.  The systematic
 pattern of such abuse occurs in the area of products for individuals to
-use, which is precisely where it is most unacceptable. Therefore, we
+use, which is precisely where it is most unacceptable.  Therefore, we
 have designed this version of the GPL to prohibit the practice for those
-products. If such problems arise substantially in other domains, we
+products.  If such problems arise substantially in other domains, we
 stand ready to extend this provision to those domains in future versions
 of the GPL, as needed to protect the freedom of users.
 
@@ -62,7 +62,7 @@ of the GPL, as needed to protect the freedom of users.
 States should not allow patents to restrict development and use of
 software on general-purpose computers, but in those that do, we wish to
 avoid the special danger that patents applied to a free program could
-make it effectively proprietary. To prevent this, the GPL assures that
+make it effectively proprietary.  To prevent this, the GPL assures that
 patents cannot be used to render the program non-free.
 
   The precise terms and conditions for copying, distribution and
@@ -78,12 +78,12 @@ modification follow.
 works, such as semiconductor masks.
 
   "The Program" refers to any copyrightable work licensed under this
-License. Each licensee is addressed as "you". "Licensees" and
+License.  Each licensee is addressed as "you".  "Licensees" and
 "recipients" may be individuals or organizations.
 
   To "modify" a work means to copy from or adapt all or part of the work
 in a fashion requiring copyright permission, other than the making of an
-exact copy. The resulting work is called a "modified version" of the
+exact copy.  The resulting work is called a "modified version" of the
 earlier work or a work "based on" the earlier work.
 
   A "covered work" means either the unmodified Program or a work based
@@ -92,12 +92,12 @@ on the Program.
   To "propagate" a work means to do anything with it that, without
 permission, would make you directly or secondarily liable for
 infringement under applicable copyright law, except executing it on a
-computer or modifying a private copy. Propagation includes copying,
+computer or modifying a private copy.  Propagation includes copying,
 distribution (with or without modification), making available to the
 public, and in some countries other activities as well.
 
   To "convey" a work means any kind of propagation that enables other
-parties to make or receive copies. Mere interaction with a user through
+parties to make or receive copies.  Mere interaction with a user through
 a computer network, with no transfer of a copy, is not conveying.
 
   An interactive user interface displays "Appropriate Legal Notices"
@@ -105,14 +105,14 @@ to the extent that it includes a convenient and prominently visible
 feature that (1) displays an appropriate copyright notice, and (2)
 tells the user that there is no warranty for the work (except to the
 extent that warranties are provided), that licensees may convey the
-work under this License, and how to view a copy of this License. If
+work under this License, and how to view a copy of this License.  If
 the interface presents a list of user commands or options, such as a
 menu, a prominent item in the list meets this criterion.
 
   1. Source Code.
 
   The "source code" for a work means the preferred form of the work
-for making modifications to it. "Object code" means any non-source
+for making modifications to it.  "Object code" means any non-source
 form of a work.
 
   A "Standard Interface" means an interface that either is an official
@@ -125,7 +125,7 @@ than the work as a whole, that (a) is included in the normal form of
 packaging a Major Component, but which is not part of that Major
 Component, and (b) serves only to enable use of the work with that
 Major Component, or to implement a Standard Interface for which an
-implementation is available to the public in source code form. A
+implementation is available to the public in source code form.  A
 "Major Component", in this context, means a major essential component
 (kernel, window system, and so on) of the specific operating system
 (if any) on which the executable work runs, or a compiler used to
@@ -134,10 +134,10 @@ produce the work, or an object code interpreter used to run it.
   The "Corresponding Source" for a work in object code form means all
 the source code needed to generate, install, and (for an executable
 work) run the object code and to modify the work, including scripts to
-control those activities. However, it does not include the work's
+control those activities.  However, it does not include the work's
 System Libraries, or general-purpose tools or generally available free
 programs which are used unmodified in performing those activities but
-which are not part of the work. For example, Corresponding Source
+which are not part of the work.  For example, Corresponding Source
 includes interface definition files associated with source files for
 the work, and the source code for shared libraries and dynamically
 linked subprograms that the work is specifically designed to require,
@@ -155,25 +155,25 @@ same work.
 
   All rights granted under this License are granted for the term of
 copyright on the Program, and are irrevocable provided the stated
-conditions are met. This License explicitly affirms your unlimited
-permission to run the unmodified Program. The output from running a
+conditions are met.  This License explicitly affirms your unlimited
+permission to run the unmodified Program.  The output from running a
 covered work is covered by this License only if the output, given its
-content, constitutes a covered work. This License acknowledges your
+content, constitutes a covered work.  This License acknowledges your
 rights of fair use or other equivalent, as provided by copyright law.
 
   You may make, run and propagate covered works that you do not
 convey, without conditions so long as your license otherwise remains
-in force. You may convey covered works to others for the sole purpose
+in force.  You may convey covered works to others for the sole purpose
 of having them make modifications exclusively for you, or provide you
 with facilities for running those works, provided that you comply with
 the terms of this License in conveying all material for which you do
-not control copyright. Those thus making or running the covered works
+not control copyright.  Those thus making or running the covered works
 for you must do so exclusively on your behalf, under your direction
 and control, on terms that prohibit them from making any copies of
 your copyrighted material outside their relationship with you.
 
   Conveying under any other circumstances is permitted solely under
-the conditions stated below. Sublicensing is not allowed; section 10
+the conditions stated below.  Sublicensing is not allowed; section 10
 makes it unnecessary.
 
   3. Protecting Users' Legal Rights From Anti-Circumvention Law.
@@ -216,14 +216,14 @@ terms of section 4, provided that you also meet all of these conditions:
 
     b) The work must carry prominent notices stating that it is
     released under this License and any conditions added under section
-    7. This requirement modifies the requirement in section 4 to
+    7.  This requirement modifies the requirement in section 4 to
     "keep intact all notices".
 
     c) You must license the entire work, as a whole, under this
-    License to anyone who comes into possession of a copy. This
+    License to anyone who comes into possession of a copy.  This
     License will therefore apply, along with any applicable section 7
     additional terms, to the whole of the work, and all its parts,
-    regardless of how they are packaged. This License gives no
+    regardless of how they are packaged.  This License gives no
     permission to license the work in any other way, but it does not
     invalidate such permission if you have separately received it.
 
@@ -238,7 +238,7 @@ and which are not combined with it such as to form a larger program,
 in or on a volume of a storage or distribution medium, is called an
 "aggregate" if the compilation and its resulting copyright are not
 used to limit the access or legal rights of the compilation's users
-beyond what the individual works permit. Inclusion of a covered work
+beyond what the individual works permit.  Inclusion of a covered work
 in an aggregate does not cause this License to apply to the other
 parts of the aggregate.
 
@@ -267,7 +267,7 @@ in one of these ways:
     Corresponding Source from a network server at no charge.
 
     c) Convey individual copies of the object code with a copy of the
-    written offer to provide the Corresponding Source. This
+    written offer to provide the Corresponding Source.  This
     alternative is allowed only occasionally and noncommercially, and
     only if you received the object code with such an offer, in accord
     with subsection 6b.
@@ -275,13 +275,13 @@ in one of these ways:
     d) Convey the object code by offering access from a designated
     place (gratis or for a charge), and offer equivalent access to the
     Corresponding Source in the same way through the same place at no
-    further charge. You need not require recipients to copy the
-    Corresponding Source along with the object code. If the place to
+    further charge.  You need not require recipients to copy the
+    Corresponding Source along with the object code.  If the place to
     copy the object code is a network server, the Corresponding Source
     may be on a different server (operated by you or a third party)
     that supports equivalent copying facilities, provided you maintain
     clear directions next to the object code saying where to find the
-    Corresponding Source. Regardless of what server hosts the
+    Corresponding Source.  Regardless of what server hosts the
     Corresponding Source, you remain obligated to ensure that it is
     available for as long as needed to satisfy these requirements.
 
@@ -297,12 +297,12 @@ included in conveying the object code work.
   A "User Product" is either (1) a "consumer product", which means any
 tangible personal property which is normally used for personal, family,
 or household purposes, or (2) anything designed or sold for incorporation
-into a dwelling. In determining whether a product is a consumer product,
-doubtful cases shall be resolved in favor of coverage. For a particular
+into a dwelling.  In determining whether a product is a consumer product,
+doubtful cases shall be resolved in favor of coverage.  For a particular
 product received by a particular user, "normally used" refers to a
 typical or common use of that class of product, regardless of the status
 of the particular user or of the way in which the particular user
-actually uses, or expects or is expected to use, the product. A product
+actually uses, or expects or is expected to use, the product.  A product
 is a consumer product regardless of whether the product has substantial
 commercial, industrial or non-consumer uses, unless such uses represent
 the only significant mode of use of the product.
@@ -310,7 +310,7 @@ the only significant mode of use of the product.
   "Installation Information" for a User Product means any methods,
 procedures, authorization keys, or other information required to install
 and execute modified versions of a covered work in that User Product from
-a modified version of its Corresponding Source. The information must
+a modified version of its Corresponding Source.  The information must
 suffice to ensure that the continued functioning of the modified object
 code is in no case prevented or interfered with solely because
 modification has been made.
@@ -321,7 +321,7 @@ part of a transaction in which the right of possession and use of the
 User Product is transferred to the recipient in perpetuity or for a
 fixed term (regardless of how the transaction is characterized), the
 Corresponding Source conveyed under this section must be accompanied
-by the Installation Information. But this requirement does not apply
+by the Installation Information.  But this requirement does not apply
 if neither you nor any third party retains the ability to install
 modified object code on the User Product (for example, the work has
 been installed in ROM).
@@ -329,7 +329,7 @@ been installed in ROM).
   The requirement to provide Installation Information does not include a
 requirement to continue to provide support service, warranty, or updates
 for a work that has been modified or installed by the recipient, or for
-the User Product in which it has been modified or installed. Access to a
+the User Product in which it has been modified or installed.  Access to a
 network may be denied when the modification itself materially and
 adversely affects the operation of the network or violates the rules and
 protocols for communication across the network.
@@ -346,15 +346,15 @@ unpacking, reading or copying.
 License by making exceptions from one or more of its conditions.
 Additional permissions that are applicable to the entire Program shall
 be treated as though they were included in this License, to the extent
-that they are valid under applicable law. If additional permissions
+that they are valid under applicable law.  If additional permissions
 apply only to part of the Program, that part may be used separately
 under those permissions, but the entire Program remains governed by
 this License without regard to the additional permissions.
 
   When you convey a copy of a covered work, you may at your option
 remove any additional permissions from that copy, or from any part of
-it. (Additional permissions may be written to require their own
-removal in certain cases when you modify the work.) You may place
+it.  (Additional permissions may be written to require their own
+removal in certain cases when you modify the work.)  You may place
 additional permissions on material, added by you to a covered work,
 for which you have or can give appropriate copyright permission.
 
@@ -386,10 +386,10 @@ that material) supplement the terms of this License with terms:
     those licensors and authors.
 
   All other non-permissive additional terms are considered "further
-restrictions" within the meaning of section 10. If the Program as you
+restrictions" within the meaning of section 10.  If the Program as you
 received it, or any part of it, contains a notice stating that it is
 governed by this License along with a term that is a further
-restriction, you may remove that term. If a license document contains
+restriction, you may remove that term.  If a license document contains
 a further restriction but permits relicensing or conveying under this
 License, you may add to a covered work material governed by the terms
 of that license document, provided that the further restriction does
@@ -407,7 +407,7 @@ the above requirements apply either way.
   8. Termination.
 
   You may not propagate or modify a covered work except as expressly
-provided under this License. Any attempt otherwise to propagate or
+provided under this License.  Any attempt otherwise to propagate or
 modify it is void, and will automatically terminate your rights under
 this License (including any patent licenses granted under the third
 paragraph of section 11).
@@ -428,31 +428,31 @@ your receipt of the notice.
 
   Termination of your rights under this section does not terminate the
 licenses of parties who have received copies or rights from you under
-this License. If your rights have been terminated and not permanently
+this License.  If your rights have been terminated and not permanently
 reinstated, you do not qualify to receive new licenses for the same
 material under section 10.
 
   9. Acceptance Not Required for Having Copies.
 
   You are not required to accept this License in order to receive or
-run a copy of the Program. Ancillary propagation of a covered work
+run a copy of the Program.  Ancillary propagation of a covered work
 occurring solely as a consequence of using peer-to-peer transmission
-to receive a copy likewise does not require acceptance. However,
+to receive a copy likewise does not require acceptance.  However,
 nothing other than this License grants you permission to propagate or
-modify any covered work. These actions infringe copyright if you do
-not accept this License. Therefore, by modifying or propagating a
+modify any covered work.  These actions infringe copyright if you do
+not accept this License.  Therefore, by modifying or propagating a
 covered work, you indicate your acceptance of this License to do so.
 
   10. Automatic Licensing of Downstream Recipients.
 
   Each time you convey a covered work, the recipient automatically
 receives a license from the original licensors, to run, modify and
-propagate that work, subject to this License. You are not responsible
+propagate that work, subject to this License.  You are not responsible
 for enforcing compliance by third parties with this License.
 
   An "entity transaction" is a transaction transferring control of an
 organization, or substantially all assets of one, or subdividing an
-organization, or merging organizations. If propagation of a covered
+organization, or merging organizations.  If propagation of a covered
 work results from an entity transaction, each party to that
 transaction who receives a copy of the work also receives whatever
 licenses to the work the party's predecessor in interest had or could
@@ -461,7 +461,7 @@ Corresponding Source of the work from the predecessor in interest, if
 the predecessor has it or can get it with reasonable efforts.
 
   You may not impose any further restrictions on the exercise of the
-rights granted or affirmed under this License. For example, you may
+rights granted or affirmed under this License.  For example, you may
 not impose a license fee, royalty, or other charge for exercise of
 rights granted under this License, and you may not initiate litigation
 (including a cross-claim or counterclaim in a lawsuit) alleging that
@@ -471,7 +471,7 @@ sale, or importing the Program or any portion of it.
   11. Patents.
 
   A "contributor" is a copyright holder who authorizes use under this
-License of the Program or a work on which the Program is based. The
+License of the Program or a work on which the Program is based.  The
 work thus licensed is called the contributor's "contributor version".
 
   A contributor's "essential patent claims" are all patent claims
@@ -479,7 +479,7 @@ owned or controlled by the contributor, whether already acquired or
 hereafter acquired, that would be infringed by some manner, permitted
 by this License, of making, using, or selling its contributor version,
 but do not include claims that would be infringed only as a
-consequence of further modification of the contributor version. For
+consequence of further modification of the contributor version.  For
 purposes of this definition, "control" includes the right to grant
 patent sublicenses in a manner consistent with the requirements of
 this License.
@@ -492,7 +492,7 @@ propagate the contents of its contributor version.
   In the following three paragraphs, a "patent license" is any express
 agreement or commitment, however denominated, not to enforce a patent
 (such as an express permission to practice a patent or covenant not to
-sue for patent infringement). To "grant" such a patent license to a
+sue for patent infringement).  To "grant" such a patent license to a
 party means to make such an agreement or commitment not to enforce a
 patent against the party.
 
@@ -504,7 +504,7 @@ then you must either (1) cause the Corresponding Source to be so
 available, or (2) arrange to deprive yourself of the benefit of the
 patent license for this particular work, or (3) arrange, in a manner
 consistent with the requirements of this License, to extend the patent
-license to downstream recipients. "Knowingly relying" means you have
+license to downstream recipients.  "Knowingly relying" means you have
 actual knowledge that, but for the patent license, your conveying the
 covered work in a country, or your recipient's use of the covered work
 in a country, would infringe one or more identifiable patents in that
@@ -521,7 +521,7 @@ work and works based on it.
   A patent license is "discriminatory" if it does not include within
 the scope of its coverage, prohibits the exercise of, or is
 conditioned on the non-exercise of one or more of the rights that are
-specifically granted under this License. You may not convey a covered
+specifically granted under this License.  You may not convey a covered
 work if you are a party to an arrangement with a third party that is
 in the business of distributing software, under which you make payment
 to the third party based on the extent of your activity of conveying
@@ -541,10 +541,10 @@ otherwise be available to you under applicable patent law.
 
   If conditions are imposed on you (whether by court order, agreement or
 otherwise) that contradict the conditions of this License, they do not
-excuse you from the conditions of this License. If you cannot convey a
+excuse you from the conditions of this License.  If you cannot convey a
 covered work so as to satisfy simultaneously your obligations under this
 License and any other pertinent obligations, then as a consequence you may
-not convey it at all. For example, if you agree to terms that obligate you
+not convey it at all.  For example, if you agree to terms that obligate you
 to collect a royalty for further conveying from those to whom you convey
 the Program, the only way you could satisfy both those terms and this
 License would be to refrain entirely from conveying the Program.
@@ -554,7 +554,7 @@ License would be to refrain entirely from conveying the Program.
   Notwithstanding any other provision of this License, you have
 permission to link or combine any covered work with a work licensed
 under version 3 of the GNU Affero General Public License into a single
-combined work, and to convey the resulting work. The terms of this
+combined work, and to convey the resulting work.  The terms of this
 License will continue to apply to the part which is the covered work,
 but the special requirements of the GNU Affero General Public License,
 section 13, concerning interaction through a network will apply to the
@@ -563,16 +563,16 @@ combination as such.
   14. Revised Versions of this License.
 
   The Free Software Foundation may publish revised and/or new versions of
-the GNU General Public License from time to time. Such new versions will
+the GNU General Public License from time to time.  Such new versions will
 be similar in spirit to the present version, but may differ in detail to
 address new problems or concerns.
 
-  Each version is given a distinguishing version number. If the
+  Each version is given a distinguishing version number.  If the
 Program specifies that a certain numbered version of the GNU General
 Public License "or any later version" applies to it, you have the
 option of following the terms and conditions either of that numbered
 version or of any later version published by the Free Software
-Foundation. If the Program does not specify a version number of the
+Foundation.  If the Program does not specify a version number of the
 GNU General Public License, you may choose any version ever published
 by the Free Software Foundation.
 
@@ -582,19 +582,19 @@ public statement of acceptance of a version permanently authorizes you
 to choose that version for the Program.
 
   Later license versions may give you additional or different
-permissions. However, no additional obligations are imposed on any
+permissions.  However, no additional obligations are imposed on any
 author or copyright holder as a result of your choosing to follow a
 later version.
 
   15. Disclaimer of Warranty.
 
   THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
-APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
 HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
 OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
 THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
-IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
 ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
 
   16. Limitation of Liability.
@@ -626,13 +626,13 @@ copy of the Program in return for a fee.
 possible use to the public, the best way to achieve this is to make it
 free software which everyone can redistribute and change under these terms.
 
-  To do so, attach the following notices to the program. It is safest
+  To do so, attach the following notices to the program.  It is safest
 to attach them to the start of each source file to most effectively
 state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
     <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) <year> <name of author>
+    Copyright (C) <year>  <name of author>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -641,24 +641,24 @@ the "copyright" line and a pointer to where the full notice is found.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program. If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Also add information on how to contact you by electronic and paper mail.
 
   If the program does terminal interaction, make it output a short
 notice like this when it starts in an interactive mode:
 
-    <program> Copyright (C) <year> <name of author>
+    <program>  Copyright (C) <year>  <name of author>
     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
 
 The hypothetical commands `show w' and `show c' should show the appropriate
-parts of the General Public License. Of course, your program's commands
+parts of the General Public License.  Of course, your program's commands
 might be different; for a GUI interface, you would use an "about box".
 
   You should also get your employer (if you work as a programmer) or school,
@@ -667,109 +667,8 @@ For more information on this, and how to apply and follow the GNU GPL, see
 <http://www.gnu.org/licenses/>.
 
   The GNU General Public License does not permit incorporating your program
-into proprietary programs. If your program is a subroutine library, you
+into proprietary programs.  If your program is a subroutine library, you
 may consider it more useful to permit linking proprietary applications with
-the library. If this is what you want to do, use the GNU Lesser General
-Public License instead of this License. But first, please read
+the library.  If this is what you want to do, use the GNU Lesser General
+Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.
-
-                                                                                             GN UGENERAL                                                                                                
-                                                                                PUBLICLICENSEVe          rsion2Ju          ne                                                                           
-                                                                           1991Copyr  ightC1 9891991FreeSo     ftwareFo   un dationI                                                                    
-                                                                        nc5  9Te m     plePlaceSuite330BostonMA 021111307USAEveryoneIsP                                                                 
-                                                                    ermittedToCopyAndDi stributeVerbatimCopiesofTh  isLicenseDocumentbutC                                                               
-                                                                 hangingItIsNotAllowedPreambleTheLicensesForMostSoftwareAreDesignedToTakeAwa                                                            
-                                                               yYourfreedomToShareAndC hangeItByContrasttheGNUGeneralPublicLicenseIsIntendedTo                                                          
-                                                             GuaranteeYourFreedomToShareAndChangeF   reeso  f  tw aretoMakeSureTheSoftwar eIsFr                                                         
-                                                           eeForAllItsUsersT hisGeneralPublicLic  ens     eA  p       p   liesToMostOfTheFreeSof t                                                      
-                                                          wareFoundationsSoftwareAndToAnyOt h  erPr  ogramW ho  se Au   t horsCommitTousingItSomeOt                                                     
-                                                        herFreeSoftwareFoundationSoftw ar     e        I              s Cov er edBytheGNULibraryGen e                                                   
-                                                       ralPublicLicenseInsteadYouCa  nA      p  p     l  y        I             tToyourProgramstooWh en                                                 
-                                                    WeSpeakOfFreeSoftwarewe AreReferr       i  n      g             T  oFre e do  mnotpriceOurGeneralP u                                                
-                                                blicLicensesAreDesignedT oMake  Su                  re                     Th  at YouhaveTheFreed omToD is                                              
-                                              tributeCopiesOfFreeSoftwar eand Ch                                                 ar geF orthisServ  iceI fY                                             
-                                            ouWishthatYouReceiveSou  r ceCod                                                eO    rC anG etItifYouWantItthat                                            
-                                          YouCanChangeTheSoftware OrUsePi                                                       e  ce sOfItinNewFreePro grams                                           
-                                         AndThatYouKnowYouCanDoTheseTh                                                              ingsToProtectYourRig  htswe                                         
-                                        NeedToMak eRestrictionsTh                                                               a tForbi   danyoneToDenyYou  Thes                                       
-                                        eRightsOrToAskYouToS                                                                u   r renderTh   eRigh tsTheseRestrict                                      
-                                       ionsTranslateToCerta                                                                 i       nR  espo  nsibi litiesForYouIfYoud                                  
-                                       istributeCopiesOfT                                                                     h      eSo ftwa  reorI fYouModifyItFor  Examplei                          
-                                      fYouDistributeCopi                                                                       es O f Suc  hAProgramwh ethergratisOrF         or                        
-                                     AFeeyouMustGiveTh   e                                                                      R  e  cip i entsAllTheRightsThatyouHaveY                                
-                                    ouMustMakeSureTha tT                                                                         h  ey  too receiveOrCanGetThesourceCodeA                               
-                                  ndYouMustShowThemThes e                                                                        Ter ms  SoT h eyKnowTh eirrightsWeProtec t                             
-                               Yo  urRights WithTwoSt                                                                           eps      1 CopyrightTheS   oftwarean d 2Of                              
-                              f    erYouThisLicenseW h  i                                                                        ch   G     ivesYouLegalPe  rmissionToCopyd is                          
-                             t    ribut eAndorModifyTh eS o                                                                    f       twar eAlsoforEachAutho rsProtectionAnd Ou                        
-                                  rsweWantToMak eC ert a         i                                                         n       th  a  t  EveryoneUnderstandsThatThereIsNoWarr  a                    
-                                 nty ForThisFr  ee  soft wa                                                                     r e    I f  The SoftwareI sModifiedBySomeoneElseA                       
-                                ndPassedOnwewan tItsRe        c                                                              i    pi   ent s  ToKnowThatWh atTheyHaveIsNotTheOrigina                    
-                                lsothatAnyPr oblem sIntr o  d    u                                                         c      e d B yO   thersWillNotReflectOnTheOriginalau  t                      
-                              horsReputationsFinal  ly an                                                                   y   F  r e e  Pr  ogramIsT hreatenedConstantlyBySoftw a  re                 
-                             patentsWeWishToAvoidTheDange                                                                            rT  hatRedistributorsOfAFreeprogramWillIndivi du a                 
-                            llyObt ainPatentLicens esin Eff                                                                     ectM   akin  g   TheprogramProprietaryToPreventThis weHav               
-                             eMadeItClearThatAnypatentMust  B                                            eLic  ens e dForEver        yon  esFreeU   seOrNotLicensedAtAllThePreciseTe r  ms              
-                            AndConditionsForCopyingdi st r                                            i   butionAndm odificatio     nFollowG NUGE NE  RALPUBLICLICENSETERMSANDCONDIT      I             
-                            ONSFORCOPYINGDISTRIBUTIONAN  D                                              M ODIFICATION0ThisLice n        s  eAppliesTo  AnyProgramOrOtherWorkWhichConta  i n             
-                         s  aNoticePlacedByTheC  opyright           Holde rS                          a  yingItMayBeDist  r ibutedund     e   rTheT  e  rmsOfThisGeneralPublicLicenseTh    e            
-                           ProgrambelowrefersToA nySuc h        ProgramOrW                             o                         rkandAw   orkB   asedOnTheProgrammeansEi therTheProgra     m           
-                          OrAnyDerivativeWorkUnderCop    yrightLawthatIsToSayaWo                                           r   k   Co  nta    inin gTheProgramOrAPortionO fIteitherVerbat               
-                         i mOrWithModificationsAndorTr anslatedIntoAnotherl an                       guag eH                 ere   inaftertran  s la  tio nIsIncludedWithoutLimitationInth              
-                        e TermmodificationEachLicens  eeIsAdd                 r e                   ss     edAsyouAc        tivitiesOt   her  Tha   nCopyingdistributionA ndModificationAr  e N         
-                         o tcoveredByThisLicenseTheyAreOu                       tsideIt           s     ScopeTh  eActOfrunningT he  Pro      g      r a m IsNotRestrictedandTheOutputFromTh    e        
-                        Pr ogramisCovere dOnlyIfItsContent  s      ConstituteA    WorkB          as ed OnTh eProgramind ependentOfHav in    gB een   Ma de ByRunningTheProgramWhetherThatIsTr           
-                     u  eDependsOnWhatTheProgramDo es1 Y o uMayCop           yAndDistrib         uteVerbatimCop    iesOfThePr    ogramssou       rc e  C od eAsYouReceiveItinAnyM ediumprovi d          
-                       e dThatYouconspicu ouslyAn dAppropriatel  yPublishOnEac   hCopyAn          Appro   p         r iateco   py rightNoti ce    A  nd  DisclaimerOfWarrantyKeep IntactAllTh e         
-                       n oticesThatReferToThisLicenseAn dToT heAbsenc eOfA   nyWa   rran         ty  an  dGiveAnyOthe      r Rec  ip ientsOf      T    heP rogramACopyOfThis LicensealongWithTh  e      
-                      P rogramYouMayChargeAFeeFo rTheP hysicalAct OfTransf      er  rin           gA Co     p      y  a    n      dyouMa yAtY        o u   rOptionOfferWarran tyProtectionInExc  h      
-                      angeForAFee2YouMayModi fyYou rCopyOrCop   iesOfTheProgramOrAn yP             ortion    o fI              tthusF   o           r     min  gAWorkBasedOnTheProgramandCopyAnd  d     
-                    istributeSuchModificationsO r   WorkUnder            Th     e  Ter              ms OfS    ec t ion1abovep  r      o  vi    de  dTha  tYouA lsoM eetAllOfTheseConditionsaYouMu       
-                    s tCauseTheModifiedFilesToCarr  yProminen tNotic e       s    sta               tingThat  Y       ouChang e           dT          h  e Fi lesAndTheDateOfAnyChangebYouMustCa  u     
-                  se AnyWorkThatYouDistributeOr Publishtha t            Inwho    leOr I         n    Part   Con                        ta             i nsOr Is DerivedFromTheProgramOrAnypartThe r     
-                   eoftoBeLicensedAsAWholeAtNoC    hargeToAllT       hirdp a  rtiesU n                   de                              r         T    heTerm sOfThisLic ensecIfTheModifiedProgramN    
-                 o r mallyReadsCommandsInteracti velyw henRunyouMus tCa us  e   Itw he                    nSt               a                        rtedR u n ningForSuchin teractiveUseInTheMos  tO   
-                r  dinaryWaytoPrintOrDisplayAna    nnou   n ce     m     e   n  tIn cl                                  u                  d            in gAnA ppropriateCopyrightNoticeAndAnoticeTh   
-               a  tThereIsNoWarrantyorElsesayin  gThat Yo        u P  r        ovi  de          a   War                          r      an             ty AndTh atUsersMayRedistributeTheProgramUnder   
-                theseConditionsandTellingTheUs  erH                            ow ToVi         e wA                                                     C opyO fThisLicenseExceptionIfTheProgra mItse   
-               lfIsInteractiveButdoesNotNormal l  yP                 r      in   tSuch       A  n Ann                                                     ouncementyourWorkBasedOntheProgr amIsNotRequ  
-            i re  dToPrintAnAnnouncementThese  Re               qu  i    r e   m ent              sApp   l                                              y  ToT heModifiedWorkAsAWholeIfidentifiableSect 
-           i  o   nsOfThatWor kAreNotDerivedFromTh   e                           Pro                gramandC                                             a nBeRea  sonablyConsideredIndependentAn dSepa 
-             ra teWorksInthemselvesthenThisL ice   ns                           ea n                 dIt sTerm                                   s     do  No  tAp plyT oThosesectionsWhenYouDistributeT
-        h  em AsSeparateWorksButWhenYoudistr i b u                             teT                      h    eS                                     am  eSecti o n  sAsPartOfAWholeWhichIsAWorkBasedonTh
-           eP r ogramtheDi stributionOfTheWhole  M  u  s                      tBe                             On                                          T heT er  msO fthisLicensewhos ePermissionsFor
-           O th erLicenseesExtendToTheentireW   h                             o  l                            ea                                        ndT husToEa chAndEveryPartRegard lessOfWhoWroteI
-           t ThusitIsNotTheIntentOfThisSectionTo  C                        l ai   mR               ightsOrCo nte       s t                              y ou  rRightsToWorkWrittenEntirelyByYouRatherthe
-          In tentIsToexerciseTheRightToControl  T h   e                      Di stribut          ionOfDe     ri          va                           t  iveOrcol le ctiveWorksBasedOnTheProgramInAdditi
-          onmereAggregationOfAnotherWorkNotBase   d  O                  nT    heP  rogram    w ithTh        e    Pr        og                            ramo r Wi t hAWorkBasedOnTheProgramOnAVolumeOfa
-         S torageOrDistributionMediumDoesNotBri ngT                       h    eO    therWorkUnde r   theSc   opeOfTh   is   Li                          cense3YouMa yCopyAndDistribute TheProgramorAWor
-          kBa sedOnItunderSection2InObjectCodeOr E                             xe cu      tableF  ormUnderTheT  ermsOfSe  ct   i                on       s1 And2AboveProvidedThatYouAlsoDoOneOfTheFo llo
-          wi ngaAccompanyItWithTheCompleteCorrespond                        i ngMachiner           e  adablesource Co dewhichM  us                t   Be Di stributedU nderTheTermsOfSection s1And2Above
-         OnA MediumCustomarilyUsedForSoftwareIn   te                        rchangeOrbAccompa   nyItWithAWrittenOfferv  ali dFo rAt                L   ea s tThreeyear  stoGiveAnyThirdP  artyforACharge
-        No M  oreThanYourcostOfPhysicallyP erform   in g             Sour ceDistributionaComplet emachinere adableCopyOfTheCorr espo           n   di    ngSourceCodetoBedistributedUnde rTheTermsOfSect
-       i ons  1And2AboveOnAMediumcustomarilyUs     ed                   Fo  rSoftwareInterchang  eOrcAccompanyItWithTheIn  formationY               o    uRece ivedAsToT heOffertoDistributeCorrespondin
-        g  SourceCodeThisAlternativeIsallowedOnl   yF         o    r N oncommercialDistributionAndOnlyIfYou receivedT heProgramI nObj ec           tC o  deOrExecutableFormWithSuchanOfferinA ccordWithS
-        u   bsectionBAboveTheSourceCodeForAWor  kM  e      a          nsThePreferredFo rmOfTheWorkFor m aking Modific   ationsToI tFor  A       n  Ex e cuta bleWorkcompleteSourceco deMeansAllTheSource
-        Co   deForAllModulesItContainsplusAny associ a         t   edIn te rfaceDefin itionFile splus Th e  ScriptsUsed T oco ntr  olC    o         mpil  ationAndInstallationOfTheExecutableHoweverasAs
-           pecialExceptiontheSourceCodeDistribu te d N     e   e  dNotIncludean ythi  ngThatIsNo rmallyDistributedinEitherSourceO r Bin     ar   yf  orm  W ithTheMajorCo mpone ntscompilerkernelandSoOn
-           O fTheoperatingSystemOnWhichTheExecutab            l  eRunsunlessThatCompone nt itselfAccompa nie sThe   Ex ecutab  le  IfDi  s  t r  ibu  tio nOfExecutabl eOrObjectCodeIsMadeByOfferingacce
-          s   sToCopyFromADesignatedPlacethenOfferin gEq    uiv alen ta ccessToCopyTheSourceCode FromTh eSamePlac  eCou ntsA sdi  stribu  tio n    O  fThe SourceCodeev enThoughThirdPart iesAreNotcompe
-          ll   edToCopyTheSourceAlongWithTheObjectC o   de   4YouMayN otCopymodifysubli cens             eo    rD   istribute  T heProgr   a   m   exceptAsExpre sslyProvi dedUnderThisLi censeAnyAttemp
-         t  otherwiseToCopymodifysublicenseOrD istrib  u  t  eThe  ProgramIsvoidandWill   A      ut            oma ticall     y T e rmin  at  e Y  ou rRightsUnderThisLicenseHow everpartiesWhoHaveRecei
-         v  edCopiesorRightsfromYouUnderthisLicense W il lNotHaveTheirLic  ensesTerm  i           n       a t     ed SoLongAsS uchpartie   sR e   mainInFullCompliance5YouAreNotRequiredToAcceptThisLice
-          n  sesinceYouHaveNotsignedItHowevernothingEl   s  eGran ts YouPer  mission  To  Mo      d    if  yOrdis trib   uteTheProgra mO rItsDeri  vativeWorksTheseActionsArepr  ohibitedByLawIfYouDoNot
-            AcceptThisLicenseThereforebymodifyin gOrD istributi ng  TheP  r   ogra morAnyWorkBase   d   OnThe P rogra my  ouIndicateY  o  ur Acc eptanceOfThisLicenseToDoSoandallItsTermsAndConditionsFo
-            rCopyingdistributingOrModifyingtheProgram OrWork sBasedOn It6Ea c  hTimeY ouRedi     stribute      T h           eProgr   am  orAny WorkBasedOnTheProgramtheRecipientAutomaticallyReceivesAL
-              icenseFromTheoriginalLicensorToCopydis tributeOr Modify TheP  r   o gramS ubj     e  c        t To     t heseTermsAndCond  i  tion   sYouMayNotImposeAnyFurtherrestrictionsOnTheRecipients
-            GN  UGENERALPUBLICLICENSEVersion2June1991CopyrightC19891 991   Fr   e    eSoftwa          r           e Fo    un    dationIn  c 59Temp lePlaceSuite330BostonMA0211 11307USAEveryoneIsPermitt
-            ed ToCopyAndDistributeVerbatimCopiesofThisLicens eD ocumentbutCh  a  ng in    g I   tI               sNo  t      Al lowedP reamble TheLicen sesForMostSoftwareAreDesignedToTakeAwayYourfreed
-          o m  ToShareAndChangeItByContrasttheGNUGeneralPub licLi  censeIsIn te     n  d     e  d           ToGuaran  t     ee  YourFre   ed om ToShareAndChangeFreesoftwaretoMakeSureTheSoftwareIsFreeF
-           or AllItsUsersThisGeneralPublicLicenseApplies ToMostOf TheFree     S   of     twa  re Fo  un dat  ions  So ftware  A   ndToAnyOthe rProgramWhoseAuthorsCommitTous ingItSome OtherFreeSoftware
-           F  oundationSoftwareIsCoveredBytheGNULibraryGeneralP ubli c Licens e In  s te adYo uCanApplyItToyour Pr  og         ra mst ooWh en WeSpeakOfFreeSoftwareweAreReferringToFreedomnotpriceOurGen
-           er alPublicLicensesAreDesignedToMakeSureThatYouhaveTheFreedom ToDis   tributeCopiesOfFreeSoftwar e a ndCharg e   ForthisServiceIfYouWishthatYouReceiveSourceCodeOrCanGetItifYouWantItthatYouC
-            anChangeTheSoftwareOrUsePiecesOfItinNewFreeProgramsAndThatYouKnowYou Ca nD oTheseThingsToProtectYourRigh   tswe N eedToMakeRes tr ictionsThatForbidanyoneToDenyYouTheseRightsOrToAskYouToSur
-            renderTheRightsTheseRestrictionsTranslateToCertainResponsibili tiesForYouIfYoudistributeCopiesOfTheSoftwa   reo  rIf  YouModifyItForExampleifYouDistributeCopiesOfSuchAProgramwhethergratisO
-          r F orAFeeyouMustGiveTheRecipientsAllTheRightsThatyouHaveYouMustMakeSureT hatTheytooreceiveOrCanGetThe sourceCodeAnd YouMustShowThemTheseTermsSoTheyKnowTheirrightsWeProtectYourRightsWithTwoS
-          t eps1CopyrightTheSoftwareand2OfferYouThisLicen seWhichGivesYouLegalPermissionToCopydistributeA   n  dorModifyTheSoftwareAlsoforEachAuthorsProtectionAndOursweWantToMakeCertainthatEveryoneUnd
-          ers tandsThatThereIsNoWarrantyForThisFreesoftw areIfTheSoft wareIsModif iedBySomeoneElseAndPassed O  n wewantItsRecipientsToKnowThatWhatTheyHaveIsNotTheOriginalsothatAnyProblemsIntroducedByO
-
