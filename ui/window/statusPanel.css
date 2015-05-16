@@ -4,7 +4,39 @@ QLineEdit
     background-color: @themeMedium;
     color: white;
     border: 0px;
-    border-radius: 6px;
+    border-radius: 4px;
+}
+
+QComboBox {
+    background: none;
+    background-color: @themeMedium;
+    color: white;
+    border-style: none;
+    border-radius: 4px;
+}
+
+QComboBox:on {
+    background-color: @themeDark;
+    border-radius: 4px;
+}
+
+QComboBox:drop-down {
+    border-style: none;
+    border-radius: 4px;
+}
+
+/**
+  Uncomment this after https://github.com/tux3/qTox/pull/1640
+  is merged!
+QComboBox:down-arrow {
+    image: url(ui/css/down_arrow.png);
+}
+**/
+
+QListView {
+    background-color: @themeLight;
+    border-style: none;
+    border-radius: 4px;
 }
 
 #statusPanel

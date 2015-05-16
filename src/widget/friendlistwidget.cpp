@@ -65,7 +65,6 @@ QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
     if (res != layouts.end())
         return res.value();
 
-    //qDebug() << "Friend Status: " << static_cast<int>(s) << " not found!";
     return layouts[static_cast<int>(Status::Online)];
 }
 
