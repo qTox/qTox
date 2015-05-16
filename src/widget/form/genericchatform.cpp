@@ -79,17 +79,14 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     screenshotButton = new QPushButton;
     screenshotButton->setToolTip(tr("Send a screenshot"));
     callButton = new QPushButton();
-    callButton->setFixedSize(50,40);
+    callButton->setFixedSize(50, 40);
     callButton->setToolTip(tr("Start an audio call"));
     videoButton = new QPushButton();
-    videoButton->setFixedSize(50,40);
+    videoButton->setFixedSize(50, 40);
     videoButton->setToolTip(tr("Start a video call"));
     volButton = new QPushButton();
-    //volButton->setFixedSize(25,20);
     volButton->setToolTip("");
     micButton = new QPushButton();
-    // micButton->setFixedSize(25,20);
-    micButton->setToolTip("");
     
     fileFlyout = new FlyoutOverlayWidget;
     QHBoxLayout *fileLayout = new QHBoxLayout(fileFlyout);
@@ -100,7 +97,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
-    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css"));
+    //whole file is commented out
+    //msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css"));
     msgEdit->setFixedHeight(50);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
@@ -182,7 +180,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L, this, SLOT(clearChatArea()));
 
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
-    headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
+    //TODO: might be no longer needed, remove file if so.
+    //headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
     
     fileFlyout->setFixedSize(24, 24);
     fileFlyout->setParent(this);

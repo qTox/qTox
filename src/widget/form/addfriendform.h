@@ -23,7 +23,7 @@
 
 namespace Ui {class MainWindow;}
 
-class AddFriendForm : public QObject
+class AddFriendForm : public QWidget
 {
     Q_OBJECT
 public:
@@ -44,12 +44,16 @@ private slots:
 
 private:
     void setIdFromClipboard();
-    QLabel headLabel, toxIdLabel, messageLabel;
-    QPushButton sendButton;
-    QLineEdit toxId;
-    QTextEdit message;
-    QVBoxLayout layout, headLayout;
-    QWidget *head, *main;
+    QLabel *headLabel,
+           *toxIdLabel,
+           *messageLabel;
+    QPushButton *sendButton;
+    QLineEdit *toxId;
+    QTextEdit *message;
+    QVBoxLayout *layout,
+                *headLayout;
+    QWidget *head,
+            *main;
 };
 
 #endif // ADDFRIENDFORM_H

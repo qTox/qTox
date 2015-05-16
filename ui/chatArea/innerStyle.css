@@ -4,7 +4,7 @@ div.msg {
 }
 
 div.action {
-  color: #1818FF;
+  color: black;
   font: @big;
 }
 
@@ -34,4 +34,3 @@ div.alert_name {
 a {
     color: blue;
 }
-

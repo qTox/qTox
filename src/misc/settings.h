@@ -29,6 +29,7 @@ enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
 class Settings : public QObject
 {
     Q_OBJECT
+    
 public:
     static Settings& getInstance();
     void switchProfile(const QString& profile);
@@ -222,9 +223,6 @@ public:
     void setTypingNotification(bool enabled);
 
     // State
-    bool getUseNativeStyle() const;
-    void setUseNativeStyle(bool value);
-
     QByteArray getWindowGeometry() const;
     void setWindowGeometry(const QByteArray &value);
 
@@ -256,9 +254,14 @@ public:
     void save(QString path, bool writePersonal = true);
     void load();
 
+    QString getTheme() const;
+    void setTheme(const QString &value);
+    
+    QStringList getThemesAvailable() const;
+    
 private:
     static QString genRandomProfileName();
-
+    
 private:
     static Settings* settings;
 
@@ -321,13 +324,14 @@ private:
     QString smileyPack;
     bool customEmojiFont;
     QString emojiFontFamily;
-    int     emojiFontPointSize;
+    int emojiFontPointSize;
     bool minimizeOnClose;
-    bool useNativeStyle;
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
-    QString style;
+    QString style; //Qt style, like Fustion, GTK, Windows98
+    QStringList themesAvailable = {"light", "darkblue", "wombat"}; //list of css files
+    QString theme; //style loaded from CSS, darkblue, light
     bool showSystemTray;
 
     // ChatView

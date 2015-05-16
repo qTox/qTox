@@ -287,11 +287,11 @@ void Settings::load()
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
-        useNativeStyle = s.value("nativeStyle", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
         themeColor = s.value("themeColor", 0).toInt();
         style = s.value("style", "").toString();
+        theme = s.value("theme", "light").toString();
         if (style == "") // Default to Fusion if available, otherwise no style
         {
             if (QStyleFactory::keys().contains("Fusion"))
@@ -459,10 +459,10 @@ void Settings::saveGlobal(QString path)
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("lightTrayIcon", lightTrayIcon);
-        s.setValue("nativeStyle", useNativeStyle);
         s.setValue("useEmoticons", useEmoticons);
-        s.setValue("themeColor", themeColor);
-        s.setValue("style", style);
+        s.setValue("themeColor", themeColor); // violet, blue, yellow
+        s.setValue("style", style); //qt, fusion, gtk
+        s.setValue("theme", theme); //light, darkblue, wombat, from css
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
     s.endGroup();
 
@@ -515,6 +515,21 @@ void Settings::savePersonal(QString path)
         ps.setValue("encryptTox", encryptTox);
     ps.endGroup();
 }
+QStringList Settings::getThemesAvailable() const
+{
+    return themesAvailable;
+}
+
+QString Settings::getTheme() const
+{
+    return theme;
+}
+
+void Settings::setTheme(const QString &value)
+{
+    theme = value;
+}
+
 
 uint32_t Settings::makeProfileId(const QString& profile)
 {
@@ -1032,16 +1047,6 @@ void Settings::setEmojiFontFamily(const QString &value)
 {
     emojiFontFamily = value;
     emit emojiFontChanged();
-}
-
-bool Settings::getUseNativeStyle() const
-{
-    return useNativeStyle;
-}
-
-void Settings::setUseNativeStyle(bool value)
-{
-    useNativeStyle = value;
 }
 
 QByteArray Settings::getWindowGeometry() const

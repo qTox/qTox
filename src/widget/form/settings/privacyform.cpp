@@ -25,7 +25,7 @@
 #include <QFile>
 #include <QDebug>
 
-PrivacyForm::PrivacyForm() :
+PrivacyForm::PrivacyForm(SettingsWidget *parent) :
     GenericForm(tr("Privacy"), QPixmap(":/img/settings/privacy.png"))
 {
     bodyUI = new Ui::PrivacySettings;

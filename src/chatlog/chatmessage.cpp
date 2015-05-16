@@ -40,7 +40,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     QString text = rawMessage.toHtmlEscaped();
     QString senderText = sender;
 
-    const QColor actionColor = QColor("#1818FF"); // has to match the color in innerStyle.css (div.action)
+    const QColor actionColor = QColor(Qt::black); // has to match the color in innerStyle.css (div.action)
 
     //smileys
     if (Settings::getInstance().getUseEmoticons())

@@ -4,6 +4,12 @@ QWidget
     font: @big;
 }
 
+QWidget:disabled
+{
+    color: grey;
+    background: white;
+}
+
 QTextEdit
 {
     border-color: @lightGrey;
@@ -29,11 +35,6 @@ QCheckBox
     color: black;    
 }
 
-QCheckBox:disabled
-{
-    color: grey;
-}
-
 QSpinBox
 {
     background: white;
@@ -49,6 +50,17 @@ QGroupBox
     color: black;
     background-color: white;
     font: @bigBold;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin-top: 1.2em;
+}
+
+QGroupBox::title
+{
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    background-color: white;
+    color: black;
 }
 
 QComboBox
@@ -66,20 +78,50 @@ QLineEdit
     background-color: white;
 }
 
-QTabWidget
-{
+QTabBar {
     background-color: white;
+    background: gray;
+    color: black;
 }
 
-QTabBar
+QTabBar::tab
 {
     background-color: white;
+    background: gray;
+    color: black;
+    padding: 8px;
+}
+
+QTabWidget::tab-bar {
+    background-color: white;
+    background: gray;
+}
+
+QTabBar::tab:selected
+{
+    background: white;
+}
+
+QTabWidget::pane {
+  border-top: 2px solid black;
+  background-color: white;
+  background: white;
+}
+
+QToolTip
+{
+    color: black;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding: 1 2 0.5ex;
+    opacity: 200;
 }
 
 QScrollArea
 {
     background-color: white;
-    background: transparent; 
+    background: transparent;
 }
 
 QScrollArea > QWidget > QWidget 
@@ -154,7 +196,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
     background: none;
 }
 
-
 QScrollBar:horizontal
 {
     background: white;
@@ -212,4 +253,21 @@ QScrollBar:QScrollBar::up-arrow:horizontal
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 {
     background: none;
+}
+
+QSplitter
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    alternate-background-color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    gridline-color: rgb(255, 255, 255);
+    selection-color: rgb(255, 255, 255);
+    selection-background-color: rgb(255, 255, 255);
+}
+
+QSplitter:handle
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
 }

@@ -338,19 +338,7 @@
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">QSplitter{
-	color: rgb(255, 255, 255);
-	background-color: rgb(255, 255, 255);
-	alternate-background-color: rgb(255, 255, 255);
-	border-color: rgb(255, 255, 255);
-	gridline-color: rgb(255, 255, 255);
-	selection-color: rgb(255, 255, 255);
-	selection-background-color: rgb(255, 255, 255);
-}
-QSplitter:handle{
-	color: rgb(255, 255, 255);
-	background-color: rgb(255, 255, 255);
-}</string>
+       <string notr="true"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -1072,8 +1060,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>284</width>
-             <height>348</height>
+             <width>292</width>
+             <height>400</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1829,20 +1817,6 @@ QSplitter:handle{
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>775</width>
-     <height>25</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionClose">
    <property name="text">
     <string>Close</string>

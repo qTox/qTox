@@ -38,52 +38,36 @@ GUI& GUI::getInstance()
 void GUI::setEnabled(bool state)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._setEnabled(state);
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_setEnabled", Qt::BlockingQueuedConnection,
                                   Q_ARG(bool, state));
-    }
 }
 
 void GUI::setWindowTitle(const QString& title)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._setWindowTitle(title);
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_setWindowTitle", Qt::BlockingQueuedConnection,
                                   Q_ARG(const QString&, title));
-    }
 }
 
 void GUI::reloadTheme()
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._reloadTheme();
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_reloadTheme", Qt::BlockingQueuedConnection);
-    }
 }
 
 void GUI::showInfo(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._showInfo(title, msg);
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_showInfo", Qt::BlockingQueuedConnection,
                         Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
-    }
 }
 
 void GUI::showWarning(const QString& title, const QString& msg)
