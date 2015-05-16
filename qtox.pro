@@ -492,4 +492,5 @@ HEADERS += \
     src/video/cameradevice.h \
     src/video/camerasource.h \
     src/video/corevideosource.h \
+    src/video/videomode.h \
     src/core/toxid.h

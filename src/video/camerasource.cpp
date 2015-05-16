@@ -33,7 +33,12 @@ CameraSource::CameraSource()
 }
 
 CameraSource::CameraSource(const QString deviceName)
-    : deviceName{deviceName}, device{nullptr},
+    : CameraSource{deviceName, VideoMode{0,0,0}}
+{
+}
+
+CameraSource::CameraSource(const QString deviceName, VideoMode mode)
+    : deviceName{deviceName}, device{nullptr}, mode(mode),
       cctx{nullptr}, videoStreamIndex{-1},
       biglock{false}, freelistLock{false}, subscriptions{0}
 {
@@ -50,8 +55,20 @@ CameraSource::~CameraSource()
             expected = false;
     }
 
+    // Free all remaining VideoFrame
+    // Locking must be done precisely this way to avoid races
+    for (int i=0; i<freelist.size(); i++)
+    {
+        std::shared_ptr<VideoFrame> vframe = freelist[i].lock();
+        if (!vframe)
+            continue;
+        vframe->releaseFrame();
+    }
+
     if (cctx)
         avcodec_free_context(&cctx);
+    if (cctxOrig)
+        avcodec_close(cctxOrig);
 
     for (int i=subscriptions; i; --i)
         device->close();
@@ -82,7 +99,10 @@ bool CameraSource::subscribe()
 
     // We need to create a new CameraDevice
     AVCodec* codec;
-    device = CameraDevice::open(deviceName);
+    if (mode)
+        device = CameraDevice::open(deviceName, mode);
+    else
+        device = CameraDevice::open(deviceName);
     if (!device)
     {
         biglock = false;

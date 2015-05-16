@@ -17,10 +17,9 @@ AVInputFormat* CameraDevice::iformat{nullptr};
 CameraDevice::CameraDevice(const QString devName, AVFormatContext *context)
     : devName{devName}, context{context}, refcount{1}
 {
-
 }
 
-CameraDevice* CameraDevice::open(QString devName)
+CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
 {
     openDeviceLock.lock();
     AVFormatContext* fctx = nullptr;
@@ -28,7 +27,7 @@ CameraDevice* CameraDevice::open(QString devName)
     if (dev)
         goto out;
 
-    if (avformat_open_input(&fctx, devName.toStdString().c_str(), iformat, nullptr)<0)
+    if (avformat_open_input(&fctx, devName.toStdString().c_str(), iformat, options)<0)
         goto out;
 
     if (avformat_find_stream_info(fctx, NULL) < 0)
@@ -42,6 +41,36 @@ CameraDevice* CameraDevice::open(QString devName)
 
 out:
     openDeviceLock.unlock();
+    return dev;
+}
+
+CameraDevice* CameraDevice::open(QString devName)
+{
+    return open(devName, nullptr);
+}
+
+CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
+{
+    if (!getDefaultInputFormat())
+        return nullptr;
+
+    AVDictionary* options = nullptr;
+    if (false);
+#ifdef Q_OS_WIN
+    else if (iformat->name == QString("dshow"))
+    {
+        av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
+        av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
+    }
+#endif
+    else
+    {
+        qWarning() << "Video mode-setting not implemented for input "<<iformat->name;
+    }
+
+    CameraDevice* dev = open(devName, &options);
+    if (options)
+        av_dict_free(&options);
     return dev;
 }
 
@@ -130,8 +159,7 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
 
 QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
 {
-    if (!iformat)
-        if (!getDefaultInputFormat())
+    if (!getDefaultInputFormat())
             return {};
 
     if (iformat->name == QString("dshow"))
@@ -156,6 +184,19 @@ QString CameraDevice::getDefaultDeviceName()
         return defaultdev;
 
     return devlist[0].first;
+}
+
+QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
+{
+    if (false);
+#ifdef Q_OS_WIN
+    else if (iformat->name == QString("dshow"))
+        return DirectShow::getDeviceModes(devName);
+#endif
+    else
+        qWarning() << "Video mode listing not implemented for input "<<iformat->name;
+
+    return {};
 }
 
 bool CameraDevice::getDefaultInputFormat()

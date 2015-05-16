@@ -18,6 +18,7 @@
 #include <QObject>
 #include <QList>
 #include "genericsettings.h"
+#include "src/video/videomode.h"
 
 namespace Ui {
 class AVSettings;
@@ -57,16 +58,17 @@ private slots:
     void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*);
-    virtual void showEvent(QShowEvent*);
     
 protected:
     bool eventFilter(QObject *o, QEvent *e);    
+    void updateVideoModes(int curIndex);
 
 private:
     Ui::AVSettings *bodyUI;
     VideoSurface* camVideoSurface;
     CameraSource* camera;
     QVector<QPair<QString, QString>> videoDeviceList;
+    QVector<VideoMode> videoModes;
 };
 
 #endif

@@ -21,6 +21,7 @@
 #include <QVector>
 #include <atomic>
 #include "src/video/videosource.h"
+#include "src/video/videomode.h"
 
 class CameraDevice;
 struct AVCodecContext;
@@ -37,6 +38,7 @@ class CameraSource : public VideoSource
 public:
     CameraSource(); ///< Opens the camera device in the settings, or the system default
     CameraSource(const QString deviceName);
+    CameraSource(const QString deviceName, VideoMode mode);
     ~CameraSource();
 
     // VideoSource interface
@@ -63,6 +65,7 @@ private:
     QFuture<void> streamFuture; ///< Future of the streaming thread
     const QString deviceName; ///< Short name of the device for CameraDevice's open(QString)
     CameraDevice* device; ///< Non-owning pointer to an open CameraDevice, or nullptr
+    VideoMode mode; ///< What mode we tried to open the device in, all zeros means default mode
     AVCodecContext* cctx, *cctxOrig; ///< Codec context of the camera's selected video stream
     int videoStreamIndex; ///< A camera can have multiple streams, this is the one we're decoding
     std::atomic_bool biglock, freelistLock; ///< True when locked. Faster than mutexes for video decoding.

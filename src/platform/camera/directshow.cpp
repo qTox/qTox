@@ -3,7 +3,11 @@
 #include <cstdint>
 #include <Objbase.h>
 #include <Strmif.h>
+#include <Amvideo.h>
+#include <Dvdmedia.h>
 #include <uuids.h>
+#include <cassert>
+#include <QDebug>
 
 /**
  * Most of this file is adapted from libavdevice's dshow.c,
@@ -48,9 +52,10 @@ QVector<QPair<QString,QString>> DirectShow::getDeviceList()
             goto fail;
         if (CreateBindCtx(0, &bindCtx) != S_OK)
             goto fail;
+
+        // Get an uuid for the device that we can pass to ffmpeg directly
         if (m->GetDisplayName(bindCtx, nullptr, &olestr) != S_OK)
             goto fail;
-
         devIdString = wcharToUtf8(olestr);
 
         // replace ':' with '_' since FFmpeg uses : to delimitate sources
@@ -58,6 +63,7 @@ QVector<QPair<QString,QString>> DirectShow::getDeviceList()
             if (devIdString[i] == ':')
                 devIdString[i] = '_';
 
+        // Get a human friendly name/description
         if (m->BindToStorage(nullptr, nullptr, IID_IPropertyBag, (void**)&bag) != S_OK)
             goto fail;
 
@@ -82,4 +88,145 @@ fail:
     classenum->Release();
 
     return devices;
+}
+
+// Used (by getDeviceModes) to select a device
+// so we can list its properties
+static IBaseFilter* getDevFilter(QString devName)
+{
+    IBaseFilter* devFilter = nullptr;
+    devName = devName.mid(6); // Remove the "video="
+    IMoniker* m = nullptr;
+
+    ICreateDevEnum* devenum = nullptr;
+    if (CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER,
+                             IID_ICreateDevEnum, (void**) &devenum) != S_OK)
+        return devFilter;
+
+    IEnumMoniker* classenum = nullptr;
+    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
+                                (IEnumMoniker**)&classenum, 0) != S_OK)
+        return devFilter;
+
+    while (classenum->Next(1, &m, nullptr) == S_OK)
+    {
+        LPMALLOC coMalloc = nullptr;
+        IBindCtx* bindCtx = nullptr;
+        LPOLESTR olestr = nullptr;
+        char* devIdString;
+
+        if (CoGetMalloc(1, &coMalloc) != S_OK)
+            goto fail;
+        if (CreateBindCtx(0, &bindCtx) != S_OK)
+            goto fail;
+
+        if (m->GetDisplayName(bindCtx, nullptr, &olestr) != S_OK)
+            goto fail;
+        devIdString = wcharToUtf8(olestr);
+
+        // replace ':' with '_' since FFmpeg uses : to delimitate sources
+        for (unsigned i = 0; i < strlen(devIdString); i++)
+            if (devIdString[i] == ':')
+                devIdString[i] = '_';
+
+        if (devName != devIdString)
+            goto fail;
+
+        if (m->BindToObject(0, 0, IID_IBaseFilter, (void**)&devFilter) != S_OK)
+            goto fail;
+
+fail:
+        if (olestr && coMalloc)
+            coMalloc->Free(olestr);
+        if (bindCtx)
+            bindCtx->Release();
+        delete[] devIdString;
+        m->Release();
+    }
+    classenum->Release();
+
+    if (!devFilter)
+        qWarning() << "Could't find the device "<<devName;
+
+    return devFilter;
+}
+
+QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
+{
+    QVector<VideoMode> modes;
+
+    IBaseFilter* devFilter = getDevFilter(devName);
+    if (!devFilter)
+        return modes;
+
+    // The outter loop tries to find a valid output pin
+    GUID category;
+    DWORD r2;
+    IEnumPins *pins = nullptr;
+    IPin *pin;
+    if (devFilter->EnumPins(&pins) != S_OK)
+        return modes;
+    while (pins->Next(1, &pin, nullptr) == S_OK)
+    {
+        IKsPropertySet *p = nullptr;
+        PIN_INFO info;
+
+        pin->QueryPinInfo(&info);
+        info.pFilter->Release();
+        if (info.dir != PINDIR_OUTPUT)
+            goto next;
+        if (pin->QueryInterface(IID_IKsPropertySet, (void**)&p) != S_OK)
+            goto next;
+        if (p->Get(AMPROPSETID_Pin, AMPROPERTY_PIN_CATEGORY,
+                nullptr, 0, &category, sizeof(GUID), &r2) != S_OK)
+            goto next;
+        if (!IsEqualGUID(category, PIN_CATEGORY_CAPTURE))
+            goto next;
+
+        // Now we can list the video modes for the current pin
+        // Prepare for another wall of spaghetti DIRECT SHOW QUALITY code
+        {
+            IAMStreamConfig *config = nullptr;
+            VIDEO_STREAM_CONFIG_CAPS *vcaps = nullptr;
+            int size, n;
+            if (pin->QueryInterface(IID_IAMStreamConfig, (void**)&config) != S_OK)
+                goto next;
+            if (config->GetNumberOfCapabilities(&n, &size) != S_OK)
+                goto pinend;
+            assert(size == sizeof(VIDEO_STREAM_CONFIG_CAPS));
+            vcaps = new VIDEO_STREAM_CONFIG_CAPS;
+
+            for (int i=0; i<n; ++i)
+            {
+                AM_MEDIA_TYPE* type = nullptr;
+                if (config->GetStreamCaps(i, &type, (BYTE*)vcaps) != S_OK)
+                    goto nextformat;
+
+                if (!IsEqualGUID(type->formattype, FORMAT_VideoInfo)
+                    && !IsEqualGUID(type->formattype, FORMAT_VideoInfo2))
+                    goto nextformat;
+
+                VideoMode mode;
+                mode.width = vcaps->MaxOutputSize.cx;
+                mode.height = vcaps->MaxOutputSize.cy;
+                mode.FPS = 1e7 / vcaps->MinFrameInterval;
+                if (!modes.contains(mode))
+                    modes.append(std::move(mode));
+
+nextformat:
+                if (type->pbFormat)
+                    CoTaskMemFree(type->pbFormat);
+                CoTaskMemFree(type);
+            }
+pinend:
+            config->Release();
+            delete vcaps;
+        }
+next:
+        if (p)
+            p->Release();
+        pin->Release();
+    }
+
+    return modes;
 }
