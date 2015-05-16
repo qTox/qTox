@@ -17,23 +17,13 @@ INSTALL_DIR=libs
 # just for convenience
 BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 
-# the sodium version to use
-SODIUM_VER=1.0.3
-
 # directory names of cloned repositories
-SODIUM_DIR=libsodium-$SODIUM_VER
 TOX_CORE_DIR=libtoxcore-latest
 FILTER_AUDIO_DIR=libfilteraudio-latest
 
 if [ -z "$BASE_DIR" ]; then
     echo "internal error detected!"
     echo "BASE_DIR should not be empty... aborting"
-    exit 1
-fi
-
-if [ -z "$SODIUM_DIR" ]; then
-    echo "internal error detected!"
-    echo "SODIUM_DIR should not be empty... aborting"
     exit 1
 fi
 
@@ -50,22 +40,14 @@ if [ -z "$FILTER_AUDIO_DIR" ]; then
 fi
 
 # default values for user given parameters
-INSTALL_SODIUM=true
 INSTALL_TOX=true
 INSTALL_FILTER_AUDIO=true
 SYSTEM_WIDE=true
 KEEP_BUILD_FILES=false
 
-
 ########## parse input parameters ##########
 while [ $# -ge 1 ] ; do
-    if [ ${1} = "--with-sodium" ] ; then
-        INSTALL_SODIUM=true
-        shift
-    elif [ ${1} = "--without-sodium" ] ; then
-        INSTALL_SODIUM=false
-        shift
-    elif [ ${1} = "--with-tox" ] ; then
+if [ ${1} = "--with-tox" ] ; then
         INSTALL_TOX=true
         shift
     elif [ ${1} = "--without-tox" ] ; then
@@ -90,14 +72,12 @@ while [ $# -ge 1 ] ; do
         fi
     
         # print help
-        echo "Use this script to install/update libsodium, libtoxcore and libfilteraudio"
+        echo "Use this script to install/update libtoxcore and libfilteraudio"
         echo ""
         echo "usage:"
         echo "    ${0} PARAMETERS"
         echo ""
         echo "parameters:"
-        echo "    --with-sodium          : install/update libsodium"
-        echo "    --without-sodium       : do not install/update libsodium"
         echo "    --with-tox             : install/update libtoxcore"
         echo "    --without-tox          : do not install/update libtoxcore"
         echo "    --with-filter-audio    : install/update libfilteraudio"
@@ -107,14 +87,13 @@ while [ $# -ge 1 ] ; do
         echo "    -k|--keep              : keep build files after installation/update"
         echo ""
         echo "example usages:"
-        echo "    ${0}    -- install libsodium, libtoxcore and libfilteraudio"
+        echo "    ${0}    -- install libtoxcore and libfilteraudio"
         exit 1
 	fi
 done
 
 
 ########## print debug output ##########
-echo "with sodium                 : ${INSTALL_SODIUM}"
 echo "with tox                    : ${INSTALL_TOX}"
 echo "with filter-audio           : ${INSTALL_FILTER_AUDIO}"
 echo "install into ${INSTALL_DIR} : ${SYSTEM_WIDE}"
@@ -128,31 +107,8 @@ mkdir -p ${BASE_DIR}
 # maybe an earlier run of this script failed
 # thus we should remove the cloned repositories
 # if exists, otherwise cloning them may fail
-rm -rf ${BASE_DIR}/${SODIUM_DIR}
 rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
-
-
-############### install step ###############
-# install libsodium
-if [[ $INSTALL_SODIUM = "true" ]]; then
-	git clone --branch $SODIUM_VER git://github.com/jedisct1/libsodium.git ${BASE_DIR}/${SODIUM_DIR} --depth 1
-	pushd ${BASE_DIR}/${SODIUM_DIR}
-	./autogen.sh
-	
-	if [[ $SYSTEM_WIDE = "false" ]]; then
-        ./configure --prefix=${BASE_DIR}
-        make -j2 check
-        make install
-    else
-        ./configure
-        make -j2 check
-        sudo make install
-        sudo ldconfig
-    fi
-    
-    popd
-fi
 
 #install libtoxcore
 if [[ $INSTALL_TOX = "true" ]]; then
@@ -161,7 +117,7 @@ if [[ $INSTALL_TOX = "true" ]]; then
 	./autogen.sh
 	
 	if [[ $SYSTEM_WIDE = "false" ]]; then
-        ./configure --prefix=${BASE_DIR} --with-libsodium-headers=${BASE_DIR}/include --with-libsodium-libs=${BASE_DIR}/lib
+        ./configure --prefix=${BASE_DIR}
         make -j2
         make install
     else
@@ -195,7 +151,6 @@ fi
 ############### cleanup step ###############
 # remove cloned repositories
 if [[ $KEEP_BUILD_FILES = "false" ]]; then
-    rm -rf ${BASE_DIR}/${SODIUM_DIR}
     rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
     rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
 fi
