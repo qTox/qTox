@@ -191,6 +191,7 @@ bool VideoFrame::convertToYUV420()
 void VideoFrame::releaseFrame()
 {
     QMutexLocker locker(&biglock);
+    freelistCallback = nullptr;
     releaseFrameLockless();
 }
 

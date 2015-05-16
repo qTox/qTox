@@ -27,7 +27,8 @@ struct vpx_image;
 /// Ownership of all video frame buffers is kept by the VideoFrame, even after conversion
 /// All references to the frame data become invalid when the VideoFrame is deleted
 /// We try to avoid pixel format conversions as much as possible, at the cost of some memory
-/// All methods are thread-safe. If provided freelistCallback will be called by the destructor.
+/// All methods are thread-safe. If provided freelistCallback will be called by the destructor,
+/// unless releaseFrame was called in between.
 class VideoFrame
 {
 public:
@@ -36,7 +37,7 @@ public:
     VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void()> freelistCallback);
     ~VideoFrame();
 
-    /// Frees all internal buffers and frame data
+    /// Frees all internal buffers and frame data, removes the freelistCallback
     /// This makes all converted objects that shares our internal buffers invalid
     void releaseFrame();
 
