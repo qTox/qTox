@@ -293,7 +293,6 @@ private:
     QTimer *toxTimer, *fileTimer; //, *saveTimer;
     Camera* camera;
     QString loadPath; // meaningless after start() is called
-    QList<DhtServer> dhtServerList;
     int dhtServerId;
     static ToxCall calls[TOXAV_MAX_CALLS];
 #ifdef QTOX_FILTER_AUDIO

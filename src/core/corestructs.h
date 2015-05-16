@@ -34,14 +34,6 @@ struct ToxID
     void clear();
 };
 
-struct DhtServer
-{
-    QString name;
-    QString userId;
-    QString address;
-    int port;
-};
-
 struct ToxFile
 {
     enum FileStatus
