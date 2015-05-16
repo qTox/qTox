@@ -2,10 +2,11 @@
 
 WINDOWS_VERSION=$(cmd.exe /c ver 2>/dev/null | grep "Microsoft Windows")
 if [ ! -z "$WINDOWS_VERSION" ]; then
-        cd windows
-		./bootstrap.sh
-		exit $?
+    cd windows
+    ./bootstrap.sh
+    exit $?
 fi
+
 
 ################ parameters ################
 # directory where the script is located
@@ -45,9 +46,10 @@ INSTALL_FILTER_AUDIO=true
 SYSTEM_WIDE=true
 KEEP_BUILD_FILES=false
 
+
 ########## parse input parameters ##########
 while [ $# -ge 1 ] ; do
-if [ ${1} = "--with-tox" ] ; then
+    if [ ${1} = "--with-tox" ] ; then
         INSTALL_TOX=true
         shift
     elif [ ${1} = "--without-tox" ] ; then
@@ -89,11 +91,11 @@ if [ ${1} = "--with-tox" ] ; then
         echo "example usages:"
         echo "    ${0}    -- install libtoxcore and libfilteraudio"
         exit 1
-	fi
+    fi
 done
 
 
-########## print debug output ##########
+############ print debug output ############
 echo "with tox                    : ${INSTALL_TOX}"
 echo "with filter-audio           : ${INSTALL_FILTER_AUDIO}"
 echo "install into ${INSTALL_DIR} : ${SYSTEM_WIDE}"
@@ -110,13 +112,15 @@ mkdir -p ${BASE_DIR}
 rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
 
+
+############### install step ###############
 #install libtoxcore
 if [[ $INSTALL_TOX = "true" ]]; then
-	git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
-	pushd ${BASE_DIR}/${TOX_CORE_DIR}
-	./autogen.sh
-	
-	if [[ $SYSTEM_WIDE = "false" ]]; then
+    git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
+    pushd ${BASE_DIR}/${TOX_CORE_DIR}
+    ./autogen.sh
+    
+    if [[ $SYSTEM_WIDE = "false" ]]; then
         ./configure --prefix=${BASE_DIR}
         make -j2
         make install
@@ -132,19 +136,19 @@ fi
 
 #install libfilteraudio
 if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
-	git clone https://github.com/irungentoo/filter_audio.git ${BASE_DIR}/${FILTER_AUDIO_DIR} --depth 1
-	pushd ${BASE_DIR}/${FILTER_AUDIO_DIR}
-	
-	if [[ $SYSTEM_WIDE = "false" ]]; then
-		PREFIX=${BASE_DIR} make -j2
-		PREFIX=${BASE_DIR} make install
-	else
-		make -j2
-		sudo make install
-		sudo ldconfig
-	fi
-	
-	popd
+    git clone https://github.com/irungentoo/filter_audio.git ${BASE_DIR}/${FILTER_AUDIO_DIR} --depth 1
+    pushd ${BASE_DIR}/${FILTER_AUDIO_DIR}
+    
+    if [[ $SYSTEM_WIDE = "false" ]]; then
+        PREFIX=${BASE_DIR} make -j2
+        PREFIX=${BASE_DIR} make install
+    else
+        make -j2
+        sudo make install
+        sudo ldconfig
+    fi
+    
+    popd
 fi
 
 
