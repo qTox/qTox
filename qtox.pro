@@ -436,7 +436,8 @@ SOURCES += \
     src/widget/tool/screengrabberoverlayitem.cpp \
     src/widget/tool/toolboxgraphicsitem.cpp \
     src/widget/tool/flyoutoverlaywidget.cpp \
-    src/widget/form/settings/verticalonlyscroller.cpp
+    src/widget/form/settings/verticalonlyscroller.cpp \
+    src/core/toxid.cpp
 
 
 HEADERS += \
@@ -468,4 +469,5 @@ HEADERS += \
     src/widget/tool/screengrabberoverlayitem.h \
     src/widget/tool/toolboxgraphicsitem.h \
     src/widget/tool/flyoutoverlaywidget.h \
-    src/widget/form/settings/verticalonlyscroller.h
+    src/widget/form/settings/verticalonlyscroller.h \
+    src/core/toxid.h
