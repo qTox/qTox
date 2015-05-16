@@ -37,18 +37,21 @@ public:
     VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void()> freelistCallback);
     ~VideoFrame();
 
+    /// Return the size of the original frame
+    QSize getSize();
+
     /// Frees all internal buffers and frame data, removes the freelistCallback
     /// This makes all converted objects that shares our internal buffers invalid
     void releaseFrame();
 
     /// Converts the VideoFrame to a QImage that shares our internal video buffer
-    QImage toQImage();
+    QImage toQImage(QSize size = QSize());
     /// Converts the VideoFrame to a vpx_image_t that shares our internal video buffer
     /// Free it with operator delete, NOT vpx_img_free
     vpx_image* toVpxImage();
 
 protected:
-    bool convertToRGB24();
+    bool convertToRGB24(QSize size = QSize());
     bool convertToYUV420();
     void releaseFrameLockless();
 

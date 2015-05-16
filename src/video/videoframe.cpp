@@ -52,14 +52,14 @@ VideoFrame::~VideoFrame()
     releaseFrameLockless();
 }
 
-QImage VideoFrame::toQImage()
+QImage VideoFrame::toQImage(QSize size)
 {
-    if (!convertToRGB24())
+    if (!convertToRGB24(size))
         return QImage();
 
     QMutexLocker locker(&biglock);
 
-    return QImage(*frameRGB24->data, width, height, *frameRGB24->linesize, QImage::Format_RGB888);
+    return QImage(*frameRGB24->data, frameRGB24->width, frameRGB24->height, *frameRGB24->linesize, QImage::Format_RGB888);
 }
 
 vpx_image *VideoFrame::toVpxImage()
@@ -86,12 +86,9 @@ vpx_image *VideoFrame::toVpxImage()
     return img;
 }
 
-bool VideoFrame::convertToRGB24()
+bool VideoFrame::convertToRGB24(QSize size)
 {
     QMutexLocker locker(&biglock);
-
-    if (frameRGB24)
-        return true;
 
     AVFrame* sourceFrame;
     if (frameOther)
@@ -108,6 +105,22 @@ bool VideoFrame::convertToRGB24()
         return false;
     }
 
+    if (size.isEmpty())
+    {
+        size.setWidth(sourceFrame->width);
+        size.setHeight(sourceFrame->height);
+    }
+
+    if (frameRGB24)
+    {
+        if (frameRGB24->width == size.width() && frameRGB24->height == size.height())
+            return true;
+
+        av_free(frameRGB24->opaque);
+        av_frame_unref(frameRGB24);
+        av_frame_free(&frameRGB24);
+    }
+
     frameRGB24=av_frame_alloc();
     if (!frameRGB24)
     {
@@ -115,7 +128,7 @@ bool VideoFrame::convertToRGB24()
         return false;
     }
 
-    uint8_t* buf = (uint8_t*)av_malloc(avpicture_get_size(AV_PIX_FMT_RGB24, width, height));
+    uint8_t* buf = (uint8_t*)av_malloc(avpicture_get_size(AV_PIX_FMT_RGB24, size.width(), size.height()));
     if (!buf)
     {
         qCritical() << "av_malloc failed";
@@ -124,11 +137,16 @@ bool VideoFrame::convertToRGB24()
     }
     frameRGB24->opaque = buf;
 
-    avpicture_fill((AVPicture*)frameRGB24, buf, AV_PIX_FMT_RGB24, width, height);
+    avpicture_fill((AVPicture*)frameRGB24, buf, AV_PIX_FMT_RGB24, size.width(), size.height());
+    frameRGB24->width = size.width();
+    frameRGB24->height = size.height();
+
+    // Bilinear is better for shrinking, bicubic better for upscaling
+    int resizeAlgo = size.width()<=width ? SWS_BILINEAR : SWS_BICUBIC;
 
     SwsContext *swsCtx =  sws_getContext(width, height, (AVPixelFormat)pixFmt,
-                                          width, height, AV_PIX_FMT_RGB24,
-                                          SWS_BILINEAR, nullptr, nullptr, nullptr);
+                                          size.width(), size.height(), AV_PIX_FMT_RGB24,
+                                          resizeAlgo, nullptr, nullptr, nullptr);
     sws_scale(swsCtx, (uint8_t const * const *)sourceFrame->data,
                 sourceFrame->linesize, 0, height,
                 frameRGB24->data, frameRGB24->linesize);
@@ -215,4 +233,9 @@ void VideoFrame::releaseFrameLockless()
         av_frame_unref(frameRGB24);
         av_frame_free(&frameRGB24);
     }
+}
+
+QSize VideoFrame::getSize()
+{
+    return {width, height};
 }

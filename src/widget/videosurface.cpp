@@ -15,6 +15,7 @@
 #include "videosurface.h"
 #include "src/video/videoframe.h"
 #include <QPainter>
+#include <QLabel>
 
 VideoSurface::VideoSurface(QWidget* parent)
     : QWidget{parent}
@@ -102,12 +103,14 @@ void VideoSurface::paintEvent(QPaintEvent*)
     painter.fillRect(painter.viewport(), Qt::black);
     if (lastFrame)
     {
+        QSize frameSize = lastFrame->getSize();
         QRect rect = painter.viewport();
-        QImage frame = lastFrame->toQImage();
-        int width = frame.width()*rect.height()/frame.height();
+        int width = frameSize.width()*rect.height()/frameSize.height();
         rect.setLeft((rect.width()-width)/2);
         rect.setWidth(width);
-        painter.drawImage(rect, frame);
+
+        QImage frame = lastFrame->toQImage(rect.size());
+        painter.drawImage(rect, frame, frame.rect(), Qt::NoFormatConversion);
     }
     frameLock = false;
 }
