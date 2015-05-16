@@ -195,6 +195,9 @@ which may lead to problems with video calls.</string>
             </item>
             <item row="3" column="2">
              <widget class="QSlider" name="BrightnessSlider">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -202,6 +205,9 @@ which may lead to problems with video calls.</string>
             </item>
             <item row="2" column="2">
              <widget class="QSlider" name="HueSlider">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -223,6 +229,9 @@ which may lead to problems with video calls.</string>
             </item>
             <item row="4" column="2">
              <widget class="QSlider" name="SaturationSlider">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -272,6 +281,9 @@ which may lead to problems with video calls.</string>
             </item>
             <item row="5" column="2">
              <widget class="QSlider" name="ContrastSlider">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
