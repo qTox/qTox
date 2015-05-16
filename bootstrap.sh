@@ -24,19 +24,19 @@ FILTER_AUDIO_DIR=libfilteraudio-latest
 
 if [ -z "$BASE_DIR" ]; then
     echo "internal error detected!"
-    echo "BASE_DIR should not be empty... aborting"
+    echo "BASE_DIR should not be empty.  Aborting."
     exit 1
 fi
 
 if [ -z "$TOX_CORE_DIR" ]; then
     echo "internal error detected!"
-    echo "TOX_CORE_DIR should not be empty... aborting"
+    echo "TOX_CORE_DIR should not be empty.  Aborting."
     exit 1
 fi
 
 if [ -z "$FILTER_AUDIO_DIR" ]; then
     echo "internal error detected!"
-    echo "FILTER_AUDIO_DIR should not be empty... aborting"
+    echo "FILTER_AUDIO_DIR should not be empty.  Aborting."
     exit 1
 fi
 
@@ -120,13 +120,28 @@ if [[ $INSTALL_TOX = "true" ]]; then
     pushd ${BASE_DIR}/${TOX_CORE_DIR}
     ./autogen.sh
     
+    # configure
     if [[ $SYSTEM_WIDE = "false" ]]; then
         ./configure --prefix=${BASE_DIR}
-        make -j2
-        make install
     else
         ./configure
-        make -j2
+    fi
+    
+    # ensure A/V support is enabled
+    if ! grep -Fxq "BUILD_AV_TRUE=''" config.log
+    then
+        echo "A/V support of libtoxcore is disabled but required by qTox.  Aborting."
+        echo "Maybe the dev-packages of libopus and libvpx are not installed?"
+        exit 1
+    fi
+    
+    # compile
+    make -j 2
+    
+    # install
+    if [[ $SYSTEM_WIDE = "false" ]]; then
+        make install
+    else
         sudo make install
         sudo ldconfig
     fi
