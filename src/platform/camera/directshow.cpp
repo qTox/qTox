@@ -1,10 +1,10 @@
 #include "directshow.h"
 
 #include <cstdint>
-#include <Objbase.h>
-#include <Strmif.h>
-#include <Amvideo.h>
-#include <Dvdmedia.h>
+#include <objbase.h>
+#include <strmif.h>
+#include <amvideo.h>
+#include <dvdmedia.h>
 #include <uuids.h>
 #include <cassert>
 #include <QDebug>
