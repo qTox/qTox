@@ -39,9 +39,9 @@ bool AudioFilterer::filterAudio(int16_t* data, int framesize)
 }
 
 /* Enable/disable filters. 1 to enable, 0 to disable. */
-bool AudioFilterer::enableDisableFilters(int echo, int noise, int gain)
+bool AudioFilterer::enableDisableFilters(int echo, int noise, int gain, int vad)
 {
-    return filter && 0 == enable_disable_filters(filter, echo, noise, gain);
+    return filter && 0 == enable_disable_filters(filter, echo, noise, gain, vad);
 }
 
 /* Give the audio output from your software to this function so it knows what echo to cancel from the frame */
