@@ -66,6 +66,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     else
     {
         qWarning() << "Video mode-setting not implemented for input "<<iformat->name;
+        (void)mode;
     }
 
     CameraDevice* dev = open(devName, &options);
@@ -162,8 +163,11 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     if (!getDefaultInputFormat())
             return {};
 
-    if (iformat->name == QString("dshow"))
+    if (false);
+#ifdef Q_OS_WIN
+    else if (iformat->name == QString("dshow"))
         return DirectShow::getDeviceList();
+#endif
     else
         return getRawDeviceListGeneric();
 }
@@ -196,6 +200,7 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
     else
         qWarning() << "Video mode listing not implemented for input "<<iformat->name;
 
+    (void)devName;
     return {};
 }
 
