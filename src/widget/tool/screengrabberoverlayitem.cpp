@@ -52,7 +52,7 @@ void ScreenGrabberOverlayItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
     
 }
 
-void ScreenGrabberOverlayItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+void ScreenGrabberOverlayItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     painter->setBrush(brush());
     painter->setPen(pen());
