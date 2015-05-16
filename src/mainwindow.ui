@@ -1023,7 +1023,7 @@ QSplitter:handle{
               <widget class="QLineEdit" name="searchContactText">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                 <horstretch>1</horstretch>
+                 <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
@@ -1032,7 +1032,7 @@ QSplitter:handle{
              <item>
               <widget class="QComboBox" name="searchContactFilterCBox">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
