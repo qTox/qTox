@@ -129,7 +129,7 @@ void AddFriendForm::setIdFromClipboard()
     QString id = clipboard->text().trimmed();
     if (Core::getInstance()->isReady() && !id.isEmpty() && ToxID::isToxId(id))
     {
-        if (!ToxID::fromString(id).isMine())
+        if (!ToxID::fromString(id).isActiveProfile())
             toxId.setText(id);
     }
 }

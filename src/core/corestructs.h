@@ -30,7 +30,7 @@ struct ToxID
 
     bool operator==(const ToxID& other) const;
     bool operator!=(const ToxID& other) const;
-    bool isMine() const;
+    bool isActiveProfile() const;
     void clear();
 };
 

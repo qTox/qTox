@@ -66,7 +66,7 @@ bool ToxID::operator!=(const ToxID& other) const
     return publicKey != other.publicKey;
 }
 
-bool ToxID::isMine() const
+bool ToxID::isActiveProfile() const
 {
     return *this == Core::getInstance()->getSelfId();
 }

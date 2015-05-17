@@ -951,7 +951,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
 
     ToxID author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
-    bool targeted = !author.isMine() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    bool targeted = !author.isActiveProfile() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else

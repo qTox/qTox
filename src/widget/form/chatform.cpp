@@ -179,7 +179,7 @@ void ChatForm::startFileSend(ToxFile file)
         return;
 
     QString name;
-    if (!previousId.isMine())
+    if (!previousId.isActiveProfile())
     {
         Core* core = Core::getInstance();
         name = core->getUsername();
@@ -814,13 +814,13 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
         // Show each messages
         ToxID authorId = ToxID::fromString(it.sender);
-        QString authorStr = authorId.isMine() ? Core::getInstance()->getUsername() : resolveToxID(authorId);
+        QString authorStr = authorId.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxID(authorId);
         bool isAction = it.message.startsWith("/me ", Qt::CaseInsensitive);
 
         ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
                                                               isAction ? it.message.right(it.message.length() - 4) : it.message,
                                                               isAction ? ChatMessage::ACTION : ChatMessage::NORMAL,
-                                                              authorId.isMine(),
+                                                              authorId.isActiveProfile(),
                                                               QDateTime());
 
         if (!isAction && (prevId == authorId) && (prevMsgDateTime.secsTo(msgDateTime) < getChatLog()->repNameAfter) )
@@ -829,7 +829,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         prevId = authorId;
         prevMsgDateTime = msgDateTime;
 
-        if (it.isSent || !authorId.isMine())
+        if (it.isSent || !authorId.isActiveProfile())
         {
             msg->markAsSent(msgDateTime);
         }
