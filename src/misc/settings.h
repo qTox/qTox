@@ -21,7 +21,7 @@
 #include <QObject>
 #include <QPixmap>
 
-struct ToxID;
+class ToxId;
 namespace Db { enum class syncType; }
 
 enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
@@ -192,8 +192,8 @@ public:
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
-    QString getAutoAcceptDir(const ToxID& id) const;
-    void setAutoAcceptDir(const ToxID&id, const QString& dir);
+    QString getAutoAcceptDir(const ToxId& id) const;
+    void setAutoAcceptDir(const ToxId&id, const QString& dir);
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
@@ -237,10 +237,10 @@ public:
     QString getFriendAdress(const QString &publicKey) const;
     void updateFriendAdress(const QString &newAddr);
 
-    QString getFriendAlias(const ToxID &id) const;
-    void setFriendAlias(const ToxID &id, const QString &alias);
+    QString getFriendAlias(const ToxId &id) const;
+    void setFriendAlias(const ToxId &id, const QString &alias);
 
-    void removeFriendSettings(const ToxID &id);
+    void removeFriendSettings(const ToxId &id);
 
     bool getFauxOfflineMessaging() const;
     void setFauxOfflineMessaging(bool value);

@@ -764,11 +764,11 @@ void Core::setAvatar(const QByteArray& data)
     AvatarBroadcaster::enableAutoBroadcast();
 }
 
-ToxID Core::getSelfId() const
+ToxId Core::getSelfId() const
 {
     uint8_t friendAddress[TOX_ADDRESS_SIZE] = {0};
     tox_self_get_address(tox, friendAddress);
-    return ToxID::fromString(CFriendAddress::toString(friendAddress));
+    return ToxId(CFriendAddress::toString(friendAddress));
 }
 
 QString Core::getIDString() const
@@ -1080,9 +1080,9 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
     return name;
 }
 
-ToxID Core::getGroupPeerToxID(int groupId, int peerId) const
+ToxId Core::getGroupPeerToxID(int groupId, int peerId) const
 {
-    ToxID peerToxID;
+    ToxId peerToxID;
 
     uint8_t rawID[TOX_PUBLIC_KEY_SIZE];
     int res = tox_group_peer_pubkey(tox, groupId, peerId, rawID);
@@ -1092,7 +1092,7 @@ ToxID Core::getGroupPeerToxID(int groupId, int peerId) const
         return peerToxID;
     }
 
-    peerToxID = ToxID::fromString(CUserId::toString(rawID));
+    peerToxID = ToxId(CUserId::toString(rawID));
     return peerToxID;
 }
 
@@ -1281,7 +1281,7 @@ QList<CString> Core::splitMessage(const QString &message, int maxLen)
     return splittedMsgs;
 }
 
-QString Core::getPeerName(const ToxID& id) const
+QString Core::getPeerName(const ToxId& id) const
 {
     QString name;
     CUserId cid(id.toString());

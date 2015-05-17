@@ -19,14 +19,14 @@ template <class T> class QList;
 template <class A, class B> class QHash;
 class Friend;
 class QString;
-struct ToxID;
+class ToxId;
 
 class FriendList
 {
 public:
-    static Friend* addFriend(int friendId, const ToxID &userId);
+    static Friend* addFriend(int friendId, const ToxId &userId);
     static Friend* findFriend(int friendId);
-    static Friend* findFriend(const ToxID &userId);
+    static Friend* findFriend(const ToxId &userId);
     static QList<Friend*> getAllFriends();
     static void removeFriend(int friendId, bool fake = false);
     static void clear();

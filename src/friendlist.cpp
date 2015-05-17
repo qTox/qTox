@@ -22,7 +22,7 @@
 QHash<int, Friend*> FriendList::friendList;
 QHash<QString, int> FriendList::tox2id;
 
-Friend* FriendList::addFriend(int friendId, const ToxID& userId)
+Friend* FriendList::addFriend(int friendId, const ToxId& userId)
 {
     auto friendChecker = friendList.find(friendId);
     if (friendChecker != friendList.end())
@@ -66,7 +66,7 @@ void FriendList::clear()
     friendList.clear();
 }
 
-Friend* FriendList::findFriend(const ToxID& userId)
+Friend* FriendList::findFriend(const ToxId& userId)
 {
     auto id = tox2id.find(userId.publicKey);
     if (id != tox2id.end())

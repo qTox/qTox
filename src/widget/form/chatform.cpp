@@ -203,7 +203,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     }
 
     QString name;
-    ToxID friendId = f->getToxID();
+    ToxId friendId = f->getToxID();
     if (friendId != previousId)
     {
         name = f->getDisplayedName();
@@ -794,8 +794,8 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
     auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->getToxID().publicKey, since, now);
 
-    ToxID storedPrevId = previousId;
-    ToxID prevId;
+    ToxId storedPrevId = previousId;
+    ToxId prevId;
 
     QList<ChatLine::Ptr> historyMessages;
 
@@ -813,7 +813,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
 
         // Show each messages
-        ToxID authorId = ToxID::fromString(it.sender);
+        ToxId authorId = ToxId(it.sender);
         QString authorStr = authorId.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxID(authorId);
         bool isAction = it.message.startsWith("/me ", Qt::CaseInsensitive);
 

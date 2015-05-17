@@ -245,7 +245,7 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
     menu.exec(pos);
 }
 
-ChatMessage::Ptr GenericChatForm::addMessage(const ToxID& author, const QString &message, bool isAction,
+ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
     QString authorStr = author.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxID(author);
@@ -279,7 +279,7 @@ ChatMessage::Ptr GenericChatForm::addSelfMessage(const QString &message, bool is
     return addMessage(Core::getInstance()->getSelfId(), message, isAction, datetime, isSent);
 }
 
-void GenericChatForm::addAlertMessage(const ToxID &author, QString message, QDateTime datetime)
+void GenericChatForm::addAlertMessage(const ToxId &author, QString message, QDateTime datetime)
 {
     QString authorStr = resolveToxID(author);
     ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, author.isActiveProfile(), datetime);
@@ -372,7 +372,7 @@ void GenericChatForm::clearChatArea()
 void GenericChatForm::clearChatArea(bool notinform)
 {
     chatWidget->clear();
-    previousId = ToxID();
+    previousId = ToxId();
 
     if (!notinform)
         addSystemInfoMessage(tr("Cleared"), ChatMessage::INFO, QDateTime::currentDateTime());
@@ -388,7 +388,7 @@ void GenericChatForm::onSelectAllClicked()
     chatWidget->selectAll();
 }
 
-QString GenericChatForm::resolveToxID(const ToxID &id)
+QString GenericChatForm::resolveToxID(const ToxId &id)
 {
     Friend *f = FriendList::findFriend(id);
     if (f)

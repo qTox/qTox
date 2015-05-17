@@ -21,6 +21,7 @@
 #include <QMenu>
 #include "src/core/corestructs.h"
 #include "src/chatlog/chatmessage.h"
+#include "../../core/toxid.h"
 
 // Spacing in px inserted when the author of the last message changes
 #define AUTHOR_CHANGE_SPACING 5 // why the hell is this a thing? surely the different font is enough?
@@ -33,7 +34,6 @@ class ChatTextEdit;
 class ChatLog;
 class MaskablePixmapWidget;
 class Widget;
-struct ToxID;
 class FlyoutOverlayWidget;
 
 namespace Ui {
@@ -49,11 +49,11 @@ public:
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
 
-    ChatMessage::Ptr addMessage(const ToxID& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     ChatMessage::Ptr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
 
     void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
-    void addAlertMessage(const ToxID& author, QString message, QDateTime datetime);
+    void addAlertMessage(const ToxId& author, QString message, QDateTime datetime);
     bool isEmpty();
 
     ChatLog* getChatLog() const;
@@ -80,13 +80,13 @@ protected slots:
     void hideFileMenu();
 
 protected:
-    QString resolveToxID(const ToxID &id);
+    QString resolveToxID(const ToxId &id);
     void insertChatMessage(ChatMessage::Ptr msg);
     void hideEvent(QHideEvent* event);
     void resizeEvent(QResizeEvent* event);
     void adjustFileMenuPosition();
 
-    ToxID previousId;
+    ToxId previousId;
     QDateTime prevMsgDateTime;
     Widget *parent;
     QMenu menu;
