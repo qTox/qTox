@@ -215,7 +215,7 @@ void GeneralForm::onTranslationUpdated()
     QMessageBox::StandardButton reply;
       reply = QMessageBox::question(0,
                                     tr("Do you want to restart now?"),
-                                    tr("You must qTox restart to change language"),
+                                    tr("You must qTox restart to change the language"),
                                     QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes) {
           QProcess::startDetached(QApplication::applicationFilePath());
