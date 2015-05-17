@@ -1,5 +1,7 @@
 #include "toxid.h"
 
+#include "core.h"
+
 #include <tox/tox.h>
 #include <qregularexpression.h>
 
@@ -38,6 +40,11 @@ bool ToxId::operator==(const ToxId& other) const
 bool ToxId::operator!=(const ToxId &other) const
 {
     return publicKey != other.publicKey;
+}
+
+bool ToxId::isActiveProfile() const
+{
+    return *this == Core::getInstance()->getSelfId();
 }
 
 QString ToxId::toString() const
