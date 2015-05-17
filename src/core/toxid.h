@@ -3,19 +3,25 @@
 
 #include <QString>
 
+/*!
+ * \brief This class represents a Tox ID as specified at:
+ *        https://libtoxcore.so/core_concepts.html
+ */
 class ToxId
 {
 public:
-    ToxId();
-    ToxId(const ToxId& other);
-    ToxId(const QString& id);
+    ToxId(); ///< The default constructor. Creates an empty Tox ID.
+    ToxId(const ToxId& other); ///< The copy constructor.
+    ToxId(const QString& id); ///< Create a Tox ID from QString.
+                              /// If the given id is not a valid Tox ID, than
+                              /// publicKey == id and noSpam == "" == checkSum.
 
-    bool operator==(const ToxId& other) const;
-    bool operator!=(const ToxId& other) const;
-    QString toString() const;
-    void clear();
+    bool operator==(const ToxId& other) const; ///< Compares only publicKey.
+    bool operator!=(const ToxId& other) const; ///< Compares only publicKey.
+    QString toString() const; ///< Returns the Tox ID as QString.
+    void clear(); ///< Clears all elements of the Tox ID.
 
-    static bool isToxId(const QString& id);
+    static bool isToxId(const QString& id); ///< Returns true if id is a valid Tox ID.
 
 public:
     QString publicKey;
