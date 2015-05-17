@@ -150,7 +150,9 @@ void ProfileForm::copyIdClicked()
     toxId->selectAll();
     QString txt = toxId->text();
     txt.replace('\n',"");
-    QApplication::clipboard()->setText(txt);
+    QApplication::clipboard()->setText(txt, QClipboard::Clipboard);
+    if (QApplication::clipboard()->supportsSelection())
+      QApplication::clipboard()->setText(txt, QClipboard::Selection);
     toxId->setCursorPosition(0);
 
     if (!hasCheck)
