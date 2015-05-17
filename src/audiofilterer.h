@@ -30,7 +30,7 @@ public:
     void closeFilter();
 
     /* Enable/disable filters. 1 to enable, 0 to disable. */
-    bool enableDisableFilters(int echo, int noise, int gain);
+    bool enableDisableFilters(int echo, int noise, int gain, int vad);
 
     bool filterAudio(int16_t* data, int samples);
 
