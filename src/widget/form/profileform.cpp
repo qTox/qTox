@@ -268,11 +268,12 @@ void ProfileForm::onRenameClicked()
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
     do
     {
-        QString name = QInputDialog::getText(this, title, title+":");
+        QString name = QInputDialog::getText(0, title, title + ":");
         if (name.isEmpty()) break;
         name = Core::sanitize(name);
         QDir dir(Settings::getSettingsDirPath());
         QString file = dir.filePath(name+Core::TOX_EXT);
+
         if (!QFile::exists(file) || GUI::askQuestion(tr("Profile already exists", "rename confirm title"),
                 tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
         {
@@ -283,15 +284,16 @@ void ProfileForm::onRenameClicked()
                 break;
             }
 
-            QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
-            QFile::rename(dir.filePath(cur+".ini"), dir.filePath(name+".ini"));
+            QFile::rename(dir.filePath(cur + Core::TOX_EXT), file);
+            QFile::rename(dir.filePath(cur + ".ini"), dir.filePath(name + ".ini"));
             bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
             HistoryKeeper::renameHistory(cur, name);
             bool resetAutorun = Settings::getInstance().getAutorun();
             Settings::getInstance().setAutorun(false);
             Settings::getInstance().setCurrentProfile(name);
+
             if (resetAutorun)
-                Settings::getInstance().setAutorun(true);                   // fixes -p flag in autostart command line
+                Settings::getInstance().setAutorun(true); // fixes -p flag in autostart command line
 
             break;
         }
