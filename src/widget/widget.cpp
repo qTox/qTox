@@ -301,7 +301,7 @@ void Widget::updateIcons()
     if (ico.isNull())
     {
         QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
-        ico = QIcon(":/img/taskbar/" + color + "/taskbar_" + status + ".svg");
+        ico = QIcon(":img/taskbar/" + color + "/taskbar_" + status + ".svg");
     }
 
     setWindowIcon(ico);
