@@ -11,29 +11,6 @@ class QTimer;
 
 enum class Status : int {Online = 0, Away, Busy, Offline};
 
-#define TOX_ID_PUBLIC_KEY_LENGTH 64
-#define TOX_ID_NO_SPAM_LENGTH    8
-#define TOX_ID_CHECKSUM_LENGTH   4
-
-struct ToxID
-{
-    ToxID()=default;
-    ToxID(const ToxID& other);
-
-    QString publicKey;
-    QString noSpam;
-    QString checkSum;
-
-    QString toString() const;
-    static ToxID fromString(QString id);
-    static bool isToxId(const QString& id);
-
-    bool operator==(const ToxID& other) const;
-    bool operator!=(const ToxID& other) const;
-    bool isMine() const;
-    void clear();
-};
-
 struct ToxFile
 {
     enum FileStatus

@@ -18,6 +18,7 @@
 #include <QObject>
 #include <QString>
 #include "src/core/corestructs.h"
+#include "core/toxid.h"
 
 struct FriendWidget;
 class ChatForm;
@@ -26,7 +27,7 @@ class Friend : public QObject
 {
     Q_OBJECT
 public:
-    Friend(uint32_t FriendId, const ToxID &UserId);
+    Friend(uint32_t FriendId, const ToxId &UserId);
     Friend(const Friend& other)=delete;
     ~Friend();
     Friend& operator=(const Friend& other)=delete;
@@ -43,7 +44,7 @@ public:
     void setEventFlag(int f);
     int getEventFlag() const;
 
-    const ToxID &getToxID() const;
+    const ToxId &getToxID() const;
     uint32_t getFriendID() const;
 
     void setStatus(Status s);
@@ -57,7 +58,7 @@ signals:
 
 private:
     QString userAlias, userName;
-    ToxID userID;
+    ToxId userID;
     uint32_t friendId;
     int hasNewEvents;
     Status friendStatus;

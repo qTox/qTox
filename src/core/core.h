@@ -27,6 +27,7 @@
 #include "corestructs.h"
 #include "coreav.h"
 #include "coredefines.h"
+#include "toxid.h"
 
 template <typename T> class QList;
 class Camera;
@@ -55,12 +56,12 @@ public:
 
     static QByteArray getSaltFromFile(QString filename);
 
-    QString getPeerName(const ToxID& id) const;
+    QString getPeerName(const ToxId& id) const;
 
     QVector<uint32_t> getFriendList() const; ///< Returns the list of friendIds in our friendlist, an empty list on error
     int getGroupNumberPeers(int groupId) const; ///< Return the number of peers in the group chat on success, or -1 on failure
     QString getGroupPeerName(int groupId, int peerId) const; ///< Get the name of a peer of a group
-    ToxID getGroupPeerToxID(int groupId, int peerId) const; ///< Get the ToxID of a peer of a group
+    ToxId getGroupPeerToxID(int groupId, int peerId) const; ///< Get the ToxID of a peer of a group
     QList<QString> getGroupPeerNames(int groupId) const; ///< Get the names of the peers of a group
     QString getFriendAddress(uint32_t friendId) const; ///< Get the full address if known, or Tox ID of a friend
     QString getFriendUsername(uint32_t friendId) const; ///< Get the username of a friend
@@ -74,7 +75,7 @@ public:
 
     QString getUsername() const; ///< Returns our username, or an empty string on failure
     QString getStatusMessage() const; ///< Returns our status message, or an empty string on failure
-    ToxID getSelfId() const; ///< Returns our Tox ID
+    ToxId getSelfId() const; ///< Returns our Tox ID
     QPair<QByteArray, QByteArray> getKeypair() const; ///< Returns our public and private keys
 
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source

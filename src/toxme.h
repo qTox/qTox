@@ -4,7 +4,7 @@
 #include <QString>
 #include <QMutex>
 #include <memory>
-#include "src/core/corestructs.h"
+#include "core/toxid.h"
 
 class QNetworkAccessManager;
 
@@ -15,14 +15,14 @@ class Toxme
 {
 public:
     /// Converts a toxme.se address to a Tox ID, returns an empty ID on error
-    static ToxID lookup(QString address);
+    static ToxId lookup(QString address);
     /// Creates a new toxme.se address associated with a Tox ID.
     /// If keepPrivate, the address will not be published on toxme.se
     /// The bio is a short optional description of yourself if you want to publish your address.
-    static bool createAddress(ToxID id, QString address,
+    static bool createAddress(ToxId id, QString address,
                               bool keepPrivate=true, QString bio=QString());
     /// Deletes the address associated with your current Tox ID
-    static bool deleteAddress(ToxID id);
+    static bool deleteAddress(ToxId id);
 
 private:
     Toxme()=delete;

@@ -609,7 +609,7 @@ void Widget::reloadHistory()
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-    ToxID userToxId = ToxID::fromString(userId);
+    ToxId userToxId = ToxId(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
     contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline);
 
@@ -950,8 +950,8 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     if (!g)
         return;
 
-    ToxID author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
-    bool targeted = !author.isMine() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    ToxId author = Core::getInstance()->getGroupPeerToxID(groupnumber, peernumber);
+    bool targeted = !author.isActiveProfile() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else

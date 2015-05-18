@@ -89,7 +89,7 @@ void AddFriendForm::onSendTriggered()
     {
         GUI::showWarning(tr("Couldn't add friend"), tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
     }
-    else if (ToxID::isToxId(id))
+    else if (ToxId::isToxId(id))
     {
         if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
             GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
@@ -109,7 +109,7 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
                 return;
         }
 
-        ToxID toxId = ToxDNS::resolveToxAddress(id, true);
+        ToxId toxId = ToxDNS::resolveToxAddress(id, true);
 
         if (toxId.toString().isEmpty())
         {
@@ -127,9 +127,9 @@ void AddFriendForm::setIdFromClipboard()
 {
     QClipboard* clipboard = QApplication::clipboard();
     QString id = clipboard->text().trimmed();
-    if (Core::getInstance()->isReady() && !id.isEmpty() && ToxID::isToxId(id))
+    if (Core::getInstance()->isReady() && !id.isEmpty() && ToxId::isToxId(id))
     {
-        if (!ToxID::fromString(id).isMine())
+        if (!ToxId(id).isActiveProfile())
             toxId.setText(id);
     }
 }
