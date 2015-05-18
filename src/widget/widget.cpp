@@ -491,11 +491,6 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
     {
         case QSystemTrayIcon::Trigger:
         {
-            #if defined(Q_OS_MAC)
-                // We don't want to raise/minimize a window on icon click in OS X
-                break;
-            #endif
-
             if (isHidden())
             {
                 show();
