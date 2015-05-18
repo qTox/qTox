@@ -188,8 +188,8 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     entry = fetchLastTextRecord(realRecord, silent);
     if (entry.isEmpty())
     {
-        qWarning() << "Server "<<server.name<<" returned no record, using tox1 as a fallback";
-        goto fallbackOnTox1;
+        qWarning() << "Server "<<server.name<<" returned no record, assuming the Tox ID doesn't exist";
+        return toxIdStr;
     }
 
     // Check toxdns protocol version
