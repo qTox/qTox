@@ -67,7 +67,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     headLayout->addWidget(nameLabel);
     headLayout->addStretch(1);
 
-    nameLabel->setText(tr("User Profile"));
+    nameLabel->setText(QObject::tr("User Profile"));
     imgLabel->setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(40, Qt::SmoothTransformation));
 
     // tox
