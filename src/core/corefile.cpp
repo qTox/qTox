@@ -36,11 +36,12 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
 {
     QMutexLocker mlocker(&fileSendMutex);
 
-    uint8_t filename[TOX_HASH_LENGTH];
-    tox_hash(filename, (uint8_t*)data.data(), data.size());
+    static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
+    uint8_t avatarHash[TOX_HASH_LENGTH];
+    tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
     uint64_t filesize = data.size();
     uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
-                                     nullptr, filename, TOX_HASH_LENGTH, nullptr);
+                                     avatarHash, avatarHash, TOX_HASH_LENGTH, nullptr);
     if (fileNum == std::numeric_limits<uint32_t>::max())
     {
         qWarning() << "sendAvatarFile: Can't create the Tox file sender";
@@ -50,7 +51,7 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
 
     ToxFile file{fileNum, friendId, "", "", ToxFile::SENDING};
     file.filesize = filesize;
-    file.fileName = QByteArray((char*)filename, TOX_HASH_LENGTH);
+    file.fileName = QByteArray((char*)avatarHash, TOX_HASH_LENGTH);
     file.fileKind = TOX_FILE_KIND_AVATAR;
     file.avatarData = data;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
@@ -246,16 +247,22 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
             QFile::remove(QDir(Settings::getSettingsDirPath()).filePath("avatars/"+friendAddr.left(64)+".hash"));
             return;
         }
-        else if (Settings::getInstance().getAvatarHash(friendAddr) == QByteArray((char*)fname, fnameLen))
-        {
-            // If it's an avatar but we already have it cached, cancel
-            tox_file_control(core->tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
-            return;
-        }
         else
         {
-            // It's an avatar and we don't have it, autoaccept the transfer
-            tox_file_control(core->tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, nullptr);
+            static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
+            uint8_t avatarHash[TOX_FILE_ID_LENGTH];
+            tox_file_get_file_id(core->tox, friendId, fileId, avatarHash, nullptr);
+            if (Settings::getInstance().getAvatarHash(friendAddr) == QByteArray((char*)avatarHash, TOX_HASH_LENGTH))
+            {
+                // If it's an avatar but we already have it cached, cancel
+                tox_file_control(core->tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
+                return;
+            }
+            else
+            {
+                // It's an avatar and we don't have it, autoaccept the transfer
+                tox_file_control(core->tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, nullptr);
+            }
         }
     }
 
