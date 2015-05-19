@@ -12,13 +12,12 @@
     See the COPYING file for more details.
 */
 
-
 #include "src/ipc.h"
 #include "src/misc/settings.h"
 #include <QDebug>
 #include <QCoreApplication>
+#include <random>
 #include <unistd.h>
-
 
 IPC::IPC()
     : globalMemory{"qtox-" IPC_PROTOCOL_VERSION}
@@ -35,8 +34,9 @@ IPC::IPC()
     // This is a safety measure, in case one of the clients crashes
     // If the owner exits normally, it can set the timestamp to 0 first to immediately give ownership
 
-    qsrand(time(0));
-    globalId = ((uint64_t)qrand()) * ((uint64_t)qrand()) * ((uint64_t)qrand());
+    std::default_random_engine randEngine((std::random_device()()));
+    std::uniform_int_distribution<uint64_t> distribution;
+    globalId = distribution(randEngine);
     qDebug() << "Our global ID is " << globalId;
     if (globalMemory.create(sizeof(IPCMemory)))
     {
