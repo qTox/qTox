@@ -156,7 +156,9 @@ void Audio::openInput(const QString& inDevDescr)
     else
         qDebug() << "Opening audio input "<<inDevDescr;
 
-    Core::getInstance()->resetCallSources(); // Force to regen each group call's sources
+    Core* core = Core::getInstance();
+    if (core)
+        core->resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
     if (userCount.load() != 0 && alInDev)
@@ -210,7 +212,9 @@ void Audio::openOutput(const QString& outDevDescr)
         qDebug() << "Opening audio output " + outDevDescr;
     }
 
-    Core::getInstance()->resetCallSources(); // Force to regen each group call's sources
+    Core* core = Core::getInstance();
+    if (core)
+        core->resetCallSources(); // Force to regen each group call's sources
 }
 
 void Audio::closeInput()

@@ -50,7 +50,7 @@
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
-    , callId(0)
+    , callId{0}, isTyping{false}
 {
     nameLabel->setText(f->getDisplayedName());
 
