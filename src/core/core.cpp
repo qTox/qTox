@@ -1080,20 +1080,20 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
     return name;
 }
 
-ToxId Core::getGroupPeerToxID(int groupId, int peerId) const
+ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
 {
-    ToxId peerToxID;
+    ToxId peerToxId;
 
     uint8_t rawID[TOX_PUBLIC_KEY_SIZE];
     int res = tox_group_peer_pubkey(tox, groupId, peerId, rawID);
     if (res == -1)
     {
-        qWarning() << "getGroupPeerToxID: Unknown error";
-        return peerToxID;
+        qWarning() << "getGroupPeerToxId: Unknown error";
+        return peerToxId;
     }
 
-    peerToxID = ToxId(CUserId::toString(rawID));
-    return peerToxID;
+    peerToxId = ToxId(CUserId::toString(rawID));
+    return peerToxId;
 }
 
 QList<QString> Core::getGroupPeerNames(int groupId) const

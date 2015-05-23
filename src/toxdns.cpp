@@ -289,7 +289,7 @@ ToxId ToxDNS::resolveToxAddress(const QString &address, bool silent)
         else
         {
 #if TOX1_SILENT_FALLBACK
-            toxId = ToxID::fromString(queryTox1(address, silent));
+            toxId = ToxId::fromString(queryTox1(address, silent));
 #elif TOX1_ASK_FALLBACK
             QMessageBox::StandardButton btn = QMessageBox::warning(nullptr, "qTox", tr("It appears that qTox has to use the old tox1 protocol to access DNS record of your friend's Tox ID.\n\
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.\n\

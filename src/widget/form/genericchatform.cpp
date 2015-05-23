@@ -248,7 +248,7 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    QString authorStr = author.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxID(author);
+    QString authorStr = author.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxId(author);
 
     ChatMessage::Ptr msg;
     if (isAction)
@@ -281,7 +281,7 @@ ChatMessage::Ptr GenericChatForm::addSelfMessage(const QString &message, bool is
 
 void GenericChatForm::addAlertMessage(const ToxId &author, QString message, QDateTime datetime)
 {
-    QString authorStr = resolveToxID(author);
+    QString authorStr = resolveToxId(author);
     ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, author.isActiveProfile(), datetime);
     insertChatMessage(msg);
 
@@ -388,7 +388,7 @@ void GenericChatForm::onSelectAllClicked()
     chatWidget->selectAll();
 }
 
-QString GenericChatForm::resolveToxID(const ToxId &id)
+QString GenericChatForm::resolveToxId(const ToxId &id)
 {
     Friend *f = FriendList::findFriend(id);
     if (f)
@@ -399,7 +399,7 @@ QString GenericChatForm::resolveToxID(const ToxId &id)
     {
         for (auto it : GroupList::getAllGroups())
         {
-            QString res = it->resolveToxID(id);
+            QString res = it->resolveToxId(id);
             if (res.size())
                 return res;
         }

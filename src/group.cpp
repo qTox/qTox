@@ -66,7 +66,7 @@ void Group::removePeer(int peerId)
 
 void Group::updatePeer(int peerId, QString name)
 {
-    ToxId id = Core::getInstance()->getGroupPeerToxID(groupId, peerId);
+    ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, peerId);
     QString toxid = id.publicKey;
     peers[peerId] = name;
     toxids[toxid] = name;
@@ -97,7 +97,7 @@ void Group::regeneratePeerList()
     nPeers = peers.size();
     for (int i = 0; i < nPeers; i++)
     {
-        ToxId id = Core::getInstance()->getGroupPeerToxID(groupId, i);
+        ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, i);
         if (id.isActiveProfile())
             selfPeerNum = i;
 
@@ -170,7 +170,7 @@ int Group::getMentionedFlag() const
     return userWasMentioned;
 }
 
-QString Group::resolveToxID(const ToxId &id) const
+QString Group::resolveToxId(const ToxId &id) const
 {
     QString key = id.publicKey;
     auto it = toxids.find(key);

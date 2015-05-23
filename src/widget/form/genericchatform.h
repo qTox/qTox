@@ -80,7 +80,7 @@ protected slots:
     void hideFileMenu();
 
 protected:
-    QString resolveToxID(const ToxId &id);
+    QString resolveToxId(const ToxId &id);
     void insertChatMessage(ChatMessage::Ptr msg);
     void hideEvent(QHideEvent* event);
     void resizeEvent(QResizeEvent* event);
