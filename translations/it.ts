@@ -2115,7 +2115,7 @@ Verrà installata al riavvio del programma.</translation>
 Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/chatmessage.cpp" line="124"/>
+        <location filename="../src/chatlog/chatmessage.cpp" line="129"/>
         <source>Resizing</source>
         <translation>Ridimensiona</translation>
     </message>
@@ -2123,6 +2123,11 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="70"/>
         <source>User Profile</source>
         <translation>Profilo Utente</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="82"/>
+        <source>Load chat history...</source>
+        <translation>Carica cronologia chat...</translation>
     </message>
 </context>
 <context>
