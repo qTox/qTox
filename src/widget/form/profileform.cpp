@@ -243,7 +243,7 @@ void ProfileForm::onAvatarClicked()
     if (bytes.size() > 65535)
     {
         QMessageBox::critical(this, tr("Error"),
-            tr("The supplied image is too large.\nPlease use an image that is less than 64 KiB in size."));
+            tr("The supplied image is too large.\nPlease use another image."));
         return;
     }
 
