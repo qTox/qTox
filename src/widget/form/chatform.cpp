@@ -79,7 +79,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
 
-    menu.addAction(tr("Load chat history..."), this, SLOT(onLoadHistory()));
+    menu.addAction(QObject::tr("Load chat history..."), this, SLOT(onLoadHistory()));
 
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
