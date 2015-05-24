@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
 
+# This script's purpose is to ease compiling qTox for users.
+# 
+# NO AUTOMATED BUILDS SHOULD DEPEND ON IT.
+# 
+# This script is and will be a subject to breaking changes, and at no time one
+# should expect it to work - it's something that you could try to use but
+# don't expect that it will work for sure.
+#
+# If script doesn't work, you should use instructions provided in INSTALL.md
+# before reporting issues like “qTox doesn't compile”.
+#
+# With that being said, reporting that this script doesn't work would be nice.
+#
+# If you are contributing code to qTox that change its dependencies / the way
+# it's being build, please keep in mind that changing just bootstrap.sh 
+# *IS NOT* and will not be sufficient - you should update INSTALL.md first.
+
+
 WINDOWS_VERSION=$(cmd.exe /c ver 2>/dev/null | grep "Microsoft Windows")
 if [ ! -z "$WINDOWS_VERSION" ]; then
     cd windows
