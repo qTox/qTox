@@ -46,8 +46,6 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     if (Settings::getInstance().getUseEmoticons())
         text = SmileyPack::getInstance().smileyfied(text);
 
-    //quotes (green text)
-    text = detectQuotes(detectAnchors(text));
 
     switch(type)
     {
@@ -57,9 +55,13 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
         msg->setAsAction();
         break;
     case ALERT:
+        // quotes should not be available for action messages ↑
+        text = detectQuotes(detectAnchors(text)); //quotes (green text)
         text = wrapDiv(text, "alert");
         break;
     default:
+        // quotes should not be avaialble for action messages
+        text = detectQuotes(detectAnchors(text)); //quotes (green text)
         text = wrapDiv(text, "msg");
     }
 
