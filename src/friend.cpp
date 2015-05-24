@@ -93,7 +93,7 @@ QString Friend::getDisplayedName() const
     return userAlias;
 }
 
-const ToxId &Friend::getToxID() const
+const ToxId &Friend::getToxId() const
 {
     return userID;
 }

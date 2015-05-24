@@ -57,7 +57,7 @@ public:
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name);
 
-    QString resolveToxID(const ToxId &id) const;
+    QString resolveToxId(const ToxId &id) const;
 
 private:
     GroupWidget* widget;

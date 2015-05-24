@@ -54,7 +54,7 @@ void FriendList::removeFriend(int friendId, bool fake)
     if (f_it != friendList.end())
     {
         if (!fake)
-            Settings::getInstance().removeFriendSettings(f_it.value()->getToxID());
+            Settings::getInstance().removeFriendSettings(f_it.value()->getToxId());
         friendList.erase(f_it);
     }
 }
@@ -74,7 +74,7 @@ Friend* FriendList::findFriend(const ToxId& userId)
         Friend *f = findFriend(*id);
         if (!f)
             return nullptr;
-        if (f->getToxID() == userId)
+        if (f->getToxId() == userId)
             return f;
     }
 

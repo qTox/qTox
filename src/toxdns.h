@@ -43,7 +43,7 @@ public:
     };
 
 public:
-    /// Tries to map a text string to a ToxID struct, will query Tox DNS records if necessary
+    /// Tries to map a text string to a ToxId struct, will query Tox DNS records if necessary
     static ToxId resolveToxAddress(const QString& address, bool silent=true);
 
     static QString queryTox1(const QString& record, bool silent=true); ///< Record should look like user@domain.tld. Do *NOT* use tox1 without a good reason, it's unsafe.

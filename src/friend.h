@@ -44,7 +44,7 @@ public:
     void setEventFlag(int f);
     int getEventFlag() const;
 
-    const ToxId &getToxID() const;
+    const ToxId &getToxId() const;
     uint32_t getFriendID() const;
 
     void setStatus(Status s);

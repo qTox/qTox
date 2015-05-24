@@ -51,7 +51,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
     QPoint pos = event->globalPos();
-    ToxId id = FriendList::findFriend(friendId)->getToxID();
+    ToxId id = FriendList::findFriend(friendId)->getToxId();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
@@ -247,7 +247,7 @@ void FriendWidget::setAlias(const QString& _alias)
     alias = alias.left(128); // same as TOX_MAX_NAME_LENGTH
     Friend* f = FriendList::findFriend(friendId);
     f->setAlias(alias);
-    Settings::getInstance().setFriendAlias(f->getToxID(), alias);
+    Settings::getInstance().setFriendAlias(f->getToxId(), alias);
     Settings::getInstance().save(true);
     hide();
     show();
