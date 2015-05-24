@@ -46,6 +46,8 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     if (Settings::getInstance().getUseEmoticons())
         text = SmileyPack::getInstance().smileyfied(text);
 
+    //quotes (green text)
+    text = detectQuotes(detectAnchors(text), type);
 
     switch(type)
     {
@@ -55,13 +57,9 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
         msg->setAsAction();
         break;
     case ALERT:
-        // quotes should not be available for action messages ↑
-        text = detectQuotes(detectAnchors(text)); //quotes (green text)
         text = wrapDiv(text, "alert");
         break;
     default:
-        // quotes should not be avaialble for action messages
-        text = detectQuotes(detectAnchors(text)); //quotes (green text)
         text = wrapDiv(text, "msg");
     }
 
@@ -112,6 +110,11 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
     // Note: "[user]..." is just a placeholder. The actual text is set in ChatForm::setFriendTyping()
+    //
+    // FIXME: Due to circumstances, placeholder is being used in a case where
+    // user received typing notifications constantly since contact came online.
+    // This causes "[user]..." to be displayed in place of user nick, as long
+    // as user will keep typing. Issue #1280
     msg->addColumn(new NotificationIcon(QSize(18, 18)), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new Text("[user]...", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
 
@@ -198,17 +201,26 @@ QString ChatMessage::detectAnchors(const QString &str)
     return out;
 }
 
-QString ChatMessage::detectQuotes(const QString& str)
+QString ChatMessage::detectQuotes(const QString& str, MessageType type)
 {
     // detect text quotes
     QStringList messageLines = str.split("\n");
     QString quotedText;
-    for (int i=0;i<messageLines.size();++i)
+    for (int i = 0; i < messageLines.size(); ++i)
     {
-        if (QRegExp("^(&gt;|＞)( |[[]|&gt;|[^_\\d\\W]).*").exactMatch(messageLines[i]))
-            quotedText += "<span class=quote>" + messageLines[i] + "</span>";
-        else
+        // don't quote first line in action message. This makes co-existence of
+        // quotes and action messages possible, since only first line can cause
+        // problems in case where there is quote in it used.
+        if (QRegExp("^(&gt;|＞)( |[[]|&gt;|[^_\\d\\W]).*").exactMatch(messageLines[i])) {
+            if (type != ACTION)
+                quotedText += "<span class=quote>" + messageLines[i] + "</span>";
+            else if (type == ACTION && i > 0)
+                quotedText += "<span class=quote>" + messageLines[i] + "</span>";
+            else if (type == ACTION && i == 0)
+                quotedText += messageLines[i];
+        } else {
             quotedText += messageLines[i];
+        }
 
         if (i < messageLines.size() - 1)
             quotedText += "<br/>";
