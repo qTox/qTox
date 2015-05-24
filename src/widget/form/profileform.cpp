@@ -213,14 +213,14 @@ void ProfileForm::onAvatarClicked()
     file.open(QIODevice::ReadOnly);
     if (!file.isOpen())
     {
-        GUI::showError(tr("Error"), tr("Unable to open this file"));
+        GUI::showError(tr("Error"), tr("Unable to open this file."));
         return;
     }
 
     QPixmap pic;
     if (!pic.loadFromData(file.readAll()))
     {
-        GUI::showError(tr("Error"), tr("Unable to read this image"));
+        GUI::showError(tr("Error"), tr("Unable to read this image."));
         return;
     }
 
@@ -242,7 +242,8 @@ void ProfileForm::onAvatarClicked()
     // If this happens, you're really doing it on purpose.
     if (bytes.size() > 65535)
     {
-        QMessageBox::critical(this, tr("Error"), tr("This image is too big"));
+        QMessageBox::critical(this, tr("Error"),
+            tr("The supplied image is too large.\nPlease use an image that is less than 64 KiB in size."));
         return;
     }
 
