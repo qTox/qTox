@@ -34,7 +34,7 @@ IPC::IPC()
     // This is a safety measure, in case one of the clients crashes
     // If the owner exits normally, it can set the timestamp to 0 first to immediately give ownership
 
-    std::default_random_engine randEngine((std::random_device()()));
+    std::default_random_engine randEngine((std::random_device())());
     std::uniform_int_distribution<uint64_t> distribution;
     globalId = distribution(randEngine);
     qDebug() << "Our global ID is " << globalId;
