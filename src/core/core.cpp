@@ -1330,8 +1330,8 @@ void Core::resetCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
     {
-        for (QHash<int, ALuint>::iterator i = call.alSources.begin(); i != call.alSources.end(); ++i)
-            alDeleteSources(1, &i.value());
+        for (ALuint source : call.alSources)
+            alDeleteSources(1, &source);
         call.alSources.clear();
     }
 

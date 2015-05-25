@@ -629,8 +629,8 @@ void Core::leaveGroupCall(int groupId)
     groupCalls[groupId].active = false;
     disconnect(groupCalls[groupId].sendAudioTimer,0,0,0);
     groupCalls[groupId].sendAudioTimer->stop();
-    for (QHash<int, ALuint>::iterator i = groupCalls[groupId].alSources.begin(); i != groupCalls[groupId].alSources.end(); ++i)
-        alDeleteSources(1, &i.value());
+    for (ALuint source : groupCalls[groupId].alSources)
+        alDeleteSources(1, &source);
     groupCalls[groupId].alSources.clear();
     Audio::unsuscribeInput();
     delete groupCalls[groupId].sendAudioTimer;
