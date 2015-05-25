@@ -1018,7 +1018,7 @@ void ChatForm::SendMessageStr(QString msg)
         int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxId().publicKey, qt_msg_hist,
                                                             Core::getInstance()->getSelfId().publicKey, timestamp, status);
 
-        ChatMessage::Ptr ma = addSelfMessage(msg, isAction, timestamp, false);
+        ChatMessage::Ptr ma = addSelfMessage(qt_msg, isAction, timestamp, false);
 
         int rec;
         if (isAction)
