@@ -211,7 +211,7 @@ QString ChatMessage::detectQuotes(const QString& str, MessageType type)
         // don't quote first line in action message. This makes co-existence of
         // quotes and action messages possible, since only first line can cause
         // problems in case where there is quote in it used.
-        if (QRegExp("^(&gt;|＞)( |[[]|&gt;|[^_\\d\\W]).*").exactMatch(messageLines[i])) {
+        if (QRegExp("^(&gt;|＞).*").exactMatch(messageLines[i])) {
             if (i > 0 || type != ACTION)
                 quotedText += "<span class=quote>" + messageLines[i] + "</span>";
             else
