@@ -11,7 +11,7 @@
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="83"/>
         <source>Initializing Camera...</source>
-        <translation>Инициализация Камеры...</translation>
+        <translation>Инициализация камеры...</translation>
     </message>
 </context>
 <context>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="64"/>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Используйте ползунок для установки уровня звука динамика.</translation>
+        <translation>Используйте ползунок для установки уровня звука динамиков.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="74"/>
@@ -280,7 +280,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/android.ui" line="353"/>
         <source>Groupbot</source>
-        <translation type="unfinished">Груповой чат</translation>
+        <translation type="unfinished">Группповой чат</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="358"/>
@@ -399,12 +399,12 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="278"/>
         <source>Accept video call</source>
-        <translation>Разрешить видеозвонок</translation>
+        <translation>Принять видеозвонок</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="290"/>
         <source>Accept audio call</source>
-        <translation>Разрешить аудиозвонок</translation>
+        <translation>Принять аудиозвонок</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="298"/>
@@ -1012,7 +1012,7 @@ Alias:</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="369"/>
         <source>Place groupchats at top of friend list</source>
-        <translation>Поместить груповые чаты вверху контакт-листа</translation>
+        <translation>Поместить групповые чаты вверху контакт-листа</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="370"/>
