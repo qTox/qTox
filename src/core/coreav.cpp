@@ -629,6 +629,8 @@ void Core::leaveGroupCall(int groupId)
     groupCalls[groupId].active = false;
     disconnect(groupCalls[groupId].sendAudioTimer,0,0,0);
     groupCalls[groupId].sendAudioTimer->stop();
+    for (ALuint source : groupCalls[groupId].alSources)
+        alDeleteSources(1, &source);
     groupCalls[groupId].alSources.clear();
     Audio::unsuscribeInput();
     delete groupCalls[groupId].sendAudioTimer;

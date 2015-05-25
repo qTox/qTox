@@ -763,7 +763,7 @@ void Core::setAvatar(const QByteArray& data)
     pic.loadFromData(data);
     Settings::getInstance().saveAvatar(pic, getSelfId().toString());
     emit selfAvatarChanged(pic);
-    
+
     AvatarBroadcaster::setAvatar(data);
     AvatarBroadcaster::enableAutoBroadcast();
 }
@@ -1329,7 +1329,11 @@ void Core::setNospam(uint32_t nospam)
 void Core::resetCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
+    {
+        for (ALuint source : call.alSources)
+            alDeleteSources(1, &source);
         call.alSources.clear();
+    }
 
     for (ToxCall& call : calls)
     {
