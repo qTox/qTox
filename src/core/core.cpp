@@ -759,7 +759,7 @@ void Core::setAvatar(const QByteArray& data)
     pic.loadFromData(data);
     Settings::getInstance().saveAvatar(pic, getSelfId().toString());
     emit selfAvatarChanged(pic);
-    
+
     AvatarBroadcaster::setAvatar(data);
     AvatarBroadcaster::enableAutoBroadcast();
 }
@@ -1325,7 +1325,13 @@ void Core::setNospam(uint32_t nospam)
 void Core::resetCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
+    {
+        for (QPair<int, ALuint> alSources : alSources)
+        {
+            alDeleteSources(1, alSources.second);
+        }
         call.alSources.clear();
+    }
 
     for (ToxCall& call : calls)
     {
