@@ -1845,6 +1845,13 @@ ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</tra
         <translation>Errore</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/profileform.cpp" line="246"/>
+        <source>The supplied image is too large.
+Please use another image.</source>
+        <translation>L&apos;immagine selezionata è troppo grande.
+Per favore scegli un&apos;immagine più piccola.</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/profileform.cpp" line="258"/>
         <source>Call active</source>
         <comment>popup title</comment>
@@ -1927,13 +1934,6 @@ ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</tra
         <location filename="../src/widget/form/profileform.cpp" line="223"/>
         <source>Unable to read this image.</source>
         <translation>Impossibile leggere l&apos;immagine.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="246"/>
-        <source>The supplied image is too large.
-Please use an image that is less than 64 KiB in size.</source>
-        <translation>L&apos;immagine selezionata è troppo grande.
-Per favore seleziona un&apos;immagine più piccola di 64KB.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="282"/>
