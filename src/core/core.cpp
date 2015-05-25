@@ -153,6 +153,10 @@ void Core::make_tox(QByteArray savedata)
     toxOptions.proxy_host = nullptr;
     toxOptions.proxy_port = 0;
 
+    toxOptions.savedata_type = (!savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE : TOX_SAVEDATA_TYPE_NONE);
+    toxOptions.savedata_data = (uint8_t*)savedata.data();
+    toxOptions.savedata_length = savedata.size();
+
     if (proxyType != ProxyType::ptNone)
     {
         QString proxyAddr = Settings::getInstance().getProxyAddr();
@@ -180,13 +184,13 @@ void Core::make_tox(QByteArray savedata)
         }
     }
 
-    tox = tox_new(&toxOptions, (uint8_t*)savedata.data(), savedata.size(), nullptr);
+    tox = tox_new(&toxOptions, nullptr);
     if (tox == nullptr)
     {
         if (enableIPv6) // Fallback to IPv4
         {
             toxOptions.ipv6_enabled = false;
-            tox = tox_new(&toxOptions, (uint8_t*)savedata.data(), savedata.size(), nullptr);
+            tox = tox_new(&toxOptions, nullptr);
             if (tox == nullptr)
             {
                 if (toxOptions.proxy_type != TOX_PROXY_TYPE_NONE)
