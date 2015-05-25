@@ -1326,10 +1326,8 @@ void Core::resetCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
     {
-        for (QPair<int, ALuint> alSources : alSources)
-        {
+        for (QPair<int, ALuint> alSources : call)
             alDeleteSources(1, alSources.second);
-        }
         call.alSources.clear();
     }
 
