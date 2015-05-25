@@ -280,7 +280,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
     <message>
         <location filename="../src/android.ui" line="353"/>
         <source>Groupbot</source>
-        <translation type="unfinished">Группповой чат</translation>
+        <translation type="unfinished">Групповой чат</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="358"/>
