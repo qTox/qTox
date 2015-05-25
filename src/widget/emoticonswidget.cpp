@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -17,12 +15,16 @@
 #include "emoticonswidget.h"
 #include "src/misc/smileypack.h"
 #include "src/misc/style.h"
+#include "src/misc/settings.h"
 
 #include <QPushButton>
 #include <QRadioButton>
 #include <QFile>
 #include <QLayout>
 #include <QGridLayout>
+#include <QMouseEvent>
+
+#include <math.h>
 
 EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     QMenu(parent)
@@ -37,17 +39,21 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
 
     layout.addWidget(pageButtonsContainer);
 
-    const int maxCols = 5;
-    const int maxRows = 3;
+    const int maxCols = 8;
+    const int maxRows = 8;
     const int itemsPerPage = maxRows * maxCols;
 
     const QList<QStringList>& emoticons = SmileyPack::getInstance().getEmoticons();
     int itemCount = emoticons.size();
-    int pageCount = (itemCount / itemsPerPage) + 1;
+    int pageCount = ceil(float(itemCount) / float(itemsPerPage));
     int currPage = 0;
     int currItem = 0;
     int row = 0;
     int col = 0;
+
+    // respect configured emoticon size
+    const int px = Settings::getInstance().getEmojiFontPointSize();
+    const QSize size(px, px);
 
     // create pages
     buttonLayout->addStretch();
@@ -78,11 +84,13 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
     for (const QStringList& set : emoticons)
     {
         QPushButton* button = new QPushButton;
-        button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]));
+        button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]).pixmap(size));
         button->setToolTip(set.join(" "));
         button->setProperty("sequence", set[0]);
         button->setCursor(Qt::PointingHandCursor);
         button->setFlat(true);
+        button->setIconSize(size);
+        button->setFixedSize(size);
 
         connect(button, &QPushButton::clicked, this, &EmoticonsWidget::onSmileyClicked);
 
@@ -114,7 +122,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
 void EmoticonsWidget::onSmileyClicked()
 {
     // hide the QMenu
-    QMenu::hide();
+    hide();
 
     // emit insert emoticon
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
@@ -135,4 +143,14 @@ void EmoticonsWidget::onPageButtonClicked()
 QSize EmoticonsWidget::sizeHint() const
 {
     return layout.sizeHint();
+}
+
+void EmoticonsWidget::mouseReleaseEvent(QMouseEvent *ev)
+{
+    if (!rect().contains(ev->pos()))
+        hide();
+}
+
+void EmoticonsWidget::mousePressEvent(QMouseEvent*)
+{
 }

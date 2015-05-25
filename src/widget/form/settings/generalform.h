@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -18,8 +16,6 @@
 #define GENERALFORM_H
 
 #include "genericsettings.h"
-#include <QComboBox>
-#include <QCheckBox>
 
 namespace Ui {
 class GeneralSettings;
@@ -29,22 +25,50 @@ class GeneralForm : public GenericForm
 {
     Q_OBJECT
 public:
-    GeneralForm();
+    GeneralForm(SettingsWidget *parent);
     ~GeneralForm();
 
 private slots:
     void onEnableIPv6Updated();
-    void onUseTranslationUpdated();
-    void onMakeToxPortableUpdated();
+    void onTranslationUpdated();
+    void onAutorunUpdated();
+    void onSetShowSystemTray();
     void onSetAutostartInTray();
+    void onSetCloseToTray();
+    void onSetLightTrayIcon();
     void onSmileyBrowserIndexChanged(int index);
     void onUDPUpdated();
     void onProxyAddrEdited();
     void onProxyPortEdited(int port);
     void onUseProxyUpdated();
+    void onEmoticonSizeChanged();
+    void onStyleSelected(QString style);  
+    void onTimestampSelected(int index);
+    void onDateFormatSelected(int index);
+    void onSetStatusChange();
+    void onAutoAwayChanged();
+    void onUseEmoticonsChange();
+    void onSetMinimizeToTray();
+    void onReconnectClicked();
+    void onAutoAcceptFileChange();
+    void onAutoSaveDirChange();
+    void onCheckUpdateChanged();
+    void onShowWindowChanged();
+    void onSetShowInFront();
+    void onSetNotifySound();
+    void onSetGroupAlwaysNotify();
+    void onFauxOfflineMessaging();
+    void onCompactLayout();
+    void onGroupchatPositionChanged();
+    void onThemeColorChanged(int);
 
 private:
     Ui::GeneralSettings *bodyUI;
+    void reloadSmiles();
+    SettingsWidget *parent;
+
+protected:
+    bool eventFilter(QObject *o, QEvent *e);
 };
 
 #endif

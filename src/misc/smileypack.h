@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -21,10 +19,11 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QIcon>
 
 #define SMILEYPACK_SEARCH_PATHS                                                                                             \
     {                                                                                                                       \
-        "./smileys", "/usr/share/qtox/smileys", "/usr/share/emoticons", "~/.kde4/share/emoticons", "~/.kde/share/emoticons" \
+        ":/smileys", "./smileys", "/usr/share/qtox/smileys", "/usr/share/emoticons", "~/.kde4/share/emoticons", "~/.kde/share/emoticons" \
     }
 
 //maps emoticons to smileys
@@ -51,10 +50,10 @@ private:
     SmileyPack& operator=(const SmileyPack&) = delete;
 
     void cacheSmiley(const QString& name);
-    QByteArray getCachedSmiley(const QString& key);
+    QIcon getCachedSmiley(const QString& key);
 
     QHash<QString, QString> filenameTable; // matches an emoticon to its corresponding smiley ie. ":)" -> "happy.png"
-    QHash<QString, QByteArray> imgCache; // (scaled) representation of a smiley ie. "happy.png" -> data
+    QHash<QString, QIcon> iconCache; // representation of a smiley ie. "happy.png" -> data
     QList<QStringList> emoticons; // {{ ":)", ":-)" }, {":(", ...}, ... }
     QString path; // directory containing the cfg and image files
 };

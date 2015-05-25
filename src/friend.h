@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -17,28 +15,56 @@
 #ifndef FRIEND_H
 #define FRIEND_H
 
+#include <QObject>
 #include <QString>
-#include "corestructs.h"
+#include "src/core/corestructs.h"
+#include "core/toxid.h"
 
 struct FriendWidget;
 class ChatForm;
 
-struct Friend
+class Friend : public QObject
 {
+    Q_OBJECT
 public:
-    Friend(int FriendId, QString UserId);
+    Friend(uint32_t FriendId, const ToxId &UserId);
+    Friend(const Friend& other)=delete;
     ~Friend();
-    void setName(QString name);
-    void setStatusMessage(QString message);
-    QString getName();
+    Friend& operator=(const Friend& other)=delete;
 
-public:
-    FriendWidget* widget;
-    int friendId;
-    QString userId;
-    ChatForm* chatForm;
+    /// Loads the friend's chat history if enabled
+    void loadHistory();
+
+    void setName(QString name);
+    void setAlias(QString name);
+    QString getDisplayedName() const;
+
+    void setStatusMessage(QString message);
+
+    void setEventFlag(int f);
+    int getEventFlag() const;
+
+    const ToxId &getToxId() const;
+    uint32_t getFriendID() const;
+
+    void setStatus(Status s);
+    Status getStatus() const;
+
+    ChatForm *getChatForm();
+    FriendWidget *getFriendWidget();
+
+signals:
+    void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
+
+private:
+    QString userAlias, userName;
+    ToxId userID;
+    uint32_t friendId;
     int hasNewEvents;
     Status friendStatus;
+
+    FriendWidget* widget;
+    ChatForm* chatForm;
 };
 
 #endif // FRIEND_H

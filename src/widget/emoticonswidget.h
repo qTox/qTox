@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -34,12 +32,17 @@ private slots:
     void onSmileyClicked();
     void onPageButtonClicked();
 
+protected:
+    virtual void mouseReleaseEvent(QMouseEvent *ev);
+    virtual void mousePressEvent(QMouseEvent *ev);
+
 private:
     QStackedWidget stack;
     QVBoxLayout layout;
 
 public:
     virtual QSize sizeHint() const;
+
 };
 
 #endif // EMOTICONSWIDGET_H

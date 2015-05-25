@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -35,6 +33,7 @@ public:
     void updateStatusLight();
     void setChatForm(Ui::MainWindow &);
     void resetEventFlags();
+    QString getStatusString();
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
@@ -44,14 +43,17 @@ signals:
 public slots:
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
+    void setAlias(const QString& alias);
 
 protected:
     void mousePressEvent(QMouseEvent* ev);
     void mouseMoveEvent(QMouseEvent* ev);
+    void setFriendAlias();
 
 public:
     int friendId;
     bool isDefaultAvatar;
+    bool historyLoaded;
     QPoint dragStartPos;
 };
 

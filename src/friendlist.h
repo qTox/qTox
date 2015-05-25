@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -18,19 +16,24 @@
 #define FRIENDLIST_H
 
 template <class T> class QList;
-struct Friend;
+template <class A, class B> class QHash;
+class Friend;
 class QString;
+class ToxId;
 
 class FriendList
 {
 public:
-    FriendList();
-    static Friend* addFriend(int friendId, const QString& userId);
+    static Friend* addFriend(int friendId, const ToxId &userId);
     static Friend* findFriend(int friendId);
-    static void removeFriend(int friendId);
+    static Friend* findFriend(const ToxId &userId);
+    static QList<Friend*> getAllFriends();
+    static void removeFriend(int friendId, bool fake = false);
+    static void clear();
 
-public:
-    static QList<Friend*> friendList;
+private:
+    static QHash<int, Friend*> friendList;
+    static QHash<QString, int> tox2id;
 };
 
 #endif // FRIENDLIST_H

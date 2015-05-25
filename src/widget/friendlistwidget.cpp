@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -16,8 +14,11 @@
 #include "friendlistwidget.h"
 #include <QDebug>
 #include <QGridLayout>
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/widget/friendwidget.h"
 
-FriendListWidget::FriendListWidget(QWidget *parent) :
+FriendListWidget::FriendListWidget(QWidget *parent, bool groupchatPosition) :
     QWidget(parent)
 {
     mainLayout = new QGridLayout();
@@ -30,39 +31,102 @@ FriendListWidget::FriendListWidget(QWidget *parent) :
     groupLayout->setSpacing(0);
     groupLayout->setMargin(0);
 
-    for (Status s : {Status::Online, Status::Away, Status::Busy, Status::Offline})
+    for (Status s : {Status::Online, Status::Offline})
     {
-        QLayout *l = new QVBoxLayout();
+        QVBoxLayout *l = new QVBoxLayout();
         l->setSpacing(0);
         l->setMargin(0);
 
         layouts[static_cast<int>(s)] = l;
     }
 
-    mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
-    mainLayout->addLayout(groupLayout, 1, 0);
-    mainLayout->addLayout(layouts[static_cast<int>(Status::Away)], 2, 0);
-    mainLayout->addLayout(layouts[static_cast<int>(Status::Busy)], 3, 0);
-    mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 4, 0);
+    if (groupchatPosition)
+    {
+        mainLayout->addLayout(groupLayout, 0, 0);
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 1, 0);
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 2, 0);
+    }
+    else
+    {
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
+        mainLayout->addLayout(groupLayout, 1, 0);
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 2, 0);
+    }
 }
 
-QLayout* FriendListWidget::getGroupLayout()
+QVBoxLayout* FriendListWidget::getGroupLayout()
 {
     return groupLayout;
 }
 
-QLayout* FriendListWidget::getFriendLayout(Status s)
+QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
 {
     auto res = layouts.find(static_cast<int>(s));
     if (res != layouts.end())
         return res.value();
 
-    qDebug() << "Friend Status: " << static_cast<int>(s) << " not found!";
     return layouts[static_cast<int>(Status::Online)];
+}
+
+void FriendListWidget::onGroupchatPositionChanged(bool top)
+{
+    mainLayout->removeItem(groupLayout);
+    mainLayout->removeItem(getFriendLayout(Status::Online));
+    if (top)
+    {
+        mainLayout->addLayout(groupLayout, 0, 0);
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 1, 0);
+    }
+    else
+    {
+        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
+        mainLayout->addLayout(groupLayout, 1, 0);
+    }
+}
+
+QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
+{
+    QList<GenericChatroomWidget*> friends;
+
+    for (int i = 0; i < mainLayout->count(); ++i)
+    {
+        QLayout* subLayout = mainLayout->itemAt(i)->layout();
+
+        if(!subLayout)
+            continue;
+
+        for (int j = 0; j < subLayout->count(); ++j)
+        {
+            GenericChatroomWidget* widget =
+                reinterpret_cast<GenericChatroomWidget*>(subLayout->itemAt(j)->widget());
+
+            if(!widget)
+                continue;
+
+            friends.append(widget);
+        }
+    }
+
+    return friends;
 }
 
 void FriendListWidget::moveWidget(QWidget *w, Status s)
 {
-    mainLayout->removeWidget(w);
-    getFriendLayout(s)->addWidget(w);
+    QVBoxLayout* l = getFriendLayout(s);
+    l->removeWidget(w);
+    Friend* g = FriendList::findFriend(dynamic_cast<FriendWidget*>(w)->friendId);
+    for (int i = 0; i < l->count(); i++)
+    {
+        FriendWidget* w1 = dynamic_cast<FriendWidget*>(l->itemAt(i)->widget());
+        if (w1 != NULL)
+        {
+            Friend* f = FriendList::findFriend(w1->friendId);
+            if (f->getDisplayedName().localeAwareCompare(g->getDisplayedName()) > 0)
+            {
+                l->insertWidget(i,w);
+                return;
+            }
+        }
+    }
+    l->addWidget(w);
 }

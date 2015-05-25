@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Config (Update me if needed !)
 VERSION_UPSTREAM="1.0"
@@ -87,7 +87,7 @@ mv qTox-master $VERNAME
 
 # Build packages
 cd $VERNAME
-./bootstrap.sh --local
+./bootstrap.sh -t
 debuild -us -uc -aamd64
 debuild -us -uc -ai386
 cd ..

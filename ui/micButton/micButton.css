@@ -4,8 +4,8 @@ QPushButton#green
     background-image: url(":/ui/micButton/micButton.png");
     background-repeat: none; 
     border: none;
-    width: 25px;
-    height: 20px;
+    width: 22px;
+    height: 18px;
 }
 
 QPushButton#green:hover
@@ -19,8 +19,8 @@ QPushButton#red
     background-image: url(":/ui/micButton/micButtonPressed.png");
     background-repeat: none; 
     border: none;
-    width: 25px;
-    height: 20px;
+    width: 22px;
+    height: 18px;
 }
 
 QPushButton#grey
@@ -29,8 +29,8 @@ QPushButton#grey
     background-image: url(":/ui/micButton/micButtonDisabled.png");
     background-repeat: none;    
     border: none;
-    width: 25px;
-    height: 20px;
+    width: 22px;
+    height: 18px;
 }
 
 QPushButton:focus {

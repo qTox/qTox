@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -24,13 +22,13 @@ class MaskablePixmapWidget : public QWidget
     Q_OBJECT
 public:
     MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName = QString());
-
+    ~MaskablePixmapWidget();
     void autopickBackground();
-    void setBackground(QColor color);
     void setClickable(bool clickable);
     void setPixmap(const QPixmap &pmap, QColor background);
     void setPixmap(const QPixmap &pmap);
     QPixmap getPixmap() const;
+    void setSize(QSize size);
 
 signals:
     void clicked();
@@ -40,13 +38,12 @@ protected:
     virtual void mousePressEvent(QMouseEvent *);
 
 private:
-    QPixmap pixmap;
-    QPixmap mask;
-    QPixmap renderTarget;
+    QPixmap pixmap, mask, unscaled; // a lot of memory...
+    QPixmap* renderTarget = nullptr; // pointer to dynamically call the constructor
     QSize size;
     QString maskName;
     QColor backgroundColor;
-    bool clickable;
+    bool clickable, manualColor = false;
 };
 
 #endif // MASKABLEPIXMAPWIDGET_H

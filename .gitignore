@@ -6,3 +6,7 @@ ui_*
 qrc_*
 Makefile
 qtox
+*.qm
+*.orig
+build-*-Release
+build-*-Debug

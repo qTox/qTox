@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -19,15 +17,15 @@
 
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QStyleFactory>
+
 class Camera;
 class GenericForm;
 class GeneralForm;
-class IdentityForm;
 class PrivacyForm;
 class AVForm;
-class QTabBar;
-class QStackedWidget;
 class QLabel;
+class QTabWidget;
 
 namespace Ui {class MainWindow;}
 
@@ -39,16 +37,19 @@ public:
     ~SettingsWidget();
 
     void show(Ui::MainWindow &ui);
-    IdentityForm *getIdentityForm() {return ifrm;}
+    void setBodyHeadStyle(QString style);
+
+signals:
+    void setShowSystemTray(bool newValue);
+    void compactToggled(bool compact);
+    void groupchatPositionToggled(bool groupchatPosition);
 
 private slots:
     void onTabChanged(int);
 
 private:
-    QWidget *head, *body; // keep the others private
-    IdentityForm *ifrm;
-    QStackedWidget *settingsWidgets;
-    QTabBar *tabBar;
+    QWidget *head, *body;
+    QTabWidget *settingsWidgets;
     QLabel *nameLabel, *imgLabel;
 };
 

@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -18,9 +16,13 @@
 #define GROUPCHATFORM_H
 
 #include "genericchatform.h"
+#include <QMap>
 
 namespace Ui {class MainWindow;}
 class Group;
+class TabCompleter;
+class FlowLayout;
+class QTimer;
 
 class GroupChatForm : public GenericChatForm
 {
@@ -29,9 +31,19 @@ public:
     GroupChatForm(Group* chatGroup);
 
     void onUserListChanged();
+    void peerAudioPlaying(int peer);
+
+    void keyPressEvent(QKeyEvent* ev);
+    void keyReleaseEvent(QKeyEvent* ev);
+
+signals:
+    void groupTitleChanged(int groupnum, const QString& name);
 
 private slots:
     void onSendTriggered();
+    void onMicMuteToggle();
+    void onVolMuteToggle();
+    void onCallClicked();
 
 protected:
     // drag & drop
@@ -40,7 +52,12 @@ protected:
 
 private:
     Group* group;
-    QLabel *nusersLabel, *namesList;
+    QList<QLabel*> peerLabels; // maps peernumbers to the QLabels in namesListLayout
+    QMap<int, QTimer*> peerAudioTimers; // timeout = peer stopped sending audio
+    FlowLayout* namesListLayout;
+    QLabel *nusersLabel;
+    TabCompleter* tabber;
+    bool inCall;
 };
 
 #endif // GROUPCHATFORM_H

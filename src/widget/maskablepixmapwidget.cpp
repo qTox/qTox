@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -19,16 +17,16 @@
 
 MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName)
     : QWidget(parent)
-    , renderTarget(size)
+    , maskName(maskName)
     , backgroundColor(Qt::white)
     , clickable(false)
 {
-    setFixedSize(size);
+    setSize(size);
+}
 
-    QPixmap pmapMask = QPixmap(maskName);
-
-    if (!pmapMask.isNull())
-        mask = QPixmap(maskName).scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+MaskablePixmapWidget::~MaskablePixmapWidget()
+{
+    delete renderTarget;
 }
 
 void MaskablePixmapWidget::autopickBackground()
@@ -63,13 +61,8 @@ void MaskablePixmapWidget::autopickBackground()
 
     QColor color = QColor::fromRgb(r,g,b);
     backgroundColor =  QColor::fromRgb(0xFFFFFF ^ color.rgb());
+    manualColor = false;
 
-    update();
-}
-
-void MaskablePixmapWidget::setBackground(QColor color)
-{
-    backgroundColor = color;
     update();
 }
 
@@ -87,9 +80,10 @@ void MaskablePixmapWidget::setPixmap(const QPixmap &pmap, QColor background)
 {
     if (!pmap.isNull())
     {
-        pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        unscaled = pmap;
+        pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         backgroundColor = background;
-
+        manualColor = true;
         update();
     }
 }
@@ -98,25 +92,44 @@ void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
 {
     if (!pmap.isNull())
     {
-        pixmap = pmap.scaled(width(), height(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        unscaled = pmap;
+        pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         autopickBackground();
-
         update();
     }
 }
 
 QPixmap MaskablePixmapWidget::getPixmap() const
 {
-    return renderTarget;
+    return *renderTarget;
+}
+
+void MaskablePixmapWidget::setSize(QSize size)
+{
+    setFixedSize(size);
+    delete renderTarget;
+    renderTarget = new QPixmap(size);
+
+    QPixmap pmapMask = QPixmap(maskName);
+    if (!pmapMask.isNull())
+        mask = pmapMask.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    if (!unscaled.isNull())
+    {
+        pixmap = unscaled.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        if (!manualColor)
+            autopickBackground();
+        update();
+    }
 }
 
 void MaskablePixmapWidget::paintEvent(QPaintEvent *)
 {
-    renderTarget.fill(Qt::transparent);
+    renderTarget->fill(Qt::transparent);
 
     QPoint offset((width() - pixmap.size().width())/2,(height() - pixmap.size().height())/2); // centering the pixmap
 
-    QPainter painter(&renderTarget);
+    QPainter painter(renderTarget);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter.fillRect(0,0,width(),height(),backgroundColor);
     painter.drawPixmap(offset,pixmap);
@@ -125,11 +138,11 @@ void MaskablePixmapWidget::paintEvent(QPaintEvent *)
     painter.end();
 
     painter.begin(this);
-    painter.drawPixmap(0,0,renderTarget);
+    painter.drawPixmap(0,0,*renderTarget);
 }
 
 void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)
 {
-    if(clickable)
+    if (clickable)
         emit clicked();
 }

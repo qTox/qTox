@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -22,7 +20,6 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPushButton>
-#include <QDnsLookup>
 
 namespace Ui {class MainWindow;}
 
@@ -34,27 +31,25 @@ public:
     ~AddFriendForm();
 
     void show(Ui::MainWindow &ui);
-    bool isToxId(const QString& value) const;
-    void showWarning(const QString& message) const;
     QString getMessage() const;
 
 signals:
     void friendRequested(const QString& friendAddress, const QString& message);
 
+public slots:
+    void onUsernameSet(const QString& userName);
+
 private slots:
     void onSendTriggered();
-    void handleDnsLookup();
 
 private:
+    void setIdFromClipboard();
     QLabel headLabel, toxIdLabel, messageLabel;
     QPushButton sendButton;
     QLineEdit toxId;
     QTextEdit message;
     QVBoxLayout layout, headLayout;
     QWidget *head, *main;
-
-    /** will be used for dns discovery if necessary */
-    QDnsLookup dns;
 };
 
 #endif // ADDFRIENDFORM_H

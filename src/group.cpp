@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -19,12 +17,13 @@
 #include "widget/form/groupchatform.h"
 #include "friendlist.h"
 #include "friend.h"
-#include "core.h"
+#include "src/core/core.h"
+#include "widget/gui.h"
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int GroupId, QString Name)
-    : groupId(GroupId), nPeers{0}
+Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
+    : groupId(GroupId), nPeers{0}, avGroupchat{IsAvGroupchat}
 {
     widget = new GroupWidget(groupId, Name);
     chatForm = new GroupChatForm(this);
@@ -42,10 +41,11 @@ Group::~Group()
     delete widget;
 }
 
+/*
 void Group::addPeer(int peerId, QString name)
 {
     if (peers.contains(peerId))
-        qWarning() << "Group::addPeer: peerId already used, overwriting anyway";
+        qWarning() << "addPeer: peerId already used, overwriting anyway";
     if (name.isEmpty())
         peers[peerId] = "<Unknown>";
     else
@@ -62,10 +62,121 @@ void Group::removePeer(int peerId)
     widget->onUserListChanged();
     chatForm->onUserListChanged();
 }
+*/
 
 void Group::updatePeer(int peerId, QString name)
 {
+    ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, peerId);
+    QString toxid = id.publicKey;
     peers[peerId] = name;
+    toxids[toxid] = name;
+    Friend *f = FriendList::findFriend(id);
+    if (f)
+    {
+        peers[peerId] = f->getDisplayedName();
+        toxids[toxid] = f->getDisplayedName();
+    }
+
     widget->onUserListChanged();
     chatForm->onUserListChanged();
+}
+
+void Group::setName(const QString& name)
+{
+    widget->setName(name);
+    chatForm->setName(name);
+
+    if (widget->isActive())
+            GUI::setWindowTitle(name);
+}
+
+void Group::regeneratePeerList()
+{
+    peers = Core::getInstance()->getGroupPeerNames(groupId);
+    toxids.clear();
+    nPeers = peers.size();
+    for (int i = 0; i < nPeers; i++)
+    {
+        ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, i);
+        if (id.isActiveProfile())
+            selfPeerNum = i;
+
+        QString toxid = id.publicKey;
+        toxids[toxid] = peers[i];
+        Friend *f = FriendList::findFriend(id);
+        if (f)
+        {
+            peers[i] = f->getDisplayedName();
+            toxids[toxid] = f->getDisplayedName();
+        }
+    }
+
+    widget->onUserListChanged();
+    chatForm->onUserListChanged();
+}
+
+bool Group::isAvGroupchat() const
+{
+    return avGroupchat;
+}
+
+int Group::getGroupId() const
+{
+    return groupId;
+}
+
+int Group::getPeersCount() const
+{
+    return nPeers;
+}
+
+GroupChatForm *Group::getChatForm()
+{
+    return chatForm;
+}
+
+GroupWidget *Group::getGroupWidget()
+{
+    return widget;
+}
+
+QStringList Group::getPeerList() const
+{
+    return peers;
+}
+
+bool Group::isSelfPeerNumber(int num) const
+{
+    return num == selfPeerNum;
+}
+
+void Group::setEventFlag(int f)
+{
+    hasNewMessages = f;
+}
+
+int Group::getEventFlag() const
+{
+    return hasNewMessages;
+}
+
+void Group::setMentionedFlag(int f)
+{
+    userWasMentioned = f;
+}
+
+int Group::getMentionedFlag() const
+{
+    return userWasMentioned;
+}
+
+QString Group::resolveToxId(const ToxId &id) const
+{
+    QString key = id.publicKey;
+    auto it = toxids.find(key);
+
+    if (it != toxids.end())
+        return *it;
+
+    return QString();
 }

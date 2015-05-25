@@ -26,6 +26,7 @@
 FriendRequestDialog::FriendRequestDialog(QWidget *parent, const QString &userId, const QString &message) :
     QDialog(parent)
 {
+    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Friend request","Title of the window to aceept/deny a friend request"));
 

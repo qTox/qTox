@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -17,23 +15,22 @@
 #include "settingswidget.h"
 #include "src/widget/widget.h"
 #include "ui_mainwindow.h"
-#include "src/widget/camera.h"
+#include "src/video/camera.h"
 #include "src/widget/form/settings/generalform.h"
-#include "src/widget/form/settings/identityform.h"
 #include "src/widget/form/settings/privacyform.h"
 #include "src/widget/form/settings/avform.h"
-#include <QTabBar>
-#include <QStackedWidget>
+#include "src/widget/form/settings/advancedform.h"
+#include <QTabWidget>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent)
 {
     body = new QWidget(this);
-    QVBoxLayout *bodyLayout = new QVBoxLayout();
+    QVBoxLayout* bodyLayout = new QVBoxLayout();
     body->setLayout(bodyLayout);
 
     head = new QWidget(this);
-    QHBoxLayout *headLayout = new QHBoxLayout();
+    QHBoxLayout* headLayout = new QHBoxLayout();
     head->setLayout(headLayout);
 
     imgLabel = new QLabel();
@@ -46,31 +43,31 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     headLayout->addWidget(nameLabel);
     headLayout->addStretch(1);
 
-    settingsWidgets = new QStackedWidget;
+    settingsWidgets = new QTabWidget(this);
+    settingsWidgets->setTabPosition(QTabWidget::North);
+
     bodyLayout->addWidget(settingsWidgets);
 
-    tabBar = new QTabBar;
-    bodyLayout->addWidget(tabBar);
+    GeneralForm* gfrm = new GeneralForm(this);
+    PrivacyForm* pfrm = new PrivacyForm;
+    AVForm* avfrm = new AVForm;
+    AdvancedForm *expfrm = new AdvancedForm;
 
-    GeneralForm *gfrm = new GeneralForm;
-    ifrm = new IdentityForm;
-    PrivacyForm *pfrm = new PrivacyForm;
-    AVForm *avfrm = new AVForm;
+    GenericForm* cfgForms[] = { gfrm, pfrm, avfrm, expfrm };
+    for (GenericForm* cfgForm : cfgForms)
+        settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
 
-    GenericForm *cfgForms[] = {gfrm, ifrm, pfrm, avfrm};
-    for (auto cfgForm : cfgForms)
-    {
-        tabBar->addTab(cfgForm->getFormIcon(), "");
-        settingsWidgets->addWidget(cfgForm);
-    }
-    tabBar->setIconSize(QSize(20, 20));
-    tabBar->setShape(QTabBar::RoundedSouth);
-
-    connect(tabBar, &QTabBar::currentChanged, this, &SettingsWidget::onTabChanged);
+    connect(settingsWidgets, &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
 }
 
 SettingsWidget::~SettingsWidget()
 {
+}
+
+void SettingsWidget::setBodyHeadStyle(QString style)
+{
+    head->setStyle(QStyleFactory::create(style));    
+    body->setStyle(QStyleFactory::create(style));
 }
 
 void SettingsWidget::show(Ui::MainWindow& ui)
@@ -79,7 +76,7 @@ void SettingsWidget::show(Ui::MainWindow& ui)
     ui.mainHead->layout()->addWidget(head);
     body->show();
     head->show();
-    onTabChanged(tabBar->currentIndex());
+    onTabChanged(settingsWidgets->currentIndex());
 }
 
 void SettingsWidget::onTabChanged(int index)

@@ -1,0 +1,23 @@
+QLineEdit {
+  color: @black;
+  background: white;
+  border: 0px;
+}
+
+#nameLabel {
+  color: @black;
+  font: @mediumBold;
+  font-size:12px;
+}
+
+#statusLabel {
+  color: @mediumGrey;
+  font: @medium;
+  font-size:12px;
+}
+
+#peersLabel {
+  color: @mediumGrey;
+  font: @medium;
+  font-size:12px;
+}

@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -25,12 +23,15 @@ class ChatTextEdit : public QTextEdit
 public:
     explicit ChatTextEdit(QWidget *parent = 0);
     virtual void keyPressEvent(QKeyEvent * event) override;
-
+    void setLastMessage(QString lm);
+    
 signals:
     void enterPressed();
+    void tabPressed();
+    void keyPressed();
 
-public slots:
-
+private:
+    QString lastMessage;
 };
 
 #endif // CHATTEXTEDIT_H

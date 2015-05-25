@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PrivacySettings</class>
+ <widget class="QWidget" name="PrivacySettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
+   <property name="rightMargin">
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
+    <number>9</number>
+   </property>
+   <item>
+    <widget class="VerticalOnlyScroller" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>380</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QCheckBox" name="cbTypingNotification">
+         <property name="toolTip">
+          <string comment="tooltip for typing notifications setting">Your friends will be able to see when you are typing.</string>
+         </property>
+         <property name="text">
+          <string>Send Typing Notifications</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cbKeepHistory">
+         <property name="toolTip">
+          <string comment="toolTip for Keep History setting">Chat history keeping is still in development.
+Save format changes are possible, which may result in data loss.</string>
+         </property>
+         <property name="text">
+          <string>Keep chat history (mostly stable)</string>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="encryptionGroup">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="title">
+          <string>Local file encryption</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="encryptStatement">
+            <property name="text">
+             <string>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="encryptToxHLayout">
+            <item>
+             <widget class="QCheckBox" name="cbEncryptTox">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Encrypt Tox data file</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="changeToxPwButton">
+              <property name="text">
+               <string>Change password</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="encryptLogsHLayout">
+            <item>
+             <widget class="QCheckBox" name="cbEncryptHistory">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Encrypt chat history</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="changeLogsPwButton">
+              <property name="text">
+               <string>Change password</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignTop">
+        <widget class="QGroupBox" name="nospamGroup">
+         <property name="toolTip">
+          <string comment="toolTip for nospam">Nospam is part of your Tox ID.
+It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
+When you change nospam, your current contacts still can communicate with you,
+but new contacts need to know your new Tox ID to be able to add you.</string>
+         </property>
+         <property name="title">
+          <string>Nospam</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLineEdit" name="nospamLineEdit">
+              <property name="inputMask">
+               <string notr="true">HHHHHHHH</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="randomNosapamButton">
+              <property name="text">
+               <string>Generate random nospam</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>VerticalOnlyScroller</class>
+   <extends>QScrollArea</extends>
+   <header>src/widget/form/settings/verticalonlyscroller.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

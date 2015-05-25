@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -19,13 +17,10 @@
 
 #include <QWidget>
 
-class QCloseEvent;
-class QShowEvent;
-class QPainter;
-class QLabel;
 class QHBoxLayout;
-class QImage;
-class vpx_image;
+struct vpx_image;
+class VideoSurface;
+class VideoSource;
 
 class NetCamView : public QWidget
 {
@@ -34,20 +29,15 @@ class NetCamView : public QWidget
 public:
     NetCamView(QWidget *parent=0);
 
-public slots:
-    void updateDisplay(vpx_image* frame);
+    virtual void show(VideoSource* source, const QString& title);
+    virtual void hide();
+
+    void setSource(VideoSource* s);
+    void setTitle(const QString& title);
 
 private:
-    static QImage convert(vpx_image& frame);
-
-protected:
-    void resizeEvent(QResizeEvent *e);
-
-private:
-    QLabel *displayLabel;
-    QImage lastFrame;
     QHBoxLayout* mainLayout;
-    QImage img;
+    VideoSurface* videoSurface;
 };
 
 #endif // NETCAMVIEW_H

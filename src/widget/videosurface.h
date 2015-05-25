@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -18,41 +16,47 @@
 #define SELFCAMVIEW_H
 
 #include <QGLWidget>
+#include <QMutex>
+#include "src/video/videosource.h"
 
 class QOpenGLBuffer;
 class QOpenGLShaderProgram;
-class QTimer;
-class VideoSource;
 
 class VideoSurface : public QGLWidget
 {
     Q_OBJECT
 
 public:
+    VideoSurface(QWidget* parent=0);
     VideoSurface(VideoSource* source, QWidget* parent=0);
     ~VideoSurface();
 
-    virtual void hideEvent(QHideEvent* ev);
-    virtual void showEvent(QShowEvent* ev);
+    void setSource(VideoSource* src); //NULL is a valid option
 
     // QGLWidget interface
 protected:
     virtual void initializeGL();
     virtual void paintGL();
-    virtual void updateGL();
 
-    void update();
+    void subscribe();
+    void unsubscribe();
+
+private slots:
+    void onNewFrameAvailable(const VideoFrame &newFrame);
 
 private:
     VideoSource* source;
-    QOpenGLBuffer* pbo;
-    QOpenGLShaderProgram* program;
+    QOpenGLBuffer* pbo[2];
+    QOpenGLShaderProgram* bgrProgramm;
+    QOpenGLShaderProgram* yuvProgramm;
     GLuint textureId;
     int pboAllocSize;
     QSize res;
-    bool uploadFrame;
     bool hasSubscribed;
 
+    QMutex mutex;
+    VideoFrame frame;
+    int pboIndex;
 };
 
 #endif // SELFCAMVIEW_H

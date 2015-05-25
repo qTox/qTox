@@ -46,7 +46,7 @@ uint8_t* CString::data()
     return cString;
 }
 
-uint16_t CString::size()
+uint16_t CString::size() const
 {
     return cStringSize;
 }

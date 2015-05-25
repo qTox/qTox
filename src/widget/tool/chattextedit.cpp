@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -20,18 +18,36 @@
 ChatTextEdit::ChatTextEdit(QWidget *parent) :
     QTextEdit(parent)
 {
-    setPlaceholderText("Type your message here...");
+    setPlaceholderText(tr("Type your message here..."));
     setAcceptRichText(false);
 }
 
 void ChatTextEdit::keyPressEvent(QKeyEvent * event)
 {
     int key = event->key();
-    if ((key == Qt::Key_Enter || key == Qt::Key_Return)
-            && !(event->modifiers() && Qt::ShiftModifier))
-    {
+    if ((key == Qt::Key_Enter || key == Qt::Key_Return) && !(event->modifiers() & Qt::ShiftModifier))
         emit enterPressed();
-        return;
+    else if (key == Qt::Key_Tab)
+    {
+        if (event->modifiers())
+            event->ignore();
+        else
+            emit tabPressed();
     }
-    QTextEdit::keyPressEvent(event);
+    else if (key == Qt::Key_Up && this->toPlainText().isEmpty())
+    {
+        this->setText(lastMessage);
+        this->setFocus();
+        this->moveCursor(QTextCursor::MoveOperation::End,QTextCursor::MoveMode::MoveAnchor);
+    }
+    else
+    {
+        emit keyPressed();
+        QTextEdit::keyPressEvent(event);
+    }
+}
+
+void ChatTextEdit::setLastMessage(QString lm)
+{
+    lastMessage = lm;
 }

@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -16,10 +14,11 @@
 
 #include "filesform.h"
 #include "ui_mainwindow.h"
+#include "src/widget/widget.h"
 #include <QFileInfo>
 #include <QUrl>
 #include <QDebug>
-#include <QDesktopServices>
+#include <QPainter>
 
 FilesForm::FilesForm()
     : QObject()
@@ -45,14 +44,9 @@ FilesForm::FilesForm()
 
 FilesForm::~FilesForm()
 {
-#if 0    
-    delete recvd; // docs claim this will clean up children
+    delete recvd;
     delete sent;
-    delete head;
-#endif
-    // having these lines caused a SIGABRT because free() received an invalid pointer
-    // but since this is only called on program shutdown anyways, 
-    // I'm not too bummed about removing it
+    head->deleteLater();
 }
 
 void FilesForm::show(Ui::MainWindow& ui)
@@ -65,14 +59,14 @@ void FilesForm::show(Ui::MainWindow& ui)
 
 void FilesForm::onFileDownloadComplete(const QString& path)
 {
-    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/acceptFileButton/default.png"), QFileInfo(path).fileName());
+    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/fileTransferWidget/fileDone.svg"), QFileInfo(path).fileName());
     tmp->path = path;
     recvd->addItem(tmp);
 }
 
 void FilesForm::onFileUploadComplete(const QString& path)
 {
-    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/acceptFileButton/default.png"), QFileInfo(path).fileName());
+    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/fileTransferWidget/fileDone.svg"), QFileInfo(path).fileName());
     tmp->path = path;
     sent->addItem(tmp);
 }
@@ -85,7 +79,6 @@ void FilesForm::onFileUploadComplete(const QString& path)
 void FilesForm::onFileActivated(QListWidgetItem* item)
 {
     ListWidgetItem* tmp = dynamic_cast<ListWidgetItem*> (item);
-    QUrl url = QUrl::fromLocalFile(tmp->path);
-    qDebug() << "Opening '" << url << "'";
-    QDesktopServices::openUrl(url);
+
+    Widget::confirmExecutableOpen(QFileInfo(tmp->path));
 }

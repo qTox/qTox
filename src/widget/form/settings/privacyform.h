@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -19,6 +17,10 @@
 
 #include "genericsettings.h"
 
+namespace Ui {
+class PrivacySettings;
+}
+
 class PrivacyForm : public GenericForm
 {
     Q_OBJECT
@@ -26,8 +28,21 @@ public:
     PrivacyForm();
     ~PrivacyForm();
 
+    virtual void present();
+
+private slots:
+    void onEnableLoggingUpdated();
+    void onTypingNotificationEnabledUpdated();
+    void setNospam();
+    void generateRandomNospam();
+    void onNospamEdit();
+    void onEncryptLogsUpdated();
+    bool setChatLogsPassword();
+    void onEncryptToxUpdated();
+    bool setToxPassword();
+
 private:
-    
+    Ui::PrivacySettings* bodyUI;
 };
 
 #endif

@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -19,9 +17,11 @@
 
 #include <QWidget>
 #include <QHash>
-#include "src/corestructs.h"
+#include <QList>
+#include "src/core/corestructs.h"
+#include "src/widget/genericchatroomwidget.h"
 
-class QLayout;
+class QVBoxLayout;
 class QGridLayout;
 class QPixmap;
 
@@ -29,19 +29,21 @@ class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FriendListWidget(QWidget *parent = 0);
+    explicit FriendListWidget(QWidget *parent = 0, bool groupchatPosition = true);
+    QVBoxLayout* getGroupLayout();
+    QVBoxLayout* getFriendLayout(Status s);
 
-    QLayout* getGroupLayout();
-    QLayout* getFriendLayout(Status s);
-    void moveWidget(QWidget *w, Status s);
+    QList<GenericChatroomWidget*> getAllFriends();
 
 signals:
 
 public slots:
+    void onGroupchatPositionChanged(bool top);
+    void moveWidget(QWidget *w, Status s);
 
 private:
-    QHash<int, QLayout*> layouts;
-    QLayout *groupLayout;
+    QHash<int, QVBoxLayout*> layouts;
+    QVBoxLayout *groupLayout;
     QGridLayout *mainLayout;
 };
 

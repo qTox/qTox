@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -36,6 +34,8 @@ public:
     virtual QSize minimumSizeHint() const;
     virtual void mouseReleaseEvent(QMouseEvent *e);
     virtual bool eventFilter(QObject *obj, QEvent *e);
+
+    QString fullText(); ///< Returns the un-cropped text
 
 signals:
     void textChanged(QString newText, QString oldText);

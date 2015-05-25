@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -20,17 +18,23 @@
 #include <QWidget>
 #include <QPoint>
 #include <QDateTime>
+#include <QMenu>
+#include "src/core/corestructs.h"
+#include "src/chatlog/chatmessage.h"
+#include "../../core/toxid.h"
 
 // Spacing in px inserted when the author of the last message changes
-#define AUTHOR_CHANGE_SPACING 5
+#define AUTHOR_CHANGE_SPACING 5 // why the hell is this a thing? surely the different font is enough?
 
 class QLabel;
 class QVBoxLayout;
 class QPushButton;
 class CroppingLabel;
 class ChatTextEdit;
-class ChatAreaWidget;
+class ChatLog;
 class MaskablePixmapWidget;
+class Widget;
+class FlyoutOverlayWidget;
 
 namespace Ui {
     class MainWindow;
@@ -44,35 +48,62 @@ public:
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
-    void addMessage(QString author, QString message, bool isAction = false, QDateTime datetime=QDateTime::currentDateTime());
-    void addSystemInfoMessage(const QString &message, const QString &type, const QDateTime &datetime=QDateTime::currentDateTime());
 
+    ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    ChatMessage::Ptr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+
+    void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
+    void addAlertMessage(const ToxId& author, QString message, QDateTime datetime);
+    bool isEmpty();
+
+    ChatLog* getChatLog() const;
+
+    bool eventFilter(QObject* object, QEvent* event);
 signals:
-    void sendMessage(int, QString);
-    void sendAction(int, QString);
+    void sendMessage(uint32_t, QString);
+    void sendAction(uint32_t, QString);
+    void chatAreaCleared();
 
 public slots:
     void focusInput();
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
-    void onSaveLogClicked();
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
+    void onSaveLogClicked();
+    void onCopyLogClicked();
+    void clearChatArea(bool);
+    void clearChatArea();
+    void onSelectAllClicked();
+    void showFileMenu();
+    void hideFileMenu();
 
 protected:
-    QString getElidedName(const QString& name);
+    QString resolveToxId(const ToxId &id);
+    void insertChatMessage(ChatMessage::Ptr msg);
+    void hideEvent(QHideEvent* event);
+    void resizeEvent(QResizeEvent* event);
+    void adjustFileMenuPosition();
 
+    ToxId previousId;
+    QDateTime prevMsgDateTime;
+    Widget *parent;
+    QMenu menu;
+    int curRow;
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;
-    QPushButton *fileButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    FlyoutOverlayWidget *fileFlyout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
-    QString previousName;
-    ChatAreaWidget *chatWidget;
-    int curRow;
+    ChatLog *chatWidget;
+    QDateTime earliestMessage;
+    QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
+    bool audioInputFlag;
+    bool audioOutputFlag;
 };
 
 #endif // GENERICCHATFORM_H

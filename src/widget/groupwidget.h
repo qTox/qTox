@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -32,10 +30,19 @@ public:
     void updateStatusLight();
     void setChatForm(Ui::MainWindow &);
     void resetEventFlags();
+    void setName(const QString& name);
+    QString getStatusString();
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
     void removeGroup(int groupId);
+
+protected:
+    // drag & drop
+    void dragEnterEvent(QDragEnterEvent* ev);
+    void dropEvent(QDropEvent* ev);
+    void keyPressEvent(QKeyEvent* ev);
+    void keyReleaseEvent(QKeyEvent* ev);
 
 public:
     int groupId;

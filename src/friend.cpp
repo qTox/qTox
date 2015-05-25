@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -18,14 +16,23 @@
 #include "friendlist.h"
 #include "widget/friendwidget.h"
 #include "widget/form/chatform.h"
+#include "widget/gui.h"
+#include "src/core/core.h"
+#include "src/misc/settings.h"
 
-Friend::Friend(int FriendId, QString UserId)
-    : friendId(FriendId), userId(UserId)
+Friend::Friend(uint32_t FriendId, const ToxId &UserId)
+    : userName{Core::getInstance()->getPeerName(UserId)},
+      userID{UserId}, friendId{FriendId}
 {
-    widget = new FriendWidget(friendId, userId);
-    chatForm = new ChatForm(this);
     hasNewEvents = 0;
     friendStatus = Status::Offline;
+    if (userName.size() == 0)
+        userName = UserId.publicKey;
+
+    userAlias = Settings::getInstance().getFriendAlias(UserId);
+
+    widget = new FriendWidget(friendId, getDisplayedName());
+    chatForm = new ChatForm(this);
 }
 
 Friend::~Friend()
@@ -34,10 +41,42 @@ Friend::~Friend()
     delete widget;
 }
 
+void Friend::loadHistory()
+{
+    if (Settings::getInstance().getEnableLogging())
+    {
+        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+        widget->historyLoaded = true;
+    }
+}
+
 void Friend::setName(QString name)
 {
-    widget->setName(name);
-    chatForm->setName(name);
+    userName = name;
+    if (userAlias.size() == 0)
+    {
+        widget->setName(name);
+        chatForm->setName(name);
+
+        if (widget->isActive())
+            GUI::setWindowTitle(name);
+        
+        emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
+    }
+}
+
+void Friend::setAlias(QString name)
+{
+    userAlias = name;
+    QString dispName = userAlias.size() == 0 ? userName : userAlias;
+
+    widget->setName(dispName);
+    chatForm->setName(dispName);
+
+    if (widget->isActive())
+            GUI::setWindowTitle(dispName);
+    
+    emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
 }
 
 void Friend::setStatusMessage(QString message)
@@ -46,7 +85,50 @@ void Friend::setStatusMessage(QString message)
     chatForm->setStatusMessage(message);
 }
 
-QString Friend::getName()
+QString Friend::getDisplayedName() const
 {
-    return widget->getName();
+    if (userAlias.size() == 0)
+        return userName;
+
+    return userAlias;
+}
+
+const ToxId &Friend::getToxId() const
+{
+    return userID;
+}
+
+uint32_t Friend::getFriendID() const
+{
+    return friendId;
+}
+
+void Friend::setEventFlag(int f)
+{
+    hasNewEvents = f;
+}
+
+int Friend::getEventFlag() const
+{
+    return hasNewEvents;
+}
+
+void Friend::setStatus(Status s)
+{
+    friendStatus = s;
+}
+
+Status Friend::getStatus() const
+{
+    return friendStatus;
+}
+
+ChatForm *Friend::getChatForm()
+{
+    return chatForm;
+}
+
+FriendWidget *Friend::getFriendWidget()
+{
+    return widget;
 }

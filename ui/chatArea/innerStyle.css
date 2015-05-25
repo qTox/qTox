@@ -1,9 +1,4 @@
-div.name {
-  color: @black;
-  font: @bigBold;
-}
-
-div.message {
+div.msg {
   color: @black;
   font: @big;
 }
@@ -13,63 +8,30 @@ div.action {
   font: @big;
 }
 
-div.date {
-  color: @black;
-  font: @big;
-}
-
-div.name_me {
-  color: @mediumGrey;
-  font: @big;
-}
-
-div.message_me {
-  color: @black;
-  font: @big;
-}
-
-div.date_me {
-  color: @black;
+div.typing {
+  color: @mediumGreyLight;
   font: @big;
 }
 
 span.quote {
-  color: #6bc260;
+  color: #279419;
 }
 
-div.green {
-  margin-top: 12px;
-  margin-bottom: 12px;
+div.alert {
   margin-left: 0px;
-  margin-right: 12px;
-  color: @white;
-  background-color: @green;
-  font: @small;
-}
-
-div.silver {
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 0px;
-  margin-right: 12px;
+  margin-right: 0px;
   color: @black;
-  background-color: @lightGrey;
-  font: @small;
+  background-color: @orange;
+  font: @big;
 }
 
-div.red {
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 0px;
-  margin-right: 12px;
-  color: @white;
-  background-color: @red;
-  font: @small;
+div.alert_name {
+  color: @black;
+  background-color: @orange;
+  font: @bigBold;
 }
 
-div.button {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-  color: @white;
+a {
+    color: blue;
 }
+

@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -16,9 +14,12 @@
 
 #include "smileypack.h"
 #include "settings.h"
+#include "style.h"
 
 #include <QFileInfo>
 #include <QFile>
+#include <QFont>
+#include <QFontInfo>
 #include <QIcon>
 #include <QPixmap>
 #include <QDir>
@@ -65,11 +66,13 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &p
                 QString relPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(absPath);
 
                 if (relPath.leftRef(2) == "..")
-                    smileyPacks << QPair<QString, QString>(packageName, absPath);
-                else
-                    smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories
+                {
+                    if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
+                        smileyPacks << QPair<QString, QString>(packageName, absPath);
+                    else if (!smileyPacks.contains(QPair<QString, QString>(packageName, relPath)))
+                        smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories                            
+                }
             }
-
             dir.cdUp();
         }
     }
@@ -86,13 +89,13 @@ bool SmileyPack::load(const QString& filename)
 {
     // discard old data
     filenameTable.clear();
-    imgCache.clear();
+    iconCache.clear();
     emoticons.clear();
     path.clear();
 
     // open emoticons.xml
     QFile xmlFile(filename);
-    if(!xmlFile.open(QIODevice::ReadOnly))
+    if (!xmlFile.open(QIODevice::ReadOnly))
         return false; // cannot open file
 
     /* parse the cfg file
@@ -125,14 +128,21 @@ bool SmileyPack::load(const QString& filename)
 
         while (!stringElement.isNull())
         {
-            QString emoticon = stringElement.text();
+            QString emoticon = stringElement.text()
+                                .replace("<","&lt;").replace(">","&gt;");
             filenameTable.insert(emoticon, file);
-            emoticonSet.push_back(emoticon);
+            
             cacheSmiley(file); // preload all smileys
 
+            if (!getCachedSmiley(emoticon).isNull())
+                emoticonSet.push_back(emoticon);
+            
             stringElement = stringElement.nextSibling().toElement();
+            
         }
-        emoticons.push_back(emoticonSet);
+        
+        if (emoticonSet.size() > 0)
+            emoticons.push_back(emoticonSet);
     }
 
     // success!
@@ -169,48 +179,35 @@ QList<QStringList> SmileyPack::getEmoticons() const
 
 QString SmileyPack::getAsRichText(const QString &key)
 {
-    return "<img src=\"data:image/png;base64," % QString(getCachedSmiley(key).toBase64()) % "\">";
+    return QString("<img title=\"%1\" src=\"key:%1\"\\>").arg(key);
 }
 
 QIcon SmileyPack::getAsIcon(const QString &key)
 {
-    QPixmap pm;
-    pm.loadFromData(getCachedSmiley(key), "PNG");
-
-    return QIcon(pm);
+    return getCachedSmiley(key);
 }
 
 void SmileyPack::cacheSmiley(const QString &name)
 {
-    QSize size(16, 16); // TODO: adapt to text size
     QString filename = QDir(path).filePath(name);
-    QImage img(filename);
 
-    if (!img.isNull())
-    {
-        QImage scaledImg = img.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        QByteArray scaledImgData;
-        QBuffer buffer(&scaledImgData);
-        scaledImg.save(&buffer, "PNG");
-
-        imgCache.insert(name, scaledImgData);
-    }
+    QIcon icon;
+    icon.addFile(filename);
+    iconCache.insert(name, icon);
 }
 
-QByteArray SmileyPack::getCachedSmiley(const QString &key)
+QIcon SmileyPack::getCachedSmiley(const QString &key)
 {
     // valid key?
     if (!filenameTable.contains(key))
-        return QByteArray();
+        return QPixmap();
 
     // cache it if needed
     QString file = filenameTable.value(key);
-    if (!imgCache.contains(file)) {
+    if (!iconCache.contains(file))
         cacheSmiley(file);
-    }
 
-    return imgCache.value(file);
+    return iconCache.value(file);
 }
 
 void SmileyPack::onSmileyPackChanged()

@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -16,37 +14,74 @@
 
 #include "friend.h"
 #include "friendlist.h"
+#include "src/misc/settings.h"
 #include <QMenu>
 #include <QDebug>
+#include <QHash>
 
-QList<Friend*> FriendList::friendList;
+QHash<int, Friend*> FriendList::friendList;
+QHash<QString, int> FriendList::tox2id;
 
-Friend* FriendList::addFriend(int friendId, const QString& userId)
+Friend* FriendList::addFriend(int friendId, const ToxId& userId)
 {
-    for (Friend* f : friendList)
-        if (f->friendId == friendId)
-            qWarning() << "FriendList::addFriend: friendId already taken";
+    auto friendChecker = friendList.find(friendId);
+    if (friendChecker != friendList.end())
+        qWarning() << "addFriend: friendId already taken";
+
     Friend* newfriend = new Friend(friendId, userId);
-    friendList.append(newfriend);
+    friendList[friendId] = newfriend;
+    tox2id[userId.publicKey] = friendId;
+
+    // Must be done AFTER adding to the friendlist
+    // or we won't find the friend and history will have blank names
+    newfriend->loadHistory();
+
     return newfriend;
 }
 
 Friend* FriendList::findFriend(int friendId)
 {
-    for (Friend* f : friendList)
-        if (f->friendId == friendId)
-            return f;
+    auto f_it = friendList.find(friendId);
+    if (f_it != friendList.end())
+        return *f_it;
+
     return nullptr;
 }
 
-void FriendList::removeFriend(int friendId)
+void FriendList::removeFriend(int friendId, bool fake)
 {
-    for (int i=0; i<friendList.size(); i++)
+    auto f_it = friendList.find(friendId);
+    if (f_it != friendList.end())
     {
-        if (friendList[i]->friendId == friendId)
-        {
-            friendList.removeAt(i);
-            return;
-        }
+        if (!fake)
+            Settings::getInstance().removeFriendSettings(f_it.value()->getToxId());
+        friendList.erase(f_it);
     }
+}
+
+void FriendList::clear()
+{
+    for (auto friendptr : friendList)
+        delete friendptr;
+    friendList.clear();
+}
+
+Friend* FriendList::findFriend(const ToxId& userId)
+{
+    auto id = tox2id.find(userId.publicKey);
+    if (id != tox2id.end())
+    {
+        Friend *f = findFriend(*id);
+        if (!f)
+            return nullptr;
+        if (f->getToxId() == userId)
+            return f;
+    }
+
+    return nullptr;
+}
+
+QList<Friend*> FriendList::getAllFriends()
+{
+    return friendList.values();
 }

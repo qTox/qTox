@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -19,30 +17,59 @@
 
 #include <QMap>
 #include <QObject>
+#include <QStringList>
 
 #define RETRY_PEER_INFO_INTERVAL 500
 
-struct Friend;
+class Friend;
 class GroupWidget;
 class GroupChatForm;
+class ToxId;
 
 class Group : public QObject
 {
     Q_OBJECT
 public:
-    Group(int GroupId, QString Name);
-    ~Group();
+    Group(int GroupId, QString Name, bool IsAvGroupchat);
+    virtual ~Group();
+
+    bool isAvGroupchat() const;
+    int getGroupId() const;
+    int getPeersCount() const;
+    void regeneratePeerList();
+    QStringList getPeerList() const;
+    bool isSelfPeerNumber(int peernumber) const;
+
+    GroupChatForm *getChatForm();
+    GroupWidget *getGroupWidget();
+
+    void setEventFlag(int f);
+    int getEventFlag() const;
+
+    void setMentionedFlag(int f);
+    int getMentionedFlag() const;
+
+    /*
     void addPeer(int peerId, QString name);
     void removePeer(int peerId);
-    void updatePeer(int peerId, QString newName);
+    */
 
-public:
-    int groupId;
-    QMap<int,QString> peers;
-    int nPeers;
+    void updatePeer(int peerId, QString newName);
+    void setName(const QString& name);
+
+    QString resolveToxId(const ToxId &id) const;
+
+private:
     GroupWidget* widget;
     GroupChatForm* chatForm;
+    QStringList peers;
+    QMap<QString, QString> toxids;
     int hasNewMessages, userWasMentioned;
+    int groupId;
+    int nPeers;
+    int selfPeerNum = -1;
+    bool avGroupchat;
+
 };
 
 #endif // GROUP_H

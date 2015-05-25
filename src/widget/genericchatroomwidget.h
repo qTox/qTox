@@ -1,6 +1,4 @@
 /*
-    Copyright (C) 2014 by Project Tox <https://tox.im>
-
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
     This program is libre software: you can redistribute it and/or modify
@@ -41,6 +39,7 @@ public:
     virtual void updateStatusLight(){;}
     virtual void setChatForm(Ui::MainWindow &){;}
     virtual void resetEventFlags(){;}
+    virtual QString getStatusString(){return QString::null;}
 
     bool isActive();
     void setActive(bool active);
@@ -51,18 +50,29 @@ public:
     QString getName() const;
     QString getStatusMsg() const;
 
+    void reloadTheme();
+
+    bool isCompact() const;
+    void setCompact(bool compact);
+
+    Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
+
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
 public slots:
+    void onCompactChanged(bool compact);
 
 protected:
     QColor lastColor;
-    QHBoxLayout layout;
-    QVBoxLayout textLayout;
+    QHBoxLayout* layout = nullptr;
+    QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     QLabel statusPic;
-    CroppingLabel *nameLabel, *statusMessageLabel;
+    CroppingLabel* nameLabel, * statusMessageLabel;
+    bool compact;
+
+    friend class Style; ///< To update our stylesheets
 };
 
 #endif // GENERICCHATROOMWIDGET_H

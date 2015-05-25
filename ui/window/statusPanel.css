@@ -1,14 +1,62 @@
-#statusPanel 
+QLineEdit
 {
-  background-color: @darkGrey;
+    background: none;
+    background-color: @themeMedium;
+    color: white;
+    border: 0px;
+    border-radius: 4px;
+}
+
+QComboBox {
+    background: none;
+    background-color: @themeMedium;
+    color: white;
+    border-style: none;
+    border-radius: 4px;
+}
+
+QComboBox:on {
+    background-color: @themeDark;
+    border-radius: 4px;
+}
+
+QComboBox:drop-down {
+    border-style: none;
+    border-radius: 4px;
+}
+
+/**
+  Uncomment this after https://github.com/tux3/qTox/pull/1640
+  is merged!
+QComboBox:down-arrow {
+    image: url(ui/css/down_arrow.png);
+}
+**/
+
+QListView {
+    background-color: @themeLight;
+    border-style: none;
+    border-radius: 4px;
+}
+
+#statusPanel
+{
+  background-color: @themeDark;
+}
+
+#statusPanel > #statusHead
+{
+  background-color: @themeDark;
 }
 
 #statusPanel > #statusHead > #nameLabel {
+  background-color: @themeDark;
   font: @extraBig;
   color: @white;
 }
 
 #statusPanel > #statusHead > #statusLabel {
+  background-color: @themeDark;
   font: @medium;
   color: @lightGrey;
 }
@@ -16,42 +64,22 @@
 #statusPanel > #statusHead > #statusButton
 {
     background: none;
-    background-color: @mediumGrey;
+    background-color: @themeMedium;
     border: none;
     border-radius: 6px;
     width: 20px;
     height: 40px;
 }
 
-#statusPanel > #statusHead > #statusButton[status="online"]
-{
-  image: url(":ui/statusButton/dot_online.png") center center;
-}
-
-#statusPanel > #statusHead > #statusButton[status="away"]
-{
-  image: url(":ui/statusButton/dot_idle.png") center center;
-}
-
-#statusPanel > #statusHead > #statusButton[status="busy"]
-{
-  image: url(":ui/statusButton/dot_busy.png") center center;
-}
-
-#statusPanel > #statusHead > #statusButton[status="offline"]
-{
-  image: url(":ui/statusButton/dot_away.png") center center;
-}
-
 /*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
 #statusPanel > #statusHead > #statusButton:hover 
 {
-  background-color: @mediumGreyLight;
+  background-color: @themeLight;
 }
 
 #statusPanel > #statusHead > #statusButton:pressed 
 {
-  background-color: @mediumGrey;
+  background-color: @themeMedium;
 }
 
 #statusPanel > #statusHead > #statusButton:focus {
