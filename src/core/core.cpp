@@ -180,43 +180,49 @@ void Core::make_tox(QByteArray savedata)
         }
     }
 
-    tox = tox_new(&toxOptions, (uint8_t*)savedata.data(), savedata.size(), nullptr);
-    if (tox == nullptr)
+    TOX_ERR_NEW tox_err;
+    tox = tox_new(&toxOptions, (uint8_t*)savedata.data(), savedata.size(), &tox_err);
+
+    switch (tox_err)
     {
-        if (enableIPv6) // Fallback to IPv4
-        {
-            toxOptions.ipv6_enabled = false;
-            tox = tox_new(&toxOptions, (uint8_t*)savedata.data(), savedata.size(), nullptr);
-            if (tox == nullptr)
+        case TOX_ERR_NEW_OK:
+            break;
+        case TOX_ERR_NEW_PORT_ALLOC:
+            if (enableIPv6)
             {
-                if (toxOptions.proxy_type != TOX_PROXY_TYPE_NONE)
+                toxOptions.ipv6_enabled = false;
+                tox = tox_new(&toxOptions, (uint8_t*)savedata.data(), savedata.size(), &tox_err);
+                if (tox_err == TOX_ERR_NEW_OK)
                 {
-                    qCritical() << "bad proxy! no toxcore!";
-                    emit badProxy();
+                    qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery may not work properly.";
+                    break;
                 }
-                else
-                {
-                    qCritical() << "Tox core failed to start";
-                    emit failedToStart();
-                }
-                return;
             }
-            else
-            {
-                qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery may not work properly.";
-            }
-        }
-        else if (toxOptions.proxy_type != TOX_PROXY_TYPE_NONE)
-        {
+
+            qCritical() << "can't to bind the port";
+            emit failedToStart();
+            return;
+        case TOX_ERR_NEW_PROXY_BAD_HOST:
+        case TOX_ERR_NEW_PROXY_BAD_PORT:
+            qCritical() << "bad proxy";
             emit badProxy();
             return;
-        }
-        else
-        {
+        case TOX_ERR_NEW_PROXY_NOT_FOUND:
+            qCritical() << "proxy not found";
+            emit badProxy();
+            return;
+        case TOX_ERR_NEW_LOAD_ENCRYPTED:
+            qCritical() << "load data is encrypted";
+            emit failedToStart();
+            return;
+        case TOX_ERR_NEW_LOAD_BAD_FORMAT:
+            qCritical() << "bad load data format";
+            emit failedToStart();
+            return;
+        default:
             qCritical() << "Tox core failed to start";
             emit failedToStart();
             return;
-        }
     }
 
     toxav = toxav_new(tox, TOXAV_MAX_CALLS);
