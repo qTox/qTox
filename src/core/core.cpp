@@ -253,6 +253,13 @@ void Core::start()
 
     qsrand(time(nullptr));
 
+    if (!tox)
+    {
+        ready = true;
+        GUI::setEnabled(true);
+        return;
+    }
+
     // set GUI with user and statusmsg
     QString name = getUsername();
     if (!name.isEmpty())
