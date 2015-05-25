@@ -869,7 +869,7 @@ QByteArray Core::loadToxSave(QString path)
     {
         qWarning() << "Profile "<<QFileInfo(path).baseName()<<" is already in use, pick another";
         GUI::showWarning(tr("Profile already in use"),
-                         tr("Your profile is already used by another qTox\n"
+                         tr("This profile is already used by another qTox instance\n"
                             "Please select another profile"));
         QString tmppath = Settings::getInstance().askProfiles();
         if (tmppath.isEmpty())
@@ -967,7 +967,7 @@ void Core::switchConfiguration(const QString& _profile)
     {
         qWarning() << "Profile "<<profile<<" is already in use, pick another";
         GUI::showWarning(tr("Profile already in use"),
-                         tr("Your profile is already used by another qTox instance\n"
+                         tr("This profile is already used by another qTox instance\n"
                             "Please select another profile"));
         do {
             profile = Settings::getInstance().askProfiles();
