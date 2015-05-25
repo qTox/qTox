@@ -873,11 +873,12 @@ void ChatForm::doScreenshot()
     ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber(this);
     connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
     screenshotGrabber->showGrabber();
+    // Create dir for screenshots
+    QDir(Settings::getSettingsDirPath()).mkdir("screenshots");
 }
 
 void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
-	QTemporaryFile file("qTox-Screenshot-XXXXXXXX.png");
-	
+    QTemporaryFile file(QDir(Settings::getSettingsDirPath() + QDir::separator() + "screenshots" + QDir::separator()).filePath("qTox-Screenshot-XXXXXXXX.png"));
 	if (!file.open())
 	{
 	    QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
@@ -893,8 +894,7 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
 	file.close();
 	QFileInfo fi(file);
 	
-	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
-        
+	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);        
 }
 
 void ChatForm::onLoadHistory()
