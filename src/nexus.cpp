@@ -90,8 +90,8 @@ void Nexus::start()
 #ifdef Q_OS_ANDROID
     connect(core, &Core::connected, androidgui, &AndroidGUI::onConnected);
     connect(core, &Core::disconnected, androidgui, &AndroidGUI::onDisconnected);
-    //connect(core, &Core::failedToStart, androidgui, &AndroidGUI::onFailedToStartCore);
-    //connect(core, &Core::badProxy, androidgui, &AndroidGUI::onBadProxyCore);
+    //connect(core, &Core::failedToStart, androidgui, &AndroidGUI::onFailedToStartCore, Qt::BlockingQueuedConnection);
+    //connect(core, &Core::badProxy, androidgui, &AndroidGUI::onBadProxyCore, Qt::BlockingQueuedConnection);
     connect(core, &Core::statusSet, androidgui, &AndroidGUI::onStatusSet);
     connect(core, &Core::usernameSet, androidgui, &AndroidGUI::setUsername);
     connect(core, &Core::statusMessageSet, androidgui, &AndroidGUI::setStatusMessage);
@@ -104,8 +104,8 @@ void Nexus::start()
 #else
     connect(core, &Core::connected,                  widget, &Widget::onConnected);
     connect(core, &Core::disconnected,               widget, &Widget::onDisconnected);
-    connect(core, &Core::failedToStart,              widget, &Widget::onFailedToStartCore);
-    connect(core, &Core::badProxy,                   widget, &Widget::onBadProxyCore);
+    connect(core, &Core::failedToStart,              widget, &Widget::onFailedToStartCore, Qt::BlockingQueuedConnection);
+    connect(core, &Core::badProxy,                   widget, &Widget::onBadProxyCore, Qt::BlockingQueuedConnection);
     connect(core, &Core::statusSet,                  widget, &Widget::onStatusSet);
     connect(core, &Core::usernameSet,                widget, &Widget::setUsername);
     connect(core, &Core::statusMessageSet,           widget, &Widget::setStatusMessage);
