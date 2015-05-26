@@ -137,7 +137,7 @@ void Widget::init()
     ui->searchContactFilterCBox->addItem(tr("Friends"));
     ui->searchContactFilterCBox->addItem(tr("Groups"));
 
-    ui->searchContactText->setPlaceholderText("Search Contacts");
+    ui->searchContactText->setPlaceholderText(tr("Search Contacts"));
 
     if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
