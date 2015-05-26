@@ -466,13 +466,13 @@ p, li { white-space: pre-wrap; }
         <translation>Invio del file &quot;%1&quot; fallito</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="883"/>
+        <location filename="../src/widget/form/chatform.cpp" line="884"/>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Impossibile creare il file temporaneo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="884"/>
+        <location filename="../src/widget/form/chatform.cpp" line="885"/>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>qTox non è stato in grado di salvare lo screenshot</translation>
     </message>
@@ -521,58 +521,52 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Core</name>
     <message>
-        <location filename="../src/core/core.cpp" line="244"/>
+        <location filename="../src/core/core.cpp" line="250"/>
         <source>Toxing on qTox</source>
         <translation>Toxing on qTox</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="245"/>
+        <location filename="../src/core/core.cpp" line="251"/>
         <source>qTox User</source>
         <translation>qTox User</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="565"/>
+        <location filename="../src/core/core.cpp" line="578"/>
         <source>You need to write a message with your request</source>
         <translation>Devi scrivere un messaggio per la richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="569"/>
+        <location filename="../src/core/core.cpp" line="582"/>
         <source>Your message is too long!</source>
         <translation>Il messaggio è troppo lungo!</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="573"/>
+        <location filename="../src/core/core.cpp" line="586"/>
         <source>Friend is already added</source>
         <translation>Questo contatto è già presente nella tua lista</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="591"/>
+        <location filename="../src/core/core.cpp" line="604"/>
         <source>/me offers friendship.</source>
         <translation>/me ti ha aggiunto come contatto.</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="593"/>
+        <location filename="../src/core/core.cpp" line="606"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me ti ha aggiunto come contatto, &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="871"/>
-        <location filename="../src/core/core.cpp" line="969"/>
+        <location filename="../src/core/core.cpp" line="884"/>
+        <location filename="../src/core/core.cpp" line="982"/>
         <source>Profile already in use</source>
         <translation>Profilo già in uso</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="872"/>
-        <source>Your profile is already used by another qTox
+        <location filename="../src/core/core.cpp" line="885"/>
+        <location filename="../src/core/core.cpp" line="983"/>
+        <source>This profile is already used by another qTox instance
 Please select another profile</source>
-        <translation>Il tuo profilo è già usato da un&apos;altra istanza di qTox
-Scegli un altro profilo</translation>
-    </message>
-    <message>
-        <location filename="../src/core/core.cpp" line="970"/>
-        <source>Your profile is already used by another qTox instance
-Please select another profile</source>
-        <translation>Il tuo profilo è già usato da un&apos;altra istanza di qTox
+        <translation>Questo profile è già usato da un&apos;altra istanza di qTox
 Scegli un altro profilo</translation>
     </message>
     <message>
@@ -2290,7 +2284,7 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1169"/>
+        <location filename="../src/widget/widget.cpp" line="1170"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
@@ -2318,14 +2312,14 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="418"/>
+        <location filename="../src/widget/widget.cpp" line="419"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="217"/>
-        <location filename="../src/widget/widget.cpp" line="450"/>
+        <location filename="../src/widget/widget.cpp" line="451"/>
         <source>Add friend</source>
         <translation>Aggiungi contatto</translation>
     </message>
@@ -2355,102 +2349,107 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <translation>Gruppi</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="464"/>
+        <location filename="../src/widget/widget.cpp" line="140"/>
+        <source>Search Contacts</source>
+        <translation>Cerca tra i contatti</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="465"/>
         <source>File transfers</source>
         <translation>Files trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="475"/>
+        <location filename="../src/widget/widget.cpp" line="476"/>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>File eseguibile</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="475"/>
+        <location filename="../src/widget/widget.cpp" line="476"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Hai chiesto a qTox di aprire un file eseguibile. I files eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="543"/>
+        <location filename="../src/widget/widget.cpp" line="544"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="552"/>
+        <location filename="../src/widget/widget.cpp" line="553"/>
         <source>Profile</source>
         <translation>Profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="660"/>
+        <location filename="../src/widget/widget.cpp" line="661"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossibile inviare la richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="702"/>
+        <location filename="../src/widget/widget.cpp" line="703"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="704"/>
+        <location filename="../src/widget/widget.cpp" line="705"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="706"/>
+        <location filename="../src/widget/widget.cpp" line="707"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="710"/>
+        <location filename="../src/widget/widget.cpp" line="711"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="713"/>
+        <location filename="../src/widget/widget.cpp" line="714"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="868"/>
+        <location filename="../src/widget/widget.cpp" line="869"/>
         <source>Remove history</source>
         <translation>Elimina cronologia chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="869"/>
+        <location filename="../src/widget/widget.cpp" line="870"/>
         <source>Do you want to remove history as well?</source>
         <translation>Vuoi rimuovere anche la cronologia chat?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="925"/>
+        <location filename="../src/widget/widget.cpp" line="926"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>Invito chat di gruppo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="925"/>
+        <location filename="../src/widget/widget.cpp" line="926"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1 ti ha invitato in una chat di gruppo. Vuoi partecipare?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="987"/>
+        <location filename="../src/widget/widget.cpp" line="988"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1015"/>
+        <location filename="../src/widget/widget.cpp" line="1016"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 ha impostato il titolo in %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1249"/>
+        <location filename="../src/widget/widget.cpp" line="1250"/>
         <source>Message failed to send</source>
         <translation>Impossibile inviare il messaggio</translation>
     </message>
