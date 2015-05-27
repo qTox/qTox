@@ -148,8 +148,7 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void searchContacts();
-    void hideFriends(QString searchString, Status status, bool hideAll = false);
-    void hideGroups(QString searchString, bool hideAll = false);
+    void friendListContextMenu(const QPoint &pos);
 
 private:
     enum ActiveToolMenuButton {

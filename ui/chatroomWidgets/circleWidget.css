@@ -1,0 +1,26 @@
+QWidget#circleWidgetContainer > QFrame#line
+{
+  color: white;
+}
+
+QWidget#circleWidgetContainer
+{
+  background-color: @themeMedium;
+}
+
+QWidget#circleWidgetContainer:hover
+{
+  background-color: @themeLight;
+}
+
+QWidget#circleWidgetContainer > QLabel#status
+{
+  font: @small;
+  color: @lightGrey;
+}
+
+QWidget#circleWidgetContainer > QLabel#name
+{
+  font: @big;
+  color: @white;
+}

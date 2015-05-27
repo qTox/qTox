@@ -21,8 +21,7 @@
 #define GENERICCHATROOMWIDGET_H
 
 #include <QFrame>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QBoxLayout>
 #include <QLabel>
 
 class CroppingLabel;
