@@ -22,11 +22,14 @@
 #include "src/friend.h"
 #include "src/friendlist.h"
 #include "src/widget/friendwidget.h"
+#include "groupwidget.h"
+#include "circlewidget.hpp"
+#include <cassert>
 
 FriendListWidget::FriendListWidget(QWidget *parent, bool groupchatPosition) :
     QWidget(parent)
 {
-    mainLayout = new QGridLayout();
+    mainLayout = new QVBoxLayout();
     setLayout(mainLayout);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     layout()->setSpacing(0);
@@ -36,57 +39,102 @@ FriendListWidget::FriendListWidget(QWidget *parent, bool groupchatPosition) :
     groupLayout->setSpacing(0);
     groupLayout->setMargin(0);
 
-    for (Status s : {Status::Online, Status::Offline})
-    {
-        QVBoxLayout *l = new QVBoxLayout();
-        l->setSpacing(0);
-        l->setMargin(0);
+    friendLayouts[Online] = new QVBoxLayout();
+    friendLayouts[Online]->setSpacing(0);
+    friendLayouts[Online]->setMargin(0);
 
-        layouts[static_cast<int>(s)] = l;
-    }
+    friendLayouts[Offline] = new QVBoxLayout();
+    friendLayouts[Offline]->setSpacing(0);
+    friendLayouts[Offline]->setMargin(0);
+
+    circleLayout = new QVBoxLayout();
+    circleLayout->setSpacing(0);
+    circleLayout->setMargin(0);
 
     if (groupchatPosition)
     {
-        mainLayout->addLayout(groupLayout, 0, 0);
-        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 1, 0);
-        mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 2, 0);
+        mainLayout->addLayout(groupLayout);
+        mainLayout->addLayout(friendLayouts[Online]);
+        mainLayout->addLayout(friendLayouts[Offline]);
     }
     else
     {
-        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
-        mainLayout->addLayout(groupLayout, 1, 0);
-        mainLayout->addLayout(layouts[static_cast<int>(Status::Offline)], 2, 0);
+        mainLayout->addLayout(friendLayouts[Online]);
+        mainLayout->addLayout(groupLayout);
+        mainLayout->addLayout(friendLayouts[Offline]);
+    }
+    mainLayout->addLayout(circleLayout);
+}
+
+void FriendListWidget::addGroupWidget(GroupWidget *widget)
+{
+    groupLayout->addWidget(widget);
+}
+
+void FriendListWidget::hideGroups(QString searchString, bool hideAll)
+{
+    QVBoxLayout* groups = groupLayout;
+    int groupCount = groups->count(), index;
+
+    for (index = 0; index<groupCount; index++)
+    {
+        GroupWidget* groupWidget = static_cast<GroupWidget*>(groups->itemAt(index)->widget());
+        QString groupName = groupWidget->getName();
+
+        if (!groupName.contains(searchString, Qt::CaseInsensitive) | hideAll)
+            groupWidget->setVisible(false);
+        else
+            groupWidget->setVisible(true);
     }
 }
 
-QVBoxLayout* FriendListWidget::getGroupLayout()
+void FriendListWidget::addCircleWidget(CircleWidget *widget)
 {
-    return groupLayout;
+    circleLayout->addWidget(widget);
+}
+
+void FriendListWidget::hideFriends(QString searchString, Status status, bool hideAll)
+{
+    QVBoxLayout* friends = getFriendLayout(status);
+    int friendCount = friends->count(), index;
+
+    for (index = 0; index<friendCount; index++)
+    {
+        FriendWidget* friendWidget = static_cast<FriendWidget*>(friends->itemAt(index)->widget());
+        QString friendName = friendWidget->getName();
+
+        if (!friendName.contains(searchString, Qt::CaseInsensitive) | hideAll)
+            friendWidget->setVisible(false);
+        else
+            friendWidget->setVisible(true);
+    }
 }
 
 QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
 {
-    auto res = layouts.find(static_cast<int>(s));
-    if (res != layouts.end())
-        return res.value();
-
-    return layouts[static_cast<int>(Status::Online)];
+    if (s == Status::Offline)
+    {
+        return friendLayouts[Offline];
+    }
+    return friendLayouts[Online];
 }
 
 void FriendListWidget::onGroupchatPositionChanged(bool top)
 {
+    mainLayout->removeItem(circleLayout);
     mainLayout->removeItem(groupLayout);
     mainLayout->removeItem(getFriendLayout(Status::Online));
     if (top)
     {
-        mainLayout->addLayout(groupLayout, 0, 0);
-        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 1, 0);
+        mainLayout->addLayout(groupLayout);
+        mainLayout->addLayout(friendLayouts[Online]);
     }
     else
     {
-        mainLayout->addLayout(layouts[static_cast<int>(Status::Online)], 0, 0);
-        mainLayout->addLayout(groupLayout, 1, 0);
+        mainLayout->addLayout(friendLayouts[Online]);
+        mainLayout->addLayout(groupLayout);
     }
+    mainLayout->addLayout(circleLayout);
 }
 
 QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
@@ -118,20 +166,26 @@ QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
 void FriendListWidget::moveWidget(FriendWidget *w, Status s)
 {
     QVBoxLayout* l = getFriendLayout(s);
-    l->removeWidget(w);
-    Friend* g = FriendList::findFriend(w->friendId);
-    for (int i = 0; i < l->count(); i++)
+    l->removeWidget(w); // In case the widget is already in this layout.
+    Friend* g = FriendList::findFriend(static_cast<FriendWidget*>(w)->friendId);
+
+    // Binary search.
+    int min = 0, max = l->count(), mid;
+    while (min < max)
     {
-        FriendWidget* w1 = static_cast<FriendWidget*>(l->itemAt(i)->widget());
+        mid = (max - min) / 2 + min;
+        FriendWidget* w1 = static_cast<FriendWidget*>(l->itemAt(mid)->widget());
+        assert(w1 != nullptr);
+
         Friend* f = FriendList::findFriend(w1->friendId);
-        if (f->getDisplayedName().localeAwareCompare(g->getDisplayedName()) > 0)
-        {
-            l->insertWidget(i,w);
-            return;
-        }
+        int compareValue = f->getDisplayedName().localeAwareCompare(g->getDisplayedName());
+        if (compareValue > 0)
+            max = mid;
+        else
+            min = mid + 1;
     }
     static_assert(std::is_same<decltype(w), FriendWidget*>(), "The layout must only contain FriendWidget*");
-    l->addWidget(w);
+    l->insertWidget(min, w);
 }
 
 // update widget after add/delete/hide/show

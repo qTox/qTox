@@ -68,6 +68,8 @@
 #include <QProcess>
 #include <tox/tox.h>
 
+#include "circlewidget.hpp"
+
 #ifdef Q_OS_ANDROID
 #define IS_ON_DESKTOP_GUI 0
 #else
@@ -155,6 +157,7 @@ void Widget::init()
     contactListWidget = new FriendListWidget(0, Settings::getInstance().getGroupchatPosition());
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
+    ui->friendList->setContextMenuPolicy(Qt::CustomContextMenu);
 
     ui->statusLabel->setEditable(true);
 
@@ -204,6 +207,7 @@ void Widget::init()
     connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
     connect(ui->searchContactText, &QLineEdit::textChanged, this, &Widget::searchContacts);
     connect(ui->searchContactFilterCBox, &QComboBox::currentTextChanged, this, &Widget::searchContacts);
+    connect(ui->friendList, &QWidget::customContextMenuRequested, this, &Widget::friendListContextMenu);
 
     // keyboard shortcuts
     new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
@@ -1033,8 +1037,9 @@ Group *Widget::createGroup(int groupId)
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName, core->isGroupAvEnabled(groupId));
-    QLayout* layout = contactListWidget->getGroupLayout();
-    layout->addWidget(newgroup->getGroupWidget());
+    //QLayout* layout = contactListWidget->getGroupLayout();
+    //layout->addWidget(newgroup->getGroupWidget());
+    contactListWidget->addGroupWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();
 
     connect(settingsWidget, &SettingsWidget::compactToggled, newgroup->getGroupWidget(), &GenericChatroomWidget::setCompact);
@@ -1383,34 +1388,34 @@ void Widget::searchContacts()
     switch(filter)
     {
         case FilterCriteria::All:
-            hideFriends(searchString, Status::Online);
-            hideFriends(searchString, Status::Offline);
+            contactListWidget->hideFriends(searchString, Status::Online);
+            contactListWidget->hideFriends(searchString, Status::Offline);
 
-            hideGroups(searchString);
+            contactListWidget->hideGroups(searchString);
             break;
         case FilterCriteria::Online:
-            hideFriends(searchString, Status::Online);
-            hideFriends(QString(), Status::Offline, true);
+            contactListWidget->hideFriends(searchString, Status::Online);
+            contactListWidget->hideFriends(QString(), Status::Offline, true);
 
-            hideGroups(searchString);
+            contactListWidget->hideGroups(searchString);
             break;
         case FilterCriteria::Offline:
-            hideFriends(QString(), Status::Online, true);
-            hideFriends(searchString, Status::Offline);
+            contactListWidget->hideFriends(QString(), Status::Online, true);
+            contactListWidget->hideFriends(searchString, Status::Offline);
 
-            hideGroups(QString(), true);
+            contactListWidget->hideGroups(QString(), true);
             break;
         case FilterCriteria::Friends:
-            hideFriends(searchString, Status::Online);
-            hideFriends(searchString, Status::Offline);
+            contactListWidget->hideFriends(searchString, Status::Online);
+            contactListWidget->hideFriends(searchString, Status::Offline);
 
-            hideGroups(QString(), true);
+            contactListWidget->hideGroups(QString(), true);
             break;
         case FilterCriteria::Groups:
-            hideFriends(QString(), Status::Online, true);
-            hideFriends(QString(), Status::Offline, true);
+            contactListWidget->hideFriends(QString(), Status::Online, true);
+            contactListWidget->hideFriends(QString(), Status::Offline, true);
 
-            hideGroups(searchString);
+            contactListWidget->hideGroups(searchString);
             break;
         default:
             return;
@@ -1419,37 +1424,15 @@ void Widget::searchContacts()
     contactListWidget->reDraw();
 }
 
-void Widget::hideFriends(QString searchString, Status status, bool hideAll)
+void Widget::friendListContextMenu(const QPoint &pos)
 {
-    QVBoxLayout* friends = contactListWidget->getFriendLayout(status);
-    int friendCount = friends->count(), index;
+    QMenu menu(this);
+    QAction *addCircleAction = menu.addAction(tr("Add new circle..."));
+    QAction *chosenAction = menu.exec(ui->friendList->mapToGlobal(pos));
 
-    for (index = 0; index<friendCount; index++)
+    if (chosenAction == addCircleAction)
     {
-        FriendWidget* friendWidget = static_cast<FriendWidget*>(friends->itemAt(index)->widget());
-        QString friendName = friendWidget->getName();
-
-        if (!friendName.contains(searchString, Qt::CaseInsensitive) || hideAll)
-            friendWidget->setVisible(false);
-        else
-            friendWidget->setVisible(true);
-    }
-}
-
-void Widget::hideGroups(QString searchString, bool hideAll)
-{
-    QVBoxLayout* groups = contactListWidget->getGroupLayout();
-    int groupCount = groups->count(), index;
-
-    for (index = 0; index<groupCount; index++)
-    {
-        GroupWidget* groupWidget = static_cast<GroupWidget*>(groups->itemAt(index)->widget());
-        QString groupName = groupWidget->getName();
-
-        if (!groupName.contains(searchString, Qt::CaseInsensitive) || hideAll)
-            groupWidget->setVisible(false);
-        else
-            groupWidget->setVisible(true);
+        contactListWidget->addCircleWidget(new CircleWidget);
     }
 }
 

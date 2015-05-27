@@ -31,12 +31,18 @@ class QGridLayout;
 class QPixmap;
 struct FriendWidget;
 
+class GroupWidget;
+class CircleWidget;
+
 class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit FriendListWidget(QWidget *parent = 0, bool groupchatPosition = true);
-    QVBoxLayout* getGroupLayout();
+    void addGroupWidget(GroupWidget *widget);
+    void hideGroups(QString searchString, bool hideAll = false);
+    void addCircleWidget(CircleWidget *widget);
+    void hideFriends(QString searchString, Status status, bool hideAll = false);
     QVBoxLayout* getFriendLayout(Status s);
 
     QList<GenericChatroomWidget*> getAllFriends();
@@ -48,9 +54,16 @@ public slots:
     void moveWidget(FriendWidget *w, Status s);
 
 private:
-    QHash<int, QVBoxLayout*> layouts;
+    enum FriendLayoutType
+    {
+        Online = 0,
+        Offline = 1
+    };
+    QVBoxLayout *friendLayouts[2];
     QVBoxLayout *groupLayout;
-    QGridLayout *mainLayout;
+    QVBoxLayout *circleLayout;
+    QVBoxLayout *mainLayout;
+    QList<CircleWidget*> circles;
 };
 
 #endif // FRIENDLISTWIDGET_H

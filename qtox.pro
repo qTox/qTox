@@ -488,7 +488,8 @@ SOURCES += \
     src/widget/translator.cpp \
     src/persistence/settingsserializer.cpp \
     src/widget/notificationscrollarea.cpp \
-    src/widget/notificationedgewidget.cpp
+    src/widget/notificationedgewidget.cpp \
+    src/widget/circlewidget.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -526,4 +527,5 @@ HEADERS += \
     src/widget/translator.h \
     src/persistence/settingsserializer.h \
     src/widget/notificationscrollarea.h \
-    src/widget/notificationedgewidget.h
+    src/widget/notificationedgewidget.h \
+    src/widget/circlewidget.hpp
