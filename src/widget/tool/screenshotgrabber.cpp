@@ -178,8 +178,12 @@ void ScreenshotGrabber::adjustWindowSize()
     this->overlay->setRect(systemScreenRect);
 }
 
-QPixmap ScreenshotGrabber::grabScreen() {
-    return QApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
+QPixmap ScreenshotGrabber::grabScreen()
+{
+    QRect systemScreenRect = getSystemScreenRect();
+    return QApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId(),0,0,
+                                                       systemScreenRect.width(),
+                                                       systemScreenRect.height());
 }
 
 void ScreenshotGrabber::beginRectChooser(QGraphicsSceneMouseEvent* event)
