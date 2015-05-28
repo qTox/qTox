@@ -54,16 +54,16 @@ void GenericChatroomWidget::setCompact(bool _compact)
     compact = _compact;
 
     delete textLayout; // has to be first, deleted by layout
-    delete layout;
+    delete mainLayout;
 
     compact = _compact;
 
-    layout = new QHBoxLayout;
+    mainLayout = new QHBoxLayout;
     textLayout = new QVBoxLayout;
 
-    setLayout(layout);
-    layout->setSpacing(0);
-    layout->setMargin(0);
+    setLayout(mainLayout);
+    mainLayout->setSpacing(0);
+    mainLayout->setMargin(0);
     textLayout->setSpacing(0);
     textLayout->setMargin(0);
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
@@ -73,15 +73,15 @@ void GenericChatroomWidget::setCompact(bool _compact)
     {
         setFixedHeight(25);
         avatar->setSize(QSize(20,20));
-        layout->addSpacing(18);
-        layout->addWidget(avatar);
-        layout->addSpacing(5);
-        layout->addWidget(nameLabel);
-        layout->addWidget(statusMessageLabel);
-        layout->addSpacing(5);
-        layout->addWidget(&statusPic);
-        layout->addSpacing(5);
-        layout->activate();
+        mainLayout->addSpacing(18);
+        mainLayout->addWidget(avatar);
+        mainLayout->addSpacing(5);
+        mainLayout->addWidget(nameLabel);
+        mainLayout->addWidget(statusMessageLabel);
+        mainLayout->addSpacing(5);
+        mainLayout->addWidget(&statusPic);
+        mainLayout->addSpacing(5);
+        mainLayout->activate();
         statusMessageLabel->setFont(Style::getFont(Style::Small));
         nameLabel->setFont(Style::getFont(Style::Medium));
     }
@@ -93,14 +93,14 @@ void GenericChatroomWidget::setCompact(bool _compact)
         textLayout->addWidget(nameLabel);
         textLayout->addWidget(statusMessageLabel);
         textLayout->addStretch();
-        layout->addSpacing(20);
-        layout->addWidget(avatar);
-        layout->addSpacing(10);
-        layout->addLayout(textLayout);
-        layout->addSpacing(10);
-        layout->addWidget(&statusPic);
-        layout->addSpacing(10);
-        layout->activate();
+        mainLayout->addSpacing(20);
+        mainLayout->addWidget(avatar);
+        mainLayout->addSpacing(10);
+        mainLayout->addLayout(textLayout);
+        mainLayout->addSpacing(10);
+        mainLayout->addWidget(&statusPic);
+        mainLayout->addSpacing(10);
+        mainLayout->activate();
         statusMessageLabel->setFont(Style::getFont(Style::Medium));
         nameLabel->setFont(Style::getFont(Style::Big));
     }

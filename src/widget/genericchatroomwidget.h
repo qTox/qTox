@@ -20,7 +20,7 @@
 #ifndef GENERICCHATROOMWIDGET_H
 #define GENERICCHATROOMWIDGET_H
 
-#include <QFrame>
+#include "genericchatitemwidget.h"
 #include <QBoxLayout>
 #include <QLabel>
 
@@ -36,6 +36,7 @@ class GenericChatroomWidget : public QFrame
     Q_OBJECT
 public:
     GenericChatroomWidget(QWidget *parent = 0);
+    void mouseReleaseEvent (QMouseEvent* event);
 
     virtual void setAsActiveChatroom(){;}
     virtual void setAsInactiveChatroom(){;}
@@ -59,6 +60,7 @@ public:
 
 public slots:
     void setCompact(bool compact);
+    void onCompactChanged(bool compact);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
@@ -71,7 +73,7 @@ protected:
 
 protected:
     QColor lastColor;
-    QHBoxLayout* layout = nullptr;
+    QHBoxLayout* mainLayout = nullptr;
     QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     QLabel statusPic;

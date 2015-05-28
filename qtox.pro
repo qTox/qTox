@@ -487,7 +487,10 @@ SOURCES += \
     src/persistence/profile.cpp \
     src/widget/translator.cpp \
     src/persistence/settingsserializer.cpp \
-    src/widget/circlewidget.cpp
+    src/widget/circlewidget.cpp \
+    src/widget/circlewidget.cpp \
+    src/widget/genericchatitemwidget.cpp \
+    src/widget/friendlistlayout.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -524,4 +527,7 @@ HEADERS += \
     src/persistence/profile.h \
     src/widget/translator.h \
     src/persistence/settingsserializer.h \
-    src/widget/circlewidget.hpp
+    src/widget/circlewidget.hpp \
+    src/widget/genericchatitemwidget.h \
+    src/widget/circlewidget.h \
+    src/widget/friendlistlayout.h
