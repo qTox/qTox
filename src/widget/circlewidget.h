@@ -36,6 +36,9 @@ public:
 
     void toggle();
 
+    void updateOnline();
+    void updateOffline();
+
 protected:
 
     void mousePressEvent(QMouseEvent *event) override;
@@ -50,10 +53,12 @@ private:
         Online = 0,
         Offline = 1
     };
-    bool visible = false;
+    bool expanded = false;
     FriendListLayout *listLayout;
     QVBoxLayout *mainLayout;
     QLabel *arrowLabel;
+    QLabel *onlineLabel;
+    QLabel *offlineLabel;
     QWidget *container;
 };
 

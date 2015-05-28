@@ -42,13 +42,11 @@ public:
     explicit FriendListWidget(QWidget *parent = 0, bool groupsOnTop = true);
 
     void addGroupWidget(GroupWidget *widget);
-    void hideGroups(QString searchString, bool hideAll = false);
 
     void addCircleWidget(CircleWidget *widget);
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
-    void hideFriends(QString searchString, Status status, bool hideAll = false);
     QList<GenericChatroomWidget*> getAllFriends();
 
     void reDraw();
@@ -56,6 +54,10 @@ public:
 public slots:
     void onGroupchatPositionChanged(bool top);
     void moveWidget(FriendWidget *w, Status s, bool add = false);
+
+protected:
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
 private:
     QVBoxLayout* getFriendLayout(Status s);
