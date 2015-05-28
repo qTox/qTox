@@ -16,7 +16,7 @@ QComboBox {
 }
 
 QComboBox:on {
-    background-color: @themeDark;
+    background-color: @themeMediumDark;
     border-radius: 4px;
 }
 
