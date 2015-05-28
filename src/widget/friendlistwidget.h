@@ -43,7 +43,8 @@ public:
 
     void addGroupWidget(GroupWidget *widget);
 
-    void addCircleWidget(CircleWidget *widget);
+    void addCircleWidget();
+    void removeCircleWidget(CircleWidget *widget);
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 

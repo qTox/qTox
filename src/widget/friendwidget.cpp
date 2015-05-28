@@ -58,18 +58,23 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
+    QMenu* circleMenu = menu.addMenu(tr("Move to circle", "Menu to move a friend into a different circle"));
     QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
     QMap<QAction*, Group*> groupActions;
-    
+
     for (Group* group : GroupList::getAllGroups())
     {
         QAction* groupAction = inviteMenu->addAction(group->getGroupWidget()->getName());
         groupActions[groupAction] =  group;
     }
-    
+
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
-    
+
+    circleMenu->addAction(tr("To new circle"));
+    circleMenu->addAction(tr("Remove from this circle"));
+    circleMenu->addSeparator();
+
     QAction* setAlias = menu.addAction(tr("Set alias..."));
 
     menu.addSeparator();
@@ -77,7 +82,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     autoAccept->setCheckable(true);
     autoAccept->setChecked(!dir.isEmpty());
     menu.addSeparator();
-    
+
     QAction* removeFriendAction = menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
 
     QAction* selectedItem = menu.exec(pos);
@@ -105,7 +110,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 autoAccept->setChecked(false);
                 Settings::getInstance().setAutoAcceptDir(id, "");
             }
-            
+
             if (autoAccept->isChecked())
             {
                 dir = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"), dir);

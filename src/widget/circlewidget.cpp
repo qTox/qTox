@@ -22,17 +22,20 @@
 #include <QLabel>
 #include <QBoxLayout>
 #include <QMouseEvent>
+#include <QLineEdit>
 
 #include <QDragEnterEvent>
 #include <QMimeData>
+#include <QMenu>
 
 #include <QDebug>
 
 #include <cassert>
 
 #include "friendlistlayout.h"
+#include "friendlistwidget.h"
 
-CircleWidget::CircleWidget(QWidget *parent)
+CircleWidget::CircleWidget(FriendListWidget *parent)
     : GenericChatItemWidget(parent)
 {
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/circleWidget.css"));
@@ -58,7 +61,7 @@ CircleWidget::CircleWidget(QWidget *parent)
     arrowLabel->setStyleSheet("color: white;");
     topLayout->addWidget(arrowLabel);
     topLayout->addSpacing(5);
-    QLabel *nameLabel = new QLabel("Circle", container);
+    nameLabel = new QLabel("Circle", container);
     nameLabel->setObjectName("name");
     topLayout->addWidget(nameLabel);
     QFrame *lineFrame = new QFrame(container);
@@ -74,9 +77,9 @@ CircleWidget::CircleWidget(QWidget *parent)
 
     QHBoxLayout *statusLayout = new QHBoxLayout();
 
-    QLabel *onlineIconLabel = new QLabel(container);
-    onlineIconLabel->setAlignment(Qt::AlignCenter);
-    onlineIconLabel->setPixmap(QPixmap(":img/status/dot_online.svg"));
+    //QLabel *onlineIconLabel = new QLabel(container);
+    //onlineIconLabel->setAlignment(Qt::AlignCenter);
+    //onlineIconLabel->setPixmap(QPixmap(":img/status/dot_online.svg"));
     onlineLabel = new QLabel("0", container);
     onlineLabel->setObjectName("status");
 
@@ -86,23 +89,23 @@ CircleWidget::CircleWidget(QWidget *parent)
     QLabel *awayLabel = new QLabel("0", container);
     awayLabel->setObjectName("status");*/
 
-    QLabel *offlineIconLabel = new QLabel(container);
-    offlineIconLabel->setAlignment(Qt::AlignCenter);
-    offlineIconLabel->setPixmap(QPixmap(":img/status/dot_offline.svg"));
-    offlineLabel = new QLabel("0", container);
-    offlineLabel->setObjectName("status");
+    //QLabel *offlineIconLabel = new QLabel(container);
+    //offlineIconLabel->setAlignment(Qt::AlignCenter);
+    //offlineIconLabel->setPixmap(QPixmap(":img/status/dot_offline.svg"));
+    //offlineLabel = new QLabel("0", container);
+    //offlineLabel->setObjectName("status");
 
-    statusLayout->addWidget(onlineIconLabel);
-    statusLayout->addSpacing(5);
+    //statusLayout->addWidget(onlineIconLabel);
+    //statusLayout->addSpacing(2);
     statusLayout->addWidget(onlineLabel);
-    statusLayout->addSpacing(10);
+    //statusLayout->addSpacing(10);
     //statusLayout->addWidget(awayIconLabel);
     //statusLayout->addSpacing(5);
     //statusLayout->addWidget(awayLabel);
     //statusLayout->addSpacing(10);
-    statusLayout->addWidget(offlineIconLabel);
-    statusLayout->addSpacing(5);
-    statusLayout->addWidget(offlineLabel);
+    //statusLayout->addWidget(offlineIconLabel);
+    //statusLayout->addSpacing(2);
+    //statusLayout->addWidget(offlineLabel);
     //statusLayout->addStretch();
 
     //midLayout->addLayout(statusLayout);
@@ -123,7 +126,6 @@ CircleWidget::CircleWidget(QWidget *parent)
 
 void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
 {
-    qDebug() << "YOLO COMBO";
     listLayout->addFriendWidget(w, s);
     //if (s == Status::Offline)
         updateOffline();
@@ -149,6 +151,63 @@ void CircleWidget::toggle()
 void CircleWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
 {
     listLayout->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
+}
+
+void CircleWidget::renameCircle()
+{
+    qDebug() << nameLabel->parentWidget()->layout();
+    QLineEdit *lineEdit = new QLineEdit(nameLabel->text());
+    lineEdit->show();
+    //nameLabel->parentWidget()->layout()
+    //static_cast<QBoxLayout*>(nameLabel->parentWidget()->layout())->insertWidget(nameLabel->parentWidget()->layout()->indexOf(nameLabel) - 1, lineEdit);
+    //nameLabel->parentWidget()->layout()->replaceWidget(nameLabel, lineEdit);
+    nameLabel->setVisible(false);
+    lineEdit->selectAll();
+    lineEdit->setFocus();
+    connect(lineEdit, &QLineEdit::editingFinished, [this, lineEdit]()
+    {
+        nameLabel->setVisible(true);
+        //lineEdit->parentWidget()->layout()->replaceWidget(lineEdit, nameLabel);
+        nameLabel->setText(lineEdit->text());
+        lineEdit->deleteLater();
+    });
+}
+
+void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+    QMenu menu;
+    QAction *renameAction = menu.addAction(tr("Rename circle", "Menu for renaming a circle"));
+    QAction *removeAction = menu.addAction(tr("Remove circle", "Menu for removing a circle"));
+
+    QAction *selectedItem = menu.exec(mapToGlobal(event->pos()));
+    if (selectedItem == renameAction)
+        renameCircle();
+    else if (selectedItem == removeAction)
+    {
+        FriendListWidget *friendList = static_cast<FriendListWidget*>(parentWidget());
+        while (listLayout->friendLayouts[Online]->count() != 0)
+        {
+            QWidget *getWidget = listLayout->friendLayouts[Online]->takeAt(0)->widget();
+            qDebug() << getWidget;
+            assert(getWidget != nullptr);
+
+            FriendWidget *friendWidget = dynamic_cast<FriendWidget*>(getWidget);
+            qDebug() << friendWidget;
+            friendList->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
+        }
+        while (listLayout->friendLayouts[Offline]->count() != 0)
+        {
+            QWidget *getWidget = listLayout->friendLayouts[Offline]->takeAt(0)->widget();
+            qDebug() << getWidget;
+            assert(getWidget != nullptr);
+
+            FriendWidget *friendWidget = dynamic_cast<FriendWidget*>(getWidget);
+            qDebug() << friendWidget;
+            friendList->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
+        }
+
+        friendList->removeCircleWidget(this);
+    }
 }
 
 void CircleWidget::mousePressEvent(QMouseEvent *event)
@@ -204,10 +263,10 @@ void CircleWidget::dropEvent(QDropEvent *event)
 
 void CircleWidget::updateOnline()
 {
-    onlineLabel->setText(QString::number(listLayout->friendOnlineCount()));
+    onlineLabel->setText(QString::number(listLayout->friendOnlineCount()) + QStringLiteral(" / ") + QString::number(listLayout->friendOfflineCount()));
 }
 
 void CircleWidget::updateOffline()
 {
-    offlineLabel->setText(QString::number(listLayout->friendOfflineCount()));
+    //offlineLabel->setText(QString::number(listLayout->friendOfflineCount()));
 }

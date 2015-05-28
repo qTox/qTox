@@ -51,9 +51,21 @@ void FriendListWidget::addGroupWidget(GroupWidget *widget)
     listLayout->groupLayout->addWidget(widget);
 }
 
-void FriendListWidget::addCircleWidget(CircleWidget *widget)
+void FriendListWidget::addCircleWidget()
 {
-    circleLayout->addWidget(widget);
+    CircleWidget *circleWidget = new CircleWidget(this);
+    circleLayout->addWidget(circleWidget);
+    circleWidget->show(); // Avoid flickering.
+}
+
+void FriendListWidget::removeCircleWidget(CircleWidget *widget)
+{
+    //setUpdatesEnabled(false);
+    //widget->setVisible(false);
+    //circleLayout->removeWidget(widget);
+    widget->deleteLater();
+    //setUpdatesEnabled(true);
+    //widget->deleteLater();
 }
 
 void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
