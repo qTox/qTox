@@ -23,10 +23,8 @@
 
 #include <QDebug>
 
-FriendListLayout::FriendListLayout(QWidget *parent, bool groupsOnTop)
-    : QVBoxLayout(parent)
+FriendListLayout::FriendListLayout(bool groupsOnTop)
 {
-    setObjectName("FriendListLayout");
     setSpacing(0);
     setMargin(0);
 
@@ -83,6 +81,16 @@ void FriendListLayout::addFriendWidget(FriendWidget *w, Status s)
     }
 
     l->insertWidget(min, w);
+}
+
+int FriendListLayout::friendOnlineCount() const
+{
+    return friendLayouts[Online]->count();
+}
+
+int FriendListLayout::friendOfflineCount() const
+{
+    return friendLayouts[Offline]->count();
 }
 
 template <typename WidgetType>

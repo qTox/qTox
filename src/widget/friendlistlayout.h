@@ -26,10 +26,12 @@ class FriendListLayout : public QVBoxLayout
 {
     Q_OBJECT
 public:
-    explicit FriendListLayout(QWidget *parent, bool groupsOnTop = true);
+    explicit FriendListLayout(bool groupsOnTop = true);
 
     void addGroupWidget(GroupWidget *widget);
     void addFriendWidget(FriendWidget *widget, Status s);
+    int friendOnlineCount() const;
+    int friendOfflineCount() const;
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
     bool hasChatrooms() const;

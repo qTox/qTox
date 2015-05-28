@@ -19,6 +19,9 @@
 #include "friendlistwidget.h"
 #include <QDebug>
 #include <QGridLayout>
+#include <QMimeData>
+#include <QDragEnterEvent>
+#include <QDragLeaveEvent>
 #include "src/friend.h"
 #include "src/friendlist.h"
 #include "src/widget/friendwidget.h"
@@ -30,7 +33,8 @@
 FriendListWidget::FriendListWidget(QWidget *parent, bool groupsOnTop) :
     QWidget(parent)
 {
-    listLayout = new FriendListLayout(this, groupsOnTop);
+    listLayout = new FriendListLayout(groupsOnTop);
+    setLayout(listLayout);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
     circleLayout = new QVBoxLayout();
@@ -38,25 +42,13 @@ FriendListWidget::FriendListWidget(QWidget *parent, bool groupsOnTop) :
     circleLayout->setMargin(0);
 
     listLayout->addLayout(circleLayout);
+
+    setAcceptDrops(true);
 }
 
 void FriendListWidget::addGroupWidget(GroupWidget *widget)
 {
     listLayout->groupLayout->addWidget(widget);
-}
-
-void FriendListWidget::hideGroups(QString searchString, bool hideAll)
-{
-    QVBoxLayout* groups = listLayout->groupLayout;
-    int groupCount = groups->count(), index;
-
-    for (index = 0; index<groupCount; index++)
-    {
-        GroupWidget* groupWidget = static_cast<GroupWidget*>(groups->itemAt(index)->widget());
-        QString groupName = groupWidget->getName();
-
-        groupWidget->setVisible(groupName.contains(searchString, Qt::CaseInsensitive) && !hideAll);
-    }
 }
 
 void FriendListWidget::addCircleWidget(CircleWidget *widget)
@@ -71,20 +63,6 @@ void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnl
     {
         CircleWidget *circleWidget = static_cast<CircleWidget*>(circleLayout->itemAt(i)->widget());
         circleWidget->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
-    }
-}
-
-void FriendListWidget::hideFriends(QString searchString, Status status, bool hideAll)
-{
-    QVBoxLayout* friends = getFriendLayout(status);
-    int friendCount = friends->count(), index;
-
-    for (index = 0; index<friendCount; index++)
-    {
-        FriendWidget* friendWidget = static_cast<FriendWidget*>(friends->itemAt(index)->widget());
-        QString friendName = friendWidget->getName();
-
-        friendWidget->setVisible(friendName.contains(searchString, Qt::CaseInsensitive) && !hideAll);
     }
 }
 
@@ -135,6 +113,37 @@ QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
     }
 
     return friends;
+}
+
+void FriendListWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat("friend"))
+        event->acceptProposedAction();
+}
+
+void FriendListWidget::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasFormat("friend"))
+    {
+        int friendId = event->mimeData()->data("friend").toInt();
+        Friend *f = FriendList::findFriend(friendId);
+        assert(f != nullptr);
+
+        FriendWidget *widget = f->getFriendWidget();
+        assert(widget != nullptr);
+
+        // Update old circle after moved.
+        CircleWidget *circleWidget = dynamic_cast<CircleWidget*>(widget->parent());
+
+        listLayout->addFriendWidget(widget, f->getStatus());
+
+        if (circleWidget != nullptr)
+        {
+            // In case the status was changed while moving, update both.
+            circleWidget->updateOffline();
+            circleWidget->updateOnline();
+        }
+    }
 }
 
 void FriendListWidget::moveWidget(FriendWidget *w, Status s, bool add)
