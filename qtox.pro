@@ -489,7 +489,9 @@ SOURCES += \
     src/persistence/settingsserializer.cpp \
     src/widget/notificationscrollarea.cpp \
     src/widget/notificationedgewidget.cpp \
-    src/widget/circlewidget.cpp
+    src/widget/circlewidget.cpp \
+    src/widget/genericchatitemwidget.cpp \
+    src/widget/friendlistlayout.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -528,4 +530,6 @@ HEADERS += \
     src/persistence/settingsserializer.h \
     src/widget/notificationscrollarea.h \
     src/widget/notificationedgewidget.h \
-    src/widget/circlewidget.hpp
+    src/widget/circlewidget.h \
+    src/widget/genericchatitemwidget.h \
+    src/widget/friendlistlayout.h

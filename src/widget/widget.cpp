@@ -68,7 +68,7 @@
 #include <QProcess>
 #include <tox/tox.h>
 
-#include "circlewidget.hpp"
+#include "circlewidget.h"
 
 #ifdef Q_OS_ANDROID
 #define IS_ON_DESKTOP_GUI 0

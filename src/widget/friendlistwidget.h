@@ -29,41 +29,40 @@
 class QVBoxLayout;
 class QGridLayout;
 class QPixmap;
-struct FriendWidget;
 
+class FriendWidget;
 class GroupWidget;
 class CircleWidget;
+class FriendListLayout;
 
 class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FriendListWidget(QWidget *parent = 0, bool groupchatPosition = true);
+    explicit FriendListWidget(QWidget *parent = 0, bool groupsOnTop = true);
+
     void addGroupWidget(GroupWidget *widget);
     void hideGroups(QString searchString, bool hideAll = false);
-    void addCircleWidget(CircleWidget *widget);
-    void hideFriends(QString searchString, Status status, bool hideAll = false);
-    QVBoxLayout* getFriendLayout(Status s);
 
+    void addCircleWidget(CircleWidget *widget);
+
+    void hideFriends(QString searchString, Status status, bool hideAll = false);
     QList<GenericChatroomWidget*> getAllFriends();
+
     void reDraw();
-signals:
 
 public slots:
     void onGroupchatPositionChanged(bool top);
-    void moveWidget(FriendWidget *w, Status s);
+    void moveWidget(FriendWidget *w, Status s, bool add = false);
 
 private:
+    QVBoxLayout* getFriendLayout(Status s);
     enum FriendLayoutType
     {
         Online = 0,
         Offline = 1
     };
-    QVBoxLayout *friendLayouts[2];
-    QVBoxLayout *groupLayout;
-    QVBoxLayout *circleLayout;
-    QVBoxLayout *mainLayout;
-    QList<CircleWidget*> circles;
+    FriendListLayout *listLayout;
 };
 
 #endif // FRIENDLISTWIDGET_H

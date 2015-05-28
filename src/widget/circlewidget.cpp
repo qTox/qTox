@@ -12,7 +12,7 @@
     See the COPYING file for more details.
 */
 
-#include "circlewidget.hpp"
+#include "circlewidget.h"
 #include "src/misc/style.h"
 #include "src/misc/settings.h"
 #include "src/friendlist.h"
@@ -29,20 +29,18 @@
 
 #include <cassert>
 
+#include "friendlistlayout.h"
+
 CircleWidget::CircleWidget(QWidget *parent)
-    : QFrame(parent)
+    : GenericChatItemWidget(parent)
 {
-    setProperty("compact", Settings::getInstance().getCompactLayout());
-
-    setProperty("active", false);
-
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/circleWidget.css"));
 
     QWidget *container = new QWidget(this);
     container->setObjectName("circleWidgetContainer");
     container->setProperty("active", false);
     mainLayout = new QVBoxLayout(this);
-    groupLayout = new QVBoxLayout(this);
+    listLayout = new FriendListLayout(this);
     QHBoxLayout *layout = new QHBoxLayout();
     QVBoxLayout *midLayout = new QVBoxLayout;
     QHBoxLayout *topLayout = new QHBoxLayout;
@@ -119,15 +117,9 @@ CircleWidget::CircleWidget(QWidget *parent)
     setAcceptDrops(true);
 }
 
-bool CircleWidget::isCompact() const
+void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
 {
-    return compact;
-}
-
-void CircleWidget::setCompact(bool compact)
-{
-    this->compact = compact;
-    Style::repolish(this);
+    listLayout->addFriendWidget(w, s);
 }
 
 void CircleWidget::toggle()
@@ -135,17 +127,17 @@ void CircleWidget::toggle()
     visible = !visible;
     if (visible)
     {
-        mainLayout->addLayout(groupLayout);
+        mainLayout->addLayout(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
     }
     else
     {
-        mainLayout->removeItem(groupLayout);
+        mainLayout->removeItem(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
     }
 }
 
-void CircleWidget::mousePressEvent(QMouseEvent *event)
+void CircleWidget::mousePressEvent(QMouseEvent*)
 {
     toggle();
 }
@@ -161,6 +153,9 @@ void CircleWidget::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasFormat("friend"))
     {
+        if (!visible)
+            toggle();
+
         int friendId = event->mimeData()->data("friend").toInt();
         Friend *f = FriendList::findFriend(friendId);
         assert(f != nullptr);
@@ -168,6 +163,6 @@ void CircleWidget::dropEvent(QDropEvent *event)
         FriendWidget *widget = f->getFriendWidget();
         assert(widget != nullptr);
 
-        groupLayout->addWidget(widget);
+        listLayout->addFriendWidget(widget, f->getStatus());
     }
 }

@@ -15,24 +15,24 @@
 #ifndef CIRCLEWIDGET_H
 #define CIRCLEWIDGET_H
 
-#include <QFrame>
+#include "genericchatitemwidget.h"
+#include "src/core/corestructs.h"
 
 class QVBoxLayout;
 class QHBoxLayout;
 class QLabel;
+class FriendListLayout;
+class FriendWidget;
 
-class CircleWidget : public QFrame
+class CircleWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
     CircleWidget(QWidget *parent = 0);
 
-    bool isCompact() const;
-    void setCompact(bool compact);
+    void addFriendWidget(FriendWidget *w, Status s);
 
     void toggle();
-
-    Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
 
 protected:
 
@@ -47,9 +47,8 @@ private:
         Online = 0,
         Offline = 1
     };
-    bool compact, visible = false;
-    QVBoxLayout *friendLayouts[2];
-    QVBoxLayout *groupLayout;
+    bool visible = false;
+    FriendListLayout *listLayout;
     QVBoxLayout *mainLayout;
     QLabel *arrowLabel;
 };

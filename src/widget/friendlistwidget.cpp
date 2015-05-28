@@ -151,7 +151,7 @@ QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
         for (int j = 0; j < subLayout->count(); ++j)
         {
             GenericChatroomWidget* widget =
-                reinterpret_cast<GenericChatroomWidget*>(subLayout->itemAt(j)->widget());
+                dynamic_cast<GenericChatroomWidget*>(subLayout->itemAt(j)->widget());
 
             if(!widget)
                 continue;
@@ -163,28 +163,32 @@ QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
     return friends;
 }
 
-void FriendListWidget::moveWidget(FriendWidget *w, Status s)
+void FriendListWidget::moveWidget(QWidget *w, Status s)
 {
     QVBoxLayout* l = getFriendLayout(s);
     l->removeWidget(w); // In case the widget is already in this layout.
-    Friend* g = FriendList::findFriend(static_cast<FriendWidget*>(w)->friendId);
+    Friend* g = FriendList::findFriend(dynamic_cast<FriendWidget*>(w)->friendId);
 
     // Binary search.
     int min = 0, max = l->count(), mid;
     while (min < max)
     {
         mid = (max - min) / 2 + min;
-        FriendWidget* w1 = static_cast<FriendWidget*>(l->itemAt(mid)->widget());
+        FriendWidget* w1 = dynamic_cast<FriendWidget*>(l->itemAt(mid)->widget());
         assert(w1 != nullptr);
 
         Friend* f = FriendList::findFriend(w1->friendId);
         int compareValue = f->getDisplayedName().localeAwareCompare(g->getDisplayedName());
         if (compareValue > 0)
+        {
             max = mid;
+        }
         else
+        {
             min = mid + 1;
+        }
     }
-    static_assert(std::is_same<decltype(w), FriendWidget*>(), "The layout must only contain FriendWidget*");
+
     l->insertWidget(min, w);
 }
 
