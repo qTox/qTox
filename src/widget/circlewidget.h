@@ -21,14 +21,16 @@
 class QVBoxLayout;
 class QHBoxLayout;
 class QLabel;
+class FriendListWidget;
 class FriendListLayout;
 class FriendWidget;
+class QLineEdit;
 
 class CircleWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    CircleWidget(QWidget *parent = 0);
+    CircleWidget(FriendListWidget *parent = 0);
 
     void addFriendWidget(FriendWidget *w, Status s);
 
@@ -39,7 +41,11 @@ public:
     void updateOnline();
     void updateOffline();
 
+    void renameCircle();
+
 protected:
+
+    void contextMenuEvent(QContextMenuEvent *event);
 
     void mousePressEvent(QMouseEvent *event) override;
 
@@ -60,6 +66,7 @@ private:
     QLabel *onlineLabel;
     QLabel *offlineLabel;
     QWidget *container;
+    QLabel *nameLabel;
 };
 
 #endif // CIRCLEWIDGET_H

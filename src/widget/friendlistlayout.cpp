@@ -90,7 +90,7 @@ int FriendListLayout::friendOnlineCount() const
 
 int FriendListLayout::friendOfflineCount() const
 {
-    return friendLayouts[Offline]->count();
+    return friendLayouts[Offline]->count() + friendOnlineCount();
 }
 
 template <typename WidgetType>

@@ -68,8 +68,6 @@
 #include <QProcess>
 #include <tox/tox.h>
 
-#include "circlewidget.h"
-
 #ifdef Q_OS_ANDROID
 #define IS_ON_DESKTOP_GUI 0
 #else
@@ -1414,7 +1412,7 @@ void Widget::friendListContextMenu(const QPoint &pos)
 
     if (chosenAction == addCircleAction)
     {
-        contactListWidget->addCircleWidget(new CircleWidget);
+        contactListWidget->addCircleWidget();
     }
 }
 
