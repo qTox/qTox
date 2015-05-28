@@ -151,6 +151,14 @@ void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
 {
     if (ev->mimeData()->hasFormat("friend"))
         ev->acceptProposedAction();
+    setAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
+    Style::repolish(this);
+}
+
+void GroupWidget::dragLeaveEvent(QDragLeaveEvent *)
+{
+    setAttribute(Qt::WA_UnderMouse, false);
+    Style::repolish(this);
 }
 
 void GroupWidget::dropEvent(QDropEvent *ev)
@@ -159,6 +167,9 @@ void GroupWidget::dropEvent(QDropEvent *ev)
     {
         int friendId = ev->mimeData()->data("friend").toInt();
         Core::getInstance()->groupInviteFriend(friendId, groupId);
+
+        setAttribute(Qt::WA_UnderMouse, false);
+        Style::repolish(this);
     }
 }
 

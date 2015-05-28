@@ -46,6 +46,8 @@ public:
 
     void addCircleWidget(CircleWidget *widget);
 
+    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
+
     void hideFriends(QString searchString, Status status, bool hideAll = false);
     QList<GenericChatroomWidget*> getAllFriends();
 
@@ -63,6 +65,7 @@ private:
         Offline = 1
     };
     FriendListLayout *listLayout;
+    QVBoxLayout *circleLayout;
 };
 
 #endif // FRIENDLISTWIDGET_H

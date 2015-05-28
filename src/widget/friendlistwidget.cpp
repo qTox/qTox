@@ -23,57 +23,31 @@
 #include "src/friendlist.h"
 #include "src/widget/friendwidget.h"
 #include "groupwidget.h"
-#include "circlewidget.hpp"
+#include "circlewidget.h"
+#include "friendlistlayout.h"
 #include <cassert>
 
-FriendListWidget::FriendListWidget(QWidget *parent, bool groupchatPosition) :
+FriendListWidget::FriendListWidget(QWidget *parent, bool groupsOnTop) :
     QWidget(parent)
 {
-    mainLayout = new QVBoxLayout();
-    setLayout(mainLayout);
+    listLayout = new FriendListLayout(this, groupsOnTop);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    layout()->setSpacing(0);
-    layout()->setMargin(0);
-
-    groupLayout = new QVBoxLayout();
-    groupLayout->setSpacing(0);
-    groupLayout->setMargin(0);
-
-    friendLayouts[Online] = new QVBoxLayout();
-    friendLayouts[Online]->setSpacing(0);
-    friendLayouts[Online]->setMargin(0);
-
-    friendLayouts[Offline] = new QVBoxLayout();
-    friendLayouts[Offline]->setSpacing(0);
-    friendLayouts[Offline]->setMargin(0);
 
     circleLayout = new QVBoxLayout();
     circleLayout->setSpacing(0);
     circleLayout->setMargin(0);
 
-    if (groupchatPosition)
-    {
-        mainLayout->addLayout(groupLayout);
-        mainLayout->addLayout(friendLayouts[Online]);
-        mainLayout->addLayout(friendLayouts[Offline]);
-    }
-    else
-    {
-        mainLayout->addLayout(friendLayouts[Online]);
-        mainLayout->addLayout(groupLayout);
-        mainLayout->addLayout(friendLayouts[Offline]);
-    }
-    mainLayout->addLayout(circleLayout);
+    listLayout->addLayout(circleLayout);
 }
 
 void FriendListWidget::addGroupWidget(GroupWidget *widget)
 {
-    groupLayout->addWidget(widget);
+    listLayout->groupLayout->addWidget(widget);
 }
 
 void FriendListWidget::hideGroups(QString searchString, bool hideAll)
 {
-    QVBoxLayout* groups = groupLayout;
+    QVBoxLayout* groups = listLayout->groupLayout;
     int groupCount = groups->count(), index;
 
     for (index = 0; index<groupCount; index++)
@@ -81,16 +55,23 @@ void FriendListWidget::hideGroups(QString searchString, bool hideAll)
         GroupWidget* groupWidget = static_cast<GroupWidget*>(groups->itemAt(index)->widget());
         QString groupName = groupWidget->getName();
 
-        if (!groupName.contains(searchString, Qt::CaseInsensitive) | hideAll)
-            groupWidget->setVisible(false);
-        else
-            groupWidget->setVisible(true);
+        groupWidget->setVisible(groupName.contains(searchString, Qt::CaseInsensitive) && !hideAll);
     }
 }
 
 void FriendListWidget::addCircleWidget(CircleWidget *widget)
 {
     circleLayout->addWidget(widget);
+}
+
+void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
+{
+    listLayout->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
+    for (int i = 0; i != circleLayout->count(); ++i)
+    {
+        CircleWidget *circleWidget = static_cast<CircleWidget*>(circleLayout->itemAt(i)->widget());
+        circleWidget->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
+    }
 }
 
 void FriendListWidget::hideFriends(QString searchString, Status status, bool hideAll)
@@ -103,47 +84,40 @@ void FriendListWidget::hideFriends(QString searchString, Status status, bool hid
         FriendWidget* friendWidget = static_cast<FriendWidget*>(friends->itemAt(index)->widget());
         QString friendName = friendWidget->getName();
 
-        if (!friendName.contains(searchString, Qt::CaseInsensitive) | hideAll)
-            friendWidget->setVisible(false);
-        else
-            friendWidget->setVisible(true);
+        friendWidget->setVisible(friendName.contains(searchString, Qt::CaseInsensitive) && !hideAll);
     }
 }
 
 QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
 {
-    if (s == Status::Offline)
-    {
-        return friendLayouts[Offline];
-    }
-    return friendLayouts[Online];
+    return s == Status::Offline ? listLayout->friendLayouts[Offline] : listLayout->friendLayouts[Online];
 }
 
 void FriendListWidget::onGroupchatPositionChanged(bool top)
 {
-    mainLayout->removeItem(circleLayout);
-    mainLayout->removeItem(groupLayout);
-    mainLayout->removeItem(getFriendLayout(Status::Online));
+    listLayout->removeItem(circleLayout);
+    listLayout->removeItem(listLayout->groupLayout);
+    listLayout->removeItem(listLayout->friendLayouts[Online]);
     if (top)
     {
-        mainLayout->addLayout(groupLayout);
-        mainLayout->addLayout(friendLayouts[Online]);
+        listLayout->addLayout(listLayout->groupLayout);
+        listLayout->addLayout(listLayout->friendLayouts[Online]);
     }
     else
     {
-        mainLayout->addLayout(friendLayouts[Online]);
-        mainLayout->addLayout(groupLayout);
+        listLayout->addLayout(listLayout->friendLayouts[Online]);
+        listLayout->addLayout(listLayout->groupLayout);
     }
-    mainLayout->addLayout(circleLayout);
+    listLayout->addLayout(circleLayout);
 }
 
 QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
 {
     QList<GenericChatroomWidget*> friends;
 
-    for (int i = 0; i < mainLayout->count(); ++i)
+    for (int i = 0; i < listLayout->count(); ++i)
     {
-        QLayout* subLayout = mainLayout->itemAt(i)->layout();
+        QLayout* subLayout = listLayout->itemAt(i)->layout();
 
         if(!subLayout)
             continue;
@@ -163,33 +137,17 @@ QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
     return friends;
 }
 
-void FriendListWidget::moveWidget(QWidget *w, Status s)
+void FriendListWidget::moveWidget(FriendWidget *w, Status s, bool add)
 {
-    QVBoxLayout* l = getFriendLayout(s);
-    l->removeWidget(w); // In case the widget is already in this layout.
-    Friend* g = FriendList::findFriend(dynamic_cast<FriendWidget*>(w)->friendId);
+    CircleWidget *circleWidget = dynamic_cast<CircleWidget*>(w->parent());
 
-    // Binary search.
-    int min = 0, max = l->count(), mid;
-    while (min < max)
+    if (circleWidget == nullptr || add)
     {
-        mid = (max - min) / 2 + min;
-        FriendWidget* w1 = dynamic_cast<FriendWidget*>(l->itemAt(mid)->widget());
-        assert(w1 != nullptr);
-
-        Friend* f = FriendList::findFriend(w1->friendId);
-        int compareValue = f->getDisplayedName().localeAwareCompare(g->getDisplayedName());
-        if (compareValue > 0)
-        {
-            max = mid;
-        }
-        else
-        {
-            min = mid + 1;
-        }
+        listLayout->addFriendWidget(w, s);
+        return;
     }
 
-    l->insertWidget(min, w);
+    circleWidget->addFriendWidget(w, s);
 }
 
 // update widget after add/delete/hide/show

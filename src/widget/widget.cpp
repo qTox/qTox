@@ -1388,34 +1388,19 @@ void Widget::searchContacts()
     switch(filter)
     {
         case FilterCriteria::All:
-            contactListWidget->hideFriends(searchString, Status::Online);
-            contactListWidget->hideFriends(searchString, Status::Offline);
-
-            contactListWidget->hideGroups(searchString);
+            contactListWidget->searchChatrooms(searchString, false, false, false);
             break;
         case FilterCriteria::Online:
-            contactListWidget->hideFriends(searchString, Status::Online);
-            contactListWidget->hideFriends(QString(), Status::Offline, true);
-
-            contactListWidget->hideGroups(searchString);
+            contactListWidget->searchChatrooms(searchString, false, true, false);
             break;
         case FilterCriteria::Offline:
-            contactListWidget->hideFriends(QString(), Status::Online, true);
-            contactListWidget->hideFriends(searchString, Status::Offline);
-
-            contactListWidget->hideGroups(QString(), true);
+            contactListWidget->searchChatrooms(searchString, true, false, true);
             break;
         case FilterCriteria::Friends:
-            contactListWidget->hideFriends(searchString, Status::Online);
-            contactListWidget->hideFriends(searchString, Status::Offline);
-
-            contactListWidget->hideGroups(QString(), true);
+            contactListWidget->searchChatrooms(searchString, false, false, true);
             break;
         case FilterCriteria::Groups:
-            contactListWidget->hideFriends(QString(), Status::Online, true);
-            contactListWidget->hideFriends(QString(), Status::Offline, true);
-
-            contactListWidget->hideGroups(searchString);
+            contactListWidget->searchChatrooms(searchString, true, true, false);
             break;
         default:
             return;

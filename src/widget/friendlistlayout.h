@@ -29,10 +29,10 @@ public:
     explicit FriendListLayout(QWidget *parent, bool groupsOnTop = true);
 
     void addGroupWidget(GroupWidget *widget);
-    void addCircleWidget(CircleWidget *widget);
     void addFriendWidget(FriendWidget *widget, Status s);
 
-    virtual void addItem(QLayoutItem *) override;
+    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
+    bool hasChatrooms() const;
 
 public:
     QVBoxLayout* getFriendLayout(Status s);
@@ -44,7 +44,6 @@ public:
     };
     QVBoxLayout *friendLayouts[2];
     QVBoxLayout *groupLayout;
-    QVBoxLayout *circleLayout;
 };
 
 #endif // GENERICFRIENDLISTWIDGET_H
