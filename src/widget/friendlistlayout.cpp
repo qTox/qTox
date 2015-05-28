@@ -18,6 +18,11 @@
 #include "friendwidget.h"
 #include <cassert>
 
+#include "groupwidget.h"
+#include "friendwidget.h"
+
+#include <QDebug>
+
 FriendListLayout::FriendListLayout(QWidget *parent, bool groupsOnTop)
     : QVBoxLayout(parent)
 {
@@ -37,10 +42,6 @@ FriendListLayout::FriendListLayout(QWidget *parent, bool groupsOnTop)
     friendLayouts[Offline]->setSpacing(0);
     friendLayouts[Offline]->setMargin(0);
 
-    circleLayout = new QVBoxLayout();
-    circleLayout->setSpacing(0);
-    circleLayout->setMargin(0);
-
     if (groupsOnTop)
     {
         QVBoxLayout::addLayout(groupLayout);
@@ -53,7 +54,6 @@ FriendListLayout::FriendListLayout(QWidget *parent, bool groupsOnTop)
         QVBoxLayout::addLayout(groupLayout);
         QVBoxLayout::addLayout(friendLayouts[Offline]);
     }
-    QVBoxLayout::addLayout(circleLayout);
 }
 
 void FriendListLayout::addFriendWidget(FriendWidget *w, Status s)
@@ -85,9 +85,28 @@ void FriendListLayout::addFriendWidget(FriendWidget *w, Status s)
     l->insertWidget(min, w);
 }
 
-void FriendListLayout::addItem(QLayoutItem *)
+template <typename WidgetType>
+void searchHelper(const QString &searchString, QBoxLayout *boxLayout, bool hideAll)
 {
-    // Must add items through addFriendWidget, addGroupWidget or addCircleWidget.
+    for (int index = 0; index < boxLayout->count(); ++index)
+    {
+        WidgetType* widgetAt = static_cast<WidgetType*>(boxLayout->itemAt(index)->widget());
+        QString widgetName = widgetAt->getName();
+
+        widgetAt->setVisible(!hideAll && widgetName.contains(searchString, Qt::CaseInsensitive));
+    }
+}
+
+void FriendListLayout::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
+{
+    searchHelper<GroupWidget>(searchString, groupLayout, hideGroups);
+    searchHelper<FriendWidget>(searchString, friendLayouts[Online], hideOnline);
+    searchHelper<FriendWidget>(searchString, friendLayouts[Offline], hideOffline);
+}
+
+bool FriendListLayout::hasChatrooms() const
+{
+    return !groupLayout->isEmpty() || !friendLayouts[Online]->isEmpty() || !friendLayouts[Offline]->isEmpty();
 }
 
 QVBoxLayout* FriendListLayout::getFriendLayout(Status s)

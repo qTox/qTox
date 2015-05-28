@@ -32,6 +32,8 @@ public:
 
     void addFriendWidget(FriendWidget *w, Status s);
 
+    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
+
     void toggle();
 
 protected:
@@ -39,6 +41,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
     void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragLeaveEvent(QDragLeaveEvent *event) override;
     void dropEvent(QDropEvent* event) override;
 
 private:
@@ -51,6 +54,7 @@ private:
     FriendListLayout *listLayout;
     QVBoxLayout *mainLayout;
     QLabel *arrowLabel;
+    QWidget *container;
 };
 
 #endif // CIRCLEWIDGET_H

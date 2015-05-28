@@ -45,7 +45,10 @@ signals:
 protected:
     // drag & drop
     virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
+    virtual void dragLeaveEvent(QDragLeaveEvent* ev);
     virtual void dropEvent(QDropEvent* ev) final override;
+    virtual void keyPressEvent(QKeyEvent* ev);
+    virtual void keyReleaseEvent(QKeyEvent* ev);
 
 public:
     int groupId;

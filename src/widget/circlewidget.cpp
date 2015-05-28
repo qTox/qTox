@@ -21,6 +21,7 @@
 #include <QVariant>
 #include <QLabel>
 #include <QBoxLayout>
+#include <QMouseEvent>
 
 #include <QDragEnterEvent>
 #include <QMimeData>
@@ -36,7 +37,7 @@ CircleWidget::CircleWidget(QWidget *parent)
 {
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/circleWidget.css"));
 
-    QWidget *container = new QWidget(this);
+    container = new QWidget(this);
     container->setObjectName("circleWidgetContainer");
     container->setProperty("active", false);
     mainLayout = new QVBoxLayout(this);
@@ -137,16 +138,29 @@ void CircleWidget::toggle()
     }
 }
 
-void CircleWidget::mousePressEvent(QMouseEvent*)
+void CircleWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
 {
-    toggle();
+    listLayout->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
+}
+
+void CircleWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+        toggle();
 }
 
 void CircleWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-  qDebug() << event->mimeData();
     if (event->mimeData()->hasFormat("friend"))
         event->acceptProposedAction();
+    container->setAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
+    Style::repolish(container);
+}
+
+void CircleWidget::dragLeaveEvent(QDragLeaveEvent *)
+{
+    container->setAttribute(Qt::WA_UnderMouse, false);
+    Style::repolish(container);
 }
 
 void CircleWidget::dropEvent(QDropEvent *event)
@@ -164,5 +178,8 @@ void CircleWidget::dropEvent(QDropEvent *event)
         assert(widget != nullptr);
 
         listLayout->addFriendWidget(widget, f->getStatus());
+
+        container->setAttribute(Qt::WA_UnderMouse, false);
+        Style::repolish(container);
     }
 }
