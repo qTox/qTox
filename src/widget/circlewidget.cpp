@@ -67,8 +67,6 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
     QFrame *lineFrame = new QFrame(container);
     lineFrame->setObjectName("line");
     lineFrame->setFrameShape(QFrame::HLine);
-    //topLayout->addSpacing(5);
-    //topLayout->addWidget(lineFrame, 1);
 
     midLayout->addLayout(topLayout);
     midLayout->addWidget(lineFrame);
@@ -77,38 +75,11 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
 
     QHBoxLayout *statusLayout = new QHBoxLayout();
 
-    //QLabel *onlineIconLabel = new QLabel(container);
-    //onlineIconLabel->setAlignment(Qt::AlignCenter);
-    //onlineIconLabel->setPixmap(QPixmap(":img/status/dot_online.svg"));
     onlineLabel = new QLabel("0", container);
     onlineLabel->setObjectName("status");
 
-    /*QLabel *awayIconLabel = new QLabel(container);
-    awayIconLabel->setAlignment(Qt::AlignCenter);
-    awayIconLabel->setPixmap(QPixmap(":img/status/dot_away.svg"));
-    QLabel *awayLabel = new QLabel("0", container);
-    awayLabel->setObjectName("status");*/
-
-    //QLabel *offlineIconLabel = new QLabel(container);
-    //offlineIconLabel->setAlignment(Qt::AlignCenter);
-    //offlineIconLabel->setPixmap(QPixmap(":img/status/dot_offline.svg"));
-    //offlineLabel = new QLabel("0", container);
-    //offlineLabel->setObjectName("status");
-
-    //statusLayout->addWidget(onlineIconLabel);
-    //statusLayout->addSpacing(2);
     statusLayout->addWidget(onlineLabel);
-    //statusLayout->addSpacing(10);
-    //statusLayout->addWidget(awayIconLabel);
-    //statusLayout->addSpacing(5);
-    //statusLayout->addWidget(awayLabel);
-    //statusLayout->addSpacing(10);
-    //statusLayout->addWidget(offlineIconLabel);
-    //statusLayout->addSpacing(2);
-    //statusLayout->addWidget(offlineLabel);
-    //statusLayout->addStretch();
 
-    //midLayout->addLayout(statusLayout);
     topLayout->addStretch();
     topLayout->addLayout(statusLayout);
 
@@ -133,6 +104,13 @@ void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
         updateOnline();
 }
 
+void CircleWidget::expand()
+{
+    if (expanded)
+        return;
+    toggle();
+}
+
 void CircleWidget::toggle()
 {
     expanded = !expanded;
@@ -151,6 +129,11 @@ void CircleWidget::toggle()
 void CircleWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
 {
     listLayout->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
+}
+
+QString CircleWidget::getName() const
+{
+    return nameLabel->text();
 }
 
 void CircleWidget::renameCircle()
@@ -173,6 +156,11 @@ void CircleWidget::renameCircle()
     });
 }
 
+void CircleWidget::onCompactChanged(bool compact)
+{
+
+}
+
 void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu;
@@ -188,21 +176,17 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
         while (listLayout->friendLayouts[Online]->count() != 0)
         {
             QWidget *getWidget = listLayout->friendLayouts[Online]->takeAt(0)->widget();
-            qDebug() << getWidget;
             assert(getWidget != nullptr);
 
             FriendWidget *friendWidget = dynamic_cast<FriendWidget*>(getWidget);
-            qDebug() << friendWidget;
             friendList->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
         }
         while (listLayout->friendLayouts[Offline]->count() != 0)
         {
             QWidget *getWidget = listLayout->friendLayouts[Offline]->takeAt(0)->widget();
-            qDebug() << getWidget;
-            assert(getWidget != nullptr);
+             assert(getWidget != nullptr);
 
             FriendWidget *friendWidget = dynamic_cast<FriendWidget*>(getWidget);
-            qDebug() << friendWidget;
             friendList->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
         }
 
