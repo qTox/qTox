@@ -51,10 +51,15 @@ void FriendListWidget::addGroupWidget(GroupWidget *widget)
     listLayout->groupLayout->addWidget(widget);
 }
 
-void FriendListWidget::addCircleWidget()
+void FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
 {
     CircleWidget *circleWidget = new CircleWidget(this);
     circleLayout->addWidget(circleWidget);
+    if (friendWidget != nullptr)
+    {
+        circleWidget->addFriendWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus());
+        circleWidget->toggle();
+    }
     circleWidget->show(); // Avoid flickering.
 }
 
@@ -62,7 +67,7 @@ void FriendListWidget::removeCircleWidget(CircleWidget *widget)
 {
     //setUpdatesEnabled(false);
     //widget->setVisible(false);
-    //circleLayout->removeWidget(widget);
+    circleLayout->removeWidget(widget);
     widget->deleteLater();
     //setUpdatesEnabled(true);
     //widget->deleteLater();
@@ -125,6 +130,17 @@ QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
     }
 
     return friends;
+}
+
+QVector<CircleWidget*> FriendListWidget::getAllCircles()
+{
+    QVector<CircleWidget*> vec;
+    vec.reserve(circleLayout->count());
+    for (int i = 0; i < circleLayout->count(); ++i)
+    {
+        vec.push_back(dynamic_cast<CircleWidget*>(circleLayout->itemAt(i)->widget()));
+    }
+    return vec;
 }
 
 void FriendListWidget::dragEnterEvent(QDragEnterEvent *event)

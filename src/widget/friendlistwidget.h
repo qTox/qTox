@@ -23,6 +23,7 @@
 #include <QWidget>
 #include <QHash>
 #include <QList>
+#include <QVector>
 #include "src/core/corestructs.h"
 #include "src/widget/genericchatroomwidget.h"
 
@@ -43,12 +44,13 @@ public:
 
     void addGroupWidget(GroupWidget *widget);
 
-    void addCircleWidget();
+    void addCircleWidget(FriendWidget *widget = nullptr);
     void removeCircleWidget(CircleWidget *widget);
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
     QList<GenericChatroomWidget*> getAllFriends();
+    QVector<CircleWidget*> getAllCircles();
 
     void reDraw();
 

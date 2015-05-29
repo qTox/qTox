@@ -36,12 +36,17 @@ public:
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
+    void expand();
     void toggle();
 
     void updateOnline();
     void updateOffline();
 
+    QString getName() const;
     void renameCircle();
+
+public slots:
+    void onCompactChanged(bool compact);
 
 protected:
 
@@ -64,7 +69,6 @@ private:
     QVBoxLayout *mainLayout;
     QLabel *arrowLabel;
     QLabel *onlineLabel;
-    QLabel *offlineLabel;
     QWidget *container;
     QLabel *nameLabel;
 };

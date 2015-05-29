@@ -38,6 +38,10 @@
 #include <QDebug>
 #include <QInputDialog>
 
+#include "circlewidget.h"
+#include "friendlistwidget.h"
+#include <cassert>
+
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
     , isDefaultAvatar{true}
@@ -71,9 +75,29 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
 
-    circleMenu->addAction(tr("To new circle"));
-    circleMenu->addAction(tr("Remove from this circle"));
+    CircleWidget *circleWidget = dynamic_cast<CircleWidget*>(parentWidget());
+
+    QAction* newCircleAction = circleMenu->addAction(tr("To new circle"));
+    QAction *removeCircleAction;
+    if (circleWidget != nullptr)
+        removeCircleAction = circleMenu->addAction(tr("Remove from this circle"));
     circleMenu->addSeparator();
+
+    FriendListWidget *friendList;
+    if (circleWidget == nullptr)
+        friendList = dynamic_cast<FriendListWidget*>(parentWidget());
+    else
+        friendList = dynamic_cast<FriendListWidget*>(circleWidget->parentWidget());
+
+    assert(friendList != nullptr);
+
+    QVector<CircleWidget*> circleVec = friendList->getAllCircles();
+    QMap<QAction*, CircleWidget*> circleActions;
+    for (CircleWidget* circle : circleVec)
+    {
+        QAction* circleAction = circleMenu->addAction(tr("Add to circle \"%1\"").arg(circle->getName()));
+        circleActions[circleAction] = circle;
+    }
 
     QAction* setAlias = menu.addAction(tr("Set alias..."));
 
@@ -119,10 +143,24 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 Settings::getInstance().setAutoAcceptDir(id, dir);
             }
         }
+        else if (selectedItem == newCircleAction)
+        {
+            friendList->addCircleWidget(this);
+        }
         else if (groupActions.contains(selectedItem))
         {
             Group* group = groupActions[selectedItem];
             Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
+        }
+        else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
+        {
+            friendList->moveWidget(this, FriendList::findFriend(friendId)->getStatus(), true);
+        }
+        else if (circleActions.contains(selectedItem))
+        {
+            CircleWidget* circle = circleActions[selectedItem];
+            circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
+            circle->expand();
         }
     }
 }
