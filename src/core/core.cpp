@@ -425,7 +425,7 @@ void Core::bootstrapDht()
     {
         const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap(tox, dhtServer.address.toLatin1().data(),
-            dhtServer.port, CUserId(dhtServer.userId).data(), nullptr) == 1)
+            dhtServer.port, CUserId(dhtServer.userId).data(), nullptr))
         {
             qDebug() << "Bootstrapping from " + dhtServer.name
                         + ", addr " + dhtServer.address.toLatin1().data()
@@ -434,6 +434,18 @@ void Core::bootstrapDht()
         else
         {
             qDebug() << "Error bootstrapping from "+dhtServer.name;
+        }
+
+        if (tox_add_tcp_relay(tox, dhtServer.address.toLatin1().data(),
+            dhtServer.port, CUserId(dhtServer.userId).data(), nullptr))
+        {
+            qDebug() << "Adding TCP relay from " + dhtServer.name
+                        + ", addr " + dhtServer.address.toLatin1().data()
+                        + ", port " + QString().setNum(dhtServer.port);
+        }
+        else
+        {
+            qDebug() << "Error adding TCP relay from "+dhtServer.name;
         }
 
         j++;
