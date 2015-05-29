@@ -179,9 +179,15 @@ void Core::make_tox(QByteArray savedata)
             toxOptions.proxy_port = proxyPort;
         }
     }
+    
+    if (!savedata.isEmpty()) {
+        toxOptions.savedata_type = TOX_SAVEDATA_TYPE_TOX_SAVE;
+        toxOptions.savedata_data = (uint8_t*)savedata.data();
+        toxOptions.savedata_length = savedata.size();
+    }
 
     TOX_ERR_NEW tox_err;
-    tox = tox_new(&toxOptions, (uint8_t*)savedata.data(), savedata.size(), &tox_err);
+    tox = tox_new(&toxOptions, &tox_err);
 
     switch (tox_err)
     {
@@ -191,7 +197,7 @@ void Core::make_tox(QByteArray savedata)
             if (enableIPv6)
             {
                 toxOptions.ipv6_enabled = false;
-                tox = tox_new(&toxOptions, (uint8_t*)savedata.data(), savedata.size(), &tox_err);
+                tox = tox_new(&toxOptions, &tox_err);
                 if (tox_err == TOX_ERR_NEW_OK)
                 {
                     qWarning() << "Core failed to start with IPv6, falling back to IPv4. LAN discovery may not work properly.";
