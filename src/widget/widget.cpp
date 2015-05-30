@@ -29,6 +29,7 @@
 #include "src/group.h"
 #include "groupwidget.h"
 #include "form/groupchatform.h"
+#include "circlewidget.h"
 #include "src/widget/style.h"
 #include "friendlistwidget.h"
 #include "form/chatform.h"
@@ -232,6 +233,9 @@ void Widget::init()
 
     if (!Settings::getInstance().getShowSystemTray())
         show();
+
+    for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+        contactListWidget->addCircleWidget(Settings::getInstance().getCircleName(i));
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
@@ -577,7 +581,7 @@ void Widget::addFriend(int friendId, const QString &userId)
 {
     ToxId userToxId = ToxId(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
-    contactListWidget->moveWidget(newfriend->getFriendWidget(),Status::Offline);
+    contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleIndex(newfriend->getToxId()));
 
     Core* core = Nexus::getCore();
     connect(newfriend, &Friend::displayedNameChanged, contactListWidget, &FriendListWidget::moveWidget);
@@ -1415,7 +1419,8 @@ void Widget::friendListContextMenu(const QPoint &pos)
 
     if (chosenAction == addCircleAction)
     {
-        contactListWidget->addCircleWidget();
+        CircleWidget *newcircle = contactListWidget->addCircleWidget();
+        connect(settingsWidget, &SettingsWidget::compactToggled, newcircle, &CircleWidget::onCompactChanged);
     }
 }
 

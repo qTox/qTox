@@ -62,7 +62,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
-    QMenu* circleMenu = menu.addMenu(tr("Move to circle", "Menu to move a friend into a different circle"));
+    QMenu* circleMenu = menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
     QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
     QMap<QAction*, Group*> groupActions;
 
@@ -95,8 +95,11 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QMap<QAction*, CircleWidget*> circleActions;
     for (CircleWidget* circle : circleVec)
     {
-        QAction* circleAction = circleMenu->addAction(tr("Add to circle \"%1\"").arg(circle->getName()));
-        circleActions[circleAction] = circle;
+        if (circle != circleWidget)
+        {
+            QAction* circleAction = circleMenu->addAction(tr("Move  to circle \"%1\"").arg(circle->getName()));
+            circleActions[circleAction] = circle;
+        }
     }
 
     QAction* setAlias = menu.addAction(tr("Set alias..."));

@@ -228,6 +228,9 @@ public:
     QString getFriendAlias(const ToxId &id) const;
     void setFriendAlias(const ToxId &id, const QString &alias);
 
+    int getFriendCircleIndex(const ToxId &id) const;
+    void setFriendCircleIndex(const ToxId &id, int index);
+
     void removeFriendSettings(const ToxId &id);
 
     bool getFauxOfflineMessaging() const;
@@ -241,6 +244,11 @@ public:
 
     bool getAutoLogin() const;
     void setAutoLogin(bool state);
+
+    int getCircleCount() const;
+    void addCircle(const QString &name);
+    QString getCircleName(int index) const;
+    void setCircleName(int index);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -357,9 +365,12 @@ private:
         QString alias;
         QString addr;
         QString autoAcceptDir;
+        int circleIndex;
     };
 
     QHash<QString, friendProp> friendLst;
+
+    QVector<QString> circleLst;
 
     int themeColor;
 

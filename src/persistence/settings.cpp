@@ -287,6 +287,7 @@ void Settings::loadPersonnal(Profile* profile)
     friendLst.clear();
     ps.beginGroup("Friends");
         int size = ps.beginReadArray("Friend");
+        friendLst.reserve(size);
         for (int i = 0; i < size; i ++)
         {
             ps.setArrayIndex(i);
@@ -294,6 +295,7 @@ void Settings::loadPersonnal(Profile* profile)
             fp.addr = ps.value("addr").toString();
             fp.alias = ps.value("alias").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
+            fp.circleIndex = ps.value("circle", -1).toInt();
             friendLst[ToxId(fp.addr).publicKey] = fp;
         }
         ps.endArray();
@@ -301,6 +303,17 @@ void Settings::loadPersonnal(Profile* profile)
 
     ps.beginGroup("General");
         compactLayout = ps.value("compactLayout", false).toBool();
+    ps.endGroup();
+
+    ps.beginGroup("Circles");
+        size = ps.beginReadArray("Circle");
+        circleLst.reserve(size);
+        for (int i = 0; i < size; i ++)
+        {
+            ps.setArrayIndex(i);
+            circleLst.push_back(ps.value("name").toString());
+        }
+        ps.endArray();
     ps.endGroup();
 
     ps.beginGroup("Privacy");
@@ -450,6 +463,7 @@ void Settings::savePersonal(QString profileName, QString password)
             ps.setValue("addr", frnd.addr);
             ps.setValue("alias", frnd.alias);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
+            ps.setValue("circle", frnd.circleIndex);
             index++;
         }
         ps.endArray();
@@ -457,6 +471,18 @@ void Settings::savePersonal(QString profileName, QString password)
 
     ps.beginGroup("General");
         ps.setValue("compactLayout", compactLayout);
+    ps.endGroup();
+
+    ps.beginGroup("Circles");
+        ps.beginWriteArray("Circle", circleLst.size());
+        index = 0;
+        for (auto& circle : circleLst)
+        {
+            ps.setArrayIndex(index);
+            ps.setValue("name", circle);
+            index++;
+        }
+        ps.endArray();
     ps.endGroup();
 
     ps.beginGroup("Privacy");
@@ -1255,6 +1281,16 @@ void Settings::setFriendAlias(const ToxId &id, const QString &alias)
     }
 }
 
+int Settings::getFriendCircleIndex(const ToxId &id) const
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+        return it->circleIndex;
+
+    return -1;
+}
+
 void Settings::removeFriendSettings(const ToxId &id)
 {
     QMutexLocker locker{&bigLock};
@@ -1296,6 +1332,16 @@ void Settings::setGroupchatPosition(bool value)
 {
     QMutexLocker locker{&bigLock};
     groupchatPosition = value;
+}
+
+int Settings::getCircleCount() const
+{
+    return circleLst.size();
+}
+
+QString Settings::getCircleName(int index) const
+{
+    return circleLst[index];
 }
 
 int Settings::getThemeColor() const

@@ -42,66 +42,44 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
 
     container = new QWidget(this);
     container->setObjectName("circleWidgetContainer");
-    container->setProperty("active", false);
-    mainLayout = new QVBoxLayout(this);
-    listLayout = new FriendListLayout();
-    QHBoxLayout *layout = new QHBoxLayout();
-    QVBoxLayout *midLayout = new QVBoxLayout;
-    QHBoxLayout *topLayout = new QHBoxLayout;
+    container->setLayoutDirection(Qt::LeftToRight);
 
-    this->layout()->setSpacing(0);
-    this->layout()->setMargin(0);
-    container->setFixedHeight(55);
-    setLayoutDirection(Qt::LeftToRight);
+    // status text
+    statusLabel = new QLabel("0 / 0", this);
+    statusLabel->setObjectName("status");
+    statusLabel->setTextFormat(Qt::PlainText);
 
-    midLayout->addStretch();
-
-    arrowLabel = new QLabel(">", container);
-    arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
-    arrowLabel->setStyleSheet("color: white;");
-    topLayout->addWidget(arrowLabel);
-    topLayout->addSpacing(5);
-    nameLabel = new QLabel("Circle", container);
+    // name text
+    nameLabel = new QLabel(this);
     nameLabel->setObjectName("name");
-    topLayout->addWidget(nameLabel);
-    QFrame *lineFrame = new QFrame(container);
+    nameLabel->setTextFormat(Qt::PlainText);
+    nameLabel->setText("Circle");
+
+    arrowLabel = new QLabel(this);
+    arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
+
+    fullLayout = new QVBoxLayout(this);
+    fullLayout->setSpacing(0);
+    fullLayout->setMargin(0);
+    fullLayout->addWidget(container);
+
+    lineFrame = new QFrame(container);
     lineFrame->setObjectName("line");
     lineFrame->setFrameShape(QFrame::HLine);
 
-    midLayout->addLayout(topLayout);
-    midLayout->addWidget(lineFrame);
-
-    midLayout->addStretch();
-
-    QHBoxLayout *statusLayout = new QHBoxLayout();
-
-    onlineLabel = new QLabel("0", container);
-    onlineLabel->setObjectName("status");
-
-    statusLayout->addWidget(onlineLabel);
-
-    topLayout->addStretch();
-    topLayout->addLayout(statusLayout);
-
-    midLayout->addStretch();
-
-    layout->addSpacing(10);
-    layout->addLayout(midLayout);
-    layout->addSpacing(10);
-
-    container->setLayout(layout);
-    mainLayout->addWidget(container);
+    listLayout = new FriendListLayout();
 
     setAcceptDrops(true);
+
+    onCompactChanged(isCompact());
+
+    //renameCircle();
 }
 
 void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
 {
     listLayout->addFriendWidget(w, s);
-    //if (s == Status::Offline)
-        updateOffline();
-    //else
-        updateOnline();
+    updateStatus();
 }
 
 void CircleWidget::expand()
@@ -116,12 +94,12 @@ void CircleWidget::toggle()
     expanded = !expanded;
     if (expanded)
     {
-        mainLayout->addLayout(listLayout);
+        fullLayout->addLayout(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
     }
     else
     {
-        mainLayout->removeItem(listLayout);
+        fullLayout->removeItem(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
     }
 }
@@ -136,29 +114,92 @@ QString CircleWidget::getName() const
     return nameLabel->text();
 }
 
+void CircleWidget::setName(const QString &name)
+{
+    nameLabel->setText(name);
+}
+
 void CircleWidget::renameCircle()
 {
     qDebug() << nameLabel->parentWidget()->layout();
     QLineEdit *lineEdit = new QLineEdit(nameLabel->text());
-    lineEdit->show();
+    topLayout->removeWidget(nameLabel);
+    topLayout->insertWidget(3, lineEdit);
+    nameLabel->setVisible(false);
+    //topLayout->replaceWidget(nameLabel, lineEdit);
     //nameLabel->parentWidget()->layout()
     //static_cast<QBoxLayout*>(nameLabel->parentWidget()->layout())->insertWidget(nameLabel->parentWidget()->layout()->indexOf(nameLabel) - 1, lineEdit);
     //nameLabel->parentWidget()->layout()->replaceWidget(nameLabel, lineEdit);
-    nameLabel->setVisible(false);
+    //nameLabel->setVisible(false);
     lineEdit->selectAll();
     lineEdit->setFocus();
     connect(lineEdit, &QLineEdit::editingFinished, [this, lineEdit]()
     {
-        nameLabel->setVisible(true);
+        this->topLayout->removeWidget(lineEdit);
+        this->topLayout->insertWidget(3, nameLabel);
+        //this->topLayout->replaceWidget(lineEdit, nameLabel);
+        //this->nameLabel->setVisible(true);
         //lineEdit->parentWidget()->layout()->replaceWidget(lineEdit, nameLabel);
-        nameLabel->setText(lineEdit->text());
+        this->nameLabel->setText(lineEdit->text());
+        nameLabel->setVisible(true);
         lineEdit->deleteLater();
     });
 }
 
-void CircleWidget::onCompactChanged(bool compact)
+void CircleWidget::onCompactChanged(bool _compact)
 {
+    delete topLayout;
+    delete mainLayout;
 
+    topLayout = new QHBoxLayout;
+    topLayout->setSpacing(0);
+    topLayout->setMargin(0);
+
+    setProperty("compact", _compact);
+
+    if (property("compact").toBool())
+    {
+        mainLayout = nullptr;
+
+        container->setFixedHeight(25);
+        container->setLayout(topLayout);
+
+        topLayout->addSpacing(18);
+        topLayout->addWidget(arrowLabel);
+        topLayout->addSpacing(5);
+        topLayout->addWidget(nameLabel);
+        topLayout->addSpacing(5);
+        topLayout->addWidget(lineFrame, 1);
+        topLayout->addSpacing(5);
+        topLayout->addWidget(statusLabel);
+        topLayout->addSpacing(5);
+        topLayout->activate();
+    }
+    else
+    {
+        qDebug() << "LTSE";
+        mainLayout = new QVBoxLayout();
+        mainLayout->setSpacing(0);
+        mainLayout->setContentsMargins(20, 0, 20, 0);
+
+        container->setFixedHeight(55);
+        container->setLayout(mainLayout);
+
+        topLayout->addWidget(arrowLabel);
+        topLayout->addSpacing(10);
+        topLayout->addWidget(nameLabel);
+        topLayout->addStretch();
+        topLayout->addWidget(statusLabel);
+        topLayout->activate();
+
+        mainLayout->addStretch();
+        mainLayout->addLayout(topLayout);
+        mainLayout->addWidget(lineFrame);
+        mainLayout->addStretch();
+        mainLayout->activate();
+    }
+
+    Style::repolish(this);
 }
 
 void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -236,8 +277,7 @@ void CircleWidget::dropEvent(QDropEvent *event)
         if (circleWidget != nullptr)
         {
             // In case the status was changed while moving, update both.
-            circleWidget->updateOffline();
-            circleWidget->updateOnline();
+            circleWidget->updateStatus();
         }
 
         container->setAttribute(Qt::WA_UnderMouse, false);
@@ -245,12 +285,7 @@ void CircleWidget::dropEvent(QDropEvent *event)
     }
 }
 
-void CircleWidget::updateOnline()
+void CircleWidget::updateStatus()
 {
-    onlineLabel->setText(QString::number(listLayout->friendOnlineCount()) + QStringLiteral(" / ") + QString::number(listLayout->friendOfflineCount()));
-}
-
-void CircleWidget::updateOffline()
-{
-    //offlineLabel->setText(QString::number(listLayout->friendOfflineCount()));
+    statusLabel->setText(QString::number(listLayout->friendOnlineCount()) + QStringLiteral(" / ") + QString::number(listLayout->friendTotalCount()));
 }

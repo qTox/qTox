@@ -51,7 +51,30 @@ void FriendListWidget::addGroupWidget(GroupWidget *widget)
     listLayout->groupLayout->addWidget(widget);
 }
 
-void FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
+void FriendListWidget::addFriendWidget(FriendWidget *w, Status s, int circleIndex)
+{
+    CircleWidget *circleWidget = nullptr;
+    qDebug() << circleIndex;
+    if (circleIndex >= 0 && circleIndex < circleLayout->count())
+        circleWidget = dynamic_cast<CircleWidget*>(circleLayout->itemAt(circleIndex)->widget());
+
+    if (circleWidget == nullptr)
+        circleIndex = -1;
+
+    if (circleIndex == -1)
+        moveWidget(w, s, true);
+    else
+        circleWidget->addFriendWidget(w, s);
+}
+
+void FriendListWidget::addCircleWidget(const QString &name)
+{
+    CircleWidget *circleWidget = new CircleWidget(this);
+    circleWidget->setName(name);
+    circleLayout->addWidget(circleWidget);
+}
+
+CircleWidget* FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
 {
     CircleWidget *circleWidget = new CircleWidget(this);
     circleLayout->addWidget(circleWidget);
@@ -61,6 +84,7 @@ void FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
         circleWidget->toggle();
     }
     circleWidget->show(); // Avoid flickering.
+    return circleWidget;
 }
 
 void FriendListWidget::removeCircleWidget(CircleWidget *widget)
@@ -168,8 +192,7 @@ void FriendListWidget::dropEvent(QDropEvent *event)
         if (circleWidget != nullptr)
         {
             // In case the status was changed while moving, update both.
-            circleWidget->updateOffline();
-            circleWidget->updateOnline();
+            circleWidget->updateStatus();
         }
     }
 }
