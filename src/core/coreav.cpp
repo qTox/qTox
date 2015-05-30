@@ -112,14 +112,14 @@ void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
         Camera::getInstance()->subscribe();
         calls[callId].videoEnabled = true;
         calls[callId].sendVideoTimer->start();
-        emit ((Core*)core)->avMediaChange(friendId, callId, true);
+        emit static_cast<Core*>(core)->avMediaChange(friendId, callId, true);
     }
     else // Audio call
     {
         calls[callId].videoEnabled = false;
         calls[callId].sendVideoTimer->stop();
         Camera::getInstance()->unsubscribe();
-        emit ((Core*)core)->avMediaChange(friendId, callId, false);
+        emit static_cast<Core*>(core)->avMediaChange(friendId, callId, false);
     }
 
     return;

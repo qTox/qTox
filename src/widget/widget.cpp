@@ -1459,7 +1459,7 @@ void Widget::hideFriends(QString searchString, Status status, bool hideAll)
         FriendWidget* friendWidget = static_cast<FriendWidget*>(friends->itemAt(index)->widget());
         QString friendName = friendWidget->getName();
 
-        if (!friendName.contains(searchString, Qt::CaseInsensitive) | hideAll)
+        if (!friendName.contains(searchString, Qt::CaseInsensitive) || hideAll)
             friendWidget->setVisible(false);
         else
             friendWidget->setVisible(true);
@@ -1476,7 +1476,7 @@ void Widget::hideGroups(QString searchString, bool hideAll)
         GroupWidget* groupWidget = static_cast<GroupWidget*>(groups->itemAt(index)->widget());
         QString groupName = groupWidget->getName();
 
-        if (!groupName.contains(searchString, Qt::CaseInsensitive) | hideAll)
+        if (!groupName.contains(searchString, Qt::CaseInsensitive) || hideAll)
             groupWidget->setVisible(false);
         else
             groupWidget->setVisible(true);
