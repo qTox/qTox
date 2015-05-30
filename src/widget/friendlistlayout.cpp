@@ -88,7 +88,7 @@ int FriendListLayout::friendOnlineCount() const
     return friendLayouts[Online]->count();
 }
 
-int FriendListLayout::friendOfflineCount() const
+int FriendListLayout::friendTotalCount() const
 {
     return friendLayouts[Offline]->count() + friendOnlineCount();
 }

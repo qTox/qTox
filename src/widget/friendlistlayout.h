@@ -31,7 +31,7 @@ public:
     void addGroupWidget(GroupWidget *widget);
     void addFriendWidget(FriendWidget *widget, Status s);
     int friendOnlineCount() const;
-    int friendOfflineCount() const;
+    int friendTotalCount() const;
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
     bool hasChatrooms() const;

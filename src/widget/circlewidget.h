@@ -39,10 +39,10 @@ public:
     void expand();
     void toggle();
 
-    void updateOnline();
-    void updateOffline();
+    void updateStatus();
 
     QString getName() const;
+    void setName(const QString &name);
     void renameCircle();
 
 public slots:
@@ -65,12 +65,15 @@ private:
         Offline = 1
     };
     bool expanded = false;
-    FriendListLayout *listLayout;
-    QVBoxLayout *mainLayout;
-    QLabel *arrowLabel;
-    QLabel *onlineLabel;
-    QWidget *container;
-    QLabel *nameLabel;
+    FriendListLayout* listLayout;
+    QVBoxLayout* fullLayout;
+    QVBoxLayout* mainLayout = nullptr;
+    QLabel* arrowLabel;
+    QLabel* nameLabel;
+    QLabel* statusLabel;
+    QFrame* lineFrame;
+    QWidget* container;
+    QHBoxLayout* topLayout = nullptr;
 };
 
 #endif // CIRCLEWIDGET_H

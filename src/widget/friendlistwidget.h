@@ -43,8 +43,9 @@ public:
     explicit FriendListWidget(QWidget *parent = 0, bool groupsOnTop = true);
 
     void addGroupWidget(GroupWidget *widget);
-
-    void addCircleWidget(FriendWidget *widget = nullptr);
+    void addFriendWidget(FriendWidget *w, Status s, int circleIndex);
+    void addCircleWidget(const QString &name);
+    CircleWidget *addCircleWidget(FriendWidget *widget = nullptr);
     void removeCircleWidget(CircleWidget *widget);
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
