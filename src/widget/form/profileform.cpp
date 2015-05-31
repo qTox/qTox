@@ -224,23 +224,29 @@ void ProfileForm::onAvatarClicked()
         return;
     }
 
-    // Limit the avatar size to 64kB
-    // We do a first rescale to 256x256 in case the image was huge, then keep tryng from here
+    // Limit the avatar size to 256kB
+    // We do a first rescale to 512x512 in case the image was huge, then keep tryng from here
+    // TODO:
+    //  * check whether 512x512 is really the best starting point
+    //  * better resizing algorithm needed, so that image will (if needed) be
+    //    resized to $max_avatar_size - 1
     QByteArray bytes{picToPng(pic)};
-    if (bytes.size() > 65535)
+    if (bytes.size() > 262143)
     {
-        pic = pic.scaled(256,256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        pic = pic.scaled(512,512, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         bytes = picToPng(pic);
     }
-    if (bytes.size() > 65535)
+    if (bytes.size() > 262143)
+        bytes = picToPng(pic.scaled(256,256, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    if (bytes.size() > 262143)
         bytes = picToPng(pic.scaled(128,128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    if (bytes.size() > 65535)
+    if (bytes.size() > 252143)
         bytes = picToPng(pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    if (bytes.size() > 65535)
+    if (bytes.size() > 262143)
         bytes = picToPng(pic.scaled(32,32, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     // If this happens, you're really doing it on purpose.
-    if (bytes.size() > 65535)
+    if (bytes.size() > 262143)
     {
         QMessageBox::critical(this, tr("Error"),
             tr("The supplied image is too large.\nPlease use another image."));
