@@ -56,6 +56,7 @@ template <typename T, QBoxLayout::Direction Dir>
 void SortingBoxLayout<T, Dir>::addSortedWidget(T* widget)
 {
     int closest = indexOfClosestSortedWidget(widget);
+    qDebug() << closest;
     layout->insertWidget(closest, widget);
 }
 
@@ -97,7 +98,7 @@ QLayout* SortingBoxLayout<T, Dir>::getLayout() const
 template <typename T, QBoxLayout::Direction Dir>
 int SortingBoxLayout<T, Dir>::indexOfClosestSortedWidget(T* widget)
 {
-    int min = 0, max = layout->count() - 1, mid;
+    int min = 0, max = layout->count(), mid;
     while (min < max)
     {
         mid = (max - min) / 2 + min;
@@ -105,9 +106,9 @@ int SortingBoxLayout<T, Dir>::indexOfClosestSortedWidget(T* widget)
         assert(atMid != nullptr);
 
         if (*widget < *atMid)
-            max = mid;
-        else
             min = mid + 1;
+        else
+            max = mid;
     }
     return min;
 }

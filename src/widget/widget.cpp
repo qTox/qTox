@@ -222,6 +222,7 @@ void Widget::init()
     ui->settingsButton->setCheckable(true);
     setActiveToolMenuButton(Widget::AddButton);
 
+    connect(settingsWidget, &SettingsWidget::compactToggled, contactListWidget, &FriendListWidget::onCompactChanged);
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
 #if (AUTOUPDATE_ENABLED)
     if (Settings::getInstance().getCheckUpdates())
@@ -1419,8 +1420,7 @@ void Widget::friendListContextMenu(const QPoint &pos)
 
     if (chosenAction == addCircleAction)
     {
-        CircleWidget *newcircle = contactListWidget->addCircleWidget();
-        connect(settingsWidget, &SettingsWidget::compactToggled, newcircle, &CircleWidget::onCompactChanged);
+        contactListWidget->addCircleWidget();
     }
 }
 
