@@ -1,4 +1,6 @@
 #include <QDebug>
+#include <QApplication>
+#include <QDesktopWidget>
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavdevice/avdevice.h>
@@ -61,7 +63,8 @@ out:
 
 CameraDevice* CameraDevice::open(QString devName)
 {
-    return open(devName, nullptr);
+    VideoMode mode{};
+    return open(devName, mode);
 }
 
 CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
@@ -71,21 +74,40 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
 
     AVDictionary* options = nullptr;
     if (false);
+#ifdef Q_OS_LINUX
+    else if (devName.startsWith("x11grab#"))
+    {
+        QSize screen;
+        if (mode)
+        {
+            screen.setWidth(mode.width);
+            screen.setHeight(mode.height);
+        }
+        else
+        {
+            screen = QApplication::desktop()->screenGeometry().size();
+            // Workaround https://trac.ffmpeg.org/ticket/4574 by choping 1 px bottom and right
+            screen.setWidth(screen.width()-1);
+            screen.setHeight(screen.height()-1);
+        }
+        av_dict_set(&options, "video_size", QString("%1x%2").arg(screen.width()).arg(screen.height()).toStdString().c_str(), 0);
+    }
+#endif
 #ifdef Q_OS_WIN
-    else if (iformat->name == QString("dshow"))
+    else if (iformat->name == QString("dshow") && mode)
     {
         av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
         av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
     }
 #endif
 #ifdef Q_OS_LINUX
-    else if (iformat->name == QString("video4linux2,v4l2"))
+    else if (iformat->name == QString("video4linux2,v4l2") && mode)
     {
         av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
         av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
     }
 #endif
-    else
+    else if (mode)
     {
         qWarning() << "Video mode-setting not implemented for input "<<iformat->name;
         (void)mode;
