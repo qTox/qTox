@@ -530,4 +530,5 @@ HEADERS += \
     src/widget/circlewidget.hpp \
     src/widget/genericchatitemwidget.h \
     src/widget/circlewidget.h \
-    src/widget/friendlistlayout.h
+    src/widget/friendlistlayout.h \
+    src/widget/sortingboxlayout.h

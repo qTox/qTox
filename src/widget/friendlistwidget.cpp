@@ -41,7 +41,10 @@ FriendListWidget::FriendListWidget(QWidget *parent, bool groupsOnTop) :
     circleLayout->setSpacing(0);
     circleLayout->setMargin(0);
 
-    listLayout->addLayout(circleLayout);
+    circleLayout2.getLayout()->setSpacing(0);
+    circleLayout2.getLayout()->setMargin(0);
+
+    listLayout->addLayout(circleLayout2.getLayout());
 
     setAcceptDrops(true);
 }
@@ -55,8 +58,8 @@ void FriendListWidget::addFriendWidget(FriendWidget *w, Status s, int circleInde
 {
     CircleWidget *circleWidget = nullptr;
     qDebug() << circleIndex;
-    if (circleIndex >= 0 && circleIndex < circleLayout->count())
-        circleWidget = dynamic_cast<CircleWidget*>(circleLayout->itemAt(circleIndex)->widget());
+    if (circleIndex >= 0 && circleIndex < circleLayout2.getLayout()->count())
+        circleWidget = dynamic_cast<CircleWidget*>(circleLayout2.getLayout()->itemAt(circleIndex)->widget());
 
     if (circleWidget == nullptr)
         circleIndex = -1;
@@ -71,13 +74,17 @@ void FriendListWidget::addCircleWidget(const QString &name)
 {
     CircleWidget *circleWidget = new CircleWidget(this);
     circleWidget->setName(name);
-    circleLayout->addWidget(circleWidget);
+    circleLayout2.addSortedWidget(circleWidget);
+    connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
+    //circleLayout->addWidget(circleWidget);
 }
 
 CircleWidget* FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
 {
     CircleWidget *circleWidget = new CircleWidget(this);
-    circleLayout->addWidget(circleWidget);
+    circleLayout2.addSortedWidget(circleWidget);
+    connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
+    //circleLayout->addWidget(circleWidget);
     if (friendWidget != nullptr)
     {
         circleWidget->addFriendWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus());
@@ -89,20 +96,16 @@ CircleWidget* FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
 
 void FriendListWidget::removeCircleWidget(CircleWidget *widget)
 {
-    //setUpdatesEnabled(false);
-    //widget->setVisible(false);
-    circleLayout->removeWidget(widget);
+    circleLayout2.removeSortedWidget(widget);
     widget->deleteLater();
-    //setUpdatesEnabled(true);
-    //widget->deleteLater();
 }
 
 void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
 {
     listLayout->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
-    for (int i = 0; i != circleLayout->count(); ++i)
+    for (int i = 0; i != circleLayout2.getLayout()->count(); ++i)
     {
-        CircleWidget *circleWidget = static_cast<CircleWidget*>(circleLayout->itemAt(i)->widget());
+        CircleWidget *circleWidget = static_cast<CircleWidget*>(circleLayout2.getLayout()->itemAt(i)->widget());
         circleWidget->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
     }
 }
@@ -112,9 +115,22 @@ QVBoxLayout* FriendListWidget::getFriendLayout(Status s)
     return s == Status::Offline ? listLayout->friendLayouts[Offline] : listLayout->friendLayouts[Online];
 }
 
+void FriendListWidget::renameCircleWidget(const QString &newName)
+{
+    assert(sender() != nullptr);
+
+    CircleWidget* circleWidget = dynamic_cast<CircleWidget*>(sender());
+    assert(circleWidget != nullptr);
+
+    // Rename before removing so you can find it successfully.
+    circleLayout2.removeSortedWidget(circleWidget);
+    circleWidget->setName(newName);
+    circleLayout2.addSortedWidget(circleWidget);
+}
+
 void FriendListWidget::onGroupchatPositionChanged(bool top)
 {
-    listLayout->removeItem(circleLayout);
+    listLayout->removeItem(circleLayout2.getLayout());
     listLayout->removeItem(listLayout->groupLayout);
     listLayout->removeItem(listLayout->friendLayouts[Online]);
     if (top)
@@ -127,7 +143,7 @@ void FriendListWidget::onGroupchatPositionChanged(bool top)
         listLayout->addLayout(listLayout->friendLayouts[Online]);
         listLayout->addLayout(listLayout->groupLayout);
     }
-    listLayout->addLayout(circleLayout);
+    listLayout->addLayout(circleLayout2.getLayout());
 }
 
 QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
@@ -159,10 +175,10 @@ QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
 QVector<CircleWidget*> FriendListWidget::getAllCircles()
 {
     QVector<CircleWidget*> vec;
-    vec.reserve(circleLayout->count());
-    for (int i = 0; i < circleLayout->count(); ++i)
+    vec.reserve(circleLayout2.getLayout()->count());
+    for (int i = 0; i < circleLayout2.getLayout()->count(); ++i)
     {
-        vec.push_back(dynamic_cast<CircleWidget*>(circleLayout->itemAt(i)->widget()));
+        vec.push_back(dynamic_cast<CircleWidget*>(circleLayout2.getLayout()->itemAt(i)->widget()));
     }
     return vec;
 }
