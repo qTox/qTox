@@ -50,6 +50,22 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
         statusMessageLabel->setText(GroupWidget::tr("0 users in chat"));
 
     setAcceptDrops(true);
+
+    connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newText, const QString &oldText)
+    {
+        Group* g = GroupList::findGroup(groupId);
+        if (newText != oldText)
+        {
+            emit g->getChatForm()->groupTitleChanged(groupId, newText.left(128));
+        }
+        /* according to agilob:
+         * “Moving mouse pointer over groupwidget results in CSS effect
+         * mouse-over(?). Changing group title repaints only changed
+         * element - title, the rest of the widget stays in the same CSS as it
+         * was on mouse over. Repainting whole widget fixes style problem.”
+         */
+        this->repaint();
+    });
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -68,21 +84,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
         }
         else if (selectedItem == setTitle)
         {
-            bool ok;
-            Group* g = GroupList::findGroup(groupId);
-
-            QString alias = QInputDialog::getText(nullptr, tr("Group title"), tr("You can also set this by clicking the chat form name.\nTitle:"), QLineEdit::Normal,
-                                          nameLabel->fullText(), &ok);
-
-            if (ok && alias != nameLabel->fullText())
-                emit g->getChatForm()->groupTitleChanged(groupId, alias.left(128));
-            /* according to agilob:
-	     * “Moving mouse pointer over groupwidget results in CSS effect
-	     * mouse-over(?). Changing group title repaints only changed
-	     * element - title, the rest of the widget stays in the same CSS as it
-	     * was on mouse over. Repainting whole widget fixes style problem.”
-	     */
-            this->repaint();
+            nameLabel->editStart();
         }
     }
 }

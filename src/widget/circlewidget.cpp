@@ -35,6 +35,15 @@
 #include "friendlistlayout.h"
 #include "friendlistwidget.h"
 
+#include "croppinglabel.h"
+
+void maxCropLabel(CroppingLabel* label)
+{
+    QFontMetrics metrics = label->fontMetrics();
+    // Text width + padding. Without padding, we'll have elipses.
+    label->setMaximumWidth(metrics.width(label->fullText()) + metrics.width("..."));
+}
+
 CircleWidget::CircleWidget(FriendListWidget *parent)
     : GenericChatItemWidget(parent)
 {
@@ -50,7 +59,7 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
     statusLabel->setTextFormat(Qt::PlainText);
 
     // name text
-    nameLabel = new QLabel(this);
+    nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("name");
     nameLabel->setTextFormat(Qt::PlainText);
     nameLabel->setText("Circle");
@@ -66,6 +75,10 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
     lineFrame = new QFrame(container);
     lineFrame->setObjectName("line");
     lineFrame->setFrameShape(QFrame::HLine);
+    lineFrame->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    qDebug() << lineFrame->sizeHint();
+    lineFrame->resize(0, 0);
+    qDebug() << QSpacerItem(0, 0).sizeHint();
 
     listLayout = new FriendListLayout();
 
@@ -73,7 +86,15 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
 
     onCompactChanged(isCompact());
 
-    //renameCircle();
+    connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newString, const QString &oldString)
+    {
+        if (isCompact())
+            maxCropLabel(nameLabel);
+        nameLabel->setText(oldString);
+        emit renameRequested(newString);
+    });
+
+    renameCircle();
 }
 
 void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
@@ -121,29 +142,13 @@ void CircleWidget::setName(const QString &name)
 
 void CircleWidget::renameCircle()
 {
-    qDebug() << nameLabel->parentWidget()->layout();
-    QLineEdit *lineEdit = new QLineEdit(nameLabel->text());
-    topLayout->removeWidget(nameLabel);
-    topLayout->insertWidget(3, lineEdit);
-    nameLabel->setVisible(false);
-    //topLayout->replaceWidget(nameLabel, lineEdit);
-    //nameLabel->parentWidget()->layout()
-    //static_cast<QBoxLayout*>(nameLabel->parentWidget()->layout())->insertWidget(nameLabel->parentWidget()->layout()->indexOf(nameLabel) - 1, lineEdit);
-    //nameLabel->parentWidget()->layout()->replaceWidget(nameLabel, lineEdit);
-    //nameLabel->setVisible(false);
-    lineEdit->selectAll();
-    lineEdit->setFocus();
-    connect(lineEdit, &QLineEdit::editingFinished, [this, lineEdit]()
-    {
-        this->topLayout->removeWidget(lineEdit);
-        this->topLayout->insertWidget(3, nameLabel);
-        //this->topLayout->replaceWidget(lineEdit, nameLabel);
-        //this->nameLabel->setVisible(true);
-        //lineEdit->parentWidget()->layout()->replaceWidget(lineEdit, nameLabel);
-        this->nameLabel->setText(lineEdit->text());
-        nameLabel->setVisible(true);
-        lineEdit->deleteLater();
-    });
+    nameLabel->editStart();
+    nameLabel->setMaximumWidth(QWIDGETSIZE_MAX);
+}
+
+bool CircleWidget::operator<(const CircleWidget& other) const
+{
+    return nameLabel->text().localeAwareCompare(other.nameLabel->text()) < 0;
 }
 
 void CircleWidget::onCompactChanged(bool _compact)
@@ -159,6 +164,8 @@ void CircleWidget::onCompactChanged(bool _compact)
 
     if (property("compact").toBool())
     {
+        maxCropLabel(nameLabel);
+
         mainLayout = nullptr;
 
         container->setFixedHeight(25);
@@ -167,8 +174,7 @@ void CircleWidget::onCompactChanged(bool _compact)
         topLayout->addSpacing(18);
         topLayout->addWidget(arrowLabel);
         topLayout->addSpacing(5);
-        topLayout->addWidget(nameLabel);
-        topLayout->addSpacing(5);
+        topLayout->addWidget(nameLabel, 100);
         topLayout->addWidget(lineFrame, 1);
         topLayout->addSpacing(5);
         topLayout->addWidget(statusLabel);
@@ -177,7 +183,8 @@ void CircleWidget::onCompactChanged(bool _compact)
     }
     else
     {
-        qDebug() << "LTSE";
+        nameLabel->setMaximumWidth(QWIDGETSIZE_MAX);
+
         mainLayout = new QVBoxLayout();
         mainLayout->setSpacing(0);
         mainLayout->setContentsMargins(20, 0, 20, 0);
@@ -187,8 +194,8 @@ void CircleWidget::onCompactChanged(bool _compact)
 
         topLayout->addWidget(arrowLabel);
         topLayout->addSpacing(10);
-        topLayout->addWidget(nameLabel);
-        topLayout->addStretch();
+        topLayout->addWidget(nameLabel, 1);
+        topLayout->addSpacing(5);
         topLayout->addWidget(statusLabel);
         topLayout->activate();
 

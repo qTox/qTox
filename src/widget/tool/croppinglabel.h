@@ -30,6 +30,7 @@ class CroppingLabel final : public QLabel
 public:
     explicit CroppingLabel(QWidget *parent = 0);
 
+    void editStart();
     void setEditable(bool editable);
     void setEdlideMode(Qt::TextElideMode elide);
 
@@ -37,6 +38,7 @@ public:
     QString fullText(); ///< Returns the un-cropped text
 
 signals:
+    void editFinished(QString newText);
     void textChanged(QString newText, QString oldText);
     void clicked();
 

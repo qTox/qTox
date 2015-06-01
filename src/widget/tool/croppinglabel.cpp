@@ -39,6 +39,12 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     textEdit->installEventFilter(this);
 }
 
+void CroppingLabel::editStart()
+{
+    showTextEdit();
+    textEdit->selectAll();
+}
+
 void CroppingLabel::setEditable(bool editable)
 {
     this->editable = editable;
@@ -135,9 +141,11 @@ void CroppingLabel::hideTextEdit(bool acceptText)
 {
     if (acceptText)
     {
+        textEdit->setText(textEdit->text().trimmed().remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"))); // we should really treat regular names this way as well (*ahem* zetok)
         QString oldOrigText = origText;
         setText(textEdit->text()); // set before emitting so we don't override external reactions to signal
         emit textChanged(textEdit->text(), oldOrigText);
+        emit editFinished(textEdit->text());
     }
 
     textEdit->hide();

@@ -52,6 +52,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     statusPic.setMargin(3);
     nameLabel->setText(id);
     nameLabel->setTextFormat(Qt::PlainText);
+    connect(nameLabel, &CroppingLabel::editFinished, this, &FriendWidget::setAlias);
     statusMessageLabel->setTextFormat(Qt::PlainText);
 }
 
@@ -121,7 +122,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             return;
         } else if (selectedItem == setAlias)
         {
-            setFriendAlias();
+            nameLabel->editStart();
         }
         else if (selectedItem == removeFriendAction)
         {
@@ -148,7 +149,9 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         }
         else if (selectedItem == newCircleAction)
         {
-            friendList->addCircleWidget(this);
+            qDebug() << friendList->parentWidget();
+            CircleWidget *newcircle = friendList->addCircleWidget(this);
+            //connect(settingsWidget, &SettingsWidget::compactToggled, newcircle, &CircleWidget::onCompactChanged);
         }
         else if (groupActions.contains(selectedItem))
         {
@@ -293,25 +296,11 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
 
 void FriendWidget::setAlias(const QString& _alias)
 {
-    QString alias = _alias.trimmed();
-    alias.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]")); // we should really treat regular names this way as well (*ahem* zetok)
-    alias = alias.left(128); // same as TOX_MAX_NAME_LENGTH
+    QString alias = _alias.left(128); // same as TOX_MAX_NAME_LENGTH
     Friend* f = FriendList::findFriend(friendId);
     f->setAlias(alias);
     Settings::getInstance().setFriendAlias(f->getToxId(), alias);
     Settings::getInstance().savePersonal();
     hide();
     show();
-}
-
-void FriendWidget::setFriendAlias()
-{
-    bool ok;
-    Friend* f = FriendList::findFriend(friendId);
-
-    QString alias = QInputDialog::getText(nullptr, tr("User alias"), tr("You can also set this by clicking the chat form name.\nAlias:"), QLineEdit::Normal,
-                                          f->getDisplayedName(), &ok);
-
-    if (ok)
-        setAlias(alias);
 }

@@ -27,6 +27,10 @@
 #include "src/core/corestructs.h"
 #include "src/widget/genericchatroomwidget.h"
 
+#include "sortingboxlayout.h"
+
+#include "circlewidget.h"
+
 class QVBoxLayout;
 class QGridLayout;
 class QPixmap;
@@ -50,12 +54,15 @@ public:
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
+    void cycleContacts(int index);
     QList<GenericChatroomWidget*> getAllFriends();
     QVector<CircleWidget*> getAllCircles();
 
     void reDraw();
 
 public slots:
+    void renameCircleWidget(const QString &newName);
+    //void onCompactChanged(bool compact);
     void onGroupchatPositionChanged(bool top);
     void moveWidget(FriendWidget *w, Status s, bool add = false);
 
@@ -72,6 +79,7 @@ private:
     };
     FriendListLayout *listLayout;
     QVBoxLayout *circleLayout;
+    VSortingBoxLayout<CircleWidget> circleLayout2;
 };
 
 #endif // FRIENDLISTWIDGET_H

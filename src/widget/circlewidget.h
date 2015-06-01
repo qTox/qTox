@@ -25,6 +25,7 @@ class FriendListWidget;
 class FriendListLayout;
 class FriendWidget;
 class QLineEdit;
+class CroppingLabel;
 
 class CircleWidget : public GenericChatItemWidget
 {
@@ -44,6 +45,11 @@ public:
     QString getName() const;
     void setName(const QString &name);
     void renameCircle();
+
+    bool operator<(const CircleWidget& other) const;
+
+signals:
+    void renameRequested(const QString &newName);
 
 public slots:
     void onCompactChanged(bool compact);
@@ -69,7 +75,7 @@ private:
     QVBoxLayout* fullLayout;
     QVBoxLayout* mainLayout = nullptr;
     QLabel* arrowLabel;
-    QLabel* nameLabel;
+    CroppingLabel* nameLabel;
     QLabel* statusLabel;
     QFrame* lineFrame;
     QWidget* container;
