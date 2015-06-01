@@ -459,7 +459,8 @@ SOURCES += \
     src/video/cameradevice.cpp \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
-    src/core/toxid.cpp
+    src/core/toxid.cpp \
+    src/platform/camera/v4l2.cpp
 
 
 HEADERS += \
@@ -493,4 +494,5 @@ HEADERS += \
     src/video/camerasource.h \
     src/video/corevideosource.h \
     src/video/videomode.h \
-    src/core/toxid.h
+    src/core/toxid.h \
+    src/platform/camera/v4l2.h
