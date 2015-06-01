@@ -16,6 +16,7 @@ extern "C" {
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
 AVInputFormat* CameraDevice::iformat{nullptr};
+AVInputFormat* CameraDevice::idesktopFormat{nullptr};
 
 CameraDevice::CameraDevice(const QString devName, AVFormatContext *context)
     : devName{devName}, context{context}, refcount{1}
@@ -30,7 +31,18 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
     if (dev)
         goto out;
 
-    if (avformat_open_input(&fctx, devName.toStdString().c_str(), iformat, options)<0)
+    AVInputFormat* format;
+    if (devName.startsWith("x11grab#"))
+    {
+        devName = devName.mid(8);
+        format = idesktopFormat;
+    }
+    else
+    {
+        format = iformat;
+    }
+
+    if (avformat_open_input(&fctx, devName.toStdString().c_str(), format, options)<0)
         goto out;
 
     if (avformat_find_stream_info(fctx, NULL) < 0)
@@ -170,16 +182,23 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
 
 QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
 {
+    QVector<QPair<QString, QString>> devices;
+
     if (!getDefaultInputFormat())
-            return {};
+            return devices;
 
     if (false);
 #ifdef Q_OS_WIN
     else if (iformat->name == QString("dshow"))
-        return DirectShow::getDeviceList();
+        devices = DirectShow::getDeviceList();
 #endif
     else
-        return getRawDeviceListGeneric();
+        devices = getRawDeviceListGeneric();
+
+    if (idesktopFormat && idesktopFormat->name == QString("x11grab"))
+        devices.push_back(QPair<QString,QString>{"x11grab#:0", "Desktop"});
+
+    return devices;
 }
 
 QString CameraDevice::getDefaultDeviceName()
@@ -226,6 +245,12 @@ bool CameraDevice::getDefaultInputFormat()
 
     avdevice_register_all();
 
+    // Desktop capture input formats
+#ifdef Q_OS_LINUX
+    idesktopFormat = av_find_input_format("x11grab");
+#endif
+
+    // Webcam input formats
 #ifdef Q_OS_LINUX
     if ((iformat = av_find_input_format("v4l2")))
         return true;

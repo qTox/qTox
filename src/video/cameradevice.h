@@ -59,7 +59,7 @@ private:
     std::atomic_int refcount; ///< Number of times the device was opened
     static QHash<QString, CameraDevice*> openDevices;
     static QMutex openDeviceLock, iformatLock;
-    static AVInputFormat* iformat;
+    static AVInputFormat* iformat, *idesktopFormat;
 };
 
 #endif // CAMERADEVICE_H
