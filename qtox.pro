@@ -429,6 +429,14 @@ win32 {
         src/platform/camera/directshow.cpp
 }
 
+unix {
+    HEADERS += \
+        src/platform/camera/v4l2.h
+
+    SOURCES += \
+        src/platform/camera/v4l2.cpp
+}
+
 SOURCES += \
     src/audio.cpp \
     src/historykeeper.cpp \
@@ -459,9 +467,7 @@ SOURCES += \
     src/video/cameradevice.cpp \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
-    src/core/toxid.cpp \
-    src/platform/camera/v4l2.cpp
-
+    src/core/toxid.cpp
 
 HEADERS += \
     src/audio.h \
@@ -494,5 +500,4 @@ HEADERS += \
     src/video/camerasource.h \
     src/video/corevideosource.h \
     src/video/videomode.h \
-    src/core/toxid.h \
-    src/platform/camera/v4l2.h
+    src/core/toxid.h
