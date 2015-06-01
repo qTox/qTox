@@ -46,7 +46,10 @@ fail:
 static QVector<unsigned short> getDeviceModeFramerates(int fd, unsigned w, unsigned h, uint32_t pixelFormat)
 {
     QVector<unsigned short> rates;
-    v4l2_frmivalenum vfve = { .pixel_format = pixelFormat, .height = h, .width = w };
+    v4l2_frmivalenum vfve{};
+    vfve.pixel_format = pixelFormat;
+    vfve.height = h;
+    vfve.width = w;
 
     while(!ioctl(fd, VIDIOC_ENUM_FRAMEINTERVALS, &vfve)) {
         int rate;
@@ -75,12 +78,14 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
     int fd = deviceOpen(devName);
     if (fd < 0)
         return modes;
-    v4l2_fmtdesc vfd = { .type = V4L2_BUF_TYPE_VIDEO_CAPTURE };
+    v4l2_fmtdesc vfd{};
+    vfd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
     while(!ioctl(fd, VIDIOC_ENUM_FMT, &vfd)) {
         vfd.index++;
 
-        v4l2_frmsizeenum vfse = { .pixel_format = vfd.pixelformat };
+        v4l2_frmsizeenum vfse{};
+        vfse.pixel_format = vfd.pixelformat;
 
         while(!ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &vfse)) {
             VideoMode mode;
