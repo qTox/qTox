@@ -150,8 +150,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         else if (selectedItem == newCircleAction)
         {
             qDebug() << friendList->parentWidget();
-            CircleWidget *newcircle = friendList->addCircleWidget(this);
-            //connect(settingsWidget, &SettingsWidget::compactToggled, newcircle, &CircleWidget::onCompactChanged);
+            friendList->addCircleWidget(this);
         }
         else if (groupActions.contains(selectedItem))
         {
@@ -164,6 +163,9 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         }
         else if (circleActions.contains(selectedItem))
         {
+            if (circleWidget != nullptr)
+                circleWidget->updateStatus();
+
             CircleWidget* circle = circleActions[selectedItem];
             circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
             circle->expand();

@@ -76,9 +76,7 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
     lineFrame->setObjectName("line");
     lineFrame->setFrameShape(QFrame::HLine);
     lineFrame->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    qDebug() << lineFrame->sizeHint();
     lineFrame->resize(0, 0);
-    qDebug() << QSpacerItem(0, 0).sizeHint();
 
     listLayout = new FriendListLayout();
 
@@ -148,7 +146,10 @@ void CircleWidget::renameCircle()
 
 bool CircleWidget::operator<(const CircleWidget& other) const
 {
-    return nameLabel->text().localeAwareCompare(other.nameLabel->text()) < 0;
+    int compareValue = nameLabel->text().localeAwareCompare(other.nameLabel->text());
+    if (compareValue == 0)
+        return this < &other; // Consistent ordering.
+    return  compareValue > 0;
 }
 
 void CircleWidget::onCompactChanged(bool _compact)

@@ -49,7 +49,7 @@ public:
     void addGroupWidget(GroupWidget *widget);
     void addFriendWidget(FriendWidget *w, Status s, int circleIndex);
     void addCircleWidget(const QString &name);
-    CircleWidget *addCircleWidget(FriendWidget *widget = nullptr);
+    void addCircleWidget(FriendWidget *widget = nullptr);
     void removeCircleWidget(CircleWidget *widget);
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
@@ -60,9 +60,11 @@ public:
 
     void reDraw();
 
+signals:
+    void onCompactChanged(bool compact);
+
 public slots:
     void renameCircleWidget(const QString &newName);
-    //void onCompactChanged(bool compact);
     void onGroupchatPositionChanged(bool top);
     void moveWidget(FriendWidget *w, Status s, bool add = false);
 

@@ -13,6 +13,11 @@ QWidget#circleWidgetContainer:hover
   background-color: @themeLight;
 }
 
+QWidget#circleWidgetContainer QLineEdit
+{
+  background-color: @themeLight;
+}
+
 QWidget#circleWidgetContainer > QLabel#status
 {
   font: @small;

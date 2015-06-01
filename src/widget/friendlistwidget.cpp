@@ -75,14 +75,16 @@ void FriendListWidget::addCircleWidget(const QString &name)
     CircleWidget *circleWidget = new CircleWidget(this);
     circleWidget->setName(name);
     circleLayout2.addSortedWidget(circleWidget);
+    connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
     //circleLayout->addWidget(circleWidget);
 }
 
-CircleWidget* FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
+void FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
 {
     CircleWidget *circleWidget = new CircleWidget(this);
     circleLayout2.addSortedWidget(circleWidget);
+    connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
     //circleLayout->addWidget(circleWidget);
     if (friendWidget != nullptr)
@@ -91,7 +93,6 @@ CircleWidget* FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
         circleWidget->toggle();
     }
     circleWidget->show(); // Avoid flickering.
-    return circleWidget;
 }
 
 void FriendListWidget::removeCircleWidget(CircleWidget *widget)
