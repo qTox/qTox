@@ -48,13 +48,14 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="64"/>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisez cette barre pour régler le volume de vos haut-parleurs.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="74"/>
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisez cette barre pour régler le volume de votre microphone.
+ATTENTION: la barre n'est pas censée fonctionner pour le moment.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="82"/>
@@ -79,7 +80,7 @@ WARNING: slider is not supposed to work yet.</source>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="112"/>
         <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer le son de votre microphone, afin que vos communications soient plus claires.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
@@ -89,7 +90,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Définit la résolution de votre webcam/caméra.
+Plus la valeur est élevée plus la qualité de la vidéo sera bonne.
+Notez toutes fois qu'une meilleure qualité vidéo néscessite une meilleure connexion Internet.
+Il se peut que votre connexion Internet ne supporte pas une qualité vidéo importante,
+ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
@@ -244,12 +249,12 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="35"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation type="unfinished">Sauvegarde les options dans le dossier courant au lieu du dossier de configuration habituel</translation>
+        <translation>Sauvegarde les options dans le dossier courant au lieu du dossier de configuration habituel</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="38"/>
         <source>Make Tox portable</source>
-        <translation type="unfinished">Rendre Tox portable</translation>
+        <translation>Rendre Tox portable</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="45"/>
@@ -264,7 +269,7 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="68"/>
         <source>Chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Historique de discussion</translation>
     </message>
     <message>
         <source>History</source>
@@ -281,37 +286,37 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/android.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="531"/>
         <source>Your name</source>
-        <translation type="unfinished">Votre nom</translation>
+        <translation>Votre nom</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="616"/>
         <source>Your status</source>
-        <translation type="unfinished">Votre status</translation>
+        <translation>Votre status</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="767"/>
         <source>Add friends</source>
-        <translation type="unfinished">Ajouter des contacts</translation>
+        <translation>Ajouter des contacts</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="805"/>
         <source>Create a group chat</source>
-        <translation type="unfinished">Créer un groupe</translation>
+        <translation>Créer un groupe</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="840"/>
         <source>View completed file transfers</source>
-        <translation type="unfinished">Voir les transfers de fichiers terminés</translation>
+        <translation>Voir les transfers de fichiers terminés</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="872"/>
         <source>Change your settings</source>
-        <translation type="unfinished">Changer les options</translation>
+        <translation>Changer les options</translation>
     </message>
 </context>
 <context>
@@ -320,19 +325,19 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
         <location filename="../src/widget/androidgui.cpp" line="45"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished">Connecté</translation>
+        <translation>Connecté</translation>
     </message>
     <message>
         <location filename="../src/widget/androidgui.cpp" line="47"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished">Absent</translation>
+        <translation>Absent</translation>
     </message>
     <message>
         <location filename="../src/widget/androidgui.cpp" line="49"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished">Occupé</translation>
+        <translation>Occupé</translation>
     </message>
 </context>
 <context>
@@ -381,7 +386,7 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="78"/>
         <source>Load chat history...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement de l'historique...</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="293"/>
@@ -424,17 +429,17 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="66"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="81"/>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout séléctionner</translation>
     </message>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="501"/>
         <source>pending</source>
-        <translation type="unfinished"></translation>
+        <translation>en cours</translation>
     </message>
 </context>
 <context>
@@ -465,12 +470,12 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/core.cpp" line="778"/>
         <source>/me offers friendship.</source>
-        <translation type="unfinished"></translation>
+        <translation>/me souhaiterait vous ajouter dans sa liste d'amis</translation>
     </message>
     <message>
         <location filename="../src/core.cpp" line="780"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>/me souhaiterait vous ajouter dans sa liste d'amis, &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="168"/>
@@ -486,37 +491,38 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
         <location filename="../src/coreencryption.cpp" line="171"/>
         <source>Please enter the password for the %1 profile.</source>
         <comment>used in load() when no pw is already set</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merci d'entrer le mot de passe pour le profil &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="172"/>
         <location filename="../src/coreencryption.cpp" line="227"/>
         <source>The previous password is incorrect; please try again:</source>
         <comment>used on retries in load()</comment>
-        <translation type="unfinished"></translation>
+        <translation>Le mot de passe est incorrect, merci de réessayer:</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="183"/>
         <source>The profile password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation type="unfinished"></translation>
+        <translation>Le mot de passe est incorrect, merci de réessayer</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="219"/>
         <source>Encrypted chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Historique de discussions chiffré</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="219"/>
         <source>No encrypted chat history file found, or it was corrupted.
 History will be disabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun fichier crypté contenant un historique de chat n'a été trouvé, ou il est endommagé.
+L'historique ne sera pas disponnible.</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="226"/>
         <source>Please enter the password for the chat history for the %1 profile.</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merci d'entrer le mot de passe pour l'historique du chat du profil %1.</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="228"/>
@@ -534,12 +540,13 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/coreencryption.cpp" line="255"/>
         <source>Disable chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactiver l'historique des communications</translation>
     </message>
     <message>
         <location filename="../src/coreencryption.cpp" line="306"/>
         <source>Encryption is enabled, but there is no password! Encryption will be disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le chiffrement est activé, mais vous n'avez pas définit de mot de passe!
+Le chiffrement va être désactivé.</translation>
     </message>
     <message>
         <source>Tox datafile decryption password</source>
@@ -645,68 +652,68 @@ Voulez-vous essayer un mot de passe différent?</translation>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="148"/>
         <source>10Mb</source>
-        <translation type="unfinished"></translation>
+        <translation>10 Mb</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="164"/>
         <source>0kb/s</source>
-        <translation type="unfinished"></translation>
+        <translation>0 Kb/s</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="180"/>
         <source>ETA:10:10</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps restant: 10:10</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="224"/>
         <source>Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du fichier</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="299"/>
         <source>[preview]</source>
-        <translation type="unfinished"></translation>
+        <translation>[prévisualisation]</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="83"/>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>En attente...</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="86"/>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Accepter de recevoir ce fichier</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="128"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished">Impossible d&apos;écrire ici</translation>
+        <translation>Impossible d&apos;écrire ici</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="129"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished">Vous n&apos;avez pas la permission d&apos;écrire ici. Choisissez un audre endroit, ou annulez.</translation>
+        <translation>Vous n&apos;avez pas la permission d&apos;écrire ici. Choisissez un audre endroit, ou annulez.</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="301"/>
         <source>paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>pause</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="427"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished">Sauvegarder un fichier</translation>
+        <translation>Sauvegarder un fichier</translation>
     </message>
 </context>
 <context>
@@ -838,17 +845,17 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/gui.cpp" line="249"/>
         <source>Enter your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrez votre mot de passe</translation>
     </message>
     <message>
         <location filename="../src/widget/gui.cpp" line="251"/>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>Déchiffrer</translation>
     </message>
     <message>
         <location filename="../src/widget/gui.cpp" line="293"/>
         <source>You must enter a non-empty password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous devez entrer un mot de passe:</translation>
     </message>
 </context>
 <context>
@@ -950,38 +957,40 @@ Alias:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="67"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Langue:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="102"/>
         <source>System tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu système</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="118"/>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Activer l'icone claire</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="134"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox démarrera minimisé dans le menu système</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="150"/>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Après avoir cliqué sur quitter (X) qTox se minimisera dans le menu système,
+au lieu de se fermer.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="167"/>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Après avoir cliqué sur minimiser (_) qTox se minimisera dans le menu système,
+au lieu de se fermer.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
@@ -991,23 +1000,23 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="199"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer avec l'ordinateur</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
         <source>Check for updates on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier les mises à jour au lancement</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="220"/>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="246"/>
         <source>Set where files will be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir où les fichiers seront sauvegardés.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
         <source>Save to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer sous:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
@@ -1017,7 +1026,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Votre statut sera modifié en "Absent" après la période d'inactivité que vous avez définit.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
@@ -1028,7 +1037,7 @@ instead of system taskbar.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="302"/>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toujours m'avertir des nouveaux messages dans les groupes.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
@@ -1060,7 +1069,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
         <source>Focus window</source>
-        <translation type="unfinished"></translation>
+        <translation>Focuser la fenêtre</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="366"/>
@@ -1665,7 +1674,7 @@ Partagez le avec vos amis pour pouvoir communiquer avec eux.</translation>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation type="unfinished">Vous permet d'exporter votre profil Tox dans un fichier.
+        <translation>Vous permet d'exporter votre profil Tox dans un fichier.
 Ce fichier ne contient pas l'historique de vos messages.</translation>
     </message>
     <message>
@@ -1794,7 +1803,7 @@ Ce fichier ne contient pas l'historique de vos messages.</translation>
         <location filename="../src/nexus.cpp" line="164"/>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Images (%1)</translation>
     </message>
 </context>
 <context>
@@ -1859,7 +1868,7 @@ Otherwise, hit cancel to try again.</source>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="164"/>
         <source>Old encrypted chat history</source>
         <comment>title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ancien historique du chat chiffré</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="148"/>
@@ -1932,7 +1941,8 @@ Voulez vous supprimer l&apos;ancien historique ?</translation>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cette fonctionnalité est encore en cours de développement.
+Le format de sauvegarde peut changer, ce qui pourrait entrainer des pertes d'historique.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
@@ -1942,12 +1952,12 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
         <source>Local file encryption</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiffrer le profil</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
         <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toutes les communications depuis Tox sont cryptées, et cela ne peut pas être désactivé. Toutes fois, vous pouvez chosir de protéger votre profil Tox par un mot de passe.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
@@ -1972,7 +1982,10 @@ It is there to help you change your Tox ID when you feel like you are getting to
 When you change nospam, your current contacts still can communicate with you,
 but new contacts need to know your new Tox ID to be able to add you.</source>
         <comment>toolTip for nospam</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un antispam est une partie de votre ToxID.
+Il vous permet de changer de Tox ID si vous pensez être victime de spam.
+Lorsque vous changez votre antispam, vos amis peuvent toujours communiquer avec vous,
+mais les gens qui souhaient vous ajouter ont besoin de connaitre votre nouveau Tox ID.</translation>
     </message>
     <message>
         <source>Keep History (unstable)</source>
