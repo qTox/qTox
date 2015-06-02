@@ -148,7 +148,7 @@ lo que puede producir problemas con las videollamadas.</translation>
         <location filename="../src/widget/form/addfriendform.cpp" line="38"/>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>ID Tox</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="39"/>
@@ -179,7 +179,7 @@ lo que puede producir problemas con las videollamadas.</translation>
         <location filename="../src/widget/form/addfriendform.cpp" line="90"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Por favor ingrese un ID Tox válido</translation>
+        <translation>Ingrese una Tox ID válida</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="90"/>
@@ -217,7 +217,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <location filename="../src/widget/form/addfriendform.cpp" line="116"/>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation>ID Tox no existe</translation>
+        <translation>Tox ID no existe</translation>
     </message>
     <message>
         <source>This address does not exist</source>
@@ -290,7 +290,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="38"/>
         <source>Make Tox portable</source>
         <translatorcomment>No debería ser &quot;Make qTox portable&quot;?</translatorcomment>
-        <translation>Hacer Tox portátil</translation>
+        <translation>Hacer qTox portátil</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="45"/>
@@ -683,7 +683,7 @@ Por favor seleccione otro perfil</translation>
         <location filename="../src/core/coreencryption.cpp" line="173"/>
         <source>Please enter the password for the %1 profile.</source>
         <comment>used in load() when no pw is already set</comment>
-        <translation>Por favor introduzca la contraseña para el perfil %1.</translation>
+        <translation>Introduzca la contraseña para el perfil %1.</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="174"/>
@@ -714,7 +714,7 @@ History will be disabled!</source>
         <location filename="../src/core/coreencryption.cpp" line="240"/>
         <source>Please enter the password for the chat history for the %1 profile.</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation>Por favor introduzca la contraseña para el historial de chat del perfil %1.</translation>
+        <translation>Introduzca la contraseña para el historial de chat del perfil %1.</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="242"/>
@@ -1046,7 +1046,7 @@ Do you want to try another password?</source>
         <location filename="../src/widget/friendwidget.cpp" line="261"/>
         <source>You can also set this by clicking the chat form name.
 Alias:</source>
-        <translation>También se puede establecer haciendo clik en el nombre del chat.
+        <translation>También se puede establecer haciendo clic en el nombre del chat.
 Alias:</translation>
     </message>
     <message>
@@ -1165,7 +1165,7 @@ Alias:</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="311"/>
         <source>Play a sound when you recieve message.</source>
         <comment>toolTip for Notify sound setting</comment>
-        <translation>Reproducir un sonido cuando se reciba un mensaje.</translation>
+        <translation>Reproducir un sonido cuando reciba un mensaje.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="314"/>
@@ -1305,7 +1305,7 @@ en lugar de la barra de tareas del sistema.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="321"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation>Poner el foco en qTox cuando se reciba un mensaje.</translation>
+        <translation>Poner el foco en qTox cuando reciba un mensaje.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="324"/>
@@ -1337,7 +1337,7 @@ en lugar de la barra de tareas del sistema.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="441"/>
         <source>Emoticon size:</source>
-        <translation>Tamaño del emoticon:</translation>
+        <translation>Tamaño del emoticono:</translation>
     </message>
     <message>
         <source>:)</source>
@@ -1471,7 +1471,7 @@ serán enviados cuando los vea aparecer de nuevo en línea.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="266"/>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Se puede configurar de forma personalizada con click derecho sobre el amigo.</translation>
+        <translation>Se puede configurar de forma personalizada con clic derecho sobre el amigo.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -1560,7 +1560,7 @@ Utilice sólo en caso de ser necesario.</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="72"/>
         <source>Send message</source>
-        <translation>Enviar un mensaje</translation>
+        <translation>Enviar mensaje</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="74"/>
@@ -1570,7 +1570,7 @@ Utilice sólo en caso de ser necesario.</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="78"/>
         <source>Send file(s)</source>
-        <translation>Enviar archivo(s)</translation>
+        <translation>Enviar archivos</translation>
     </message>
     <message>
         <source>Audio call: RED means you&apos;re on a call</source>
@@ -1591,7 +1591,7 @@ Utilice sólo en caso de ser necesario.</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
         <source>Send a screenshot</source>
-        <translation>Enviar una captura de pantalla</translation>
+        <translation>Enviar captura de pantalla</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="83"/>
@@ -1653,7 +1653,7 @@ Utilice sólo en caso de ser necesario.</translation>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="221"/>
         <source>Unmute microphone</source>
-        <translation>Desilenciar micrófono</translation>
+        <translation>Activar sonido del micrófono</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="236"/>
@@ -1664,7 +1664,7 @@ Utilice sólo en caso de ser necesario.</translation>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="242"/>
         <source>Unmute call</source>
-        <translation>Desilenciar llamada</translation>
+        <translation>Activar sonido de la llamada</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="258"/>
@@ -1706,7 +1706,7 @@ Utilice sólo en caso de ser necesario.</translation>
         <location filename="../src/widget/groupwidget.cpp" line="69"/>
         <source>You can also set this by clicking the chat form name.
 Title:</source>
-        <translation>También se puede establecer haciendo clik en el nombre del chat.
+        <translation>También se puede establecer haciendo clic en el nombre del chat.
 Título:</translation>
     </message>
 </context>
@@ -1840,7 +1840,7 @@ Título:</translation>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="92"/>
         <source>Tox ID</source>
-        <translation>ID Tox</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="98"/>
@@ -1848,13 +1848,13 @@ Título:</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Este grupo caracteres le dicen a otros clientes de Tox como usted ha de ser contactado.
+        <translation>Tox usa este grupo caracteres para saber como usted ha de ser contactado.
 Compártalo con sus amigos para poder comunicarse.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="102"/>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Su ID Tox (clik para copiar)</translation>
+        <translation>Su Tox ID (haga clic para copiar)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="120"/>
@@ -1864,7 +1864,7 @@ Compártalo con sus amigos para poder comunicarse.</translation>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="133"/>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Este código QR contiene su ID Tox. Puede compartirlo con sus amigos.</translation>
+        <translation>Este código QR contiene su Tox ID. Puede compartirlo con sus amigos.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="140"/>
@@ -1932,7 +1932,7 @@ Compártalo con sus amigos para poder comunicarse.</translation>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Permite exportar su perfil Tox a un archivo.
+        <translation>Exportar su perfil Tox a un archivo.
 El perfil no contiene su historial.</translation>
     </message>
     <message>
@@ -1949,7 +1949,7 @@ El perfil no contiene su historial.</translation>
         <location filename="../src/widget/form/profileform.ui" line="226"/>
         <source>Delete selected profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation>Eliminar perfil seleccionado.</translation>
+        <translation>Eliminar el perfil seleccionado.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="229"/>
@@ -1978,13 +1978,13 @@ El perfil no contiene su historial.</translation>
         <location filename="../src/widget/form/profileform.ui" line="250"/>
         <source>Create new Tox ID and switch to it.</source>
         <comment>tooltip for creating new Tox ID button</comment>
-        <translation>Crear y cambiar a un nuevo ID Tox.</translation>
+        <translation>Crear y cambiar a una nueva Tox ID.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="253"/>
         <source>New Tox ID</source>
         <comment>new profile button</comment>
-        <translation>Nuevo ID Tox</translation>
+        <translation>Nueva Tox ID</translation>
     </message>
 </context>
 <context>
@@ -2084,7 +2084,7 @@ El perfil no contiene su historial.</translation>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="76"/>
         <source>Please set your new chat history password.</source>
-        <translation>Por favor ingrese la contraseña para el nuevo historial de chat.</translation>
+        <translation>Ingrese la contraseña para el nuevo historial de chat.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="78"/>
@@ -2179,7 +2179,7 @@ En caso contrario será eliminado.</translation>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="204"/>
         <source>Please set your new data file password.</source>
-        <translation>Por favor ingrese la contraseña para el nuevo archivo de datos.</translation>
+        <translation>Ingrese la contraseña para el nuevo archivo de datos.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacyform.cpp" line="206"/>
@@ -2262,7 +2262,7 @@ Es posible que haya cambios en el formato de guardado, lo que puede generar pér
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
         <source>Local file encryption</source>
-        <translation>Cifrado local de archivos</translation>
+        <translation>Cifrado Local de Archivos</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
@@ -2297,9 +2297,9 @@ It is there to help you change your Tox ID when you feel like you are getting to
 When you change nospam, your current contacts still can communicate with you,
 but new contacts need to know your new Tox ID to be able to add you.</source>
         <comment>toolTip for nospam</comment>
-        <translation>&quot;Nospam&quot; es parte de su ID Tox y ayuda si usted recibe demasiadas solicitudes spam de amistad.
-Si cambia su &quot;nospam&quot;, usted va a poder seguir comunicándose con sus amigos actuales,
-pero nuevos amigos van a necesitar su nueva ID Tox para añadirlo.</translation>
+        <translation>&quot;Nospam&quot; es parte de su Tox ID y ayuda si usted recibe demasiadas solicitudes de amistad no deseadas.
+Al cambiar su &quot;nospam&quot;, usted va a poder seguir comunicándose con sus amigos actuales,
+pero nuevos amigos van a necesitar su nueva Tox ID para añadirlo.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="156"/>
@@ -2615,7 +2615,7 @@ Será instalado al reinicar qTox.</translation>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="70"/>
         <source>User Profile</source>
-        <translation>Perfil de usuario</translation>
+        <translation>Perfil de Usuario</translation>
     </message>
     <message>
         <location filename="../src/widget/toxuri.cpp" line="68"/>
@@ -2635,7 +2635,7 @@ Será instalado al reinicar qTox.</translation>
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="127"/>
         <source>Click and drag to select a region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Haga click y arrastre para seleccionar un área. Presione &lt;b&gt;Escape&lt;/b&gt; para cancelar.</translation>
+        <translation>Haga clic y arrastre para seleccionar un área. Presione &lt;b&gt;Escape&lt;/b&gt; para cancelar.</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="134"/>
@@ -2695,7 +2695,7 @@ Será instalado al reinicar qTox.</translation>
     <message>
         <location filename="../src/misc/settings.cpp" line="155"/>
         <source>Please choose which identity to use</source>
-        <translation>Por favor elija la identidad a utilizar</translation>
+        <translation>Elija la identidad a usar</translation>
     </message>
 </context>
 <context>
@@ -2740,14 +2740,14 @@ Será instalado al reinicar qTox.</translation>
         <location filename="../src/toxdns.cpp" line="137"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>La respuesta DNS no contiene ninguna ID Tox</translation>
+        <translation>La respuesta DNS no contiene ninguna Tox ID</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="146"/>
         <location filename="../src/toxdns.cpp" line="155"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>La respuesta DNS no contiene una ID Tox válida</translation>
+        <translation>La respuesta DNS no contiene una Tox ID válida</translation>
     </message>
     <message>
         <location filename="../src/toxdns.cpp" line="242"/>
@@ -2756,10 +2756,10 @@ Será instalado al reinicar qTox.</translation>
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
 If unsure, press “No”, so that request to ToxDNS service will not be made using unsecure protocol.</source>
-        <translation>Parece que qTox tiene que usar el antiguo protocolo tox1 para acceder al registro DNS de la ID Tox de su amigo.
-Desgraciadamente, tox1 no es seguro y usted estaría en riesgo de que su comunicación con el servicio DNS de Tox sea interceptada.
+        <translation>Parece que qTox tiene que usar el antiguo protocolo tox1 para acceder al registro DNS de la Tox ID de su amigo.
+Desgraciadamente, tox1 no es seguro y usted estaría en riesgo de que su comunicación con el ToxDNS sea interceptada.
 ¿Desea usar tox1 de todos modos?
-Si no está seguro, seleccione &quot;No&quot; para evitar comunicaciones no seguras.</translation>
+Si no está seguro, seleccione &quot;No&quot; para evitar comunicaciones por un protocolo no seguro.</translation>
     </message>
 </context>
 <context>
@@ -2807,7 +2807,7 @@ Si no está seguro, seleccione &quot;No&quot; para evitar comunicaciones no segu
     <message>
         <location filename="../src/widget/widget.cpp" line="135"/>
         <source>Online</source>
-        <translation>Conectado</translation>
+        <translation>Conectados</translation>
     </message>
     <message>
         <source>Away</source>
@@ -2820,7 +2820,7 @@ Si no está seguro, seleccione &quot;No&quot; para evitar comunicaciones no segu
     <message>
         <location filename="../src/widget/widget.cpp" line="1170"/>
         <source>&amp;Quit</source>
-        <translation>Cerrar</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>Change status to:</source>
@@ -2897,7 +2897,7 @@ Si no está seguro, seleccione &quot;No&quot; para evitar comunicaciones no segu
     <message>
         <location filename="../src/widget/widget.cpp" line="136"/>
         <source>Offline</source>
-        <translation>Desconectado</translation>
+        <translation>Desconectados</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="137"/>
