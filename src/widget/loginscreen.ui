@@ -143,6 +143,10 @@
   <property name="windowTitle">
    <string>qTox</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../res.qrc">
+    <normaloff>:/img/icons/qtox.svg</normaloff>:/img/icons/qtox.svg</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
@@ -223,7 +227,7 @@
     <bool>true</bool>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="newPage">
     <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -300,12 +304,6 @@ margin-bottom:45px;</string>
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>25</height>
-            </size>
-           </property>
            <property name="maxLength">
             <number>64</number>
            </property>
@@ -323,12 +321,6 @@ margin-bottom:45px;</string>
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_2">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>25</height>
-            </size>
-           </property>
            <property name="maxLength">
             <number>64</number>
            </property>
@@ -336,6 +328,19 @@ margin-bottom:45px;</string>
             <enum>QLineEdit::Password</enum>
            </property>
           </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Confirm password:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_5"/>
          </item>
          <item>
           <spacer name="verticalSpacer">
@@ -648,12 +653,6 @@ margin-bottom:5px;</string>
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_3">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>25</height>
-            </size>
-           </property>
            <property name="maxLength">
             <number>64</number>
            </property>
@@ -671,12 +670,6 @@ margin-bottom:5px;</string>
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_4">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>25</height>
-            </size>
-           </property>
            <property name="maxLength">
             <number>64</number>
            </property>
