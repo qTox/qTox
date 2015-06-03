@@ -119,5 +119,6 @@
         <file>ui/acceptCall/acceptCall.svg</file>
         <file>ui/rejectCall/rejectCall.svg</file>
         <file>ui/volButton/volButtonDisabled.png</file>
+        <file>img/login_logo.png</file>
     </qresource>
 </RCC>
