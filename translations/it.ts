@@ -4,14 +4,19 @@
 <context>
     <name>AVForm</name>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="33"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="38"/>
         <source>Audio/Video</source>
         <translation>Audio/Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="83"/>
-        <source>Initializing Camera...</source>
-        <translation>Inizializzazione Webcam...</translation>
+        <location filename="../src/widget/form/settings/avform.cpp" line="131"/>
+        <source>%1x%2 at %3 FPS</source>
+        <translation>%1x%2 - %3 FPS</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avform.cpp" line="135"/>
+        <source>Default resolution</source>
+        <translation>Risoluzione di default</translation>
     </message>
 </context>
 <context>
@@ -22,17 +27,17 @@
         <translation>Impostazioni Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="237"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="178"/>
         <source>Resolution</source>
         <translation>Risoluzione</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="61"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
         <source>Playback</source>
         <translation>Volume altoparlanti</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="54"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="80"/>
         <source>Microphone</source>
         <translation>Volume microfono</translation>
     </message>
@@ -42,65 +47,62 @@
         <translation>Impostazioni Audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="89"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="67"/>
         <source>Use slider to set volume of your speakers.</source>
         <translation>Usa lo slider per impostare il volume degli altoparlanti.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="75"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
         <translation>Usa lo slider per impostare il volume del microfono.
 ATTENZIONE: lo slider è ancora non funzionante.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="112"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="146"/>
         <source>Playback device</source>
         <translation>Dispositivo di output</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="68"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="122"/>
         <source>Capture device</source>
         <translation>Dispositivo di input</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="126"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="94"/>
         <source>Rescan audio devices</source>
         <translation>Cerca dispositivi audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="105"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="57"/>
         <source>Filter audio</source>
         <translation>Filtra audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="47"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="140"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="279"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="286"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="293"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="300"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="87"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="101"/>
         <source>100</source>
         <translation>100</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="102"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="54"/>
         <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
         <translation>Filtra l&apos;audio del microfono, così le persone che chiami ti sentiranno meglio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="119"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="133"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="195"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="209"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="244"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="258"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="47"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="129"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="184"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="230"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
+        <source>Video device</source>
+        <translation>Dispositivo di input</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="171"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="191"/>
         <source>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
@@ -111,26 +113,6 @@ Più alto il valore, migliore sarà la qualità del video che i tuoi contatti ri
 NOTA: più alta è la qualità video, più veloce deve essere la connessione ad internet.
 Può capitare che la tua connessione ad internet non sia abbastanza veloce per gestire
 qualità video elevate, questo può causare problemi con le chiamate video.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="223"/>
-        <source>Hue</source>
-        <translation>Colore</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="272"/>
-        <source>Brightness</source>
-        <translation>Luminoistà</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="265"/>
-        <source>Saturation</source>
-        <translation>Saturazione</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="202"/>
-        <source>Contrast</source>
-        <translation>Contrasto</translation>
     </message>
 </context>
 <context>
@@ -359,25 +341,25 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="159"/>
-        <location filename="../src/widget/form/chatform.cpp" line="750"/>
+        <location filename="../src/widget/form/chatform.cpp" line="752"/>
         <source>File not read</source>
         <translation>Impossibile leggere il file</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="159"/>
-        <location filename="../src/widget/form/chatform.cpp" line="750"/>
+        <location filename="../src/widget/form/chatform.cpp" line="752"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translation>qTox non è riuscito ad aprire %1</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="164"/>
-        <location filename="../src/widget/form/chatform.cpp" line="756"/>
+        <location filename="../src/widget/form/chatform.cpp" line="758"/>
         <source>Bad Idea</source>
         <translation>Pessima idea</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="164"/>
-        <location filename="../src/widget/form/chatform.cpp" line="756"/>
+        <location filename="../src/widget/form/chatform.cpp" line="758"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>Stai cercando di inviare un file speciale (sequenziale), questo non funzionerà!</translation>
     </message>
@@ -398,25 +380,25 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="302"/>
-        <location filename="../src/widget/form/chatform.cpp" line="420"/>
+        <location filename="../src/widget/form/chatform.cpp" line="422"/>
         <source>End video call</source>
         <translation>Termina videochiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="311"/>
-        <location filename="../src/widget/form/chatform.cpp" line="429"/>
+        <location filename="../src/widget/form/chatform.cpp" line="431"/>
         <source>End audio call</source>
         <translation>Termina chiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="322"/>
-        <location filename="../src/widget/form/chatform.cpp" line="676"/>
+        <location filename="../src/widget/form/chatform.cpp" line="678"/>
         <source>Mute microphone</source>
         <translation>Disattiva microfono</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="325"/>
-        <location filename="../src/widget/form/chatform.cpp" line="696"/>
+        <location filename="../src/widget/form/chatform.cpp" line="698"/>
         <source>Mute call</source>
         <translation>Disattiva audio</translation>
     </message>
@@ -441,53 +423,53 @@ p, li { white-space: pre-wrap; }
         <translation>Stai chiamando %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="653"/>
+        <location filename="../src/widget/form/chatform.cpp" line="655"/>
         <source>Start audio call</source>
         <translation>Avvia chiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="656"/>
+        <location filename="../src/widget/form/chatform.cpp" line="658"/>
         <source>Start video call</source>
         <translation>Avvia videochiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="681"/>
+        <location filename="../src/widget/form/chatform.cpp" line="683"/>
         <source>Unmute microphone</source>
         <translation>Attiva microfono</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="701"/>
+        <location filename="../src/widget/form/chatform.cpp" line="703"/>
         <source>Unmute call</source>
         <translation>Attiva audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="713"/>
+        <location filename="../src/widget/form/chatform.cpp" line="715"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Invio del file &quot;%1&quot; fallito</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="884"/>
+        <location filename="../src/widget/form/chatform.cpp" line="886"/>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Impossibile creare il file temporaneo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="885"/>
+        <location filename="../src/widget/form/chatform.cpp" line="887"/>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>qTox non è stato in grado di salvare lo screenshot</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="927"/>
+        <location filename="../src/widget/form/chatform.cpp" line="929"/>
         <source>Call with %1 ended. %2</source>
         <translation>Chiamata con %1 terminata. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="946"/>
+        <location filename="../src/widget/form/chatform.cpp" line="948"/>
         <source>Call duration: </source>
         <translation>Durata chiamata: </translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="499"/>
+        <location filename="../src/widget/form/chatform.cpp" line="501"/>
         <source>Call rejected</source>
         <translation>Chiamata rifiutata</translation>
     </message>
@@ -521,49 +503,49 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Core</name>
     <message>
-        <location filename="../src/core/core.cpp" line="250"/>
+        <location filename="../src/core/core.cpp" line="251"/>
         <source>Toxing on qTox</source>
         <translation>Toxing on qTox</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="251"/>
+        <location filename="../src/core/core.cpp" line="252"/>
         <source>qTox User</source>
         <translation>qTox User</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="578"/>
+        <location filename="../src/core/core.cpp" line="591"/>
         <source>You need to write a message with your request</source>
         <translation>Devi scrivere un messaggio per la richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="582"/>
+        <location filename="../src/core/core.cpp" line="595"/>
         <source>Your message is too long!</source>
         <translation>Il messaggio è troppo lungo!</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="586"/>
+        <location filename="../src/core/core.cpp" line="599"/>
         <source>Friend is already added</source>
         <translation>Questo contatto è già presente nella tua lista</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="604"/>
+        <location filename="../src/core/core.cpp" line="617"/>
         <source>/me offers friendship.</source>
         <translation>/me ti ha aggiunto come contatto.</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="606"/>
+        <location filename="../src/core/core.cpp" line="619"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me ti ha aggiunto come contatto, &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="884"/>
-        <location filename="../src/core/core.cpp" line="982"/>
+        <location filename="../src/core/core.cpp" line="897"/>
+        <location filename="../src/core/core.cpp" line="995"/>
         <source>Profile already in use</source>
         <translation>Profilo già in uso</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="885"/>
-        <location filename="../src/core/core.cpp" line="983"/>
+        <location filename="../src/core/core.cpp" line="898"/>
+        <location filename="../src/core/core.cpp" line="996"/>
         <source>This profile is already used by another qTox instance
 Please select another profile</source>
         <translation>Questo profile è già usato da un&apos;altra istanza di qTox
@@ -1618,7 +1600,7 @@ I profili non contengono la cronologia messaggi.</translation>
 <context>
     <name>Nexus</name>
     <message>
-        <location filename="../src/nexus.cpp" line="181"/>
+        <location filename="../src/nexus.cpp" line="182"/>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>Immagini (%1)</translation>
@@ -2057,17 +2039,17 @@ It will be installed when qTox restarts.</source>
 Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="107"/>
+        <location filename="../src/main.cpp" line="106"/>
         <source>Tox URI to parse</source>
         <translation>URI Tox da interpretare</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="108"/>
+        <location filename="../src/main.cpp" line="107"/>
         <source>Starts new instance and loads specified profile.</source>
         <translation>Avvia una nuova istanza caricando il profilo selezionato.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="108"/>
+        <location filename="../src/main.cpp" line="107"/>
         <source>profile</source>
         <translation>profilo</translation>
     </message>
@@ -2284,172 +2266,172 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1170"/>
+        <location filename="../src/widget/widget.cpp" line="1169"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="107"/>
+        <location filename="../src/widget/widget.cpp" line="106"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="110"/>
+        <location filename="../src/widget/widget.cpp" line="109"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="113"/>
+        <location filename="../src/widget/widget.cpp" line="112"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="409"/>
+        <location filename="../src/widget/widget.cpp" line="408"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Impossibile avviare Toxcore.\nqTox terminerà dopo che avrai chiuso questo messaggio.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="419"/>
+        <location filename="../src/widget/widget.cpp" line="418"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="217"/>
-        <location filename="../src/widget/widget.cpp" line="451"/>
+        <location filename="../src/widget/widget.cpp" line="216"/>
+        <location filename="../src/widget/widget.cpp" line="450"/>
         <source>Add friend</source>
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="134"/>
+        <location filename="../src/widget/widget.cpp" line="133"/>
         <source>All</source>
         <translation>Tutti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="135"/>
+        <location filename="../src/widget/widget.cpp" line="134"/>
         <source>Online</source>
         <translation>Online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="136"/>
+        <location filename="../src/widget/widget.cpp" line="135"/>
         <source>Offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="137"/>
+        <location filename="../src/widget/widget.cpp" line="136"/>
         <source>Friends</source>
         <translation>Contatti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="138"/>
+        <location filename="../src/widget/widget.cpp" line="137"/>
         <source>Groups</source>
         <translation>Gruppi</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="140"/>
+        <location filename="../src/widget/widget.cpp" line="139"/>
         <source>Search Contacts</source>
         <translation>Cerca tra i contatti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="465"/>
+        <location filename="../src/widget/widget.cpp" line="464"/>
         <source>File transfers</source>
         <translation>Files trasferiti</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="476"/>
+        <location filename="../src/widget/widget.cpp" line="475"/>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>File eseguibile</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="476"/>
+        <location filename="../src/widget/widget.cpp" line="475"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Hai chiesto a qTox di aprire un file eseguibile. I files eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="544"/>
+        <location filename="../src/widget/widget.cpp" line="543"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="553"/>
+        <location filename="../src/widget/widget.cpp" line="552"/>
         <source>Profile</source>
         <translation>Profilo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="661"/>
+        <location filename="../src/widget/widget.cpp" line="660"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossibile inviare la richiesta d&apos;amicizia</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="703"/>
+        <location filename="../src/widget/widget.cpp" line="702"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>assente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="705"/>
+        <location filename="../src/widget/widget.cpp" line="704"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupato</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="707"/>
+        <location filename="../src/widget/widget.cpp" line="706"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>offline</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="711"/>
+        <location filename="../src/widget/widget.cpp" line="710"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>online</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="714"/>
+        <location filename="../src/widget/widget.cpp" line="713"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 è ora %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="869"/>
+        <location filename="../src/widget/widget.cpp" line="868"/>
         <source>Remove history</source>
         <translation>Elimina cronologia chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="870"/>
+        <location filename="../src/widget/widget.cpp" line="869"/>
         <source>Do you want to remove history as well?</source>
         <translation>Vuoi rimuovere anche la cronologia chat?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="926"/>
+        <location filename="../src/widget/widget.cpp" line="925"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>Invito chat di gruppo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="926"/>
+        <location filename="../src/widget/widget.cpp" line="925"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1 ti ha invitato in una chat di gruppo. Vuoi partecipare?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="988"/>
+        <location filename="../src/widget/widget.cpp" line="987"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Sconosciuto&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1016"/>
+        <location filename="../src/widget/widget.cpp" line="1015"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 ha impostato il titolo in %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1250"/>
+        <location filename="../src/widget/widget.cpp" line="1249"/>
         <source>Message failed to send</source>
         <translation>Impossibile inviare il messaggio</translation>
     </message>
