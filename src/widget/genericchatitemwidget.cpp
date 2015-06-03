@@ -22,6 +22,10 @@ GenericChatItemWidget::GenericChatItemWidget(QWidget *parent)
     : QFrame(parent)
 {
     setProperty("compact", Settings::getInstance().getCompactLayout());
+
+    nameLabel = new CroppingLabel(this);
+    nameLabel->setObjectName("name");
+    nameLabel->setTextFormat(Qt::PlainText);
 }
 
 bool GenericChatItemWidget::isCompact() const
@@ -43,7 +47,7 @@ QString GenericChatItemWidget::getName() const
 bool GenericChatItemWidget::operator<(const GenericChatItemWidget& other) const
 {
     int compareValue = getName().localeAwareCompare(other.getName());
-    if (compareValue == 0)
-        return this < &other; // Consistent ordering.
-    return  compareValue > 0;
+    //if (compareValue == 0)
+    //    return this < &other; // Consistent ordering.
+    return  compareValue < 0;
 }

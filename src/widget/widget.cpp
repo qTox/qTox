@@ -236,7 +236,10 @@ void Widget::init()
         show();
 
     for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
-        contactListWidget->addCircleWidget(Settings::getInstance().getCircleName(i));
+    {
+        qDebug() << "HELELEL";
+        contactListWidget->addCircleWidget(i);
+    }
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)

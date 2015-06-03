@@ -28,6 +28,7 @@
 #include "groupwidget.h"
 #include "circlewidget.h"
 #include "friendlistlayout.h"
+#include "src/misc/settings.h"
 #include <cassert>
 
 FriendListWidget::FriendListWidget(QWidget *parent, bool groupsOnTop)
@@ -59,26 +60,22 @@ void FriendListWidget::addGroupWidget(GroupWidget *widget)
 
 void FriendListWidget::addFriendWidget(FriendWidget *w, Status s, int circleIndex)
 {
-    CircleWidget *circleWidget = nullptr;
-    if (circleIndex >= 0 && circleIndex < circleLayout2.getLayout()->count())
-        circleWidget = dynamic_cast<CircleWidget*>(circleLayout2.getLayout()->itemAt(circleIndex)->widget());
-
-    if (circleWidget == nullptr)
-        circleIndex = -1;
-
     if (circleIndex == -1)
         moveWidget(w, s, true);
     else
-        circleWidget->addFriendWidget(w, s);
+    {
+        CircleWidget::getFromID(circleIndex)->addFriendWidget(w, s);
+        CircleWidget::getFromID(circleIndex)->show();
+    }
 }
 
-void FriendListWidget::addCircleWidget(const QString &name)
+void FriendListWidget::addCircleWidget(int id)
 {
-    CircleWidget *circleWidget = new CircleWidget(this);
-    circleWidget->setName(name);
+    CircleWidget *circleWidget = new CircleWidget(this, id);
     circleLayout2.addSortedWidget(circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
+    //ircleWidget->show(); // Avoid flickering.
 }
 
 void FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
@@ -318,10 +315,11 @@ void FriendListWidget::dropEvent(QDropEvent *event)
 
 void FriendListWidget::moveWidget(FriendWidget *w, Status s, bool add)
 {
-    CircleWidget *circleWidget = dynamic_cast<CircleWidget*>(w->parent());
+    CircleWidget *circleWidget = dynamic_cast<CircleWidget*>(w->parentWidget());
 
     if (circleWidget == nullptr || add)
     {
+        Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(w->friendId)->getToxId(), -1);
         listLayout->addFriendWidget(w, s);
         return;
     }

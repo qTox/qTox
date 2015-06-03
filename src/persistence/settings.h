@@ -247,8 +247,11 @@ public:
 
     int getCircleCount() const;
     int addCircle(const QString &name);
+    int removeCircle(int index);
     QString getCircleName(int index) const;
-    void setCircleName(int index);
+    void setCircleName(int index, const QString &name);
+    bool getCircleExpanded(int index) const;
+    void setCircleExpanded(int index, bool expanded);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -368,9 +371,15 @@ private:
         int circleIndex;
     };
 
+    struct circleProp
+    {
+        QString name;
+        bool expanded;
+    };
+
     QHash<QString, friendProp> friendLst;
 
-    QVector<QString> circleLst;
+    QVector<circleProp> circleLst;
 
     int themeColor;
 
