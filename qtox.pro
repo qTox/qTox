@@ -32,7 +32,8 @@ FORMS    += \
     src/widget/form/setpassworddialog.ui \
     src/chatlog/content/filetransferwidget.ui \
     src/widget/form/settings/advancedsettings.ui \
-    src/android.ui
+    src/android.ui \
+    src/widget/loginscreen.ui
     
 CONFIG   += c++11
 
@@ -467,7 +468,8 @@ SOURCES += \
     src/video/cameradevice.cpp \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
-    src/core/toxid.cpp
+    src/core/toxid.cpp \
+    src/widget/loginscreen.cpp
 
 HEADERS += \
     src/audio.h \
@@ -500,4 +502,5 @@ HEADERS += \
     src/video/camerasource.h \
     src/video/corevideosource.h \
     src/video/videomode.h \
-    src/core/toxid.h
+    src/core/toxid.h \
+    src/widget/loginscreen.h
