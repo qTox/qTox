@@ -49,7 +49,7 @@ public:
 
     void addGroupWidget(GroupWidget *widget);
     void addFriendWidget(FriendWidget *w, Status s, int circleIndex);
-    void addCircleWidget(const QString &name);
+    void addCircleWidget(int id);
     void addCircleWidget(FriendWidget *widget = nullptr);
     void removeCircleWidget(CircleWidget *widget);
 

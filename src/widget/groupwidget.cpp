@@ -68,6 +68,8 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
          */
         this->repaint();
     });
+
+    nameLabel->editStart();
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -136,14 +138,6 @@ QString GroupWidget::getStatusString()
         return "Online";
     else
         return "New Message";
-}
-
-bool GroupWidget::operator<(const GroupWidget& other) const
-{
-    int compareValue = nameLabel->text().localeAwareCompare(other.nameLabel->text());
-    if (compareValue == 0)
-        return this < &other; // Consistent ordering.
-    return  compareValue > 0;
 }
 
 void GroupWidget::setChatForm(Ui::MainWindow &ui)

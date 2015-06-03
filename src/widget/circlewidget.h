@@ -31,7 +31,7 @@ class CircleWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    CircleWidget(FriendListWidget *parent = 0);
+    CircleWidget(FriendListWidget *parent = 0, int id = -1);
 
     void addFriendWidget(FriendWidget *w, Status s);
 
@@ -48,7 +48,7 @@ public:
     bool cycleContacts(bool forward);
     bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
 
-    bool operator<(const CircleWidget& other) const;
+    static CircleWidget* getFromID(int id);
 
 signals:
     void renameRequested(const QString &newName);
@@ -67,11 +67,14 @@ protected:
     void dropEvent(QDropEvent* event) override;
 
 private:
+    void updateID(int index);
+    static QHash<int, CircleWidget*> circleList;
     enum FriendLayoutType
     {
         Online = 0,
         Offline = 1
     };
+    int id;
     bool expanded = false;
     FriendListLayout* listLayout;
     QVBoxLayout* fullLayout;
@@ -81,6 +84,7 @@ private:
     QFrame* lineFrame;
     QWidget* container;
     QHBoxLayout* topLayout = nullptr;
+    QWidget* listWidget;
 };
 
 #endif // CIRCLEWIDGET_H

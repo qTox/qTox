@@ -42,7 +42,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     // name text
     nameLabel = new CroppingLabel(this);
     nameLabel->setTextFormat(Qt::PlainText);
-    nameLabel->setForegroundRole(QPalette::WindowText);
+    nameLabel->setForegroundRole(QPalette::WindowText);*/
 
     setAutoFillBackground(true);
     reloadTheme();

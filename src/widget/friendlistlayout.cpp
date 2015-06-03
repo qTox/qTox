@@ -43,8 +43,8 @@ FriendListLayout::FriendListLayout()
 void FriendListLayout::addFriendWidget(FriendWidget *w, Status s)
 {
     // bug somewhere here.
-    friendOfflineLayout.removeSortedWidget(w);
-    friendOnlineLayout.removeSortedWidget(w);
+    friendOfflineLayout.getLayout()->removeWidget(w);
+    friendOnlineLayout.getLayout()->removeWidget(w);
     if (s == Status::Offline)
     {
         friendOfflineLayout.addSortedWidget(w);

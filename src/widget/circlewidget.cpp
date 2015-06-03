@@ -23,6 +23,7 @@
 #include <QBoxLayout>
 #include <QMouseEvent>
 #include <QLineEdit>
+#include "src/misc/settings.h"
 
 #include <QDragEnterEvent>
 #include <QMimeData>
@@ -44,8 +45,11 @@ void maxCropLabel(CroppingLabel* label)
     label->setMaximumWidth(metrics.width(label->fullText()) + metrics.width("..."));
 }
 
-CircleWidget::CircleWidget(FriendListWidget *parent)
+QHash<int, CircleWidget*> CircleWidget::circleList;
+
+CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
     : GenericChatItemWidget(parent)
+    , id(id_)
 {
     setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/circleWidget.css"));
 
@@ -59,9 +63,6 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
     statusLabel->setTextFormat(Qt::PlainText);
 
     // name text
-    nameLabel = new CroppingLabel(this);
-    nameLabel->setObjectName("name");
-    nameLabel->setTextFormat(Qt::PlainText);
     nameLabel->setText("Circle");
 
     arrowLabel = new QLabel(this);
@@ -82,7 +83,18 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
 
     setAcceptDrops(true);
 
+    listWidget = new QWidget(this);
+    fullLayout->addWidget(listWidget);
+    listWidget->setLayout(listLayout);
+    listWidget->setVisible(false);
+
     onCompactChanged(isCompact());
+
+    if (id != -1)
+    {
+        // Set name before connecting text change.
+        setName(Settings::getInstance().getCircleName(id));
+    }
 
     connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newName, const QString &oldName)
     {
@@ -90,15 +102,33 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
             maxCropLabel(nameLabel);
         nameLabel->setText(oldName);
         emit renameRequested(newName);
+        Settings::getInstance().setCircleName(id, newName);
     });
 
-    renameCircle();
+    bool isNew = false;
+    auto circleIt = circleList.find(id);
+    if (circleIt == circleList.end())
+    {
+        if (id == -1)
+        {
+            isNew = true;
+            id = Settings::getInstance().addCircle("Circle");
+        }
+    }
+    circleList.insert(id, this);
+
+    if (isNew)
+        renameCircle();
+
+    if (Settings::getInstance().getCircleExpanded(id))
+        expand();
 }
 
 void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
 {
     listLayout->addFriendWidget(w, s);
     updateStatus();
+    Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(w->friendId)->getToxId(), id);
 }
 
 void CircleWidget::expand()
@@ -111,14 +141,14 @@ void CircleWidget::expand()
 void CircleWidget::toggle()
 {
     expanded = !expanded;
+    listWidget->setVisible(expanded);
+    Settings::getInstance().setCircleExpanded(id, expanded);
     if (expanded)
     {
-        fullLayout->addLayout(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
     }
     else
     {
-        fullLayout->removeItem(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
     }
 }
@@ -238,12 +268,12 @@ bool CircleWidget::cycleContacts(FriendWidget *activeChatroomWidget, bool forwar
     return false;
 }
 
-bool CircleWidget::operator<(const CircleWidget& other) const
+CircleWidget* CircleWidget::getFromID(int id)
 {
-    int compareValue = nameLabel->text().localeAwareCompare(other.nameLabel->text());
-    if (compareValue == 0)
-        return this < &other; // Consistent ordering.
-    return  compareValue > 0;
+    auto circleIt = circleList.find(id);
+    if (circleIt != circleList.end())
+        return circleIt.value();
+    return nullptr;
 }
 
 void CircleWidget::onCompactChanged(bool _compact)
@@ -319,6 +349,13 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
         listLayout->moveFriendWidgets(friendList);
 
         friendList->removeCircleWidget(this);
+
+        circleList.remove(id);
+        int replacedCircle = Settings::getInstance().removeCircle(id);
+
+        auto circleReplace = circleList.find(replacedCircle);
+        if (circleReplace != circleList.end())
+            circleReplace.value()->updateID(id);
     }
 }
 
@@ -375,4 +412,31 @@ void CircleWidget::dropEvent(QDropEvent *event)
 void CircleWidget::updateStatus()
 {
     statusLabel->setText(QString::number(listLayout->friendOnlineCount()) + QStringLiteral(" / ") + QString::number(listLayout->friendTotalCount()));
+}
+
+void CircleWidget::updateID(int index)
+{
+    // For when a circle gets destroyed, another takes its id.
+    // This function updates all friends widgets.
+    id = index;
+    circleList[id] = this;
+
+    for (int i = 0; i < listLayout->getLayoutOnline()->count(); ++i)
+    {
+        FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(listLayout->getLayoutOnline()->itemAt(i));
+        if (friendWidget != nullptr)
+        {
+            qDebug() << "My yolo slow";
+            Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
+        }
+    }
+    for (int i = 0; i < listLayout->getLayoutOffline()->count(); ++i)
+    {
+        FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(listLayout->getLayoutOffline()->itemAt(i));
+        if (friendWidget != nullptr)
+        {
+            qDebug() << "My yolo slow";
+            Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
+        }
+    }
 }

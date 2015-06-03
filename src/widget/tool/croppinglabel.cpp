@@ -21,6 +21,8 @@
 #include <QResizeEvent>
 #include <QLineEdit>
 
+#include <QTimer>
+
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
     , blockPaintEvents(false)
@@ -156,8 +158,10 @@ void CroppingLabel::showTextEdit()
 {
     blockPaintEvents = true;
     textEdit->show();
-    textEdit->setFocus();
+    //textEdit->setFocus();
     textEdit->setText(origText);
+    // Set focus when event loop is free.
+    QTimer::singleShot(0, textEdit, SLOT(setFocus()));
 }
 
 QString CroppingLabel::fullText()

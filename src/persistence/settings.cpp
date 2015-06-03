@@ -311,7 +311,10 @@ void Settings::loadPersonnal(Profile* profile)
         for (int i = 0; i < size; i ++)
         {
             ps.setArrayIndex(i);
-            circleLst.push_back(ps.value("name").toString());
+            circleProp cp;
+            cp.name = ps.value("name").toString();
+            cp.expanded = ps.value("expanded", true).toBool();
+            circleLst.push_back(cp);
         }
         ps.endArray();
     ps.endGroup();
@@ -479,7 +482,8 @@ void Settings::savePersonal(QString profileName, QString password)
         for (auto& circle : circleLst)
         {
             ps.setArrayIndex(index);
-            ps.setValue("name", circle);
+            ps.setValue("name", circle.name);
+            ps.setValue("expanded", circle.expanded);
             index++;
         }
         ps.endArray();
@@ -1291,6 +1295,14 @@ int Settings::getFriendCircleIndex(const ToxId &id) const
     return -1;
 }
 
+void Settings::setFriendCircleIndex(const ToxId &id, int index)
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+        it->circleIndex = index;
+}
+
 void Settings::removeFriendSettings(const ToxId &id)
 {
     QMutexLocker locker{&bigLock};
@@ -1341,7 +1353,40 @@ int Settings::getCircleCount() const
 
 QString Settings::getCircleName(int index) const
 {
-    return circleLst[index];
+    return circleLst[index].name;
+}
+
+void Settings::setCircleName(int index, const QString &name)
+{
+    circleLst[index].name = name;
+}
+
+int Settings::addCircle(const QString &name)
+{
+    circleProp cp;
+    cp.name = name;
+    cp.expanded = false;
+    circleLst.append(cp);
+    return circleLst.count() - 1;
+}
+
+bool Settings::getCircleExpanded(int index) const
+{
+    return circleLst[index].expanded;
+}
+
+void Settings::setCircleExpanded(int index, bool expanded)
+{
+    circleLst[index].expanded = expanded;
+}
+
+int Settings::removeCircle(int index)
+{
+    // Replace index with last one and remove last one instead.
+    // This gives you contiguous ids all the time.
+    circleLst[index] = circleLst.last();
+    circleLst.pop_back();
+    return circleLst.count();
 }
 
 int Settings::getThemeColor() const
