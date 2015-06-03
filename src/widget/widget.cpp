@@ -1264,7 +1264,8 @@ void Widget::onSplitterMoved(int pos, int index)
 
 void Widget::cycleContacts(int offset)
 {
-    if (!activeChatroomWidget)
+    contactListWidget->cycleContacts(activeChatroomWidget, offset == 1 ? true : false);
+    /*if (!activeChatroomWidget)
         return;
 
     FriendListWidget* friendList = static_cast<FriendListWidget*>(ui->friendList->widget());
@@ -1276,7 +1277,7 @@ void Widget::cycleContacts(int offset)
     if(bounded < 0)
         bounded += friends.length();
 
-    emit friends[bounded]->chatroomWidgetClicked(friends[bounded]);
+    emit friends[bounded]->chatroomWidgetClicked(friends[bounded]);*/
 }
 
 void Widget::processOfflineMsgs()

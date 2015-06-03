@@ -51,12 +51,14 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
 
     setAcceptDrops(true);
 
-    connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newText, const QString &oldText)
+    connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newName, const QString &oldName)
     {
-        Group* g = GroupList::findGroup(groupId);
-        if (newText != oldText)
+        //Group* g = GroupList::findGroup(groupId);
+        if (newName != oldName)
         {
-            emit g->getChatForm()->groupTitleChanged(groupId, newText.left(128));
+            nameLabel->setText(oldName);
+            emit renameRequested(newName);
+            //emit g->getChatForm()->groupTitleChanged(groupId, newText.left(128));
         }
         /* according to agilob:
          * “Moving mouse pointer over groupwidget results in CSS effect
@@ -134,6 +136,14 @@ QString GroupWidget::getStatusString()
         return "Online";
     else
         return "New Message";
+}
+
+bool GroupWidget::operator<(const GroupWidget& other) const
+{
+    int compareValue = nameLabel->text().localeAwareCompare(other.nameLabel->text());
+    if (compareValue == 0)
+        return this < &other; // Consistent ordering.
+    return  compareValue > 0;
 }
 
 void GroupWidget::setChatForm(Ui::MainWindow &ui)

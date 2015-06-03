@@ -30,13 +30,14 @@ public:
     ~SortingBoxLayout();
 
     void addSortedWidget(T* widget);
+    int indexOfSortedWidget(T* widget) const;
     bool existsSortedWidget(T* widget) const;
     void removeSortedWidget(T* widget);
 
     QLayout* getLayout() const;
 
 private:
-    int indexOfClosestSortedWidget(T* widget);
+    int indexOfClosestSortedWidget(T* widget) const;
     QBoxLayout* layout;
 };
 
@@ -61,15 +62,27 @@ void SortingBoxLayout<T, Dir>::addSortedWidget(T* widget)
 }
 
 template <typename T, QBoxLayout::Direction Dir>
-bool SortingBoxLayout<T, Dir>::existsSortedWidget(T* widget) const
+int SortingBoxLayout<T, Dir>::indexOfSortedWidget(T* widget) const
 {
+    if (layout->count() == 0)
+        return -1;
+
     int index = indexOfClosestSortedWidget(widget);
+    if (index >= layout->count())
+        return -1;
+
     T* atMid = dynamic_cast<T*>(layout->itemAt(index)->widget());
     assert(atMid != nullptr);
 
     if (atMid == widget)
-        return true;
-    return false;
+        return index;
+    return -1;
+}
+
+template <typename T, QBoxLayout::Direction Dir>
+bool SortingBoxLayout<T, Dir>::existsSortedWidget(T* widget) const
+{
+    return indexOfSortedWidget(widget) != -1;
 }
 
 template <typename T, QBoxLayout::Direction Dir>
@@ -96,11 +109,13 @@ QLayout* SortingBoxLayout<T, Dir>::getLayout() const
 }
 
 template <typename T, QBoxLayout::Direction Dir>
-int SortingBoxLayout<T, Dir>::indexOfClosestSortedWidget(T* widget)
+int SortingBoxLayout<T, Dir>::indexOfClosestSortedWidget(T* widget) const
 {
+    // Binary search: Deferred test of equality.
     int min = 0, max = layout->count(), mid;
     while (min < max)
     {
+        qDebug() << "min";
         mid = (max - min) / 2 + min;
         T* atMid = dynamic_cast<T*>(layout->itemAt(mid)->widget());
         assert(atMid != nullptr);
@@ -112,6 +127,7 @@ int SortingBoxLayout<T, Dir>::indexOfClosestSortedWidget(T* widget)
     }
     return min;
 }
+
 
 template <typename T>
 using VSortingBoxLayout = SortingBoxLayout<T, QBoxLayout::TopToBottom>;
