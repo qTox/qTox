@@ -24,6 +24,10 @@ public:
     static bool lock(QString profile);
     /// Releases the lock on the current profile
     static void unlock();
+    /// Returns true if we're currently holding a lock
+    static bool hasLock();
+    /// Return the name of the currently loaded profile, a null string if there is none
+    static QString getCurLockName();
     /// Releases all locks on all profiles
     /// DO NOT call unless all we're the only qTox instance
     /// and we don't hold any lock yet.

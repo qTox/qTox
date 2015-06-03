@@ -14,8 +14,10 @@ class LoginScreen : public QWidget
 public:
     explicit LoginScreen(QWidget *parent = 0);
     ~LoginScreen();
+    void reset(); ///< Resets the UI, clears all fields
 
 private slots:
+    void onLoginUsernameSelected(const QString& name);
     // Buttons to change page
     void onNewProfilePageClicked();
     void onLoginPageClicked();

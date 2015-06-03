@@ -709,7 +709,7 @@ margin-bottom:5px;</string>
           <widget class="QComboBox" name="loginUsernames"/>
          </item>
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="loginPasswordLabel">
            <property name="text">
             <string>Password:</string>
            </property>

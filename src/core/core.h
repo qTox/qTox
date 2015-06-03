@@ -29,6 +29,7 @@
 #include "coredefines.h"
 #include "toxid.h"
 
+class Profile;
 template <typename T> class QList;
 class QTimer;
 class QString;
@@ -45,7 +46,7 @@ class Core : public QObject
 public:
     enum PasswordType {ptMain = 0, ptHistory, ptCounter};
 
-    explicit Core(QThread* coreThread, QString initialLoadPath);
+    explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
 
@@ -292,7 +293,7 @@ private:
     Tox* tox;
     ToxAv* toxav;
     QTimer *toxTimer, *fileTimer; //, *saveTimer;
-    QString loadPath; // meaningless after start() is called
+    Profile& profile;
     int dhtServerId;
     static ToxCall calls[TOXAV_MAX_CALLS];
 #ifdef QTOX_FILTER_AUDIO

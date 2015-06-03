@@ -1,12 +1,16 @@
 #include "nexus.h"
+#include "profile.h"
 #include "src/core/core.h"
 #include "misc/settings.h"
 #include "video/camerasource.h"
 #include "widget/gui.h"
+#include "widget/loginscreen.h"
 #include <QThread>
 #include <QDebug>
 #include <QImageReader>
 #include <QFile>
+#include <QApplication>
+#include <cassert>
 
 #ifdef Q_OS_ANDROID
 #include <src/widget/androidgui.h>
@@ -18,18 +22,14 @@ static Nexus* nexus{nullptr};
 
 Nexus::Nexus(QObject *parent) :
     QObject(parent),
-    core{nullptr},
-    coreThread{nullptr},
+    profile{nullptr},
     widget{nullptr},
-    androidgui{nullptr},
-    started{false}
+    androidgui{nullptr}
 {
 }
 
 Nexus::~Nexus()
 {
-    delete core;
-    delete coreThread;
 #ifdef Q_OS_ANDROID
     delete androidgui;
 #else
@@ -39,9 +39,6 @@ Nexus::~Nexus()
 
 void Nexus::start()
 {
-    if (started)
-        return;
-
     qDebug() << "Starting up";
 
     // Setup the environment
@@ -59,18 +56,29 @@ void Nexus::start()
     qRegisterMetaType<Core::PasswordType>("Core::PasswordType");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
 
+    // Create and show login screen
+    loginScreen = new LoginScreen();
+    showLogin();
+}
+
+void Nexus::showLogin()
+{
+    ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
+    loginScreen->reset();
+    loginScreen->show();
+}
+
+void Nexus::showMainGUI()
+{
+    assert(profile);
+
+    ((QApplication*)qApp)->setQuitOnLastWindowClosed(false);
+    loginScreen->close();
+
     // Create GUI
 #ifndef Q_OS_ANDROID
     widget = Widget::getInstance();
 #endif
-
-    // Create Core
-    QString profilePath = Settings::getInstance().detectProfile();
-    coreThread = new QThread(this);
-    coreThread->setObjectName("qTox Core");
-    core = new Core(coreThread, profilePath);
-    core->moveToThread(coreThread);
-    connect(coreThread, &QThread::started, core, &Core::start);
 
     // Start GUI
 #ifdef Q_OS_ANDROID
@@ -88,6 +96,7 @@ void Nexus::start()
     GUI::setEnabled(false);
 
     // Connections
+    Core* core = profile->getCore();
 #ifdef Q_OS_ANDROID
     connect(core, &Core::connected, androidgui, &AndroidGUI::onConnected);
     connect(core, &Core::disconnected, androidgui, &AndroidGUI::onDisconnected);
@@ -138,10 +147,7 @@ void Nexus::start()
     connect(widget, &Widget::changeProfile, core, &Core::switchConfiguration);
 #endif
 
-    // Start Core
-    coreThread->start();
-
-    started = true;
+    profile->startCore();
 }
 
 Nexus& Nexus::getInstance()
@@ -160,7 +166,20 @@ void Nexus::destroyInstance()
 
 Core* Nexus::getCore()
 {
-    return getInstance().core;
+    Nexus& nexus = getInstance();
+    if (!nexus.profile)
+        return nullptr;
+    return nexus.profile->getCore();
+}
+
+Profile* Nexus::getProfile()
+{
+    return getInstance().profile;
+}
+
+void Nexus::setProfile(Profile* profile)
+{
+    getInstance().profile = profile;
 }
 
 AndroidGUI* Nexus::getAndroidGUI()

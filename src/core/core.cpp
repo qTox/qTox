@@ -24,6 +24,7 @@
 #include "src/audio.h"
 #include "src/profilelocker.h"
 #include "src/avatarbroadcaster.h"
+#include "src/profile.h"
 #include "corefile.h"
 
 #include <tox/tox.h>
@@ -52,11 +53,9 @@ QThread* Core::coreThread{nullptr};
 
 #define MAX_GROUP_MESSAGE_LEN 1024
 
-Core::Core(QThread *CoreThread, QString loadPath) :
-    tox(nullptr), toxav(nullptr), loadPath(loadPath), ready{false}
+Core::Core(QThread *CoreThread, Profile& profile) :
+    tox(nullptr), toxav(nullptr), profile(profile), ready{false}
 {
-    qDebug() << "loading Tox from" << loadPath;
-
     coreThread = CoreThread;
 
     Audio::getInstance();
@@ -239,7 +238,7 @@ void Core::start()
 {
     qDebug() << "Starting up";
 
-    QByteArray savedata = loadToxSave(loadPath);
+    QByteArray savedata = profile.loadToxSave();
 
     make_tox(savedata);
 
@@ -888,7 +887,7 @@ QString Core::sanitize(QString name)
 QByteArray Core::loadToxSave(QString path)
 {
     QByteArray data;
-    loadPath = ""; // if not empty upon return, then user forgot a password and is switching
+    //loadPath = ""; // if not empty upon return, then user forgot a password and is switching
 
     // If we can't get a lock, then another instance is already using that profile
     while (!ProfileLocker::lock(QFileInfo(path).baseName()))
@@ -1019,10 +1018,10 @@ void Core::switchConfiguration(const QString& _profile)
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
     emit blockingClearContacts(); // we need this to block, but signals are required for thread safety
 
-    if (profile.isEmpty())
-        loadPath = "";
-    else
-        loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
+    //if (profile.isEmpty())
+        //loadPath = "";
+    //else
+    //    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
 
     Settings::getInstance().switchProfile(profile);
     HistoryKeeper::resetInstance();

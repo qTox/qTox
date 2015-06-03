@@ -97,3 +97,16 @@ void ProfileLocker::deathByBrokenLock()
     qCritical() << "Lock is *BROKEN*, exiting immediately";
     abort();
 }
+
+bool ProfileLocker::hasLock()
+{
+    return lockfile.operator bool();
+}
+
+QString ProfileLocker::getCurLockName()
+{
+    if (lockfile)
+        return curLockName;
+    else
+        return QString();
+}

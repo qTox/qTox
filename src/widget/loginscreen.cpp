@@ -12,7 +12,24 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->loginPgbtn, &QPushButton::clicked, this, &LoginScreen::onLoginPageClicked);
     connect(ui->createAccountButton, &QPushButton::clicked, this, &LoginScreen::onCreateNewProfile);
     connect(ui->loginButton, &QPushButton::clicked, this, &LoginScreen::onLogin);
+    connect(ui->loginUsernames, &QComboBox::currentTextChanged, this, &LoginScreen::onLoginUsernameSelected);
 
+    reset();
+}
+
+LoginScreen::~LoginScreen()
+{
+    delete ui;
+}
+
+void LoginScreen::reset()
+{
+    ui->newUsername->clear();
+    ui->newPass->clear();
+    ui->loginPassword->clear();
+
+    ui->loginUsernames->clear();
+    Profile::scanProfiles();
     QVector<QString> profiles = Profile::getProfiles();
     for (QString profile : profiles)
         ui->loginUsernames->addItem(profile);
@@ -21,11 +38,6 @@ LoginScreen::LoginScreen(QWidget *parent) :
         ui->stackedWidget->setCurrentIndex(0);
     else
         ui->stackedWidget->setCurrentIndex(1);
-}
-
-LoginScreen::~LoginScreen()
-{
-    delete ui;
 }
 
 void LoginScreen::onNewProfilePageClicked()
@@ -41,6 +53,23 @@ void LoginScreen::onLoginPageClicked()
 void LoginScreen::onCreateNewProfile()
 {
 
+}
+
+void LoginScreen::onLoginUsernameSelected(const QString &name)
+{
+    if (name.isEmpty())
+        return;
+
+    if (Profile::isProfileEncrypted(name))
+    {
+        ui->loginPasswordLabel->show();
+        ui->loginPassword->show();
+    }
+    else
+    {
+        ui->loginPasswordLabel->hide();
+        ui->loginPassword->hide();
+    }
 }
 
 void LoginScreen::onLogin()

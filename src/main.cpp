@@ -12,6 +12,7 @@
     See the COPYING file for more details.
 */
 
+#include "toxme.h"
 #include "widget/widget.h"
 #include "misc/settings.h"
 #include "src/nexus.h"
@@ -20,6 +21,7 @@
 #include "src/widget/toxsave.h"
 #include "src/autoupdate.h"
 #include "src/profilelocker.h"
+#include "src/widget/loginscreen.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDateTime>
@@ -31,9 +33,6 @@
 #include <QProcess>
 
 #include <sodium.h>
-
-#include "toxme.h"
-
 #include <unistd.h>
 
 #define EXIT_UPDATE_MACX 218 //We track our state using unique exit codes when debugging
@@ -292,7 +291,6 @@ int main(int argc, char *argv[])
     Nexus::getInstance().start();
 
     // Run
-    a.setQuitOnLastWindowClosed(false);
     int errorcode = a.exec();
 
 #ifdef LOG_TO_FILE
