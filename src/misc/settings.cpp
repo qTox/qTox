@@ -1246,7 +1246,6 @@ bool Settings::getCompactLayout() const
 void Settings::setCompactLayout(bool value)
 {
     compactLayout = value;
-    emit compactLayoutChanged();
 }
 
 bool Settings::getGroupchatPosition() const
@@ -1267,4 +1266,25 @@ int Settings::getThemeColor() const
 void Settings::setThemeColor(const int &value)
 {
     themeColor = value;
+}
+
+void Settings::createPersonal(QString basename)
+{
+    QString path = getSettingsDirPath() + QDir::separator() + basename + ".ini";
+    qDebug() << "Creating new profile settings in " << path;
+
+    QSettings ps(path, QSettings::IniFormat);
+    ps.beginGroup("Friends");
+        ps.beginWriteArray("Friend", 0);
+        ps.endArray();
+    ps.endGroup();
+
+    ps.beginGroup("Privacy");
+    ps.endGroup();
+}
+
+bool Settings::profileExists(QString basename)
+{
+    QString path = getSettingsDirPath() + QDir::separator() + basename;
+    return QFile::exists(path+".tox") && QFile::exists(path+".ini");
 }

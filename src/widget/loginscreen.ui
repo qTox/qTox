@@ -357,7 +357,7 @@ margin-bottom:45px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="newUsername">
            <property name="maxLength">
             <number>64</number>
            </property>
@@ -374,7 +374,7 @@ margin-bottom:45px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_2">
+          <widget class="QLineEdit" name="newPass">
            <property name="maxLength">
             <number>64</number>
            </property>
@@ -394,7 +394,7 @@ margin-bottom:45px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_5"/>
+          <widget class="QLineEdit" name="newPassConfirm"/>
          </item>
          <item>
           <spacer name="verticalSpacer">
@@ -706,7 +706,7 @@ margin-bottom:5px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox"/>
+          <widget class="QComboBox" name="loginUsernames"/>
          </item>
          <item>
           <widget class="QLabel" name="label_4">
@@ -719,7 +719,7 @@ margin-bottom:5px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_4">
+          <widget class="QLineEdit" name="loginPassword">
            <property name="maxLength">
             <number>64</number>
            </property>

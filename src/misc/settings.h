@@ -30,12 +30,15 @@ class Settings : public QObject
 {
     Q_OBJECT
 public:
+    ~Settings() = default;
     static Settings& getInstance();
     void switchProfile(const QString& profile);
     QString detectProfile();
     QList<QString> searchProfiles();
     QString askProfiles();
-    ~Settings() = default;
+
+    void createPersonal(QString basename); ///< Write a default personnal settings file for a profile
+    bool profileExists(QString basename); ///< Return true if the given profile (tox AND ini) exists
 
     void executeSettingsDialog(QWidget* parent);
 
@@ -365,12 +368,9 @@ private:
     int themeColor;
 
 signals:
-    //void dataChanged();
     void dhtServerListChanged();
-    void logStorageOptsChanged();
     void smileyPackChanged();
     void emojiFontChanged();
-    void compactLayoutChanged();
 };
 
 #endif // SETTINGS_HPP
