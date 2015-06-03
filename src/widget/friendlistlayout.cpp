@@ -21,103 +21,97 @@
 #include "groupwidget.h"
 #include "friendwidget.h"
 
+#include "friendlistwidget.h"
+
 #include <QDebug>
 
-FriendListLayout::FriendListLayout(bool groupsOnTop)
+FriendListLayout::FriendListLayout()
 {
     setSpacing(0);
     setMargin(0);
 
-    groupLayout = new QVBoxLayout();
-    groupLayout->setSpacing(0);
-    groupLayout->setMargin(0);
+    friendOnlineLayout.getLayout()->setSpacing(0);
+    friendOnlineLayout.getLayout()->setMargin(0);
 
-    friendLayouts[Online] = new QVBoxLayout();
-    friendLayouts[Online]->setSpacing(0);
-    friendLayouts[Online]->setMargin(0);
+    friendOfflineLayout.getLayout()->setSpacing(0);
+    friendOfflineLayout.getLayout()->setMargin(0);
 
-    friendLayouts[Offline] = new QVBoxLayout();
-    friendLayouts[Offline]->setSpacing(0);
-    friendLayouts[Offline]->setMargin(0);
-
-    if (groupsOnTop)
-    {
-        QVBoxLayout::addLayout(groupLayout);
-        QVBoxLayout::addLayout(friendLayouts[Online]);
-        QVBoxLayout::addLayout(friendLayouts[Offline]);
-    }
-    else
-    {
-        QVBoxLayout::addLayout(friendLayouts[Online]);
-        QVBoxLayout::addLayout(groupLayout);
-        QVBoxLayout::addLayout(friendLayouts[Offline]);
-    }
+    addLayout(friendOnlineLayout.getLayout());
+    addLayout(friendOfflineLayout.getLayout());
 }
 
 void FriendListLayout::addFriendWidget(FriendWidget *w, Status s)
 {
-    QVBoxLayout* l = getFriendLayout(s);
-    l->removeWidget(w); // In case the widget is already in this layout.
-    Friend* g = FriendList::findFriend(w->friendId);
-
-    // Binary search.
-    int min = 0, max = l->count(), mid;
-    while (min < max)
+    // bug somewhere here.
+    friendOfflineLayout.removeSortedWidget(w);
+    friendOnlineLayout.removeSortedWidget(w);
+    if (s == Status::Offline)
     {
-        mid = (max - min) / 2 + min;
-        FriendWidget* w1 = dynamic_cast<FriendWidget*>(l->itemAt(mid)->widget());
-        assert(w1 != nullptr);
-
-        Friend* f = FriendList::findFriend(w1->friendId);
-        int compareValue = f->getDisplayedName().localeAwareCompare(g->getDisplayedName());
-        if (compareValue > 0)
-        {
-            max = mid;
-        }
-        else
-        {
-            min = mid + 1;
-        }
+        friendOfflineLayout.addSortedWidget(w);
+        return;
     }
+    friendOnlineLayout.addSortedWidget(w);
+}
 
-    l->insertWidget(min, w);
+int FriendListLayout::indexOfFriendWidget(FriendWidget *widget, bool online) const
+{
+    if (online)
+        return friendOnlineLayout.indexOfSortedWidget(widget);
+    return friendOfflineLayout.indexOfSortedWidget(widget);
+}
+
+void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget)
+{
+    while (friendOnlineLayout.getLayout()->count() != 0)
+    {
+        QWidget *getWidget = friendOnlineLayout.getLayout()->takeAt(0)->widget();
+        assert(getWidget != nullptr);
+
+        FriendWidget *friendWidget = dynamic_cast<FriendWidget*>(getWidget);
+        listWidget->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
+    }
+    while (friendOfflineLayout.getLayout()->count() != 0)
+    {
+        QWidget *getWidget = friendOfflineLayout.getLayout()->takeAt(0)->widget();
+         assert(getWidget != nullptr);
+
+        FriendWidget *friendWidget = dynamic_cast<FriendWidget*>(getWidget);
+        listWidget->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
+    }
 }
 
 int FriendListLayout::friendOnlineCount() const
 {
-    return friendLayouts[Online]->count();
+    return friendOnlineLayout.getLayout()->count();
 }
 
 int FriendListLayout::friendTotalCount() const
 {
-    return friendLayouts[Offline]->count() + friendOnlineCount();
-}
-
-template <typename WidgetType>
-void searchHelper(const QString &searchString, QBoxLayout *boxLayout, bool hideAll)
-{
-    for (int index = 0; index < boxLayout->count(); ++index)
-    {
-        WidgetType* widgetAt = static_cast<WidgetType*>(boxLayout->itemAt(index)->widget());
-        QString widgetName = widgetAt->getName();
-
-        widgetAt->setVisible(!hideAll && widgetName.contains(searchString, Qt::CaseInsensitive));
-    }
-}
-
-void FriendListLayout::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
-{
-    searchHelper<GroupWidget>(searchString, groupLayout, hideGroups);
-    searchHelper<FriendWidget>(searchString, friendLayouts[Online], hideOnline);
-    searchHelper<FriendWidget>(searchString, friendLayouts[Offline], hideOffline);
+    return friendOfflineLayout.getLayout()->count() + friendOnlineCount();
 }
 
 bool FriendListLayout::hasChatrooms() const
 {
-    return !groupLayout->isEmpty() || !friendLayouts[Online]->isEmpty() || !friendLayouts[Offline]->isEmpty();
+    return false;
 }
 
-QVBoxLayout* FriendListLayout::getFriendLayout(Status s)
+void FriendListLayout::searchChatrooms(const QString& searchString, bool hideOnline, bool hideOffline)
 {
-    return s == Status::Offline ? friendLayouts[Offline] : friendLayouts[Online];
+    searchLayout<FriendWidget>(searchString, friendOnlineLayout.getLayout(), hideOnline);
+    searchLayout<FriendWidget>(searchString, friendOfflineLayout.getLayout(), hideOffline);
+}
+
+QLayout* FriendListLayout::getLayoutOnline() const
+{
+    return friendOnlineLayout.getLayout();
+}
+
+QLayout* FriendListLayout::getLayoutOffline() const
+{
+    return friendOfflineLayout.getLayout();
+}
+
+QLayout* FriendListLayout::getFriendLayout(Status s)
+{
+    return s == Status::Offline ? friendOfflineLayout.getLayout() : friendOnlineLayout.getLayout();
 }

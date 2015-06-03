@@ -149,7 +149,9 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         }
         else if (selectedItem == newCircleAction)
         {
-            qDebug() << friendList->parentWidget();
+            if (circleWidget != nullptr)
+                circleWidget->updateStatus();
+
             friendList->addCircleWidget(this);
         }
         else if (groupActions.contains(selectedItem))
@@ -210,6 +212,13 @@ void FriendWidget::updateStatusLight()
         statusPic.setPixmap(QPixmap(":img/status/dot_offline.svg"));
     else if (status == Status::Offline && f->getEventFlag() == 1)
         statusPic.setPixmap(QPixmap(":img/status/dot_offline_notification.svg"));
+
+    if (f->getEventFlag())
+    {
+        CircleWidget* circleWidget = dynamic_cast<CircleWidget*>(parentWidget());
+        if (circleWidget != nullptr)
+            circleWidget->expand();
+    }
 
     if (!f->getEventFlag())
         statusPic.setMargin(3);

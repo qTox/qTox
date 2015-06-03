@@ -138,11 +138,6 @@ void GenericChatroomWidget::setStatusMsg(const QString &status)
     statusMessageLabel->setText(status);
 }
 
-QString GenericChatroomWidget::getName() const
-{
-    return nameLabel->fullText();
-}
-
 QString GenericChatroomWidget::getStatusMsg() const
 {
     return statusMessageLabel->text();

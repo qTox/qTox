@@ -84,12 +84,12 @@ CircleWidget::CircleWidget(FriendListWidget *parent)
 
     onCompactChanged(isCompact());
 
-    connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newString, const QString &oldString)
+    connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newName, const QString &oldName)
     {
         if (isCompact())
             maxCropLabel(nameLabel);
-        nameLabel->setText(oldString);
-        emit renameRequested(newString);
+        nameLabel->setText(oldName);
+        emit renameRequested(newName);
     });
 
     renameCircle();
@@ -123,14 +123,9 @@ void CircleWidget::toggle()
     }
 }
 
-void CircleWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline, bool hideGroups)
+void CircleWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline)
 {
-    listLayout->searchChatrooms(searchString, hideOnline, hideOffline, hideGroups);
-}
-
-QString CircleWidget::getName() const
-{
-    return nameLabel->text();
+    listLayout->searchChatrooms(searchString, hideOnline, hideOffline);
 }
 
 void CircleWidget::setName(const QString &name)
@@ -142,6 +137,105 @@ void CircleWidget::renameCircle()
 {
     nameLabel->editStart();
     nameLabel->setMaximumWidth(QWIDGETSIZE_MAX);
+}
+
+void emitChatroomWidget(QLayout* layout, int index)
+{
+    GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(layout->itemAt(index)->widget());
+    if (chatWidget != nullptr)
+        emit chatWidget->chatroomWidgetClicked(chatWidget);
+}
+
+bool CircleWidget::cycleContacts(bool forward)
+{
+    if (listLayout->friendTotalCount() == 0)
+    {
+        return false;
+    }
+    if (forward)
+    {
+        if (listLayout->getLayoutOnline()->count() != 0)
+        {
+            expand();
+            emitChatroomWidget(listLayout->getLayoutOnline(), 0);
+            return true;
+        }
+        else if (listLayout->getLayoutOffline()->count() != 0)
+        {
+            expand();
+            emitChatroomWidget(listLayout->getLayoutOffline(), 0);
+            return true;
+        }
+    }
+    else
+    {
+        if (listLayout->getLayoutOffline()->count() != 0)
+        {
+            expand();
+            emitChatroomWidget(listLayout->getLayoutOffline(), listLayout->getLayoutOffline()->count() - 1);
+            return true;
+        }
+        else if (listLayout->getLayoutOnline()->count() != 0)
+        {
+            expand();
+            emitChatroomWidget(listLayout->getLayoutOnline(), listLayout->getLayoutOnline()->count() - 1);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool CircleWidget::cycleContacts(FriendWidget *activeChatroomWidget, bool forward)
+{
+    int index = -1;
+    QLayout* currentLayout = nullptr;
+
+    FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(activeChatroomWidget);
+    if (friendWidget != nullptr)
+    {
+        currentLayout = listLayout->getLayoutOnline();
+        index = listLayout->indexOfFriendWidget(friendWidget, true);
+        if (index == -1)
+        {
+            currentLayout = listLayout->getLayoutOffline();
+            index = listLayout->indexOfFriendWidget(friendWidget, false);
+        }
+    }
+    else
+        return false;
+
+    index += forward ? 1 : -1;
+    for (;;)
+    {
+        // Bounds checking.
+        if (index < 0)
+        {
+            if (currentLayout == listLayout->getLayoutOffline())
+                currentLayout = listLayout->getLayoutOnline();
+            else
+                return false;
+
+            index = currentLayout->count() - 1;
+            continue;
+        }
+        else if (index >= currentLayout->count())
+        {
+            if (currentLayout == listLayout->getLayoutOnline())
+                currentLayout = listLayout->getLayoutOffline();
+            else
+                return false;
+
+            index = 0;
+            continue;
+        }
+
+        GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
+        if (chatWidget != nullptr)
+            emit chatWidget->chatroomWidgetClicked(chatWidget);
+        return true;
+    }
+
+    return false;
 }
 
 bool CircleWidget::operator<(const CircleWidget& other) const
@@ -222,22 +316,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
     else if (selectedItem == removeAction)
     {
         FriendListWidget *friendList = static_cast<FriendListWidget*>(parentWidget());
-        while (listLayout->friendLayouts[Online]->count() != 0)
-        {
-            QWidget *getWidget = listLayout->friendLayouts[Online]->takeAt(0)->widget();
-            assert(getWidget != nullptr);
-
-            FriendWidget *friendWidget = dynamic_cast<FriendWidget*>(getWidget);
-            friendList->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
-        }
-        while (listLayout->friendLayouts[Offline]->count() != 0)
-        {
-            QWidget *getWidget = listLayout->friendLayouts[Offline]->takeAt(0)->widget();
-             assert(getWidget != nullptr);
-
-            FriendWidget *friendWidget = dynamic_cast<FriendWidget*>(getWidget);
-            friendList->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
-        }
+        listLayout->moveFriendWidgets(friendList);
 
         friendList->removeCircleWidget(this);
     }

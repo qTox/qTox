@@ -17,6 +17,8 @@
 
 #include <QFrame>
 
+class CroppingLabel;
+
 class GenericChatItemWidget : public QFrame
 {
     Q_OBJECT
@@ -26,7 +28,14 @@ public:
     bool isCompact() const;
     void setCompact(bool compact);
 
+    QString getName() const;
+
+    bool operator<(const GenericChatItemWidget& other) const;
+
     Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
+
+protected:
+    CroppingLabel* nameLabel;
 
 private:
     bool compact;

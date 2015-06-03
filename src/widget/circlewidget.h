@@ -35,16 +35,18 @@ public:
 
     void addFriendWidget(FriendWidget *w, Status s);
 
-    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
+    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false);
 
     void expand();
     void toggle();
 
     void updateStatus();
 
-    QString getName() const;
     void setName(const QString &name);
     void renameCircle();
+
+    bool cycleContacts(bool forward);
+    bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
 
     bool operator<(const CircleWidget& other) const;
 
@@ -75,7 +77,6 @@ private:
     QVBoxLayout* fullLayout;
     QVBoxLayout* mainLayout = nullptr;
     QLabel* arrowLabel;
-    CroppingLabel* nameLabel;
     QLabel* statusLabel;
     QFrame* lineFrame;
     QWidget* container;

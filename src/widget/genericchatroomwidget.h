@@ -77,7 +77,7 @@ protected:
     QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     QLabel statusPic;
-    CroppingLabel* nameLabel, *statusMessageLabel;
+    CroppingLabel* statusMessageLabel;
     bool compact, active;
 };
 

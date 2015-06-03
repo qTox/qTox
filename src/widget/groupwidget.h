@@ -38,8 +38,11 @@ public:
     void setName(const QString& name);
     void onUserListChanged();
 
+    bool operator<(const GroupWidget& other) const;
+
 signals:
     void groupWidgetClicked(GroupWidget* widget);
+    void renameRequested(const QString& newName);
     void removeGroup(int groupId);
 
 protected:

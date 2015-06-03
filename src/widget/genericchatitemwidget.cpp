@@ -15,6 +15,7 @@
 #include "genericchatitemwidget.h"
 #include "src/misc/style.h"
 #include "src/misc/settings.h"
+#include "croppinglabel.h"
 #include <QVariant>
 
 GenericChatItemWidget::GenericChatItemWidget(QWidget *parent)
@@ -32,4 +33,17 @@ void GenericChatItemWidget::setCompact(bool compact)
 {
     this->compact = compact;
     Style::repolish(this);
+}
+
+QString GenericChatItemWidget::getName() const
+{
+    return nameLabel->fullText();
+}
+
+bool GenericChatItemWidget::operator<(const GenericChatItemWidget& other) const
+{
+    int compareValue = getName().localeAwareCompare(other.getName());
+    if (compareValue == 0)
+        return this < &other; // Consistent ordering.
+    return  compareValue > 0;
 }

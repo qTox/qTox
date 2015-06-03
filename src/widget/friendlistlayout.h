@@ -17,35 +17,52 @@
 
 #include <QBoxLayout>
 #include "src/core/corestructs.h"
+#include "sortingboxlayout.h"
+#include "friendwidget.h"
 
 class GroupWidget;
 class CircleWidget;
 class FriendWidget;
+class FriendListWidget;
 
 class FriendListLayout : public QVBoxLayout
 {
     Q_OBJECT
 public:
-    explicit FriendListLayout(bool groupsOnTop = true);
+    explicit FriendListLayout();
 
-    void addGroupWidget(GroupWidget *widget);
-    void addFriendWidget(FriendWidget *widget, Status s);
+    void addFriendWidget(FriendWidget* widget, Status s);
+    int indexOfFriendWidget(FriendWidget* widget, bool online) const;
+    void moveFriendWidgets(FriendListWidget* listWidget);
     int friendOnlineCount() const;
     int friendTotalCount() const;
 
-    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
     bool hasChatrooms() const;
+    void searchChatrooms(const QString& searchString, bool hideOnline = false, bool hideOffline = false);
 
-public:
-    QVBoxLayout* getFriendLayout(Status s);
+    template <typename WidgetType>
+    static void searchLayout(const QString& searchString, QLayout* boxLayout, bool hideAll);
 
-    enum FriendLayoutType
-    {
-        Online = 0,
-        Offline = 1
-    };
-    QVBoxLayout *friendLayouts[2];
-    QVBoxLayout *groupLayout;
+    QLayout* getLayoutOnline() const;
+    QLayout* getLayoutOffline() const;
+
+private:
+    QLayout* getFriendLayout(Status s);
+
+    VSortingBoxLayout<FriendWidget> friendOnlineLayout;
+    VSortingBoxLayout<FriendWidget> friendOfflineLayout;
 };
+
+template <typename WidgetType>
+void FriendListLayout::searchLayout(const QString &searchString, QLayout *boxLayout, bool hideAll)
+{
+    for (int index = 0; index < boxLayout->count(); ++index)
+    {
+        WidgetType* widgetAt = static_cast<WidgetType*>(boxLayout->itemAt(index)->widget());
+        QString widgetName = widgetAt->getName();
+
+        widgetAt->setVisible(!hideAll && widgetName.contains(searchString, Qt::CaseInsensitive));
+    }
+}
 
 #endif // GENERICFRIENDLISTWIDGET_H

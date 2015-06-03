@@ -30,6 +30,7 @@
 #include "sortingboxlayout.h"
 
 #include "circlewidget.h"
+#include "groupwidget.h"
 
 class QVBoxLayout;
 class QGridLayout;
@@ -54,7 +55,7 @@ public:
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
-    void cycleContacts(int index);
+    void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
     QList<GenericChatroomWidget*> getAllFriends();
     QVector<CircleWidget*> getAllCircles();
 
@@ -64,7 +65,8 @@ signals:
     void onCompactChanged(bool compact);
 
 public slots:
-    void renameCircleWidget(const QString &newName);
+    void renameGroupWidget(const QString& newName);
+    void renameCircleWidget(const QString& newName);
     void onGroupchatPositionChanged(bool top);
     void moveWidget(FriendWidget *w, Status s, bool add = false);
 
@@ -73,15 +75,12 @@ protected:
     void dropEvent(QDropEvent* event) override;
 
 private:
-    QVBoxLayout* getFriendLayout(Status s);
-    enum FriendLayoutType
-    {
-        Online = 0,
-        Offline = 1
-    };
-    FriendListLayout *listLayout;
-    QVBoxLayout *circleLayout;
+    QLayout* nextLayout(QLayout* layout, bool forward) const;
+
+    bool groupsOnTop;
+    FriendListLayout* listLayout;
     VSortingBoxLayout<CircleWidget> circleLayout2;
+    VSortingBoxLayout<GroupWidget> groupLayout;
 };
 
 #endif // FRIENDLISTWIDGET_H
