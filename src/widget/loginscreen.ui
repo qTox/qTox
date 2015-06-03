@@ -366,7 +366,7 @@ margin-bottom:45px;</string>
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="createAccountButton">
              <property name="palette">
               <palette>
                <active>
@@ -714,7 +714,7 @@ margin-bottom:5px;</string>
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="loginButton">
              <property name="palette">
               <palette>
                <active>
@@ -972,7 +972,7 @@ background-color:#6cc865;</string>
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="newProfilePgbtn">
    <property name="geometry">
     <rect>
      <x>25</x>
@@ -994,7 +994,7 @@ background-color:#6cc865;</string>
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QPushButton" name="loginPgbtn">
    <property name="geometry">
     <rect>
      <x>25</x>

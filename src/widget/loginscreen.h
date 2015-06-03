@@ -15,6 +15,14 @@ public:
     explicit LoginScreen(QWidget *parent = 0);
     ~LoginScreen();
 
+private slots:
+    // Buttons to change page
+    void onNewProfilePageClicked();
+    void onLoginPageClicked();
+    // Buttons to submit form
+    void onCreateNewProfile();
+    void onLogin();
+
 private:
     Ui::LoginScreen *ui;
 };
