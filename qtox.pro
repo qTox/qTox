@@ -359,7 +359,8 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/callconfirmwidget.h \
         src/widget/systemtrayicon.h \
         src/misc/qrwidget.h \
-        src/widget/systemtrayicon_private.h
+        src/widget/systemtrayicon_private.h \
+        src/widget/loginscreen.h
 
     SOURCES += \
         src/widget/form/addfriendform.cpp \
@@ -419,7 +420,8 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/chatlog/pixmapcache.cpp \
         src/offlinemsgengine.cpp \
         src/misc/qrwidget.cpp \
-        src/widget/genericchatroomwidget.cpp
+        src/widget/genericchatroomwidget.cpp \
+        src/widget/loginscreen.cpp
 }
 
 win32 {
@@ -468,8 +470,7 @@ SOURCES += \
     src/video/cameradevice.cpp \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
-    src/core/toxid.cpp \
-    src/widget/loginscreen.cpp
+    src/core/toxid.cpp
 
 HEADERS += \
     src/audio.h \
@@ -502,5 +503,4 @@ HEADERS += \
     src/video/camerasource.h \
     src/video/corevideosource.h \
     src/video/videomode.h \
-    src/core/toxid.h \
-    src/widget/loginscreen.h
+    src/core/toxid.h
