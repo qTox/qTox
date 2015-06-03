@@ -12,7 +12,7 @@
 | Qt           | >= 5.2.0    | core, gui, network, opengl, sql, svg, widget, xml |
 | GCC/MinGW    | >= 4.8      | C++11 enabled                                     |
 | Tox Core     | most recent | core, av                                          |
-| OpenCV       | >= 2.4.9    | core, highgui, imgproc                            |
+| FFmpeg       | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
 | OpenAL Soft  | >= 1.16.0   |                                                   |
 | filter_audio | most recent |                                                   |
 | qrencode     | >= 3.0.3    |                                                   |
@@ -64,37 +64,28 @@ git clone https://github.com/tux3/qTox.git qTox
 
 The following steps assumes that you cloned the repository at "/home/user/qTox". If you decided to choose another location, replace corresponding parts.
 
-###GCC, Qt, OpenCV, OpanAL Soft and QRCode
+###GCC, Qt, FFmpeg, OpanAL Soft and QRCode
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed base-devel qt5 opencv openal libxss qrencode
+sudo pacman -S --needed base-devel qt5 openal libxss qrencode
 ```
 
 Debian / Ubuntu:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev libxss-dev qrencode libqrencode-dev
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev
 ```
 
 Fedora:
 ```bash
 sudo dnf group install "Development Tools"
-sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
+sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg openal-soft-devel libXScrnSaver-devel qrencode-devel
 ```
 
 openSUSE:
 
-If you are running openSUSE 13.2 you have to add the following repository to be able to install opencv-qt5.
-
-WARNING: This may break other applications that are depending on opencv.
-
 ```bash
-sudo zypper ar http://download.opensuse.org/repositories/KDE:/Extra/openSUSE_13.2/ 'openSUSE BuildService - KDE:Extra'
-```
-
-With openSUSE Tumbleweed you can continue here:
-```bash
-sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite opencv-qt5-devel 
+sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite 
 ```
 
 Slackware:
@@ -103,7 +94,6 @@ You can grab SlackBuilds of the needed dependencies here:
 
 http://slackbuilds.org/repository/14.1/libraries/OpenAL/
 http://slackbuilds.org/repository/14.1/libraries/qt5/
-http://slackbuilds.org/repository/14.1/libraries/opencv/
 http://slackbuilds.org/repository/14.1/graphics/qrencode/
 ```
 
