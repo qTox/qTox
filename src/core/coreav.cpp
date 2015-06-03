@@ -236,8 +236,11 @@ void Core::cleanupCall(int32_t callId)
     {
         delete calls[callId].camera;
         calls[callId].camera = nullptr;
-        calls[callId].videoSource->setDeleteOnClose(true);
-        calls[callId].videoSource = nullptr;
+        if (calls[callId].videoSource)
+        {
+            calls[callId].videoSource->setDeleteOnClose(true);
+            calls[callId].videoSource = nullptr;
+        }
     }
 
     Audio::unsuscribeInput();
