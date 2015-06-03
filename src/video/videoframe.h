@@ -15,42 +15,57 @@
 #ifndef VIDEOFRAME_H
 #define VIDEOFRAME_H
 
-#include <QMetaType>
-#include <QByteArray>
-#include <QSize>
+#include <QMutex>
+#include <QImage>
+#include <functional>
 
-#include "vpx/vpx_image.h"
+struct AVFrame;
+struct AVCodecContext;
+struct vpx_image;
 
-struct VideoFrame
+/// VideoFrame takes ownership of an AVFrame* and allows fast conversions to other formats
+/// Ownership of all video frame buffers is kept by the VideoFrame, even after conversion
+/// All references to the frame data become invalid when the VideoFrame is deleted
+/// We try to avoid pixel format conversions as much as possible, at the cost of some memory
+/// All methods are thread-safe. If provided freelistCallback will be called by the destructor,
+/// unless releaseFrame was called in between.
+class VideoFrame
 {
-    enum ColorFormat
-    {
-        NONE,
-        BGR,
-        YUV,
-    };
+public:
+    VideoFrame(AVFrame* frame);
+    VideoFrame(AVFrame* frame, std::function<void()> freelistCallback);
+    VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void()> freelistCallback);
+    ~VideoFrame();
 
-    QByteArray frameData;
-    QSize resolution;
-    ColorFormat format;
+    /// Return the size of the original frame
+    QSize getSize();
 
-    VideoFrame() : format(NONE) {}
-    VideoFrame(QByteArray d, QSize r, ColorFormat f) : frameData(d), resolution(r), format(f) {}
+    /// Frees all internal buffers and frame data, removes the freelistCallback
+    /// This makes all converted objects that shares our internal buffers invalid
+    void releaseFrame();
 
-    void invalidate()
-    {
-        frameData = QByteArray();
-        resolution = QSize(-1,-1);
-    }
+    /// Converts the VideoFrame to a QImage that shares our internal video buffer
+    QImage toQImage(QSize size = QSize());
+    /// Converts the VideoFrame to a vpx_image_t that shares our internal video buffer
+    /// Free it with operator delete, NOT vpx_img_free
+    vpx_image* toVpxImage();
 
-    bool isValid() const
-    {
-        return !frameData.isEmpty() && resolution.isValid() && format != NONE;
-    }
+protected:
+    bool convertToRGB24(QSize size = QSize());
+    bool convertToYUV420();
+    void releaseFrameLockless();
 
-    vpx_image_t createVpxImage() const;
+private:
+    // Disable copy. Use a shared_ptr if you need copies.
+    VideoFrame(const VideoFrame& other)=delete;
+    VideoFrame& operator=(const VideoFrame& other)=delete;
+
+private:
+    std::function<void()> freelistCallback;
+    QMutex biglock;
+    AVFrame* frameOther, *frameYUV420, *frameRGB24;
+    int width, height;
+    int pixFmt;
 };
-
-Q_DECLARE_METATYPE(VideoFrame)
 
 #endif // VIDEOFRAME_H

@@ -401,12 +401,14 @@ void ChatForm::onAvRinging(uint32_t FriendId, int CallId, bool video)
     addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
 }
 
-void ChatForm::onAvStarting(uint32_t FriendId, int, bool video)
+void ChatForm::onAvStarting(uint32_t FriendId, int CallId, bool video)
 {
     if (FriendId != f->getFriendID())
         return;
 
     qDebug() << "onAvStarting";
+
+    callId = CallId;
 
     callButton->disconnect();
     videoButton->disconnect();

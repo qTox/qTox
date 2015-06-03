@@ -26,7 +26,6 @@
 #include "form/groupchatform.h"
 #include "src/misc/style.h"
 #include "friendlistwidget.h"
-#include "src/video/camera.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
 #include "src/historykeeper.h"

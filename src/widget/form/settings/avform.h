@@ -15,18 +15,17 @@
 #ifndef AVFORM_H
 #define AVFORM_H
 
+#include <QObject>
+#include <QList>
 #include "genericsettings.h"
-#include "src/widget/videosurface.h"
-#include "src/video/camera.h"
-#include <QGroupBox>
-#include <QVBoxLayout>
-#include <QPushButton>
+#include "src/video/videomode.h"
 
 namespace Ui {
 class AVSettings;
 }
 
-class Camera;
+class CameraSource;
+class VideoSurface;
 
 class AVForm : public GenericForm
 {
@@ -39,15 +38,12 @@ public:
 private:
     void getAudioInDevices();
     void getAudioOutDevices();
+    void getVideoDevices();
 
     void createVideoSurface();
     void killVideoSurface();
 
 private slots:
-    void on_ContrastSlider_sliderMoved(int position);
-    void on_SaturationSlider_sliderMoved(int position);
-    void on_BrightnessSlider_sliderMoved(int position);
-    void on_HueSlider_sliderMoved(int position);
     void on_videoModescomboBox_currentIndexChanged(int index);
 
     // audio
@@ -58,23 +54,21 @@ private slots:
     void on_microphoneSlider_valueChanged(int value);
 
     // camera
-    void onPropProbingFinished(Camera::Prop prop, double val);
+    void onVideoDevChanged(int index);
     void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*);
-    virtual void showEvent(QShowEvent*);
-
-    void on_HueSlider_valueChanged(int value);
-    void on_BrightnessSlider_valueChanged(int value);
-    void on_SaturationSlider_valueChanged(int value);
-    void on_ContrastSlider_valueChanged(int value);
     
 protected:
     bool eventFilter(QObject *o, QEvent *e);    
+    void updateVideoModes(int curIndex);
 
 private:
     Ui::AVSettings *bodyUI;
-    VideoSurface* CamVideoSurface;
+    VideoSurface* camVideoSurface;
+    CameraSource* camera;
+    QVector<QPair<QString, QString>> videoDeviceList;
+    QVector<VideoMode> videoModes;
 };
 
 #endif

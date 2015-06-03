@@ -15,7 +15,7 @@
 #include "settingswidget.h"
 #include "src/widget/widget.h"
 #include "ui_mainwindow.h"
-#include "src/video/camera.h"
+#include "src/video/camerasource.h"
 #include "src/widget/form/settings/generalform.h"
 #include "src/widget/form/settings/privacyform.h"
 #include "src/widget/form/settings/avform.h"

@@ -55,7 +55,6 @@ private:
 private:
     static QMutex fileSendMutex;
     static QHash<uint64_t, ToxFile> fileMap;
-    /// TODO: Replace the two queues by a hash map uint64_t -> unique_ptr<ToxFile>
 };
 
 #endif // COREFILE_H

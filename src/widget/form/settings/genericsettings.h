@@ -16,7 +16,6 @@
 #define GENERICFORM_H
 
 #include <QWidget>
-#include "src/widget/form/settingswidget.h"
 
 class GenericForm : public QWidget
 {

@@ -52,8 +52,8 @@ QThread* Core::coreThread{nullptr};
 
 #define MAX_GROUP_MESSAGE_LEN 1024
 
-Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
-    tox(nullptr), toxav(nullptr), camera(cam), loadPath(loadPath), ready{false}
+Core::Core(QThread *CoreThread, QString loadPath) :
+    tox(nullptr), toxav(nullptr), loadPath(loadPath), ready{false}
 {
     qDebug() << "loading Tox from" << loadPath;
 
@@ -76,10 +76,7 @@ Core::Core(Camera* cam, QThread *CoreThread, QString loadPath) :
         calls[i].active = false;
         calls[i].alSource = 0;
         calls[i].sendAudioTimer = new QTimer();
-        calls[i].sendVideoTimer = new QTimer();
         calls[i].sendAudioTimer->moveToThread(coreThread);
-        calls[i].sendVideoTimer->moveToThread(coreThread);
-        connect(calls[i].sendVideoTimer, &QTimer::timeout, [this,i](){sendCallVideo(i);});
     }
 
     // OpenAL init

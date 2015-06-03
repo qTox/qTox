@@ -12,43 +12,230 @@
     See the COPYING file for more details.
 */
 
+#include <QMutexLocker>
+#include <QDebug>
+#include <vpx/vpx_image.h>
+extern "C" {
+#include <libavcodec/avcodec.h>
+#include <libswscale/swscale.h>
+}
 #include "videoframe.h"
 
-vpx_image_t VideoFrame::createVpxImage() const
+VideoFrame::VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void()> freelistCallback)
+    : freelistCallback{freelistCallback},
+      frameOther{nullptr}, frameYUV420{nullptr}, frameRGB24{nullptr},
+      width{w}, height{h}, pixFmt{fmt}
 {
-    vpx_image img;
-    img.w = img.h = img.d_w = img.d_h = 0;
+    if (pixFmt == AV_PIX_FMT_YUV420P)
+        frameYUV420 = frame;
+    else if (pixFmt == AV_PIX_FMT_RGB24)
+        frameRGB24 = frame;
+    else
+        frameOther = frame;
+}
 
-    if (!isValid())
+VideoFrame::VideoFrame(AVFrame* frame, std::function<void()> freelistCallback)
+    : VideoFrame{frame, frame->width, frame->height, frame->format, freelistCallback}
+{
+}
+
+VideoFrame::VideoFrame(AVFrame* frame)
+    : VideoFrame{frame, frame->width, frame->height, frame->format, nullptr}
+{
+}
+
+VideoFrame::~VideoFrame()
+{
+    if (freelistCallback)
+        freelistCallback();
+
+    releaseFrameLockless();
+}
+
+QImage VideoFrame::toQImage(QSize size)
+{
+    if (!convertToRGB24(size))
+        return QImage();
+
+    QMutexLocker locker(&biglock);
+
+    return QImage(*frameRGB24->data, frameRGB24->width, frameRGB24->height, *frameRGB24->linesize, QImage::Format_RGB888);
+}
+
+vpx_image *VideoFrame::toVpxImage()
+{
+    // libvpx doesn't provide a clean way to reuse an existing external buffer
+    // so we'll manually fill-in the vpx_image fields and hope for the best.
+    vpx_image* img = new vpx_image;
+    memset(img, 0, sizeof(vpx_image));
+
+    if (!convertToYUV420())
         return img;
 
-    const int w = resolution.width();
-    const int h = resolution.height();
+    img->w = img->d_w = width;
+    img->h = img->d_h = height;
+    img->fmt = VPX_IMG_FMT_I420;
+    img->planes[0] = frameYUV420->data[0];
+    img->planes[1] = frameYUV420->data[1];
+    img->planes[2] = frameYUV420->data[2];
+    img->planes[3] = nullptr;
+    img->stride[0] = frameYUV420->linesize[0];
+    img->stride[1] = frameYUV420->linesize[1];
+    img->stride[2] = frameYUV420->linesize[2];
+    img->stride[3] = frameYUV420->linesize[3];
+    return img;
+}
 
-    // I420 "It comprises an NxM Y plane followed by (N/2)x(M/2) V and U planes."
-    // http://fourcc.org/yuv.php#IYUV
-    vpx_img_alloc(&img, VPX_IMG_FMT_VPXI420, w, h, 1);
+bool VideoFrame::convertToRGB24(QSize size)
+{
+    QMutexLocker locker(&biglock);
 
-    for (int y = 0; y < h; ++y)
+    AVFrame* sourceFrame;
+    if (frameOther)
     {
-        for (int x = 0; x < w; ++x)
-        {
-            uint8_t b = frameData.data()[(x + y * w) * 3 + 0];
-            uint8_t g = frameData.data()[(x + y * w) * 3 + 1];
-            uint8_t r = frameData.data()[(x + y * w) * 3 + 2];
-
-            img.planes[VPX_PLANE_Y][x + y * img.stride[VPX_PLANE_Y]] = ((66 * r + 129 * g + 25 * b) >> 8) + 16;
-
-            if (!(x % (1 << img.x_chroma_shift)) && !(y % (1 << img.y_chroma_shift)))
-            {
-                const int i = x / (1 << img.x_chroma_shift);
-                const int j = y / (1 << img.y_chroma_shift);
-
-                img.planes[VPX_PLANE_V][i + j * img.stride[VPX_PLANE_V]] = ((112 * r + -94 * g + -18 * b) >> 8) + 128;
-                img.planes[VPX_PLANE_U][i + j * img.stride[VPX_PLANE_U]] = ((-38 * r + -74 * g + 112 * b) >> 8) + 128;
-            }
-        }
+        sourceFrame = frameOther;
+    }
+    else if (frameYUV420)
+    {
+        sourceFrame = frameYUV420;
+    }
+    else
+    {
+        qCritical() << "None of the frames are valid! Did someone release us?";
+        return false;
     }
 
-    return img;
+    if (size.isEmpty())
+    {
+        size.setWidth(sourceFrame->width);
+        size.setHeight(sourceFrame->height);
+    }
+
+    if (frameRGB24)
+    {
+        if (frameRGB24->width == size.width() && frameRGB24->height == size.height())
+            return true;
+
+        av_free(frameRGB24->opaque);
+        av_frame_unref(frameRGB24);
+        av_frame_free(&frameRGB24);
+    }
+
+    frameRGB24=av_frame_alloc();
+    if (!frameRGB24)
+    {
+        qCritical() << "av_frame_alloc failed";
+        return false;
+    }
+
+    uint8_t* buf = (uint8_t*)av_malloc(avpicture_get_size(AV_PIX_FMT_RGB24, size.width(), size.height()));
+    if (!buf)
+    {
+        qCritical() << "av_malloc failed";
+        av_frame_free(&frameRGB24);
+        return false;
+    }
+    frameRGB24->opaque = buf;
+
+    avpicture_fill((AVPicture*)frameRGB24, buf, AV_PIX_FMT_RGB24, size.width(), size.height());
+    frameRGB24->width = size.width();
+    frameRGB24->height = size.height();
+
+    // Bilinear is better for shrinking, bicubic better for upscaling
+    int resizeAlgo = size.width()<=width ? SWS_BILINEAR : SWS_BICUBIC;
+
+    SwsContext *swsCtx =  sws_getContext(width, height, (AVPixelFormat)pixFmt,
+                                          size.width(), size.height(), AV_PIX_FMT_RGB24,
+                                          resizeAlgo, nullptr, nullptr, nullptr);
+    sws_scale(swsCtx, (uint8_t const * const *)sourceFrame->data,
+                sourceFrame->linesize, 0, height,
+                frameRGB24->data, frameRGB24->linesize);
+    sws_freeContext(swsCtx);
+
+    return true;
+}
+
+bool VideoFrame::convertToYUV420()
+{
+    QMutexLocker locker(&biglock);
+
+    if (frameYUV420)
+        return true;
+
+    AVFrame* sourceFrame;
+    if (frameOther)
+    {
+        sourceFrame = frameOther;
+    }
+    else if (frameRGB24)
+    {
+        sourceFrame = frameRGB24;
+    }
+    else
+    {
+        qCritical() << "None of the frames are valid! Did someone release us?";
+        return false;
+    }
+
+    frameYUV420=av_frame_alloc();
+    if (!frameYUV420)
+    {
+        qCritical() << "av_frame_alloc failed";
+        return false;
+    }
+
+    uint8_t* buf = (uint8_t*)av_malloc(avpicture_get_size(AV_PIX_FMT_RGB24, width, height));
+    if (!buf)
+    {
+        qCritical() << "av_malloc failed";
+        av_frame_free(&frameYUV420);
+        return false;
+    }
+    frameYUV420->opaque = buf;
+
+    avpicture_fill((AVPicture*)frameYUV420, buf, AV_PIX_FMT_YUV420P, width, height);
+
+    SwsContext *swsCtx =  sws_getContext(width, height, (AVPixelFormat)pixFmt,
+                                          width, height, AV_PIX_FMT_YUV420P,
+                                          SWS_BILINEAR, nullptr, nullptr, nullptr);
+    sws_scale(swsCtx, (uint8_t const * const *)sourceFrame->data,
+                sourceFrame->linesize, 0, height,
+                frameYUV420->data, frameYUV420->linesize);
+    sws_freeContext(swsCtx);
+
+    return true;
+}
+
+void VideoFrame::releaseFrame()
+{
+    QMutexLocker locker(&biglock);
+    freelistCallback = nullptr;
+    releaseFrameLockless();
+}
+
+void VideoFrame::releaseFrameLockless()
+{
+    if (frameOther)
+    {
+        av_free(frameOther->opaque);
+        av_frame_unref(frameOther);
+        av_frame_free(&frameOther);
+    }
+    if (frameYUV420)
+    {
+        av_free(frameYUV420->opaque);
+        av_frame_unref(frameYUV420);
+        av_frame_free(&frameYUV420);
+    }
+    if (frameRGB24)
+    {
+        av_free(frameRGB24->opaque);
+        av_frame_unref(frameRGB24);
+        av_frame_free(&frameRGB24);
+    }
+}
+
+QSize VideoFrame::getSize()
+{
+    return {width, height};
 }

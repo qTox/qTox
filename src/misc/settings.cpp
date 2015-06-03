@@ -314,6 +314,7 @@ void Settings::load()
     s.endGroup();
 
     s.beginGroup("Video");
+        videoDev = s.value("videoDev", "").toString();
         camVideoRes = s.value("camVideoRes",QSize()).toSize();
     s.endGroup();
 
@@ -479,6 +480,7 @@ void Settings::saveGlobal(QString path)
     s.endGroup();
 
     s.beginGroup("Video");
+        s.setValue("videoDev", videoDev);
         s.setValue("camVideoRes",camVideoRes);
     s.endGroup();
 }
@@ -1122,6 +1124,16 @@ QString Settings::getInDev() const
 void Settings::setInDev(const QString& deviceSpecifier)
 {
     inDev = deviceSpecifier;
+}
+
+QString Settings::getVideoDev() const
+{
+    return videoDev;
+}
+
+void Settings::setVideoDev(const QString& deviceSpecifier)
+{
+    videoDev = deviceSpecifier;
 }
 
 QString Settings::getOutDev() const

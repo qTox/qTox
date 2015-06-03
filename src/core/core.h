@@ -30,11 +30,11 @@
 #include "toxid.h"
 
 template <typename T> class QList;
-class Camera;
 class QTimer;
 class QString;
 class CString;
 class VideoSource;
+class VideoFrame;
 #ifdef QTOX_FILTER_AUDIO
 class AudioFilterer;
 #endif
@@ -45,7 +45,7 @@ class Core : public QObject
 public:
     enum PasswordType {ptMain = 0, ptHistory, ptCounter};
 
-    explicit Core(Camera* cam, QThread* coreThread, QString initialLoadPath);
+    explicit Core(QThread* coreThread, QString initialLoadPath);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
 
@@ -274,7 +274,7 @@ private:
     static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
                                 unsigned channels, int sampleRate);
     static void playCallVideo(void *toxav, int32_t callId, const vpx_image_t* img, void *user_data);
-    void sendCallVideo(int callId);
+    static void sendCallVideo(int callId, ToxAv* toxav, std::shared_ptr<VideoFrame> frame);
 
     bool checkConnection();
 
@@ -292,7 +292,6 @@ private:
     Tox* tox;
     ToxAv* toxav;
     QTimer *toxTimer, *fileTimer; //, *saveTimer;
-    Camera* camera;
     QString loadPath; // meaningless after start() is called
     int dhtServerId;
     static ToxCall calls[TOXAV_MAX_CALLS];

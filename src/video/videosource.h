@@ -16,22 +16,25 @@
 #define VIDEOSOURCE_H
 
 #include <QObject>
-#include <QSize>
-#include <QRgb>
+#include <memory>
 
-#include "videoframe.h"
+class VideoFrame;
 
+/// An abstract source of video frames
+/// When it has at least one subscriber the source will emit new video frames
+/// Subscribing is recursive, multiple users can subscribe to the same VideoSource
 class VideoSource : public QObject
 {
     Q_OBJECT
 
 public:
-    virtual void subscribe() = 0;
+    /// If subscribe sucessfully opens the source, it will start emitting frameAvailable signals
+    virtual bool subscribe() = 0;
+    /// Stop emitting frameAvailable signals, and free associated resources if necessary
     virtual void unsubscribe() = 0;
 
 signals:
-    void frameAvailable(const VideoFrame& frame);
-
+    void frameAvailable(std::shared_ptr<VideoFrame> frame);
 };
 
 #endif // VIDEOSOURCE_H

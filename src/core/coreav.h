@@ -3,7 +3,6 @@
 
 #include <QHash>
 #include <tox/toxav.h>
-#include "src/video/netvideosource.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -14,11 +13,13 @@
 #endif
 
 class QTimer;
+class CoreVideoSource;
+class CameraSource;
 
 struct ToxCall
 {
     ToxAvCSettings codecSettings;
-    QTimer *sendAudioTimer, *sendVideoTimer;
+    QTimer *sendAudioTimer;
     int32_t callId;
     uint32_t friendId;
     bool videoEnabled;
@@ -26,7 +27,8 @@ struct ToxCall
     bool muteMic;
     bool muteVol;
     ALuint alSource;
-    NetVideoSource videoSource;
+    CoreVideoSource* videoSource;
+    CameraSource* camera;
 };
 
 struct ToxGroupCall

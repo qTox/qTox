@@ -15,7 +15,9 @@
 */
 
 #include "core.h"
-#include "src/video/camera.h"
+#include "src/video/camerasource.h"
+#include "src/video/corevideosource.h"
+#include "src/video/videoframe.h"
 #include "src/audio.h"
 #ifdef QTOX_FILTER_AUDIO
 #include "src/audiofilterer.h"
@@ -71,12 +73,13 @@ void Core::prepareCall(uint32_t friendId, int32_t callId, ToxAv* toxav, bool vid
     calls[callId].sendAudioTimer->setSingleShot(true);
     connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
     calls[callId].sendAudioTimer->start();
-    calls[callId].sendVideoTimer->setInterval(50);
-    calls[callId].sendVideoTimer->setSingleShot(true);
     if (calls[callId].videoEnabled)
     {
-        calls[callId].sendVideoTimer->start();
-        Camera::getInstance()->subscribe();
+        calls[callId].videoSource = new CoreVideoSource;
+        calls[callId].camera = new CameraSource;
+        calls[callId].camera->subscribe();
+        connect(calls[callId].camera, &VideoSource::frameAvailable,
+                [=](std::shared_ptr<VideoFrame> frame){sendCallVideo(callId,toxav,frame);});
     }
 
 #ifdef QTOX_FILTER_AUDIO
@@ -109,17 +112,20 @@ void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
 
     if (cap == (av_VideoEncoding|av_VideoDecoding)) // Video call
     {
-        Camera::getInstance()->subscribe();
-        calls[callId].videoEnabled = true;
-        calls[callId].sendVideoTimer->start();
         emit static_cast<Core*>(core)->avMediaChange(friendId, callId, true);
+        calls[callId].videoSource = new CoreVideoSource;
+        calls[callId].camera = new CameraSource;
+        calls[callId].camera->subscribe();
+        calls[callId].videoEnabled = true;
     }
     else // Audio call
     {
-        calls[callId].videoEnabled = false;
-        calls[callId].sendVideoTimer->stop();
-        Camera::getInstance()->unsubscribe();
         emit static_cast<Core*>(core)->avMediaChange(friendId, callId, false);
+        calls[callId].videoEnabled = false;
+        delete calls[callId].camera;
+        calls[callId].camera = nullptr;
+        calls[callId].videoSource->setDeleteOnClose(true);
+        calls[callId].videoSource = nullptr;
     }
 
     return;
@@ -226,9 +232,13 @@ void Core::cleanupCall(int32_t callId)
     calls[callId].active = false;
     disconnect(calls[callId].sendAudioTimer,0,0,0);
     calls[callId].sendAudioTimer->stop();
-    calls[callId].sendVideoTimer->stop();
     if (calls[callId].videoEnabled)
-        Camera::getInstance()->unsubscribe();
+    {
+        delete calls[callId].camera;
+        calls[callId].camera = nullptr;
+        calls[callId].videoSource->setDeleteOnClose(true);
+        calls[callId].videoSource = nullptr;
+    }
 
     Audio::unsuscribeInput();
     toxav_kill_transmission(Core::getInstance()->toxav, callId);
@@ -314,37 +324,35 @@ void Core::playCallVideo(void*, int32_t callId, const vpx_image_t* img, void *us
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    calls[callId].videoSource.pushVPXFrame(img);
+    calls[callId].videoSource->pushFrame(img);
 }
 
-void Core::sendCallVideo(int32_t callId)
+void Core::sendCallVideo(int32_t callId, ToxAv* toxav, std::shared_ptr<VideoFrame> vframe)
 {
     if (!calls[callId].active || !calls[callId].videoEnabled)
         return;
 
-    vpx_image frame = camera->getLastFrame().createVpxImage();
-    if (frame.w && frame.h)
+    // This frame shares vframe's buffers, we don't call vpx_img_free but just delete it
+    vpx_image* frame = vframe->toVpxImage();
+    if (frame->fmt == VPX_IMG_FMT_NONE)
     {
-        int result;
-        if ((result = toxav_prepare_video_frame(toxav, callId, videobuf, videobufsize, &frame)) < 0)
-        {
-            qDebug() << QString("toxav_prepare_video_frame: error %1").arg(result);
-            vpx_img_free(&frame);
-            calls[callId].sendVideoTimer->start();
-            return;
-        }
-
-        if ((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
-            qDebug() << QString("toxav_send_video error: %1").arg(result);
-
-        vpx_img_free(&frame);
-    }
-    else
-    {
-        qDebug("sendCallVideo: Invalid frame (bad camera ?)");
+        qWarning() << "Invalid frame";
+        delete frame;
+        return;
     }
 
-    calls[callId].sendVideoTimer->start();
+    int result;
+    if ((result = toxav_prepare_video_frame(toxav, callId, videobuf, videobufsize, frame)) < 0)
+    {
+        qDebug() << QString("toxav_prepare_video_frame: error %1").arg(result);
+        delete frame;
+        return;
+    }
+
+    if ((result = toxav_send_video(toxav, callId, (uint8_t*)videobuf, result)) < 0)
+        qDebug() << QString("toxav_send_video error: %1").arg(result);
+
+    delete frame;
 }
 
 void Core::micMuteToggle(int32_t callId)
@@ -412,9 +420,9 @@ void Core::onAvEnd(void* _toxav, int32_t call_index, void* core)
     }
     qDebug() << QString("AV end from %1").arg(friendId);
 
-    cleanupCall(call_index);
-
     emit static_cast<Core*>(core)->avEnd(friendId, call_index);
+
+    cleanupCall(call_index);
 }
 
 void Core::onAvRinging(void* _toxav, int32_t call_index, void* core)
@@ -452,9 +460,9 @@ void Core::onAvRequestTimeout(void* _toxav, int32_t call_index, void* core)
     }
     qDebug() << QString("AV request timeout with %1").arg(friendId);
 
-    cleanupCall(call_index);
-
     emit static_cast<Core*>(core)->avRequestTimeout(friendId, call_index);
+
+    cleanupCall(call_index);
 }
 
 void Core::onAvPeerTimeout(void* _toxav, int32_t call_index, void* core)
@@ -469,9 +477,9 @@ void Core::onAvPeerTimeout(void* _toxav, int32_t call_index, void* core)
     }
     qDebug() << QString("AV peer timeout with %1").arg(friendId);
 
-    cleanupCall(call_index);
-
     emit static_cast<Core*>(core)->avPeerTimeout(friendId, call_index);
+
+    cleanupCall(call_index);
 }
 
 
@@ -593,7 +601,7 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
 
 VideoSource *Core::getVideoSourceFromCall(int callNumber)
 {
-    return &calls[callNumber].videoSource;
+    return calls[callNumber].videoSource;
 }
 
 void Core::joinGroupCall(int groupId)
