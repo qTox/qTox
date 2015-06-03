@@ -889,8 +889,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
 
-    contactListWidget->hide();
-    contactListWidget->show();
+    contactListWidget->reDraw();
 }
 
 void Widget::removeFriend(int friendId)
@@ -1040,8 +1039,7 @@ void Widget::removeGroup(Group* g, bool fake)
     if (ui->mainHead->layout()->isEmpty())
         onAddClicked();
 
-    contactListWidget->hide();
-    contactListWidget->show();
+    contactListWidget->reDraw();
 }
 
 void Widget::removeGroup(int groupId)
@@ -1445,8 +1443,7 @@ void Widget::searchContacts()
             return;
     }
 
-    contactListWidget->hide();
-    contactListWidget->show();
+    contactListWidget->reDraw();
 }
 
 void Widget::hideFriends(QString searchString, Status status, bool hideAll)

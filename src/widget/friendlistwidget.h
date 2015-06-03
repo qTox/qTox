@@ -34,7 +34,7 @@ public:
     QVBoxLayout* getFriendLayout(Status s);
 
     QList<GenericChatroomWidget*> getAllFriends();
-
+    void reDraw();
 signals:
 
 public slots:
