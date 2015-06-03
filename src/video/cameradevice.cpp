@@ -39,6 +39,11 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
         devName = devName.mid(8);
         format = idesktopFormat;
     }
+    else if (devName.startsWith("gdigrab#"))
+    {
+        devName = devName.mid(8);
+        format = idesktopFormat;
+    }
     else
     {
         format = iformat;
@@ -63,7 +68,7 @@ out:
 
 CameraDevice* CameraDevice::open(QString devName)
 {
-    VideoMode mode{};
+    VideoMode mode{0,0,0};
     return open(devName, mode);
 }
 
@@ -217,8 +222,13 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     else
         devices = getRawDeviceListGeneric();
 
-    if (idesktopFormat && idesktopFormat->name == QString("x11grab"))
-        devices.push_back(QPair<QString,QString>{"x11grab#:0", "Desktop"});
+    if (idesktopFormat)
+    {
+        if (idesktopFormat->name == QString("x11grab"))
+            devices.push_back(QPair<QString,QString>{"x11grab#:0", "Desktop"});
+        if (idesktopFormat->name == QString("gdigrab"))
+            devices.push_back(QPair<QString,QString>{"gdigrab#desktop", "Desktop"});
+    }
 
     return devices;
 }
@@ -270,6 +280,9 @@ bool CameraDevice::getDefaultInputFormat()
     // Desktop capture input formats
 #ifdef Q_OS_LINUX
     idesktopFormat = av_find_input_format("x11grab");
+#endif
+#ifdef Q_OS_WIN
+    idesktopFormat = av_find_input_format("gdigrab");
 #endif
 
     // Webcam input formats
