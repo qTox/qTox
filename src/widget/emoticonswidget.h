@@ -31,10 +31,12 @@ signals:
 private slots:
     void onSmileyClicked();
     void onPageButtonClicked();
+    void PageButtonsUpdate();
 
 protected:
     virtual void mouseReleaseEvent(QMouseEvent *ev);
     virtual void mousePressEvent(QMouseEvent *ev);
+    virtual void wheelEvent(QWheelEvent * event) override;
 
 private:
     QStackedWidget stack;
