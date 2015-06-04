@@ -49,7 +49,7 @@ void TabCompleter::buildCompletionList()
     nextCompletion = completionMap.begin();
 
     // split the string on the given RE (not chars, nums or braces/brackets) and take the last section
-    QString tabAbbrev = msgEdit->toPlainText().left(msgEdit->textCursor().position()).section(QRegExp("[^\\w\\d:--_\\[\\]{}|`^.\\\\]"), -1, -1);
+    QString tabAbbrev = msgEdit->toPlainText().left(msgEdit->textCursor().position()).section(QRegExp("[^\\w\\d:@--_\\[\\]{}|`^.\\\\]"), -1, -1);
     // that section is then used as the completion regex
     QRegExp regex(QString("^[-_\\[\\]{}|`^.\\\\]*").append(QRegExp::escape(tabAbbrev)), Qt::CaseInsensitive);
 
