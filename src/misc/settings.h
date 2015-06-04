@@ -33,14 +33,9 @@ public:
     ~Settings() = default;
     static Settings& getInstance();
     void switchProfile(const QString& profile);
-    QString detectProfile();
-    QList<QString> searchProfiles();
-    QString askProfiles();
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
 
     void createPersonal(QString basename); ///< Write a default personnal settings file for a profile
-
-    void executeSettingsDialog(QWidget* parent);
 
     static QString getSettingsDirPath();
 
@@ -261,9 +256,6 @@ public:
     void save(bool writePersonal = true);
     void save(QString path, bool writePersonal = true);
     void load();
-
-private:
-    static QString genRandomProfileName();
 
 private:
     static Settings* settings;
