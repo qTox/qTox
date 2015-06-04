@@ -76,7 +76,7 @@ void LoginScreen::onCreateNewProfile()
         return;
     }
 
-    if (pass.size() < 6)
+    if (pass.size()!=0 && pass.size() < 6)
     {
         QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The password must be at least 6 characters."));
         return;

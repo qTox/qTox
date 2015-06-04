@@ -375,9 +375,6 @@ margin-bottom:45px;</string>
          </item>
          <item>
           <widget class="QLineEdit" name="newPass">
-           <property name="maxLength">
-            <number>64</number>
-           </property>
            <property name="echoMode">
             <enum>QLineEdit::Password</enum>
            </property>
