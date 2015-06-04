@@ -68,42 +68,32 @@ void SetPasswordDialog::onPasswordEdit()
     ui->strengthBar->setValue(getPasswordStrength(pswd));
 }
 
-int SetPasswordDialog::getPasswordStrength(QString pswd)
+int SetPasswordDialog::getPasswordStrength(QString pass)
 {
-    // Password strength calculator
-    // Based on code in the Master Password dialog in Firefox
-    // (pref-masterpass.js)
-    // Original code triple-licensed under the MPL, GPL, and LGPL
-    // so is license-compatible with this file
+    if (pass.size() < 6)
+        return 0;
 
-    const double lengthFactor = reasonablePasswordLength / 8.0;
-    int pwlength = (int)(pswd.length() / lengthFactor);
-    if (pwlength > 5)
-        pwlength = 5;
+    double fscore = 0;
+    QHash<QChar, int> charCounts;
+    for (QChar c : pass)
+    {
+        charCounts[c]++;
+        fscore += 5. / charCounts[c];
+    }
 
-    const QRegExp numRxp("[0-9]", Qt::CaseSensitive, QRegExp::RegExp);
-    int numeric = (int)(pswd.count(numRxp) / lengthFactor);
-    if (numeric > 3)
-        numeric = 3;
+    int variations = -1;
+    variations += pass.contains(QRegExp("[0-9]", Qt::CaseSensitive, QRegExp::RegExp)) ? 1 : 0;
+    variations += pass.contains(QRegExp("[a-z]", Qt::CaseSensitive, QRegExp::RegExp)) ? 1 : 0;
+    variations += pass.contains(QRegExp("[A-Z]", Qt::CaseSensitive, QRegExp::RegExp)) ? 1 : 0;
+    variations += pass.contains(QRegExp("[\\W]", Qt::CaseSensitive, QRegExp::RegExp)) ? 1 : 0;
 
-    const QRegExp symbRxp("\\W", Qt::CaseInsensitive, QRegExp::RegExp);
-    int numsymbols = (int)(pswd.count(symbRxp) / lengthFactor);
-    if (numsymbols > 3)
-        numsymbols = 3;
+    int score = fscore;
+    score += variations * 10;
+    score -= 20;
+    score = std::min(score, 100);
+    score = std::max(score, 0);
 
-    const QRegExp upperRxp("[A-Z]", Qt::CaseSensitive, QRegExp::RegExp);
-    int upper = (int)(pswd.count(upperRxp) / lengthFactor);
-    if (upper > 3)
-        upper = 3;
-
-    int pwstrength=((pwlength*10)-20) + (numeric*10) + (numsymbols*15) + (upper*10);
-    if (pwstrength < 0)
-        pwstrength = 0;
-
-    if (pwstrength > 100)
-        pwstrength = 100;
-
-    return pwstrength;
+    return score;
 }
 
 QString SetPasswordDialog::getPassword()
