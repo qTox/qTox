@@ -195,6 +195,7 @@ void Profile::saveToxSave(QByteArray data)
     assert(ProfileLocker::getCurLockName() == name);
 
     QString path = Settings::getSettingsDirPath() + QDir::separator() + name + ".tox";
+    qDebug() << "Saving tox save to "<<path;
     QSaveFile saveFile(path);
     if (!saveFile.open(QIODevice::WriteOnly))
     {

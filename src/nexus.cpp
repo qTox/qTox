@@ -25,7 +25,8 @@ Nexus::Nexus(QObject *parent) :
     QObject(parent),
     profile{nullptr},
     widget{nullptr},
-    androidgui{nullptr}
+    androidgui{nullptr},
+    loginScreen{nullptr}
 {
 }
 
@@ -36,6 +37,9 @@ Nexus::~Nexus()
 #else
     delete widget;
 #endif
+    delete loginScreen;
+    delete profile;
+    Settings::getInstance().save();
 }
 
 void Nexus::start()
