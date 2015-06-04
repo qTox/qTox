@@ -157,7 +157,6 @@ void Nexus::showMainGUI()
     connect(core, &Core::groupPeerAudioPlaying,      widget, &Widget::onGroupPeerAudioPlaying);
     connect(core, &Core::emptyGroupCreated, widget, &Widget::onEmptyGroupCreated);
     connect(core, &Core::avInvite, widget, &Widget::playRingtone);
-    connect(core, &Core::blockingClearContacts, widget, &Widget::clearContactsList, Qt::BlockingQueuedConnection);
     connect(core, &Core::friendTypingChanged, widget, &Widget::onFriendTypingChanged);
 
     connect(core, &Core::messageSentResult, widget, &Widget::onMessageSendResult);

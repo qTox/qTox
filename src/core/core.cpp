@@ -105,9 +105,10 @@ Core::~Core()
     if (coreThread->isRunning())
     {
         if (QThread::currentThread() == coreThread)
-            killTimers();
+            killTimers(false);
         else
-            QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection);
+            QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection,
+                                      Q_ARG(bool, false));
     }
     coreThread->exit(0);
     while (coreThread->isRunning())
@@ -1245,9 +1246,27 @@ void Core::resetCallSources()
     }
 }
 
-void Core::killTimers()
+void Core::killTimers(bool onlyStop)
 {
     assert(QThread::currentThread() == coreThread);
     toxTimer->stop();
-    delete toxTimer;
+    if (!onlyStop)
+    {
+        delete toxTimer;
+        toxTimer = nullptr;
+    }
+}
+
+void Core::reset()
+{
+    assert(QThread::currentThread() == coreThread);
+
+    ready = false;
+    killTimers(true);
+    deadifyTox();
+
+    emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
+    GUI::clearContacts();
+
+    start();
 }

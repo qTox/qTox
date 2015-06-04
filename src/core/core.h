@@ -87,6 +87,7 @@ public:
 
 public slots:
     void start(); ///< Initializes the core, must be called before anything else
+    void reset(); ///< Reinitialized the core. Must be called from the Core thread, with the GUI thread ready to process events.
     void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer
     void bootstrapDht(); ///< Connects us to the Tox network
 
@@ -151,7 +152,6 @@ public slots:
 signals:
     void connected();
     void disconnected();
-    void blockingClearContacts();
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
@@ -283,7 +283,7 @@ private:
     void deadifyTox();
 
 private slots:
-    void killTimers(); ///< Must only be called from the Core thread
+    void killTimers(bool onlyStop); ///< Must only be called from the Core thread
 
 private:
     Tox* tox;

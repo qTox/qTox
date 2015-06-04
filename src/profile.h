@@ -25,6 +25,7 @@ public:
     QString getName();
 
     void startCore(); ///< Starts the Core thread
+    void restartCore(); ///< Delete core and restart a new one
     bool isNewProfile();
     bool isEncrypted(); ///< Returns true if we have a password set (doesn't check the actual file on disk)
     bool checkPassword(); ///< Checks whether the password is valid

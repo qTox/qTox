@@ -20,6 +20,8 @@
 #include "src/misc/smileypack.h"
 #include "src/core/core.h"
 #include "src/misc/style.h"
+#include "src/nexus.h"
+#include "src/profile.h"
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QTime>
@@ -351,7 +353,7 @@ void GeneralForm::onReconnectClicked()
         QMessageBox::warning(this, tr("Call active", "popup title"),
                         tr("You can't disconnect while a call is active!", "popup text"));
     else
-        ; /// TODO: Add a reset function in Profile to save then restart toxcore
+        Nexus::getProfile()->restartCore();
 }
 
 void GeneralForm::reloadSmiles()

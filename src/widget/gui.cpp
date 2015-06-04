@@ -35,6 +35,14 @@ GUI& GUI::getInstance()
 
 // Implementation of the public clean interface
 
+void GUI::clearContacts()
+{
+    if (QThread::currentThread() == qApp->thread())
+        getInstance()._clearContacts();
+    else
+        QMetaObject::invokeMethod(&getInstance(), "_clearContacts", Qt::BlockingQueuedConnection);
+}
+
 void GUI::setEnabled(bool state)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -191,6 +199,14 @@ QString GUI::passwordDialog(const QString& cancel, const QString& body)
 }
 
 // Private implementations
+
+void GUI::_clearContacts()
+{
+#ifdef Q_OS_ANDROID
+#else
+    Nexus::getDesktopGUI()->clearContactsList();
+#endif
+}
 
 void GUI::_setEnabled(bool state)
 {

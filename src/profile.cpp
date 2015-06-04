@@ -3,6 +3,7 @@
 #include "src/misc/settings.h"
 #include "src/core/core.h"
 #include "src/historykeeper.h"
+#include "src/widget/gui.h"
 #include <cassert>
 #include <QDir>
 #include <QFileInfo>
@@ -17,6 +18,7 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
       newProfile{isNewProfile}, isRemoved{false}
 {
     Settings::getInstance().setCurrentProfile(name);
+    HistoryKeeper::resetInstance();
 
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
@@ -312,4 +314,12 @@ bool Profile::checkPassword()
 QString Profile::getPassword()
 {
     return password;
+}
+
+void Profile::restartCore()
+{
+    GUI::setEnabled(false); // Core::reset re-enables it
+    if (!isRemoved && core->isReady())
+        saveToxSave();
+    QMetaObject::invokeMethod(core, "reset");
 }

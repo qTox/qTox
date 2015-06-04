@@ -70,9 +70,9 @@ public:
     void newMessageAlert(GenericChatroomWidget* chat);
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
-    void clearContactsList();
     void setTranslation();
     void updateIcons();
+    void clearContactsList();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);

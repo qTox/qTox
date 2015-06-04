@@ -898,6 +898,8 @@ void Widget::removeFriend(int friendId)
 
 void Widget::clearContactsList()
 {
+    assert(QThread::currentThread() == qApp->thread());
+
     QList<Friend*> friends = FriendList::getAllFriends();
     for (Friend* f : friends)
         removeFriend(f, true);
