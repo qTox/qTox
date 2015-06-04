@@ -1095,7 +1095,7 @@ background-color:#6cc865;</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="../../res.qrc">:/img/login_logo.png</pixmap>
+    <pixmap resource="../../res.qrc">:/img/login_logo.svg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
