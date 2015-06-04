@@ -43,11 +43,3 @@ QString GenericChatItemWidget::getName() const
 {
     return nameLabel->fullText();
 }
-
-bool GenericChatItemWidget::operator<(const GenericChatItemWidget& other) const
-{
-    int compareValue = getName().localeAwareCompare(other.getName());
-    //if (compareValue == 0)
-    //    return this < &other; // Consistent ordering.
-    return  compareValue < 0;
-}

@@ -312,6 +312,6 @@ void FriendWidget::setAlias(const QString& _alias)
     f->setAlias(alias);
     Settings::getInstance().setFriendAlias(f->getToxId(), alias);
     Settings::getInstance().savePersonal();
-    hide();
-    show();
+    //hide();
+    //show();
 }

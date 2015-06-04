@@ -40,6 +40,12 @@ FriendListLayout::FriendListLayout()
     addLayout(friendOfflineLayout.getLayout());
 }
 
+FriendListLayout::FriendListLayout(QWidget *parent)
+    : QVBoxLayout(parent)
+{
+    FriendListLayout();
+}
+
 void FriendListLayout::addFriendWidget(FriendWidget *w, Status s)
 {
     // bug somewhere here.

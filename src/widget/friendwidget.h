@@ -22,6 +22,8 @@
 
 #include "genericchatroomwidget.h"
 
+#include <QDebug>
+
 class QPixmap;
 class MaskablePixmapWidget;
 
@@ -52,6 +54,10 @@ protected:
     virtual void mousePressEvent(QMouseEvent* ev) final override;
     virtual void mouseMoveEvent(QMouseEvent* ev) final  override;
     void setFriendAlias();
+    void showEvent(QShowEvent *)
+    {
+        qDebug() << "EVENT";
+    }
 
 public:
     int friendId;
