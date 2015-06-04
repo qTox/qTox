@@ -4,6 +4,7 @@
 #include "src/profilelocker.h"
 #include "src/nexus.h"
 #include "src/misc/settings.h"
+#include "src/widget/form/setpassworddialog.h"
 #include <QMessageBox>
 #include <QDebug>
 
@@ -22,6 +23,8 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->loginButton, &QPushButton::clicked, this, &LoginScreen::onLogin);
     connect(ui->loginUsernames, &QComboBox::currentTextChanged, this, &LoginScreen::onLoginUsernameSelected);
     connect(ui->loginPassword, &QLineEdit::returnPressed, this, &LoginScreen::onLogin);
+    connect(ui->newPass, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
+    connect(ui->newPassConfirm, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
 
     reset();
 }
@@ -156,4 +159,9 @@ void LoginScreen::onLogin()
 
     nexus.setProfile(profile);
     nexus.showMainGUI();
+}
+
+void LoginScreen::onPasswordEdited()
+{
+    ui->passStrengthMeter->setValue(SetPasswordDialog::getPasswordStrength(ui->newPass->text()));
 }

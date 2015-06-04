@@ -18,6 +18,7 @@ public:
 
 private slots:
     void onLoginUsernameSelected(const QString& name);
+    void onPasswordEdited();
     // Buttons to change page
     void onNewProfilePageClicked();
     void onLoginPageClicked();

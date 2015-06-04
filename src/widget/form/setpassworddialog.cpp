@@ -65,6 +65,11 @@ void SetPasswordDialog::onPasswordEdit()
         ui->body->setText(body);
     }
 
+    ui->strengthBar->setValue(getPasswordStrength(pswd));
+}
+
+int SetPasswordDialog::getPasswordStrength(QString pswd)
+{
     // Password strength calculator
     // Based on code in the Master Password dialog in Firefox
     // (pref-masterpass.js)
@@ -98,7 +103,7 @@ void SetPasswordDialog::onPasswordEdit()
     if (pwstrength > 100)
         pwstrength = 100;
 
-    ui->strengthBar->setValue(pwstrength);
+    return pwstrength;
 }
 
 QString SetPasswordDialog::getPassword()
