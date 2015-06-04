@@ -193,7 +193,10 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
     }
     avdevice_list_devices(s, &devlist);
     if (!devlist)
+    {
         qWarning() << "avdevice_list_devices failed";
+        return devices;
+    }
 
     // Convert the list to a QVector
     devices.resize(devlist->nb_devices);
