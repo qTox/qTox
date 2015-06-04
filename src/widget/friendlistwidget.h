@@ -27,7 +27,7 @@
 #include "src/core/corestructs.h"
 #include "src/widget/genericchatroomwidget.h"
 
-#include "sortingboxlayout.h"
+#include "genericchatitemlayout.h"
 
 #include "circlewidget.h"
 #include "groupwidget.h"
@@ -52,6 +52,7 @@ public:
     void addCircleWidget(int id);
     void addCircleWidget(FriendWidget *widget = nullptr);
     void removeCircleWidget(CircleWidget *widget);
+    void initCircles();
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
@@ -79,8 +80,8 @@ private:
 
     bool groupsOnTop;
     FriendListLayout* listLayout;
-    VSortingBoxLayout<CircleWidget> circleLayout2;
-    VSortingBoxLayout<GroupWidget> groupLayout;
+    GenericChatItemLayout circleLayout2;
+    GenericChatItemLayout groupLayout;
 };
 
 #endif // FRIENDLISTWIDGET_H

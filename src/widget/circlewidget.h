@@ -48,6 +48,8 @@ public:
     bool cycleContacts(bool forward);
     bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
 
+    void init();
+
     static CircleWidget* getFromID(int id);
 
 signals:

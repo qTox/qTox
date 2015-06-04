@@ -17,7 +17,7 @@
 
 #include <QBoxLayout>
 #include "src/core/corestructs.h"
-#include "sortingboxlayout.h"
+#include "genericchatitemlayout.h"
 #include "friendwidget.h"
 
 class GroupWidget;
@@ -30,6 +30,7 @@ class FriendListLayout : public QVBoxLayout
     Q_OBJECT
 public:
     explicit FriendListLayout();
+    explicit FriendListLayout(QWidget* parent);
 
     void addFriendWidget(FriendWidget* widget, Status s);
     int indexOfFriendWidget(FriendWidget* widget, bool online) const;
@@ -49,8 +50,8 @@ public:
 private:
     QLayout* getFriendLayout(Status s);
 
-    VSortingBoxLayout<FriendWidget> friendOnlineLayout;
-    VSortingBoxLayout<FriendWidget> friendOfflineLayout;
+    GenericChatItemLayout friendOnlineLayout;
+    GenericChatItemLayout friendOfflineLayout;
 };
 
 template <typename WidgetType>

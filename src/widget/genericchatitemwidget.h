@@ -30,8 +30,6 @@ public:
 
     QString getName() const;
 
-    bool operator<(const GenericChatItemWidget& other) const;
-
     Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
 
 protected:

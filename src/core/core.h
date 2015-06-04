@@ -157,6 +157,9 @@ signals:
     void connected();
     void disconnected();
 
+    void blockingClearContacts();
+    void started();
+
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
 

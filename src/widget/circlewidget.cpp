@@ -80,13 +80,11 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
     lineFrame->resize(0, 0);
 
     listLayout = new FriendListLayout();
+    listWidget = new QWidget(this);
+    listWidget->setLayout(listLayout);
+    fullLayout->addWidget(listWidget);
 
     setAcceptDrops(true);
-
-    listWidget = new QWidget(this);
-    fullLayout->addWidget(listWidget);
-    listWidget->setLayout(listLayout);
-    listWidget->setVisible(false);
 
     onCompactChanged(isCompact());
 
@@ -120,8 +118,9 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
     if (isNew)
         renameCircle();
 
-    if (Settings::getInstance().getCircleExpanded(id))
-        expand();
+    listWidget->setVisible(Settings::getInstance().getCircleExpanded(id));
+    //expand();
+    //Settings::getInstance().setCircleExpanded(id, isExpanded);
 }
 
 void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
@@ -142,15 +141,18 @@ void CircleWidget::toggle()
 {
     expanded = !expanded;
     listWidget->setVisible(expanded);
-    Settings::getInstance().setCircleExpanded(id, expanded);
     if (expanded)
     {
+        //fullLayout->addLayout(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
     }
     else
     {
+        //fullLayout->removeItem(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
     }
+
+    Settings::getInstance().setCircleExpanded(id, expanded);
 }
 
 void CircleWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline)
@@ -266,6 +268,20 @@ bool CircleWidget::cycleContacts(FriendWidget *activeChatroomWidget, bool forwar
     }
 
     return false;
+}
+
+void CircleWidget::init()
+{
+    qDebug() << "EXPANDED? " << Settings::getInstance().getCircleExpanded(id);
+    if (Settings::getInstance().getCircleExpanded(id))
+        expand();
+    else
+    {
+        if (expanded)
+        {
+            toggle();
+        }
+    }
 }
 
 CircleWidget* CircleWidget::getFromID(int id)
