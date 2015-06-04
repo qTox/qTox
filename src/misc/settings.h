@@ -104,12 +104,6 @@ public:
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
 
-    bool getEncryptLogs() const;
-    void setEncryptLogs(bool newValue);
-
-    bool getEncryptTox() const;
-    void setEncryptTox(bool newValue);
-
     Db::syncType getDbSyncType() const;
     void setDbSyncType(int newValue);
 
@@ -303,8 +297,6 @@ private:
     uint32_t currentProfileId;
 
     bool enableLogging;
-    bool encryptLogs;
-    bool encryptTox = false;
 
     int autoAwayTime;
 

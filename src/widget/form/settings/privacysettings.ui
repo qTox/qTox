@@ -37,7 +37,7 @@
         <x>0</x>
         <y>0</y>
         <width>380</width>
-        <height>391</height>
+        <height>280</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -47,7 +47,7 @@
           <string comment="tooltip for typing notifications setting">Your friends will be able to see when you are typing.</string>
          </property>
          <property name="text">
-          <string>Send Typing Notifications</string>
+          <string>Send typing notifications</string>
          </property>
         </widget>
        </item>
@@ -58,75 +58,8 @@
 Save format changes are possible, which may result in data loss.</string>
          </property>
          <property name="text">
-          <string>Keep chat history (mostly stable)</string>
+          <string>Keep chat history</string>
          </property>
-        </widget>
-       </item>
-       <item alignment="Qt::AlignTop">
-        <widget class="QGroupBox" name="encryptionGroup">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="title">
-          <string>Local file encryption</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QLabel" name="encryptStatement">
-            <property name="text">
-             <string>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="encryptToxHLayout">
-            <item>
-             <widget class="QCheckBox" name="cbEncryptTox">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Encrypt Tox data file</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="changeToxPwButton">
-              <property name="text">
-               <string>Change password</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="encryptLogsHLayout">
-            <item>
-             <widget class="QCheckBox" name="cbEncryptHistory">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Encrypt chat history</string>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="changeLogsPwButton">
-              <property name="text">
-               <string>Change password</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
         </widget>
        </item>
        <item alignment="Qt::AlignTop">
@@ -138,9 +71,19 @@ When you change nospam, your current contacts still can communicate with you,
 but new contacts need to know your new Tox ID to be able to add you.</string>
          </property>
          <property name="title">
-          <string>Nospam</string>
+          <string>NoSpam</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>The NoSpam is part of your Tox ID, if you are getting spammed with friend requests, change the NoSpam.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
@@ -153,7 +96,7 @@ but new contacts need to know your new Tox ID to be able to add you.</string>
             <item>
              <widget class="QPushButton" name="randomNosapamButton">
               <property name="text">
-               <string>Generate random nospam</string>
+               <string>Generate random NoSpam</string>
               </property>
              </widget>
             </item>

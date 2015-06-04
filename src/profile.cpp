@@ -176,9 +176,9 @@ QByteArray Profile::loadToxSave()
 
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-        core->setPassword(password, Core::ptMain, salt);
+        core->setPassword(password, salt);
 
-        data = core->decryptData(data, Core::ptMain);
+        data = core->decryptData(data);
         if (data.isEmpty())
             qCritical() << "Failed to decrypt the tox save file";
     }
@@ -218,8 +218,8 @@ void Profile::saveToxSave(QByteArray data)
 
     if (!password.isEmpty())
     {
-        core->setPassword(password, Core::ptMain);
-        data = core->encryptData(data, Core::ptMain);
+        core->setPassword(password);
+        data = core->encryptData(data);
         if (data.isEmpty())
         {
             qCritical() << "Failed to encrypt, can't save!";
@@ -239,7 +239,12 @@ bool Profile::profileExists(QString name)
     return QFile::exists(path+".tox") && QFile::exists(path+".ini");
 }
 
-bool Profile::isProfileEncrypted(QString name)
+bool Profile::isEncrypted()
+{
+    return !password.isEmpty();
+}
+
+bool Profile::isEncrypted(QString name)
 {
     uint8_t data[encryptHeaderSize] = {0};
     QString path = Settings::getSettingsDirPath() + QDir::separator() + name + ".tox";
@@ -302,4 +307,9 @@ bool Profile::checkPassword()
         return false;
 
     return !loadToxSave().isEmpty();
+}
+
+QString Profile::getPassword()
+{
+    return password;
 }

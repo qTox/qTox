@@ -36,10 +36,6 @@ private slots:
     void setNospam();
     void generateRandomNospam();
     void onNospamEdit();
-    void onEncryptLogsUpdated();
-    bool setChatLogsPassword();
-    void onEncryptToxUpdated();
-    bool setToxPassword();
 
 private:
     Ui::PrivacySettings* bodyUI;

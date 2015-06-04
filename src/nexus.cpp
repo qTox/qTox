@@ -59,7 +59,6 @@ void Nexus::start()
     qRegisterMetaType<QPixmap>("QPixmap");
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
-    qRegisterMetaType<Core::PasswordType>("Core::PasswordType");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
 
     loginScreen = new LoginScreen();

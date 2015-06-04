@@ -26,7 +26,10 @@ public:
 
     void startCore(); ///< Starts the Core thread
     bool isNewProfile();
+    bool isEncrypted(); ///< Returns true if we have a password set (doesn't check the actual file on disk)
     bool checkPassword(); ///< Checks whether the password is valid
+    QString getPassword();
+
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
     void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.
     void saveToxSave(QByteArray data); ///< Write the .tox save, encrypted if needed. Invalid on deleted profiles.
@@ -45,7 +48,7 @@ public:
     static QVector<QString> getProfiles();
 
     static bool profileExists(QString name);
-    static bool isProfileEncrypted(QString name); ///< Returns false on error.
+    static bool isEncrypted(QString name); ///< Returns false on error. Checks the actual file on disk.
 
 private:
     Profile(QString name, QString password, bool newProfile);

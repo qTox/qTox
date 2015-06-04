@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
         if (QDir(Settings::getSettingsDirPath()).exists(profileName + ".tox"))
         {
             qDebug() << "Setting profile to" << profileName;
-            if (Profile::isProfileEncrypted(profileName))
+            if (Profile::isEncrypted(profileName))
             {
                 Settings::getInstance().setCurrentProfile(profileName);
             }

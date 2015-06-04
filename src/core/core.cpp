@@ -62,9 +62,7 @@ Core::Core(QThread *CoreThread, Profile& profile) :
     Audio::getInstance();
 
     videobuf = nullptr;
-
-    for (int i = 0; i < ptCounter; i++)
-        pwsaltedkeys[i] = nullptr;
+    encryptionKey = nullptr;
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -109,7 +107,7 @@ Core::~Core()
         if (QThread::currentThread() == coreThread)
             killTimers();
         else
-            QMetaObject::invokeMethod(this, "stopTimers", Qt::BlockingQueuedConnection);
+            QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection);
     }
     coreThread->exit(0);
     while (coreThread->isRunning())
@@ -286,7 +284,7 @@ void Core::start()
         emit idSet(id);
 
     // tox core is already decrypted
-    if (Settings::getInstance().getEnableLogging() && Settings::getInstance().getEncryptLogs())
+    if (Settings::getInstance().getEnableLogging() && Nexus::getProfile()->isEncrypted())
         checkEncryptedHistory();
 
     loadFriends();

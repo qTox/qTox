@@ -33,45 +33,38 @@
 #include <algorithm>
 #include <cassert>
 
-void Core::setPassword(const QString& password, PasswordType passtype, uint8_t* salt)
+void Core::setPassword(const QString& password, uint8_t* salt)
 {
-    clearPassword(passtype);
+    clearPassword();
     if (password.isEmpty())
         return;
 
-    pwsaltedkeys[passtype] = new TOX_PASS_KEY;
+    encryptionKey = new TOX_PASS_KEY;
 
     CString str(password);
     if (salt)
-        tox_derive_key_with_salt(str.data(), str.size(), salt, pwsaltedkeys[passtype], nullptr);
+        tox_derive_key_with_salt(str.data(), str.size(), salt, encryptionKey, nullptr);
     else
-        tox_derive_key_from_pass(str.data(), str.size(), pwsaltedkeys[passtype], nullptr);
+        tox_derive_key_from_pass(str.data(), str.size(), encryptionKey, nullptr);
 }
 
-void Core::useOtherPassword(PasswordType type)
+void Core::clearPassword()
 {
-    clearPassword(type);
-    pwsaltedkeys[type] = new TOX_PASS_KEY;
-
-    PasswordType other = (type == ptMain) ? ptHistory : ptMain;
-
-    std::copy(pwsaltedkeys[other], pwsaltedkeys[other]+1, pwsaltedkeys[type]);
+    delete encryptionKey;
+    encryptionKey = nullptr;
 }
 
-void Core::clearPassword(PasswordType passtype)
+QByteArray Core::encryptData(const QByteArray& data)
 {
-    delete pwsaltedkeys[passtype];
-    pwsaltedkeys[passtype] = nullptr;
-}
-
-QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
-{
-    if (!pwsaltedkeys[passtype])
+    if (!encryptionKey)
+    {
+        qWarning() << "No encryption key set";
         return QByteArray();
+    }
 
     uint8_t encrypted[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
     if (!tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                            pwsaltedkeys[passtype], encrypted, nullptr))
+                            encryptionKey, encrypted, nullptr))
     {
         qWarning() << "Encryption failed";
         return QByteArray();
@@ -79,15 +72,18 @@ QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
     return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
 }
 
-QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
+QByteArray Core::decryptData(const QByteArray& data)
 {
-    if (!pwsaltedkeys[passtype])
+    if (!encryptionKey)
+    {
+        qWarning() << "No encryption key set";
         return QByteArray();
+    }
 
     int sz = data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
     uint8_t decrypted[sz];
     if (!tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                              pwsaltedkeys[passtype], decrypted, nullptr))
+                              encryptionKey, decrypted, nullptr))
     {
         qWarning() << "Decryption failed";
         return QByteArray();
@@ -95,12 +91,9 @@ QByteArray Core::decryptData(const QByteArray& data, PasswordType passtype)
     return QByteArray(reinterpret_cast<char*>(decrypted), sz);
 }
 
-bool Core::isPasswordSet(PasswordType passtype)
+bool Core::isPasswordSet()
 {
-    if (pwsaltedkeys[passtype])
-        return true;
-
-    return false;
+    return static_cast<bool>(encryptionKey);
 }
 
 QByteArray Core::getSaltFromFile(QString filename)
@@ -135,41 +128,23 @@ void Core::checkEncryptedHistory()
     if (exists && salt.size() == 0)
     {   // maybe we should handle this better
         GUI::showWarning(tr("Encrypted chat history"), tr("No encrypted chat history file found, or it was corrupted.\nHistory will be disabled!"));
-        Settings::getInstance().setEncryptLogs(false);
-        Settings::getInstance().setEnableLogging(false);
         HistoryKeeper::resetInstance();
         return;
     }
+
+    setPassword(Nexus::getProfile()->getPassword(), reinterpret_cast<uint8_t*>(salt.data()));
 
     QString a(tr("Please enter the password for the chat history for the profile \"%1\".", "used in load() when no hist pw set").arg(Nexus::getProfile()->getName()));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
     QString c(tr("\nDisabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.", "part of history password dialog"));
     QString dialogtxt;
 
-    if (pwsaltedkeys[ptHistory])
-    {
-        if (!exists || HistoryKeeper::checkPassword())
-            return;
 
-        dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
-    }
-    else
-    {
-        dialogtxt = a;
-    }
+    if (!exists || HistoryKeeper::checkPassword())
+        return;
 
+    dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
     dialogtxt += "\n" + c;
-
-    if (pwsaltedkeys[ptMain])
-    {
-        useOtherPassword(ptHistory);
-        if (!exists || HistoryKeeper::checkPassword())
-        {
-            qDebug() << "using main password for chat history";
-            return;
-        }
-        clearPassword(ptHistory);
-    }
 
     bool error = true;
     do
@@ -178,15 +153,14 @@ void Core::checkEncryptedHistory()
 
         if (pw.isEmpty())
         {
-            clearPassword(ptHistory);
-            Settings::getInstance().setEncryptLogs(false);
+            clearPassword();
             Settings::getInstance().setEnableLogging(false);
             HistoryKeeper::resetInstance();
             return;
         }
         else
         {
-            setPassword(pw, ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
+            setPassword(pw, reinterpret_cast<uint8_t*>(salt.data()));
         }
 
         error = exists && !HistoryKeeper::checkPassword();

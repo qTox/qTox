@@ -249,8 +249,6 @@ void Settings::load()
         ps.beginGroup("Privacy");
             typingNotification = ps.value("typingNotification", false).toBool();
             enableLogging = ps.value("enableLogging", false).toBool();
-            encryptLogs = ps.value("encryptLogs", false).toBool();
-            encryptTox = ps.value("encryptTox", false).toBool();
         ps.endGroup();
     }
 }
@@ -396,8 +394,6 @@ void Settings::savePersonal(QString path)
     ps.beginGroup("Privacy");
         ps.setValue("typingNotification", typingNotification);
         ps.setValue("enableLogging", enableLogging);
-        ps.setValue("encryptLogs", encryptLogs);
-        ps.setValue("encryptTox", encryptTox);
     ps.endGroup();
 }
 
@@ -729,26 +725,6 @@ bool Settings::getEnableLogging() const
 void Settings::setEnableLogging(bool newValue)
 {
     enableLogging = newValue;
-}
-
-bool Settings::getEncryptLogs() const
-{
-    return encryptLogs;
-}
-
-void Settings::setEncryptLogs(bool newValue)
-{
-    encryptLogs = newValue;
-}
-
-bool Settings::getEncryptTox() const
-{
-    return encryptTox;
-}
-
-void Settings::setEncryptTox(bool newValue)
-{
-    encryptTox = newValue;
 }
 
 Db::syncType Settings::getDbSyncType() const

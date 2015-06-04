@@ -85,7 +85,7 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
     while (!dbFile.atEnd())
     {
         QByteArray encrChunk = dbFile.read(encryptedChunkSize);
-        buf = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
+        buf = Core::getInstance()->decryptData(encrChunk);
         if (buf.size() > 0)
         {
             fileContent += buf;
@@ -130,7 +130,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
     {
         QByteArray filledChunk = buffer.left(plainChunkSize);
         encrFile.seek(chunkPosition * encryptedChunkSize);
-        QByteArray encr = Core::getInstance()->encryptData(filledChunk, Core::ptHistory);
+        QByteArray encr = Core::getInstance()->encryptData(filledChunk);
         if (encr.size() > 0)
         {
             encrFile.write(encr);
@@ -142,7 +142,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
     }
     encrFile.seek(chunkPosition * encryptedChunkSize);
 
-    QByteArray encr = Core::getInstance()->encryptData(buffer, Core::ptHistory);
+    QByteArray encr = Core::getInstance()->encryptData(buffer);
     if (encr.size() > 0)
         encrFile.write(encr);
 
@@ -158,7 +158,7 @@ bool EncryptedDb::check(const QString &fname)
     if (file.size() > 0)
     {
         QByteArray encrChunk = file.read(encryptedChunkSize);
-        QByteArray buf = Core::getInstance()->decryptData(encrChunk, Core::ptHistory);
+        QByteArray buf = Core::getInstance()->decryptData(encrChunk);
         if (buf.size() == 0)
             state = false;
     }

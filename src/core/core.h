@@ -44,8 +44,6 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    enum PasswordType {ptMain = 0, ptHistory, ptCounter};
-
     explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
@@ -82,7 +80,7 @@ public:
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
 
     static bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
-    bool isPasswordSet(PasswordType passtype);
+    bool isPasswordSet();
     bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
 
     void resetCallSources(); ///< Forces to regenerate each call's audio sources
@@ -145,11 +143,10 @@ public slots:
     static bool isGroupCallMicEnabled(int groupId);
     static bool isGroupCallVolEnabled(int groupId);
 
-    void setPassword(const QString &password, PasswordType passtype, uint8_t* salt = nullptr);
-    void useOtherPassword(PasswordType type);
-    void clearPassword(PasswordType passtype);
-    QByteArray encryptData(const QByteArray& data, PasswordType passtype);
-    QByteArray decryptData(const QByteArray& data, PasswordType passtype);
+    void setPassword(const QString &password, uint8_t* salt = nullptr);
+    void clearPassword();
+    QByteArray encryptData(const QByteArray& data);
+    QByteArray decryptData(const QByteArray& data);
 
 signals:
     void connected();
@@ -301,7 +298,7 @@ private:
     QMutex messageSendMutex;
     bool ready;
 
-    TOX_PASS_KEY* pwsaltedkeys[PasswordType::ptCounter] = {nullptr}; // use the pw's hash as the "pw"
+    TOX_PASS_KEY* encryptionKey = nullptr; // use the pw's hash as the "pw"
 
     static const int videobufsize;
     static uint8_t* videobuf;

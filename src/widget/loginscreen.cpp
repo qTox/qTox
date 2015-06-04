@@ -108,7 +108,7 @@ void LoginScreen::onLoginUsernameSelected(const QString &name)
         return;
 
     ui->loginPassword->clear();
-    if (Profile::isProfileEncrypted(name))
+    if (Profile::isEncrypted(name))
     {
         ui->loginPasswordLabel->show();
         ui->loginPassword->show();
