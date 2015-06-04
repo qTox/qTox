@@ -12,7 +12,7 @@
 QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, QString password, bool isNewProfile)
-    : name{name}, password{password}, isNewProfile{isNewProfile}
+    : name{name}, password{password}, newProfile{isNewProfile}
 {
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
@@ -111,20 +111,25 @@ Core* Profile::getCore()
     return core;
 }
 
+QString Profile::getName()
+{
+    return name;
+}
+
 void Profile::startCore()
 {
     coreThread->start();
 }
 
+bool Profile::isNewProfile()
+{
+    return newProfile;
+}
+
 QByteArray Profile::loadToxSave()
 {
+    /// TODO: Cache the data, invalidate it only when we save
     QByteArray data;
-
-    if (isNewProfile)
-    {
-        qDebug() << "Loading empty data for new profile";
-        return data;
-    }
 
     QString path = Settings::getSettingsDirPath() + QDir::separator() + name + ".tox";
     QFile saveFile(path);
@@ -156,6 +161,7 @@ QByteArray Profile::loadToxSave()
         if (password.isEmpty())
         {
             qCritical() << "The tox save file is encrypted, but we don't have a password!";
+            data.clear();
             goto fail;
         }
 

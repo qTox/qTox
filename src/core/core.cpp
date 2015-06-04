@@ -126,7 +126,7 @@ Core* Core::getInstance()
     return Nexus::getCore();
 }
 
-void Core::make_tox(QByteArray savedata)
+void Core::makeTox(QByteArray savedata)
 {
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be disabled in options.
     bool enableIPv6 = Settings::getInstance().getEnableIPv6();
@@ -236,19 +236,25 @@ void Core::make_tox(QByteArray savedata)
 
 void Core::start()
 {
-    qDebug() << "Starting up";
-
-    QByteArray savedata = profile.loadToxSave();
-
-    make_tox(savedata);
-
-    // Do we need to create a new save & profile?
-    if (savedata.isNull())
+    bool isNewProfile = profile.isNewProfile();
+    if (isNewProfile)
     {
-        qDebug() << "Save file not found, creating a new profile";
+        qDebug() << "Creating a new profile";
+        makeTox(QByteArray());
         Settings::getInstance().load();
         setStatusMessage(tr("Toxing on qTox"));
-        setUsername(tr("qTox User"));
+        setUsername(profile.getName());
+    }
+    else
+    {
+        qDebug() << "Loading user profile";
+        QByteArray savedata = profile.loadToxSave();
+        if (savedata.isEmpty())
+        {
+            emit failedToStart();
+            return;
+        }
+        makeTox(savedata);
     }
 
     qsrand(time(nullptr));
@@ -323,7 +329,7 @@ void Core::start()
     }
     else
     {
-        qDebug() << "Error loading self avatar";
+        qDebug() << "Self avatar not found";
     }
 
     ready = true;
@@ -331,7 +337,7 @@ void Core::start()
     // If we created a new profile earlier,
     // now that we're ready save it and ONLY THEN broadcast the new ID.
     // This is useful for e.g. the profileForm that searches for saves.
-    if (savedata.isNull())
+    if (isNewProfile)
     {
         saveConfiguration();
         emit idSet(getSelfId().toString());
@@ -882,71 +888,6 @@ QString Core::sanitize(QString name)
         name[name.length()-1] = '_';
 
     return name;
-}
-
-QByteArray Core::loadToxSave(QString path)
-{
-    QByteArray data;
-    //loadPath = ""; // if not empty upon return, then user forgot a password and is switching
-
-    // If we can't get a lock, then another instance is already using that profile
-    while (!ProfileLocker::lock(QFileInfo(path).baseName()))
-    {
-        qWarning() << "Profile "<<QFileInfo(path).baseName()<<" is already in use, pick another";
-        GUI::showWarning(tr("Profile already in use"),
-                         tr("This profile is already used by another qTox instance\n"
-                            "Please select another profile"));
-        QString tmppath = Settings::getInstance().askProfiles();
-        if (tmppath.isEmpty())
-            continue;
-        Settings::getInstance().switchProfile(tmppath);
-        path = QDir(Settings::getSettingsDirPath()).filePath(tmppath + TOX_EXT);
-        HistoryKeeper::resetInstance();
-    }
-
-    QFile configurationFile(path);
-    qDebug() << "loadConfiguration: reading from " << path;
-
-    if (!configurationFile.exists())
-    {
-        qWarning() << "The Tox configuration file "<<path<<" was not found";
-        return data;
-    }
-
-    if (!configurationFile.open(QIODevice::ReadOnly))
-    {
-        qCritical() << "File " << path << " cannot be opened";
-        return data;
-    }
-
-    qint64 fileSize = configurationFile.size();
-    if (fileSize > 0)
-    {
-        data = configurationFile.readAll();
-        if (tox_is_data_encrypted((uint8_t*)data.data()))
-        {
-            if (!loadEncryptedSave(data))
-            {
-                configurationFile.close();
-
-                QString profile;
-                do {
-                    profile = Settings::getInstance().askProfiles();
-                } while (profile.isEmpty());
-
-                if (!profile.isEmpty())
-                {
-                    Settings::getInstance().switchProfile(profile);
-                    HistoryKeeper::resetInstance();
-                    return loadToxSave(QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT));
-                }
-                return QByteArray();
-            }
-        }
-    }
-    configurationFile.close();
-
-    return data;
 }
 
 void Core::saveConfiguration()

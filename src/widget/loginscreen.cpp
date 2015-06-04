@@ -126,6 +126,13 @@ void LoginScreen::onLogin()
         QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Couldn't load this profile."));
         return;
     }
+    if (profile->loadToxSave().isEmpty())
+    {
+        // Unknown error
+        QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
+        delete profile;
+        return;
+    }
 
     Nexus& nexus = Nexus::getInstance();
 

@@ -147,7 +147,7 @@ public slots:
     static bool isGroupCallMicEnabled(int groupId);
     static bool isGroupCallVolEnabled(int groupId);
 
-    void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
+    void setPassword(const QString &password, PasswordType passtype, uint8_t* salt = nullptr);
     void useOtherPassword(PasswordType type);
     void clearPassword(PasswordType passtype);
     QByteArray encryptData(const QByteArray& data, PasswordType passtype);
@@ -279,10 +279,8 @@ private:
 
     bool checkConnection();
 
-    QByteArray loadToxSave(QString path);
-    bool loadEncryptedSave(QByteArray& data);
     void checkEncryptedHistory();
-    void make_tox(QByteArray savedata);
+    void makeTox(QByteArray savedata);
     void loadFriends();
 
     void checkLastOnline(uint32_t friendId);

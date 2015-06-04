@@ -22,7 +22,10 @@ public:
     ~Profile();
 
     Core* getCore();
+    QString getName();
+
     void startCore(); ///< Starts the Core thread
+    bool isNewProfile();
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
 
     /// Scan for profile, automatically importing them if needed
@@ -34,7 +37,7 @@ public:
     static bool isProfileEncrypted(QString name); ///< Returns false on error.
 
 private:
-    Profile(QString name, QString password, bool isNewProfile);
+    Profile(QString name, QString password, bool newProfile);
     /// Lists all the files in the config dir with a given extension
     /// Pass the raw extension, e.g. "jpeg" not ".jpeg".
     static QVector<QString> getFilesByExt(QString extension);
@@ -47,7 +50,7 @@ private:
     QThread* coreThread;
     QString name, password;
     static QVector<QString> profiles;
-    bool isNewProfile;
+    bool newProfile; ///< True if this is a newly created profile, with no .tox save file yet.
     /// How much data we need to read to check if the file is encrypted
     /// Must be >= TOX_ENC_SAVE_MAGIC_LENGTH (8), which isn't publicly defined
     static constexpr int encryptHeaderSize = 8;

@@ -31,7 +31,7 @@
 #include <algorithm>
 #include <cassert>
 
-void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
+void Core::setPassword(const QString& password, PasswordType passtype, uint8_t* salt)
 {
     clearPassword(passtype);
     if (password.isEmpty())
@@ -44,8 +44,6 @@ void Core::setPassword(QString& password, PasswordType passtype, uint8_t* salt)
         tox_derive_key_with_salt(str.data(), str.size(), salt, pwsaltedkeys[passtype], nullptr);
     else
         tox_derive_key_from_pass(str.data(), str.size(), pwsaltedkeys[passtype], nullptr);
-
-    password.clear();
 }
 
 void Core::useOtherPassword(PasswordType type)
@@ -161,65 +159,6 @@ QByteArray Core::getSaltFromFile(QString filename)
     QByteArray res(reinterpret_cast<const char*>(salt), TOX_PASS_SALT_LENGTH);
     delete[] salt;
     return res;
-}
-
-bool Core::loadEncryptedSave(QByteArray& data)
-{
-    if (!Settings::getInstance().getEncryptTox())
-        GUI::showWarning(tr("Encryption error"), tr("The .tox file is encrypted, but encryption was not checked, continuing regardless."));
-
-    size_t fileSize = data.size();
-    int error = -1;
-    QString a(tr("Please enter the password for the %1 profile.", "used in load() when no pw is already set").arg(Settings::getInstance().getCurrentProfile()));
-    QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
-    QString dialogtxt;
-
-    if (pwsaltedkeys[ptMain]) // password set, try it
-    {
-        QByteArray newData(fileSize-TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0);
-        if (tox_pass_key_decrypt((uint8_t*)data.data(), fileSize, pwsaltedkeys[ptMain],
-                                 (uint8_t*)newData.data(), nullptr))
-        {
-            data = newData;
-            Settings::getInstance().setEncryptTox(true);
-            return true;
-        }
-
-        dialogtxt = tr("The profile password failed. Please try another?", "used only when pw set before load() doesn't work");
-    }
-    else
-    {
-        dialogtxt = a;
-    }
-
-    uint8_t salt[TOX_PASS_SALT_LENGTH];
-    tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-
-    do
-    {
-        QString pw = GUI::passwordDialog(tr("Change profile"), dialogtxt);
-
-        if (pw.isEmpty())
-        {
-            clearPassword(ptMain);
-            return false;
-        }
-        else
-        {
-            setPassword(pw, ptMain, salt);
-        }
-
-        QByteArray newData(fileSize-TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0);
-        error = !tox_pass_key_decrypt((uint8_t*)data.data(), data.size(), pwsaltedkeys[ptMain],
-                                 (uint8_t*)newData.data(), nullptr);
-        if (!error)
-            data = newData;
-
-        dialogtxt = a + "\n" + b;
-    } while (error != 0);
-
-    Settings::getInstance().setEncryptTox(true);
-    return true;
 }
 
 void Core::checkEncryptedHistory()
