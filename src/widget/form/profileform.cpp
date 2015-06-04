@@ -19,6 +19,7 @@
 #include "ui_mainwindow.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/maskablepixmapwidget.h"
+#include "src/widget/form/setpassworddialog.h"
 #include "src/misc/settings.h"
 #include "src/widget/croppinglabel.h"
 #include "src/widget/widget.h"
@@ -327,5 +328,11 @@ void ProfileForm::onDeletePassClicked()
 
 void ProfileForm::onChangePassClicked()
 {
+    SetPasswordDialog* dialog = new SetPasswordDialog(tr("Please enter a new password."), QString(), 0);
+    int r = dialog->exec();
+    if (r == QDialog::Rejected)
+        return;
 
+    QString newPass = dialog->getPassword();
+    Nexus::getProfile()->setPassword(newPass);
 }

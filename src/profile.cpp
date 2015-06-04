@@ -5,7 +5,6 @@
 #include "src/historykeeper.h"
 #include "src/widget/gui.h"
 #include "src/widget/widget.h"
-#include "src/widget/form/setpassworddialog.h"
 #include "src/nexus.h"
 #include <cassert>
 #include <QDir>

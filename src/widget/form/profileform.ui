@@ -37,7 +37,7 @@
      <widget class="QWidget" name="scrollAreaWidgetContents">
       <property name="geometry">
        <rect>
-        <x>-41</x>
+        <x>0</x>
         <y>0</y>
         <width>630</width>
         <height>625</height>
@@ -252,7 +252,7 @@ Profile does not contain your history.</string>
             <item>
              <widget class="QPushButton" name="deletePassButton">
               <property name="text">
-               <string>Delete password</string>
+               <string>Remove password</string>
               </property>
              </widget>
             </item>

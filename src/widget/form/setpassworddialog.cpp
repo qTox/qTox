@@ -48,15 +48,21 @@ void SetPasswordDialog::onPasswordEdit()
 {
     QString pswd = ui->passwordlineEdit->text();
 
-    if (pswd == ui->repasswordlineEdit->text() && pswd.length() > 0)
+
+    if (pswd.length() < 6)
     {
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-        ui->body->setText(body);
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+        ui->body->setText(body + tr("The password is too short"));
+    }
+    else if (pswd != ui->repasswordlineEdit->text())
+    {
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+        ui->body->setText(body + tr("The password doesn't match."));
     }
     else
     {
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-        ui->body->setText(body + tr("The passwords don't match."));
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+        ui->body->setText(body);
     }
 
     // Password strength calculator
