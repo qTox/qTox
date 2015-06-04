@@ -40,8 +40,7 @@
 
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
 
-const QString Settings::OLDFILENAME = "settings.ini";
-const QString Settings::FILENAME = "qtox.ini";
+const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
 bool Settings::makeToxPortable{false};
 
@@ -59,38 +58,17 @@ Settings& Settings::getInstance()
     return *settings;
 }
 
-void Settings::switchProfile(const QString& profile)
-{
-    // Saves current profile as main profile if this instance is main instance
-    setCurrentProfile(profile);
-    save(false);
-
-    // If this instance is not main instance previous save did not happen therefore
-    // we manually set profile again and load profile settings
-    setCurrentProfile(profile);
-    loaded = false;
-    load();
-}
-
 void Settings::load()
 {
     if (loaded)
         return;
 
+    createSettingsDir();
     QDir dir(getSettingsDirPath());
-    if (!dir.exists())
-        dir.mkpath(".");
 
-    if (QFile(FILENAME).exists())
+    if (QFile(globalSettingsFile).exists())
     {
-        QSettings ps(FILENAME, QSettings::IniFormat);
-        ps.beginGroup("General");
-            makeToxPortable = ps.value("makeToxPortable", false).toBool();
-        ps.endGroup();
-    }
-    else if (QFile(OLDFILENAME).exists())
-    {
-        QSettings ps(OLDFILENAME, QSettings::IniFormat);
+        QSettings ps(globalSettingsFile, QSettings::IniFormat);
         ps.beginGroup("General");
             makeToxPortable = ps.value("makeToxPortable", false).toBool();
         ps.endGroup();
@@ -100,16 +78,13 @@ void Settings::load()
         makeToxPortable = false;
     }
 
-    QString filePath = dir.filePath(FILENAME);
+    QString filePath = dir.filePath(globalSettingsFile);
 
-    //if no settings file exist -- use the default one
+    // If no settings file exist -- use the default one
     if (!QFile(filePath).exists())
     {
-        if (!QFile(filePath = dir.filePath(OLDFILENAME)).exists())
-        {
-            qDebug() << "No settings file found, using defaults";
-            filePath = ":/conf/" + FILENAME;
-        }
+        qDebug() << "No settings file found, using defaults";
+        filePath = ":/conf/" + globalSettingsFile;
     }
 
     qDebug() << "Loading settings from " + filePath;
@@ -282,7 +257,7 @@ void Settings::load()
 
 void Settings::save(bool writePersonal)
 {
-    QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
+    QString filePath = QDir(getSettingsDirPath()).filePath(globalSettingsFile);
     save(filePath, writePersonal);
 }
 
@@ -533,7 +508,7 @@ bool Settings::getMakeToxPortable() const
 void Settings::setMakeToxPortable(bool newValue)
 {
     makeToxPortable = newValue;
-    save(FILENAME); // Commit to the portable file that we don't want to use it
+    save(globalSettingsFile); // Commit to the portable file that we don't want to use it
     if (!newValue) // Update the new file right now if not already done
         save();
 }

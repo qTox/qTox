@@ -20,6 +20,7 @@
 #include "src/widget/toxuri.h"
 #include "src/widget/toxsave.h"
 #include "src/autoupdate.h"
+#include "src/profile.h"
 #include "src/profilelocker.h"
 #include "src/widget/loginscreen.h"
 #include <QApplication>
@@ -113,15 +114,28 @@ int main(int argc, char *argv[])
 
     if (parser.isSet("p"))
     {
-        QString profile = parser.value("p");
-        if (QDir(Settings::getSettingsDirPath()).exists(profile + ".tox"))
+        QString profileName = parser.value("p");
+        if (QDir(Settings::getSettingsDirPath()).exists(profileName + ".tox"))
         {
-            qDebug() << "Setting profile to" << profile;
-            Settings::getInstance().switchProfile(profile);
+            qDebug() << "Setting profile to" << profileName;
+            if (Profile::isProfileEncrypted(profileName))
+            {
+                Settings::getInstance().setCurrentProfile(profileName);
+            }
+            else
+            {
+                Profile* profile = Profile::loadProfile(profileName);
+                if (!profile)
+                {
+                    qCritical() << "-p profile" << profileName + ".tox" << " couldn't be loaded";
+                    return EXIT_FAILURE;
+                }
+                Nexus::getInstance().setProfile(profile);
+            }
         }
         else
         {
-            qCritical() << "-p profile" << profile + ".tox" << "doesn't exist";
+            qCritical() << "-p profile" << profileName + ".tox" << "doesn't exist";
             return EXIT_FAILURE;
         }
     }

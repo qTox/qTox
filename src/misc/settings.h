@@ -32,7 +32,6 @@ class Settings : public QObject
 public:
     ~Settings() = default;
     static Settings& getInstance();
-    void switchProfile(const QString& profile);
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
 
     void createPersonal(QString basename); ///< Write a default personnal settings file for a profile
@@ -267,7 +266,7 @@ private:
     void saveGlobal(QString path);
     void savePersonal(QString path);
 
-    static const QString FILENAME;
+    static const QString globalSettingsFile;
     static const QString OLDFILENAME;
 
     bool loaded;

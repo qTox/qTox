@@ -3,7 +3,9 @@
 #include "src/profile.h"
 #include "src/profilelocker.h"
 #include "src/nexus.h"
+#include "src/misc/settings.h"
 #include <QMessageBox>
+#include <QDebug>
 
 LoginScreen::LoginScreen(QWidget *parent) :
     QWidget(parent),
@@ -37,9 +39,15 @@ void LoginScreen::reset()
 
     ui->loginUsernames->clear();
     Profile::scanProfiles();
+    QString lastUsed = Settings::getInstance().getCurrentProfile();
+    qDebug() << "Last used is "<<lastUsed;
     QVector<QString> profiles = Profile::getProfiles();
     for (QString profile : profiles)
+    {
         ui->loginUsernames->addItem(profile);
+        if (profile == lastUsed)
+            ui->loginUsernames->setCurrentIndex(ui->loginUsernames->count()-1);
+    }
 
     if (profiles.isEmpty())
         ui->stackedWidget->setCurrentIndex(0);
@@ -130,9 +138,8 @@ void LoginScreen::onLogin()
         QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Couldn't load this profile."));
         return;
     }
-    if (profile->loadToxSave().isEmpty())
+    if (!profile->checkPassword())
     {
-        // Unknown error
         QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
         delete profile;
         return;

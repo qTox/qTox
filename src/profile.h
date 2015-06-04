@@ -14,7 +14,7 @@ class Profile
 public:
     /// Locks and loads an existing profile and create the associate Core* instance
     /// Returns a nullptr on error, for example if the profile is already in use
-    static Profile* loadProfile(QString name, QString password);
+    static Profile* loadProfile(QString name, QString password = QString());
     /// Creates a new profile and the associated Core* instance
     /// If password is not empty, the profile will be encrypted
     /// Returns a nullptr on error, for example if the profile already exists
@@ -26,6 +26,7 @@ public:
 
     void startCore(); ///< Starts the Core thread
     bool isNewProfile();
+    bool checkPassword(); ///< Checks whether the password is valid
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
     void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.
     void saveToxSave(QByteArray data); ///< Write the .tox save, encrypted if needed. Invalid on deleted profiles.

@@ -62,9 +62,12 @@ void Nexus::start()
     qRegisterMetaType<Core::PasswordType>("Core::PasswordType");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
 
-    // Create and show login screen
     loginScreen = new LoginScreen();
-    showLogin();
+
+    if (profile)
+        showMainGUI();
+    else
+        showLogin();
 }
 
 void Nexus::showLogin()

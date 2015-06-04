@@ -21,6 +21,8 @@
 #include "src/misc/settings.h"
 #include "src/misc/cstring.h"
 #include "src/historykeeper.h"
+#include "src/nexus.h"
+#include "src/profile.h"
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 #include <QApplication>
@@ -139,7 +141,7 @@ void Core::checkEncryptedHistory()
         return;
     }
 
-    QString a(tr("Please enter the password for the chat history for the %1 profile.", "used in load() when no hist pw set").arg(Settings::getInstance().getCurrentProfile()));
+    QString a(tr("Please enter the password for the chat history for the profile \"%1\".", "used in load() when no hist pw set").arg(Nexus::getProfile()->getName()));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
     QString c(tr("\nDisabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.", "part of history password dialog"));
     QString dialogtxt;

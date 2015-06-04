@@ -15,6 +15,8 @@
 #include "historykeeper.h"
 #include "misc/settings.h"
 #include "src/core/core.h"
+#include "src/nexus.h"
+#include "src/profile.h"
 
 #include <QSqlError>
 #include <QFile>
@@ -74,7 +76,7 @@ bool HistoryKeeper::checkPassword(int encrypted)
         return true;
 
     if ((encrypted == 1) || (encrypted == -1 && Settings::getInstance().getEncryptLogs()))
-        return EncryptedDb::check(getHistoryPath(Settings::getInstance().getCurrentProfile(), encrypted));
+        return EncryptedDb::check(getHistoryPath(Nexus::getProfile()->getName(), encrypted));
 
     return true;
 }

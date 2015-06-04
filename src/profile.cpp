@@ -16,6 +16,8 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     : name{name}, password{password},
       newProfile{isNewProfile}, isRemoved{false}
 {
+    Settings::getInstance().setCurrentProfile(name);
+
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
     core = new Core(coreThread, *this);
@@ -292,4 +294,12 @@ bool Profile::rename(QString newName)
 
     name = newName;
     return true;
+}
+
+bool Profile::checkPassword()
+{
+    if (isRemoved)
+        return false;
+
+    return !loadToxSave().isEmpty();
 }
