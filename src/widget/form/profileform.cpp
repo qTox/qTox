@@ -237,16 +237,14 @@ void ProfileForm::onRenameClicked()
         if (name.isEmpty()) break;
         name = Core::sanitize(name);
 
-        if (!Profile::profileExists(name) || GUI::askQuestion(tr("Profile already exists", "rename confirm title"),
-                tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(name)))
-        {
-
-
-            if (!nexus.getProfile()->rename(name))
-                GUI::showError(tr("Failed to rename", "rename failed title"),
-                                 tr("Couldn't rename the profile to \"%1\"").arg(cur));
+        if (Profile::profileExists(name))
+            GUI::showError(tr("Profile already exists", "rename failure title"),
+                           tr("A profile named \"%1\" already exists.", "rename confirm text").arg(name));
+        else if (!nexus.getProfile()->rename(name))
+            GUI::showError(tr("Failed to rename", "rename failed title"),
+                             tr("Couldn't rename the profile to \"%1\"").arg(cur));
+        else
             break;
-        }
     } while (true);
 }
 
