@@ -275,7 +275,14 @@ void Profile::remove()
     isRemoved = true;
 
     qDebug() << "Removing profile"<<name;
-    profiles.removeAll(name);
+    for (int i=0; i<profiles.size(); i++)
+    {
+        if (profiles[i] == name)
+        {
+            profiles.removeAt(i);
+            i--;
+        }
+    }
     QString path = Settings::getSettingsDirPath() + QDir::separator() + name;
     QFile::remove(path+".tox");
     QFile::remove(path+".ini");
