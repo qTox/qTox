@@ -69,6 +69,8 @@ private slots:
     void onLogoutClicked();
     void onCopyQrClicked();
     void onSaveQrClicked();
+    void onDeletePassClicked();
+    void onChangePassClicked();
 
 private:
     void refreshProfiles();

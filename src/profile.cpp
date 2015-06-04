@@ -4,6 +4,9 @@
 #include "src/core/core.h"
 #include "src/historykeeper.h"
 #include "src/widget/gui.h"
+#include "src/widget/widget.h"
+#include "src/widget/form/setpassworddialog.h"
+#include "src/nexus.h"
 #include <cassert>
 #include <QDir>
 #include <QFileInfo>
@@ -322,4 +325,16 @@ void Profile::restartCore()
     if (!isRemoved && core->isReady())
         saveToxSave();
     QMetaObject::invokeMethod(core, "reset");
+}
+
+void Profile::setPassword(QString newPassword)
+{
+    QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
+
+    password = newPassword;
+    core->setPassword(password);
+    saveToxSave();
+
+    HistoryKeeper::getInstance()->importMessages(oldMessages);
+    Nexus::getDesktopGUI()->reloadHistory();
 }

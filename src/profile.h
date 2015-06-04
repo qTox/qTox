@@ -30,6 +30,7 @@ public:
     bool isEncrypted(); ///< Returns true if we have a password set (doesn't check the actual file on disk)
     bool checkPassword(); ///< Checks whether the password is valid
     QString getPassword();
+    void setPassword(QString newPassword); ///< Changes the encryption password and re-saves everything with it
 
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
     void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.

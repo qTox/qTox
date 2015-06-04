@@ -94,6 +94,8 @@ ProfileForm::ProfileForm(QWidget *parent) :
     connect(bodyUI->exportButton, &QPushButton::clicked, this, &ProfileForm::onExportClicked);
     connect(bodyUI->deleteButton, &QPushButton::clicked, this, &ProfileForm::onDeleteClicked);
     connect(bodyUI->logoutButton, &QPushButton::clicked, this, &ProfileForm::onLogoutClicked);
+    connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::onDeletePassClicked);
+    connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
@@ -305,4 +307,25 @@ void ProfileForm::onSaveQrClicked()
         if (!qr->saveImage(path))
             GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
     }
+}
+
+void ProfileForm::onDeletePassClicked()
+{
+    Profile* pro = Nexus::getProfile();
+    if (!pro->isEncrypted())
+    {
+        GUI::showInfo(tr("Nothing to remove"), tr("Your profile does not have a password!"));
+        return;
+    }
+
+    if (!GUI::askQuestion(tr("Really delete password?","deletion confirmation title"),
+                      tr("Are you sure you want to delete your password?","deletion confirmation text")))
+        return;
+
+    Nexus::getProfile()->setPassword(QString());
+}
+
+void ProfileForm::onChangePassClicked()
+{
+
 }
