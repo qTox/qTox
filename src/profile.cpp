@@ -5,10 +5,10 @@
 #include <cassert>
 #include <QDir>
 #include <QFileInfo>
+#include <QSaveFile>
 #include <QThread>
 #include <QObject>
 #include <QDebug>
-
 QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, QString password, bool isNewProfile)
@@ -182,6 +182,36 @@ QByteArray Profile::loadToxSave()
 fail:
     saveFile.close();
     return data;
+}
+
+void Profile::saveToxSave(QByteArray data)
+{
+    ProfileLocker::assertLock();
+    assert(ProfileLocker::getCurLockName() == name);
+
+    QString path = Settings::getSettingsDirPath() + QDir::separator() + name + ".tox";
+    QSaveFile saveFile(path);
+    if (!saveFile.open(QIODevice::WriteOnly))
+    {
+        qCritical() << "Tox save file " << path << " couldn't be opened";
+        return;
+    }
+
+    if (!password.isEmpty())
+    {
+        core->setPassword(password, Core::ptMain);
+        data = core->encryptData(data, Core::ptMain);
+        if (data.isEmpty())
+        {
+            qCritical() << "Failed to encrypt, can't save!";
+            saveFile.cancelWriting();
+            return;
+        }
+    }
+
+    saveFile.write(data);
+    saveFile.commit();
+    newProfile = false;
 }
 
 bool Profile::profileExists(QString name)

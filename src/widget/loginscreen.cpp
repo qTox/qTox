@@ -14,8 +14,12 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->newProfilePgbtn, &QPushButton::clicked, this, &LoginScreen::onNewProfilePageClicked);
     connect(ui->loginPgbtn, &QPushButton::clicked, this, &LoginScreen::onLoginPageClicked);
     connect(ui->createAccountButton, &QPushButton::clicked, this, &LoginScreen::onCreateNewProfile);
+    connect(ui->newUsername, &QLineEdit::returnPressed, this, &LoginScreen::onCreateNewProfile);
+    connect(ui->newPass, &QLineEdit::returnPressed, this, &LoginScreen::onCreateNewProfile);
+    connect(ui->newPassConfirm, &QLineEdit::returnPressed, this, &LoginScreen::onCreateNewProfile);
     connect(ui->loginButton, &QPushButton::clicked, this, &LoginScreen::onLogin);
     connect(ui->loginUsernames, &QComboBox::currentTextChanged, this, &LoginScreen::onLoginUsernameSelected);
+    connect(ui->loginPassword, &QLineEdit::returnPressed, this, &LoginScreen::onLogin);
 
     reset();
 }

@@ -27,6 +27,7 @@ public:
     void startCore(); ///< Starts the Core thread
     bool isNewProfile();
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
+    void saveToxSave(QByteArray data); ///< Saves the profile's .tox save, encrypted if needed
 
     /// Scan for profile, automatically importing them if needed
     /// NOT thread-safe
