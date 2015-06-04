@@ -83,7 +83,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     else if (devName.startsWith("x11grab#"))
     {
         QSize screen;
-        if (mode)
+        if (mode.width && mode.height)
         {
             screen.setWidth(mode.width);
             screen.setHeight(mode.height);
@@ -96,6 +96,16 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
             screen.setHeight(screen.height()-1);
         }
         av_dict_set(&options, "video_size", QString("%1x%2").arg(screen.width()).arg(screen.height()).toStdString().c_str(), 0);
+        if (mode.FPS)
+            av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
+        else
+            av_dict_set(&options, "framerate", QString().setNum(5).toStdString().c_str(), 0);
+    }
+#endif
+#ifdef Q_OS_WIN
+    else if (devName.startsWith("gdigrab#"))
+    {
+        av_dict_set(&options, "framerate", QString().setNum(5).toStdString().c_str(), 0);
     }
 #endif
 #ifdef Q_OS_WIN

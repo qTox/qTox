@@ -128,7 +128,13 @@ void AVForm::updateVideoModes(int curIndex)
         VideoMode mode = videoModes[i];
         if (mode.width==prefRes.width() && mode.height==prefRes.height() && prefResIndex==-1)
             prefResIndex = i;
-        QString str = tr("%1x%2 at %3 FPS").arg(mode.width).arg(mode.height).arg(mode.FPS);
+        QString str;
+        if (mode.height && mode.width)
+            str += tr("%1x%2").arg(mode.width).arg(mode.height);
+        else
+            str += tr("Default resolution");
+        if (mode.FPS)
+            str += tr(" at %1 FPS").arg(mode.FPS);
         bodyUI->videoModescomboBox->addItem(str);
     }
     if (videoModes.isEmpty())
