@@ -130,3 +130,11 @@ void FriendListWidget::moveWidget(QWidget *w, Status s)
     }
     l->addWidget(w);
 }
+
+// update widget after add/delete/hide/show
+void FriendListWidget::reDraw()
+{
+    hide();
+    show();
+    resize(QSize()); //lifehack
+}
