@@ -1282,9 +1282,3 @@ void Settings::createPersonal(QString basename)
     ps.beginGroup("Privacy");
     ps.endGroup();
 }
-
-bool Settings::profileExists(QString basename)
-{
-    QString path = getSettingsDirPath() + QDir::separator() + basename;
-    return QFile::exists(path+".tox") && QFile::exists(path+".ini");
-}

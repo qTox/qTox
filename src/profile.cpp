@@ -11,8 +11,8 @@
 
 QVector<QString> Profile::profiles;
 
-Profile::Profile(QString name, QString password)
-    : name{name}, password{password}
+Profile::Profile(QString name, QString password, bool isNewProfile)
+    : name{name}, password{password}, isNewProfile{isNewProfile}
 {
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
@@ -25,7 +25,8 @@ Profile* Profile::loadProfile(QString name, QString password)
 {
     if (ProfileLocker::hasLock())
     {
-
+        qCritical() << "Tried to load profile "<<name<<", but another profile is already locked!";
+        return nullptr;
     }
 
     if (!ProfileLocker::lock(name))
@@ -34,7 +35,31 @@ Profile* Profile::loadProfile(QString name, QString password)
         return nullptr;
     }
 
-    return new Profile(name, password);
+    return new Profile(name, password, false);
+}
+
+Profile* Profile::createProfile(QString name, QString password)
+{
+    if (ProfileLocker::hasLock())
+    {
+        qCritical() << "Tried to create profile "<<name<<", but another profile is already locked!";
+        return nullptr;
+    }
+
+    if (profileExists(name))
+    {
+        qCritical() << "Tried to create profile "<<name<<", but it already exists!";
+        return nullptr;
+    }
+
+    if (!ProfileLocker::lock(name))
+    {
+        qWarning() << "Failed to lock profile "<<name;
+        return nullptr;
+    }
+
+    Settings::getInstance().createPersonal(name);
+    return new Profile(name, password, true);
 }
 
 Profile::~Profile()
@@ -72,9 +97,8 @@ void Profile::scanProfiles()
 
 void Profile::importProfile(QString name)
 {
-    Settings& s =  Settings::getInstance();
-    assert(!s.profileExists(name));
-    s.createPersonal(name);
+    assert(!profileExists(name));
+    Settings::getInstance().createPersonal(name);
 }
 
 QVector<QString> Profile::getProfiles()
@@ -95,8 +119,14 @@ void Profile::startCore()
 QByteArray Profile::loadToxSave()
 {
     QByteArray data;
-    QString path = Settings::getSettingsDirPath() + QDir::separator() + name;
 
+    if (isNewProfile)
+    {
+        qDebug() << "Loading empty data for new profile";
+        return data;
+    }
+
+    QString path = Settings::getSettingsDirPath() + QDir::separator() + name + ".tox";
     QFile saveFile(path);
     qint64 fileSize;
     qDebug() << "Loading tox save "<<path;
@@ -146,6 +176,12 @@ QByteArray Profile::loadToxSave()
 fail:
     saveFile.close();
     return data;
+}
+
+bool Profile::profileExists(QString name)
+{
+    QString path = Settings::getSettingsDirPath() + QDir::separator() + name;
+    return QFile::exists(path+".tox") && QFile::exists(path+".ini");
 }
 
 bool Profile::isProfileEncrypted(QString name)

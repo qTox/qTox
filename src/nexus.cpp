@@ -16,6 +16,7 @@
 #include <src/widget/androidgui.h>
 #else
 #include <src/widget/widget.h>
+#include <QDesktopWidget>
 #endif
 
 static Nexus* nexus{nullptr};
@@ -65,6 +66,9 @@ void Nexus::showLogin()
 {
     ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
     loginScreen->reset();
+#ifndef Q_OS_ANDROID
+    loginScreen->move(QApplication::desktop()->screen()->rect().center() - loginScreen->rect().center());
+#endif
     loginScreen->show();
 }
 

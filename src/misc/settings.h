@@ -38,7 +38,6 @@ public:
     QString askProfiles();
 
     void createPersonal(QString basename); ///< Write a default personnal settings file for a profile
-    bool profileExists(QString basename); ///< Return true if the given profile (tox AND ini) exists
 
     void executeSettingsDialog(QWidget* parent);
 
