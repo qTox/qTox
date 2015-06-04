@@ -1282,3 +1282,11 @@ void Settings::createPersonal(QString basename)
     ps.beginGroup("Privacy");
     ps.endGroup();
 }
+
+void Settings::createSettingsDir()
+{
+    QString dir = Settings::getSettingsDirPath();
+    QDir directory(dir);
+    if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
+        qCritical() << "Error while creating directory " << dir;
+}

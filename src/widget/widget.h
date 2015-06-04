@@ -131,7 +131,6 @@ signals:
     void statusSelected(Status status);
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
-    void changeProfile(const QString& profile);
     void resized();
 
 private slots:

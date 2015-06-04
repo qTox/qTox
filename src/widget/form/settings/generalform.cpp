@@ -349,9 +349,9 @@ void GeneralForm::onReconnectClicked()
 {
     if (Core::getInstance()->anyActiveCalls())
         QMessageBox::warning(this, tr("Call active", "popup title"),
-           tr("You can't disconnect while a call is active!", "popup text"));
+                        tr("You can't disconnect while a call is active!", "popup text"));
     else
-        emit Widget::getInstance()->changeProfile(Settings::getInstance().getCurrentProfile());
+        ; /// TODO: Add a reset function in Profile to save then restart toxcore
 }
 
 void GeneralForm::reloadSmiles()

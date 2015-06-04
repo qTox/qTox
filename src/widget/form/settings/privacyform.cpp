@@ -218,7 +218,7 @@ bool PrivacyForm::setToxPassword()
             core->setPassword(newpw, Core::ptMain);
 
         Settings::getInstance().setEncryptTox(true);
-        core->saveConfiguration();
+        Settings::getInstance().save();
         return true;
     }
     else

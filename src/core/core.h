@@ -92,9 +92,7 @@ public slots:
     void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer
     void bootstrapDht(); ///< Connects us to the Tox network
 
-    void saveConfiguration();
-    void saveConfiguration(const QString& path);
-    void switchConfiguration(const QString& profile); ///< Load a different profile and restart the core
+    QByteArray getToxSaveData(); ///< Returns the unencrypted tox save data
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
@@ -302,16 +300,6 @@ private:
     bool ready;
 
     TOX_PASS_KEY* pwsaltedkeys[PasswordType::ptCounter] = {nullptr}; // use the pw's hash as the "pw"
-
-    // Hack for reloading current profile if switching to an encrypted one fails.
-    // Testing the passwords before killing the current profile is perfectly doable,
-    // however it would require major refactoring;
-    // the Core class as a whole also requires major refactoring (especially to support multiple IDs at once),
-    // so I'm punting on this until then, when it would get fixed anyways
-    TOX_PASS_KEY* backupkeys[PasswordType::ptCounter] = {nullptr};
-    QString* backupProfile = nullptr;
-    void saveCurrentInformation();
-    QString loadOldInformation();
 
     static const int videobufsize;
     static uint8_t* videobuf;

@@ -184,6 +184,11 @@ fail:
     return data;
 }
 
+void Profile::saveToxSave()
+{
+    saveToxSave(core->getToxSaveData());
+}
+
 void Profile::saveToxSave(QByteArray data)
 {
     ProfileLocker::assertLock();

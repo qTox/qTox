@@ -103,7 +103,7 @@ Core::~Core()
 {
     qDebug() << "Deleting Core";
 
-    saveConfiguration();
+    profile.saveToxSave();
     toxTimer->stop();
     coreThread->exit(0);
     while (coreThread->isRunning())
@@ -339,7 +339,7 @@ void Core::start()
     // This is useful for e.g. the profileForm that searches for saves.
     if (isNewProfile)
     {
-        saveConfiguration();
+        profile.saveToxSave();
         emit idSet(getSelfId().toString());
     }
 
@@ -582,7 +582,7 @@ void Core::acceptFriendRequest(const QString& userId)
     }
     else
     {
-        saveConfiguration();
+        profile.saveToxSave();
         emit friendAdded(friendId, userId);
     }
 }
@@ -627,7 +627,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
             emit friendAdded(friendId, userId);
         }
     }
-    saveConfiguration();
+    profile.saveToxSave();
 }
 
 int Core::sendMessage(uint32_t friendId, const QString& message)
@@ -742,7 +742,7 @@ void Core::removeFriend(uint32_t friendId, bool fake)
     }
     else
     {
-        saveConfiguration();
+        profile.saveToxSave();
         emit friendRemoved(friendId);
     }
 }
@@ -780,7 +780,7 @@ void Core::setUsername(const QString& username)
     else
     {
         emit usernameSet(username);
-        saveConfiguration();
+        profile.saveToxSave();
     }
 }
 
@@ -844,7 +844,7 @@ void Core::setStatusMessage(const QString& message)
     }
     else
     {
-        saveConfiguration();
+        profile.saveToxSave();
         emit statusMessageSet(message);
     }
 }
@@ -869,7 +869,7 @@ void Core::setStatus(Status status)
     }
 
     tox_self_set_status(tox, userstatus);
-    saveConfiguration();
+    profile.saveToxSave();
     emit statusSet(status);
 }
 
@@ -890,84 +890,13 @@ QString Core::sanitize(QString name)
     return name;
 }
 
-void Core::saveConfiguration()
+QByteArray Core::getToxSaveData()
 {
-    if (QThread::currentThread() != coreThread)
-        return (void) QMetaObject::invokeMethod(this, "saveConfiguration");
-
-    if (!isReady())
-        return;
-
-    ProfileLocker::assertLock();
-
-    QString dir = Settings::getSettingsDirPath();
-    QDir directory(dir);
-    if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
-    {
-        qCritical() << "Error while creating directory " << dir;
-        return;
-    }
-
-    QString profile = Settings::getInstance().getCurrentProfile();
-
-    if (profile == "")
-    { // no profile active; this should only happen on startup, if at all
-        profile = sanitize(getUsername());
-
-        if (profile == "") // happens on creation of a new Tox ID
-            profile = getIDString();
-
-        Settings::getInstance().switchProfile(profile);
-    }
-
-    QString path = directory.filePath(profile + TOX_EXT);
-
-    saveConfiguration(path);
-}
-
-void Core::switchConfiguration(const QString& _profile)
-{
-    QString profile = QFileInfo(_profile).baseName();
-    // If we can't get a lock, then another instance is already using that profile
-    while (!profile.isEmpty() && !ProfileLocker::lock(profile))
-    {
-        qWarning() << "Profile "<<profile<<" is already in use, pick another";
-        GUI::showWarning(tr("Profile already in use"),
-                         tr("This profile is already used by another qTox instance\n"
-                            "Please select another profile"));
-        do {
-            profile = Settings::getInstance().askProfiles();
-        } while (profile.isEmpty());
-    }
-
-    if (profile.isEmpty())
-        qDebug() << "creating new Id";
-    else
-        qDebug() << "switching from" << Settings::getInstance().getCurrentProfile() << "to" << profile;
-
-    saveConfiguration();
-    saveCurrentInformation(); // part of a hack, see core.h
-
-    ready = false;
-    GUI::setEnabled(false);
-    clearPassword(ptMain);
-    clearPassword(ptHistory);
-
-    toxTimer->stop();
-    deadifyTox();
-
-    emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
-    emit blockingClearContacts(); // we need this to block, but signals are required for thread safety
-
-    //if (profile.isEmpty())
-        //loadPath = "";
-    //else
-    //    loadPath = QDir(Settings::getSettingsDirPath()).filePath(profile + TOX_EXT);
-
-    Settings::getInstance().switchProfile(profile);
-    HistoryKeeper::resetInstance();
-
-    start();
+    uint32_t fileSize = tox_get_savedata_size(tox);
+    QByteArray data;
+    data.resize(fileSize);
+    tox_get_savedata(tox, (uint8_t*)data.data());
+    return data;
 }
 
 void Core::loadFriends()

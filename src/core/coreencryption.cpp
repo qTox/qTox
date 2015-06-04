@@ -62,43 +62,6 @@ void Core::clearPassword(PasswordType passtype)
     pwsaltedkeys[passtype] = nullptr;
 }
 
-// part of a hack, see core.h
-void Core::saveCurrentInformation()
-{
-    if (pwsaltedkeys[ptMain])
-    {
-        backupkeys[ptMain] = new TOX_PASS_KEY;
-        std::copy(pwsaltedkeys[ptMain], pwsaltedkeys[ptMain]+1, backupkeys[ptMain]);
-    }
-    if (pwsaltedkeys[ptHistory])
-    {
-        backupkeys[ptHistory] = new TOX_PASS_KEY;
-        std::copy(pwsaltedkeys[ptHistory], pwsaltedkeys[ptHistory]+1, backupkeys[ptHistory]);
-    }
-    backupProfile = new QString(Settings::getInstance().getCurrentProfile());
-}
-
-QString Core::loadOldInformation()
-{
-    QString out;
-    if (backupProfile)
-    {
-        out  = *backupProfile;
-        delete backupProfile;
-        backupProfile = nullptr;
-    }
-    backupProfile = nullptr;
-    clearPassword(ptMain);
-    clearPassword(ptHistory);
-    // we can just copy the pointer, as long as we null out backupkeys
-    // (if backupkeys was null anyways, then this is a null-op)
-    pwsaltedkeys[ptMain]    = backupkeys[ptMain];
-    pwsaltedkeys[ptHistory] = backupkeys[ptHistory];
-    backupkeys[ptMain]    = nullptr;
-    backupkeys[ptHistory] = nullptr;
-    return out;
-}
-
 QByteArray Core::encryptData(const QByteArray& data, PasswordType passtype)
 {
     if (!pwsaltedkeys[passtype])
@@ -227,73 +190,4 @@ void Core::checkEncryptedHistory()
         error = exists && !HistoryKeeper::checkPassword();
         dialogtxt = a + "\n" + c + "\n" + b;
     } while (error);
-}
-
-void Core::saveConfiguration(const QString& path)
-{
-    if (QThread::currentThread() != coreThread)
-        return (void) QMetaObject::invokeMethod(this, "saveConfiguration", Q_ARG(const QString&, path));
-
-    if (!isReady())
-    {
-        qWarning() << "saveConfiguration: Tox not started, aborting!";
-        return;
-    }
-
-    QSaveFile configurationFile(path);
-    if (!configurationFile.open(QIODevice::WriteOnly))
-    {
-        qCritical() << "File " << path << " cannot be opened";
-        return;
-    }
-
-    qDebug() << "writing tox_save to " << path;
-
-    uint32_t fileSize = tox_get_savedata_size(tox);
-    bool encrypt = Settings::getInstance().getEncryptTox();
-
-    if (fileSize > 0 && fileSize <= std::numeric_limits<int32_t>::max())
-    {
-        uint8_t *data = new uint8_t[fileSize];
-
-        if (encrypt)
-        {
-            if (!pwsaltedkeys[ptMain])
-            {
-                // probably zero chance event
-                GUI::showWarning(tr("NO Password"), tr("Local file encryption is enabled, but there is no password! It will be disabled."));
-                Settings::getInstance().setEncryptTox(false);
-                tox_get_savedata(tox, data);
-            }
-            else
-            {
-                tox_get_savedata(tox, data);
-                uint8_t* newData = new uint8_t[fileSize+TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
-                if (tox_pass_key_encrypt(data, fileSize, pwsaltedkeys[ptMain], newData, nullptr))
-                {
-                    delete[] data;
-                    data = newData;
-                    fileSize+=TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
-                }
-                else
-                {
-                    delete[] newData;
-                    delete[] data;
-                    qCritical() << "Core::saveConfiguration(QString): Encryption failed, couldn't save";
-                    configurationFile.cancelWriting();
-                    return;
-                }
-            }
-        }
-        else
-        {
-            tox_get_savedata(tox, data);
-        }
-
-        configurationFile.write(reinterpret_cast<char *>(data), fileSize);
-        configurationFile.commit();
-        delete[] data;
-    }
-
-    Settings::getInstance().save();
 }

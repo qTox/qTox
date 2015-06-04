@@ -148,7 +148,6 @@ void Nexus::showMainGUI()
     connect(widget, &Widget::statusSet, core, &Core::setStatus);
     connect(widget, &Widget::friendRequested, core, &Core::requestFriendship);
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
-    connect(widget, &Widget::changeProfile, core, &Core::switchConfiguration);
 #endif
 
     profile->startCore();

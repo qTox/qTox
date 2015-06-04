@@ -36,6 +36,7 @@ public:
     QString detectProfile();
     QList<QString> searchProfiles();
     QString askProfiles();
+    void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
 
     void createPersonal(QString basename); ///< Write a default personnal settings file for a profile
 
