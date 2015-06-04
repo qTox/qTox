@@ -31,15 +31,8 @@ PrivacyForm::PrivacyForm() :
     bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);
 
-    bodyUI->encryptToxHLayout->addStretch();
-    bodyUI->encryptLogsHLayout->addStretch();
-
     connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
-    connect(bodyUI->cbEncryptHistory, SIGNAL(clicked()), this, SLOT(onEncryptLogsUpdated()));
-    connect(bodyUI->changeLogsPwButton, &QPushButton::clicked, this, &PrivacyForm::setChatLogsPassword);
-    connect(bodyUI->cbEncryptTox, SIGNAL(clicked()), this, SLOT(onEncryptToxUpdated()));
-    connect(bodyUI->changeToxPwButton, &QPushButton::clicked, this, &PrivacyForm::setToxPassword);
     connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
     connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
     connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
@@ -53,7 +46,6 @@ PrivacyForm::~PrivacyForm()
 void PrivacyForm::onEnableLoggingUpdated()
 {
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
-    bodyUI->cbEncryptHistory->setEnabled(bodyUI->cbKeepHistory->isChecked());
     HistoryKeeper::resetInstance();
     Widget::getInstance()->clearAllReceipts();
 }
@@ -61,205 +53,6 @@ void PrivacyForm::onEnableLoggingUpdated()
 void PrivacyForm::onTypingNotificationEnabledUpdated()
 {
     Settings::getInstance().setTypingNotification(bodyUI->cbTypingNotification->isChecked());
-}
-
-bool PrivacyForm::setChatLogsPassword()
-{
-    Core* core = Core::getInstance();
-    SetPasswordDialog* dialog;
-
-    // check if an encrypted history exists because it was disabled earlier, and use it if possible
-    QString path = HistoryKeeper::getHistoryPath(QString(), 1);
-    QByteArray salt = core->getSaltFromFile(path);
-    bool haveEncHist = salt.size() > 0;
-
-    QString body = tr("Please set your new chat history password.");
-    if (haveEncHist)
-        body += "\n\n" + tr("It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.");
-
-    if (core->isPasswordSet(Core::ptMain))
-        dialog = new SetPasswordDialog(body, tr("Use data file password", "pushbutton text"), 0);
-    else
-        dialog = new SetPasswordDialog(body, QString(), 0);
-
-    do {
-        int r = dialog->exec();
-        if (r == QDialog::Rejected)
-            break;
-
-        QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
-
-        QString newpw = dialog->getPassword();
-
-        if (r == SetPasswordDialog::Tertiary)
-            core->useOtherPassword(Core::ptHistory);
-        else if (haveEncHist)
-            core->setPassword(newpw, Core::ptHistory, reinterpret_cast<uint8_t*>(salt.data()));
-        else
-            core->setPassword(newpw, Core::ptHistory);
-
-        if (!haveEncHist || HistoryKeeper::checkPassword(1))
-        {
-            Settings::getInstance().setEncryptLogs(true);
-            HistoryKeeper::getInstance()->importMessages(oldMessages);
-            if (haveEncHist)
-            {
-                Widget::getInstance()->reloadHistory();
-                GUI::showWarning(tr("Successfully decrypted old chat history","popup title"), tr("You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.", "popup text"));
-            }
-            delete dialog;
-            return true;
-        }
-        else
-        {
-            if (GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("There is currently an unused encrypted chat history, but the password you just entered doesn't match.\n\nIf you don't care about the old history, you may delete it and use the password you just entered.\nOtherwise, hit Cancel to try again.", "This happens when enabling encryption after previously \"Disabling History\""), tr("Delete"), tr("Cancel")))
-            {
-                if (GUI::askQuestion(tr("Old encrypted chat history", "popup title"), tr("Are you absolutely sure you want to lose the unused encrypted chat history?", "secondary popup"), tr("Delete"), tr("Cancel")))
-                    haveEncHist = false; // logically this is really just a `break`, but conceptually this is more accurate
-            }
-        }
-    } while (haveEncHist);
-
-    delete dialog;
-    return false;
-}
-
-void PrivacyForm::onEncryptLogsUpdated()
-{
-    Core* core = Core::getInstance();
-
-    if (bodyUI->cbEncryptHistory->isChecked())
-    {
-        if (!core->isPasswordSet(Core::ptHistory))
-        {
-            if (setChatLogsPassword())
-            {
-                bodyUI->cbEncryptHistory->setChecked(true);
-                bodyUI->changeLogsPwButton->setEnabled(true);
-                return;
-            }
-        }
-    }
-    else
-    {
-        QMessageBox box(QMessageBox::Warning,
-            tr("Old encrypted chat history", "title"),
-            tr("Would you like to decrypt your chat history?\nOtherwise it will be deleted."),
-            QMessageBox::NoButton, Widget::getInstance());
-        QPushButton* decryptBtn = box.addButton(tr("Decrypt"), QMessageBox::YesRole);
-        QPushButton* deleteBtn = box.addButton(tr("Delete"), QMessageBox::NoRole);
-        QPushButton* cancelBtn = box.addButton(tr("Cancel"), QMessageBox::RejectRole);
-        box.setDefaultButton(cancelBtn);
-        box.setEscapeButton(cancelBtn);
-
-        box.exec();
-
-        if (box.clickedButton() == decryptBtn)
-        {
-            QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile(true);
-            core->clearPassword(Core::ptHistory);
-            Settings::getInstance().setEncryptLogs(false);
-            HistoryKeeper::getInstance()->importMessages(oldMessages);
-        }
-        else if (box.clickedButton() == deleteBtn)
-        {
-            QMessageBox box2(QMessageBox::Critical,
-                tr("Old encrypted chat history", "title"),
-                tr("Are you sure you want to lose your entire chat history?"),
-                QMessageBox::NoButton, Widget::getInstance());
-            QPushButton* deleteBtn2 = box2.addButton(tr("Delete"), QMessageBox::AcceptRole);
-            QPushButton* cancelBtn2 = box2.addButton(tr("Cancel"), QMessageBox::RejectRole);
-            box2.setDefaultButton(cancelBtn2);
-            box2.setEscapeButton(cancelBtn2);
-            box2.exec();
-
-            if (box2.clickedButton() == deleteBtn2)
-            {
-                HistoryKeeper::removeHistory(true);
-            }
-            else
-            {
-                bodyUI->cbEncryptHistory->setChecked(true);
-                return;
-            }
-        }
-        else
-        {
-            bodyUI->cbEncryptHistory->setChecked(true);
-            return;
-        }
-    }
-
-    core->clearPassword(Core::ptHistory);
-    Settings::getInstance().setEncryptLogs(false);
-    bodyUI->cbEncryptHistory->setChecked(false);
-    bodyUI->changeLogsPwButton->setEnabled(false);
-    HistoryKeeper::resetInstance();
-}
-
-bool PrivacyForm::setToxPassword()
-{
-    Core* core = Core::getInstance();
-    SetPasswordDialog* dialog;
-    QString body = tr("Please set your new data file password.");
-    if (core->isPasswordSet(Core::ptHistory))
-        dialog = new SetPasswordDialog(body, tr("Use chat history password", "pushbutton text"), 0);
-    else
-        dialog = new SetPasswordDialog(body, QString(), 0);
-
-    if (int r = dialog->exec())
-    {
-        QString newpw = dialog->getPassword();
-        delete dialog;
-
-        if (r == SetPasswordDialog::Tertiary)
-            core->useOtherPassword(Core::ptMain);
-        else
-            core->setPassword(newpw, Core::ptMain);
-
-        Settings::getInstance().setEncryptTox(true);
-        core->saveConfiguration();
-        return true;
-    }
-    else
-    {
-        delete dialog;
-        return false;
-    }
-}
-
-void PrivacyForm::onEncryptToxUpdated()
-{
-    Core* core = Core::getInstance();
-
-    if (bodyUI->cbEncryptTox->isChecked())
-    {
-        if (!core->isPasswordSet(Core::ptMain))
-        {
-            if (setToxPassword())
-            {
-                bodyUI->cbEncryptTox->setChecked(true);
-                bodyUI->changeToxPwButton->setEnabled(true);
-                return;
-            }
-        }
-    }
-    else
-    {
-        if (!GUI::askQuestion(tr("Decrypt your data file", "title"),
-            tr("Would you like to decrypt your data file?"),
-            tr("Decrypt"), tr("Cancel")))
-        {
-            bodyUI->cbEncryptTox->setChecked(true);
-            return;
-        }
-        // affirmative answer falls through to the catch all below
-    }
-
-    bodyUI->cbEncryptTox->setChecked(false);
-    Settings::getInstance().setEncryptTox(false);
-    bodyUI->changeToxPwButton->setEnabled(false);
-    core->clearPassword(Core::ptMain);
 }
 
 void PrivacyForm::setNospam()
@@ -277,11 +70,6 @@ void PrivacyForm::present()
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
     bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
-    bodyUI->cbEncryptHistory->setChecked(Settings::getInstance().getEncryptLogs());
-    bodyUI->changeLogsPwButton->setEnabled(Settings::getInstance().getEncryptLogs());
-    bodyUI->cbEncryptHistory->setEnabled(Settings::getInstance().getEnableLogging());
-    bodyUI->cbEncryptTox->setChecked(Settings::getInstance().getEncryptTox());
-    bodyUI->changeToxPwButton->setEnabled(Settings::getInstance().getEncryptTox());
 }
 
 void PrivacyForm::generateRandomNospam()

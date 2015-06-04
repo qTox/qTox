@@ -15,6 +15,8 @@
 #include "historykeeper.h"
 #include "misc/settings.h"
 #include "src/core/core.h"
+#include "src/nexus.h"
+#include "src/profile.h"
 
 #include <QSqlError>
 #include <QFile>
@@ -45,9 +47,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
 
         if (Settings::getInstance().getEnableLogging())
         {
-            bool encrypted = Settings::getInstance().getEncryptLogs();
-
-            if (encrypted)
+            if (Nexus::getProfile()->isEncrypted())
             {
                 path = getHistoryPath();
                 dbIntf = new EncryptedDb(path, initLst);
@@ -73,8 +73,8 @@ bool HistoryKeeper::checkPassword(int encrypted)
     if (!Settings::getInstance().getEnableLogging() && (encrypted == -1))
         return true;
 
-    if ((encrypted == 1) || (encrypted == -1 && Settings::getInstance().getEncryptLogs()))
-        return EncryptedDb::check(getHistoryPath(Settings::getInstance().getCurrentProfile(), encrypted));
+    if ((encrypted == 1) || (encrypted == -1 && Nexus::getProfile()->isEncrypted()))
+        return EncryptedDb::check(getHistoryPath(Nexus::getProfile()->getName(), encrypted));
 
     return true;
 }
@@ -363,7 +363,7 @@ QString HistoryKeeper::getHistoryPath(QString currentProfile, int encrypted)
     if (currentProfile.isEmpty())
         currentProfile = Settings::getInstance().getCurrentProfile();
 
-    if (encrypted == 1 || (encrypted == -1 && Settings::getInstance().getEncryptLogs()))
+    if (encrypted == 1 || (encrypted == -1 && Nexus::getProfile()->isEncrypted()))
         return baseDir.filePath(currentProfile + ".qtox_history.encrypted");
     else
         return baseDir.filePath(currentProfile + ".qtox_history");

@@ -40,8 +40,7 @@
 
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
 
-const QString Settings::OLDFILENAME = "settings.ini";
-const QString Settings::FILENAME = "qtox.ini";
+const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
 bool Settings::makeToxPortable{false};
 
@@ -59,130 +58,17 @@ Settings& Settings::getInstance()
     return *settings;
 }
 
-void Settings::switchProfile(const QString& profile)
-{
-    // Saves current profile as main profile if this instance is main instance
-    setCurrentProfile(profile);
-    save(false);
-
-    // If this instance is not main instance previous save did not happen therefore
-    // we manually set profile again and load profile settings
-    setCurrentProfile(profile);
-    loaded = false;
-    load();
-}
-
-QString Settings::genRandomProfileName()
-{
-    QDir dir(getSettingsDirPath());
-    QString basename = "imported_";
-    QString randname;
-    do {
-        randname = QString().setNum(qrand()*qrand()*qrand(), 16);
-        randname.truncate(6);
-        randname = basename + randname;
-    } while (QFile(dir.filePath(randname)).exists());
-    return randname;
-}
-
-QString Settings::detectProfile()
-{
-    QDir dir(getSettingsDirPath());
-    QString path, profile = getCurrentProfile();
-    path = dir.filePath(profile + Core::TOX_EXT);
-    QFile file(path);
-    if (profile.isEmpty() || !file.exists())
-    {
-        setCurrentProfile("");
-#if 1 // deprecation attempt
-        // if the last profile doesn't exist, fall back to old "data"
-        path = dir.filePath(Core::CONFIG_FILE_NAME);
-        QFile file(path);
-        if (file.exists())
-        {
-            profile = genRandomProfileName();
-            setCurrentProfile(profile);
-            file.rename(profile + Core::TOX_EXT);
-            return profile;
-        }
-        else if (QFile(path = dir.filePath("tox_save")).exists()) // also import tox_save if no data
-        {
-            profile = genRandomProfileName();
-            setCurrentProfile(profile);
-            QFile(path).rename(profile + Core::TOX_EXT);
-            return profile;
-        }
-        else
-#endif
-        {
-            profile = askProfiles();
-            if (profile.isEmpty())
-            {
-                return "";
-            }
-            else
-            {
-                switchProfile(profile);
-                return dir.filePath(profile + Core::TOX_EXT);
-            }
-        }
-    }
-    else
-    {
-        return path;
-    }
-}
-
-QList<QString> Settings::searchProfiles()
-{
-    QList<QString> out;
-    QDir dir(getSettingsDirPath());
-    dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
-    dir.setNameFilters(QStringList("*.tox"));
-    for (QFileInfo file : dir.entryInfoList())
-        out += file.completeBaseName();
-
-    return out;
-}
-
-QString Settings::askProfiles()
-{   // TODO: allow user to create new Tox ID, even if a profile already exists
-    QList<QString> profiles = searchProfiles();
-    if (profiles.empty()) return "";
-    bool ok;
-    QString profile = GUI::itemInputDialog(nullptr,
-                                            tr("Choose a profile"),
-                                            tr("Please choose which identity to use"),
-                                            profiles,
-                                            0, // which slot to start on
-                                            false, // if the user can enter their own input
-                                            &ok);
-    if (!ok) // user cancelled
-        return "";
-    else
-        return profile;
-}
-
-
 void Settings::load()
 {
     if (loaded)
         return;
 
+    createSettingsDir();
     QDir dir(getSettingsDirPath());
-    if (!dir.exists())
-        dir.mkpath(".");
 
-    if (QFile(FILENAME).exists())
+    if (QFile(globalSettingsFile).exists())
     {
-        QSettings ps(FILENAME, QSettings::IniFormat);
-        ps.beginGroup("General");
-            makeToxPortable = ps.value("makeToxPortable", false).toBool();
-        ps.endGroup();
-    }
-    else if (QFile(OLDFILENAME).exists())
-    {
-        QSettings ps(OLDFILENAME, QSettings::IniFormat);
+        QSettings ps(globalSettingsFile, QSettings::IniFormat);
         ps.beginGroup("General");
             makeToxPortable = ps.value("makeToxPortable", false).toBool();
         ps.endGroup();
@@ -192,16 +78,13 @@ void Settings::load()
         makeToxPortable = false;
     }
 
-    QString filePath = dir.filePath(FILENAME);
+    QString filePath = dir.filePath(globalSettingsFile);
 
-    //if no settings file exist -- use the default one
+    // If no settings file exist -- use the default one
     if (!QFile(filePath).exists())
     {
-        if (!QFile(filePath = dir.filePath(OLDFILENAME)).exists())
-        {
-            qDebug() << "No settings file found, using defaults";
-            filePath = ":/conf/" + FILENAME;
-        }
+        qDebug() << "No settings file found, using defaults";
+        filePath = ":/conf/" + globalSettingsFile;
     }
 
     qDebug() << "Loading settings from " + filePath;
@@ -366,15 +249,13 @@ void Settings::load()
         ps.beginGroup("Privacy");
             typingNotification = ps.value("typingNotification", false).toBool();
             enableLogging = ps.value("enableLogging", false).toBool();
-            encryptLogs = ps.value("encryptLogs", false).toBool();
-            encryptTox = ps.value("encryptTox", false).toBool();
         ps.endGroup();
     }
 }
 
 void Settings::save(bool writePersonal)
 {
-    QString filePath = QDir(getSettingsDirPath()).filePath(FILENAME);
+    QString filePath = QDir(getSettingsDirPath()).filePath(globalSettingsFile);
     save(filePath, writePersonal);
 }
 
@@ -513,8 +394,6 @@ void Settings::savePersonal(QString path)
     ps.beginGroup("Privacy");
         ps.setValue("typingNotification", typingNotification);
         ps.setValue("enableLogging", enableLogging);
-        ps.setValue("encryptLogs", encryptLogs);
-        ps.setValue("encryptTox", encryptTox);
     ps.endGroup();
 }
 
@@ -625,7 +504,7 @@ bool Settings::getMakeToxPortable() const
 void Settings::setMakeToxPortable(bool newValue)
 {
     makeToxPortable = newValue;
-    save(FILENAME); // Commit to the portable file that we don't want to use it
+    save(globalSettingsFile); // Commit to the portable file that we don't want to use it
     if (!newValue) // Update the new file right now if not already done
         save();
 }
@@ -846,26 +725,6 @@ bool Settings::getEnableLogging() const
 void Settings::setEnableLogging(bool newValue)
 {
     enableLogging = newValue;
-}
-
-bool Settings::getEncryptLogs() const
-{
-    return encryptLogs;
-}
-
-void Settings::setEncryptLogs(bool newValue)
-{
-    encryptLogs = newValue;
-}
-
-bool Settings::getEncryptTox() const
-{
-    return encryptTox;
-}
-
-void Settings::setEncryptTox(bool newValue)
-{
-    encryptTox = newValue;
 }
 
 Db::syncType Settings::getDbSyncType() const
@@ -1246,7 +1105,6 @@ bool Settings::getCompactLayout() const
 void Settings::setCompactLayout(bool value)
 {
     compactLayout = value;
-    emit compactLayoutChanged();
 }
 
 bool Settings::getGroupchatPosition() const
@@ -1267,4 +1125,27 @@ int Settings::getThemeColor() const
 void Settings::setThemeColor(const int &value)
 {
     themeColor = value;
+}
+
+void Settings::createPersonal(QString basename)
+{
+    QString path = getSettingsDirPath() + QDir::separator() + basename + ".ini";
+    qDebug() << "Creating new profile settings in " << path;
+
+    QSettings ps(path, QSettings::IniFormat);
+    ps.beginGroup("Friends");
+        ps.beginWriteArray("Friend", 0);
+        ps.endArray();
+    ps.endGroup();
+
+    ps.beginGroup("Privacy");
+    ps.endGroup();
+}
+
+void Settings::createSettingsDir()
+{
+    QString dir = Settings::getSettingsDirPath();
+    QDir directory(dir);
+    if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
+        qCritical() << "Error while creating directory " << dir;
 }

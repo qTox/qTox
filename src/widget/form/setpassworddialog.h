@@ -30,6 +30,7 @@ public:
     explicit SetPasswordDialog(QString body, QString extraButton, QWidget* parent = 0);
     ~SetPasswordDialog();
     QString getPassword();
+    static int getPasswordStrength(QString pass);
 
 private slots:
     void onPasswordEdit();

@@ -56,7 +56,6 @@ signals:
 
 public slots:
     void onSelfAvatarLoaded(const QPixmap &pic);
-    void onStatusSet(Status status);
 
 private slots:
     void setToxId(const QString& id);
@@ -64,21 +63,14 @@ private slots:
     void onAvatarClicked();
     void onUserNameEdited();
     void onStatusMessageEdited();
-    void onLoadClicked();
     void onRenameClicked();
     void onExportClicked();
     void onDeleteClicked();
-    void onImportClicked();
-    void onNewClicked();
-    void disableSwitching();
-    void enableSwitching();
-    void on_copyQr_clicked();
-    
-    void on_saveQr_clicked();
-    
-protected:
-    virtual void showEvent(QShowEvent *);
-    bool eventFilter(QObject *o, QEvent *e);
+    void onLogoutClicked();
+    void onCopyQrClicked();
+    void onSaveQrClicked();
+    void onDeletePassClicked();
+    void onChangePassClicked();
 
 private:
     void refreshProfiles();

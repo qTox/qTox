@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>565</width>
-        <height>617</height>
+        <width>630</width>
+        <height>625</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
@@ -160,52 +160,41 @@ Share it with your friends to communicate.</string>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="profilesGroup">
          <property name="title">
-          <string>Profiles</string>
+          <string>Profile</string>
          </property>
          <layout class="QVBoxLayout" name="profilesVLayout">
           <item>
-           <layout class="QHBoxLayout" name="profilesComboLayout">
-            <item>
-             <widget class="QLabel" name="profilesLabel">
-              <property name="text">
-               <string>Available profiles:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="profiles">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="toolTip">
-               <string comment="toolTip for currently set profile">Currently selected profile.</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="profilesButtonsLayout">
             <item>
-             <widget class="QPushButton" name="loadButton">
-              <property name="toolTip">
-               <string comment="tooltip for loading profile button">Load selected profile and switch to it.</string>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
-              <property name="text">
-               <string comment="load profile button">Load</string>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
               </property>
-             </widget>
+             </spacer>
             </item>
             <item>
              <widget class="QPushButton" name="renameButton">
               <property name="toolTip">
-               <string comment="tooltip for renaming profile button">Rename selected profile.</string>
+               <string comment="tooltip for renaming profile button">Rename profile.</string>
               </property>
               <property name="text">
                <string comment="rename profile button">Rename</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deleteButton">
+              <property name="toolTip">
+               <string comment="delete profile button tooltip">Delete profile.</string>
+              </property>
+              <property name="text">
+               <string comment="delete profile button">Delete</string>
               </property>
              </widget>
             </item>
@@ -221,38 +210,71 @@ Profile does not contain your history.</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="deleteButton">
+             <widget class="QPushButton" name="logoutButton">
               <property name="toolTip">
-               <string comment="delete profile button tooltip">Delete selected profile.</string>
+               <string comment="tooltip for logout button">Go back to the login screen</string>
               </property>
               <property name="text">
-               <string comment="delete profile button">Delete</string>
+               <string comment="import profile button">Logout</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="profilesButtonsLayout2">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
-             <widget class="QPushButton" name="importButton">
-              <property name="toolTip">
-               <string comment="tooltip for importing profile button">Import Tox profile from a .tox file.</string>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deletePassButton">
               <property name="text">
-               <string comment="import profile button">Import a profile</string>
+               <string>Remove password</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="newButton">
-              <property name="toolTip">
-               <string comment="tooltip for creating new Tox ID button">Create new Tox ID and switch to it.</string>
-              </property>
+             <widget class="QPushButton" name="changePassButton">
               <property name="text">
-               <string comment="new profile button">New Tox ID</string>
+               <string>Change password</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>

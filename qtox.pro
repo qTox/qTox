@@ -32,7 +32,8 @@ FORMS    += \
     src/widget/form/setpassworddialog.ui \
     src/chatlog/content/filetransferwidget.ui \
     src/widget/form/settings/advancedsettings.ui \
-    src/android.ui
+    src/android.ui \
+    src/widget/loginscreen.ui
     
 CONFIG   += c++11
 
@@ -358,7 +359,8 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/callconfirmwidget.h \
         src/widget/systemtrayicon.h \
         src/misc/qrwidget.h \
-        src/widget/systemtrayicon_private.h
+        src/widget/systemtrayicon_private.h \
+        src/widget/loginscreen.h
 
     SOURCES += \
         src/widget/form/addfriendform.cpp \
@@ -418,7 +420,8 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/chatlog/pixmapcache.cpp \
         src/offlinemsgengine.cpp \
         src/misc/qrwidget.cpp \
-        src/widget/genericchatroomwidget.cpp
+        src/widget/genericchatroomwidget.cpp \
+        src/widget/loginscreen.cpp
 }
 
 win32 {
@@ -467,7 +470,8 @@ SOURCES += \
     src/video/cameradevice.cpp \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
-    src/core/toxid.cpp
+    src/core/toxid.cpp \
+    src/profile.cpp
 
 HEADERS += \
     src/audio.h \
@@ -500,4 +504,5 @@ HEADERS += \
     src/video/camerasource.h \
     src/video/corevideosource.h \
     src/video/videomode.h \
-    src/core/toxid.h
+    src/core/toxid.h \
+    src/profile.h

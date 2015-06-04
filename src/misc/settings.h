@@ -30,14 +30,11 @@ class Settings : public QObject
 {
     Q_OBJECT
 public:
-    static Settings& getInstance();
-    void switchProfile(const QString& profile);
-    QString detectProfile();
-    QList<QString> searchProfiles();
-    QString askProfiles();
     ~Settings() = default;
+    static Settings& getInstance();
+    void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
 
-    void executeSettingsDialog(QWidget* parent);
+    void createPersonal(QString basename); ///< Write a default personnal settings file for a profile
 
     static QString getSettingsDirPath();
 
@@ -106,12 +103,6 @@ public:
 
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
-
-    bool getEncryptLogs() const;
-    void setEncryptLogs(bool newValue);
-
-    bool getEncryptTox() const;
-    void setEncryptTox(bool newValue);
 
     Db::syncType getDbSyncType() const;
     void setDbSyncType(int newValue);
@@ -260,9 +251,6 @@ public:
     void load();
 
 private:
-    static QString genRandomProfileName();
-
-private:
     static Settings* settings;
 
     Settings();
@@ -272,7 +260,7 @@ private:
     void saveGlobal(QString path);
     void savePersonal(QString path);
 
-    static const QString FILENAME;
+    static const QString globalSettingsFile;
     static const QString OLDFILENAME;
 
     bool loaded;
@@ -309,8 +297,6 @@ private:
     uint32_t currentProfileId;
 
     bool enableLogging;
-    bool encryptLogs;
-    bool encryptTox = false;
 
     int autoAwayTime;
 
@@ -365,12 +351,9 @@ private:
     int themeColor;
 
 signals:
-    //void dataChanged();
     void dhtServerListChanged();
-    void logStorageOptsChanged();
     void smileyPackChanged();
     void emojiFontChanged();
-    void compactLayoutChanged();
 };
 
 #endif // SETTINGS_HPP

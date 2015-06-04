@@ -19,6 +19,7 @@
 #include "ui_mainwindow.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/maskablepixmapwidget.h"
+#include "src/widget/form/setpassworddialog.h"
 #include "src/misc/settings.h"
 #include "src/widget/croppinglabel.h"
 #include "src/widget/widget.h"
@@ -26,6 +27,7 @@
 #include "src/historykeeper.h"
 #include "src/misc/style.h"
 #include "src/profilelocker.h"
+#include "src/profile.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>
@@ -34,17 +36,6 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QBuffer>
-
-void ProfileForm::refreshProfiles()
-{
-    bodyUI->profiles->clear();
-    for (QString profile : Settings::getInstance().searchProfiles())
-        bodyUI->profiles->addItem(profile);
-
-    QString current = Settings::getInstance().getCurrentProfile();
-    if (current != "")
-        bodyUI->profiles->setCurrentText(current);
-}
 
 ProfileForm::ProfileForm(QWidget *parent) :
     QWidget{parent}, qr{nullptr}
@@ -98,25 +89,14 @@ ProfileForm::ProfileForm(QWidget *parent) :
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(core, &Core::idSet, this, &ProfileForm::setToxId);
-    connect(core, &Core::statusSet, this, &ProfileForm::onStatusSet);
     connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
     connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
-    connect(bodyUI->loadButton, &QPushButton::clicked, this, &ProfileForm::onLoadClicked);
     connect(bodyUI->renameButton, &QPushButton::clicked, this, &ProfileForm::onRenameClicked);
     connect(bodyUI->exportButton, &QPushButton::clicked, this, &ProfileForm::onExportClicked);
     connect(bodyUI->deleteButton, &QPushButton::clicked, this, &ProfileForm::onDeleteClicked);
-    connect(bodyUI->importButton, &QPushButton::clicked, this, &ProfileForm::onImportClicked);
-    connect(bodyUI->newButton, &QPushButton::clicked, this, &ProfileForm::onNewClicked);
-
-    connect(core, &Core::avStart, this, &ProfileForm::disableSwitching);
-    connect(core, &Core::avStarting, this, &ProfileForm::disableSwitching);
-    connect(core, &Core::avInvite, this, &ProfileForm::disableSwitching);
-    connect(core, &Core::avRinging, this, &ProfileForm::disableSwitching);
-    connect(core, &Core::avCancel, this, &ProfileForm::enableSwitching);
-    connect(core, &Core::avEnd, this, &ProfileForm::enableSwitching);
-    connect(core, &Core::avEnding, this, &ProfileForm::enableSwitching);
-    connect(core, &Core::avPeerTimeout, this, &ProfileForm::enableSwitching);
-    connect(core, &Core::avRequestTimeout, this, &ProfileForm::enableSwitching);
+    connect(bodyUI->logoutButton, &QPushButton::clicked, this, &ProfileForm::onLogoutClicked);
+    connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::onDeletePassClicked);
+    connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
@@ -187,7 +167,6 @@ void ProfileForm::setToxId(const QString& id)
     qr = new QRWidget();
     qr->setQRData("tox:"+id);
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
-    refreshProfiles();
 }
 
 void ProfileForm::onAvatarClicked()
@@ -250,58 +229,31 @@ void ProfileForm::onAvatarClicked()
     Nexus::getCore()->setAvatar(bytes);
 }
 
-void ProfileForm::onLoadClicked()
-{
-    if (bodyUI->profiles->currentText() != Settings::getInstance().getCurrentProfile())
-    {
-        if (Core::getInstance()->anyActiveCalls())
-            GUI::showWarning(tr("Call active", "popup title"),
-                tr("You can't switch profiles while a call is active!", "popup text"));
-        else
-            emit Widget::getInstance()->changeProfile(bodyUI->profiles->currentText());
-            // I think by directly calling the function, I may have been causing thread issues
-    }
-}
-
 void ProfileForm::onRenameClicked()
 {
-    QString cur = bodyUI->profiles->currentText();
+    Nexus& nexus = Nexus::getInstance();
+    QString cur = nexus.getProfile()->getName();
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
     do
     {
         QString name = QInputDialog::getText(this, title, title+":");
         if (name.isEmpty()) break;
         name = Core::sanitize(name);
-        QDir dir(Settings::getSettingsDirPath());
-        QString file = dir.filePath(name+Core::TOX_EXT);
-        if (!QFile::exists(file) || GUI::askQuestion(tr("Profile already exists", "rename confirm title"),
-                tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
-        {
-            if (!ProfileLocker::lock(name))
-            {
-                GUI::showWarning(tr("Profile already exists", "rename failed title"),
-                                 tr("A profile named \"%1\" already exists and is in use.").arg(cur));
-                break;
-            }
 
-            QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
-            QFile::rename(dir.filePath(cur+".ini"), dir.filePath(name+".ini"));
-            bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
-            HistoryKeeper::renameHistory(cur, name);
-            bool resetAutorun = Settings::getInstance().getAutorun();
-            Settings::getInstance().setAutorun(false);
-            Settings::getInstance().setCurrentProfile(name);
-            if (resetAutorun)
-                Settings::getInstance().setAutorun(true);                   // fixes -p flag in autostart command line
-
+        if (Profile::profileExists(name))
+            GUI::showError(tr("Profile already exists", "rename failure title"),
+                           tr("A profile named \"%1\" already exists.", "rename confirm text").arg(name));
+        else if (!nexus.getProfile()->rename(name))
+            GUI::showError(tr("Failed to rename", "rename failed title"),
+                             tr("Couldn't rename the profile to \"%1\"").arg(cur));
+        else
             break;
-        }
     } while (true);
 }
 
 void ProfileForm::onExportClicked()
 {
-    QString current = bodyUI->profiles->currentText() + Core::TOX_EXT;
+    QString current = Nexus::getProfile()->getName() + Core::TOX_EXT;
     QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"),
                     QDir::home().filePath(current),
                     tr("Tox save file (*.tox)", "save dialog filter"));
@@ -319,97 +271,30 @@ void ProfileForm::onExportClicked()
 
 void ProfileForm::onDeleteClicked()
 {
-    if (Settings::getInstance().getCurrentProfile() == bodyUI->profiles->currentText())
+    if (GUI::askQuestion(tr("Really delete profile?","deletion confirmation title"),
+                      tr("Are you sure you want to delete this profile?","deletion confirmation text")))
     {
-        GUI::showWarning(tr("Profile currently loaded","current profile deletion warning title"), tr("This profile is currently in use. Please load a different profile before deleting this one.","current profile deletion warning text"));
-    }
-    else
-    {
-        if (GUI::askQuestion(tr("Deletion imminent!","deletion confirmation title"),
-                          tr("Are you sure you want to delete this profile?","deletion confirmation text")))
-        {
-            QString profile = bodyUI->profiles->currentText();
-            QDir dir(Settings::getSettingsDirPath());
-
-            QFile::remove(dir.filePath(profile + Core::TOX_EXT));
-            QFile::remove(dir.filePath(profile + ".ini"));
-            QFile::remove(HistoryKeeper::getHistoryPath(profile, 0));
-            QFile::remove(HistoryKeeper::getHistoryPath(profile, 1));
-
-            bodyUI->profiles->removeItem(bodyUI->profiles->currentIndex());
-            bodyUI->profiles->setCurrentText(Settings::getInstance().getCurrentProfile());
-        }
+        Nexus& nexus = Nexus::getInstance();
+        nexus.getProfile()->remove();
+        nexus.showLogin();
     }
 }
 
-void ProfileForm::onImportClicked()
+void ProfileForm::onLogoutClicked()
 {
-    QString path = QFileDialog::getOpenFileName(0,
-                                                tr("Import profile", "import dialog title"),
-                                                QDir::homePath(),
-                                                tr("Tox save file (*.tox)", "import dialog filter"));
-    if (path.isEmpty())
-        return;
-
-    QFileInfo info(path);
-    QString profile = info.completeBaseName();
-
-    if (info.suffix() != "tox")
-    {
-        GUI::showWarning(tr("Ignoring non-Tox file", "popup title"),
-                         tr("Warning: you've chosen a file that is not a Tox save file; ignoring.", "popup text"));
-        return;
-    }
-
-    QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
-
-    if (QFileInfo(profilePath).exists() && !GUI::askQuestion(tr("Profile already exists", "import confirm title"),
-            tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
-        return;
-
-    QFile::copy(path, profilePath);
-    bodyUI->profiles->addItem(profile);
+    Nexus& nexus = Nexus::getInstance();
+    Settings::getInstance().save();
+    nexus.showLogin();
 }
 
-void ProfileForm::onStatusSet(Status)
-{
-    refreshProfiles();
-}
-
-void ProfileForm::onNewClicked()
-{
-    emit Widget::getInstance()->changeProfile(QString());
-}
-
-void ProfileForm::disableSwitching()
-{
-    bodyUI->loadButton->setEnabled(false);
-    bodyUI->newButton->setEnabled(false);
-}
-
-void ProfileForm::enableSwitching()
-{
-    if (!core->anyActiveCalls())
-    {
-        bodyUI->loadButton->setEnabled(true);
-        bodyUI->newButton->setEnabled(true);
-    }
-}
-
-void ProfileForm::showEvent(QShowEvent *event)
-{
-    refreshProfiles();
-    QWidget::showEvent(event);
-}
-
-void ProfileForm::on_copyQr_clicked()
+void ProfileForm::onCopyQrClicked()
 {
     QApplication::clipboard()->setImage(*qr->getImage());
 }
 
-void ProfileForm::on_saveQr_clicked()
+void ProfileForm::onSaveQrClicked()
 {
-    QString current = bodyUI->profiles->currentText() + ".png";
+    QString current = Nexus::getProfile()->getName() + ".png";
     QString path = QFileDialog::getSaveFileName(0, tr("Save", "save qr image"),
                    QDir::home().filePath(current),
                    tr("Save QrCode (*.png)", "save dialog filter"));
@@ -425,13 +310,29 @@ void ProfileForm::on_saveQr_clicked()
     }
 }
 
-bool ProfileForm::eventFilter(QObject *o, QEvent *e)
+void ProfileForm::onDeletePassClicked()
 {
-    if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+    Profile* pro = Nexus::getProfile();
+    if (!pro->isEncrypted())
     {
-        e->ignore();
-        return true;
+        GUI::showInfo(tr("Nothing to remove"), tr("Your profile does not have a password!"));
+        return;
     }
-    return QWidget::eventFilter(o, e);
+
+    if (!GUI::askQuestion(tr("Really delete password?","deletion confirmation title"),
+                      tr("Are you sure you want to delete your password?","deletion confirmation text")))
+        return;
+
+    Nexus::getProfile()->setPassword(QString());
+}
+
+void ProfileForm::onChangePassClicked()
+{
+    SetPasswordDialog* dialog = new SetPasswordDialog(tr("Please enter a new password."), QString(), 0);
+    int r = dialog->exec();
+    if (r == QDialog::Rejected)
+        return;
+
+    QString newPass = dialog->getPassword();
+    Nexus::getProfile()->setPassword(newPass);
 }

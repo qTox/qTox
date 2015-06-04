@@ -12,6 +12,7 @@
     See the COPYING file for more details.
 */
 
+#include "toxme.h"
 #include "widget/widget.h"
 #include "misc/settings.h"
 #include "src/nexus.h"
@@ -19,7 +20,9 @@
 #include "src/widget/toxuri.h"
 #include "src/widget/toxsave.h"
 #include "src/autoupdate.h"
+#include "src/profile.h"
 #include "src/profilelocker.h"
+#include "src/widget/loginscreen.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDateTime>
@@ -31,9 +34,6 @@
 #include <QProcess>
 
 #include <sodium.h>
-
-#include "toxme.h"
-
 #include <unistd.h>
 
 #define EXIT_UPDATE_MACX 218 //We track our state using unique exit codes when debugging
@@ -114,15 +114,28 @@ int main(int argc, char *argv[])
 
     if (parser.isSet("p"))
     {
-        QString profile = parser.value("p");
-        if (QDir(Settings::getSettingsDirPath()).exists(profile + ".tox"))
+        QString profileName = parser.value("p");
+        if (QDir(Settings::getSettingsDirPath()).exists(profileName + ".tox"))
         {
-            qDebug() << "Setting profile to" << profile;
-            Settings::getInstance().switchProfile(profile);
+            qDebug() << "Setting profile to" << profileName;
+            if (Profile::isEncrypted(profileName))
+            {
+                Settings::getInstance().setCurrentProfile(profileName);
+            }
+            else
+            {
+                Profile* profile = Profile::loadProfile(profileName);
+                if (!profile)
+                {
+                    qCritical() << "-p profile" << profileName + ".tox" << " couldn't be loaded";
+                    return EXIT_FAILURE;
+                }
+                Nexus::getInstance().setProfile(profile);
+            }
         }
         else
         {
-            qCritical() << "-p profile" << profile + ".tox" << "doesn't exist";
+            qCritical() << "-p profile" << profileName + ".tox" << "doesn't exist";
             return EXIT_FAILURE;
         }
     }
@@ -292,7 +305,6 @@ int main(int argc, char *argv[])
     Nexus::getInstance().start();
 
     // Run
-    a.setQuitOnLastWindowClosed(false);
     int errorcode = a.exec();
 
 #ifdef LOG_TO_FILE

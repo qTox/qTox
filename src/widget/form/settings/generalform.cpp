@@ -20,6 +20,8 @@
 #include "src/misc/smileypack.h"
 #include "src/core/core.h"
 #include "src/misc/style.h"
+#include "src/nexus.h"
+#include "src/profile.h"
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QTime>
@@ -349,9 +351,9 @@ void GeneralForm::onReconnectClicked()
 {
     if (Core::getInstance()->anyActiveCalls())
         QMessageBox::warning(this, tr("Call active", "popup title"),
-           tr("You can't disconnect while a call is active!", "popup text"));
+                        tr("You can't disconnect while a call is active!", "popup text"));
     else
-        emit Widget::getInstance()->changeProfile(Settings::getInstance().getCurrentProfile());
+        Nexus::getProfile()->restartCore();
 }
 
 void GeneralForm::reloadSmiles()

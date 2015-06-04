@@ -29,6 +29,7 @@
 #include "coredefines.h"
 #include "toxid.h"
 
+class Profile;
 template <typename T> class QList;
 class QTimer;
 class QString;
@@ -43,9 +44,7 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    enum PasswordType {ptMain = 0, ptHistory, ptCounter};
-
-    explicit Core(QThread* coreThread, QString initialLoadPath);
+    explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance(); ///< Returns the global widget's Core instance
     ~Core();
 
@@ -81,19 +80,18 @@ public:
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
 
     static bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
-    bool isPasswordSet(PasswordType passtype);
+    bool isPasswordSet();
     bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
 
     void resetCallSources(); ///< Forces to regenerate each call's audio sources
 
 public slots:
     void start(); ///< Initializes the core, must be called before anything else
+    void reset(); ///< Reinitialized the core. Must be called from the Core thread, with the GUI thread ready to process events.
     void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer
     void bootstrapDht(); ///< Connects us to the Tox network
 
-    void saveConfiguration();
-    void saveConfiguration(const QString& path);
-    void switchConfiguration(const QString& profile); ///< Load a different profile and restart the core
+    QByteArray getToxSaveData(); ///< Returns the unencrypted tox save data
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
@@ -146,16 +144,14 @@ public slots:
     static bool isGroupCallMicEnabled(int groupId);
     static bool isGroupCallVolEnabled(int groupId);
 
-    void setPassword(QString& password, PasswordType passtype, uint8_t* salt = nullptr);
-    void useOtherPassword(PasswordType type);
-    void clearPassword(PasswordType passtype);
-    QByteArray encryptData(const QByteArray& data, PasswordType passtype);
-    QByteArray decryptData(const QByteArray& data, PasswordType passtype);
+    void setPassword(const QString &password, uint8_t* salt = nullptr);
+    void clearPassword();
+    QByteArray encryptData(const QByteArray& data);
+    QByteArray decryptData(const QByteArray& data);
 
 signals:
     void connected();
     void disconnected();
-    void blockingClearContacts();
 
     void friendRequestReceived(const QString& userId, const QString& message);
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
@@ -278,22 +274,22 @@ private:
 
     bool checkConnection();
 
-    QByteArray loadToxSave(QString path);
-    bool loadEncryptedSave(QByteArray& data);
     void checkEncryptedHistory();
-    void make_tox(QByteArray savedata);
+    void makeTox(QByteArray savedata);
     void loadFriends();
 
     void checkLastOnline(uint32_t friendId);
 
     void deadifyTox();
 
+private slots:
+    void killTimers(bool onlyStop); ///< Must only be called from the Core thread
+
 private:
     Tox* tox;
     ToxAv* toxav;
-    QTimer *toxTimer, *fileTimer; //, *saveTimer;
-    QString loadPath; // meaningless after start() is called
-    int dhtServerId;
+    QTimer *toxTimer;
+    Profile& profile;
     static ToxCall calls[TOXAV_MAX_CALLS];
 #ifdef QTOX_FILTER_AUDIO
     static AudioFilterer * filterer[TOXAV_MAX_CALLS];
@@ -302,17 +298,7 @@ private:
     QMutex messageSendMutex;
     bool ready;
 
-    TOX_PASS_KEY* pwsaltedkeys[PasswordType::ptCounter] = {nullptr}; // use the pw's hash as the "pw"
-
-    // Hack for reloading current profile if switching to an encrypted one fails.
-    // Testing the passwords before killing the current profile is perfectly doable,
-    // however it would require major refactoring;
-    // the Core class as a whole also requires major refactoring (especially to support multiple IDs at once),
-    // so I'm punting on this until then, when it would get fixed anyways
-    TOX_PASS_KEY* backupkeys[PasswordType::ptCounter] = {nullptr};
-    QString* backupProfile = nullptr;
-    void saveCurrentInformation();
-    QString loadOldInformation();
+    TOX_PASS_KEY* encryptionKey = nullptr; // use the pw's hash as the "pw"
 
     static const int videobufsize;
     static uint8_t* videobuf;

@@ -70,9 +70,9 @@ public:
     void newMessageAlert(GenericChatroomWidget* chat);
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
-    void clearContactsList();
     void setTranslation();
     void updateIcons();
+    void clearContactsList();
     ~Widget();
 
     virtual void closeEvent(QCloseEvent *event);
@@ -131,7 +131,6 @@ signals:
     void statusSelected(Status status);
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
-    void changeProfile(const QString& profile);
     void resized();
 
 private slots:
