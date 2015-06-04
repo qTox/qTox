@@ -107,11 +107,10 @@ Core::~Core()
     if (coreThread->isRunning())
     {
         if (QThread::currentThread() == coreThread)
-            stopTimers();
+            killTimers();
         else
             QMetaObject::invokeMethod(this, "stopTimers", Qt::BlockingQueuedConnection);
     }
-    delete toxTimer;
     coreThread->exit(0);
     while (coreThread->isRunning())
     {
@@ -1248,8 +1247,9 @@ void Core::resetCallSources()
     }
 }
 
-void Core::stopTimers()
+void Core::killTimers()
 {
     assert(QThread::currentThread() == coreThread);
     toxTimer->stop();
+    delete toxTimer;
 }

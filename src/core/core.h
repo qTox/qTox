@@ -286,7 +286,7 @@ private:
     void deadifyTox();
 
 private slots:
-    void stopTimers(); ///< Must only be called from the Core thread
+    void killTimers(); ///< Must only be called from the Core thread
 
 private:
     Tox* tox;
