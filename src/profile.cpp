@@ -66,6 +66,7 @@ Profile::~Profile()
 {
     delete core;
     delete coreThread;
+    ProfileLocker::assertLock();
     assert(ProfileLocker::getCurLockName() == name);
     ProfileLocker::unlock();
 }

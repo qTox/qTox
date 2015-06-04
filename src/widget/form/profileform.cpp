@@ -310,7 +310,10 @@ void ProfileForm::onDeleteClicked()
 
 void ProfileForm::onLogoutClicked()
 {
-    /// TODO: Save and call Nexus show login?
+    Nexus& nexus = Nexus::getInstance();
+    nexus.getProfile()->saveToxSave();
+    Settings::getInstance().save();
+    nexus.showLogin();
 }
 
 void ProfileForm::onCopyQrClicked()

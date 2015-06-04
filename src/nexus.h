@@ -17,7 +17,7 @@ class Nexus : public QObject
     Q_OBJECT
 public:
     void start(); ///< Sets up invariants and calls showLogin
-    void showLogin(); ///< Shows the login screen
+    void showLogin(); ///< Hides the man GUI, delete the profile, and shows the login screen
     /// Hides the login screen and shows the GUI for the given profile.
     /// Will delete the current GUI, if it exists.
     void showMainGUI();

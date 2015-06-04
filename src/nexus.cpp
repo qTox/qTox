@@ -39,7 +39,8 @@ Nexus::~Nexus()
 #endif
     delete loginScreen;
     delete profile;
-    Settings::getInstance().save();
+    if (profile)
+        Settings::getInstance().save();
 }
 
 void Nexus::start()
@@ -68,12 +69,23 @@ void Nexus::start()
 
 void Nexus::showLogin()
 {
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
+#ifdef Q_OS_ANDROID
+    delete androidui;
+    androidgui = nullptr;
+#else
+    delete widget;
+    widget = nullptr;
+#endif
+
+    delete profile;
+    profile = nullptr;
+
     loginScreen->reset();
 #ifndef Q_OS_ANDROID
     loginScreen->move(QApplication::desktop()->screen()->rect().center() - loginScreen->rect().center());
 #endif
     loginScreen->show();
+    ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
 }
 
 void Nexus::showMainGUI()
