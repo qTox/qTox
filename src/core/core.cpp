@@ -104,7 +104,13 @@ Core::~Core()
 {
     qDebug() << "Deleting Core";
 
-    QMetaObject::invokeMethod(this, "stopTimers", Qt::BlockingQueuedConnection);
+    if (coreThread->isRunning())
+    {
+        if (QThread::currentThread() == coreThread)
+            stopTimers();
+        else
+            QMetaObject::invokeMethod(this, "stopTimers", Qt::BlockingQueuedConnection);
+    }
     delete toxTimer;
     coreThread->exit(0);
     while (coreThread->isRunning())
@@ -781,7 +787,8 @@ void Core::setUsername(const QString& username)
     else
     {
         emit usernameSet(username);
-        profile.saveToxSave();
+        if (ready)
+            profile.saveToxSave();
     }
 }
 
@@ -845,7 +852,8 @@ void Core::setStatusMessage(const QString& message)
     }
     else
     {
-        profile.saveToxSave();
+        if (ready)
+            profile.saveToxSave();
         emit statusMessageSet(message);
     }
 }

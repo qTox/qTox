@@ -27,8 +27,13 @@ public:
     void startCore(); ///< Starts the Core thread
     bool isNewProfile();
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
-    void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed
-    void saveToxSave(QByteArray data); ///< Saves the profile's .tox save with this data, encrypted if needed
+    void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.
+    void saveToxSave(QByteArray data); ///< Write the .tox save, encrypted if needed. Invalid on deleted profiles.
+
+    /// Removes the profile permanently
+    /// It is invalid to call loadToxSave or saveToxSave on a deleted profile
+    /// Updates the profiles vector
+    void remove();
 
     /// Scan for profile, automatically importing them if needed
     /// NOT thread-safe
@@ -51,8 +56,9 @@ private:
     Core* core;
     QThread* coreThread;
     QString name, password;
-    static QVector<QString> profiles;
     bool newProfile; ///< True if this is a newly created profile, with no .tox save file yet.
+    bool isRemoved; ///< True if the profile has been removed by remove()
+    static QVector<QString> profiles;
     /// How much data we need to read to check if the file is encrypted
     /// Must be >= TOX_ENC_SAVE_MAGIC_LENGTH (8), which isn't publicly defined
     static constexpr int encryptHeaderSize = 8;

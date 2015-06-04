@@ -2,6 +2,7 @@
 #include "profilelocker.h"
 #include "src/misc/settings.h"
 #include "src/core/core.h"
+#include "src/historykeeper.h"
 #include <cassert>
 #include <QDir>
 #include <QFileInfo>
@@ -12,7 +13,8 @@
 QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, QString password, bool isNewProfile)
-    : name{name}, password{password}, newProfile{isNewProfile}
+    : name{name}, password{password},
+      newProfile{isNewProfile}, isRemoved{false}
 {
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
@@ -64,7 +66,8 @@ Profile* Profile::createProfile(QString name, QString password)
 
 Profile::~Profile()
 {
-    saveToxSave();
+    if (!isRemoved && core->isReady())
+        saveToxSave();
     delete core;
     delete coreThread;
     ProfileLocker::assertLock();
@@ -130,6 +133,8 @@ bool Profile::isNewProfile()
 
 QByteArray Profile::loadToxSave()
 {
+    assert(!isRemoved);
+
     /// TODO: Cache the data, invalidate it only when we save
     QByteArray data;
 
@@ -188,11 +193,15 @@ fail:
 
 void Profile::saveToxSave()
 {
-    saveToxSave(core->getToxSaveData());
+    assert(core->isReady());
+    QByteArray data = core->getToxSaveData();
+    assert(data.size());
+    saveToxSave(data);
 }
 
 void Profile::saveToxSave(QByteArray data)
 {
+    assert(!isRemoved);
     ProfileLocker::assertLock();
     assert(ProfileLocker::getCurLockName() == name);
 
@@ -243,4 +252,23 @@ bool Profile::isProfileEncrypted(QString name)
     saveFile.close();
 
     return tox_is_data_encrypted(data);
+}
+
+void Profile::remove()
+{
+    if (isRemoved)
+    {
+        qWarning() << "Profile "<<name<<" is already removed!";
+        return;
+    }
+    isRemoved = true;
+
+    qDebug() << "Removing profile"<<name;
+    profiles.removeAll(name);
+    QString path = Settings::getSettingsDirPath() + QDir::separator() + name;
+    QFile::remove(path+".tox");
+    QFile::remove(path+".ini");
+
+    QFile::remove(HistoryKeeper::getHistoryPath(name, 0));
+    QFile::remove(HistoryKeeper::getHistoryPath(name, 1));
 }

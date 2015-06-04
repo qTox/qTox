@@ -283,29 +283,13 @@ void ProfileForm::onExportClicked()
 
 void ProfileForm::onDeleteClicked()
 {
-    /** Add a delete function in profile
-    if (Settings::getInstance().getCurrentProfile() == bodyUI->profiles->currentText())
+    if (GUI::askQuestion(tr("Really delete profile?","deletion confirmation title"),
+                      tr("Are you sure you want to delete this profile?","deletion confirmation text")))
     {
-        GUI::showWarning(tr("Profile currently loaded","current profile deletion warning title"), tr("This profile is currently in use. Please load a different profile before deleting this one.","current profile deletion warning text"));
+        Nexus& nexus = Nexus::getInstance();
+        nexus.getProfile()->remove();
+        nexus.showLogin();
     }
-    else
-    {
-        if (GUI::askQuestion(tr("Deletion imminent!","deletion confirmation title"),
-                          tr("Are you sure you want to delete this profile?","deletion confirmation text")))
-        {
-            QString profile = bodyUI->profiles->currentText();
-            QDir dir(Settings::getSettingsDirPath());
-
-            QFile::remove(dir.filePath(profile + Core::TOX_EXT));
-            QFile::remove(dir.filePath(profile + ".ini"));
-            QFile::remove(HistoryKeeper::getHistoryPath(profile, 0));
-            QFile::remove(HistoryKeeper::getHistoryPath(profile, 1));
-
-            bodyUI->profiles->removeItem(bodyUI->profiles->currentIndex());
-            bodyUI->profiles->setCurrentText(Settings::getInstance().getCurrentProfile());
-        }
-    }
-    */
 }
 
 void ProfileForm::onLogoutClicked()

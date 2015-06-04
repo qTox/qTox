@@ -281,7 +281,7 @@
     <bool>true</bool>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="newPage">
     <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -394,7 +394,11 @@ margin-bottom:45px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="newPassConfirm"/>
+          <widget class="QLineEdit" name="newPassConfirm">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
          </item>
          <item>
           <spacer name="verticalSpacer">
