@@ -76,7 +76,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
 
-    CircleWidget *circleWidget = dynamic_cast<CircleWidget*>(parentWidget());
+    CircleWidget *circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(friendId)->getToxId()));
 
     QAction* newCircleAction = circleMenu->addAction(tr("To new circle"));
     QAction *removeCircleAction;
