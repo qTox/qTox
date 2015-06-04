@@ -30,6 +30,7 @@
 #include <tox/tox.h>
 
 #include <ctime>
+#include <cassert>
 #include <limits>
 #include <functional>
 
@@ -103,8 +104,8 @@ Core::~Core()
 {
     qDebug() << "Deleting Core";
 
-    profile.saveToxSave();
-    toxTimer->stop();
+    QMetaObject::invokeMethod(this, "stopTimers", Qt::BlockingQueuedConnection);
+    delete toxTimer;
     coreThread->exit(0);
     while (coreThread->isRunning())
     {
@@ -1237,4 +1238,10 @@ void Core::resetCallSources()
             alGenSources(1, &call.alSource);
         }
     }
+}
+
+void Core::stopTimers()
+{
+    assert(QThread::currentThread() == coreThread);
+    toxTimer->stop();
 }

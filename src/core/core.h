@@ -285,12 +285,14 @@ private:
 
     void deadifyTox();
 
+private slots:
+    void stopTimers(); ///< Must only be called from the Core thread
+
 private:
     Tox* tox;
     ToxAv* toxav;
-    QTimer *toxTimer, *fileTimer; //, *saveTimer;
+    QTimer *toxTimer;
     Profile& profile;
-    int dhtServerId;
     static ToxCall calls[TOXAV_MAX_CALLS];
 #ifdef QTOX_FILTER_AUDIO
     static AudioFilterer * filterer[TOXAV_MAX_CALLS];

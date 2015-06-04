@@ -64,6 +64,7 @@ Profile* Profile::createProfile(QString name, QString password)
 
 Profile::~Profile()
 {
+    saveToxSave();
     delete core;
     delete coreThread;
     ProfileLocker::assertLock();

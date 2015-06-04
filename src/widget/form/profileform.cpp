@@ -311,7 +311,6 @@ void ProfileForm::onDeleteClicked()
 void ProfileForm::onLogoutClicked()
 {
     Nexus& nexus = Nexus::getInstance();
-    nexus.getProfile()->saveToxSave();
     Settings::getInstance().save();
     nexus.showLogin();
 }
