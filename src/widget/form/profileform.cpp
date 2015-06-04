@@ -228,39 +228,26 @@ void ProfileForm::onAvatarClicked()
 
 void ProfileForm::onRenameClicked()
 {
-    /** TODO: Create a rename (low level) function in Profile, use it
+    Nexus& nexus = Nexus::getInstance();
+    QString cur = nexus.getProfile()->getName();
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
     do
     {
         QString name = QInputDialog::getText(this, title, title+":");
         if (name.isEmpty()) break;
         name = Core::sanitize(name);
-        QDir dir(Settings::getSettingsDirPath());
-        QString file = dir.filePath(name+Core::TOX_EXT);
-        if (!QFile::exists(file) || GUI::askQuestion(tr("Profile already exists", "rename confirm title"),
-                tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(cur)))
+
+        if (!Profile::profileExists(name) || GUI::askQuestion(tr("Profile already exists", "rename confirm title"),
+                tr("A profile named \"%1\" already exists. Do you want to erase it?", "rename confirm text").arg(name)))
         {
-            if (!ProfileLocker::lock(name))
-            {
-                GUI::showWarning(tr("Profile already exists", "rename failed title"),
-                                 tr("A profile named \"%1\" already exists and is in use.").arg(cur));
-                break;
-            }
 
-            QFile::rename(dir.filePath(cur+Core::TOX_EXT), file);
-            QFile::rename(dir.filePath(cur+".ini"), dir.filePath(name+".ini"));
-            bodyUI->profiles->setItemText(bodyUI->profiles->currentIndex(), name);
-            HistoryKeeper::renameHistory(cur, name);
-            bool resetAutorun = Settings::getInstance().getAutorun();
-            Settings::getInstance().setAutorun(false);
-            Settings::getInstance().setCurrentProfile(name);
-            if (resetAutorun)
-                Settings::getInstance().setAutorun(true);                   // fixes -p flag in autostart command line
 
+            if (!nexus.getProfile()->rename(name))
+                GUI::showError(tr("Failed to rename", "rename failed title"),
+                                 tr("Couldn't rename the profile to \"%1\"").arg(cur));
             break;
         }
     } while (true);
-    */
 }
 
 void ProfileForm::onExportClicked()

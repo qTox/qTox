@@ -272,3 +272,24 @@ void Profile::remove()
     QFile::remove(HistoryKeeper::getHistoryPath(name, 0));
     QFile::remove(HistoryKeeper::getHistoryPath(name, 1));
 }
+
+bool Profile::rename(QString newName)
+{
+    QString path = Settings::getSettingsDirPath() + QDir::separator() + name,
+            newPath = Settings::getSettingsDirPath() + QDir::separator() + newName;
+
+    if (!ProfileLocker::lock(newName))
+        return false;
+
+    QFile::rename(path+".tox", newPath+".tox");
+    QFile::rename(path+".ini", newPath+".ini");
+    HistoryKeeper::renameHistory(name, newName);
+    bool resetAutorun = Settings::getInstance().getAutorun();
+    Settings::getInstance().setAutorun(false);
+    Settings::getInstance().setCurrentProfile(newName);
+    if (resetAutorun)
+        Settings::getInstance().setAutorun(true); // fixes -p flag in autostart command line
+
+    name = newName;
+    return true;
+}

@@ -35,6 +35,9 @@ public:
     /// Updates the profiles vector
     void remove();
 
+    /// Tries to rename the profile
+    bool rename(QString newName);
+
     /// Scan for profile, automatically importing them if needed
     /// NOT thread-safe
     static void scanProfiles();
