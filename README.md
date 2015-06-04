@@ -5,7 +5,7 @@ qTox
 
 ====
 
-<h5>qTox is a powerful Tox client that tries to follow the Tox design guidelines while running on all major platforms:</h5>
+<h5>qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms:</h5>
 
 * **Windows**:
   - [**64 bit download**](https://tux3-dev.tox.im/jenkins/job/qTox-win64-nsis/lastSuccessfulBuild/artifact/setup-qtox64.exe)
