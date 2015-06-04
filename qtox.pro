@@ -429,7 +429,7 @@ win32 {
         src/platform/camera/directshow.cpp
 }
 
-unix {
+unix:!macx {
     HEADERS += \
         src/platform/camera/v4l2.h
 
