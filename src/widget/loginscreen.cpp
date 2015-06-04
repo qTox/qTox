@@ -35,6 +35,7 @@ void LoginScreen::reset()
 {
     ui->newUsername->clear();
     ui->newPass->clear();
+    ui->newPassConfirm->clear();
     ui->loginPassword->clear();
 
     ui->loginUsernames->clear();
