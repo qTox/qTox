@@ -127,7 +127,11 @@ void EmoticonsWidget::onSmileyClicked()
     // emit insert emoticon
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
     if (sender)
-        emit insertEmoticon(' ' + sender->property("sequence").toString() + ' ');
+    {
+        QString sequence = sender->property("sequence").toString()
+                .replace("&lt;","<").replace("&gt;",">");
+        emit insertEmoticon(' ' + sequence + ' ');
+    }
 }
 
 void EmoticonsWidget::onPageButtonClicked()
