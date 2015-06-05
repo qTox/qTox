@@ -102,7 +102,14 @@ int GenericChatItemLayout::indexOfClosestSortedWidget(GenericChatItemWidget* wid
         GenericChatItemWidget* atMid = dynamic_cast<GenericChatItemWidget*>(layout->itemAt(mid)->widget());
         assert(atMid != nullptr);
 
-        if (atMid->getName().localeAwareCompare(widget->getName()) < 0)
+        bool lessThan = false;
+        int compareValue = atMid->getName().localeAwareCompare(widget->getName());
+        if (compareValue < 0)
+            lessThan = true;
+        else if (compareValue == 0)
+            lessThan = atMid < widget; // Consistent ordering.
+
+        if (lessThan)
             min = mid + 1;
         else
             max = mid;
