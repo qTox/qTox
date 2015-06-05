@@ -179,8 +179,10 @@ void emitChatroomWidget(QLayout* layout, int index)
 
 bool CircleWidget::cycleContacts(bool forward)
 {
+    qDebug() << "Cycling on contact: " << getName();
     if (listLayout->friendTotalCount() == 0)
     {
+        qDebug() << "Empty";
         return false;
     }
     if (forward)
@@ -189,12 +191,14 @@ bool CircleWidget::cycleContacts(bool forward)
         {
             expand();
             emitChatroomWidget(listLayout->getLayoutOnline(), 0);
+            qDebug() << "emmited 1";
             return true;
         }
         else if (listLayout->getLayoutOffline()->count() != 0)
         {
             expand();
             emitChatroomWidget(listLayout->getLayoutOffline(), 0);
+            qDebug() << "emmited 2";
             return true;
         }
     }
@@ -204,12 +208,14 @@ bool CircleWidget::cycleContacts(bool forward)
         {
             expand();
             emitChatroomWidget(listLayout->getLayoutOffline(), listLayout->getLayoutOffline()->count() - 1);
+            qDebug() << "emmited 3";
             return true;
         }
         else if (listLayout->getLayoutOnline()->count() != 0)
         {
             expand();
             emitChatroomWidget(listLayout->getLayoutOnline(), listLayout->getLayoutOnline()->count() - 1);
+            qDebug() << "emmited 4";
             return true;
         }
     }

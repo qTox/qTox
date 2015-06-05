@@ -168,10 +168,6 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId()));
         if (circleWidget != nullptr)
         {
-            if (friendWidget == nullptr)
-            {
-                return;
-            }
             if (circleWidget->cycleContacts(friendWidget, forward))
                 return;
 
