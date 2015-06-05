@@ -60,14 +60,11 @@ void FriendListWidget::addGroupWidget(GroupWidget *widget)
 
 void FriendListWidget::addFriendWidget(FriendWidget *w, Status s, int circleIndex)
 {
-    if (circleIndex == -1)
+    CircleWidget* circleWidget = CircleWidget::getFromID(circleIndex);
+    if (circleWidget == nullptr)
         moveWidget(w, s, true);
     else
-    {
-        CircleWidget::getFromID(circleIndex)->addFriendWidget(w, s);
-        CircleWidget::getFromID(circleIndex)->show();
-        //w->setParent(CircleWidget::getFromID(circleIndex));
-    }
+        circleWidget->addFriendWidget(w, s);
 }
 
 void FriendListWidget::addCircleWidget(int id)
