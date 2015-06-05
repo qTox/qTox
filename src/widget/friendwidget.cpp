@@ -76,7 +76,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
 
-    CircleWidget *circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(friendId)->getToxId()));
+    CircleWidget *circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId()));
 
     QAction* newCircleAction = circleMenu->addAction(tr("To new circle"));
     QAction *removeCircleAction;
@@ -170,7 +170,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 
             CircleWidget* circle = circleActions[selectedItem];
             circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
-            circle->expand();
+            circle->setExpanded(true);
         }
     }
 }
@@ -215,9 +215,9 @@ void FriendWidget::updateStatusLight()
 
     if (f->getEventFlag())
     {
-        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(friendId)->getToxId()));
+        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId()));
         if (circleWidget != nullptr)
-            circleWidget->expand();
+            circleWidget->setExpanded(true);
     }
 
     if (!f->getEventFlag())

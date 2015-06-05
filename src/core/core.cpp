@@ -351,7 +351,6 @@ void Core::start()
     }
 
     ready = true;
-    emit started();
 
     // If we created a new profile earlier,
     // now that we're ready save it and ONLY THEN broadcast the new ID.

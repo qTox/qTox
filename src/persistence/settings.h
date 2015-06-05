@@ -228,8 +228,8 @@ public:
     QString getFriendAlias(const ToxId &id) const;
     void setFriendAlias(const ToxId &id, const QString &alias);
 
-    int getFriendCircleIndex(const ToxId &id) const;
-    void setFriendCircleIndex(const ToxId &id, int index);
+    int getFriendCircleID(const ToxId &id) const;
+    void setFriendCircleID(const ToxId &id, int circleID);
 
     void removeFriendSettings(const ToxId &id);
 
@@ -247,11 +247,11 @@ public:
 
     int getCircleCount() const;
     int addCircle(const QString &name);
-    int removeCircle(int index);
-    QString getCircleName(int index) const;
-    void setCircleName(int index, const QString &name);
-    bool getCircleExpanded(int index) const;
-    void setCircleExpanded(int index, bool expanded);
+    int removeCircle(int id);
+    QString getCircleName(int id) const;
+    void setCircleName(int id, const QString &name);
+    bool getCircleExpanded(int id) const;
+    void setCircleExpanded(int id, bool expanded);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -368,7 +368,7 @@ private:
         QString alias;
         QString addr;
         QString autoAcceptDir;
-        int circleIndex = -1;
+        int circleID = -1;
     };
 
     struct circleProp

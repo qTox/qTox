@@ -88,7 +88,7 @@ void FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
     if (friendWidget != nullptr)
     {
         circleWidget->addFriendWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus());
-        circleWidget->toggle();
+        circleWidget->setExpanded(true);
     }
     circleWidget->show(); // Avoid flickering.
 }
@@ -165,7 +165,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 
     if (friendWidget != nullptr)
     {
-        circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId()));
+        circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId()));
         if (circleWidget != nullptr)
         {
             if (circleWidget->cycleContacts(friendWidget, forward))
@@ -275,7 +275,7 @@ void FriendListWidget::dropEvent(QDropEvent *event)
         assert(widget != nullptr);
 
         // Update old circle after moved.
-        CircleWidget *circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(f->getToxId()));
+        CircleWidget *circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
 
         listLayout->addFriendWidget(widget, f->getStatus());
 
@@ -289,13 +289,13 @@ void FriendListWidget::dropEvent(QDropEvent *event)
 
 void FriendListWidget::moveWidget(FriendWidget *w, Status s, bool add)
 {
-    int circleId = Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(w->friendId)->getToxId());
+    int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(w->friendId)->getToxId());
     CircleWidget *circleWidget = CircleWidget::getFromID(circleId);
 
     if (circleWidget == nullptr || add)
     {
         if (circleId != -1)
-            Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(w->friendId)->getToxId(), -1);
+            Settings::getInstance().setFriendCircleID(FriendList::findFriend(w->friendId)->getToxId(), -1);
         listLayout->addFriendWidget(w, s);
         return;
     }

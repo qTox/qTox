@@ -36,7 +36,7 @@ public:
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false);
 
     void expand();
-    void toggle();
+    void setExpanded(bool isExpanded);
 
     void updateStatus();
 
