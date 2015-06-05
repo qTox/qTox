@@ -215,7 +215,7 @@ void FriendWidget::updateStatusLight()
 
     if (f->getEventFlag())
     {
-        CircleWidget* circleWidget = dynamic_cast<CircleWidget*>(parentWidget());
+        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(friendId)->getToxId()));
         if (circleWidget != nullptr)
             circleWidget->expand();
     }

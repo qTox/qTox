@@ -1301,6 +1301,15 @@ void Settings::setFriendCircleIndex(const ToxId &id, int index)
     auto it = friendLst.find(key);
     if (it != friendLst.end())
         it->circleIndex = index;
+    else
+    {
+        friendProp fp;
+        fp.addr = key;
+        fp.alias = "";
+        fp.autoAcceptDir = "";
+        fp.circleIndex = index;
+        friendLst[key] = fp;
+    }
 }
 
 void Settings::removeFriendSettings(const ToxId &id)
