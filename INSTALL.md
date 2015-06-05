@@ -147,7 +147,7 @@ sudo make install
 ```
 
 ###Compiling
-**Make sur that all the dependencies are installed.**  
+**Make sure that all the dependencies are installed.**  
 Now go to `/home/user/qTox/qTox` (or where you cloned) and simply run :
 ```bash
 qmake
