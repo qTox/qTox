@@ -144,7 +144,7 @@ QByteArray Profile::loadToxSave()
     /// TODO: Cache the data, invalidate it only when we save
     QByteArray data;
 
-    QString path = Settings::getSettingsDirPath() + QDir::separator() + name + ".tox";
+    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
     QFile saveFile(path);
     qint64 fileSize;
     qDebug() << "Loading tox save "<<path;
@@ -211,7 +211,7 @@ void Profile::saveToxSave(QByteArray data)
     ProfileLocker::assertLock();
     assert(ProfileLocker::getCurLockName() == name);
 
-    QString path = Settings::getSettingsDirPath() + QDir::separator() + name + ".tox";
+    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
     qDebug() << "Saving tox save to "<<path;
     QSaveFile saveFile(path);
     if (!saveFile.open(QIODevice::WriteOnly))
@@ -239,7 +239,7 @@ void Profile::saveToxSave(QByteArray data)
 
 bool Profile::exists(QString name)
 {
-    QString path = Settings::getSettingsDirPath() + QDir::separator() + name;
+    QString path = Settings::getInstance().getSettingsDirPath() + name;
     return QFile::exists(path+".tox") && QFile::exists(path+".ini");
 }
 
@@ -251,7 +251,7 @@ bool Profile::isEncrypted()
 bool Profile::isEncrypted(QString name)
 {
     uint8_t data[encryptHeaderSize] = {0};
-    QString path = Settings::getSettingsDirPath() + QDir::separator() + name + ".tox";
+    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
     QFile saveFile(path);
     if (!saveFile.open(QIODevice::ReadOnly))
     {
@@ -283,7 +283,7 @@ void Profile::remove()
             i--;
         }
     }
-    QString path = Settings::getSettingsDirPath() + QDir::separator() + name;
+    QString path = Settings::getInstance().getSettingsDirPath() + name;
     QFile::remove(path+".tox");
     QFile::remove(path+".ini");
 
@@ -293,8 +293,8 @@ void Profile::remove()
 
 bool Profile::rename(QString newName)
 {
-    QString path = Settings::getSettingsDirPath() + QDir::separator() + name,
-            newPath = Settings::getSettingsDirPath() + QDir::separator() + newName;
+    QString path = Settings::getInstance().getSettingsDirPath() + name,
+            newPath = Settings::getInstance().getSettingsDirPath() + newName;
 
     if (!ProfileLocker::lock(newName))
         return false;

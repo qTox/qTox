@@ -20,6 +20,7 @@
 #include <QHash>
 #include <QObject>
 #include <QPixmap>
+#include "src/core/corestructs.h"
 
 class ToxId;
 namespace Db { enum class syncType; }
@@ -32,20 +33,22 @@ class Settings : public QObject
 public:
     ~Settings() = default;
     static Settings& getInstance();
+    QString getSettingsDirPath(); ///< The returned path ends with a directory separator
+
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
+    void createPersonal(QString basename); ///< Write a default personnal .ini settings file for a profile
 
-    void createPersonal(QString basename); ///< Write a default personnal settings file for a profile
+    void save(bool writePersonal = true);
+    void save(QString path, bool writePersonal = true);
+    void load();
 
-    static QString getSettingsDirPath(); ///< The returned path ends with a directory separator
+signals:
+    void dhtServerListChanged();
+    void smileyPackChanged();
+    void emojiFontChanged();
 
-    struct DhtServer
-    {
-        QString name;
-        QString userId;
-        QString address;
-        quint16 port;
-    };
-
+public:
+    // Getter/setters
     const QList<DhtServer>& getDhtServerList() const;
     void setDhtServerList(const QList<DhtServer>& newDhtServerList);
 
@@ -146,28 +149,6 @@ public:
     QSize getCamVideoRes() const;
     void setCamVideoRes(QSize newValue);
 
-    // Assume all widgets have unique names
-    // Don't use it to save every single thing you want to save, use it
-    // for some general purpose widgets, such as MainWindows or Splitters,
-    // which have widget->saveX() and widget->loadX() methods.
-    QByteArray getWidgetData(const QString& uniqueName) const;
-    void setWidgetData(const QString& uniqueName, const QByteArray& data);
-
-    // Wrappers around getWidgetData() and setWidgetData()
-    // Assume widget has a unique objectName set
-    template <class T>
-    void restoreGeometryState(T* widget) const
-    {
-        widget->restoreGeometry(getWidgetData(widget->objectName() + "Geometry"));
-        widget->restoreState(getWidgetData(widget->objectName() + "State"));
-    }
-    template <class T>
-    void saveGeometryState(const T* widget)
-    {
-        setWidgetData(widget->objectName() + "Geometry", widget->saveGeometry());
-        setWidgetData(widget->objectName() + "State", widget->saveState());
-    }
-
     bool isAnimationEnabled() const;
     void setAnimationEnabled(bool newValue);
 
@@ -248,14 +229,29 @@ public:
     bool getAutoLogin() const;
     void setAutoLogin(bool state);
 
-public:
-    void save(bool writePersonal = true);
-    void save(QString path, bool writePersonal = true);
-    void load();
+    // Assume all widgets have unique names
+    // Don't use it to save every single thing you want to save, use it
+    // for some general purpose widgets, such as MainWindows or Splitters,
+    // which have widget->saveX() and widget->loadX() methods.
+    QByteArray getWidgetData(const QString& uniqueName) const;
+    void setWidgetData(const QString& uniqueName, const QByteArray& data);
+
+    // Wrappers around getWidgetData() and setWidgetData()
+    // Assume widget has a unique objectName set
+    template <class T>
+    void restoreGeometryState(T* widget) const
+    {
+        widget->restoreGeometry(getWidgetData(widget->objectName() + "Geometry"));
+        widget->restoreState(getWidgetData(widget->objectName() + "State"));
+    }
+    template <class T>
+    void saveGeometryState(const T* widget)
+    {
+        setWidgetData(widget->objectName() + "Geometry", widget->saveGeometry());
+        setWidgetData(widget->objectName() + "State", widget->saveState());
+    }
 
 private:
-    static Settings* settings;
-
     Settings();
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
@@ -263,9 +259,7 @@ private:
     void saveGlobal(QString path);
     void savePersonal(QString path);
 
-    static const QString globalSettingsFile;
-    static const QString OLDFILENAME;
-
+private:
     bool loaded;
 
     bool useCustomDhtList;
@@ -279,7 +273,7 @@ private:
     bool groupchatPosition;
     bool enableIPv6;
     QString translation;
-    static bool makeToxPortable;
+    bool makeToxPortable;
     bool autostartInTray;
     bool closeToTray;
     bool minimizeToTray;
@@ -354,10 +348,8 @@ private:
 
     int themeColor;
 
-signals:
-    void dhtServerListChanged();
-    void smileyPackChanged();
-    void emojiFontChanged();
+    static Settings* settings;
+    static const QString globalSettingsFile;
 };
 
 #endif // SETTINGS_HPP

@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
 
 #ifdef LOG_TO_FILE
     logFile = new QTextStream;
-    QFile logfile(Settings::getSettingsDirPath()+"qtox.log");
+    QFile logfile(Settings::getInstance().getSettingsDirPath()+"qtox.log");
     if (logfile.open(QIODevice::Append))
     {
         logFile->setDevice(&logfile);

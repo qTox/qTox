@@ -264,7 +264,7 @@ void ProfileForm::onExportClicked()
             GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
             return;
         }
-        if (!QFile::copy(QDir(Settings::getSettingsDirPath()).filePath(current), path))
+        if (!QFile::copy(Settings::getInstance().getSettingsDirPath()+current, path))
             GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
     }
 }

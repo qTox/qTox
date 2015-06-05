@@ -17,7 +17,6 @@
 #include "src/core/core.h"
 #include "src/misc/settings.h"
 #include <QCoreApplication>
-#include <QDir>
 #include <QFileInfo>
 
 bool toxSaveEventHandler(const QByteArray& eventData)
@@ -55,7 +54,7 @@ bool handleToxSave(const QString& path)
         return false;
     }
 
-    QString profilePath = QDir(Settings::getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
+    QString profilePath = Settings::getInstance().getSettingsDirPath()+profile+Core::TOX_EXT;
 
     if (QFileInfo(profilePath).exists() && !GUI::askQuestion(QObject::tr("Profile already exists", "import confirm title"),
             QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))

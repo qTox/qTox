@@ -42,10 +42,10 @@
 
 const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
-bool Settings::makeToxPortable{false};
 
 Settings::Settings() :
-    loaded(false), useCustomDhtList{false}, currentProfileId(0)
+    loaded(false), useCustomDhtList{false},
+    makeToxPortable{false}, currentProfileId(0)
 {
     load();
 }
@@ -420,10 +420,10 @@ QString Settings::getSettingsDirPath()
     // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
-                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox" + QDir::separator());
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                           + QDir::separator() + "tox" + QDir::separator());
+                           + QDir::separator() + "tox")+QDir::separator();
 #endif
 }
 
@@ -484,7 +484,7 @@ QByteArray Settings::getAvatarHash(const QString& ownerId)
     return out;
 }
 
-const QList<Settings::DhtServer>& Settings::getDhtServerList() const
+const QList<DhtServer>& Settings::getDhtServerList() const
 {
     return dhtServerList;
 }
