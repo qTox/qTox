@@ -74,7 +74,7 @@ AVForm::~AVForm()
     }
 }
 
-void AVForm::present()
+void AVForm::showEvent(QShowEvent*)
 {
     getAudioOutDevices();
     getAudioInDevices();

@@ -65,7 +65,7 @@ void PrivacyForm::setNospam()
         Core::getInstance()->setNospam(nospam);
 }
 
-void PrivacyForm::present()
+void PrivacyForm::showEvent(QShowEvent*)
 {
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
     bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());

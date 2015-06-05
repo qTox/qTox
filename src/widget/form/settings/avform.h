@@ -33,7 +33,6 @@ class AVForm : public GenericForm
 public:
     AVForm();
     ~AVForm();
-    virtual void present();
 
 private:
     void getAudioInDevices();
@@ -58,6 +57,7 @@ private slots:
     void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*);
+    virtual void showEvent(QShowEvent*);
     
 protected:
     bool eventFilter(QObject *o, QEvent *e);    

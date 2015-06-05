@@ -83,7 +83,6 @@ void SettingsWidget::onTabChanged(int index)
 {
     this->settingsWidgets->setCurrentIndex(index);
     GenericForm* currentWidget = static_cast<GenericForm*>(this->settingsWidgets->widget(index));
-    currentWidget->present();
     nameLabel->setText(currentWidget->getFormName());
     imgLabel->setPixmap(currentWidget->getFormIcon().scaledToHeight(40, Qt::SmoothTransformation));
 }
