@@ -87,6 +87,8 @@ protected:
     QString resolveToxId(const ToxId &id);
     void insertChatMessage(ChatMessage::Ptr msg);
     void hideEvent(QHideEvent* event);
+    void showEvent(QShowEvent *);
+    bool event(QEvent *);
     void resizeEvent(QResizeEvent* event);
     void adjustFileMenuPosition();
 

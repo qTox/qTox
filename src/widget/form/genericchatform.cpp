@@ -19,6 +19,7 @@
 #include <QHBoxLayout>
 #include <QDebug>
 #include <QShortcut>
+#include <QKeyEvent>
 
 #include "src/misc/smileypack.h"
 #include "src/widget/emoticonswidget.h"
@@ -238,6 +239,23 @@ void GenericChatForm::show(Ui::MainWindow &ui)
     ui.mainHead->layout()->addWidget(headWidget);
     headWidget->show();
     QWidget::show();
+}
+
+void GenericChatForm::showEvent(QShowEvent *)
+{
+    msgEdit->setFocus();
+}
+
+bool GenericChatForm::event(QEvent* e)
+{
+    // If the user accidentally starts typing outside of the msgEdit, focus it automatically
+    if (e->type() == QEvent::KeyRelease && !msgEdit->hasFocus())
+    {
+        QKeyEvent* ke = static_cast<QKeyEvent*>(e);
+        if (ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
+            msgEdit->setFocus();
+    }
+    return QWidget::event(e);
 }
 
 void GenericChatForm::onChatContextMenuRequested(QPoint pos)
