@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>410</width>
     <height>200</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
+    <width>410</width>
     <height>200</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
+    <width>415</width>
     <height>200</height>
    </size>
   </property>
@@ -153,7 +153,7 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>160</x>
      <y>0</y>
      <width>250</width>
      <height>200</height>
@@ -1000,7 +1000,7 @@ background-color:#6cc865;</string>
     <rect>
      <x>10</x>
      <y>160</y>
-     <width>125</width>
+     <width>135</width>
      <height>1</height>
     </rect>
    </property>
@@ -1051,9 +1051,9 @@ background-color:#6cc865;</string>
   <widget class="QPushButton" name="newProfilePgbtn">
    <property name="geometry">
     <rect>
-     <x>25</x>
+     <x>0</x>
      <y>130</y>
-     <width>100</width>
+     <width>160</width>
      <height>22</height>
     </rect>
    </property>
@@ -1073,9 +1073,9 @@ background-color:#6cc865;</string>
   <widget class="QPushButton" name="loginPgbtn">
    <property name="geometry">
     <rect>
-     <x>25</x>
+     <x>0</x>
      <y>170</y>
-     <width>100</width>
+     <width>160</width>
      <height>22</height>
     </rect>
    </property>
@@ -1095,7 +1095,7 @@ background-color:#6cc865;</string>
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>25</x>
+     <x>30</x>
      <y>15</y>
      <width>100</width>
      <height>100</height>
