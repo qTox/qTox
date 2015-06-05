@@ -20,6 +20,7 @@
 #include <QHash>
 #include <QObject>
 #include <QPixmap>
+#include <QMutex>
 #include "src/core/corestructs.h"
 
 class ToxId;
@@ -38,9 +39,9 @@ public:
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
     void createPersonal(QString basename); ///< Write a default personnal .ini settings file for a profile
 
+    void load();
     void save(bool writePersonal = true);
     void save(QString path, bool writePersonal = true);
-    void load();
 
 signals:
     void dhtServerListChanged();
@@ -348,6 +349,7 @@ private:
 
     int themeColor;
 
+    static QMutex bigLock;
     static Settings* settings;
     static const QString globalSettingsFile;
 };
