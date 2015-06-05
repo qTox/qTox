@@ -82,19 +82,19 @@ void LoginScreen::onCreateNewProfile()
 
     if (pass.size()!=0 && pass.size() < 6)
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The password must be at least 6 characters."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The password must be at least 6 characters long."));
         return;
     }
 
     if (ui->newPassConfirm->text() != pass)
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The passwords are different."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The passwords you've entered are different.\nPlease make sure to enter same password twice."));
         return;
     }
 
     if (Profile::exists(name))
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("This profile already exists."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("A profile with this name already exists."));
         return;
     }
 
@@ -102,7 +102,7 @@ void LoginScreen::onCreateNewProfile()
     if (!profile)
     {
         // Unknown error
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("Couldn't create a new profile."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("Unknown error: Couldn't create a new profile.\nIf you encountered this error, please report it."));
         return;
     }
 
