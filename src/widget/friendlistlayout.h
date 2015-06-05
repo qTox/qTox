@@ -12,16 +12,13 @@
     See the COPYING file for more details.
 */
 
-#ifndef GENERICFRIENDLISTWIDGET_H
-#define GENERICFRIENDLISTWIDGET_H
+#ifndef FRIENDLISTLAYOUT_H
+#define FRIENDLISTLAYOUT_H
 
 #include <QBoxLayout>
 #include "src/core/corestructs.h"
 #include "genericchatitemlayout.h"
-#include "friendwidget.h"
 
-class GroupWidget;
-class CircleWidget;
 class FriendWidget;
 class FriendListWidget;
 
@@ -41,9 +38,6 @@ public:
     bool hasChatrooms() const;
     void searchChatrooms(const QString& searchString, bool hideOnline = false, bool hideOffline = false);
 
-    template <typename WidgetType>
-    static void searchLayout(const QString& searchString, QLayout* boxLayout, bool hideAll);
-
     QLayout* getLayoutOnline() const;
     QLayout* getLayoutOffline() const;
 
@@ -54,16 +48,4 @@ private:
     GenericChatItemLayout friendOfflineLayout;
 };
 
-template <typename WidgetType>
-void FriendListLayout::searchLayout(const QString &searchString, QLayout *boxLayout, bool hideAll)
-{
-    for (int index = 0; index < boxLayout->count(); ++index)
-    {
-        WidgetType* widgetAt = static_cast<WidgetType*>(boxLayout->itemAt(index)->widget());
-        QString widgetName = widgetAt->getName();
-
-        widgetAt->setVisible(!hideAll && widgetName.contains(searchString, Qt::CaseInsensitive));
-    }
-}
-
-#endif // GENERICFRIENDLISTWIDGET_H
+#endif // FRIENDLISTLAYOUT_H

@@ -17,6 +17,11 @@
 #include <QBoxLayout>
 #include <cassert>
 
+// As this layout sorts widget, extra care must be taken when inserting widgets.
+// Prefer using the build in add and remove functions for modifying widgets.
+// Inserting widgets other ways would cause this layout to be unable to sort.
+// As such, they are protected using asserts.
+
 GenericChatItemLayout::GenericChatItemLayout()
     : layout(new QVBoxLayout())
 {
@@ -69,6 +74,17 @@ void GenericChatItemLayout::removeSortedWidget(GenericChatItemWidget* widget)
 
     if (atMid == widget)
         layout->removeWidget(widget);
+}
+
+void GenericChatItemLayout::search(const QString &searchString, bool hideAll)
+{
+    for (int index = 0; index < layout->count(); ++index)
+    {
+        GenericChatItemWidget* widgetAt = dynamic_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
+        assert(widgetAt != nullptr);
+
+        widgetAt->setVisible(!hideAll && widgetAt->getName().contains(searchString, Qt::CaseInsensitive));
+    }
 }
 
 QLayout* GenericChatItemLayout::getLayout() const
