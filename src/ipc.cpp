@@ -174,10 +174,6 @@ bool IPC::isEventAccepted(time_t time)
         }
         globalMemory.unlock();
     }
-    else
-    {
-        qWarning() << "isEventAccepted failed to lock, returning false";
-    }
     return result;
 }
 
