@@ -233,14 +233,13 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
                                  uint64_t filesize, const uint8_t *fname, size_t fnameLen, void *_core)
 {
     Core* core = static_cast<Core*>(_core);
-    qDebug() << QString("Received file request %1:%2 kind %3")
-                        .arg(friendId).arg(fileId).arg(kind);
 
     if (kind == TOX_FILE_KIND_AVATAR)
     {
         QString friendAddr = core->getFriendAddress(friendId);
         if (!filesize)
         {
+            qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             // Avatars of size 0 means explicitely no avatar
             emit core->friendAvatarRemoved(friendId);
             QFile::remove(Settings::getInstance().getSettingsDirPath()+"avatars/"+friendAddr.left(64)+".png");
@@ -255,19 +254,25 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
             if (Settings::getInstance().getAvatarHash(friendAddr) == QByteArray((char*)avatarHash, TOX_HASH_LENGTH))
             {
                 // If it's an avatar but we already have it cached, cancel
+                qDebug() << QString("Received avatar request %1:%2, and we have it in cache").arg(friendId).arg(fileId);
                 tox_file_control(core->tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
                 return;
             }
             else
             {
                 // It's an avatar and we don't have it, autoaccept the transfer
+                qDebug() << QString("Received avatar request %1:%2, and we don't have it in cache").arg(friendId).arg(fileId);
                 tox_file_control(core->tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, nullptr);
             }
         }
     }
+    else
+    {
+        qDebug() << QString("Received file request %1:%2 kind %3")
+                            .arg(friendId).arg(fileId).arg(kind);
+    }
 
-    ToxFile file{fileId, friendId,
-                CString::toString(fname,fnameLen).toUtf8(), "", ToxFile::RECEIVING};
+    ToxFile file{fileId, friendId, QByteArray((char*)fname,fnameLen), "", ToxFile::RECEIVING};
     file.filesize = filesize;
     file.fileKind = kind;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
@@ -288,7 +293,11 @@ void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
 
     if (control == TOX_FILE_CONTROL_CANCEL)
     {
-        qDebug() << "onFileControlCallback: Received cancel for file "<<friendId<<":"<<fileId;
+        if (file->fileKind == TOX_FILE_KIND_AVATAR)
+            qDebug() << "Avatar tranfer"<<friendId<<":"<<fileId
+                     << "cancelled by friend, assuming friend has it cached";
+        else
+            qDebug() << "File tranfer"<<friendId<<":"<<fileId<<"cancelled by friend";
         emit static_cast<Core*>(core)->fileTransferCancelled(*file);
         removeFile(friendId, fileId);
     }
@@ -404,7 +413,7 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
                 qDebug() << "Got"<<file->avatarData.size()<<"bytes of avatar data from"
                          << static_cast<Core*>(core)->getFriendUsername(friendId);
                 Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendId));
-                Settings::getInstance().saveAvatarHash(file->fileName, static_cast<Core*>(core)->getFriendAddress(friendId));
+                Settings::getInstance().saveAvatarHash(file->resumeFileId, static_cast<Core*>(core)->getFriendAddress(friendId));
                 emit static_cast<Core*>(core)->friendAvatarChanged(friendId, pic);
             }
         }
