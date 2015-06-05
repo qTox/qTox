@@ -182,4 +182,6 @@ void LoginScreen::onAutoLoginToggled(int state)
         Settings::getInstance().setAutoLogin(false);
     else
         Settings::getInstance().setAutoLogin(true);
+
+    Settings::getInstance().save(false);
 }
