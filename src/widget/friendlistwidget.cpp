@@ -156,27 +156,29 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
     if (activeChatroomWidget == nullptr)
         return;
 
-    CircleWidget* circleWidget = dynamic_cast<CircleWidget*>(activeChatroomWidget->parentWidget());
 
     int index = -1;
     QLayout* currentLayout = nullptr;
 
+    CircleWidget* circleWidget = nullptr;
     FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(activeChatroomWidget);
-    if (circleWidget != nullptr)
-    {
-        if (friendWidget == nullptr)
-        {
-            return;
-        }
-        if (circleWidget->cycleContacts(friendWidget, forward))
-            return;
 
-        index = circleLayout.indexOfSortedWidget(circleWidget);
-        currentLayout = circleLayout.getLayout();
-    }
-    else
+    if (friendWidget != nullptr)
     {
-        if (friendWidget != nullptr)
+        circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId()));
+        if (circleWidget != nullptr)
+        {
+            if (friendWidget == nullptr)
+            {
+                return;
+            }
+            if (circleWidget->cycleContacts(friendWidget, forward))
+                return;
+
+            index = circleLayout.indexOfSortedWidget(circleWidget);
+            currentLayout = circleLayout.getLayout();
+        }
+        else
         {
             currentLayout = listLayout->getLayoutOnline();
             index = listLayout->indexOfFriendWidget(friendWidget, true);
@@ -186,19 +188,19 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
                 index = listLayout->indexOfFriendWidget(friendWidget, false);
             }
         }
+    }
+    else
+    {
+        GroupWidget* groupWidget = dynamic_cast<GroupWidget*>(activeChatroomWidget);
+        if (groupWidget != nullptr)
+        {
+            currentLayout = groupLayout.getLayout();
+            index = groupLayout.indexOfSortedWidget(groupWidget);
+        }
         else
         {
-            GroupWidget* groupWidget = dynamic_cast<GroupWidget*>(activeChatroomWidget);
-            if (groupWidget != nullptr)
-            {
-                currentLayout = groupLayout.getLayout();
-                index = groupLayout.indexOfSortedWidget(groupWidget);
-            }
-            else
-            {
-                return;
-            };
-        }
+            return;
+        };
     }
 
     index += forward ? 1 : -1;
@@ -277,7 +279,7 @@ void FriendListWidget::dropEvent(QDropEvent *event)
         assert(widget != nullptr);
 
         // Update old circle after moved.
-        CircleWidget *circleWidget = dynamic_cast<CircleWidget*>(widget->parent());
+        CircleWidget *circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleIndex(f->getToxId()));
 
         listLayout->addFriendWidget(widget, f->getStatus());
 

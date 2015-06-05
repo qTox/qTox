@@ -119,8 +119,6 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
         renameCircle();
 
     listWidget->setVisible(Settings::getInstance().getCircleExpanded(id));
-    //expand();
-    //Settings::getInstance().setCircleExpanded(id, isExpanded);
 }
 
 void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
@@ -128,6 +126,7 @@ void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
     listLayout->addFriendWidget(w, s);
     updateStatus();
     Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(w->friendId)->getToxId(), id);
+    qDebug() << Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(w->friendId)->getToxId()) << " WITH " << id;
 }
 
 void CircleWidget::expand()
@@ -401,7 +400,7 @@ void CircleWidget::dropEvent(QDropEvent *event)
         assert(widget != nullptr);
 
         // Update old circle after moved.
-        CircleWidget *circleWidget = dynamic_cast<CircleWidget*>(widget->parent());
+        CircleWidget *circleWidget = getFromID(Settings::getInstance().getFriendCircleIndex(f->getToxId()));
 
         addFriendWidget(widget, f->getStatus());
 
@@ -433,7 +432,6 @@ void CircleWidget::updateID(int index)
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(listLayout->getLayoutOnline()->itemAt(i));
         if (friendWidget != nullptr)
         {
-            qDebug() << "My yolo slow";
             Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
         }
     }
@@ -442,7 +440,6 @@ void CircleWidget::updateID(int index)
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(listLayout->getLayoutOffline()->itemAt(i));
         if (friendWidget != nullptr)
         {
-            qDebug() << "My yolo slow";
             Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
         }
     }
