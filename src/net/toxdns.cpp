@@ -13,8 +13,8 @@
 */
 
 
-#include "src/toxdns.h"
-#include "src/misc/cdata.h"
+#include "src/net/toxdns.h"
+#include "src/core/cdata.h"
 #include <QMessageBox>
 #include <QCoreApplication>
 #include <QThread>

@@ -13,7 +13,7 @@
 */
 
 
-#include "src/misc/serialize.h"
+#include "src/persistence/serialize.h"
 
 QByteArray doubleToData(double num)
 {

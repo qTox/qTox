@@ -20,7 +20,7 @@
 #include "src/widget/form/settings/privacyform.h"
 #include "src/widget/form/settings/avform.h"
 #include "src/widget/form/settings/advancedform.h"
-#include "src/translator.h"
+#include "src/widget/translator.h"
 #include <QTabWidget>
 
 SettingsWidget::SettingsWidget(QWidget* parent)

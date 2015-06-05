@@ -15,12 +15,12 @@
 */
 
 #include "settings.h"
-#include "smileypack.h"
+#include "src/persistence/smileypack.h"
+#include "src/persistence/db/plaindb.h"
 #include "src/core/corestructs.h"
-#include "src/misc/db/plaindb.h"
 #include "src/core/core.h"
 #include "src/widget/gui.h"
-#include "src/profilelocker.h"
+#include "src/persistence/profilelocker.h"
 #ifdef QTOX_PLATFORM_EXT
 #include "src/platform/autorun.h"
 #endif

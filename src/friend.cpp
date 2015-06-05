@@ -18,7 +18,7 @@
 #include "widget/form/chatform.h"
 #include "widget/gui.h"
 #include "src/core/core.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)},

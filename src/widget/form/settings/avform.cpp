@@ -14,12 +14,12 @@
 
 #include "avform.h"
 #include "ui_avsettings.h"
-#include "src/misc/settings.h"
-#include "src/audio.h"
+#include "src/persistence/settings.h"
+#include "src/audio/audio.h"
 #include "src/video/camerasource.h"
 #include "src/video/cameradevice.h"
-#include "src/widget/videosurface.h"
-#include "src/translator.h"
+#include "src/video/videosurface.h"
+#include "src/widget/translator.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>

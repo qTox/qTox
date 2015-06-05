@@ -13,8 +13,8 @@
 */
 
 
-#include "src/widget/toxuri.h"
-#include "src/toxdns.h"
+#include "src/net/toxuri.h"
+#include "src/net/toxdns.h"
 #include "src/widget/tool/friendrequestdialog.h"
 #include "src/nexus.h"
 #include "src/core/core.h"

@@ -1,8 +1,8 @@
 #include "core.h"
 #include "corefile.h"
 #include "corestructs.h"
-#include "src/misc/cstring.h"
-#include "src/misc/settings.h"
+#include "src/core/cstring.h"
+#include "src/persistence/settings.h"
 #include <QDebug>
 #include <QFile>
 #include <QThread>

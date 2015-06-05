@@ -15,10 +15,10 @@
 #include "groupwidget.h"
 #include "src/grouplist.h"
 #include "src/group.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include "form/groupchatform.h"
 #include "maskablepixmapwidget.h"
-#include "src/misc/style.h"
+#include "src/widget/style.h"
 #include "src/core/core.h"
 #include <QPalette>
 #include <QMenu>

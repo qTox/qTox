@@ -14,7 +14,7 @@
 
 #include "friend.h"
 #include "friendlist.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include <QMenu>
 #include <QDebug>
 #include <QHash>

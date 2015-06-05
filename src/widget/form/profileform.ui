@@ -39,7 +39,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>579</width>
+        <width>585</width>
         <height>625</height>
        </rect>
       </property>
@@ -283,7 +283,7 @@ Profile does not contain your history.</string>
   <customwidget>
    <class>CroppingLabel</class>
    <extends>QLabel</extends>
-   <header location="global">src/widget/croppinglabel.h</header>
+   <header location="global">src/widget/tool/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

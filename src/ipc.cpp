@@ -13,7 +13,7 @@
 */
 
 #include "src/ipc.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include <QDebug>
 #include <QCoreApplication>
 #include <random>

@@ -13,10 +13,10 @@
 */
 
 #include "genericchatroomwidget.h"
-#include "src/misc/style.h"
-#include "src/misc/settings.h"
+#include "src/widget/style.h"
+#include "src/persistence/settings.h"
 #include "maskablepixmapwidget.h"
-#include "croppinglabel.h"
+#include "src/widget/tool/croppinglabel.h"
 #include <QMouseEvent>
 #include <QStyle>
 

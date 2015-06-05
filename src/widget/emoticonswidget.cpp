@@ -13,9 +13,9 @@
 */
 
 #include "emoticonswidget.h"
-#include "src/misc/smileypack.h"
-#include "src/misc/style.h"
-#include "src/misc/settings.h"
+#include "src/widget/style.h"
+#include "src/persistence/smileypack.h"
+#include "src/persistence/settings.h"
 
 #include <QPushButton>
 #include <QRadioButton>

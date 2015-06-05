@@ -21,9 +21,9 @@
 #include "src/core/core.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
-#include "croppinglabel.h"
-#include "src/misc/style.h"
-#include "src/misc/settings.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/widget/style.h"
+#include "src/persistence/settings.h"
 #include "src/widget/widget.h"
 #include <QContextMenuEvent>
 #include <QMenu>

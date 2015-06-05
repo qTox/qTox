@@ -1,5 +1,5 @@
 #include "translator.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include <QApplication>
 #include <QString>
 #include <QLocale>

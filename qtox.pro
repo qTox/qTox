@@ -33,7 +33,7 @@ FORMS    += \
     src/chatlog/content/filetransferwidget.ui \
     src/widget/form/settings/advancedsettings.ui \
     src/android.ui \
-    src/widget/loginscreen.ui
+    src/loginscreen.ui
     
 CONFIG   += c++11
 
@@ -113,8 +113,8 @@ contains(JENKINS,YES) {
 }
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
-    HEADERS += src/audiofilterer.h
-    SOURCES += src/audiofilterer.cpp
+    HEADERS += src/audio/audiofilterer.h
+    SOURCES += src/audio/audiofilterer.cpp
 }
 
 contains(DEFINES, QTOX_PLATFORM_EXT) {
@@ -304,16 +304,16 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/group.h \
         src/grouplist.h \
         src/friendlist.h \
-        src/misc/smileypack.h \
+        src/persistence/smileypack.h \
         src/widget/emoticonswidget.h \
-        src/misc/style.h \
-        src/widget/croppinglabel.h \
+        src/widget/style.h \
+        src/widget/tool/croppinglabel.h \
         src/widget/maskablepixmapwidget.h \
-        src/widget/videosurface.h \
-        src/widget/toxuri.h \
-        src/toxdns.h \
-        src/widget/toxsave.h \
-        src/misc/serialize.h \
+        src/video/videosurface.h \
+        src/net/toxuri.h \
+        src/net/toxdns.h \
+        src/persistence/toxsave.h \
+        src/persistence/serialize.h \
         src/chatlog/chatlog.h \
         src/chatlog/chatline.h \
         src/chatlog/chatlinecontent.h \
@@ -329,7 +329,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/chatlog/content/timestamp.h \
         src/chatlog/documentcache.h \
         src/chatlog/pixmapcache.h \
-        src/offlinemsgengine.h \
+        src/persistence/offlinemsgengine.h \
         src/widget/form/addfriendform.h \
         src/widget/form/chatform.h \
         src/widget/form/groupchatform.h \
@@ -345,7 +345,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/friendwidget.h \
         src/widget/groupwidget.h \
         src/widget/widget.h \
-        src/widget/netcamview.h \
+        src/video/netcamview.h \
         src/widget/friendlistwidget.h \
         src/widget/genericchatroomwidget.h \
         src/widget/form/genericchatform.h \
@@ -353,12 +353,12 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/loadhistorydialog.h \
         src/widget/form/setpassworddialog.h \
         src/widget/form/tabcompleter.h \
-        src/misc/flowlayout.h \
+        src/widget/flowlayout.h \
         src/ipc.h \
-        src/autoupdate.h \
-        src/widget/callconfirmwidget.h \
+        src/net/autoupdate.h \
+        src/widget/tool/callconfirmwidget.h \
         src/widget/systemtrayicon.h \
-        src/misc/qrwidget.h \
+        src/widget/qrwidget.h \
         src/widget/systemtrayicon_private.h \
         src/widget/loginscreen.h
 
@@ -373,16 +373,16 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/tool/chattextedit.cpp \
         src/widget/tool/friendrequestdialog.cpp \
         src/widget/widget.cpp \
-        src/widget/netcamview.cpp \
+        src/video/netcamview.cpp \
         src/widget/friendlistwidget.cpp \
         src/widget/adjustingscrollarea.cpp \
         src/widget/form/loadhistorydialog.cpp \
         src/widget/form/setpassworddialog.cpp \
         src/widget/form/tabcompleter.cpp \
-        src/misc/flowlayout.cpp \
+        src/widget/flowlayout.cpp \
         src/ipc.cpp \
-        src/autoupdate.cpp \
-        src/widget/callconfirmwidget.cpp \
+        src/net/autoupdate.cpp \
+        src/widget/tool/callconfirmwidget.cpp \
         src/widget/systemtrayicon.cpp \
         src/widget/groupwidget.cpp \
         src/widget/friendwidget.cpp \
@@ -393,16 +393,16 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/friendlist.cpp \
         src/group.cpp \
         src/grouplist.cpp \
-        src/misc/smileypack.cpp \
+        src/persistence/smileypack.cpp \
         src/widget/emoticonswidget.cpp \
-        src/misc/style.cpp \
-        src/widget/croppinglabel.cpp \
+        src/widget/style.cpp \
+        src/widget/tool/croppinglabel.cpp \
         src/widget/maskablepixmapwidget.cpp \
-        src/widget/videosurface.cpp \
-        src/widget/toxuri.cpp \
-        src/toxdns.cpp \
-        src/widget/toxsave.cpp \
-        src/misc/serialize.cpp \
+        src/video/videosurface.cpp \
+        src/net/toxuri.cpp \
+        src/net/toxdns.cpp \
+        src/persistence/toxsave.cpp \
+        src/persistence/serialize.cpp \
         src/chatlog/chatlog.cpp \
         src/chatlog/chatline.cpp \
         src/chatlog/chatlinecontent.cpp \
@@ -418,8 +418,8 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/chatlog/content/timestamp.cpp \
         src/chatlog/documentcache.cpp \
         src/chatlog/pixmapcache.cpp \
-        src/offlinemsgengine.cpp \
-        src/misc/qrwidget.cpp \
+        src/persistence/offlinemsgengine.cpp \
+        src/widget/qrwidget.cpp \
         src/widget/genericchatroomwidget.cpp \
         src/widget/loginscreen.cpp
 }
@@ -449,26 +449,26 @@ macx {
 }
 
 SOURCES += \
-    src/audio.cpp \
-    src/historykeeper.cpp \
+    src/audio/audio.cpp \
+    src/persistence/historykeeper.cpp \
     src/main.cpp \
     src/nexus.cpp \
-    src/misc/cdata.cpp \
-    src/misc/cstring.cpp \
-    src/misc/settings.cpp \
-    src/misc/db/genericddinterface.cpp \
-    src/misc/db/plaindb.cpp \
-    src/misc/db/encrypteddb.cpp \
+    src/core/cdata.cpp \
+    src/core/cstring.cpp \
+    src/persistence/settings.cpp \
+    src/persistence/db/genericddinterface.cpp \
+    src/persistence/db/plaindb.cpp \
+    src/persistence/db/encrypteddb.cpp \
     src/video/videoframe.cpp \
     src/widget/gui.cpp \
-    src/toxme.cpp \
+    src/net/toxme.cpp \
     src/core/core.cpp \
     src/core/coreav.cpp \
     src/core/coreencryption.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
-    src/profilelocker.cpp \
-    src/avatarbroadcaster.cpp \
+    src/persistence/profilelocker.cpp \
+    src/net/avatarbroadcaster.cpp \
     src/widget/tool/screenshotgrabber.cpp \
     src/widget/tool/screengrabberchooserrectitem.cpp \
     src/widget/tool/screengrabberoverlayitem.cpp \
@@ -479,30 +479,30 @@ SOURCES += \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
     src/core/toxid.cpp \
-    src/profile.cpp \
-    src/translator.cpp
+    src/persistence/profile.cpp \
+    src/widget/translator.cpp
 
 HEADERS += \
-    src/audio.h \
+    src/audio/audio.h \
     src/core/core.h \
     src/core/coreav.h \
     src/core/coredefines.h \
     src/core/corefile.h \
     src/core/corestructs.h \
-    src/historykeeper.h \
+    src/persistence/historykeeper.h \
     src/nexus.h \
-    src/misc/cdata.h \
-    src/misc/cstring.h \
-    src/misc/settings.h \
-    src/misc/db/genericddinterface.h \
-    src/misc/db/plaindb.h \
-    src/misc/db/encrypteddb.h \
+    src/core/cdata.h \
+    src/core/cstring.h \
+    src/persistence/settings.h \
+    src/persistence/db/genericddinterface.h \
+    src/persistence/db/plaindb.h \
+    src/persistence/db/encrypteddb.h \
     src/video/videoframe.h \
     src/video/videosource.h \
     src/widget/gui.h \
-    src/toxme.h \
-    src/profilelocker.h \
-    src/avatarbroadcaster.h \
+    src/net/toxme.h \
+    src/persistence/profilelocker.h \
+    src/net/avatarbroadcaster.h \
     src/widget/tool/screenshotgrabber.h \
     src/widget/tool/screengrabberchooserrectitem.h \
     src/widget/tool/screengrabberoverlayitem.h \
@@ -514,5 +514,5 @@ HEADERS += \
     src/video/corevideosource.h \
     src/video/videomode.h \
     src/core/toxid.h \
-    src/profile.h \
-    src/translator.h
+    src/persistence/profile.h \
+    src/widget/translator.h

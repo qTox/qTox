@@ -18,11 +18,11 @@
 
 #include "core.h"
 #include "src/widget/gui.h"
-#include "src/misc/settings.h"
-#include "src/misc/cstring.h"
-#include "src/historykeeper.h"
+#include "src/persistence/settings.h"
+#include "src/core/cstring.h"
+#include "src/persistence/historykeeper.h"
 #include "src/nexus.h"
-#include "src/profile.h"
+#include "src/persistence/profile.h"
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 #include <QApplication>

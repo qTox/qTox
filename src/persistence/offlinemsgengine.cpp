@@ -14,8 +14,8 @@
 
 #include "offlinemsgengine.h"
 #include "src/friend.h"
-#include "src/historykeeper.h"
-#include "src/misc/settings.h"
+#include "src/persistence/historykeeper.h"
+#include "src/persistence/settings.h"
 #include "src/core/core.h"
 #include <QMutexLocker>
 #include <QTimer>

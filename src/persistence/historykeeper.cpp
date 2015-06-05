@@ -13,10 +13,10 @@
 */
 
 #include "historykeeper.h"
-#include "misc/settings.h"
+#include "src/persistence/settings.h"
 #include "src/core/core.h"
 #include "src/nexus.h"
-#include "src/profile.h"
+#include "src/persistence/profile.h"
 
 #include <QSqlError>
 #include <QFile>
@@ -26,8 +26,8 @@
 #include <QDebug>
 #include <QTemporaryFile>
 
-#include "misc/db/plaindb.h"
-#include "misc/db/encrypteddb.h"
+#include "src/persistence/db/plaindb.h"
+#include "src/persistence/db/encrypteddb.h"
 
 static HistoryKeeper *historyInstance = nullptr;
 

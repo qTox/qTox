@@ -15,7 +15,7 @@
 #include "chatlog.h"
 #include "chatmessage.h"
 #include "chatlinecontent.h"
-#include "src/translator.h"
+#include "src/widget/translator.h"
 
 #include <QDebug>
 #include <QScrollBar>

@@ -15,10 +15,10 @@
 #include "ui_advancedsettings.h"
 
 #include "advancedform.h"
-#include "src/historykeeper.h"
-#include "src/misc/settings.h"
-#include "src/misc/db/plaindb.h"
-#include "src/translator.h"
+#include "src/persistence/historykeeper.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/db/plaindb.h"
+#include "src/widget/translator.h"
 
 AdvancedForm::AdvancedForm() :
     GenericForm(QPixmap(":/img/settings/general.png"))

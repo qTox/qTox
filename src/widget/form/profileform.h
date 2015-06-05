@@ -20,7 +20,7 @@
 #include <QTimer>
 #include <QVBoxLayout>
 #include "src/core/core.h"
-#include "src/misc/qrwidget.h"
+#include "src/widget/qrwidget.h"
 
 class CroppingLabel;
 class Core;

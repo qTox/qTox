@@ -13,9 +13,9 @@
 */
 
 #include "customtextdocument.h"
-#include "../misc/settings.h"
-#include "../misc/smileypack.h"
-#include "../misc/style.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/smileypack.h"
+#include "src/widget/style.h"
 
 #include <QIcon>
 #include <QDebug>

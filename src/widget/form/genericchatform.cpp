@@ -21,11 +21,11 @@
 #include <QShortcut>
 #include <QKeyEvent>
 
-#include "src/misc/smileypack.h"
+#include "src/persistence/smileypack.h"
 #include "src/widget/emoticonswidget.h"
-#include "src/misc/style.h"
+#include "src/widget/style.h"
 #include "src/widget/widget.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/core/core.h"
@@ -36,7 +36,7 @@
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/timestamp.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
-#include "src/translator.h"
+#include "src/widget/translator.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent)

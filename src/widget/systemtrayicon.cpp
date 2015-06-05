@@ -4,7 +4,7 @@
 #include <QMenu>
 #include <QFile>
 #include <QDebug>
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 
 SystemTrayIcon::SystemTrayIcon()
 {

@@ -1,8 +1,8 @@
 #include "profile.h"
 #include "profilelocker.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include "src/core/core.h"
-#include "src/historykeeper.h"
+#include "src/persistence/historykeeper.h"
 #include "src/widget/gui.h"
 #include "src/widget/widget.h"
 #include "src/nexus.h"
@@ -13,6 +13,7 @@
 #include <QThread>
 #include <QObject>
 #include <QDebug>
+
 QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, QString password, bool isNewProfile)

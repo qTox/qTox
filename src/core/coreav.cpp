@@ -18,11 +18,11 @@
 #include "src/video/camerasource.h"
 #include "src/video/corevideosource.h"
 #include "src/video/videoframe.h"
-#include "src/audio.h"
+#include "src/audio/audio.h"
 #ifdef QTOX_FILTER_AUDIO
-#include "src/audiofilterer.h"
+#include "src/audio/audiofilterer.h"
 #endif
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include <assert.h>
 #include <QDebug>
 #include <QTimer>

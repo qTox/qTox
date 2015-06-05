@@ -1,5 +1,5 @@
 #include "profilelocker.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include <QDir>
 #include <QDebug>
 

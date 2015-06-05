@@ -13,9 +13,9 @@
 */
 
 
-#include "src/autoupdate.h"
-#include "src/misc/serialize.h"
-#include "src/misc/settings.h"
+#include "src/net/autoupdate.h"
+#include "src/persistence/serialize.h"
+#include "src/persistence/settings.h"
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
 #include <QNetworkAccessManager>

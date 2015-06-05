@@ -15,7 +15,7 @@
 #include <QApplication>
 #ifdef Q_OS_WIN32
 #include "src/platform/autorun.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include <windows.h>
 #include <string>
 

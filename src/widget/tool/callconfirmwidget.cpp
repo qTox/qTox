@@ -1,5 +1,5 @@
 #include "callconfirmwidget.h"
-#include "gui.h"
+#include "src/widget/gui.h"
 #include <assert.h>
 #include <QVBoxLayout>
 #include <QHBoxLayout>

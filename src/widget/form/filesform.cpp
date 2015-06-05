@@ -15,7 +15,7 @@
 #include "filesform.h"
 #include "ui_mainwindow.h"
 #include "src/widget/widget.h"
-#include "src/translator.h"
+#include "src/widget/translator.h"
 #include <QFileInfo>
 #include <QUrl>
 #include <QDebug>

@@ -435,7 +435,7 @@
   <customwidget>
    <class>CroppingLabel</class>
    <extends>QLabel</extends>
-   <header>src/widget/croppinglabel.h</header>
+   <header location="global">src/widget/tool/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

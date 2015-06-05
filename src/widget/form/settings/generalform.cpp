@@ -16,21 +16,20 @@
 #include "generalform.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/widget.h"
-#include "src/misc/settings.h"
-#include "src/misc/smileypack.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/smileypack.h"
 #include "src/core/core.h"
-#include "src/misc/style.h"
+#include "src/widget/style.h"
 #include "src/nexus.h"
-#include "src/profile.h"
-#include "src/translator.h"
+#include "src/persistence/profile.h"
+#include "src/widget/translator.h"
+#include "src/net/autoupdate.h"
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QTime>
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QDebug>
-
-#include "src/autoupdate.h"
 
 static QStringList locales = {"bg", "de", "en", "es", "fr", "hr", "hu", "it", "lt", "mannol", "nl", "no_nb", "pirate", "pl", "pt", "ru", "sl", "fi", "sv", "uk", "zh"};
 static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "mannol", "Nederlands", "Norsk Bokmål", "Pirate", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};

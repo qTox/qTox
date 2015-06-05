@@ -22,11 +22,11 @@
 #include "ui_mainwindow.h"
 #include "src/nexus.h"
 #include "src/core/core.h"
-#include "src/misc/cdata.h"
-#include "src/toxdns.h"
-#include "src/misc/settings.h"
+#include "src/core/cdata.h"
+#include "src/net/toxdns.h"
+#include "src/persistence/settings.h"
 #include "src/widget/gui.h"
-#include "src/translator.h"
+#include "src/widget/translator.h"
 
 AddFriendForm::AddFriendForm()
 {

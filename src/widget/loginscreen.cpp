@@ -1,11 +1,11 @@
 #include "loginscreen.h"
 #include "ui_loginscreen.h"
-#include "src/profile.h"
-#include "src/profilelocker.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/profilelocker.h"
 #include "src/nexus.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include "src/widget/form/setpassworddialog.h"
-#include "src/translator.h"
+#include "src/widget/translator.h"
 #include <QMessageBox>
 #include <QDebug>
 

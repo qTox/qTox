@@ -13,9 +13,9 @@
 */
 
 #include "toxsave.h"
-#include "gui.h"
+#include "src/widget/gui.h"
 #include "src/core/core.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include <QCoreApplication>
 #include <QFileInfo>
 

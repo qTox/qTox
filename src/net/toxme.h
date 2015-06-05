@@ -4,7 +4,7 @@
 #include <QString>
 #include <QMutex>
 #include <memory>
-#include "core/toxid.h"
+#include "src/core/toxid.h"
 
 class QNetworkAccessManager;
 

@@ -21,9 +21,9 @@
 #include "content/image.h"
 #include "content/notificationicon.h"
 
-#include "src/misc/settings.h"
-#include "src/misc/smileypack.h"
-#include "src/misc/style.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/smileypack.h"
+#include "src/widget/style.h"
 
 #define NAME_COL_WIDTH 90.0
 #define TIME_COL_WIDTH 90.0

@@ -15,7 +15,7 @@
 #include <QApplication>
 #if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
 #include "src/platform/autorun.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include <QProcessEnvironment>
 #include <QDir>
 

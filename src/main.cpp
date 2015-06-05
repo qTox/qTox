@@ -13,16 +13,16 @@
 */
 
 #include "widget/widget.h"
-#include "misc/settings.h"
+#include "persistence/settings.h"
 #include "src/nexus.h"
 #include "src/ipc.h"
-#include "src/widget/toxuri.h"
-#include "src/widget/toxsave.h"
-#include "src/autoupdate.h"
-#include "src/profile.h"
-#include "src/profilelocker.h"
+#include "src/net/toxuri.h"
+#include "src/net/autoupdate.h"
+#include "src/persistence/toxsave.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/profilelocker.h"
 #include "src/widget/loginscreen.h"
-#include "src/translator.h"
+#include "src/widget/translator.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDateTime>

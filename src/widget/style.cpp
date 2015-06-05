@@ -13,7 +13,7 @@
 */
 
 #include "style.h"
-#include "settings.h"
+#include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 
 #include <QFile>

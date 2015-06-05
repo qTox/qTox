@@ -7,7 +7,7 @@
 #include "src/friendlist.h"
 #include "src/group.h"
 #include "src/grouplist.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include "src/misc/style.h"
 #include "src/nexus.h"
 #include "src/widget/friendwidget.h"

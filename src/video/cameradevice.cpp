@@ -6,7 +6,7 @@ extern "C" {
 #include <libavdevice/avdevice.h>
 }
 #include "cameradevice.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 
 #ifdef Q_OS_WIN
 #include "src/platform/camera/directshow.h"
