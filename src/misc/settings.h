@@ -32,16 +32,18 @@ class Settings : public QObject
 {
     Q_OBJECT
 public:
-    ~Settings() = default;
     static Settings& getInstance();
+    static void destroyInstance();
     QString getSettingsDirPath(); ///< The returned path ends with a directory separator
 
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
     void createPersonal(QString basename); ///< Write a default personnal .ini settings file for a profile
 
+public slots:
     void load();
-    void save(bool writePersonal = true);
-    void save(QString path, bool writePersonal = true);
+    void save(bool writePersonal = true); ///< Asynchronous
+    void save(QString path, bool writePersonal = true); ///< Asynchronous
+    void sync(); ///< Waits for all asynchronous operations to complete
 
 signals:
     void dhtServerListChanged();
@@ -254,6 +256,7 @@ public:
 
 private:
     Settings();
+    ~Settings();
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
     static uint32_t makeProfileId(const QString& profile);
@@ -352,6 +355,7 @@ private:
     static QMutex bigLock;
     static Settings* settings;
     static const QString globalSettingsFile;
+    static QThread* settingsThread;
 };
 
 #endif // SETTINGS_HPP

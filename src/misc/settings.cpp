@@ -37,19 +37,32 @@
 #include <QStyleFactory>
 #include <QCryptographicHash>
 #include <QMutexLocker>
-
+#include <QThread>
 
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
 
 const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
 QMutex Settings::bigLock{QMutex::Recursive};
+QThread* Settings::settingsThread{nullptr};
 
 Settings::Settings() :
     loaded(false), useCustomDhtList{false},
     makeToxPortable{false}, currentProfileId(0)
 {
+    settingsThread = new QThread();
+    settingsThread->setObjectName("qTox Settings");
+    settingsThread->start(QThread::LowPriority);
+    moveToThread(settingsThread);
     load();
+}
+
+Settings::~Settings()
+{
+    sync();
+    settingsThread->exit(0);
+    settingsThread->wait();
+    delete settingsThread;
 }
 
 Settings& Settings::getInstance()
@@ -58,6 +71,12 @@ Settings& Settings::getInstance()
         settings = new Settings();
 
     return *settings;
+}
+
+void Settings::destroyInstance()
+{
+    delete settings;
+    settings = nullptr;
 }
 
 void Settings::load()
@@ -263,12 +282,20 @@ void Settings::load()
 
 void Settings::save(bool writePersonal)
 {
-    QString filePath = QDir(getSettingsDirPath()).filePath(globalSettingsFile);
+    if (QThread::currentThread() != settingsThread)
+        return (void) QMetaObject::invokeMethod(&getInstance(), "save",
+                                                Q_ARG(bool, writePersonal));
+
+    QString filePath = getSettingsDirPath()+globalSettingsFile;
     save(filePath, writePersonal);
 }
 
 void Settings::save(QString path, bool writePersonal)
 {
+    if (QThread::currentThread() != settingsThread)
+        return (void) QMetaObject::invokeMethod(&getInstance(), "save",
+                                                Q_ARG(QString, path), Q_ARG(bool, writePersonal));
+
 #ifndef Q_OS_ANDROID
     if (IPC::getInstance().isCurrentOwner())
 #endif
@@ -1288,4 +1315,16 @@ void Settings::createSettingsDir()
     QDir directory(dir);
     if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
         qCritical() << "Error while creating directory " << dir;
+}
+
+void Settings::sync()
+{
+    if (QThread::currentThread() != settingsThread)
+    {
+        QMetaObject::invokeMethod(&getInstance(), "sync", Qt::BlockingQueuedConnection);
+        return;
+    }
+
+    QMutexLocker locker{&bigLock};
+    qApp->processEvents();
 }

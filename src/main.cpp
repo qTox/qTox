@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 #endif
 
     qsrand(time(0));
-
+    Settings::getInstance();
     Translator::translate();
 
     // Process arguments
@@ -110,7 +110,6 @@ int main(int argc, char *argv[])
 #ifndef Q_OS_ANDROID
     IPC::getInstance();
 #endif
-    Settings::getInstance(); // Build our Settings singleton as soon as QApplication is ready, not before
 
     if (parser.isSet("p"))
     {
@@ -272,6 +271,7 @@ int main(int argc, char *argv[])
 #endif
 
     Nexus::destroyInstance();
-
+    Settings::destroyInstance();
+    qDebug() << "Clean exit with status"<<errorcode;
     return errorcode;
 }
