@@ -286,7 +286,7 @@ void Settings::save(bool writePersonal)
         return (void) QMetaObject::invokeMethod(&getInstance(), "save",
                                                 Q_ARG(bool, writePersonal));
 
-    QString filePath = getSettingsDirPath()+globalSettingsFile;
+    QString filePath = getSettingsDirPath();
     save(filePath, writePersonal);
 }
 
@@ -301,14 +301,15 @@ void Settings::save(QString path, bool writePersonal)
 #endif
         saveGlobal(path);
 
-    if (writePersonal) // Core::switchConfiguration
+    if (writePersonal)
         savePersonal(path);
 }
 
 void Settings::saveGlobal(QString path)
 {
     QMutexLocker locker{&bigLock};
-    qDebug() << "Saving settings in " + path;
+    path += globalSettingsFile;
+    qDebug() << "Saving settings at " + path;
 
     QSettings s(path, QSettings::IniFormat);
 
@@ -417,7 +418,7 @@ void Settings::savePersonal(QString path)
 
     qDebug() << "Saving personal settings in " << path;
 
-    QSettings ps(QFileInfo(path).dir().filePath(currentProfile + ".ini"), QSettings::IniFormat);
+    QSettings ps(path + currentProfile + ".ini", QSettings::IniFormat);
     ps.beginGroup("Friends");
         ps.beginWriteArray("Friend", friendLst.size());
         int index = 0;
@@ -552,10 +553,9 @@ bool Settings::getMakeToxPortable() const
 void Settings::setMakeToxPortable(bool newValue)
 {
     QMutexLocker locker{&bigLock};
+    QFile(getSettingsDirPath()+globalSettingsFile).remove();
     makeToxPortable = newValue;
-    save(globalSettingsFile); // Commit to the portable file that we don't want to use it
-    if (!newValue) // Update the new file right now if not already done
-        save();
+    save(false);
 }
 
 bool Settings::getAutorun() const

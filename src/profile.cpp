@@ -19,7 +19,9 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     : name{name}, password{password},
       newProfile{isNewProfile}, isRemoved{false}
 {
-    Settings::getInstance().setCurrentProfile(name);
+    Settings& s = Settings::getInstance();
+    s.setCurrentProfile(name);
+    s.save(false);
     HistoryKeeper::resetInstance();
 
     coreThread = new QThread();

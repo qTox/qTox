@@ -26,6 +26,7 @@
 #include "src/avatarbroadcaster.h"
 #include "src/profile.h"
 #include "corefile.h"
+#include "src/video/camerasource.h"
 
 #include <tox/tox.h>
 
@@ -115,6 +116,15 @@ Core::~Core()
     {
         qApp->processEvents();
         coreThread->wait(500);
+    }
+
+    for (ToxCall call : calls)
+    {
+        if (!call.active)
+            continue;
+        hangupCall(call.callId);
+        if (call.camera)
+            delete call.camera;
     }
 
     deadifyTox();
