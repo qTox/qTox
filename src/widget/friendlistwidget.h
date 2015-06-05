@@ -78,7 +78,7 @@ private:
 
     bool groupsOnTop;
     FriendListLayout* listLayout;
-    GenericChatItemLayout circleLayout2;
+    GenericChatItemLayout circleLayout;
     GenericChatItemLayout groupLayout;
 };
 
