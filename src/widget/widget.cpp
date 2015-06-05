@@ -585,7 +585,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     qDebug() << "ADDING FRIEND ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
     ToxId userToxId = ToxId(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
-    contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleIndex(newfriend->getToxId()));
+    contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
 
     Core* core = Nexus::getCore();
     connect(newfriend, &Friend::displayedNameChanged, contactListWidget, &FriendListWidget::moveWidget);

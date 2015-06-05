@@ -295,7 +295,7 @@ void Settings::loadPersonnal(Profile* profile)
             fp.addr = ps.value("addr").toString();
             fp.alias = ps.value("alias").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
-            fp.circleIndex = ps.value("circle", -1).toInt();
+            fp.circleID = ps.value("circle", -1).toInt();
             friendLst[ToxId(fp.addr).publicKey] = fp;
         }
         ps.endArray();
@@ -466,7 +466,7 @@ void Settings::savePersonal(QString profileName, QString password)
             ps.setValue("addr", frnd.addr);
             ps.setValue("alias", frnd.alias);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
-            ps.setValue("circle", frnd.circleIndex);
+            ps.setValue("circle", frnd.circleID);
             index++;
         }
         ps.endArray();
@@ -1285,31 +1285,32 @@ void Settings::setFriendAlias(const ToxId &id, const QString &alias)
     }
 }
 
-int Settings::getFriendCircleIndex(const ToxId &id) const
+int Settings::getFriendCircleID(const ToxId &id) const
 {
     QString key = id.publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
-        return it->circleIndex;
+        return it->circleID;
 
     return -1;
 }
 
-void Settings::setFriendCircleIndex(const ToxId &id, int index)
+void Settings::setFriendCircleID(const ToxId &id, int circleID)
 {
     QString key = id.publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
-        it->circleIndex = index;
+        it->circleID = circleID;
     else
     {
         friendProp fp;
         fp.addr = key;
         fp.alias = "";
         fp.autoAcceptDir = "";
-        fp.circleIndex = index;
+        fp.circleID = circleID;
         friendLst[key] = fp;
     }
+    savePersonal();
 }
 
 void Settings::removeFriendSettings(const ToxId &id)
@@ -1360,14 +1361,15 @@ int Settings::getCircleCount() const
     return circleLst.size();
 }
 
-QString Settings::getCircleName(int index) const
+QString Settings::getCircleName(int id) const
 {
-    return circleLst[index].name;
+    return circleLst[id].name;
 }
 
-void Settings::setCircleName(int index, const QString &name)
+void Settings::setCircleName(int id, const QString &name)
 {
-    circleLst[index].name = name;
+    circleLst[id].name = name;
+    save();
 }
 
 int Settings::addCircle(const QString &name)
@@ -1376,25 +1378,28 @@ int Settings::addCircle(const QString &name)
     cp.name = name;
     cp.expanded = false;
     circleLst.append(cp);
+    savePersonal();
     return circleLst.count() - 1;
 }
 
-bool Settings::getCircleExpanded(int index) const
+bool Settings::getCircleExpanded(int id) const
 {
-    return circleLst[index].expanded;
+    return circleLst[id].expanded;
 }
 
-void Settings::setCircleExpanded(int index, bool expanded)
+void Settings::setCircleExpanded(int id, bool expanded)
 {
-    circleLst[index].expanded = expanded;
+    circleLst[id].expanded = expanded;
+    save();
 }
 
-int Settings::removeCircle(int index)
+int Settings::removeCircle(int id)
 {
     // Replace index with last one and remove last one instead.
     // This gives you contiguous ids all the time.
-    circleLst[index] = circleLst.last();
+    circleLst[id] = circleLst.last();
     circleLst.pop_back();
+    savePersonal();
     return circleLst.count();
 }
 

@@ -91,13 +91,13 @@ int FriendListLayout::friendTotalCount() const
 
 bool FriendListLayout::hasChatrooms() const
 {
-    return !(friendOfflineLayout.getLayout()->isEmpty() && friendOfflineLayout.getLayout()->isEmpty());
+    return !(friendOfflineLayout.getLayout()->isEmpty() && friendOnlineLayout.getLayout()->isEmpty());
 }
 
 void FriendListLayout::searchChatrooms(const QString& searchString, bool hideOnline, bool hideOffline)
 {
-    friendOfflineLayout.search(searchString, hideOffline);
     friendOnlineLayout.search(searchString, hideOnline);
+    friendOfflineLayout.search(searchString, hideOffline);
 }
 
 QLayout* FriendListLayout::getLayoutOnline() const

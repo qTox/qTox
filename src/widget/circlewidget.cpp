@@ -118,40 +118,31 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
     if (isNew)
         renameCircle();
 
-    listWidget->setVisible(Settings::getInstance().getCircleExpanded(id));
+    setExpanded(Settings::getInstance().getCircleExpanded(id));
 }
 
 void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
 {
     listLayout->addFriendWidget(w, s);
     updateStatus();
-    Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(w->friendId)->getToxId(), id);
-    qDebug() << Settings::getInstance().getFriendCircleIndex(FriendList::findFriend(w->friendId)->getToxId()) << " WITH " << id;
+    Settings::getInstance().setFriendCircleID(FriendList::findFriend(w->friendId)->getToxId(), id);
+    qDebug() << Settings::getInstance().getFriendCircleID(FriendList::findFriend(w->friendId)->getToxId()) << " WITH " << id;
 }
 
-void CircleWidget::expand()
+void CircleWidget::setExpanded(bool isExpanded)
 {
-    if (expanded)
-        return;
-    toggle();
-}
-
-void CircleWidget::toggle()
-{
-    expanded = !expanded;
-    listWidget->setVisible(expanded);
-    if (expanded)
+    expanded = isExpanded;
+    listWidget->setVisible(isExpanded);
+    if (isExpanded)
     {
-        //fullLayout->addLayout(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
     }
     else
     {
-        //fullLayout->removeItem(listLayout);
         arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
     }
 
-    Settings::getInstance().setCircleExpanded(id, expanded);
+    Settings::getInstance().setCircleExpanded(id, isExpanded);
 }
 
 void CircleWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline)
@@ -189,14 +180,14 @@ bool CircleWidget::cycleContacts(bool forward)
     {
         if (listLayout->getLayoutOnline()->count() != 0)
         {
-            expand();
+            setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOnline(), 0);
             qDebug() << "emmited 1";
             return true;
         }
         else if (listLayout->getLayoutOffline()->count() != 0)
         {
-            expand();
+            setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOffline(), 0);
             qDebug() << "emmited 2";
             return true;
@@ -206,14 +197,14 @@ bool CircleWidget::cycleContacts(bool forward)
     {
         if (listLayout->getLayoutOffline()->count() != 0)
         {
-            expand();
+            setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOffline(), listLayout->getLayoutOffline()->count() - 1);
             qDebug() << "emmited 3";
             return true;
         }
         else if (listLayout->getLayoutOnline()->count() != 0)
         {
-            expand();
+            setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOnline(), listLayout->getLayoutOnline()->count() - 1);
             qDebug() << "emmited 4";
             return true;
@@ -374,7 +365,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
 void CircleWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
-        toggle();
+        setExpanded(!expanded);
 }
 
 void CircleWidget::dragEnterEvent(QDragEnterEvent *event)
@@ -395,8 +386,7 @@ void CircleWidget::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasFormat("friend"))
     {
-        if (!expanded)
-            toggle();
+        setExpanded(true);
 
         int friendId = event->mimeData()->data("friend").toInt();
         Friend *f = FriendList::findFriend(friendId);
@@ -406,7 +396,7 @@ void CircleWidget::dropEvent(QDropEvent *event)
         assert(widget != nullptr);
 
         // Update old circle after moved.
-        CircleWidget *circleWidget = getFromID(Settings::getInstance().getFriendCircleIndex(f->getToxId()));
+        CircleWidget *circleWidget = getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
 
         addFriendWidget(widget, f->getStatus());
 
@@ -438,7 +428,7 @@ void CircleWidget::updateID(int index)
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(listLayout->getLayoutOnline()->itemAt(i));
         if (friendWidget != nullptr)
         {
-            Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
+            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
         }
     }
     for (int i = 0; i < listLayout->getLayoutOffline()->count(); ++i)
@@ -446,7 +436,7 @@ void CircleWidget::updateID(int index)
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(listLayout->getLayoutOffline()->itemAt(i));
         if (friendWidget != nullptr)
         {
-            Settings::getInstance().setFriendCircleIndex(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
+            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
         }
     }
 }
