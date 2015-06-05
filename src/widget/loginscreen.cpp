@@ -25,6 +25,7 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->loginPassword, &QLineEdit::returnPressed, this, &LoginScreen::onLogin);
     connect(ui->newPass, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->newPassConfirm, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
+    connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
 
     reset();
 }
@@ -40,8 +41,8 @@ void LoginScreen::reset()
     ui->newPass->clear();
     ui->newPassConfirm->clear();
     ui->loginPassword->clear();
-
     ui->loginUsernames->clear();
+
     Profile::scanProfiles();
     QString lastUsed = Settings::getInstance().getCurrentProfile();
     qDebug() << "Last used is "<<lastUsed;
@@ -57,6 +58,8 @@ void LoginScreen::reset()
         ui->stackedWidget->setCurrentIndex(0);
     else
         ui->stackedWidget->setCurrentIndex(1);
+
+    ui->autoLoginCB->setChecked(Settings::getInstance().getAutoLogin());
 }
 
 void LoginScreen::onNewProfilePageClicked()
@@ -164,4 +167,13 @@ void LoginScreen::onLogin()
 void LoginScreen::onPasswordEdited()
 {
     ui->passStrengthMeter->setValue(SetPasswordDialog::getPasswordStrength(ui->newPass->text()));
+}
+
+void LoginScreen::onAutoLoginToggled(int state)
+{
+    Qt::CheckState cstate = static_cast<Qt::CheckState>(state);
+    if (cstate == Qt::CheckState::Unchecked)
+        Settings::getInstance().setAutoLogin(false);
+    else
+        Settings::getInstance().setAutoLogin(true);
 }

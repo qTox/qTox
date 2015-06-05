@@ -90,6 +90,10 @@ void Settings::load()
     qDebug() << "Loading settings from " + filePath;
 
     QSettings s(filePath, QSettings::IniFormat);
+    s.beginGroup("Login");
+        autoLogin = s.value("autoLogin", false).toBool();
+    s.endGroup();
+
     s.beginGroup("DHT Server");
         if (s.value("useCustomList").toBool())
         {
@@ -277,6 +281,10 @@ void Settings::saveGlobal(QString path)
     QSettings s(path, QSettings::IniFormat);
 
     s.clear();
+
+    s.beginGroup("Login");
+        s.setValue("autoLogin", autoLogin);
+    s.endGroup();
 
     s.beginGroup("DHT Server");
         s.setValue("useCustomList", useCustomDhtList);
@@ -1149,4 +1157,14 @@ void Settings::createSettingsDir()
     QDir directory(dir);
     if (!directory.exists() && !directory.mkpath(directory.absolutePath()))
         qCritical() << "Error while creating directory " << dir;
+}
+
+bool Settings::getAutoLogin() const
+{
+    return autoLogin;
+}
+
+void Settings::setAutoLogin(bool state)
+{
+    autoLogin = state;
 }

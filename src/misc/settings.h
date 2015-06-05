@@ -245,6 +245,9 @@ public:
     bool getGroupchatPosition() const;
     void setGroupchatPosition(bool value);
 
+    bool getAutoLogin() const;
+    void setAutoLogin(bool state);
+
 public:
     void save(bool writePersonal = true);
     void save(QString path, bool writePersonal = true);
@@ -270,6 +273,7 @@ private:
     int dhtServerId;
     bool dontShowDhtDialog;
 
+    bool autoLogin;
     bool fauxOfflineMessaging;
     bool compactLayout;
     bool groupchatPosition;

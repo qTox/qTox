@@ -249,6 +249,18 @@ int main(int argc, char *argv[])
     }
 #endif
 
+    // Autologin
+    if (Settings::getInstance().getAutoLogin())
+    {
+        QString profileName = Settings::getInstance().getCurrentProfile();
+        if (Profile::exists(profileName) && !Profile::isEncrypted(profileName))
+        {
+            Profile* profile = Profile::loadProfile(profileName);
+            if (profile)
+                Nexus::getInstance().setProfile(profile);
+        }
+    }
+
     Nexus::getInstance().start();
 
     // Run

@@ -281,7 +281,7 @@
     <bool>true</bool>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="newPage">
     <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -748,6 +748,16 @@ margin-bottom:5px;</string>
           <widget class="QLineEdit" name="loginPassword">
            <property name="echoMode">
             <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="autoLoginCB">
+           <property name="toolTip">
+            <string>If the profile does not have a password, qTox can skip the login screen</string>
+           </property>
+           <property name="text">
+            <string>Login automatically</string>
            </property>
           </widget>
          </item>

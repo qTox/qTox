@@ -17,6 +17,7 @@ public:
     void reset(); ///< Resets the UI, clears all fields
 
 private slots:
+    void onAutoLoginToggled(int state);
     void onLoginUsernameSelected(const QString& name);
     void onPasswordEdited();
     // Buttons to change page
