@@ -7,9 +7,10 @@
 #include <QLibraryInfo>
 #include <QDebug>
 #include <QMutexLocker>
+#include <algorithm>
 
 QTranslator* Translator::translator{nullptr};
-QVector<QPair<void*, std::function<void()>>> Translator::callbacks;
+QVector<Translator::Callback> Translator::callbacks;
 QMutex Translator::lock;
 
 void Translator::translate()
@@ -64,12 +65,6 @@ void Translator::registerHandler(std::function<void()> f, void *owner)
 void Translator::unregister(void *owner)
 {
     QMutexLocker locker{&lock};
-    for (int i=0; i<callbacks.size(); i++)
-    {
-        if (callbacks[i].first == owner)
-        {
-            callbacks.removeAt(i);
-            i--;
-        }
-    }
+    callbacks.erase(std::remove_if(begin(callbacks), end(callbacks),
+                    [=](const Callback& c){return c.first==owner;}), end(callbacks));
 }

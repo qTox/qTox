@@ -19,9 +19,10 @@ public:
     static void unregister(void* owner);
 
 private:
-    static QTranslator* translator;
-    static QVector<QPair<void*, std::function<void()>>> callbacks;
+    using Callback = QPair<void*, std::function<void()>>;
+    static QVector<Callback> callbacks;
     static QMutex lock;
+    static QTranslator* translator;
 };
 
 #endif // TRANSLATOR_H
