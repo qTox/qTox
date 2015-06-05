@@ -1,6 +1,8 @@
 #ifndef INSTALLOSX_H
 #define INSTALLOSX_H
 
+#include <QtCore/qsystemdetection.h>
+
 #ifndef Q_OS_MACX
 #error "This file is only meant to be compiled for Mac OSX targets"
 #endif
