@@ -27,7 +27,7 @@
 class QPixmap;
 class MaskablePixmapWidget;
 
-struct FriendWidget final : public GenericChatroomWidget
+class FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
@@ -51,8 +51,8 @@ public slots:
     void setAlias(const QString& alias);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent* ev) final override;
-    virtual void mouseMoveEvent(QMouseEvent* ev) final  override;
+    virtual void mousePressEvent(QMouseEvent* ev) override;
+    virtual void mouseMoveEvent(QMouseEvent* ev) override;
     void setFriendAlias();
     void showEvent(QShowEvent *)
     {

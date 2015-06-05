@@ -368,7 +368,7 @@ private:
         QString alias;
         QString addr;
         QString autoAcceptDir;
-        int circleIndex;
+        int circleIndex = -1;
     };
 
     struct circleProp
