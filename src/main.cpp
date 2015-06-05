@@ -23,6 +23,7 @@
 #include "src/profile.h"
 #include "src/profilelocker.h"
 #include "src/widget/loginscreen.h"
+#include "src/translator.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDateTime>
@@ -97,6 +98,8 @@ int main(int argc, char *argv[])
 #endif
 
     qsrand(time(0));
+
+    Translator::translate();
 
     // Process arguments
     QCommandLineParser parser;

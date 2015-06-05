@@ -471,7 +471,8 @@ SOURCES += \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
     src/core/toxid.cpp \
-    src/profile.cpp
+    src/profile.cpp \
+    src/translator.cpp
 
 HEADERS += \
     src/audio.h \
@@ -505,4 +506,5 @@ HEADERS += \
     src/video/corevideosource.h \
     src/video/videomode.h \
     src/core/toxid.h \
-    src/profile.h
+    src/profile.h \
+    src/translator.h

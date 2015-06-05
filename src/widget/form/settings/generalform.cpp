@@ -22,6 +22,7 @@
 #include "src/misc/style.h"
 #include "src/nexus.h"
 #include "src/profile.h"
+#include "src/translator.h"
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QTime>
@@ -211,7 +212,7 @@ void GeneralForm::onEnableIPv6Updated()
 void GeneralForm::onTranslationUpdated()
 {
     Settings::getInstance().setTranslation(locales[bodyUI->transComboBox->currentIndex()]);
-    Widget::getInstance()->setTranslation();
+    Translator::translate();
 }
 
 void GeneralForm::onAutorunUpdated()

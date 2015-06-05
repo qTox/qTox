@@ -42,7 +42,6 @@ class Camera;
 class FriendListWidget;
 class MaskablePixmapWidget;
 class QTimer;
-class QTranslator;
 class SystemTrayIcon;
 
 class Widget : public QMainWindow
@@ -70,7 +69,6 @@ public:
     void newMessageAlert(GenericChatroomWidget* chat);
     bool isFriendWidgetCurActiveWidget(Friend* f);
     bool getIsWindowMinimized();
-    void setTranslation();
     void updateIcons();
     void clearContactsList();
     ~Widget();
@@ -197,7 +195,6 @@ private:
     bool autoAwayActive = false;
     Status beforeDisconnect = Status::Offline;
     QTimer *timer, *offlineMsgTimer;
-    QTranslator* translator;
     QRegExp nameMention, sanitizedNameMention;
     bool eventFlag;
     bool eventIcon;

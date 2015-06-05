@@ -36,6 +36,7 @@
 #include "src/nexus.h"
 #include "src/widget/gui.h"
 #include "src/offlinemsgengine.h"
+#include "src/translator.h"
 #include <cassert>
 #include <QMessageBox>
 #include <QDebug>
@@ -50,14 +51,12 @@
 #include <QShortcut>
 #include <QTimer>
 #include <QStyleFactory>
-#include <QTranslator>
 #include <QString>
 #include <QByteArray>
 #include <QImageReader>
 #include <QList>
 #include <QDesktopServices>
 #include <QProcess>
-#include <QLibraryInfo>
 #include <tox/tox.h>
 
 #ifdef Q_OS_ANDROID
@@ -85,8 +84,7 @@ Widget::Widget(QWidget *parent)
       eventIcon(false)
 {
     installEventFilter(this);
-    translator = new QTranslator;
-    setTranslation();
+    Translator::translate();
 }
 
 void Widget::init()
@@ -228,41 +226,6 @@ void Widget::init()
         show();
 }
 
-void Widget::setTranslation()
-{
-    // Load translations
-    QCoreApplication::removeTranslator(translator);
-    QString locale;
-    if ((locale = Settings::getInstance().getTranslation()).isEmpty())
-        locale = QLocale::system().name().section('_', 0, 0);
-
-    if (locale == "en")
-        return;
-
-    if (translator->load(locale, ":translations/"))
-    {
-        qDebug() << "Loaded translation" << locale;
-
-        // system menu translation
-        QTranslator *qtTranslator = new QTranslator();
-        QString s_locale = "qt_"+locale;
-        if (qtTranslator->load(s_locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-        {
-            QApplication::installTranslator(qtTranslator);
-            qDebug() << "System translation loaded" << locale;
-        }
-        else
-        {
-            qDebug() << "System translation not loaded" << locale;
-        }
-    }
-    else
-    {
-        qDebug() << "Error loading translation" << locale;
-    }
-    QCoreApplication::installTranslator(translator);
-}
-
 bool Widget::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange && obj != NULL)
@@ -327,7 +290,6 @@ Widget::~Widget()
     GroupList::clear();
     delete trayMenu;
     delete ui;
-    delete translator;
     instance = nullptr;
 }
 
