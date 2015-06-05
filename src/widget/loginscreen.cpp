@@ -92,7 +92,7 @@ void LoginScreen::onCreateNewProfile()
         return;
     }
 
-    if (Profile::profileExists(name))
+    if (Profile::exists(name))
     {
         QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("This profile already exists."));
         return;

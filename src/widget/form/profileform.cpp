@@ -240,7 +240,7 @@ void ProfileForm::onRenameClicked()
         if (name.isEmpty()) break;
         name = Core::sanitize(name);
 
-        if (Profile::profileExists(name))
+        if (Profile::exists(name))
             GUI::showError(tr("Profile already exists", "rename failure title"),
                            tr("A profile named \"%1\" already exists.", "rename confirm text").arg(name));
         else if (!nexus.getProfile()->rename(name))

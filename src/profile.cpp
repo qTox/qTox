@@ -54,7 +54,7 @@ Profile* Profile::createProfile(QString name, QString password)
         return nullptr;
     }
 
-    if (profileExists(name))
+    if (exists(name))
     {
         qCritical() << "Tried to create profile "<<name<<", but it already exists!";
         return nullptr;
@@ -108,7 +108,7 @@ void Profile::scanProfiles()
 
 void Profile::importProfile(QString name)
 {
-    assert(!profileExists(name));
+    assert(!exists(name));
     Settings::getInstance().createPersonal(name);
 }
 
@@ -237,7 +237,7 @@ void Profile::saveToxSave(QByteArray data)
     newProfile = false;
 }
 
-bool Profile::profileExists(QString name)
+bool Profile::exists(QString name)
 {
     QString path = Settings::getSettingsDirPath() + QDir::separator() + name;
     return QFile::exists(path+".tox") && QFile::exists(path+".ini");

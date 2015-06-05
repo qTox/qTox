@@ -440,6 +440,14 @@ unix:!macx {
         src/platform/camera/v4l2.cpp
 }
 
+macx {
+    SOURCES += \
+        src/platform/install_osx.cpp
+
+    HEADERS += \
+        src/platform/install_osx.h
+}
+
 SOURCES += \
     src/audio.cpp \
     src/historykeeper.cpp \

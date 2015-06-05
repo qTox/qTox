@@ -49,7 +49,7 @@ public:
     static void scanProfiles();
     static QVector<QString> getProfiles();
 
-    static bool profileExists(QString name);
+    static bool exists(QString name);
     static bool isEncrypted(QString name); ///< Returns false on error. Checks the actual file on disk.
 
 private:

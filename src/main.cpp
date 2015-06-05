@@ -12,7 +12,6 @@
     See the COPYING file for more details.
 */
 
-#include "toxme.h"
 #include "widget/widget.h"
 #include "misc/settings.h"
 #include "src/nexus.h"
@@ -28,17 +27,15 @@
 #include <QCommandLineParser>
 #include <QDateTime>
 #include <QDebug>
-#include <QDir>
 #include <QFile>
 #include <QFontDatabase>
 #include <QMutexLocker>
-#include <QProcess>
 
 #include <sodium.h>
-#include <unistd.h>
 
-#define EXIT_UPDATE_MACX 218 //We track our state using unique exit codes when debugging
-#define EXIT_UPDATE_MACX_FAIL 216
+#if defined(Q_OS_MACX) && defined(QT_RELEASE)
+#include "platform/install_osx.h"
+#endif
 
 #ifdef LOG_TO_FILE
 static QTextStream* logFile {nullptr};
@@ -118,7 +115,7 @@ int main(int argc, char *argv[])
     if (parser.isSet("p"))
     {
         QString profileName = parser.value("p");
-        if (QDir(Settings::getSettingsDirPath()).exists(profileName + ".tox"))
+        if (Profile::exists(profileName))
         {
             qDebug() << "Setting profile to" << profileName;
             if (Profile::isEncrypted(profileName))
@@ -147,7 +144,7 @@ int main(int argc, char *argv[])
 
 #ifdef LOG_TO_FILE
     logFile = new QTextStream;
-    QFile logfile(QDir(Settings::getSettingsDirPath()).filePath("qtox.log"));
+    QFile logfile(Settings::getSettingsDirPath()+"qtox.log");
     if (logfile.open(QIODevice::Append))
     {
         logFile->setDevice(&logfile);
@@ -169,60 +166,7 @@ int main(int argc, char *argv[])
     qDebug() << "commit: " << GIT_VERSION << "\n";
 
 #if defined(Q_OS_MACX) && defined(QT_RELEASE)
-    if (qApp->applicationDirPath() != "/Applications/qtox.app/Contents/MacOS") {
-        qDebug() << "OS X: Not in Applications folder";
-
-        QMessageBox AskInstall;
-        AskInstall.setIcon(QMessageBox::Question);
-        AskInstall.setWindowModality(Qt::ApplicationModal);
-        AskInstall.setText("Move to Applications folder?");
-        AskInstall.setInformativeText("I can move myself to the Applications folder, keeping your downloads folder less cluttered.\r\n");
-        AskInstall.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
-        AskInstall.setDefaultButton(QMessageBox::Yes);
-
-        int AskInstallAttempt = AskInstall.exec(); //Actually ask the user
-
-        if (AskInstallAttempt == QMessageBox::Yes) {
-            QProcess *sudoprocess = new QProcess;
-            QProcess *qtoxprocess = new QProcess;
-
-            QString bindir = qApp->applicationDirPath();
-            QString appdir = bindir;
-            appdir.chop(15);
-            QString sudo = bindir + "/qtox_sudo rsync -avzhpltK " + appdir + " /Applications";
-            QString qtox = "open /Applications/qtox.app";
-
-            QString appdir_noqtox = appdir;
-            appdir_noqtox.chop(8);
-
-            if ((appdir_noqtox + "qtox.app") != appdir) //quick safety check
-            {
-                qDebug() << "OS X: Attmepted to delete non qTox directory!";
-                return EXIT_UPDATE_MACX_FAIL;
-            }
-
-            QDir old_app(appdir);
-
-            sudoprocess->start(sudo); //Where the magic actually happens, safety checks ^
-            sudoprocess->waitForFinished();
-
-            if (old_app.removeRecursively()) //We've just deleted the running program
-            {
-                qDebug() << "OS X: Cleaned up old directory";
-            }
-            else
-            {
-                qDebug() << "OS X: This should never happen, the directory failed to delete";
-            }
-
-            if (fork() != 0) //Forking is required otherwise it won't actually cleanly launch
-                return EXIT_UPDATE_MACX;
-
-            qtoxprocess->start(qtox);
-
-            return 0; //Actually kills it
-        }
-    }
+    osx::moveToAppFolder();
 #endif
 
     // Install Unicode 6.1 supporting font

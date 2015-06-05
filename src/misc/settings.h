@@ -36,7 +36,7 @@ public:
 
     void createPersonal(QString basename); ///< Write a default personnal settings file for a profile
 
-    static QString getSettingsDirPath();
+    static QString getSettingsDirPath(); ///< The returned path ends with a directory separator
 
     struct DhtServer
     {

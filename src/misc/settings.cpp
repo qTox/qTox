@@ -407,14 +407,15 @@ uint32_t Settings::makeProfileId(const QString& profile)
 QString Settings::getSettingsDirPath()
 {
     if (makeToxPortable)
-        return ".";
+        return QString(".")+QDir::separator();
 
     // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox");
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox" + QDir::separator());
 #else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + "tox");
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
+                           + QDir::separator() + "tox" + QDir::separator());
 #endif
 }
 
