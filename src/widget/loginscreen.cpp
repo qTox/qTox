@@ -10,10 +10,12 @@
 
 LoginScreen::LoginScreen(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::LoginScreen)
+    ui(new Ui::LoginScreen),
+    quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
 {
     ui->setupUi(this);
 
+    connect(&quitShortcut, &QShortcut::activated, this, &LoginScreen::close);
     connect(ui->newProfilePgbtn, &QPushButton::clicked, this, &LoginScreen::onNewProfilePageClicked);
     connect(ui->loginPgbtn, &QPushButton::clicked, this, &LoginScreen::onLoginPageClicked);
     connect(ui->createAccountButton, &QPushButton::clicked, this, &LoginScreen::onCreateNewProfile);

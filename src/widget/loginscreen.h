@@ -2,6 +2,7 @@
 #define LOGINSCREEN_H
 
 #include <QWidget>
+#include <QShortcut>
 
 namespace Ui {
 class LoginScreen;
@@ -29,6 +30,7 @@ private slots:
 
 private:
     Ui::LoginScreen *ui;
+    QShortcut quitShortcut;
 };
 
 #endif // LOGINSCREEN_H
