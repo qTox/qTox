@@ -8,12 +8,12 @@ struct VideoMode
     unsigned short FPS; ///< Max frames per second supported by the device at this resolution
 
     /// All zeros means a default/unspecified mode
-    operator bool()
+    operator bool() const
     {
         return width || height || FPS;
     }
 
-    bool operator==(const VideoMode& other)
+    bool operator==(const VideoMode& other) const
     {
         return width == other.width
                 && height == other.height
