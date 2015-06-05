@@ -55,9 +55,15 @@ void LoginScreen::reset()
     }
 
     if (profiles.isEmpty())
+    {
         ui->stackedWidget->setCurrentIndex(0);
+        ui->newUsername->setFocus();
+    }
     else
+    {
         ui->stackedWidget->setCurrentIndex(1);
+        ui->loginPassword->setFocus();
+    }
 
     ui->autoLoginCB->setChecked(Settings::getInstance().getAutoLogin());
 }
