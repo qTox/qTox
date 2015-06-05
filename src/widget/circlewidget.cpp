@@ -270,18 +270,9 @@ bool CircleWidget::cycleContacts(FriendWidget *activeChatroomWidget, bool forwar
     return false;
 }
 
-void CircleWidget::init()
+bool CircleWidget::hasChatrooms() const
 {
-    qDebug() << "EXPANDED? " << Settings::getInstance().getCircleExpanded(id);
-    if (Settings::getInstance().getCircleExpanded(id))
-        expand();
-    else
-    {
-        if (expanded)
-        {
-            toggle();
-        }
-    }
+    return listLayout->hasChatrooms();
 }
 
 CircleWidget* CircleWidget::getFromID(int id)

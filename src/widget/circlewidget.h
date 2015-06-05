@@ -24,16 +24,14 @@ class QLabel;
 class FriendListWidget;
 class FriendListLayout;
 class FriendWidget;
-class QLineEdit;
-class CroppingLabel;
 
 class CircleWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    CircleWidget(FriendListWidget *parent = 0, int id = -1);
+    CircleWidget(FriendListWidget* parent = 0, int id = -1);
 
-    void addFriendWidget(FriendWidget *w, Status s);
+    void addFriendWidget(FriendWidget* w, Status s);
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false);
 
@@ -48,7 +46,7 @@ public:
     bool cycleContacts(bool forward);
     bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
 
-    void init();
+    bool hasChatrooms() const;
 
     static CircleWidget* getFromID(int id);
 
@@ -60,22 +58,17 @@ public slots:
 
 protected:
 
-    void contextMenuEvent(QContextMenuEvent *event);
+    void contextMenuEvent(QContextMenuEvent* event);
 
-    void mousePressEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
     void dragEnterEvent(QDragEnterEvent* event) override;
-    void dragLeaveEvent(QDragLeaveEvent *event) override;
+    void dragLeaveEvent(QDragLeaveEvent* event) override;
     void dropEvent(QDropEvent* event) override;
 
 private:
     void updateID(int index);
     static QHash<int, CircleWidget*> circleList;
-    enum FriendLayoutType
-    {
-        Online = 0,
-        Offline = 1
-    };
     int id;
     bool expanded = false;
     FriendListLayout* listLayout;

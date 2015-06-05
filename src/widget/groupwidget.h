@@ -20,7 +20,6 @@
 #ifndef GROUPWIDGET_H
 #define GROUPWIDGET_H
 
-#include <QLabel>
 #include "genericchatroomwidget.h"
 
 class GroupWidget : public GenericChatroomWidget

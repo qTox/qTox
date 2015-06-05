@@ -52,12 +52,10 @@ public:
     void addCircleWidget(int id);
     void addCircleWidget(FriendWidget *widget = nullptr);
     void removeCircleWidget(CircleWidget *widget);
-    void initCircles();
 
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
     void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
-    QList<GenericChatroomWidget*> getAllFriends();
     QVector<CircleWidget*> getAllCircles();
 
     void reDraw();
