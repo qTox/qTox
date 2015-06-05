@@ -15,6 +15,7 @@
 #include "chatlog.h"
 #include "chatmessage.h"
 #include "chatlinecontent.h"
+#include "src/translator.h"
 
 #include <QDebug>
 #include <QScrollBar>
@@ -61,7 +62,6 @@ ChatLog::ChatLog(QWidget* parent)
     // copy action (ie. Ctrl+C)
     copyAction = new QAction(this);
     copyAction->setIcon(QIcon::fromTheme("edit-copy"));
-    copyAction->setText(tr("Copy"));
     copyAction->setShortcut(QKeySequence::Copy);
     copyAction->setEnabled(false);
     connect(copyAction, &QAction::triggered, this, [this]() { copySelectedText(); });
@@ -74,9 +74,8 @@ ChatLog::ChatLog(QWidget* parent)
 #endif
 
     // select all action (ie. Ctrl+A)
-    QAction* selectAllAction = new QAction(this);
+    selectAllAction = new QAction(this);
     selectAllAction->setIcon(QIcon::fromTheme("edit-select-all"));
-    selectAllAction->setText(tr("Select all"));
     selectAllAction->setShortcut(QKeySequence::SelectAll);
     connect(selectAllAction, &QAction::triggered, this, [this]() { selectAll(); });
     addAction(selectAllAction);
@@ -103,10 +102,15 @@ ChatLog::ChatLog(QWidget* parent)
         copySelectedText(true);
 #endif
     });
+
+    retranslateUi();
+    Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 }
 
 ChatLog::~ChatLog()
 {
+    Translator::unregister(this);
+
     // Remove chatlines from scene
     for (ChatLine::Ptr l : lines)
         l->removeFromScene();
@@ -811,4 +815,10 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
         for (int i=selFirstRow; i<=selLastRow; ++i)
             lines[i]->selectionFocusChanged(false);
     }
+}
+
+void ChatLog::retranslateUi()
+{
+    copyAction->setText(tr("Copy"));
+    selectAllAction->setText(tr("Select all"));
 }

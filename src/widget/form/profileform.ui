@@ -39,7 +39,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>630</width>
+        <width>579</width>
         <height>625</height>
        </rect>
       </property>
@@ -104,21 +104,13 @@ Share it with your friends to communicate.</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="toxId">
-            <property name="toolTip">
-             <string comment="Tox ID tooltip">This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</string>
-            </property>
-           </widget>
+           <widget class="QLineEdit" name="toxId"/>
           </item>
           <item>
            <widget class="QFrame" name="verticalFrame">
             <layout class="QHBoxLayout" name="qrGroup">
              <item>
               <widget class="QLabel" name="qrCode">
-               <property name="text">
-                <string>QRCODE</string>
-               </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>

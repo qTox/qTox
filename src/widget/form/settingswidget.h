@@ -18,6 +18,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QStyleFactory>
+#include <array>
 
 class Camera;
 class GenericForm;
@@ -48,9 +49,14 @@ private slots:
     void onTabChanged(int);
 
 private:
+    void retranslateUi();
+
+private:
     QWidget *head, *body;
     QTabWidget *settingsWidgets;
     QLabel *nameLabel, *imgLabel;
+    std::array<GenericForm*, 4> cfgForms;
+    int currentIndex;
 };
 
 #endif // SETTINGSWIDGET_H

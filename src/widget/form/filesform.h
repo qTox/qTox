@@ -42,6 +42,9 @@ private slots:
     void onFileActivated(QListWidgetItem* item);
 
 private:
+    void retranslateUi();
+
+private:
     QWidget* head;
     QLabel headLabel;
     QVBoxLayout headLayout;

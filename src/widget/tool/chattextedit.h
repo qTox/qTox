@@ -22,6 +22,7 @@ class ChatTextEdit : public QTextEdit
     Q_OBJECT
 public:
     explicit ChatTextEdit(QWidget *parent = 0);
+    ~ChatTextEdit();
     virtual void keyPressEvent(QKeyEvent * event) override;
     void setLastMessage(QString lm);
     
@@ -29,6 +30,9 @@ signals:
     void enterPressed();
     void tabPressed();
     void keyPressed();
+
+private:
+    void retranslateUi();
 
 private:
     QString lastMessage;

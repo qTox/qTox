@@ -29,6 +29,7 @@ class GeneralForm : public GenericForm
 public:
     GeneralForm(SettingsWidget *parent);
     ~GeneralForm();
+    QString getFormName() final {return tr("General");}
 
 private slots:
     void onEnableIPv6Updated();
@@ -63,6 +64,9 @@ private slots:
     void onCompactLayout();
     void onGroupchatPositionChanged();
     void onThemeColorChanged(int);
+
+private:
+    void retranslateUi();
 
 private:
     Ui::GeneralSettings *bodyUI;

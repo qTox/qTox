@@ -29,6 +29,7 @@ class AdvancedForm : public GenericForm
 public:
     AdvancedForm();
     virtual ~AdvancedForm();
+    QString getFormName() final {return tr("Advanced");}
     
 protected:
     bool eventFilter(QObject *o, QEvent *e);
@@ -37,6 +38,9 @@ private slots:
     void onMakeToxPortableUpdated();
     void onDbSyncTypeUpdated();
     void resetToDefault();
+
+private:
+    void retranslateUi();
 
 private:
     Ui::AdvancedSettings* bodyUI;

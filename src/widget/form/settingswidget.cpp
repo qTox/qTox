@@ -20,6 +20,7 @@
 #include "src/widget/form/settings/privacyform.h"
 #include "src/widget/form/settings/avform.h"
 #include "src/widget/form/settings/advancedform.h"
+#include "src/translator.h"
 #include <QTabWidget>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
@@ -53,15 +54,18 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     AVForm* avfrm = new AVForm;
     AdvancedForm *expfrm = new AdvancedForm;
 
-    GenericForm* cfgForms[] = { gfrm, pfrm, avfrm, expfrm };
+    cfgForms = {{ gfrm, pfrm, avfrm, expfrm }};
     for (GenericForm* cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
 
     connect(settingsWidgets, &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
+
+    Translator::registerHandler(std::bind(&SettingsWidget::retranslateUi, this), this);
 }
 
 SettingsWidget::~SettingsWidget()
 {
+    Translator::unregister(this);
 }
 
 void SettingsWidget::setBodyHeadStyle(QString style)
@@ -85,4 +89,12 @@ void SettingsWidget::onTabChanged(int index)
     GenericForm* currentWidget = static_cast<GenericForm*>(this->settingsWidgets->widget(index));
     nameLabel->setText(currentWidget->getFormName());
     imgLabel->setPixmap(currentWidget->getFormIcon().scaledToHeight(40, Qt::SmoothTransformation));
+}
+
+void SettingsWidget::retranslateUi()
+{
+    GenericForm* currentWidget = static_cast<GenericForm*>(settingsWidgets->currentWidget());
+    nameLabel->setText(currentWidget->getFormName());
+    for (size_t i=0; i<cfgForms.size(); i++)
+        settingsWidgets->setTabText(i, cfgForms[i]->getFormName());
 }

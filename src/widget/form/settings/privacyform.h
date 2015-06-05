@@ -27,6 +27,7 @@ class PrivacyForm : public GenericForm
 public:
     PrivacyForm();
     ~PrivacyForm();
+    QString getFormName() final {return tr("Privacy");}
 
 private slots:
     void onEnableLoggingUpdated();
@@ -35,6 +36,9 @@ private slots:
     void generateRandomNospam();
     void onNospamEdit();
     virtual void showEvent(QShowEvent*);
+
+private:
+    void retranslateUi();
 
 private:
     Ui::PrivacySettings* bodyUI;

@@ -173,6 +173,7 @@ private:
     void saveWindowGeometry();
     void saveSplitterGeometry();
     void cycleContacts(int offset);
+    void retranslateUi();
     SystemTrayIcon *icon;
     QMenu *trayMenu;
     QAction *statusOnline,

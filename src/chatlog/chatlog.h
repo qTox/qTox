@@ -100,6 +100,9 @@ private slots:
     void onWorkerTimeout();
 
 private:
+    void retranslateUi();
+
+private:
     enum SelectionMode {
         None,
         Precise,
@@ -113,6 +116,7 @@ private:
     };
 
     QAction* copyAction = nullptr;
+    QAction* selectAllAction = nullptr;
     QGraphicsScene* scene = nullptr;
     QGraphicsScene* busyScene = nullptr;
     QVector<ChatLine::Ptr> lines;
@@ -141,9 +145,6 @@ private:
     // layout
     QMargins margins = QMargins(10,10,10,10);
     qreal lineSpacing = 5.0f;
-
-
-
 };
 
 #endif // CHATLOG_H

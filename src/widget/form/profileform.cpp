@@ -28,6 +28,7 @@
 #include "src/misc/style.h"
 #include "src/profilelocker.h"
 #include "src/profile.h"
+#include "src/translator.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>
@@ -51,14 +52,13 @@ ProfileForm::ProfileForm(QWidget *parent) :
     QLabel* imgLabel = new QLabel();
     headLayout->addWidget(imgLabel);
 
-    QLabel* nameLabel = new QLabel();
+    nameLabel = new QLabel();
     QFont bold;
     bold.setBold(true);
     nameLabel->setFont(bold);
     headLayout->addWidget(nameLabel);
     headLayout->addStretch(1);
 
-    nameLabel->setText(QObject::tr("User Profile"));
     imgLabel->setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(40, Qt::SmoothTransformation));
 
     // tox
@@ -106,10 +106,14 @@ ProfileForm::ProfileForm(QWidget *parent) :
             cb->installEventFilter(this);
             cb->setFocusPolicy(Qt::StrongFocus);
     }
+
+    retranslateUi();
+    Translator::registerHandler(std::bind(&ProfileForm::retranslateUi, this), this);
 }
 
 ProfileForm::~ProfileForm()
 {
+    Translator::unregister(this);
     delete qr;
     delete bodyUI;
     head->deleteLater();
@@ -335,4 +339,12 @@ void ProfileForm::onChangePassClicked()
 
     QString newPass = dialog->getPassword();
     Nexus::getProfile()->setPassword(newPass);
+}
+
+void ProfileForm::retranslateUi()
+{
+    bodyUI->retranslateUi(this);
+    nameLabel->setText(QObject::tr("User Profile"));
+    // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
+    toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
 }

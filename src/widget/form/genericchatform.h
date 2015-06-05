@@ -45,6 +45,7 @@ class GenericChatForm : public QWidget
     Q_OBJECT
 public:
     GenericChatForm(QWidget *parent = 0);
+    ~GenericChatForm();
 
     virtual void setName(const QString &newName);
     virtual void show(Ui::MainWindow &ui);
@@ -79,6 +80,9 @@ protected slots:
     void showFileMenu();
     void hideFileMenu();
 
+private:
+    void retranslateUi();
+
 protected:
     QString resolveToxId(const ToxId &id);
     void insertChatMessage(ChatMessage::Ptr msg);
@@ -86,6 +90,7 @@ protected:
     void resizeEvent(QResizeEvent* event);
     void adjustFileMenuPosition();
 
+    QAction* saveChatAction, *clearAction;
     ToxId previousId;
     QDateTime prevMsgDateTime;
     Widget *parent;

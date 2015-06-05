@@ -5,6 +5,7 @@
 #include "src/nexus.h"
 #include "src/misc/settings.h"
 #include "src/widget/form/setpassworddialog.h"
+#include "src/translator.h"
 #include <QMessageBox>
 #include <QDebug>
 
@@ -30,10 +31,13 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
 
     reset();
+    retranslateUi();
+    Translator::registerHandler(std::bind(&LoginScreen::retranslateUi, this), this);
 }
 
 LoginScreen::~LoginScreen()
 {
+    Translator::unregister(this);
     delete ui;
 }
 
@@ -47,7 +51,7 @@ void LoginScreen::reset()
 
     Profile::scanProfiles();
     QString lastUsed = Settings::getInstance().getCurrentProfile();
-    qDebug() << "Last used is "<<lastUsed;
+    qDebug() << "Last used profile is "<<lastUsed;
     QVector<QString> profiles = Profile::getProfiles();
     for (QString profile : profiles)
     {
@@ -186,4 +190,9 @@ void LoginScreen::onAutoLoginToggled(int state)
         Settings::getInstance().setAutoLogin(true);
 
     Settings::getInstance().save(false);
+}
+
+void LoginScreen::retranslateUi()
+{
+    ui->retranslateUi(this);
 }

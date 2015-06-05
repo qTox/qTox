@@ -96,6 +96,9 @@ private slots:
     void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
 
+private:
+    void retranslateUi();
+
 protected:
     void showNetcam();
     void hideNetcam();
@@ -116,6 +119,7 @@ private:
     QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
     OfflineMsgEngine *offlineEngine;
+    QAction* loadHistoryAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     void startCounter();

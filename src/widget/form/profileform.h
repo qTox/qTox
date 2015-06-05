@@ -73,15 +73,18 @@ private slots:
     void onChangePassClicked();
 
 private:
+    void retranslateUi();
+
+private:
     void refreshProfiles();
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
+    QLabel* nameLabel;
     QWidget *head;
     Core* core;
     QTimer timer;
     bool hasCheck = false;
     QRWidget *qr;
-
     ClickableTE* toxId;
 };
 

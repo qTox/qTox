@@ -16,6 +16,7 @@
 #define AVFORM_H
 
 #include <QObject>
+#include <QString>
 #include <QList>
 #include "genericsettings.h"
 #include "src/video/videomode.h"
@@ -33,6 +34,7 @@ class AVForm : public GenericForm
 public:
     AVForm();
     ~AVForm();
+    QString getFormName() final {return tr("Audio/Video");}
 
 private:
     void getAudioInDevices();
@@ -41,6 +43,8 @@ private:
 
     void createVideoSurface();
     void killVideoSurface();
+
+    void retranslateUi();
 
 private slots:
     void on_videoModescomboBox_currentIndexChanged(int index);

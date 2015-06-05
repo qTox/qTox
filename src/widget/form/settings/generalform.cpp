@@ -40,7 +40,7 @@ static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"
 static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
-    GenericForm(tr("General"), QPixmap(":/img/settings/general.png"))
+    GenericForm(QPixmap(":/img/settings/general.png"))
 {
     parent = myParent;
 
@@ -197,10 +197,13 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
     bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
 #endif
+
+    Translator::registerHandler(std::bind(&GeneralForm::retranslateUi, this), this);
 }
 
 GeneralForm::~GeneralForm()
 {
+    Translator::unregister(this);
     delete bodyUI;
 }
 
@@ -443,4 +446,9 @@ bool GeneralForm::eventFilter(QObject *o, QEvent *e)
         return true;
     }
     return QWidget::eventFilter(o, e);
+}
+
+void GeneralForm::retranslateUi()
+{
+    bodyUI->retranslateUi(this);
 }

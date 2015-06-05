@@ -43,6 +43,9 @@ private slots:
     void onSendTriggered();
 
 private:
+    void retranslateUi();
+
+private:
     void setIdFromClipboard();
     QLabel headLabel, toxIdLabel, messageLabel;
     QPushButton sendButton;
@@ -50,6 +53,7 @@ private:
     QTextEdit message;
     QVBoxLayout layout, headLayout;
     QWidget *head, *main;
+    QString lastUsername; // Cached username so we can retranslate the invite message
 };
 
 #endif // ADDFRIENDFORM_H

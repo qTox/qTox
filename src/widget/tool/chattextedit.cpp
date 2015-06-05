@@ -13,13 +13,21 @@
 */
 
 #include "chattextedit.h"
+#include "src/translator.h"
 #include <QKeyEvent>
 
 ChatTextEdit::ChatTextEdit(QWidget *parent) :
     QTextEdit(parent)
 {
-    setPlaceholderText(tr("Type your message here..."));
+    retranslateUi();
     setAcceptRichText(false);
+
+    Translator::registerHandler(std::bind(&ChatTextEdit::retranslateUi, this), this);
+}
+
+ChatTextEdit::~ChatTextEdit()
+{
+    Translator::unregister(this);
 }
 
 void ChatTextEdit::keyPressEvent(QKeyEvent * event)
@@ -50,4 +58,9 @@ void ChatTextEdit::keyPressEvent(QKeyEvent * event)
 void ChatTextEdit::setLastMessage(QString lm)
 {
     lastMessage = lm;
+}
+
+void ChatTextEdit::retranslateUi()
+{
+    setPlaceholderText(tr("Type your message here..."));
 }

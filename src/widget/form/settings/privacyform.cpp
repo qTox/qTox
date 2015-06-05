@@ -21,12 +21,13 @@
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
 #include "src/widget/form/setpassworddialog.h"
+#include "src/translator.h"
 #include <QMessageBox>
 #include <QFile>
 #include <QDebug>
 
 PrivacyForm::PrivacyForm() :
-    GenericForm(tr("Privacy"), QPixmap(":/img/settings/privacy.png"))
+    GenericForm(QPixmap(":/img/settings/privacy.png"))
 {
     bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);
@@ -36,10 +37,13 @@ PrivacyForm::PrivacyForm() :
     connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
     connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
     connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
+
+    Translator::registerHandler(std::bind(&PrivacyForm::retranslateUi, this), this);
 }
 
 PrivacyForm::~PrivacyForm()
 {
+    Translator::unregister(this);
     delete bodyUI;
 }
 
@@ -95,4 +99,9 @@ void PrivacyForm::onNospamEdit()
         bodyUI->nospamLineEdit->setText(str);
         bodyUI->nospamLineEdit->setCursorPosition(curs);
     };
+}
+
+void PrivacyForm::retranslateUi()
+{
+    bodyUI->retranslateUi(this);
 }

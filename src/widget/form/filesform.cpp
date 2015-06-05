@@ -15,6 +15,7 @@
 #include "filesform.h"
 #include "ui_mainwindow.h"
 #include "src/widget/widget.h"
+#include "src/translator.h"
 #include <QFileInfo>
 #include <QUrl>
 #include <QDebug>
@@ -26,7 +27,6 @@ FilesForm::FilesForm()
     head = new QWidget();
     QFont bold;
     bold.setBold(true);
-    headLabel.setText(tr("Transfered Files","\"Headline\" of the window"));
     headLabel.setFont(bold);
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
@@ -34,16 +34,19 @@ FilesForm::FilesForm()
     recvd = new QListWidget;
     sent = new QListWidget;
     
-    main.addTab(recvd, tr("Downloads"));
-    main.addTab(sent, tr("Uploads"));
+    main.addTab(recvd, QString());
+    main.addTab(sent, QString());
     
     connect(sent, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onFileActivated(QListWidgetItem*)));
     connect(recvd, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onFileActivated(QListWidgetItem*)));
 
+    retranslateUi();
+    Translator::registerHandler(std::bind(&FilesForm::retranslateUi, this), this);
 }
 
 FilesForm::~FilesForm()
 {
+    Translator::unregister(this);
     delete recvd;
     delete sent;
     head->deleteLater();
@@ -81,4 +84,11 @@ void FilesForm::onFileActivated(QListWidgetItem* item)
     ListWidgetItem* tmp = dynamic_cast<ListWidgetItem*> (item);
 
     Widget::confirmExecutableOpen(QFileInfo(tmp->path));
+}
+
+void FilesForm::retranslateUi()
+{
+    headLabel.setText(tr("Transfered Files","\"Headline\" of the window"));
+    main.setTabText(0, tr("Downloads"));
+    main.setTabText(1, tr("Uploads"));
 }

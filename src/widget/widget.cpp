@@ -101,13 +101,13 @@ void Widget::init()
     restoreState(Settings::getInstance().getWindowState());
     ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
 
-    statusOnline = new QAction(tr("Online", "Button to set your status to 'Online'"), this);
+    statusOnline = new QAction(this);
     statusOnline->setIcon(getStatusIcon(Status::Online, 10, 10));
     connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
-    statusAway = new QAction(tr("Away", "Button to set your status to 'Away'"), this);
+    statusAway = new QAction(this);
     statusAway->setIcon(getStatusIcon(Status::Away, 10, 10));
     connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
-    statusBusy = new QAction(tr("Busy", "Button to set your status to 'Busy'"), this);
+    statusBusy = new QAction(this);
     statusBusy->setIcon(getStatusIcon(Status::Busy, 10, 10));
     connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
 
@@ -127,14 +127,6 @@ void Widget::init()
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
-
-    ui->searchContactFilterCBox->addItem(tr("All"));
-    ui->searchContactFilterCBox->addItem(tr("Online"));
-    ui->searchContactFilterCBox->addItem(tr("Offline"));
-    ui->searchContactFilterCBox->addItem(tr("Friends"));
-    ui->searchContactFilterCBox->addItem(tr("Groups"));
-
-    ui->searchContactText->setPlaceholderText(tr("Search Contacts"));
 
     if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
@@ -222,6 +214,10 @@ void Widget::init()
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
 #endif
+
+    retranslateUi();
+    Translator::registerHandler(std::bind(&Widget::retranslateUi, this), this);
+
     if (!Settings::getInstance().getShowSystemTray())
         show();
 }
@@ -274,6 +270,7 @@ void Widget::updateIcons()
 Widget::~Widget()
 {
     qDebug() << "Deleting Widget";
+    Translator::unregister(this);
     AutoUpdater::abortUpdates();
     if (icon)
         icon->hide();
@@ -1453,4 +1450,23 @@ void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
     ui->transferButton->setDisabled(newActiveButton == Widget::TransferButton);
     ui->settingsButton->setChecked(newActiveButton == Widget::SettingButton);
     ui->settingsButton->setDisabled(newActiveButton == Widget::SettingButton);
+}
+
+void Widget::retranslateUi()
+{
+    QString name = ui->nameLabel->text(), status = ui->statusLabel->text();
+    ui->retranslateUi(this);
+    ui->nameLabel->setText(name);
+    ui->statusLabel->setText(status);
+    ui->searchContactFilterCBox->clear();
+    ui->searchContactFilterCBox->addItem(tr("All"));
+    ui->searchContactFilterCBox->addItem(tr("Online"));
+    ui->searchContactFilterCBox->addItem(tr("Offline"));
+    ui->searchContactFilterCBox->addItem(tr("Friends"));
+    ui->searchContactFilterCBox->addItem(tr("Groups"));
+    ui->searchContactText->setPlaceholderText(tr("Search Contacts"));
+    statusOnline->setText(tr("Online", "Button to set your status to 'Online'"));
+    statusAway->setText(tr("Away", "Button to set your status to 'Away'"));
+    statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
+    setWindowTitle(tr("Settings"));
 }

@@ -21,13 +21,14 @@
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/core/core.h"
 #include "src/misc/style.h"
+#include "src/historykeeper.h"
+#include "src/misc/flowlayout.h"
+#include "src/translator.h"
+#include <QDebug>
+#include <QTimer>
 #include <QPushButton>
 #include <QMimeData>
 #include <QDragEnterEvent>
-#include "src/historykeeper.h"
-#include "src/misc/flowlayout.h"
-#include <QDebug>
-#include <QTimer>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), inCall{false}
@@ -53,8 +54,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     nameLabel->setText(group->getGroupWidget()->getName());
 
     nusersLabel->setFont(Style::getFont(Style::Medium));
-    nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->getPeersCount()));
     nusersLabel->setObjectName("statusLabel");
+    retranslateUi();
 
     avatar->setPixmap(Style::scaleSvgImage(":/img/group_dark.svg", avatar->width(), avatar->height()), Qt::transparent);
 
@@ -88,6 +89,12 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
         {if (text != orig) emit groupTitleChanged(group->getGroupId(), text.left(128));} );
 
     setAcceptDrops(true);
+    Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
+}
+
+GroupChatForm::~GroupChatForm()
+{
+    Translator::unregister(this);
 }
 
 void GroupChatForm::onSendTriggered()
@@ -318,4 +325,9 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 
     if (msgEdit->hasFocus())
         return;
+}
+
+void GroupChatForm::retranslateUi()
+{
+    nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->getPeersCount()));
 }

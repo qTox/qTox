@@ -29,6 +29,9 @@ private slots:
     void onLogin();
 
 private:
+    void retranslateUi();
+
+private:
     Ui::LoginScreen *ui;
     QShortcut quitShortcut;
 };

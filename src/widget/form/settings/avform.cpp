@@ -19,6 +19,7 @@
 #include "src/video/camerasource.h"
 #include "src/video/cameradevice.h"
 #include "src/widget/videosurface.h"
+#include "src/translator.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -35,7 +36,7 @@
 #endif
 
 AVForm::AVForm() :
-    GenericForm(tr("Audio/Video"), QPixmap(":/img/settings/av.png")),
+    GenericForm(QPixmap(":/img/settings/av.png")),
     camVideoSurface{nullptr}, camera{nullptr}
 {
     bodyUI = new Ui::AVSettings;
@@ -62,10 +63,13 @@ AVForm::AVForm() :
         cb->installEventFilter(this);
         cb->setFocusPolicy(Qt::StrongFocus);
     }
+
+    Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
 }
 
 AVForm::~AVForm()
 {
+    Translator::unregister(this);
     delete bodyUI;
     if (camera)
     {
@@ -386,4 +390,9 @@ void AVForm::killVideoSurface()
     
     delete camVideoSurface;
     camVideoSurface = nullptr;
+}
+
+void AVForm::retranslateUi()
+{
+    bodyUI->retranslateUi(this);
 }

@@ -47,6 +47,7 @@
 #include "src/offlinemsgengine.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
+#include "src/translator.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -79,7 +80,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
 
-    menu.addAction(QObject::tr("Load chat history..."), this, SLOT(onLoadHistory()));
+    loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
 
     connect(Core::getInstance(), &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
@@ -100,10 +101,14 @@ ChatForm::ChatForm(Friend* chatFriend)
     } );
 
     setAcceptDrops(true);
+
+    retranslateUi();
+    Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
 }
 
 ChatForm::~ChatForm()
 {
+    Translator::unregister(this);
     delete netcam;
     delete callConfirm;
     delete offlineEngine;
@@ -1048,4 +1053,9 @@ void ChatForm::hideNetcam()
     netcam->hide();
     delete netcam;
     netcam = nullptr;
+}
+
+void ChatForm::retranslateUi()
+{
+    loadHistoryAction->setText(tr("Load chat history..."));
 }

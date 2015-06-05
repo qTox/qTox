@@ -35,6 +35,7 @@
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/timestamp.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
+#include "src/translator.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent)
@@ -69,21 +70,15 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     msgEdit = new ChatTextEdit();
 
     sendButton = new QPushButton();
-    sendButton->setToolTip(tr("Send message"));
     emoteButton = new QPushButton();
-    emoteButton->setToolTip(tr("Smileys"));
 
     // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
     fileButton = new QPushButton();
-    fileButton->setToolTip(tr("Send file(s)"));
     screenshotButton = new QPushButton;
-    screenshotButton->setToolTip(tr("Send a screenshot"));
     callButton = new QPushButton();
     callButton->setFixedSize(50,40);
-    callButton->setToolTip(tr("Start an audio call"));
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
-    videoButton->setToolTip(tr("Start a video call"));
     volButton = new QPushButton();
     //volButton->setFixedSize(25,20);
     volButton->setToolTip("");
@@ -172,8 +167,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
     menu.addActions(chatWidget->actions());
     menu.addSeparator();
-    menu.addAction(QIcon::fromTheme("document-save"), tr("Save chat log"), this, SLOT(onSaveLogClicked()));
-    menu.addAction(QIcon::fromTheme("edit-clear"), tr("Clear displayed messages"), this, SLOT(clearChatArea(bool)));
+    saveChatAction = menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onSaveLogClicked()));
+    clearAction = menu.addAction(QIcon::fromTheme("edit-clear"), QString(), this, SLOT(clearChatArea(bool)));
     menu.addSeparator();
 
     connect(emoteButton, &QPushButton::clicked, this, &GenericChatForm::onEmoteButtonClicked);
@@ -188,6 +183,14 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileFlyout->setParent(this);
     fileButton->installEventFilter(this);
     fileFlyout->installEventFilter(this);
+
+    retranslateUi();
+    Translator::registerHandler(std::bind(&GenericChatForm::retranslateUi, this), this);
+}
+
+GenericChatForm::~GenericChatForm()
+{
+    Translator::unregister(this);
 }
 
 void GenericChatForm::adjustFileMenuPosition()
@@ -458,4 +461,16 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
     }
     
     return false;
+}
+
+void GenericChatForm::retranslateUi()
+{
+    sendButton->setToolTip(tr("Send message"));
+    emoteButton->setToolTip(tr("Smileys"));
+    fileButton->setToolTip(tr("Send file(s)"));
+    screenshotButton->setToolTip(tr("Send a screenshot"));
+    callButton->setToolTip(tr("Start an audio call"));
+    videoButton->setToolTip(tr("Start a video call"));
+    saveChatAction->setText(tr("Save chat log"));
+    clearAction->setText(tr("Clear displayed messages"));
 }

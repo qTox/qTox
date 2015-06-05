@@ -18,9 +18,10 @@
 #include "src/historykeeper.h"
 #include "src/misc/settings.h"
 #include "src/misc/db/plaindb.h"
+#include "src/translator.h"
 
 AdvancedForm::AdvancedForm() :
-    GenericForm(tr("Advanced"), QPixmap(":/img/settings/general.png"))
+    GenericForm(QPixmap(":/img/settings/general.png"))
 {
     bodyUI = new Ui::AdvancedSettings;
     bodyUI->setupUi(this);
@@ -46,10 +47,13 @@ AdvancedForm::AdvancedForm() :
             cb->installEventFilter(this);
             cb->setFocusPolicy(Qt::StrongFocus);
     }
+
+    Translator::registerHandler(std::bind(&AdvancedForm::retranslateUi, this), this);
 }
 
 AdvancedForm::~AdvancedForm()
 {
+    Translator::unregister(this);
     delete bodyUI;
 }
 
@@ -81,4 +85,9 @@ bool AdvancedForm::eventFilter(QObject *o, QEvent *e)
         return true;
     }
     return QWidget::eventFilter(o, e);
+}
+
+void AdvancedForm::retranslateUi()
+{
+    bodyUI->retranslateUi(this);
 }

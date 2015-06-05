@@ -21,14 +21,13 @@ class GenericForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericForm(const QString &name, const QPixmap &icon) : formName(name), formIcon(icon) {;}
+    GenericForm(const QPixmap &icon) : formIcon(icon) {;}
     ~GenericForm() {;}
 
-    QString getFormName() {return formName;}
+    virtual QString getFormName() = 0;
     QPixmap getFormIcon() {return formIcon;}
 
 protected:
-    QString formName;
     QPixmap formIcon;
 };
 

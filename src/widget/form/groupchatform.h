@@ -29,6 +29,7 @@ class GroupChatForm : public GenericChatForm
     Q_OBJECT
 public:
     GroupChatForm(Group* chatGroup);
+    ~GroupChatForm();
 
     void onUserListChanged();
     void peerAudioPlaying(int peer);
@@ -49,6 +50,9 @@ protected:
     // drag & drop
     void dragEnterEvent(QDragEnterEvent* ev);
     void dropEvent(QDropEvent* ev);
+
+private:
+    void retranslateUi();
 
 private:
     Group* group;

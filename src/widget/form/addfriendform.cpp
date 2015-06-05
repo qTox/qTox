@@ -26,18 +26,16 @@
 #include "src/toxdns.h"
 #include "src/misc/settings.h"
 #include "src/widget/gui.h"
+#include "src/translator.h"
 
 AddFriendForm::AddFriendForm()
 {
     main = new QWidget(), head = new QWidget();
     QFont bold;
     bold.setBold(true);
-    headLabel.setText(tr("Add Friends"));
     headLabel.setFont(bold);
 
-    toxIdLabel.setText(tr("Tox ID","Tox ID of the person you're sending a friend request to"));
-    messageLabel.setText(tr("Message","The message you send in friend requests"));
-    sendButton.setText(tr("Send friend request"));
+    retranslateUi();
 
     main->setLayout(&layout);
     layout.addWidget(&toxIdLabel);
@@ -52,10 +50,13 @@ AddFriendForm::AddFriendForm()
     connect(&toxId,&QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
+
+    Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 }
 
 AddFriendForm::~AddFriendForm()
 {
+    Translator::unregister(this);
     head->deleteLater();
     main->deleteLater();
 }
@@ -78,7 +79,8 @@ QString AddFriendForm::getMessage() const
 
 void AddFriendForm::onUsernameSet(const QString& username)
 {
-    message.setPlaceholderText(tr("%1 here! Tox me maybe?","Default message in friend requests if the field is left blank. Write something appropriate!").arg(username));
+    lastUsername = username;
+    retranslateUi();
 }
 
 void AddFriendForm::onSendTriggered()
@@ -132,4 +134,15 @@ void AddFriendForm::setIdFromClipboard()
         if (!ToxId(id).isActiveProfile())
             toxId.setText(id);
     }
+}
+
+void AddFriendForm::retranslateUi()
+{
+    headLabel.setText(tr("Add Friends"));
+    toxIdLabel.setText(tr("Tox ID","Tox ID of the person you're sending a friend request to"));
+    messageLabel.setText(tr("Message","The message you send in friend requests"));
+    sendButton.setText(tr("Send friend request"));
+    message.setPlaceholderText(tr("%1 here! Tox me maybe?",
+                "Default message in friend requests if the field is left blank. Write something appropriate!")
+                .arg(lastUsername));
 }
