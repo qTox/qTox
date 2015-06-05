@@ -359,7 +359,7 @@ HistoryKeeper::ChatType HistoryKeeper::convertToChatType(int ct)
 
 QString HistoryKeeper::getHistoryPath(QString currentProfile, int encrypted)
 {
-    QDir baseDir(Settings::getSettingsDirPath());
+    QDir baseDir(Settings::getInstance().getSettingsDirPath());
     if (currentProfile.isEmpty())
         currentProfile = Settings::getInstance().getCurrentProfile();
 

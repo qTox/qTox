@@ -11,6 +11,14 @@ class QTimer;
 
 enum class Status : int {Online = 0, Away, Busy, Offline};
 
+struct DhtServer
+{
+    QString name;
+    QString userId;
+    QString address;
+    quint16 port;
+};
+
 struct ToxFile
 {
     enum FileStatus

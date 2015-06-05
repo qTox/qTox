@@ -419,7 +419,7 @@ bool Core::checkConnection()
 void Core::bootstrapDht()
 {
     const Settings& s = Settings::getInstance();
-    QList<Settings::DhtServer> dhtServerList = s.getDhtServerList();
+    QList<DhtServer> dhtServerList = s.getDhtServerList();
 
     int listSize = dhtServerList.size();
     if (listSize == 0)
@@ -434,7 +434,7 @@ void Core::bootstrapDht()
     int i=0;
     while (i < 2) // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     {
-        const Settings::DhtServer& dhtServer = dhtServerList[j % listSize];
+        const DhtServer& dhtServer = dhtServerList[j % listSize];
         if (tox_bootstrap(tox, dhtServer.address.toLatin1().data(),
             dhtServer.port, CUserId(dhtServer.userId).data(), nullptr))
         {

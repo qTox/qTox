@@ -36,18 +36,33 @@
 #include <QList>
 #include <QStyleFactory>
 #include <QCryptographicHash>
-
+#include <QMutexLocker>
+#include <QThread>
 
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
 
 const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
-bool Settings::makeToxPortable{false};
+QMutex Settings::bigLock{QMutex::Recursive};
+QThread* Settings::settingsThread{nullptr};
 
 Settings::Settings() :
-    loaded(false), useCustomDhtList{false}, currentProfileId(0)
+    loaded(false), useCustomDhtList{false},
+    makeToxPortable{false}, currentProfileId(0)
 {
+    settingsThread = new QThread();
+    settingsThread->setObjectName("qTox Settings");
+    settingsThread->start(QThread::LowPriority);
+    moveToThread(settingsThread);
     load();
+}
+
+Settings::~Settings()
+{
+    sync();
+    settingsThread->exit(0);
+    settingsThread->wait();
+    delete settingsThread;
 }
 
 Settings& Settings::getInstance()
@@ -58,8 +73,16 @@ Settings& Settings::getInstance()
     return *settings;
 }
 
+void Settings::destroyInstance()
+{
+    delete settings;
+    settings = nullptr;
+}
+
 void Settings::load()
 {
+    QMutexLocker locker{&bigLock};
+
     if (loaded)
         return;
 
@@ -124,7 +147,7 @@ void Settings::load()
         showSystemTray = s.value("showSystemTray", SHOW_SYSTEM_TRAY_DEFAULT).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
-        closeToTray = s.value("closeToTray", false).toBool();        
+        closeToTray = s.value("closeToTray", false).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         setProxyType(s.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
@@ -259,12 +282,20 @@ void Settings::load()
 
 void Settings::save(bool writePersonal)
 {
-    QString filePath = QDir(getSettingsDirPath()).filePath(globalSettingsFile);
+    if (QThread::currentThread() != settingsThread)
+        return (void) QMetaObject::invokeMethod(&getInstance(), "save",
+                                                Q_ARG(bool, writePersonal));
+
+    QString filePath = getSettingsDirPath()+globalSettingsFile;
     save(filePath, writePersonal);
 }
 
 void Settings::save(QString path, bool writePersonal)
 {
+    if (QThread::currentThread() != settingsThread)
+        return (void) QMetaObject::invokeMethod(&getInstance(), "save",
+                                                Q_ARG(QString, path), Q_ARG(bool, writePersonal));
+
 #ifndef Q_OS_ANDROID
     if (IPC::getInstance().isCurrentOwner())
 #endif
@@ -276,6 +307,7 @@ void Settings::save(QString path, bool writePersonal)
 
 void Settings::saveGlobal(QString path)
 {
+    QMutexLocker locker{&bigLock};
     qDebug() << "Saving settings in " + path;
 
     QSettings s(path, QSettings::IniFormat);
@@ -376,6 +408,7 @@ void Settings::saveGlobal(QString path)
 
 void Settings::savePersonal(QString path)
 {
+    QMutexLocker locker{&bigLock};
     if (currentProfile.isEmpty())
     {
         qDebug() << "could not save personal settings because currentProfile profile is empty";
@@ -414,16 +447,17 @@ uint32_t Settings::makeProfileId(const QString& profile)
 
 QString Settings::getSettingsDirPath()
 {
+    QMutexLocker locker{&bigLock};
     if (makeToxPortable)
         return QString(".")+QDir::separator();
 
     // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
-                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox" + QDir::separator());
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                           + QDir::separator() + "tox" + QDir::separator());
+                           + QDir::separator() + "tox")+QDir::separator();
 #endif
 }
 
@@ -484,34 +518,40 @@ QByteArray Settings::getAvatarHash(const QString& ownerId)
     return out;
 }
 
-const QList<Settings::DhtServer>& Settings::getDhtServerList() const
+const QList<DhtServer>& Settings::getDhtServerList() const
 {
+    QMutexLocker locker{&bigLock};
     return dhtServerList;
 }
 
 void Settings::setDhtServerList(const QList<DhtServer>& newDhtServerList)
 {
+    QMutexLocker locker{&bigLock};
     dhtServerList = newDhtServerList;
     emit dhtServerListChanged();
 }
 
 bool Settings::getEnableIPv6() const
 {
+    QMutexLocker locker{&bigLock};
     return enableIPv6;
 }
 
 void Settings::setEnableIPv6(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     enableIPv6 = newValue;
 }
 
 bool Settings::getMakeToxPortable() const
 {
+    QMutexLocker locker{&bigLock};
     return makeToxPortable;
 }
 
 void Settings::setMakeToxPortable(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     makeToxPortable = newValue;
     save(globalSettingsFile); // Commit to the portable file that we don't want to use it
     if (!newValue) // Update the new file right now if not already done
@@ -521,6 +561,7 @@ void Settings::setMakeToxPortable(bool newValue)
 bool Settings::getAutorun() const
 {
 #ifdef QTOX_PLATFORM_EXT
+    QMutexLocker locker{&bigLock};
     return Platform::getAutorun();
 #else
     return false;
@@ -530,6 +571,7 @@ bool Settings::getAutorun() const
 void Settings::setAutorun(bool newValue)
 {
 #ifdef QTOX_PLATFORM_EXT
+    QMutexLocker locker{&bigLock};
     Platform::setAutorun(newValue);
 #else
     Q_UNUSED(newValue);
@@ -538,152 +580,181 @@ void Settings::setAutorun(bool newValue)
 
 bool Settings::getAutostartInTray() const
 {
+    QMutexLocker locker{&bigLock};
     return autostartInTray;
 }
 
 QString Settings::getStyle() const
 {
+    QMutexLocker locker{&bigLock};
     return style;
 }
 
 void Settings::setStyle(const QString& newStyle)
 {
+    QMutexLocker locker{&bigLock};
     style = newStyle;
 }
 
 bool Settings::getShowSystemTray() const
 {
+    QMutexLocker locker{&bigLock};
     return showSystemTray;
 }
 
 void Settings::setShowSystemTray(const bool& newValue)
 {
+    QMutexLocker locker{&bigLock};
     showSystemTray = newValue;
 }
 
 void Settings::setUseEmoticons(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     useEmoticons = newValue;
 }
 
 bool Settings::getUseEmoticons() const
 {
+    QMutexLocker locker{&bigLock};
     return useEmoticons;
 }
 
 void Settings::setAutoSaveEnabled(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     autoSaveEnabled = newValue;
 }
 
 bool Settings::getAutoSaveEnabled() const
 {
+    QMutexLocker locker{&bigLock};
     return autoSaveEnabled;
 }
 
 void Settings::setAutostartInTray(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     autostartInTray = newValue;
 }
 
 bool Settings::getCloseToTray() const
 {
+    QMutexLocker locker{&bigLock};
     return closeToTray;
 }
 
 void Settings::setCloseToTray(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     closeToTray = newValue;
 }
 
 bool Settings::getMinimizeToTray() const
 {
+    QMutexLocker locker{&bigLock};
     return minimizeToTray;
 }
 
-
 void Settings::setMinimizeToTray(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     minimizeToTray = newValue;
 }
 
 bool Settings::getLightTrayIcon() const
 {
+    QMutexLocker locker{&bigLock};
     return lightTrayIcon;
 }
 
 void Settings::setLightTrayIcon(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     lightTrayIcon = newValue;
 }
 
 bool Settings::getStatusChangeNotificationEnabled() const
 {
+    QMutexLocker locker{&bigLock};
     return statusChangeNotificationEnabled;
 }
 
 void Settings::setStatusChangeNotificationEnabled(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     statusChangeNotificationEnabled = newValue;
 }
 
 bool Settings::getShowInFront() const
 {
+    QMutexLocker locker{&bigLock};
    return showInFront;
 }
 
 void Settings::setShowInFront(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     showInFront = newValue;
 }
 
 bool Settings::getNotifySound() const
 {
-   return notifySound;
+    QMutexLocker locker{&bigLock};
+    return notifySound;
 }
 
 void Settings::setNotifySound(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     notifySound = newValue;
 }
 
 bool Settings::getGroupAlwaysNotify() const
 {
+    QMutexLocker locker{&bigLock};
     return groupAlwaysNotify;
 }
 
 void Settings::setGroupAlwaysNotify(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     groupAlwaysNotify = newValue;
 }
 
 QString Settings::getTranslation() const
 {
+    QMutexLocker locker{&bigLock};
     return translation;
 }
 
 void Settings::setTranslation(QString newValue)
 {
+    QMutexLocker locker{&bigLock};
     translation = newValue;
 }
 
 bool Settings::getForceTCP() const
 {
+    QMutexLocker locker{&bigLock};
     return forceTCP;
 }
 
 void Settings::setForceTCP(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     forceTCP = newValue;
 }
 
 ProxyType Settings::getProxyType() const
 {
+    QMutexLocker locker{&bigLock};
     return proxyType;
 }
 
 void Settings::setProxyType(int newValue)
 {
+    QMutexLocker locker{&bigLock};
     if (newValue >= 0 && newValue <= 2)
         proxyType = static_cast<ProxyType>(newValue);
     else
@@ -692,57 +763,68 @@ void Settings::setProxyType(int newValue)
 
 QString Settings::getProxyAddr() const
 {
+    QMutexLocker locker{&bigLock};
     return proxyAddr;
 }
 
 void Settings::setProxyAddr(const QString& newValue)
 {
+    QMutexLocker locker{&bigLock};
     proxyAddr = newValue;
 }
 
 int Settings::getProxyPort() const
 {
+    QMutexLocker locker{&bigLock};
     return proxyPort;
 }
 
 void Settings::setProxyPort(int newValue)
 {
+    QMutexLocker locker{&bigLock};
     proxyPort = newValue;
 }
 
 QString Settings::getCurrentProfile() const
 {
+    QMutexLocker locker{&bigLock};
     return currentProfile;
 }
 
 uint32_t Settings::getCurrentProfileId() const
 {
+    QMutexLocker locker{&bigLock};
     return currentProfileId;
 }
 
 void Settings::setCurrentProfile(QString profile)
 {
+    QMutexLocker locker{&bigLock};
     currentProfile = profile;
     currentProfileId = makeProfileId(currentProfile);
 }
 
 bool Settings::getEnableLogging() const
 {
+    QMutexLocker locker{&bigLock};
     return enableLogging;
 }
 
 void Settings::setEnableLogging(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     enableLogging = newValue;
 }
 
 Db::syncType Settings::getDbSyncType() const
 {
+    QMutexLocker locker{&bigLock};
     return dbSyncType;
 }
 
 void Settings::setDbSyncType(int newValue)
 {
+    QMutexLocker locker{&bigLock};
     if (newValue >= 0 && newValue <= 2)
         dbSyncType = static_cast<Db::syncType>(newValue);
     else
@@ -751,11 +833,13 @@ void Settings::setDbSyncType(int newValue)
 
 int Settings::getAutoAwayTime() const
 {
+    QMutexLocker locker{&bigLock};
     return autoAwayTime;
 }
 
 void Settings::setAutoAwayTime(int newValue)
 {
+    QMutexLocker locker{&bigLock};
     if (newValue < 0)
         newValue = 10;
 
@@ -764,6 +848,7 @@ void Settings::setAutoAwayTime(int newValue)
 
 QString Settings::getAutoAcceptDir(const ToxId& id) const
 {
+    QMutexLocker locker{&bigLock};
     QString key = id.publicKey;
 
     auto it = friendLst.find(key);
@@ -775,6 +860,7 @@ QString Settings::getAutoAcceptDir(const ToxId& id) const
 
 void Settings::setAutoAcceptDir(const ToxId &id, const QString& dir)
 {
+    QMutexLocker locker{&bigLock};
     QString key = id.publicKey;
 
     auto it = friendLst.find(key);
@@ -791,251 +877,299 @@ void Settings::setAutoAcceptDir(const ToxId &id, const QString& dir)
 
 QString Settings::getGlobalAutoAcceptDir() const
 {
+    QMutexLocker locker{&bigLock};
     return globalAutoAcceptDir;
 }
 
 void Settings::setGlobalAutoAcceptDir(const QString& newValue)
 {
+    QMutexLocker locker{&bigLock};
     globalAutoAcceptDir = newValue;
 }
 
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)
 {
+    QMutexLocker locker{&bigLock};
     widgetSettings[uniqueName] = data;
 }
 
 QByteArray Settings::getWidgetData(const QString& uniqueName) const
 {
+    QMutexLocker locker{&bigLock};
     return widgetSettings.value(uniqueName);
 }
 
 bool Settings::isAnimationEnabled() const
 {
+    QMutexLocker locker{&bigLock};
     return enableSmoothAnimation;
 }
 
 void Settings::setAnimationEnabled(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     enableSmoothAnimation = newValue;
 }
 
 QString Settings::getSmileyPack() const
 {
+    QMutexLocker locker{&bigLock};
     return smileyPack;
 }
 
 void Settings::setSmileyPack(const QString &value)
 {
+    QMutexLocker locker{&bigLock};
     smileyPack = value;
     emit smileyPackChanged();
 }
 
 bool Settings::isCurstomEmojiFont() const
 {
+    QMutexLocker locker{&bigLock};
     return customEmojiFont;
 }
 
 void Settings::setCurstomEmojiFont(bool value)
 {
+    QMutexLocker locker{&bigLock};
     customEmojiFont = value;
     emit emojiFontChanged();
 }
 
 int Settings::getEmojiFontPointSize() const
 {
+    QMutexLocker locker{&bigLock};
     return emojiFontPointSize;
 }
 
 void Settings::setEmojiFontPointSize(int value)
 {
+    QMutexLocker locker{&bigLock};
     emojiFontPointSize = value;
     emit emojiFontChanged();
 }
 
 int Settings::getFirstColumnHandlePos() const
 {
+    QMutexLocker locker{&bigLock};
     return firstColumnHandlePos;
 }
 
 void Settings::setFirstColumnHandlePos(const int pos)
 {
+    QMutexLocker locker{&bigLock};
     firstColumnHandlePos = pos;
 }
 
 int Settings::getSecondColumnHandlePosFromRight() const
 {
+    QMutexLocker locker{&bigLock};
     return secondColumnHandlePosFromRight;
 }
 
 void Settings::setSecondColumnHandlePosFromRight(const int pos)
 {
+    QMutexLocker locker{&bigLock};
     secondColumnHandlePosFromRight = pos;
 }
 
 const QString& Settings::getTimestampFormat() const
 {
+    QMutexLocker locker{&bigLock};
     return timestampFormat;
 }
 
 void Settings::setTimestampFormat(const QString &format)
 {
+    QMutexLocker locker{&bigLock};
     timestampFormat = format;
 }
 
 const QString& Settings::getDateFormat() const
 {
+    QMutexLocker locker{&bigLock};
     return dateFormat;
 }
 
 void Settings::setDateFormat(const QString &format)
 {
+    QMutexLocker locker{&bigLock};
     dateFormat = format;
 }
 
-
 QString Settings::getEmojiFontFamily() const
 {
+    QMutexLocker locker{&bigLock};
     return emojiFontFamily;
 }
 
 void Settings::setEmojiFontFamily(const QString &value)
 {
+    QMutexLocker locker{&bigLock};
     emojiFontFamily = value;
     emit emojiFontChanged();
 }
 
 bool Settings::getUseNativeStyle() const
 {
+    QMutexLocker locker{&bigLock};
     return useNativeStyle;
 }
 
 void Settings::setUseNativeStyle(bool value)
 {
+    QMutexLocker locker{&bigLock};
     useNativeStyle = value;
 }
 
 QByteArray Settings::getWindowGeometry() const
 {
+    QMutexLocker locker{&bigLock};
     return windowGeometry;
 }
 
 void Settings::setWindowGeometry(const QByteArray &value)
 {
+    QMutexLocker locker{&bigLock};
     windowGeometry = value;
 }
 
 QByteArray Settings::getWindowState() const
 {
+    QMutexLocker locker{&bigLock};
     return windowState;
 }
 
 void Settings::setWindowState(const QByteArray &value)
 {
+    QMutexLocker locker{&bigLock};
     windowState = value;
 }
 
 bool Settings::getCheckUpdates() const
 {
+    QMutexLocker locker{&bigLock};
     return checkUpdates;
 }
 
 void Settings::setCheckUpdates(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     checkUpdates = newValue;
 }
 
 bool Settings::getShowWindow() const
 {
+    QMutexLocker locker{&bigLock};
     return showWindow;
 }
 
 void Settings::setShowWindow(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     showWindow = newValue;
 }
 
 QByteArray Settings::getSplitterState() const
 {
+    QMutexLocker locker{&bigLock};
     return splitterState;
 }
 
 void Settings::setSplitterState(const QByteArray &value)
 {
+    QMutexLocker locker{&bigLock};
     splitterState = value;
 }
 
 bool Settings::isMinimizeOnCloseEnabled() const
 {
+    QMutexLocker locker{&bigLock};
     return minimizeOnClose;
 }
 
 void Settings::setMinimizeOnClose(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     minimizeOnClose = newValue;
 }
 
 bool Settings::isTypingNotificationEnabled() const
 {
+    QMutexLocker locker{&bigLock};
     return typingNotification;
 }
 
 void Settings::setTypingNotification(bool enabled)
 {
+    QMutexLocker locker{&bigLock};
     typingNotification = enabled;
 }
 
 QString Settings::getInDev() const
 {
+    QMutexLocker locker{&bigLock};
     return inDev;
 }
 
 void Settings::setInDev(const QString& deviceSpecifier)
 {
+    QMutexLocker locker{&bigLock};
     inDev = deviceSpecifier;
 }
 
 QString Settings::getVideoDev() const
 {
+    QMutexLocker locker{&bigLock};
     return videoDev;
 }
 
 void Settings::setVideoDev(const QString& deviceSpecifier)
 {
+    QMutexLocker locker{&bigLock};
     videoDev = deviceSpecifier;
 }
 
 QString Settings::getOutDev() const
 {
+    QMutexLocker locker{&bigLock};
     return outDev;
 }
 
 void Settings::setOutDev(const QString& deviceSpecifier)
 {
+    QMutexLocker locker{&bigLock};
     outDev = deviceSpecifier;
 }
 
 bool Settings::getFilterAudio() const
 {
+    QMutexLocker locker{&bigLock};
     return filterAudio;
 }
 
 void Settings::setFilterAudio(bool newValue)
 {
+    QMutexLocker locker{&bigLock};
     filterAudio = newValue;
 }
 
 QSize Settings::getCamVideoRes() const
 {
+    QMutexLocker locker{&bigLock};
     return camVideoRes;
 }
 
 void Settings::setCamVideoRes(QSize newValue)
 {
+    QMutexLocker locker{&bigLock};
     camVideoRes = newValue;
 }
 
 QString Settings::getFriendAdress(const QString &publicKey) const
 {
+    QMutexLocker locker{&bigLock};
     QString key = ToxId(publicKey).publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
@@ -1046,6 +1180,7 @@ QString Settings::getFriendAdress(const QString &publicKey) const
 
 void Settings::updateFriendAdress(const QString &newAddr)
 {
+    QMutexLocker locker{&bigLock};
     QString key = ToxId(newAddr).publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
@@ -1064,6 +1199,7 @@ void Settings::updateFriendAdress(const QString &newAddr)
 
 QString Settings::getFriendAlias(const ToxId &id) const
 {
+    QMutexLocker locker{&bigLock};
     QString key = id.publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
@@ -1074,6 +1210,7 @@ QString Settings::getFriendAlias(const ToxId &id) const
 
 void Settings::setFriendAlias(const ToxId &id, const QString &alias)
 {
+    QMutexLocker locker{&bigLock};
     QString key = id.publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
@@ -1092,48 +1229,69 @@ void Settings::setFriendAlias(const ToxId &id, const QString &alias)
 
 void Settings::removeFriendSettings(const ToxId &id)
 {
+    QMutexLocker locker{&bigLock};
     QString key = id.publicKey;
     friendLst.remove(key);
 }
 
 bool Settings::getFauxOfflineMessaging() const
 {
+    QMutexLocker locker{&bigLock};
     return fauxOfflineMessaging;
 }
 
 void Settings::setFauxOfflineMessaging(bool value)
 {
+    QMutexLocker locker{&bigLock};
     fauxOfflineMessaging = value;
 }
 
 bool Settings::getCompactLayout() const
 {
+    QMutexLocker locker{&bigLock};
     return compactLayout;
 }
 
 void Settings::setCompactLayout(bool value)
 {
+    QMutexLocker locker{&bigLock};
     compactLayout = value;
 }
 
 bool Settings::getGroupchatPosition() const
 {
+    QMutexLocker locker{&bigLock};
     return groupchatPosition;
 }
 
 void Settings::setGroupchatPosition(bool value)
 {
+    QMutexLocker locker{&bigLock};
     groupchatPosition = value;
 }
 
 int Settings::getThemeColor() const
 {
+    QMutexLocker locker{&bigLock};
     return themeColor;
 }
 
 void Settings::setThemeColor(const int &value)
 {
+    QMutexLocker locker{&bigLock};
     themeColor = value;
+}
+
+bool Settings::getAutoLogin() const
+{
+    QMutexLocker locker{&bigLock};
+    return autoLogin;
+}
+
+void Settings::setAutoLogin(bool state)
+{
+    QMutexLocker locker{&bigLock};
+    autoLogin = state;
 }
 
 void Settings::createPersonal(QString basename)
@@ -1159,12 +1317,14 @@ void Settings::createSettingsDir()
         qCritical() << "Error while creating directory " << dir;
 }
 
-bool Settings::getAutoLogin() const
+void Settings::sync()
 {
-    return autoLogin;
-}
+    if (QThread::currentThread() != settingsThread)
+    {
+        QMetaObject::invokeMethod(&getInstance(), "sync", Qt::BlockingQueuedConnection);
+        return;
+    }
 
-void Settings::setAutoLogin(bool state)
-{
-    autoLogin = state;
+    QMutexLocker locker{&bigLock};
+    qApp->processEvents();
 }
