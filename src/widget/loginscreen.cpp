@@ -209,7 +209,7 @@ void LoginScreen::onAutoLoginToggled(int state)
     else
         Settings::getInstance().setAutoLogin(true);
 
-    Settings::getInstance().save(false);
+    Settings::getInstance().saveGlobal();
 }
 
 void LoginScreen::retranslateUi()

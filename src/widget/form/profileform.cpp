@@ -292,7 +292,7 @@ void ProfileForm::onDeleteClicked()
 void ProfileForm::onLogoutClicked()
 {
     Nexus& nexus = Nexus::getInstance();
-    Settings::getInstance().save();
+    Settings::getInstance().saveGlobal();
     nexus.showLogin();
 }
 

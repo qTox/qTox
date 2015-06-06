@@ -232,7 +232,7 @@ void GeneralForm::onSetShowSystemTray()
     Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
     emit parent->setShowSystemTray(bodyUI->showSystemTray->isChecked());
     bodyUI->lightTrayIcon->setEnabled(bodyUI->showSystemTray->isChecked());
-    Settings::getInstance().save();
+    Settings::getInstance().saveGlobal();
 }
 
 void GeneralForm::onSetAutostartInTray()

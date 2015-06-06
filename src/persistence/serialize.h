@@ -39,10 +39,12 @@ uint8_t dataToUint8(QByteArray data);
 uint16_t dataToUint16(QByteArray data);
 uint32_t dataToUint32(QByteArray data);
 uint64_t dataToUint64(QByteArray data);
+size_t dataToVUint(const QByteArray& data);
 unsigned getVUint32Size(QByteArray data);
 QByteArray uint8ToData(uint8_t num);
 QByteArray uint16ToData(uint16_t num);
 QByteArray uint32ToData(uint32_t num);
 QByteArray uint64ToData(uint64_t num);
+QByteArray vuintToData(size_t num);
 
 #endif // SERIALIZE_H

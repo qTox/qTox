@@ -59,8 +59,7 @@ Nexus::~Nexus()
 #endif
     delete loginScreen;
     delete profile;
-    if (profile)
-        Settings::getInstance().save();
+    Settings::getInstance().saveGlobal();
 }
 
 void Nexus::start()
@@ -77,6 +76,7 @@ void Nexus::start()
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
     qRegisterMetaType<QPixmap>("QPixmap");
+    qRegisterMetaType<Profile*>("Profile*");
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
@@ -220,6 +220,8 @@ Profile* Nexus::getProfile()
 void Nexus::setProfile(Profile* profile)
 {
     getInstance().profile = profile;
+    if (profile)
+        Settings::getInstance().loadPersonnal(profile);
 }
 
 AndroidGUI* Nexus::getAndroidGUI()

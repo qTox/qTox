@@ -42,7 +42,7 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
 {
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
-    s.save(false);
+    s.saveGlobal();
     HistoryKeeper::resetInstance();
 
     coreThread = new QThread();
@@ -99,6 +99,8 @@ Profile::~Profile()
         saveToxSave();
     delete core;
     delete coreThread;
+    Settings::getInstance().savePersonal(this);
+    Settings::getInstance().sync();
     ProfileLocker::assertLock();
     assert(ProfileLocker::getCurLockName() == name);
     ProfileLocker::unlock();
