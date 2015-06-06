@@ -431,7 +431,8 @@ void Core::onAvEnd(void* _toxav, int32_t call_index, void* core)
 
     emit static_cast<Core*>(core)->avEnd(friendId, call_index);
 
-    cleanupCall(call_index);
+    if (calls[call_index].active)
+        cleanupCall(call_index);
 }
 
 void Core::onAvRinging(void* _toxav, int32_t call_index, void* core)
@@ -471,7 +472,8 @@ void Core::onAvRequestTimeout(void* _toxav, int32_t call_index, void* core)
 
     emit static_cast<Core*>(core)->avRequestTimeout(friendId, call_index);
 
-    cleanupCall(call_index);
+    if (calls[call_index].active)
+        cleanupCall(call_index);
 }
 
 void Core::onAvPeerTimeout(void* _toxav, int32_t call_index, void* core)
