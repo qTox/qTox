@@ -78,6 +78,7 @@ Widget *Widget::instance{nullptr};
 Widget::Widget(QWidget *parent)
     : QMainWindow(parent),
       icon{nullptr},
+      trayMenu{nullptr},
       ui(new Ui::MainWindow),
       activeChatroomWidget{nullptr},
       eventFlag(false),
