@@ -1,5 +1,6 @@
 qTox
 ======
+![state of qTox](http://hapshack.eu/lr/svg.php?title=qTox%20state&state=fuck%20uTox)
 
  [**Compiling**](/INSTALL.md) **|** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **|** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Useful-bug-reports) **|** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **|** [**GitStats**](https://tux3-dev.tox.im/) **|** [**Mac & Linux jenkins**](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/) | [**Windows jenkins**](https://tux3-dev.tox.im/jenkins) **|** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|** [**Mailing list**](https://lists.tox.im) **|** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
 
