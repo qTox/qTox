@@ -112,6 +112,7 @@ protected:
     void dropEvent(QDropEvent* ev);
     void registerReceipt(int receipt, int messageID, ChatMessage::Ptr msg);
     virtual void hideEvent(QHideEvent* event);
+    virtual void showEvent(QShowEvent* event);
 
 private:
     Friend* f;

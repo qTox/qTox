@@ -993,6 +993,14 @@ void ChatForm::show(Ui::MainWindow &ui)
         callConfirm->show();
 }
 
+void ChatForm::showEvent(QShowEvent* event)
+{
+    if (callConfirm)
+        callConfirm->show();
+
+    GenericChatForm::showEvent(event);
+}
+
 void ChatForm::hideEvent(QHideEvent* event)
 {
     if (callConfirm)
