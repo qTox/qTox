@@ -1072,7 +1072,7 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>292</width>
+             <width>284</width>
              <height>359</height>
             </rect>
            </property>
@@ -1856,12 +1856,12 @@ QSplitter:handle{
   <customwidget>
    <class>CroppingLabel</class>
    <extends>QLabel</extends>
-   <header location="global">src/widget/croppinglabel.h</header>
+   <header location="global">src/widget/tool/croppinglabel.h</header>
   </customwidget>
   <customwidget>
    <class>AdjustingScrollArea</class>
    <extends>QScrollArea</extends>
-   <header>src/widget/adjustingscrollarea.h</header>
+   <header location="global">src/widget/tool/adjustingscrollarea.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

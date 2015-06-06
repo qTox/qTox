@@ -349,7 +349,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/friendlistwidget.h \
         src/widget/genericchatroomwidget.h \
         src/widget/form/genericchatform.h \
-        src/widget/adjustingscrollarea.h \
+        src/widget/tool/adjustingscrollarea.h \
         src/widget/form/loadhistorydialog.h \
         src/widget/form/setpassworddialog.h \
         src/widget/form/tabcompleter.h \
@@ -375,7 +375,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/widget.cpp \
         src/video/netcamview.cpp \
         src/widget/friendlistwidget.cpp \
-        src/widget/adjustingscrollarea.cpp \
+        src/widget/tool/adjustingscrollarea.cpp \
         src/widget/form/loadhistorydialog.cpp \
         src/widget/form/setpassworddialog.cpp \
         src/widget/form/tabcompleter.cpp \
