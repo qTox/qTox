@@ -72,7 +72,6 @@
         <file>ui/chatArea/scrollBarDownArrow.svg</file>
         <file>ui/chatArea/scrollBarLeftArrow.svg</file>
         <file>ui/chatArea/scrollBarRightArrow.svg</file>
-        <file>ui/chatroomWidgets/genericChatroomWidget.css</file>
         <file>ui/emoteButton/emoteButton.css</file>
         <file>ui/emoteButton/emoteButton.svg</file>
         <file>ui/emoticonWidget/dot_page.svg</file>

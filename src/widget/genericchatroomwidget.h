@@ -37,7 +37,6 @@ class GenericChatroomWidget : public QFrame
     Q_OBJECT
 public:
     GenericChatroomWidget(QWidget *parent = 0);
-    void mouseReleaseEvent (QMouseEvent* event);
 
     virtual void setAsActiveChatroom(){;}
     virtual void setAsInactiveChatroom(){;}
@@ -58,15 +57,18 @@ public:
     void reloadTheme();
 
     bool isCompact() const;
-    void setCompact(bool compact);
 
-    Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
+public slots:
+    void setCompact(bool compact);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
-public slots:
-    void onCompactChanged(bool compact);
+protected:
+    virtual void mousePressEvent(QMouseEvent* event);
+    virtual void mouseReleaseEvent (QMouseEvent* event);
+    virtual void enterEvent(QEvent* e);
+    virtual void leaveEvent(QEvent* e);
 
 protected:
     QColor lastColor;
@@ -74,10 +76,8 @@ protected:
     QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     QLabel statusPic;
-    CroppingLabel* nameLabel, * statusMessageLabel;
-    bool compact;
-
-    friend class Style; ///< To update our stylesheets
+    CroppingLabel* nameLabel, *statusMessageLabel;
+    bool compact, active;
 };
 
 #endif // GENERICCHATROOMWIDGET_H

@@ -223,6 +223,8 @@ void FriendWidget::mousePressEvent(QMouseEvent *ev)
 {
     if (ev->button() == Qt::LeftButton)
         dragStartPos = ev->pos();
+
+    GenericChatroomWidget::mousePressEvent(ev);
 }
 
 void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
