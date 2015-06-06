@@ -38,6 +38,8 @@
 #include <algorithm>
 #include <cassert>
 
+TOX_PASS_KEY* Core::encryptionKey = nullptr;
+
 void Core::setPassword(const QString& password, uint8_t* salt)
 {
     clearPassword();

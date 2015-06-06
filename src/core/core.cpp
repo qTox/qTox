@@ -260,7 +260,6 @@ void Core::start()
     {
         qDebug() << "Creating a new profile";
         makeTox(QByteArray());
-        Settings::getInstance().load();
         setStatusMessage(tr("Toxing on qTox"));
         setUsername(profile.getName());
     }

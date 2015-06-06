@@ -302,7 +302,7 @@ private:
     QMutex messageSendMutex;
     bool ready;
 
-    TOX_PASS_KEY* encryptionKey = nullptr; // use the pw's hash as the "pw"
+    static TOX_PASS_KEY* encryptionKey; // use the pw's hash as the "pw"
 
     static const int videobufsize;
     static uint8_t* videobuf;

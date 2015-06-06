@@ -25,6 +25,9 @@
 #include "src/core/core.h"
 #include "src/widget/gui.h"
 #include "src/persistence/profilelocker.h"
+#include "src/persistence/settingsserializer.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
 #ifdef QTOX_PLATFORM_EXT
 #include "src/platform/autorun.h"
 #endif
@@ -34,7 +37,6 @@
 #include <QApplication>
 #include <QDir>
 #include <QFile>
-#include <QSettings>
 #include <QStandardPaths>
 #include <QDebug>
 #include <QList>
@@ -58,7 +60,7 @@ Settings::Settings() :
     settingsThread->setObjectName("qTox Settings");
     settingsThread->start(QThread::LowPriority);
     moveToThread(settingsThread);
-    load();
+    loadGlobal();
 }
 
 Settings::~Settings()
@@ -83,7 +85,7 @@ void Settings::destroyInstance()
     settings = nullptr;
 }
 
-void Settings::load()
+void Settings::loadGlobal()
 {
     QMutexLocker locker{&bigLock};
 
@@ -254,66 +256,63 @@ void Settings::load()
     }
 
     loaded = true;
+}
 
+void Settings::loadPersonnal()
+{
+    Profile* profile = Nexus::getProfile();
+    if (!profile)
     {
-        // load from a profile specific friend data list if possible
-        QString tmp = dir.filePath(currentProfile + ".ini");
-        if (QFile(tmp).exists()) // otherwise, filePath remains the global file
-            filePath = tmp;
-
-        QSettings ps(filePath, QSettings::IniFormat);
-        friendLst.clear();
-        ps.beginGroup("Friends");
-            int size = ps.beginReadArray("Friend");
-            for (int i = 0; i < size; i ++)
-            {
-                ps.setArrayIndex(i);
-                friendProp fp;
-                fp.addr = ps.value("addr").toString();
-                fp.alias = ps.value("alias").toString();
-                fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
-                friendLst[ToxId(fp.addr).publicKey] = fp;
-            }
-            ps.endArray();
-        ps.endGroup();
-
-        ps.beginGroup("Privacy");
-            typingNotification = ps.value("typingNotification", false).toBool();
-            enableLogging = ps.value("enableLogging", false).toBool();
-        ps.endGroup();
+        qCritical() << "No active profile, couldn't load personnal settings";
+        return;
     }
+    loadPersonnal(profile);
 }
 
-void Settings::save(bool writePersonal)
-{
-    if (QThread::currentThread() != settingsThread)
-        return (void) QMetaObject::invokeMethod(&getInstance(), "save",
-                                                Q_ARG(bool, writePersonal));
-
-    QString filePath = getSettingsDirPath();
-    save(filePath, writePersonal);
-}
-
-void Settings::save(QString path, bool writePersonal)
-{
-    if (QThread::currentThread() != settingsThread)
-        return (void) QMetaObject::invokeMethod(&getInstance(), "save",
-                                                Q_ARG(QString, path), Q_ARG(bool, writePersonal));
-
-#ifndef Q_OS_ANDROID
-    if (IPC::getInstance().isCurrentOwner())
-#endif
-        saveGlobal(path);
-
-    if (writePersonal)
-        savePersonal(path);
-}
-
-void Settings::saveGlobal(QString path)
+void Settings::loadPersonnal(Profile* profile)
 {
     QMutexLocker locker{&bigLock};
-    path += globalSettingsFile;
-    qDebug() << "Saving settings at " + path;
+
+    QDir dir(getSettingsDirPath());
+    QString filePath = dir.filePath(globalSettingsFile);
+
+    // load from a profile specific friend data list if possible
+    QString tmp = dir.filePath(profile->getName() + ".ini");
+    if (QFile(tmp).exists()) // otherwise, filePath remains the global file
+        filePath = tmp;
+
+    qDebug()<<"Loading personnal settings from"<<filePath;
+
+    SettingsSerializer ps(filePath, profile->getPassword());
+    friendLst.clear();
+    ps.beginGroup("Friends");
+        int size = ps.beginReadArray("Friend");
+        for (int i = 0; i < size; i ++)
+        {
+            ps.setArrayIndex(i);
+            friendProp fp;
+            fp.addr = ps.value("addr").toString();
+            fp.alias = ps.value("alias").toString();
+            fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
+            friendLst[ToxId(fp.addr).publicKey] = fp;
+        }
+        ps.endArray();
+    ps.endGroup();
+
+    ps.beginGroup("Privacy");
+        typingNotification = ps.value("typingNotification", false).toBool();
+        enableLogging = ps.value("enableLogging", false).toBool();
+    ps.endGroup();
+}
+
+void Settings::saveGlobal()
+{
+    if (QThread::currentThread() != settingsThread)
+        return (void) QMetaObject::invokeMethod(&getInstance(), "saveGlobal");
+
+    QMutexLocker locker{&bigLock};
+    QString path = getSettingsDirPath() + globalSettingsFile;
+    qDebug() << "Saving global settings at " + path;
 
     QSettings s(path, QSettings::IniFormat);
 
@@ -411,18 +410,34 @@ void Settings::saveGlobal(QString path)
     s.endGroup();
 }
 
-void Settings::savePersonal(QString path)
+void Settings::savePersonal()
 {
-    QMutexLocker locker{&bigLock};
-    if (currentProfile.isEmpty())
+    savePersonal(Nexus::getProfile());
+}
+
+void Settings::savePersonal(Profile* profile)
+{
+    if (!profile)
     {
-        qDebug() << "could not save personal settings because currentProfile profile is empty";
+        qDebug() << "Could not save personal settings because there is no active profile";
         return;
     }
+    savePersonal(profile->getName(), profile->getPassword());
+}
 
-    qDebug() << "Saving personal settings in " << path;
+void Settings::savePersonal(QString profileName, QString password)
+{
+    if (QThread::currentThread() != settingsThread)
+        return (void) QMetaObject::invokeMethod(&getInstance(), "savePersonal",
+                                                Q_ARG(QString, profileName), Q_ARG(QString, password));
 
-    QSettings ps(path + currentProfile + ".ini", QSettings::IniFormat);
+    QMutexLocker locker{&bigLock};
+
+    QString path = getSettingsDirPath() + profileName + ".ini";
+
+    qDebug() << "Saving personal settings at " << path;
+
+    SettingsSerializer ps(path, password);
     ps.beginGroup("Friends");
         ps.beginWriteArray("Friend", friendLst.size());
         int index = 0;
@@ -441,6 +456,8 @@ void Settings::savePersonal(QString path)
         ps.setValue("typingNotification", typingNotification);
         ps.setValue("enableLogging", enableLogging);
     ps.endGroup();
+
+    ps.write();
 }
 
 uint32_t Settings::makeProfileId(const QString& profile)
@@ -559,7 +576,7 @@ void Settings::setMakeToxPortable(bool newValue)
     QMutexLocker locker{&bigLock};
     QFile(getSettingsDirPath()+globalSettingsFile).remove();
     makeToxPortable = newValue;
-    save(false);
+    saveGlobal();
 }
 
 bool Settings::getAutorun() const

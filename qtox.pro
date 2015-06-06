@@ -480,7 +480,8 @@ SOURCES += \
     src/video/corevideosource.cpp \
     src/core/toxid.cpp \
     src/persistence/profile.cpp \
-    src/widget/translator.cpp
+    src/widget/translator.cpp \
+    src/persistence/settingsserializer.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -515,4 +516,5 @@ HEADERS += \
     src/video/videomode.h \
     src/core/toxid.h \
     src/persistence/profile.h \
-    src/widget/translator.h
+    src/widget/translator.h \
+    src/persistence/settingsserializer.h

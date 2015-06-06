@@ -204,6 +204,21 @@ uint64_t dataToUint64(QByteArray data)
             +(((uint64_t)(uint8_t)data[7])<<56);
 }
 
+size_t dataToVUint(const QByteArray& data)
+{
+    unsigned char num3;
+    size_t num = 0;
+    int num2 = 0;
+    int i=0;
+    do
+    {
+        num3 = data[i]; i++;
+        num |= (num3 & 0x7f) << num2;
+        num2 += 7;
+    } while ((num3 & 0x80) != 0);
+    return num;
+}
+
 unsigned getVUint32Size(QByteArray data)
 {
     unsigned lensize=0;
@@ -253,5 +268,20 @@ QByteArray uint64ToData(uint64_t num)
     data[5] = (uint8_t)((num>>40) & 0xFF);
     data[6] = (uint8_t)((num>>48) & 0xFF);
     data[7] = (uint8_t)((num>>56) & 0xFF);
+    return data;
+}
+
+QByteArray vuintToData(size_t num)
+{
+    QByteArray data(sizeof(size_t), 0);
+    // Write the size in a Uint of variable lenght (8-32 bits)
+    int i=0;
+    while (num >= 0x80)
+    {
+        data[i] = (unsigned char)(num | 0x80); i++;
+        num = num >> 7;
+    }
+    data[i]=num;
+    data.resize(i+1);
     return data;
 }

@@ -251,7 +251,7 @@ void FriendWidget::setAlias(const QString& _alias)
     Friend* f = FriendList::findFriend(friendId);
     f->setAlias(alias);
     Settings::getInstance().setFriendAlias(f->getToxId(), alias);
-    Settings::getInstance().save(true);
+    Settings::getInstance().savePersonal();
     hide();
     show();
 }

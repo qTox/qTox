@@ -28,6 +28,7 @@
 #include "src/core/corestructs.h"
 
 class ToxId;
+class Profile;
 namespace Db { enum class syncType; }
 
 enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
@@ -43,10 +44,15 @@ public:
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
     void createPersonal(QString basename); ///< Write a default personnal .ini settings file for a profile
 
+    void savePersonal(); ///< Asynchronous, saves the current profile
+    void savePersonal(Profile *profile); ///< Asynchronous
+
+    void loadGlobal();
+    void loadPersonnal();
+    void loadPersonnal(Profile *profile);
+
 public slots:
-    void load();
-    void save(bool writePersonal = true); ///< Asynchronous
-    void save(QString path, bool writePersonal = true); ///< Asynchronous
+    void saveGlobal(); ///< Asynchronous
     void sync(); ///< Waits for all asynchronous operations to complete
 
 signals:
@@ -264,8 +270,9 @@ private:
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
     static uint32_t makeProfileId(const QString& profile);
-    void saveGlobal(QString path);
-    void savePersonal(QString path);
+
+private slots:
+    void savePersonal(QString profileName, QString password);
 
 private:
     bool loaded;
