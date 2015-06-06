@@ -724,7 +724,6 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
     if (!widget->getStatusString().isNull())
         windowTitle += " (" + widget->getStatusString() + ")";
     setWindowTitle(windowTitle);
-
 }
 
 void Widget::onFriendMessageReceived(int friendId, const QString& message, bool isAction)
@@ -776,6 +775,8 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
 
     if (Settings::getInstance().getShowWindow())
     {
+        if (activeChatroomWidget != chat)
+            onChatroomWidgetClicked(chat);
         show();
         if (inactiveWindow && Settings::getInstance().getShowInFront())
             setWindowState(Qt::WindowActive);
