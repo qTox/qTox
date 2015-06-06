@@ -364,6 +364,11 @@ void SettingsSerializer::readSerialized()
             beginReadArray(QString::fromUtf8(prefix));
             QByteArray sizeData;
             stream >> sizeData;
+            if (sizeData.isEmpty())
+            {
+                qWarning("The personnal save file is corrupted!");
+                return;
+            }
             quint64 size = dataToVUint(sizeData);
             arrays[array].size = max(size, arrays[array].size);
             //qDebug()<<"!Array start"<<prefix;
@@ -372,6 +377,11 @@ void SettingsSerializer::readSerialized()
         {
             QByteArray indexData;
             stream >> indexData;
+            if (indexData.isEmpty())
+            {
+                qWarning("The personnal save file is corrupted!");
+                return;
+            }
             quint64 index = dataToVUint(indexData);
             setArrayIndex(index);
             QByteArray key;
