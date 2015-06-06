@@ -174,7 +174,6 @@ void Settings::loadGlobal()
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
-        compactLayout = s.value("compactLayout", false).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 
@@ -299,6 +298,10 @@ void Settings::loadPersonnal(Profile* profile)
         ps.endArray();
     ps.endGroup();
 
+    ps.beginGroup("General");
+        compactLayout = ps.value("compactLayout", false).toBool();
+    ps.endGroup();
+
     ps.beginGroup("Privacy");
         typingNotification = ps.value("typingNotification", false).toBool();
         enableLogging = ps.value("enableLogging", false).toBool();
@@ -355,7 +358,6 @@ void Settings::saveGlobal()
         s.setValue("notifySound", notifySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
-        s.setValue("compactLayout", compactLayout);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
@@ -450,6 +452,10 @@ void Settings::savePersonal(QString profileName, QString password)
             index++;
         }
         ps.endArray();
+    ps.endGroup();
+
+    ps.beginGroup("General");
+        ps.setValue("compactLayout", compactLayout);
     ps.endGroup();
 
     ps.beginGroup("Privacy");
