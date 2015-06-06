@@ -233,9 +233,7 @@ void Core::cancelCall(int32_t callId, uint32_t friendId)
 
 void Core::cleanupCall(int32_t callId)
 {
-    if (!calls[callId].active)
-        return;
-    //assert(calls[callId].active); /// TODO: Fix this, see #1817
+    assert(!calls[callId].active);
     qDebug() << QString("cleaning up call %1").arg(callId);
     calls[callId].active = false;
     disconnect(calls[callId].sendAudioTimer,0,0,0);
@@ -490,7 +488,8 @@ void Core::onAvPeerTimeout(void* _toxav, int32_t call_index, void* core)
 
     emit static_cast<Core*>(core)->avPeerTimeout(friendId, call_index);
 
-    cleanupCall(call_index);
+    if (calls[call_index].active)
+        cleanupCall(call_index);
 }
 
 
