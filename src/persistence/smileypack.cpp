@@ -1,15 +1,20 @@
 /*
+    Copyright © 2014-2015 by The qTox Project
+
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
-    This program is libre software: you can redistribute it and/or modify
+    qTox is libre software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-    See the COPYING file for more details.
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "smileypack.h"
@@ -70,7 +75,7 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &p
                     if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
                         smileyPacks << QPair<QString, QString>(packageName, absPath);
                     else if (!smileyPacks.contains(QPair<QString, QString>(packageName, relPath)))
-                        smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories                            
+                        smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories
                 }
             }
             dir.cdUp();
@@ -131,16 +136,16 @@ bool SmileyPack::load(const QString& filename)
             QString emoticon = stringElement.text()
                                 .replace("<","&lt;").replace(">","&gt;");
             filenameTable.insert(emoticon, file);
-            
+
             cacheSmiley(file); // preload all smileys
 
             if (!getCachedSmiley(emoticon).isNull())
                 emoticonSet.push_back(emoticon);
-            
+
             stringElement = stringElement.nextSibling().toElement();
-            
+
         }
-        
+
         if (emoticonSet.size() > 0)
             emoticons.push_back(emoticonSet);
     }
