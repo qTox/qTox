@@ -233,7 +233,9 @@ void Core::cancelCall(int32_t callId, uint32_t friendId)
 
 void Core::cleanupCall(int32_t callId)
 {
-    assert(calls[callId].active);
+    if (!calls[callId].active)
+        return;
+    //assert(calls[callId].active); /// TODO: Fix this, see #1817
     qDebug() << QString("cleaning up call %1").arg(callId);
     calls[callId].active = false;
     disconnect(calls[callId].sendAudioTimer,0,0,0);
