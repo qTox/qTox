@@ -74,20 +74,6 @@ SettingsSerializer::SettingsSerializer(QString filePath, QString password)
     : path{filePath}, password{password},
       group{-1}, array{-1}, arrayIndex{-1}
 {
-    if (isSerializedFormat(filePath))
-        readSerialized();
-    else
-        readIni();
-
-    /* Dump state for debugging
-    qDebug() << "SettingsSerializer data:";
-    for (int i=0; i<groups.size(); i++)
-        qDebug()<<"Group"<<i<<"is"<<groups[i];
-    for (int i=0; i<arrays.size(); i++)
-        qDebug()<<"Array"<<i<<"size"<<arrays[i].size<<arrays[i].values.size()<<"of group"<<arrays[i].group<<"is"<<arrays[i].name;
-    for (int i=0; i<values.size(); i++)
-        qDebug()<<"Value"<<i<<"of group"<<values[i].group<<"array"<<values[i].array<<values[i].arrayIndex<<"key"<<values[i].key;
-    */
 }
 
 void SettingsSerializer::beginGroup(const QString &prefix)
@@ -222,7 +208,25 @@ bool SettingsSerializer::isSerializedFormat(QString filePath)
     return !memcmp(fmagic, magic, 4) || tox_is_data_encrypted((uint8_t*)fmagic);
 }
 
-void SettingsSerializer::write()
+void SettingsSerializer::load()
+{
+    if (isSerializedFormat(path))
+        readSerialized();
+    else
+        readIni();
+
+    /* Dump state for debugging
+    qDebug() << "SettingsSerializer data:";
+    for (int i=0; i<groups.size(); i++)
+        qDebug()<<"Group"<<i<<"is"<<groups[i];
+    for (int i=0; i<arrays.size(); i++)
+        qDebug()<<"Array"<<i<<"size"<<arrays[i].size<<arrays[i].values.size()<<"of group"<<arrays[i].group<<"is"<<arrays[i].name;
+    for (int i=0; i<values.size(); i++)
+        qDebug()<<"Value"<<i<<"of group"<<values[i].group<<"array"<<values[i].array<<values[i].arrayIndex<<"key"<<values[i].key;
+    */
+}
+
+void SettingsSerializer::save()
 {
     QFile f(path);
     if (!f.open(QIODevice::Truncate | QIODevice::WriteOnly))

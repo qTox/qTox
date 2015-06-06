@@ -283,6 +283,7 @@ void Settings::loadPersonnal(Profile* profile)
     qDebug()<<"Loading personnal settings from"<<filePath;
 
     SettingsSerializer ps(filePath, profile->getPassword());
+    ps.load();
     friendLst.clear();
     ps.beginGroup("Friends");
         int size = ps.beginReadArray("Friend");
@@ -463,7 +464,7 @@ void Settings::savePersonal(QString profileName, QString password)
         ps.setValue("enableLogging", enableLogging);
     ps.endGroup();
 
-    ps.write();
+    ps.save();
 }
 
 uint32_t Settings::makeProfileId(const QString& profile)

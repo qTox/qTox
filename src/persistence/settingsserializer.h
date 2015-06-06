@@ -28,16 +28,17 @@
 /// SettingsSerializer can detect regular .ini files and serialized ones,
 /// it will read both regular and serialized .ini, but only save in serialized format.
 /// The file is encrypted with the current profile's password, if any.
-/// The file is only written to disk if write() is called, the destructor does not write to disk
+/// The file is only written to disk if save() is called, the destructor does not save to disk
 /// All member functions are reentrant, but not thread safe.
 class SettingsSerializer
 {
 public:
-    SettingsSerializer(QString filePath, QString password=QString()); ///< Loads the settings from file
+    SettingsSerializer(QString filePath, QString password=QString());
 
     static bool isSerializedFormat(QString filePath); ///< Check if the file is serialized settings. False on error.
 
-    void write(); ///< Writes the current settings back to file
+    void load(); ///< Loads the settings from file
+    void save(); ///< Saves the current settings back to file
 
     void beginGroup(const QString &prefix);
     void endGroup();
