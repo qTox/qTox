@@ -1,15 +1,20 @@
 /*
+    Copyright © 2014-2015 by The qTox Project
+
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
-    This program is libre software: you can redistribute it and/or modify
+    qTox is libre software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-    See the COPYING file for more details.
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "genericchatform.h"
@@ -86,7 +91,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     micButton = new QPushButton();
     // micButton->setFixedSize(25,20);
     micButton->setToolTip("");
-    
+
     fileFlyout = new FlyoutOverlayWidget;
     QHBoxLayout *fileLayout = new QHBoxLayout(fileFlyout);
     fileLayout->addWidget(screenshotButton);
@@ -179,7 +184,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
-    
+
     fileFlyout->setFixedSize(24, 24);
     fileFlyout->setParent(this);
     fileButton->installEventFilter(this);
@@ -206,7 +211,7 @@ void GenericChatForm::showFileMenu()
     if (!fileFlyout->isShown() && !fileFlyout->isBeingShown()) {
         adjustFileMenuPosition();
     }
-    
+
     fileFlyout->animateShow();
 }
 
@@ -214,7 +219,7 @@ void GenericChatForm::hideFileMenu()
 {
     if(fileFlyout->isShown() || fileFlyout->isBeingShown())
         fileFlyout->animateHide();
-    
+
 }
 
 bool GenericChatForm::isEmpty()
@@ -450,34 +455,34 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
 {
     if (object != this->fileButton && object != this->fileFlyout)
         return false;
-    
+
     if (!qobject_cast<QWidget*>(object)->isEnabled())
         return false;
-    
+
     switch(event->type())
     {
     case QEvent::Enter:
         showFileMenu();
         break;
-        
+
     case QEvent::Leave: {
         QPoint pos = mapFromGlobal(QCursor::pos());
         QRect fileRect(fileFlyout->pos(), fileFlyout->size());
         fileRect = fileRect.united(QRect(fileButton->pos(), fileButton->size()));
-        
+
         if (!fileRect.contains(pos))
             hideFileMenu();
-        
+
     } break;
-        
+
     case QEvent::MouseButtonPress:
         hideFileMenu();
         break;
-        
+
     default:
         break;
     }
-    
+
     return false;
 }
 

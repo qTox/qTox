@@ -1,15 +1,20 @@
 /*
+    Copyright © 2014-2015 by The qTox Project
+
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
-    This program is libre software: you can redistribute it and/or modify
+    qTox is libre software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-    See the COPYING file for more details.
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <QDebug>
@@ -870,7 +875,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 void ChatForm::onScreenshotClicked()
 {
     doScreenshot();
-    
+
     // Give the window manager a moment to open the fullscreen grabber window
     QTimer::singleShot(500, this, SLOT(hideFileMenu()));
 }
@@ -892,16 +897,16 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
 	                         tr("qTox wasn't able to save the screenshot"));
 	    return;
 	}
-	
+
 	file.setAutoRemove(false);
-	
+
 	pixmap.save(&file, "PNG");
-	
+
 	long long filesize = file.size();
 	file.close();
 	QFileInfo fi(file);
-	
-	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);        
+
+	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
 }
 
 void ChatForm::onLoadHistory()
@@ -992,7 +997,7 @@ void ChatForm::hideEvent(QHideEvent* event)
 {
     if (callConfirm)
         callConfirm->hide();
-    
+
     GenericChatForm::hideEvent(event);
 }
 
