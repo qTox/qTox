@@ -35,6 +35,7 @@ public:
     virtual void setChatForm(Ui::MainWindow &) override;
     virtual void resetEventFlags() override;
     virtual QString getStatusString() override;
+    void search(const QString &searchString, bool hide = false);
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);

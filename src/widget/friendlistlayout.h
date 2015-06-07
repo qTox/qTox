@@ -42,7 +42,7 @@ public:
     QLayout* getLayoutOffline() const;
 
 private:
-    QLayout* getFriendLayout(Status s);
+    QLayout* getFriendLayout(Status s) const;
 
     GenericChatItemLayout friendOnlineLayout;
     GenericChatItemLayout friendOfflineLayout;

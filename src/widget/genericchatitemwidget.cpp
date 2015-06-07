@@ -43,3 +43,8 @@ QString GenericChatItemWidget::getName() const
 {
     return nameLabel->fullText();
 }
+
+void GenericChatItemWidget::searchName(const QString &searchString, bool hide)
+{
+    setVisible(!hide && getName().contains(searchString, Qt::CaseInsensitive));
+}

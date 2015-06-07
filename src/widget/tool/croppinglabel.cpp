@@ -22,6 +22,7 @@
 #include <QLineEdit>
 
 #include <QTimer>
+#include <QDebug>
 
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
@@ -39,10 +40,13 @@ CroppingLabel::CroppingLabel(QWidget* parent)
 
     installEventFilter(this);
     textEdit->installEventFilter(this);
+    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::finishTextEdit);
 }
 
 void CroppingLabel::editStart()
 {
+    //if (!parentWidget()->isVisible())
+    //    return;
     showTextEdit();
     textEdit->selectAll();
 }
@@ -122,7 +126,9 @@ bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
         }
 
         if (e->type() == QEvent::FocusOut)
+        {
             hideTextEdit(true);
+        }
     }
 
     return false;
@@ -167,4 +173,18 @@ void CroppingLabel::showTextEdit()
 QString CroppingLabel::fullText()
 {
     return origText;
+}
+
+void CroppingLabel::finishTextEdit()
+{
+    QString newText = textEdit->text().trimmed().remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
+    if (!newText.isEmpty() && origText != newText)
+    {
+        setText(textEdit->text()); // set before emitting so we don't override external reactions to signal
+        emit textChanged(textEdit->text(), origText);
+        emit editFinished(textEdit->text());
+    }
+
+    textEdit->hide();
+    blockPaintEvents = false;
 }

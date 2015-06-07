@@ -17,26 +17,19 @@
 #include "src/misc/settings.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
-#include "src/widget/friendwidget.h"
+#include "friendwidget.h"
+#include "friendlistlayout.h"
+#include "friendlistwidget.h"
+#include "croppinglabel.h"
+#include "widget.h"
 #include <QVariant>
 #include <QLabel>
 #include <QBoxLayout>
 #include <QMouseEvent>
-#include <QLineEdit>
-#include "src/misc/settings.h"
-
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QMenu>
-
-#include <QDebug>
-
 #include <cassert>
-
-#include "friendlistlayout.h"
-#include "friendlistwidget.h"
-
-#include "croppinglabel.h"
 
 void maxCropLabel(CroppingLabel* label)
 {
@@ -61,9 +54,6 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
     statusLabel = new QLabel("0 / 0", this);
     statusLabel->setObjectName("status");
     statusLabel->setTextFormat(Qt::PlainText);
-
-    // name text
-    nameLabel->setText("Circle");
 
     arrowLabel = new QLabel(this);
     arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
@@ -90,7 +80,6 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
 
     if (id != -1)
     {
-        // Set name before connecting text change.
         setName(Settings::getInstance().getCircleName(id));
     }
 
@@ -110,10 +99,12 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
         if (id == -1)
         {
             isNew = true;
-            id = Settings::getInstance().addCircle("Circle");
+            id = Settings::getInstance().addCircle();
+            nameLabel->setText(tr("Circle #%1").arg(id + 1));
+            Settings::getInstance().setCircleName(id, nameLabel->fullText());
         }
     }
-    circleList.insert(id, this);
+    circleList[id] = this;
 
     if (isNew)
         renameCircle();
@@ -126,7 +117,6 @@ void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
     listLayout->addFriendWidget(w, s);
     updateStatus();
     Settings::getInstance().setFriendCircleID(FriendList::findFriend(w->friendId)->getToxId(), id);
-    qDebug() << Settings::getInstance().getFriendCircleID(FriendList::findFriend(w->friendId)->getToxId()) << " WITH " << id;
 }
 
 void CircleWidget::setExpanded(bool isExpanded)
@@ -145,9 +135,14 @@ void CircleWidget::setExpanded(bool isExpanded)
     Settings::getInstance().setCircleExpanded(id, isExpanded);
 }
 
-void CircleWidget::searchChatrooms(const QString &searchString, bool hideOnline, bool hideOffline)
+void CircleWidget::search(const QString &searchString, bool updateAll, bool hideOnline, bool hideOffline)
 {
-    listLayout->searchChatrooms(searchString, hideOnline, hideOffline);
+    if (updateAll)
+    {
+        listLayout->searchChatrooms(searchString, hideOnline, hideOffline);
+    }
+    bool inCategory = searchString.isEmpty() && !(hideOnline && hideOffline);
+    setVisible(inCategory || listLayout->hasChatrooms());
 }
 
 void CircleWidget::setName(const QString &name)
@@ -170,10 +165,8 @@ void emitChatroomWidget(QLayout* layout, int index)
 
 bool CircleWidget::cycleContacts(bool forward)
 {
-    qDebug() << "Cycling on contact: " << getName();
     if (listLayout->friendTotalCount() == 0)
     {
-        qDebug() << "Empty";
         return false;
     }
     if (forward)
@@ -182,14 +175,12 @@ bool CircleWidget::cycleContacts(bool forward)
         {
             setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOnline(), 0);
-            qDebug() << "emmited 1";
             return true;
         }
         else if (listLayout->getLayoutOffline()->count() != 0)
         {
             setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOffline(), 0);
-            qDebug() << "emmited 2";
             return true;
         }
     }
@@ -199,14 +190,12 @@ bool CircleWidget::cycleContacts(bool forward)
         {
             setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOffline(), listLayout->getLayoutOffline()->count() - 1);
-            qDebug() << "emmited 3";
             return true;
         }
         else if (listLayout->getLayoutOnline()->count() != 0)
         {
             setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOnline(), listLayout->getLayoutOnline()->count() - 1);
-            qDebug() << "emmited 4";
             return true;
         }
     }
@@ -264,11 +253,6 @@ bool CircleWidget::cycleContacts(FriendWidget *activeChatroomWidget, bool forwar
     }
 
     return false;
-}
-
-bool CircleWidget::hasChatrooms() const
-{
-    return listLayout->hasChatrooms();
 }
 
 CircleWidget* CircleWidget::getFromID(int id)
@@ -402,8 +386,8 @@ void CircleWidget::dropEvent(QDropEvent *event)
 
         if (circleWidget != nullptr)
         {
-            // In case the status was changed while moving, update both.
             circleWidget->updateStatus();
+            Widget::getInstance()->searchCircle(circleWidget);
         }
 
         container->setAttribute(Qt::WA_UnderMouse, false);

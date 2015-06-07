@@ -153,7 +153,7 @@ void Widget::init()
     ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 #endif
 
-    contactListWidget = new FriendListWidget(0, Settings::getInstance().getGroupchatPosition());
+    contactListWidget = new FriendListWidget(this, Settings::getInstance().getGroupchatPosition());
     ui->friendList->setWidget(contactListWidget);
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
     ui->friendList->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -631,7 +631,8 @@ void Widget::addFriend(int friendId, const QString &userId)
         newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
     }
 
-    searchContacts();
+    int filter = ui->searchContactFilterCBox->currentIndex();
+    newfriend->getFriendWidget()->search(ui->searchContactText->text(), filterOffline(filter));
 }
 
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
@@ -719,7 +720,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     QString str = username; str.replace('\n', ' ');
     str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
     f->setName(str);
-    searchContacts();
+
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
@@ -996,7 +997,9 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
     g->setName(title);
     if (!author.isEmpty())
         g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
-    searchContacts();
+
+    int filter = ui->searchContactFilterCBox->currentIndex();
+    g->getGroupWidget()->searchName(ui->searchContactText->text(), filterGroups(filter));
 }
 
 void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
@@ -1043,8 +1046,7 @@ Group *Widget::createGroup(int groupId)
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
     Group* newgroup = GroupList::addGroup(groupId, groupName, core->isGroupAvEnabled(groupId));
-    //QLayout* layout = contactListWidget->getGroupLayout();
-    //layout->addWidget(newgroup->getGroupWidget());
+
     contactListWidget->addGroupWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();
 
@@ -1055,7 +1057,10 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->getChatForm(), &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
     connect(newgroup->getChatForm(), &GroupChatForm::sendAction, core, &Core::sendGroupAction);
     connect(newgroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
-    searchContacts();
+
+    int filter = ui->searchContactFilterCBox->currentIndex();
+    newgroup->getGroupWidget()->searchName(ui->searchContactText->text(), filterGroups(filter));
+
     return newgroup;
 }
 
@@ -1265,22 +1270,45 @@ void Widget::onSplitterMoved(int pos, int index)
     saveSplitterGeometry();
 }
 
-void Widget::cycleContacts(int offset)
+void Widget::cycleContacts(bool forward)
 {
-    contactListWidget->cycleContacts(activeChatroomWidget, offset == 1 ? true : false);
-    /*if (!activeChatroomWidget)
-        return;
+    contactListWidget->cycleContacts(activeChatroomWidget, forward);
+}
 
-    FriendListWidget* friendList = static_cast<FriendListWidget*>(ui->friendList->widget());
-    QList<GenericChatroomWidget*> friends = friendList->getAllFriends();
+bool Widget::filterGroups(int index)
+{
+    switch (index)
+    {
+        case FilterCriteria::Offline:
+        case FilterCriteria::Friends:
+            return true;
+        default:
+            return false;
+    }
+}
 
-    int activeIndex = friends.indexOf(activeChatroomWidget);
-    int bounded = (activeIndex + offset) % friends.length();
+bool Widget::filterOffline(int index)
+{
+    switch (index)
+    {
+        case FilterCriteria::Online:
+        case FilterCriteria::Groups:
+            return true;
+        default:
+            return false;
+    }
+}
 
-    if(bounded < 0)
-        bounded += friends.length();
-
-    emit friends[bounded]->chatroomWidgetClicked(friends[bounded]);*/
+bool Widget::filterOnline(int index)
+{
+    switch (index)
+    {
+        case FilterCriteria::Offline:
+        case FilterCriteria::Groups:
+            return true;
+        default:
+            return false;
+    }
 }
 
 void Widget::processOfflineMsgs()
@@ -1392,28 +1420,37 @@ void Widget::searchContacts()
     QString searchString = ui->searchContactText->text();
     int filter = ui->searchContactFilterCBox->currentIndex();
 
-    switch(filter)
-    {
-        case FilterCriteria::All:
-            contactListWidget->searchChatrooms(searchString, false, false, false);
-            break;
-        case FilterCriteria::Online:
-            contactListWidget->searchChatrooms(searchString, false, true, false);
-            break;
-        case FilterCriteria::Offline:
-            contactListWidget->searchChatrooms(searchString, true, false, true);
-            break;
-        case FilterCriteria::Friends:
-            contactListWidget->searchChatrooms(searchString, false, false, true);
-            break;
-        case FilterCriteria::Groups:
-            contactListWidget->searchChatrooms(searchString, true, true, false);
-            break;
-        default:
-            return;
-    }
+    contactListWidget->searchChatrooms(searchString, filterOnline(filter), filterOffline(filter), filterGroups(filter));
 
     contactListWidget->reDraw();
+}
+
+void Widget::searchCircle(CircleWidget *circleWidget)
+{
+    int filter = ui->searchContactFilterCBox->currentIndex();
+    circleWidget->search(ui->searchContactText->text(), true, filterOnline(filter), filterOffline(filter));
+}
+
+void Widget::searchItem(GenericChatItemWidget *chatItem, GenericChatItemWidget::ItemType type)
+{
+    bool hide;
+    int filter = ui->searchContactFilterCBox->currentIndex();
+    switch (type)
+    {
+        case GenericChatItemWidget::GroupItem:
+            hide = filterGroups(filter);
+            break;
+        default:
+            hide = true;
+    }
+
+    chatItem->searchName(ui->searchContactText->text(), hide);
+}
+
+bool Widget::groupsVisible() const
+{
+    int filter = ui->searchContactFilterCBox->currentIndex();
+    return !filterGroups(filter);
 }
 
 void Widget::friendListContextMenu(const QPoint &pos)

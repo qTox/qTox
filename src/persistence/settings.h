@@ -246,7 +246,7 @@ public:
     void setAutoLogin(bool state);
 
     int getCircleCount() const;
-    int addCircle(const QString &name);
+    int addCircle(const QString &name = QString());
     int removeCircle(int id);
     QString getCircleName(int id) const;
     void setCircleName(int id, const QString &name);

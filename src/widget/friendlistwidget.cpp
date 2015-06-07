@@ -16,24 +16,25 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #include "friendlistwidget.h"
-#include <QDebug>
+#include "friendlistlayout.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/misc/settings.h"
+#include "friendwidget.h"
+#include "groupwidget.h"
+#include "circlewidget.h"
 #include <QGridLayout>
 #include <QMimeData>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
-#include "src/friend.h"
-#include "src/friendlist.h"
-#include "src/widget/friendwidget.h"
-#include "groupwidget.h"
-#include "circlewidget.h"
-#include "friendlistlayout.h"
-#include "src/misc/settings.h"
 #include <cassert>
 
 #include <QDebug>
+#include "widget.h"
 
-FriendListWidget::FriendListWidget(QWidget *parent, bool groupsOnTop)
+FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     : QWidget(parent)
     , groupsOnTop(groupsOnTop)
 {
@@ -54,13 +55,17 @@ FriendListWidget::FriendListWidget(QWidget *parent, bool groupsOnTop)
     setAcceptDrops(true);
 }
 
-void FriendListWidget::addGroupWidget(GroupWidget *widget)
+void FriendListWidget::addGroupWidget(GroupWidget* widget)
 {
     groupLayout.addSortedWidget(widget);
     connect(widget, &GroupWidget::renameRequested, this, &FriendListWidget::renameGroupWidget);
+
+    // Only rename group if groups are visible.
+    if (Widget::getInstance()->groupsVisible())
+        widget->rename();
 }
 
-void FriendListWidget::addFriendWidget(FriendWidget *w, Status s, int circleIndex)
+void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleIndex)
 {
     CircleWidget* circleWidget = CircleWidget::getFromID(circleIndex);
     if (circleWidget == nullptr)
@@ -71,29 +76,27 @@ void FriendListWidget::addFriendWidget(FriendWidget *w, Status s, int circleInde
 
 void FriendListWidget::addCircleWidget(int id)
 {
-    CircleWidget *circleWidget = new CircleWidget(this, id);
-    circleLayout.addSortedWidget(circleWidget);
-    connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
-    connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
-    circleWidget->show(); // Avoid flickering.
+    createCircleWidget(id);
 }
 
-void FriendListWidget::addCircleWidget(FriendWidget *friendWidget)
+void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
 {
-    CircleWidget *circleWidget = new CircleWidget(this);
-    circleLayout.addSortedWidget(circleWidget);
-    connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
-    connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
-    //circleLayout->addWidget(circleWidget);
+    CircleWidget* circleWidget = createCircleWidget();
     if (friendWidget != nullptr)
     {
+        CircleWidget* circleOriginal = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId()));
+
         circleWidget->addFriendWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus());
         circleWidget->setExpanded(true);
+
+        Widget::getInstance()->searchCircle(circleWidget);
+
+        if (circleOriginal != nullptr)
+            Widget::getInstance()->searchCircle(circleOriginal);
     }
-    circleWidget->show(); // Avoid flickering.
 }
 
-void FriendListWidget::removeCircleWidget(CircleWidget *widget)
+void FriendListWidget::removeCircleWidget(CircleWidget* widget)
 {
     circleLayout.removeSortedWidget(widget);
     widget->deleteLater();
@@ -105,9 +108,8 @@ void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnl
     listLayout->searchChatrooms(searchString, hideOnline, hideOffline);
     for (int i = 0; i != circleLayout.getLayout()->count(); ++i)
     {
-        CircleWidget *circleWidget = static_cast<CircleWidget*>(circleLayout.getLayout()->itemAt(i)->widget());
-        circleWidget->searchChatrooms(searchString, hideOnline, hideOffline);
-        circleWidget->setVisible(searchString.isEmpty() || (circleWidget->hasChatrooms() && !(hideOnline && hideOffline)));
+        CircleWidget* circleWidget = static_cast<CircleWidget*>(circleLayout.getLayout()->itemAt(i)->widget());
+        circleWidget->search(searchString, true, hideOnline, hideOffline);
     }
 }
 
@@ -118,10 +120,10 @@ void FriendListWidget::renameGroupWidget(const QString &newName)
     GroupWidget* groupWidget = dynamic_cast<GroupWidget*>(sender());
     assert(groupWidget != nullptr);
 
-    // Rename before removing so you can find it successfully.
     groupLayout.removeSortedWidget(groupWidget);
     groupWidget->setName(newName);
     groupLayout.addSortedWidget(groupWidget);
+    reDraw(); // Prevent artifacts.
 }
 
 void FriendListWidget::renameCircleWidget(const QString &newName)
@@ -202,7 +204,6 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
     index += forward ? 1 : -1;
     for (;;)
     {
-        qDebug() << "CHECKING BOUNDS...............................";
         // Bounds checking.
         if (index < 0)
         {
@@ -257,25 +258,25 @@ QVector<CircleWidget*> FriendListWidget::getAllCircles()
     return vec;
 }
 
-void FriendListWidget::dragEnterEvent(QDragEnterEvent *event)
+void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)
 {
     if (event->mimeData()->hasFormat("friend"))
         event->acceptProposedAction();
 }
 
-void FriendListWidget::dropEvent(QDropEvent *event)
+void FriendListWidget::dropEvent(QDropEvent* event)
 {
     if (event->mimeData()->hasFormat("friend"))
     {
         int friendId = event->mimeData()->data("friend").toInt();
-        Friend *f = FriendList::findFriend(friendId);
+        Friend* f = FriendList::findFriend(friendId);
         assert(f != nullptr);
 
-        FriendWidget *widget = f->getFriendWidget();
+        FriendWidget* widget = f->getFriendWidget();
         assert(widget != nullptr);
 
         // Update old circle after moved.
-        CircleWidget *circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
+        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
 
         listLayout->addFriendWidget(widget, f->getStatus());
 
@@ -287,10 +288,10 @@ void FriendListWidget::dropEvent(QDropEvent *event)
     }
 }
 
-void FriendListWidget::moveWidget(FriendWidget *w, Status s, bool add)
+void FriendListWidget::moveWidget(FriendWidget* w, Status s, bool add)
 {
     int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(w->friendId)->getToxId());
-    CircleWidget *circleWidget = CircleWidget::getFromID(circleId);
+    CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
     if (circleWidget == nullptr || add)
     {
@@ -309,6 +310,16 @@ void FriendListWidget::reDraw()
     hide();
     show();
     resize(QSize()); //lifehack
+}
+
+CircleWidget* FriendListWidget::createCircleWidget(int id)
+{
+    CircleWidget* circleWidget = new CircleWidget(this, id);
+    circleLayout.addSortedWidget(circleWidget);
+    connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
+    connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
+    circleWidget->show(); // Avoid flickering.
+    return circleWidget;
 }
 
 QLayout* FriendListWidget::nextLayout(QLayout* layout, bool forward) const

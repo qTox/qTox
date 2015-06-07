@@ -53,12 +53,12 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
 
     connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newName, const QString &oldName)
     {
-        //Group* g = GroupList::findGroup(groupId);
+        Group* g = GroupList::findGroup(groupId);
         if (newName != oldName)
         {
             nameLabel->setText(oldName);
             emit renameRequested(newName);
-            //emit g->getChatForm()->groupTitleChanged(groupId, newText.left(128));
+            emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
         }
         /* according to agilob:
          * “Moving mouse pointer over groupwidget results in CSS effect
@@ -68,8 +68,6 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
          */
         this->repaint();
     });
-
-    nameLabel->editStart();
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
@@ -138,6 +136,11 @@ QString GroupWidget::getStatusString()
         return "Online";
     else
         return "New Message";
+}
+
+void GroupWidget::rename()
+{
+    nameLabel->editStart();
 }
 
 void GroupWidget::setChatForm(Ui::MainWindow &ui)

@@ -33,7 +33,6 @@ public:
 
     void addFriendWidget(FriendWidget* w, Status s);
 
-    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false);
 
     void expand();
     void setExpanded(bool isExpanded);
@@ -45,8 +44,7 @@ public:
 
     bool cycleContacts(bool forward);
     bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
-
-    bool hasChatrooms() const;
+    void search(const QString &searchString, bool updateAll = false, bool hideOnline = false, bool hideOffline = false);
 
     static CircleWidget* getFromID(int id);
 
