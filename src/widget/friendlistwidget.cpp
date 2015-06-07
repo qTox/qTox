@@ -113,13 +113,8 @@ void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnl
     }
 }
 
-void FriendListWidget::renameGroupWidget(const QString &newName)
+void FriendListWidget::renameGroupWidget(GroupWidget* groupWidget, const QString &newName)
 {
-    assert(sender() != nullptr);
-
-    GroupWidget* groupWidget = dynamic_cast<GroupWidget*>(sender());
-    assert(groupWidget != nullptr);
-
     groupLayout.removeSortedWidget(groupWidget);
     groupWidget->setName(newName);
     groupLayout.addSortedWidget(groupWidget);
@@ -133,7 +128,7 @@ void FriendListWidget::renameCircleWidget(const QString &newName)
     CircleWidget* circleWidget = dynamic_cast<CircleWidget*>(sender());
     assert(circleWidget != nullptr);
 
-    // Rename before removing so you can find it successfully.
+    // Rename after removing so you can find it successfully.
     circleLayout.removeSortedWidget(circleWidget);
     circleWidget->setName(newName);
     circleLayout.addSortedWidget(circleWidget);

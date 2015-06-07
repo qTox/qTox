@@ -56,7 +56,7 @@ signals:
     void onCompactChanged(bool compact);
 
 public slots:
-    void renameGroupWidget(const QString& newName);
+    void renameGroupWidget(GroupWidget* groupWidget, const QString& newName);
     void renameCircleWidget(const QString& newName);
     void onGroupchatPositionChanged(bool top);
     void moveWidget(FriendWidget* w, Status s, bool add = false);

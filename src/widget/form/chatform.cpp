@@ -103,8 +103,10 @@ ChatForm::ChatForm(Friend* chatFriend)
         Core::getInstance()->sendTyping(f->getFriendID(), false);
         isTyping = false;
     } );
-    connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig) {
-        if (text != orig) emit aliasChanged(text);
+    connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName)
+    {
+        nameLabel->setText(newName);
+        emit aliasChanged(newName);
     } );
 
     setAcceptDrops(true);

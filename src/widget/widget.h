@@ -33,6 +33,7 @@ class MainWindow;
 }
 
 class GenericChatroomWidget;
+class FriendWidget;
 class Group;
 class Friend;
 class QSplitter;
@@ -100,6 +101,7 @@ public slots:
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
+    void onFriendDisplayChanged(FriendWidget* friendWidget, Status s);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
@@ -138,7 +140,7 @@ private slots:
     void onTransferClicked();
     void showProfile();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
-    void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
+    void onStatusMessageChanged(const QString& newStatusMessage);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);

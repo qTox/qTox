@@ -23,6 +23,7 @@
 #include "src/persistence/settings.h"
 #include "form/groupchatform.h"
 #include "maskablepixmapwidget.h"
+#include "friendlistwidget.h"
 #include "src/widget/style.h"
 #include "src/core/core.h"
 #include <QPalette>
@@ -51,13 +52,12 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
 
     setAcceptDrops(true);
 
-    connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newName, const QString &oldName)
+    connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
     {
-        Group* g = GroupList::findGroup(groupId);
-        if (newName != oldName)
+        if (!newName.isEmpty())
         {
-            nameLabel->setText(oldName);
-            emit renameRequested(newName);
+            Group* g = GroupList::findGroup(groupId);
+            emit renameRequested(this, newName);
             emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
         }
         /* according to agilob:
@@ -76,6 +76,9 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
     QMenu menu;
     QAction* setTitle = menu.addAction(tr("Set title..."));
     QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
+
+    FriendListWidget *friendList = static_cast<FriendListWidget*>(parentWidget());
+    friendList->reDraw();
 
     QAction* selectedItem = menu.exec(pos);
     if (selectedItem)

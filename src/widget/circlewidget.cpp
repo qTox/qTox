@@ -83,13 +83,12 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
         setName(Settings::getInstance().getCircleName(id));
     }
 
-    connect(nameLabel, &CroppingLabel::textChanged, [this](const QString &newName, const QString &oldName)
+    connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
     {
-        if (isCompact())
-            maxCropLabel(nameLabel);
-        nameLabel->setText(oldName);
-        emit renameRequested(newName);
-        Settings::getInstance().setCircleName(id, newName);
+        if (!newName.isEmpty())
+        {
+            emit renameRequested(newName);
+        }
     });
 
     bool isNew = false;
@@ -148,6 +147,9 @@ void CircleWidget::search(const QString &searchString, bool updateAll, bool hide
 void CircleWidget::setName(const QString &name)
 {
     nameLabel->setText(name);
+    Settings::getInstance().setCircleName(id, name);
+    if (isCompact())
+        maxCropLabel(nameLabel);
 }
 
 void CircleWidget::renameCircle()
