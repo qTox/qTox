@@ -21,9 +21,6 @@
 #include <QResizeEvent>
 #include <QLineEdit>
 
-#include <QTimer>
-#include <QDebug>
-
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
     , blockPaintEvents(false)
@@ -38,15 +35,11 @@ CroppingLabel::CroppingLabel(QWidget* parent)
                                   | Qt::ImhNoPredictiveText
                                   | Qt::ImhPreferLatin);
 
-    installEventFilter(this);
-    textEdit->installEventFilter(this);
     connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::finishTextEdit);
 }
 
 void CroppingLabel::editStart()
 {
-    //if (!parentWidget()->isVisible())
-    //    return;
     showTextEdit();
     textEdit->selectAll();
 }
@@ -100,38 +93,14 @@ void CroppingLabel::mouseReleaseEvent(QMouseEvent *e)
     QLabel::mouseReleaseEvent(e);
 }
 
-bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
+void CroppingLabel::paintEvent(QPaintEvent* paintEvent)
 {
-    // catch paint events if needed
-    if (obj == this)
+    if (blockPaintEvents)
     {
-        if (e->type() == QEvent::Paint && blockPaintEvents)
-            return true;
+        paintEvent->ignore();
+        return;
     }
-
-    // events fired by the QLineEdit
-    if (obj == textEdit)
-    {
-        if (!textEdit->isVisible())
-            return false;
-
-        if (e->type() == QEvent::KeyPress)
-        {
-            QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
-            if (keyEvent->key() == Qt::Key_Return)
-                hideTextEdit(true);
-
-            if (keyEvent->key() == Qt::Key_Escape)
-                hideTextEdit(false);
-        }
-
-        if (e->type() == QEvent::FocusOut)
-        {
-            hideTextEdit(true);
-        }
-    }
-
-    return false;
+    QLabel::paintEvent(paintEvent);
 }
 
 void CroppingLabel::setElidedText()
@@ -145,29 +114,12 @@ void CroppingLabel::setElidedText()
     QLabel::setText(elidedText);
 }
 
-void CroppingLabel::hideTextEdit(bool acceptText)
-{
-    if (acceptText)
-    {
-        textEdit->setText(textEdit->text().trimmed().remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"))); // we should really treat regular names this way as well (*ahem* zetok)
-        QString oldOrigText = origText;
-        setText(textEdit->text()); // set before emitting so we don't override external reactions to signal
-        emit textChanged(textEdit->text(), oldOrigText);
-        emit editFinished(textEdit->text());
-    }
-
-    textEdit->hide();
-    blockPaintEvents = false;
-}
-
 void CroppingLabel::showTextEdit()
 {
     blockPaintEvents = true;
     textEdit->show();
-    //textEdit->setFocus();
+    textEdit->setFocus();
     textEdit->setText(origText);
-    // Set focus when event loop is free.
-    QTimer::singleShot(0, textEdit, SLOT(setFocus()));
 }
 
 QString CroppingLabel::fullText()
@@ -178,10 +130,8 @@ QString CroppingLabel::fullText()
 void CroppingLabel::finishTextEdit()
 {
     QString newText = textEdit->text().trimmed().remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
-    if (!newText.isEmpty() && origText != newText)
+    if (origText != newText)
     {
-        setText(textEdit->text()); // set before emitting so we don't override external reactions to signal
-        emit textChanged(textEdit->text(), origText);
         emit editFinished(textEdit->text());
     }
 

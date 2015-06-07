@@ -43,6 +43,7 @@ signals:
     void clicked();
 
 protected:
+    void paintEvent(QPaintEvent* paintEvent) override;
     void setElidedText();
     void hideTextEdit(bool acceptText);
     void showTextEdit();

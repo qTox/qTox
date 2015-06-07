@@ -197,7 +197,7 @@ void Widget::init()
     connect(ui->settingsButton, &QPushButton::clicked, this, &Widget::onSettingsClicked);
     connect(profilePicture, &MaskablePixmapWidget::clicked, this, &Widget::showProfile);
     connect(ui->nameLabel, &CroppingLabel::clicked, this, &Widget::showProfile);
-    connect(ui->statusLabel, &CroppingLabel::textChanged, this, &Widget::onStatusMessageChanged);
+    connect(ui->statusLabel, &CroppingLabel::editFinished, this, &Widget::onStatusMessageChanged);
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequested);
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
@@ -561,10 +561,9 @@ void Widget::setUsername(const QString& username)
     sanitizedNameMention = QRegExp("\\b" + QRegExp::escape(sanename) + "\\b", Qt::CaseInsensitive);
 }
 
-void Widget::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
+void Widget::onStatusMessageChanged(const QString& newStatusMessage)
 {
-    ui->statusLabel->setText(oldStatusMessage); // restore old status message until Core tells us to set it
-    ui->statusLabel->setToolTip(oldStatusMessage); // for overlength messsages
+    // Keep old status message until Core tells us to set it.
     Nexus::getCore()->setStatusMessage(newStatusMessage);
 }
 
@@ -588,7 +587,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
 
     Core* core = Nexus::getCore();
-    connect(newfriend, &Friend::displayedNameChanged, contactListWidget, &FriendListWidget::moveWidget);
+    connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
     connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::setCompact);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
@@ -720,6 +719,19 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     QString str = username; str.replace('\n', ' ');
     str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
     f->setName(str);
+}
+
+void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
+{
+    contactListWidget->moveWidget(friendWidget, s);
+    int filter = ui->searchContactFilterCBox->currentIndex();
+    switch (s)
+    {
+        case Status::Offline:
+            friendWidget->searchName(ui->searchContactText->text(), filterOffline(filter));
+        default:
+            friendWidget->searchName(ui->searchContactText->text(), filterOnline(filter));
+    }
 
 }
 
@@ -994,10 +1006,10 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
     if (!g)
         return;
 
-    g->setName(title);
     if (!author.isEmpty())
         g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
 
+    contactListWidget->renameGroupWidget(g->getGroupWidget(), title);
     int filter = ui->searchContactFilterCBox->currentIndex();
     g->getGroupWidget()->searchName(ui->searchContactText->text(), filterGroups(filter));
 }
