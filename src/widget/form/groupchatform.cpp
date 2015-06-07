@@ -69,9 +69,15 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     namesListLayout = new FlowLayout(0,5,0);
     QStringList names(group->getPeerList());
 
-    for (const QString& name : names)
+    for (QString& name : names)
     {
-        QLabel *l = new QLabel(name);
+        QLabel *l = new QLabel();
+        QString tooltip = correctNames(name);
+        if (tooltip.isNull())
+        {
+            l->setToolTip(tooltip);
+        }
+        l->setText(name);
         l->setTextFormat(Qt::PlainText);
         namesListLayout->addWidget(l);
     }
@@ -95,6 +101,24 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
+}
+
+// Correct names with "\n" in NamesListLayout widget
+QString GroupChatForm::correctNames(QString& name)
+{
+    int pos = name.indexOf(QRegExp("\n|\r\n|\r"));
+    int len = name.length();
+    if ( (pos < len) && (pos !=-1) )
+    {
+        QString tooltip = name;
+        name.remove( pos, len-pos );
+        name.append("...");
+        return tooltip;
+    }
+    else
+    {
+        return QString();
+    }
 }
 
 GroupChatForm::~GroupChatForm()
@@ -153,7 +177,10 @@ void GroupChatForm::onUserListChanged()
     unsigned nNames = names.size();
     for (unsigned i=0; i<nNames; ++i)
     {
+        QString tooltip = correctNames(names[i]);
         peerLabels.append(new QLabel(names[i]));
+        if (!tooltip.isEmpty())
+            peerLabels[i]->setToolTip(tooltip);
         peerLabels[i]->setTextFormat(Qt::PlainText);
         orderizer[names[i]] = peerLabels[i];
         if (group->isSelfPeerNumber(i))
