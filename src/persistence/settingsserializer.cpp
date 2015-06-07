@@ -29,7 +29,7 @@
 
 using namespace std;
 
-constexpr char SettingsSerializer::magic[] = {0x51,0x54,0x4F,0x58};
+const char SettingsSerializer::magic[] = {0x51,0x54,0x4F,0x58};
 
 QDataStream& operator<<(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
 {
