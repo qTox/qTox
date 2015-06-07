@@ -51,22 +51,11 @@ private:
 
 private:
     QWidget* head;
+    QIcon doneIcon;
     QLabel headLabel;
     QVBoxLayout headLayout;
-
-    /* If we really do go whole hog with listing in progress transers,
-    I should really look into the new fangled list thingy, to deactivate
-    specific items in the list */
     QTabWidget main;
     QListWidget* sent, * recvd;
-
-};
-
-class ListWidgetItem : public QListWidgetItem
-{
-    using QListWidgetItem::QListWidgetItem;
-  public:
-    QString path;
 };
 
 #endif // FILESFORM_H

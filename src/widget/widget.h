@@ -22,12 +22,7 @@
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
-#include <QMessageBox>
 #include <QFileInfo>
-#include "form/addfriendform.h"
-#include "form/settingswidget.h"
-#include "form/profileform.h"
-#include "form/filesform.h"
 #include "src/core/corestructs.h"
 
 #define PIXELS_TO_ACT 7
@@ -48,6 +43,10 @@ class FriendListWidget;
 class MaskablePixmapWidget;
 class QTimer;
 class SystemTrayIcon;
+class FilesForm;
+class ProfileForm;
+class SettingsWidget;
+class AddFriendForm;
 
 class Widget : public QMainWindow
 {

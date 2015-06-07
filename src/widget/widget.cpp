@@ -42,6 +42,10 @@
 #include "src/widget/gui.h"
 #include "src/persistence/offlinemsgengine.h"
 #include "src/widget/translator.h"
+#include "src/widget/form/addfriendform.h"
+#include "src/widget/form/filesform.h"
+#include "src/widget/form/profileform.h"
+#include "src/widget/form/settingswidget.h"
 #include <cassert>
 #include <QMessageBox>
 #include <QDebug>

@@ -37,7 +37,7 @@ FORMS    += \
     
 CONFIG   += c++11
 
-QMAKE_CXXFLAGS += -fno-exceptions
+QMAKE_CXXFLAGS += -fno-exceptions -fno-rtti
 
 # Rules for creating/updating {ts|qm}-files
 include(translations/i18n.pri)

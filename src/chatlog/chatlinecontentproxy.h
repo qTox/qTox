@@ -23,10 +23,21 @@
 #include <QGraphicsProxyWidget>
 #include "chatlinecontent.h"
 
+class FileTransferWidget;
+
 class ChatLineContentProxy : public ChatLineContent
 {
 public:
+    // Type tag to avoid dynamic_cast of contained QWidget*
+    enum ChatLineContentProxyType
+    {
+        GenericType,
+        FileTransferWidgetType=0,
+    };
+
+public:
     ChatLineContentProxy(QWidget* widget, int minWidth, float widthInPercent = 1.0f);
+    ChatLineContentProxy(FileTransferWidget* widget, int minWidth, float widthInPercent = 1.0f);
 
     virtual QRectF boundingRect() const;
     virtual void setWidth(qreal width);
@@ -34,11 +45,16 @@ public:
     virtual qreal getAscent() const;
 
     QWidget* getWidget() const;
+    ChatLineContentProxyType getWidgetType() const;
+
+protected:
+    ChatLineContentProxy(QWidget* widget, ChatLineContentProxyType type, int minWidth, float widthInPercent);
 
 private:
     QGraphicsProxyWidget* proxy;
-    int widthMin;
     float widthPercent;
+    int widthMin;
+    const ChatLineContentProxyType widgetType;
 };
 
 #endif // CHATLINECONTENTPROXY_H

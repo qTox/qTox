@@ -29,6 +29,8 @@
 #include <QScreen>
 #include <QTemporaryFile>
 #include <QGuiApplication>
+#include <QStyle>
+#include <cassert>
 #include "chatform.h"
 #include "src/core/core.h"
 #include "src/friend.h"
@@ -226,14 +228,10 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxId()).isEmpty()
             || Settings::getInstance().getAutoSaveEnabled())
     {
-        ChatLineContentProxy* proxy = dynamic_cast<ChatLineContentProxy*>(msg->getContent(1));
-        if (proxy)
-        {
-            FileTransferWidget* tfWidget = dynamic_cast<FileTransferWidget*>(proxy->getWidget());
-
-            if (tfWidget)
-                tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxId()));
-        }
+        ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
+        assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
+        FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
+        tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxId()));
     }
 }
 
@@ -979,10 +977,8 @@ void ChatForm::setFriendTyping(bool isTyping)
 {
     chatWidget->setTypingNotificationVisible(isTyping);
 
-    Text* text = dynamic_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
-
-    if (text)
-        text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
+    Text* text = static_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
+    text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
 }
 
 void ChatForm::show(Ui::MainWindow &ui)

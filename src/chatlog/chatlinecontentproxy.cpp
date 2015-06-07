@@ -18,17 +18,29 @@
 */
 
 #include "chatlinecontentproxy.h"
+#include "src/chatlog/content/filetransferwidget.h"
 #include <QLayout>
 #include <QWidget>
 #include <QPainter>
 #include <QDebug>
 
-ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, int minWidth, float widthInPercent)
-    : widthMin(minWidth)
-    , widthPercent(widthInPercent)
+ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, ChatLineContentProxyType type, int minWidth, float widthInPercent)
+    : widthPercent(widthInPercent)
+    , widthMin(minWidth)
+    , widgetType{type}
 {
     proxy = new QGraphicsProxyWidget(this);
     proxy->setWidget(widget);
+}
+
+ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, int minWidth, float widthInPercent)
+    : ChatLineContentProxy(widget, GenericType, minWidth, widthInPercent)
+{
+}
+
+ChatLineContentProxy::ChatLineContentProxy(FileTransferWidget* widget, int minWidth, float widthInPercent)
+    : ChatLineContentProxy(widget, FileTransferWidgetType, minWidth, widthInPercent)
+{
 }
 
 QRectF ChatLineContentProxy::boundingRect() const
@@ -57,4 +69,9 @@ QWidget *ChatLineContentProxy::getWidget() const
 void ChatLineContentProxy::setWidth(qreal width)
 {
     proxy->widget()->setFixedWidth(qMax(static_cast<int>(width*widthPercent), widthMin));
+}
+
+ChatLineContentProxy::ChatLineContentProxyType ChatLineContentProxy::getWidgetType() const
+{
+    return widgetType;
 }

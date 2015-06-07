@@ -115,24 +115,22 @@ QList<GenericChatroomWidget*> FriendListWidget::getAllFriends()
     return friends;
 }
 
-void FriendListWidget::moveWidget(QWidget *w, Status s)
+void FriendListWidget::moveWidget(FriendWidget *w, Status s)
 {
     QVBoxLayout* l = getFriendLayout(s);
     l->removeWidget(w);
-    Friend* g = FriendList::findFriend(dynamic_cast<FriendWidget*>(w)->friendId);
+    Friend* g = FriendList::findFriend(w->friendId);
     for (int i = 0; i < l->count(); i++)
     {
-        FriendWidget* w1 = dynamic_cast<FriendWidget*>(l->itemAt(i)->widget());
-        if (w1 != NULL)
+        FriendWidget* w1 = static_cast<FriendWidget*>(l->itemAt(i)->widget());
+        Friend* f = FriendList::findFriend(w1->friendId);
+        if (f->getDisplayedName().localeAwareCompare(g->getDisplayedName()) > 0)
         {
-            Friend* f = FriendList::findFriend(w1->friendId);
-            if (f->getDisplayedName().localeAwareCompare(g->getDisplayedName()) > 0)
-            {
-                l->insertWidget(i,w);
-                return;
-            }
+            l->insertWidget(i,w);
+            return;
         }
     }
+    static_assert(std::is_same<decltype(w), FriendWidget*>(), "The layout must only contain FriendWidget*");
     l->addWidget(w);
 }
 

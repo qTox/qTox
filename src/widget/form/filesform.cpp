@@ -22,12 +22,9 @@
 #include "src/widget/widget.h"
 #include "src/widget/translator.h"
 #include <QFileInfo>
-#include <QUrl>
-#include <QDebug>
-#include <QPainter>
 
 FilesForm::FilesForm()
-    : QObject()
+    : QObject(), doneIcon(":/ui/fileTransferWidget/fileDone.svg")
 {
     head = new QWidget();
     QFont bold;
@@ -42,8 +39,8 @@ FilesForm::FilesForm()
     main.addTab(recvd, QString());
     main.addTab(sent, QString());
 
-    connect(sent, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onFileActivated(QListWidgetItem*)));
-    connect(recvd, SIGNAL(itemActivated(QListWidgetItem*)), this, SLOT(onFileActivated(QListWidgetItem*)));
+    connect(sent, &QListWidget::itemActivated, this, &FilesForm::onFileActivated);
+    connect(recvd, &QListWidget::itemActivated, this, &FilesForm::onFileActivated);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&FilesForm::retranslateUi, this), this);
@@ -67,15 +64,15 @@ void FilesForm::show(Ui::MainWindow& ui)
 
 void FilesForm::onFileDownloadComplete(const QString& path)
 {
-    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/fileTransferWidget/fileDone.svg"), QFileInfo(path).fileName());
-    tmp->path = path;
+    QListWidgetItem* tmp = new QListWidgetItem(doneIcon, QFileInfo(path).fileName());
+    tmp->setData(Qt::UserRole, path);
     recvd->addItem(tmp);
 }
 
 void FilesForm::onFileUploadComplete(const QString& path)
 {
-    ListWidgetItem* tmp = new ListWidgetItem(QIcon(":/ui/fileTransferWidget/fileDone.svg"), QFileInfo(path).fileName());
-    tmp->path = path;
+    QListWidgetItem* tmp = new QListWidgetItem(doneIcon, QFileInfo(path).fileName());
+    tmp->setData(Qt::UserRole, path);
     sent->addItem(tmp);
 }
 
@@ -84,11 +81,9 @@ void FilesForm::onFileUploadComplete(const QString& path)
 // whenever they're not saved anywhere custom, thanks to the hack)
 // I could do some digging around, but for now I'm tired and others already
 // might know it without me needing to dig, so...
-void FilesForm::onFileActivated(QListWidgetItem* item)
+void FilesForm::onFileActivated(QListWidgetItem *item)
 {
-    ListWidgetItem* tmp = dynamic_cast<ListWidgetItem*> (item);
-
-    Widget::confirmExecutableOpen(QFileInfo(tmp->path));
+    Widget::confirmExecutableOpen(QFileInfo(item->data(Qt::UserRole).toString()));
 }
 
 void FilesForm::retranslateUi()

@@ -360,7 +360,7 @@ void GenericChatForm::onSaveLogClicked()
     auto lines = chatWidget->getLines();
     for (ChatLine::Ptr l : lines)
     {
-        Timestamp* rightCol = dynamic_cast<Timestamp*>(l->getContent(2));
+        Timestamp* rightCol = static_cast<Timestamp*>(l->getContent(2));
         ChatLineContent* middleCol = l->getContent(1);
         ChatLineContent* leftCol = l->getContent(0);
 

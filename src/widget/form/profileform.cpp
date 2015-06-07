@@ -42,6 +42,7 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QBuffer>
+#include <QMessageBox>
 
 ProfileForm::ProfileForm(QWidget *parent) :
     QWidget{parent}, qr{nullptr}

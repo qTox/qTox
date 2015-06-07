@@ -29,6 +29,7 @@
 class QVBoxLayout;
 class QGridLayout;
 class QPixmap;
+struct FriendWidget;
 
 class FriendListWidget : public QWidget
 {
@@ -44,7 +45,7 @@ signals:
 
 public slots:
     void onGroupchatPositionChanged(bool top);
-    void moveWidget(QWidget *w, Status s);
+    void moveWidget(FriendWidget *w, Status s);
 
 private:
     QHash<int, QVBoxLayout*> layouts;
