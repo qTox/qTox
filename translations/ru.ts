@@ -4,23 +4,23 @@
 <context>
     <name>AVForm</name>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="38"/>
+        <location filename="../src/widget/form/settings/avform.h" line="42"/>
         <source>Audio/Video</source>
         <translation>Аудио/Видео</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="133"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="142"/>
         <source>%1x%2</source>
         <translation>%1x%2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="135"/>
-        <location filename="../src/widget/form/settings/avform.cpp" line="141"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="144"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="150"/>
         <source>Default resolution</source>
         <translation>Разрешение по умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="137"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="146"/>
         <source> at %1 FPS</source>
         <translation type="unfinished"></translation>
     </message>
@@ -124,63 +124,63 @@ which may lead to problems with video calls.</source>
 <context>
     <name>AddFriendForm</name>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="35"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="146"/>
         <source>Add Friends</source>
         <translation>Добавить друзей</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="38"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="147"/>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="39"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="148"/>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
         <translation>Сообщение</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="40"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="149"/>
         <source>Send friend request</source>
         <translatorcomment>Мне не нравится, но другого не придумал, и фейсбук использует это</translatorcomment>
         <translation>Отправить запрос на добавление в друзья</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="81"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="150"/>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translatorcomment>Взял из старого пункта. Лучше, так, чем без перевода</translatorcomment>
-        <translation>Привет, добавите меня в друзья?</translation>
+        <translation>Привет, это %1! Добавите меня в друзья?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="90"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="97"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
         <translation>Пожалуйста, введите корректный Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="90"/>
-        <location filename="../src/widget/form/addfriendform.cpp" line="95"/>
-        <location filename="../src/widget/form/addfriendform.cpp" line="116"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="97"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="102"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="123"/>
         <source>Couldn&apos;t add friend</source>
         <translation>Невозможно добавить друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="95"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="102"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Вы не можете добавить самого себя в друзья!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="106"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="113"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly?</source>
         <translation>qTox необходимо воспользоваться Tox DNS, но это нельзя сделать через прокси.
 Игнорировать прокси и подлючиться напрямую через интернет?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="116"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="123"/>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>Такого Tox ID не существует</translation>
@@ -189,22 +189,22 @@ Ignore the proxy and connect to the Internet directly?</source>
 <context>
     <name>AdvancedForm</name>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="23"/>
+        <location filename="../src/widget/form/settings/advancedform.h" line="37"/>
         <source>Advanced</source>
         <translation>Расширенные</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="33"/>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
         <source>FULL - very safe, slowest (recommended)</source>
         <translation>Полная - полностью безопасно, самая медленная (рекомендуется)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="34"/>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
         <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
         <translation>Нормальная - почти так же безопасно, как полная, но на 20% быстрее</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="35"/>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
         <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
         <translation>Выключена - небезопасно, если что-то пойдёт не так, история может быть утрачена, самая быстрая (не рекомендуется)</translation>
     </message>
@@ -253,17 +253,14 @@ Ignore the proxy and connect to the Internet directly?</source>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;This program is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License     along with this program.  If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;Author: &lt;/span&gt;&lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;Contributors: &lt;/span&gt;&lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;see all on GitHub.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;Known issues: &lt;/span&gt;&lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;see all on GitHub.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;Author: &lt;/span&gt;&lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;Contributors: &lt;/span&gt;&lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;see all on GitHub.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;Known issues: &lt;/span&gt;&lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;see all on GitHub.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -328,161 +325,166 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="150"/>
+        <location filename="../src/widget/form/chatform.cpp" line="160"/>
         <source>Send a file</source>
         <translation>Отправить файл</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="159"/>
-        <location filename="../src/widget/form/chatform.cpp" line="752"/>
+        <location filename="../src/widget/form/chatform.cpp" line="169"/>
+        <location filename="../src/widget/form/chatform.cpp" line="762"/>
         <source>File not read</source>
         <translation>Файл не прочитан</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="159"/>
-        <location filename="../src/widget/form/chatform.cpp" line="752"/>
+        <location filename="../src/widget/form/chatform.cpp" line="169"/>
+        <location filename="../src/widget/form/chatform.cpp" line="762"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translatorcomment>Паравозик не смог. Не сможешь и ты!</translatorcomment>
         <translation>qTox не смог открыть %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="164"/>
-        <location filename="../src/widget/form/chatform.cpp" line="758"/>
+        <location filename="../src/widget/form/chatform.cpp" line="174"/>
+        <location filename="../src/widget/form/chatform.cpp" line="768"/>
         <source>Bad Idea</source>
         <translation>Плохая идея</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="164"/>
-        <location filename="../src/widget/form/chatform.cpp" line="758"/>
+        <location filename="../src/widget/form/chatform.cpp" line="174"/>
+        <location filename="../src/widget/form/chatform.cpp" line="768"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translatorcomment>...передаёте последовательный файл и получаете te-le-fun-ken. И переводчик работает по другой линии. По линии «Библиотека».</translatorcomment>
         <translation>Вы пытаетесь отправить специальный (последовательный) файл. Это так не работает!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="252"/>
+        <location filename="../src/widget/form/chatform.cpp" line="262"/>
         <source>Accept video call</source>
         <translation>Принять видеозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="265"/>
+        <location filename="../src/widget/form/chatform.cpp" line="275"/>
         <source>Accept audio call</source>
         <translation>Принять аудиозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="273"/>
+        <location filename="../src/widget/form/chatform.cpp" line="283"/>
         <source>%1 calling</source>
         <translation>%1 звонит</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="302"/>
-        <location filename="../src/widget/form/chatform.cpp" line="422"/>
+        <location filename="../src/widget/form/chatform.cpp" line="312"/>
+        <location filename="../src/widget/form/chatform.cpp" line="432"/>
         <source>End video call</source>
         <translation>Завершить видеозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="311"/>
-        <location filename="../src/widget/form/chatform.cpp" line="431"/>
+        <location filename="../src/widget/form/chatform.cpp" line="321"/>
+        <location filename="../src/widget/form/chatform.cpp" line="441"/>
         <source>End audio call</source>
         <translation>Завершить аудиозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="322"/>
-        <location filename="../src/widget/form/chatform.cpp" line="678"/>
+        <location filename="../src/widget/form/chatform.cpp" line="332"/>
+        <location filename="../src/widget/form/chatform.cpp" line="688"/>
         <source>Mute microphone</source>
         <translation>Выключить микрофон</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="325"/>
-        <location filename="../src/widget/form/chatform.cpp" line="698"/>
+        <location filename="../src/widget/form/chatform.cpp" line="335"/>
+        <location filename="../src/widget/form/chatform.cpp" line="708"/>
         <source>Mute call</source>
         <translation>Выключить звук</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="350"/>
+        <location filename="../src/widget/form/chatform.cpp" line="360"/>
         <source>%1 stopped calling</source>
         <translation>%1 прекратил звонить</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="385"/>
+        <location filename="../src/widget/form/chatform.cpp" line="395"/>
         <source>Cancel video call</source>
         <translation>Отменить видеозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="393"/>
+        <location filename="../src/widget/form/chatform.cpp" line="403"/>
         <source>Cancel audio call</source>
         <translation>Отменить аудиозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="401"/>
+        <location filename="../src/widget/form/chatform.cpp" line="411"/>
         <source>Calling to %1</source>
         <translation>Звоним %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="501"/>
+        <location filename="../src/widget/form/chatform.cpp" line="511"/>
         <source>Call rejected</source>
         <translation>Звонок отклонён</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="655"/>
+        <location filename="../src/widget/form/chatform.cpp" line="665"/>
         <source>Start audio call</source>
         <translation>Начать аудиозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="658"/>
+        <location filename="../src/widget/form/chatform.cpp" line="668"/>
         <source>Start video call</source>
         <translation>Начать видеозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="683"/>
+        <location filename="../src/widget/form/chatform.cpp" line="693"/>
         <source>Unmute microphone</source>
         <translation>Включить микрофон</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="703"/>
+        <location filename="../src/widget/form/chatform.cpp" line="713"/>
         <source>Unmute call</source>
         <translation>Включить звук</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="715"/>
+        <location filename="../src/widget/form/chatform.cpp" line="725"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Не удалось отправить файл «%1»</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="886"/>
+        <location filename="../src/widget/form/chatform.cpp" line="896"/>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Не удалось открыть временный файл</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="887"/>
+        <location filename="../src/widget/form/chatform.cpp" line="897"/>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>qTox не смог сохранить снимок экрана</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="929"/>
+        <location filename="../src/widget/form/chatform.cpp" line="939"/>
         <source>Call with %1 ended. %2</source>
         <translation>Разговор с %1 завершился. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="948"/>
+        <location filename="../src/widget/form/chatform.cpp" line="958"/>
         <source>Call duration: </source>
         <translation>Длительность разговора:</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="1073"/>
+        <source>Load chat history...</source>
+        <translation type="unfinished">Загрузить историю чата...</translation>
     </message>
 </context>
 <context>
     <name>ChatLog</name>
     <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="64"/>
+        <location filename="../src/chatlog/chatlog.cpp" line="827"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="79"/>
+        <location filename="../src/chatlog/chatlog.cpp" line="828"/>
         <source>Select all</source>
         <translation>Выбрать всё</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="494"/>
+        <location filename="../src/chatlog/chatlog.cpp" line="503"/>
         <source>pending</source>
         <translation type="unfinished"></translation>
     </message>
@@ -490,7 +492,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ChatTextEdit</name>
     <message>
-        <location filename="../src/widget/tool/chattextedit.cpp" line="21"/>
+        <location filename="../src/widget/tool/chattextedit.cpp" line="70"/>
         <source>Type your message here...</source>
         <translation>Введите ваше сообщение здесь...</translation>
     </message>
@@ -498,62 +500,62 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Core</name>
     <message>
-        <location filename="../src/core/core.cpp" line="250"/>
+        <location filename="../src/core/core.cpp" line="263"/>
         <source>Toxing on qTox</source>
         <translatorcomment>Как-то так. Может, можно ещё что-нибудь придумать?</translatorcomment>
         <translation type="unfinished">Всем привет из qTox&apos;а</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="601"/>
+        <location filename="../src/core/core.cpp" line="614"/>
         <source>You need to write a message with your request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="605"/>
+        <location filename="../src/core/core.cpp" line="618"/>
         <source>Your message is too long!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="609"/>
+        <location filename="../src/core/core.cpp" line="622"/>
         <source>Friend is already added</source>
         <translation>Друг уже добавлен</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="627"/>
+        <location filename="../src/core/core.cpp" line="640"/>
         <source>/me offers friendship.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="629"/>
+        <location filename="../src/core/core.cpp" line="642"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="138"/>
+        <location filename="../src/core/coreencryption.cpp" line="145"/>
         <source>The previous password is incorrect; please try again:</source>
         <comment>used on retries in load()</comment>
         <translation>Предыдущий пароль неправильный. Повторите ввод:</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="130"/>
+        <location filename="../src/core/coreencryption.cpp" line="137"/>
         <source>Encrypted chat history</source>
         <translation type="unfinished">Зашифрованная история чата</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="130"/>
+        <location filename="../src/core/coreencryption.cpp" line="137"/>
         <source>No encrypted chat history file found, or it was corrupted.
 History will be disabled!</source>
         <translation type="unfinished">Зашифрованная история чата не найдена или повреждена.
 История будет отключена!</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="137"/>
+        <location filename="../src/core/coreencryption.cpp" line="144"/>
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
         <translation>Пожалуйста, введите пароль для истории чата профиля «%1».</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="139"/>
+        <location filename="../src/core/coreencryption.cpp" line="146"/>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
@@ -561,13 +563,13 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 Выключение истории чата сейчас оставит зашифрованную историю нетронутой (но она не будет использоваться). Если позже вы вспомните пароль, то сможете включить шифрование на вкладке Конфиденциальность с правильным паролем, что бы использовать историю.</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="146"/>
+        <location filename="../src/core/coreencryption.cpp" line="153"/>
         <source>The chat history password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
         <translation type="unfinished">Пароль к истории чата не верен. Попробуете другой?</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="152"/>
+        <location filename="../src/core/coreencryption.cpp" line="159"/>
         <source>Disable chat history</source>
         <translation>Выключить историю чата</translation>
     </message>
@@ -605,76 +607,76 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>[предпросмотр]</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="87"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="92"/>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
         <translation type="unfinished">Ожидание отправки...</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="91"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="96"/>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
         <translation type="unfinished">Разрешение на получение файла</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="134"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="139"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation type="unfinished">Нет прав на запись</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="135"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="140"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation type="unfinished">У вас нет прав для записи в эту директорию. Выберете другую.</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="303"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="308"/>
         <source>paused</source>
         <comment>file transfer widget</comment>
         <translation type="unfinished">пауза</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="323"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="328"/>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
         <translation type="unfinished">Возобновление...</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="349"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="354"/>
         <source>Open file.</source>
         <translation>Открыть файл.</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="354"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="359"/>
         <source>Open file directory.</source>
         <translation type="unfinished">Открыть каталог с файлом.</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="406"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="418"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="431"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="411"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="423"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="436"/>
         <source>Cancel transfer</source>
         <translation>Отменить передачу</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="410"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="437"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="415"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="442"/>
         <source>Pause transfer</source>
         <translation>Приостановить передачу</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="422"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="427"/>
         <source>Resume transfer</source>
         <translation>Возобновить передачу</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="443"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="448"/>
         <source>Accept transfer</source>
         <translation>Разрешить передачу</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="470"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="475"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Сохранить файл</translation>
@@ -683,18 +685,18 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 <context>
     <name>FilesForm</name>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="29"/>
+        <location filename="../src/widget/form/filesform.cpp" line="96"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
         <translation>Переданные файлы</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="37"/>
+        <location filename="../src/widget/form/filesform.cpp" line="97"/>
         <source>Downloads</source>
         <translation>Принятые</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="38"/>
+        <location filename="../src/widget/form/filesform.cpp" line="98"/>
         <source>Uploads</source>
         <translation>Отправленные</translation>
     </message>
@@ -702,36 +704,36 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 <context>
     <name>FriendRequestDialog</name>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="31"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="35"/>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
         <translatorcomment>Мне не нравится, но другого не придумал, и фейсбук использует это</translatorcomment>
         <translation>Запрос на добавление в друзья</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="37"/>
         <source>Someone wants to make friends with you</source>
         <translatorcomment>«Подружиться», вероятно, недостаточно вежливо</translatorcomment>
         <translation>Кто-то хочет добавить вас в друзья</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="34"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="38"/>
         <source>User ID:</source>
         <translation>ID пользователя:</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="38"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="42"/>
         <source>Friend request message:</source>
         <translation>Текст запроса:</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="45"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="49"/>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
         <translation>Принять</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="46"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="50"/>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
         <translation>Отклонить</translation>
@@ -740,73 +742,73 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="58"/>
+        <location filename="../src/widget/friendwidget.cpp" line="61"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
         <translation>Копировать ID друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="73"/>
+        <location filename="../src/widget/friendwidget.cpp" line="76"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>Автоматически принимать файлы от этого друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="57"/>
+        <location filename="../src/widget/friendwidget.cpp" line="60"/>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
         <translation>Пригласить в группу</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="70"/>
+        <location filename="../src/widget/friendwidget.cpp" line="73"/>
         <source>Set alias...</source>
         <translatorcomment>Может &quot;отображаемое имя&quot;?</translatorcomment>
         <translation>Установить псевдоним...</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="78"/>
+        <location filename="../src/widget/friendwidget.cpp" line="81"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Удалить друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="108"/>
+        <location filename="../src/widget/friendwidget.cpp" line="111"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Выбрать папку для автоматического приёма</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="172"/>
+        <location filename="../src/widget/friendwidget.cpp" line="175"/>
         <source>New message</source>
         <translation>Новое сообщение</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="174"/>
+        <location filename="../src/widget/friendwidget.cpp" line="177"/>
         <source>Online</source>
         <translation>В сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="176"/>
+        <location filename="../src/widget/friendwidget.cpp" line="179"/>
         <source>Away</source>
         <translation>Отошёл</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="178"/>
+        <location filename="../src/widget/friendwidget.cpp" line="181"/>
         <source>Busy</source>
         <translation>Занят</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="180"/>
+        <location filename="../src/widget/friendwidget.cpp" line="183"/>
         <source>Offline</source>
         <translation>Не в сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="261"/>
+        <location filename="../src/widget/friendwidget.cpp" line="266"/>
         <source>User alias</source>
         <translation>Псевдоним пользователя</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="261"/>
+        <location filename="../src/widget/friendwidget.cpp" line="266"/>
         <source>You can also set this by clicking the chat form name.
 Alias:</source>
         <translation>Можно также установить, щёлкнув по имени вверху окна чата.
@@ -816,17 +818,17 @@ Alias:</source>
 <context>
     <name>GUI</name>
     <message>
-        <location filename="../src/widget/gui.cpp" line="297"/>
+        <location filename="../src/widget/gui.cpp" line="317"/>
         <source>Enter your password</source>
         <translation>Введите свой пароль</translation>
     </message>
     <message>
-        <location filename="../src/widget/gui.cpp" line="299"/>
+        <location filename="../src/widget/gui.cpp" line="319"/>
         <source>Decrypt</source>
         <translation type="unfinished">Расшифровать</translation>
     </message>
     <message>
-        <location filename="../src/widget/gui.cpp" line="341"/>
+        <location filename="../src/widget/gui.cpp" line="361"/>
         <source>You must enter a non-empty password:</source>
         <translation>Вы должны ввести непустой пароль:</translation>
     </message>
@@ -834,30 +836,30 @@ Alias:</source>
 <context>
     <name>GeneralForm</name>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="42"/>
+        <location filename="../src/widget/form/settings/generalform.h" line="37"/>
         <source>General</source>
         <translation>Общие</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="93"/>
         <location filename="../src/widget/form/settings/generalform.cpp" line="98"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="103"/>
         <source>None</source>
         <translation>Отсутствует</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="297"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="305"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Выбрать папку для автоматического приёма</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="353"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="361"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Идёт звонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="354"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="362"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>Нельзя отключиться пока идёт звонок!</translation>
@@ -1195,53 +1197,53 @@ will be sent to them when they appear online to you.</source>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="72"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="492"/>
         <source>Send message</source>
         <translation>Отправить сообщение</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="74"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="493"/>
         <source>Smileys</source>
         <translation>Смайлики</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="78"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="494"/>
         <source>Send file(s)</source>
         <translation>Отправить файл(ы)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="80"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="495"/>
         <source>Send a screenshot</source>
         <translation>Отправить снимок экрана</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="83"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="496"/>
         <source>Start an audio call</source>
         <translation>Начать аудио звонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="86"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="497"/>
         <source>Start a video call</source>
         <translation>Начать видео звонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="175"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="324"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="351"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="498"/>
         <source>Save chat log</source>
         <translation>Сохранить журнал чата</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="176"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="499"/>
         <source>Clear displayed messages</source>
         <translation>Очистить показываемые сообщения</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="340"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="367"/>
         <source>Not sent</source>
         <translation>Не отправлено</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="378"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="405"/>
         <source>Cleared</source>
         <translation>Очищено</translation>
     </message>
@@ -1249,46 +1251,46 @@ will be sent to them when they appear online to you.</source>
 <context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="56"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="337"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 пользователей в чате</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="125"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="137"/>
         <source>%1 users in chat</source>
         <translation>%1 пользователей в чате</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="167"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="274"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="179"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="286"/>
         <source>Start audio call</source>
         <translation type="unfinished">Начать аудиозвонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="215"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="261"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="227"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="273"/>
         <source>Mute microphone</source>
         <translation>Выключить микрофон</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="221"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="233"/>
         <source>Unmute microphone</source>
         <translation>Включить микрофон</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="236"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="264"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="248"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="276"/>
         <source>Mute call</source>
         <translation>Выключить звук</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="242"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="254"/>
         <source>Unmute call</source>
         <translation>Включить звук</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="258"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="270"/>
         <source>End audio call</source>
         <translation>Завершить аудио звонок</translation>
     </message>
@@ -1296,35 +1298,35 @@ will be sent to them when they appear online to you.</source>
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="55"/>
+        <location filename="../src/widget/groupwidget.cpp" line="60"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Покинуть группу</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="43"/>
-        <location filename="../src/widget/groupwidget.cpp" line="89"/>
+        <location filename="../src/widget/groupwidget.cpp" line="48"/>
+        <location filename="../src/widget/groupwidget.cpp" line="94"/>
         <source>%1 users in chat</source>
         <translation>%1 пользователей в чате</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="45"/>
-        <location filename="../src/widget/groupwidget.cpp" line="91"/>
+        <location filename="../src/widget/groupwidget.cpp" line="50"/>
+        <location filename="../src/widget/groupwidget.cpp" line="96"/>
         <source>0 users in chat</source>
         <translation>Ни одного пользователя в чате</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="54"/>
+        <location filename="../src/widget/groupwidget.cpp" line="59"/>
         <source>Set title...</source>
         <translation>Установить заголовок...</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="69"/>
+        <location filename="../src/widget/groupwidget.cpp" line="74"/>
         <source>Group title</source>
         <translation>Заголовок группы</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="69"/>
+        <location filename="../src/widget/groupwidget.cpp" line="74"/>
         <source>You can also set this by clicking the chat form name.
 Title:</source>
         <translation>Можно также установить, щёлкнув по заголовку вверху окна чата.
@@ -1355,7 +1357,6 @@ Title:</source>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="98"/>
-        <location filename="../src/widget/form/profileform.ui" line="109"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
@@ -1368,78 +1369,77 @@ Share it with your friends to communicate.</source>
         <translation>Ваш Tox ID (нажмите на него, чтобы скопировать)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="120"/>
         <source>QRCODE</source>
-        <translation type="unfinished">QR-код</translation>
+        <translation type="obsolete">QR-код</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="133"/>
+        <location filename="../src/widget/form/profileform.ui" line="125"/>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
         <translation type="unfinished">Данный QR-код содержит ваш Tox ID. Им можно поделиться с друзьями.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="140"/>
+        <location filename="../src/widget/form/profileform.ui" line="132"/>
         <source>Save image</source>
         <translation type="unfinished">Сохранить изображение</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="147"/>
+        <location filename="../src/widget/form/profileform.ui" line="139"/>
         <source>Copy image</source>
         <translation type="unfinished">Копировать изображение</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="163"/>
+        <location filename="../src/widget/form/profileform.ui" line="155"/>
         <source>Profile</source>
         <translation type="unfinished">Профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="184"/>
+        <location filename="../src/widget/form/profileform.ui" line="176"/>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation type="unfinished">Переименовать профиль.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="194"/>
+        <location filename="../src/widget/form/profileform.ui" line="186"/>
         <source>Delete profile.</source>
         <comment>delete profile button tooltip</comment>
         <translation type="unfinished">Удалить профиль.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="215"/>
+        <location filename="../src/widget/form/profileform.ui" line="207"/>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
         <translation type="unfinished">Вернуться к экрану входа</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="218"/>
+        <location filename="../src/widget/form/profileform.ui" line="210"/>
         <source>Logout</source>
         <comment>import profile button</comment>
         <translation type="unfinished">Выйти</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="255"/>
+        <location filename="../src/widget/form/profileform.ui" line="247"/>
         <source>Remove password</source>
         <translation type="unfinished">Удалить пароль</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="262"/>
+        <location filename="../src/widget/form/profileform.ui" line="254"/>
         <source>Change password</source>
         <translation type="unfinished">Сменить пароль</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="187"/>
+        <location filename="../src/widget/form/profileform.ui" line="179"/>
         <source>Rename</source>
         <comment>rename profile button</comment>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="208"/>
+        <location filename="../src/widget/form/profileform.ui" line="200"/>
         <source>Export</source>
         <comment>export profile button</comment>
         <translation>Экспортировать</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="204"/>
+        <location filename="../src/widget/form/profileform.ui" line="196"/>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
@@ -1447,7 +1447,7 @@ Profile does not contain your history.</source>
 Данный файл-профиля не содержит историю переписки.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="197"/>
+        <location filename="../src/widget/form/profileform.ui" line="189"/>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Удалить</translation>
@@ -1469,103 +1469,131 @@ Profile does not contain your history.</source>
 <context>
     <name>LoginScreen</name>
     <message>
-        <location filename="../src/widget/loginscreen.ui" line="144"/>
+        <location filename="../src/loginscreen.ui" line="144"/>
         <source>qTox</source>
         <translation type="unfinished">qTox</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.ui" line="354"/>
-        <location filename="../src/widget/loginscreen.ui" line="727"/>
+        <location filename="../src/loginscreen.ui" line="354"/>
+        <location filename="../src/loginscreen.ui" line="727"/>
         <source>Username:</source>
         <translation type="unfinished">Имя пользователя:</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.ui" line="371"/>
-        <location filename="../src/widget/loginscreen.ui" line="740"/>
+        <location filename="../src/loginscreen.ui" line="371"/>
+        <location filename="../src/loginscreen.ui" line="740"/>
         <source>Password:</source>
         <translation type="unfinished">Пароль:</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.ui" line="388"/>
+        <location filename="../src/loginscreen.ui" line="388"/>
         <source>Confirm:</source>
         <translation type="unfinished">Ещё раз:</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.ui" line="408"/>
+        <location filename="../src/loginscreen.ui" line="408"/>
         <source>Password strength: %p%</source>
         <translation type="unfinished">Сложность пароля: %p%</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.ui" line="617"/>
+        <location filename="../src/loginscreen.ui" line="617"/>
         <source>Create Account</source>
         <translation type="unfinished">Создать аккаунт</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.ui" line="972"/>
-        <location filename="../src/widget/loginscreen.ui" line="1079"/>
+        <location filename="../src/loginscreen.ui" line="757"/>
+        <source>If the profile does not have a password, qTox can skip the login screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/loginscreen.ui" line="760"/>
+        <source>Login automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/loginscreen.ui" line="982"/>
+        <location filename="../src/loginscreen.ui" line="1097"/>
         <source>Login</source>
         <translation type="unfinished">Войти</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.ui" line="1057"/>
+        <location filename="../src/loginscreen.ui" line="1071"/>
         <source>New Profile</source>
         <translation type="unfinished">Новый профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="79"/>
-        <location filename="../src/widget/loginscreen.cpp" line="85"/>
-        <location filename="../src/widget/loginscreen.cpp" line="91"/>
-        <location filename="../src/widget/loginscreen.cpp" line="97"/>
-        <location filename="../src/widget/loginscreen.cpp" line="105"/>
+        <location filename="../src/widget/loginscreen.cpp" line="114"/>
+        <location filename="../src/widget/loginscreen.cpp" line="120"/>
+        <location filename="../src/widget/loginscreen.cpp" line="126"/>
+        <location filename="../src/widget/loginscreen.cpp" line="132"/>
+        <location filename="../src/widget/loginscreen.cpp" line="140"/>
         <source>Couldn&apos;t create a new profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Невозможно создать новый профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="79"/>
+        <location filename="../src/widget/loginscreen.cpp" line="114"/>
         <source>The username must not be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поле имени пользователя не должно быть пустым</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="85"/>
         <source>The password must be at least 6 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Длинна пароля должна быть не менее 6 символов.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="91"/>
         <source>The passwords are different.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Пароли не совпадают.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="97"/>
         <source>This profile already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Профиль уже используется</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="105"/>
         <source>Couldn&apos;t create a new profile.</source>
+        <translation type="obsolete">Невозможно создать новый профиль</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/loginscreen.cpp" line="120"/>
+        <source>The password must be at least 6 characters long.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/loginscreen.cpp" line="126"/>
+        <source>The passwords you&apos;ve entered are different.
+Please make sure to enter same password twice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/loginscreen.cpp" line="132"/>
+        <source>A profile with this name already exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="140"/>
-        <location filename="../src/widget/loginscreen.cpp" line="148"/>
-        <location filename="../src/widget/loginscreen.cpp" line="153"/>
+        <source>Unknown error: Couldn&apos;t create a new profile.
+If you encountered this error, please report it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/loginscreen.cpp" line="175"/>
+        <location filename="../src/widget/loginscreen.cpp" line="183"/>
+        <location filename="../src/widget/loginscreen.cpp" line="188"/>
         <source>Couldn&apos;t load this profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Невозможно загрузить данный профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="140"/>
+        <location filename="../src/widget/loginscreen.cpp" line="175"/>
         <source>This profile is already in use.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Профиль уже используется.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="148"/>
+        <location filename="../src/widget/loginscreen.cpp" line="183"/>
         <source>Couldn&apos;t load this profile.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Невозможно загрузить данный профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="153"/>
+        <location filename="../src/widget/loginscreen.cpp" line="188"/>
         <source>Wrong password.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Неправильный пароль.</translation>
     </message>
 </context>
 <context>
@@ -1609,7 +1637,7 @@ Profile does not contain your history.</source>
 <context>
     <name>NetCamView</name>
     <message>
-        <location filename="../src/widget/netcamview.cpp" line="26"/>
+        <location filename="../src/video/netcamview.cpp" line="31"/>
         <source>Tox video</source>
         <translation>Видео</translation>
     </message>
@@ -1617,7 +1645,7 @@ Profile does not contain your history.</source>
 <context>
     <name>Nexus</name>
     <message>
-        <location filename="../src/nexus.cpp" line="221"/>
+        <location filename="../src/nexus.cpp" line="243"/>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>Изображения (%1)</translation>
@@ -1626,7 +1654,7 @@ Profile does not contain your history.</source>
 <context>
     <name>PrivacyForm</name>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="29"/>
+        <location filename="../src/widget/form/settings/privacyform.h" line="35"/>
         <source>Privacy</source>
         <translation>Конфиденциальность</translation>
     </message>
@@ -1688,147 +1716,154 @@ but new contacts need to know your new Tox ID to be able to add you.</source>
 <context>
     <name>ProfileForm</name>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="185"/>
+        <location filename="../src/widget/form/profileform.cpp" line="194"/>
         <source>Choose a profile picture</source>
         <translation>Выбрать картинку для профиля</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="195"/>
-        <location filename="../src/widget/form/profileform.cpp" line="202"/>
-        <location filename="../src/widget/form/profileform.cpp" line="224"/>
+        <location filename="../src/widget/form/profileform.cpp" line="204"/>
+        <location filename="../src/widget/form/profileform.cpp" line="211"/>
+        <location filename="../src/widget/form/profileform.cpp" line="233"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="236"/>
+        <location filename="../src/widget/form/profileform.cpp" line="245"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
         <translation>Переименовать &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="195"/>
+        <location filename="../src/widget/form/profileform.cpp" line="204"/>
         <source>Unable to open this file.</source>
         <translation>Невозможно открыть файл.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="202"/>
+        <location filename="../src/widget/form/profileform.cpp" line="211"/>
         <source>Unable to read this image.</source>
         <translation>Невозможно прочесть это изображение.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="225"/>
+        <location filename="../src/widget/form/profileform.cpp" line="234"/>
         <source>The supplied image is too large.
 Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="244"/>
+        <location filename="../src/widget/form/profileform.cpp" line="253"/>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
         <translation type="unfinished">Профиль уже существует</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="245"/>
+        <location filename="../src/widget/form/profileform.cpp" line="254"/>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
         <translation type="unfinished">Профиль с именем «%1» уже существует.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="247"/>
+        <location filename="../src/widget/form/profileform.cpp" line="256"/>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="248"/>
+        <location filename="../src/widget/form/profileform.cpp" line="257"/>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="257"/>
+        <location filename="../src/widget/form/profileform.cpp" line="266"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
         <translation>Экспортировать профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="259"/>
+        <location filename="../src/widget/form/profileform.cpp" line="268"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
         <translation>Файл Tox (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="264"/>
-        <location filename="../src/widget/form/profileform.cpp" line="305"/>
+        <location filename="../src/widget/form/profileform.cpp" line="273"/>
+        <location filename="../src/widget/form/profileform.cpp" line="314"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Нет прав на запись</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="264"/>
-        <location filename="../src/widget/form/profileform.cpp" line="305"/>
+        <location filename="../src/widget/form/profileform.cpp" line="273"/>
+        <location filename="../src/widget/form/profileform.cpp" line="314"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>У вас нет прав для записи в эту директорию. Выберете другую.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="274"/>
+        <location filename="../src/widget/form/profileform.cpp" line="283"/>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
         <translation type="unfinished">Действительно удалить профиль?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="298"/>
+        <location filename="../src/widget/form/profileform.cpp" line="307"/>
         <source>Save</source>
         <comment>save qr image</comment>
         <translation>Сохранение изображения с QR кодом...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="300"/>
+        <location filename="../src/widget/form/profileform.cpp" line="309"/>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
         <translation type="unfinished">Сохранить QR код (*.png)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="318"/>
+        <location filename="../src/widget/form/profileform.cpp" line="327"/>
         <source>Nothing to remove</source>
         <translation>Нечего удалять</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="318"/>
+        <location filename="../src/widget/form/profileform.cpp" line="327"/>
         <source>Your profile does not have a password!</source>
         <translation>У вашего профиля нет пароля!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="322"/>
+        <location filename="../src/widget/form/profileform.cpp" line="331"/>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
         <translation>Действительно удалить пароль?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="323"/>
+        <location filename="../src/widget/form/profileform.cpp" line="332"/>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
         <translation>Вы уверены, что хотите удалить свой пароль?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="331"/>
+        <location filename="../src/widget/form/profileform.cpp" line="340"/>
         <source>Please enter a new password.</source>
         <translation type="unfinished">Пожалуйста введите новый пароль.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="268"/>
-        <location filename="../src/widget/form/profileform.cpp" line="309"/>
+        <location filename="../src/widget/form/profileform.cpp" line="354"/>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.</source>
+        <translation type="unfinished">Этот набор символов говорит другим пользователям Tox как связаться с вами.
+Отправте его своим друзьям для связи.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.cpp" line="277"/>
+        <location filename="../src/widget/form/profileform.cpp" line="318"/>
         <source>Failed to copy file</source>
         <translation>Не удалось скопировать файл</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="268"/>
-        <location filename="../src/widget/form/profileform.cpp" line="309"/>
+        <location filename="../src/widget/form/profileform.cpp" line="277"/>
+        <location filename="../src/widget/form/profileform.cpp" line="318"/>
         <source>The file you chose could not be written to.</source>
         <translation>Выбранный файл не может быть записан.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="275"/>
+        <location filename="../src/widget/form/profileform.cpp" line="284"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation type="unfinished">Вы действительно хотите удалить этот профиль?</translation>
@@ -1837,118 +1872,117 @@ Please use another image.</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/autoupdate.cpp" line="496"/>
+        <location filename="../src/net/autoupdate.cpp" line="501"/>
         <source>Update</source>
         <comment>The title of a message box</comment>
         <translation>Обновление</translation>
     </message>
     <message>
-        <location filename="../src/autoupdate.cpp" line="497"/>
+        <location filename="../src/net/autoupdate.cpp" line="502"/>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
         <translation>Обновление доступно, не желаете ли скачать его прямо сейчас?
 Оно будет установлено после того, как qTox будет перезапущен.</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="53"/>
+        <location filename="../src/persistence/toxsave.cpp" line="57"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
         <translation>Выбран не файл Tox</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="54"/>
+        <location filename="../src/persistence/toxsave.cpp" line="58"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
         <translation>Внимание: вы выбрали не файл Tox; игнорирование.</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="60"/>
+        <location filename="../src/persistence/toxsave.cpp" line="64"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
         <translation>Профиль уже существует</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="61"/>
+        <location filename="../src/persistence/toxsave.cpp" line="65"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Профиль с именем «%1» уже существует. Желаете его стереть?</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="67"/>
+        <location filename="../src/persistence/toxsave.cpp" line="71"/>
         <source>Profile imported</source>
         <translation>Профиль импортирован</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxsave.cpp" line="67"/>
+        <location filename="../src/persistence/toxsave.cpp" line="71"/>
         <source>%1.tox was successfully imported</source>
         <translation>%1.tox успешно импортирован</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="106"/>
+        <location filename="../src/main.cpp" line="111"/>
         <source>Tox URI to parse</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
         <translation>Tox URI to parse</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="107"/>
+        <location filename="../src/main.cpp" line="112"/>
         <source>Starts new instance and loads specified profile.</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
         <translation>Starts new instance and loads specified profile.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="107"/>
+        <location filename="../src/main.cpp" line="112"/>
         <source>profile</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
         <translation>profile</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/widget/style.cpp" line="74"/>
         <source>Default</source>
         <translation>По-умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/widget/style.cpp" line="74"/>
         <source>Blue</source>
         <translation>Синяя</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/widget/style.cpp" line="74"/>
         <source>Olive</source>
         <translation>Оливковая</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/widget/style.cpp" line="74"/>
         <source>Red</source>
         <translation>Красная</translation>
     </message>
     <message>
-        <location filename="../src/misc/style.cpp" line="69"/>
+        <location filename="../src/widget/style.cpp" line="74"/>
         <source>Violet</source>
         <translation>Фиолетовая</translation>
     </message>
     <message>
-        <location filename="../src/widget/callconfirmwidget.cpp" line="28"/>
+        <location filename="../src/widget/tool/callconfirmwidget.cpp" line="48"/>
         <source>Incoming call...</source>
         <translation type="unfinished">Входящий вызов...</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="68"/>
+        <location filename="../src/net/toxuri.cpp" line="73"/>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation type="unfinished">Привет, это %1! Добавите меня в друзья?</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/chatmessage.cpp" line="129"/>
+        <location filename="../src/chatlog/chatmessage.cpp" line="134"/>
         <source>Resizing</source>
         <translation>Изменение размера</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="82"/>
         <source>Load chat history...</source>
-        <translation type="unfinished">Загрузить историю чата...</translation>
+        <translation type="obsolete">Загрузить историю чата...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="61"/>
+        <location filename="../src/widget/form/profileform.cpp" line="352"/>
         <source>User Profile</source>
         <translation type="unfinished">Профиль пользователя</translation>
     </message>
@@ -1956,13 +1990,13 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="127"/>
+        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="132"/>
         <source>Click and drag to select a region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="134"/>
+        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="139"/>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selected region or select a new region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation type="unfinished"></translation>
@@ -1991,17 +2025,17 @@ It will be installed when qTox restarts.</source>
         <translation>Сложность пароля</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="31"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="36"/>
         <source>The passwords don&apos;t match.</source>
         <translation>Пароли не совпадают.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="55"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="60"/>
         <source>The password is too short</source>
         <translation>Пароль слишком короткий</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="60"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="65"/>
         <source>The password doesn&apos;t match.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2009,57 +2043,57 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ToxDNS</name>
     <message>
-        <location filename="../src/toxdns.cpp" line="63"/>
+        <location filename="../src/net/toxdns.cpp" line="68"/>
         <source>The connection timed out</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Время ожидания соединения истекло</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="71"/>
+        <location filename="../src/net/toxdns.cpp" line="76"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Нет такого адреса</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="78"/>
+        <location filename="../src/net/toxdns.cpp" line="83"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Ошибка при просмотре DNS</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="87"/>
+        <location filename="../src/net/toxdns.cpp" line="92"/>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
         <translation>Текстовых записей не найдено</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="96"/>
+        <location filename="../src/net/toxdns.cpp" line="101"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Непредвиденное количество значений в текстовой записи</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="125"/>
+        <location filename="../src/net/toxdns.cpp" line="130"/>
         <source>The version of Tox DNS used by this server is not supported</source>
         <comment>Error with the DNS</comment>
         <translation>Используемая сервером версия Tox DNS не поддерживается</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="137"/>
+        <location filename="../src/net/toxdns.cpp" line="142"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>В ответе DNS ни одного Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="146"/>
-        <location filename="../src/toxdns.cpp" line="155"/>
+        <location filename="../src/net/toxdns.cpp" line="151"/>
+        <location filename="../src/net/toxdns.cpp" line="160"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>Ответ DNS не содержит корректных Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/toxdns.cpp" line="242"/>
-        <location filename="../src/toxdns.cpp" line="294"/>
+        <location filename="../src/net/toxdns.cpp" line="247"/>
+        <location filename="../src/net/toxdns.cpp" line="299"/>
         <source>It appears that qTox has to use the old tox1 protocol to access DNS record of your friend&apos;s Tox ID.
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
@@ -2073,34 +2107,34 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
 <context>
     <name>ToxURIDialog</name>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="79"/>
+        <location filename="../src/net/toxuri.cpp" line="84"/>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
         <translation>Добавить друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="81"/>
+        <location filename="../src/net/toxuri.cpp" line="86"/>
         <source>Do you want to add %1 as a friend?</source>
         <translation>Хотите добавить %1 в друзья?</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="82"/>
+        <location filename="../src/net/toxuri.cpp" line="87"/>
         <source>User ID:</source>
         <translation>ID пользователя:</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="86"/>
+        <location filename="../src/net/toxuri.cpp" line="91"/>
         <source>Friend request message:</source>
         <translation>Текст запроса:</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="91"/>
+        <location filename="../src/net/toxuri.cpp" line="96"/>
         <source>Send</source>
         <comment>Send a friend request</comment>
         <translation>Отправить</translation>
     </message>
     <message>
-        <location filename="../src/widget/toxuri.cpp" line="92"/>
+        <location filename="../src/net/toxuri.cpp" line="97"/>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Отмена</translation>
@@ -2109,173 +2143,174 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="134"/>
+        <location filename="../src/widget/widget.cpp" line="1470"/>
         <source>Online</source>
         <translation>В сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1169"/>
+        <location filename="../src/widget/widget.cpp" line="1135"/>
         <source>&amp;Quit</source>
         <translation>В&amp;ыход</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="106"/>
+        <location filename="../src/widget/widget.cpp" line="1475"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>В сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="109"/>
+        <location filename="../src/widget/widget.cpp" line="1476"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translatorcomment>Вероятно, это не столь долгое путешествие</translatorcomment>
         <translation>Отошёл</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="112"/>
+        <location filename="../src/widget/widget.cpp" line="1477"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Занят</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="408"/>
+        <location filename="../src/widget/widget.cpp" line="373"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>Не удалось запустить toxcore, приложение будет завершено после того как вы закроете это сообщение.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="418"/>
+        <location filename="../src/widget/widget.cpp" line="383"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>Не удалось запустить toxcore с вашими настройками прокси, qTox не может работать; измените ваши настройки и перезапустите его.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="216"/>
-        <location filename="../src/widget/widget.cpp" line="450"/>
+        <location filename="../src/widget/widget.cpp" line="212"/>
+        <location filename="../src/widget/widget.cpp" line="415"/>
         <source>Add friend</source>
         <translation>Добавить друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="133"/>
+        <location filename="../src/widget/widget.cpp" line="1469"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="135"/>
+        <location filename="../src/widget/widget.cpp" line="1471"/>
         <source>Offline</source>
         <translation>Не в сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="136"/>
+        <location filename="../src/widget/widget.cpp" line="1472"/>
         <source>Friends</source>
         <translation>Друзья</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="137"/>
+        <location filename="../src/widget/widget.cpp" line="1473"/>
         <source>Groups</source>
         <translation>Группы</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="139"/>
+        <location filename="../src/widget/widget.cpp" line="1474"/>
         <source>Search Contacts</source>
         <translation>Поиск контактов</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="464"/>
+        <location filename="../src/widget/widget.cpp" line="429"/>
         <source>File transfers</source>
         <translation>Передачи файлов</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="475"/>
+        <location filename="../src/widget/widget.cpp" line="440"/>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Исполняемый файл</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="475"/>
+        <location filename="../src/widget/widget.cpp" line="440"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation type="unfinished">Вы просите qTox открыть исполняемый файл. Исполняемые файлы могут нанести вред вашему компьютеру. Вы уверены, что хотите открыть этот файл?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="543"/>
+        <location filename="../src/widget/widget.cpp" line="508"/>
+        <location filename="../src/widget/widget.cpp" line="1478"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="552"/>
+        <location filename="../src/widget/widget.cpp" line="517"/>
         <source>Profile</source>
         <translation>Профиль</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="660"/>
+        <location filename="../src/widget/widget.cpp" line="625"/>
         <source>Couldn&apos;t request friendship</source>
         <translation type="unfinished">Не удалось запросить добавление в друзья</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="702"/>
+        <location filename="../src/widget/widget.cpp" line="667"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>отсутствует</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="704"/>
+        <location filename="../src/widget/widget.cpp" line="669"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>занят</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="706"/>
+        <location filename="../src/widget/widget.cpp" line="671"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>офлайн</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="710"/>
+        <location filename="../src/widget/widget.cpp" line="675"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>в сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="713"/>
+        <location filename="../src/widget/widget.cpp" line="678"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 сейчас %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="868"/>
+        <location filename="../src/widget/widget.cpp" line="834"/>
         <source>Remove history</source>
         <translation type="unfinished">Удаление истории</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="869"/>
+        <location filename="../src/widget/widget.cpp" line="835"/>
         <source>Do you want to remove history as well?</source>
         <translation type="unfinished">Хотите заодно удалить историю?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="926"/>
+        <location filename="../src/widget/widget.cpp" line="892"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation type="unfinished">Приглашение в группу</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="926"/>
+        <location filename="../src/widget/widget.cpp" line="892"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation type="unfinished">%1 пригласил вас в груповой чат. Хотите присоединиться?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="988"/>
+        <location filename="../src/widget/widget.cpp" line="954"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Неизвестный&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1016"/>
+        <location filename="../src/widget/widget.cpp" line="982"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 сменил заголовок на %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1249"/>
+        <location filename="../src/widget/widget.cpp" line="1215"/>
         <source>Message failed to send</source>
         <translation>Не удалось отправить сообщение</translation>
     </message>
