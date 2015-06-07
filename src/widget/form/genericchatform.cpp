@@ -257,7 +257,8 @@ bool GenericChatForm::event(QEvent* e)
     if (e->type() == QEvent::KeyRelease && !msgEdit->hasFocus())
     {
         QKeyEvent* ke = static_cast<QKeyEvent*>(e);
-        if (ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
+        if ((ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
+                && !ke->text().isEmpty())
             msgEdit->setFocus();
     }
     return QWidget::event(e);
