@@ -82,6 +82,8 @@ void GenericChatroomWidget::setCompact(bool _compact)
         layout->addWidget(&statusPic);
         layout->addSpacing(5);
         layout->activate();
+        statusMessageLabel->setFont(Style::getFont(Style::Small));
+        nameLabel->setFont(Style::getFont(Style::Medium));
     }
     else
     {
@@ -99,6 +101,8 @@ void GenericChatroomWidget::setCompact(bool _compact)
         layout->addWidget(&statusPic);
         layout->addSpacing(10);
         layout->activate();
+        statusMessageLabel->setFont(Style::getFont(Style::Medium));
+        nameLabel->setFont(Style::getFont(Style::Big));
     }
 }
 
