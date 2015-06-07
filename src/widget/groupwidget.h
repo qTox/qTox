@@ -36,6 +36,7 @@ public:
     virtual QString getStatusString() final override;
     void setName(const QString& name);
     void onUserListChanged();
+    void rename();
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
@@ -44,9 +45,9 @@ signals:
 
 protected:
     // drag & drop
-    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
+    virtual void dragEnterEvent(QDragEnterEvent* ev) override;
     virtual void dragLeaveEvent(QDragLeaveEvent* ev);
-    virtual void dropEvent(QDropEvent* ev) final override;
+    virtual void dropEvent(QDropEvent* ev) override;
     virtual void keyPressEvent(QKeyEvent* ev);
     virtual void keyReleaseEvent(QKeyEvent* ev);
 

@@ -23,12 +23,21 @@ class GenericChatItemWidget : public QFrame
 {
     Q_OBJECT
 public:
+    enum ItemType
+    {
+        GroupItem,
+        FriendOfflineItem,
+        FriendOnlineItem
+    };
+
     GenericChatItemWidget(QWidget *parent = 0);
 
     bool isCompact() const;
     void setCompact(bool compact);
 
     QString getName() const;
+
+    void searchName(const QString &searchString, bool hideAll);
 
     Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
 

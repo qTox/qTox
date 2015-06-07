@@ -21,38 +21,30 @@
 #define FRIENDLISTWIDGET_H
 
 #include <QWidget>
-#include <QHash>
-#include <QList>
-#include <QVector>
 #include "src/core/corestructs.h"
-#include "src/widget/genericchatroomwidget.h"
-
 #include "genericchatitemlayout.h"
-
-#include "circlewidget.h"
-#include "groupwidget.h"
 
 class QVBoxLayout;
 class QGridLayout;
 class QPixmap;
-
+class Widget;
 class FriendWidget;
 class GroupWidget;
 class CircleWidget;
 class FriendListLayout;
+class GenericChatroomWidget;
 
 class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FriendListWidget(QWidget *parent = 0, bool groupsOnTop = true);
+    explicit FriendListWidget(Widget* parent, bool groupsOnTop = true);
 
-    void addGroupWidget(GroupWidget *widget);
-    void addFriendWidget(FriendWidget *w, Status s, int circleIndex);
+    void addGroupWidget(GroupWidget* widget);
+    void addFriendWidget(FriendWidget* w, Status s, int circleIndex);
     void addCircleWidget(int id);
-    void addCircleWidget(FriendWidget *widget = nullptr);
-    void removeCircleWidget(CircleWidget *widget);
-
+    void addCircleWidget(FriendWidget* widget = nullptr);
+    void removeCircleWidget(CircleWidget* widget);
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
     void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
@@ -67,13 +59,14 @@ public slots:
     void renameGroupWidget(const QString& newName);
     void renameCircleWidget(const QString& newName);
     void onGroupchatPositionChanged(bool top);
-    void moveWidget(FriendWidget *w, Status s, bool add = false);
+    void moveWidget(FriendWidget* w, Status s, bool add = false);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dropEvent(QDropEvent* event) override;
 
 private:
+    CircleWidget* createCircleWidget(int id = -1);
     QLayout* nextLayout(QLayout* layout, bool forward) const;
 
     bool groupsOnTop;

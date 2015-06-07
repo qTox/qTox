@@ -24,6 +24,7 @@
 #include <QSystemTrayIcon>
 #include <QFileInfo>
 #include "src/core/corestructs.h"
+#include "genericchatitemwidget.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -47,6 +48,7 @@ class FilesForm;
 class ProfileForm;
 class SettingsWidget;
 class AddFriendForm;
+class CircleWidget;
 
 class Widget final : public QMainWindow
 {
@@ -76,6 +78,10 @@ public:
     static QPixmap getStatusIconPixmap(Status status, uint32_t w, uint32_t h);
     static QString getStatusTitle(Status status);
     static Status getStatusFromString(QString status);
+
+    void searchCircle(CircleWidget* circleWidget);
+    void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
+    bool groupsVisible() const;
 
 public slots:
     void onSettingsClicked();
@@ -147,7 +153,6 @@ private slots:
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
-    void searchContacts();
     void friendListContextMenu(const QPoint &pos);
 
 private:
@@ -176,7 +181,11 @@ private:
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();
-    void cycleContacts(int offset);
+    void cycleContacts(bool forward);
+    void searchContacts();
+    static bool filterGroups(int index);
+    static bool filterOnline(int index);
+    static bool filterOffline(int index);
     void retranslateUi();
 
 private:

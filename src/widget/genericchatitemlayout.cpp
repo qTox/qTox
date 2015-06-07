@@ -83,7 +83,7 @@ void GenericChatItemLayout::search(const QString &searchString, bool hideAll)
         GenericChatItemWidget* widgetAt = dynamic_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
         assert(widgetAt != nullptr);
 
-        widgetAt->setVisible(!hideAll && widgetAt->getName().contains(searchString, Qt::CaseInsensitive));
+        widgetAt->searchName(searchString, hideAll);
     }
 }
 

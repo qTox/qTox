@@ -110,7 +110,7 @@ QLayout* FriendListLayout::getLayoutOffline() const
     return friendOfflineLayout.getLayout();
 }
 
-QLayout* FriendListLayout::getFriendLayout(Status s)
+QLayout* FriendListLayout::getFriendLayout(Status s) const
 {
     return s == Status::Offline ? friendOfflineLayout.getLayout() : friendOnlineLayout.getLayout();
 }

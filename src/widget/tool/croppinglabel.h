@@ -24,11 +24,11 @@
 
 class QLineEdit;
 
-class CroppingLabel final : public QLabel
+class CroppingLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit CroppingLabel(QWidget *parent = 0);
+    explicit CroppingLabel(QWidget* parent = 0);
 
     void editStart();
     void setEditable(bool editable);
@@ -51,6 +51,9 @@ protected:
     virtual QSize minimumSizeHint() const final override;
     virtual void mouseReleaseEvent(QMouseEvent *e) final override;
     virtual bool eventFilter(QObject *obj, QEvent *e) final override;
+
+private slots:
+    void finishTextEdit();
 
 private:
     QString origText;

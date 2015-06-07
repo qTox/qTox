@@ -91,6 +91,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         friendList = dynamic_cast<FriendListWidget*>(circleWidget->parentWidget());
 
     assert(friendList != nullptr);
+    friendList->reDraw();
 
     QVector<CircleWidget*> circleVec = friendList->getAllCircles();
     QMap<QAction*, CircleWidget*> circleActions;
@@ -162,15 +163,21 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
         {
             friendList->moveWidget(this, FriendList::findFriend(friendId)->getStatus(), true);
+            circleWidget->updateStatus();
+            Widget::getInstance()->searchCircle(circleWidget);
         }
         else if (circleActions.contains(selectedItem))
         {
-            if (circleWidget != nullptr)
-                circleWidget->updateStatus();
-
             CircleWidget* circle = circleActions[selectedItem];
             circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
             circle->setExpanded(true);
+            Widget::getInstance()->searchCircle(circle);
+
+            if (circleWidget != nullptr)
+            {
+                circleWidget->updateStatus();
+                Widget::getInstance()->searchCircle(circleWidget);
+            }
         }
     }
 }
@@ -242,6 +249,14 @@ QString FriendWidget::getStatusString()
     else if (status == Status::Offline)
         return tr("Offline");
     return QString::null;
+}
+
+void FriendWidget::search(const QString &searchString, bool hide)
+{
+    searchName(searchString, hide);
+    CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId()));
+    if (circleWidget != nullptr)
+        circleWidget->search(searchString);
 }
 
 void FriendWidget::setChatForm(Ui::MainWindow &ui)
