@@ -33,11 +33,11 @@
 #include <QPalette>
 
 CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
-    QWidget(GUI::getMainWidget()), anchor(Anchor), f{f},
+    QWidget(GUI::getMainWidget()), anchor(Anchor), f(f),
     rectW{120}, rectH{85},
     spikeW{30}, spikeH{15},
     roundedFactor{20},
-    rectRatio{static_cast<qreal>(rectH)/static_cast<qreal>(rectW)}
+    rectRatio(static_cast<qreal>(rectH)/static_cast<qreal>(rectW))
 {
     setWindowFlags(Qt::SubWindow);
 
