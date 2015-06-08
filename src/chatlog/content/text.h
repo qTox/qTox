@@ -36,27 +36,27 @@ public:
 
     void setText(const QString& txt);
 
-    virtual void setWidth(qreal width) override;
+    virtual void setWidth(qreal width) final;
 
-    virtual void selectionMouseMove(QPointF scenePos) override;
-    virtual void selectionStarted(QPointF scenePos) override;
-    virtual void selectionCleared() override;
-    virtual void selectionDoubleClick(QPointF scenePos) override;
-    virtual void selectionFocusChanged(bool focusIn) override;
-    virtual bool isOverSelection(QPointF scenePos) const override;
-    virtual QString getSelectedText() const override;
+    virtual void selectionMouseMove(QPointF scenePos) final;
+    virtual void selectionStarted(QPointF scenePos) final;
+    virtual void selectionCleared() final;
+    virtual void selectionDoubleClick(QPointF scenePos) final;
+    virtual void selectionFocusChanged(bool focusIn) final;
+    virtual bool isOverSelection(QPointF scenePos) const final;
+    virtual QString getSelectedText() const final;
 
-    virtual QRectF boundingRect() const override;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    virtual QRectF boundingRect() const final;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final;
 
-    virtual void visibilityChanged(bool keepInMemory) override;
+    virtual void visibilityChanged(bool keepInMemory) final;
 
-    virtual qreal getAscent() const override;
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
-    virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
+    virtual qreal getAscent() const final;
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) final override;
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) final override;
+    virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
 
-    virtual QString getText() const override;
+    virtual QString getText() const final;
 
 protected:
     // dynamic resource management

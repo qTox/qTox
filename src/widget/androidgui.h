@@ -57,7 +57,7 @@ signals:
 
 private:
     void reloadTheme();
-    virtual void keyPressEvent(QKeyEvent* event) final;
+    virtual void keyPressEvent(QKeyEvent* event) final override;
 
 private slots:
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);

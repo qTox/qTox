@@ -25,18 +25,18 @@
 class QPixmap;
 class MaskablePixmapWidget;
 
-struct FriendWidget : public GenericChatroomWidget
+struct FriendWidget final : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
     FriendWidget(int FriendId, QString id);
-    void contextMenuEvent(QContextMenuEvent * event);
-    void setAsActiveChatroom();
-    void setAsInactiveChatroom();
-    void updateStatusLight();
-    void setChatForm(Ui::MainWindow &);
-    void resetEventFlags();
-    QString getStatusString();
+    virtual void contextMenuEvent(QContextMenuEvent * event) override;
+    virtual void setAsActiveChatroom() override;
+    virtual void setAsInactiveChatroom() override;
+    virtual void updateStatusLight() override;
+    virtual void setChatForm(Ui::MainWindow &) override;
+    virtual void resetEventFlags() override;
+    virtual QString getStatusString() override;
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
@@ -49,8 +49,8 @@ public slots:
     void setAlias(const QString& alias);
 
 protected:
-    void mousePressEvent(QMouseEvent* ev);
-    void mouseMoveEvent(QMouseEvent* ev);
+    virtual void mousePressEvent(QMouseEvent* ev) final override;
+    virtual void mouseMoveEvent(QMouseEvent* ev) final  override;
     void setFriendAlias();
 
 public:

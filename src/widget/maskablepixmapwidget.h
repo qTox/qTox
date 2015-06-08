@@ -22,7 +22,7 @@
 
 #include <QWidget>
 
-class MaskablePixmapWidget : public QWidget
+class MaskablePixmapWidget final : public QWidget
 {
     Q_OBJECT
 public:
@@ -39,8 +39,8 @@ signals:
     void clicked();
 
 protected:
-    virtual void paintEvent(QPaintEvent *);
-    virtual void mousePressEvent(QMouseEvent *);
+    virtual void paintEvent(QPaintEvent *) final override;
+    virtual void mousePressEvent(QMouseEvent *) final override;
 
 private:
     QPixmap pixmap, mask, unscaled; // a lot of memory...

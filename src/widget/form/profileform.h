@@ -44,7 +44,7 @@ public:
 signals:
     void clicked();
 protected:
-    void mouseReleaseEvent(QMouseEvent*) {emit clicked();}
+    virtual void mouseReleaseEvent(QMouseEvent*) final override {emit clicked();}
 };
 
 class ProfileForm : public QWidget
@@ -53,6 +53,7 @@ class ProfileForm : public QWidget
 public:
     ProfileForm(QWidget *parent = nullptr);
     ~ProfileForm();
+    virtual void show() final = delete;
     void show(Ui::MainWindow &ui);
 
 signals:

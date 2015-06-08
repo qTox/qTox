@@ -50,7 +50,7 @@ public:
     void setFriendTyping(bool isTyping);
     OfflineMsgEngine* getOfflineMsgEngine();
 
-    virtual void show(Ui::MainWindow &ui);
+    virtual void show(Ui::MainWindow &ui) final override;
 
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);
@@ -108,11 +108,10 @@ protected:
     void showNetcam();
     void hideNetcam();
     // drag & drop
-    void dragEnterEvent(QDragEnterEvent* ev);
-    void dropEvent(QDropEvent* ev);
-    void registerReceipt(int receipt, int messageID, ChatMessage::Ptr msg);
-    virtual void hideEvent(QHideEvent* event);
-    virtual void showEvent(QShowEvent* event);
+    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
+    virtual void dropEvent(QDropEvent* ev) final override;
+    virtual void hideEvent(QHideEvent* event) final override;
+    virtual void showEvent(QShowEvent* event) final override;
 
 private:
     Friend* f;

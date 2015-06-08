@@ -24,7 +24,7 @@
 
 class ScreenshotGrabber;
 
-class ScreenGrabberOverlayItem : public QObject, public QGraphicsRectItem
+class ScreenGrabberOverlayItem final : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
@@ -33,10 +33,9 @@ public:
 
     void setChosenRect(QRect rect);
 
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
-
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) final override;
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final override;
 
 private:
     ScreenshotGrabber* screnshootGrabber;

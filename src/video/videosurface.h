@@ -40,7 +40,7 @@ protected:
     void subscribe();
     void unsubscribe();
 
-    virtual void paintEvent(QPaintEvent * event) override;
+    virtual void paintEvent(QPaintEvent * event) final override;
 
 private slots:
     void onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame);

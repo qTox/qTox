@@ -28,15 +28,15 @@ class GroupWidget : public GenericChatroomWidget
     Q_OBJECT
 public:
     GroupWidget(int GroupId, QString Name);
-    void onUserListChanged();
-    void contextMenuEvent(QContextMenuEvent * event);
-    void setAsInactiveChatroom();
-    void setAsActiveChatroom();
-    void updateStatusLight();
-    void setChatForm(Ui::MainWindow &);
-    void resetEventFlags();
+    virtual void contextMenuEvent(QContextMenuEvent * event) final override;
+    virtual void setAsInactiveChatroom() final override;
+    virtual void setAsActiveChatroom() final override;
+    virtual void updateStatusLight() final override;
+    virtual void setChatForm(Ui::MainWindow &) final override;
+    virtual void resetEventFlags() final override;
+    virtual QString getStatusString() final override;
     void setName(const QString& name);
-    QString getStatusString();
+    void onUserListChanged();
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
@@ -44,10 +44,8 @@ signals:
 
 protected:
     // drag & drop
-    void dragEnterEvent(QDragEnterEvent* ev);
-    void dropEvent(QDropEvent* ev);
-    void keyPressEvent(QKeyEvent* ev);
-    void keyReleaseEvent(QKeyEvent* ev);
+    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
+    virtual void dropEvent(QDropEvent* ev) final override;
 
 public:
     int groupId;

@@ -22,14 +22,14 @@
 
 #include <QGraphicsItemGroup>
 
-class ScreenGrabberChooserRectItem : public QObject, public QGraphicsItemGroup
+class ScreenGrabberChooserRectItem final : public QObject, public QGraphicsItemGroup
 {
     Q_OBJECT
 public:
     ScreenGrabberChooserRectItem(QGraphicsScene* scene);
     ~ScreenGrabberChooserRectItem();
 
-    QRectF boundingRect() const;
+    virtual QRectF boundingRect() const final override;
     void beginResize(QPointF mousePos);
 
     QRect chosenRect() const;
@@ -43,7 +43,7 @@ signals:
     void regionChosen(QRect rect);
 
 protected:
-    bool sceneEventFilter(QGraphicsItem* watched, QEvent* event);
+    virtual bool sceneEventFilter(QGraphicsItem* watched, QEvent* event) final override;
 
 private:
 

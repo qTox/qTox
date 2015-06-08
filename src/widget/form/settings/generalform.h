@@ -28,13 +28,13 @@ class GeneralSettings;
 
 class SettingsWidget;
 
-class GeneralForm : public GenericForm
+class GeneralForm final : public GenericForm
 {
     Q_OBJECT
 public:
     GeneralForm(SettingsWidget *parent);
     ~GeneralForm();
-    QString getFormName() final {return tr("General");}
+    virtual QString getFormName() final override {return tr("General");}
 
 private slots:
     void onEnableIPv6Updated();

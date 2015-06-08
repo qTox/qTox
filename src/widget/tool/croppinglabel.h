@@ -24,7 +24,7 @@
 
 class QLineEdit;
 
-class CroppingLabel : public QLabel
+class CroppingLabel final : public QLabel
 {
     Q_OBJECT
 public:
@@ -33,13 +33,7 @@ public:
     void setEditable(bool editable);
     void setEdlideMode(Qt::TextElideMode elide);
 
-    virtual void setText(const QString& text);
-    virtual void resizeEvent(QResizeEvent *ev);
-    virtual QSize sizeHint() const;
-    virtual QSize minimumSizeHint() const;
-    virtual void mouseReleaseEvent(QMouseEvent *e);
-    virtual bool eventFilter(QObject *obj, QEvent *e);
-
+    void setText(const QString& text);
     QString fullText(); ///< Returns the un-cropped text
 
 signals:
@@ -50,6 +44,11 @@ protected:
     void setElidedText();
     void hideTextEdit(bool acceptText);
     void showTextEdit();
+    virtual void resizeEvent(QResizeEvent *ev) final override;
+    virtual QSize sizeHint() const final override;
+    virtual QSize minimumSizeHint() const final override;
+    virtual void mouseReleaseEvent(QMouseEvent *e) final override;
+    virtual bool eventFilter(QObject *obj, QEvent *e) final override;
 
 private:
     QString origText;

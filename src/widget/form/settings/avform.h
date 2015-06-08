@@ -33,13 +33,13 @@ class AVSettings;
 class CameraSource;
 class VideoSurface;
 
-class AVForm : public GenericForm
+class AVForm final : public GenericForm
 {
     Q_OBJECT
 public:
     AVForm();
     ~AVForm();
-    QString getFormName() final {return tr("Audio/Video");}
+    virtual QString getFormName() final override {return tr("Audio/Video");}
 
 private:
     void getAudioInDevices();
@@ -65,11 +65,11 @@ private slots:
     void onVideoDevChanged(int index);
     void onResProbingFinished(QList<QSize> res);
 
-    virtual void hideEvent(QHideEvent*);
-    virtual void showEvent(QShowEvent*);
+    virtual void hideEvent(QHideEvent*) final override;
+    virtual void showEvent(QShowEvent*) final override;
 
 protected:
-    bool eventFilter(QObject *o, QEvent *e);
+    virtual bool eventFilter(QObject *o, QEvent *e) final override;
     void updateVideoModes(int curIndex);
 
 private:

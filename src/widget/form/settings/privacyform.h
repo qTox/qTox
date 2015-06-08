@@ -26,13 +26,13 @@ namespace Ui {
 class PrivacySettings;
 }
 
-class PrivacyForm : public GenericForm
+class PrivacyForm final : public GenericForm
 {
     Q_OBJECT
 public:
     PrivacyForm();
     ~PrivacyForm();
-    QString getFormName() final {return tr("Privacy");}
+    virtual QString getFormName() final override {return tr("Privacy");}
 
 private slots:
     void onEnableLoggingUpdated();
@@ -40,7 +40,7 @@ private slots:
     void setNospam();
     void generateRandomNospam();
     void onNospamEdit();
-    virtual void showEvent(QShowEvent*);
+    virtual void showEvent(QShowEvent*) final override;
 
 private:
     void retranslateUi();

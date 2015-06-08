@@ -39,9 +39,6 @@ public:
     void onUserListChanged();
     void peerAudioPlaying(int peer);
 
-    void keyPressEvent(QKeyEvent* ev);
-    void keyReleaseEvent(QKeyEvent* ev);
-
 signals:
     void groupTitleChanged(int groupnum, const QString& name);
 
@@ -52,9 +49,11 @@ private slots:
     void onCallClicked();
 
 protected:
+    virtual void keyPressEvent(QKeyEvent* ev) final override;
+    virtual void keyReleaseEvent(QKeyEvent* ev) final override;
     // drag & drop
-    void dragEnterEvent(QDragEnterEvent* ev);
-    void dropEvent(QDropEvent* ev);
+    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
+    virtual void dropEvent(QDropEvent* ev) final override;
 
 private:
     void retranslateUi();

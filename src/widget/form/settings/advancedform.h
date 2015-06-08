@@ -28,13 +28,13 @@ namespace Ui {
 class AdvancedSettings;
 }
 
-class AdvancedForm : public GenericForm
+class AdvancedForm final : public GenericForm
 {
     Q_OBJECT
 public:
     AdvancedForm();
-    virtual ~AdvancedForm();
-    QString getFormName() final {return tr("Advanced");}
+    ~AdvancedForm();
+    virtual QString getFormName() final override {return tr("Advanced");}
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

@@ -22,19 +22,21 @@
 
 #include <QTextEdit>
 
-class ChatTextEdit : public QTextEdit
+class ChatTextEdit final : public QTextEdit
 {
     Q_OBJECT
 public:
     explicit ChatTextEdit(QWidget *parent = 0);
     ~ChatTextEdit();
-    virtual void keyPressEvent(QKeyEvent * event) override;
     void setLastMessage(QString lm);
 
 signals:
     void enterPressed();
     void tabPressed();
     void keyPressed();
+
+protected:
+    virtual void keyPressEvent(QKeyEvent * event) final override;
 
 private:
     void retranslateUi();

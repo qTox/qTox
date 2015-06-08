@@ -65,7 +65,7 @@ protected:
 
     bool drawButtonAreaNeeded() const;
 
-    virtual void paintEvent(QPaintEvent*);
+    virtual void paintEvent(QPaintEvent*) final override;
 
 private slots:
     void on_topButton_clicked();

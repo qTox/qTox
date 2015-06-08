@@ -32,8 +32,8 @@ public:
     explicit VerticalOnlyScroller(QWidget *parent = 0);
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-    void showEvent(QShowEvent *event);
+    virtual void resizeEvent(QResizeEvent *event) final override;
+    virtual void showEvent(QShowEvent *event) final override;
 };
 
 #endif // VERTICALONLYSCROLLER_H

@@ -24,7 +24,7 @@
 #include <QPropertyAnimation>
 #include <QObject>
 
-class ToolBoxGraphicsItem : public QObject, public QGraphicsItemGroup
+class ToolBoxGraphicsItem final : public QObject, public QGraphicsItemGroup
 {
     Q_OBJECT
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
@@ -32,11 +32,11 @@ public:
     ToolBoxGraphicsItem();
     ~ToolBoxGraphicsItem();
 
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final override;
 
 protected:
-    void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event) final override;
+    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) final override;
 
 private:
 

@@ -162,21 +162,6 @@ void GroupWidget::dropEvent(QDropEvent *ev)
     }
 }
 
-void GroupWidget::keyPressEvent(QKeyEvent* ev)
-{
-    Group* g = GroupList::findGroup(groupId);
-    if (g)
-        g->getChatForm()->keyPressEvent(ev);
-
-}
-
-void GroupWidget::keyReleaseEvent(QKeyEvent* ev)
-{
-    Group* g = GroupList::findGroup(groupId);
-    if (g)
-        g->getChatForm()->keyReleaseEvent(ev);
-}
-
 void GroupWidget::setName(const QString& name)
 {
     nameLabel->setText(name);

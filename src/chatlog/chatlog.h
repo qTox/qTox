@@ -84,15 +84,15 @@ protected:
     void scrollToBottom();
     void startResizeWorker();
 
-    virtual void mouseDoubleClickEvent(QMouseEvent* ev);
-    virtual void mousePressEvent(QMouseEvent* ev);
-    virtual void mouseReleaseEvent(QMouseEvent* ev);
-    virtual void mouseMoveEvent(QMouseEvent* ev);
-    virtual void scrollContentsBy(int dx, int dy);
-    virtual void resizeEvent(QResizeEvent* ev);
-    virtual void showEvent(QShowEvent*);
-    virtual void focusInEvent(QFocusEvent* ev);
-    virtual void focusOutEvent(QFocusEvent* ev);
+    virtual void mouseDoubleClickEvent(QMouseEvent* ev) final override;
+    virtual void mousePressEvent(QMouseEvent* ev) final override;
+    virtual void mouseReleaseEvent(QMouseEvent* ev) final override;
+    virtual void mouseMoveEvent(QMouseEvent* ev) final override;
+    virtual void scrollContentsBy(int dx, int dy) final override;
+    virtual void resizeEvent(QResizeEvent* ev) final override;
+    virtual void showEvent(QShowEvent*) final override;
+    virtual void focusInEvent(QFocusEvent* ev) final override;
+    virtual void focusOutEvent(QFocusEvent* ev) final override;
 
     void updateMultiSelectionRect();
     void updateTypingNotification();

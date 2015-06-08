@@ -65,10 +65,10 @@ signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent* event);
-    virtual void mouseReleaseEvent (QMouseEvent* event);
-    virtual void enterEvent(QEvent* e);
-    virtual void leaveEvent(QEvent* e);
+    virtual void mousePressEvent(QMouseEvent* event) override;
+    virtual void mouseReleaseEvent (QMouseEvent* event) override;
+    virtual void enterEvent(QEvent* e) override;
+    virtual void leaveEvent(QEvent* e) override;
 
 protected:
     QColor lastColor;

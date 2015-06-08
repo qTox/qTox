@@ -52,7 +52,8 @@ public:
     GenericChatForm(QWidget *parent = 0);
     ~GenericChatForm();
 
-    virtual void setName(const QString &newName);
+    void setName(const QString &newName);
+    virtual void show() final = delete;
     virtual void show(Ui::MainWindow &ui);
 
     ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
@@ -64,7 +65,6 @@ public:
 
     ChatLog* getChatLog() const;
 
-    bool eventFilter(QObject* object, QEvent* event);
 signals:
     void sendMessage(uint32_t, QString);
     void sendAction(uint32_t, QString);
@@ -91,12 +91,14 @@ private:
 protected:
     QString resolveToxId(const ToxId &id);
     void insertChatMessage(ChatMessage::Ptr msg);
-    void hideEvent(QHideEvent* event);
-    void showEvent(QShowEvent *);
-    bool event(QEvent *);
-    void resizeEvent(QResizeEvent* event);
     void adjustFileMenuPosition();
+    virtual void hideEvent(QHideEvent* event) override;
+    virtual void showEvent(QShowEvent *) override;
+    virtual bool event(QEvent *) final override;
+    virtual void resizeEvent(QResizeEvent* event) final override;
+    virtual bool eventFilter(QObject* object, QEvent* event) final override;
 
+protected:
     QAction* saveChatAction, *clearAction;
     ToxId previousId;
     QDateTime prevMsgDateTime;
