@@ -33,6 +33,8 @@ class AddFriendForm : public QObject
     Q_OBJECT
 public:
     AddFriendForm();
+    AddFriendForm(const AddFriendForm&) = delete;
+    AddFriendForm& operator=(const AddFriendForm&) = delete;
     ~AddFriendForm();
 
     void show(Ui::MainWindow &ui);

@@ -30,7 +30,9 @@ class AudioFilterer
 {
 public:
     explicit AudioFilterer() = default;
+    explicit AudioFilterer(const AudioFilterer&) = delete;
     ~AudioFilterer();
+    AudioFilterer operator=(const AudioFilterer) = delete;
     void startFilter(unsigned int fs);
     void closeFilter();
 

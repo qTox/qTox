@@ -166,7 +166,6 @@ void CoreFile::cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId)
     file->status = ToxFile::STOPPED;
     emit core->fileTransferCancelled(*file);
     tox_file_control(core->tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_CANCEL, nullptr);
-    while (file->sendTimer) QThread::msleep(1); // Wait until sendAllFileData returns before deleting
     removeFile(friendId, fileId);
 }
 

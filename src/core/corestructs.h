@@ -55,7 +55,6 @@ struct ToxFile
     quint64 filesize;
     FileStatus status;
     FileDirection direction;
-    QTimer* sendTimer;
     QByteArray avatarData;
     QByteArray resumeFileId;
 };
