@@ -335,9 +335,20 @@ instead of system taskbar.</string>
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QCheckBox" name="autoSwitchTab">
+                 <property name="toolTip">
+                  <string comment="tooltip for Auto tab switching">Automatically switch to friend who send the message.</string>
+                 </property>
+                 <property name="text">
+                  <string>Switch to friend</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
               <zorder>showWindow</zorder>
               <zorder>showInFront</zorder>
+              <zorder>autoSwitchTab</zorder>
               <zorder>notifySound</zorder>
              </widget>
             </item>

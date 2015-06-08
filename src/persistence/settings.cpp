@@ -165,6 +165,7 @@ void Settings::loadGlobal()
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", false).toBool();
+        autoSwitchTab = s.value("autoSwitchTab", false).toBool();
         showWindow = s.value("showWindow", true).toBool();
         showInFront = s.value("showInFront", false).toBool();
         notifySound = s.value("notifySound", true).toBool();
@@ -354,6 +355,7 @@ void Settings::saveGlobal()
         s.setValue("currentProfile", currentProfile);
         s.setValue("autoAwayTime", autoAwayTime);
         s.setValue("checkUpdates", checkUpdates);
+        s.setValue("autoSwitchTab", autoSwitchTab);
         s.setValue("showWindow", showWindow);
         s.setValue("showInFront", showInFront);
         s.setValue("notifySound", notifySound);
@@ -1085,6 +1087,18 @@ void Settings::setCheckUpdates(bool newValue)
 {
     QMutexLocker locker{&bigLock};
     checkUpdates = newValue;
+}
+
+bool Settings::getAutoSwitchTab() const
+{
+    QMutexLocker locker{&bigLock};
+    return autoSwitchTab;
+}
+
+void Settings::setAutoSwitchTab(bool newValue)
+{
+    QMutexLocker locker{&bigLock};
+    autoSwitchTab = newValue;
 }
 
 bool Settings::getShowWindow() const
