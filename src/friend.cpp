@@ -138,3 +138,8 @@ FriendWidget *Friend::getFriendWidget()
 {
     return widget;
 }
+
+const FriendWidget *Friend::getFriendWidget() const
+{
+    return widget;
+}

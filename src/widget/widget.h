@@ -60,7 +60,7 @@ public:
     Camera* getCamera();
     static Widget* getInstance();
     void newMessageAlert(GenericChatroomWidget* chat);
-    bool isFriendWidgetCurActiveWidget(Friend* f);
+    bool isFriendWidgetCurActiveWidget(const Friend* f) const;
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();

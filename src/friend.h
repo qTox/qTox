@@ -57,6 +57,7 @@ public:
 
     ChatForm *getChatForm();
     FriendWidget *getFriendWidget();
+    const FriendWidget *getFriendWidget() const;
 
 signals:
     void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);

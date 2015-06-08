@@ -247,8 +247,8 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
     videoButton->disconnect();
     if (video)
     {
-        callConfirm = new CallConfirmWidget(videoButton);
-        if (isVisible())
+        callConfirm = new CallConfirmWidget(videoButton, *f);
+        if (Widget::getInstance()->isFriendWidgetCurActiveWidget(f))
             callConfirm->show();
 
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
@@ -262,8 +262,8 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
     }
     else
     {
-        callConfirm = new CallConfirmWidget(callButton);
-        if (isVisible())
+        callConfirm = new CallConfirmWidget(callButton, *f);
+        if (Widget::getInstance()->isFriendWidgetCurActiveWidget(f))
             callConfirm->show();
 
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
