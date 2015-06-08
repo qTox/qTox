@@ -1,0 +1,9 @@
+NotificationEdgeWidget
+{
+    background-color: #6bc260;
+}
+
+NotificationEdgeWidget > QLabel
+{
+    color: white;
+}
