@@ -80,6 +80,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
+    bodyUI->autoSwitchTab->setChecked(Settings::getInstance().getAutoSwitchTab());
     bodyUI->showWindow->setChecked(Settings::getInstance().getShowWindow());
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
     bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
@@ -155,6 +156,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->lightTrayIcon, &QCheckBox::stateChanged, this, &GeneralForm::onSetLightTrayIcon);
     connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
     connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
+    connect(bodyUI->autoSwitchTab, &QCheckBox::stateChanged, this, &GeneralForm::onAutoSwitchTabChanged);
     connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
@@ -394,6 +396,11 @@ void GeneralForm::reloadSmiles()
 void GeneralForm::onCheckUpdateChanged()
 {
     Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
+}
+
+void GeneralForm::onAutoSwitchTabChanged()
+{
+    Settings::getInstance().setAutoSwitchTab(bodyUI->autoSwitchTab->isChecked());
 }
 
 void GeneralForm::onShowWindowChanged()

@@ -129,6 +129,9 @@ public:
     bool getCheckUpdates() const;
     void setCheckUpdates(bool newValue);
 
+    bool getAutoSwitchTab() const;
+    void setAutoSwitchTab(bool newValue);
+
     bool getShowWindow() const;
     void setShowWindow(bool newValue);
 
@@ -295,6 +298,7 @@ private:
     bool lightTrayIcon;
     bool useEmoticons;
     bool checkUpdates;
+    bool autoSwitchTab;
     bool showWindow;
     bool showInFront;
     bool notifySound;

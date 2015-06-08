@@ -61,6 +61,7 @@ private slots:
     void onAutoAcceptFileChange();
     void onAutoSaveDirChange();
     void onCheckUpdateChanged();
+    void onAutoSwitchTabChanged();
     void onShowWindowChanged();
     void onSetShowInFront();
     void onSetNotifySound();
