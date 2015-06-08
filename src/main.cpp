@@ -116,34 +116,6 @@ int main(int argc, char *argv[])
     IPC::getInstance();
 #endif
 
-    if (parser.isSet("p"))
-    {
-        QString profileName = parser.value("p");
-        if (Profile::exists(profileName))
-        {
-            qDebug() << "Setting profile to" << profileName;
-            if (Profile::isEncrypted(profileName))
-            {
-                Settings::getInstance().setCurrentProfile(profileName);
-            }
-            else
-            {
-                Profile* profile = Profile::loadProfile(profileName);
-                if (!profile)
-                {
-                    qCritical() << "-p profile" << profileName + ".tox" << " couldn't be loaded";
-                    return EXIT_FAILURE;
-                }
-                Nexus::getInstance().setProfile(profile);
-            }
-        }
-        else
-        {
-            qCritical() << "-p profile" << profileName + ".tox" << "doesn't exist";
-            return EXIT_FAILURE;
-        }
-    }
-
     sodium_init(); // For the auto-updater
 
 #ifdef LOG_TO_FILE
@@ -196,6 +168,34 @@ int main(int argc, char *argv[])
     // It's safe to remove any potential stale locks in this situation.
     if (ipc.isCurrentOwner())
         ProfileLocker::clearAllLocks();
+
+    if (parser.isSet("p"))
+    {
+        QString profileName = parser.value("p");
+        if (Profile::exists(profileName))
+        {
+            qDebug() << "Setting profile to" << profileName;
+            if (Profile::isEncrypted(profileName))
+            {
+                Settings::getInstance().setCurrentProfile(profileName);
+            }
+            else
+            {
+                Profile* profile = Profile::loadProfile(profileName);
+                if (!profile)
+                {
+                    qCritical() << "-p profile" << profileName + ".tox" << " couldn't be loaded";
+                    return EXIT_FAILURE;
+                }
+                Nexus::getInstance().setProfile(profile);
+            }
+        }
+        else
+        {
+            qCritical() << "-p profile" << profileName + ".tox" << "doesn't exist";
+            return EXIT_FAILURE;
+        }
+    }
 
     if (parser.positionalArguments().size() > 0)
     {
