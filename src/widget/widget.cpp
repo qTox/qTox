@@ -779,11 +779,14 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
 
     if (Settings::getInstance().getShowWindow())
     {
-        if (activeChatroomWidget != chat)
-            onChatroomWidgetClicked(chat);
         show();
-        if (inactiveWindow && Settings::getInstance().getShowInFront())
-            setWindowState(Qt::WindowActive);
+        if (inactiveWindow)
+        {
+            if (activeChatroomWidget != chat)
+                onChatroomWidgetClicked(chat);
+            if (Settings::getInstance().getShowInFront())
+                setWindowState(Qt::WindowActive);
+        }
     }
 
     if (Settings::getInstance().getNotifySound())
