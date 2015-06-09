@@ -800,7 +800,8 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
         Audio::playMono16Sound(sndData);
     }
 
-    ui->friendList->trackWidget(chat);
+    if (activeChatroomWidget != chat)
+        ui->friendList->trackWidget(chat);
 }
 
 void Widget::playRingtone()
