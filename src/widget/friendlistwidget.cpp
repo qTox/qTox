@@ -21,7 +21,7 @@
 #include "friendlistlayout.h"
 #include "src/friend.h"
 #include "src/friendlist.h"
-#include "src/misc/settings.h"
+#include "src/persistence/settings.h"
 #include "friendwidget.h"
 #include "groupwidget.h"
 #include "circlewidget.h"
@@ -123,7 +123,7 @@ void FriendListWidget::renameCircleWidget(const QString &newName)
 {
     assert(sender() != nullptr);
 
-    CircleWidget* circleWidget = dynamic_cast<CircleWidget*>(sender());
+    CircleWidget* circleWidget = static_cast<CircleWidget*>(sender());
     assert(circleWidget != nullptr);
 
     // Rename after removing so you can find it successfully.

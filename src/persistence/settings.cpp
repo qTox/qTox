@@ -1369,7 +1369,7 @@ QString Settings::getCircleName(int id) const
 void Settings::setCircleName(int id, const QString &name)
 {
     circleLst[id].name = name;
-    save();
+    savePersonal();
 }
 
 int Settings::addCircle(const QString &name)
@@ -1390,7 +1390,7 @@ bool Settings::getCircleExpanded(int id) const
 void Settings::setCircleExpanded(int id, bool expanded)
 {
     circleLst[id].expanded = expanded;
-    save();
+    savePersonal();
 }
 
 int Settings::removeCircle(int id)

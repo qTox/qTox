@@ -48,8 +48,6 @@ protected:
     virtual void dragEnterEvent(QDragEnterEvent* ev) override;
     virtual void dragLeaveEvent(QDragLeaveEvent* ev);
     virtual void dropEvent(QDropEvent* ev) override;
-    virtual void keyPressEvent(QKeyEvent* ev);
-    virtual void keyReleaseEvent(QKeyEvent* ev);
 
 public:
     int groupId;

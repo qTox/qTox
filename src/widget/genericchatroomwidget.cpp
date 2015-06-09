@@ -25,7 +25,7 @@
 #include <QMouseEvent>
 
 GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
-    : QFrame(parent), compact{Settings::getInstance().getCompactLayout()},
+    : GenericChatItemWidget(parent), compact{Settings::getInstance().getCompactLayout()},
       active{false}
 {
     // avatar
@@ -38,6 +38,9 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     statusMessageLabel = new CroppingLabel(this);
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setForegroundRole(QPalette::WindowText);
+
+    nameLabel->setTextFormat(Qt::PlainText);
+    nameLabel->setForegroundRole(QPalette::WindowText);
 
     setAutoFillBackground(true);
     reloadTheme();
