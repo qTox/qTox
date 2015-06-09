@@ -39,11 +39,6 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setForegroundRole(QPalette::WindowText);
 
-    // name text
-    nameLabel = new CroppingLabel(this);
-    nameLabel->setTextFormat(Qt::PlainText);
-    nameLabel->setForegroundRole(QPalette::WindowText);*/
-
     setAutoFillBackground(true);
     reloadTheme();
     setCompact(compact);
