@@ -19,6 +19,8 @@
 #include "src/group.h"
 #include "src/grouplist.h"
 #include "groupwidget.h"
+#include "circlewidget.h"
+#include "friendlistwidget.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
 #include "src/core/core.h"
@@ -37,9 +39,6 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QInputDialog>
-
-#include "circlewidget.h"
-#include "friendlistwidget.h"
 #include <cassert>
 
 FriendWidget::FriendWidget(int FriendId, QString id)

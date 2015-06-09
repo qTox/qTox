@@ -72,7 +72,6 @@ private:
     FriendListLayout* listLayout;
     QVBoxLayout* fullLayout;
     QVBoxLayout* mainLayout = nullptr;
-    QLabel* arrowLabel;
     QLabel* statusLabel;
     QFrame* lineFrame;
     QWidget* container;

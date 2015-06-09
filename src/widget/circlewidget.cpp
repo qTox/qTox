@@ -51,12 +51,11 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
     container->setLayoutDirection(Qt::LeftToRight);
 
     // status text
-    statusLabel = new QLabel("0 / 0", this);
+    statusLabel = new QLabel(this);
     statusLabel->setObjectName("status");
     statusLabel->setTextFormat(Qt::PlainText);
 
-    arrowLabel = new QLabel(this);
-    arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
+    statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
 
     fullLayout = new QVBoxLayout(this);
     fullLayout->setSpacing(0);
@@ -109,6 +108,8 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
         renameCircle();
 
     setExpanded(Settings::getInstance().getCircleExpanded(id));
+
+    updateStatus();
 }
 
 void CircleWidget::addFriendWidget(FriendWidget *w, Status s)
@@ -124,11 +125,11 @@ void CircleWidget::setExpanded(bool isExpanded)
     listWidget->setVisible(isExpanded);
     if (isExpanded)
     {
-        arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
+        statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
     }
     else
     {
-        arrowLabel->setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
+        statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
     }
 
     Settings::getInstance().setCircleExpanded(id, isExpanded);
@@ -286,7 +287,7 @@ void CircleWidget::onCompactChanged(bool _compact)
         container->setLayout(topLayout);
 
         topLayout->addSpacing(18);
-        topLayout->addWidget(arrowLabel);
+        topLayout->addWidget(&statusPic);
         topLayout->addSpacing(5);
         topLayout->addWidget(nameLabel, 100);
         topLayout->addWidget(lineFrame, 1);
@@ -306,7 +307,7 @@ void CircleWidget::onCompactChanged(bool _compact)
         container->setFixedHeight(55);
         container->setLayout(mainLayout);
 
-        topLayout->addWidget(arrowLabel);
+        topLayout->addWidget(&statusPic);
         topLayout->addSpacing(10);
         topLayout->addWidget(nameLabel, 1);
         topLayout->addSpacing(5);
@@ -405,7 +406,7 @@ void CircleWidget::updateStatus()
 void CircleWidget::updateID(int index)
 {
     // For when a circle gets destroyed, another takes its id.
-    // This function updates all friends widgets.
+    // This function updates all friends widgets for this new id.
     id = index;
     circleList[id] = this;
 

@@ -581,7 +581,6 @@ void Widget::reloadHistory()
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
-    qDebug() << "ADDING FRIEND ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;";
     ToxId userToxId = ToxId(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
     contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleID(newfriend->getToxId()));

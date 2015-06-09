@@ -25,14 +25,12 @@
 #include "friendwidget.h"
 #include "groupwidget.h"
 #include "circlewidget.h"
+#include "widget.h"
 #include <QGridLayout>
 #include <QMimeData>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <cassert>
-
-#include <QDebug>
-#include "widget.h"
 
 FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     : QWidget(parent)

@@ -16,6 +16,7 @@
 #define GENERICCHATITEMWIDGET_H
 
 #include <QFrame>
+#include <QLabel>
 
 class CroppingLabel;
 
@@ -43,6 +44,7 @@ public:
 
 protected:
     CroppingLabel* nameLabel;
+    QLabel statusPic;
 
 private:
     bool compact;
