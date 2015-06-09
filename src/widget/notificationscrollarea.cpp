@@ -22,13 +22,11 @@
 #include <QScrollBar>
 #include <cassert>
 
-#include <QDebug>
-#include <QTimer>
-
 NotificationScrollArea::NotificationScrollArea(QWidget* parent)
     : AdjustingScrollArea(parent)
 {
     connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &NotificationScrollArea::updateTracking);
+    connect(verticalScrollBar(), &QAbstractSlider::rangeChanged, this, &NotificationScrollArea::updateTracking);
 }
 
 void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
@@ -64,7 +62,6 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
 
         trackedWidgets.insert(widget, visibility);
     }
-    qDebug() << "VISIBLE?" << visibility;
 }
 
 void NotificationScrollArea::updateTracking()
@@ -183,7 +180,7 @@ NotificationScrollArea::Visibility NotificationScrollArea::widgetVisible(QWidget
 
     if (y < 0)
         return Above;
-    else if (y + widget->height() > viewport()->height())
+    else if (y + widget->height() - 1 > viewport()->height())
         return Below;
 
     return Visible;
