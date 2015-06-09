@@ -13,14 +13,14 @@
 */
 
 #include "circlewidget.h"
-#include "src/misc/style.h"
-#include "src/misc/settings.h"
+#include "src/widget/style.h"
+#include "src/persistence/settings.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
 #include "friendwidget.h"
 #include "friendlistlayout.h"
 #include "friendlistwidget.h"
-#include "croppinglabel.h"
+#include "src/widget/tool/croppinglabel.h"
 #include "widget.h"
 #include <QVariant>
 #include <QLabel>

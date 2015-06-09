@@ -51,7 +51,6 @@ protected:
     virtual QSize sizeHint() const final override;
     virtual QSize minimumSizeHint() const final override;
     virtual void mouseReleaseEvent(QMouseEvent *e) final override;
-    virtual bool eventFilter(QObject *obj, QEvent *e) final override;
 
 private slots:
     void finishTextEdit();

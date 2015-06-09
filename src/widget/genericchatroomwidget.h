@@ -31,12 +31,11 @@ namespace Ui {
     class MainWindow;
 }
 
-class GenericChatroomWidget : public QFrame
+class GenericChatroomWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
     GenericChatroomWidget(QWidget *parent = 0);
-    void mouseReleaseEvent (QMouseEvent* event);
 
     virtual void setAsActiveChatroom(){;}
     virtual void setAsInactiveChatroom(){;}
@@ -51,7 +50,6 @@ public:
     void setName(const QString& name);
     void setStatusMsg(const QString& status);
 
-    QString getName() const;
     QString getStatusMsg() const;
 
     void reloadTheme();
@@ -60,7 +58,6 @@ public:
 
 public slots:
     void setCompact(bool compact);
-    void onCompactChanged(bool compact);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);

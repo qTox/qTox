@@ -38,7 +38,7 @@ FORMS    += \
 
 CONFIG   += c++11
 
-QMAKE_CXXFLAGS += -fno-exceptions -fno-rtti
+QMAKE_CXXFLAGS += -fno-exceptions
 
 # Rules for creating/updating {ts|qm}-files
 include(translations/i18n.pri)
@@ -488,7 +488,6 @@ SOURCES += \
     src/widget/translator.cpp \
     src/persistence/settingsserializer.cpp \
     src/widget/circlewidget.cpp \
-    src/widget/circlewidget.cpp \
     src/widget/genericchatitemwidget.cpp \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp
@@ -528,7 +527,6 @@ HEADERS += \
     src/persistence/profile.h \
     src/widget/translator.h \
     src/persistence/settingsserializer.h \
-    src/widget/circlewidget.hpp \
     src/widget/genericchatitemwidget.h \
     src/widget/circlewidget.h \
     src/widget/friendlistlayout.h \
