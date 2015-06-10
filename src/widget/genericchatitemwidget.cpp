@@ -24,6 +24,7 @@ GenericChatItemWidget::GenericChatItemWidget(QWidget *parent)
     setProperty("compact", Settings::getInstance().getCompactLayout());
 
     nameLabel = new CroppingLabel(this);
+    nameLabel->setObjectName("name");
     nameLabel->setTextFormat(Qt::PlainText);
 }
 
