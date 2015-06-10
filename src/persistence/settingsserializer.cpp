@@ -401,6 +401,8 @@ void SettingsSerializer::readSerialized()
             //qDebug() <<"!Array end";
         }
     }
+
+    group = array = -1;
 }
 
 void SettingsSerializer::readIni()
@@ -545,6 +547,8 @@ void SettingsSerializer::readIni()
         //qDebug() << "Removing spurious array group"<<g<<groupSizes[g];
         removeGroup(g);
     }
+
+    group = array = -1;
 }
 
 void SettingsSerializer::removeGroup(int group)
