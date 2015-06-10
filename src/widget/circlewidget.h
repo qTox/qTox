@@ -25,7 +25,7 @@ class FriendListWidget;
 class FriendListLayout;
 class FriendWidget;
 
-class CircleWidget : public GenericChatItemWidget
+class CircleWidget final : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
@@ -49,20 +49,17 @@ public:
     static CircleWidget* getFromID(int id);
 
 signals:
-    void renameRequested(const QString &newName);
+    void renameRequested(CircleWidget* circleWidget, const QString &newName);
 
 public slots:
     void onCompactChanged(bool compact);
 
 protected:
-
-    void contextMenuEvent(QContextMenuEvent* event);
-
-    void mousePressEvent(QMouseEvent* event) override;
-
-    void dragEnterEvent(QDragEnterEvent* event) override;
-    void dragLeaveEvent(QDragLeaveEvent* event) override;
-    void dropEvent(QDropEvent* event) override;
+    virtual void contextMenuEvent(QContextMenuEvent* event) final override;
+    virtual void mouseReleaseEvent(QMouseEvent* event) final override;
+    virtual void dragEnterEvent(QDragEnterEvent* event) final override;
+    virtual void dragLeaveEvent(QDragLeaveEvent* event) final override;
+    virtual void dropEvent(QDropEvent* event) final override;
 
 private:
     void updateID(int index);

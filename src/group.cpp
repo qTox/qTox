@@ -43,7 +43,7 @@ Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
 Group::~Group()
 {
     delete chatForm;
-    delete widget;
+    widget->deleteLater();
 }
 
 /*

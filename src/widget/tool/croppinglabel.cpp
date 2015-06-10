@@ -35,10 +35,10 @@ CroppingLabel::CroppingLabel(QWidget* parent)
                                   | Qt::ImhNoPredictiveText
                                   | Qt::ImhPreferLatin);
 
-    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::finishTextEdit);
+    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::editingFinished);
 }
 
-void CroppingLabel::editStart()
+void CroppingLabel::editBegin()
 {
     showTextEdit();
     textEdit->selectAll();
@@ -127,7 +127,14 @@ QString CroppingLabel::fullText()
     return origText;
 }
 
-void CroppingLabel::finishTextEdit()
+void CroppingLabel::minimizeMaximumWidth()
+{
+    // This function chooses the smallest possible maximum width.
+    // Text width + padding. Without padding, we'll have elipses.
+    setMaximumWidth(fontMetrics().width(origText) + fontMetrics().width("..."));
+}
+
+void CroppingLabel::editingFinished()
 {
     QString newText = textEdit->text().trimmed().remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
     if (origText != newText)
@@ -137,4 +144,5 @@ void CroppingLabel::finishTextEdit()
 
     textEdit->hide();
     blockPaintEvents = false;
+    emit editRemoved();
 }

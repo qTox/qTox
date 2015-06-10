@@ -18,6 +18,7 @@
 */
 
 #include <QDebug>
+#include <QBoxLayout>
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QMessageBox>

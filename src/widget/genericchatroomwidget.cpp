@@ -22,14 +22,14 @@
 #include "src/persistence/settings.h"
 #include "maskablepixmapwidget.h"
 #include "src/widget/tool/croppinglabel.h"
+#include <QBoxLayout>
 #include <QMouseEvent>
 
 GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
-    : GenericChatItemWidget(parent), compact{Settings::getInstance().getCompactLayout()},
-      active{false}
+    : GenericChatItemWidget(parent), active{false}
 {
     // avatar
-    if (compact)
+    if (isCompact())
         avatar = new MaskablePixmapWidget(this, QSize(20,20), ":/img/avatar_mask.svg");
     else
         avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.svg");
@@ -39,22 +39,25 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setForegroundRole(QPalette::WindowText);
 
-    nameLabel->setTextFormat(Qt::PlainText);
     nameLabel->setForegroundRole(QPalette::WindowText);
 
     setAutoFillBackground(true);
     reloadTheme();
-    setCompact(compact);
+
+    compactChange(isCompact());
 }
 
-void GenericChatroomWidget::setCompact(bool _compact)
+bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
 {
-    compact = _compact;
+    return true; // Disable all events.
+}
+
+void GenericChatroomWidget::compactChange(bool _compact)
+{
+    setCompact(_compact);
 
     delete textLayout; // has to be first, deleted by layout
     delete mainLayout;
-
-    compact = _compact;
 
     mainLayout = new QHBoxLayout;
     textLayout = new QVBoxLayout;
@@ -67,7 +70,7 @@ void GenericChatroomWidget::setCompact(bool _compact)
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     // avatar
-    if (compact)
+    if (isCompact())
     {
         setFixedHeight(25);
         avatar->setSize(QSize(20,20));
@@ -162,17 +165,6 @@ void GenericChatroomWidget::reloadTheme()
     setPalette(p);
 }
 
-bool GenericChatroomWidget::isCompact() const
-{
-    return compact;
-}
-
-void GenericChatroomWidget::mousePressEvent(QMouseEvent* event)
-{
-    if (!active && event->button() == Qt::RightButton)
-        setBackgroundRole(QPalette::Window);
-}
-
 void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)
 {
     emit chatroomWidgetClicked(this);
@@ -184,8 +176,9 @@ void GenericChatroomWidget::enterEvent(QEvent*)
         setBackgroundRole(QPalette::Highlight);
 }
 
-void GenericChatroomWidget::leaveEvent(QEvent*)
+void GenericChatroomWidget::leaveEvent(QEvent* event)
 {
     if (!active)
         setBackgroundRole(QPalette::Window);
+    QWidget::leaveEvent(event);
 }
