@@ -57,6 +57,11 @@ FriendWidget::FriendWidget(int FriendId, QString id)
 
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 {
+    if (!active)
+        setBackgroundRole(QPalette::Highlight);
+
+    installEventFilter(this); // Disable leave event.
+
     QPoint pos = event->globalPos();
     ToxId id = FriendList::findFriend(friendId)->getToxId();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
@@ -90,7 +95,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         friendList = dynamic_cast<FriendListWidget*>(circleWidget->parentWidget());
 
     assert(friendList != nullptr);
-    friendList->reDraw();
 
     QVector<CircleWidget*> circleVec = friendList->getAllCircles();
     QMap<QAction*, CircleWidget*> circleActions;
@@ -114,6 +118,12 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QAction* removeFriendAction = menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
 
     QAction* selectedItem = menu.exec(pos);
+
+    removeEventFilter(this);
+
+    if (!active)
+        setBackgroundRole(QPalette::Window);
+
     if (selectedItem)
     {
         if (selectedItem == copyId)
@@ -122,7 +132,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             return;
         } else if (selectedItem == setAlias)
         {
-            nameLabel->editStart();
+            nameLabel->editBegin();
         }
         else if (selectedItem == removeFriendAction)
         {
@@ -326,6 +336,4 @@ void FriendWidget::setAlias(const QString& _alias)
     f->setAlias(alias);
     Settings::getInstance().setFriendAlias(f->getToxId(), alias);
     Settings::getInstance().savePersonal();
-    //hide();
-    //show();
 }

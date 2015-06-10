@@ -31,13 +31,6 @@
 #include <QMenu>
 #include <cassert>
 
-void maxCropLabel(CroppingLabel* label)
-{
-    QFontMetrics metrics = label->fontMetrics();
-    // Text width + padding. Without padding, we'll have elipses.
-    label->setMaximumWidth(metrics.width(label->fullText()) + metrics.width("..."));
-}
-
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
 CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
@@ -85,9 +78,13 @@ CircleWidget::CircleWidget(FriendListWidget *parent, int id_)
     connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
     {
         if (!newName.isEmpty())
-        {
-            emit renameRequested(newName);
-        }
+            emit renameRequested(this, newName);
+    });
+
+    connect(nameLabel, &CroppingLabel::editRemoved, [this]()
+    {
+        if (isCompact())
+            nameLabel->minimizeMaximumWidth();
     });
 
     bool isNew = false;
@@ -150,12 +147,12 @@ void CircleWidget::setName(const QString &name)
     nameLabel->setText(name);
     Settings::getInstance().setCircleName(id, name);
     if (isCompact())
-        maxCropLabel(nameLabel);
+        nameLabel->minimizeMaximumWidth();
 }
 
 void CircleWidget::renameCircle()
 {
-    nameLabel->editStart();
+    nameLabel->editBegin();
     nameLabel->setMaximumWidth(QWIDGETSIZE_MAX);
 }
 
@@ -279,7 +276,7 @@ void CircleWidget::onCompactChanged(bool _compact)
 
     if (property("compact").toBool())
     {
-        maxCropLabel(nameLabel);
+        nameLabel->minimizeMaximumWidth();
 
         mainLayout = nullptr;
 
@@ -335,7 +332,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
         renameCircle();
     else if (selectedItem == removeAction)
     {
-        FriendListWidget *friendList = static_cast<FriendListWidget*>(parentWidget());
+        FriendListWidget* friendList = dynamic_cast<FriendListWidget*>(parentWidget());
         listLayout->moveFriendWidgets(friendList);
 
         friendList->removeCircleWidget(this);
@@ -349,7 +346,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent *event)
     }
 }
 
-void CircleWidget::mousePressEvent(QMouseEvent *event)
+void CircleWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
         setExpanded(!expanded);

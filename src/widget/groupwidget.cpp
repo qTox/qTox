@@ -18,23 +18,18 @@
 */
 
 #include "groupwidget.h"
+#include "maskablepixmapwidget.h"
 #include "src/grouplist.h"
 #include "src/group.h"
-#include "src/persistence/settings.h"
 #include "form/groupchatform.h"
-#include "maskablepixmapwidget.h"
-#include "friendlistwidget.h"
 #include "src/widget/style.h"
 #include "src/core/core.h"
+#include "tool/croppinglabel.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
-#include <QMimeData>
 #include <QDragEnterEvent>
-#include <QInputDialog>
-
-#include "ui_mainwindow.h"
-
+#include <QMimeData>
 
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
@@ -44,11 +39,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     statusPic.setMargin(3);
     nameLabel->setText(Name);
 
-    Group* g = GroupList::findGroup(groupId);
-    if (g)
-        statusMessageLabel->setText(GroupWidget::tr("%1 users in chat").arg(g->getPeersCount()));
-    else
-        statusMessageLabel->setText(GroupWidget::tr("0 users in chat"));
+    onUserListChanged();
 
     setAcceptDrops(true);
 
@@ -60,27 +51,27 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
             emit renameRequested(this, newName);
             emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
         }
-        /* according to agilob:
-         * “Moving mouse pointer over groupwidget results in CSS effect
-         * mouse-over(?). Changing group title repaints only changed
-         * element - title, the rest of the widget stays in the same CSS as it
-         * was on mouse over. Repainting whole widget fixes style problem.”
-         */
-        this->repaint();
     });
 }
 
-void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
+void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
 {
-    QPoint pos = event->globalPos();
-    QMenu menu;
+    if (!active)
+        setBackgroundRole(QPalette::Highlight);
+
+    installEventFilter(this); // Disable leave event.
+
+    QMenu menu(this);
     QAction* setTitle = menu.addAction(tr("Set title..."));
     QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
 
-    FriendListWidget *friendList = static_cast<FriendListWidget*>(parentWidget());
-    friendList->reDraw();
+    QAction* selectedItem = menu.exec(event->globalPos());
 
-    QAction* selectedItem = menu.exec(pos);
+    removeEventFilter(this);
+
+    if (!active)
+        setBackgroundRole(QPalette::Window);
+
     if (selectedItem)
     {
         if (selectedItem == quitGroup)
@@ -89,7 +80,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent * event)
         }
         else if (selectedItem == setTitle)
         {
-            nameLabel->editStart();
+            editName();
         }
     }
 }
@@ -141,9 +132,9 @@ QString GroupWidget::getStatusString()
         return "New Message";
 }
 
-void GroupWidget::rename()
+void GroupWidget::editName()
 {
-    nameLabel->editStart();
+    nameLabel->editBegin();
 }
 
 void GroupWidget::setChatForm(Ui::MainWindow &ui)
@@ -163,14 +154,15 @@ void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
 {
     if (ev->mimeData()->hasFormat("friend"))
         ev->acceptProposedAction();
-    setAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
-    Style::repolish(this);
+
+    if (!active)
+        setBackgroundRole(QPalette::Highlight);
 }
 
 void GroupWidget::dragLeaveEvent(QDragLeaveEvent *)
 {
-    setAttribute(Qt::WA_UnderMouse, false);
-    Style::repolish(this);
+    if (!active)
+        setBackgroundRole(QPalette::Window);
 }
 
 void GroupWidget::dropEvent(QDropEvent *ev)
@@ -180,8 +172,8 @@ void GroupWidget::dropEvent(QDropEvent *ev)
         int friendId = ev->mimeData()->data("friend").toInt();
         Core::getInstance()->groupInviteFriend(friendId, groupId);
 
-        setAttribute(Qt::WA_UnderMouse, false);
-        Style::repolish(this);
+        if (!active)
+            setBackgroundRole(QPalette::Window);
     }
 }
 

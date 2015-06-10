@@ -21,11 +21,11 @@
 #define GENERICCHATROOMWIDGET_H
 
 #include "genericchatitemwidget.h"
-#include <QBoxLayout>
-#include <QLabel>
 
 class CroppingLabel;
 class MaskablePixmapWidget;
+class QVBoxLayout;
+class QHBoxLayout;
 
 namespace Ui {
     class MainWindow;
@@ -37,34 +37,32 @@ class GenericChatroomWidget : public GenericChatItemWidget
 public:
     GenericChatroomWidget(QWidget *parent = 0);
 
-    virtual void setAsActiveChatroom(){;}
-    virtual void setAsInactiveChatroom(){;}
-    virtual void updateStatusLight(){;}
-    virtual void setChatForm(Ui::MainWindow &){;}
-    virtual void resetEventFlags(){;}
-    virtual QString getStatusString(){return QString::null;}
+    virtual void setAsActiveChatroom() = 0;
+    virtual void setAsInactiveChatroom() = 0;
+    virtual void updateStatusLight() = 0;
+    virtual void setChatForm(Ui::MainWindow &) = 0;
+    virtual void resetEventFlags() = 0;
+    virtual QString getStatusString() = 0;
+
+    virtual bool eventFilter(QObject *, QEvent *) final override;
 
     bool isActive();
     void setActive(bool active);
 
     void setName(const QString& name);
     void setStatusMsg(const QString& status);
-
     QString getStatusMsg() const;
 
-    void reloadTheme();
-
-    bool isCompact() const;
+	void reloadTheme();
 
 public slots:
-    void setCompact(bool compact);
+	void compactChange(bool compact);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent* event) override;
-    virtual void mouseReleaseEvent (QMouseEvent* event) override;
+    virtual void mouseReleaseEvent(QMouseEvent* event) override;
     virtual void enterEvent(QEvent* e) override;
     virtual void leaveEvent(QEvent* e) override;
 
@@ -74,7 +72,7 @@ protected:
     QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     CroppingLabel* statusMessageLabel;
-    bool compact, active;
+	bool active;
 };
 
 #endif // GENERICCHATROOMWIDGET_H

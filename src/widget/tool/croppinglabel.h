@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014 by The qTox Project
+    Copyright © 2014-2015 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -30,16 +30,19 @@ class CroppingLabel : public QLabel
 public:
     explicit CroppingLabel(QWidget* parent = 0);
 
-    void editStart();
+    void editBegin();
     void setEditable(bool editable);
     void setEdlideMode(Qt::TextElideMode elide);
 
     void setText(const QString& text);
     QString fullText(); ///< Returns the un-cropped text
 
+public slots:
+    void minimizeMaximumWidth();
+
 signals:
-    void editFinished(QString newText);
-    void textChanged(QString newText, QString oldText);
+    void editFinished(const QString& newText);
+    void editRemoved();
     void clicked();
 
 protected:
@@ -53,7 +56,7 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent *e) final override;
 
 private slots:
-    void finishTextEdit();
+    void editingFinished();
 
 private:
     QString origText;

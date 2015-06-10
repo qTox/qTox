@@ -42,8 +42,8 @@ FriendListLayout::FriendListLayout(QWidget* parent)
 
 void FriendListLayout::addFriendWidget(FriendWidget* w, Status s)
 {
-    friendOfflineLayout.getLayout()->removeWidget(w);
-    friendOnlineLayout.getLayout()->removeWidget(w);
+    friendOfflineLayout.removeSortedWidget(w);
+    friendOnlineLayout.removeSortedWidget(w);
     if (s == Status::Offline)
     {
         friendOfflineLayout.addSortedWidget(w);
@@ -64,7 +64,6 @@ void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget)
     while (friendOnlineLayout.getLayout()->count() != 0)
     {
         QWidget* getWidget = friendOnlineLayout.getLayout()->takeAt(0)->widget();
-        assert(getWidget != nullptr);
 
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(getWidget);
         listWidget->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
@@ -72,7 +71,6 @@ void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget)
     while (friendOfflineLayout.getLayout()->count() != 0)
     {
         QWidget* getWidget = friendOfflineLayout.getLayout()->takeAt(0)->widget();
-         assert(getWidget != nullptr);
 
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(getWidget);
         listWidget->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);

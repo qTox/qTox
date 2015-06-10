@@ -60,7 +60,7 @@ void FriendListWidget::addGroupWidget(GroupWidget* widget)
 
     // Only rename group if groups are visible.
     if (Widget::getInstance()->groupsVisible())
-        widget->rename();
+        widget->editName();
 }
 
 void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleIndex)
@@ -116,17 +116,10 @@ void FriendListWidget::renameGroupWidget(GroupWidget* groupWidget, const QString
     groupLayout.removeSortedWidget(groupWidget);
     groupWidget->setName(newName);
     groupLayout.addSortedWidget(groupWidget);
-    reDraw(); // Prevent artifacts.
 }
 
-void FriendListWidget::renameCircleWidget(const QString &newName)
+void FriendListWidget::renameCircleWidget(CircleWidget* circleWidget, const QString &newName)
 {
-    assert(sender() != nullptr);
-
-    CircleWidget* circleWidget = static_cast<CircleWidget*>(sender());
-    assert(circleWidget != nullptr);
-
-    // Rename after removing so you can find it successfully.
     circleLayout.removeSortedWidget(circleWidget);
     circleWidget->setName(newName);
     circleLayout.addSortedWidget(circleWidget);
@@ -271,13 +264,10 @@ void FriendListWidget::dropEvent(QDropEvent* event)
         // Update old circle after moved.
         CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
 
-        listLayout->addFriendWidget(widget, f->getStatus());
+        moveWidget(widget, f->getStatus(), true);
 
         if (circleWidget != nullptr)
-        {
-            // In case the status was changed while moving, update both.
             circleWidget->updateStatus();
-        }
     }
 }
 
