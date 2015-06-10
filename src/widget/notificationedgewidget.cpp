@@ -32,7 +32,7 @@ NotificationEdgeWidget::NotificationEdgeWidget(Position position, QWidget *paren
     QHBoxLayout* layout = new QHBoxLayout(this);
     layout->addStretch();
 
-    QLabel* textLabel = new QLabel(tr("Unread message(s)"), this);
+    textLabel = new QLabel(this);
     textLabel->setMinimumHeight(textLabel->sizeHint().height()); // Prevent cut-off text.
     layout->addWidget(textLabel);
 
@@ -47,6 +47,11 @@ NotificationEdgeWidget::NotificationEdgeWidget(Position position, QWidget *paren
     layout->addStretch();
 
     setCursor(Qt::PointingHandCursor);
+}
+
+void NotificationEdgeWidget::updateNotificationCount(int count)
+{
+    textLabel->setText(tr("Unread message(s)", "", count));
 }
 
 void NotificationEdgeWidget::mouseReleaseEvent(QMouseEvent *event)

@@ -22,6 +22,8 @@
 
 #include <QWidget>
 
+class QLabel;
+
 class NotificationEdgeWidget final : public QWidget
 {
     Q_OBJECT
@@ -33,12 +35,16 @@ public:
     };
 
     explicit NotificationEdgeWidget(Position position, QWidget *parent = 0);
+    void updateNotificationCount(int count);
 
 signals:
     void clicked();
 
 protected:
     void mouseReleaseEvent(QMouseEvent* event) final override;
+
+private:
+    QLabel* textLabel;
 };
 
 #endif // NOTIFICATIONEDGEWIDGET_H

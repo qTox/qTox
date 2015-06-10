@@ -47,6 +47,7 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
                 recalculateTopEdge();
                 topEdge->show();
             }
+            topEdge->updateNotificationCount(referencesAbove);
         }
         else
         {
@@ -58,6 +59,7 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
                 recalculateBottomEdge();
                 bottomEdge->show();
             }
+            bottomEdge->updateNotificationCount(referencesBelow);
         }
 
         trackedWidgets.insert(widget, visibility);
@@ -78,6 +80,10 @@ void NotificationScrollArea::updateTracking()
                     delete topEdge;
                     topEdge = nullptr;
                 }
+                else
+                {
+                    topEdge->updateNotificationCount(referencesAbove);
+                }
             }
             else
             {
@@ -85,6 +91,10 @@ void NotificationScrollArea::updateTracking()
                 {
                     delete bottomEdge;
                     bottomEdge = nullptr;
+                }
+                else
+                {
+                    bottomEdge->updateNotificationCount(referencesBelow);
                 }
             }
             i = trackedWidgets.erase(i);
