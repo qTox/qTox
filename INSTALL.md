@@ -153,6 +153,12 @@ Now go to `/home/user/qTox/qTox` (or where you cloned) and simply run :
 qmake
 make
 ```
+(Debian / Ubuntu / Mint)
+If the compiling process stops with a missing dependency like: "... libswscale/swscale.h missing" try:
+  apt-file search libswscale/swscale.h
+And install the package that provide the missing file.
+Start make again. Repeat if nessary until all dependencies are installed.
+
 
 for openSUSE you have to use:
 ```bash
