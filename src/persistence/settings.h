@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QPixmap>
 #include <QMutex>
+#include <QDate>
 #include "src/core/corestructs.h"
 
 class ToxId;
@@ -231,6 +232,9 @@ public:
     int getFriendCircleID(const ToxId &id) const;
     void setFriendCircleID(const ToxId &id, int circleID);
 
+    QDate getFriendActivity(const ToxId &id) const;
+    void setFriendActivity(const ToxId &id, const QDate &date);
+
     void removeFriendSettings(const ToxId &id);
 
     bool getFauxOfflineMessaging() const;
@@ -369,6 +373,7 @@ private:
         QString addr;
         QString autoAcceptDir;
         int circleID = -1;
+        QDate activity = QDate();
     };
 
     struct circleProp

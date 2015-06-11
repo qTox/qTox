@@ -38,7 +38,14 @@ class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
+    enum Mode : uint8_t
+    {
+        Name,
+        Activity,
+    };
+
     explicit FriendListWidget(Widget* parent, bool groupsOnTop = true);
+    void setMode(Mode mode);
 
     void addGroupWidget(GroupWidget* widget);
     void addFriendWidget(FriendWidget* w, Status s, int circleIndex);
@@ -69,10 +76,12 @@ private:
     CircleWidget* createCircleWidget(int id = -1);
     QLayout* nextLayout(QLayout* layout, bool forward) const;
 
+    Mode mode;
     bool groupsOnTop;
     FriendListLayout* listLayout;
     GenericChatItemLayout circleLayout;
     GenericChatItemLayout groupLayout;
+    QVBoxLayout* activityLayout;
 };
 
 #endif // FRIENDLISTWIDGET_H

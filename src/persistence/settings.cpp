@@ -296,6 +296,7 @@ void Settings::loadPersonnal(Profile* profile)
             fp.alias = ps.value("alias").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
             fp.circleID = ps.value("circle", -1).toInt();
+            fp.activity = ps.value("activity").toDate();
             friendLst[ToxId(fp.addr).publicKey] = fp;
         }
         ps.endArray();
@@ -467,6 +468,7 @@ void Settings::savePersonal(QString profileName, QString password)
             ps.setValue("alias", frnd.alias);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
             ps.setValue("circle", frnd.circleID);
+            ps.setValue("activity", frnd.activity);
             index++;
         }
         ps.endArray();
@@ -1308,6 +1310,35 @@ void Settings::setFriendCircleID(const ToxId &id, int circleID)
         fp.alias = "";
         fp.autoAcceptDir = "";
         fp.circleID = circleID;
+        friendLst[key] = fp;
+    }
+    savePersonal();
+}
+
+QDate Settings::getFriendActivity(const ToxId &id) const
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+        return it->activity;
+
+    return QDate();
+}
+
+void Settings::setFriendActivity(const ToxId &id, const QDate &activity)
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+        it->activity = activity;
+    else
+    {
+        friendProp fp;
+        fp.addr = key;
+        fp.alias = "";
+        fp.autoAcceptDir = "";
+        fp.circleID = -1;
+        fp.activity = activity;
         friendLst[key] = fp;
     }
     savePersonal();

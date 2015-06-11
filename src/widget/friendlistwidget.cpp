@@ -32,6 +32,84 @@
 #include <QDragLeaveEvent>
 #include <cassert>
 
+enum Time : int
+{
+    Today = 0,
+    Yesterday = 1,
+    ThisWeek = 2,
+    ThisMonth = 3,
+    Month1Ago = 4,
+    Month2Ago = 5,
+    Month3Ago = 6,
+    Month4Ago = 7,
+    Month5Ago = 8,
+    LongAgo = 9,
+    Never = 10
+};
+
+bool last7DaysWasLastMonth()
+{
+    return QDate::currentDate().addDays(-7).month() == QDate::currentDate().month();
+}
+
+Time getTime(const QDate date)
+{
+    if (date == QDate())
+        return Never;
+
+    QDate today = QDate::currentDate();
+    if (date == today)
+        return Today;
+
+    today = today.addDays(-1);
+    if (date == today)
+        return Yesterday;
+
+    today = today.addDays(-6);
+    if (date >= today)
+        return ThisWeek;
+
+    today = today.addDays(-today.day() + 1); // Go to the beginning of the month.
+    if (last7DaysWasLastMonth())
+    {
+        if (date >= today)
+            return ThisMonth;
+        today = today.addMonths(-1);
+    }
+
+    if (date >= today)
+        return Month1Ago;
+
+    today = today.addMonths(-1);
+    if (date >= today)
+        return Month2Ago;
+
+    today = today.addMonths(-1);
+    if (date >= today)
+        return Month3Ago;
+
+    today = today.addMonths(-1);
+    if (date >= today)
+        return Month4Ago;
+
+    today = today.addMonths(-1);
+    if (date >= today)
+        return Month5Ago;
+
+    return LongAgo;
+}
+
+int toIndex(Time time)
+{
+    if (time < ThisMonth)
+        return time;
+
+    if (!last7DaysWasLastMonth())
+        return time - 1;
+
+    return time;
+}
+
 FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     : QWidget(parent)
     , groupsOnTop(groupsOnTop)
@@ -46,11 +124,102 @@ FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     groupLayout.getLayout()->setSpacing(0);
     groupLayout.getLayout()->setMargin(0);
 
-    listLayout->addLayout(circleLayout.getLayout());
+    setMode(Name);
 
     onGroupchatPositionChanged(groupsOnTop);
 
     setAcceptDrops(true);
+}
+
+void FriendListWidget::setMode(Mode mode)
+{
+    this->mode = mode;
+    if (mode == Name)
+    {
+        for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+        {
+            addCircleWidget(i);
+        }
+
+        listLayout->addLayout(circleLayout.getLayout());
+    }
+    else if (mode == Activity)
+    {
+        activityLayout = new QVBoxLayout(this);
+
+        CategoryWidget* categoryToday = new CategoryWidget(this);
+        categoryToday->setName(tr("Today", "Category for sorting friends by activity"));
+        activityLayout->addWidget(categoryToday);
+
+        CategoryWidget* categoryYesterday = new CategoryWidget(this);
+        categoryYesterday->setName(tr("Yesterday", "Category for sorting friends by activity"));
+        activityLayout->addWidget(categoryYesterday);
+
+        CategoryWidget* categoryLastWeek = new CategoryWidget(this);
+        categoryLastWeek->setName(tr("Last 7 days", "Category for sorting friends by activity"));
+        activityLayout->addWidget(categoryLastWeek);
+
+        QDate currentDate = QDate::currentDate();
+        if (last7DaysWasLastMonth())
+        {
+            CategoryWidget* categoryThisMonth = new CategoryWidget(this);
+            categoryThisMonth ->setName(tr("This month", "Category for sorting friends by activity"));
+            activityLayout->addWidget(categoryThisMonth);
+            currentDate = currentDate.addMonths(-1);
+        }
+
+        CategoryWidget* categoryLast1Month = new CategoryWidget(this);
+        categoryLast1Month ->setName(QDate::longMonthName(currentDate.month()));
+        activityLayout->addWidget(categoryLast1Month);
+
+        currentDate = currentDate.addMonths(-1);
+        CategoryWidget* categoryLast2Month = new CategoryWidget(this);
+        categoryLast2Month ->setName(QDate::longMonthName(currentDate.month()));
+        activityLayout->addWidget(categoryLast2Month);
+
+        currentDate = currentDate.addMonths(-1);
+        CategoryWidget* categoryLast3Month = new CategoryWidget(this);
+        categoryLast3Month ->setName(QDate::longMonthName(currentDate.month()));
+        activityLayout->addWidget(categoryLast3Month);
+
+        currentDate = currentDate.addMonths(-1);
+        CategoryWidget* categoryLast4Month = new CategoryWidget(this);
+        categoryLast4Month ->setName(QDate::longMonthName(currentDate.month()));
+        activityLayout->addWidget(categoryLast4Month);
+
+        currentDate = currentDate.addMonths(-1);
+        CategoryWidget* categoryLast5Month = new CategoryWidget(this);
+        categoryLast5Month ->setName(QDate::longMonthName(currentDate.month()));
+        activityLayout->addWidget(categoryLast5Month);
+
+        CategoryWidget* categoryOlder = new CategoryWidget(this);
+        categoryOlder->setName(tr("Older than 6 Months", "Category for sorting friends by activity"));
+        activityLayout->addWidget(categoryOlder);
+
+        CategoryWidget* categoryNever = new CategoryWidget(this);
+        categoryNever->setName(tr("Never", "Category for sorting friends by activity"));
+        activityLayout->addWidget(categoryNever);
+
+        QList<Friend*> friendList = FriendList::getAllFriends();
+        for (Friend* contact : friendList)
+        {
+            QDate activityDate = Settings::getInstance().getFriendActivity(contact->getToxId());
+            Time time = getTime(activityDate);
+            CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
+            categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
+        }
+
+        for (int i = 0; i < activityLayout->count(); ++i)
+        {
+            CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
+           categoryWidget->setVisible(categoryWidget->hasChatrooms());
+        }
+
+        listLayout->removeItem(listLayout->getLayoutOnline());
+        listLayout->removeItem(listLayout->getLayoutOffline());
+        listLayout->removeItem(circleLayout.getLayout());
+        listLayout->insertLayout(0, activityLayout);
+    }
 }
 
 void FriendListWidget::addGroupWidget(GroupWidget* widget)
@@ -80,7 +249,7 @@ void FriendListWidget::addCircleWidget(int id)
 void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
 {
     CircleWidget* circleWidget = createCircleWidget();
-    if (friendWidget != nullptr)
+    if (circleWidget != nullptr && friendWidget != nullptr)
     {
         CircleWidget* circleOriginal = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId()));
 
@@ -273,18 +442,29 @@ void FriendListWidget::dropEvent(QDropEvent* event)
 
 void FriendListWidget::moveWidget(FriendWidget* w, Status s, bool add)
 {
-    int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(w->friendId)->getToxId());
-    CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
-
-    if (circleWidget == nullptr || add)
+    if (mode == Name)
     {
-        if (circleId != -1)
-            Settings::getInstance().setFriendCircleID(FriendList::findFriend(w->friendId)->getToxId(), -1);
-        listLayout->addFriendWidget(w, s);
-        return;
-    }
+        int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(w->friendId)->getToxId());
+        CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
-    circleWidget->addFriendWidget(w, s);
+        if (circleWidget == nullptr || add)
+        {
+            if (circleId != -1)
+                Settings::getInstance().setFriendCircleID(FriendList::findFriend(w->friendId)->getToxId(), -1);
+            listLayout->addFriendWidget(w, s);
+            return;
+        }
+
+        circleWidget->addFriendWidget(w, s);
+    }
+    else
+    {
+        Friend* contact = FriendList::findFriend(w->friendId);
+        QDate activityDate = Settings::getInstance().getFriendActivity(contact->getToxId());
+        Time time = getTime(activityDate);
+        CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
+        categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
+    }
 }
 
 // update widget after add/delete/hide/show
@@ -297,6 +477,15 @@ void FriendListWidget::reDraw()
 
 CircleWidget* FriendListWidget::createCircleWidget(int id)
 {
+    if (id == -1)
+    {
+        id = Settings::getInstance().addCircle();
+        Settings::getInstance().setCircleName(id, tr("Circle #%1").arg(id + 1));
+    }
+
+    if (mode == Activity)
+        return nullptr;
+
     CircleWidget* circleWidget = new CircleWidget(this, id);
     circleLayout.addSortedWidget(circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
