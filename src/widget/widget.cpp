@@ -234,11 +234,6 @@ void Widget::init()
 
     if (!Settings::getInstance().getShowSystemTray())
         show();
-
-    for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
-    {
-        contactListWidget->addCircleWidget(i);
-    }
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
@@ -775,6 +770,11 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
             windowTitle += " (" + f->getFriendWidget()->getStatusString() + ")";
         setWindowTitle(windowTitle);
     }
+
+    QDate activity = Settings::getInstance().getFriendActivity(f->getToxId());
+    qDebug() << "YOLOOLOLOLO" << activity;
+    if (activity != QDate::currentDate())
+        Settings::getInstance().setFriendActivity(f->getToxId(), QDate::currentDate());
 }
 
 void Widget::onReceiptRecieved(int friendId, int receipt)
@@ -1468,11 +1468,16 @@ void Widget::friendListContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
     QAction *addCircleAction = menu.addAction(tr("Add new circle..."));
+    QAction *switchMode = menu.addAction("Switch to Recent (BETA)");
     QAction *chosenAction = menu.exec(ui->friendList->mapToGlobal(pos));
 
     if (chosenAction == addCircleAction)
     {
         contactListWidget->addCircleWidget();
+    }
+    else if (chosenAction == switchMode)
+    {
+        contactListWidget->setMode(FriendListWidget::Activity);
     }
 }
 

@@ -1,79 +1,52 @@
 /*
+    Copyright © 2015 by The qTox Project
+
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
-    This program is libre software: you can redistribute it and/or modify
+    qTox is libre software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-    See the COPYING file for more details.
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #ifndef CIRCLEWIDGET_H
 #define CIRCLEWIDGET_H
 
-#include "genericchatitemwidget.h"
-#include "src/core/corestructs.h"
+#include "categorywidget.h"
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QLabel;
-class FriendListWidget;
-class FriendListLayout;
-class FriendWidget;
-
-class CircleWidget final : public GenericChatItemWidget
+class CircleWidget final : public CategoryWidget
 {
     Q_OBJECT
 public:
     CircleWidget(FriendListWidget* parent = 0, int id = -1);
-
-    void addFriendWidget(FriendWidget* w, Status s);
-
-
-    void expand();
-    void setExpanded(bool isExpanded);
-
-    void updateStatus();
-
-    void setName(const QString &name);
-    void renameCircle();
-
-    bool cycleContacts(bool forward);
-    bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
-    void search(const QString &searchString, bool updateAll = false, bool hideOnline = false, bool hideOffline = false);
 
     static CircleWidget* getFromID(int id);
 
 signals:
     void renameRequested(CircleWidget* circleWidget, const QString &newName);
 
-public slots:
-    void onCompactChanged(bool compact);
-
 protected:
     virtual void contextMenuEvent(QContextMenuEvent* event) final override;
-    virtual void mouseReleaseEvent(QMouseEvent* event) final override;
     virtual void dragEnterEvent(QDragEnterEvent* event) final override;
     virtual void dragLeaveEvent(QDragLeaveEvent* event) final override;
     virtual void dropEvent(QDropEvent* event) final override;
 
 private:
+    virtual void onSetName() final override;
+    virtual void onExpand() final override;
+    virtual void onAddFriendWidget(FriendWidget* w) final override;
     void updateID(int index);
+
     static QHash<int, CircleWidget*> circleList;
     int id;
-    bool expanded = false;
-    FriendListLayout* listLayout;
-    QVBoxLayout* fullLayout;
-    QVBoxLayout* mainLayout = nullptr;
-    QLabel* statusLabel;
-    QFrame* lineFrame;
-    QWidget* container;
-    QHBoxLayout* topLayout = nullptr;
-    QWidget* listWidget;
 };
 
 #endif // CIRCLEWIDGET_H
