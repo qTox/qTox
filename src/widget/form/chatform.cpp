@@ -202,6 +202,8 @@ void ChatForm::startFileSend(ToxFile file)
     }
 
     insertChatMessage(ChatMessage::createFileTransferMessage(name, file, true, QDateTime::currentDateTime()));
+
+    Widget::getInstance()->updateFriendActivity(f);
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -236,6 +238,8 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
         tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxId()));
     }
+
+    Widget::getInstance()->updateFriendActivity(f);
 }
 
 void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
@@ -410,6 +414,8 @@ void ChatForm::onAvRinging(uint32_t FriendId, int CallId, bool video)
     }
 
     addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
+
+    Widget::getInstance()->updateFriendActivity(f);
 }
 
 void ChatForm::onAvStarting(uint32_t FriendId, int CallId, bool video)

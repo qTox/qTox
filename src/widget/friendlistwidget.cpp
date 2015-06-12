@@ -220,7 +220,7 @@ void FriendListWidget::setMode(Mode mode)
         activityLayout->addWidget(categoryOlder);
 
         CategoryWidget* categoryNever = new CategoryWidget(this);
-        categoryNever->setName(tr("Never", "Category for sorting friends by activity"));
+        categoryNever->setName(tr("Unknown", "Category for sorting friends by activity"));
         activityLayout->addWidget(categoryNever);
 
         QList<Friend*> friendList = FriendList::getAllFriends();
