@@ -67,8 +67,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
-    QMenu* circleMenu = menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
-    QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
     QMap<QAction*, Group*> groupActions;
 
     for (Group* group : GroupList::getAllGroups())
@@ -80,33 +78,38 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (groupActions.isEmpty())
         inviteMenu->setEnabled(false);
 
-    CircleWidget *circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId()));
+    int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId());
+    CircleWidget *circleWidget = CircleWidget::getFromID(circleId);
 
-    QAction* newCircleAction = circleMenu->addAction(tr("To new circle"));
-    QAction *removeCircleAction;
-    if (circleWidget != nullptr)
-        removeCircleAction = circleMenu->addAction(tr("Remove from this circle"));
-    circleMenu->addSeparator();
+    QMenu* circleMenu = nullptr;
+    QAction* newCircleAction = nullptr;
+    QAction *removeCircleAction = nullptr;
+    QMap<QAction*, int> circleActions;
 
     FriendListWidget *friendList;
+
     if (circleWidget == nullptr)
         friendList = dynamic_cast<FriendListWidget*>(parentWidget());
     else
         friendList = dynamic_cast<FriendListWidget*>(circleWidget->parentWidget());
 
-    assert(friendList != nullptr);
+        circleMenu = menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
 
-    QVector<CircleWidget*> circleVec = friendList->getAllCircles();
-    QMap<QAction*, CircleWidget*> circleActions;
-    for (CircleWidget* circle : circleVec)
-    {
-        if (circle != circleWidget)
+        newCircleAction = circleMenu->addAction(tr("To new circle"));
+        if (circleId != -1)
+            removeCircleAction = circleMenu->addAction(tr("Remove from circle '%1'").arg(Settings::getInstance().getCircleName(circleId)));
+        circleMenu->addSeparator();
+
+        for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
         {
-            QAction* circleAction = circleMenu->addAction(tr("Move  to circle \"%1\"").arg(circle->getName()));
-            circleActions[circleAction] = circle;
+            if (i != circleId)
+            {
+                QAction* circleAction = circleMenu->addAction(tr("Move  to circle \"%1\"").arg(Settings::getInstance().getCircleName(i)));
+                circleActions[circleAction] = i;
+            }
         }
-    }
 
+    QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
     QAction* setAlias = menu.addAction(tr("Set alias..."));
 
     menu.addSeparator();
@@ -162,7 +165,11 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             if (circleWidget != nullptr)
                 circleWidget->updateStatus();
 
-            friendList->addCircleWidget(this);
+            if (friendList != nullptr)
+                friendList->addCircleWidget(this);
+            else
+                Settings::getInstance().setFriendCircleID(id, Settings::getInstance().addCircle());
+
         }
         else if (groupActions.contains(selectedItem))
         {
@@ -171,16 +178,29 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         }
         else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
         {
-            friendList->moveWidget(this, FriendList::findFriend(friendId)->getStatus(), true);
-            circleWidget->updateStatus();
-            Widget::getInstance()->searchCircle(circleWidget);
+            if (friendList != nullptr)
+                friendList->moveWidget(this, FriendList::findFriend(friendId)->getStatus(), true);
+            else
+                Settings::getInstance().setFriendCircleID(id, -1);
+
+            if (circleWidget)
+            {
+                circleWidget->updateStatus();
+                Widget::getInstance()->searchCircle(circleWidget);
+            }
         }
         else if (circleActions.contains(selectedItem))
         {
-            CircleWidget* circle = circleActions[selectedItem];
-            circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
-            circle->setExpanded(true);
-            Widget::getInstance()->searchCircle(circle);
+            CircleWidget* circle = CircleWidget::getFromID(circleActions[selectedItem]);
+
+            if (circle != nullptr)
+            {
+                circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
+                circle->setExpanded(true);
+                Widget::getInstance()->searchCircle(circle);
+            }
+            else
+                Settings::getInstance().setFriendCircleID(id, circleActions[selectedItem]);
 
             if (circleWidget != nullptr)
             {

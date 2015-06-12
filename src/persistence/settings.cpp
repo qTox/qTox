@@ -1406,8 +1406,13 @@ void Settings::setCircleName(int id, const QString &name)
 int Settings::addCircle(const QString &name)
 {
     circleProp cp;
-    cp.name = name;
     cp.expanded = false;
+
+    if (name.isEmpty())
+        cp.name = tr("Circle #%1").arg(circleLst.count() + 1);
+    else
+        cp.name = name;
+
     circleLst.append(cp);
     savePersonal();
     return circleLst.count() - 1;
