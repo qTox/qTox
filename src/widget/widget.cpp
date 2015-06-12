@@ -810,8 +810,6 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
             windowTitle += " (" + f->getFriendWidget()->getStatusString() + ")";
         setWindowTitle(windowTitle);
     }
-
-    updateFriendActivity(f);
 }
 
 void Widget::onReceiptRecieved(int friendId, int receipt)
