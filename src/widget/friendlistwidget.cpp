@@ -130,6 +130,9 @@ FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
 
 void FriendListWidget::setMode(Mode mode)
 {
+    if (this->mode == mode)
+        return;
+
     this->mode = mode;
     if (mode == Name)
     {
@@ -168,7 +171,7 @@ void FriendListWidget::setMode(Mode mode)
     }
     else if (mode == Activity)
     {
-        activityLayout = new QVBoxLayout(this);
+        activityLayout = new QVBoxLayout();
 
         CategoryWidget* categoryToday = new CategoryWidget(this);
         categoryToday->setName(tr("Today", "Category for sorting friends by activity"));
@@ -521,10 +524,7 @@ void FriendListWidget::reDraw()
 CircleWidget* FriendListWidget::createCircleWidget(int id)
 {
     if (id == -1)
-    {
         id = Settings::getInstance().addCircle();
-        Settings::getInstance().setCircleName(id, tr("Circle #%1").arg(id + 1));
-    }
 
     if (mode == Activity)
         return nullptr;

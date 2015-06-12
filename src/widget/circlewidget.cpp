@@ -80,6 +80,11 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id_)
     updateStatus();
 }
 
+CircleWidget::~CircleWidget()
+{
+    circleList.remove(id);
+}
+
 CircleWidget* CircleWidget::getFromID(int id)
 {
     auto circleIt = circleList.find(id);
