@@ -66,6 +66,7 @@ private:
     QLabel *nusersLabel;
     TabCompleter* tabber;
     bool inCall;
+    QString correctNames(QString& name);
 };
 
 #endif // GROUPCHATFORM_H
