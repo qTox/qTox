@@ -1049,9 +1049,7 @@ void ChatForm::SendMessageStr(QString msg)
 
         msgEdit->setLastMessage(msg); //set last message only when sending it
 
-        QDate date = Settings::getInstance().getFriendActivity(f->getToxId());
-        if (date != QDate::currentDate())
-            Settings::getInstance().setFriendActivity(f->getToxId(), QDate::currentDate());
+        Widget::getInstance()->updateFriendActivity(f);
     }
 }
 

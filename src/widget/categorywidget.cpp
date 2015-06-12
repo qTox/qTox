@@ -67,6 +67,9 @@ CategoryWidget::CategoryWidget(QWidget* parent)
     setAcceptDrops(true);
 
     onCompactChanged(isCompact());
+
+    setExpanded(true);
+    updateStatus();
 }
 
 bool CategoryWidget::isExpanded() const

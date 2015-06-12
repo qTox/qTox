@@ -771,10 +771,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         setWindowTitle(windowTitle);
     }
 
-    QDate activity = Settings::getInstance().getFriendActivity(f->getToxId());
-    qDebug() << "YOLOOLOLOLO" << activity;
-    if (activity != QDate::currentDate())
-        Settings::getInstance().setFriendActivity(f->getToxId(), QDate::currentDate());
+    updateFriendActivity(f);
 }
 
 void Widget::onReceiptRecieved(int friendId, int receipt)
@@ -851,6 +848,16 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 
     if (dialog.exec() == QDialog::Accepted)
         emit friendRequestAccepted(userId);
+}
+
+void Widget::updateFriendActivity(Friend *frnd)
+{
+    QDate date = Settings::getInstance().getFriendActivity(frnd->getToxId());
+    if (date != QDate::currentDate())
+    {
+        Settings::getInstance().setFriendActivity(frnd->getToxId(), QDate::currentDate());
+        contactListWidget->moveWidget(frnd->getFriendWidget(), frnd->getStatus());
+    }
 }
 
 void Widget::removeFriend(Friend* f, bool fake)
@@ -1468,7 +1475,7 @@ void Widget::friendListContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
     QAction *addCircleAction = menu.addAction(tr("Add new circle..."));
-    QAction *switchMode = menu.addAction("Switch to Recent (BETA)");
+    QAction *switchMode = menu.addAction("Switch between Recent and Name (BETA)");
     QAction *chosenAction = menu.exec(ui->friendList->mapToGlobal(pos));
 
     if (chosenAction == addCircleAction)
@@ -1477,7 +1484,10 @@ void Widget::friendListContextMenu(const QPoint &pos)
     }
     else if (chosenAction == switchMode)
     {
-        contactListWidget->setMode(FriendListWidget::Activity);
+        if (contactListWidget->getMode() == FriendListWidget::Name)
+            contactListWidget->setMode(FriendListWidget::Activity);
+        else
+            contactListWidget->setMode(FriendListWidget::Name);
     }
 }
 

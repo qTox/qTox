@@ -46,6 +46,7 @@ public:
 
     explicit FriendListWidget(Widget* parent, bool groupsOnTop = true);
     void setMode(Mode mode);
+    Mode getMode() const;
 
     void addGroupWidget(GroupWidget* widget);
     void addFriendWidget(FriendWidget* w, Status s, int circleIndex);
@@ -79,9 +80,9 @@ private:
     Mode mode;
     bool groupsOnTop;
     FriendListLayout* listLayout;
-    GenericChatItemLayout circleLayout;
+    GenericChatItemLayout* circleLayout = nullptr;
     GenericChatItemLayout groupLayout;
-    QVBoxLayout* activityLayout;
+    QVBoxLayout* activityLayout = nullptr;
 };
 
 #endif // FRIENDLISTWIDGET_H
