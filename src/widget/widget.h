@@ -50,6 +50,7 @@ class ProfileForm;
 class SettingsWidget;
 class AddFriendForm;
 class CircleWidget;
+class QActionGroup;
 
 class Widget final : public QMainWindow
 {
@@ -186,6 +187,9 @@ private:
     void saveSplitterGeometry();
     void cycleContacts(bool forward);
     void searchContacts();
+    void changeDisplayMode();
+    void updateFilterText();
+    int getFilterCriteria() const;
     static bool filterGroups(int index);
     static bool filterOnline(int index);
     static bool filterOffline(int index);
@@ -194,10 +198,23 @@ private:
 private:
     SystemTrayIcon *icon;
     QMenu *trayMenu;
-    QAction *statusOnline,
-            *statusAway,
-            *statusBusy,
-            *actionQuit;
+    QAction *statusOnline;
+    QAction *statusAway;
+    QAction *statusBusy;
+    QAction *actionQuit;
+
+    QMenu* filterMenu;
+
+    QActionGroup* filterGroup;
+    QAction* filterAllAction;
+    QAction* filterOnlineAction;
+    QAction* filterOfflineAction;
+    QAction* filterFriendsAction;
+    QAction* filterGroupsAction;
+
+    QActionGroup* filterDisplayGroup;
+    QAction* filterDisplayName;
+    QAction* filterDisplayActivity;
 
     Ui::MainWindow *ui;
     QSplitter *centralLayout;

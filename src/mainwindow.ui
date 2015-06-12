@@ -1030,12 +1030,24 @@ QSplitter:handle{
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="searchContactFilterCBox">
+              <widget class="QToolButton" name="searchContactFilterBox">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="popupMode">
+                <enum>QToolButton::InstantPopup</enum>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextBesideIcon</enum>
+               </property>
+               <property name="arrowType">
+                <enum>Qt::DownArrow</enum>
                </property>
               </widget>
              </item>

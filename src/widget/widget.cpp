@@ -134,6 +134,45 @@ void Widget::init()
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
 
+    filterMenu = new QMenu(this);
+    filterGroup = new QActionGroup(this);
+    filterDisplayGroup = new QActionGroup(this);
+
+    filterDisplayName = new QAction(this);
+    filterDisplayName->setCheckable(true);
+    filterDisplayName->setChecked(true);
+    filterDisplayGroup->addAction(filterDisplayName);
+    filterMenu->addAction(filterDisplayName);
+    filterDisplayActivity = new QAction(this);
+    filterDisplayActivity->setCheckable(true);
+    filterDisplayGroup->addAction(filterDisplayActivity);
+    filterMenu->addAction(filterDisplayActivity);
+    filterMenu->addSeparator();
+
+    filterAllAction = new QAction(this);
+    filterAllAction->setCheckable(true);
+    filterAllAction->setChecked(true);
+    filterGroup->addAction(filterAllAction);
+    filterMenu->addAction(filterAllAction);
+    filterOnlineAction = new QAction(this);
+    filterOnlineAction->setCheckable(true);
+    filterGroup->addAction(filterOnlineAction);
+    filterMenu->addAction(filterOnlineAction);
+    filterOfflineAction = new QAction(this);
+    filterOfflineAction->setCheckable(true);
+    filterGroup->addAction(filterOfflineAction);
+    filterMenu->addAction(filterOfflineAction);
+    filterFriendsAction = new QAction(this);
+    filterFriendsAction->setCheckable(true);
+    filterGroup->addAction(filterFriendsAction);
+    filterMenu->addAction(filterFriendsAction);
+    filterGroupsAction = new QAction(this);
+    filterGroupsAction->setCheckable(true);
+    filterGroup->addAction(filterGroupsAction);
+    filterMenu->addAction(filterGroupsAction);
+
+    ui->searchContactFilterBox->setMenu(filterMenu);
+
     ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
@@ -205,7 +244,8 @@ void Widget::init()
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
     connect(offlineMsgTimer, &QTimer::timeout, this, &Widget::processOfflineMsgs);
     connect(ui->searchContactText, &QLineEdit::textChanged, this, &Widget::searchContacts);
-    connect(ui->searchContactFilterCBox, &QComboBox::currentTextChanged, this, &Widget::searchContacts);
+    connect(filterGroup, &QActionGroup::triggered, this, &Widget::searchContacts);
+    connect(filterDisplayGroup, &QActionGroup::triggered, this, &Widget::changeDisplayMode);
     connect(ui->friendList, &QWidget::customContextMenuRequested, this, &Widget::friendListContextMenu);
 
     // keyboard shortcuts
@@ -624,7 +664,7 @@ void Widget::addFriend(int friendId, const QString &userId)
         newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
     }
 
-    int filter = ui->searchContactFilterCBox->currentIndex();
+    int filter = getFilterCriteria();
     newfriend->getFriendWidget()->search(ui->searchContactText->text(), filterOffline(filter));
 }
 
@@ -718,7 +758,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
 {
     contactListWidget->moveWidget(friendWidget, s);
-    int filter = ui->searchContactFilterCBox->currentIndex();
+    int filter = getFilterCriteria();
     switch (s)
     {
         case Status::Offline:
@@ -1016,7 +1056,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
 
     contactListWidget->renameGroupWidget(g->getGroupWidget(), title);
-    int filter = ui->searchContactFilterCBox->currentIndex();
+    int filter = getFilterCriteria();
     g->getGroupWidget()->searchName(ui->searchContactText->text(), filterGroups(filter));
 }
 
@@ -1076,7 +1116,7 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->getChatForm(), &GroupChatForm::sendAction, core, &Core::sendGroupAction);
     connect(newgroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
 
-    int filter = ui->searchContactFilterCBox->currentIndex();
+    int filter = getFilterCriteria();
     newgroup->getGroupWidget()->searchName(ui->searchContactText->text(), filterGroups(filter));
 
     return newgroup;
@@ -1436,23 +1476,56 @@ Status Widget::getStatusFromString(QString status)
 void Widget::searchContacts()
 {
     QString searchString = ui->searchContactText->text();
-    int filter = ui->searchContactFilterCBox->currentIndex();
+    int filter = getFilterCriteria();
 
     contactListWidget->searchChatrooms(searchString, filterOnline(filter), filterOffline(filter), filterGroups(filter));
+
+    updateFilterText();
 
     contactListWidget->reDraw();
 }
 
+void Widget::changeDisplayMode()
+{
+    if (filterDisplayGroup->checkedAction() == filterDisplayActivity)
+        contactListWidget->setMode(FriendListWidget::Activity);
+    else if (filterDisplayGroup->checkedAction() == filterDisplayName)
+        contactListWidget->setMode(FriendListWidget::Name);
+
+    updateFilterText();
+}
+
+void Widget::updateFilterText()
+{
+     ui->searchContactFilterBox->setText(filterDisplayGroup->checkedAction()->text() + QStringLiteral(" | ") + filterGroup->checkedAction()->text());
+}
+
+int Widget::getFilterCriteria() const
+{
+    QAction* checked = filterGroup->checkedAction();
+
+    if (checked == filterOnlineAction)
+        return Online;
+    else if (checked == filterOfflineAction)
+        return Offline;
+    else if (checked == filterFriendsAction)
+        return Friends;
+    else if (checked == filterGroupsAction)
+        return Groups;
+
+    return All;
+}
+
 void Widget::searchCircle(CircleWidget *circleWidget)
 {
-    int filter = ui->searchContactFilterCBox->currentIndex();
+    int filter = getFilterCriteria();
     circleWidget->search(ui->searchContactText->text(), true, filterOnline(filter), filterOffline(filter));
 }
 
 void Widget::searchItem(GenericChatItemWidget *chatItem, GenericChatItemWidget::ItemType type)
 {
     bool hide;
-    int filter = ui->searchContactFilterCBox->currentIndex();
+    int filter = getFilterCriteria();
     switch (type)
     {
         case GenericChatItemWidget::GroupItem:
@@ -1467,7 +1540,7 @@ void Widget::searchItem(GenericChatItemWidget *chatItem, GenericChatItemWidget::
 
 bool Widget::groupsVisible() const
 {
-    int filter = ui->searchContactFilterCBox->currentIndex();
+    int filter = getFilterCriteria();
     return !filterGroups(filter);
 }
 
@@ -1475,20 +1548,10 @@ void Widget::friendListContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
     QAction *addCircleAction = menu.addAction(tr("Add new circle..."));
-    QAction *switchMode = menu.addAction("Switch between Recent and Name (BETA)");
     QAction *chosenAction = menu.exec(ui->friendList->mapToGlobal(pos));
 
     if (chosenAction == addCircleAction)
-    {
         contactListWidget->addCircleWidget();
-    }
-    else if (chosenAction == switchMode)
-    {
-        if (contactListWidget->getMode() == FriendListWidget::Name)
-            contactListWidget->setMode(FriendListWidget::Activity);
-        else
-            contactListWidget->setMode(FriendListWidget::Name);
-    }
 }
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
@@ -1509,12 +1572,17 @@ void Widget::retranslateUi()
     ui->retranslateUi(this);
     ui->nameLabel->setText(name);
     ui->statusLabel->setText(status);
-    ui->searchContactFilterCBox->clear();
-    ui->searchContactFilterCBox->addItem(tr("All"));
-    ui->searchContactFilterCBox->addItem(tr("Online"));
-    ui->searchContactFilterCBox->addItem(tr("Offline"));
-    ui->searchContactFilterCBox->addItem(tr("Friends"));
-    ui->searchContactFilterCBox->addItem(tr("Groups"));
+
+    filterDisplayName->setText(tr("By Name"));
+    filterDisplayActivity->setText(tr("By Activity"));
+    filterAllAction->setText(tr("All"));
+    filterOnlineAction->setText(tr("Online"));
+    filterOfflineAction->setText(tr("Offline"));
+    filterFriendsAction->setText(tr("Friends"));
+    filterGroupsAction->setText(tr("Groups"));
+    ui->searchContactText->setPlaceholderText(tr("Search Contacts"));
+    updateFilterText();
+
     ui->searchContactText->setPlaceholderText(tr("Search Contacts"));
     statusOnline->setText(tr("Online", "Button to set your status to 'Online'"));
     statusAway->setText(tr("Away", "Button to set your status to 'Away'"));
