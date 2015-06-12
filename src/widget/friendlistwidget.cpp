@@ -118,9 +118,6 @@ FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     setLayout(listLayout);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-    circleLayout.getLayout()->setSpacing(0);
-    circleLayout.getLayout()->setMargin(0);
-
     groupLayout.getLayout()->setSpacing(0);
     groupLayout.getLayout()->setMargin(0);
 
@@ -136,12 +133,38 @@ void FriendListWidget::setMode(Mode mode)
     this->mode = mode;
     if (mode == Name)
     {
+        circleLayout = new GenericChatItemLayout;
+        circleLayout->getLayout()->setSpacing(0);
+        circleLayout->getLayout()->setMargin(0);
+
         for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
         {
             addCircleWidget(i);
         }
 
-        listLayout->addLayout(circleLayout.getLayout());
+        QList<Friend*> friendList = FriendList::getAllFriends();
+        for (Friend* contact : friendList)
+        {
+            int circleId = Settings::getInstance().getFriendCircleID(contact->getToxId());
+            addFriendWidget(contact->getFriendWidget(), contact->getStatus(), circleId);
+        }
+
+        listLayout->removeItem(activityLayout);
+        listLayout->addLayout(listLayout->getLayoutOnline());
+        listLayout->addLayout(listLayout->getLayoutOffline());
+        listLayout->addLayout(circleLayout->getLayout());
+        onGroupchatPositionChanged(groupsOnTop);
+
+        if (activityLayout != nullptr)
+        {
+            while (activityLayout->count() > 0)
+                delete activityLayout->takeAt(0)->widget();
+        }
+
+        delete activityLayout;
+        activityLayout = nullptr;
+
+        reDraw();
     }
     else if (mode == Activity)
     {
@@ -215,11 +238,27 @@ void FriendListWidget::setMode(Mode mode)
            categoryWidget->setVisible(categoryWidget->hasChatrooms());
         }
 
+        if (circleLayout != nullptr)
+        {
+            while (circleLayout->getLayout()->count() > 0)
+                delete circleLayout->getLayout()->takeAt(0)->widget();
+        }
+
         listLayout->removeItem(listLayout->getLayoutOnline());
         listLayout->removeItem(listLayout->getLayoutOffline());
-        listLayout->removeItem(circleLayout.getLayout());
-        listLayout->insertLayout(0, activityLayout);
+        listLayout->removeItem(circleLayout->getLayout());
+        listLayout->insertLayout(1, activityLayout);
+
+        reDraw();
+
+        delete circleLayout;
+        circleLayout = nullptr;
     }
+}
+
+FriendListWidget::Mode FriendListWidget::getMode() const
+{
+    return mode;
 }
 
 void FriendListWidget::addGroupWidget(GroupWidget* widget)
@@ -265,7 +304,7 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
 
 void FriendListWidget::removeCircleWidget(CircleWidget* widget)
 {
-    circleLayout.removeSortedWidget(widget);
+    circleLayout->removeSortedWidget(widget);
     widget->deleteLater();
 }
 
@@ -273,9 +312,9 @@ void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnl
 {
     groupLayout.search(searchString, hideGroups);
     listLayout->searchChatrooms(searchString, hideOnline, hideOffline);
-    for (int i = 0; i != circleLayout.getLayout()->count(); ++i)
+    for (int i = 0; i != circleLayout->getLayout()->count(); ++i)
     {
-        CircleWidget* circleWidget = static_cast<CircleWidget*>(circleLayout.getLayout()->itemAt(i)->widget());
+        CircleWidget* circleWidget = static_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget());
         circleWidget->search(searchString, true, hideOnline, hideOffline);
     }
 }
@@ -289,23 +328,26 @@ void FriendListWidget::renameGroupWidget(GroupWidget* groupWidget, const QString
 
 void FriendListWidget::renameCircleWidget(CircleWidget* circleWidget, const QString &newName)
 {
-    circleLayout.removeSortedWidget(circleWidget);
+    circleLayout->removeSortedWidget(circleWidget);
     circleWidget->setName(newName);
-    circleLayout.addSortedWidget(circleWidget);
+    circleLayout->addSortedWidget(circleWidget);
 }
 
 void FriendListWidget::onGroupchatPositionChanged(bool top)
 {
     groupsOnTop = top;
+
+    if (mode != Name)
+        return;
+
     listLayout->removeItem(groupLayout.getLayout());
+
     if (top)
-    {
         listLayout->insertLayout(0, groupLayout.getLayout());
-    }
     else
-    {
         listLayout->insertLayout(1, groupLayout.getLayout());
-    }
+
+    reDraw();
 }
 
 void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward)
@@ -328,8 +370,8 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
             if (circleWidget->cycleContacts(friendWidget, forward))
                 return;
 
-            index = circleLayout.indexOfSortedWidget(circleWidget);
-            currentLayout = circleLayout.getLayout();
+            index = circleLayout->indexOfSortedWidget(circleWidget);
+            currentLayout = circleLayout->getLayout();
         }
         else
         {
@@ -381,7 +423,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
                 emit chatWidget->chatroomWidgetClicked(chatWidget);
             return;
         }
-        else if (currentLayout == circleLayout.getLayout())
+        else if (currentLayout == circleLayout->getLayout())
         {
             circleWidget = dynamic_cast<CircleWidget*>(currentLayout->itemAt(index)->widget());
             if (circleWidget != nullptr)
@@ -405,10 +447,10 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 QVector<CircleWidget*> FriendListWidget::getAllCircles()
 {
     QVector<CircleWidget*> vec;
-    vec.reserve(circleLayout.getLayout()->count());
-    for (int i = 0; i < circleLayout.getLayout()->count(); ++i)
+    vec.reserve(circleLayout->getLayout()->count());
+    for (int i = 0; i < circleLayout->getLayout()->count(); ++i)
     {
-        vec.push_back(dynamic_cast<CircleWidget*>(circleLayout.getLayout()->itemAt(i)->widget()));
+        vec.push_back(dynamic_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget()));
     }
     return vec;
 }
@@ -487,7 +529,7 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
         return nullptr;
 
     CircleWidget* circleWidget = new CircleWidget(this, id);
-    circleLayout.addSortedWidget(circleWidget);
+    circleLayout->addSortedWidget(circleWidget);
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
     circleWidget->show(); // Avoid flickering.
@@ -507,7 +549,7 @@ QLayout* FriendListWidget::nextLayout(QLayout* layout, bool forward) const
         else
         {
             if (groupsOnTop)
-                return circleLayout.getLayout();
+                return circleLayout->getLayout();
             return listLayout->getLayoutOnline();
         }
     }
@@ -523,18 +565,18 @@ QLayout* FriendListWidget::nextLayout(QLayout* layout, bool forward) const
         {
             if (groupsOnTop)
                 return groupLayout.getLayout();
-            return circleLayout.getLayout();
+            return circleLayout->getLayout();
         }
     }
     else if (layout == listLayout->getLayoutOffline())
     {
         if (forward)
-            return circleLayout.getLayout();
+            return circleLayout->getLayout();
         else if (groupsOnTop)
             return listLayout->getLayoutOnline();
         return groupLayout.getLayout();
     }
-    else if (layout == circleLayout.getLayout())
+    else if (layout == circleLayout->getLayout())
     {
         if (forward)
         {
