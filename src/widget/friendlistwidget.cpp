@@ -506,6 +506,7 @@ void FriendListWidget::moveWidget(FriendWidget* w, Status s, bool add)
         Time time = getTime(activityDate);
         CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
         categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
+        categoryWidget->show();
     }
 }
 
