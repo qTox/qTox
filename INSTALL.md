@@ -27,6 +27,8 @@ If your distribution is not listed, or you want/need to compile qTox, there are 
 
 **Please note that installing toxcore/qTox from AUR is not supported**, although installing other dependencies, provided that they met requirements, should be fine, unless you are installing cryptography library from AUR, which should rise red flags by itself…
 
+That being said, there are supported PKGBUILDs at https://github.com/Tox/arch-repo-tox
+
 ----
 
 Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning, which will attempt to automatically download dependencies followed by compilation.
@@ -68,13 +70,20 @@ The following steps assumes that you cloned the repository at "/home/user/qTox".
 
 Arch Linux:
 ```bash
-sudo pacman -S --needed base-devel qt5 openal libxss qrencode
+sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 ```
 
-Debian / Ubuntu:
+Debian <10 / Ubuntu <15.04:
+**Note that ffmpeg is not included in those distribution version(!).**
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev
 ```
+
+Debian >=10 / Ubuntu >=15.04:
+```bash
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev
+```
+
 
 Fedora:
 ```bash
@@ -153,18 +162,23 @@ Now go to `/home/user/qTox/qTox` (or where you cloned) and simply run :
 qmake
 make
 ```
-(Debian / Ubuntu / Mint)
-If the compiling process stops with a missing dependency like: "... libswscale/swscale.h missing" try:
-  apt-file search libswscale/swscale.h
-And install the package that provide the missing file.
-Start make again. Repeat if nessary until all dependencies are installed.
-
 
 for openSUSE you have to use:
 ```bash
 qmake-qt5
 make
 ```
+
+(Debian / Ubuntu / Mint)
+If the compiling process stops with a missing dependency like: `... libswscale/swscale.h missing` try:
+```
+apt-file search libswscale/swscale.h
+```
+And install the package that provides the missing file.
+Start make again. Repeat if nessary until all dependencies are installed.  If you can, please note down all additional dependencies you had to install that aren't listed here, and let us know what is missing `;)`
+
+
+
 
 ###Building packages
 
