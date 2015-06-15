@@ -114,6 +114,12 @@ void CategoryWidget::addFriendWidget(FriendWidget* w, Status s)
     onAddFriendWidget(w);
 }
 
+void CategoryWidget::removeFriendWidget(FriendWidget* w, Status s)
+{
+    listLayout->removeFriendWidget(w, s);
+    updateStatus();
+}
+
 void CategoryWidget::updateStatus()
 {
     statusLabel->setText(QString::number(listLayout->friendOnlineCount()) + QStringLiteral(" / ") + QString::number(listLayout->friendTotalCount()));

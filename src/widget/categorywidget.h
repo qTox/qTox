@@ -40,6 +40,7 @@ public:
     void setName(const QString &name);
 
     void addFriendWidget(FriendWidget* w, Status s);
+    void removeFriendWidget(FriendWidget* w, Status s);
     void updateStatus();
 
     bool hasChatrooms() const;

@@ -603,6 +603,7 @@ void Core::acceptFriendRequest(const QString& userId)
     {
         profile.saveToxSave();
         emit friendAdded(friendId, userId);
+        emit friendshipChanged(friendId);
     }
 }
 
@@ -644,6 +645,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
 
             HistoryKeeper::getInstance()->addChatEntry(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true);
             emit friendAdded(friendId, userId);
+            emit friendshipChanged(friendId);
         }
     }
     profile.saveToxSave();

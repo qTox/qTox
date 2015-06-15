@@ -50,6 +50,7 @@ public:
 
     void addGroupWidget(GroupWidget* widget);
     void addFriendWidget(FriendWidget* w, Status s, int circleIndex);
+    void removeFriendWidget(FriendWidget* w);
     void addCircleWidget(int id);
     void addCircleWidget(FriendWidget* widget = nullptr);
     void removeCircleWidget(CircleWidget* widget);
