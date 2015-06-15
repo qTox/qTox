@@ -283,6 +283,29 @@ void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleInde
         circleWidget->addFriendWidget(w, s);
 }
 
+void FriendListWidget::removeFriendWidget(FriendWidget* w)
+{
+    Friend* contact = FriendList::findFriend(w->friendId);
+    if (mode == Activity)
+    {
+        QDate activityDate = Settings::getInstance().getFriendActivity(contact->getToxId());
+        Time time = getTime(activityDate);
+        CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
+        categoryWidget->removeFriendWidget(w, contact->getStatus());
+        categoryWidget->setVisible(categoryWidget->hasChatrooms());
+    }
+    else
+    {
+        int id = Settings::getInstance().getFriendCircleID(contact->getToxId());
+        CircleWidget* circleWidget = CircleWidget::getFromID(id);
+        if (circleWidget != nullptr)
+        {
+            circleWidget->removeFriendWidget(w, contact->getStatus());
+            Widget::getInstance()->searchCircle(circleWidget);
+        }
+    }
+}
+
 void FriendListWidget::addCircleWidget(int id)
 {
     createCircleWidget(id);

@@ -678,6 +678,12 @@ void Widget::addFriendFailed(const QString&, const QString& errorInfo)
     QMessageBox::critical(0,"Error",info);
 }
 
+void Widget::onFriendshipChanged(int friendId)
+{
+    Friend* who = FriendList::findFriend(friendId);
+    updateFriendActivity(who);
+}
+
 void Widget::onFriendStatusChanged(int friendId, Status status)
 {
     Friend* f = FriendList::findFriend(friendId);
@@ -919,6 +925,8 @@ void Widget::removeFriend(Friend* f, bool fake)
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
+
+    contactListWidget->removeFriendWidget(f->getFriendWidget());
 
     FriendList::removeFriend(f->getFriendID(), fake);
     Nexus::getCore()->removeFriend(f->getFriendID(), fake);

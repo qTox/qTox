@@ -30,6 +30,7 @@ public:
     explicit FriendListLayout(QWidget* parent);
 
     void addFriendWidget(FriendWidget* widget, Status s);
+    void removeFriendWidget(FriendWidget* widget, Status s);
     int indexOfFriendWidget(FriendWidget* widget, bool online) const;
     void moveFriendWidgets(FriendListWidget* listWidget);
     int friendOnlineCount() const;

@@ -52,6 +52,14 @@ void FriendListLayout::addFriendWidget(FriendWidget* w, Status s)
     friendOnlineLayout.addSortedWidget(w);
 }
 
+void FriendListLayout::removeFriendWidget(FriendWidget *widget, Status s)
+{
+    if (s == Status::Offline)
+        friendOfflineLayout.removeSortedWidget(widget);
+    else
+        friendOnlineLayout.removeSortedWidget(widget);
+}
+
 int FriendListLayout::indexOfFriendWidget(FriendWidget* widget, bool online) const
 {
     if (online)
