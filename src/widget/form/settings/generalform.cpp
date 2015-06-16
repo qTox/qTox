@@ -87,6 +87,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
+    bodyUI->cbSeparateWindow->setChecked(Settings::getInstance().getSeparateWindow());
     bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
 
     for (auto entry : SmileyPack::listSmileyPacks())
@@ -179,6 +180,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
     connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
     connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
+    connect(bodyUI->cbSeparateWindow, &QCheckBox::stateChanged, this, &GeneralForm::onSeparateWindowChanged);
     connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
 
     // prevent stealing mouse whell scroll
@@ -428,6 +430,12 @@ void GeneralForm::onCompactLayout()
 {
     Settings::getInstance().setCompactLayout(bodyUI->cbCompactLayout->isChecked());
     emit parent->compactToggled(bodyUI->cbCompactLayout->isChecked());
+}
+
+void GeneralForm::onSeparateWindowChanged()
+{
+    Settings::getInstance().setSeparateWindow(bodyUI->cbSeparateWindow->isChecked());
+    emit parent->separateWindowToggled(bodyUI->cbSeparateWindow->isChecked());
 }
 
 void GeneralForm::onGroupchatPositionChanged()

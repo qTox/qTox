@@ -304,10 +304,16 @@ void FriendWidget::search(const QString &searchString, bool hide)
         circleWidget->search(searchString);
 }
 
-void FriendWidget::setChatForm(Ui::MainWindow &ui)
+bool FriendWidget::chatFormIsSet() const
 {
     Friend* f = FriendList::findFriend(friendId);
-    f->getChatForm()->show(ui);
+    return f->getChatForm()->isVisible();
+}
+
+void FriendWidget::setChatForm(ContentLayout* contentLayout)
+{
+    Friend* f = FriendList::findFriend(friendId);
+    f->getChatForm()->show(contentLayout);
 }
 
 void FriendWidget::resetEventFlags()

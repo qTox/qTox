@@ -26,10 +26,7 @@ class CroppingLabel;
 class MaskablePixmapWidget;
 class QVBoxLayout;
 class QHBoxLayout;
-
-namespace Ui {
-    class MainWindow;
-}
+class ContentLayout;
 
 class GenericChatroomWidget : public GenericChatItemWidget
 {
@@ -40,7 +37,8 @@ public:
     virtual void setAsActiveChatroom() = 0;
     virtual void setAsInactiveChatroom() = 0;
     virtual void updateStatusLight() = 0;
-    virtual void setChatForm(Ui::MainWindow &) = 0;
+    virtual bool chatFormIsSet() const = 0;
+    virtual void setChatForm(ContentLayout* contentLayout) = 0;
     virtual void resetEventFlags() = 0;
     virtual QString getStatusString() = 0;
 

@@ -19,7 +19,6 @@
 
 #include "settingswidget.h"
 #include "src/widget/widget.h"
-#include "ui_mainwindow.h"
 #include "src/video/camerasource.h"
 #include "src/widget/form/settings/generalform.h"
 #include "src/widget/form/settings/privacyform.h"
@@ -27,12 +26,14 @@
 #include "src/widget/form/settings/advancedform.h"
 #include "src/widget/form/settings/aboutform.h"
 #include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
 #include <QTabWidget>
+#include <QLabel>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent)
 {
-    body = new QWidget(this);
+    body = new QWidget();
     QVBoxLayout* bodyLayout = new QVBoxLayout();
     body->setLayout(bodyLayout);
 
@@ -86,10 +87,20 @@ void SettingsWidget::showAbout()
     onTabChanged(settingsWidgets->count() - 1);
 }
 
-void SettingsWidget::show(Ui::MainWindow& ui)
+bool SettingsWidget::isShown() const
 {
-    ui.mainContent->layout()->addWidget(body);
-    ui.mainHead->layout()->addWidget(head);
+    if (body->isVisible())
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void SettingsWidget::show(ContentLayout* contentLayout)
+{
+    contentLayout->mainContent->layout()->addWidget(body);
+    contentLayout->mainHead->layout()->addWidget(head);
     body->show();
     head->show();
     onTabChanged(settingsWidgets->currentIndex());

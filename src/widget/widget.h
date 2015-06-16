@@ -51,6 +51,7 @@ class SettingsWidget;
 class AddFriendForm;
 class CircleWidget;
 class QActionGroup;
+class ContentLayout;
 
 class Widget final : public QMainWindow
 {
@@ -68,6 +69,7 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
+    ContentLayout* createContentDialog(const QString& title) const;
 
     static void confirmExecutableOpen(const QFileInfo file);
 
@@ -87,6 +89,8 @@ public:
 
 public slots:
     void onSettingsClicked();
+    void onSeparateWindowClicked(bool separate);
+    void onSeparateWindowChanged(bool separate, bool clicked);
     void setWindowTitle(const QString& title);
     void forceShow();
     void onConnected();
@@ -185,7 +189,7 @@ private:
 
 private:
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
-    void hideMainForms();
+    void hideMainForms(GenericChatroomWidget* chatroomWidget);
     Group *createGroup(int groupId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
@@ -225,6 +229,7 @@ private:
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
+    ContentLayout* contentLayout;
     AddFriendForm *addFriendForm;
     ProfileForm *profileForm;
     SettingsWidget *settingsWidget;

@@ -30,7 +30,8 @@ public:
     virtual void setAsInactiveChatroom() final override;
     virtual void setAsActiveChatroom() final override;
     virtual void updateStatusLight() final override;
-    virtual void setChatForm(Ui::MainWindow &) final override;
+    virtual bool chatFormIsSet() const final override;
+    virtual void setChatForm(ContentLayout* contentLayout) override;
     virtual void resetEventFlags() final override;
     virtual QString getStatusString() final override;
     void setName(const QString& name);
