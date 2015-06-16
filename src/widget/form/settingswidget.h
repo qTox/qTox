@@ -32,8 +32,7 @@ class PrivacyForm;
 class AVForm;
 class QLabel;
 class QTabWidget;
-
-namespace Ui {class MainWindow;}
+class ContentLayout;
 
 class SettingsWidget : public QWidget
 {
@@ -42,7 +41,8 @@ public:
     SettingsWidget(QWidget* parent = nullptr);
     ~SettingsWidget();
 
-    void show(Ui::MainWindow &ui);
+    bool isShown() const;
+    void show(ContentLayout* contentLayout);
     void setBodyHeadStyle(QString style);
 
     void showAbout();
@@ -50,6 +50,7 @@ public:
 signals:
     void setShowSystemTray(bool newValue);
     void compactToggled(bool compact);
+    void separateWindowToggled(bool separateWindow);
     void groupchatPositionToggled(bool groupchatPosition);
 
 private slots:

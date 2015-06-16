@@ -1009,9 +1009,9 @@ void ChatForm::setFriendTyping(bool isTyping)
     text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
 }
 
-void ChatForm::show(Ui::MainWindow &ui)
+void ChatForm::show(ContentLayout* contentLayout)
 {
-    GenericChatForm::show(ui);
+    GenericChatForm::show(contentLayout);
 
     if (callConfirm)
         callConfirm->show();

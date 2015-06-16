@@ -18,9 +18,9 @@
 */
 
 #include "filesform.h"
-#include "ui_mainwindow.h"
 #include "src/widget/widget.h"
 #include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
 #include <QFileInfo>
 
 FilesForm::FilesForm()
@@ -54,10 +54,20 @@ FilesForm::~FilesForm()
     head->deleteLater();
 }
 
-void FilesForm::show(Ui::MainWindow& ui)
+bool FilesForm::isShown() const
 {
-    ui.mainContent->layout()->addWidget(&main);
-    ui.mainHead->layout()->addWidget(head);
+    if (main.isVisible())
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void FilesForm::show(ContentLayout* contentLayout)
+{
+    contentLayout->mainContent->layout()->addWidget(&main);
+    contentLayout->mainHead->layout()->addWidget(head);
     main.show();
     head->show();
 }

@@ -32,7 +32,8 @@ public:
     virtual void setAsActiveChatroom() override;
     virtual void setAsInactiveChatroom() override;
     virtual void updateStatusLight() override;
-    virtual void setChatForm(Ui::MainWindow &) override;
+    virtual bool chatFormIsSet() const override;
+    virtual void setChatForm(ContentLayout* contentLayout) override;
     virtual void resetEventFlags() override;
     virtual QString getStatusString() override;
     void search(const QString &searchString, bool hide = false);

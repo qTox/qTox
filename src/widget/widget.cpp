@@ -18,6 +18,7 @@
 */
 
 #include "widget.h"
+#include "contentlayout.h"
 #include "ui_mainwindow.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
@@ -68,6 +69,7 @@
 #include <QList>
 #include <QDesktopServices>
 #include <QProcess>
+#include <QWindow>
 #include <tox/tox.h>
 
 #ifdef Q_OS_MAC
@@ -112,11 +114,6 @@ void Widget::init()
     timer->start(1000);
     offlineMsgTimer = new QTimer();
     offlineMsgTimer->start(15000);
-
-    //restore window state
-    restoreGeometry(Settings::getInstance().getWindowGeometry());
-    restoreState(Settings::getInstance().getWindowState());
-    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
 
     statusOnline = new QAction(this);
     statusOnline->setIcon(getStatusIcon(Status::Online, 10, 10));
@@ -176,7 +173,7 @@ void Widget::init()
 
     ui->searchContactFilterBox->setMenu(filterMenu);
 
-    ui->mainContent->setLayout(new QVBoxLayout());
+    /*ui->mainContent->setLayout(new QVBoxLayout());
     ui->mainHead->setLayout(new QVBoxLayout());
     ui->mainHead->layout()->setMargin(0);
     ui->mainHead->layout()->setSpacing(0);
@@ -186,11 +183,11 @@ void Widget::init()
     {
         ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
         ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-    }
+    }*/
 
 #ifndef Q_OS_MAC
-    ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
-    ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
+    //ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
+    //ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
     ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
     ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 #endif
@@ -331,15 +328,25 @@ void Widget::init()
     });
 #endif
 
-    addFriendForm->show(*ui);
-    setWindowTitle(tr("Add friend"));
+    contentLayout = nullptr;
+    onSeparateWindowChanged(Settings::getInstance().getSeparateWindow(), false);
+
+    if (contentLayout != nullptr)
+        onAddClicked();
+
     ui->addButton->setCheckable(true);
     ui->transferButton->setCheckable(true);
     ui->settingsButton->setCheckable(true);
     setActiveToolMenuButton(Widget::AddButton);
 
+    //restore window state
+    restoreGeometry(Settings::getInstance().getWindowGeometry());
+    restoreState(Settings::getInstance().getWindowState());
+    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
+
     connect(settingsWidget, &SettingsWidget::compactToggled, contactListWidget, &FriendListWidget::onCompactChanged);
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
+    connect(settingsWidget, &SettingsWidget::separateWindowToggled, this, &Widget::onSeparateWindowClicked);
 #if (AUTOUPDATE_ENABLED)
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
@@ -404,13 +411,13 @@ Widget::~Widget()
     if (icon)
         icon->hide();
 
-    hideMainForms();
     delete profileForm;
     delete settingsWidget;
     delete addFriendForm;
     delete filesForm;
     delete timer;
     delete offlineMsgTimer;
+    delete contentLayout;
 
     FriendList::clear();
     GroupList::clear();
@@ -517,6 +524,51 @@ void Widget::onStatusSet(Status status)
     updateIcons();
 }
 
+void Widget::onSeparateWindowClicked(bool separate)
+{
+    onSeparateWindowChanged(separate, true);
+}
+
+void Widget::onSeparateWindowChanged(bool separate, bool clicked)
+{
+    if (!separate)
+    {
+        QWindowList windowList = QGuiApplication::topLevelWindows();
+        for (QWindow* window : windowList)
+        {
+            qDebug() << window->objectName();
+            if (window->objectName() == "detachedWindow")
+                window->close();
+        }
+
+        QWidget* contentWidget = new QWidget(this);
+        contentWidget->setObjectName("yolo");
+        contentLayout = new ContentLayout(contentWidget);
+        ui->mainSplitter->addWidget(contentWidget);
+
+        clicked = true;
+        setMinimumWidth(775);
+    }
+    else
+    {
+        if (contentLayout != nullptr)
+        {
+            contentLayout->parentWidget()->hide();
+            contentLayout->parentWidget()->deleteLater();
+            contentLayout->deleteLater();
+            contentLayout = nullptr;
+        }
+
+        setMinimumWidth(ui->tooliconsZone->sizeHint().width());
+
+        if (clicked)
+            resize(ui->statusPanel->width(), height());
+    }
+
+    if (clicked)
+        onSettingsClicked();
+}
+
 void Widget::setWindowTitle(const QString& title)
 {
     QString tmp = title;
@@ -533,11 +585,21 @@ void Widget::forceShow()
 
 void Widget::onAddClicked()
 {
-    hideMainForms();
-    addFriendForm->show(*ui);
-    setWindowTitle(tr("Add friend"));
-    setActiveToolMenuButton(Widget::AddButton);
-    activeChatroomWidget = nullptr;
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!addFriendForm->isShown())
+        {
+            addFriendForm->show(createContentDialog(tr("Add friend")));
+            setActiveToolMenuButton(Widget::None);
+        }
+    }
+    else
+    {
+        hideMainForms(nullptr);
+        addFriendForm->show(contentLayout);
+        setWindowTitle(tr("Add friend"));
+        setActiveToolMenuButton(Widget::AddButton);
+    }
 }
 
 void Widget::onGroupClicked()
@@ -547,11 +609,21 @@ void Widget::onGroupClicked()
 
 void Widget::onTransferClicked()
 {
-    hideMainForms();
-    filesForm->show(*ui);
-    setWindowTitle(tr("File transfers"));
-    setActiveToolMenuButton(Widget::TransferButton);
-    activeChatroomWidget = nullptr;
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!filesForm->isShown())
+        {
+            filesForm->show(createContentDialog(tr("File transfers")));
+            setActiveToolMenuButton(Widget::None);
+        }
+    }
+    else
+    {
+        hideMainForms(nullptr);
+        filesForm->show(contentLayout);
+        setWindowTitle(tr("File transfers"));
+        setActiveToolMenuButton(Widget::TransferButton);
+    }
 }
 
 void Widget::confirmExecutableOpen(const QFileInfo file)
@@ -626,33 +698,39 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 
 void Widget::onSettingsClicked()
 {
-    hideMainForms();
-    settingsWidget->show(*ui);
-    setWindowTitle(tr("Settings"));
-    setActiveToolMenuButton(Widget::SettingButton);
-    activeChatroomWidget = nullptr;
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!settingsWidget->isShown())
+        {
+            settingsWidget->show(createContentDialog(tr("Settings")));
+            setActiveToolMenuButton(Widget::None);
+        }
+    }
+    else
+    {
+        hideMainForms(nullptr);
+        settingsWidget->show(contentLayout);
+        setWindowTitle(tr("Settings"));
+        setActiveToolMenuButton(Widget::SettingButton);
+    }
 }
 
 void Widget::showProfile() // onAvatarClicked, onUsernameClicked
 {
-    hideMainForms();
-    profileForm->show(*ui);
+    hideMainForms(nullptr);
+    profileForm->show(contentLayout);
     setWindowTitle(tr("Profile"));
-    activeChatroomWidget = nullptr;
 }
 
-void Widget::hideMainForms()
+void Widget::hideMainForms(GenericChatroomWidget* chatroomWidget)
 {
     setActiveToolMenuButton(Widget::None);
-    QLayoutItem* item;
-    while ((item = ui->mainHead->layout()->takeAt(0)) != 0)
-        item->widget()->hide();
-
-    while ((item = ui->mainContent->layout()->takeAt(0)) != 0)
-        item->widget()->hide();
+    contentLayout->clear();
 
     if (activeChatroomWidget != nullptr)
         activeChatroomWidget->setAsInactiveChatroom();
+
+    activeChatroomWidget = chatroomWidget;
 }
 
 void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
@@ -860,21 +938,23 @@ void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
 {
-    hideMainForms();
-
-    if (activeChatroomWidget != nullptr)
-        activeChatroomWidget->setAsInactiveChatroom();
-    activeChatroomWidget = widget;
-
-    widget->setAsActiveChatroom();
-    widget->setChatForm(*ui);
-    setWindowTitle(widget->getName());
-    widget->resetEventFlags();
-    widget->updateStatusLight();
-    QString windowTitle = widget->getName();
-    if (!widget->getStatusString().isNull())
-        windowTitle += " (" + widget->getStatusString() + ")";
-    setWindowTitle(windowTitle);
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!widget->chatFormIsSet())
+            widget->setChatForm(createContentDialog(widget->getName()));
+    }
+    else
+    {
+        widget->setChatForm(contentLayout);
+        setWindowTitle(widget->getName());
+        widget->setAsActiveChatroom();
+        widget->resetEventFlags();
+        widget->updateStatusLight();
+        QString windowTitle = widget->getName();
+        if (!widget->getStatusString().isNull())
+            windowTitle += " (" + widget->getStatusString() + ")";
+        setWindowTitle(windowTitle);
+    }
 }
 
 void Widget::onFriendMessageReceived(int friendId, const QString& message, bool isAction)
@@ -1017,7 +1097,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     Nexus::getCore()->removeFriend(f->getFriendID(), fake);
 
     delete f;
-    if (ui->mainHead->layout()->isEmpty())
+    if (contentLayout->mainHead->layout()->isEmpty())
         onAddClicked();
 
     contactListWidget->reDraw();
@@ -1039,6 +1119,23 @@ void Widget::clearContactsList()
     QList<Group*> groups = GroupList::getAllGroups();
     for (Group* g : groups)
         removeGroup(g, true);
+}
+
+ContentLayout* Widget::createContentDialog(const QString &title) const
+{
+    QDialog* dialog = new QDialog();
+    ContentLayout* contentLayout = new ContentLayout(dialog);
+
+    dialog->setObjectName("detached");
+    dialog->setLayout(contentLayout);
+    dialog->layout()->setMargin(0);
+    dialog->layout()->setSpacing(0);
+    dialog->setMinimumSize(775, 420);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->setWindowTitle(title);
+    dialog->show();
+
+    return contentLayout;
 }
 
 void Widget::copyFriendIdToClipboard(int friendId)
@@ -1172,7 +1269,7 @@ void Widget::removeGroup(Group* g, bool fake)
     GroupList::removeGroup(g->getGroupId(), fake);
     Nexus::getCore()->removeGroup(g->getGroupId(), fake);
     delete g;
-    if (ui->mainHead->layout()->isEmpty())
+    if (contentLayout->mainHead->layout()->isEmpty())
         onAddClicked();
 
     contactListWidget->reDraw();

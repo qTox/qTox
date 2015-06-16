@@ -174,6 +174,7 @@ void Settings::loadGlobal()
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
+        separateWindow = s.value("separateWindow", false).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 
@@ -375,6 +376,7 @@ void Settings::saveGlobal()
         s.setValue("notifySound", notifySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
+        s.setValue("separateWindow", separateWindow);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
@@ -1322,6 +1324,18 @@ void Settings::setCompactLayout(bool value)
 {
     QMutexLocker locker{&bigLock};
     compactLayout = value;
+}
+
+bool Settings::getSeparateWindow() const
+{
+    QMutexLocker locker{&bigLock};
+    return separateWindow;
+}
+
+void Settings::setSeparateWindow(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    separateWindow = value;
 }
 
 bool Settings::getGroupchatPosition() const

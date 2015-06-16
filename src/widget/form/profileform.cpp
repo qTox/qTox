@@ -21,11 +21,11 @@
 #include "src/nexus.h"
 #include "ui_profileform.h"
 #include "profileform.h"
-#include "ui_mainwindow.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/form/setpassworddialog.h"
 #include "src/persistence/settings.h"
+#include "src/widget/contentlayout.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
@@ -134,10 +134,10 @@ ProfileForm::~ProfileForm()
     head->deleteLater();
 }
 
-void ProfileForm::show(Ui::MainWindow &ui)
+void ProfileForm::show(ContentLayout* contentLayout)
 {
-    ui.mainHead->layout()->addWidget(head);
-    ui.mainContent->layout()->addWidget(this);
+    contentLayout->mainHead->layout()->addWidget(head);
+    contentLayout->mainContent->layout()->addWidget(this);
     head->show();
     QWidget::show();
     prFileLabelUpdate();

@@ -137,10 +137,16 @@ void GroupWidget::editName()
     nameLabel->editBegin();
 }
 
-void GroupWidget::setChatForm(Ui::MainWindow &ui)
+bool GroupWidget::chatFormIsSet() const
 {
     Group* g = GroupList::findGroup(groupId);
-    g->getChatForm()->show(ui);
+    return g->getChatForm()->isVisible();
+}
+
+void GroupWidget::setChatForm(ContentLayout* contentLayout)
+{
+    Group* g = GroupList::findGroup(groupId);
+    g->getChatForm()->show(contentLayout);
 }
 
 void GroupWidget::resetEventFlags()

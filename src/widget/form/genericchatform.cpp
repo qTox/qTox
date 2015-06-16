@@ -18,7 +18,6 @@
 */
 
 #include "genericchatform.h"
-#include "ui_mainwindow.h"
 
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -42,6 +41,9 @@
 #include "src/chatlog/content/timestamp.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
+#include "src/widget/tool/croppinglabel.h"
+#include <QPushButton>
 
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent)
@@ -255,10 +257,10 @@ void GenericChatForm::setName(const QString &newName)
     nameLabel->setToolTip(newName); // for overlength names
 }
 
-void GenericChatForm::show(Ui::MainWindow &ui)
+void GenericChatForm::show(ContentLayout* contentLayout)
 {
-    ui.mainContent->layout()->addWidget(this);
-    ui.mainHead->layout()->addWidget(headWidget);
+    contentLayout->mainContent->layout()->addWidget(this);
+    contentLayout->mainHead->layout()->addWidget(headWidget);
     headWidget->show();
     QWidget::show();
 }

@@ -495,7 +495,8 @@ SOURCES += \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
-    src/widget/tool/removefrienddialog.cpp
+    src/widget/tool/removefrienddialog.cpp \
+    src/widget/contentlayout.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -539,4 +540,5 @@ HEADERS += \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
     src/widget/categorywidget.h \
+    src/widget/contentlayout.h \
     src/widget/tool/removefrienddialog.h

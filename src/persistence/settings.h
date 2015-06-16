@@ -237,6 +237,9 @@ public:
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
+    bool getSeparateWindow() const;
+    void setSeparateWindow(bool value);
+
     bool getGroupchatPosition() const;
     void setGroupchatPosition(bool value);
 
@@ -295,6 +298,7 @@ private:
     bool fauxOfflineMessaging;
     bool compactLayout;
     bool groupchatPosition;
+    bool separateWindow;
     bool enableIPv6;
     QString translation;
     bool makeToxPortable;

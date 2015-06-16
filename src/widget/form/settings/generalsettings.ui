@@ -375,6 +375,13 @@ instead of system taskbar.</string>
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="cbSeparateWindow">
+            <property name="text">
+             <string>Use separate windows for friend list.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="cbGroupchatPosition">
             <property name="toolTip">
              <string comment="toolTip for groupchat positioning">If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</string>
