@@ -546,9 +546,12 @@ void FriendListWidget::reDraw()
 
 CircleWidget* FriendListWidget::createCircleWidget(int id)
 {
+    bool isNew = (id == -1);
+
     if (id == -1)
         id = Settings::getInstance().addCircle();
 
+    // Stop, after it has been created. Code after this is for displaying.
     if (mode == Activity)
         return nullptr;
 
@@ -557,6 +560,10 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
     circleWidget->show(); // Avoid flickering.
+
+    if (isNew)
+        circleWidget->editName();
+
     return circleWidget;
 }
 

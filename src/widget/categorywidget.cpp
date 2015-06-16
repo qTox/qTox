@@ -81,6 +81,7 @@ void CategoryWidget::setExpanded(bool isExpanded)
 {
     expanded = isExpanded;
     listWidget->setVisible(isExpanded);
+    listWidget->move(1000, 1000);
     if (isExpanded)
     {
         statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
@@ -89,6 +90,15 @@ void CategoryWidget::setExpanded(bool isExpanded)
     {
         statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
     }
+
+    // The listWidget will recieve a enterEvent for some reason if now visible.
+    // Using the following, we prevent that.
+    hide();
+    show();
+
+    // However, the above also removes the hover, so we need to reenable it.
+    if (underMouse())
+        setContainerAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
 
     onExpand();
 }
