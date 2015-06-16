@@ -26,9 +26,10 @@ class CircleWidget final : public CategoryWidget
 {
     Q_OBJECT
 public:
-    CircleWidget(FriendListWidget* parent = 0, int id = -1);
+    CircleWidget(FriendListWidget* parent, int id);
     ~CircleWidget();
 
+    void editName();
     static CircleWidget* getFromID(int id);
 
 signals:

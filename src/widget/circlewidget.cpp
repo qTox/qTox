@@ -21,14 +21,11 @@
 #include "friendwidget.h"
 #include "friendlistwidget.h"
 #include "tool/croppinglabel.h"
-#include "src/widget/style.h"
-
 #include "src/persistence/settings.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
 #include "widget.h"
 #include <QVariant>
-#include <QLabel>
 #include <QBoxLayout>
 #include <QMouseEvent>
 #include <QDragEnterEvent>
@@ -38,14 +35,12 @@
 
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
-CircleWidget::CircleWidget(FriendListWidget* parent, int id_)
+CircleWidget::CircleWidget(FriendListWidget* parent, int id)
     : CategoryWidget(parent)
-    , id(id_)
+    , id(id)
 {
-    if (id != -1)
-    {
-        setName(Settings::getInstance().getCircleName(id));
-    }
+    setName(Settings::getInstance().getCircleName(id));
+    circleList[id] = this;
 
     connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
     {
@@ -59,23 +54,6 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id_)
             nameLabel->minimizeMaximumWidth();
     });
 
-    bool isNew = false;
-    auto circleIt = circleList.find(id);
-    if (circleIt == circleList.end())
-    {
-        if (id == -1)
-        {
-            isNew = true;
-            id = Settings::getInstance().addCircle();
-            nameLabel->setText(tr("Circle #%1").arg(id + 1));
-            Settings::getInstance().setCircleName(id, nameLabel->fullText());
-        }
-    }
-    circleList[id] = this;
-
-    if (isNew)
-        editName();
-
     setExpanded(Settings::getInstance().getCircleExpanded(id));
     updateStatus();
 }
@@ -83,6 +61,11 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id_)
 CircleWidget::~CircleWidget()
 {
     circleList.remove(id);
+}
+
+void CircleWidget::editName()
+{
+    CategoryWidget::editName();
 }
 
 CircleWidget* CircleWidget::getFromID(int id)
@@ -104,7 +87,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
         editName();
     else if (selectedItem == removeAction)
     {
-        FriendListWidget* friendList = dynamic_cast<FriendListWidget*>(parentWidget());
+        FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
         moveFriendWidgets(friendList);
 
         friendList->removeCircleWidget(this);
