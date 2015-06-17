@@ -26,6 +26,8 @@
 #include <QBoxLayout>
 #include <QMouseEvent>
 
+#include <QApplication>
+
 void emitChatroomWidget(QLayout* layout, int index)
 {
     GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(layout->itemAt(index)->widget());
@@ -68,7 +70,7 @@ CategoryWidget::CategoryWidget(QWidget* parent)
 
     onCompactChanged(isCompact());
 
-    setExpanded(true);
+    setExpanded(true, false);
     updateStatus();
 }
 
@@ -77,38 +79,41 @@ bool CategoryWidget::isExpanded() const
     return expanded;
 }
 
-void CategoryWidget::setExpanded(bool isExpanded)
+void CategoryWidget::setExpanded(bool isExpanded, bool save)
 {
     expanded = isExpanded;
+    setMouseTracking(true);
     listWidget->setVisible(isExpanded);
-    listWidget->move(1000, 1000);
+
     if (isExpanded)
-    {
         statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
-    }
     else
-    {
         statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
-    }
 
     // The listWidget will recieve a enterEvent for some reason if now visible.
     // Using the following, we prevent that.
-    hide();
-    show();
+    QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
+    container->hide();
+    container->show();
 
-    // However, the above also removes the hover, so we need to reenable it.
-    if (underMouse())
-        setContainerAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
-
-    onExpand();
+    if (save)
+        onExpand();
 }
 
-void CategoryWidget::setName(const QString &name)
+void CategoryWidget::leaveEvent(QEvent *event)
+{
+    event->ignore();
+}
+
+void CategoryWidget::setName(const QString &name, bool save)
 {
     nameLabel->setText(name);
+
     if (isCompact())
         nameLabel->minimizeMaximumWidth();
-    onSetName();
+
+    if (save)
+        onSetName();
 }
 
 void CategoryWidget::editName()

@@ -364,7 +364,6 @@ void Core::start()
     if (isReady())
         GUI::setEnabled(true);
 
-
     process(); // starts its own timer
 }
 

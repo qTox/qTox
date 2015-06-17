@@ -198,6 +198,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
                 circle->setExpanded(true);
                 Widget::getInstance()->searchCircle(circle);
+                Settings::getInstance().savePersonal();
             }
             else
                 Settings::getInstance().setFriendCircleID(id, circleActions[selectedItem]);

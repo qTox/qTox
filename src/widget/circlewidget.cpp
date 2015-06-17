@@ -39,7 +39,7 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
     : CategoryWidget(parent)
     , id(id)
 {
-    setName(Settings::getInstance().getCircleName(id));
+    setName(Settings::getInstance().getCircleName(id), false);
     circleList[id] = this;
 
     connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
@@ -54,7 +54,7 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
             nameLabel->minimizeMaximumWidth();
     });
 
-    setExpanded(Settings::getInstance().getCircleExpanded(id));
+    setExpanded(Settings::getInstance().getCircleExpanded(id), false);
     updateStatus();
 }
 
@@ -118,7 +118,7 @@ void CircleWidget::dropEvent(QDropEvent* event)
 {
     if (event->mimeData()->hasFormat("friend"))
     {
-        setExpanded(true);
+        setExpanded(true, false);
 
         int friendId = event->mimeData()->data("friend").toInt();
         Friend* f = FriendList::findFriend(friendId);
@@ -131,6 +131,7 @@ void CircleWidget::dropEvent(QDropEvent* event)
         CircleWidget* circleWidget = getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
 
         addFriendWidget(widget, f->getStatus());
+        Settings::getInstance().savePersonal();
 
         if (circleWidget != nullptr)
         {
@@ -150,6 +151,7 @@ void CircleWidget::onSetName()
 void CircleWidget::onExpand()
 {
     Settings::getInstance().setCircleExpanded(id, isExpanded());
+    Settings::getInstance().savePersonal();
 }
 
 void CircleWidget::onAddFriendWidget(FriendWidget* w)

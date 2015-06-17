@@ -1312,7 +1312,6 @@ void Settings::setFriendCircleID(const ToxId &id, int circleID)
         fp.circleID = circleID;
         friendLst[key] = fp;
     }
-    savePersonal();
 }
 
 QDate Settings::getFriendActivity(const ToxId &id) const
@@ -1426,7 +1425,6 @@ bool Settings::getCircleExpanded(int id) const
 void Settings::setCircleExpanded(int id, bool expanded)
 {
     circleLst[id].expanded = expanded;
-    savePersonal();
 }
 
 int Settings::removeCircle(int id)
