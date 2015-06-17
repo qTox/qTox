@@ -44,6 +44,7 @@ int GenericChatItemLayout::indexOfSortedWidget(GenericChatItemWidget* widget) co
         return -1;
 
     int index = indexOfClosestSortedWidget(widget);
+
     if (index >= layout->count())
         return -1;
 
@@ -52,6 +53,7 @@ int GenericChatItemLayout::indexOfSortedWidget(GenericChatItemWidget* widget) co
 
     if (atMid == widget)
         return index;
+
     return -1;
 }
 
@@ -64,6 +66,7 @@ void GenericChatItemLayout::removeSortedWidget(GenericChatItemWidget* widget)
 {
     if (layout->isEmpty())
         return;
+
     int index = indexOfClosestSortedWidget(widget);
 
     if (layout->itemAt(index) == nullptr)
@@ -104,6 +107,7 @@ int GenericChatItemLayout::indexOfClosestSortedWidget(GenericChatItemWidget* wid
 
         bool lessThan = false;
         int compareValue = atMid->getName().localeAwareCompare(widget->getName());
+
         if (compareValue < 0)
             lessThan = true;
         else if (compareValue == 0)

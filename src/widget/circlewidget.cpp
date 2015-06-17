@@ -71,8 +71,10 @@ void CircleWidget::editName()
 CircleWidget* CircleWidget::getFromID(int id)
 {
     auto circleIt = circleList.find(id);
+
     if (circleIt != circleList.end())
         return circleIt.value();
+
     return nullptr;
 }
 
@@ -84,7 +86,9 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
     QAction* selectedItem = menu.exec(mapToGlobal(event->pos()));
     if (selectedItem == renameAction)
+    {
         editName();
+    }
     else if (selectedItem == removeAction)
     {
         FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
@@ -106,6 +110,7 @@ void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
 {
     if (event->mimeData()->hasFormat("friend"))
         event->acceptProposedAction();
+
     setContainerAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
 }
 
@@ -169,17 +174,15 @@ void CircleWidget::updateID(int index)
     for (int i = 0; i < friendOnlineLayout()->count(); ++i)
     {
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i));
+
         if (friendWidget != nullptr)
-        {
             Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
-        }
     }
     for (int i = 0; i < friendOfflineLayout()->count(); ++i)
     {
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i));
+
         if (friendWidget != nullptr)
-        {
             Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
-        }
     }
 }

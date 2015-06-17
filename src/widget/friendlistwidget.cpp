@@ -58,22 +58,27 @@ Time getTime(const QDate date)
         return Never;
 
     QDate today = QDate::currentDate();
+
     if (date == today)
         return Today;
 
     today = today.addDays(-1);
+
     if (date == today)
         return Yesterday;
 
     today = today.addDays(-6);
+
     if (date >= today)
         return ThisWeek;
 
     today = today.addDays(-today.day() + 1); // Go to the beginning of the month.
+
     if (last7DaysWasLastMonth())
     {
         if (date >= today)
             return ThisMonth;
+
         today = today.addMonths(-1);
     }
 
@@ -81,18 +86,22 @@ Time getTime(const QDate date)
         return Month1Ago;
 
     today = today.addMonths(-1);
+
     if (date >= today)
         return Month2Ago;
 
     today = today.addMonths(-1);
+
     if (date >= today)
         return Month3Ago;
 
     today = today.addMonths(-1);
+
     if (date >= today)
         return Month4Ago;
 
     today = today.addMonths(-1);
+
     if (date >= today)
         return Month5Ago;
 
@@ -162,9 +171,7 @@ void FriendListWidget::setMode(Mode mode)
         circleLayout->getLayout()->setMargin(0);
 
         for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
-        {
             addCircleWidget(i);
-        }
 
         QList<Friend*> friendList = FriendList::getAllFriends();
         for (Friend* contact : friendList)
@@ -366,10 +373,13 @@ void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnl
 {
     groupLayout.search(searchString, hideGroups);
     listLayout->searchChatrooms(searchString, hideOnline, hideOffline);
-    for (int i = 0; i != circleLayout->getLayout()->count(); ++i)
+    if (circleLayout != nullptr)
     {
-        CircleWidget* circleWidget = static_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget());
-        circleWidget->search(searchString, true, hideOnline, hideOffline);
+        for (int i = 0; i != circleLayout->getLayout()->count(); ++i)
+        {
+            CircleWidget* circleWidget = static_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget());
+            circleWidget->search(searchString, true, hideOnline, hideOffline);
+        }
     }
 }
 
@@ -409,12 +419,57 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
     if (activeChatroomWidget == nullptr)
         return;
 
-
     int index = -1;
-    QLayout* currentLayout = nullptr;
-
-    CircleWidget* circleWidget = nullptr;
     FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(activeChatroomWidget);
+
+    if (mode == Activity)
+    {
+        if (friendWidget == nullptr)
+            return;
+
+        QDate activityDate = Settings::getInstance().getFriendActivity(FriendList::findFriend(friendWidget->friendId)->getToxId());
+        index = getTime(activityDate);
+        CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
+
+        if (categoryWidget == nullptr || categoryWidget->cycleContacts(friendWidget, forward))
+            return;
+
+        index += forward ? 1 : -1;
+
+        for (;;)
+        {
+            // Bounds checking.
+            if (index < Today)
+            {
+                index = Never;
+                continue;
+            }
+            else if (index > Never)
+            {
+                index = Today;
+                continue;
+            }
+
+            CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
+
+            if (categoryWidget != nullptr)
+            {
+                if (!categoryWidget->cycleContacts(forward))
+                {
+                    // Skip empty or finished categories.
+                    index += forward ? 1 : -1;
+                    continue;
+                }
+            }
+
+            break;
+        }
+
+        return;
+    }
+
+    QLayout* currentLayout = nullptr;
+    CircleWidget* circleWidget = nullptr;
 
     if (friendWidget != nullptr)
     {
@@ -453,6 +508,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
     }
 
     index += forward ? 1 : -1;
+
     for (;;)
     {
         // Bounds checking.
@@ -473,8 +529,10 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         if (currentLayout == listLayout->getLayoutOnline() || currentLayout == listLayout->getLayoutOffline() || currentLayout == groupLayout.getLayout())
         {
             GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
+
             if (chatWidget != nullptr)
                 emit chatWidget->chatroomWidgetClicked(chatWidget);
+
             return;
         }
         else if (currentLayout == circleLayout->getLayout())
@@ -547,6 +605,7 @@ void FriendListWidget::moveWidget(FriendWidget* w, Status s, bool add)
         {
             if (circleId != -1)
                 Settings::getInstance().setFriendCircleID(FriendList::findFriend(w->friendId)->getToxId(), -1);
+
             listLayout->addFriendWidget(w, s);
             return;
         }
@@ -603,12 +662,14 @@ QLayout* FriendListWidget::nextLayout(QLayout* layout, bool forward) const
         {
             if (groupsOnTop)
                 return listLayout->getLayoutOnline();
+
             return listLayout->getLayoutOffline();
         }
         else
         {
             if (groupsOnTop)
                 return circleLayout->getLayout();
+
             return listLayout->getLayoutOnline();
         }
     }
@@ -618,12 +679,14 @@ QLayout* FriendListWidget::nextLayout(QLayout* layout, bool forward) const
         {
             if (groupsOnTop)
                 return listLayout->getLayoutOffline();
+
             return groupLayout.getLayout();
         }
         else
         {
             if (groupsOnTop)
                 return groupLayout.getLayout();
+
             return circleLayout->getLayout();
         }
     }
@@ -633,6 +696,7 @@ QLayout* FriendListWidget::nextLayout(QLayout* layout, bool forward) const
             return circleLayout->getLayout();
         else if (groupsOnTop)
             return listLayout->getLayoutOnline();
+
         return groupLayout.getLayout();
     }
     else if (layout == circleLayout->getLayout())
@@ -641,6 +705,7 @@ QLayout* FriendListWidget::nextLayout(QLayout* layout, bool forward) const
         {
             if (groupsOnTop)
                 return groupLayout.getLayout();
+
             return listLayout->getLayoutOnline();
         }
         else

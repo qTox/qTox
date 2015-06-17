@@ -1302,7 +1302,9 @@ void Settings::setFriendCircleID(const ToxId &id, int circleID)
     QString key = id.publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
+    {
         it->circleID = circleID;
+    }
     else
     {
         friendProp fp;
@@ -1329,7 +1331,9 @@ void Settings::setFriendActivity(const ToxId &id, const QDate &activity)
     QString key = id.publicKey;
     auto it = friendLst.find(key);
     if (it != friendLst.end())
+    {
         it->activity = activity;
+    }
     else
     {
         friendProp fp;
