@@ -96,8 +96,10 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         circleMenu = menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
 
         newCircleAction = circleMenu->addAction(tr("To new circle"));
+
         if (circleId != -1)
             removeCircleAction = circleMenu->addAction(tr("Remove from circle '%1'").arg(Settings::getInstance().getCircleName(circleId)));
+
         circleMenu->addSeparator();
 
         for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)

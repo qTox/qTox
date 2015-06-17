@@ -44,11 +44,13 @@ void FriendListLayout::addFriendWidget(FriendWidget* w, Status s)
 {
     friendOfflineLayout.removeSortedWidget(w);
     friendOnlineLayout.removeSortedWidget(w);
+
     if (s == Status::Offline)
     {
         friendOfflineLayout.addSortedWidget(w);
         return;
     }
+
     friendOnlineLayout.addSortedWidget(w);
 }
 

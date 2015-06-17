@@ -1022,7 +1022,7 @@ QSplitter:handle{
              <item>
               <widget class="QLineEdit" name="searchContactText">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -1032,7 +1032,7 @@ QSplitter:handle{
              <item>
               <widget class="QToolButton" name="searchContactFilterBox">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -1047,7 +1047,7 @@ QSplitter:handle{
                 <enum>Qt::ToolButtonTextBesideIcon</enum>
                </property>
                <property name="arrowType">
-                <enum>Qt::DownArrow</enum>
+                <enum>Qt::NoArrow</enum>
                </property>
               </widget>
              </item>
@@ -1084,7 +1084,7 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>292</width>
+             <width>284</width>
              <height>353</height>
             </rect>
            </property>

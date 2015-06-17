@@ -1412,12 +1412,12 @@ void Widget::reloadTheme()
 
 void Widget::nextContact()
 {
-    cycleContacts(1);
+    cycleContacts(true);
 }
 
 void Widget::previousContact()
 {
-    cycleContacts(-1);
+    cycleContacts(false);
 }
 
 QString Widget::getStatusIconPath(Status status)
