@@ -79,7 +79,7 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 Fedora:
 ```bash
 sudo dnf group install "Development Tools"
-sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg openal-soft-devel libXScrnSaver-devel qrencode-devel
+sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg openal-soft-devel libXScrnSaver-devel qrencode-devel qt5-qttools qt5-qttools-devel ## qt5-qttools pkgs needed for translations to compile  (lrelease is now in  qt5-qttools-devel)
 ```
 
 openSUSE:
@@ -113,7 +113,7 @@ sudo apt-get install libtool autotools-dev automake checkinstall check libopus-d
 
 Fedora:
 ```bash
-sudo dnf install libtool autoconf automake check check-devel libsodium-devel
+sudo dnf install libtool autoconf automake check check-devel libsodium-devel  
 ```
 
 openSUSE:
@@ -159,8 +159,9 @@ If the compiling process stops with a missing dependency like: "... libswscale/s
 And install the package that provide the missing file.
 Start make again. Repeat if nessary until all dependencies are installed.
 
+For Fedora: modify the  INCLUDE in /home/qTox/Makefile (or wherever you cloned the repo) ADDING -isystem/usr/include/ffpmeg OR  cd %{Git_Dir}/qTox/src; wget https://github.com/tux3/qTox/pull/1881 && patch -p1 ## to avoid   fatal error  compiling  libavcodec/avcodec.h  
 
-for openSUSE you have to use:
+for openSUSE you have to use, Fedora  requires qmake-qt5
 ```bash
 qmake-qt5
 make
