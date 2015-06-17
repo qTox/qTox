@@ -206,6 +206,7 @@ void Settings::loadGlobal()
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
         themeColor = s.value("themeColor", 0).toInt();
         style = s.value("style", "").toString();
+        theme = s.value("theme", "light").toString();
         if (style == "") // Default to Fusion if available, otherwise no style
         {
             if (QStyleFactory::keys().contains("Fusion"))
@@ -388,8 +389,9 @@ void Settings::saveGlobal()
         s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("lightTrayIcon", lightTrayIcon);
         s.setValue("useEmoticons", useEmoticons);
-        s.setValue("themeColor", themeColor);
-        s.setValue("style", style);
+        s.setValue("themeColor", themeColor); // violet, blue, yellow
+        s.setValue("style", style); //qt, fusion, gtk
+        s.setValue("theme", theme); //light, darkblue, wombat, from css
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
     s.endGroup();
 

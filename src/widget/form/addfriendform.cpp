@@ -40,15 +40,9 @@ AddFriendForm::AddFriendForm()
     QFont bold;
     bold.setBold(true);
 
-    retranslateUi();
-
-    connect(toxId, &QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
-    connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
-
     headLabel = new QLabel(this);
     toxId = new QLineEdit(this);
 
-    headLabel = new QLabel(this);
     toxIdLabel = new QLabel(this);
     messageLabel = new QLabel(this);
     sendButton = new QPushButton(this);
@@ -56,8 +50,6 @@ AddFriendForm::AddFriendForm()
     message = new QTextEdit(this);
     layout = new QVBoxLayout(this);
     headLayout = new QVBoxLayout(this);
-    head = new QWidget(this);
-    main = new QWidget(this);
 
     headLabel->setText(tr("Add Friends"));
     headLabel->setFont(bold);
@@ -73,13 +65,13 @@ AddFriendForm::AddFriendForm()
     layout->addWidget(sendButton);
     main->setLayout(layout);
 
-//    head->setLayout(headLayout);
-//    headLayout->addWidget(headLabel);
+    head->setLayout(headLayout);
+    headLayout->addWidget(headLabel);
 
     connect(toxId, &QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
-    connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
+    retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 }
 

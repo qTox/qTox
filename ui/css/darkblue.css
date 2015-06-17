@@ -3,7 +3,7 @@
 * Created in 2013 by Khromathyon Software.
 * QSS Theme: Visual Studio(R) 2012 Dark Theme.
 * License: WTFPL
-* 
+*
     code adopted from: https://gitlab.com/agilob/qfakturat/blob/master/res/darkblue.css
     please sumbit or notify me about any changes in this file ~agilob
 */
@@ -13,59 +13,59 @@ QMainWindow {
 }
 
 QDialog {
-    background:#2d2d30;
-    color:#f1f1f1;
+    background: #2d2d30;
+    color: #f1f1f1;
 }
 
 QMenuBar {
-  background-color:#2d2d30;
+  background-color: #2d2d30;
   text-transform: uppercase;
-  color:#f1f1f1;
+  color: #f1f1f1;
 }
 
 QMenuBar::item:selected{
-  background-color:#3e3e40;
+  background-color: #3e3e40;
 }
 
 QMenu {
-  border:0.5px solid #333337;
-  color:#f1f1f1;
+  border: 0.5px solid #333337;
+  color: #f1f1f1;
 }
 
 QMenu::item:selected {
-  background-color:#2d2d30;
-  border-color:#333337;
+  background-color: #2d2d30;
+  border-color: #333337;
 }
 
 QMenu::item {
-  background-color:#1b1b1c;
-  border-color:#333337;
+  background-color: #1b1b1c;
+  border-color: #33337;
   padding: 2px 25px 2px 20px;
 }
 
 QMenu::separator{
-  background-color:#333337;
-  spacing:2px;
+  background-color: #333337;
+  spacing: 2px;
 }
 
 QTabBar::tab {
-  background-color:#2d2d30;
+  background-color: #2d2d30;
   border: 1px solid transparent;
-  color:#f1f1f1;
-  padding:5px;
+  color: #f1f1f1;
+  padding: 5px;
 }
 
 QTabBar::tab:hover{
-  background-color:#1c97ea;
+  background-color: #1c97ea;
 }
 
 QTabBar::tab:selected{
-  background-color:#007acc;
+  background-color: #007acc;
 }
 
 QTabWidget::pane {
   border-top: 2px solid #007acc;
-  background-color:#2d2d30;
+  background-color: #2d2d30;
 }
 
 QTableWidget {
@@ -79,7 +79,7 @@ QCalendarWidget QWidget {
 
 QDockWidget {
     background: #2d2d30;
-    color:#f1f1f1;
+    color: #f1f1f1;
 }
 
 QDockWidget::active {
@@ -87,119 +87,156 @@ QDockWidget::active {
 }
 
 QDockWidget::title {
-  color:#f1f1f1;
-  background:#007acc;
+  color: #f1f1f1;
+  background: #007acc;
 }
 
 QComboBox {
-  background-color:#333337;
-  color:#b2b2b2;
-  border-style:none;
+  background-color: #333337;
+  color: #b2b2b2;
+  border-style: none;
 }
 
 QComboBox:on {
-  background-color:#3f3f46;
+  background-color: #3f3f46;
 }
 
 QComboBox:down-arrow {
-    image: url(:/icons/down_arrow.png);
+  image: url(ui/css/down_arrow.png);
 }
 
 QComboBox:drop-down {
   border-style:none;
 }
 
-/*Needs fix*/
-QScrollBar{
-  background:#3e3e42;
-  border-style:none;
+QWidget:disabled
+{
+  color: grey;
 }
 
-QScrollbar::horizontal{
-     height: 15px;
-     margin: 0px 20px 0 20px;
+QScrollBar {
+  background: #3e3e42;
+  border-style: none;
+}
+
+QScrollBar::add-line:vertical
+{
+    background: white;
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical
+{
+    background: white;
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:QScrollBar::down-arrow:vertical
+{
+    width: 10;
+    height: 10px;
+    background: white;
+}
+
+QScrollBar:QScrollBar::up-arrow:vertical
+{
+    width: 10px;
+    height: 10px;
+    background: white;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
+    background: none;
+}
+
+QScrollbar::horizontal {
+  height: 15px;
+  margin: 0px 20px 0 20px;
 }
 
 QScrollBar:handle {
-  border-style:none;
-  background:#9d9d9d;
+  border-style: none;
+  background: #9d9d9d;
   margin: inherited;
 }
 
 QPushButton {
-  border-style:none;
-  border-bottom:1px solid #007acc;
-  color:#f1f1f1;
-  background:#3e3e42;
-  padding:5px;
+  border-style: none;
+  border-bottom: 1px solid #007acc;
+  color: #f1f1f1;
+  background: #3e3e42;
 }
 
 QPushButton::pressed {
   border: 1px solid #007acc;
-  background:#3e3e42;
+  background: #3e3e42;
 }
 
 QToolButton {
-  border-style:none;
-  background:#2d2d30;
-  color:#f1f1f1;
+  border-style: none;
+  background: #2d2d30;
+  color: #f1f1f1;
 }
 
 QToolButton:pressed {
   border: 1px solid #007acc;
-  background:#3e3e42;
+  background: #3e3e42;
 }
 
-QDoubleSpinBox, QSpinBox, QTimeEdit, QNumberSpinBox,
+QDoubleSpinBox, QSplitter::handle, QSplitter, QSpinBox, QTimeEdit, QNumberSpinBox,
 QListBox, QDateEdit, QDateTime, QDateTimeEdit, QComboBox, QLineEdit {
-    padding: 2px;
     border-width: 1px;
     border-color: black;
-    background-color:#3f3f46;    
+    background-color:#3f3f46;
 }
 
 QLabel {
-  color:#f1f1f1;
+  color: #f1f1f1;
 }
 
 QLineEdit:selected {
-  border-color:#007acc;
+  border-color: #007acc;
 }
 
 QToolBar {
-  background:#2d2d30;
-  border-style:none;
+  background: #2d2d30;
+  border-style: none;
 }
 
-QToolBox{
-  background:#2d2d30;
+QToolBox {
+  background: #2d2d30;
 }
 
 QToolBox::tab{
-  background:#2d2d30;
-  color:#f1f1f1;
-  border-style:none;
+  background: #2d2d30;
+  color: #f1f1f1;
+  border-style: none;
   border-bottom-style: solid;
   border-bottom: 2px solid #007acc;
 }
 
 QToolBox::tab:selected {
-  border:1px solid #007acc;
+  border: 1px solid #007acc;
 }
 
 QWidget{
-  background:#2d2d30;
-  color:#f1f1f1;
+  background: #2d2d30;
+  color: #f1f1f1;
 }
 
 QTreeView {
-  background-color:#2d2d30;
-  border-style:none;
+  background-color: #2d2d30;
+  border-style: none;
 }
 
 QTreeView::item:selected
 {
-  background:#007acc;
+  background: #007acc;
 }
 
 QTreeView::item:selected!active {
@@ -211,7 +248,6 @@ QTreeView::item:selected {
 }
 
 QListView {
-  background-color:#252526;
-  border-style:none;
+  background-color: #252526;
+  border-style: none;
 }
-
