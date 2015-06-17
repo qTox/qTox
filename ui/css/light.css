@@ -1,0 +1,268 @@
+QWidget {
+    color: black;
+    font: @big;
+}
+QDialog {
+    background-color: white;
+    background: white;
+}
+QTabBar {
+    background-color: white;
+    background: gray;
+    color: black;
+}
+QTabBar::tab {
+    background-color: white;
+    background: gray;
+    color: black;
+    padding: 8px;
+}
+QTabWidget::tab-bar {
+    background-color: white;
+    background: gray;
+}
+QTabBar::tab:selected {
+    background: white;
+}
+QTabWidget::pane {
+    border-top: 2px solid black;
+    background-color: white;
+    background: white;
+}
+QDockWidget {
+    background: white;
+    color: #f1f1f1;
+}
+QTextEdit {
+    border-color: grey;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+    background: white;
+    border: 1px solid #c4c1bd;
+}
+QListWidget {
+    background: white;
+}
+QMessageBox {
+    background: white;
+}
+QCheckBox {
+    background: white;
+    color: black;
+}
+QCheckBox:disabled {
+    color: grey;
+}
+QPushButton {
+    background: white;
+}
+QGroupBox {
+    color: black;
+    background-color: white;
+    font: @big;
+}
+QComboBox {
+    color: black;
+    background: white;
+}
+QComboBox QAbstractItemView {
+    background: white;
+}
+QLineEdit {
+    background-color: white;
+}
+QTabWidget {
+    background-color: white;
+}
+QTabBar {
+    background-color: white;
+}
+QScrollArea {
+    background-color: white;
+    background: transparent;
+}
+QScrollArea > QWidget > QWidget {
+    background: transparent;
+}
+QScrollBar:vertical {
+    background: transparent;
+    width: 12px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+QScrollBar::handle:vertical {
+    background: #d1d1d1;
+    min-height: 20px;
+    border-radius: 3px;
+    margin-left: 2px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #e3e3e3;
+}
+QScrollBar::handle:vertical:pressed {
+    background: #b1b1b1;
+}
+QScrollBar::add-line:vertical {
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+QScrollBar:QScrollBar::down-arrow:vertical {
+    width: 10;
+    height: 10px;
+    background: white;
+}
+QScrollBar:QScrollBar::up-arrow:vertical {
+    width: 10px;
+    height: 10px;
+    background: white;
+}
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: none;
+}
+QScrollBar:horizontal {
+    background: white;
+    height: 10px;
+    margin: 0 2px 0 2px;
+}
+QScrollBar::handle:horizontal {
+    background: #d1d1d1;
+    min-width: 20px;
+    border-radius: 2px;
+}
+QScrollBar::handle:horizontal:hover {
+    background: #e3e3e3;
+}
+QScrollBar::handle:horizontal:pressed {
+    background: #b1b1b1;
+}
+QScrollBar::add-line:horizontal {
+    background: url(":ui/chatArea/scrollBarRightArrow.svg") center;
+    width: 0px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+    background: url(":ui/chatArea/scrollBarLeftArrow.svg") center;
+    width: 0px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+QScrollBar:QScrollBar::down-arrow:horizontal {
+    width: 10;
+    height: 10px;
+    background: white;
+}
+QScrollBar:QScrollBar::up-arrow:horizontal {
+    width: 10px;
+    height: 10px;
+    background: white;
+}
+QScrollBar::add-page:horizontal,
+QScrollBar::sub-page:horizontal {
+    background: none;
+}
+QTableWidget {
+    color: black;
+    alternate-background-color: #DDDAE3;
+    background-color: white;
+}
+QCheckBox::indicator,
+QRadioButton::indicator {
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+}
+QTableView QTableCornerButton::section {
+    color: black;
+    background-color: white;
+}
+QRadioButton::indicator:checked {
+    background-color: black;
+}
+QCheckBox::indicator:checked {
+    background-color: black;
+}
+QGraphicsView,
+QDoubleSpinBox,
+QSpinBox,
+QTimeEdit,
+QNumberSpinBox,
+QListBox,
+QDateEdit,
+QDateTime,
+QDateTimeEdit,
+QComboBox,
+QLabel#statusLabel {
+    /** for status label in chat */
+
+    padding: 2px;
+    border-width: 1px;
+    border-color: black;
+    color: black;
+    background: white;
+}
+QCalendarWidget QWidget#qt_calendar_navigationbar,
+QCalendarWidget QToolButton,
+QCalendarWidget QToolButton::onHover,
+QCalendarWidget QMenu,
+QCalendarWidget QWidget,
+QCalendarWidget QAbstractItemView:enabled {
+    color: black;
+    background: white;
+    selection-background-color: #D4CAE8;
+    alternate-background-color: rgb(128, 128, 128);
+    selection-color: black;
+}
+/* days in other months */
+
+QCalendarWidget QAbstractItemView:disabled {
+    color: rgb(64, 64, 64);
+}
+QMenu {
+    background: white;
+    border: 1px solid #222;
+    padding: 4px;
+    padding-right: 0px;
+}
+QLayout {
+    background-color: white;
+    color: black;
+}
+QGridLayout {
+    background-color: white;
+    color: black;
+}
+QAbstractItemView {
+    background-color: white;
+    background: white;
+}
+QHeaderView {} QHeaderView::section {
+    background: white;
+    background-color: white;
+    color: black;
+}
+QGroupBox {
+    color: black;
+    background-color: white;
+    border: 1px solid grey;
+    margin-top: 1.3em;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    background-color: white;
+}
+QToolTip {
+    color: black;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding: 1 2 0.5ex;
+    opacity: 200;
+}
