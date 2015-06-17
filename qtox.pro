@@ -205,6 +205,7 @@ contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 	INCLUDEPATH += "/usr/include/gtk-2.0"
 	INCLUDEPATH += "/usr/include/atk-1.0"
 	INCLUDEPATH += "/usr/include/cairo"
+	INCLUDEPATH += "/usr/include/ffmpeg"
 	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
 	INCLUDEPATH += "/usr/include/libappindicator-0.1"
 	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
@@ -236,6 +237,7 @@ contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
 	INCLUDEPATH += "/usr/include/gtk-2.0"
 	INCLUDEPATH += "/usr/include/atk-1.0"
 	INCLUDEPATH += "/usr/include/cairo"
+	INCLUDEPATH += "/usr/include/ffmpeg"
 	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
 	INCLUDEPATH += "/usr/include/pango-1.0"
 	equals(QT_ARCH, x86_64) {
