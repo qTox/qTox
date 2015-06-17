@@ -77,7 +77,7 @@ void NotificationScrollArea::updateTracking()
             {
                 if (--referencesAbove == 0)
                 {
-                    delete topEdge;
+                    topEdge->deleteLater();
                     topEdge = nullptr;
                 }
                 else
@@ -89,7 +89,7 @@ void NotificationScrollArea::updateTracking()
             {
                 if (--referencesBelow == 0)
                 {
-                    delete bottomEdge;
+                    bottomEdge->deleteLater();
                     bottomEdge = nullptr;
                 }
                 else
