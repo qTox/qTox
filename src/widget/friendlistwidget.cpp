@@ -99,19 +99,11 @@ Time getTime(const QDate date)
     return LongAgo;
 }
 
-int toIndex(Time time)
-{
-    if (time < ThisMonth)
-        return time;
-
-    if (!last7DaysWasLastMonth())
-        return time - 1;
-
-    return time;
-}
-
 FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     : QWidget(parent)
+    // Prevent Valgrind from complaining. We're changing this to Name here.
+    // Must be Activity for change to take effect.
+    , mode(Activity)
     , groupsOnTop(groupsOnTop)
 {
     listLayout = new FriendListLayout();
@@ -121,11 +113,40 @@ FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     groupLayout.getLayout()->setSpacing(0);
     groupLayout.getLayout()->setMargin(0);
 
+    // Prevent QLayout's add child warning before setting the mode.
+    listLayout->removeItem(listLayout->getLayoutOnline());
+    listLayout->removeItem(listLayout->getLayoutOffline());
+
     setMode(Name);
 
     onGroupchatPositionChanged(groupsOnTop);
 
     setAcceptDrops(true);
+}
+
+FriendListWidget::~FriendListWidget()
+{
+    if (activityLayout != nullptr)
+    {
+        QLayoutItem* item;
+        while ((item = activityLayout->takeAt(0)) != nullptr)
+        {
+            delete item->widget();
+            delete item;
+        }
+        delete activityLayout;
+    }
+
+    if (circleLayout != nullptr)
+    {
+        QLayoutItem* item;
+        while ((item = circleLayout->getLayout()->takeAt(0)) != nullptr)
+        {
+            delete item->widget();
+            delete item;
+        }
+        delete circleLayout;
+    }
 }
 
 void FriendListWidget::setMode(Mode mode)
@@ -160,12 +181,15 @@ void FriendListWidget::setMode(Mode mode)
 
         if (activityLayout != nullptr)
         {
-            while (activityLayout->count() > 0)
-                delete activityLayout->takeAt(0)->widget();
+            QLayoutItem* item;
+            while ((item = activityLayout->takeAt(0)) != nullptr)
+            {
+                delete item->widget();
+                delete item;
+            }
+            delete activityLayout;
+            activityLayout = nullptr;
         }
-
-        delete activityLayout;
-        activityLayout = nullptr;
 
         reDraw();
     }
@@ -174,6 +198,7 @@ void FriendListWidget::setMode(Mode mode)
         activityLayout = new QVBoxLayout();
 
         CategoryWidget* categoryToday = new CategoryWidget(this);
+        categoryToday->setObjectName("Todddd");
         categoryToday->setName(tr("Today", "Category for sorting friends by activity"));
         activityLayout->addWidget(categoryToday);
 
@@ -241,21 +266,24 @@ void FriendListWidget::setMode(Mode mode)
            categoryWidget->setVisible(categoryWidget->hasChatrooms());
         }
 
-        if (circleLayout != nullptr)
-        {
-            while (circleLayout->getLayout()->count() > 0)
-                delete circleLayout->getLayout()->takeAt(0)->widget();
-        }
-
         listLayout->removeItem(listLayout->getLayoutOnline());
         listLayout->removeItem(listLayout->getLayoutOffline());
         listLayout->removeItem(circleLayout->getLayout());
         listLayout->insertLayout(1, activityLayout);
 
-        reDraw();
+        if (circleLayout != nullptr)
+        {
+            QLayoutItem* item;
+            while ((item = circleLayout->getLayout()->takeAt(0)) != nullptr)
+            {
+                delete item->widget();
+                delete item;
+            }
+            delete circleLayout;
+            circleLayout = nullptr;
+        }
 
-        delete circleLayout;
-        circleLayout = nullptr;
+        reDraw();
     }
 }
 

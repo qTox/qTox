@@ -45,6 +45,7 @@ public:
     };
 
     explicit FriendListWidget(Widget* parent, bool groupsOnTop = true);
+    ~FriendListWidget();
     void setMode(Mode mode);
     Mode getMode() const;
 

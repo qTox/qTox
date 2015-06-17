@@ -36,8 +36,8 @@ public:
     CategoryWidget(QWidget* parent = 0);
 
     bool isExpanded() const;
-    void setExpanded(bool isExpanded);
-    void setName(const QString &name);
+    void setExpanded(bool isExpanded, bool save = true);
+    void setName(const QString &name, bool save = true);
 
     void addFriendWidget(FriendWidget* w, Status s);
     void removeFriendWidget(FriendWidget* w, Status s);
@@ -52,6 +52,7 @@ public slots:
     void onCompactChanged(bool compact);
 
 protected:
+    virtual void leaveEvent(QEvent* event) final override;
     virtual void mouseReleaseEvent(QMouseEvent* event) final override;
 
     void editName();

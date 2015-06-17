@@ -18,6 +18,7 @@ QToolButton {
 QToolButton:pressed {
     background-color: @themeMediumDark;
     border-radius: 4px;
+    color: white;
 }
 
 QToolButton::menu-indicator {
