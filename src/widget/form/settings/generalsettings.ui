@@ -581,7 +581,7 @@ will be sent to them when they appear online to you.</string>
             <item row="4" column="0">
              <widget class="QLabel" name="themeColorLabel">
               <property name="text">
-               <string>Theme color:</string>
+               <string>Contacts theme:</string>
               </property>
              </widget>
             </item>
@@ -598,7 +598,7 @@ will be sent to them when they appear online to you.</string>
             <item row="5" column="0">
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>Style</string>
+               <string>Theme:</string>
               </property>
              </widget>
             </item>

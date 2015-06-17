@@ -135,10 +135,7 @@ void Text::selectionFocusChanged(bool focusIn)
 bool Text::isOverSelection(QPointF scenePos) const
 {
     int cur = cursorFromPos(scenePos);
-    if (getSelectionStart() < cur && getSelectionEnd() >= cur)
-        return true;
-
-    return false;
+    return (getSelectionStart() < cur && getSelectionEnd() >= cur);
 }
 
 QString Text::getSelectedText() const

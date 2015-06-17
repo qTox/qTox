@@ -43,15 +43,13 @@
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
 
-GenericChatForm::GenericChatForm(QWidget *parent)
-  : QWidget(parent)
-  , audioInputFlag(false)
-  , audioOutputFlag(false)
+GenericChatForm::GenericChatForm(QWidget *parent) : QWidget(parent)
+  , audioInputFlag(false), audioOutputFlag(false)
 {
     curRow = 0;
     headWidget = new QWidget();
 
-    nameLabel = new CroppingLabel();
+    nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("nameLabel");
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     nameLabel->setEditable(true);
@@ -73,7 +71,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
     connect(&Settings::getInstance(), &Settings::emojiFontChanged, this, [this]() { chatWidget->forceRelayout(); });
 
-    msgEdit = new ChatTextEdit();
+    msgEdit = new ChatTextEdit(this);
 
     sendButton = new QPushButton();
     emoteButton = new QPushButton();
@@ -101,7 +99,6 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
-    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css"));
     msgEdit->setFixedHeight(50);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 

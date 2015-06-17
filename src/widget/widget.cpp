@@ -1322,7 +1322,6 @@ void Widget::reloadTheme()
     for (Group* g : GroupList::getAllGroups())
         g->getGroupWidget()->reloadTheme();
 
-    qDebug() << "changing style";
     ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" +
                                                        Settings::getInstance().getTheme() + ".css"));
 }

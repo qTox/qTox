@@ -445,7 +445,6 @@ void GeneralForm::onGroupchatPositionChanged()
  */
 void GeneralForm::onStyleColorChanged(int)
 {
-    qDebug() << "onStyleColorChanged";
     int index = bodyUI->styleColorCBox->currentIndex();
     Settings::getInstance().setThemeColor(index);
     Style::setThemeColor(index);
@@ -459,7 +458,6 @@ void GeneralForm::onStyleColorChanged(int)
  */
 void GeneralForm::onThemeChanged(QString currentTheme)
 {
-    qDebug() << "onThemeChanged: " << currentTheme;
     Settings::getInstance().setTheme(currentTheme);
     Settings::getInstance().saveGlobal(); //not sure if global? ~@agilob
     Widget::getInstance()->reloadTheme();
