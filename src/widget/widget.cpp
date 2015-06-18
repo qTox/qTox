@@ -1322,8 +1322,11 @@ void Widget::reloadTheme()
     for (Group* g : GroupList::getAllGroups())
         g->getGroupWidget()->reloadTheme();
 
-    ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" +
-                                                       Settings::getInstance().getTheme() + ".css"));
+    ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" + Settings::getInstance().getTheme() + ".css"));
+    ui->mainSplitter->setObjectName(Settings::getInstance().getTheme());
+
+    ui->mainSplitter->setStyleSheet(Style::getStylesheet("ui/css/splitter.css"));
+    ui->mainSplitter->repaint();
 }
 
 void Widget::nextContact()

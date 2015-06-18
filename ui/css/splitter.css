@@ -1,0 +1,11 @@
+QSplitter#light {
+    background-color: white;
+}
+
+QSplitter#darkblue {
+    background-color: #2d2d30;
+}
+
+QSplitter#wombat {
+    background-color: #222;
+}

@@ -5,10 +5,11 @@
     <qresource prefix="/font">
         <file alias="DejaVuSans.ttf">res/DejaVuSans.ttf</file>
     </qresource>
-    <qresource prefix="css">
+    <qresource prefix="/css">
         <file>ui/css/light.css</file>
         <file>ui/css/darkblue.css</file>
         <file>ui/css/wombat.css</file>
+        <file>ui/css/splitter.css</file>
     </qresource>
     <qresource prefix="/">
         <file>audio/notification.pcm</file>
