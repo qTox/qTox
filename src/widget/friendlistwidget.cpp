@@ -363,17 +363,20 @@ void FriendListWidget::addCircleWidget(int id)
 void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
 {
     CircleWidget* circleWidget = createCircleWidget();
-    if (circleWidget != nullptr && friendWidget != nullptr)
+    if (circleWidget != nullptr)
     {
-        CircleWidget* circleOriginal = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId()));
+        if (friendWidget != nullptr)
+        {
+            CircleWidget* circleOriginal = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId()));
 
-        circleWidget->addFriendWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus());
-        circleWidget->setExpanded(true);
+            circleWidget->addFriendWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus());
+            circleWidget->setExpanded(true);
+
+            if (circleOriginal != nullptr)
+                Widget::getInstance()->searchCircle(circleOriginal);
+        }
 
         Widget::getInstance()->searchCircle(circleWidget);
-
-        if (circleOriginal != nullptr)
-            Widget::getInstance()->searchCircle(circleOriginal);
     }
 }
 
