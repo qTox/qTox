@@ -374,10 +374,12 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
 
             if (circleOriginal != nullptr)
                 Widget::getInstance()->searchCircle(circleOriginal);
+
         }
 
         Widget::getInstance()->searchCircle(circleWidget);
     }
+    circleWidget->editName();
 }
 
 void FriendListWidget::removeCircleWidget(CircleWidget* widget)
@@ -660,8 +662,6 @@ void FriendListWidget::reDraw()
 
 CircleWidget* FriendListWidget::createCircleWidget(int id)
 {
-    bool isNew = (id == -1);
-
     if (id == -1)
         id = Settings::getInstance().addCircle();
 
@@ -676,9 +676,6 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
     connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
     circleWidget->show(); // Avoid flickering.
-
-    if (isNew)
-        circleWidget->editName();
 
     return circleWidget;
 }

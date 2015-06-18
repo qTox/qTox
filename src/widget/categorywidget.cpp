@@ -256,9 +256,10 @@ void CategoryWidget::onCompactChanged(bool _compact)
     topLayout->setSpacing(0);
     topLayout->setMargin(0);
 
-    setCompact(_compact);
+    (void)_compact;
+    setCompact(true);
 
-    if (isCompact())
+    if (true)
     {
         nameLabel->minimizeMaximumWidth();
 
@@ -277,7 +278,7 @@ void CategoryWidget::onCompactChanged(bool _compact)
         topLayout->addSpacing(5);
         topLayout->activate();
     }
-    else
+    /*else
     {
         nameLabel->setMaximumWidth(QWIDGETSIZE_MAX);
 
@@ -285,7 +286,7 @@ void CategoryWidget::onCompactChanged(bool _compact)
         mainLayout->setSpacing(0);
         mainLayout->setContentsMargins(20, 0, 20, 0);
 
-        container->setFixedHeight(35);
+        container->setFixedHeight(25);
         container->setLayout(mainLayout);
 
         topLayout->addWidget(&statusPic);
@@ -300,7 +301,7 @@ void CategoryWidget::onCompactChanged(bool _compact)
         mainLayout->addWidget(lineFrame);
         mainLayout->addStretch();
         mainLayout->activate();
-    }
+    }*/
 
     Style::repolish(this);
 }

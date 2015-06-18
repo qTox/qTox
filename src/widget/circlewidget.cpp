@@ -60,7 +60,8 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
 
 CircleWidget::~CircleWidget()
 {
-    circleList.remove(id);
+    if (circleList[id] == this)
+        circleList.remove(id);
 }
 
 void CircleWidget::editName()
@@ -96,12 +97,15 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
         friendList->removeCircleWidget(this);
 
-        circleList.remove(id);
         int replacedCircle = Settings::getInstance().removeCircle(id);
 
         auto circleReplace = circleList.find(replacedCircle);
         if (circleReplace != circleList.end())
             circleReplace.value()->updateID(id);
+        else
+            assert(true); // This should never happen.
+
+        circleList.remove(replacedCircle);
     }
     setContainerAttribute(Qt::WA_UnderMouse, false);
 }
@@ -168,6 +172,10 @@ void CircleWidget::updateID(int index)
 {
     // For when a circle gets destroyed, another takes its id.
     // This function updates all friends widgets for this new id.
+
+    if (id == index)
+        return;
+
     id = index;
     circleList[id] = this;
 
