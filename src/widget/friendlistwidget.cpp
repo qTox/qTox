@@ -188,6 +188,10 @@ void FriendListWidget::setMode(Mode mode)
             CircleWidget::getFromID(i)->setVisible(false);
         }
 
+        // Only display circles once all created to avoid artifacts.
+        for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+            CircleWidget::getFromID(i)->setVisible(true);
+
         QList<Friend*> friendList = FriendList::getAllFriends();
         for (Friend* contact : friendList)
         {
