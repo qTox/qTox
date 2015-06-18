@@ -82,7 +82,6 @@ void SettingsWidget::setBodyHeadStyle(QString style)
 void SettingsWidget::show(Ui::MainWindow& ui)
 {
     ui.mainContent->layout()->addWidget(body);
-    ui.mainHead->layout()->addWidget(head);
     body->show();
     head->show();
     onTabChanged(settingsWidgets->currentIndex());

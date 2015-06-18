@@ -121,11 +121,6 @@ GenericChatForm::GenericChatForm(QWidget *parent) : QWidget(parent)
     micButton->setObjectName("grey");
     micButton->setStyleSheet(micButtonStylesheet);
 
-    setLayout(mainLayout);
-    mainLayout->addWidget(chatWidget);
-    mainLayout->addLayout(mainFootLayout);
-    mainLayout->setMargin(0);
-
     footButtonsSmall->addWidget(emoteButton);
     footButtonsSmall->addWidget(fileButton);
 
@@ -136,8 +131,9 @@ GenericChatForm::GenericChatForm(QWidget *parent) : QWidget(parent)
     mainFootLayout->setSpacing(0);
 
     headTextLayout->addStretch();
-    headTextLayout->addWidget(nameLabel);
+    headTextLayout->addWidget(nameLabel, 0, Qt::AlignTop);
     headTextLayout->addStretch();
+    headTextLayout->setAlignment(Qt::AlignTop);
 
     micButtonsLayout->setSpacing(0);
     micButtonsLayout->addWidget(micButton, Qt::AlignTop | Qt::AlignRight);
@@ -149,12 +145,13 @@ GenericChatForm::GenericChatForm(QWidget *parent) : QWidget(parent)
     buttonsLayout->addWidget(videoButton, 0, 2, 2, 1, Qt::AlignTop);
     buttonsLayout->setVerticalSpacing(0);
     buttonsLayout->setHorizontalSpacing(4);
+    buttonsLayout->setAlignment(Qt::AlignTop);
 
-    headLayout->addWidget(avatar);
-    headLayout->addSpacing(5);
+    headLayout->addWidget(avatar, 0, Qt::AlignTop);
+    //headLayout->addSpacing(5);
     headLayout->addLayout(headTextLayout);
     headLayout->addLayout(buttonsLayout);
-
+    headLayout->setAlignment(Qt::AlignTop);
     headWidget->setLayout(headLayout);
 
     //Fix for incorrect layouts on OS X as per
@@ -167,6 +164,12 @@ GenericChatForm::GenericChatForm(QWidget *parent) : QWidget(parent)
     volButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     callButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     videoButton->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+
+    mainLayout->addWidget(headWidget, 0, Qt::AlignTop);
+    mainLayout->addWidget(chatWidget);
+    mainLayout->addLayout(mainFootLayout);
+    mainLayout->setMargin(0);
+    setLayout(mainLayout);
 
     menu.addActions(chatWidget->actions());
     menu.addSeparator();
@@ -238,8 +241,6 @@ void GenericChatForm::setName(const QString &newName)
 void GenericChatForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(this);
-    ui.mainHead->layout()->addWidget(headWidget);
-    headWidget->show();
     QWidget::show();
 }
 

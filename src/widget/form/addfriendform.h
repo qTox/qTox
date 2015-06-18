@@ -55,16 +55,13 @@ private:
 private:
     void setIdFromClipboard();
 
-    QLabel *headLabel,
-           *toxIdLabel,
+    QLabel *toxIdLabel,
            *messageLabel;
     QPushButton *sendButton;
     QLineEdit *toxId;
     QTextEdit *message;
-    QVBoxLayout *layout,
-                *headLayout;
-    QWidget *head,
-            *main;
+    QVBoxLayout *layout;
+    QWidget *main;
     QString lastUsername; // Cached username so we can retranslate the invite message
 
 };

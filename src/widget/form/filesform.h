@@ -50,12 +50,9 @@ private:
     void retranslateUi();
 
 private:
-    QWidget* head;
     QIcon doneIcon;
-    QLabel headLabel;
-    QVBoxLayout headLayout;
     QTabWidget main;
-    QListWidget* sent, * recvd;
+    QListWidget *sent, *recvd;
 };
 
 #endif // FILESFORM_H

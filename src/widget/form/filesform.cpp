@@ -26,13 +26,6 @@
 FilesForm::FilesForm()
     : QObject(), doneIcon(":/ui/fileTransferWidget/fileDone.svg")
 {
-    head = new QWidget();
-    QFont bold;
-    bold.setBold(true);
-    headLabel.setFont(bold);
-    head->setLayout(&headLayout);
-    headLayout.addWidget(&headLabel);
-
     recvd = new QListWidget;
     sent = new QListWidget;
 
@@ -51,15 +44,12 @@ FilesForm::~FilesForm()
     Translator::unregister(this);
     delete recvd;
     delete sent;
-    head->deleteLater();
 }
 
 void FilesForm::show(Ui::MainWindow& ui)
 {
     ui.mainContent->layout()->addWidget(&main);
-    ui.mainHead->layout()->addWidget(head);
     main.show();
-    head->show();
 }
 
 void FilesForm::onFileDownloadComplete(const QString& path)
@@ -88,7 +78,6 @@ void FilesForm::onFileActivated(QListWidgetItem *item)
 
 void FilesForm::retranslateUi()
 {
-    headLabel.setText(tr("Transfered Files","\"Headline\" of the window"));
     main.setTabText(0, tr("Downloads"));
     main.setTabText(1, tr("Uploads"));
 }

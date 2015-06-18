@@ -36,23 +36,14 @@
 AddFriendForm::AddFriendForm()
 {
     main = new QWidget();
-    head = new QWidget();
-    QFont bold;
-    bold.setBold(true);
 
-    headLabel = new QLabel(this);
     toxId = new QLineEdit(this);
-
     toxIdLabel = new QLabel(this);
     messageLabel = new QLabel(this);
     sendButton = new QPushButton(this);
     toxId = new QLineEdit(this);
     message = new QTextEdit(this);
     layout = new QVBoxLayout(this);
-    headLayout = new QVBoxLayout(this);
-
-    headLabel->setText(tr("Add Friends"));
-    headLabel->setFont(bold);
 
     toxIdLabel->setText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
     messageLabel->setText(tr("Message", "The message you send in friend requests"));
@@ -65,9 +56,6 @@ AddFriendForm::AddFriendForm()
     layout->addWidget(sendButton);
     main->setLayout(layout);
 
-    head->setLayout(headLayout);
-    headLayout->addWidget(headLabel);
-
     connect(toxId, &QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
     connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
 
@@ -78,16 +66,13 @@ AddFriendForm::AddFriendForm()
 AddFriendForm::~AddFriendForm()
 {
     Translator::unregister(this);
-    head->deleteLater();
     main->deleteLater();
 }
 
 void AddFriendForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(main);
-    ui.mainHead->layout()->addWidget(head);
     main->show();
-    head->show();
     setIdFromClipboard();
     toxId->setFocus();
 }
@@ -161,7 +146,6 @@ void AddFriendForm::setIdFromClipboard()
 
 void AddFriendForm::retranslateUi()
 {
-    headLabel->setText(tr("Add Friends"));
     toxIdLabel->setText(tr("Tox ID","Tox ID of the person you're sending a friend request to"));
     messageLabel->setText(tr("Message","The message you send in friend requests"));
     sendButton->setText(tr("Send friend request"));

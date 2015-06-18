@@ -127,7 +127,6 @@ ProfileForm::~ProfileForm()
 
 void ProfileForm::show(Ui::MainWindow &ui)
 {
-    ui.mainHead->layout()->addWidget(head);
     ui.mainContent->layout()->addWidget(this);
     head->show();
     QWidget::show();

@@ -121,9 +121,6 @@ void Widget::init()
     statusBusy->setIcon(getStatusIcon(Status::Busy, 10, 10));
     connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
 
-    ui->statusbar->hide();
-    ui->menubar->hide();
-
     layout()->setContentsMargins(0, 0, 0, 0);
     ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
 
@@ -134,14 +131,10 @@ void Widget::init()
     ui->myProfile->insertSpacing(1, 7);
 
     ui->mainContent->setLayout(new QVBoxLayout(this));
-    ui->mainHead->setLayout(new QVBoxLayout(this));
-    ui->mainHead->layout()->setMargin(0);
-    ui->mainHead->layout()->setSpacing(0);
 
     if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
             && Settings::getInstance().getStyle() != "None")
     {
-        ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
         ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
     }
 
@@ -171,8 +164,6 @@ void Widget::init()
     ui->friendList->setLayoutDirection(Qt::RightToLeft);
 
     ui->statusLabel->setEditable(true);
-
-    //ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 
     qDebug() << "Loading theme: " << Settings::getInstance().getTheme();
     //ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
@@ -545,8 +536,6 @@ void Widget::hideMainForms()
 {
     setActiveToolMenuButton(Widget::None);
     QLayoutItem* item;
-    while ((item = ui->mainHead->layout()->takeAt(0)) != 0)
-        item->widget()->hide();
 
     while ((item = ui->mainContent->layout()->takeAt(0)) != 0)
         item->widget()->hide();
@@ -873,8 +862,6 @@ void Widget::removeFriend(Friend* f, bool fake)
     Nexus::getCore()->removeFriend(f->getFriendID(), fake);
 
     delete f;
-    if (ui->mainHead->layout()->isEmpty())
-        onAddClicked();
 
     contactListWidget->reDraw();
 }
@@ -1025,8 +1012,6 @@ void Widget::removeGroup(Group* g, bool fake)
     GroupList::removeGroup(g->getGroupId(), fake);
     Nexus::getCore()->removeGroup(g->getGroupId(), fake);
     delete g;
-    if (ui->mainHead->layout()->isEmpty())
-        onAddClicked();
 
     contactListWidget->reDraw();
 }
