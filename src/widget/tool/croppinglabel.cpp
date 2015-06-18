@@ -21,6 +21,17 @@
 #include <QResizeEvent>
 #include <QLineEdit>
 
+class LineEdit : public QLineEdit
+{
+public:
+    LineEdit(QWidget* parent = 0) : QLineEdit(parent) {}
+protected:
+    void focusOutEvent(QFocusEvent *)
+    {
+        emit editingFinished();
+    }
+};
+
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
     , blockPaintEvents(false)

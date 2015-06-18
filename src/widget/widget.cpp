@@ -1499,13 +1499,17 @@ void Widget::searchContacts()
 
 void Widget::changeDisplayMode()
 {
+    filterDisplayGroup->setEnabled(false);
+
     if (filterDisplayGroup->checkedAction() == filterDisplayActivity)
         contactListWidget->setMode(FriendListWidget::Activity);
     else if (filterDisplayGroup->checkedAction() == filterDisplayName)
         contactListWidget->setMode(FriendListWidget::Name);
 
-    updateFilterText();
     searchContacts();
+    filterDisplayGroup->setEnabled(true);
+
+    updateFilterText();
 }
 
 void Widget::updateFilterText()
