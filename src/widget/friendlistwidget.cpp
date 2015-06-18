@@ -26,6 +26,7 @@
 #include "groupwidget.h"
 #include "circlewidget.h"
 #include "widget.h"
+#include "src/persistence/historykeeper.h"
 #include <QGridLayout>
 #include <QMimeData>
 #include <QDragEnterEvent>
@@ -108,6 +109,16 @@ Time getTime(const QDate date)
     return LongAgo;
 }
 
+QDate getDateFriend(Friend* contact)
+{
+    QDate date = Settings::getInstance().getFriendActivity(contact->getToxId());
+
+    if (date.isNull() && Settings::getInstance().getEnableLogging())
+        date = HistoryKeeper::getInstance()->getLatestDate(contact->getToxId().publicKey);
+
+    return date;
+}
+
 FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     : QWidget(parent)
     // Prevent Valgrind from complaining. We're changing this to Name here.
@@ -164,6 +175,7 @@ void FriendListWidget::setMode(Mode mode)
         return;
 
     this->mode = mode;
+
     if (mode == Name)
     {
         circleLayout = new GenericChatItemLayout;
@@ -171,7 +183,10 @@ void FriendListWidget::setMode(Mode mode)
         circleLayout->getLayout()->setMargin(0);
 
         for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+        {
             addCircleWidget(i);
+            CircleWidget::getFromID(i)->setVisible(false);
+        }
 
         QList<Friend*> friendList = FriendList::getAllFriends();
         for (Friend* contact : friendList)
@@ -180,7 +195,6 @@ void FriendListWidget::setMode(Mode mode)
             addFriendWidget(contact->getFriendWidget(), contact->getStatus(), circleId);
         }
 
-        listLayout->removeItem(activityLayout);
         listLayout->addLayout(listLayout->getLayoutOnline());
         listLayout->addLayout(listLayout->getLayoutOffline());
         listLayout->addLayout(circleLayout->getLayout());
@@ -261,7 +275,7 @@ void FriendListWidget::setMode(Mode mode)
         QList<Friend*> friendList = FriendList::getAllFriends();
         for (Friend* contact : friendList)
         {
-            QDate activityDate = Settings::getInstance().getFriendActivity(contact->getToxId());
+            QDate activityDate = getDateFriend(contact);
             Time time = getTime(activityDate);
             CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
             categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
@@ -270,7 +284,7 @@ void FriendListWidget::setMode(Mode mode)
         for (int i = 0; i < activityLayout->count(); ++i)
         {
             CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
-           categoryWidget->setVisible(categoryWidget->hasChatrooms());
+            categoryWidget->setVisible(categoryWidget->hasChatrooms());
         }
 
         listLayout->removeItem(listLayout->getLayoutOnline());
@@ -303,10 +317,6 @@ void FriendListWidget::addGroupWidget(GroupWidget* widget)
 {
     groupLayout.addSortedWidget(widget);
     connect(widget, &GroupWidget::renameRequested, this, &FriendListWidget::renameGroupWidget);
-
-    // Only rename group if groups are visible.
-    if (Widget::getInstance()->groupsVisible())
-        widget->editName();
 }
 
 void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleIndex)
@@ -323,7 +333,7 @@ void FriendListWidget::removeFriendWidget(FriendWidget* w)
     Friend* contact = FriendList::findFriend(w->friendId);
     if (mode == Activity)
     {
-        QDate activityDate = Settings::getInstance().getFriendActivity(contact->getToxId());
+        QDate activityDate = getDateFriend(contact);
         Time time = getTime(activityDate);
         CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
         categoryWidget->removeFriendWidget(w, contact->getStatus());
@@ -373,12 +383,22 @@ void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnl
 {
     groupLayout.search(searchString, hideGroups);
     listLayout->searchChatrooms(searchString, hideOnline, hideOffline);
+
     if (circleLayout != nullptr)
     {
         for (int i = 0; i != circleLayout->getLayout()->count(); ++i)
         {
             CircleWidget* circleWidget = static_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget());
             circleWidget->search(searchString, true, hideOnline, hideOffline);
+        }
+    }
+    else if (activityLayout != nullptr)
+    {
+        for (int i = 0; i != activityLayout->count(); ++i)
+        {
+            CategoryWidget* categoryWidget = static_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
+            categoryWidget->search(searchString, true, hideOnline, hideOffline);
+            categoryWidget->setVisible(categoryWidget->hasChatrooms());
         }
     }
 }
@@ -427,7 +447,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         if (friendWidget == nullptr)
             return;
 
-        QDate activityDate = Settings::getInstance().getFriendActivity(FriendList::findFriend(friendWidget->friendId)->getToxId());
+        QDate activityDate = getDateFriend(FriendList::findFriend(friendWidget->friendId));
         index = getTime(activityDate);
         CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
 
@@ -615,7 +635,7 @@ void FriendListWidget::moveWidget(FriendWidget* w, Status s, bool add)
     else
     {
         Friend* contact = FriendList::findFriend(w->friendId);
-        QDate activityDate = Settings::getInstance().getFriendActivity(contact->getToxId());
+        QDate activityDate = getDateFriend(contact);
         Time time = getTime(activityDate);
         CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
         categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
@@ -641,6 +661,8 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
     // Stop, after it has been created. Code after this is for displaying.
     if (mode == Activity)
         return nullptr;
+
+    assert(circleLayout != nullptr);
 
     CircleWidget* circleWidget = new CircleWidget(this, id);
     circleLayout->addSortedWidget(circleWidget);

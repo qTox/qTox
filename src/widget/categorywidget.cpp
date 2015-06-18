@@ -285,7 +285,7 @@ void CategoryWidget::onCompactChanged(bool _compact)
         mainLayout->setSpacing(0);
         mainLayout->setContentsMargins(20, 0, 20, 0);
 
-        container->setFixedHeight(55);
+        container->setFixedHeight(35);
         container->setLayout(mainLayout);
 
         topLayout->addWidget(&statusPic);
