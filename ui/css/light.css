@@ -199,9 +199,7 @@ QDateEdit,
 QDateTime,
 QDateTimeEdit,
 QComboBox,
-QLabel#statusLabel {
-    /** for status label in chat */
-
+QLabel#statusLabel { /** for status label in chat */
     padding: 2px;
     border-width: 1px;
     border-color: black;

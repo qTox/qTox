@@ -76,7 +76,6 @@ QSpinBox {
     border-color: #1e1e1e;
     border-style: solid;
 }
-
 QComboBox {
     selection-background-color: #ffaa00;
     background-color: #222;
@@ -143,9 +142,7 @@ QToolBar {
     border: 1px solid #323232;
 }
 QToolBar::handle {
-    spacing: 3px;
-    /* spacing between items in the tool bar */
-
+    spacing: 3px; /* spacing between items in the tool bar */
     background: url(ui/css/handle.png);
 }
 QMenu::separator {
@@ -199,7 +196,6 @@ QAbstractItemView::selected {
     border: 0px;
     outline: none;
 }
-
 QHeaderView::section {
     background: transparent;
     background-color: #222;
@@ -208,9 +204,7 @@ QHeaderView::section {
     border-top: 0px solid #777;
     padding: 0 0 2px 3px
 }
-/* header row */
-
-QCalendarWidget QWidget {
+QCalendarWidget QWidget { /* header row */
     alternate-background-color: rgb(128, 128, 128);
 }
 QTableWidget {
@@ -259,15 +253,11 @@ QListView {
     background-color: #252526;
     border-style: none;
 }
-CroppingLabel {
-    /* for status label in chat */
-
+CroppingLabel {/* for status label in chat */
     color: white;
     background-color: #222;
 }
-ChatTextEdit {
-    /* msg edit box */
-
+ChatTextEdit { /* msg edit box */
     border-width: 1px !important;
     border-style: solid !important;
     border-color: black !important;
