@@ -15,6 +15,7 @@
 #include "genericchatitemlayout.h"
 #include "genericchatitemwidget.h"
 #include <QBoxLayout>
+#include <QCollator>
 #include <cassert>
 
 // As this layout sorts widget, extra care must be taken when inserting widgets.
@@ -106,7 +107,11 @@ int GenericChatItemLayout::indexOfClosestSortedWidget(GenericChatItemWidget* wid
         assert(atMid != nullptr);
 
         bool lessThan = false;
-        int compareValue = atMid->getName().localeAwareCompare(widget->getName());
+
+        QCollator collator;
+        collator.setNumericMode(true);
+
+        int compareValue = collator.compare(atMid->getName(), widget->getName());
 
         if (compareValue < 0)
             lessThan = true;
