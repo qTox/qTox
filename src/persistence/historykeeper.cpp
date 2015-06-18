@@ -392,6 +392,26 @@ void HistoryKeeper::markAsSent(int m_id)
     db->exec(QString("UPDATE sent_status SET status = 1 WHERE id = %1;").arg(m_id));
 }
 
+QDate HistoryKeeper::getLatestDate(const QString &chat)
+{
+    int chat_id = getChatID(chat, ctSingle).first;
+
+    QSqlQuery dbAnswer;
+    dbAnswer = db->exec(QString("SELECT MAX(timestamp) FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
+                        QString("INNER JOIN aliases ON history.sender = aliases.id AND chat_id = %3;")
+                        .arg(chat_id));
+
+    if (dbAnswer.first())
+    {
+        qint64 timeInt = dbAnswer.value(0).toLongLong();
+
+        if (timeInt != 0)
+            return QDateTime::fromMSecsSinceEpoch(timeInt).date();
+    }
+
+    return QDate();
+}
+
 void HistoryKeeper::setSyncType(Db::syncType sType)
 {
     QString syncCmd;

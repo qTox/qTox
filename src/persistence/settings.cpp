@@ -296,7 +296,8 @@ void Settings::loadPersonnal(Profile* profile)
             fp.alias = ps.value("alias").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
             fp.circleID = ps.value("circle", -1).toInt();
-            fp.activity = ps.value("activity").toDate();
+            fp.activity = ps.value("activity", QDate()).toDate();
+
             friendLst[ToxId(fp.addr).publicKey] = fp;
         }
         ps.endArray();

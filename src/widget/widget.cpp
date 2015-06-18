@@ -656,6 +656,8 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::friendAvatarRemoved, newfriend->getChatForm(), &ChatForm::onAvatarRemoved);
     connect(core, &Core::friendAvatarRemoved, newfriend->getFriendWidget(), &FriendWidget::onAvatarRemoved);
 
+    qDebug() << HistoryKeeper::getInstance()->getLatestDate(newfriend->getToxId().publicKey);
+
     // Try to get the avatar from the cache
     QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);
     if (!avatar.isNull())
@@ -1130,7 +1132,11 @@ Group *Widget::createGroup(int groupId)
 
 void Widget::onEmptyGroupCreated(int groupId)
 {
-    createGroup(groupId);
+    Group* group = createGroup(groupId);
+
+    // Only rename group if groups are visible.
+    if (Widget::getInstance()->groupsVisible())
+        group->getGroupWidget()->editName();
 }
 
 bool Widget::isFriendWidgetCurActiveWidget(const Friend* f) const
@@ -1499,6 +1505,7 @@ void Widget::changeDisplayMode()
         contactListWidget->setMode(FriendListWidget::Name);
 
     updateFilterText();
+    searchContacts();
 }
 
 void Widget::updateFilterText()
