@@ -175,6 +175,7 @@ void Settings::loadGlobal()
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
         separateWindow = s.value("separateWindow", false).toBool();
+        dontGroupWindows = s.value("dontGroupWindows", false).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 
@@ -217,6 +218,8 @@ void Settings::loadGlobal()
         windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
         windowState = s.value("windowState", QByteArray()).toByteArray();
         splitterState = s.value("splitterState", QByteArray()).toByteArray();
+        dialogGeometry = s.value("dialogGeometry", QByteArray()).toByteArray();
+        dialogSplitterState = s.value("dialogSplitterState", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -377,6 +380,7 @@ void Settings::saveGlobal()
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("separateWindow", separateWindow);
+        s.setValue("dontGroupWindows", dontGroupWindows);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
@@ -1092,6 +1096,30 @@ void Settings::setSplitterState(const QByteArray &value)
     splitterState = value;
 }
 
+QByteArray Settings::getDialogGeometry() const
+{
+    QMutexLocker locker{&bigLock};
+    return dialogGeometry;
+}
+
+void Settings::setDialogGeometry(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    dialogGeometry = value;
+}
+
+QByteArray Settings::getDialogSplitterState() const
+{
+    QMutexLocker locker{&bigLock};
+    return dialogSplitterState;
+}
+
+void Settings::setDialogSplitterState(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    dialogSplitterState = value;
+}
+
 bool Settings::isMinimizeOnCloseEnabled() const
 {
     QMutexLocker locker{&bigLock};
@@ -1336,6 +1364,18 @@ void Settings::setSeparateWindow(bool value)
 {
     QMutexLocker locker{&bigLock};
     separateWindow = value;
+}
+
+bool Settings::getDontGroupWindows() const
+{
+    QMutexLocker locker{&bigLock};
+    return dontGroupWindows;
+}
+
+void Settings::setDontGroupWindows(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    dontGroupWindows = value;
 }
 
 bool Settings::getGroupchatPosition() const

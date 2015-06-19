@@ -22,6 +22,7 @@
 #include "ui_mainwindow.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
+#include "contentdialog.h"
 #include "src/friend.h"
 #include "src/friendlist.h"
 #include "tool/friendrequestdialog.h"
@@ -534,6 +535,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
     if (!separate)
     {
         QWindowList windowList = QGuiApplication::topLevelWindows();
+
         for (QWindow* window : windowList)
         {
             qDebug() << window->objectName();
@@ -542,7 +544,6 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         }
 
         QWidget* contentWidget = new QWidget(this);
-        contentWidget->setObjectName("yolo");
         contentLayout = new ContentLayout(contentWidget);
         ui->mainSplitter->addWidget(contentWidget);
 
@@ -553,6 +554,8 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
     {
         if (contentLayout != nullptr)
         {
+            contentLayout->clear();
+            contentLayout->parentWidget()->setParent(0); // Remove from splitter.
             contentLayout->parentWidget()->hide();
             contentLayout->parentWidget()->deleteLater();
             contentLayout->deleteLater();
@@ -563,6 +566,8 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
         if (clicked)
             resize(ui->statusPanel->width(), height());
+
+        setWindowTitle(QString());
     }
 
     if (clicked)
@@ -571,9 +576,16 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
 void Widget::setWindowTitle(const QString& title)
 {
-    QString tmp = title;
-    /// <[^>]*> Regexp to remove HTML tags, in case someone used them in title
-    QMainWindow::setWindowTitle("qTox - " + tmp.remove(QRegExp("<[^>]*>")));
+    if (title.isEmpty())
+    {
+        QMainWindow::setWindowTitle(QApplication::applicationName());
+    }
+    else
+    {
+        QString tmp = title;
+        /// <[^>]*> Regexp to remove HTML tags, in case someone used them in title
+        QMainWindow::setWindowTitle(QApplication::applicationName() + QStringLiteral(" - ") + tmp.remove(QRegExp("<[^>]*>")));
+    }
 }
 
 void Widget::forceShow()
@@ -941,12 +953,27 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget)
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!widget->chatFormIsSet())
-            widget->setChatForm(createContentDialog(widget->getName()));
+        {
+            ContentDialog* dialog = nullptr;
+
+            if (!Settings::getInstance().getDontGroupWindows())
+                dialog = ContentDialog::current();
+
+            if (dialog == nullptr)
+                dialog = new ContentDialog();
+
+            dialog->show();
+            Friend* frnd = widget->getFriend();
+            if (frnd != nullptr)
+            {
+                dialog->addFriend(frnd->getFriendID(), frnd->getDisplayedName());
+            }
+        }
     }
     else
     {
+        hideMainForms(widget);
         widget->setChatForm(contentLayout);
-        setWindowTitle(widget->getName());
         widget->setAsActiveChatroom();
         widget->resetEventFlags();
         widget->updateStatusLight();
@@ -1799,7 +1826,7 @@ void Widget::retranslateUi()
     statusOnline->setText(tr("Online", "Button to set your status to 'Online'"));
     statusAway->setText(tr("Away", "Button to set your status to 'Away'"));
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
-    setWindowTitle(tr("Settings"));
+    //setWindowTitle(tr("Settings"));
 }
 
 #ifdef Q_OS_MAC

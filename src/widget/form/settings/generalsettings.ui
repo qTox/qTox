@@ -377,7 +377,17 @@ instead of system taskbar.</string>
           <item>
            <widget class="QCheckBox" name="cbSeparateWindow">
             <property name="text">
-             <string>Use separate windows for friend list.</string>
+             <string>Open chats in separate window.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbDontGroupWindows">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Don't group chat wndows.</string>
             </property>
            </widget>
           </item>
