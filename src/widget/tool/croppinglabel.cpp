@@ -46,7 +46,22 @@ CroppingLabel::CroppingLabel(QWidget* parent)
                                   | Qt::ImhNoPredictiveText
                                   | Qt::ImhPreferLatin);
 
+    installEventFilter(this);
+    textEdit->installEventFilter(this);
+
     connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::editingFinished);
+}
+#include <QDebug>
+bool CroppingLabel::eventFilter(QObject *, QEvent *event)
+{
+    if (event->type() == QEvent::FocusOut)
+    {
+        qDebug() << "Focus out changed!";
+        textEdit->clearFocus();
+        emit editingFinished();
+        return true;
+    }
+    return false;
 }
 
 void CroppingLabel::editBegin()
