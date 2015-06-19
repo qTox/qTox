@@ -378,8 +378,8 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
         }
 
         Widget::getInstance()->searchCircle(circleWidget);
+        circleWidget->editName();
     }
-    circleWidget->editName();
 }
 
 void FriendListWidget::removeCircleWidget(CircleWidget* widget)
