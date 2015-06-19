@@ -27,6 +27,7 @@ class MaskablePixmapWidget;
 class QVBoxLayout;
 class QHBoxLayout;
 class ContentLayout;
+class Friend;
 
 class GenericChatroomWidget : public GenericChatItemWidget
 {
@@ -41,6 +42,7 @@ public:
     virtual void setChatForm(ContentLayout* contentLayout) = 0;
     virtual void resetEventFlags() = 0;
     virtual QString getStatusString() = 0;
+    virtual Friend* getFriend() const{return nullptr;}
 
     virtual bool eventFilter(QObject *, QEvent *) final override;
 

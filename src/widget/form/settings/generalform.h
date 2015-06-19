@@ -68,6 +68,7 @@ private slots:
     void onFauxOfflineMessaging();
     void onCompactLayout();
     void onSeparateWindowChanged();
+    void onDontGroupWindowsChanged();
     void onGroupchatPositionChanged();
     void onThemeColorChanged(int);
 

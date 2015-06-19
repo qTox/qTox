@@ -36,6 +36,7 @@ public:
     virtual void setChatForm(ContentLayout* contentLayout) override;
     virtual void resetEventFlags() override;
     virtual QString getStatusString() override;
+    virtual Friend* getFriend() const override;
     void search(const QString &searchString, bool hide = false);
 
 signals:

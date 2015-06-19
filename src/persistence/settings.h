@@ -217,6 +217,12 @@ public:
     QByteArray getSplitterState() const;
     void setSplitterState(const QByteArray &value);
 
+    QByteArray getDialogGeometry() const;
+    void setDialogGeometry(const QByteArray& value);
+
+    QByteArray getDialogSplitterState() const;
+    void setDialogSplitterState(const QByteArray &value);
+
     QString getFriendAdress(const QString &publicKey) const;
     void updateFriendAdress(const QString &newAddr);
 
@@ -239,6 +245,9 @@ public:
 
     bool getSeparateWindow() const;
     void setSeparateWindow(bool value);
+
+    bool getDontGroupWindows() const;
+    void setDontGroupWindows(bool value);
 
     bool getGroupchatPosition() const;
     void setGroupchatPosition(bool value);
@@ -299,6 +308,7 @@ private:
     bool compactLayout;
     bool groupchatPosition;
     bool separateWindow;
+    bool dontGroupWindows;
     bool enableIPv6;
     QString translation;
     bool makeToxPortable;
@@ -338,6 +348,8 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
+    QByteArray dialogGeometry;
+    QByteArray dialogSplitterState;
     QString style;
     bool showSystemTray;
 

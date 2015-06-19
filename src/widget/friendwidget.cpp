@@ -26,6 +26,7 @@
 #include "src/core/core.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
+#include "contentdialog.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/style.h"
 #include "src/persistence/settings.h"
@@ -67,6 +68,9 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     ToxId id = FriendList::findFriend(friendId)->getToxId();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
+    menu.addAction(tr("Open Chat"));
+    menu.addAction(tr("Open Chat in New Window"));
+    menu.addSeparator();
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
     QMap<QAction*, Group*> groupActions;
 
@@ -296,6 +300,11 @@ QString FriendWidget::getStatusString()
     return QString::null;
 }
 
+Friend* FriendWidget::getFriend() const
+{
+    return FriendList::findFriend(friendId);
+}
+
 void FriendWidget::search(const QString &searchString, bool hide)
 {
     searchName(searchString, hide);
@@ -307,7 +316,7 @@ void FriendWidget::search(const QString &searchString, bool hide)
 bool FriendWidget::chatFormIsSet() const
 {
     Friend* f = FriendList::findFriend(friendId);
-    return f->getChatForm()->isVisible();
+    return f->getChatForm()->isVisible() || ContentDialog::showChatroomWidget(friendId);
 }
 
 void FriendWidget::setChatForm(ContentLayout* contentLayout)

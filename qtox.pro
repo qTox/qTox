@@ -32,8 +32,8 @@ FORMS    += \
     src/widget/form/setpassworddialog.ui \
     src/widget/form/settings/aboutsettings.ui \
     src/widget/form/settings/advancedsettings.ui \
-    src/widget/form/settings/avsettings.ui \
     src/widget/form/settings/generalsettings.ui \
+    src/widget/form/settings/avsettings.ui \
     src/widget/form/settings/privacysettings.ui
 
 CONFIG   += c++11
@@ -494,7 +494,8 @@ SOURCES += \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
-    src/widget/contentlayout.cpp
+    src/widget/contentlayout.cpp \
+    src/widget/contentdialog.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -538,4 +539,5 @@ HEADERS += \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
     src/widget/categorywidget.h \
-    src/widget/contentlayout.h
+    src/widget/contentlayout.h \
+    src/widget/contentdialog.h
