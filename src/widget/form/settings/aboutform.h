@@ -17,51 +17,34 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SETTINGSWIDGET_H
-#define SETTINGSWIDGET_H
+#ifndef ABOUTFORM_H
+#define ABOUTFORM_H
 
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QStyleFactory>
-#include <array>
+#include "genericsettings.h"
 
-class Camera;
-class GenericForm;
-class GeneralForm;
-class PrivacyForm;
-class AVForm;
-class QLabel;
-class QTabWidget;
+class Core;
 
-namespace Ui {class MainWindow;}
+namespace Ui {
+class AboutSettings;
+}
 
-class SettingsWidget : public QWidget
+class AboutForm final : public GenericForm
 {
     Q_OBJECT
 public:
-    SettingsWidget(QWidget* parent = nullptr);
-    ~SettingsWidget();
+    AboutForm();
+    ~AboutForm();
+    virtual QString getFormName() final override {return tr("About");}
 
-    void show(Ui::MainWindow &ui);
-    void setBodyHeadStyle(QString style);
-
-signals:
-    void setShowSystemTray(bool newValue);
-    void compactToggled(bool compact);
-    void groupchatPositionToggled(bool groupchatPosition);
+protected:
 
 private slots:
-    void onTabChanged(int);
 
 private:
     void retranslateUi();
 
 private:
-    QWidget *head, *body;
-    QTabWidget *settingsWidgets;
-    QLabel *nameLabel, *imgLabel;
-    std::array<GenericForm*, 5> cfgForms;
-    int currentIndex;
+    Ui::AboutSettings* bodyUI;
 };
 
-#endif // SETTINGSWIDGET_H
+#endif // ABOUTFORM_H

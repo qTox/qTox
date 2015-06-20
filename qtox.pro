@@ -23,18 +23,19 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET    = qtox
 TEMPLATE  = app
 FORMS    += \
+    src/android.ui \
+    src/loginscreen.ui \
     src/mainwindow.ui \
-    src/widget/form/settings/generalsettings.ui \
-    src/widget/form/settings/avsettings.ui \
-    src/widget/form/settings/privacysettings.ui \
+    src/chatlog/content/filetransferwidget.ui \
     src/widget/form/profileform.ui \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/setpassworddialog.ui \
-    src/chatlog/content/filetransferwidget.ui \
+    src/widget/form/settings/aboutsettings.ui \
     src/widget/form/settings/advancedsettings.ui \
-    src/android.ui \
-    src/loginscreen.ui
-    
+    src/widget/form/settings/avsettings.ui \
+    src/widget/form/settings/generalsettings.ui \
+    src/widget/form/settings/privacysettings.ui
+
 CONFIG   += c++11
 
 QMAKE_CXXFLAGS += -fno-exceptions -fno-rtti
@@ -324,6 +325,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/chatlog/chatmessage.h \
         src/chatlog/content/image.h \
         src/chatlog/customtextdocument.h \
+        src/widget/form/settings/aboutform.h \
         src/widget/form/settings/advancedform.h \
         src/chatlog/content/notificationicon.h \
         src/chatlog/content/timestamp.h \
@@ -413,6 +415,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/chatlog/chatmessage.cpp \
         src/chatlog/content/image.cpp \
         src/chatlog/customtextdocument.cpp\
+        src/widget/form/settings/aboutform.cpp \
         src/widget/form/settings/advancedform.cpp \
         src/chatlog/content/notificationicon.cpp \
         src/chatlog/content/timestamp.cpp \
