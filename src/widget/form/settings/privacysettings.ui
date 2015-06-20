@@ -65,10 +65,9 @@ Save format changes are possible, which may result in data loss.</string>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="nospamGroup">
          <property name="toolTip">
-          <string comment="toolTip for nospam">Nospam is part of your Tox ID.
-It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
-When you change nospam, your current contacts still can communicate with you,
-but new contacts need to know your new Tox ID to be able to add you.</string>
+          <string comment="toolTip for nospam">NoSpam is part of your Tox ID.
+If you are being spammed with friend requests, you should change your NoSpam.
+People will be unable to add you with your old ID, but you will keep your current friends.</string>
          </property>
          <property name="title">
           <string>NoSpam</string>
@@ -77,7 +76,8 @@ but new contacts need to know your new Tox ID to be able to add you.</string>
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>The NoSpam is part of your Tox ID, if you are getting spammed with friend requests, change the NoSpam.</string>
+             <string>NoSpam is a part of your ID that can be changed at will.
+If you are getting spammed with friend requests, change the NoSpam.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
