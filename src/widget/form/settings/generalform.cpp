@@ -160,8 +160,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
-    if (bodyUI->autoacceptFiles->isChecked())
-        connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+    connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
@@ -291,19 +290,16 @@ void GeneralForm::onAutoAwayChanged()
 void GeneralForm::onAutoAcceptFileChange()
 {
     Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
-
-    if (bodyUI->autoacceptFiles->isChecked() == true)
-        connect(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
-    else
-        disconnect(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
 }
 
 void GeneralForm::onAutoSaveDirChange()
 {
     QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
     QString directory = QFileDialog::getExistingDirectory(0,
-                                                          tr("Choose an auto accept directory","popup title"));
-    if (directory.isEmpty())
+                                                          tr("Choose an auto accept directory", "popup title"),  //opens in home directory
+                                                             QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
+                                                          );
+    if (directory.isEmpty())  // cancel was pressed
         directory = previousDir;
 
     Settings::getInstance().setGlobalAutoAcceptDir(directory);

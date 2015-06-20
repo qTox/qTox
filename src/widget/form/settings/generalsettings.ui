@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>653</width>
-        <height>1150</height>
+        <width>639</width>
+        <height>1221</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -237,6 +237,13 @@ instead of system taskbar.</string>
           <item>
            <layout class="QVBoxLayout" name="startupLayout">
             <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QCheckBox" name="cbAutorun">
               <property name="toolTip">
                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -256,21 +263,11 @@ instead of system taskbar.</string>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="autoacceptLayout">
+           <layout class="QFormLayout" name="formLayout_2">
             <property name="leftMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QCheckBox" name="autoacceptFiles">
-              <property name="toolTip">
-               <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking them.</string>
-              </property>
-              <property name="text">
-               <string>Autoaccept and save files:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
+            <item row="2" column="1">
              <widget class="QPushButton" name="autoSaveFilesDir">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -280,6 +277,23 @@ instead of system taskbar.</string>
               </property>
               <property name="toolTip">
                <string>Set where files will be saved.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Default directory to save files</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QCheckBox" name="autoacceptFiles">
+              <property name="toolTip">
+               <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking them.</string>
+              </property>
+              <property name="text">
+               <string>Autoaccept files</string>
               </property>
              </widget>
             </item>
