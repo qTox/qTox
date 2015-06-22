@@ -11,10 +11,10 @@ qTox
   - [**64 bit download**](https://tux3-dev.tox.im/jenkins/job/qTox-win64-nsis/lastSuccessfulBuild/artifact/setup-qtox64.exe)
   - [**32 bit download** (for older hardware)](https://tux3-dev.tox.im/jenkins/job/qTox-win32-nsis/lastSuccessfulBuild/artifact/setup-qtox32.exe)
 * **Linux**:
-  - [**binary**](https://jenkins.libtoxcore.so/job/qTox-linux-amd64/lastSuccessfulBuild/artifact/qt/qtox.xz)
-  - [**packages**](https://jenkins.libtoxcore.so/job/qTox-Linux-pkg/lastSuccessfulBuild/artifact/)
+  - [**binary**](#) - Currently unmaintained
+  - [**packages**](#) - Currently unmaintained
   - [**Gentoo overlay**](https://github.com/Tox/gentoo-overlay-tox)
-* **Mac**: [**download**](https://dist-build.tox.im/qtox/osx/qtox.zip)<br/>
+* **Mac**: [**download**](#) - Currently unmaintained<br/>
 
 
 <h4>Screenshots</h4>
