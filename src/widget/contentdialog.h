@@ -22,6 +22,7 @@
 
 #include <QDialog>
 #include <tuple>
+#include "src/core/corestructs.h"
 
 template <typename K, typename V> class QHash;
 
@@ -29,6 +30,8 @@ class QSplitter;
 class QVBoxLayout;
 class ContentLayout;
 class GenericChatroomWidget;
+class FriendWidget;
+class GroupWidget;
 
 class ContentDialog : public QDialog
 {
@@ -36,20 +39,48 @@ class ContentDialog : public QDialog
 public:
     ContentDialog(QWidget* parent = 0);
     ~ContentDialog();
-    void addFriend(int friendId, QString id);
+
+    FriendWidget* addFriend(int friendId, QString id);
+    GroupWidget* addGroup(int groupId, const QString& name);
+    void removeFriend(int friendId);
+    void removeGroup(int groupId);
+    bool hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget);
+    bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget);
+    int chatroomWidgetCount() const;
+
     static ContentDialog* current();
-    static bool showChatroomWidget(int friendId);
+    static bool existsFriendWidget(int friendId, bool focus);
+    static bool existsGroupWidget(int groupId, bool focus);
+    static void updateFriendStatus(int friendId);
+    static void updateFriendStatusMessage(int friendId, const QString &message);
+    static void updateGroupStatus(int groupId);
+    static bool isFriendWidgetActive(int friendId);
+    static bool isGroupWidgetActive(int groupId);
+    static ContentDialog* getFriendDialog(int friendId);
+    static ContentDialog* getGroupDialog(int groupId);
 
 protected:
+    void dragEnterEvent(QDragEnterEvent* event) final override;
+    void dropEvent(QDropEvent* event) final override;
+    void changeEvent(QEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
 
 private slots:
-    void onChatroomWidgetClicked(GenericChatroomWidget* widget);
+    void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
+    void updateFriendWidget(FriendWidget* w, Status s);
+    void updateGroupWidget(GroupWidget* w);
 
 private:
     void saveDialogGeometry();
     void saveSplitterState();
+
+    void remove(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    static bool existsWidget(int id, bool focus, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    static void updateStatus(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    static bool isWidgetActive(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    static ContentDialog* getDialog(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
 
     QSplitter* splitter;
     QVBoxLayout* friendLayout;
@@ -57,6 +88,7 @@ private:
     GenericChatroomWidget* activeChatroomWidget;
     static ContentDialog* currentDialog;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> friendList;
+    static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> groupList;
 };
 
 #endif // CONTENTDIALOG_H

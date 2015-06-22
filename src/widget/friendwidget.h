@@ -32,10 +32,10 @@ public:
     virtual void setAsActiveChatroom() override;
     virtual void setAsInactiveChatroom() override;
     virtual void updateStatusLight() override;
-    virtual bool chatFormIsSet() const override;
+    virtual bool chatFormIsSet(bool focus) const override;
     virtual void setChatForm(ContentLayout* contentLayout) override;
     virtual void resetEventFlags() override;
-    virtual QString getStatusString() override;
+    virtual QString getStatusString() const override;
     virtual Friend* getFriend() const override;
     void search(const QString &searchString, bool hide = false);
 
