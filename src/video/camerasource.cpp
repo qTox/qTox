@@ -49,6 +49,8 @@ CameraSource::CameraSource(const QString deviceName, VideoMode mode)
 {
     av_register_all();
     avdevice_register_all();
+
+    isNull = (deviceName == "none");
 }
 
 CameraSource::~CameraSource()
@@ -58,6 +60,12 @@ CameraSource::~CameraSource()
         bool expected = false;
         while (!biglock.compare_exchange_weak(expected, true))
             expected = false;
+    }
+
+    if (isNull)
+    {
+        biglock = false;
+        return;
     }
 
     // Free all remaining VideoFrame
@@ -94,6 +102,12 @@ bool CameraSource::subscribe()
             expected = false;
     }
 
+    if (isNull)
+    {
+        biglock = false;
+        return true;
+    }
+
     if (device)
     {
         device->open();
@@ -111,6 +125,7 @@ bool CameraSource::subscribe()
     if (!device)
     {
         biglock = false;
+        qWarning() << "Failed to open device!";
         return false;
     }
 
@@ -171,6 +186,12 @@ void CameraSource::unsubscribe()
         bool expected = false;
         while (!biglock.compare_exchange_weak(expected, true))
             expected = false;
+    }
+
+    if (isNull)
+    {
+        biglock = false;
+        return;
     }
 
     if (!device)

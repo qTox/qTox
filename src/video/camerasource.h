@@ -73,7 +73,7 @@ private:
     VideoMode mode; ///< What mode we tried to open the device in, all zeros means default mode
     AVCodecContext* cctx, *cctxOrig; ///< Codec context of the camera's selected video stream
     int videoStreamIndex; ///< A camera can have multiple streams, this is the one we're decoding
-    std::atomic_bool biglock, freelistLock; ///< True when locked. Faster than mutexes for video decoding.
+    std::atomic_bool biglock, freelistLock, isNull; ///< True when locked. Faster than mutexes for video decoding.
     std::atomic_int subscriptions; ///< Remember how many times we subscribed for RAII
 };
 
