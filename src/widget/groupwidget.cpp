@@ -19,8 +19,10 @@
 
 #include "groupwidget.h"
 #include "maskablepixmapwidget.h"
+#include "contentdialog.h"
 #include "src/grouplist.h"
 #include "src/group.h"
+#include "src/persistence/settings.h"
 #include "form/groupchatform.h"
 #include "src/widget/style.h"
 #include "src/core/core.h"
@@ -62,6 +64,25 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     installEventFilter(this); // Disable leave event.
 
     QMenu menu(this);
+
+    QAction* openChat = menu.addAction(tr("Open chat"));
+    QAction* openChatWindow = nullptr;
+    QAction* removeChatWindow = nullptr;
+
+    if (!Settings::getInstance().getSeparateWindow() || !Settings::getInstance().getDontGroupWindows())
+    {
+        ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
+        bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
+
+        if (contentDialog == nullptr || notAlone)
+            openChatWindow = menu.addAction(tr("Open chat in new window"));
+
+        if (notAlone && contentDialog->hasGroupWidget(groupId, this))
+            removeChatWindow = menu.addAction(tr("Remove chat from this window"));
+    }
+
+    menu.addSeparator();
+
     QAction* setTitle = menu.addAction(tr("Set title..."));
     QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
 
@@ -77,6 +98,22 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
         if (selectedItem == quitGroup)
         {
             emit removeGroup(groupId);
+        }
+        else if (selectedItem == openChat)
+        {
+            emit chatroomWidgetClicked(this);
+            return;
+        }
+        else if (selectedItem == openChatWindow)
+        {
+            emit chatroomWidgetClicked(this, true);
+            return;
+        }
+        else if (selectedItem == removeChatWindow)
+        {
+            ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
+            contentDialog->removeGroup(groupId);
+            return;
         }
         else if (selectedItem == setTitle)
         {
@@ -122,7 +159,7 @@ void GroupWidget::updateStatusLight()
     }
 }
 
-QString GroupWidget::getStatusString()
+QString GroupWidget::getStatusString() const
 {
     Group *g = GroupList::findGroup(groupId);
 
@@ -137,10 +174,16 @@ void GroupWidget::editName()
     nameLabel->editBegin();
 }
 
-bool GroupWidget::chatFormIsSet() const
+Group* GroupWidget::getGroup() const
 {
+    return GroupList::findGroup(groupId);
+}
+
+bool GroupWidget::chatFormIsSet(bool focus) const
+{
+    (void)focus;
     Group* g = GroupList::findGroup(groupId);
-    return g->getChatForm()->isVisible();
+    return ContentDialog::existsGroupWidget(groupId, focus) || g->getChatForm()->isVisible();
 }
 
 void GroupWidget::setChatForm(ContentLayout* contentLayout)

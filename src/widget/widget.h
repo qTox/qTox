@@ -52,6 +52,7 @@ class AddFriendForm;
 class CircleWidget;
 class QActionGroup;
 class ContentLayout;
+class ContentDialog;
 
 class Widget final : public QMainWindow
 {
@@ -64,7 +65,10 @@ public:
     QString getUsername();
     Camera* getCamera();
     static Widget* getInstance();
-    void newMessageAlert(GenericChatroomWidget* chat);
+    void addFriendDialog(Friend* frnd, ContentDialog* dialog);
+    void addGroupDialog(Group* group, ContentDialog* dialog);
+    void newFriendMessageAlert(int friendId);
+    void newGroupMessageAlert(int groupId);
     bool isFriendWidgetCurActiveWidget(const Friend* f) const;
     bool getIsWindowMinimized();
     void updateIcons();
@@ -147,8 +151,8 @@ private slots:
     void onTransferClicked();
     void showProfile();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
+    void onChatroomWidgetClicked(GenericChatroomWidget *, bool group);
     void onStatusMessageChanged(const QString& newStatusMessage);
-    void onChatroomWidgetClicked(GenericChatroomWidget *);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
@@ -188,6 +192,7 @@ private:
     };
 
 private:
+    void newMessageAlert(QWidget* currentWindow, bool isActive);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     void hideMainForms(GenericChatroomWidget* chatroomWidget);
     Group *createGroup(int groupId);

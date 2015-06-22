@@ -68,8 +68,22 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     ToxId id = FriendList::findFriend(friendId)->getToxId();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
-    menu.addAction(tr("Open Chat"));
-    menu.addAction(tr("Open Chat in New Window"));
+    QAction* openChat = menu.addAction(tr("Open chat"));
+    QAction* openChatWindow = nullptr;
+    QAction* removeChatWindow = nullptr;
+
+    if (!Settings::getInstance().getSeparateWindow() || !Settings::getInstance().getDontGroupWindows())
+    {
+        ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+        bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
+
+        if (contentDialog == nullptr || notAlone)
+            openChatWindow = menu.addAction(tr("Open chat in new window"));
+
+        if (notAlone && contentDialog->hasFriendWidget(friendId, this))
+            removeChatWindow = menu.addAction(tr("Remove chat from this window"));
+    }
+
     menu.addSeparator();
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
     QMap<QAction*, Group*> groupActions;
@@ -158,6 +172,22 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         else if (selectedItem == removeFriendAction)
         {
             emit removeFriend(friendId);
+            return;
+        }
+        else if (selectedItem == openChat)
+        {
+            emit chatroomWidgetClicked(this);
+            return;
+        }
+        else if (selectedItem == openChatWindow)
+        {
+            emit chatroomWidgetClicked(this, true);
+            return;
+        }
+        else if (selectedItem == removeChatWindow)
+        {
+            ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+            contentDialog->removeFriend(friendId);
             return;
         }
         else if (selectedItem == autoAccept)
@@ -282,7 +312,7 @@ void FriendWidget::updateStatusLight()
         statusPic.setMargin(0);
 }
 
-QString FriendWidget::getStatusString()
+QString FriendWidget::getStatusString() const
 {
     Friend* f = FriendList::findFriend(friendId);
     Status status = f->getStatus();
@@ -313,10 +343,10 @@ void FriendWidget::search(const QString &searchString, bool hide)
         circleWidget->search(searchString);
 }
 
-bool FriendWidget::chatFormIsSet() const
+bool FriendWidget::chatFormIsSet(bool focus) const
 {
     Friend* f = FriendList::findFriend(friendId);
-    return f->getChatForm()->isVisible() || ContentDialog::showChatroomWidget(friendId);
+    return ContentDialog::existsFriendWidget(friendId, focus) || f->getChatForm()->isVisible();
 }
 
 void FriendWidget::setChatForm(ContentLayout* contentLayout)
