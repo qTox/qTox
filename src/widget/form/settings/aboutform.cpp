@@ -43,4 +43,5 @@ AboutForm::~AboutForm()
 void AboutForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
+    bodyUI->label_4->setText(bodyUI->label_4->text().replace("GIT_VERSION", QString(GIT_VERSION)));
 }
