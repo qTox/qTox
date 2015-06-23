@@ -469,7 +469,10 @@ void Settings::savePersonal(QString profileName, QString password)
             ps.setValue("alias", frnd.alias);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
             ps.setValue("circle", frnd.circleID);
-            ps.setValue("activity", frnd.activity);
+
+            if (getEnableLogging())
+                ps.setValue("activity", frnd.activity);
+
             index++;
         }
         ps.endArray();

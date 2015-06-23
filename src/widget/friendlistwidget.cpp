@@ -111,12 +111,7 @@ Time getTime(const QDate date)
 
 QDate getDateFriend(Friend* contact)
 {
-    QDate date = Settings::getInstance().getFriendActivity(contact->getToxId());
-
-    if (date.isNull() && Settings::getInstance().getEnableLogging())
-        date = HistoryKeeper::getInstance()->getLatestDate(contact->getToxId().publicKey);
-
-    return date;
+    return Settings::getInstance().getFriendActivity(contact->getToxId());
 }
 
 FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)

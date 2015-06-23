@@ -64,6 +64,7 @@ public:
     bool isEmpty();
 
     ChatLog* getChatLog() const;
+    QDate getLatestDate() const;
 
 signals:
     void sendMessage(uint32_t, QString);

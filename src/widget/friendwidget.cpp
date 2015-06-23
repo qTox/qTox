@@ -39,6 +39,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QInputDialog>
+#include <QCollator>
 #include <cassert>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
@@ -93,23 +94,34 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     else
         friendList = dynamic_cast<FriendListWidget*>(circleWidget->parentWidget());
 
-        circleMenu = menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
+    circleMenu = menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
 
-        newCircleAction = circleMenu->addAction(tr("To new circle"));
+    newCircleAction = circleMenu->addAction(tr("To new circle"));
 
-        if (circleId != -1)
-            removeCircleAction = circleMenu->addAction(tr("Remove from circle '%1'").arg(Settings::getInstance().getCircleName(circleId)));
+    if (circleId != -1)
+        removeCircleAction = circleMenu->addAction(tr("Remove from circle '%1'").arg(Settings::getInstance().getCircleName(circleId)));
 
-        circleMenu->addSeparator();
+    circleMenu->addSeparator();
 
-        for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+    QList<QAction*> circleActionList;
+
+    for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+    {
+        if (i != circleId)
         {
-            if (i != circleId)
-            {
-                QAction* circleAction = circleMenu->addAction(tr("Move  to circle \"%1\"").arg(Settings::getInstance().getCircleName(i)));
-                circleActions[circleAction] = i;
-            }
+            circleActionList.push_back(new QAction(tr("Move  to circle \"%1\"").arg(Settings::getInstance().getCircleName(i)), circleMenu));
+            circleActions[circleActionList.back()] = i;
         }
+    }
+
+    std::sort(circleActionList.begin(), circleActionList.end(), [](const QAction* lhs, const QAction* rhs) -> bool
+    {
+        QCollator collator;
+        collator.setNumericMode(true);
+        return collator.compare(lhs->text(), rhs->text()) < 0;
+    });
+
+    circleMenu->addActions(circleActionList);
 
     QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
     QAction* setAlias = menu.addAction(tr("Set alias..."));
