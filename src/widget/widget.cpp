@@ -1007,18 +1007,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     HistoryKeeper::getInstance()->addChatEntry(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
                                                f->getToxId().publicKey, timestamp, true);
 
-    f->setEventFlag(f->getFriendWidget() != activeChatroomWidget && !ContentDialog::isFriendWidgetActive(friendId));
     newFriendMessageAlert(friendId);
-    f->getFriendWidget()->updateStatusLight();
-    ContentDialog::updateFriendStatus(friendId);
-
-    if (f->getFriendWidget()->isActive())
-    {
-        QString windowTitle = f->getFriendWidget()->getName();
-        if (!f->getFriendWidget()->getStatusString().isNull())
-            windowTitle += " (" + f->getFriendWidget()->getStatusString() + ")";
-        setWindowTitle(windowTitle);
-    }
 }
 
 void Widget::onReceiptRecieved(int friendId, int receipt)
@@ -1054,11 +1043,12 @@ void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
     connect(groupWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), group->getChatForm(), SLOT(focusInput()));
 }
 
-void Widget::newFriendMessageAlert(int friendId)
+bool Widget::newFriendMessageAlert(int friendId)
 {
     bool hasActive;
     QWidget* currentWindow;
     ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+    Friend* f = FriendList::findFriend(friendId);
 
     if (contentDialog != nullptr)
     {
@@ -1068,13 +1058,31 @@ void Widget::newFriendMessageAlert(int friendId)
     else
     {
         currentWindow = window();
-        hasActive = activeChatroomWidget != nullptr && FriendList::findFriend(friendId)->getFriendWidget() == activeChatroomWidget;
+        hasActive = f->getFriendWidget() == activeChatroomWidget;
     }
 
-    newMessageAlert(currentWindow, hasActive);
+    if (newMessageAlert(currentWindow, hasActive))
+    {
+        f->setEventFlag(true);
+        f->getFriendWidget()->updateStatusLight();
+
+        if (contentDialog == nullptr)
+        {
+            if (hasActive)
+                setWindowTitle(f->getFriendWidget()->getTitle());
+        }
+        else
+        {
+            ContentDialog::updateFriendStatus(friendId);
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
-void Widget::newGroupMessageAlert(int groupId)
+bool Widget::newGroupMessageAlert(int groupId)
 {
     bool hasActive;
     QWidget* currentWindow;
@@ -1088,33 +1096,29 @@ void Widget::newGroupMessageAlert(int groupId)
     else
     {
         currentWindow = window();
-        hasActive = activeChatroomWidget != nullptr && GroupList::findGroup(groupId)->getGroupWidget() == activeChatroomWidget;
+        hasActive = GroupList::findGroup(groupId)->getGroupWidget() == activeChatroomWidget;
     }
 
-    newMessageAlert(currentWindow, hasActive);
+    return newMessageAlert(currentWindow, hasActive);
 }
 
-void Widget::newMessageAlert(QWidget* currentWindow, bool isActive)
+bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive)
 {
     bool inactiveWindow = isMinimized() || !isActiveWindow();
 
     if (!inactiveWindow && isActive)
-        return;
+        return false;
 
     if (ui->statusButton->property("status").toString() == "busy")
-        return;
+        return false;
 
     QApplication::alert(currentWindow);
 
-    if (inactiveWindow)
-        eventFlag = true;
-
     if (Settings::getInstance().getShowWindow())
     {
-        currentWindow->activateWindow();
         currentWindow->show();
         if (inactiveWindow && Settings::getInstance().getShowInFront())
-            currentWindow->setWindowState(Qt::WindowActive);
+            currentWindow->activateWindow();
     }
 
     if (Settings::getInstance().getNotifySound())
@@ -1131,14 +1135,14 @@ void Widget::newMessageAlert(QWidget* currentWindow, bool isActive)
 
         Audio::playMono16Sound(sndData);
     }
+
+    return true;
 }
 
 void Widget::playRingtone()
 {
     if (ui->statusButton->property("status").toString() == "busy")
         return;
-
-    QApplication::alert(this);
 
     // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
     static QFile sndFile1(":audio/ToxicIncomingCall.pcm");
@@ -1423,14 +1427,6 @@ void Widget::onEmptyGroupCreated(int groupId)
     // Only rename group if groups are visible.
     if (Widget::getInstance()->groupsVisible())
         group->getGroupWidget()->editName();
-}
-
-bool Widget::isFriendWidgetCurActiveWidget(const Friend* f) const
-{
-    if (!f)
-        return false;
-
-    return (activeChatroomWidget == static_cast<const GenericChatroomWidget*>(f->getFriendWidget()));
 }
 
 bool Widget::event(QEvent * e)

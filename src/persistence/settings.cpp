@@ -752,7 +752,7 @@ void Settings::setStatusChangeNotificationEnabled(bool newValue)
 bool Settings::getShowInFront() const
 {
     QMutexLocker locker{&bigLock};
-   return showInFront;
+    return showInFront;
 }
 
 void Settings::setShowInFront(bool newValue)

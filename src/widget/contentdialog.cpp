@@ -34,6 +34,39 @@
 #include <QSplitter>
 #include <QGuiApplication>
 
+#include <QDragEnterEvent>
+#include <QMimeData>
+
+#include <QDebug>
+
+/*class ContentFriendList : public QScrollArea
+{
+public:
+    ContentFriendList(QWidget* parent = 0) : QScrollArea(parent)
+    {
+        setAcceptDrops(true);
+    }
+
+protected:
+
+    void dragEnterEvent(QDragEnterEvent* event) final override
+    {
+        qDebug() << "h";
+        if (event->mimeData()->hasFormat("friend"))
+            event->acceptProposedAction();
+        QScrollArea::dragEnterEvent(event);
+    }
+
+    void dropEvent(QDropEvent *event) final override
+    {
+        if (event->mimeData()->hasFormat("friend"))
+        {
+            int friendId = ev->mimeData()->data("friend").toInt();
+            //Core::getInstance()->groupInviteFriend(friendId, groupId);
+        }
+    }
+};*/
+
 ContentDialog* ContentDialog::currentDialog = nullptr;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::groupList;
@@ -88,6 +121,8 @@ ContentDialog::ContentDialog(QWidget* parent)
     splitter->restoreState(Settings::getInstance().getDialogSplitterState());
 
     currentDialog = this;
+
+    setAcceptDrops(true);
 }
 
 ContentDialog::~ContentDialog()
@@ -225,20 +260,37 @@ ContentDialog* ContentDialog::getGroupDialog(int groupId)
     return getDialog(groupId, groupList);
 }
 
-#include <QDragEnterEvent>
-#include <QMimeData>
 void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat("friend"))
-        event->acceptProposedAction();
+    {
+        int friendId = event->mimeData()->data("friend").toInt();
+
+        auto iter = friendList.find(friendId);
+
+        // If friend is already in a dialog then you can't drop friend where it already is.
+        if (iter == friendList.end() || (iter != friendList.end() && std::get<0>(iter.value()) != this))
+            event->acceptProposedAction();
+    }
 }
 
 void ContentDialog::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasFormat("friend"))
     {
-        //int friendId = ev->mimeData()->data("friend").toInt();
-        //Core::getInstance()->groupInviteFriend(friendId, groupId);
+        int friendId = event->mimeData()->data("friend").toInt();
+
+        auto iter = friendList.find(friendId);
+
+        if (iter != friendList.end())
+            std::get<0>(iter.value())->removeFriend(friendId);
+
+        Friend* contact = FriendList::findFriend(friendId);
+        Widget::getInstance()->addFriendDialog(contact, this);
+
+        // Display friend list after dropping, if not already visible.
+        if (splitter->sizes().at(0) == 0)
+            splitter->setSizes({1, 1});
     }
 }
 
@@ -282,6 +334,9 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
             removeGroup(widget->getGroup()->getGroupId());
             Widget::getInstance()->addGroupDialog(widget->getGroup(), contentDialog);
         }
+
+        contentDialog->raise();
+        contentDialog->activateWindow();
 
         return;
     }
@@ -341,7 +396,7 @@ void ContentDialog::remove(int id, const QHash<int, std::tuple<ContentDialog *, 
     if (activeChatroomWidget == chatroomWidget)
     {
         // Need to find replacement to show here instead.
-        if (chatroomWidgetCount() > 0)
+        if (chatroomWidgetCount() > 1)
         {
             int index = friendLayout->indexOf(chatroomWidget) - 1;
 
@@ -402,7 +457,7 @@ void ContentDialog::updateStatus(int id, const QHash<int, std::tuple<ContentDial
     GenericChatroomWidget* chatroomWidget = std::get<1>(iter.value());
     chatroomWidget->updateStatusLight();
 
-    if(chatroomWidget->isActive())
+    if (chatroomWidget->isActive())
         std::get<0>(iter.value())->setWindowTitle(chatroomWidget->getTitle());
 }
 

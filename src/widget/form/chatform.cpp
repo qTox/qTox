@@ -216,13 +216,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     if (file.friendId != f->getFriendID())
         return;
 
-    Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
-    {
-        w->newFriendMessageAlert(file.friendId);
-        f->setEventFlag(true);
-        f->getFriendWidget()->updateStatusLight();
-    }
+    Widget::getInstance()->newFriendMessageAlert(file.friendId);
 
     QString name;
     ToxId friendId = f->getToxId();
@@ -265,7 +259,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
     if (video)
     {
         callConfirm = new CallConfirmWidget(videoButton, *f);
-        if (Widget::getInstance()->isFriendWidgetCurActiveWidget(f))
+        if (f->getFriendWidget()->chatFormIsSet(false))
             callConfirm->show();
 
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
@@ -280,7 +274,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
     else
     {
         callConfirm = new CallConfirmWidget(callButton, *f);
-        if (Widget::getInstance()->isFriendWidgetCurActiveWidget(f))
+        if (f->getFriendWidget()->chatFormIsSet(false))
             callConfirm->show();
 
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
@@ -292,6 +286,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
         videoButton->setToolTip("");
         connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
     }
+
     callButton->style()->polish(callButton);
     videoButton->style()->polish(videoButton);
 
@@ -299,13 +294,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
                                                          ChatMessage::INFO,
                                                          QDateTime::currentDateTime()));
 
-    Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
-    {
-        w->newFriendMessageAlert(FriendId);
-        f->setEventFlag(true);
-        f->getFriendWidget()->updateStatusLight();
-    }
+    Widget::getInstance()->newFriendMessageAlert(FriendId);
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
