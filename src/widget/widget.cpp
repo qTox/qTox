@@ -618,6 +618,13 @@ void Widget::addFriend(int friendId, const QString &userId)
 {
     ToxId userToxId = ToxId(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
+
+    QDate activityDate = Settings::getInstance().getFriendActivity(newfriend->getToxId());
+    QDate chatDate = newfriend->getChatForm()->getLatestDate();
+
+    if (chatDate > activityDate && chatDate.isValid())
+        Settings::getInstance().setFriendActivity(newfriend->getToxId(), chatDate);
+
     contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
 
     Core* core = Nexus::getCore();
@@ -656,8 +663,6 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::friendAvatarRemoved, newfriend->getChatForm(), &ChatForm::onAvatarRemoved);
     connect(core, &Core::friendAvatarRemoved, newfriend->getFriendWidget(), &FriendWidget::onAvatarRemoved);
 
-    qDebug() << HistoryKeeper::getInstance()->getLatestDate(newfriend->getToxId().publicKey);
-
     // Try to get the avatar from the cache
     QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);
     if (!avatar.isNull())
@@ -668,6 +673,7 @@ void Widget::addFriend(int friendId, const QString &userId)
 
     int filter = getFilterCriteria();
     newfriend->getFriendWidget()->search(ui->searchContactText->text(), filterOffline(filter));
+
 }
 
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
@@ -1064,6 +1070,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
         g->getChatForm()->addSystemInfoMessage(tr("%1 has set the title to %2").arg(author, title), ChatMessage::INFO, QDateTime::currentDateTime());
 
     contactListWidget->renameGroupWidget(g->getGroupWidget(), title);
+    g->setName(title);
     int filter = getFilterCriteria();
     g->getGroupWidget()->searchName(ui->searchContactText->text(), filterGroups(filter));
 }

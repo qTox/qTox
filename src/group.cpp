@@ -88,7 +88,6 @@ void Group::updatePeer(int peerId, QString name)
 
 void Group::setName(const QString& name)
 {
-    widget->setName(name);
     chatForm->setName(name);
 
     if (widget->isActive())
