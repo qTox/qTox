@@ -62,6 +62,7 @@ public:
     qint64 addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
     void markAsSent(int m_id);
+    QDate getLatestDate(const QString& chat);
 
     QList<HistMessage> exportMessages();
     void importMessages(const QList<HistoryKeeper::HistMessage> &lst);

@@ -161,6 +161,7 @@ signals:
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
 
     void friendAdded(uint32_t friendId, const QString& userId);
+    void friendshipChanged(uint32_t friendId);
 
     void friendStatusChanged(uint32_t friendId, Status status);
     void friendStatusMessageChanged(uint32_t friendId, const QString& message);

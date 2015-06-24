@@ -25,7 +25,7 @@
 #include "src/core/corestructs.h"
 #include "core/toxid.h"
 
-struct FriendWidget;
+class FriendWidget;
 class ChatForm;
 
 class Friend : public QObject

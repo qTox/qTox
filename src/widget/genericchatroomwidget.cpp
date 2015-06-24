@@ -22,14 +22,14 @@
 #include "src/persistence/settings.h"
 #include "maskablepixmapwidget.h"
 #include "src/widget/tool/croppinglabel.h"
+#include <QBoxLayout>
 #include <QMouseEvent>
 
 GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
-    : QFrame(parent), compact{Settings::getInstance().getCompactLayout()},
-      active{false}
+    : GenericChatItemWidget(parent), active{false}
 {
     // avatar
-    if (compact)
+    if (isCompact())
         avatar = new MaskablePixmapWidget(this, QSize(20,20), ":/img/avatar_mask.svg");
     else
         avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.svg");
@@ -39,49 +39,50 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setForegroundRole(QPalette::WindowText);
 
-    // name text
-    nameLabel = new CroppingLabel(this);
-    nameLabel->setTextFormat(Qt::PlainText);
     nameLabel->setForegroundRole(QPalette::WindowText);
 
     setAutoFillBackground(true);
     reloadTheme();
-    setCompact(compact);
+
+    compactChange(isCompact());
 }
 
-void GenericChatroomWidget::setCompact(bool _compact)
+bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
 {
-    compact = _compact;
+    return true; // Disable all events.
+}
+
+void GenericChatroomWidget::compactChange(bool _compact)
+{
+    setCompact(_compact);
 
     delete textLayout; // has to be first, deleted by layout
-    delete layout;
+    delete mainLayout;
 
-    compact = _compact;
-
-    layout = new QHBoxLayout;
+    mainLayout = new QHBoxLayout;
     textLayout = new QVBoxLayout;
 
-    setLayout(layout);
-    layout->setSpacing(0);
-    layout->setMargin(0);
+    setLayout(mainLayout);
+    mainLayout->setSpacing(0);
+    mainLayout->setMargin(0);
     textLayout->setSpacing(0);
     textLayout->setMargin(0);
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     // avatar
-    if (compact)
+    if (isCompact())
     {
         setFixedHeight(25);
         avatar->setSize(QSize(20,20));
-        layout->addSpacing(18);
-        layout->addWidget(avatar);
-        layout->addSpacing(5);
-        layout->addWidget(nameLabel);
-        layout->addWidget(statusMessageLabel);
-        layout->addSpacing(5);
-        layout->addWidget(&statusPic);
-        layout->addSpacing(5);
-        layout->activate();
+        mainLayout->addSpacing(18);
+        mainLayout->addWidget(avatar);
+        mainLayout->addSpacing(5);
+        mainLayout->addWidget(nameLabel);
+        mainLayout->addWidget(statusMessageLabel);
+        mainLayout->addSpacing(5);
+        mainLayout->addWidget(&statusPic);
+        mainLayout->addSpacing(5);
+        mainLayout->activate();
         statusMessageLabel->setFont(Style::getFont(Style::Small));
         nameLabel->setFont(Style::getFont(Style::Medium));
     }
@@ -93,14 +94,14 @@ void GenericChatroomWidget::setCompact(bool _compact)
         textLayout->addWidget(nameLabel);
         textLayout->addWidget(statusMessageLabel);
         textLayout->addStretch();
-        layout->addSpacing(20);
-        layout->addWidget(avatar);
-        layout->addSpacing(10);
-        layout->addLayout(textLayout);
-        layout->addSpacing(10);
-        layout->addWidget(&statusPic);
-        layout->addSpacing(10);
-        layout->activate();
+        mainLayout->addSpacing(20);
+        mainLayout->addWidget(avatar);
+        mainLayout->addSpacing(10);
+        mainLayout->addLayout(textLayout);
+        mainLayout->addSpacing(10);
+        mainLayout->addWidget(&statusPic);
+        mainLayout->addSpacing(10);
+        mainLayout->activate();
         statusMessageLabel->setFont(Style::getFont(Style::Medium));
         nameLabel->setFont(Style::getFont(Style::Big));
     }
@@ -138,11 +139,6 @@ void GenericChatroomWidget::setStatusMsg(const QString &status)
     statusMessageLabel->setText(status);
 }
 
-QString GenericChatroomWidget::getName() const
-{
-    return nameLabel->fullText();
-}
-
 QString GenericChatroomWidget::getStatusMsg() const
 {
     return statusMessageLabel->text();
@@ -169,17 +165,6 @@ void GenericChatroomWidget::reloadTheme()
     setPalette(p);
 }
 
-bool GenericChatroomWidget::isCompact() const
-{
-    return compact;
-}
-
-void GenericChatroomWidget::mousePressEvent(QMouseEvent* event)
-{
-    if (!active && event->button() == Qt::RightButton)
-        setBackgroundRole(QPalette::Window);
-}
-
 void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)
 {
     emit chatroomWidgetClicked(this);
@@ -191,8 +176,9 @@ void GenericChatroomWidget::enterEvent(QEvent*)
         setBackgroundRole(QPalette::Highlight);
 }
 
-void GenericChatroomWidget::leaveEvent(QEvent*)
+void GenericChatroomWidget::leaveEvent(QEvent* event)
 {
     if (!active)
         setBackgroundRole(QPalette::Window);
+    QWidget::leaveEvent(event);
 }
