@@ -1045,7 +1045,7 @@ QSplitter:handle{
          </widget>
         </item>
         <item>
-         <widget class="AdjustingScrollArea" name="friendList">
+         <widget class="NotificationScrollArea" name="friendList">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -1072,8 +1072,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>284</width>
-             <height>359</height>
+             <width>292</width>
+             <height>353</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1838,7 +1838,7 @@ QSplitter:handle{
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -1859,9 +1859,9 @@ QSplitter:handle{
    <header location="global">src/widget/tool/croppinglabel.h</header>
   </customwidget>
   <customwidget>
-   <class>AdjustingScrollArea</class>
+   <class>NotificationScrollArea</class>
    <extends>QScrollArea</extends>
-   <header location="global">src/widget/tool/adjustingscrollarea.h</header>
+   <header location="global">src/widget/notificationscrollarea.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

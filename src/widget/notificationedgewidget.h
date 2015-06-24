@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014 by The qTox Project
+    Copyright © 2015 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,20 +17,34 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ADJUSTINGSCROLLAREA_H
-#define ADJUSTINGSCROLLAREA_H
+#ifndef NOTIFICATIONEDGEWIDGET_H
+#define NOTIFICATIONEDGEWIDGET_H
 
-#include <QScrollArea>
+#include <QWidget>
 
-class AdjustingScrollArea : public QScrollArea
+class QLabel;
+
+class NotificationEdgeWidget final : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AdjustingScrollArea(QWidget *parent = 0);
+    enum Position : uint8_t
+    {
+        Top,
+        Bottom
+    };
+
+    explicit NotificationEdgeWidget(Position position, QWidget *parent = 0);
+    void updateNotificationCount(int count);
+
+signals:
+    void clicked();
 
 protected:
-    virtual void resizeEvent(QResizeEvent *ev) override;
-    virtual QSize sizeHint() const final override;
+    void mouseReleaseEvent(QMouseEvent* event) final override;
+
+private:
+    QLabel* textLabel;
 };
 
-#endif // ADJUSTINGSCROLLAREA_H
+#endif // NOTIFICATIONEDGEWIDGET_H

@@ -799,6 +799,9 @@ void Widget::newMessageAlert(GenericChatroomWidget* chat)
 
         Audio::playMono16Sound(sndData);
     }
+
+    if (activeChatroomWidget != chat)
+        ui->friendList->trackWidget(chat);
 }
 
 void Widget::playRingtone()
