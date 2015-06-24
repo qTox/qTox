@@ -23,6 +23,7 @@
 #include <QSettings>
 #include <QVector>
 #include <QString>
+#include <QDataStream>
 
 /// Serializes a QSettings's data in an (optionally) encrypted binary format
 /// SettingsSerializer can detect regular .ini files and serialized ones,
