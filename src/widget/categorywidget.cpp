@@ -38,8 +38,6 @@ void emitChatroomWidget(QLayout* layout, int index)
 CategoryWidget::CategoryWidget(QWidget* parent)
     : GenericChatItemWidget(parent)
 {
-    setStyleSheet(Style::getStylesheet(":/ui/chatroomWidgets/circleWidget.css"));
-
     container = new QWidget(this);
     container->setObjectName("circleWidgetContainer");
     container->setLayoutDirection(Qt::LeftToRight);
@@ -127,6 +125,7 @@ void CategoryWidget::addFriendWidget(FriendWidget* w, Status s)
     listLayout->addFriendWidget(w, s);
     updateStatus();
     onAddFriendWidget(w);
+    w->reloadTheme(); // Otherwise theme will change when moving to another circle.
 }
 
 void CategoryWidget::removeFriendWidget(FriendWidget* w, Status s)
