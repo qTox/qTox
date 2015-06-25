@@ -183,7 +183,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 friendList->addCircleWidget(this);
             else
                 Settings::getInstance().setFriendCircleID(id, Settings::getInstance().addCircle());
-
         }
         else if (groupActions.contains(selectedItem))
         {

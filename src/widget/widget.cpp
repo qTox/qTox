@@ -1415,6 +1415,7 @@ void Widget::reloadTheme()
     ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
     ui->statusButton->setStyleSheet(Style::getStylesheet(":ui/statusButton/statusButton.css"));
+    contactListWidget->reDraw();
 
     for (Friend* f : FriendList::getAllFriends())
         f->getFriendWidget()->reloadTheme();

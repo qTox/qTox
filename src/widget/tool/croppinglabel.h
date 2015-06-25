@@ -29,7 +29,6 @@ class CroppingLabel : public QLabel
     Q_OBJECT
 public:
     explicit CroppingLabel(QWidget* parent = 0);
-    bool eventFilter(QObject *, QEvent *) override;
 
     void editBegin();
     void setEditable(bool editable);

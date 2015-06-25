@@ -118,6 +118,5 @@
         <file>ui/volButton/volButtonDisabled.png</file>
         <file>img/login_logo.svg</file>
         <file>ui/notificationEdge/notificationEdge.css</file>
-        <file>ui/chatroomWidgets/circleWidget.css</file>
     </qresource>
 </RCC>
