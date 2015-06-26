@@ -47,6 +47,7 @@ class CameraSource : public VideoSource
     Q_OBJECT
 public:
     static CameraSource& getInstance();
+    static void destroyInstance();
     /// Opens the source for the camera device in argument, in the settings, or the system default
     /// If a device is already open, the source will seamlessly switch to the new device
     void open();

@@ -51,6 +51,15 @@ CameraSource& CameraSource::getInstance()
     return *instance;
 }
 
+void CameraSource::destroyInstance()
+{
+    if (instance)
+    {
+        delete instance;
+        instance = nullptr;
+    }
+}
+
 void CameraSource::open()
 {
     open(CameraDevice::getDefaultDeviceName());
@@ -293,6 +302,8 @@ void CameraSource::closeDevice()
             continue;
         vframe->releaseFrame();
     }
+    freelist.clear();
+    freelist.squeeze();
 
     // Free our resources and close the device
     videoStreamIndex = -1;
