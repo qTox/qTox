@@ -72,17 +72,14 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QAction* openChatWindow = nullptr;
     QAction* removeChatWindow = nullptr;
 
-    if (!Settings::getInstance().getSeparateWindow() || !Settings::getInstance().getDontGroupWindows())
-    {
-        ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
-        bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
+    ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+    bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
 
-        if (contentDialog == nullptr || notAlone)
-            openChatWindow = menu.addAction(tr("Open chat in new window"));
+    if (contentDialog == nullptr || notAlone)
+        openChatWindow = menu.addAction(tr("Open chat in new window"));
 
-        if (notAlone && contentDialog->hasFriendWidget(friendId, this))
-            removeChatWindow = menu.addAction(tr("Remove chat from this window"));
-    }
+    if (contentDialog->hasFriendWidget(friendId, this))
+        removeChatWindow = menu.addAction(tr("Remove chat from this window"));
 
     menu.addSeparator();
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));

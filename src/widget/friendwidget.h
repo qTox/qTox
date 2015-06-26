@@ -58,7 +58,6 @@ public:
     int friendId;
     bool isDefaultAvatar;
     bool historyLoaded;
-    QPoint dragStartPos;
 };
 
 #endif // FRIENDWIDGET_H

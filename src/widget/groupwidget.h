@@ -46,6 +46,8 @@ signals:
 
 protected:
     virtual void contextMenuEvent(QContextMenuEvent * event) final override;
+    virtual void mousePressEvent(QMouseEvent* event) final override;
+    virtual void mouseMoveEvent(QMouseEvent* event) final override;
     virtual void dragEnterEvent(QDragEnterEvent* ev) override;
     virtual void dragLeaveEvent(QDragLeaveEvent* ev);
     virtual void dropEvent(QDropEvent* ev) override;

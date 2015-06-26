@@ -32,6 +32,8 @@ class ContentLayout;
 class GenericChatroomWidget;
 class FriendWidget;
 class GroupWidget;
+class FriendListLayout;
+class GenericChatItemLayout;
 
 class ContentDialog : public QDialog
 {
@@ -83,7 +85,8 @@ private:
     static ContentDialog* getDialog(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
 
     QSplitter* splitter;
-    QVBoxLayout* friendLayout;
+    FriendListLayout* friendLayout;
+    GenericChatItemLayout* groupLayout;
     ContentLayout* contentLayout;
     GenericChatroomWidget* activeChatroomWidget;
     static ContentDialog* currentDialog;

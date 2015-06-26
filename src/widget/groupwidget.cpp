@@ -32,6 +32,8 @@
 #include <QContextMenuEvent>
 #include <QDragEnterEvent>
 #include <QMimeData>
+#include <QApplication>
+#include <QDrag>
 
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
@@ -69,17 +71,14 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     QAction* openChatWindow = nullptr;
     QAction* removeChatWindow = nullptr;
 
-    if (!Settings::getInstance().getSeparateWindow() || !Settings::getInstance().getDontGroupWindows())
-    {
-        ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
-        bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
+    ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
+    bool notAlone = contentDialog != nullptr && contentDialog->chatroomWidgetCount() > 1;
 
-        if (contentDialog == nullptr || notAlone)
-            openChatWindow = menu.addAction(tr("Open chat in new window"));
+    if (contentDialog == nullptr || notAlone)
+        openChatWindow = menu.addAction(tr("Open chat in new window"));
 
-        if (notAlone && contentDialog->hasGroupWidget(groupId, this))
-            removeChatWindow = menu.addAction(tr("Remove chat from this window"));
-    }
+    if (contentDialog->hasGroupWidget(groupId, this))
+        removeChatWindow = menu.addAction(tr("Remove chat from this window"));
 
     menu.addSeparator();
 
@@ -119,6 +118,32 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
         {
             editName();
         }
+    }
+}
+
+void GroupWidget::mousePressEvent(QMouseEvent *ev)
+{
+    if (ev->button() == Qt::LeftButton)
+        dragStartPos = ev->pos();
+
+    GenericChatroomWidget::mousePressEvent(ev);
+}
+
+void GroupWidget::mouseMoveEvent(QMouseEvent *ev)
+{
+    if (!(ev->buttons() & Qt::LeftButton))
+        return;
+
+    if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
+    {
+        QDrag* drag = new QDrag(this);
+        QMimeData* mdata = new QMimeData;
+        mdata->setData("group", QString::number(groupId).toLatin1());
+
+        drag->setMimeData(mdata);
+        drag->setPixmap(avatar->getPixmap());
+
+        drag->exec(Qt::CopyAction | Qt::MoveAction);
     }
 }
 
