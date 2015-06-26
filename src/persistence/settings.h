@@ -175,9 +175,6 @@ public:
     bool isCurstomEmojiFont() const;
     void setCurstomEmojiFont(bool value);
 
-    QString getEmojiFontFamily() const;
-    void setEmojiFontFamily(const QString &value);
-
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
@@ -211,9 +208,6 @@ public:
     void setTypingNotification(bool enabled);
 
     // State
-    bool getUseNativeStyle() const;
-    void setUseNativeStyle(bool value);
-
     QByteArray getWindowGeometry() const;
     void setWindowGeometry(const QByteArray &value);
 
@@ -334,13 +328,9 @@ private:
     QString globalAutoAcceptDir;
 
     // GUI
-    bool enableSmoothAnimation;
     QString smileyPack;
-    bool customEmojiFont;
-    QString emojiFontFamily;
-    int     emojiFontPointSize;
+    int emojiFontPointSize;
     bool minimizeOnClose;
-    bool useNativeStyle;
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;

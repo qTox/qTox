@@ -230,13 +230,17 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     ChatMessage::Ptr msg = ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
     insertChatMessage(msg);
 
-    if (!Settings::getInstance().getAutoAcceptDir(f->getToxId()).isEmpty()
-            || Settings::getInstance().getAutoSaveEnabled())
+    if (!Settings::getInstance().getAutoAcceptDir(f->getToxId()).isEmpty()) //per contact autosave
     {
         ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
         assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
         FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
         tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxId()));
+    } else if (Settings::getInstance().getAutoSaveEnabled()) { //global autosave to global directory
+        ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
+        assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
+        FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
+        tfWidget->autoAcceptTransfer(Settings::getInstance().getGlobalAutoAcceptDir());
     }
 
     Widget::getInstance()->updateFriendActivity(f);
