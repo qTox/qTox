@@ -453,6 +453,7 @@ void GenericChatForm::showFindWidget()
         connect(findWidget, &FindWidget::findNext, this, &GenericChatForm::findNext);
         connect(findWidget, &FindWidget::findPrevious, this, &GenericChatForm::findPrevious);
         connect(findWidget, &FindWidget::close, this, &GenericChatForm::removeFindWidget);
+        connect(this, &GenericChatForm::findMatchesChanged, findWidget, &FindWidget::setMatches);
 
         mainLayout->insertWidget(0, findWidget);
     }
@@ -469,10 +470,17 @@ void GenericChatForm::removeFindWidget()
         IndicatorScrollBar* indicatorScroll =
         static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar());
         indicatorScroll->clearIndicators();
+
+        //if (getChatLog()->getSelectedText())
     }
 }
 
 void GenericChatForm::findText(const QString &text)
+{
+    findNext(text);
+}
+
+void GenericChatForm::findNext(const QString& text)
 {
     int i = 0;
     QVector<ChatLine::Ptr> chatLines = getChatLog()->getLines();
@@ -480,6 +488,9 @@ void GenericChatForm::findText(const QString &text)
     IndicatorScrollBar* indicatorScroll =
     static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar());
     indicatorScroll->clearIndicators();
+
+    int to = -1;
+    ChatLine::Ptr toSelect;
 
     for (ChatLine::Ptr chatLine : chatLines)
     {
@@ -493,34 +504,23 @@ void GenericChatForm::findText(const QString &text)
         if (last != i)
         {
             indicatorScroll->setTotal(chatWidget->sceneRect().height() - 40);
-            indicatorScroll->addIndicator(chatLine.get()->getContent(0)->pos().y());
+            indicatorScroll->addIndicator(chatLine.get()->sceneBoundingRect().top());
             indicatorScroll->update();
+
+            if (chatLine.get()->sceneBoundingRect().top() >= getChatLog()->sceneRect().top() && to == -1)
+            {
+                to = i;
+                toSelect = chatLine;
+            }
         }
-        /*qDebug() << chatLine.get()->getColumnCount();
-
-        QTextCursor cursor;
-
-        while (!(cursor = chatLine.get()->getContent(0)->setHighlight(text, cursor)).isNull())
-        {
-            ++i;
-        }
-
-        cursor = QTextCursor();
-
-        while (!(cursor = chatLine.get()->getContent(1)->setHighlight(text, cursor)).isNull())
-        {
-            ++i;
-        }*/
     }
 
-    getChatLog()->repaint();
+    emit findMatchesChanged(to, i);
 
-    qDebug() << i << " AND " << chatLines.count();
-}
+    if (to != -1)
+        toSelect.get()->selectNext(text);
 
-void GenericChatForm::findNext()
-{
-
+    getChatLog()->update();
 }
 
 void GenericChatForm::findPrevious()

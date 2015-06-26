@@ -74,6 +74,7 @@ signals:
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
     void messageInserted();
+    void findMatchesChanged(int index, int total);
 
 public slots:
     void focusInput();
@@ -81,7 +82,7 @@ public slots:
     void showFindWidget();
     void removeFindWidget();
     void findText(const QString& text);
-    void findNext();
+    void findNext(const QString& text);
     void findPrevious();
 
 protected slots:

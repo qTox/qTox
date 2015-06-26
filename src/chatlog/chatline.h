@@ -81,6 +81,7 @@ public:
     void setVisible(bool visible);
     void selectionCleared();
     void selectionFocusChanged(bool focusIn);
+    bool selectNext(const QString &text);
 
     int getColumnCount();
     int getRow() const;

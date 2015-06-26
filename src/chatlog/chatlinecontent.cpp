@@ -76,6 +76,16 @@ QString ChatLineContent::getSelectedText() const
     return QString();
 }
 
+bool ChatLineContent::hasSelection() const
+{
+    return false;
+}
+
+bool ChatLineContent::selectNext(const QString&)
+{
+    return false;
+}
+
 int ChatLineContent::setHighlight(const QString&)
 {
     return 0;

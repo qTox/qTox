@@ -45,6 +45,8 @@ public:
     virtual void selectionFocusChanged(bool focusIn);
     virtual bool isOverSelection(QPointF scenePos) const;
     virtual QString getSelectedText() const;
+    virtual bool hasSelection() const;
+    virtual bool selectNext(const QString& search);
     virtual int setHighlight(const QString& highlight);
     virtual QTextCursor setHighlight(const QString &highlight, const QTextCursor &previous);
 
