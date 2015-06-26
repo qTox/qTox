@@ -194,8 +194,8 @@ void Settings::loadGlobal()
     s.beginGroup("GUI");
         smileyPack = s.value("smileyPack", ":/smileys/TwitterEmojiSVG/emoticons.xml").toString();
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
-        firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
-        secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
+        columnRightWidth = s.value("columnRightWidth", 90).toInt();
+        columnLeftWidth = s.value("columnLeftWidth", 90).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm:ss").toString();
         dateFormat = s.value("dateFormat", "dddd, MMMM d, yyyy").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
@@ -405,8 +405,8 @@ void Settings::saveGlobal()
     s.beginGroup("GUI");
         s.setValue("smileyPack", smileyPack);
         s.setValue("emojiFontPointSize", emojiFontPointSize);
-        s.setValue("firstColumnHandlePos", firstColumnHandlePos);
-        s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
+        s.setValue("firstColumnHandlePos", columnRightWidth);
+        s.setValue("secondColumnHandlePosFromRight", columnLeftWidth);
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("dateFormat", dateFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
@@ -972,28 +972,28 @@ void Settings::setEmojiFontPointSize(int value)
     emit emojiFontChanged();
 }
 
-int Settings::getFirstColumnHandlePos() const
+int Settings::getColumnRightWidth() const
 {
     QMutexLocker locker{&bigLock};
-    return firstColumnHandlePos;
+    return columnRightWidth;
 }
 
-void Settings::setFirstColumnHandlePos(const int pos)
+void Settings::setColumnRightWidth(const int pos)
 {
     QMutexLocker locker{&bigLock};
-    firstColumnHandlePos = pos;
+    columnRightWidth = pos;
 }
 
-int Settings::getSecondColumnHandlePosFromRight() const
+int Settings::getColumnLeftWidth() const
 {
     QMutexLocker locker{&bigLock};
-    return secondColumnHandlePosFromRight;
+    return columnLeftWidth;
 }
 
-void Settings::setSecondColumnHandlePosFromRight(const int pos)
+void Settings::setColumnLeftWidth(const int pos)
 {
     QMutexLocker locker{&bigLock};
-    secondColumnHandlePosFromRight = pos;
+    columnLeftWidth = pos;
 }
 
 const QString& Settings::getTimestampFormat() const

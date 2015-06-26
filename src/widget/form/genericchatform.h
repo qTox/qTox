@@ -77,6 +77,12 @@ signals:
 
 public slots:
     void focusInput();
+    void toggleFindWidget();
+    void showFindWidget();
+    void removeFindWidget();
+    void findText(const QString& text);
+    void findNext();
+    void findPrevious();
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -93,6 +99,7 @@ protected slots:
     void onSplitterMoved(int pos, int index);
 
 private:
+    bool hasFindWidget() const;
     void retranslateUi();
 
 protected:
@@ -130,6 +137,9 @@ protected:
     bool audioOutputFlag;
     QSplitter* bodySplitter;
     GenericNetCamView* netcam;
+
+private:
+    QVBoxLayout* mainLayout;
 };
 
 #endif // GENERICCHATFORM_H

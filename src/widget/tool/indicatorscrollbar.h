@@ -17,16 +17,25 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "timestamp.h"
-#include <QCursor>
-Timestamp::Timestamp(const QDateTime &time, const QString &format, const QFont &font)
-    : Text(time.toString(format), font, false, time.toString(format))
-{
-    this->time = time;
-    setCursor(Qt::ForbiddenCursor);
-}
+#ifndef INDICATORSCROLLBAR_H
+#define INDICATORSCROLLBAR_H
 
-QDateTime Timestamp::getTime()
+#include <QScrollBar>
+
+class IndicatorScrollBar : public QScrollBar
 {
-    return time;
-}
+public:
+    IndicatorScrollBar(int total, QWidget *parent = 0);
+    void setTotal(int total);
+    void addIndicator(int pos);
+    void clearIndicators();
+
+protected:
+    virtual void paintEvent(QPaintEvent *event) final override;
+
+private:
+    QVector<int> indicators;
+    int total;
+};
+
+#endif // INDICATORSCROLLBAR_H

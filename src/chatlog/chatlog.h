@@ -109,10 +109,16 @@ private:
     void retranslateUi();
 
 private:
+    void updateLayout(int currentWidth, int previousWidth);
+
     enum SelectionMode {
-        None,
-        Precise,
-        Multi,
+        None          = 0x00,
+        Precise       = 0x01,
+        Multi         = 0x02,
+        Selected      = Precise | Multi,
+        SplitterLeft  = 0x04,
+        SplitterRight = 0x08,
+        Splitter      = SplitterLeft | SplitterRight,
     };
 
     enum AutoScrollDirection {
@@ -142,6 +148,7 @@ private:
     QTimer* selectionTimer = nullptr;
     QTimer* workerTimer = nullptr;
     AutoScrollDirection selectionScrollDir = NoDirection;
+    int splitterVal;
 
     //worker vars
     int workerLastIndex = 0;

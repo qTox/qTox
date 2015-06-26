@@ -17,16 +17,31 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "timestamp.h"
-#include <QCursor>
-Timestamp::Timestamp(const QDateTime &time, const QString &format, const QFont &font)
-    : Text(time.toString(format), font, false, time.toString(format))
-{
-    this->time = time;
-    setCursor(Qt::ForbiddenCursor);
-}
+#ifndef FINDWIDGET_H
+#define FINDWIDGET_H
 
-QDateTime Timestamp::getTime()
+#include <QWidget>
+
+class QLabel;
+
+class FindWidget : public QWidget
 {
-    return time;
-}
+    Q_OBJECT
+public:
+    explicit FindWidget(QWidget *parent = 0);
+
+signals:
+    void findText(const QString& text);
+    void findNext();
+    void findPrevious();
+    void setCase(bool match);
+    void close();
+
+public slots:
+    void setMatches(int matches);
+
+private:
+    QLabel* matchesLabel;
+};
+
+#endif // FINDWIDGET_H

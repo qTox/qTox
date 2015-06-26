@@ -191,11 +191,11 @@ public:
     void setGlobalAutoAcceptDir(const QString& dir);
 
     // ChatView
-    int getFirstColumnHandlePos() const;
-    void setFirstColumnHandlePos(const int pos);
+    int getColumnRightWidth() const;
+    void setColumnRightWidth(int width);
 
-    int getSecondColumnHandlePosFromRight() const;
-    void setSecondColumnHandlePosFromRight(const int pos);
+    int getColumnLeftWidth() const;
+    void setColumnLeftWidth(int pos);
 
     const QString& getTimestampFormat() const;
     void setTimestampFormat(const QString& format);
@@ -364,8 +364,8 @@ private:
     bool showSystemTray;
 
     // ChatView
-    int firstColumnHandlePos;
-    int secondColumnHandlePosFromRight;
+    int columnRightWidth;
+    int columnLeftWidth;
     QString timestampFormat;
     QString dateFormat;
     bool statusChangeNotificationEnabled;

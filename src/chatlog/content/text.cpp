@@ -161,6 +161,20 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         QAbstractTextDocumentLayout::PaintContext ctx;
         QAbstractTextDocumentLayout::Selection sel;
 
+        if (!highlightText.isEmpty())
+        {
+            QTextCursor findCursor;
+
+            while (!(findCursor = doc->find(highlightText, findCursor)).isNull())
+            {
+                QAbstractTextDocumentLayout::Selection highlight;
+                highlight.cursor = findCursor;
+                highlight.format.setBackground(Qt::yellow);
+                highlight.format.setForeground(Qt::black);
+                ctx.selections.append(highlight);
+            }
+        }
+
         if (hasSelection())
         {
             sel.cursor = QTextCursor(doc);
@@ -223,7 +237,7 @@ void Text::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     if (!anchor.isEmpty())
         setCursor(QCursor(Qt::PointingHandCursor));
     else
-        setCursor(QCursor());
+        setCursor(QCursor(Qt::IBeamCursor));
 
     // tooltip
     setToolTip(extractImgTooltip(cursorFromPos(event->scenePos(), false)));
@@ -232,6 +246,39 @@ void Text::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 QString Text::getText() const
 {
     return rawText;
+}
+
+int Text::setHighlight(const QString &highlight)
+{
+    int foundCount = 0;
+    int index = 0;
+
+    if (!highlight.isEmpty())
+    {
+        while ((index = text.indexOf(highlight, index + highlight.count())) != -1)
+            ++foundCount;
+    }
+
+    highlightText = highlight;
+
+    if (!isVisible())
+        update();
+
+    return foundCount;
+}
+#include <QGraphicsScene>
+QTextCursor Text::setHighlight(const QString &highlight, const QTextCursor &from)
+{
+    highlightText = highlight;
+    update();
+
+    if (!doc)
+        return QTextCursor();
+
+    //this->scene()->invalidate(pos().x(), pos().y(), size()., size().height());
+
+
+    return doc->find(highlight, from);
 }
 
 void Text::regenerate()
