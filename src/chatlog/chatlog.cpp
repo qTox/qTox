@@ -21,6 +21,7 @@
 #include "chatmessage.h"
 #include "chatlinecontent.h"
 #include "src/widget/translator.h"
+#include "src/persistence/settings.h"
 
 #include <QDebug>
 #include <QScrollBar>
@@ -108,6 +109,8 @@ ChatLog::ChatLog(QWidget* parent)
 #endif
     });
 
+    //setCursor(Qt::SplitHCursor);
+
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 }
@@ -129,7 +132,7 @@ ChatLog::~ChatLog()
 
 void ChatLog::clearSelection()
 {
-    if (selectionMode == None)
+    if (!(selectionMode & Selected))
         return;
 
     for (int i=selFirstRow; i<=selLastRow; ++i)
@@ -195,6 +198,7 @@ void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
 {
     QGraphicsView::mouseReleaseEvent(ev);
 
+    viewport()->unsetCursor();
     selectionScrollDir = NoDirection;
 }
 
@@ -204,8 +208,75 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
     QPointF scenePos = mapToScene(ev->pos());
 
+    int leftColumnWidth = Settings::getInstance().getColumnLeftWidth();
+    int rightColumnWidth = Settings::getInstance().getColumnRightWidth();
+    //int endLocation = width() - rightColumnWidth - margins.left() - verticalScrollBar()->sizeHint().width() - 15 / 2;
+
+    bool splitterLeft = scenePos.x() > leftColumnWidth && scenePos.x() < leftColumnWidth + 15;
+    // Uncomment this for movable time stamps.
+    bool splitterRight = false;//scenePos.x() > endLocation - 15 && scenePos.x() < endLocation;
+
+    if ((splitterLeft || splitterRight) && selectionMode == None)
+    {
+        viewport()->setCursor(Qt::SplitHCursor);
+
+        if (ev->buttons() & Qt::LeftButton)
+        {
+            if (splitterLeft)
+            {
+                selectionMode = SplitterLeft;
+                splitterVal = leftColumnWidth;
+            }
+            else
+            {
+                selectionMode = SplitterRight;
+                splitterVal = rightColumnWidth;
+            }
+        }
+    }
+    else if (viewport()->cursor().shape() == Qt::SplitHCursor)
+    {
+        viewport()->unsetCursor();
+    }
+
+    if (selectionMode & Splitter)
+    {
+        if (!(ev->buttons() & Qt::LeftButton))
+        {
+            selectionMode = None;
+        }
+    }
+
+
     if (ev->buttons() & Qt::LeftButton)
     {
+        if (selectionMode & Splitter)
+        {
+            viewport()->setCursor(Qt::SplitHCursor);
+            int previousWidth = splitterVal;
+            int newWidth;
+
+            if (selectionMode == SplitterLeft)
+            {
+                newWidth = clamp<int>(splitterVal - (clickPos.x() - ev->pos().x()), 32, 320);
+                Settings::getInstance().setColumnLeftWidth(newWidth);
+            }
+            else
+            {
+                newWidth = clamp<int>(splitterVal + (clickPos.x() - ev->pos().x()), 32, 320);
+                Settings::getInstance().setColumnRightWidth(newWidth);
+            }
+
+            if (newWidth == 32 || newWidth == 320)
+            {
+                splitterVal = newWidth;
+                clickPos.setX(ev->pos().x());
+            }
+
+            updateLayout(newWidth, previousWidth);
+            return;
+        }
+
         //autoscroll
         if (ev->pos().y() < 0)
             selectionScrollDir = Up;
@@ -246,7 +317,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
             }
         }
 
-        if (selectionMode != None)
+        if (selectionMode & Selected)
         {
             ChatLineContent* content = getContentFromPos(scenePos);
             ChatLine::Ptr line = findLineByPosY(scenePos.y());
@@ -294,8 +365,8 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                 selFirstRow = row;
 
             updateMultiSelectionRect();
+            viewport()->setCursor(Qt::IBeamCursor);
         }
-
         emit selectionChanged();
     }
 }
@@ -520,7 +591,7 @@ bool ChatLog::isEmpty() const
 
 bool ChatLog::hasTextToBeCopied() const
 {
-    return selectionMode != None;
+    return selectionMode & Selected;
 }
 
 ChatLine::Ptr ChatLog::getTypingNotification() const
@@ -665,20 +736,9 @@ void ChatLog::scrollContentsBy(int dx, int dy)
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
 {
-    bool stb = stickToBottom();
-
-    if (ev->size().width() != ev->oldSize().width())
-    {
-        startResizeWorker();
-        stb = false; // let the resize worker handle it
-    }
+    updateLayout(ev->size().width(), ev->oldSize().width());
 
     QGraphicsView::resizeEvent(ev);
-
-    if (stb)
-        scrollToBottom();
-
-    updateBusyNotification();
 }
 
 void ChatLog::updateMultiSelectionRect()
@@ -809,7 +869,7 @@ void ChatLog::focusInEvent(QFocusEvent* ev)
 {
     QGraphicsView::focusInEvent(ev);
 
-    if (selectionMode != None)
+    if (selectionMode & Selected)
     {
         selGraphItem->setBrush(QBrush(selectionRectColor));
 
@@ -822,7 +882,7 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
 {
     QGraphicsView::focusOutEvent(ev);
 
-    if (selectionMode != None)
+    if (selectionMode & Selected)
     {
         selGraphItem->setBrush(QBrush(selectionRectColor.lighter(120)));
 
@@ -835,4 +895,20 @@ void ChatLog::retranslateUi()
 {
     copyAction->setText(tr("Copy"));
     selectAllAction->setText(tr("Select all"));
+}
+
+void ChatLog::updateLayout(int currentWidth, int previousWidth)
+{
+    bool stb = stickToBottom();
+
+    if (currentWidth != previousWidth)
+    {
+        startResizeWorker();
+        stb = false; // let the resize worker handle it
+    }
+
+    if (stb)
+        scrollToBottom();
+
+    updateBusyNotification();
 }

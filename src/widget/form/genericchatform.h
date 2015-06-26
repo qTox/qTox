@@ -73,6 +73,12 @@ signals:
 
 public slots:
     void focusInput();
+    void toggleFindWidget();
+    void showFindWidget();
+    void removeFindWidget();
+    void findText(const QString& text);
+    void findNext();
+    void findPrevious();
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -87,6 +93,7 @@ protected slots:
     void hideFileMenu();
 
 private:
+    bool hasFindWidget() const;
     void retranslateUi();
 
 protected:
@@ -119,6 +126,9 @@ protected:
     QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
     bool audioInputFlag;
     bool audioOutputFlag;
+
+private:
+    QVBoxLayout* mainLayout;
 };
 
 #endif // GENERICCHATFORM_H

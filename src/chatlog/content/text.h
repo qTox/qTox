@@ -45,6 +45,8 @@ public:
     virtual void selectionFocusChanged(bool focusIn) final;
     virtual bool isOverSelection(QPointF scenePos) const final;
     virtual QString getSelectedText() const final;
+    virtual int setHighlight(const QString& highlight) override final;
+    virtual QTextCursor setHighlight(const QString& highlight, const QTextCursor& from) override final;
 
     virtual QRectF boundingRect() const final;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final;
@@ -57,6 +59,7 @@ public:
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
 
     virtual QString getText() const final;
+
 
 protected:
     // dynamic resource management
@@ -77,6 +80,7 @@ private:
     QString rawText;
     QString elidedText;
     QString selectedText;
+    QString highlightText;
     QSizeF size;
     bool keepInMemory = false;
     bool elide = false;

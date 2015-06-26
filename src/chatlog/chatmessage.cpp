@@ -69,9 +69,9 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     }
 
     // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
-    msg->addColumn(new Text(senderText, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true, sender, type == ACTION ? actionColor : Qt::black), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(senderText, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true, sender, type == ACTION ? actionColor : Qt::black), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new Text(text, Style::getFont(Style::Big), false, ((type == ACTION) && isMe) ? QString("%1 %2").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0/1.6), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0/1.6), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Right));
 
     if (!date.isNull())
         msg->markAsSent(date);
@@ -92,9 +92,9 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     case TYPING: img = ":/ui/chatArea/typing.svg";   break;
     }
 
-    msg->addColumn(new Image(QSize(18, 18), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Image(QSize(18, 18), img), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new Text("<b>" + text + "</b>", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Right));
 
     return msg;
 }
@@ -103,9 +103,9 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
-    msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 320, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Right));
 
     return msg;
 }
@@ -120,7 +120,7 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
     // user received typing notifications constantly since contact came online.
     // This causes "[user]..." to be displayed in place of user nick, as long
     // as user will keep typing. Issue #1280
-    msg->addColumn(new NotificationIcon(QSize(18, 18)), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new NotificationIcon(QSize(18, 18)), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new Text("[user]...", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
 
     return msg;

@@ -493,7 +493,9 @@ SOURCES += \
     src/widget/genericchatitemwidget.cpp \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
-    src/widget/categorywidget.cpp
+    src/widget/categorywidget.cpp \
+    src/widget/tool/findwidget.cpp \
+    src/widget/tool/indicatorscrollbar.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -536,4 +538,6 @@ HEADERS += \
     src/widget/genericchatitemwidget.h \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
-    src/widget/categorywidget.h
+    src/widget/categorywidget.h \
+    src/widget/tool/findwidget.h \
+    src/widget/tool/indicatorscrollbar.h

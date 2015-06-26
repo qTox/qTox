@@ -18,6 +18,7 @@
 */
 
 #include "chatlinecontent.h"
+#include <QTextCursor>
 
 void ChatLineContent::setIndex(int r, int c)
 {
@@ -73,6 +74,16 @@ bool ChatLineContent::isOverSelection(QPointF) const
 QString ChatLineContent::getSelectedText() const
 {
     return QString();
+}
+
+int ChatLineContent::setHighlight(const QString&)
+{
+    return 0;
+}
+
+QTextCursor ChatLineContent::setHighlight(const QString&, const QTextCursor&)
+{
+    return QTextCursor();
 }
 
 qreal ChatLineContent::getAscent() const
