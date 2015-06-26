@@ -33,7 +33,7 @@ class AVSettings;
 class CameraSource;
 class VideoSurface;
 
-class AVForm final : public GenericForm
+class AVForm : public GenericForm
 {
     Q_OBJECT
 public:

@@ -28,7 +28,7 @@ namespace Ui {
 class AboutSettings;
 }
 
-class AboutForm final : public GenericForm
+class AboutForm  : public GenericForm
 {
     Q_OBJECT
 public:

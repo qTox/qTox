@@ -26,7 +26,7 @@ namespace Ui {
 class PrivacySettings;
 }
 
-class PrivacyForm final : public GenericForm
+class PrivacyForm : public GenericForm
 {
     Q_OBJECT
 public:
