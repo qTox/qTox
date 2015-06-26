@@ -68,7 +68,7 @@ public:
 
     /// May be called from any thread, will always queue a call to playGroupAudio
     /// The first and last argument are ignored, but allow direct compatibility with toxcore
-    static void playGroupAudioQueued(Tox*, int group, int peer, const int16_t* data,
+    static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
 #ifdef QTOX_FILTER_AUDIO
@@ -95,6 +95,12 @@ private:
     static ALuint alMainSource;
     static QThread* audioThread;
     static ALCcontext* alContext;
+
+    struct DefaultSettings {
+        static constexpr int sampleRate = 48000;
+        static constexpr int frameDuration = 20;
+        static constexpr int audioChannels = 1;
+    };
 };
 
 #endif // AUDIO_H
