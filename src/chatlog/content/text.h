@@ -45,6 +45,8 @@ public:
     virtual void selectionFocusChanged(bool focusIn) final;
     virtual bool isOverSelection(QPointF scenePos) const final;
     virtual QString getSelectedText() const final;
+    virtual bool hasSelection() const override final;
+    virtual bool selectNext(const QString& search) override final;
     virtual int setHighlight(const QString& highlight) override final;
     virtual QTextCursor setHighlight(const QString& highlight, const QTextCursor& from) override final;
 
@@ -70,7 +72,6 @@ protected:
     int cursorFromPos(QPointF scenePos, bool fuzzy = true) const;
     int getSelectionEnd() const;
     int getSelectionStart() const;
-    bool hasSelection() const;
     QString extractSanitizedText(int from, int to) const;
     QString extractImgTooltip(int pos) const;
 

@@ -30,7 +30,7 @@ FindWidget::FindWidget(QWidget *parent) : QWidget(parent)
 
     matchesLabel = new QLabel();
     findLayout->addWidget(matchesLabel, 1);
-    setMatches(0);
+    setMatches(0, 0);
 
     QLineEdit* lineEdit = new QLineEdit(this);
     lineEdit->setFocus();
@@ -55,18 +55,23 @@ FindWidget::FindWidget(QWidget *parent) : QWidget(parent)
     findLayout->addWidget(closeButton);
 
     connect(lineEdit, &QLineEdit::textChanged, this, &FindWidget::findText);
-    connect(nextButton, &QPushButton::pressed, this, &FindWidget::findNext);
-    connect(previousButton, &QPushButton::pressed, this, &FindWidget::findPrevious);
+    connect(nextButton, &QPushButton::pressed, [this, lineEdit]()
+    {
+        emit findNext(lineEdit->text());
+    });
+    connect(previousButton, &QPushButton::pressed, [this, lineEdit]()
+    {
+        emit findPrevious(lineEdit->text());
+    });
     connect(closeButton, &QPushButton::pressed, this, &FindWidget::close);
 }
 
-void FindWidget::setMatches(int matches)
+void FindWidget::setMatches(int index, int matches)
 {
     if (matches <= 0)
         matchesLabel->setText(QString());
     else if (matches > 100)
         matchesLabel->setText(tr("More than 100 matches"));
     else
-        matchesLabel->setText(tr("%1 of %2 matches").arg(matches));
+        matchesLabel->setText(tr("%1 of %2 matches").arg(index).arg(matches));
 }
-

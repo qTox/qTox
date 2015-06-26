@@ -32,13 +32,13 @@ public:
 
 signals:
     void findText(const QString& text);
-    void findNext();
-    void findPrevious();
+    void findNext(const QString& text);
+    void findPrevious(const QString& text);
     void setCase(bool match);
     void close();
 
 public slots:
-    void setMatches(int matches);
+    void setMatches(int index, int matches);
 
 private:
     QLabel* matchesLabel;

@@ -146,6 +146,34 @@ QString Text::getSelectedText() const
     return selectedText;
 }
 
+bool Text::hasSelection() const
+{
+    return selectionEnd != -1;
+}
+
+bool Text::selectNext(const QString& search)
+{
+    int indexOf = selectionEnd;
+
+    if (search != selectedText)
+        indexOf = selectionAnchor;
+
+    if (indexOf == -1)
+        indexOf = 0;
+
+    if ((indexOf = getText().indexOf(search, indexOf)) != -1)
+    {
+        qDebug() << "FOUND" << indexOf << getText() << text;
+        selectionAnchor = indexOf;
+        selectionEnd = indexOf + search.count();
+        selectedText = search;
+        update();
+        return true;
+    }
+
+    return false;
+}
+
 QRectF Text::boundingRect() const
 {
     return QRectF(QPointF(0, 0), size);
@@ -189,6 +217,7 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         ctx.palette.setColor(QPalette::Text, color);
 
         // draw text
+        doc->setUseDesignMetrics(true);
         doc->documentLayout()->draw(painter, ctx);
     }
 
@@ -255,7 +284,7 @@ int Text::setHighlight(const QString &highlight)
 
     if (!highlight.isEmpty())
     {
-        while ((index = text.indexOf(highlight, index + highlight.count())) != -1)
+        while ((index = getText().indexOf(highlight, index + highlight.count())) != -1)
             ++foundCount;
     }
 
@@ -266,7 +295,7 @@ int Text::setHighlight(const QString &highlight)
 
     return foundCount;
 }
-#include <QGraphicsScene>
+
 QTextCursor Text::setHighlight(const QString &highlight, const QTextCursor &from)
 {
     highlightText = highlight;
@@ -274,9 +303,6 @@ QTextCursor Text::setHighlight(const QString &highlight, const QTextCursor &from
 
     if (!doc)
         return QTextCursor();
-
-    //this->scene()->invalidate(pos().x(), pos().y(), size()., size().height());
-
 
     return doc->find(highlight, from);
 }
@@ -356,11 +382,6 @@ int Text::getSelectionEnd() const
 int Text::getSelectionStart() const
 {
     return qMin(selectionAnchor, selectionEnd);
-}
-
-bool Text::hasSelection() const
-{
-    return selectionEnd >= 0;
 }
 
 QString Text::extractSanitizedText(int from, int to) const
