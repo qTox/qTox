@@ -20,15 +20,13 @@
 #ifndef GROUPWIDGET_H
 #define GROUPWIDGET_H
 
-#include <QLabel>
 #include "genericchatroomwidget.h"
 
-class GroupWidget : public GenericChatroomWidget
+class GroupWidget final : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
     GroupWidget(int GroupId, QString Name);
-    virtual void contextMenuEvent(QContextMenuEvent * event) final override;
     virtual void setAsInactiveChatroom() final override;
     virtual void setAsActiveChatroom() final override;
     virtual void updateStatusLight() final override;
@@ -37,15 +35,18 @@ public:
     virtual QString getStatusString() final override;
     void setName(const QString& name);
     void onUserListChanged();
+    void editName();
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
+    void renameRequested(GroupWidget* widget, const QString& newName);
     void removeGroup(int groupId);
 
 protected:
-    // drag & drop
-    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
-    virtual void dropEvent(QDropEvent* ev) final override;
+    virtual void contextMenuEvent(QContextMenuEvent * event) final override;
+    virtual void dragEnterEvent(QDragEnterEvent* ev) override;
+    virtual void dragLeaveEvent(QDragLeaveEvent* ev);
+    virtual void dropEvent(QDropEvent* ev) override;
 
 public:
     int groupId;

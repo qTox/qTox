@@ -35,8 +35,13 @@ CroppingLabel::CroppingLabel(QWidget* parent)
                                   | Qt::ImhNoPredictiveText
                                   | Qt::ImhPreferLatin);
 
-    installEventFilter(this);
-    textEdit->installEventFilter(this);
+    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::editingFinished);
+}
+
+void CroppingLabel::editBegin()
+{
+    showTextEdit();
+    textEdit->selectAll();
 }
 
 void CroppingLabel::setEditable(bool editable)
@@ -88,36 +93,14 @@ void CroppingLabel::mouseReleaseEvent(QMouseEvent *e)
     QLabel::mouseReleaseEvent(e);
 }
 
-bool CroppingLabel::eventFilter(QObject *obj, QEvent *e)
+void CroppingLabel::paintEvent(QPaintEvent* paintEvent)
 {
-    // catch paint events if needed
-    if (obj == this)
+    if (blockPaintEvents)
     {
-        if (e->type() == QEvent::Paint && blockPaintEvents)
-            return true;
+        paintEvent->ignore();
+        return;
     }
-
-    // events fired by the QLineEdit
-    if (obj == textEdit)
-    {
-        if (!textEdit->isVisible())
-            return false;
-
-        if (e->type() == QEvent::KeyPress)
-        {
-            QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
-            if (keyEvent->key() == Qt::Key_Return)
-                hideTextEdit(true);
-
-            if (keyEvent->key() == Qt::Key_Escape)
-                hideTextEdit(false);
-        }
-
-        if (e->type() == QEvent::FocusOut)
-            hideTextEdit(true);
-    }
-
-    return false;
+    QLabel::paintEvent(paintEvent);
 }
 
 void CroppingLabel::setElidedText()
@@ -131,28 +114,35 @@ void CroppingLabel::setElidedText()
     QLabel::setText(elidedText);
 }
 
-void CroppingLabel::hideTextEdit(bool acceptText)
-{
-    if (acceptText)
-    {
-        QString oldOrigText = origText;
-        setText(textEdit->text()); // set before emitting so we don't override external reactions to signal
-        emit textChanged(textEdit->text(), oldOrigText);
-    }
-
-    textEdit->hide();
-    blockPaintEvents = false;
-}
-
 void CroppingLabel::showTextEdit()
 {
     blockPaintEvents = true;
     textEdit->show();
     textEdit->setFocus();
     textEdit->setText(origText);
+    textEdit->setFocusPolicy(Qt::ClickFocus);
 }
 
 QString CroppingLabel::fullText()
 {
     return origText;
+}
+
+void CroppingLabel::minimizeMaximumWidth()
+{
+    // This function chooses the smallest possible maximum width.
+    // Text width + padding. Without padding, we'll have elipses.
+    setMaximumWidth(fontMetrics().width(origText) + fontMetrics().width("..."));
+}
+
+void CroppingLabel::editingFinished()
+{
+    QString newText = textEdit->text().trimmed().remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
+
+    if (origText != newText)
+        emit editFinished(textEdit->text());
+
+    textEdit->hide();
+    blockPaintEvents = false;
+    emit editRemoved();
 }

@@ -38,7 +38,7 @@ FORMS    += \
 
 CONFIG   += c++11
 
-QMAKE_CXXFLAGS += -fno-exceptions -fno-rtti
+QMAKE_CXXFLAGS += -fno-exceptions
 
 # Rules for creating/updating {ts|qm}-files
 include(translations/i18n.pri)
@@ -108,9 +108,9 @@ contains(HIGH_DPI, YES) {
 }
 
 contains(JENKINS,YES) {
-	INCLUDEPATH += ./libs/include/
+    INCLUDEPATH += ./libs/include/
 } else {
-	INCLUDEPATH += libs/include
+    INCLUDEPATH += libs/include
 }
 
 contains(DEFINES, QTOX_FILTER_AUDIO) {
@@ -133,8 +133,8 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
 # Rules for Windows, Mac OSX, and Linux
 win32 {
     RC_FILE = windows/qtox.rc
-	LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
-	LIBS += -L$$PWD/libs/lib -lavformat -lavdevice -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
+    LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
+    LIBS += -L$$PWD/libs/lib -lavformat -lavdevice -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
     LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lz -luuid
     LIBS += -lqrencode
     LIBS += -lstrmiids # For DirectShow
@@ -200,31 +200,31 @@ win32 {
 # The systray Unity backend implements the system tray icon on Unity (Ubuntu) and GNOME desktops.
 unix:!macx:!android {
 contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
-	DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
+    DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
 
-	INCLUDEPATH += "/usr/include/glib-2.0"
-	INCLUDEPATH += "/usr/include/gtk-2.0"
-	INCLUDEPATH += "/usr/include/atk-1.0"
-	INCLUDEPATH += "/usr/include/cairo"
-	INCLUDEPATH += "/usr/include/ffmpeg"
-	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
-	INCLUDEPATH += "/usr/include/libappindicator-0.1"
-	INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
-	INCLUDEPATH += "/usr/include/pango-1.0"
-	equals(QT_ARCH, x86_64) {
-		INCLUDEPATH += "/usr/lib64/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
-		INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
-	}
-	else {
-		INCLUDEPATH += "/usr/lib/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/gtk-2.0/include"
-		INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
-	}
+    INCLUDEPATH += "/usr/include/glib-2.0"
+    INCLUDEPATH += "/usr/include/gtk-2.0"
+    INCLUDEPATH += "/usr/include/atk-1.0"
+    INCLUDEPATH += "/usr/include/cairo"
+    INCLUDEPATH += "/usr/include/ffmpeg"
+    INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+    INCLUDEPATH += "/usr/include/libappindicator-0.1"
+    INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
+    INCLUDEPATH += "/usr/include/pango-1.0"
+    equals(QT_ARCH, x86_64) {
+        INCLUDEPATH += "/usr/lib64/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
+        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+    }
+    else {
+        INCLUDEPATH += "/usr/lib/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/gtk-2.0/include"
+        INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+    }
 
-	LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
+    LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
 }
 }
 
@@ -232,30 +232,30 @@ contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
 unix:!macx:!android {
 contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
 } else {
-	DEFINES += ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+    DEFINES += ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
 
-	INCLUDEPATH += "/usr/include/glib-2.0"
-	INCLUDEPATH += "/usr/include/gtk-2.0"
-	INCLUDEPATH += "/usr/include/atk-1.0"
-	INCLUDEPATH += "/usr/include/cairo"
-	INCLUDEPATH += "/usr/include/ffmpeg"
-	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
-	INCLUDEPATH += "/usr/include/pango-1.0"
-	equals(QT_ARCH, x86_64) {
-		INCLUDEPATH += "/usr/lib64/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
-		INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
-	}
-	else {
-		INCLUDEPATH += "/usr/lib/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/gtk-2.0/include"
-		INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
-	}
+    INCLUDEPATH += "/usr/include/glib-2.0"
+    INCLUDEPATH += "/usr/include/gtk-2.0"
+    INCLUDEPATH += "/usr/include/atk-1.0"
+    INCLUDEPATH += "/usr/include/cairo"
+    INCLUDEPATH += "/usr/include/ffmpeg"
+    INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+    INCLUDEPATH += "/usr/include/pango-1.0"
+    equals(QT_ARCH, x86_64) {
+        INCLUDEPATH += "/usr/lib64/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
+        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+    }
+    else {
+        INCLUDEPATH += "/usr/lib/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/gtk-2.0/include"
+        INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+    }
 
 
-	LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
+    LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
 
     SOURCES +=     src/platform/statusnotifier/closures.c \
     src/platform/statusnotifier/enums.c \
@@ -272,29 +272,29 @@ contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
 unix:!macx:!android {
 contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
 } else {
-	DEFINES += ENABLE_SYSTRAY_GTK_BACKEND
+    DEFINES += ENABLE_SYSTRAY_GTK_BACKEND
 
-	INCLUDEPATH += "/usr/include/glib-2.0"
-	INCLUDEPATH += "/usr/include/gtk-2.0"
-	INCLUDEPATH += "/usr/include/atk-1.0"
-	INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
-	INCLUDEPATH += "/usr/include/cairo"
-	INCLUDEPATH += "/usr/include/pango-1.0"
-	equals(QT_ARCH, x86_64) {
-		INCLUDEPATH += "/usr/lib64/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
-		INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
-	}
-	else {
-		INCLUDEPATH += "/usr/lib/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
-		INCLUDEPATH += "/usr/lib/gtk-2.0/include"
-		INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
-	}
+    INCLUDEPATH += "/usr/include/glib-2.0"
+    INCLUDEPATH += "/usr/include/gtk-2.0"
+    INCLUDEPATH += "/usr/include/atk-1.0"
+    INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
+    INCLUDEPATH += "/usr/include/cairo"
+    INCLUDEPATH += "/usr/include/pango-1.0"
+    equals(QT_ARCH, x86_64) {
+        INCLUDEPATH += "/usr/lib64/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
+        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+    }
+    else {
+        INCLUDEPATH += "/usr/lib/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
+        INCLUDEPATH += "/usr/lib/gtk-2.0/include"
+        INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+    }
 
 
-	LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
+    LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
 }
 }
 
@@ -488,7 +488,12 @@ SOURCES += \
     src/widget/translator.cpp \
     src/persistence/settingsserializer.cpp \
     src/widget/notificationscrollarea.cpp \
-    src/widget/notificationedgewidget.cpp
+    src/widget/notificationedgewidget.cpp \
+    src/widget/circlewidget.cpp \
+    src/widget/genericchatitemwidget.cpp \
+    src/widget/friendlistlayout.cpp \
+    src/widget/genericchatitemlayout.cpp \
+    src/widget/categorywidget.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -526,4 +531,9 @@ HEADERS += \
     src/widget/translator.h \
     src/persistence/settingsserializer.h \
     src/widget/notificationscrollarea.h \
-    src/widget/notificationedgewidget.h
+    src/widget/notificationedgewidget.h \
+    src/widget/circlewidget.h \
+    src/widget/genericchatitemwidget.h \
+    src/widget/friendlistlayout.h \
+    src/widget/genericchatitemlayout.h \
+    src/widget/categorywidget.h

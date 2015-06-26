@@ -7,7 +7,7 @@ QLineEdit
     border-radius: 4px;
 }
 
-QComboBox {
+QToolButton {
     background: none;
     background-color: @themeMedium;
     color: white;
@@ -15,14 +15,14 @@ QComboBox {
     border-radius: 4px;
 }
 
-QComboBox:on {
+QToolButton:pressed {
     background-color: @themeMediumDark;
     border-radius: 4px;
+    color: white;
 }
 
-QComboBox:drop-down {
-    border-style: none;
-    border-radius: 4px;
+QToolButton::menu-indicator {
+    image: none
 }
 
 /**

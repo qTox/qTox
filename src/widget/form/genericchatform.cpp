@@ -232,6 +232,23 @@ ChatLog *GenericChatForm::getChatLog() const
     return chatWidget;
 }
 
+QDate GenericChatForm::getLatestDate() const
+{
+    ChatLine::Ptr chatLine = chatWidget->getLatestLine();
+
+    if (chatLine)
+    {
+        Timestamp* timestamp = dynamic_cast<Timestamp*>(chatLine->getContent(2));
+
+        if (timestamp)
+            return timestamp->getTime().date();
+        else
+            return QDate::currentDate();
+    }
+
+    return QDate();
+}
+
 void GenericChatForm::setName(const QString &newName)
 {
     nameLabel->setText(newName);
@@ -360,7 +377,11 @@ void GenericChatForm::onSaveLogClicked()
     auto lines = chatWidget->getLines();
     for (ChatLine::Ptr l : lines)
     {
-        Timestamp* rightCol = static_cast<Timestamp*>(l->getContent(2));
+        Timestamp* rightCol = dynamic_cast<Timestamp*>(l->getContent(2));
+
+        if (!rightCol)
+            return;
+
         ChatLineContent* middleCol = l->getContent(1);
         ChatLineContent* leftCol = l->getContent(0);
 

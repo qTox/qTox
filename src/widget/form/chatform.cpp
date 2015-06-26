@@ -18,6 +18,7 @@
 */
 
 #include <QDebug>
+#include <QBoxLayout>
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -103,8 +104,10 @@ ChatForm::ChatForm(Friend* chatFriend)
         Core::getInstance()->sendTyping(f->getFriendID(), false);
         isTyping = false;
     } );
-    connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig) {
-        if (text != orig) emit aliasChanged(text);
+    connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName)
+    {
+        nameLabel->setText(newName);
+        emit aliasChanged(newName);
     } );
 
     setAcceptDrops(true);
@@ -199,6 +202,8 @@ void ChatForm::startFileSend(ToxFile file)
     }
 
     insertChatMessage(ChatMessage::createFileTransferMessage(name, file, true, QDateTime::currentDateTime()));
+
+    Widget::getInstance()->updateFriendActivity(f);
 }
 
 void ChatForm::onFileRecvRequest(ToxFile file)
@@ -233,6 +238,8 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
         tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxId()));
     }
+
+    Widget::getInstance()->updateFriendActivity(f);
 }
 
 void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
@@ -407,6 +414,8 @@ void ChatForm::onAvRinging(uint32_t FriendId, int CallId, bool video)
     }
 
     addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
+
+    Widget::getInstance()->updateFriendActivity(f);
 }
 
 void ChatForm::onAvStarting(uint32_t FriendId, int CallId, bool video)
@@ -1045,6 +1054,8 @@ void ChatForm::SendMessageStr(QString msg)
         getOfflineMsgEngine()->registerReceipt(rec, id, ma);
 
         msgEdit->setLastMessage(msg); //set last message only when sending it
+
+        Widget::getInstance()->updateFriendActivity(f);
     }
 }
 

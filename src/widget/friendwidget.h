@@ -18,14 +18,12 @@
 #ifndef FRIENDWIDGET_H
 #define FRIENDWIDGET_H
 
-#include <QLabel>
-
 #include "genericchatroomwidget.h"
 
 class QPixmap;
 class MaskablePixmapWidget;
 
-struct FriendWidget final : public GenericChatroomWidget
+class FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
@@ -37,6 +35,7 @@ public:
     virtual void setChatForm(Ui::MainWindow &) override;
     virtual void resetEventFlags() override;
     virtual QString getStatusString() override;
+    void search(const QString &searchString, bool hide = false);
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
@@ -49,8 +48,8 @@ public slots:
     void setAlias(const QString& alias);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent* ev) final override;
-    virtual void mouseMoveEvent(QMouseEvent* ev) final  override;
+    virtual void mousePressEvent(QMouseEvent* ev) override;
+    virtual void mouseMoveEvent(QMouseEvent* ev) override;
     void setFriendAlias();
 
 public:

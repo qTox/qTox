@@ -163,6 +163,7 @@ void Nexus::showMainGUI()
     connect(core, &Core::statusMessageSet,           widget, &Widget::setStatusMessage);
     connect(core, &Core::selfAvatarChanged,          widget, &Widget::onSelfAvatarLoaded);
     connect(core, &Core::friendAdded,                widget, &Widget::addFriend);
+    connect(core, &Core::friendshipChanged,          widget, &Widget::onFriendshipChanged);
     connect(core, &Core::failedToAddFriend,          widget, &Widget::addFriendFailed);
     connect(core, &Core::friendUsernameChanged,      widget, &Widget::onFriendUsernameChanged);
     connect(core, &Core::friendStatusChanged,        widget, &Widget::onFriendStatusChanged);

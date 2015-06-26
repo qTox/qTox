@@ -287,6 +287,7 @@ void Settings::loadPersonnal(Profile* profile)
     friendLst.clear();
     ps.beginGroup("Friends");
         int size = ps.beginReadArray("Friend");
+        friendLst.reserve(size);
         for (int i = 0; i < size; i ++)
         {
             ps.setArrayIndex(i);
@@ -294,6 +295,11 @@ void Settings::loadPersonnal(Profile* profile)
             fp.addr = ps.value("addr").toString();
             fp.alias = ps.value("alias").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
+            fp.circleID = ps.value("circle", -1).toInt();
+
+            if (getEnableLogging())
+                fp.activity = ps.value("activity", QDate()).toDate();
+
             friendLst[ToxId(fp.addr).publicKey] = fp;
         }
         ps.endArray();
@@ -301,6 +307,20 @@ void Settings::loadPersonnal(Profile* profile)
 
     ps.beginGroup("General");
         compactLayout = ps.value("compactLayout", false).toBool();
+    ps.endGroup();
+
+    ps.beginGroup("Circles");
+        size = ps.beginReadArray("Circle");
+        circleLst.reserve(size);
+        for (int i = 0; i < size; i ++)
+        {
+            ps.setArrayIndex(i);
+            circleProp cp;
+            cp.name = ps.value("name").toString();
+            cp.expanded = ps.value("expanded", true).toBool();
+            circleLst.push_back(cp);
+        }
+        ps.endArray();
     ps.endGroup();
 
     ps.beginGroup("Privacy");
@@ -450,6 +470,11 @@ void Settings::savePersonal(QString profileName, QString password)
             ps.setValue("addr", frnd.addr);
             ps.setValue("alias", frnd.alias);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
+            ps.setValue("circle", frnd.circleID);
+
+            if (getEnableLogging())
+                ps.setValue("activity", frnd.activity);
+
             index++;
         }
         ps.endArray();
@@ -457,6 +482,19 @@ void Settings::savePersonal(QString profileName, QString password)
 
     ps.beginGroup("General");
         ps.setValue("compactLayout", compactLayout);
+    ps.endGroup();
+
+    ps.beginGroup("Circles");
+        ps.beginWriteArray("Circle", circleLst.size());
+        index = 0;
+        for (auto& circle : circleLst)
+        {
+            ps.setArrayIndex(index);
+            ps.setValue("name", circle.name);
+            ps.setValue("expanded", circle.expanded);
+            index++;
+        }
+        ps.endArray();
     ps.endGroup();
 
     ps.beginGroup("Privacy");
@@ -1255,6 +1293,66 @@ void Settings::setFriendAlias(const ToxId &id, const QString &alias)
     }
 }
 
+int Settings::getFriendCircleID(const ToxId &id) const
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+        return it->circleID;
+
+    return -1;
+}
+
+void Settings::setFriendCircleID(const ToxId &id, int circleID)
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+    {
+        it->circleID = circleID;
+    }
+    else
+    {
+        friendProp fp;
+        fp.addr = key;
+        fp.alias = "";
+        fp.autoAcceptDir = "";
+        fp.circleID = circleID;
+        friendLst[key] = fp;
+    }
+}
+
+QDate Settings::getFriendActivity(const ToxId &id) const
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+        return it->activity;
+
+    return QDate();
+}
+
+void Settings::setFriendActivity(const ToxId &id, const QDate &activity)
+{
+    QString key = id.publicKey;
+    auto it = friendLst.find(key);
+    if (it != friendLst.end())
+    {
+        it->activity = activity;
+    }
+    else
+    {
+        friendProp fp;
+        fp.addr = key;
+        fp.alias = "";
+        fp.autoAcceptDir = "";
+        fp.circleID = -1;
+        fp.activity = activity;
+        friendLst[key] = fp;
+    }
+    savePersonal();
+}
+
 void Settings::removeFriendSettings(const ToxId &id)
 {
     QMutexLocker locker{&bigLock};
@@ -1296,6 +1394,57 @@ void Settings::setGroupchatPosition(bool value)
 {
     QMutexLocker locker{&bigLock};
     groupchatPosition = value;
+}
+
+int Settings::getCircleCount() const
+{
+    return circleLst.size();
+}
+
+QString Settings::getCircleName(int id) const
+{
+    return circleLst[id].name;
+}
+
+void Settings::setCircleName(int id, const QString &name)
+{
+    circleLst[id].name = name;
+    savePersonal();
+}
+
+int Settings::addCircle(const QString &name)
+{
+    circleProp cp;
+    cp.expanded = false;
+
+    if (name.isEmpty())
+        cp.name = tr("Circle #%1").arg(circleLst.count() + 1);
+    else
+        cp.name = name;
+
+    circleLst.append(cp);
+    savePersonal();
+    return circleLst.count() - 1;
+}
+
+bool Settings::getCircleExpanded(int id) const
+{
+    return circleLst[id].expanded;
+}
+
+void Settings::setCircleExpanded(int id, bool expanded)
+{
+    circleLst[id].expanded = expanded;
+}
+
+int Settings::removeCircle(int id)
+{
+    // Replace index with last one and remove last one instead.
+    // This gives you contiguous ids all the time.
+    circleLst[id] = circleLst.last();
+    circleLst.pop_back();
+    savePersonal();
+    return circleLst.count();
 }
 
 int Settings::getThemeColor() const

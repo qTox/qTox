@@ -24,6 +24,7 @@
 #include <QSystemTrayIcon>
 #include <QFileInfo>
 #include "src/core/corestructs.h"
+#include "genericchatitemwidget.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -32,6 +33,7 @@ class MainWindow;
 }
 
 class GenericChatroomWidget;
+class FriendWidget;
 class Group;
 class Friend;
 class QSplitter;
@@ -47,6 +49,8 @@ class FilesForm;
 class ProfileForm;
 class SettingsWidget;
 class AddFriendForm;
+class CircleWidget;
+class QActionGroup;
 
 class Widget final : public QMainWindow
 {
@@ -77,6 +81,10 @@ public:
     static QString getStatusTitle(Status status);
     static Status getStatusFromString(QString status);
 
+    void searchCircle(CircleWidget* circleWidget);
+    void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
+    bool groupsVisible() const;
+
 public slots:
     void onSettingsClicked();
     void setWindowTitle(const QString& title);
@@ -91,11 +99,14 @@ public slots:
     void setStatusMessage(const QString &statusMessage);
     void addFriend(int friendId, const QString& userId);
     void addFriendFailed(const QString& userId, const QString& errorInfo = QString());
+    void onFriendshipChanged(int friendId);
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
+    void onFriendDisplayChanged(FriendWidget* friendWidget, Status s);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
+    void updateFriendActivity(Friend* frnd);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
@@ -132,7 +143,7 @@ private slots:
     void onTransferClicked();
     void showProfile();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
-    void onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage);
+    void onStatusMessageChanged(const QString& newStatusMessage);
     void onChatroomWidgetClicked(GenericChatroomWidget *);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
@@ -147,9 +158,7 @@ private slots:
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
-    void searchContacts();
-    void hideFriends(QString searchString, Status status, bool hideAll = false);
-    void hideGroups(QString searchString, bool hideAll = false);
+    void friendListContextMenu(const QPoint &pos);
 
 private:
     enum ActiveToolMenuButton {
@@ -177,16 +186,36 @@ private:
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();
-    void cycleContacts(int offset);
+    void cycleContacts(bool forward);
+    void searchContacts();
+    void changeDisplayMode();
+    void updateFilterText();
+    int getFilterCriteria() const;
+    static bool filterGroups(int index);
+    static bool filterOnline(int index);
+    static bool filterOffline(int index);
     void retranslateUi();
 
 private:
     SystemTrayIcon *icon;
     QMenu *trayMenu;
-    QAction *statusOnline,
-            *statusAway,
-            *statusBusy,
-            *actionQuit;
+    QAction *statusOnline;
+    QAction *statusAway;
+    QAction *statusBusy;
+    QAction *actionQuit;
+
+    QMenu* filterMenu;
+
+    QActionGroup* filterGroup;
+    QAction* filterAllAction;
+    QAction* filterOnlineAction;
+    QAction* filterOfflineAction;
+    QAction* filterFriendsAction;
+    QAction* filterGroupsAction;
+
+    QActionGroup* filterDisplayGroup;
+    QAction* filterDisplayName;
+    QAction* filterDisplayActivity;
 
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
