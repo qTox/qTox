@@ -34,6 +34,7 @@
 #include <cassert>
 #include "chatform.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/friend.h"
 #include "src/persistence/historykeeper.h"
 #include "src/widget/style.h"
@@ -1071,7 +1072,7 @@ void ChatForm::showNetcam()
 {
     if (!netcam)
         netcam = new NetCamView();
-    netcam->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
+    netcam->show(CoreAV::getVideoSourceFromCall(callId), f->getDisplayedName());
 }
 
 void ChatForm::hideNetcam()
