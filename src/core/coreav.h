@@ -48,7 +48,6 @@ struct ToxCall
     bool muteVol;
     ALuint alSource;
     CoreVideoSource* videoSource;
-    CameraSource* camera;
 };
 
 struct ToxGroupCall

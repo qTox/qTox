@@ -35,22 +35,32 @@ struct AVCodecContext;
  * This class is a wrapper to share a camera's captured video frames
  * It allows objects to suscribe and unsuscribe to the stream, starting
  * the camera and streaming new video frames only when needed.
+ * This is a singleton, since we can only capture from one
+ * camera at the same time without thread-safety issues.
+ * The source is lazy in the sense that it will only keep the video
+ * device open as long as there are subscribers, the source can be
+ * open but the device closed if there are zero subscribers.
  **/
 
 class CameraSource : public VideoSource
 {
     Q_OBJECT
 public:
-    CameraSource(); ///< Opens the camera device in the settings, or the system default
-    CameraSource(const QString deviceName);
-    CameraSource(const QString deviceName, VideoMode mode);
-    ~CameraSource();
+    static CameraSource& getInstance();
+    /// Opens the source for the camera device in argument, in the settings, or the system default
+    /// If a device is already open, the source will seamlessly switch to the new device
+    void open();
+    void open(const QString deviceName);
+    void open(const QString deviceName, VideoMode mode);
+    void close(); ///< Equivalent to opening the source with the video device "none". Stops streaming.
 
     // VideoSource interface
     virtual bool subscribe() override;
     virtual void unsubscribe() override;
 
 private:
+    CameraSource();
+    ~CameraSource();
     /// Blocking. Decodes video stream and emits new frames.
     /// Designed to run in its own thread.
     void stream();
@@ -64,17 +74,22 @@ private:
     /// Get the index of a free slot in the freelist
     /// Callers must hold the freelistLock
     int getFreelistSlotLockless();
+    bool openDevice(); ///< Callers must own the biglock. Actually opens the video device and starts streaming.
+    void closeDevice(); ///< Callers must own the biglock. Actually closes the video device and stops streaming.
 
 private:
     QVector<std::weak_ptr<VideoFrame>> freelist; ///< Frames that need freeing before we can safely close the device
     QFuture<void> streamFuture; ///< Future of the streaming thread
-    const QString deviceName; ///< Short name of the device for CameraDevice's open(QString)
-    CameraDevice* device; ///< Non-owning pointer to an open CameraDevice, or nullptr
+    QString deviceName; ///< Short name of the device for CameraDevice's open(QString)
+    CameraDevice* device; ///< Non-owning pointer to an open CameraDevice, or nullptr. Not atomic, synced with memfences when becomes null.
     VideoMode mode; ///< What mode we tried to open the device in, all zeros means default mode
     AVCodecContext* cctx, *cctxOrig; ///< Codec context of the camera's selected video stream
     int videoStreamIndex; ///< A camera can have multiple streams, this is the one we're decoding
-    std::atomic_bool biglock, freelistLock, isNull; ///< True when locked. Faster than mutexes for video decoding.
+    std::atomic_bool biglock, freelistLock; ///< True when locked. Faster than mutexes for video decoding.
+    std::atomic_bool isOpen;
     std::atomic_int subscriptions; ///< Remember how many times we subscribed for RAII
+
+    static CameraSource* instance;
 };
 
 #endif // CAMERA_H
