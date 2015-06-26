@@ -35,8 +35,8 @@ public:
     virtual void unsubscribe() override;
 
 private:
-    // Only Core should create a CoreVideoSource since
-    // only Core can push images to it
+    // Only CoreAV should create a CoreVideoSource since
+    // only CoreAV can push images to it
     CoreVideoSource();
 
     /// Makes a copy of the vpx_image_t and emits it as a new VideoFrame
@@ -49,7 +49,7 @@ private:
     std::atomic_bool deleteOnClose; ///< If true, self-delete after the last suscriber is gone
     std::atomic_bool biglock; ///< Fast lock
 
-friend class Core;
+friend class CoreAV;
 };
 
 #endif // COREVIDEOSOURCE_H

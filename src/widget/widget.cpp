@@ -21,6 +21,7 @@
 #include "contentlayout.h"
 #include "ui_mainwindow.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "contentdialog.h"
 #include "src/friend.h"
@@ -890,13 +891,13 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), &GenericChatForm::sendMessage, core, &Core::sendMessage);
     connect(newfriend->getChatForm(), &GenericChatForm::sendAction, core, &Core::sendAction);
     connect(newfriend->getChatForm(), &ChatForm::sendFile, core, &Core::sendFile);
-    connect(newfriend->getChatForm(), &ChatForm::answerCall, core, &Core::answerCall);
-    connect(newfriend->getChatForm(), &ChatForm::hangupCall, core, &Core::hangupCall);
-    connect(newfriend->getChatForm(), &ChatForm::rejectCall, core, &Core::rejectCall);
-    connect(newfriend->getChatForm(), &ChatForm::startCall, core, &Core::startCall);
-    connect(newfriend->getChatForm(), &ChatForm::cancelCall, core, &Core::cancelCall);
-    connect(newfriend->getChatForm(), &ChatForm::micMuteToggle, core, &Core::micMuteToggle);
-    connect(newfriend->getChatForm(), &ChatForm::volMuteToggle, core, &Core::volMuteToggle);
+    connect(newfriend->getChatForm(), &ChatForm::answerCall, core->getAv(), &CoreAV::answerCall);
+    connect(newfriend->getChatForm(), &ChatForm::hangupCall, core->getAv(), &CoreAV::hangupCall);
+    connect(newfriend->getChatForm(), &ChatForm::rejectCall, core->getAv(), &CoreAV::rejectCall);
+    connect(newfriend->getChatForm(), &ChatForm::startCall, core->getAv(), &CoreAV::startCall);
+    connect(newfriend->getChatForm(), &ChatForm::cancelCall, core->getAv(), &CoreAV::cancelCall);
+    connect(newfriend->getChatForm(), &ChatForm::micMuteToggle, core->getAv(), &CoreAV::micMuteToggle);
+    connect(newfriend->getChatForm(), &ChatForm::volMuteToggle, core->getAv(), &CoreAV::volMuteToggle);
     connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
     connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
@@ -1588,7 +1589,7 @@ Group *Widget::createGroup(int groupId)
     Core* core = Nexus::getCore();
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, core->isGroupAvEnabled(groupId));
+    Group* newgroup = GroupList::addGroup(groupId, groupName, CoreAV::isGroupAvEnabled(groupId));
 
     contactListWidget->addGroupWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();

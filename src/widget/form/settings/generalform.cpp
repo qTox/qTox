@@ -24,6 +24,7 @@
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/widget/style.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
@@ -358,7 +359,7 @@ void GeneralForm::onUseProxyUpdated()
 
 void GeneralForm::onReconnectClicked()
 {
-    if (Core::getInstance()->anyActiveCalls())
+    if (CoreAV::anyActiveCalls())
     {
         QMessageBox::warning(this, tr("Call active", "popup title"),
                         tr("You can't disconnect while a call is active!", "popup text"));

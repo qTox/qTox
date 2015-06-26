@@ -21,7 +21,6 @@
 #ifndef COREDEFINES_H
 #define COREDEFINES_H
 
-#define TOXAV_MAX_CALLS 16
 #define TOXAV_RINGING_TIME 45
 
 // TODO: Put that in the settings

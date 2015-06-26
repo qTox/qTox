@@ -35,6 +35,7 @@
 #include <cassert>
 #include "chatform.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/friend.h"
 #include "src/persistence/historykeeper.h"
 #include "src/widget/style.h"
@@ -756,7 +757,7 @@ GenericNetCamView *ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
     NetCamView* view = new NetCamView(f->getFriendID(), this);
-    view->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
+    view->show(CoreAV::getVideoSourceFromCall(callId), f->getDisplayedName());
     return view;
 }
 

@@ -32,6 +32,7 @@
 #include <QFile>
 #include <QApplication>
 #include <cassert>
+#include <vpx/vpx_image.h>
 
 #ifdef Q_OS_ANDROID
 #include <src/widget/androidgui.h>

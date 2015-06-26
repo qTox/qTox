@@ -29,10 +29,12 @@
 #include "audio.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
+#include "src/core/coreav.h"
 
 #include <QDebug>
 #include <QTimer>
 #include <QThread>
+#include <QMutexLocker>
 
 #include <cassert>
 
@@ -110,7 +112,7 @@ void Audio::setOutputVolume(qreal volume)
     outputVolume = volume;
     alSourcef(alMainSource, AL_GAIN, outputVolume);
 
-    for (const ToxGroupCall& call : Core::groupCalls)
+    for (const ToxGroupCall& call : CoreAV::groupCalls)
     {
         if (!call.active)
             continue;
@@ -118,7 +120,7 @@ void Audio::setOutputVolume(qreal volume)
             alSourcef(source, AL_GAIN, outputVolume);
     }
 
-    for (const ToxCall& call : Core::calls)
+    for (const ToxCall& call : CoreAV::calls)
     {
         if (!call.active)
             continue;
@@ -193,10 +195,11 @@ void Audio::openInput(const QString& inDevDescr)
     }
     alInDev = nullptr;
 
-    int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-    const uint32_t sampleRate = av_DefaultSettings.audio_sample_rate;
-    const uint16_t frameDuration = av_DefaultSettings.audio_frame_duration;
-    const uint32_t chnls = av_DefaultSettings.audio_channels;
+    /// TODO: Try to actually detect if our audio source is stereo
+    int stereoFlag = DefaultSettings::audioChannels ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+    const uint32_t sampleRate = DefaultSettings::sampleRate;
+    const uint16_t frameDuration = DefaultSettings::frameDuration;
+    const uint32_t chnls = DefaultSettings::audioChannels;
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
     if (inDevDescr.isEmpty())
         alInDev = alcCaptureOpenDevice(nullptr, sampleRate, stereoFlag, bufSize);
@@ -211,7 +214,7 @@ void Audio::openInput(const QString& inDevDescr)
 
     Core* core = Core::getInstance();
     if (core)
-        core->resetCallSources(); // Force to regen each group call's sources
+        CoreAV::resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
     if (alInDev)
@@ -269,7 +272,7 @@ bool Audio::openOutput(const QString &outDevDescr)
 
     Core* core = Core::getInstance();
     if (core)
-        core->resetCallSources(); // Force to regen each group call's sources
+        CoreAV::resetCallSources(); // Force to regen each group call's sources
 
     return true;
 }
@@ -371,7 +374,7 @@ void Audio::playMono16Sound(const QByteArray& data)
 
 The first and last argument are ignored, but allow direct compatibility with toxcore.
 */
-void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
+void Audio::playGroupAudioQueued(void*,int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
     QMetaObject::invokeMethod(instance, "playGroupAudio", Qt::BlockingQueuedConnection,
@@ -391,7 +394,7 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
     assert(QThread::currentThread() == audioThread);
     QMutexLocker lock(&audioOutLock);
 
-    ToxGroupCall& call = Core::groupCalls[group];
+    ToxGroupCall& call = CoreAV::groupCalls[group];
 
     if (!call.active || call.muteVol)
         return;
@@ -482,7 +485,7 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
     if (samples < framesize)
         return false;
 
-    memset(buf, 0, framesize * 2 * av_DefaultSettings.audio_channels); // Avoid uninitialized values (Valgrind)
+    memset(buf, 0, framesize * 2 * DefaultSettings::audioChannels); // Avoid uninitialized values (Valgrind)
     alcCaptureSamples(Audio::alInDev, buf, framesize);
 
     if (inputVolume != 1)

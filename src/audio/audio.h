@@ -22,6 +22,7 @@
 #define AUDIO_H
 
 #include <QObject>
+#include <QHash>
 #include <QMutexLocker>
 #include <atomic>
 #include <cmath>
@@ -34,7 +35,11 @@
  #include <AL/alc.h>
 #endif
 
+class QString;
+class QByteArray;
 class QTimer;
+class QThread;
+class QMutex;
 struct Tox;
 class AudioFilterer;
 
@@ -64,7 +69,7 @@ public:
     void playMono16Sound(const QByteArray& data);
     bool tryCaptureSamples(uint8_t* buf, int framesize);
 
-    static void playGroupAudioQueued(Tox*, int group, int peer, const int16_t* data,
+    static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
 #ifdef QTOX_FILTER_AUDIO
@@ -102,6 +107,12 @@ private:
     ALuint              alMainSource;
     ALCcontext*         alContext;
     QTimer*             timer;
+
+    struct DefaultSettings {
+        static constexpr int sampleRate = 48000;
+        static constexpr int frameDuration = 20;
+        static constexpr int audioChannels = 1;
+    };
 };
 
 #endif // AUDIO_H
