@@ -39,34 +39,6 @@
 
 #include <QDebug>
 
-/*class ContentFriendList : public QScrollArea
-{
-public:
-    ContentFriendList(QWidget* parent = 0) : QScrollArea(parent)
-    {
-        setAcceptDrops(true);
-    }
-
-protected:
-
-    void dragEnterEvent(QDragEnterEvent* event) final override
-    {
-        qDebug() << "h";
-        if (event->mimeData()->hasFormat("friend"))
-            event->acceptProposedAction();
-        QScrollArea::dragEnterEvent(event);
-    }
-
-    void dropEvent(QDropEvent *event) final override
-    {
-        if (event->mimeData()->hasFormat("friend"))
-        {
-            int friendId = ev->mimeData()->data("friend").toInt();
-            //Core::getInstance()->groupInviteFriend(friendId, groupId);
-        }
-    }
-};*/
-
 ContentDialog* ContentDialog::currentDialog = nullptr;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::groupList;
