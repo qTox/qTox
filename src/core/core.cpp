@@ -127,8 +127,6 @@ Core::~Core()
         if (!call.active)
             continue;
         hangupCall(call.callId);
-        if (call.camera)
-            delete call.camera;
     }
 
     deadifyTox();

@@ -25,6 +25,7 @@ extern "C" {
 #include <libswscale/swscale.h>
 }
 #include "videoframe.h"
+#include "camerasource.h"
 
 VideoFrame::VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void()> freelistCallback)
     : freelistCallback{freelistCallback},
@@ -106,7 +107,7 @@ bool VideoFrame::convertToRGB24(QSize size)
     }
     else
     {
-        qCritical() << "None of the frames are valid! Did someone release us?";
+        qWarning() << "None of the frames are valid! Did someone release us?";
         return false;
     }
 

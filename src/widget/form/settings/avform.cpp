@@ -42,7 +42,7 @@
 
 AVForm::AVForm() :
     GenericForm(QPixmap(":/img/settings/av.png")),
-    camVideoSurface{nullptr}, camera{nullptr}
+    camVideoSurface{nullptr}, camera{CameraSource::getInstance()}
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
@@ -76,11 +76,6 @@ AVForm::~AVForm()
 {
     Translator::unregister(this);
     delete bodyUI;
-    if (camera)
-    {
-        delete camera;
-        camera = nullptr;
-    }
 }
 
 void AVForm::showEvent(QShowEvent*)
@@ -107,11 +102,7 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
     Settings::getInstance().setCamVideoRes(QSize(mode.width, mode.height));
-    camVideoSurface->setSource(nullptr);
-    if (camera)
-        delete camera;
-    camera = new CameraSource(devName, mode);
-    camVideoSurface->setSource(camera);
+    camera.open(devName, mode);
 }
 
 void AVForm::updateVideoModes(int curIndex)
@@ -128,7 +119,7 @@ void AVForm::updateVideoModes(int curIndex)
             {return a.width!=b.width ? a.width>b.width :
                     a.height!=b.height ? a.height>b.height :
                     a.FPS>b.FPS;});
-    bodyUI->videoModescomboBox->blockSignals(true);
+    bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     bodyUI->videoModescomboBox->clear();
     int prefResIndex = -1;
     QSize prefRes = Settings::getInstance().getCamVideoRes();
@@ -148,7 +139,7 @@ void AVForm::updateVideoModes(int curIndex)
     }
     if (videoModes.isEmpty())
         bodyUI->videoModescomboBox->addItem(tr("Default resolution"));
-    bodyUI->videoModescomboBox->blockSignals(false);
+    bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
     if (prefResIndex != -1)
     {
         bodyUI->videoModescomboBox->setCurrentIndex(prefResIndex);
@@ -197,17 +188,12 @@ void AVForm::onVideoDevChanged(int index)
         qWarning() << "Invalid index";
         return;
     }
-    camVideoSurface->setSource(nullptr);
-    if (camera)
-    {
-        delete camera;
-        camera = nullptr;
-    }
     QString dev = videoDeviceList[index].first;
     Settings::getInstance().setVideoDev(dev);
+    bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     updateVideoModes(index);
-    camera = new CameraSource(dev);
-    camVideoSurface->setSource(camera);
+    bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
+    camera.open(dev);
 }
 
 void AVForm::onResProbingFinished(QList<QSize> res)
@@ -240,11 +226,6 @@ void AVForm::hideEvent(QHideEvent *)
         camVideoSurface->setSource(nullptr);
         killVideoSurface();
     }
-    if (camera)
-    {
-        delete camera;
-        camera = nullptr;
-    }
     videoDeviceList.clear();
 }
 
@@ -264,8 +245,8 @@ void AVForm::getVideoDevices()
     }
     //addItem changes currentIndex -> reset
     bodyUI->videoDevCombobox->setCurrentIndex(-1);
-    bodyUI->videoDevCombobox->blockSignals(false);
     bodyUI->videoDevCombobox->setCurrentIndex(videoDevIndex);
+    bodyUI->videoDevCombobox->blockSignals(false);
     updateVideoModes(videoDevIndex);
 }
 
@@ -382,6 +363,7 @@ void AVForm::createVideoSurface()
     camVideoSurface = new VideoSurface(bodyUI->CamFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
+    camVideoSurface->setSource(&camera);
     bodyUI->gridLayout->addWidget(camVideoSurface, 0, 0, 1, 1);
 }
 
