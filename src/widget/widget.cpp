@@ -537,7 +537,6 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
         for (QWindow* window : windowList)
         {
-            qDebug() << window->objectName();
             if (window->objectName() == "detachedWindow")
                 window->close();
         }
@@ -957,7 +956,7 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
     widget->resetEventFlags();
     widget->updateStatusLight();
 
-    if (widget->chatFormIsSet(true))
+    if (widget->chatFormIsSet(true) && !group)
         return;
 
     if (Settings::getInstance().getSeparateWindow() || group)
@@ -1021,6 +1020,9 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
 
 void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 {
+    if (!ContentDialog::getFriendDialog(frnd->getFriendID()) && !Settings::getInstance().getSeparateWindow() && activeChatroomWidget == frnd->getFriendWidget())
+        onAddClicked();
+
     FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendID(), frnd->getDisplayedName());
 
     friendWidget->setStatusMsg(frnd->getFriendWidget()->getStatusMsg());
