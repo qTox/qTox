@@ -21,13 +21,48 @@
 ##Linux
 ###Simple install
 Easy qTox install is provided for variety of distributions:
-https://wiki.tox.im/Binaries#Apt.2FAptitude_.28Debian.2C_Ubuntu.2C_Mint.2C_etc..29
 
-If your distribution is not listed, or you want/need to compile qTox, there are provided instructions.
+* [Arch](#arch)
+* [Debian, Mint, Ubuntu, etc](#debian)
+* [Gentoo](#gentoo)
+
+
+#### Arch
 
 **Please note that installing toxcore/qTox from AUR is not supported**, although installing other dependencies, provided that they met requirements, should be fine, unless you are installing cryptography library from AUR, which should rise red flags by itself…
 
 That being said, there are supported PKGBUILDs at https://github.com/Tox/arch-repo-tox
+
+
+<a name="debian" />
+#### Debian, Mint, Ubuntu, etc
+
+Use this script to add repository:
+```bash
+sudo sh -c 'echo "deb https://pkg.tox.chat/ nightly main" > /etc/apt/sources.list.d/tox.list'
+wget -qO - https://pkg.tox.chat/pubkey.gpg | sudo apt-key add -
+sudo apt-get install apt-transport-https
+sudo apt-get update -qq
+echo "qTox Repository Installed."
+```
+
+
+#### Gentoo
+
+qTox ebuild is available in ``tox-overlay``. To add it and install qTox you will need to have installed ``layman``:
+```bash
+emerge layman
+```
+
+After that, add overlay and install qTox:
+```bash
+layman -f
+layman -a tox-overlay
+emerge qtox
+```
+
+If your distribution is not listed, or you want/need to compile qTox, there are provided instructions.
+
 
 ----
 

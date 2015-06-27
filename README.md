@@ -12,7 +12,7 @@ qTox
   - [**32 bit download** (for older hardware)](https://tux3-dev.tox.im/jenkins/job/qTox-win32-nsis/lastSuccessfulBuild/artifact/setup-qtox32.exe)
 * **Linux**:
   - [**binary**](#) - Currently unmaintained
-  - [**packages**](#) - Currently unmaintained
+  - [**packages**](/INSTALL.md#simple-install)
   - [**Gentoo overlay**](https://github.com/Tox/gentoo-overlay-tox)
 * **Mac**: [**download**](#) - Currently unmaintained<br/>
 
