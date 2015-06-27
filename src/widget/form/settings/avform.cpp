@@ -42,7 +42,7 @@
 
 AVForm::AVForm() :
     GenericForm(QPixmap(":/img/settings/av.png")),
-    camVideoSurface{nullptr}, camera{CameraSource::getInstance()}
+    camVideoSurface{nullptr}, camera(CameraSource::getInstance())
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
