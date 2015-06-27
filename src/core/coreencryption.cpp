@@ -38,40 +38,29 @@
 #include <algorithm>
 #include <cassert>
 
-TOX_PASS_KEY* Core::encryptionKey = nullptr;
-
-void Core::setPassword(const QString& password, uint8_t* salt)
+std::unique_ptr<TOX_PASS_KEY> Core::createPasskey(const QString& password, uint8_t* salt)
 {
-    clearPassword();
-    if (password.isEmpty())
-        return;
-
-    encryptionKey = new TOX_PASS_KEY;
+    std::unique_ptr<TOX_PASS_KEY> encryptionKey(new TOX_PASS_KEY);
 
     CString str(password);
     if (salt)
-        tox_derive_key_with_salt(str.data(), str.size(), salt, encryptionKey, nullptr);
+        tox_derive_key_with_salt(str.data(), str.size(), salt, encryptionKey.get(), nullptr);
     else
-        tox_derive_key_from_pass(str.data(), str.size(), encryptionKey, nullptr);
+        tox_derive_key_from_pass(str.data(), str.size(), encryptionKey.get(), nullptr);
+
+    return encryptionKey;
 }
 
-void Core::clearPassword()
+QByteArray Core::encryptData(const QByteArray &data)
 {
-    delete encryptionKey;
-    encryptionKey = nullptr;
+    return encryptData(data, Nexus::getProfile()->getPasskey());
 }
 
-QByteArray Core::encryptData(const QByteArray& data)
+QByteArray Core::encryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey)
 {
-    if (!encryptionKey)
-    {
-        qWarning() << "No encryption key set";
-        return QByteArray();
-    }
-
     uint8_t encrypted[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
     if (!tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                            encryptionKey, encrypted, nullptr))
+                            &encryptionKey, encrypted, nullptr))
     {
         qWarning() << "Encryption failed";
         return QByteArray();
@@ -79,28 +68,22 @@ QByteArray Core::encryptData(const QByteArray& data)
     return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
 }
 
-QByteArray Core::decryptData(const QByteArray& data)
+QByteArray Core::decryptData(const QByteArray &data)
 {
-    if (!encryptionKey)
-    {
-        qWarning() << "No encryption key set";
-        return QByteArray();
-    }
+    return decryptData(data, Nexus::getProfile()->getPasskey());
+}
 
+QByteArray Core::decryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey)
+{
     int sz = data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
     uint8_t decrypted[sz];
     if (!tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                              encryptionKey, decrypted, nullptr))
+                              &encryptionKey, decrypted, nullptr))
     {
         qWarning() << "Decryption failed";
         return QByteArray();
     }
     return QByteArray(reinterpret_cast<char*>(decrypted), sz);
-}
-
-bool Core::isPasswordSet()
-{
-    return static_cast<bool>(encryptionKey);
 }
 
 QByteArray Core::getSaltFromFile(QString filename)
@@ -139,7 +122,7 @@ void Core::checkEncryptedHistory()
         return;
     }
 
-    setPassword(Nexus::getProfile()->getPassword(), reinterpret_cast<uint8_t*>(salt.data()));
+    auto passkey = createPasskey(Nexus::getProfile()->getPassword(), reinterpret_cast<uint8_t*>(salt.data()));
 
     QString a(tr("Please enter the password for the chat history for the profile \"%1\".", "used in load() when no hist pw set").arg(Nexus::getProfile()->getName()));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
@@ -147,7 +130,7 @@ void Core::checkEncryptedHistory()
     QString dialogtxt;
 
 
-    if (!exists || HistoryKeeper::checkPassword())
+    if (!exists || HistoryKeeper::checkPassword(*passkey))
         return;
 
     dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
@@ -160,17 +143,16 @@ void Core::checkEncryptedHistory()
 
         if (pw.isEmpty())
         {
-            clearPassword();
             Settings::getInstance().setEnableLogging(false);
             HistoryKeeper::resetInstance();
             return;
         }
         else
         {
-            setPassword(pw, reinterpret_cast<uint8_t*>(salt.data()));
+            passkey = createPasskey(pw, reinterpret_cast<uint8_t*>(salt.data()));
         }
 
-        error = exists && !HistoryKeeper::checkPassword();
+        error = exists && !HistoryKeeper::checkPassword(*passkey);
         dialogtxt = a + "\n" + c + "\n" + b;
     } while (error);
 }

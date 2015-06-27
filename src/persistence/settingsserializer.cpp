@@ -287,8 +287,8 @@ void SettingsSerializer::save()
     if (!password.isEmpty())
     {
         Core* core = Nexus::getCore();
-        core->setPassword(password);
-        data = core->encryptData(data);
+        auto passkey = core->createPasskey(password);
+        data = core->encryptData(data, *passkey);
     }
 
     f.write(data);
@@ -319,11 +319,14 @@ void SettingsSerializer::readSerialized()
 
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-        core->setPassword(password, salt);
+        auto passkey = core->createPasskey(password, salt);
 
-        data = core->decryptData(data);
+        data = core->decryptData(data, *passkey);
         if (data.isEmpty())
+        {
             qCritical() << "Failed to decrypt the settings file";
+            return;
+        }
     }
     else
     {

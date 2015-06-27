@@ -73,13 +73,13 @@ HistoryKeeper *HistoryKeeper::getInstance()
     return historyInstance;
 }
 
-bool HistoryKeeper::checkPassword(int encrypted)
+bool HistoryKeeper::checkPassword(const TOX_PASS_KEY &passkey, int encrypted)
 {
     if (!Settings::getInstance().getEnableLogging() && (encrypted == -1))
         return true;
 
     if ((encrypted == 1) || (encrypted == -1 && Nexus::getProfile()->isEncrypted()))
-        return EncryptedDb::check(getHistoryPath(Nexus::getProfile()->getName(), encrypted));
+        return EncryptedDb::check(passkey, getHistoryPath(Nexus::getProfile()->getName(), encrypted));
 
     return true;
 }

@@ -81,10 +81,15 @@ public:
     ToxId getSelfId() const; ///< Returns our Tox ID
     QPair<QByteArray, QByteArray> getKeypair() const; ///< Returns our public and private keys
 
+    static std::unique_ptr<TOX_PASS_KEY> createPasskey(const QString &password, uint8_t* salt = nullptr);
+    static QByteArray encryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey);
+    static QByteArray encryptData(const QByteArray& data); ///< Uses the default profile's key
+    static QByteArray decryptData(const QByteArray& data, const TOX_PASS_KEY &encryptionKey);
+    static QByteArray decryptData(const QByteArray& data); ///< Uses the default profile's key
+
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
 
     static bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
-    bool isPasswordSet();
     bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
 
     void resetCallSources(); ///< Forces to regenerate each call's audio sources
@@ -147,11 +152,6 @@ public slots:
     static void enableGroupCallVol(int groupId);
     static bool isGroupCallMicEnabled(int groupId);
     static bool isGroupCallVolEnabled(int groupId);
-
-    void setPassword(const QString &password, uint8_t* salt = nullptr);
-    void clearPassword();
-    QByteArray encryptData(const QByteArray& data);
-    QByteArray decryptData(const QByteArray& data);
 
 signals:
     void connected();
@@ -302,8 +302,6 @@ private:
     static QHash<int, ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
     QMutex messageSendMutex;
     bool ready;
-
-    static TOX_PASS_KEY* encryptionKey; // use the pw's hash as the "pw"
 
     static const int videobufsize;
     static uint8_t* videobuf;

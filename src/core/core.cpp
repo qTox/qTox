@@ -67,7 +67,6 @@ Core::Core(QThread *CoreThread, Profile& profile) :
     Audio::getInstance();
 
     videobuf = nullptr;
-    encryptionKey = nullptr;
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
