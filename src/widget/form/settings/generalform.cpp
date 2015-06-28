@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ui_generalsettings.h"
+#include "ui_generalform.h"
 #include "generalform.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/widget.h"
@@ -43,12 +43,11 @@ static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
 static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
-GeneralForm::GeneralForm(SettingsWidget *myParent) :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+GeneralForm::GeneralForm(SettingsWidget *myParent) : GenericForm(QPixmap(":/img/settings/general.png"))
 {
     parent = myParent;
 
-    bodyUI = new Ui::GeneralSettings;
+    bodyUI = new Ui::GeneralForm;
     bodyUI->setupUi(this);
 
     bodyUI->themeLabel->hide();

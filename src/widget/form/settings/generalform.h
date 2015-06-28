@@ -23,7 +23,7 @@
 #include "genericsettings.h"
 
 namespace Ui {
-class GeneralSettings;
+class GeneralForm;
 }
 
 class SettingsWidget;
@@ -75,7 +75,7 @@ private:
     void retranslateUi();
 
 private:
-    Ui::GeneralSettings *bodyUI;
+    Ui::GeneralForm *bodyUI;
     void reloadSmiles();
     SettingsWidget *parent;
 

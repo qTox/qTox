@@ -22,8 +22,7 @@
 #include "aboutform.h"
 #include "src/widget/translator.h"
 
-AboutForm::AboutForm(SettingsWidget *parent) :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+AboutForm::AboutForm(SettingsWidget *parent) : GenericForm(QPixmap(":/img/settings/general.png"))
 {
     bodyUI = new Ui::AboutSettings;
     bodyUI->setupUi(this);
