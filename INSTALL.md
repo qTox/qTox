@@ -25,6 +25,7 @@ Easy qTox install is provided for variety of distributions:
 * [Arch](#arch)
 * [Debian, Mint, Ubuntu, etc](#debian)
 * [Gentoo](#gentoo)
+* [Slackware](#slackware)
 
 
 #### Arch
@@ -60,6 +61,15 @@ layman -f
 layman -a tox-overlay
 emerge qtox
 ```
+
+
+#### Slackware
+
+qTox SlackBuild and all of its dependencies can be found here:
+```bash
+http://slackbuilds.org/repository/14.1/network/qTox/
+```
+
 
 If your distribution is not listed, or you want/need to compile qTox, there are provided instructions.
 
@@ -133,12 +143,10 @@ sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel lib
 ```
 
 Slackware:
-```bash
-You can grab SlackBuilds of the needed dependencies here:
 
-http://slackbuilds.org/repository/14.1/libraries/OpenAL/
-http://slackbuilds.org/repository/14.1/libraries/qt5/
-http://slackbuilds.org/repository/14.1/graphics/qrencode/
+List of all the ``qTox`` dependencies and their SlackBuilds can be found here:
+```bash
+http://slackbuilds.org/repository/14.1/network/qTox/
 ```
 
 ###Tox Core
@@ -166,12 +174,10 @@ sudo zypper install libsodium-devel libvpx-devel libopus-devel patterns-openSUSE
 ```
 
 Slackware:
-```bash
-You can grab SlackBuilds of the needed dependencies here:
 
-http://slackbuilds.org/repository/14.1/audio/opus/
-http://slackbuilds.org/repository/14.1/libraries/libvpx/
-http://slackbuilds.org/repository/14.1/libraries/libsodium/
+List of all the ``toxcore`` dependencies and their SlackBuilds can be found here:
+```bash
+http://slackbuilds.org/repository/14.1/network/toxcore/
 ```
 
 Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
