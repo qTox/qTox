@@ -177,8 +177,6 @@ void AVForm::updateVideoModes(int curIndex)
             }
         }
     }
-
-
 }
 
 void AVForm::onVideoDevChanged(int index)
@@ -248,6 +246,9 @@ void AVForm::getVideoDevices()
     bodyUI->videoDevCombobox->setCurrentIndex(videoDevIndex);
     bodyUI->videoDevCombobox->blockSignals(false);
     updateVideoModes(videoDevIndex);
+
+    QString devName = videoDeviceList[videoDevIndex].first;
+    camera.open(devName);
 }
 
 void AVForm::getAudioInDevices()
