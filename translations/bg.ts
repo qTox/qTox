@@ -4,8 +4,9 @@
 <context>
     <name>AVForm</name>
     <message>
+        <location filename="../src/widget/form/settings/avform.h" line="43"/>
         <source>Audio/Video</source>
-        <translation type="vanished">Аудио/Видео</translation>
+        <translation>Аудио/Видео</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="140"/>
@@ -133,6 +134,14 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Contrast</source>
         <translation type="vanished">Контраст</translation>
+    </message>
+</context>
+<context>
+    <name>AboutForm</name>
+    <message>
+        <location filename="../src/widget/form/settings/aboutform.h" line="38"/>
+        <source>About</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -307,6 +316,11 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
         <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/advancedform.h" line="39"/>
+        <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1129,236 +1143,20 @@ Do you want to try another password?</source>
 <context>
     <name>GeneralForm</name>
     <message>
+        <location filename="../src/widget/form/settings/generalform.h" line="37"/>
         <source>General</source>
-        <translation type="vanished">Общи</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="101"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="106"/>
-        <source>None</source>
-        <translation>Никой</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="309"/>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Изберете папка за автоматично приемане</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="367"/>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Обадете се активно</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="368"/>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Вие не можете да излезнете, докато повикването е активно!</translation>
-    </message>
-</context>
-<context>
-    <name>GeneralSettings</name>
-    <message>
-        <source>Form</source>
-        <translation type="obsolete">Форма</translation>
+        <translation>Общи</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="56"/>
         <source>General Settings</source>
-        <translation>Общи настройки</translation>
+        <translation type="unfinished">Общи настройки</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="64"/>
         <location filename="../src/widget/form/settings/generalform.ui" line="80"/>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Преводът няма да се промени, докато не рестартирате qTox</translation>
-    </message>
-    <message>
-        <source>Translation:</source>
-        <translation type="obsolete">Превод/Език:</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="165"/>
-        <source>Close to tray</source>
-        <translation>Минимизиране</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="182"/>
-        <source>Minimize to tray</source>
-        <translation>Минимизиране</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="228"/>
-        <source>Set to 0 to disable</source>
-        <translation>Посочете 0, за да забраните</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="295"/>
-        <source>Default directory to save files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="334"/>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="337"/>
-        <source>Play sound</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="389"/>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="392"/>
-        <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="399"/>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="429"/>
-        <source>Use emoticons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="447"/>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Комплект от емотикони:</translation>
-    </message>
-    <message>
-        <source>:)</source>
-        <translation type="obsolete">:)</translation>
-    </message>
-    <message>
-        <source>;)</source>
-        <translation type="obsolete">;)</translation>
-    </message>
-    <message>
-        <source>:p</source>
-        <translation type="obsolete">:p</translation>
-    </message>
-    <message>
-        <source>:O</source>
-        <translation type="obsolete">:O</translation>
-    </message>
-    <message>
-        <source>:&apos;(</source>
-        <translation type="obsolete">:&apos;(</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="581"/>
-        <source>Style:</source>
-        <translation>Стил:</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="625"/>
-        <source>Timestamp format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="657"/>
-        <source>Connection Settings</source>
-        <translation>Настройки за връзка</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="671"/>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="681"/>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Активиране на IPv6 (Препоръчително)</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="674"/>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Активиране на UDP (Препоръчително)</translation>
-    </message>
-    <message>
-        <source>Use proxy (SOCKS5)</source>
-        <translation type="obsolete">Използвайте прокси (SOCKS5)</translation>
-    </message>
-    <message>
-        <source>Address</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation type="obsolete">Адрес</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="732"/>
-        <source>Port</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>Порт</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="746"/>
-        <source>None</source>
-        <translation type="unfinished">Никой</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="751"/>
-        <source>SOCKS5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="756"/>
-        <source>HTTP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="781"/>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Свържете се отново</translation>
-    </message>
-    <message>
-        <source>Save settings to the working directory instead of the usual conf dir</source>
-        <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation type="obsolete">Запазване на настройките в работната директория вместо настройките на директорията по подразбиране</translation>
-    </message>
-    <message>
-        <source>Make Tox portable</source>
-        <translation type="obsolete">Направете Tox преносим</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="148"/>
-        <source>Start in tray</source>
-        <translation>Започнете в тава</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="372"/>
-        <source>Show contacts&apos; status changes</source>
-        <translation>Промени в статуса. Показване на контактите</translation>
-    </message>
-    <message>
-        <source>Provided in minutes</source>
-        <translation type="obsolete">Предлага се в минути</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="215"/>
-        <source>Auto away after (0 to disable):</source>
-        <translation>Направи ме афроматично &quot;Отсъстваш&quot; след (0 за деактивиране):</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="234"/>
-        <source> minutes</source>
-        <translation>Минути</translation>
+        <translation type="unfinished">Преводът няма да се промени, докато не рестартирате qTox</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="67"/>
@@ -1393,6 +1191,11 @@ will be sent to them when they appear online to you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="148"/>
+        <source>Start in tray</source>
+        <translation type="unfinished">Започнете в тава</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="161"/>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
@@ -1400,11 +1203,41 @@ instead of closing itself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="165"/>
+        <source>Close to tray</source>
+        <translation type="unfinished">Минимизиране</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="178"/>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="182"/>
+        <source>Minimize to tray</source>
+        <translation type="unfinished">Минимизиране</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="209"/>
+        <source>Your status is changed to Away after set period of inactivity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="215"/>
+        <source>Auto away after (0 to disable):</source>
+        <translation type="unfinished">Направи ме афроматично &quot;Отсъстваш&quot; след (0 за деактивиране):</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="228"/>
+        <source>Set to 0 to disable</source>
+        <translation type="unfinished">Посочете 0, за да забраните</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="234"/>
+        <source> minutes</source>
+        <translation type="unfinished">Минути</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="258"/>
@@ -1427,6 +1260,11 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="295"/>
+        <source>Default directory to save files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="302"/>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
@@ -1438,29 +1276,35 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="209"/>
-        <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="317"/>
         <source>Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="379"/>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="382"/>
-        <source>Group chats always notify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="328"/>
         <source>On new message:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="334"/>
+        <source>Play a sound when you recieve message.</source>
+        <comment>toolTip for Notify sound setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="337"/>
+        <source>Play sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="344"/>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="347"/>
+        <source>Focus window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1475,14 +1319,37 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="344"/>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
+        <location filename="../src/widget/form/settings/generalform.ui" line="372"/>
+        <source>Show contacts&apos; status changes</source>
+        <translation type="unfinished">Промени в статуса. Показване на контактите</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="379"/>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="347"/>
-        <source>Focus window</source>
+        <location filename="../src/widget/form/settings/generalform.ui" line="382"/>
+        <source>Group chats always notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="389"/>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="392"/>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="399"/>
+        <source>Messages you are trying to send to your friends when they are not online
+will be sent to them when they appear online to you.</source>
+        <comment>toolTip for Faux offline messaging setting</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1504,7 +1371,18 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="423"/>
         <source>Theme</source>
-        <translation>Тема</translation>
+        <translation type="unfinished">Тема</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="429"/>
+        <source>Use emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="447"/>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Комплект от емотикони:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="549"/>
@@ -1517,6 +1395,11 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="581"/>
+        <source>Style:</source>
+        <translation type="unfinished">Стил:</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="598"/>
         <source>Contacts theme:</source>
         <translation type="unfinished"></translation>
@@ -1527,9 +1410,37 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="625"/>
+        <source>Timestamp format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="642"/>
         <source>Date format:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="657"/>
+        <source>Connection Settings</source>
+        <translation type="unfinished">Настройки за връзка</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="671"/>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="674"/>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">Активиране на UDP (Препоръчително)</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="681"/>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">Активиране на IPv6 (Препоръчително)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="715"/>
@@ -1541,6 +1452,183 @@ instead of system taskbar.</source>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="732"/>
+        <source>Port</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished">Порт</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="746"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="100"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="105"/>
+        <source>None</source>
+        <translation>Никой</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="751"/>
+        <source>SOCKS5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="756"/>
+        <source>HTTP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="781"/>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">Свържете се отново</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="308"/>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Изберете папка за автоматично приемане</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="366"/>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation>Обадете се активно</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="367"/>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation>Вие не можете да излезнете, докато повикването е активно!</translation>
+    </message>
+</context>
+<context>
+    <name>GeneralSettings</name>
+    <message>
+        <source>Form</source>
+        <translation type="obsolete">Форма</translation>
+    </message>
+    <message>
+        <source>General Settings</source>
+        <translation type="vanished">Общи настройки</translation>
+    </message>
+    <message>
+        <source>The translation may not load until qTox restarts.</source>
+        <translation type="vanished">Преводът няма да се промени, докато не рестартирате qTox</translation>
+    </message>
+    <message>
+        <source>Translation:</source>
+        <translation type="obsolete">Превод/Език:</translation>
+    </message>
+    <message>
+        <source>Close to tray</source>
+        <translation type="vanished">Минимизиране</translation>
+    </message>
+    <message>
+        <source>Minimize to tray</source>
+        <translation type="vanished">Минимизиране</translation>
+    </message>
+    <message>
+        <source>Set to 0 to disable</source>
+        <translation type="vanished">Посочете 0, за да забраните</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="vanished">Комплект от емотикони:</translation>
+    </message>
+    <message>
+        <source>:)</source>
+        <translation type="obsolete">:)</translation>
+    </message>
+    <message>
+        <source>;)</source>
+        <translation type="obsolete">;)</translation>
+    </message>
+    <message>
+        <source>:p</source>
+        <translation type="obsolete">:p</translation>
+    </message>
+    <message>
+        <source>:O</source>
+        <translation type="obsolete">:O</translation>
+    </message>
+    <message>
+        <source>:&apos;(</source>
+        <translation type="obsolete">:&apos;(</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="vanished">Стил:</translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="vanished">Настройки за връзка</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="vanished">Активиране на IPv6 (Препоръчително)</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="vanished">Активиране на UDP (Препоръчително)</translation>
+    </message>
+    <message>
+        <source>Use proxy (SOCKS5)</source>
+        <translation type="obsolete">Използвайте прокси (SOCKS5)</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="obsolete">Адрес</translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="vanished">Порт</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">Никой</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="vanished">Свържете се отново</translation>
+    </message>
+    <message>
+        <source>Save settings to the working directory instead of the usual conf dir</source>
+        <extracomment>describes makeToxPortable checkbox</extracomment>
+        <translation type="obsolete">Запазване на настройките в работната директория вместо настройките на директорията по подразбиране</translation>
+    </message>
+    <message>
+        <source>Make Tox portable</source>
+        <translation type="obsolete">Направете Tox преносим</translation>
+    </message>
+    <message>
+        <source>Start in tray</source>
+        <translation type="vanished">Започнете в тава</translation>
+    </message>
+    <message>
+        <source>Show contacts&apos; status changes</source>
+        <translation type="vanished">Промени в статуса. Показване на контактите</translation>
+    </message>
+    <message>
+        <source>Provided in minutes</source>
+        <translation type="obsolete">Предлага се в минути</translation>
+    </message>
+    <message>
+        <source>Auto away after (0 to disable):</source>
+        <translation type="vanished">Направи ме афроматично &quot;Отсъстваш&quot; след (0 за деактивиране):</translation>
+    </message>
+    <message>
+        <source> minutes</source>
+        <translation type="vanished">Минути</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="vanished">Тема</translation>
     </message>
     <message>
         <source>Disable UDP (not recommended)</source>
@@ -2165,8 +2253,9 @@ If you encountered this error, please report it.</source>
 <context>
     <name>PrivacyForm</name>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.h" line="36"/>
         <source>Privacy</source>
-        <translation type="vanished">Уединение</translation>
+        <translation>Уединение</translation>
     </message>
     <message>
         <source>Encrypted log</source>
@@ -2256,153 +2345,153 @@ Save format changes are possible, which may result in data loss.</source>
 <context>
     <name>ProfileForm</name>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="195"/>
+        <location filename="../src/widget/form/profileform.cpp" line="182"/>
         <source>Choose a profile picture</source>
         <translation type="unfinished">Изберете профилна снимка</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="205"/>
-        <location filename="../src/widget/form/profileform.cpp" line="212"/>
-        <location filename="../src/widget/form/profileform.cpp" line="234"/>
+        <location filename="../src/widget/form/profileform.cpp" line="192"/>
+        <location filename="../src/widget/form/profileform.cpp" line="199"/>
+        <location filename="../src/widget/form/profileform.cpp" line="221"/>
         <source>Error</source>
         <translation type="unfinished">Грешка</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="205"/>
+        <location filename="../src/widget/form/profileform.cpp" line="192"/>
         <source>Unable to open this file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="212"/>
+        <location filename="../src/widget/form/profileform.cpp" line="199"/>
         <source>Unable to read this image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="235"/>
+        <location filename="../src/widget/form/profileform.cpp" line="222"/>
         <source>The supplied image is too large.
 Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="246"/>
+        <location filename="../src/widget/form/profileform.cpp" line="233"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
         <translation type="unfinished">Преименуване на «%1»</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="254"/>
+        <location filename="../src/widget/form/profileform.cpp" line="241"/>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
         <translation type="unfinished">Този профил вече съществува</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="255"/>
+        <location filename="../src/widget/form/profileform.cpp" line="242"/>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="257"/>
+        <location filename="../src/widget/form/profileform.cpp" line="244"/>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="258"/>
+        <location filename="../src/widget/form/profileform.cpp" line="245"/>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="267"/>
+        <location filename="../src/widget/form/profileform.cpp" line="254"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
         <translation type="unfinished">Износ на профила</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="269"/>
+        <location filename="../src/widget/form/profileform.cpp" line="256"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="274"/>
-        <location filename="../src/widget/form/profileform.cpp" line="315"/>
+        <location filename="../src/widget/form/profileform.cpp" line="261"/>
+        <location filename="../src/widget/form/profileform.cpp" line="302"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation type="unfinished">Текущото местоположение не е за писане</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="274"/>
-        <location filename="../src/widget/form/profileform.cpp" line="315"/>
+        <location filename="../src/widget/form/profileform.cpp" line="261"/>
+        <location filename="../src/widget/form/profileform.cpp" line="302"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation type="unfinished">Вие нямате права да пишете на тази директория. Изберете друга.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="278"/>
-        <location filename="../src/widget/form/profileform.cpp" line="319"/>
+        <location filename="../src/widget/form/profileform.cpp" line="265"/>
+        <location filename="../src/widget/form/profileform.cpp" line="306"/>
         <source>Failed to copy file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="278"/>
-        <location filename="../src/widget/form/profileform.cpp" line="319"/>
+        <location filename="../src/widget/form/profileform.cpp" line="265"/>
+        <location filename="../src/widget/form/profileform.cpp" line="306"/>
         <source>The file you chose could not be written to.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="284"/>
+        <location filename="../src/widget/form/profileform.cpp" line="271"/>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="285"/>
+        <location filename="../src/widget/form/profileform.cpp" line="272"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation type="unfinished">Наистина ли искате да изтриете този профил?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="308"/>
+        <location filename="../src/widget/form/profileform.cpp" line="295"/>
         <source>Save</source>
         <comment>save qr image</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="310"/>
+        <location filename="../src/widget/form/profileform.cpp" line="297"/>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="328"/>
+        <location filename="../src/widget/form/profileform.cpp" line="315"/>
         <source>Nothing to remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="328"/>
+        <location filename="../src/widget/form/profileform.cpp" line="315"/>
         <source>Your profile does not have a password!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="332"/>
+        <location filename="../src/widget/form/profileform.cpp" line="319"/>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="333"/>
+        <location filename="../src/widget/form/profileform.cpp" line="320"/>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="341"/>
+        <location filename="../src/widget/form/profileform.cpp" line="328"/>
         <source>Please enter a new password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="355"/>
+        <location filename="../src/widget/form/profileform.cpp" line="342"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation type="unfinished"></translation>
@@ -2518,7 +2607,7 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="353"/>
+        <location filename="../src/widget/form/profileform.cpp" line="340"/>
         <source>User Profile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2939,29 +3028,16 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
 <context>
     <name>final</name>
     <message>
-        <location filename="../src/widget/form/settings/aboutform.h" line="38"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/advancedform.h" line="39"/>
-        <source>Advanced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avform.h" line="43"/>
         <source>Audio/Video</source>
-        <translation type="unfinished">Аудио/Видео</translation>
+        <translation type="obsolete">Аудио/Видео</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.h" line="37"/>
         <source>General</source>
-        <translation type="unfinished">Общи</translation>
+        <translation type="obsolete">Общи</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.h" line="36"/>
         <source>Privacy</source>
-        <translation type="unfinished">Уединение</translation>
+        <translation type="obsolete">Уединение</translation>
     </message>
 </context>
 </TS>

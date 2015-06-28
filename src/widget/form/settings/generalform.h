@@ -28,7 +28,7 @@ class GeneralForm;
 
 class SettingsWidget;
 
-class GeneralForm final : public GenericForm
+class GeneralForm : public GenericForm
 {
     Q_OBJECT
 public:

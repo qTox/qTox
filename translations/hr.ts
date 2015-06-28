@@ -4,8 +4,9 @@
 <context>
     <name>AVForm</name>
     <message>
+        <location filename="../src/widget/form/settings/avform.h" line="43"/>
         <source>Audio/Video</source>
-        <translation type="vanished">Audio/Video</translation>
+        <translation>Audio/Video</translation>
     </message>
     <message>
         <source>Initializing Camera...</source>
@@ -141,6 +142,14 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
 </context>
 <context>
+    <name>AboutForm</name>
+    <message>
+        <location filename="../src/widget/form/settings/aboutform.h" line="38"/>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="20"/>
@@ -270,8 +279,9 @@ Da ignoriramo proxy i spojimo se na internet direktno?</translation>
 <context>
     <name>AdvancedForm</name>
     <message>
+        <location filename="../src/widget/form/settings/advancedform.h" line="39"/>
         <source>Advanced</source>
-        <translation type="vanished">Napredno</translation>
+        <translation>Napredno</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="38"/>
@@ -1000,129 +1010,198 @@ Alias:</translation>
 <context>
     <name>GeneralForm</name>
     <message>
+        <location filename="../src/widget/form/settings/generalform.h" line="37"/>
         <source>General</source>
-        <translation type="vanished">Opće</translation>
+        <translation>Opće</translation>
     </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="101"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="106"/>
-        <source>None</source>
-        <translation>Nijedan</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="309"/>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Odaberite direktorij za automatsko prihvaćanje</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="367"/>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Poziv je aktivan</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="368"/>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Ne možete se odspojiti dok je poziv aktivan!</translation>
-    </message>
-</context>
-<context>
-    <name>GeneralSettings</name>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="56"/>
         <source>General Settings</source>
-        <translation>Opće postavke</translation>
+        <translation type="unfinished">Opće postavke</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="64"/>
         <location filename="../src/widget/form/settings/generalform.ui" line="80"/>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Prijevod možda neće biti učitan dok ne pokrenete ponovo qTox.</translation>
+        <translation type="unfinished">Prijevod možda neće biti učitan dok ne pokrenete ponovo qTox.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="67"/>
         <source>Language:</source>
-        <translation>Jezik:</translation>
+        <translation type="unfinished">Jezik:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="102"/>
         <source>System tray</source>
-        <translation>Sistemska ladica (System tray)</translation>
+        <translation type="unfinished">Sistemska ladica (System tray)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="122"/>
         <source>Show system tray icon</source>
-        <translation>Prikaži ikonu u sitemskoj ladici</translation>
+        <translation type="unfinished">Prikaži ikonu u sitemskoj ladici</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="129"/>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation>Omogući svijetlu ikonu</translation>
+        <translation type="unfinished">Omogući svijetlu ikonu</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="132"/>
         <source>Light icon</source>
-        <translation>Svijetla ikona</translation>
+        <translation type="unfinished">Svijetla ikona</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="145"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox će se pokrenuti minimiziran u ladici</translation>
+        <translation type="unfinished">qTox će se pokrenuti minimiziran u ladici</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="148"/>
         <source>Start in tray</source>
-        <translation>Pokreni u ladici</translation>
+        <translation type="unfinished">Pokreni u ladici</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="161"/>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Nakon pritiska na &quot;Zatvori&quot; (X), qTox će se minimizirati u ladicu,
+        <translation type="unfinished">Nakon pritiska na &quot;Zatvori&quot; (X), qTox će se minimizirati u ladicu,
 umjesto da se zatvori.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="165"/>
         <source>Close to tray</source>
-        <translation>Zatvori u ladicu</translation>
+        <translation type="unfinished">Zatvori u ladicu</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="178"/>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Nakon pritiskanja na &quot;Minimiziraj&quot; (_), qTox će se minimizirati u ladicu,
+        <translation type="unfinished">Nakon pritiskanja na &quot;Minimiziraj&quot; (_), qTox će se minimizirati u ladicu,
 umjesto u programsku traku.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="182"/>
         <source>Minimize to tray</source>
-        <translation>Minimiziraj u ladicu</translation>
+        <translation type="unfinished">Minimiziraj u ladicu</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="209"/>
+        <source>Your status is changed to Away after set period of inactivity.</source>
+        <translation type="unfinished">Vaš se status mijenja u &quot;Odsutan&quot; nakon postavljenog perioda neaktivnosti.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="215"/>
+        <source>Auto away after (0 to disable):</source>
+        <translation type="unfinished">Automatska odsutnost nakon (0 onemogućava):</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="228"/>
+        <source>Set to 0 to disable</source>
+        <translation type="unfinished">Postavi na 0 za onemogućavanje</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="234"/>
+        <source> minutes</source>
+        <translation type="unfinished"> minuta</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pokreni qTox prilikom pokretanja računala (trenutni profil).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pokreni qTox prilikom pokretanja računala (trenutni profil).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="261"/>
         <source>Autostart</source>
-        <translation>Samopokretanje</translation>
+        <translation type="unfinished">Samopokretanje</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="268"/>
         <source>Check for updates on startup</source>
-        <translation>Prilikom pokretanja provjeri za dopune</translation>
+        <translation type="unfinished">Prilikom pokretanja provjeri za dopune</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="288"/>
         <source>Set where files will be saved.</source>
-        <translation>Postavite gdje će se spremati datoteke.</translation>
+        <translation type="unfinished">Postavite gdje će se spremati datoteke.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="295"/>
+        <source>Default directory to save files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="302"/>
+        <source>You can set this on a per-friend basis by right clicking them.</source>
+        <comment>autoaccept cb tooltip</comment>
+        <translation type="unfinished">Ovo možete postaviti posebno za svakog prijatelja, tako da na njih kliknete desnim klikom.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="305"/>
+        <source>Autoaccept files</source>
+        <translation type="unfinished">Automatski prihvat datoteka</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="317"/>
+        <source>Chat</source>
+        <translation type="unfinished">Razgovor</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="328"/>
+        <source>On new message:</source>
+        <translation type="unfinished">Kod nove poruke:</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="334"/>
+        <source>Play a sound when you recieve message.</source>
+        <comment>toolTip for Notify sound setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="337"/>
+        <source>Play sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="344"/>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">Fokusiraj qTox prilikom primanja poruke.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="347"/>
+        <source>Focus window</source>
+        <translation type="unfinished">Fokusiraj prozor</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="354"/>
+        <source>Show qTox&apos;s window when you receive new message.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished">Prikazivanje qTox prozora kod primanja nove poruke.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="357"/>
+        <source>Show window</source>
+        <translation type="unfinished">Prikaži prozor</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="372"/>
+        <source>Show contacts&apos; status changes</source>
+        <translation type="unfinished">Prikaži promjenu statusa kontakta</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="379"/>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">Uvijek me obavijesti o novim porukama u grupnom razgovoru.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="382"/>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">Grupni razgovor uvijek obavijesti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="389"/>
@@ -1143,6 +1222,53 @@ will be sent to them when they appear online to you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="403"/>
+        <source>Faux offline messaging</source>
+        <translation type="unfinished">Proslijedi offline poruke</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="410"/>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">Vaša lista kontakata bit će prikazana u kompaktnom načinu prikaza.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="413"/>
+        <source>Compact contact list</source>
+        <translation type="unfinished">Kompaktna lista kontakata</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="423"/>
+        <source>Theme</source>
+        <translation type="unfinished">Tema</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="429"/>
+        <source>Use emoticons</source>
+        <translation type="unfinished">Koristi emotikone</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="447"/>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Smješko-paket:</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="549"/>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">Veličina emotikona:</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="565"/>
+        <source> px</source>
+        <translation type="unfinished"> px</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="581"/>
+        <source>Style:</source>
+        <translation type="unfinished">Stil:</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="598"/>
         <source>Contacts theme:</source>
         <translation type="unfinished"></translation>
@@ -1153,166 +1279,9 @@ will be sent to them when they appear online to you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save to:</source>
-        <translation type="vanished">Spremi u:</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="302"/>
-        <source>You can set this on a per-friend basis by right clicking them.</source>
-        <comment>autoaccept cb tooltip</comment>
-        <translation>Ovo možete postaviti posebno za svakog prijatelja, tako da na njih kliknete desnim klikom.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="305"/>
-        <source>Autoaccept files</source>
-        <translation>Automatski prihvat datoteka</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="228"/>
-        <source>Set to 0 to disable</source>
-        <translation>Postavi na 0 za onemogućavanje</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="234"/>
-        <source> minutes</source>
-        <translation> minuta</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="209"/>
-        <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Vaš se status mijenja u &quot;Odsutan&quot; nakon postavljenog perioda neaktivnosti.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="215"/>
-        <source>Auto away after (0 to disable):</source>
-        <translation>Automatska odsutnost nakon (0 onemogućava):</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="295"/>
-        <source>Default directory to save files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="317"/>
-        <source>Chat</source>
-        <translation>Razgovor</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="334"/>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="337"/>
-        <source>Play sound</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="379"/>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Uvijek me obavijesti o novim porukama u grupnom razgovoru.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="382"/>
-        <source>Group chats always notify</source>
-        <translation>Grupni razgovor uvijek obavijesti</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="372"/>
-        <source>Show contacts&apos; status changes</source>
-        <translation>Prikaži promjenu statusa kontakta</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="328"/>
-        <source>On new message:</source>
-        <translation>Kod nove poruke:</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="354"/>
-        <source>Show qTox&apos;s window when you receive new message.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation>Prikazivanje qTox prozora kod primanja nove poruke.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="357"/>
-        <source>Show window</source>
-        <translation>Prikaži prozor</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="344"/>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Fokusiraj qTox prilikom primanja poruke.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="347"/>
-        <source>Focus window</source>
-        <translation>Fokusiraj prozor</translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they will appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="vanished">Poruke koje šaljete prijateljima kada nisu online
-bit će im poslane kada se vama prikažu online.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="403"/>
-        <source>Faux offline messaging</source>
-        <translation>Proslijedi offline poruke</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="410"/>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>Vaša lista kontakata bit će prikazana u kompaktnom načinu prikaza.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="413"/>
-        <source>Compact contact list</source>
-        <translation>Kompaktna lista kontakata</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="423"/>
-        <source>Theme</source>
-        <translation>Tema</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="429"/>
-        <source>Use emoticons</source>
-        <translation>Koristi emotikone</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="447"/>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Smješko-paket:</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="549"/>
-        <source>Emoticon size:</source>
-        <translation>Veličina emotikona:</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="565"/>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="581"/>
-        <source>Style:</source>
-        <translation>Stil:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation type="vanished">Boja teme:</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="625"/>
         <source>Timestamp format:</source>
-        <translation>Format vremenske oznake:</translation>
+        <translation type="unfinished">Format vremenske oznake:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="642"/>
@@ -1322,63 +1291,333 @@ bit će im poslane kada se vama prikažu online.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="657"/>
         <source>Connection Settings</source>
-        <translation>Postavke povezivanja</translation>
+        <translation type="unfinished">Postavke povezivanja</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="671"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Onemogućavanje ovoga dozvoljava npr. toksiranja preko Tora, no oglasi će se i dalje učitavati, tako da ovo isključite samo ako je potrebno.</translation>
+        <translation type="unfinished">Onemogućavanje ovoga dozvoljava npr. toksiranja preko Tora, no oglasi će se i dalje učitavati, tako da ovo isključite samo ako je potrebno.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="674"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Omogući UDP (preporučeno)</translation>
+        <translation type="unfinished">Omogući UDP (preporučeno)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="681"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Omogući IPv6 (preporučeno)</translation>
+        <translation type="unfinished">Omogući IPv6 (preporučeno)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="715"/>
         <source>Proxy type:</source>
-        <translation>Proxy tip:</translation>
+        <translation type="unfinished">Proxy tip:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="722"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation>Adresa:</translation>
+        <translation type="unfinished">Adresa:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="732"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Port</translation>
+        <translation type="unfinished">Port</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="746"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="100"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="105"/>
         <source>None</source>
         <translation>Nijedan</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="751"/>
         <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
+        <translation type="unfinished">SOCKS5</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="756"/>
         <source>HTTP</source>
-        <translation>HTTP</translation>
+        <translation type="unfinished">HTTP</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="781"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Ponovo spajanje</translation>
+        <translation type="unfinished">Ponovo spajanje</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="308"/>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Odaberite direktorij za automatsko prihvaćanje</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="366"/>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation>Poziv je aktivan</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="367"/>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation>Ne možete se odspojiti dok je poziv aktivan!</translation>
+    </message>
+</context>
+<context>
+    <name>GeneralSettings</name>
+    <message>
+        <source>General Settings</source>
+        <translation type="vanished">Opće postavke</translation>
+    </message>
+    <message>
+        <source>The translation may not load until qTox restarts.</source>
+        <translation type="vanished">Prijevod možda neće biti učitan dok ne pokrenete ponovo qTox.</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="vanished">Jezik:</translation>
+    </message>
+    <message>
+        <source>System tray</source>
+        <translation type="vanished">Sistemska ladica (System tray)</translation>
+    </message>
+    <message>
+        <source>Show system tray icon</source>
+        <translation type="vanished">Prikaži ikonu u sitemskoj ladici</translation>
+    </message>
+    <message>
+        <source>Enable light tray icon.</source>
+        <comment>toolTip for light icon setting</comment>
+        <translation type="vanished">Omogući svijetlu ikonu</translation>
+    </message>
+    <message>
+        <source>Light icon</source>
+        <translation type="vanished">Svijetla ikona</translation>
+    </message>
+    <message>
+        <source>qTox will start minimized in tray.</source>
+        <comment>toolTip for Start in tray setting</comment>
+        <translation type="vanished">qTox će se pokrenuti minimiziran u ladici</translation>
+    </message>
+    <message>
+        <source>Start in tray</source>
+        <translation type="vanished">Pokreni u ladici</translation>
+    </message>
+    <message>
+        <source>After pressing close (X) qTox will minimize to tray,
+instead of closing itself.</source>
+        <comment>toolTip for close to tray setting</comment>
+        <translation type="vanished">Nakon pritiska na &quot;Zatvori&quot; (X), qTox će se minimizirati u ladicu,
+umjesto da se zatvori.</translation>
+    </message>
+    <message>
+        <source>Close to tray</source>
+        <translation type="vanished">Zatvori u ladicu</translation>
+    </message>
+    <message>
+        <source>After pressing minimize (_) qTox will minimize itself to tray,
+instead of system taskbar.</source>
+        <comment>toolTip for minimize to tray setting</comment>
+        <translation type="vanished">Nakon pritiskanja na &quot;Minimiziraj&quot; (_), qTox će se minimizirati u ladicu,
+umjesto u programsku traku.</translation>
+    </message>
+    <message>
+        <source>Minimize to tray</source>
+        <translation type="vanished">Minimiziraj u ladicu</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pokreni qTox prilikom pokretanja računala (trenutni profil).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Autostart</source>
+        <translation type="vanished">Samopokretanje</translation>
+    </message>
+    <message>
+        <source>Check for updates on startup</source>
+        <translation type="vanished">Prilikom pokretanja provjeri za dopune</translation>
+    </message>
+    <message>
+        <source>Set where files will be saved.</source>
+        <translation type="vanished">Postavite gdje će se spremati datoteke.</translation>
+    </message>
+    <message>
+        <source>Save to:</source>
+        <translation type="vanished">Spremi u:</translation>
+    </message>
+    <message>
+        <source>You can set this on a per-friend basis by right clicking them.</source>
+        <comment>autoaccept cb tooltip</comment>
+        <translation type="vanished">Ovo možete postaviti posebno za svakog prijatelja, tako da na njih kliknete desnim klikom.</translation>
+    </message>
+    <message>
+        <source>Autoaccept files</source>
+        <translation type="vanished">Automatski prihvat datoteka</translation>
+    </message>
+    <message>
+        <source>Set to 0 to disable</source>
+        <translation type="vanished">Postavi na 0 za onemogućavanje</translation>
+    </message>
+    <message>
+        <source> minutes</source>
+        <translation type="vanished"> minuta</translation>
+    </message>
+    <message>
+        <source>Your status is changed to Away after set period of inactivity.</source>
+        <translation type="vanished">Vaš se status mijenja u &quot;Odsutan&quot; nakon postavljenog perioda neaktivnosti.</translation>
+    </message>
+    <message>
+        <source>Auto away after (0 to disable):</source>
+        <translation type="vanished">Automatska odsutnost nakon (0 onemogućava):</translation>
+    </message>
+    <message>
+        <source>Chat</source>
+        <translation type="vanished">Razgovor</translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="vanished">Uvijek me obavijesti o novim porukama u grupnom razgovoru.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="vanished">Grupni razgovor uvijek obavijesti</translation>
+    </message>
+    <message>
+        <source>Show contacts&apos; status changes</source>
+        <translation type="vanished">Prikaži promjenu statusa kontakta</translation>
+    </message>
+    <message>
+        <source>On new message:</source>
+        <translation type="vanished">Kod nove poruke:</translation>
+    </message>
+    <message>
+        <source>Show qTox&apos;s window when you receive new message.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="vanished">Prikazivanje qTox prozora kod primanja nove poruke.</translation>
+    </message>
+    <message>
+        <source>Show window</source>
+        <translation type="vanished">Prikaži prozor</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="vanished">Fokusiraj qTox prilikom primanja poruke.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="vanished">Fokusiraj prozor</translation>
+    </message>
+    <message>
+        <source>Messages you are trying to send to your friends when they are not online
+will be sent to them when they will appear online to you.</source>
+        <comment>toolTip for Faux offline messaging setting</comment>
+        <translation type="vanished">Poruke koje šaljete prijateljima kada nisu online
+bit će im poslane kada se vama prikažu online.</translation>
+    </message>
+    <message>
+        <source>Faux offline messaging</source>
+        <translation type="vanished">Proslijedi offline poruke</translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="vanished">Vaša lista kontakata bit će prikazana u kompaktnom načinu prikaza.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="vanished">Kompaktna lista kontakata</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="vanished">Tema</translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="vanished">Koristi emotikone</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="vanished">Smješko-paket:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="vanished">Veličina emotikona:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="vanished"> px</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="vanished">Stil:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="vanished">Boja teme:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="vanished">Format vremenske oznake:</translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="vanished">Postavke povezivanja</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="vanished">Onemogućavanje ovoga dozvoljava npr. toksiranja preko Tora, no oglasi će se i dalje učitavati, tako da ovo isključite samo ako je potrebno.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="vanished">Omogući UDP (preporučeno)</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="vanished">Omogući IPv6 (preporučeno)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="vanished">Proxy tip:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="vanished">Adresa:</translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="vanished">Port</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="vanished">Nijedan</translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="vanished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="vanished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="vanished">Ponovo spajanje</translation>
     </message>
 </context>
 <context>
@@ -1895,8 +2134,9 @@ If you encountered this error, please report it.</source>
 <context>
     <name>PrivacyForm</name>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.h" line="36"/>
         <source>Privacy</source>
-        <translation type="vanished">Privatnost</translation>
+        <translation>Privatnost</translation>
     </message>
     <message>
         <source>Please set your new chat history password.</source>
@@ -2081,117 +2321,117 @@ ali novi kontakti moraju znati vaš novi ID da bi vas pronašli.</translation>
         <translation type="vanished">Korisnički profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="195"/>
+        <location filename="../src/widget/form/profileform.cpp" line="182"/>
         <source>Choose a profile picture</source>
         <translation>Odaberi sliku profila</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="205"/>
-        <location filename="../src/widget/form/profileform.cpp" line="212"/>
-        <location filename="../src/widget/form/profileform.cpp" line="234"/>
+        <location filename="../src/widget/form/profileform.cpp" line="192"/>
+        <location filename="../src/widget/form/profileform.cpp" line="199"/>
+        <location filename="../src/widget/form/profileform.cpp" line="221"/>
         <source>Error</source>
         <translation>Pogreška</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="205"/>
+        <location filename="../src/widget/form/profileform.cpp" line="192"/>
         <source>Unable to open this file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="212"/>
+        <location filename="../src/widget/form/profileform.cpp" line="199"/>
         <source>Unable to read this image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="235"/>
+        <location filename="../src/widget/form/profileform.cpp" line="222"/>
         <source>The supplied image is too large.
 Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="254"/>
+        <location filename="../src/widget/form/profileform.cpp" line="241"/>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
         <translation type="unfinished">Profil već postoji</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="255"/>
+        <location filename="../src/widget/form/profileform.cpp" line="242"/>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="257"/>
+        <location filename="../src/widget/form/profileform.cpp" line="244"/>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="258"/>
+        <location filename="../src/widget/form/profileform.cpp" line="245"/>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="274"/>
-        <location filename="../src/widget/form/profileform.cpp" line="315"/>
+        <location filename="../src/widget/form/profileform.cpp" line="261"/>
+        <location filename="../src/widget/form/profileform.cpp" line="302"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation type="unfinished">Na lokaciju nije dozvoljeno pisanje</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="274"/>
-        <location filename="../src/widget/form/profileform.cpp" line="315"/>
+        <location filename="../src/widget/form/profileform.cpp" line="261"/>
+        <location filename="../src/widget/form/profileform.cpp" line="302"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation type="unfinished">Nemate ovlasti za pisanje na tu lokaciju. Odaberite drugu ili otkažite spremanje.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="284"/>
+        <location filename="../src/widget/form/profileform.cpp" line="271"/>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="308"/>
+        <location filename="../src/widget/form/profileform.cpp" line="295"/>
         <source>Save</source>
         <comment>save qr image</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="310"/>
+        <location filename="../src/widget/form/profileform.cpp" line="297"/>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="328"/>
+        <location filename="../src/widget/form/profileform.cpp" line="315"/>
         <source>Nothing to remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="328"/>
+        <location filename="../src/widget/form/profileform.cpp" line="315"/>
         <source>Your profile does not have a password!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="332"/>
+        <location filename="../src/widget/form/profileform.cpp" line="319"/>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="333"/>
+        <location filename="../src/widget/form/profileform.cpp" line="320"/>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="341"/>
+        <location filename="../src/widget/form/profileform.cpp" line="328"/>
         <source>Please enter a new password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="355"/>
+        <location filename="../src/widget/form/profileform.cpp" line="342"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation type="unfinished">Ova gomila znakova govori drugim Tox klijentima kako da vas kontaktiraju.
@@ -2220,7 +2460,7 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
         <translation type="vanished">Ne možete mijenjati profile dok je poziv aktivan!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="246"/>
+        <location filename="../src/widget/form/profileform.cpp" line="233"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
         <translation>Preimenuj &quot;%1&quot;</translation>
@@ -2236,13 +2476,13 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
         <translation type="vanished">Profil imena &quot;%1&quot; već postoji. Želite li ga izbrisati?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="267"/>
+        <location filename="../src/widget/form/profileform.cpp" line="254"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
         <translation>Izvoz profila</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="269"/>
+        <location filename="../src/widget/form/profileform.cpp" line="256"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
         <translation>Tox datoteka (.tox)</translation>
@@ -2256,14 +2496,14 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
         <translation type="vanished">Datoteka koju želite prepisati, nije mogla biti prvo uklonjena.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="278"/>
-        <location filename="../src/widget/form/profileform.cpp" line="319"/>
+        <location filename="../src/widget/form/profileform.cpp" line="265"/>
+        <location filename="../src/widget/form/profileform.cpp" line="306"/>
         <source>Failed to copy file</source>
         <translation>Neuspješno kopiranje datoteke</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="278"/>
-        <location filename="../src/widget/form/profileform.cpp" line="319"/>
+        <location filename="../src/widget/form/profileform.cpp" line="265"/>
+        <location filename="../src/widget/form/profileform.cpp" line="306"/>
         <source>The file you chose could not be written to.</source>
         <translation>U odabranu datoteku se ne može pisati.</translation>
     </message>
@@ -2283,7 +2523,7 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
         <translation type="vanished">Brisanje je neizbježno!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="285"/>
+        <location filename="../src/widget/form/profileform.cpp" line="272"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Sigurno želite obrisati ovaj profil?</translation>
@@ -2429,7 +2669,7 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="353"/>
+        <location filename="../src/widget/form/profileform.cpp" line="340"/>
         <source>User Profile</source>
         <translation type="unfinished">Korisnički profil</translation>
     </message>
@@ -2806,29 +3046,20 @@ Ako niste sigurni pritisnite  â</lengthvariant>
 <context>
     <name>final</name>
     <message>
-        <location filename="../src/widget/form/settings/aboutform.h" line="38"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/advancedform.h" line="39"/>
         <source>Advanced</source>
-        <translation type="unfinished">Napredno</translation>
+        <translation type="obsolete">Napredno</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.h" line="43"/>
         <source>Audio/Video</source>
-        <translation type="unfinished">Audio/Video</translation>
+        <translation type="obsolete">Audio/Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.h" line="37"/>
         <source>General</source>
-        <translation type="unfinished">Opće</translation>
+        <translation type="obsolete">Opće</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.h" line="36"/>
         <source>Privacy</source>
-        <translation type="unfinished">Privatnost</translation>
+        <translation type="obsolete">Privatnost</translation>
     </message>
 </context>
 </TS>

@@ -4,8 +4,9 @@
 <context>
     <name>AVForm</name>
     <message>
+        <location filename="../src/widget/form/settings/avform.h" line="43"/>
         <source>Audio/Video</source>
-        <translation type="vanished">Audio/Video</translation>
+        <translation>Audio/Video</translation>
     </message>
     <message>
         <source>Initializing Camera...</source>
@@ -140,6 +141,14 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
 </context>
 <context>
+    <name>AboutForm</name>
+    <message>
+        <location filename="../src/widget/form/settings/aboutform.h" line="38"/>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AboutSettings</name>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="20"/>
@@ -270,8 +279,9 @@ Ignorer proxyen og koble til internettet direkte?</translation>
 <context>
     <name>AdvancedForm</name>
     <message>
+        <location filename="../src/widget/form/settings/advancedform.h" line="39"/>
         <source>Advanced</source>
-        <translation type="vanished">Avansert</translation>
+        <translation>Avansert</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="38"/>
@@ -1022,164 +1032,134 @@ Alias:</translation>
 <context>
     <name>GeneralForm</name>
     <message>
+        <location filename="../src/widget/form/settings/generalform.h" line="37"/>
         <source>General</source>
-        <translation type="vanished">Generelt</translation>
+        <translation>Generelt</translation>
     </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="101"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="106"/>
-        <source>None</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="309"/>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>Velg en mappe for auto aksepterte filer</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="367"/>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Samtale aktiv</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="368"/>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Du kan ikke koble fra når en samtale pågår!</translation>
-    </message>
-</context>
-<context>
-    <name>GeneralSettings</name>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="56"/>
         <source>General Settings</source>
-        <translation>Generelle Instillinger</translation>
+        <translation type="unfinished">Generelle Instillinger</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="64"/>
         <location filename="../src/widget/form/settings/generalform.ui" line="80"/>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Oversettelsen laster kanskje ikke før qTox restarter.</translation>
+        <translation type="unfinished">Oversettelsen laster kanskje ikke før qTox restarter.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="67"/>
         <source>Language:</source>
-        <translation>Språk:</translation>
+        <translation type="unfinished">Språk:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="102"/>
         <source>System tray</source>
-        <translation>Systemstatusfelt</translation>
+        <translation type="unfinished">Systemstatusfelt</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="122"/>
+        <source>Show system tray icon</source>
+        <translation type="unfinished">Vis ikonet i statusfeltet</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="129"/>
+        <source>Enable light tray icon.</source>
+        <comment>toolTip for light icon setting</comment>
+        <translation type="unfinished">Aktiver lyst ikon i statusfeltet.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="132"/>
+        <source>Light icon</source>
+        <translation type="unfinished">Lyst ikon</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="145"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox starter minimert i statusfeltet.</translation>
+        <translation type="unfinished">qTox starter minimert i statusfeltet.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="148"/>
         <source>Start in tray</source>
-        <translation>Start i statusfeltet</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="122"/>
-        <source>Show system tray icon</source>
-        <translation>Vis ikonet i statusfeltet</translation>
+        <translation type="unfinished">Start i statusfeltet</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="161"/>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Etter å ha valgt å lukke programmet (X) vil qTox minimere til statusfeltet,
+        <translation type="unfinished">Etter å ha valgt å lukke programmet (X) vil qTox minimere til statusfeltet,
 i stedet for å lukke seg selv.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="165"/>
         <source>Close to tray</source>
-        <translation>Lukk til statusfeltet</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="129"/>
-        <source>Enable light tray icon.</source>
-        <comment>toolTip for light icon setting</comment>
-        <translation>Aktiver lyst ikon i statusfeltet.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="132"/>
-        <source>Light icon</source>
-        <translation>Lyst ikon</translation>
+        <translation type="unfinished">Lukk til statusfeltet</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="178"/>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Etter å ha valg å minimere (_) vil qTox minimere seg selv til statusfeltet,
+        <translation type="unfinished">Etter å ha valg å minimere (_) vil qTox minimere seg selv til statusfeltet,
 i stedet for oppgavelinjen.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="182"/>
         <source>Minimize to tray</source>
-        <translation>Minimere til statusfeltet</translation>
+        <translation type="unfinished">Minimere til statusfeltet</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="209"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Din status vil bli endret til Borte etter følgende periode av inaktivitet.</translation>
+        <translation type="unfinished">Din status vil bli endret til Borte etter følgende periode av inaktivitet.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="215"/>
         <source>Auto away after (0 to disable):</source>
-        <translation>Automatisk Borte etter (0 for å deaktivere):</translation>
+        <translation type="unfinished">Automatisk Borte etter (0 for å deaktivere):</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="228"/>
         <source>Set to 0 to disable</source>
-        <translation>Set til 0 for å deaktivere</translation>
+        <translation type="unfinished">Set til 0 for å deaktivere</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="234"/>
         <source> minutes</source>
-        <translation> minutter</translation>
+        <translation type="unfinished"> minutter</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox ved oppstart (gjeldende profil).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox ved oppstart (gjeldende profil).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="261"/>
         <source>Autostart</source>
-        <translation>Autostart</translation>
+        <translation type="unfinished">Autostart</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="268"/>
         <source>Check for updates on startup</source>
-        <translation>Se etter oppdateringer ved oppstart</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalform.ui" line="302"/>
-        <source>You can set this on a per-friend basis by right clicking them.</source>
-        <comment>autoaccept cb tooltip</comment>
-        <translation>Du kan velge dette på en per-kontakt basis vedå høyreklikke på dem.</translation>
-    </message>
-    <message>
-        <source>Autoaccept and save files:</source>
-        <translation type="vanished">Auto aksepter og lagre filer:</translation>
+        <translation type="unfinished">Se etter oppdateringer ved oppstart</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="288"/>
         <source>Set where files will be saved.</source>
-        <translation>Velg hvor filene blir lagret.</translation>
+        <translation type="unfinished">Velg hvor filene blir lagret.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="295"/>
         <source>Default directory to save files</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.ui" line="302"/>
+        <source>You can set this on a per-friend basis by right clicking them.</source>
+        <comment>autoaccept cb tooltip</comment>
+        <translation type="unfinished">Du kan velge dette på en per-kontakt basis vedå høyreklikke på dem.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="305"/>
@@ -1189,127 +1169,127 @@ i stedet for oppgavelinjen.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="317"/>
         <source>Chat</source>
-        <translation>Chat</translation>
+        <translation type="unfinished">Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="328"/>
         <source>On new message:</source>
-        <translation>Ved ny melding:</translation>
+        <translation type="unfinished">Ved ny melding:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="334"/>
         <source>Play a sound when you recieve message.</source>
         <comment>toolTip for Notify sound setting</comment>
-        <translation>Spill av en lyd når du får en ny melding.</translation>
+        <translation type="unfinished">Spill av en lyd når du får en ny melding.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="337"/>
         <source>Play sound</source>
-        <translation>Spill av lyd</translation>
+        <translation type="unfinished">Spill av lyd</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="344"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation>Fokuser qTox når du får en ny melding.</translation>
+        <translation type="unfinished">Fokuser qTox når du får en ny melding.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="347"/>
         <source>Focus window</source>
-        <translation>Fokuser vindu</translation>
+        <translation type="unfinished">Fokuser vindu</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="354"/>
         <source>Show qTox&apos;s window when you receive new message.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Vis qTox vinduet når du får en ny melding.</translation>
+        <translation type="unfinished">Vis qTox vinduet når du får en ny melding.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="357"/>
         <source>Show window</source>
-        <translation>Vis vindu</translation>
+        <translation type="unfinished">Vis vindu</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="372"/>
         <source>Show contacts&apos; status changes</source>
-        <translation>Vis kontakt status endringer</translation>
+        <translation type="unfinished">Vis kontakt status endringer</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="379"/>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation>Alltid varsle om nye meldinger i gruppechatter.</translation>
+        <translation type="unfinished">Alltid varsle om nye meldinger i gruppechatter.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="382"/>
         <source>Group chats always notify</source>
-        <translation>Alltid varsle om nye meldinger i gruppechatter</translation>
+        <translation type="unfinished">Alltid varsle om nye meldinger i gruppechatter</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="389"/>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Hvis valgt, vil gruppechatter bli plassert på toppen av kontaktlisten, ellers vil de ligge under påloggede kontakter.</translation>
+        <translation type="unfinished">Hvis valgt, vil gruppechatter bli plassert på toppen av kontaktlisten, ellers vil de ligge under påloggede kontakter.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="392"/>
         <source>Place groupchats at top of friend list</source>
-        <translation>Plasser gruppechatter på toppen av kontaktlisten</translation>
+        <translation type="unfinished">Plasser gruppechatter på toppen av kontaktlisten</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="399"/>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation>Meldinger du forsøker å sende til kontakter som ikke er pålogget
+        <translation type="unfinished">Meldinger du forsøker å sende til kontakter som ikke er pålogget
 vil bli sent til dem når de vises som pålogget til deg.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="403"/>
         <source>Faux offline messaging</source>
-        <translation>Faux offline messaging</translation>
+        <translation type="unfinished">Faux offline messaging</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="410"/>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>Din kontakt liste vil bli vist i kompakt modus.</translation>
+        <translation type="unfinished">Din kontakt liste vil bli vist i kompakt modus.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="413"/>
         <source>Compact contact list</source>
-        <translation>Kompakt kontaktliste</translation>
+        <translation type="unfinished">Kompakt kontaktliste</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="423"/>
         <source>Theme</source>
-        <translation>Tema</translation>
+        <translation type="unfinished">Tema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="429"/>
         <source>Use emoticons</source>
-        <translation>Bruk emoticons</translation>
+        <translation type="unfinished">Bruk emoticons</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="447"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Smiley pakke:</translation>
+        <translation type="unfinished">Smiley pakke:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="549"/>
         <source>Emoticon size:</source>
-        <translation>Emoticon størrelse:</translation>
+        <translation type="unfinished">Emoticon størrelse:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="565"/>
         <source> px</source>
-        <translation> px</translation>
+        <translation type="unfinished"> px</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="581"/>
         <source>Style:</source>
-        <translation>Stil:</translation>
+        <translation type="unfinished">Stil:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="598"/>
@@ -1322,79 +1302,363 @@ vil bli sent til dem når de vises som pålogget til deg.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Theme color:</source>
-        <translation type="vanished">Tema farge:</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="625"/>
         <source>Timestamp format:</source>
-        <translation>Tidsstempel format:</translation>
+        <translation type="unfinished">Tidsstempel format:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="642"/>
         <source>Date format:</source>
-        <translation>Dato format:</translation>
+        <translation type="unfinished">Dato format:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="657"/>
         <source>Connection Settings</source>
-        <translation>Tilkoblings Instillinger</translation>
+        <translation type="unfinished">Tilkoblings Instillinger</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="671"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Deaktivering av dette tillater, f.eks., toxing over Tor. Det legger derimot en last på Tox nettverket, så bare aktiver dette når det er nødvendig.</translation>
+        <translation type="unfinished">Deaktivering av dette tillater, f.eks., toxing over Tor. Det legger derimot en last på Tox nettverket, så bare aktiver dette når det er nødvendig.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="674"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Aktiver UDP (anbefalt)</translation>
+        <translation type="unfinished">Aktiver UDP (anbefalt)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="681"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Aktiver IPv6 (anbefalt)</translation>
+        <translation type="unfinished">Aktiver IPv6 (anbefalt)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="715"/>
         <source>Proxy type:</source>
-        <translation>Proxy type:</translation>
+        <translation type="unfinished">Proxy type:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="722"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation>Adresse:</translation>
+        <translation type="unfinished">Adresse:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="732"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Port:</translation>
+        <translation type="unfinished">Port:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="746"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="100"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="105"/>
         <source>None</source>
-        <translation>Ingen</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="751"/>
         <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
+        <translation type="unfinished">SOCKS5</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="756"/>
         <source>HTTP</source>
-        <translation>HTTP</translation>
+        <translation type="unfinished">HTTP</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.ui" line="781"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation>Tilkoble</translation>
+        <translation type="unfinished">Tilkoble</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="308"/>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Velg en mappe for auto aksepterte filer</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="366"/>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation>Samtale aktiv</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="367"/>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation>Du kan ikke koble fra når en samtale pågår!</translation>
+    </message>
+</context>
+<context>
+    <name>GeneralSettings</name>
+    <message>
+        <source>General Settings</source>
+        <translation type="vanished">Generelle Instillinger</translation>
+    </message>
+    <message>
+        <source>The translation may not load until qTox restarts.</source>
+        <translation type="vanished">Oversettelsen laster kanskje ikke før qTox restarter.</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="vanished">Språk:</translation>
+    </message>
+    <message>
+        <source>System tray</source>
+        <translation type="vanished">Systemstatusfelt</translation>
+    </message>
+    <message>
+        <source>qTox will start minimized in tray.</source>
+        <comment>toolTip for Start in tray setting</comment>
+        <translation type="vanished">qTox starter minimert i statusfeltet.</translation>
+    </message>
+    <message>
+        <source>Start in tray</source>
+        <translation type="vanished">Start i statusfeltet</translation>
+    </message>
+    <message>
+        <source>Show system tray icon</source>
+        <translation type="vanished">Vis ikonet i statusfeltet</translation>
+    </message>
+    <message>
+        <source>After pressing close (X) qTox will minimize to tray,
+instead of closing itself.</source>
+        <comment>toolTip for close to tray setting</comment>
+        <translation type="vanished">Etter å ha valgt å lukke programmet (X) vil qTox minimere til statusfeltet,
+i stedet for å lukke seg selv.</translation>
+    </message>
+    <message>
+        <source>Close to tray</source>
+        <translation type="vanished">Lukk til statusfeltet</translation>
+    </message>
+    <message>
+        <source>Enable light tray icon.</source>
+        <comment>toolTip for light icon setting</comment>
+        <translation type="vanished">Aktiver lyst ikon i statusfeltet.</translation>
+    </message>
+    <message>
+        <source>Light icon</source>
+        <translation type="vanished">Lyst ikon</translation>
+    </message>
+    <message>
+        <source>After pressing minimize (_) qTox will minimize itself to tray,
+instead of system taskbar.</source>
+        <comment>toolTip for minimize to tray setting</comment>
+        <translation type="vanished">Etter å ha valg å minimere (_) vil qTox minimere seg selv til statusfeltet,
+i stedet for oppgavelinjen.</translation>
+    </message>
+    <message>
+        <source>Minimize to tray</source>
+        <translation type="vanished">Minimere til statusfeltet</translation>
+    </message>
+    <message>
+        <source>Your status is changed to Away after set period of inactivity.</source>
+        <translation type="vanished">Din status vil bli endret til Borte etter følgende periode av inaktivitet.</translation>
+    </message>
+    <message>
+        <source>Auto away after (0 to disable):</source>
+        <translation type="vanished">Automatisk Borte etter (0 for å deaktivere):</translation>
+    </message>
+    <message>
+        <source>Set to 0 to disable</source>
+        <translation type="vanished">Set til 0 for å deaktivere</translation>
+    </message>
+    <message>
+        <source> minutes</source>
+        <translation type="vanished"> minutter</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox ved oppstart (gjeldende profil).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Autostart</source>
+        <translation type="vanished">Autostart</translation>
+    </message>
+    <message>
+        <source>Check for updates on startup</source>
+        <translation type="vanished">Se etter oppdateringer ved oppstart</translation>
+    </message>
+    <message>
+        <source>You can set this on a per-friend basis by right clicking them.</source>
+        <comment>autoaccept cb tooltip</comment>
+        <translation type="vanished">Du kan velge dette på en per-kontakt basis vedå høyreklikke på dem.</translation>
+    </message>
+    <message>
+        <source>Autoaccept and save files:</source>
+        <translation type="vanished">Auto aksepter og lagre filer:</translation>
+    </message>
+    <message>
+        <source>Set where files will be saved.</source>
+        <translation type="vanished">Velg hvor filene blir lagret.</translation>
+    </message>
+    <message>
+        <source>Chat</source>
+        <translation type="vanished">Chat</translation>
+    </message>
+    <message>
+        <source>On new message:</source>
+        <translation type="vanished">Ved ny melding:</translation>
+    </message>
+    <message>
+        <source>Play a sound when you recieve message.</source>
+        <comment>toolTip for Notify sound setting</comment>
+        <translation type="vanished">Spill av en lyd når du får en ny melding.</translation>
+    </message>
+    <message>
+        <source>Play sound</source>
+        <translation type="vanished">Spill av lyd</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="vanished">Fokuser qTox når du får en ny melding.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="vanished">Fokuser vindu</translation>
+    </message>
+    <message>
+        <source>Show qTox&apos;s window when you receive new message.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="vanished">Vis qTox vinduet når du får en ny melding.</translation>
+    </message>
+    <message>
+        <source>Show window</source>
+        <translation type="vanished">Vis vindu</translation>
+    </message>
+    <message>
+        <source>Show contacts&apos; status changes</source>
+        <translation type="vanished">Vis kontakt status endringer</translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="vanished">Alltid varsle om nye meldinger i gruppechatter.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="vanished">Alltid varsle om nye meldinger i gruppechatter</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="vanished">Hvis valgt, vil gruppechatter bli plassert på toppen av kontaktlisten, ellers vil de ligge under påloggede kontakter.</translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="vanished">Plasser gruppechatter på toppen av kontaktlisten</translation>
+    </message>
+    <message>
+        <source>Messages you are trying to send to your friends when they are not online
+will be sent to them when they appear online to you.</source>
+        <comment>toolTip for Faux offline messaging setting</comment>
+        <translation type="vanished">Meldinger du forsøker å sende til kontakter som ikke er pålogget
+vil bli sent til dem når de vises som pålogget til deg.</translation>
+    </message>
+    <message>
+        <source>Faux offline messaging</source>
+        <translation type="vanished">Faux offline messaging</translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="vanished">Din kontakt liste vil bli vist i kompakt modus.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="vanished">Kompakt kontaktliste</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="vanished">Tema</translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="vanished">Bruk emoticons</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="vanished">Smiley pakke:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="vanished">Emoticon størrelse:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="vanished"> px</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="vanished">Stil:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="vanished">Tema farge:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="vanished">Tidsstempel format:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="vanished">Dato format:</translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="vanished">Tilkoblings Instillinger</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="vanished">Deaktivering av dette tillater, f.eks., toxing over Tor. Det legger derimot en last på Tox nettverket, så bare aktiver dette når det er nødvendig.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="vanished">Aktiver UDP (anbefalt)</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="vanished">Aktiver IPv6 (anbefalt)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="vanished">Proxy type:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="vanished">Adresse:</translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="vanished">Port:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="vanished">Ingen</translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="vanished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="vanished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="vanished">Tilkoble</translation>
     </message>
 </context>
 <context>
@@ -1905,8 +2169,9 @@ If you encountered this error, please report it.</source>
 <context>
     <name>PrivacyForm</name>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.h" line="36"/>
         <source>Privacy</source>
-        <translation type="vanished">Personvern</translation>
+        <translation>Personvern</translation>
     </message>
     <message>
         <source>Please set your new chat history password.</source>
@@ -2099,24 +2364,24 @@ men nye kontakter trenger å vite din nye Tox ID for å kunne legge deg til som 
 <context>
     <name>ProfileForm</name>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="195"/>
+        <location filename="../src/widget/form/profileform.cpp" line="182"/>
         <source>Choose a profile picture</source>
         <translation>Velg et profilbilde</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="205"/>
-        <location filename="../src/widget/form/profileform.cpp" line="212"/>
-        <location filename="../src/widget/form/profileform.cpp" line="234"/>
+        <location filename="../src/widget/form/profileform.cpp" line="192"/>
+        <location filename="../src/widget/form/profileform.cpp" line="199"/>
+        <location filename="../src/widget/form/profileform.cpp" line="221"/>
         <source>Error</source>
         <translation>Feilmelding</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="205"/>
+        <location filename="../src/widget/form/profileform.cpp" line="192"/>
         <source>Unable to open this file.</source>
         <translation>Kunne ikke åpne denne filen.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="212"/>
+        <location filename="../src/widget/form/profileform.cpp" line="199"/>
         <source>Unable to read this image.</source>
         <translation>Kunne ikke lese dette bilde.</translation>
     </message>
@@ -2137,7 +2402,7 @@ Vennligst velg et bilde som er mindre enn 64 KiB i størrelse.</translation>
         <translation type="vanished">Du kan ikke endre profil når en samtale er aktiv!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="246"/>
+        <location filename="../src/widget/form/profileform.cpp" line="233"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
         <translation>Endre navn på &quot;%1&quot;</translation>
@@ -2162,107 +2427,107 @@ Vennligst velg et bilde som er mindre enn 64 KiB i størrelse.</translation>
         <translation type="vanished">En profil med navn &quot;%1&quot; eksisterer allerede og blir brukt.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="235"/>
+        <location filename="../src/widget/form/profileform.cpp" line="222"/>
         <source>The supplied image is too large.
 Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="254"/>
+        <location filename="../src/widget/form/profileform.cpp" line="241"/>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="255"/>
+        <location filename="../src/widget/form/profileform.cpp" line="242"/>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="257"/>
+        <location filename="../src/widget/form/profileform.cpp" line="244"/>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="258"/>
+        <location filename="../src/widget/form/profileform.cpp" line="245"/>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="267"/>
+        <location filename="../src/widget/form/profileform.cpp" line="254"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
         <translation>Eksporter profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="269"/>
+        <location filename="../src/widget/form/profileform.cpp" line="256"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
         <translation>Tox lagrings fil (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="274"/>
-        <location filename="../src/widget/form/profileform.cpp" line="315"/>
+        <location filename="../src/widget/form/profileform.cpp" line="261"/>
+        <location filename="../src/widget/form/profileform.cpp" line="302"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Lokasjon er ikke skrivbar</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="274"/>
-        <location filename="../src/widget/form/profileform.cpp" line="315"/>
+        <location filename="../src/widget/form/profileform.cpp" line="261"/>
+        <location filename="../src/widget/form/profileform.cpp" line="302"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Du har ikke skriverettigheter for den lokasjonen. Velg en annen, eller avbryt lagringsdialogen.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="278"/>
-        <location filename="../src/widget/form/profileform.cpp" line="319"/>
+        <location filename="../src/widget/form/profileform.cpp" line="265"/>
+        <location filename="../src/widget/form/profileform.cpp" line="306"/>
         <source>Failed to copy file</source>
         <translation>Mislyktes å kopiere fil</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="278"/>
-        <location filename="../src/widget/form/profileform.cpp" line="319"/>
+        <location filename="../src/widget/form/profileform.cpp" line="265"/>
+        <location filename="../src/widget/form/profileform.cpp" line="306"/>
         <source>The file you chose could not be written to.</source>
         <translation>Kunne ikke skrive til filen du valgte.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="284"/>
+        <location filename="../src/widget/form/profileform.cpp" line="271"/>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="328"/>
+        <location filename="../src/widget/form/profileform.cpp" line="315"/>
         <source>Nothing to remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="328"/>
+        <location filename="../src/widget/form/profileform.cpp" line="315"/>
         <source>Your profile does not have a password!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="332"/>
+        <location filename="../src/widget/form/profileform.cpp" line="319"/>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="333"/>
+        <location filename="../src/widget/form/profileform.cpp" line="320"/>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="341"/>
+        <location filename="../src/widget/form/profileform.cpp" line="328"/>
         <source>Please enter a new password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="355"/>
+        <location filename="../src/widget/form/profileform.cpp" line="342"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation type="unfinished">Denne bunken av bokstaver forteller andre Tox klienter om hvordan de skal kontakte deg.
@@ -2284,7 +2549,7 @@ Del den med venner du vil kommunisere med.</translation>
         <translation type="vanished">Sletting av profil!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="285"/>
+        <location filename="../src/widget/form/profileform.cpp" line="272"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Er du sikker du vil slette denne profilen?</translation>
@@ -2320,13 +2585,13 @@ Del den med venner du vil kommunisere med.</translation>
         <translation type="vanished">En profil med navn &quot;%1&quot; eksisterer allerede. Vil du slette den?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="308"/>
+        <location filename="../src/widget/form/profileform.cpp" line="295"/>
         <source>Save</source>
         <comment>save qr image</comment>
         <translation>Lagre</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="310"/>
+        <location filename="../src/widget/form/profileform.cpp" line="297"/>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
         <translation>Lagre QR kode (*.png)</translation>
@@ -2402,7 +2667,7 @@ Den vil bli installert når qTox restarter.</translation>
         <translation type="vanished">Last inn samtale historikk...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="353"/>
+        <location filename="../src/widget/form/profileform.cpp" line="340"/>
         <source>User Profile</source>
         <translation>Bruker Profil</translation>
     </message>
@@ -2813,29 +3078,20 @@ Hvis du er usikker, velg &quot;Nei&quot;, slik at forespørselen til Tox DNS tje
 <context>
     <name>final</name>
     <message>
-        <location filename="../src/widget/form/settings/aboutform.h" line="38"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/advancedform.h" line="39"/>
         <source>Advanced</source>
-        <translation type="unfinished">Avansert</translation>
+        <translation type="obsolete">Avansert</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.h" line="43"/>
         <source>Audio/Video</source>
-        <translation type="unfinished">Audio/Video</translation>
+        <translation type="obsolete">Audio/Video</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.h" line="37"/>
         <source>General</source>
-        <translation type="unfinished">Generelt</translation>
+        <translation type="obsolete">Generelt</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.h" line="36"/>
         <source>Privacy</source>
-        <translation type="unfinished">Personvern</translation>
+        <translation type="obsolete">Personvern</translation>
     </message>
 </context>
 </TS>
