@@ -1,7 +1,7 @@
 qTox
 ======
 
- [**Compiling**](/INSTALL.md) **|** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **|** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Useful-bug-reports) **|** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **|** [**GitStats**](https://tux3-dev.tox.im/) **|** [**Mac & Linux jenkins**](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/) | [**Windows jenkins**](https://tux3-dev.tox.im/jenkins) **|** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|** [**Mailing list**](https://lists.tox.im) **|** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
+ [**Compiling**](/INSTALL.md) **|** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **|** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **|** [**GitStats**](https://tux3-dev.tox.im/) **|** [**Mac & Linux jenkins**](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/) | [**Windows jenkins**](https://tux3-dev.tox.im/jenkins) **|** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|** [**Mailing list**](https://lists.tox.im) **|** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
 
 ====
 
@@ -11,10 +11,10 @@ qTox
   - [**64 bit download**](https://tux3-dev.tox.im/jenkins/job/qTox-win64-nsis/lastSuccessfulBuild/artifact/setup-qtox64.exe)
   - [**32 bit download** (for older hardware)](https://tux3-dev.tox.im/jenkins/job/qTox-win32-nsis/lastSuccessfulBuild/artifact/setup-qtox32.exe)
 * **Linux**:
-  - [**binary**](https://jenkins.libtoxcore.so/job/qTox-linux-amd64/lastSuccessfulBuild/artifact/qt/qtox.xz)
-  - [**packages**](https://jenkins.libtoxcore.so/job/qTox-Linux-pkg/lastSuccessfulBuild/artifact/)
+  - [**binary**](#) - Currently unmaintained
+  - [**packages**](/INSTALL.md#simple-install)
   - [**Gentoo overlay**](https://github.com/Tox/gentoo-overlay-tox)
-* **Mac**: [**download**](https://dist-build.tox.im/qtox/osx/qtox.zip)<br/>
+* **Mac**: [**download**](#) - Currently unmaintained<br/>
 
 
 <h4>Screenshots</h4>

@@ -97,6 +97,12 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     if (!getDefaultInputFormat())
         return nullptr;
 
+    if (devName == "none")
+    {
+        qDebug() << "Tried to open the null device";
+        return nullptr;
+    }
+
     AVDictionary* options = nullptr;
     if (false);
 #ifdef Q_OS_LINUX
@@ -244,16 +250,18 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
 {
     QVector<QPair<QString, QString>> devices;
 
+    devices.append({"none", "None"});
+
     if (!getDefaultInputFormat())
             return devices;
 
     if (false);
 #ifdef Q_OS_WIN
     else if (iformat->name == QString("dshow"))
-        devices = DirectShow::getDeviceList();
+        devices += DirectShow::getDeviceList();
 #endif
     else
-        devices = getRawDeviceListGeneric();
+        devices += getRawDeviceListGeneric();
 
     if (idesktopFormat)
     {

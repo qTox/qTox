@@ -21,36 +21,70 @@
 #define FRIENDLISTWIDGET_H
 
 #include <QWidget>
-#include <QHash>
-#include <QList>
 #include "src/core/corestructs.h"
-#include "src/widget/genericchatroomwidget.h"
+#include "genericchatitemlayout.h"
 
 class QVBoxLayout;
 class QGridLayout;
 class QPixmap;
-struct FriendWidget;
+class Widget;
+class FriendWidget;
+class GroupWidget;
+class CircleWidget;
+class FriendListLayout;
+class GenericChatroomWidget;
 
 class FriendListWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FriendListWidget(QWidget *parent = 0, bool groupchatPosition = true);
-    QVBoxLayout* getGroupLayout();
-    QVBoxLayout* getFriendLayout(Status s);
+    enum Mode : uint8_t
+    {
+        Name,
+        Activity,
+    };
 
-    QList<GenericChatroomWidget*> getAllFriends();
+    explicit FriendListWidget(Widget* parent, bool groupsOnTop = true);
+    ~FriendListWidget();
+    void setMode(Mode mode);
+    Mode getMode() const;
+
+    void addGroupWidget(GroupWidget* widget);
+    void addFriendWidget(FriendWidget* w, Status s, int circleIndex);
+    void removeFriendWidget(FriendWidget* w);
+    void addCircleWidget(int id);
+    void addCircleWidget(FriendWidget* widget = nullptr);
+    void removeCircleWidget(CircleWidget* widget);
+    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
+
+    void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
+    QVector<CircleWidget*> getAllCircles();
+
     void reDraw();
+
 signals:
+    void onCompactChanged(bool compact);
 
 public slots:
+    void renameGroupWidget(GroupWidget* groupWidget, const QString& newName);
+    void renameCircleWidget(CircleWidget* circleWidget, const QString& newName);
     void onGroupchatPositionChanged(bool top);
-    void moveWidget(FriendWidget *w, Status s);
+    void moveWidget(FriendWidget* w, Status s, bool add = false);
+
+protected:
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
 private:
-    QHash<int, QVBoxLayout*> layouts;
-    QVBoxLayout *groupLayout;
-    QGridLayout *mainLayout;
+    CircleWidget* createCircleWidget(int id = -1);
+    QLayout* nextLayout(QLayout* layout, bool forward) const;
+
+    Mode mode;
+    bool groupsOnTop;
+    FriendListLayout* listLayout;
+    GenericChatItemLayout* circleLayout = nullptr;
+    GenericChatItemLayout groupLayout;
+    QVBoxLayout* activityLayout = nullptr;
 };
 
 #endif // FRIENDLISTWIDGET_H

@@ -81,9 +81,9 @@ void Core::prepareCall(uint32_t friendId, int32_t callId, ToxAv* toxav, bool vid
     if (calls[callId].videoEnabled)
     {
         calls[callId].videoSource = new CoreVideoSource;
-        calls[callId].camera = new CameraSource;
-        calls[callId].camera->subscribe();
-        connect(calls[callId].camera, &VideoSource::frameAvailable,
+        CameraSource& source = CameraSource::getInstance();
+        source.subscribe();
+        connect(&source, &VideoSource::frameAvailable,
                 [=](std::shared_ptr<VideoFrame> frame){sendCallVideo(callId,toxav,frame);});
     }
 
@@ -119,16 +119,15 @@ void Core::onAvMediaChange(void* toxav, int32_t callId, void* core)
     {
         emit static_cast<Core*>(core)->avMediaChange(friendId, callId, true);
         calls[callId].videoSource = new CoreVideoSource;
-        calls[callId].camera = new CameraSource;
-        calls[callId].camera->subscribe();
+        CameraSource& source = CameraSource::getInstance();
+        source.subscribe();
         calls[callId].videoEnabled = true;
     }
     else // Audio call
     {
         emit static_cast<Core*>(core)->avMediaChange(friendId, callId, false);
         calls[callId].videoEnabled = false;
-        delete calls[callId].camera;
-        calls[callId].camera = nullptr;
+        CameraSource::getInstance().unsubscribe();
         calls[callId].videoSource->setDeleteOnClose(true);
         calls[callId].videoSource = nullptr;
     }
@@ -240,8 +239,7 @@ void Core::cleanupCall(int32_t callId)
     calls[callId].sendAudioTimer->stop();
     if (calls[callId].videoEnabled)
     {
-        delete calls[callId].camera;
-        calls[callId].camera = nullptr;
+        CameraSource::getInstance().unsubscribe();
         if (calls[callId].videoSource)
         {
             calls[callId].videoSource->setDeleteOnClose(true);

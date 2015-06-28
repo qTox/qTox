@@ -24,6 +24,7 @@
 #include <QVector>
 #include <QString>
 #include <QByteArray>
+#include <tox/toxencryptsave.h>
 
 class Core;
 class QThread;
@@ -51,6 +52,7 @@ public:
     bool checkPassword(); ///< Checks whether the password is valid
     QString getPassword();
     void setPassword(QString newPassword); ///< Changes the encryption password and re-saves everything with it
+    const TOX_PASS_KEY& getPasskey();
 
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
     void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.
@@ -85,6 +87,7 @@ private:
     Core* core;
     QThread* coreThread;
     QString name, password;
+    TOX_PASS_KEY passkey;
     bool newProfile; ///< True if this is a newly created profile, with no .tox save file yet.
     bool isRemoved; ///< True if the profile has been removed by remove()
     static QVector<QString> profiles;

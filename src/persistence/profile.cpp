@@ -40,6 +40,8 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     : name{name}, password{password},
       newProfile{isNewProfile}, isRemoved{false}
 {
+    passkey = *core->createPasskey(password);
+
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
     s.saveGlobal();
@@ -64,6 +66,63 @@ Profile* Profile::loadProfile(QString name, QString password)
     {
         qWarning() << "Failed to lock profile "<<name;
         return nullptr;
+    }
+
+    // Check password
+    {
+        QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+        QFile saveFile(path);
+        qDebug() << "Loading tox save "<<path;
+
+        if (!saveFile.exists())
+        {
+            qWarning() << "The tox save file "<<path<<" was not found";
+            ProfileLocker::unlock();
+            return nullptr;
+        }
+
+        if (!saveFile.open(QIODevice::ReadOnly))
+        {
+            qCritical() << "The tox save file " << path << " couldn't' be opened";
+            ProfileLocker::unlock();
+            return nullptr;
+        }
+
+        qint64 fileSize = saveFile.size();
+        if (fileSize <= 0)
+        {
+            qWarning() << "The tox save file"<<path<<" is empty!";
+            ProfileLocker::unlock();
+            return nullptr;
+        }
+
+        QByteArray data = saveFile.readAll();
+        if (tox_is_data_encrypted((uint8_t*)data.data()))
+        {
+            if (password.isEmpty())
+            {
+                qCritical() << "The tox save file is encrypted, but we don't have a password!";
+                ProfileLocker::unlock();
+                return nullptr;
+            }
+
+            uint8_t salt[TOX_PASS_SALT_LENGTH];
+            tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
+            auto tmpkey = *Core::createPasskey(password, salt);
+
+            data = Core::decryptData(data, tmpkey);
+            if (data.isEmpty())
+            {
+                qCritical() << "Failed to decrypt the tox save file";
+                ProfileLocker::unlock();
+                return nullptr;
+            }
+        }
+        else
+        {
+            if (!password.isEmpty())
+                qWarning() << "We have a password, but the tox save file is not encrypted";
+        }
     }
 
     return new Profile(name, password, false);
@@ -205,9 +264,9 @@ QByteArray Profile::loadToxSave()
 
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-        core->setPassword(password, salt);
+        passkey = *core->createPasskey(password, salt);
 
-        data = core->decryptData(data);
+        data = core->decryptData(data, passkey);
         if (data.isEmpty())
             qCritical() << "Failed to decrypt the tox save file";
     }
@@ -247,8 +306,8 @@ void Profile::saveToxSave(QByteArray data)
 
     if (!password.isEmpty())
     {
-        core->setPassword(password);
-        data = core->encryptData(data);
+        passkey = *core->createPasskey(password);
+        data = core->encryptData(data, passkey);
         if (data.isEmpty())
         {
             qCritical() << "Failed to encrypt, can't save!";
@@ -350,6 +409,11 @@ QString Profile::getPassword()
     return password;
 }
 
+const TOX_PASS_KEY& Profile::getPasskey()
+{
+    return passkey;
+}
+
 void Profile::restartCore()
 {
     GUI::setEnabled(false); // Core::reset re-enables it
@@ -363,7 +427,7 @@ void Profile::setPassword(QString newPassword)
     QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
 
     password = newPassword;
-    core->setPassword(password);
+    passkey = *core->createPasskey(password);
     saveToxSave();
 
     HistoryKeeper::getInstance()->importMessages(oldMessages);

@@ -73,13 +73,13 @@ HistoryKeeper *HistoryKeeper::getInstance()
     return historyInstance;
 }
 
-bool HistoryKeeper::checkPassword(int encrypted)
+bool HistoryKeeper::checkPassword(const TOX_PASS_KEY &passkey, int encrypted)
 {
     if (!Settings::getInstance().getEnableLogging() && (encrypted == -1))
         return true;
 
     if ((encrypted == 1) || (encrypted == -1 && Nexus::getProfile()->isEncrypted()))
-        return EncryptedDb::check(getHistoryPath(Nexus::getProfile()->getName(), encrypted));
+        return EncryptedDb::check(passkey, getHistoryPath(Nexus::getProfile()->getName(), encrypted));
 
     return true;
 }
@@ -390,6 +390,26 @@ void HistoryKeeper::renameHistory(QString from, QString to)
 void HistoryKeeper::markAsSent(int m_id)
 {
     db->exec(QString("UPDATE sent_status SET status = 1 WHERE id = %1;").arg(m_id));
+}
+
+QDate HistoryKeeper::getLatestDate(const QString &chat)
+{
+    int chat_id = getChatID(chat, ctSingle).first;
+
+    QSqlQuery dbAnswer;
+    dbAnswer = db->exec(QString("SELECT MAX(timestamp) FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
+                        QString("INNER JOIN aliases ON history.sender = aliases.id AND chat_id = %3;")
+                        .arg(chat_id));
+
+    if (dbAnswer.first())
+    {
+        qint64 timeInt = dbAnswer.value(0).toLongLong();
+
+        if (timeInt != 0)
+            return QDateTime::fromMSecsSinceEpoch(timeInt).date();
+    }
+
+    return QDate();
 }
 
 void HistoryKeeper::setSyncType(Db::syncType sType)

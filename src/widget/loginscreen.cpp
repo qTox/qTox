@@ -179,15 +179,16 @@ void LoginScreen::onLogin()
     Profile* profile = Profile::loadProfile(name, pass);
     if (!profile)
     {
-        // Unknown error
-        QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Couldn't load this profile."));
-        return;
-    }
-    if (!profile->checkPassword())
-    {
-        QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
-        delete profile;
-        return;
+        if (!ProfileLocker::isLockable(name))
+        {
+            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Profile already in use. Close other clients."));
+            return;
+        }
+        else
+        {
+            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
+            return;
+        }
     }
 
     Nexus& nexus = Nexus::getInstance();

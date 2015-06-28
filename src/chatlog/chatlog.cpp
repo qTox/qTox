@@ -531,6 +531,15 @@ QVector<ChatLine::Ptr> ChatLog::getLines()
     return lines;
 }
 
+ChatLine::Ptr ChatLog::getLatestLine() const
+{
+    if (!lines.empty())
+    {
+        return lines.last();
+    }
+    return nullptr;
+}
+
 void ChatLog::clear()
 {
     clearSelection();

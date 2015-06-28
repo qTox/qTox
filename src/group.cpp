@@ -43,7 +43,7 @@ Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
 Group::~Group()
 {
     delete chatForm;
-    delete widget;
+    widget->deleteLater();
 }
 
 /*
@@ -88,7 +88,6 @@ void Group::updatePeer(int peerId, QString name)
 
 void Group::setName(const QString& name)
 {
-    widget->setName(name);
     chatForm->setName(name);
 
     if (widget->isActive())

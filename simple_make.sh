@@ -5,7 +5,8 @@ if which apt-get; then
         git build-essential qt5-qmake qt5-default qttools5-dev-tools \
         libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev \
         libxss-dev qrencode libqrencode-dev libtool autotools-dev \
-        automake checkinstall check libopus-dev libvpx-dev libsodium-dev
+        automake checkinstall check libopus-dev libvpx-dev libsodium-dev \
+        libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
 elif which pacman; then
     sudo pacman -S --needed \
         git base-devel qt5 opencv openal libxss qrencode opus libvpx \

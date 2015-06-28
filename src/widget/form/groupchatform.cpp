@@ -96,8 +96,14 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(callButton, &QPushButton::clicked, this, &GroupChatForm::onCallClicked);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
-    connect(nameLabel, &CroppingLabel::textChanged, this, [=](QString text, QString orig)
-        {if (text != orig) emit groupTitleChanged(group->getGroupId(), text.left(128));} );
+    connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName)
+    {
+        if (!newName.isEmpty())
+        {
+            nameLabel->setText(newName);
+            emit groupTitleChanged(group->getGroupId(), newName.left(128));
+        }
+    });
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);

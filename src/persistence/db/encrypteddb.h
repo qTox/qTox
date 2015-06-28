@@ -21,6 +21,7 @@
 #define ENCRYPTEDDB_H
 
 #include "plaindb.h"
+#include <tox/toxencryptsave.h>
 
 #include <QList>
 #include <QFile>
@@ -32,7 +33,7 @@ public:
     virtual ~EncryptedDb();
 
     virtual QSqlQuery exec(const QString &query);
-    static bool check(const QString &fname);
+    static bool check(const TOX_PASS_KEY &passkey, const QString &fname);
 
 private:
     bool pullFileContent(const QString& fname, QByteArray &buf);
@@ -44,6 +45,8 @@ private:
 
     static qint64 plainChunkSize;
     static qint64 encryptedChunkSize;
+
+    static TOX_PASS_KEY decryptionKey; ///< When importing, the decryption key may not be the same as the profile key
 
     qint64 chunkPosition;
     QByteArray buffer;

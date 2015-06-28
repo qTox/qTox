@@ -22,14 +22,14 @@
 
 #include <QScrollArea>
 
-class AdjustingScrollArea final : public QScrollArea
+class AdjustingScrollArea : public QScrollArea
 {
     Q_OBJECT
 public:
     explicit AdjustingScrollArea(QWidget *parent = 0);
 
 protected:
-    virtual void resizeEvent(QResizeEvent *ev) final override;
+    virtual void resizeEvent(QResizeEvent *ev) override;
     virtual QSize sizeHint() const final override;
 };
 

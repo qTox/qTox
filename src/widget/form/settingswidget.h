@@ -60,7 +60,7 @@ private:
     QWidget *head, *body;
     QTabWidget *settingsWidgets;
     QLabel *nameLabel, *imgLabel;
-    std::array<GenericForm*, 4> cfgForms;
+    std::array<GenericForm*, 5> cfgForms;
     int currentIndex;
 };
 
