@@ -36,7 +36,7 @@ FORMS    += \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/settings/generalform.ui
 
-CONFIG   += c++11
+CONFIG   += c++11 silent
 
 QMAKE_CXXFLAGS += -fno-exceptions
 
