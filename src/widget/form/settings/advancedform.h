@@ -28,7 +28,7 @@ namespace Ui {
 class AdvancedSettings;
 }
 
-class AdvancedForm final : public GenericForm
+class AdvancedForm : public GenericForm
 {
     Q_OBJECT
 public:
