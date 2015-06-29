@@ -13,7 +13,7 @@ QTabBar {
 }
 QTabBar::tab {
     background-color: white;
-    background: gray;
+    background: white;
     color: black;
     padding: 8px;
 }
@@ -22,10 +22,10 @@ QTabWidget::tab-bar {
     background: gray;
 }
 QTabBar::tab:selected {
-    background: white;
+    background: #d1d1d1;
 }
 QTabWidget::pane {
-    border-top: 2px solid black;
+    border-top: 1px solid #d1d1d1;
     background-color: white;
     background: white;
 }
@@ -177,17 +177,17 @@ QCheckBox::indicator,
 QRadioButton::indicator {
     color: black;
     background-color: white;
-    border: 1px solid black;
+    border: 1px solid gray;
 }
 QTableView QTableCornerButton::section {
     color: black;
     background-color: white;
 }
 QRadioButton::indicator:checked {
-    background-color: black;
+    background-color: #6bc260;
 }
 QCheckBox::indicator:checked {
-    background-color: black;
+    background-color: #6bc260;
 }
 QGraphicsView,
 QDoubleSpinBox,
@@ -249,7 +249,7 @@ QHeaderView {} QHeaderView::section {
 QGroupBox {
     color: black;
     background-color: white;
-    border: 1px solid grey;
+    border: 1px solid #d1d1d1;
     margin-top: 1.3em;
 }
 QGroupBox::title {
@@ -270,5 +270,5 @@ ChatTextEdit,
 ChatLine { /* msg edit box */
     border-width: 1px;
     border-style: solid;
-    border-color: black;
+    border-color: #d1d1d1;
 }
