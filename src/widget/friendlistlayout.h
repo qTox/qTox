@@ -31,7 +31,7 @@ public:
 
     void addFriendWidget(FriendWidget* widget, Status s);
     void removeFriendWidget(FriendWidget* widget, Status s);
-    int indexOfFriendWidget(FriendWidget* widget, bool online) const;
+    int indexOfFriendWidget(GenericChatItemWidget* widget, bool online) const;
     void moveFriendWidgets(FriendListWidget* listWidget);
     int friendOnlineCount() const;
     int friendTotalCount() const;

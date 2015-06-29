@@ -596,17 +596,6 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
     }
 }
 
-QVector<CircleWidget*> FriendListWidget::getAllCircles()
-{
-    QVector<CircleWidget*> vec;
-    vec.reserve(circleLayout->getLayout()->count());
-    for (int i = 0; i < circleLayout->getLayout()->count(); ++i)
-    {
-        vec.push_back(dynamic_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget()));
-    }
-    return vec;
-}
-
 void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)
 {
     if (event->mimeData()->hasFormat("friend"))

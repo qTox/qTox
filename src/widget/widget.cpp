@@ -967,7 +967,7 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
             dialog = ContentDialog::current();
 
         if (dialog == nullptr)
-            dialog = new ContentDialog();
+            dialog = new ContentDialog(settingsWidget);
 
         dialog->show();
         Friend* frnd = widget->getFriend();
