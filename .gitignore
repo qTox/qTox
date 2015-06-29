@@ -10,3 +10,4 @@ qtox
 *.orig
 build-*-Release
 build-*-Debug
+.DS_Store
