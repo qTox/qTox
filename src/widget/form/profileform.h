@@ -53,7 +53,7 @@ class ProfileForm : public QWidget
 public:
     ProfileForm(QWidget *parent = nullptr);
     ~ProfileForm();
-    virtual void show() final = delete;
+    virtual void show() final{}
     void show(Ui::MainWindow &ui);
 
 signals:

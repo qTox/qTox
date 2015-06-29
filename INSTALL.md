@@ -233,37 +233,25 @@ packages necessary for building .debs, so be prepared to type your password for 
 
 <a name="osx" />
 ##OS X
-Please be aware that if you've tried an earlier version of this set of instructions you may have 
-installed broken libraries and packages in the proces. Please delete them before continuing.
-
-Also, if you want to use qTox and are an end user download it by clicking the download button on tox.im, 
-as the copy you'll make by following this guide is only suitable for testing.
-
 Compiling qTox on OS X for development requires 3 tools, [Xcode](https://developer.apple.com/xcode/) and [Qt 5.4+](http://www.qt.io/qt5-4/), and [homebrew](http://brew.sh).
 
-###Required tools
+###Required Libraries
 
-First, let's install the dependencies
-* ```brew install git wget```
-* ``git clone https://github.com/tux3/qTox``
+First, let's install the dependencies available via brew.
+* ```brew install git ffmpeg qrencode```
+
+Next, install [filter_audio](https://github.com/irungentoo/filter_audio) (you may delete the directory it creates afterwards):
+* ```git clone https://github.com/irungentoo/filter_audio.git```
+* ```cd filter_audio```
+* ```sudo make install```
+* ```cd ../```
+
+Finally, clone qTox and copy all dependencies:
+* ```git clone https://github.com/tux3/qTox``
 * ```cd qTox```
 
-###Libraries required to compile
-
-Now we are in the qTox folder and need our library dependencies to actually build it.
-
-We've taken the time to prepare them automatically with our CI system so if you ever have issues redownload them.
-
-* ```wget https://jenkins.libtoxcore.so/job/qTox%20OS%20X/lastSuccessfulBuild/artifact/dep.zip```
-* ```unzip dep.zip```
-
-If you do not want to download our binaries, you must compile [opencv2](http://opencv.org), [toxcore](https://github.com/irungentoo/toxcore), [opus](https://www.opus-codec.org), [vpx](http://www.webmproject.org/tools/), [filteraudio](https://github.com/irungentoo/filter_audio), and our fork of [openal](https://github.com/irungentoo/openal-soft-tox) yourself with the prefix to the libs folder.
-
-Please be aware that no one has ever successfully got this working outside of on our CI system, but we encourage you to try and provide instructions on how you did so if you do.
-
-Please be aware that you shouldn't do this on your main Mac, as it's fairly hard to successfully do this without ruining a bunch of things in the process.
-
-Everything from opencv2 to filter_audio has now been installed in this library and is ready to go.
+Finally, copy all required files. Whenever you update your brew packages, you may skip all of the above steps and simply run the following script:
+* ```sudo bash bootstrap-osx.sh```
 
 ###Compiling
 

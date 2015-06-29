@@ -53,7 +53,7 @@ public:
     ~GenericChatForm();
 
     void setName(const QString &newName);
-    virtual void show() final = delete;
+    virtual void show() final{}
     virtual void show(Ui::MainWindow &ui);
 
     ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
