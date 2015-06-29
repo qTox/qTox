@@ -171,17 +171,9 @@ void Widget::init()
     filterMenu->addAction(filterGroupsAction);
 
     ui->searchContactFilterBox->setMenu(filterMenu);
+    ui->searchContactText->setPlaceholderText("Search Contacts");
 
     ui->mainContent->setLayout(new QVBoxLayout());
-
-    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
-            && Settings::getInstance().getStyle() != "None")
-    {
-        ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-    }
-
-
-    ui->searchContactText->setPlaceholderText("Search Contacts");
 
 //    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
 //            && Settings::getInstance().getStyle() != "None")
@@ -205,8 +197,7 @@ void Widget::init()
 
     qDebug() << "Loading theme: " << Settings::getInstance().getTheme();
     //ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-    ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" +
-                                                       Settings::getInstance().getTheme() + ".css"));
+    ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" + Settings::getInstance().getTheme() + ".css"));
 
     QMenu *statusButtonMenu = new QMenu(this);//ui->statusButton);
     statusButtonMenu->addAction(statusOnline);
@@ -215,8 +206,8 @@ void Widget::init()
     ui->statusButton->setMenu(statusButtonMenu);
 
     // disable proportional scaling
-    ui->mainSplitter->setStretchFactor(0,0);
-    ui->mainSplitter->setStretchFactor(1,1);
+    ui->mainSplitter->setStretchFactor(0, 0);
+    ui->mainSplitter->setStretchFactor(1, 1);
 
     onStatusSet(Status::Offline);
 

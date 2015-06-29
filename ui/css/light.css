@@ -264,3 +264,11 @@ QToolTip {
     padding: 1 2 0.5ex;
     opacity: 200;
 }
+QTextEdit,
+QLineEdit,
+ChatTextEdit,
+ChatLine { /* msg edit box */
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}

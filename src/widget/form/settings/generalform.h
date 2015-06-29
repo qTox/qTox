@@ -67,7 +67,6 @@ private slots:
     void onFauxOfflineMessaging();
     void onCompactLayout();
     void onGroupchatPositionChanged();
-    void onStyleSelected(QString style);
     void onThemeChanged(QString theme);
     void onStyleColorChanged(int);
 

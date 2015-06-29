@@ -88,9 +88,6 @@ public:
     bool getLightTrayIcon() const;
     void setLightTrayIcon(bool newValue);
 
-    QString getStyle() const;
-    void setStyle(const QString& newValue);
-
     bool getShowSystemTray() const;
     void setShowSystemTray(const bool& newValue);
 
@@ -343,7 +340,6 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
-    QString style; //Qt style, like Fustion, GTK, Windows98
     QStringList themesAvailable = {"light", "darkblue", "wombat"}; //list of css files
     QString theme; //style loaded from CSS, darkblue, light
     bool showSystemTray;

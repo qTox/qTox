@@ -202,15 +202,7 @@ void Settings::loadGlobal()
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
         themeColor = s.value("themeColor", 0).toInt();
-        style = s.value("style", "").toString();
         theme = s.value("theme", "light").toString();
-        if (style == "") // Default to Fusion if available, otherwise no style
-        {
-            if (QStyleFactory::keys().contains("Fusion"))
-                style = "Fusion";
-            else
-                style = "None";
-        }
     s.endGroup();
 
     s.beginGroup("State");
@@ -404,7 +396,6 @@ void Settings::saveGlobal()
         s.setValue("lightTrayIcon", lightTrayIcon);
         s.setValue("useEmoticons", useEmoticons);
         s.setValue("themeColor", themeColor); // violet, blue, yellow
-        s.setValue("style", style); //qt, fusion, gtk
         s.setValue("theme", theme); //light, darkblue, wombat, from css
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
     s.endGroup();
@@ -662,18 +653,6 @@ bool Settings::getAutostartInTray() const
 {
     QMutexLocker locker{&bigLock};
     return autostartInTray;
-}
-
-QString Settings::getStyle() const
-{
-    QMutexLocker locker{&bigLock};
-    return style;
-}
-
-void Settings::setStyle(const QString& newStyle)
-{
-    QMutexLocker locker{&bigLock};
-    style = newStyle;
 }
 
 bool Settings::getShowSystemTray() const

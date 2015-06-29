@@ -97,13 +97,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) : GenericForm(QPixmap(":/img/
     reloadSmiles();
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 
-    bodyUI->styleBrowser->addItem(tr("None"));
-    bodyUI->styleBrowser->addItems(QStyleFactory::keys());
-    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
-        bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
-    else
-        bodyUI->styleBrowser->setCurrentText(tr("None"));
-
     for (QString color : Style::themeColorNames)
         bodyUI->styleColorCBox->addItem(color);
 
@@ -172,7 +165,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) : GenericForm(QPixmap(":/img/
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
-    connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
     connect(bodyUI->styleColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onStyleColorChanged(int)));
     connect(bodyUI->themeComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onThemeChanged);
     connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));
@@ -262,17 +254,6 @@ void GeneralForm::onSetLightTrayIcon()
 void GeneralForm::onSetMinimizeToTray()
 {
     Settings::getInstance().setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
-}
-
-void GeneralForm::onStyleSelected(QString style)
-{
-    if (bodyUI->styleBrowser->currentIndex() == 0)
-        Settings::getInstance().setStyle("None");
-    else
-        Settings::getInstance().setStyle(style);
-
-    this->setStyle(QStyleFactory::create(style));
-    parent->setBodyHeadStyle(style);
 }
 
 void GeneralForm::onEmoticonSizeChanged()
