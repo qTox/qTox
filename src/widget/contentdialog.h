@@ -23,6 +23,7 @@
 #include <QDialog>
 #include <tuple>
 #include "src/core/corestructs.h"
+#include "src/widget/genericchatitemlayout.h"
 
 template <typename K, typename V> class QHash;
 
@@ -33,13 +34,13 @@ class GenericChatroomWidget;
 class FriendWidget;
 class GroupWidget;
 class FriendListLayout;
-class GenericChatItemLayout;
+class SettingsWidget;
 
 class ContentDialog : public QDialog
 {
     Q_OBJECT
 public:
-    ContentDialog(QWidget* parent = 0);
+    ContentDialog(SettingsWidget* settingsWidget, QWidget* parent = 0);
     ~ContentDialog();
 
     FriendWidget* addFriend(int friendId, QString id);
@@ -49,6 +50,8 @@ public:
     bool hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget);
     bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget);
     int chatroomWidgetCount() const;
+
+    void cycleContacts(bool forward, bool loop = true);
 
     static ContentDialog* current();
     static bool existsFriendWidget(int friendId, bool focus);
@@ -61,6 +64,10 @@ public:
     static ContentDialog* getFriendDialog(int friendId);
     static ContentDialog* getGroupDialog(int groupId);
 
+public slots:
+    void previousContact();
+    void nextContact();
+
 protected:
     void dragEnterEvent(QDragEnterEvent* event) final override;
     void dropEvent(QDropEvent* event) final override;
@@ -72,10 +79,12 @@ private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
     void updateFriendWidget(FriendWidget* w, Status s);
     void updateGroupWidget(GroupWidget* w);
+    void onGroupchatPositionChanged(bool top);
 
 private:
     void saveDialogGeometry();
     void saveSplitterState();
+    QLayout* nextLayout(QLayout* layout, bool forward) const;
 
     void remove(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
     bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
@@ -86,9 +95,10 @@ private:
 
     QSplitter* splitter;
     FriendListLayout* friendLayout;
-    GenericChatItemLayout* groupLayout;
+    GenericChatItemLayout groupLayout;
     ContentLayout* contentLayout;
     GenericChatroomWidget* activeChatroomWidget;
+    SettingsWidget* settingsWidget;
     static ContentDialog* currentDialog;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> friendList;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> groupList;

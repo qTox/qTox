@@ -58,7 +58,6 @@ public:
     void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
     void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
-    QVector<CircleWidget*> getAllCircles();
 
     void updateActivityDate(const QDate& date);
     void reDraw();

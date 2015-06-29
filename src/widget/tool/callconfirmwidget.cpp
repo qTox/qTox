@@ -74,7 +74,7 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
     setFixedSize(rectW,rectH+spikeH);
     reposition();
 }
-#include <QDebug>
+
 void CallConfirmWidget::reposition()
 {
     if (parentWidget())
@@ -84,7 +84,6 @@ void CallConfirmWidget::reposition()
     parentWidget()->installEventFilter(this);
 
     QWidget* w = anchor->window();
-    qDebug() << anchor->window();
     QPoint pos = anchor->mapToGlobal({(anchor->width()-rectW)/2,anchor->height()})-w->mapToGlobal({0,0});
 
     // We don't want the widget to overflow past the right of the screen
