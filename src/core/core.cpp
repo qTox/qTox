@@ -1219,7 +1219,7 @@ QString Core::getPeerName(const ToxId& id) const
         return name;
     }
 
-    name = name.fromLocal8Bit((char*)cname, nameSize);
+    name = CString::toString(cname, nameSize);
     delete[] cname;
     return name;
 }
