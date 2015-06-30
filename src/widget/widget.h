@@ -72,6 +72,7 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
+    ContentDialog* createContentDialog() const;
     ContentLayout* createContentDialog(const QString& title) const;
 
     static void confirmExecutableOpen(const QFileInfo file);

@@ -550,6 +550,8 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
     }
     else
     {
+        int width = ui->friendList->size().width();
+
         if (contentLayout != nullptr)
         {
             contentLayout->clear();
@@ -563,7 +565,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         setMinimumWidth(ui->tooliconsZone->sizeHint().width());
 
         if (clicked)
-            resize(ui->statusPanel->width(), height());
+            resize(width, height());
 
         setWindowTitle(QString());
         setActiveToolMenuButton(None);
@@ -728,15 +730,29 @@ void Widget::onSettingsClicked()
 
 void Widget::showProfile() // onAvatarClicked, onUsernameClicked
 {
-    hideMainForms(nullptr);
-    profileForm->show(contentLayout);
-    setWindowTitle(tr("Profile"));
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!profileForm->isShown())
+        {
+            profileForm->show(createContentDialog(tr("Profile")));
+            setActiveToolMenuButton(Widget::None);
+        }
+    }
+    else
+    {
+        hideMainForms(nullptr);
+        profileForm->show(contentLayout);
+        setWindowTitle(tr("Profile"));
+        setActiveToolMenuButton(Widget::None);
+    }
 }
 
 void Widget::hideMainForms(GenericChatroomWidget* chatroomWidget)
 {
     setActiveToolMenuButton(Widget::None);
-    contentLayout->clear();
+
+    if (contentLayout != nullptr)
+        contentLayout->clear();
 
     if (activeChatroomWidget != nullptr)
         activeChatroomWidget->setAsInactiveChatroom();
@@ -967,7 +983,7 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
             dialog = ContentDialog::current();
 
         if (dialog == nullptr)
-            dialog = new ContentDialog(settingsWidget);
+            dialog = createContentDialog();
 
         dialog->show();
         Friend* frnd = widget->getFriend();
@@ -1228,6 +1244,11 @@ void Widget::clearContactsList()
     QList<Group*> groups = GroupList::getAllGroups();
     for (Group* g : groups)
         removeGroup(g, true);
+}
+
+ContentDialog* Widget::createContentDialog() const
+{
+    return new ContentDialog(settingsWidget);
 }
 
 ContentLayout* Widget::createContentDialog(const QString &title) const

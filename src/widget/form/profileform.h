@@ -55,6 +55,7 @@ public:
     ~ProfileForm();
     virtual void show() final{}
     void show(ContentLayout* contentLayout);
+    bool isShown() const;
 
 signals:
     void userNameChanged(QString);

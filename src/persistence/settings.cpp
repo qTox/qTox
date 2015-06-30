@@ -175,7 +175,7 @@ void Settings::loadGlobal()
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
         separateWindow = s.value("separateWindow", false).toBool();
-        dontGroupWindows = s.value("dontGroupWindows", false).toBool();
+        dontGroupWindows = s.value("dontGroupWindows", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 

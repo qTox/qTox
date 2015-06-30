@@ -134,6 +134,16 @@ ProfileForm::~ProfileForm()
     head->deleteLater();
 }
 
+bool ProfileForm::isShown() const
+{
+    if (head->isVisible())
+    {
+        return true;
+    }
+
+    return false;
+}
+
 void ProfileForm::show(ContentLayout* contentLayout)
 {
     contentLayout->mainHead->layout()->addWidget(head);
