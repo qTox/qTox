@@ -146,7 +146,6 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
 
     Friend* frnd = friendWidget->getFriend();
 
-    onChatroomWidgetClicked(friendWidget, false);
 
     connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
     connect(settingsWidget, &SettingsWidget::compactToggled, friendWidget, &FriendWidget::compactChange);
@@ -155,7 +154,13 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
     connect(Core::getInstance(), &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
 
+    ContentDialog* lastDialog = getFriendDialog(friendId);
+
+    if (lastDialog != nullptr)
+        lastDialog->removeFriend(friendId);
+
     friendList.insert(friendId, std::make_tuple(this, friendWidget));
+    onChatroomWidgetClicked(friendWidget, false);
 
     return friendWidget;
 }
@@ -171,9 +176,13 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     connect(settingsWidget, &SettingsWidget::compactToggled, groupWidget, &GroupWidget::compactChange);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
 
-    onChatroomWidgetClicked(groupWidget, false);
+    ContentDialog* lastDialog = getGroupDialog(groupId);
+
+    if (lastDialog != nullptr)
+        lastDialog->removeGroup(groupId);
 
     groupList.insert(groupId, std::make_tuple(this, groupWidget));
+    onChatroomWidgetClicked(groupWidget, false);
 
     return groupWidget;
 }
@@ -191,16 +200,7 @@ void ContentDialog::removeFriend(int friendId)
     if (activeChatroomWidget == chatroomWidget)
     {
         // Need to find replacement to show here instead.
-        if (chatroomWidgetCount() > 1)
-        {
-            cycleContacts(true, false);
-        }
-        else
-        {
-            contentLayout->clear();
-            activeChatroomWidget = nullptr;
-            deleteLater();
-        }
+        cycleContacts(true, false);
     }
 
     friendLayout->removeFriendWidget(chatroomWidget, Status::Offline);
@@ -208,7 +208,17 @@ void ContentDialog::removeFriend(int friendId)
 
     chatroomWidget->deleteLater();
     friendList.remove(friendId);
-    update();
+
+    if (chatroomWidgetCount() == 0)
+    {
+        contentLayout->clear();
+        activeChatroomWidget = nullptr;
+        deleteLater();
+    }
+    else
+    {
+        update();
+    }
 }
 
 void ContentDialog::removeGroup(int groupId)
@@ -287,7 +297,7 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
         GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
 
         if (chatWidget != nullptr)
-            emit chatWidget->chatroomWidgetClicked(chatWidget);
+            onChatroomWidgetClicked(chatWidget, false);
 
         return;
     }
