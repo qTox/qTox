@@ -71,7 +71,6 @@
         <file>ui/callButton/callButton.svg</file>
         <file>ui/chatArea/chatArea.css</file>
         <file>ui/chatArea/chatHead.css</file>
-        <file>ui/chatArea/innerStyle.css</file>
         <file>ui/chatArea/scrollBarUpArrow.svg</file>
         <file>ui/chatArea/scrollBarDownArrow.svg</file>
         <file>ui/chatArea/scrollBarLeftArrow.svg</file>
@@ -93,11 +92,8 @@
         <file>ui/micButton/micButtonDisabled.png</file>
         <file>ui/micButton/micButtonHover.png</file>
         <file>ui/micButton/micButtonPressed.png</file>
-        <file>ui/msgEdit/msgEdit.css</file>
         <file>ui/sendButton/sendButton.css</file>
         <file>ui/sendButton/sendButton.svg</file>
-        <file>ui/settings/mainContent.css</file>
-        <file>ui/settings/mainHead.css</file>
         <file>ui/statusButton/statusButton.css</file>
         <file>ui/statusButton/menu_indicator.svg</file>
         <file>ui/videoButton/videoButton.css</file>
