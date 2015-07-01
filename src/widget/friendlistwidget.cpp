@@ -53,7 +53,7 @@ bool last7DaysWasLastMonth()
     return QDate::currentDate().addDays(-7).month() == QDate::currentDate().month();
 }
 
-Time getTime(const QDate date)
+Time getTime(const QDate& date)
 {
     if (date == QDate())
         return Never;
@@ -231,12 +231,15 @@ void FriendListWidget::setMode(Mode mode)
         activityLayout->addWidget(categoryLastWeek);
 
         QDate currentDate = QDate::currentDate();
-        if (last7DaysWasLastMonth())
+        //if (last7DaysWasLastMonth())
         {
             CategoryWidget* categoryThisMonth = new CategoryWidget(this);
             categoryThisMonth->setName(tr("This month", "Category for sorting friends by activity"));
             activityLayout->addWidget(categoryThisMonth);
-            currentDate = currentDate.addMonths(-1);
+            categoryThisMonth->setVisible(last7DaysWasLastMonth());
+
+            if (categoryThisMonth->isVisible())
+                currentDate = currentDate.addMonths(-1);
         }
 
         CategoryWidget* categoryLast1Month = new CategoryWidget(this);
@@ -276,8 +279,6 @@ void FriendListWidget::setMode(Mode mode)
         {
             QDate activityDate = getDateFriend(contact);
             Time time = getTime(activityDate);
-            if (!last7DaysWasLastMonth())
-                time = static_cast<Time>(time-1);
             CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
             categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
         }
@@ -647,6 +648,17 @@ void FriendListWidget::moveWidget(FriendWidget* w, Status s, bool add)
         categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
         categoryWidget->show();
     }
+}
+
+void FriendListWidget::updateActivityDate(const QDate& date)
+{
+    if (mode != Activity)
+        return;
+
+    CategoryWidget* categoryWidget = static_cast<CategoryWidget*>(activityLayout->itemAt(getTime(date))->widget());
+    categoryWidget->updateStatus();
+
+    categoryWidget->setVisible(categoryWidget->hasChatrooms());
 }
 
 // update widget after add/delete/hide/show
