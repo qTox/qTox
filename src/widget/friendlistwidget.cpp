@@ -234,33 +234,33 @@ void FriendListWidget::setMode(Mode mode)
         if (last7DaysWasLastMonth())
         {
             CategoryWidget* categoryThisMonth = new CategoryWidget(this);
-            categoryThisMonth ->setName(tr("This month", "Category for sorting friends by activity"));
+            categoryThisMonth->setName(tr("This month", "Category for sorting friends by activity"));
             activityLayout->addWidget(categoryThisMonth);
             currentDate = currentDate.addMonths(-1);
         }
 
         CategoryWidget* categoryLast1Month = new CategoryWidget(this);
-        categoryLast1Month ->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast1Month->setName(QDate::longMonthName(currentDate.month()));
         activityLayout->addWidget(categoryLast1Month);
 
         currentDate = currentDate.addMonths(-1);
         CategoryWidget* categoryLast2Month = new CategoryWidget(this);
-        categoryLast2Month ->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast2Month->setName(QDate::longMonthName(currentDate.month()));
         activityLayout->addWidget(categoryLast2Month);
 
         currentDate = currentDate.addMonths(-1);
         CategoryWidget* categoryLast3Month = new CategoryWidget(this);
-        categoryLast3Month ->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast3Month->setName(QDate::longMonthName(currentDate.month()));
         activityLayout->addWidget(categoryLast3Month);
 
         currentDate = currentDate.addMonths(-1);
         CategoryWidget* categoryLast4Month = new CategoryWidget(this);
-        categoryLast4Month ->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast4Month->setName(QDate::longMonthName(currentDate.month()));
         activityLayout->addWidget(categoryLast4Month);
 
         currentDate = currentDate.addMonths(-1);
         CategoryWidget* categoryLast5Month = new CategoryWidget(this);
-        categoryLast5Month ->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast5Month->setName(QDate::longMonthName(currentDate.month()));
         activityLayout->addWidget(categoryLast5Month);
 
         CategoryWidget* categoryOlder = new CategoryWidget(this);
@@ -276,6 +276,8 @@ void FriendListWidget::setMode(Mode mode)
         {
             QDate activityDate = getDateFriend(contact);
             Time time = getTime(activityDate);
+            if (!last7DaysWasLastMonth())
+                time = (Time)(time-1);
             CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
             categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
         }
