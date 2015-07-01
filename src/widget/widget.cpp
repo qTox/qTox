@@ -69,6 +69,11 @@
 #include <QProcess>
 #include <tox/tox.h>
 
+#ifdef Q_OS_MAC
+#include <QMenuBar>
+#include <QWindow>
+#endif
+
 #ifdef Q_OS_ANDROID
 #define IS_ON_DESKTOP_GUI 0
 #else
@@ -121,9 +126,6 @@ void Widget::init()
     statusBusy = new QAction(this);
     statusBusy->setIcon(getStatusIcon(Status::Busy, 10, 10));
     connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
-
-    ui->statusbar->hide();
-    ui->menubar->hide();
 
     layout()->setContentsMargins(0, 0, 0, 0);
     ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
@@ -254,6 +256,95 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
+
+#ifdef Q_OS_MAC
+    mainMenu = new QMenuBar(0);
+    mainMenu->setNativeMenuBar(true);
+
+    QMenu* fileMenu = new QMenu(tr("File"));
+    mainMenu->addAction(fileMenu->menuAction());
+
+    QAction* editProfileAction = fileMenu->addAction(tr("Edit Profile"));
+    connect(editProfileAction, &QAction::triggered, this, &Widget::showProfile);
+
+    QMenu* changeStatusMenu = new QMenu(tr("Change Status"));
+    fileMenu->addAction(changeStatusMenu->menuAction());
+    changeStatusMenu->addAction(statusOnline);
+    changeStatusMenu->addSeparator();
+    changeStatusMenu->addAction(statusAway);
+    changeStatusMenu->addAction(statusBusy);
+
+    fileMenu->addSeparator();
+    QAction* logoutAction = fileMenu->addAction(tr("Log out"));
+    connect(logoutAction, &QAction::triggered, [this]()
+    {
+        Nexus::getInstance().showLogin();
+    });
+
+    QMenu* editMenu = new QMenu(tr("Edit"));
+    mainMenu->addAction(editMenu->menuAction());
+
+    QMenu* viewMenu = new QMenu(tr("View"));
+    mainMenu->addAction(viewMenu->menuAction());
+
+    QMenu* filterMenu = new QMenu(tr("Filter..."));
+    viewMenu->addAction(filterMenu->menuAction());
+    filterMenu->addAction(filterDisplayName);
+    filterMenu->addAction(filterDisplayActivity);
+    filterMenu->addSeparator();
+    filterMenu->addAction(filterAllAction);
+    filterMenu->addAction(filterOnlineAction);
+    filterMenu->addAction(filterOfflineAction);
+    filterMenu->addAction(filterFriendsAction);
+    filterMenu->addAction(filterGroupsAction);
+
+    viewMenu->addSeparator();
+    fullscreenAction = viewMenu->addAction(tr("Enter Fullscreen"));
+    fullscreenAction->setShortcut(QKeySequence::FullScreen);
+    connect(fullscreenAction, &QAction::triggered, this, &Widget::toggleFullscreen);
+
+    QMenu* contactMenu = new QMenu(tr("Contacts"));
+    mainMenu->addAction(contactMenu->menuAction());
+
+    QAction* addContactAction = contactMenu->addAction(tr("Add Contact..."));
+    connect(addContactAction, &QAction::triggered, this, &Widget::onAddClicked);
+
+    QMenu* windowMenu = new QMenu(tr("Window"));
+    mainMenu->addAction(windowMenu->menuAction());
+
+    QAction* minimizeAction = windowMenu->addAction(tr("Minimize"));
+    minimizeAction->setShortcut(Qt::CTRL + Qt::Key_M);
+    connect(minimizeAction, &QAction::triggered, this, &Widget::showMinimized);
+    windowMenu->addSeparator();
+
+    QAction* nextConversationAction = windowMenu->addAction(tr("Next Conversation"));
+    nextConversationAction->setShortcut(QKeySequence::SelectNextPage);
+    connect(nextConversationAction, &QAction::triggered, this, &Widget::nextContact);
+
+    QAction* previousConversationAction = windowMenu->addAction(tr("Previous Conversation"));
+    previousConversationAction->setShortcut(QKeySequence::SelectPreviousPage);
+    connect(previousConversationAction, &QAction::triggered, this, &Widget::previousContact);
+
+    windowMenu->addSeparator();
+    QAction* frontAction = windowMenu->addAction(tr("Bring All to Front"));
+    connect(frontAction, &QAction::triggered, this, &Widget::bringAllToFront);
+
+    QAction* preferencesAction = viewMenu->addAction(QString());
+    preferencesAction->setMenuRole(QAction::PreferencesRole);
+    connect(preferencesAction, &QAction::triggered, this, &Widget::onSettingsClicked);
+
+    QAction* quitAction = viewMenu->addAction(QString());
+    quitAction->setMenuRole(QAction::QuitRole);
+    connect(quitAction, &QAction::triggered, this, &Widget::close);
+
+    QAction* aboutAction = viewMenu->addAction(QString());
+    aboutAction->setMenuRole(QAction::AboutRole);
+    connect(aboutAction, &QAction::triggered, [this]()
+    {
+        onSettingsClicked();
+        settingsWidget->showAbout();
+    });
+#endif
 
     addFriendForm->show(*ui);
     setWindowTitle(tr("Add friend"));
@@ -1614,3 +1705,32 @@ void Widget::retranslateUi()
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
     setWindowTitle(tr("Settings"));
 }
+
+#ifdef Q_OS_MAC
+void Widget::bringAllToFront()
+{
+    QWindowList windowList = QApplication::topLevelWindows();
+    for (QWindow* window : windowList)
+    {
+        window->raise();
+        window->showNormal();
+        window->requestActivate();
+    }
+}
+
+void Widget::toggleFullscreen()
+{
+    QWidget* window = QApplication::activeWindow();
+
+    if (window->isFullScreen())
+    {
+        window->showNormal();
+        fullscreenAction->setText(tr("Enter Fullscreen"));
+    }
+    else
+    {
+        window->showFullScreen();
+        fullscreenAction->setText(tr("Exit Fullscreen"));
+    }
+}
+#endif

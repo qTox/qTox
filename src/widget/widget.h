@@ -160,6 +160,11 @@ private slots:
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
 
+#ifdef Q_OS_MAC
+    void bringAllToFront();
+    void toggleFullscreen();
+#endif
+
 private:
     enum ActiveToolMenuButton {
         AddButton,
@@ -236,6 +241,11 @@ private:
     bool eventFlag;
     bool eventIcon;
     bool wasMaximized = false;
+
+#ifdef Q_OS_MAC
+    QMenuBar* mainMenu;
+    QAction* fullscreenAction;
+#endif
 };
 
 bool toxActivateEventHandler(const QByteArray& data);

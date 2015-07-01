@@ -81,6 +81,11 @@ void SettingsWidget::setBodyHeadStyle(QString style)
     body->setStyle(QStyleFactory::create(style));
 }
 
+void SettingsWidget::showAbout()
+{
+    onTabChanged(settingsWidgets->count() - 1);
+}
+
 void SettingsWidget::show(Ui::MainWindow& ui)
 {
     ui.mainContent->layout()->addWidget(body);
