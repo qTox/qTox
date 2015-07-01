@@ -89,14 +89,25 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     splitter->setCollapsible(1, false);
     boxLayout->addWidget(splitter);
 
+    connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
+
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, this, &ContentDialog::onGroupchatPositionChanged);
 
-    setMinimumSize(775, 420);
+    setMinimumSize(500, 220);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    //restore window state
-    restoreGeometry(Settings::getInstance().getDialogGeometry());
-    splitter->restoreState(Settings::getInstance().getDialogSplitterState());
+    QByteArray geometry = Settings::getInstance().getDialogGeometry();
+
+    if (!geometry.isNull())
+        restoreGeometry(geometry);
+    else
+        resize(720, 400);
+
+
+    QByteArray splitterState = Settings::getInstance().getDialogSplitterState();
+
+    if (!splitterState.isNull())
+        splitter->restoreState(splitterState);
 
     currentDialog = this;
 
@@ -145,7 +156,6 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
 
     Friend* frnd = friendWidget->getFriend();
-
 
     connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
     connect(settingsWidget, &SettingsWidget::compactToggled, friendWidget, &FriendWidget::compactChange);
@@ -478,13 +488,6 @@ void ContentDialog::resizeEvent(QResizeEvent* event)
     saveDialogGeometry();
 }
 
-void ContentDialog::closeEvent(QCloseEvent* event)
-{
-    saveDialogGeometry();
-    saveSplitterState();
-    QWidget::closeEvent(event);
-}
-
 void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
 {
     if (group)
@@ -555,9 +558,10 @@ void ContentDialog::saveDialogGeometry()
 {
     Settings::getInstance().setDialogGeometry(saveGeometry());
 }
-
+#include <QDebug>
 void ContentDialog::saveSplitterState()
 {
+    qDebug() << splitter->saveState();
     Settings::getInstance().setDialogSplitterState(splitter->saveState());
 }
 

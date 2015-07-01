@@ -75,7 +75,6 @@ protected:
     void dropEvent(QDropEvent* event) final override;
     void changeEvent(QEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
-    void closeEvent(QCloseEvent* event) override;
 
 private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
