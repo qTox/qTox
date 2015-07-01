@@ -1125,7 +1125,7 @@ bool Widget::newGroupMessageAlert(int groupId)
 
 bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive)
 {
-    bool inactiveWindow = isMinimized() || !isActiveWindow();
+    bool inactiveWindow = isMinimized() || !currentWindow->isActiveWindow();
 
     if (!inactiveWindow && isActive)
         return false;
@@ -1263,7 +1263,7 @@ ContentLayout* Widget::createContentDialog(const QString &title) const
     dialog->setLayout(contentLayout);
     dialog->layout()->setMargin(0);
     dialog->layout()->setSpacing(0);
-    dialog->setMinimumSize(775, 420);
+    dialog->setMinimumSize(720, 400);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->setWindowTitle(title);
     dialog->show();
