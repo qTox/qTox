@@ -565,7 +565,10 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         setMinimumWidth(ui->tooliconsZone->sizeHint().width());
 
         if (clicked)
+        {
+            showNormal();
             resize(width, height());
+        }
 
         setWindowTitle(QString());
         setActiveToolMenuButton(None);
@@ -1401,7 +1404,7 @@ void Widget::removeGroup(Group* g, bool fake)
     GroupList::removeGroup(g->getGroupId(), fake);
     Nexus::getCore()->removeGroup(g->getGroupId(), fake);
     delete g;
-    if (contentLayout->mainHead->layout()->isEmpty())
+    if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
         onAddClicked();
 
     contactListWidget->reDraw();

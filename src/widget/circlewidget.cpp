@@ -137,7 +137,9 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                 dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
             }
         }
+
         dialog->show();
+        dialog->ensureSplitterVisible();
     }
 
     setContainerAttribute(Qt::WA_UnderMouse, false);
