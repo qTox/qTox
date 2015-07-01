@@ -245,6 +245,14 @@ int ContentDialog::chatroomWidgetCount() const
     return friendLayout->friendTotalCount() + groupLayout.getLayout()->count();
 }
 
+void ContentDialog::ensureSplitterVisible()
+{
+    if (splitter->sizes().at(0) == 0)
+        splitter->setSizes({1, 1});
+
+    update();
+}
+
 void ContentDialog::cycleContacts(bool forward, bool loop)
 {
     Settings::getInstance().getGroupchatPosition();
@@ -374,6 +382,37 @@ void ContentDialog::nextContact()
     cycleContacts(true);
 }
 
+bool ContentDialog::event(QEvent* event)
+{
+    switch (event->type())
+    {
+        case QEvent::WindowActivate:
+            if (activeChatroomWidget != nullptr)
+            {
+                activeChatroomWidget->resetEventFlags();
+                activeChatroomWidget->updateStatusLight();
+                QString windowTitle = activeChatroomWidget->getName();
+                if (!activeChatroomWidget->getStatusString().isNull())
+                    windowTitle += " (" + activeChatroomWidget->getStatusString() + ")";
+                setWindowTitle(windowTitle);
+
+                Friend* frnd = activeChatroomWidget->getFriend();
+
+                if (frnd)
+                {
+                    frnd->getFriendWidget()->resetEventFlags();
+                    frnd->getFriendWidget()->updateStatusLight();
+                }
+            }
+
+            currentDialog = this;
+        default:
+            break;
+    }
+
+    return QWidget::event(event);
+}
+
 void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat("friend"))
@@ -407,10 +446,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
 
         Friend* contact = FriendList::findFriend(friendId);
         Widget::getInstance()->addFriendDialog(contact, this);
-
-        // Display friend list after dropping, if not already visible.
-        if (splitter->sizes().at(0) == 0)
-            splitter->setSizes({1, 1});
+        ensureSplitterVisible();
     }
     else if (event->mimeData()->hasFormat("group"))
     {
@@ -422,10 +458,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
 
         Group* contact = GroupList::findGroup(groupId);
         Widget::getInstance()->addGroupDialog(contact, this);
-
-        // Display friend list after dropping, if not already visible.
-        if (splitter->sizes().at(0) == 0)
-            splitter->setSizes({1, 1});
+        ensureSplitterVisible();
     }
 }
 

@@ -50,6 +50,7 @@ public:
     bool hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget);
     bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget);
     int chatroomWidgetCount() const;
+    void ensureSplitterVisible();
 
     void cycleContacts(bool forward, bool loop = true);
 
@@ -69,6 +70,7 @@ public slots:
     void nextContact();
 
 protected:
+    bool event(QEvent* event) final override;
     void dragEnterEvent(QDragEnterEvent* event) final override;
     void dropEvent(QDropEvent* event) final override;
     void changeEvent(QEvent* event) override;
