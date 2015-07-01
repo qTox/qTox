@@ -1221,11 +1221,16 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     contactListWidget->removeFriendWidget(f->getFriendWidget());
 
+    ContentDialog* lastDialog = ContentDialog::getFriendDialog(f->getFriendID());
+
+    if (lastDialog != nullptr)
+        lastDialog->removeFriend(f->getFriendID());
+
     FriendList::removeFriend(f->getFriendID(), fake);
     Nexus::getCore()->removeFriend(f->getFriendID(), fake);
 
     delete f;
-    if (contentLayout->mainHead->layout()->isEmpty())
+    if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
         onAddClicked();
 
     contactListWidget->reDraw();
@@ -1402,6 +1407,12 @@ void Widget::removeGroup(Group* g, bool fake)
         onAddClicked();
     }
     GroupList::removeGroup(g->getGroupId(), fake);
+
+    ContentDialog* contentDialog = ContentDialog::getGroupDialog(g->getGroupId());
+
+    if (contentDialog != nullptr)
+        contentDialog->removeGroup(g->getGroupId());
+
     Nexus::getCore()->removeGroup(g->getGroupId(), fake);
     delete g;
     if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
