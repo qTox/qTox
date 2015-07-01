@@ -60,6 +60,7 @@ public:
     void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
     QVector<CircleWidget*> getAllCircles();
 
+    void updateActivityDate(const QDate& date);
     void reDraw();
 
 signals:

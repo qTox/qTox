@@ -907,8 +907,11 @@ void Widget::updateFriendActivity(Friend *frnd)
     QDate date = Settings::getInstance().getFriendActivity(frnd->getToxId());
     if (date != QDate::currentDate())
     {
+        // Update old activity before after new one. Store old date first.
+        QDate oldDate = Settings::getInstance().getFriendActivity(frnd->getToxId());
         Settings::getInstance().setFriendActivity(frnd->getToxId(), QDate::currentDate());
         contactListWidget->moveWidget(frnd->getFriendWidget(), frnd->getStatus());
+        contactListWidget->updateActivityDate(oldDate);
     }
 }
 
