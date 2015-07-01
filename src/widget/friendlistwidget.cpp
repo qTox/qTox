@@ -277,7 +277,7 @@ void FriendListWidget::setMode(Mode mode)
             QDate activityDate = getDateFriend(contact);
             Time time = getTime(activityDate);
             if (!last7DaysWasLastMonth())
-                time = (Time)(time-1);
+                time = static_cast<Time>(time-1);
             CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
             categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
         }
