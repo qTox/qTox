@@ -33,6 +33,7 @@
 #include "src/core/core.h"
 #include "src/widget/friendlistlayout.h"
 #include "src/widget/form/settingswidget.h"
+#include "src/widget/translator.h"
 #include <QBoxLayout>
 #include <QSplitter>
 #include <QGuiApplication>
@@ -120,6 +121,8 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
     connect(Core::getInstance(), &Core::usernameSet, this, &ContentDialog::updateTitleUsername);
+
+    Translator::registerHandler(std::bind(&ContentDialog::retranslateUi, this), this);
 }
 
 ContentDialog::~ContentDialog()
@@ -150,6 +153,8 @@ ContentDialog::~ContentDialog()
         }
         ++groupIt;
     }
+
+    Translator::unregister(this);
 }
 
 FriendWidget* ContentDialog::addFriend(int friendId, QString id)
@@ -571,6 +576,11 @@ void ContentDialog::onGroupchatPositionChanged(bool top)
         friendLayout->insertLayout(0, groupLayout.getLayout());
     else
         friendLayout->insertLayout(1, groupLayout.getLayout());
+}
+
+void ContentDialog::retranslateUi()
+{
+    updateTitleUsername(Core::getInstance()->getUsername());
 }
 
 void ContentDialog::saveDialogGeometry()

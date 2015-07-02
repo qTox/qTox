@@ -147,7 +147,10 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     autoAccept->setChecked(!dir.isEmpty());
     menu.addSeparator();
 
-    QAction* removeFriendAction = menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
+    QAction* removeFriendAction = nullptr;
+
+    if (contentDialog == nullptr || !contentDialog->hasFriendWidget(friendId, this))
+        removeFriendAction = menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
 
     QAction* selectedItem = menu.exec(pos);
 

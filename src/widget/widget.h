@@ -72,8 +72,18 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
+
+    enum DialogType
+    {
+        AddDialog,
+        TransferDialog,
+        SettingDialog,
+        ProfileDialog
+    };
+
+    static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
-    ContentLayout* createContentDialog(const QString& title) const;
+    ContentLayout* createContentDialog(DialogType type) const;
 
     static void confirmExecutableOpen(const QFileInfo file);
 

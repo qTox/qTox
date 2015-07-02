@@ -26,6 +26,7 @@
 #include "src/widget/genericchatitemlayout.h"
 
 template <typename K, typename V> class QHash;
+template <typename T> class QSet;
 
 class QSplitter;
 class QVBoxLayout;
@@ -86,6 +87,7 @@ private slots:
     void onGroupchatPositionChanged(bool top);
 
 private:
+    void retranslateUi();
     void saveDialogGeometry();
     void saveSplitterState();
     QLayout* nextLayout(QLayout* layout, bool forward) const;

@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>639</width>
-        <height>1221</height>
+        <height>1388</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -387,7 +387,7 @@ instead of system taskbar.</string>
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>Don't group chat wndows.</string>
+             <string>Don't group chat windows.</string>
             </property>
            </widget>
           </item>
