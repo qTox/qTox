@@ -66,6 +66,8 @@ public:
     static ContentDialog* getGroupDialog(int groupId);
 
 public slots:
+    void updateTitleUsername(const QString& username);
+    void updateTitle(GenericChatroomWidget* chatroomWidget);
     void previousContact();
     void nextContact();
 
@@ -75,6 +77,7 @@ protected:
     void dropEvent(QDropEvent* event) final override;
     void changeEvent(QEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
+    void moveEvent(QMoveEvent* event) override;
 
 private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
@@ -99,6 +102,7 @@ private:
     GenericChatItemLayout groupLayout;
     ContentLayout* contentLayout;
     GenericChatroomWidget* activeChatroomWidget;
+    GenericChatroomWidget* displayWidget = nullptr;
     SettingsWidget* settingsWidget;
     static ContentDialog* currentDialog;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> friendList;

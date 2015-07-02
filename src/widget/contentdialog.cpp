@@ -118,6 +118,8 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
+
+    connect(Core::getInstance(), &Core::usernameSet, this, &ContentDialog::updateTitleUsername);
 }
 
 ContentDialog::~ContentDialog()
@@ -382,6 +384,20 @@ ContentDialog* ContentDialog::getGroupDialog(int groupId)
     return getDialog(groupId, groupList);
 }
 
+void ContentDialog::updateTitleUsername(const QString& username)
+{
+    if (displayWidget != nullptr)
+        setWindowTitle(username + QStringLiteral(" - ") + displayWidget->getTitle());
+    else
+        setWindowTitle(username);
+}
+
+void ContentDialog::updateTitle(GenericChatroomWidget* chatroomWidget)
+{
+    displayWidget = chatroomWidget;
+    updateTitleUsername(Core::getInstance()->getUsername());
+}
+
 void ContentDialog::previousContact()
 {
     cycleContacts(false);
@@ -401,10 +417,7 @@ bool ContentDialog::event(QEvent* event)
             {
                 activeChatroomWidget->resetEventFlags();
                 activeChatroomWidget->updateStatusLight();
-                QString windowTitle = activeChatroomWidget->getName();
-                if (!activeChatroomWidget->getStatusString().isNull())
-                    windowTitle += " (" + activeChatroomWidget->getStatusString() + ")";
-                setWindowTitle(windowTitle);
+                updateTitle(activeChatroomWidget);
 
                 Friend* frnd = activeChatroomWidget->getFriend();
 
@@ -484,8 +497,14 @@ void ContentDialog::changeEvent(QEvent *event)
 
 void ContentDialog::resizeEvent(QResizeEvent* event)
 {
-    Q_UNUSED(event);
     saveDialogGeometry();
+    QDialog::resizeEvent(event);
+}
+
+void ContentDialog::moveEvent(QMoveEvent* event)
+{
+    saveDialogGeometry();
+    QDialog::moveEvent(event);
 }
 
 void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
@@ -523,7 +542,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     widget->setAsActiveChatroom();
     widget->resetEventFlags();
     widget->updateStatusLight();
-    setWindowTitle(widget->getTitle());
+    updateTitle(widget);
 
     if (widget->getFriend() != nullptr)
         widget->getFriend()->getFriendWidget()->updateStatusLight();
@@ -558,10 +577,9 @@ void ContentDialog::saveDialogGeometry()
 {
     Settings::getInstance().setDialogGeometry(saveGeometry());
 }
-#include <QDebug>
+
 void ContentDialog::saveSplitterState()
 {
-    qDebug() << splitter->saveState();
     Settings::getInstance().setDialogSplitterState(splitter->saveState());
 }
 
@@ -639,7 +657,7 @@ void ContentDialog::updateStatus(int id, const QHash<int, std::tuple<ContentDial
     chatroomWidget->updateStatusLight();
 
     if (chatroomWidget->isActive())
-        std::get<0>(iter.value())->setWindowTitle(chatroomWidget->getTitle());
+        std::get<0>(iter.value())->updateTitle(chatroomWidget);
 }
 
 bool ContentDialog::isWidgetActive(int id, const QHash<int, std::tuple<ContentDialog *, GenericChatroomWidget *> > &list)

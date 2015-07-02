@@ -406,6 +406,14 @@ void Widget::updateIcons()
 
 Widget::~Widget()
 {
+    QWidgetList windowList = QApplication::topLevelWidgets();
+
+    for (QWidget* window : windowList)
+    {
+        if (window != this)
+            window->close();
+    }
+
     Translator::unregister(this);
     AutoUpdater::abortUpdates();
     if (icon)
@@ -545,12 +553,21 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         contentLayout = new ContentLayout(contentWidget);
         ui->mainSplitter->addWidget(contentWidget);
 
-        clicked = true;
         setMinimumWidth(775);
+
+        onSettingsClicked();
     }
     else
     {
         int width = ui->friendList->size().width();
+        QSize size;
+        QPoint pos;
+
+        if (contentLayout)
+        {
+            pos = mapToGlobal(ui->mainSplitter->widget(1)->pos());
+            size = ui->mainSplitter->widget(1)->size();
+        }
 
         if (contentLayout != nullptr)
         {
@@ -572,10 +589,16 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
         setWindowTitle(QString());
         setActiveToolMenuButton(None);
-    }
 
-    if (clicked)
-        onSettingsClicked();
+        if (clicked)
+        {
+            ContentLayout* contentLayout = createContentDialog(tr("Settings"));
+            contentLayout->parentWidget()->resize(size);
+            contentLayout->parentWidget()->move(pos);
+            settingsWidget->show(contentLayout);
+            setActiveToolMenuButton(Widget::None);
+        }
+    }
 }
 
 void Widget::setWindowTitle(const QString& title)
@@ -894,12 +917,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     f->setStatus(status);
     f->getFriendWidget()->updateStatusLight();
     if(f->getFriendWidget()->isActive())
-    {
-        QString windowTitle = f->getFriendWidget()->getName();
-        if (!f->getFriendWidget()->getStatusString().isNull())
-            windowTitle += " (" + f->getFriendWidget()->getStatusString() + ")";
-        setWindowTitle(windowTitle);
-    }
+        setWindowTitle(f->getFriendWidget()->getTitle());
 
     ContentDialog::updateFriendStatus(friendId);
 
@@ -1213,7 +1231,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
 
     f->getFriendWidget()->setAsInactiveChatroom();
-    if (static_cast<GenericChatroomWidget*>(f->getFriendWidget()) == activeChatroomWidget)
+    if (f->getFriendWidget() == activeChatroomWidget)
     {
         activeChatroomWidget = nullptr;
         onAddClicked();
@@ -1261,11 +1279,35 @@ ContentDialog* Widget::createContentDialog() const
 
 ContentLayout* Widget::createContentDialog(const QString &title) const
 {
-    QDialog* dialog = new QDialog();
-    ContentLayout* contentLayout = new ContentLayout(dialog);
+    class Dialog : public QDialog
+    {
+    public:
+        Dialog()
+            : QDialog()
+        {
+            restoreGeometry(Settings::getInstance().getDialogSettingsGeometry());
+        }
+
+    protected:
+        void resizeEvent(QResizeEvent* event) override
+        {
+            Settings::getInstance().setDialogSettingsGeometry(saveGeometry());
+            QDialog::resizeEvent(event);
+        }
+
+        void moveEvent(QMoveEvent* event) override
+        {
+            Settings::getInstance().setDialogSettingsGeometry(saveGeometry());
+            QDialog::moveEvent(event);
+        }
+    };
+
+    QDialog* dialog = new Dialog();
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    ContentLayout* contentLayoutDialog = new ContentLayout(dialog);
 
     dialog->setObjectName("detached");
-    dialog->setLayout(contentLayout);
+    dialog->setLayout(contentLayoutDialog);
     dialog->layout()->setMargin(0);
     dialog->layout()->setSpacing(0);
     dialog->setMinimumSize(720, 400);
@@ -1273,7 +1315,7 @@ ContentLayout* Widget::createContentDialog(const QString &title) const
     dialog->setWindowTitle(title);
     dialog->show();
 
-    return contentLayout;
+    return contentLayoutDialog;
 }
 
 void Widget::copyFriendIdToClipboard(int friendId)
@@ -1332,12 +1374,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     ContentDialog::updateGroupStatus(g->getGroupId());
 
     if (g->getGroupWidget()->isActive())
-    {
-        QString windowTitle = g->getGroupWidget()->getName();
-        if (!g->getGroupWidget()->getStatusString().isNull())
-            windowTitle += " (" + g->getGroupWidget()->getStatusString() + ")";
-        setWindowTitle(windowTitle);
-    }
+        setWindowTitle(g->getGroupWidget()->getTitle());
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
@@ -1475,10 +1512,7 @@ bool Widget::event(QEvent * e)
             {
                 activeChatroomWidget->resetEventFlags();
                 activeChatroomWidget->updateStatusLight();
-                QString windowTitle = activeChatroomWidget->getName();
-                if (!activeChatroomWidget->getStatusString().isNull())
-                    windowTitle += " (" + activeChatroomWidget->getStatusString() + ")";
-                setWindowTitle(windowTitle);
+                setWindowTitle(activeChatroomWidget->getTitle());
             }
             if (eventFlag)
             {
