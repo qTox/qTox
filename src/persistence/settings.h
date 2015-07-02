@@ -223,6 +223,9 @@ public:
     QByteArray getDialogSplitterState() const;
     void setDialogSplitterState(const QByteArray &value);
 
+    QByteArray getDialogSettingsGeometry() const;
+    void setDialogSettingsGeometry(const QByteArray& value);
+
     QString getFriendAdress(const QString &publicKey) const;
     void updateFriendAdress(const QString &newAddr);
 
@@ -350,6 +353,7 @@ private:
     QByteArray splitterState;
     QByteArray dialogGeometry;
     QByteArray dialogSplitterState;
+    QByteArray dialogSettingsGeometry;
     QString style;
     bool showSystemTray;
 
