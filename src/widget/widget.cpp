@@ -593,7 +593,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
         if (clicked)
         {
-            ContentLayout* contentLayout = createContentDialog(tr("Settings"));
+            ContentLayout* contentLayout = createContentDialog((SettingDialog));
             contentLayout->parentWidget()->resize(size);
             contentLayout->parentWidget()->move(pos);
             settingsWidget->show(contentLayout);
@@ -629,7 +629,7 @@ void Widget::onAddClicked()
     {
         if (!addFriendForm->isShown())
         {
-            addFriendForm->show(createContentDialog(tr("Add friend")));
+            addFriendForm->show(createContentDialog(AddDialog));
             setActiveToolMenuButton(Widget::None);
         }
     }
@@ -637,7 +637,7 @@ void Widget::onAddClicked()
     {
         hideMainForms(nullptr);
         addFriendForm->show(contentLayout);
-        setWindowTitle(tr("Add friend"));
+        setWindowTitle(fromDialogType(AddDialog));
         setActiveToolMenuButton(Widget::AddButton);
     }
 }
@@ -653,7 +653,7 @@ void Widget::onTransferClicked()
     {
         if (!filesForm->isShown())
         {
-            filesForm->show(createContentDialog(tr("File transfers")));
+            filesForm->show(createContentDialog(TransferDialog));
             setActiveToolMenuButton(Widget::None);
         }
     }
@@ -661,7 +661,7 @@ void Widget::onTransferClicked()
     {
         hideMainForms(nullptr);
         filesForm->show(contentLayout);
-        setWindowTitle(tr("File transfers"));
+        setWindowTitle(fromDialogType(TransferDialog));
         setActiveToolMenuButton(Widget::TransferButton);
     }
 }
@@ -742,7 +742,7 @@ void Widget::onSettingsClicked()
     {
         if (!settingsWidget->isShown())
         {
-            settingsWidget->show(createContentDialog(tr("Settings")));
+            settingsWidget->show(createContentDialog(SettingDialog));
             setActiveToolMenuButton(Widget::None);
         }
     }
@@ -750,7 +750,7 @@ void Widget::onSettingsClicked()
     {
         hideMainForms(nullptr);
         settingsWidget->show(contentLayout);
-        setWindowTitle(tr("Settings"));
+        setWindowTitle(fromDialogType(SettingDialog));
         setActiveToolMenuButton(Widget::SettingButton);
     }
 }
@@ -761,7 +761,7 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
     {
         if (!profileForm->isShown())
         {
-            profileForm->show(createContentDialog(tr("Profile")));
+            profileForm->show(createContentDialog(ProfileDialog));
             setActiveToolMenuButton(Widget::None);
         }
     }
@@ -769,7 +769,7 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
     {
         hideMainForms(nullptr);
         profileForm->show(contentLayout);
-        setWindowTitle(tr("Profile"));
+        setWindowTitle(fromDialogType(ProfileDialog));
         setActiveToolMenuButton(Widget::None);
     }
 }
@@ -1142,6 +1142,23 @@ bool Widget::newGroupMessageAlert(int groupId)
     return newMessageAlert(currentWindow, hasActive);
 }
 
+QString Widget::fromDialogType(DialogType type)
+{
+    switch (type)
+    {
+        case AddDialog:
+            return tr("Add friend");
+        case TransferDialog:
+            return tr("File transfers");
+        case SettingDialog:
+            return tr("Settings");
+        case ProfileDialog:
+            return tr("Profile");
+        default:
+            return QString();
+    }
+}
+
 bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive)
 {
     bool inactiveWindow = isMinimized() || !currentWindow->isActiveWindow();
@@ -1279,15 +1296,32 @@ ContentDialog* Widget::createContentDialog() const
     return new ContentDialog(settingsWidget);
 }
 
-ContentLayout* Widget::createContentDialog(const QString &title) const
+ContentLayout* Widget::createContentDialog(DialogType type) const
 {
     class Dialog : public QDialog
     {
     public:
-        Dialog()
+        Dialog(DialogType type)
             : QDialog()
+            , type(type)
         {
             restoreGeometry(Settings::getInstance().getDialogSettingsGeometry());
+            Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
+            retranslateUi();
+
+            connect(Core::getInstance(), &Core::usernameSet, this, &Dialog::retranslateUi);
+        }
+
+        ~Dialog()
+        {
+            Translator::unregister(this);
+        }
+
+    public slots:
+
+        void retranslateUi()
+        {
+            setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
         }
 
     protected:
@@ -1302,9 +1336,12 @@ ContentLayout* Widget::createContentDialog(const QString &title) const
             Settings::getInstance().setDialogSettingsGeometry(saveGeometry());
             QDialog::moveEvent(event);
         }
+
+    private:
+        DialogType type;
     };
 
-    QDialog* dialog = new Dialog();
+    QDialog* dialog = new Dialog(type);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     ContentLayout* contentLayoutDialog = new ContentLayout(dialog);
 
@@ -1314,7 +1351,6 @@ ContentLayout* Widget::createContentDialog(const QString &title) const
     dialog->layout()->setSpacing(0);
     dialog->setMinimumSize(720, 400);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->setWindowTitle(title);
     dialog->show();
 
     return contentLayoutDialog;
@@ -1973,7 +2009,9 @@ void Widget::retranslateUi()
     statusOnline->setText(tr("Online", "Button to set your status to 'Online'"));
     statusAway->setText(tr("Away", "Button to set your status to 'Away'"));
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
-    //setWindowTitle(tr("Settings"));
+
+    if (!Settings::getInstance().getSeparateWindow())
+        setWindowTitle(fromDialogType(SettingDialog));
 }
 
 #ifdef Q_OS_MAC
