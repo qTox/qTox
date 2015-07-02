@@ -29,6 +29,7 @@
 #include "src/persistence/profile.h"
 #include "src/widget/translator.h"
 #include "src/net/autoupdate.h"
+#include <QDesktopWidget>
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QTime>
@@ -385,6 +386,12 @@ void GeneralForm::reloadSmiles()
     bodyUI->smile3->setToolTip(smiles[2]);
     bodyUI->smile4->setToolTip(smiles[3]);
     bodyUI->smile5->setToolTip(smiles[4]);
+
+    //set maximum size of emoji
+    QDesktopWidget desktop;
+    int maxSize = qMin(desktop.geometry().height()/8,
+                       desktop.geometry().width()/8); // 8 is the count of row and column in emoji's in widget
+    bodyUI->emoticonSize->setMaximum(SmileyPack::getInstance().getAsIcon(smiles[0]).actualSize(QSize(maxSize,maxSize)).width());
 }
 
 void GeneralForm::onCheckUpdateChanged()
