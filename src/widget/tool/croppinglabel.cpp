@@ -20,6 +20,7 @@
 #include "croppinglabel.h"
 #include <QResizeEvent>
 #include <QLineEdit>
+#include <QKeyEvent>
 
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
@@ -29,13 +30,31 @@ CroppingLabel::CroppingLabel(QWidget* parent)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    textEdit = new QLineEdit(this);
+    class LineEdit : public QLineEdit
+    {
+    public:
+        LineEdit(QWidget* parent = 0) :
+            QLineEdit(parent)
+        {}
+
+    protected:
+        void keyPressEvent(QKeyEvent* event) override
+        {
+            if (event->key() == Qt::Key_Escape)
+                clearFocus();
+
+            QLineEdit::keyPressEvent(event);
+        }
+    };
+
+    textEdit = new LineEdit(this);
     textEdit->hide();
     textEdit->setInputMethodHints(Qt::ImhNoAutoUppercase
                                   | Qt::ImhNoPredictiveText
                                   | Qt::ImhPreferLatin);
 
-    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::editingFinished);
+    connect(textEdit, &QLineEdit::returnPressed, this, &CroppingLabel::editingFinished);
+    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::hideTextEdit);
 }
 
 void CroppingLabel::editBegin()
@@ -114,6 +133,12 @@ void CroppingLabel::setElidedText()
     QLabel::setText(elidedText);
 }
 
+void CroppingLabel::hideTextEdit()
+{
+    textEdit->hide();
+    blockPaintEvents = false;
+}
+
 void CroppingLabel::showTextEdit()
 {
     blockPaintEvents = true;
@@ -142,7 +167,5 @@ void CroppingLabel::editingFinished()
     if (origText != newText)
         emit editFinished(textEdit->text());
 
-    textEdit->hide();
-    blockPaintEvents = false;
     emit editRemoved();
 }

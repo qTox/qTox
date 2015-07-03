@@ -49,7 +49,7 @@ signals:
 protected:
     void paintEvent(QPaintEvent* paintEvent) override;
     void setElidedText();
-    void hideTextEdit(bool acceptText);
+    void hideTextEdit();
     void showTextEdit();
     virtual void resizeEvent(QResizeEvent *ev) final override;
     virtual QSize sizeHint() const final override;

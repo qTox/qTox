@@ -79,6 +79,7 @@ protected:
     void changeEvent(QEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
     void moveEvent(QMoveEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
@@ -92,7 +93,6 @@ private:
     void saveSplitterState();
     QLayout* nextLayout(QLayout* layout, bool forward) const;
 
-    void remove(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
     bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
     static bool existsWidget(int id, bool focus, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
     static void updateStatus(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
