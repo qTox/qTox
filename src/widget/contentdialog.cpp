@@ -244,7 +244,33 @@ void ContentDialog::removeGroup(int groupId)
     disconnect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
     disconnect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
 
-    remove(groupId, groupList);
+    auto iter = groupList.find(groupId);
+
+    if (iter == groupList.end())
+        return;
+
+    GenericChatroomWidget* chatroomWidget = std::get<1>(iter.value());
+
+    if (activeChatroomWidget == chatroomWidget)
+    {
+        // Need to find replacement to show here instead.
+        cycleContacts(true, false);
+    }
+
+    groupLayout.removeSortedWidget(chatroomWidget);
+    chatroomWidget->deleteLater();
+    groupList.remove(groupId);
+
+    if (chatroomWidgetCount() == 0)
+    {
+        contentLayout->clear();
+        activeChatroomWidget = nullptr;
+        deleteLater();
+    }
+    else
+    {
+        update();
+    }
 }
 
 bool ContentDialog::hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget)
@@ -292,6 +318,21 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
         index = groupLayout.indexOfSortedWidget(activeChatroomWidget);
     }
 
+    if (!loop && index == currentLayout->count() - 1)
+    {
+        bool groupsOnTop = Settings::getInstance().getGroupchatPosition();
+        bool offlineEmpty = friendLayout->getLayoutOffline()->count() == 0;
+        bool onlineEmpty = offlineEmpty && ((friendLayout->getLayoutOnline()->count() == 0 && groupsOnTop) || !groupsOnTop);
+        bool groupsEmpty = offlineEmpty && ((groupLayout.getLayout()->count() == 0 && !groupsOnTop) || groupsOnTop);
+
+        if ((currentLayout == friendLayout->getLayoutOffline())
+            || (currentLayout == friendLayout->getLayoutOnline() && groupsEmpty)
+            || (currentLayout == groupLayout.getLayout() && onlineEmpty))
+        {
+            forward = !forward;
+        }
+    }
+
     index += forward ? 1 : -1;
 
     for (;;)
@@ -305,13 +346,13 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
         }
         else if (index >= currentLayout->count())
         {
-            if (!loop && currentLayout == friendLayout->getLayoutOffline())
+            /*if (!loop && currentLayout == friendLayout->getLayoutOffline())
             {
                 forward = !forward; // Go backward.
                 index += forward ? 2 : -2; // Go back to where started and then one.
                 continue; // Recheck bounds.
             }
-            else
+            else*/
             {
                 currentLayout = nextLayout(currentLayout, forward);
                 index = 0;
@@ -512,6 +553,12 @@ void ContentDialog::moveEvent(QMoveEvent* event)
     QDialog::moveEvent(event);
 }
 
+void ContentDialog::keyPressEvent(QKeyEvent* event)
+{
+    if(event->key() != Qt::Key_Escape)
+        QDialog::keyPressEvent(event); // Ignore escape keyboard shortcut.
+}
+
 void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
 {
     if (group)
@@ -591,43 +638,6 @@ void ContentDialog::saveDialogGeometry()
 void ContentDialog::saveSplitterState()
 {
     Settings::getInstance().setDialogSplitterState(splitter->saveState());
-}
-
-void ContentDialog::remove(int id, const QHash<int, std::tuple<ContentDialog *, GenericChatroomWidget *> > &list)
-{
-    auto iter = list.find(id);
-
-    if (iter == list.end())
-        return;
-
-    GenericChatroomWidget* chatroomWidget = std::get<1>(iter.value());
-
-    if (activeChatroomWidget == chatroomWidget)
-    {
-        // Need to find replacement to show here instead.
-        if (chatroomWidgetCount() > 1)
-        {
-            int index = groupLayout.indexOfSortedWidget(chatroomWidget) - 1;
-
-            // Don't let it go below 0. If it does, then we're first. Go second.
-            if (index < 0)
-                index = 1;
-
-            GenericChatroomWidget* chatroomWidget = static_cast<GenericChatroomWidget*>(groupLayout.getLayout()->itemAt(index)->widget());
-            onChatroomWidgetClicked(chatroomWidget, false);
-        }
-        else
-        {
-            contentLayout->clear();
-            activeChatroomWidget = nullptr;
-            deleteLater();
-        }
-    }
-
-    groupLayout.removeSortedWidget(chatroomWidget);
-    chatroomWidget->deleteLater();
-    friendList.remove(id);
-    update();
 }
 
 bool ContentDialog::hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list)
