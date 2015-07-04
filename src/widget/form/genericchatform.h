@@ -78,8 +78,8 @@ public slots:
     void showFindWidget();
     void removeFindWidget();
     void findText(const QString& text);
-    void findNext(const QString& text);
-    void findPrevious();
+    void findNext(const QString& text, int to, int total);
+    void findPrevious(const QString& text, int to, int total);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -127,6 +127,7 @@ protected:
     QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
     bool audioInputFlag;
     bool audioOutputFlag;
+    QHash<int, ChatLine::Ptr> foundText;
 
 private:
     QVBoxLayout* mainLayout;

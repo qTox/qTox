@@ -450,17 +450,24 @@ void GenericChatForm::removeFindWidget()
         static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar());
         indicatorScroll->clearIndicators();
 
-        //if (getChatLog()->getSelectedText())
+        foundText.clear();
+        foundText.squeeze();
+
+        QVector<ChatLine::Ptr> chatLines = getChatLog()->getLines();
+
+        for (ChatLine::Ptr chatLine : chatLines)
+        {
+            chatLine.get()->setHighlight(QString());
+
+            //if (chatLine.get()->getContent(0)->getSelectedText() == )
+        }
     }
 }
 
 void GenericChatForm::findText(const QString &text)
 {
-    findNext(text);
-}
+    foundText.clear();
 
-void GenericChatForm::findNext(const QString& text)
-{
     int i = 0;
     QVector<ChatLine::Ptr> chatLines = getChatLog()->getLines();
 
@@ -470,41 +477,113 @@ void GenericChatForm::findNext(const QString& text)
 
     int to = -1;
     ChatLine::Ptr toSelect;
+    ChatLine::Ptr first;
 
     for (ChatLine::Ptr chatLine : chatLines)
     {
-        if (chatLine.get()->getColumnCount() != 3)
-            continue;
-
         int last = i;
-        i += chatLine.get()->getContent(0)->setHighlight(text);
-        i += chatLine.get()->getContent(1)->setHighlight(text);
+        i += chatLine.get()->setHighlight(text);
 
         if (last != i)
         {
-            indicatorScroll->setTotal(chatWidget->sceneRect().height() - 40);
-            indicatorScroll->addIndicator(chatLine.get()->sceneBoundingRect().top());
+            if (!first)
+                first = chatLine;
+
+            for (int iter = last; iter != i; ++iter)
+                foundText.insert(iter, chatLine);
+
+            indicatorScroll->setTotal(chatWidget->sceneRect().height());
+            indicatorScroll->addIndicator(chatLine.get()->sceneBoundingRect().top() + 20);
             indicatorScroll->update();
 
-            if (chatLine.get()->sceneBoundingRect().top() >= getChatLog()->sceneRect().top() && to == -1)
+            bool above = chatLine.get()->sceneBoundingRect().top() >= getChatLog()->verticalScrollBar()->value();
+
+            if (to == -1 && above)
             {
-                to = i;
+                to = last;
                 toSelect = chatLine;
             }
         }
+
+        chatLine.get()->selectionCleared();
     }
 
-    emit findMatchesChanged(to, i);
+    // If we didn't find anything near the scroll area, then go to the first found.
+    if (to == -1 && i != 0)
+    {
+        to = 0;
+        toSelect = first;
+    }
+
+    emit findMatchesChanged(to + 1, i);
 
     if (to != -1)
+    {
         toSelect.get()->selectNext(text);
+        getChatLog()->ensureVisible(toSelect.get()->sceneBoundingRect());
+    }
 
     getChatLog()->update();
 }
 
-void GenericChatForm::findPrevious()
+void GenericChatForm::findNext(const QString& text, int to, int total)
 {
+    bool clear = true;
+    int next = to;
+    auto newFound = foundText.find(next - 1);
+    auto lastFound = foundText.find(next - 2);
 
+    if (lastFound == foundText.end())
+        lastFound = foundText.find(total - 1);
+
+    if (newFound == foundText.end())
+    {
+        newFound = foundText.find(0);
+        next = 1;
+    }
+
+    if (newFound.value() == lastFound.value())
+        clear = false;
+
+    emit findMatchesChanged(next, total);
+
+    if (clear)
+        lastFound.value().get()->selectionCleared();
+
+    getChatLog()->ensureVisible(newFound.value().get()->sceneBoundingRect());
+    newFound.value().get()->selectNext(text);
+
+    getChatLog()->update();
+}
+
+void GenericChatForm::findPrevious(const QString& text, int to, int total)
+{
+    bool clear = true;
+    int next = to;
+    auto newFound = foundText.find(next - 1);
+    auto lastFound = foundText.find(next);
+
+    if (lastFound == foundText.end())
+        lastFound = foundText.find(0);
+
+    if (newFound == foundText.end())
+    {
+        newFound = foundText.find(total - 1);
+        next = total;
+    }
+
+    if (newFound.value() == lastFound.value())
+        clear = false;
+
+    emit findMatchesChanged(next, total);
+
+    if (clear)
+        lastFound.value().get()->selectionCleared();
+
+    getChatLog()->ensureVisible(newFound.value().get()->sceneBoundingRect());
+    newFound.value().get()->selectPrevious(text);
+
+    getChatLog()->update();
 }
 
 void GenericChatForm::addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime)

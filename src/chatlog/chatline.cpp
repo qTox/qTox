@@ -118,38 +118,19 @@ void ChatLine::selectionFocusChanged(bool focusIn)
         c->selectionFocusChanged(focusIn);
 }
 
-bool ChatLine::selectNext(const QString& text)
+bool ChatLine::selectNext(const QString&)
 {
-    bool done = false;
-
-    // First, check if a selection has been made. If it has, then move to next one.
-    for (ChatLineContent* c : content)
-    {
-        if (c->hasSelection())
-        {
-            done = true;
-
-            if (c->selectNext(text))
-                return true;
-            else
-                continue;
-        }
-    }
-
-    // If not, then find the next one starting from the beginning.
-    if (!done)
-    {
-        for (ChatLineContent* c : content)
-        {
-             if (c->selectNext(text))
-                return true;
-            else
-                continue;
-        }
-    }
-
-    // Text not found for selection.
     return false;
+}
+
+bool ChatLine::selectPrevious(const QString&)
+{
+    return false;
+}
+
+int ChatLine::setHighlight(const QString&)
+{
+    return 0;
 }
 
 int ChatLine::getColumnCount()

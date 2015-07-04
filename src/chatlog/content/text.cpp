@@ -155,15 +155,32 @@ bool Text::selectNext(const QString& search)
 {
     int indexOf = selectionEnd;
 
-    if (search != selectedText)
-        indexOf = selectionAnchor;
-
     if (indexOf == -1)
         indexOf = 0;
 
-    if ((indexOf = getText().indexOf(search, indexOf)) != -1)
+    if ((indexOf = getText().indexOf(search, indexOf, Qt::CaseInsensitive)) != -1)
     {
-        qDebug() << "FOUND" << indexOf << getText() << text;
+        selectionAnchor = indexOf;
+        selectionEnd = indexOf + search.count();
+        selectedText = search;
+        update();
+        return true;
+    }
+
+    return false;
+}
+
+bool Text::selectPrevious(const QString& search)
+{
+    int indexOf = getText().length() - 1;
+
+    if (hasSelection())
+        indexOf = selectionAnchor;
+
+    qDebug() << getText().left(indexOf) << getText().left(indexOf).lastIndexOf(search, -1, Qt::CaseInsensitive);
+    if ((indexOf = (getText().left(indexOf + search.count() - 1).lastIndexOf(search, -1, Qt::CaseInsensitive)) ) != -1)
+    {
+        qDebug() << getText().mid(indexOf, search.count());
         selectionAnchor = indexOf;
         selectionEnd = indexOf + search.count();
         selectedText = search;
@@ -280,13 +297,15 @@ QString Text::getText() const
 int Text::setHighlight(const QString &highlight)
 {
     int foundCount = 0;
-    int index = 0;
+    int index = -highlight.count();
 
     if (!highlight.isEmpty())
     {
-        while ((index = getText().indexOf(highlight, index + highlight.count())) != -1)
+        while ((index = getText().indexOf(highlight, index + highlight.count(), Qt::CaseInsensitive)) != -1)
             ++foundCount;
     }
+
+    //qDebug() << getText() << foundCount;
 
     highlightText = highlight;
 

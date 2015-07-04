@@ -38,6 +38,86 @@ ChatMessage::ChatMessage()
 
 }
 
+bool ChatMessage::selectNext(const QString& text)
+{
+    bool done = false;
+
+    // First, check if a selection has been made. If it has, then move to next one.
+    for (int i = 0; i < 2; ++i)
+    {
+        if (getContent(i)->hasSelection() || done)
+        {
+            done = true;
+
+            if (getContent(i)->selectNext(text))
+                return true;
+            else
+                getContent(i)->selectionCleared();
+        }
+    }
+
+    // If not, then find the next one starting from the beginning.
+    if (!done)
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            if (i == 0 && isSenderHidden())
+                continue;
+
+            if (getContent(i)->selectNext(text))
+                return true;
+        }
+    }
+
+    // Text not found for selection.
+    return false;
+}
+
+bool ChatMessage::selectPrevious(const QString& text)
+{
+    bool done = false;
+
+    // First, check if a selection has been made. If it has, then move to next one.
+    for (int i = 1; i > 0; --i)
+    {
+        if (getContent(i)->hasSelection() || done)
+        {
+            done = true;
+
+            if (getContent(i)->selectPrevious(text))
+                return true;
+            else
+                getContent(i)->selectionCleared();
+        }
+    }
+
+    // If not, then find the next one starting from the beginning.
+    if (!done)
+    {
+        for (int i = 1; i > 0; --i)
+        {
+            if (i == 0 && isSenderHidden())
+                continue;
+
+            if (getContent(i)->selectPrevious(text))
+                return true;
+        }
+    }
+
+    // Text not found for selection.
+    return false;
+}
+
+int ChatMessage::setHighlight(const QString &text)
+{
+    int total = 0;
+
+    if (!isSenderHidden())
+        total += getContent(0)->setHighlight(text);
+
+    return total + getContent(1)->setHighlight(text);
+}
+
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage, MessageType type, bool isMe, const QDateTime &date)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
@@ -71,7 +151,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
     msg->addColumn(new Text(senderText, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true, sender, type == ACTION ? actionColor : Qt::black), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new Text(text, Style::getFont(Style::Big), false, ((type == ACTION) && isMe) ? QString("%1 %2").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0/1.6), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Right));
+    msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0/1.6), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Left));
 
     if (!date.isNull())
         msg->markAsSent(date);
@@ -94,7 +174,7 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
 
     msg->addColumn(new Image(QSize(18, 18), img), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new Text("<b>" + text + "</b>", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Left));
 
     return msg;
 }
@@ -105,7 +185,7 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
 
     msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 320, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Left));
 
     return msg;
 }
@@ -153,19 +233,28 @@ QString ChatMessage::toString() const
 
 bool ChatMessage::isAction() const
 {
-    return action;
+    return flags & IsAction;
 }
 
 void ChatMessage::setAsAction()
 {
-    action = true;
+    flags |= IsAction;
+}
+
+bool ChatMessage::isSenderHidden() const
+{
+    return flags & SenderHidden;
 }
 
 void ChatMessage::hideSender()
 {
     ChatLineContent* c = getContent(0);
+
     if (c)
+    {
         c->hide();
+        flags |= SenderHidden;
+    }
 }
 
 void ChatMessage::hideDate()
@@ -234,5 +323,5 @@ QString ChatMessage::detectQuotes(const QString& str, MessageType type)
 
 QString ChatMessage::wrapDiv(const QString &str, const QString &div)
 {
-    return QString("<div class=%1>%2</div>").arg(div, QChar(0x200E) + QString(str).replace(" ", "&nbsp;"));
+    return QString("<div class=%1>%2</div>").arg(div, /*QChar(0x200E) + */QString(str).replace(" ", QChar(0xA0)));
 }

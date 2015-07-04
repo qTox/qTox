@@ -210,11 +210,11 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
     int leftColumnWidth = Settings::getInstance().getColumnLeftWidth();
     int rightColumnWidth = Settings::getInstance().getColumnRightWidth();
-    //int endLocation = width() - rightColumnWidth - margins.left() - verticalScrollBar()->sizeHint().width() - 15 / 2;
+    int endLocation = width() - rightColumnWidth - margins.left() - verticalScrollBar()->sizeHint().width() - 15 / 2;
 
     bool splitterLeft = scenePos.x() > leftColumnWidth && scenePos.x() < leftColumnWidth + 15;
     // Uncomment this for movable time stamps.
-    bool splitterRight = false;//scenePos.x() > endLocation - 15 && scenePos.x() < endLocation;
+    bool splitterRight = scenePos.x() > endLocation - 15 && scenePos.x() < endLocation;
 
     if ((splitterLeft || splitterRight) && selectionMode == None)
     {
