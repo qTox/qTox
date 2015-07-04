@@ -19,7 +19,7 @@ qTox
 
 <h4>Screenshots</h4>
 Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features
-<img src="http://i.imgur.com/hwGmDeK.png"/>
+<img src="http://i.imgur.com/8yhNcAu.png"/>
 <img src="http://i.imgur.com/tmX8z9s.png"/>
 
 
