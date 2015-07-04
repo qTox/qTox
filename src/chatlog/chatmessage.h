@@ -46,6 +46,9 @@ public:
     };
 
     ChatMessage();
+    virtual bool selectNext(const QString& text) override;
+    virtual bool selectPrevious(const QString& text) override;
+    virtual int setHighlight(const QString& text) override;
 
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage, MessageType type, bool isMe, const QDateTime& date = QDateTime());
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type, const QDateTime& date);
@@ -57,6 +60,7 @@ public:
     QString toString() const;
     bool isAction() const;
     void setAsAction();
+    bool isSenderHidden() const;
     void hideSender();
     void hideDate();
 
@@ -66,7 +70,16 @@ protected:
     static QString wrapDiv(const QString& str, const QString& div);
 
 private:
-    bool action = false;
+
+    typedef uint8_t Flags;
+
+    enum Flag : Flags
+    {
+        IsAction     = 0x01,
+        SenderHidden = 0x02
+    };
+
+    Flags flags = 0;
 };
 
 #endif // CHATMESSAGE_H

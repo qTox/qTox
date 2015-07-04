@@ -32,8 +32,8 @@ public:
 
 signals:
     void findText(const QString& text);
-    void findNext(const QString& text);
-    void findPrevious(const QString& text);
+    void findNext(const QString& text, int index, int total);
+    void findPrevious(const QString& text, int index, int total);
     void setCase(bool match);
     void close();
 
@@ -42,6 +42,8 @@ public slots:
 
 private:
     QLabel* matchesLabel;
+    int index;
+    int total;
 };
 
 #endif // FINDWIDGET_H

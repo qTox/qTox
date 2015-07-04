@@ -82,8 +82,8 @@ public slots:
     void showFindWidget();
     void removeFindWidget();
     void findText(const QString& text);
-    void findNext(const QString& text);
-    void findPrevious();
+    void findNext(const QString& text, int to, int total);
+    void findPrevious(const QString& text, int to, int total);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -137,6 +137,7 @@ protected:
     bool audioInputFlag;
     bool audioOutputFlag;
     QSplitter* bodySplitter;
+    QHash<int, ChatLine::Ptr> foundText;
     GenericNetCamView* netcam;
 
 private:

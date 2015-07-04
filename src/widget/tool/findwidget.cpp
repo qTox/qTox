@@ -57,17 +57,22 @@ FindWidget::FindWidget(QWidget *parent) : QWidget(parent)
     connect(lineEdit, &QLineEdit::textChanged, this, &FindWidget::findText);
     connect(nextButton, &QPushButton::pressed, [this, lineEdit]()
     {
-        emit findNext(lineEdit->text());
+        if (total != 0)
+            emit findNext(lineEdit->text(), index + 1, total);
     });
     connect(previousButton, &QPushButton::pressed, [this, lineEdit]()
     {
-        emit findPrevious(lineEdit->text());
+        if (total != 0)
+            emit findPrevious(lineEdit->text(), index - 1, total);
     });
     connect(closeButton, &QPushButton::pressed, this, &FindWidget::close);
 }
 
 void FindWidget::setMatches(int index, int matches)
 {
+    this->index = index;
+    total = matches;
+
     if (matches <= 0)
         matchesLabel->setText(QString());
     else if (matches > 100)

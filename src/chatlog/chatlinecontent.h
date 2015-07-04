@@ -47,6 +47,7 @@ public:
     virtual QString getSelectedText() const;
     virtual bool hasSelection() const;
     virtual bool selectNext(const QString& search);
+    virtual bool selectPrevious(const QString& search);
     virtual int setHighlight(const QString& highlight);
     virtual QTextCursor setHighlight(const QString &highlight, const QTextCursor &previous);
 
