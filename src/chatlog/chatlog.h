@@ -55,6 +55,10 @@ public:
     void forceRelayout();
 
     QString getSelectedText() const;
+    int findText(const QString &text, Qt::CaseSensitivity sensitivity, int &index);
+    int findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
+    int findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
+    const QHash<int, ChatLine::Ptr>& getFoundLines() const;
 
     bool isEmpty() const;
     bool hasTextToBeCopied() const;
@@ -158,6 +162,9 @@ private:
     // layout
     QMargins margins = QMargins(10,10,10,10);
     qreal lineSpacing = 5.0f;
+
+    // find
+    QHash<int, ChatLine::Ptr> foundText;
 };
 
 #endif // CHATLOG_H

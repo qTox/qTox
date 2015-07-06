@@ -118,14 +118,14 @@ void ChatLine::selectionFocusChanged(bool focusIn)
         c->selectionFocusChanged(focusIn);
 }
 
-bool ChatLine::selectNext(const QString&, Qt::CaseSensitivity)
+int ChatLine::selectNext(const QString&, Qt::CaseSensitivity)
 {
-    return false;
+    return -1;
 }
 
-bool ChatLine::selectPrevious(const QString&, Qt::CaseSensitivity)
+int ChatLine::selectPrevious(const QString&, Qt::CaseSensitivity)
 {
-    return false;
+    return -1;
 }
 
 int ChatLine::setHighlight(const QString&, Qt::CaseSensitivity)

@@ -75,12 +75,13 @@ signals:
     void chatAreaCleared();
     void messageInserted();
     void findMatchesChanged(int index, int total);
+    void findIndexChanged(int index);
 
 public slots:
     void focusInput();
     void toggleFindWidget();
     void showFindWidget();
-    void removeFindWidget();
+    void removeFindWidget(const QString& text);
     void findText(const QString& text, Qt::CaseSensitivity sensitivity);
     void findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
     void findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
@@ -137,7 +138,6 @@ protected:
     bool audioInputFlag;
     bool audioOutputFlag;
     QSplitter* bodySplitter;
-    QHash<int, ChatLine::Ptr> foundText;
     GenericNetCamView* netcam;
 
 private:

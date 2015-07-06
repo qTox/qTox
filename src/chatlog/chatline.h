@@ -81,8 +81,8 @@ public:
     void setVisible(bool visible);
     void selectionCleared();
     void selectionFocusChanged(bool focusIn);
-    virtual bool selectNext(const QString& text, Qt::CaseSensitivity sensitivity);
-    virtual bool selectPrevious(const QString& text, Qt::CaseSensitivity sensitivity);
+    virtual int selectNext(const QString& text, Qt::CaseSensitivity sensitivity);
+    virtual int selectPrevious(const QString& text, Qt::CaseSensitivity sensitivity);
     virtual int setHighlight(const QString& text, Qt::CaseSensitivity sensitivity);
 
     int getColumnCount();

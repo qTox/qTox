@@ -53,14 +53,19 @@ FindWidget::FindWidget(QWidget *parent) : QWidget(parent)
     connect(lineEdit, &QLineEdit::textChanged, this, &FindWidget::onFindText);
     connect(nextButton, &QPushButton::pressed, this, &FindWidget::onFindNextPressed);
     connect(previousButton, &QPushButton::pressed, this, &FindWidget::onFindPreviousPressed);
-    connect(closeButton, &QPushButton::pressed, this, &FindWidget::close);
+    connect(closeButton, &QPushButton::pressed, this, &FindWidget::onClosePressed);
     connect(caseCheck, &QCheckBox::clicked, this, &FindWidget::onFindText);
 }
 
 void FindWidget::setMatches(int index, int matches)
 {
-    this->index = index;
     total = matches;
+    setIndex(index);
+}
+
+void FindWidget::setIndex(int newIndex)
+{
+    index = newIndex;
 
     if (lineEdit->text().isEmpty())
     {
@@ -69,9 +74,9 @@ void FindWidget::setMatches(int index, int matches)
     }
     else
     {
-        lineEdit->setLabelText(tr("%1 of %2").arg(index).arg(matches));
+        lineEdit->setLabelText(tr("%1 of %2").arg(index).arg(total));
 
-        if (matches == 0)
+        if (total == 0)
             lineEdit->setStyleSheet("QLineEdit > QLabel {background-color: #ff6666;}");
         else
             lineEdit->setStyleSheet(QString());
@@ -93,4 +98,9 @@ void FindWidget::onFindPreviousPressed()
 void FindWidget::onFindText()
 {
     emit findText(lineEdit->text(), caseCheck->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive);
+}
+
+void FindWidget::onClosePressed()
+{
+    emit close(lineEdit->text());
 }

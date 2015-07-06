@@ -440,7 +440,7 @@ void GenericChatForm::toggleFindWidget()
     if (!hasFindWidget())
         showFindWidget();
     else
-        removeFindWidget();
+        removeFindWidget(QString());
 }
 
 void GenericChatForm::showFindWidget()
@@ -454,12 +454,13 @@ void GenericChatForm::showFindWidget()
         connect(findWidget, &FindWidget::findPrevious, this, &GenericChatForm::findPrevious);
         connect(findWidget, &FindWidget::close, this, &GenericChatForm::removeFindWidget);
         connect(this, &GenericChatForm::findMatchesChanged, findWidget, &FindWidget::setMatches);
+        connect(this, &GenericChatForm::findIndexChanged, findWidget, &FindWidget::setIndex);
 
         mainLayout->insertWidget(0, findWidget);
     }
 }
 
-void GenericChatForm::removeFindWidget()
+void GenericChatForm::removeFindWidget(const QString& text)
 {
     if (hasFindWidget())
     {
@@ -471,138 +472,49 @@ void GenericChatForm::removeFindWidget()
         static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar());
         indicatorScroll->clearIndicators();
 
-        foundText.clear();
-        foundText.squeeze();
+        //foundText.clear();
+        //foundText.squeeze();
 
         QVector<ChatLine::Ptr> chatLines = getChatLog()->getLines();
 
         for (ChatLine::Ptr chatLine : chatLines)
             chatLine.get()->setHighlight(QString(), Qt::CaseInsensitive);
+
+        qDebug() << getChatLog()->getSelectedText();
+
+        if (getChatLog()->getSelectedText() == text)
+            getChatLog()->clearSelection();
+
     }
 }
 
 void GenericChatForm::findText(const QString &text, Qt::CaseSensitivity sensitivity)
 {
-    foundText.clear();
-
-    int i = 0;
-    QVector<ChatLine::Ptr> chatLines = getChatLog()->getLines();
+    int index;
+    int total = getChatLog()->findText(text, sensitivity, index);
 
     IndicatorScrollBar* indicatorScroll =
     static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar());
     indicatorScroll->clearIndicators();
 
-    int to = -1;
-    ChatLine::Ptr toSelect;
-    ChatLine::Ptr first;
-
-    for (ChatLine::Ptr chatLine : chatLines)
+    for (ChatLine::Ptr chatLine : getChatLog()->getFoundLines().values())
     {
-        int last = i;
-        i += chatLine.get()->setHighlight(text, sensitivity);
-
-        if (last != i)
-        {
-            if (!first)
-                first = chatLine;
-
-            for (int iter = last; iter != i; ++iter)
-                foundText.insert(iter, chatLine);
-
-            indicatorScroll->setTotal(chatWidget->sceneRect().height());
-            indicatorScroll->addIndicator(chatLine.get()->sceneBoundingRect().top() + 20);
-            indicatorScroll->update();
-
-            bool above = chatLine.get()->sceneBoundingRect().top() >= getChatLog()->verticalScrollBar()->value();
-
-            if (to == -1 && above)
-            {
-                to = last;
-                toSelect = chatLine;
-            }
-        }
-
-        chatLine.get()->selectionCleared();
+        indicatorScroll->setTotal(chatWidget->sceneRect().height());
+        indicatorScroll->addIndicator(chatLine.get()->sceneBoundingRect().top() + 20);
+        indicatorScroll->update();
     }
 
-    // If we didn't find anything near the scroll area, then go to the first found.
-    if (to == -1 && i != 0)
-    {
-        to = 0;
-        toSelect = first;
-    }
-
-    emit findMatchesChanged(to + 1, i);
-
-    if (to != -1)
-    {
-        toSelect.get()->selectNext(text, sensitivity);
-        getChatLog()->ensureVisible(toSelect.get()->sceneBoundingRect());
-    }
-
-    getChatLog()->update();
+    emit findMatchesChanged(index + 1, total);
 }
 
 void GenericChatForm::findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity)
 {
-    bool clear = true;
-    int next = to;
-    auto newFound = foundText.find(next - 1);
-    auto lastFound = foundText.find(next - 2);
-
-    if (lastFound == foundText.end())
-        lastFound = foundText.find(total - 1);
-
-    if (newFound == foundText.end())
-    {
-        newFound = foundText.find(0);
-        next = 1;
-    }
-
-    if (newFound.value() == lastFound.value())
-        clear = false;
-
-    emit findMatchesChanged(next, total);
-
-    if (clear)
-        lastFound.value().get()->selectionCleared();
-
-    getChatLog()->ensureVisible(newFound.value().get()->sceneBoundingRect());
-
-    //if (total != 1)
-        newFound.value().get()->selectNext(text, sensitivity);
-
-    getChatLog()->update();
+    emit findIndexChanged(getChatLog()->findNext(text, to, total, sensitivity));
 }
 
 void GenericChatForm::findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity)
 {
-    bool clear = true;
-    int next = to;
-    auto newFound = foundText.find(next - 1);
-    auto lastFound = foundText.find(next);
-
-    if (lastFound == foundText.end())
-        lastFound = foundText.find(0);
-
-    if (newFound == foundText.end())
-    {
-        newFound = foundText.find(total - 1);
-        next = total;
-    }
-
-    if (newFound.value() == lastFound.value())
-        clear = false;
-
-    emit findMatchesChanged(next, total);
-
-    if (clear)
-        lastFound.value().get()->selectionCleared();
-
-    getChatLog()->ensureVisible(newFound.value().get()->sceneBoundingRect());
-    newFound.value().get()->selectPrevious(text, sensitivity);
-
-    getChatLog()->update();
+    emit findIndexChanged(getChatLog()->findPrevious(text, to, total, sensitivity));
 }
 
 void GenericChatForm::addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime)

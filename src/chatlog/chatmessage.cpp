@@ -38,7 +38,7 @@ ChatMessage::ChatMessage()
 
 }
 
-bool ChatMessage::selectNext(const QString& text, Qt::CaseSensitivity sensitivity)
+int ChatMessage::selectNext(const QString& text, Qt::CaseSensitivity sensitivity)
 {
     bool done = false;
 
@@ -50,7 +50,7 @@ bool ChatMessage::selectNext(const QString& text, Qt::CaseSensitivity sensitivit
             done = true;
 
             if (getContent(i)->selectNext(text, sensitivity))
-                return true;
+                return i;
             else
                 getContent(i)->selectionCleared();
         }
@@ -65,15 +65,15 @@ bool ChatMessage::selectNext(const QString& text, Qt::CaseSensitivity sensitivit
                 continue;
 
             if (getContent(i)->selectNext(text, sensitivity))
-                return true;
+                return i;
         }
     }
 
     // Text not found for selection.
-    return false;
+    return -1;
 }
 
-bool ChatMessage::selectPrevious(const QString& text, Qt::CaseSensitivity sensitivity)
+int ChatMessage::selectPrevious(const QString& text, Qt::CaseSensitivity sensitivity)
 {
     bool done = false;
 
@@ -85,7 +85,7 @@ bool ChatMessage::selectPrevious(const QString& text, Qt::CaseSensitivity sensit
             done = true;
 
             if (getContent(i)->selectPrevious(text, sensitivity))
-                return true;
+                return i;
             else
                 getContent(i)->selectionCleared();
         }
@@ -100,12 +100,12 @@ bool ChatMessage::selectPrevious(const QString& text, Qt::CaseSensitivity sensit
                 continue;
 
             if (getContent(i)->selectPrevious(text, sensitivity))
-                return true;
+                return i;
         }
     }
 
     // Text not found for selection.
-    return false;
+    return -1;
 }
 
 int ChatMessage::setHighlight(const QString &text, Qt::CaseSensitivity sensitivity)
@@ -173,7 +173,7 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     }
 
     msg->addColumn(new Image(QSize(18, 18), img), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
-    msg->addColumn(new Text("<b>" + text + "</b>", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
+    msg->addColumn(new Text("<b>" + text + "</b>", Style::getFont(Style::Big), false, text), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
     msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Left));
 
     return msg;
