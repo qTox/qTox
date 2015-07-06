@@ -19,13 +19,12 @@
 
 #include "indicatorscrollbar.h"
 #include <QPainter>
-#include <QDebug>
+#include <QStyleOptionSlider>
+
 IndicatorScrollBar::IndicatorScrollBar(int total, QWidget *parent)
     : QScrollBar(parent)
 {
     setTotal(total);
-    //addIndicator(10);
-    //addIndicator(100);
 }
 
 void IndicatorScrollBar::setTotal(int total)
@@ -42,6 +41,7 @@ void IndicatorScrollBar::addIndicator(int pos)
 void IndicatorScrollBar::clearIndicators()
 {
     indicators.clear();
+    indicators.squeeze();
     update();
 }
 
@@ -49,16 +49,17 @@ void IndicatorScrollBar::paintEvent(QPaintEvent *event)
 {
     QScrollBar::paintEvent(event);
 
-    QPainter painter(this);
-
-    int range = height();
-
-    for (int pos : indicators)
+    if (!indicators.isEmpty())
     {
-        int loc = (static_cast<float>(pos) / total) * range;
+        QPainter painter(this);
         painter.setBrush(Qt::yellow);
         painter.setPen(Qt::darkYellow);
-        painter.drawLine(0, loc, width() - 1, loc);
+
+        for (int pos : indicators)
+        {
+            int loc = (static_cast<float>(pos) / total) * height();
+            painter.drawRect(0, loc - 1, width() - 1, 2);
+        }
     }
 }
 

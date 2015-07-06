@@ -23,7 +23,6 @@
 #include <QFontMetrics>
 #include <QPainter>
 #include <QPalette>
-#include <QDebug>
 #include <QTextBlock>
 #include <QAbstractTextDocumentLayout>
 #include <QApplication>
@@ -151,14 +150,14 @@ bool Text::hasSelection() const
     return selectionEnd != -1;
 }
 
-bool Text::selectNext(const QString& search)
+bool Text::selectNext(const QString& search, Qt::CaseSensitivity sensitivity)
 {
     int indexOf = selectionEnd;
 
     if (indexOf == -1)
         indexOf = 0;
 
-    if ((indexOf = getText().indexOf(search, indexOf, Qt::CaseInsensitive)) != -1)
+    if ((indexOf = getText().indexOf(search, indexOf, sensitivity)) != -1)
     {
         selectionAnchor = indexOf;
         selectionEnd = indexOf + search.count();
@@ -170,17 +169,15 @@ bool Text::selectNext(const QString& search)
     return false;
 }
 
-bool Text::selectPrevious(const QString& search)
+bool Text::selectPrevious(const QString& search, Qt::CaseSensitivity sensitivity)
 {
-    int indexOf = getText().length() - 1;
+    int indexOf = getText().length();
 
     if (hasSelection())
         indexOf = selectionAnchor;
 
-    qDebug() << getText().left(indexOf) << getText().left(indexOf).lastIndexOf(search, -1, Qt::CaseInsensitive);
-    if ((indexOf = (getText().left(indexOf + search.count() - 1).lastIndexOf(search, -1, Qt::CaseInsensitive)) ) != -1)
+    if ((indexOf = (getText().left(indexOf).lastIndexOf(search, -1, sensitivity)) ) != -1)
     {
-        qDebug() << getText().mid(indexOf, search.count());
         selectionAnchor = indexOf;
         selectionEnd = indexOf + search.count();
         selectedText = search;
@@ -209,8 +206,12 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         if (!highlightText.isEmpty())
         {
             QTextCursor findCursor;
+            QTextDocument::FindFlags caseFlags;
 
-            while (!(findCursor = doc->find(highlightText, findCursor)).isNull())
+            if (sensitivity == Qt::CaseSensitive)
+                caseFlags = QTextDocument::FindCaseSensitively;
+
+            while (!(findCursor = doc->find(highlightText, findCursor, caseFlags)).isNull())
             {
                 QAbstractTextDocumentLayout::Selection highlight;
                 highlight.cursor = findCursor;
@@ -294,36 +295,24 @@ QString Text::getText() const
     return rawText;
 }
 
-int Text::setHighlight(const QString &highlight)
+int Text::setHighlight(const QString &highlight, Qt::CaseSensitivity sensitivity)
 {
     int foundCount = 0;
     int index = -highlight.count();
 
     if (!highlight.isEmpty())
     {
-        while ((index = getText().indexOf(highlight, index + highlight.count(), Qt::CaseInsensitive)) != -1)
+        while ((index = getText().indexOf(highlight, index + highlight.count(), sensitivity)) != -1)
             ++foundCount;
     }
 
-    //qDebug() << getText() << foundCount;
-
     highlightText = highlight;
+    this->sensitivity = sensitivity;
 
     if (!isVisible())
         update();
 
     return foundCount;
-}
-
-QTextCursor Text::setHighlight(const QString &highlight, const QTextCursor &from)
-{
-    highlightText = highlight;
-    update();
-
-    if (!doc)
-        return QTextCursor();
-
-    return doc->find(highlight, from);
 }
 
 void Text::regenerate()

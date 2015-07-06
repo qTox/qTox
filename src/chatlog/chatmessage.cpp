@@ -38,7 +38,7 @@ ChatMessage::ChatMessage()
 
 }
 
-bool ChatMessage::selectNext(const QString& text)
+bool ChatMessage::selectNext(const QString& text, Qt::CaseSensitivity sensitivity)
 {
     bool done = false;
 
@@ -49,7 +49,7 @@ bool ChatMessage::selectNext(const QString& text)
         {
             done = true;
 
-            if (getContent(i)->selectNext(text))
+            if (getContent(i)->selectNext(text, sensitivity))
                 return true;
             else
                 getContent(i)->selectionCleared();
@@ -64,7 +64,7 @@ bool ChatMessage::selectNext(const QString& text)
             if (i == 0 && isSenderHidden())
                 continue;
 
-            if (getContent(i)->selectNext(text))
+            if (getContent(i)->selectNext(text, sensitivity))
                 return true;
         }
     }
@@ -73,18 +73,18 @@ bool ChatMessage::selectNext(const QString& text)
     return false;
 }
 
-bool ChatMessage::selectPrevious(const QString& text)
+bool ChatMessage::selectPrevious(const QString& text, Qt::CaseSensitivity sensitivity)
 {
     bool done = false;
 
     // First, check if a selection has been made. If it has, then move to next one.
-    for (int i = 1; i > 0; --i)
+    for (int i = 1; i >= 0; --i)
     {
         if (getContent(i)->hasSelection() || done)
         {
             done = true;
 
-            if (getContent(i)->selectPrevious(text))
+            if (getContent(i)->selectPrevious(text, sensitivity))
                 return true;
             else
                 getContent(i)->selectionCleared();
@@ -94,12 +94,12 @@ bool ChatMessage::selectPrevious(const QString& text)
     // If not, then find the next one starting from the beginning.
     if (!done)
     {
-        for (int i = 1; i > 0; --i)
+        for (int i = 1; i >= 0; --i)
         {
             if (i == 0 && isSenderHidden())
                 continue;
 
-            if (getContent(i)->selectPrevious(text))
+            if (getContent(i)->selectPrevious(text, sensitivity))
                 return true;
         }
     }
@@ -108,14 +108,14 @@ bool ChatMessage::selectPrevious(const QString& text)
     return false;
 }
 
-int ChatMessage::setHighlight(const QString &text)
+int ChatMessage::setHighlight(const QString &text, Qt::CaseSensitivity sensitivity)
 {
     int total = 0;
 
     if (!isSenderHidden())
-        total += getContent(0)->setHighlight(text);
+        total += getContent(0)->setHighlight(text, sensitivity);
 
-    return total + getContent(1)->setHighlight(text);
+    return total + getContent(1)->setHighlight(text, sensitivity);
 }
 
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage, MessageType type, bool isMe, const QDateTime &date)

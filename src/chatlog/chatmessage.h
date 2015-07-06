@@ -46,9 +46,9 @@ public:
     };
 
     ChatMessage();
-    virtual bool selectNext(const QString& text) override;
-    virtual bool selectPrevious(const QString& text) override;
-    virtual int setHighlight(const QString& text) override;
+    virtual bool selectNext(const QString& text, Qt::CaseSensitivity sensitivity) override;
+    virtual bool selectPrevious(const QString&, Qt::CaseSensitivity sensitivity) override;
+    virtual int setHighlight(const QString& text, Qt::CaseSensitivity sensitivity) override;
 
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage, MessageType type, bool isMe, const QDateTime& date = QDateTime());
     static ChatMessage::Ptr createChatInfoMessage(const QString& rawMessage, SystemMessageType type, const QDateTime& date);

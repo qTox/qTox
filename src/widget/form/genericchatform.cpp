@@ -456,15 +456,11 @@ void GenericChatForm::removeFindWidget()
         QVector<ChatLine::Ptr> chatLines = getChatLog()->getLines();
 
         for (ChatLine::Ptr chatLine : chatLines)
-        {
-            chatLine.get()->setHighlight(QString());
-
-            //if (chatLine.get()->getContent(0)->getSelectedText() == )
-        }
+            chatLine.get()->setHighlight(QString(), Qt::CaseInsensitive);
     }
 }
 
-void GenericChatForm::findText(const QString &text)
+void GenericChatForm::findText(const QString &text, Qt::CaseSensitivity sensitivity)
 {
     foundText.clear();
 
@@ -482,7 +478,7 @@ void GenericChatForm::findText(const QString &text)
     for (ChatLine::Ptr chatLine : chatLines)
     {
         int last = i;
-        i += chatLine.get()->setHighlight(text);
+        i += chatLine.get()->setHighlight(text, sensitivity);
 
         if (last != i)
         {
@@ -519,14 +515,14 @@ void GenericChatForm::findText(const QString &text)
 
     if (to != -1)
     {
-        toSelect.get()->selectNext(text);
+        toSelect.get()->selectNext(text, sensitivity);
         getChatLog()->ensureVisible(toSelect.get()->sceneBoundingRect());
     }
 
     getChatLog()->update();
 }
 
-void GenericChatForm::findNext(const QString& text, int to, int total)
+void GenericChatForm::findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity)
 {
     bool clear = true;
     int next = to;
@@ -551,12 +547,14 @@ void GenericChatForm::findNext(const QString& text, int to, int total)
         lastFound.value().get()->selectionCleared();
 
     getChatLog()->ensureVisible(newFound.value().get()->sceneBoundingRect());
-    newFound.value().get()->selectNext(text);
+
+    //if (total != 1)
+        newFound.value().get()->selectNext(text, sensitivity);
 
     getChatLog()->update();
 }
 
-void GenericChatForm::findPrevious(const QString& text, int to, int total)
+void GenericChatForm::findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity)
 {
     bool clear = true;
     int next = to;
@@ -581,7 +579,7 @@ void GenericChatForm::findPrevious(const QString& text, int to, int total)
         lastFound.value().get()->selectionCleared();
 
     getChatLog()->ensureVisible(newFound.value().get()->sceneBoundingRect());
-    newFound.value().get()->selectPrevious(text);
+    newFound.value().get()->selectPrevious(text, sensitivity);
 
     getChatLog()->update();
 }
