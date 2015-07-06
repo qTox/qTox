@@ -200,7 +200,6 @@ if  using  /usr/local/bin for final build make sure to follow advise here: https
 ```
 
 
-```
 ###Compiling
 **Make sure that all the dependencies are installed.**  
 Now go to `/home/user/qTox/qTox` (or where you cloned) and simply run :
