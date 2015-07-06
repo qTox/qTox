@@ -36,15 +36,17 @@ signals:
     void findNext(const QString& text, int index, int total, Qt::CaseSensitivity);
     void findPrevious(const QString& text, int index, int total, Qt::CaseSensitivity);
     void setCase(bool match);
-    void close();
+    void close(const QString& text);
 
 public slots:
     void setMatches(int index, int matches);
+    void setIndex(int index);
 
 private slots:
     void onFindNextPressed();
     void onFindPreviousPressed();
     void onFindText();
+    void onClosePressed();
 
 private:
     QCheckBox* caseCheck;

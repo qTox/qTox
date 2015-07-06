@@ -584,6 +584,132 @@ QString ChatLog::getSelectedText() const
     return QString();
 }
 
+int ChatLog::findText(const QString &text, Qt::CaseSensitivity sensitivity, int &index)
+{
+    clearSelection();
+    foundText.clear();
+
+    index = -1;
+    int i = 0;
+    ChatLine::Ptr toSelect;
+    ChatLine::Ptr first;
+
+    for (ChatLine::Ptr chatLine : lines)
+    {
+        int last = i;
+        i += chatLine.get()->setHighlight(text, sensitivity);
+
+        if (last != i)
+        {
+            if (!first)
+                first = chatLine;
+
+            for (int iter = last; iter != i; ++iter)
+                foundText.insert(iter, chatLine);
+
+            bool above = chatLine.get()->sceneBoundingRect().top() >= verticalScrollBar()->value();
+
+            if (index == -1 && above)
+            {
+                index = last;
+                toSelect = chatLine;
+            }
+        }
+
+        chatLine.get()->selectionCleared();
+    }
+
+    // If we didn't find anything near the scroll area, then go to the first found.
+    if (index == -1 && i != 0)
+    {
+        index = 0;
+        toSelect = first;
+    }
+
+    if (index != -1)
+    {
+        ensureVisible(toSelect.get()->sceneBoundingRect());
+
+        selClickedCol = toSelect->selectNext(text, sensitivity);
+        selClickedRow = toSelect->getRow();
+        selFirstRow = toSelect->getRow();
+        selLastRow = toSelect->getRow();
+        selectionMode = Precise;
+    }
+
+    update();
+    emit selectionChanged();
+
+    return i;
+}
+
+int ChatLog::findNext(const QString &text, int to, int total, Qt::CaseSensitivity sensitivity)
+{
+    bool clear = true;
+    int next = to;
+    auto newFound = foundText.find(next - 1);
+    auto lastFound = foundText.find(next - 2);
+
+    if (lastFound == foundText.end())
+        lastFound = foundText.find(total - 1);
+
+    if (newFound == foundText.end())
+    {
+        newFound = foundText.find(0);
+        next = 1;
+    }
+
+    if (newFound.value() == lastFound.value())
+        clear = false;
+
+    if (clear)
+        lastFound.value().get()->selectionCleared();
+
+    ensureVisible(newFound.value().get()->sceneBoundingRect());
+
+    if (total != 1 || getSelectedText() != text)
+        newFound.value().get()->selectNext(text, sensitivity);
+
+    update();
+    return next;
+}
+
+int ChatLog::findPrevious(const QString &text, int to, int total, Qt::CaseSensitivity sensitivity)
+{
+    bool clear = true;
+    int next = to;
+    auto newFound = foundText.find(next - 1);
+    auto lastFound = foundText.find(next);
+
+    if (lastFound == foundText.end())
+        lastFound = foundText.find(0);
+
+    if (newFound == foundText.end())
+    {
+        newFound = foundText.find(total - 1);
+        next = total;
+    }
+
+    if (newFound.value() == lastFound.value())
+        clear = false;
+
+    if (clear)
+        lastFound.value().get()->selectionCleared();
+
+    ensureVisible(newFound.value().get()->sceneBoundingRect());
+
+    if (total != 1 || getSelectedText() != text)
+        newFound.value().get()->selectPrevious(text, sensitivity);
+
+    update();
+    return next;
+}
+
+const QHash<int, ChatLine::Ptr>& ChatLog::getFoundLines() const
+{
+    return foundText;
+}
+
 bool ChatLog::isEmpty() const
 {
     return lines.isEmpty();

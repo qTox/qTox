@@ -71,12 +71,13 @@ signals:
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
     void findMatchesChanged(int index, int total);
+    void findIndexChanged(int index);
 
 public slots:
     void focusInput();
     void toggleFindWidget();
     void showFindWidget();
-    void removeFindWidget();
+    void removeFindWidget(const QString& text);
     void findText(const QString& text, Qt::CaseSensitivity sensitivity);
     void findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
     void findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
@@ -127,7 +128,6 @@ protected:
     QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
     bool audioInputFlag;
     bool audioOutputFlag;
-    QHash<int, ChatLine::Ptr> foundText;
 
 private:
     QVBoxLayout* mainLayout;
