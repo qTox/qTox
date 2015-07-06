@@ -173,7 +173,7 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     }
 
     msg->addColumn(new Image(QSize(18, 18), img), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
-    msg->addColumn(new Text("<b>" + text + "</b>", Style::getFont(Style::Big), false, text), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
+    msg->addColumn(new Text("<b>" + text + "</b>", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
     msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Left));
 
     return msg;

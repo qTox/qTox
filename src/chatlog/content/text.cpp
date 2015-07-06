@@ -29,6 +29,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDesktopServices>
 #include <QTextFragment>
+#include <QRegularExpression>
 
 Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText, const QColor c)
     : rawText(rwText)
@@ -306,7 +307,11 @@ int Text::setHighlight(const QString &highlight, Qt::CaseSensitivity sensitivity
             ++foundCount;
     }
 
-    highlightText = highlight;
+    if (foundCount)
+        highlightText = highlight;
+    else
+        highlightText.clear();
+
     this->sensitivity = sensitivity;
 
     if (!isVisible())
