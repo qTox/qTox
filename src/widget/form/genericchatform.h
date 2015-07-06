@@ -81,9 +81,9 @@ public slots:
     void toggleFindWidget();
     void showFindWidget();
     void removeFindWidget();
-    void findText(const QString& text);
-    void findNext(const QString& text, int to, int total);
-    void findPrevious(const QString& text, int to, int total);
+    void findText(const QString& text, Qt::CaseSensitivity sensitivity);
+    void findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
+    void findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);

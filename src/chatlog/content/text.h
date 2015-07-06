@@ -46,10 +46,9 @@ public:
     virtual bool isOverSelection(QPointF scenePos) const final;
     virtual QString getSelectedText() const final;
     virtual bool hasSelection() const override final;
-    virtual bool selectNext(const QString& search) override final;
-    virtual bool selectPrevious(const QString& search) override final;
-    virtual int setHighlight(const QString& highlight) override final;
-    virtual QTextCursor setHighlight(const QString& highlight, const QTextCursor& from) override final;
+    virtual bool selectNext(const QString& search, Qt::CaseSensitivity sensitivity) override final;
+    virtual bool selectPrevious(const QString& search, Qt::CaseSensitivity sensitivity) override final;
+    virtual int setHighlight(const QString& highlight, Qt::CaseSensitivity sensitivity) override final;
 
     virtual QRectF boundingRect() const final;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final;
@@ -94,7 +93,7 @@ private:
     qreal width = 0.0;
     QFont defFont;
     QColor color;
-
+    Qt::CaseSensitivity sensitivity;
 };
 
 #endif // TEXT_H

@@ -18,8 +18,8 @@
 */
 
 #include "findwidget.h"
+#include "labeledlineedit.h"
 #include <QBoxLayout>
-#include <QLineEdit>
 #include <QPushButton>
 #include <QCheckBox>
 #include <QLabel>
@@ -28,44 +28,33 @@ FindWidget::FindWidget(QWidget *parent) : QWidget(parent)
 {
     QHBoxLayout* findLayout = new QHBoxLayout(this);
 
-    matchesLabel = new QLabel();
-    findLayout->addWidget(matchesLabel, 1);
-    setMatches(0, 0);
+    QLabel* matchesLabel = new QLabel(tr("Find:"));
+    findLayout->addWidget(matchesLabel);
 
-    QLineEdit* lineEdit = new QLineEdit(this);
+    lineEdit = new LabeledLineEdit(this);
     lineEdit->setFocus();
     findLayout->addWidget(lineEdit, 1);
 
-    QPushButton* previousButton = new QPushButton();
+    QPushButton* previousButton = new QPushButton(tr("Previous"), this);
     previousButton->setToolTip(tr("Find the previous occurence of the phrase"));
-    previousButton->setIcon(QIcon("://ui/chatArea/scrollBarUpArrow.svg"));
     findLayout->addWidget(previousButton);
 
-    QPushButton* nextButton = new QPushButton();
+    QPushButton* nextButton = new QPushButton(tr("Next"), this);
     nextButton ->setToolTip(tr("Find the next occurence of the phrase"));
-    nextButton ->setIcon(QIcon("://ui/chatArea/scrollBarDownArrow.svg"));
     findLayout->addWidget(nextButton);
 
-    QCheckBox* matchCheck = new QCheckBox(tr("Match Case"));
-    findLayout->addWidget(matchCheck);
+    caseCheck = new QCheckBox(tr("Match Case"), this);
+    findLayout->addWidget(caseCheck);
 
-    QPushButton* closeButton = new QPushButton(this);
-    closeButton->setIcon(QIcon("://ui/fileTransferInstance/no.svg"));
+    QPushButton* closeButton = new QPushButton(tr("Close"), this);
     closeButton->setToolTip(tr("Close the find bar"));
     findLayout->addWidget(closeButton);
 
-    connect(lineEdit, &QLineEdit::textChanged, this, &FindWidget::findText);
-    connect(nextButton, &QPushButton::pressed, [this, lineEdit]()
-    {
-        if (total != 0)
-            emit findNext(lineEdit->text(), index + 1, total);
-    });
-    connect(previousButton, &QPushButton::pressed, [this, lineEdit]()
-    {
-        if (total != 0)
-            emit findPrevious(lineEdit->text(), index - 1, total);
-    });
+    connect(lineEdit, &QLineEdit::textChanged, this, &FindWidget::onFindText);
+    connect(nextButton, &QPushButton::pressed, this, &FindWidget::onFindNextPressed);
+    connect(previousButton, &QPushButton::pressed, this, &FindWidget::onFindPreviousPressed);
     connect(closeButton, &QPushButton::pressed, this, &FindWidget::close);
+    connect(caseCheck, &QCheckBox::clicked, this, &FindWidget::onFindText);
 }
 
 void FindWidget::setMatches(int index, int matches)
@@ -73,10 +62,35 @@ void FindWidget::setMatches(int index, int matches)
     this->index = index;
     total = matches;
 
-    if (matches <= 0)
-        matchesLabel->setText(QString());
-    else if (matches > 100)
-        matchesLabel->setText(tr("More than 100 matches"));
+    if (lineEdit->text().isEmpty())
+    {
+        lineEdit->setLabelText(QString());
+        lineEdit->setStyleSheet(QString());
+    }
     else
-        matchesLabel->setText(tr("%1 of %2 matches").arg(index).arg(matches));
+    {
+        lineEdit->setLabelText(tr("%1 of %2").arg(index).arg(matches));
+
+        if (matches == 0)
+            lineEdit->setStyleSheet("QLineEdit > QLabel {background-color: #ff6666;}");
+        else
+            lineEdit->setStyleSheet(QString());
+    }
+}
+
+void FindWidget::onFindNextPressed()
+{
+    if (total != 0)
+        emit findNext(lineEdit->text(), index + 1, total, caseCheck->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive);
+}
+
+void FindWidget::onFindPreviousPressed()
+{
+    if (total != 0)
+        emit findPrevious(lineEdit->text(), index - 1, total, caseCheck->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive);
+}
+
+void FindWidget::onFindText()
+{
+    emit findText(lineEdit->text(), caseCheck->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive);
 }

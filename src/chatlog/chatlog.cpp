@@ -109,8 +109,6 @@ ChatLog::ChatLog(QWidget* parent)
 #endif
     });
 
-    //setCursor(Qt::SplitHCursor);
-
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 }
@@ -200,6 +198,8 @@ void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
 
     viewport()->unsetCursor();
     selectionScrollDir = NoDirection;
+
+    mouseMoveEvent(ev); // To fix the cursor.
 }
 
 void ChatLog::mouseMoveEvent(QMouseEvent* ev)

@@ -46,10 +46,9 @@ public:
     virtual bool isOverSelection(QPointF scenePos) const;
     virtual QString getSelectedText() const;
     virtual bool hasSelection() const;
-    virtual bool selectNext(const QString& search);
-    virtual bool selectPrevious(const QString& search);
-    virtual int setHighlight(const QString& highlight);
-    virtual QTextCursor setHighlight(const QString &highlight, const QTextCursor &previous);
+    virtual bool selectNext(const QString& search, Qt::CaseSensitivity sensitivity);
+    virtual bool selectPrevious(const QString& search, Qt::CaseSensitivity sensitivity);
+    virtual int setHighlight(const QString& highlight, Qt::CaseSensitivity sensitivity);
 
     virtual QString getText() const;
 

@@ -516,6 +516,7 @@ SOURCES += \
     src/widget/tool/findwidget.cpp \
     src/widget/tool/indicatorscrollbar.cpp \
     src/video/genericnetcamview.cpp \
+    src/widget/tool/labeledlineedit.cpp \
     src/widget/tool/activatedialog.cpp \
     src/widget/tool/movablewidget.cpp \
     src/widget/tool/micfeedbackwidget.cpp \
@@ -573,6 +574,7 @@ HEADERS += \
     src/widget/tool/findwidget.h \
     src/widget/tool/indicatorscrollbar.h \
     src/widget/tool/activatedialog.h \
+    src/widget/tool/labeledlineedit.h \
     src/widget/tool/micfeedbackwidget.h \
     src/widget/tool/removefrienddialog.h \
     src/widget/tool/movablewidget.h \

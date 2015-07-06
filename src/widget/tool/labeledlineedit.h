@@ -17,40 +17,27 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FINDWIDGET_H
-#define FINDWIDGET_H
+#ifndef LABELEDLINEEDIT_H
+#define LABELEDLINEEDIT_H
 
-#include <QWidget>
+#include <QLineEdit>
 
-class QCheckBox;
-class LabeledLineEdit;
+class QLabel;
 
-class FindWidget : public QWidget
+class LabeledLineEdit : public QLineEdit
 {
-    Q_OBJECT
 public:
-    explicit FindWidget(QWidget *parent = 0);
+    LabeledLineEdit(QWidget* parent = 0);
+    void setLabelText(const QString& text);
 
-signals:
-    void findText(const QString& text, Qt::CaseSensitivity);
-    void findNext(const QString& text, int index, int total, Qt::CaseSensitivity);
-    void findPrevious(const QString& text, int index, int total, Qt::CaseSensitivity);
-    void setCase(bool match);
-    void close();
-
-public slots:
-    void setMatches(int index, int matches);
-
-private slots:
-    void onFindNextPressed();
-    void onFindPreviousPressed();
-    void onFindText();
+protected:
+    void resizeEvent(QResizeEvent* event) final override;
+    void moveEvent(QMoveEvent* event) final override;
 
 private:
-    QCheckBox* caseCheck;
-    LabeledLineEdit* lineEdit;
-    int index;
-    int total;
+    void setLabelGeometry();
+
+    QLabel* label;
 };
 
-#endif // FINDWIDGET_H
+#endif // LABELEDLINEEDIT_H

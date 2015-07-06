@@ -81,24 +81,19 @@ bool ChatLineContent::hasSelection() const
     return false;
 }
 
-bool ChatLineContent::selectNext(const QString&)
+bool ChatLineContent::selectNext(const QString&, Qt::CaseSensitivity)
 {
     return false;
 }
 
-bool ChatLineContent::selectPrevious(const QString&)
+bool ChatLineContent::selectPrevious(const QString&, Qt::CaseSensitivity)
 {
     return false;
 }
 
-int ChatLineContent::setHighlight(const QString&)
+int ChatLineContent::setHighlight(const QString&, Qt::CaseSensitivity)
 {
     return 0;
-}
-
-QTextCursor ChatLineContent::setHighlight(const QString&, const QTextCursor&)
-{
-    return QTextCursor();
 }
 
 qreal ChatLineContent::getAscent() const
