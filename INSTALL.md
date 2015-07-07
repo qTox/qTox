@@ -137,7 +137,7 @@ sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-sof
 ```
 
 openSUSE:
-
+**Note that ffmpeg is not included in the default repositories, you have to add the packman repository.**
 ```bash
 sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite 
 ```
@@ -200,7 +200,6 @@ if  using  /usr/local/bin for final build make sure to follow advise here: https
 ```
 
 
-```
 ###Compiling
 **Make sure that all the dependencies are installed.**  
 Now go to `/home/user/qTox/qTox` (or where you cloned) and simply run :
