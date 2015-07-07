@@ -54,6 +54,7 @@ public:
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);
     void aliasChanged(const QString& alias);
+    void invitedCall(int friendId);
 
 public slots:
     void startFileSend(ToxFile file);

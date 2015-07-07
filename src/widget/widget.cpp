@@ -239,6 +239,7 @@ void Widget::init()
     Core* core = Nexus::getCore();
     connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
     connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
+    connect(core, &Core::fileTransferFinished, this, &Widget::notifyFileTransferFinished);
     connect(settingsWidget, &SettingsWidget::setShowSystemTray, this, &Widget::onSetShowSystemTray);
     connect(core, &Core::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
     connect(ui->addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
@@ -376,6 +377,7 @@ void Widget::init()
 
     connect(settingsWidget, &SettingsWidget::compactToggled, contactListWidget, &FriendListWidget::onCompactChanged);
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
+    connect(settingsWidget, &SettingsWidget::desktopNotificationsToggled, this, &Widget::onDesktopNotificationsToggled);
     connect(settingsWidget, &SettingsWidget::separateWindowToggled, this, &Widget::onSeparateWindowClicked);
 #if (AUTOUPDATE_ENABLED)
     if (Settings::getInstance().getCheckUpdates())
@@ -471,6 +473,7 @@ Widget::~Widget()
     delete filesForm;
     delete timer;
     delete offlineMsgTimer;
+    delete notification;
     delete contentLayout;
 
     FriendList::clear();
@@ -549,6 +552,11 @@ void Widget::resizeEvent(QResizeEvent *event)
 QString Widget::getUsername()
 {
     return Nexus::getCore()->getUsername();
+}
+
+SystemTrayIcon* Widget::getSystemTrayIcon() const
+{
+    return icon;
 }
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
@@ -901,6 +909,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), &ChatForm::sendFile, core, &Core::sendFile);
     connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
+    connect(newfriend->getChatForm(), &ChatForm::invitedCall, this, &Widget::notifyAvInvite);
     connect(coreav, &CoreAV::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite, Qt::BlockingQueuedConnection);
     connect(coreav, &CoreAV::avStart, newfriend->getChatForm(), &ChatForm::onAvStart, Qt::BlockingQueuedConnection);
     connect(coreav, &CoreAV::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd, Qt::BlockingQueuedConnection);
@@ -949,9 +958,19 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (isActualChange)
     {
         if (f->getStatus() == Status::Offline)
+        {
             contactListWidget->moveWidget(f->getFriendWidget(), Status::Online);
+
+            if (notification && Settings::getInstance().getNotifyOnFriendOnline())
+                notification->notify(NotificationBackend::FriendOnline, f->getFriendWidget(), tr("%1 is now online").arg(f->getDisplayedName()), QString(), f->getFriendWidget()->getAvatar());
+        }
         else if (status == Status::Offline)
+        {
             contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline);
+
+            if (notification && Settings::getInstance().getNotifyOnFriendOffline())
+                notification->notify(NotificationBackend::FriendOffline, f->getFriendWidget(), tr("%1 is now offline").arg(f->getDisplayedName()), QString(), f->getFriendWidget()->getAvatar());
+        }
     }
 
     f->setStatus(status);
@@ -1085,7 +1104,11 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         profile->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
                                                f->getToxId().publicKey, timestamp, true, f->getDisplayedName());
 
-    newFriendMessageAlert(friendId);
+    if (newFriendMessageAlert(friendId))
+    {
+        if ((f->getEventFlag() || !isActiveWindow()) && notification && Settings::getInstance().getNotifyOnNewMessage())
+            notification->notify(NotificationBackend::NewMessage, f->getFriendWidget(), f->getDisplayedName(), message, f->getFriendWidget()->getAvatar());
+    }
 }
 
 void Widget::onReceiptRecieved(int friendId, int receipt)
@@ -1253,6 +1276,12 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
+    if (notification && Settings::getInstance().getNotifyOnFriendRequest())
+    {
+        Friend* f = FriendList::findFriend(userId);
+        notification->notify(NotificationBackend::FriendRequest, nullptr, tr("Friend Request from %1 Recieved").arg(userId), message, QPixmap());
+    }
+
     FriendRequestDialog dialog(this, userId, message);
 
     if (dialog.exec() == QDialog::Accepted)
@@ -1421,7 +1450,11 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("%1 has invited you to a groupchat. Would you like to join?", "popup text").arg(Nexus::getCore()->getFriendUsername(friendId).toHtmlEscaped()), true, false))
+        QString invitedText = tr("%1 has invited you to a groupchat.", "popup text part 1").arg(Nexus::getCore()->getFriendUsername(friendId));
+        if (notification && Settings::getInstance().getNotifyOnGroupInvite())
+            notification->notify(NotificationBackend::GroupInvite, nullptr, tr("Groupchat invite"), invitedText, FriendList::findFriend(friendId)->getFriendWidget()->getAvatar());
+
+        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("Would you like to join?", "popup text part 2"), true, false))
         {
             int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
             if (groupId < 0)
@@ -1446,12 +1479,24 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
 
     ToxId author = Core::getInstance()->getGroupPeerToxId(groupnumber, peernumber);
     bool targeted = !author.isSelf() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    if (targeted)
+        g->setMentionedFlag(true);
+
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
         g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
 
-    newGroupMessageAlert(g->getGroupId(), targeted || Settings::getInstance().getGroupAlwaysNotify());
+    if (newGroupMessageAlert(g->getGroupId(), targeted || Settings::getInstance().getGroupAlwaysNotify()))
+    {
+        if (notification)
+        {
+            if (g->getEventFlag() && Settings::getInstance().getNotifyOnNewMessage())
+                notification->notify(NotificationBackend::NewMessage, g->getGroupWidget(), g->getGroupWidget()->getName(), message, g->getGroupWidget()->getAvatar());
+            else if (g->getMentionedFlag() && Settings::getInstance().getNotifyOnHighlight())
+                notification->notify(NotificationBackend::Highlighted, g->getGroupWidget(), g->getGroupWidget()->getName(), message, g->getGroupWidget()->getAvatar());
+        }
+    }
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
@@ -1693,6 +1738,7 @@ void Widget::onTryCreateTrayIcon()
 #ifdef Q_OS_MAC
             qt_mac_set_dock_menu(Nexus::getInstance().dockMenu);
 #endif
+            settingsWidget->reloadNotificationBackend();
         }
         else if (!isVisible())
         {
@@ -2038,6 +2084,36 @@ void Widget::friendListContextMenu(const QPoint &pos)
 
     if (chosenAction == addCircleAction)
         contactListWidget->addCircleWidget();
+}
+
+void Widget::onDesktopNotificationsToggled(NotificationBackend* notificationBackend)
+{
+    delete notification;
+    notification = notificationBackend;
+
+    if (notification)
+        connect(notification, &NotificationBackend::activated, this, &Widget::onChatroomWidgetClicked);
+}
+
+void Widget::notifyAvInvite(int friendId)
+{
+    qDebug() << "notified...";
+    if (notification && Settings::getInstance().getNotifyOnCallInvite())
+    {
+        Friend* f = FriendList::findFriend(friendId);
+        FriendWidget* fwidget = f->getFriendWidget();
+        notification->notify(NotificationBackend::AVCallInvite, fwidget, tr("Incoming Call"), f->getDisplayedName(), fwidget->getAvatar());
+    }
+}
+
+void Widget::notifyFileTransferFinished(ToxFile file)
+{
+    if (notification && Settings::getInstance().getNotifyOnFileTransfer())
+    {
+        Friend* f = FriendList::findFriend(file.friendId);
+        FriendWidget* fwidget = f->getFriendWidget();
+        notification->notify(NotificationBackend::FileTransferFinished, fwidget, tr("File transfer finished"), file.fileName, fwidget->getAvatar());
+    }
 }
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)

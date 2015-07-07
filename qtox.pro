@@ -312,6 +312,35 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
 }
 }
 
+# The snorenotify backend implements a notification system compatible with many systems
+!android {
+contains(ENABLE_NOTIFICATION_SNORE_BACKEND, YES) {
+    DEFINES += ENABLE_NOTIFICATION_SNORE_BACKEND
+
+    unix {
+        INCLUDEPATH += "/usr/local/include/snore/core"
+        equals(QT_ARCH, x86_64) {
+            INCLUDEPATH += "/usr/local/lib64/libsnore-qt5/include"
+            INCLUDEPATH += "/usr/local/lib/x86_64-linux-gnu/libsnore-qt5/include"
+        }
+        else {
+            INCLUDEPATH += "/usr/local/lib/libsnore-qt5/include"
+            INCLUDEPATH += "/usr/local/lib/i386-linux-gnu/libsnore-qt5/include"
+        }
+
+        LIBS += -L/usr/local/lib64/ -lsnore-qt5
+    }
+
+    win32 {
+        LIBS += -lsnore-qt5
+    }
+
+    SOURCES += src/widget/snorenotificationbackend.cpp
+
+    HEADERS += src/widget/snorenotificationbackend.h
+}
+}
+
 !android {
     RESOURCES += res.qrc \
         smileys/smileys.qrc
@@ -511,6 +540,7 @@ SOURCES += \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
+    src/widget/notificationbackend.cpp \
     src/widget/contentlayout.cpp \
     src/widget/contentdialog.cpp \
     src/video/genericnetcamview.cpp \
@@ -566,6 +596,7 @@ HEADERS += \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
     src/widget/categorywidget.h \
+    src/widget/notificationbackend.h \
     src/widget/contentlayout.h \
     src/widget/contentdialog.h \
     src/widget/tool/activatedialog.h \

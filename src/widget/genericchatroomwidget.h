@@ -54,6 +54,7 @@ public:
     void setName(const QString& name);
     void setStatusMsg(const QString& status);
     QString getStatusMsg() const;
+    QPixmap getAvatar() const;
     QString getTitle() const;
 
 	void reloadTheme();

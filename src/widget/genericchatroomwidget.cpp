@@ -147,6 +147,11 @@ QString GenericChatroomWidget::getStatusMsg() const
     return statusMessageLabel->text();
 }
 
+QPixmap GenericChatroomWidget::getAvatar() const
+{
+    return avatar->getPixmap();
+}
+
 QString GenericChatroomWidget::getTitle() const
 {
     QString title = getName();
