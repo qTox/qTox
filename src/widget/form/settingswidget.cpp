@@ -86,6 +86,14 @@ void SettingsWidget::showAbout()
     onTabChanged(settingsWidgets->count() - 1);
 }
 
+void SettingsWidget::setNotificationWidget(QWidget *widget)
+{
+    notificationWidget = widget;
+
+    if (notificationWidget)
+        body->layout()->addWidget(notificationWidget);
+}
+
 void SettingsWidget::show(Ui::MainWindow& ui)
 {
     ui.mainContent->layout()->addWidget(body);

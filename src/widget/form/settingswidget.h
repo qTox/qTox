@@ -44,6 +44,7 @@ public:
 
     void show(Ui::MainWindow &ui);
     void setBodyHeadStyle(QString style);
+    void setNotificationWidget(QWidget* widget);
 
     void showAbout();
 
@@ -61,6 +62,7 @@ private:
 private:
     QWidget *head, *body;
     QTabWidget *settingsWidgets;
+    QWidget* notificationWidget;
     QLabel *nameLabel, *imgLabel;
     std::array<GenericForm*, 5> cfgForms;
     int currentIndex;

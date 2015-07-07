@@ -297,6 +297,31 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
     LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
 }
 }
+ENABLE_NOTIFICATION_SNORE_BACKEND=YES
+# The snorenotify backend implements a notification system compatible with many systems
+unix:!macx:!android {
+contains(ENABLE_NOTIFICATION_SNORE_BACKEND, NO) {
+} else {
+    DEFINES += ENABLE_NOTIFICATION_SNORE_BACKEND
+
+    INCLUDEPATH += "/usr/include/snore/core"
+    equals(QT_ARCH, x86_64) {
+        INCLUDEPATH += "/usr/lib64/libsnore-qt5/include"
+        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/libsnore-qt5/include"
+    }
+    else {
+        INCLUDEPATH += "/usr/lib/libsnore-qt5/include"
+        INCLUDEPATH += "/usr/lib/i386-linux-gnu/libsnore-qt5/include"
+    }
+
+
+    LIBS += -lsnore-qt5
+
+    SOURCES += src/widget/notificationbackend.cpp
+
+    HEADERS += src/widget/notificationbackend.h
+}
+}
 
 !android {
     RESOURCES += res.qrc \

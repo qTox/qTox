@@ -27,6 +27,7 @@
 #include "src/persistence/settings.h"
 
 SystemTrayIcon::SystemTrayIcon()
+    : qtIcon(nullptr)
 {
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (desktop.isEmpty())

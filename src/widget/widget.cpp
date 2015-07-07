@@ -349,6 +349,12 @@ void Widget::init()
 
     if (!Settings::getInstance().getShowSystemTray())
         show();
+
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+   notification = new NotificationBackend(this);
+   settingsWidget->setNotificationWidget(notification->settingsWidget());
+   connect(notification, &NotificationBackend::activated, this, &Widget::onChatroomWidgetClicked);
+#endif
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
@@ -817,8 +823,13 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     }
 
     if (isActualChange && status != Status::Offline)
-    { // wait a little
+    {
+        // wait a little
         QTimer::singleShot(250, f->getChatForm()->getOfflineMsgEngine(), SLOT(deliverOfflineMsgs()));
+
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+        notification->notify(NotificationBackend::FriendStatusChanged, f->getFriendWidget(), f->getDisplayedName(), tr("is now online"));
+#endif
     }
 }
 
@@ -899,6 +910,11 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
             windowTitle += " (" + f->getFriendWidget()->getStatusString() + ")";
         setWindowTitle(windowTitle);
     }
+
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+    if (f->getEventFlag())
+        notification->notify(NotificationBackend::NewMessage, f->getFriendWidget(), f->getDisplayedName(), message);
+#endif
 }
 
 void Widget::onReceiptRecieved(int friendId, int receipt)
@@ -1102,6 +1118,13 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
             windowTitle += " (" + g->getGroupWidget()->getStatusString() + ")";
         setWindowTitle(windowTitle);
     }
+
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+    if (g->getEventFlag())
+        notification->notify(NotificationBackend::NewMessage, g->getGroupWidget(), g->getGroupWidget()->getName(), message);
+    else if (g->getMentionedFlag())
+        notification->notify(NotificationBackend::Highlighted, g->getGroupWidget(), g->getGroupWidget()->getName(), message);
+#endif
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
