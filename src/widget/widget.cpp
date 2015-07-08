@@ -826,10 +826,6 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     {
         // wait a little
         QTimer::singleShot(250, f->getChatForm()->getOfflineMsgEngine(), SLOT(deliverOfflineMsgs()));
-
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-        notification->notify(NotificationBackend::FriendStatusChanged, f->getFriendWidget(), f->getDisplayedName(), tr("is now online"));
-#endif
     }
 }
 

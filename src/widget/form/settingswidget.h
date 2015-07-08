@@ -62,9 +62,9 @@ private:
 private:
     QWidget *head, *body;
     QTabWidget *settingsWidgets;
-    QWidget* notificationWidget;
     QLabel *nameLabel, *imgLabel;
     std::array<GenericForm*, 5> cfgForms;
+    GeneralForm* gfrm;
     int currentIndex;
 };
 

@@ -39,6 +39,7 @@ BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 # directory names of cloned repositories
 TOX_CORE_DIR=libtoxcore-latest
 FILTER_AUDIO_DIR=libfilteraudio-latest
+SNORENOTIFY_DIR=libsnore-latest
 
 if [ -z "$BASE_DIR" ]; then
     echo "internal error detected!"
@@ -58,9 +59,16 @@ if [ -z "$FILTER_AUDIO_DIR" ]; then
     exit 1
 fi
 
+if [ -z "$SNORENOTIFY_DIR" ]; then
+    echo "internal error detected!"
+    echo "SNORENOTIFY_DIR should not be empty.  Aborting."
+    exit 1
+fi
+
 # default values for user given parameters
 INSTALL_TOX=true
 INSTALL_FILTER_AUDIO=true
+INSTALL_SNORENOTIFY=true
 SYSTEM_WIDE=true
 KEEP_BUILD_FILES=false
 
@@ -78,6 +86,12 @@ while [ $# -ge 1 ] ; do
         shift
     elif [ ${1} = "--without-filter-audio" ] ; then
         INSTALL_FILTER_AUDIO=false
+        shift
+    elif [ ${1} = "--with-snorenotify" ] ; then
+        INSTALL_SNORENOTIFY=true
+        shift
+    elif [ ${1} = "--without-snorenotify" ] ; then
+        INSTALL_SNORENOTIFY=false
         shift
     elif [ ${1} = "-l" -o ${1} = "--local" ] ; then
         SYSTEM_WIDE=false
@@ -102,6 +116,8 @@ while [ $# -ge 1 ] ; do
         echo "    --without-tox          : do not install/update libtoxcore"
         echo "    --with-filter-audio    : install/update libfilteraudio"
         echo "    --without-filter-audio : do not install/update libfilteraudio"
+        echo "    --with-snorenotify     : install/update Snorenotify"
+        echo "    --without-snorenotify  : do not install/update Snorenotify"
         echo "    -h|--help              : displays this help"
         echo "    -l|--local             : install packages into ${INSTALL_DIR}"
         echo "    -k|--keep              : keep build files after installation/update"
@@ -116,6 +132,7 @@ done
 ############ print debug output ############
 echo "with tox                    : ${INSTALL_TOX}"
 echo "with filter-audio           : ${INSTALL_FILTER_AUDIO}"
+echo "with Snorenotify            : ${INSTALL_SNORENOTIFY}"
 echo "install into ${INSTALL_DIR} : ${SYSTEM_WIDE}"
 echo "keep build files            : ${KEEP_BUILD_FILES}"
 
@@ -129,6 +146,7 @@ mkdir -p ${BASE_DIR}
 # if exists, otherwise cloning them may fail
 rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
+rm -rf ${BASE_DIR}/${SNORENOTIFY_DIR}
 
 
 ############### install step ###############
@@ -184,10 +202,29 @@ if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
     popd
 fi
 
+#install Snorenotify
+if [[ $INSTALL_SNORENOTIFY = "true" ]]; then
+    git clone https://github.com/Snorenotify/Snorenotify.git ${BASE_DIR}/${SNORENOTIFY_DIR} --depth 1
+    pushd ${BASE_DIR}/${SNORENOTIFY_DIR}
+    
+    if [[ $SYSTEM_WIDE = "false" ]]; then
+    	PREFIX=${BASE_DIR} cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_SHARED_LINKER_FLAGS=-m32 -qt5 .
+        PREFIX=${BASE_DIR} make -j2
+        PREFIX=${BASE_DIR} make install
+    else
+    	cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_SHARED_LINKER_FLAGS=-m32 -DCMAKE_MODULE_LINKER_FLAGS -m32 -qt5 .
+        make -j2
+        sudo make install
+        sudo ldconfig
+    fi
+    
+    popd
+fi
 
 ############### cleanup step ###############
 # remove cloned repositories
 if [[ $KEEP_BUILD_FILES = "false" ]]; then
     rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
     rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
+    rm -rf ${BASE_DIR}/${SNORENOTIFY_DIR}
 fi

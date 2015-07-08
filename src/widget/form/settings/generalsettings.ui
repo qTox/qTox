@@ -40,10 +40,10 @@
         <x>0</x>
         <y>0</y>
         <width>639</width>
-        <height>1221</height>
+        <height>1334</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,1">
        <property name="spacing">
         <number>32</number>
        </property>
@@ -404,6 +404,18 @@ will be sent to them when they appear online to you.</string>
              <string>Compact contact list</string>
             </property>
            </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="notificationGroup">
+         <property name="title">
+          <string>Notifications</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <layout class="QVBoxLayout" name="notificationLayout"/>
           </item>
          </layout>
         </widget>

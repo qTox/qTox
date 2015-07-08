@@ -19,60 +19,68 @@
 
 #include "notificationbackend.h"
 #include <QApplication>
-#include <QComboBox>
-#include <QPointer>
+#include <QPushButton>
+#include <QBoxLayout>
+
+#include <libsnore/settingsdialog.h>
 
 NotificationBackend::NotificationBackend(QObject *parent)
     : QObject(parent)
 {
-    snoreCore.loadPlugins(Snore::SnorePlugin::BACKEND);
-    snoreApp = Snore::Application(QApplication::applicationName(), Snore::Icon());
-    alert[0] = Snore::Alert(tr("New Message"), Snore::Icon());
-    alert[1] = Snore::Alert(tr("Highlighted"), Snore::Icon());
-    alert[2] = Snore::Alert(tr("File Transfer Finished"), Snore::Icon());
-    alert[3] = Snore::Alert(tr("Friend Request"), Snore::Icon());
-    alert[4] = Snore::Alert(tr("AV Call"), Snore::Icon());
-    alert[5] = Snore::Alert(tr("Friend Online"), Snore::Icon());
+    Snore::Icon icon(QIcon("://img/icons/qtox.svg").pixmap(48, 48).toImage());
+    snoreApp = Snore::Application(QApplication::applicationName(), icon);
+    snoreApp.addAlert(Snore::Alert(typeToString(NewMessage), icon));
+    snoreApp.addAlert(Snore::Alert(typeToString(Highlighted), icon));
+    snoreApp.addAlert(Snore::Alert(typeToString(FileTransferFinished), icon));
+    snoreApp.addAlert(Snore::Alert(typeToString(FriendRequest), icon));
+    snoreApp.addAlert(Snore::Alert(typeToString(AVCall), icon));
 
     snoreApp.hints().setValue("windows-app-id", "ToxFoundation.qTox");
     snoreApp.hints().setValue("desktop-entry", QApplication::applicationName());
 
-    snoreCore.registerApplication(snoreApp);
-    snoreCore.setPrimaryNotificationBackend();
+    Snore::SnoreCore::instance().loadPlugins(Snore::SnorePlugin::BACKEND);
+    Snore::SnoreCore::instance().registerApplication(snoreApp);
+    Snore::SnoreCore::instance().setPrimaryNotificationBackend("Snore");
 }
 
 void NotificationBackend::notify(Type type, GenericChatroomWidget *chat, const QString &title, const QString &message)
 {
-    Snore::Notification notification(snoreApp, alert[type], title, message, Snore::Icon());
-    connect(&snoreCore, &Snore::SnoreCore::actionInvoked, this, &NotificationBackend::notificationInvoked);
-    connect(&snoreCore, &Snore::SnoreCore::notificationClosed, this, &NotificationBackend::notificationClose);
+    Snore::Icon icon(QImage{});
+    Snore::Notification notification(snoreApp, snoreApp.alerts().values()[type], title, message, icon);
+    connect(&Snore::SnoreCore::instance(), &Snore::SnoreCore::actionInvoked, this, &NotificationBackend::notificationInvoked);
+    connect(&Snore::SnoreCore::instance(), &Snore::SnoreCore::notificationClosed, this, &NotificationBackend::notificationClose);
 
-    snoreCore.broadcastNotification(notification);
+    Snore::SnoreCore::instance().broadcastNotification(notification);
 
     chatList[notification.id()] = chat;
 }
 
 QWidget* NotificationBackend::settingsWidget()
 {
-    QComboBox* comboBox = new QComboBox();
+    QWidget* settings = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout(settings);
+    Snore::SettingsDialog* dialog = new Snore::SettingsDialog(settings);
+    dialog->layout()->setMargin(0);
+    QPushButton* apply = new QPushButton(tr("Apply"), settings);
 
-    for (QString backend : snoreCore.notificationBackends())
-        comboBox->addItem(backend);
+    connect(apply, &QPushButton::clicked, [dialog]()
+    {
+        dialog->accept();
+    });
 
-    connect(comboBox, SIGNAL(activated(QString)), this, SLOT(setOptions(QString)));
-    connect(this, &NotificationBackend::optionChanged, comboBox, &QComboBox::setCurrentText);
+    layout->addWidget(dialog);
 
-    return comboBox;
+    QHBoxLayout* hlayout = new QHBoxLayout();
+    hlayout->addStretch(1);
+    hlayout->addWidget(apply);
+    layout->addLayout(hlayout);
+
+    return settings;
 }
 
 void NotificationBackend::setOptions(const QString& option)
 {
-    if (!snoreCore.setPrimaryNotificationBackend(option))
-    {
-        snoreCore.setPrimaryNotificationBackend();
-        emit optionChanged(snoreCore.primaryNotificationBackend());
-    }
-
+    Snore::SnoreCore::instance().setPrimaryNotificationBackend(option);
 }
 
 void NotificationBackend::notificationInvoked(Snore::Notification notification)
@@ -83,4 +91,23 @@ void NotificationBackend::notificationInvoked(Snore::Notification notification)
 void NotificationBackend::notificationClose(Snore::Notification notification)
 {
     chatList.remove(notification.id());
+}
+
+QString NotificationBackend::typeToString(Type type)
+{
+    switch (type)
+    {
+        case NewMessage:
+            return tr("New Message");
+        case Highlighted:
+            return tr("Highlighted");
+        case FileTransferFinished:
+            return tr("File Transfer Finished");
+        case FriendRequest:
+            return tr("Friend Request");
+        case AVCall:
+            return tr("AV Call");
+        default:
+            return QString();
+    }
 }

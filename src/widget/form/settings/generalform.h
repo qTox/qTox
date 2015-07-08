@@ -35,6 +35,7 @@ public:
     GeneralForm(SettingsWidget *parent);
     ~GeneralForm();
     virtual QString getFormName() final override {return tr("General");}
+    void setNotificationWidget(QWidget* widget);
 
 private slots:
     void onEnableIPv6Updated();

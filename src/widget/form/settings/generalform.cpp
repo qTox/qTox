@@ -211,6 +211,22 @@ GeneralForm::~GeneralForm()
     delete bodyUI;
 }
 
+void GeneralForm::setNotificationWidget(QWidget* widget)
+{
+    QLayoutItem* item;
+
+    while ((item = bodyUI->notificationLayout->takeAt(0)))
+    {
+        delete item->widget();
+        delete item;
+    }
+
+    bodyUI->notificationGroup->setVisible(widget);
+
+    if (widget)
+        bodyUI->notificationLayout->addWidget(widget);
+}
+
 void GeneralForm::onEnableIPv6Updated()
 {
     Settings::getInstance().setEnableIPv6(bodyUI->cbEnableIPv6->isChecked());

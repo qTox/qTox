@@ -21,7 +21,7 @@
 #define NOTIFICATIONBACKEND_H
 
 #include <QObject>
-#include <snore/core/snore.h>
+#include <libsnore/snore.h>
 
 class GenericChatroomWidget;
 
@@ -36,7 +36,6 @@ public:
         FileTransferFinished = 2,
         FriendRequest = 3,
         AVCall = 4,
-        FriendStatusChanged = 5,
     };
 
     NotificationBackend(QObject* parent = 0);
@@ -55,9 +54,9 @@ private slots:
     void notificationClose(Snore::Notification notification);
 
 private:
-    Snore::SnoreCore snoreCore;
+    QString typeToString(Type type);
+
     Snore::Application snoreApp;
-    Snore::Alert alert[6];
     QHash<uint, GenericChatroomWidget*> chatList;
 };
 

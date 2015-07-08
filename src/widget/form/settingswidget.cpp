@@ -55,7 +55,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     bodyLayout->addWidget(settingsWidgets);
 
-    GeneralForm* gfrm = new GeneralForm(this);
+    gfrm = new GeneralForm(this);
     PrivacyForm* pfrm = new PrivacyForm;
     AVForm* avfrm = new AVForm;
     AdvancedForm *expfrm = new AdvancedForm;
@@ -88,10 +88,7 @@ void SettingsWidget::showAbout()
 
 void SettingsWidget::setNotificationWidget(QWidget *widget)
 {
-    notificationWidget = widget;
-
-    if (notificationWidget)
-        body->layout()->addWidget(notificationWidget);
+    gfrm->setNotificationWidget(widget);
 }
 
 void SettingsWidget::show(Ui::MainWindow& ui)
