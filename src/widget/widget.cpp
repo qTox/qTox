@@ -235,6 +235,7 @@ void Widget::init()
     Core* core = Nexus::getCore();
     connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
     connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
+    connect(core, &Core::fileTransferFinished, this, &Widget::notifyFileTransferFinished);
     connect(settingsWidget, &SettingsWidget::setShowSystemTray, this, &Widget::onSetShowSystemTray);
     connect(core, &Core::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
     connect(ui->addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
@@ -737,6 +738,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
     connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
+    connect(core, &Core::avInvite, this, &Widget::notifyAvInvite);
     connect(core, &Core::avStart, newfriend->getChatForm(), &ChatForm::onAvStart);
     connect(core, &Core::avCancel, newfriend->getChatForm(), &ChatForm::onAvCancel);
     connect(core, &Core::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd);
@@ -990,6 +992,12 @@ void Widget::playRingtone()
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
+    if (notification)
+    {
+        Friend* f = FriendList::findFriend(userId);
+        notification->notify(NotificationBackend::FriendRequest, nullptr, tr("Friend Request from %1 Recieved").arg(userId), message, QPixmap());
+    }
+
     FriendRequestDialog dialog(this, userId, message);
 
     if (dialog.exec() == QDialog::Accepted)
@@ -1695,6 +1703,26 @@ void Widget::friendListContextMenu(const QPoint &pos)
 
     if (chosenAction == addCircleAction)
         contactListWidget->addCircleWidget();
+}
+
+void Widget::notifyAvInvite(uint32_t friendId, int, bool)
+{
+    if (notification)
+    {
+        Friend* f = FriendList::findFriend(friendId);
+        FriendWidget* fwidget = f->getFriendWidget();
+        notification->notify(NotificationBackend::AVCall, fwidget, tr("Incoming Call"), f->getDisplayedName(), fwidget->getAvatar());
+    }
+}
+
+void Widget::notifyFileTransferFinished(ToxFile file)
+{
+    if (notification)
+    {
+        Friend* f = FriendList::findFriend(file.friendId);
+        FriendWidget* fwidget = f->getFriendWidget();
+        notification->notify(NotificationBackend::AVCall, fwidget, tr("File transfer finished"), file.fileName, fwidget->getAvatar());
+    }
 }
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)

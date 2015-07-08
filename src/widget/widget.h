@@ -160,6 +160,8 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
+    void notifyAvInvite(uint32_t friendId, int callIndex, bool video);
+    void notifyFileTransferFinished(ToxFile file);
 
 #ifdef Q_OS_MAC
     void bringAllToFront();
