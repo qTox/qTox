@@ -317,9 +317,9 @@ contains(ENABLE_NOTIFICATION_SNORE_BACKEND, NO) {
 
     LIBS += -L/usr/local/lib64/ -lsnore-qt5
 
-    SOURCES += src/widget/notificationbackend.cpp
+    SOURCES += src/widget/snorenotificationbackend.cpp
 
-    HEADERS += src/widget/notificationbackend.h
+    HEADERS += src/widget/snorenotificationbackend.h
 }
 }
 
@@ -518,7 +518,8 @@ SOURCES += \
     src/widget/genericchatitemwidget.cpp \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
-    src/widget/categorywidget.cpp
+    src/widget/categorywidget.cpp \
+    src/widget/notificationbackend.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -561,4 +562,5 @@ HEADERS += \
     src/widget/genericchatitemwidget.h \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
-    src/widget/categorywidget.h
+    src/widget/categorywidget.h \
+    src/widget/notificationbackend.h

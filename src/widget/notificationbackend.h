@@ -21,7 +21,6 @@
 #define NOTIFICATIONBACKEND_H
 
 #include <QObject>
-#include <libsnore/snore.h>
 
 class GenericChatroomWidget;
 
@@ -39,25 +38,11 @@ public:
     };
 
     NotificationBackend(QObject* parent = 0);
-    void notify(Type type, GenericChatroomWidget* chat, const QString& title, const QString& message);
-    QWidget* settingsWidget();
+    virtual void notify(Type type, GenericChatroomWidget* chat, const QString& title, const QString& message, const QPixmap &icon) = 0;
+    virtual QWidget* settingsWidget() = 0;
 
 signals:
     void activated(GenericChatroomWidget* chat);
-    void optionChanged(const QString& option);
-
-public slots:
-    void setOptions(const QString& option);
-
-private slots:
-    void notificationInvoked(Snore::Notification notification);
-    void notificationClose(Snore::Notification notification);
-
-private:
-    QString typeToString(Type type);
-
-    Snore::Application snoreApp;
-    QHash<uint, GenericChatroomWidget*> chatList;
 };
 
 #endif // NOTIFICATIONBACKEND_H

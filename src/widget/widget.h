@@ -25,9 +25,7 @@
 #include <QFileInfo>
 #include "src/core/corestructs.h"
 #include "genericchatitemwidget.h"
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
 #include "notificationbackend.h"
-#endif
 
 #define PIXELS_TO_ACT 7
 

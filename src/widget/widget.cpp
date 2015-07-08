@@ -80,6 +80,11 @@
 #define IS_ON_DESKTOP_GUI 1
 #endif
 
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+#include "snorenotificationbackend.h"
+#endif
+
+
 bool toxActivateEventHandler(const QByteArray&)
 {
     if (!Widget::getInstance()->isActiveWindow())
@@ -351,10 +356,14 @@ void Widget::init()
         show();
 
 #ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-   notification = new NotificationBackend(this);
-   settingsWidget->setNotificationWidget(notification->settingsWidget());
-   connect(notification, &NotificationBackend::activated, this, &Widget::onChatroomWidgetClicked);
+   notification = new SnoreNotificationBackend(this);
 #endif
+
+   if (notification)
+   {
+       settingsWidget->setNotificationWidget(notification->settingsWidget());
+       connect(notification, &NotificationBackend::activated, this, &Widget::onChatroomWidgetClicked);
+   }
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
@@ -907,10 +916,8 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         setWindowTitle(windowTitle);
     }
 
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-    if (f->getEventFlag())
-        notification->notify(NotificationBackend::NewMessage, f->getFriendWidget(), f->getDisplayedName(), message);
-#endif
+    if (f->getEventFlag() && notification)
+        notification->notify(NotificationBackend::NewMessage, f->getFriendWidget(), f->getDisplayedName(), message, f->getFriendWidget()->getAvatar());
 }
 
 void Widget::onReceiptRecieved(int friendId, int receipt)
@@ -1115,12 +1122,13 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         setWindowTitle(windowTitle);
     }
 
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-    if (g->getEventFlag())
-        notification->notify(NotificationBackend::NewMessage, g->getGroupWidget(), g->getGroupWidget()->getName(), message);
-    else if (g->getMentionedFlag())
-        notification->notify(NotificationBackend::Highlighted, g->getGroupWidget(), g->getGroupWidget()->getName(), message);
-#endif
+    if (notification)
+    {
+        if (g->getEventFlag())
+            notification->notify(NotificationBackend::NewMessage, g->getGroupWidget(), g->getGroupWidget()->getName(), message, g->getGroupWidget()->getAvatar());
+        else if (g->getMentionedFlag())
+            notification->notify(NotificationBackend::Highlighted, g->getGroupWidget(), g->getGroupWidget()->getName(), message, g->getGroupWidget()->getAvatar());
+    }
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
