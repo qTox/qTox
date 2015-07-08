@@ -241,36 +241,45 @@ Compiling qTox on OS X for development requires 3 tools, [Xcode](https://develop
 ###Required Libraries
 
 First, let's install the dependencies available via brew.
-* ```brew install git ffmpeg qrencode```
+```bash
+brew install git ffmpeg qrencode
+```
 
 Next, install [filter_audio](https://github.com/irungentoo/filter_audio) (you may delete the directory it creates afterwards):
-* ```git clone https://github.com/irungentoo/filter_audio.git```
-* ```cd filter_audio```
-* ```sudo make install```
-* ```cd ../```
+```bash
+git clone https://github.com/irungentoo/filter_audio.git
+cd filter_audio
+sudo make install
+cd ../
+```
 
-Finally, clone qTox and copy all dependencies:
-* ```git clone https://github.com/tux3/qTox``
-* ```cd qTox```
+Then, clone qTox:
+```bash
+git clone https://github.com/tux3/qTox``
+```
 
-Finally, copy all required files. Whenever you update your brew packages, you may skip all of the above steps and simply run the following script:
-* ```sudo bash bootstrap-osx.sh```
+Finally, copy all required files. Whenever you update your brew packages, you may skip all of the above steps and simply run the following commands:
+```bash
+cd qTox
+sudo bash bootstrap-osx.sh
+```
 
 ###Compiling
 
-Either open Qt creator and hit build or run qmake && make in your qTox folder and it'll just work™
+Either open Qt creator and hit build or run ```qmake && make``` in your qTox folder and it'll just work™.
 
 Note that if you use the CLI to build you'll need to add Qt5's bins to your path.
-```export PATH=$PATH:~/Qt/5.4/clang_64/bin/```
+```bash
+export PATH=$PATH:~/Qt/5.4/clang_64/bin/
+```
 
 ###Fixing things up
 
-The bad news is that Qt breaks our linker paths so we need to fix those.
-First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
+The bad news is that Qt breaks our linker paths so we need to fix those. First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
 
 Install qTox so we can copy its libraries and shove the following in a script somewhere:
 
-```
+```bash
 ~macdeployqt qtox.app
 cp -r /Applications/qtox.app qtox_old.app
 cp qtox.app/Contents/MacOS/qtox qtox_old.app/Contents/MacOS/qtox
@@ -281,9 +290,12 @@ mv qtox_old.app qtox.app
 * cd in to the folder with qtox.app
 * run ```bash ~/deploy.qtox.sh```
 
+
 ###Running qTox
 You've got 2 choices, either click on the qTox app that suddenly exists, or do the following:
-* ``qtox.app/Contents/MacOS/qtox`` 
+```bash
+qtox.app/Contents/MacOS/qtox
+```
 * Enjoy the snazzy CLI output as your friends and family congratulate you on becoming a hacker
 
 <a name="windows" />
