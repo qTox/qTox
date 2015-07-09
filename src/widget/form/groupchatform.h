@@ -28,6 +28,9 @@ class Group;
 class TabCompleter;
 class FlowLayout;
 class QTimer;
+class QSplitter;
+class QStringListModel;
+class QSortFilterProxyModel;
 
 class GroupChatForm : public GenericChatForm
 {
@@ -38,6 +41,9 @@ public:
 
     void onUserListChanged();
     void peerAudioPlaying(int peer);
+    void resetLayout();
+
+    virtual void show(Ui::MainWindow &ui);
 
 signals:
     void groupTitleChanged(int groupnum, const QString& name);
@@ -63,8 +69,10 @@ private:
     Group* group;
     QList<QLabel*> peerLabels; // maps peernumbers to the QLabels in namesListLayout
     QMap<int, QTimer*> peerAudioTimers; // timeout = peer stopped sending audio
-    FlowLayout* namesListLayout;
+    FlowLayout* namesListLayout = nullptr;
     QLabel *nusersLabel;
+    QSplitter* mainSplitter = nullptr;
+    QStringListModel* stringListModel = nullptr;
     TabCompleter* tabber;
     bool inCall;
     QString correctNames(QString& name);
