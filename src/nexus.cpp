@@ -39,6 +39,11 @@
 #include <QDesktopWidget>
 #endif
 
+#ifdef Q_OS_MAC
+#include <QWindow>
+#include <QMenuBar>
+#endif
+
 static Nexus* nexus{nullptr};
 
 Nexus::Nexus(QObject *parent) :
@@ -60,6 +65,9 @@ Nexus::~Nexus()
     delete loginScreen;
     delete profile;
     Settings::getInstance().saveGlobal();
+#ifdef Q_OS_MAC
+    delete globalMenuBar;
+#endif
 }
 
 void Nexus::start()
@@ -80,6 +88,25 @@ void Nexus::start()
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
+
+#ifdef Q_OS_MAC
+    globalMenuBar = new QMenuBar(0);
+
+    windowMenu = globalMenuBar->addMenu(tr("Window"));
+    globalMenuBar->addAction(windowMenu->menuAction());
+
+    QAction* minimizeAction = Nexus::getInstance().windowMenu->addAction(tr("Minimize"));
+    minimizeAction->setShortcut(Qt::CTRL + Qt::Key_M);
+    connect(minimizeAction, &QAction::triggered, [minimizeAction]()
+    {
+        QApplication::focusWindow()->showMinimized();
+    });
+    Nexus::getInstance().windowMenu->addSeparator();
+
+    QAction* quitAction = new QAction(globalMenuBar);
+    quitAction->setMenuRole(QAction::QuitRole);
+    connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
+#endif
 
     loginScreen = new LoginScreen();
 

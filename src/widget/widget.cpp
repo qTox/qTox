@@ -258,37 +258,32 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
 #ifdef Q_OS_MAC
-    mainMenu = new QMenuBar(0);
-    mainMenu->setNativeMenuBar(true);
+    QAction* windowMenu = Nexus::getInstance().windowMenu->menuAction();
+    QAction* fileMenu = Nexus::getInstance().globalMenuBar->insertMenu(windowMenu, new QMenu(tr("File"), this));
 
-    QMenu* fileMenu = new QMenu(tr("File"));
-    mainMenu->addAction(fileMenu->menuAction());
-
-    QAction* editProfileAction = fileMenu->addAction(tr("Edit Profile"));
+    QAction* editProfileAction = fileMenu->menu()->addAction(tr("Edit Profile"));
     connect(editProfileAction, &QAction::triggered, this, &Widget::showProfile);
 
-    QMenu* changeStatusMenu = new QMenu(tr("Change Status"));
-    fileMenu->addAction(changeStatusMenu->menuAction());
+    QMenu* changeStatusMenu = fileMenu->menu()->addMenu(tr("Change Status"));
+    fileMenu->menu()->addAction(changeStatusMenu->menuAction());
     changeStatusMenu->addAction(statusOnline);
     changeStatusMenu->addSeparator();
     changeStatusMenu->addAction(statusAway);
     changeStatusMenu->addAction(statusBusy);
 
-    fileMenu->addSeparator();
-    QAction* logoutAction = fileMenu->addAction(tr("Log out"));
+    fileMenu->menu()->addSeparator();
+    QAction* logoutAction = fileMenu->menu()->addAction(tr("Log out"));
     connect(logoutAction, &QAction::triggered, [this]()
     {
         Nexus::getInstance().showLogin();
     });
 
-    QMenu* editMenu = new QMenu(tr("Edit"));
-    mainMenu->addAction(editMenu->menuAction());
+    QAction* editMenu = Nexus::getInstance().globalMenuBar->insertMenu(windowMenu, new QMenu(tr("Edit"), this));
+    editMenu->menu()->addSeparator();
 
-    QMenu* viewMenu = new QMenu(tr("View"));
-    mainMenu->addAction(viewMenu->menuAction());
+    QAction* viewMenu = Nexus::getInstance().globalMenuBar->insertMenu(windowMenu, new QMenu(tr("View"), this));
 
-    QMenu* filterMenu = new QMenu(tr("Filter..."));
-    viewMenu->addAction(filterMenu->menuAction());
+    QMenu* filterMenu = viewMenu->menu()->addMenu(tr("Filter..."));
     filterMenu->addAction(filterDisplayName);
     filterMenu->addAction(filterDisplayActivity);
     filterMenu->addSeparator();
@@ -298,46 +293,33 @@ void Widget::init()
     filterMenu->addAction(filterFriendsAction);
     filterMenu->addAction(filterGroupsAction);
 
-    viewMenu->addSeparator();
-    fullscreenAction = viewMenu->addAction(tr("Enter Fullscreen"));
+    viewMenu->menu()->addSeparator();
+    fullscreenAction = viewMenu->menu()->addAction(tr("Enter Fullscreen"));
     fullscreenAction->setShortcut(QKeySequence::FullScreen);
     connect(fullscreenAction, &QAction::triggered, this, &Widget::toggleFullscreen);
 
-    QMenu* contactMenu = new QMenu(tr("Contacts"));
-    mainMenu->addAction(contactMenu->menuAction());
+    QAction* contactMenu = Nexus::getInstance().globalMenuBar->insertMenu(windowMenu, new QMenu(tr("Contacts"), this));
 
-    QAction* addContactAction = contactMenu->addAction(tr("Add Contact..."));
+    QAction* addContactAction = contactMenu->menu()->addAction(tr("Add Contact..."));
     connect(addContactAction, &QAction::triggered, this, &Widget::onAddClicked);
 
-    QMenu* windowMenu = new QMenu(tr("Window"));
-    mainMenu->addAction(windowMenu->menuAction());
-
-    QAction* minimizeAction = windowMenu->addAction(tr("Minimize"));
-    minimizeAction->setShortcut(Qt::CTRL + Qt::Key_M);
-    connect(minimizeAction, &QAction::triggered, this, &Widget::showMinimized);
-    windowMenu->addSeparator();
-
-    QAction* nextConversationAction = windowMenu->addAction(tr("Next Conversation"));
+    QAction* nextConversationAction = Nexus::getInstance().windowMenu->addAction(tr("Next Conversation"));
     nextConversationAction->setShortcut(QKeySequence::SelectNextPage);
     connect(nextConversationAction, &QAction::triggered, this, &Widget::nextContact);
 
-    QAction* previousConversationAction = windowMenu->addAction(tr("Previous Conversation"));
+    QAction* previousConversationAction = Nexus::getInstance().windowMenu->addAction(tr("Previous Conversation"));
     previousConversationAction->setShortcut(QKeySequence::SelectPreviousPage);
     connect(previousConversationAction, &QAction::triggered, this, &Widget::previousContact);
 
-    windowMenu->addSeparator();
-    QAction* frontAction = windowMenu->addAction(tr("Bring All to Front"));
+    Nexus::getInstance().windowMenu->addSeparator();
+    QAction* frontAction = Nexus::getInstance().windowMenu->addAction(tr("Bring All to Front"));
     connect(frontAction, &QAction::triggered, this, &Widget::bringAllToFront);
 
-    QAction* preferencesAction = viewMenu->addAction(QString());
+    QAction* preferencesAction = viewMenu->menu()->addAction(QString());
     preferencesAction->setMenuRole(QAction::PreferencesRole);
     connect(preferencesAction, &QAction::triggered, this, &Widget::onSettingsClicked);
 
-    QAction* quitAction = viewMenu->addAction(QString());
-    quitAction->setMenuRole(QAction::QuitRole);
-    connect(quitAction, &QAction::triggered, this, &Widget::close);
-
-    QAction* aboutAction = viewMenu->addAction(QString());
+    QAction* aboutAction = viewMenu->menu()->addAction(QString());
     aboutAction->setMenuRole(QAction::AboutRole);
     connect(aboutAction, &QAction::triggered, [this]()
     {
@@ -433,6 +415,11 @@ Widget::~Widget()
     delete trayMenu;
     delete ui;
     instance = nullptr;
+
+#ifdef Q_OS_MAC
+    //Nexus::getInstance().globalMenuBar->clear();
+    //Nexus::getInstance().globalMenuBar->addMenu(Nexus::getInstance().windowMenu);
+#endif
 }
 
 Widget* Widget::getInstance()
@@ -1344,6 +1331,19 @@ void Widget::onTryCreateTrayIcon()
             {
                 show();
             }
+
+#ifdef Q_OS_MAC
+            QMenu* changeStatusMenu = new QMenu(tr("Status"), this);
+            changeStatusMenu->addAction(statusOnline);
+            statusOnline->setIconVisibleInMenu(true);
+            changeStatusMenu->addSeparator();
+            changeStatusMenu->addAction(statusAway);
+            changeStatusMenu->addAction(statusBusy);
+
+            QMenu* dockMenu = new QMenu(this);
+            dockMenu->addAction(changeStatusMenu->menuAction());
+            qt_mac_set_dock_menu(dockMenu);
+#endif
         }
         else if (!isVisible())
         {

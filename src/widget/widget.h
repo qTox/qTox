@@ -243,7 +243,6 @@ private:
     bool wasMaximized = false;
 
 #ifdef Q_OS_MAC
-    QMenuBar* mainMenu;
     QAction* fullscreenAction;
 #endif
 };
