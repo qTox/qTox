@@ -342,7 +342,7 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <location filename="../src/android.ui" line="358"/>
         <source>That guy who I don&apos;t remember adding</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Чувак, которого я не добавлял</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="363"/>
@@ -529,7 +529,7 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <location filename="../src/chatlog/chatlog.cpp" line="503"/>
         <source>pending</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">в ожидании</translation>
     </message>
 </context>
 <context>
@@ -546,13 +546,13 @@ Ignore the proxy and connect to the Internet directly?</source>
         <location filename="../src/widget/circlewidget.cpp" line="85"/>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Переименовать группу</translation>
     </message>
     <message>
         <location filename="../src/widget/circlewidget.cpp" line="86"/>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить группу</translation>
     </message>
 </context>
 <context>
@@ -765,37 +765,37 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/widget/friendlistwidget.cpp" line="222"/>
         <source>Today</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Сегодня</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="226"/>
         <source>Yesterday</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вчера</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="230"/>
         <source>Last 7 days</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Последние 7 дней</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="237"/>
         <source>This month</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Этот месяц</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="267"/>
         <source>Older than 6 Months</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Более 6 месяцев</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="271"/>
         <source>Unknown</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестно</translation>
     </message>
 </context>
 <context>
@@ -860,27 +860,27 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/widget/friendwidget.cpp" line="97"/>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Поместить в группу...</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="99"/>
         <source>To new circle</source>
-        <translation type="unfinished"></translation>
+        <translation>В новую группу</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="102"/>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить из группы &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="112"/>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Поместить в группу &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="127"/>
         <source>Set alias...</source>
-        <translatorcomment>Может &quot;отображаемое имя&quot;?</translatorcomment>
+        <translatorcomment>Может &quot;отображаемое имя&quot;?; Можно даже 'элиас' :)</translatorcomment>
         <translation>Установить псевдоним...</translation>
     </message>
     <message>
@@ -931,7 +931,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/gui.cpp" line="319"/>
         <source>Decrypt</source>
-        <translation type="unfinished">Расшифровать</translation>
+        <translation>Расшифровать</translation>
     </message>
     <message>
         <location filename="../src/widget/gui.cpp" line="361"/>
@@ -1091,12 +1091,12 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="200"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation type="unfinished">Ваш статус будет меняться на Отошел после заданного периода бездействия.</translation>
+        <translation>Ваш статус изменится на «Отошел» после заданного периода бездействия.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
         <source>Auto away after (0 to disable):</source>
-        <translation type="unfinished">Статус «Отошел» после (0 - выключено):</translation>
+        <translation>Статус «Отошел» после (0 - выключено):</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="308"/>
@@ -1123,7 +1123,7 @@ instead of system taskbar.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="345"/>
         <source>Show qTox&apos;s window when you receive new message.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Открывать окно qTox&apos;а, когда вы получаете новое сообщение.</translation>
+        <translation>Открывать окно qTox&apos;а, при получении нового сообщения.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="348"/>
@@ -1145,12 +1145,12 @@ instead of system taskbar.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="401"/>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">Ваша адресная книга будет показана в компактном виде.</translation>
+        <translation>Ваш список контактов будет показан в компактном виде.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="404"/>
         <source>Compact contact list</source>
-        <translation type="unfinished">Компактный список контактов</translation>
+        <translation>Компактный список контактов</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="420"/>
@@ -1194,31 +1194,31 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="286"/>
         <source>Default directory to save files</source>
-        <translation type="unfinished"></translation>
+        <translation>Директория по умолчанию для сохранения файлов</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
         <source>Autoaccept files</source>
-        <translation type="unfinished"></translation>
+        <translation>Принимать файлы автоматически</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="325"/>
         <source>Play a sound when you recieve message.</source>
         <comment>toolTip for Notify sound setting</comment>
-        <translation type="unfinished">Проигрывать звук при получении нового сообщения.</translation>
+        <translation>Проигрывать звук при получении нового сообщения.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">Если отмечено, групповые чаты будут размещаться вверху списка контактов, они будут выше списка друзей в сети.</translation>
+        <translation>Если отмечено, групповые чаты будут размещаться вверху списка контактов, выше списка друзей в сети.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="390"/>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished">Сообщения которые вы пытаетесь отправить друзьям не в сети,
+        <translation>Сообщения, которые вы пытаетесь отправить друзьям не в сети,
 будут доставлены после того как те появятся в сети.</translation>
     </message>
     <message>
@@ -1250,7 +1250,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="538"/>
         <source>Date format:</source>
-        <translation type="unfinished">Формат даты:</translation>
+        <translation>Формат даты:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="655"/>
@@ -1377,7 +1377,7 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/groupchatform.cpp" line="212"/>
         <location filename="../src/widget/form/groupchatform.cpp" line="319"/>
         <source>Start audio call</source>
-        <translation type="unfinished">Начать аудиозвонок</translation>
+        <translation>Позвонить</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="260"/>
@@ -1469,12 +1469,12 @@ Share it with your friends to communicate.</source>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="125"/>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation type="unfinished">Данный QR-код содержит ваш Tox ID. Им можно поделиться с друзьями.</translation>
+        <translation>Данный QR-код содержит ваш Tox ID. Им можно поделиться с друзьями.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="132"/>
         <source>Save image</source>
-        <translation type="unfinished">Сохранить изображение</translation>
+        <translation>Сохранить изображение</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="139"/>
@@ -1502,7 +1502,7 @@ Share it with your friends to communicate.</source>
         <location filename="../src/widget/form/profileform.ui" line="207"/>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
-        <translation type="unfinished">Вернуться к экрану входа</translation>
+        <translation type="unfinished">Вернуться к окну входа</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="210"/>
@@ -1639,7 +1639,7 @@ Profile does not contain your history.</source>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
         <translation type="unfinished">Введенные пароли не совпадают.
-Пожалуйста проверьте что введенные пароли идентичны.</translation>
+Пожалуйста, проверьте что введенные пароли идентичны.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="132"/>
@@ -1651,7 +1651,7 @@ Please make sure to enter same password twice.</source>
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
         <translation type="unfinished">Неизвестная ошибка: невозможно создать новый профиль.
-Если вы вызвали данное сообщение, пожалуйста сообщите об этом.</translation>
+Пожалуйста, сообщите об этой проблеме.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="175"/>
@@ -1668,12 +1668,12 @@ If you encountered this error, please report it.</source>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="184"/>
         <source>Profile already in use. Close other clients.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Профиль уже используется. Закройте другие процессы клиента.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="189"/>
         <source>Wrong password.</source>
-        <translation type="unfinished">Неправильный пароль.</translation>
+        <translation type="unfinished">Неверный пароль.</translation>
     </message>
 </context>
 <context>
@@ -1762,17 +1762,17 @@ If you encountered this error, please report it.</source>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="47"/>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation type="unfinished">Ваши друзья смогут видеть, когда вы им пишите.</translation>
+        <translation>Ваши друзья будут видеть, когда вы им печатаете.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
         <source>Send typing notifications</source>
-        <translation type="unfinished">Сообщать о наборе сообщения</translation>
+        <translation>Сообщать о наборе сообщения</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
         <source>Keep chat history</source>
-        <translation type="unfinished">Хранить историю чата</translation>
+        <translation>Хранить историю чата</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="68"/>
@@ -1781,25 +1781,25 @@ If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
         <translation type="unfinished">Антиспам это часть вашего Tox ID.
-Если к вам стали приходить частые и ненужные запросы в друзья, вам достаточно изменить значение Антиспам.
-Пользователи не смогу слать вам запросы зная старый ID, подтвержденным друзьям  не придется ничего менять.</translation>
+Если к вам стали приходить частые и ненужные запросы в друзья, вам достаточно изменить это значение.
+Пользователи не смогут посылать вам запросы, зная старый ID, подтвержденным друзьям  не придется ничего менять.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="73"/>
         <source>NoSpam</source>
-        <translation type="unfinished">Антиспам</translation>
+        <translation>Антиспам</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation type="unfinished">Антиспам это часть вашего Tox ID, которая может меняться.
-Если к вам стали приходить частые и ненужные запросы в друзья, вам достаточно изменить значение Антиспам.</translation>
+        <translation type="unfinished">Антиспам это часть вашего Tox ID.
+Если к вам стали приходить частые и ненужные запросы в друзья, вам достаточно изменить это значение.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
         <source>Generate random NoSpam</source>
-        <translation type="unfinished">Сгенерировать случайное значение</translation>
+        <translation>Сгенерировать случайное значение</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="57"/>
@@ -1845,7 +1845,7 @@ Save format changes are possible, which may result in data loss.</source>
         <source>The supplied image is too large.
 Please use another image.</source>
         <translation type="unfinished">Выбранное изображение слишком большое.
-Пожалуйста выберите другое изображение.</translation>
+Пожалуйста, выберите другое изображение.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="255"/>
@@ -2139,7 +2139,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/persistence/settings.cpp" line="1363"/>
         <source>Circle #%1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Группа #%1</translation>
     </message>
 </context>
 <context>
@@ -2298,17 +2298,17 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
     <message>
         <location filename="../src/widget/widget.cpp" line="1575"/>
         <source>Add new circle...</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить новую группу...</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1601"/>
         <source>By Name</source>
-        <translation type="unfinished"></translation>
+        <translation>По имени</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1602"/>
         <source>By Activity</source>
-        <translation type="unfinished"></translation>
+        <translation>По активности</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1603"/>
@@ -2385,7 +2385,7 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
         <location filename="../src/widget/widget.cpp" line="733"/>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation>офлайн</translation>
+        <translation>оффлайн</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="737"/>
