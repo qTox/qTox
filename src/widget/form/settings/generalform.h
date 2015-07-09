@@ -66,6 +66,7 @@ private slots:
     void onSetShowInFront();
     void onSetNotifySound();
     void onSetGroupAlwaysNotify();
+    void onSetDesktopNotifications();
     void onFauxOfflineMessaging();
     void onCompactLayout();
     void onGroupchatPositionChanged();

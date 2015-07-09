@@ -345,6 +345,7 @@ void Widget::init()
 
     connect(settingsWidget, &SettingsWidget::compactToggled, contactListWidget, &FriendListWidget::onCompactChanged);
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
+    connect(settingsWidget, &SettingsWidget::desktopNotificationsToggled, this, &Widget::onDesktopNotificationsToggled);
 #if (AUTOUPDATE_ENABLED)
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
@@ -355,16 +356,6 @@ void Widget::init()
 
     if (!Settings::getInstance().getShowSystemTray())
         show();
-
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-   notification = new SnoreNotificationBackend(this);
-#endif
-
-   if (notification)
-   {
-       settingsWidget->setNotificationWidget(notification->settingsWidget());
-       connect(notification, &NotificationBackend::activated, this, &Widget::onChatroomWidgetClicked);
-   }
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
@@ -1703,6 +1694,27 @@ void Widget::friendListContextMenu(const QPoint &pos)
 
     if (chosenAction == addCircleAction)
         contactListWidget->addCircleWidget();
+}
+
+void Widget::onDesktopNotificationsToggled(bool desktopNotifications)
+{
+    delete notification;
+    notification = nullptr;
+
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+    if (desktopNotifications)
+        notification = new SnoreNotificationBackend(this);
+#endif
+
+    if (notification)
+    {
+        settingsWidget->setNotificationWidget(notification->settingsWidget());
+        connect(notification, &NotificationBackend::activated, this, &Widget::onChatroomWidgetClicked);
+    }
+    else
+    {
+        settingsWidget->setNotificationWidget(nullptr);
+    }
 }
 
 void Widget::notifyAvInvite(uint32_t friendId, int, bool)

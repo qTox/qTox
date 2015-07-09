@@ -169,6 +169,7 @@ void Settings::loadGlobal()
         showInFront = s.value("showInFront", false).toBool();
         notifySound = s.value("notifySound", true).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
+        desktopNotifications = s.value("desltp[Notifications", true).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
@@ -375,6 +376,7 @@ void Settings::saveGlobal()
         s.setValue("showInFront", showInFront);
         s.setValue("notifySound", notifySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
+        s.setValue("desktopNotifications", notifySound);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
@@ -778,6 +780,18 @@ void Settings::setGroupAlwaysNotify(bool newValue)
 {
     QMutexLocker locker{&bigLock};
     groupAlwaysNotify = newValue;
+}
+
+bool Settings::getDesktopNotifications() const
+{
+    QMutexLocker locker{&bigLock};
+    return desktopNotifications;
+}
+
+void Settings::setDesktopNotifications(bool newValue)
+{
+    QMutexLocker locker{&bigLock};
+    desktopNotifications = newValue;
 }
 
 QString Settings::getTranslation() const

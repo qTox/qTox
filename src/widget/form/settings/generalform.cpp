@@ -160,6 +160,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
+    connect(bodyUI->cbDesktopNotifications, &QCheckBox::stateChanged, this, &GeneralForm::onSetDesktopNotifications);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     //theme
@@ -221,10 +222,10 @@ void GeneralForm::setNotificationWidget(QWidget* widget)
         delete item;
     }
 
-    bodyUI->notificationGroup->setVisible(widget);
-
     if (widget)
         bodyUI->notificationLayout->addWidget(widget);
+
+    bodyUI->notificationGroup->setVisible(widget);
 }
 
 void GeneralForm::onEnableIPv6Updated()
@@ -433,6 +434,12 @@ void GeneralForm::onSetNotifySound()
 void GeneralForm::onSetGroupAlwaysNotify()
 {
     Settings::getInstance().setGroupAlwaysNotify(bodyUI->groupAlwaysNotify->isChecked());
+}
+
+void GeneralForm::onSetDesktopNotifications()
+{
+    Settings::getInstance().setDesktopNotifications(bodyUI->cbDesktopNotifications->isChecked());
+    emit parent->desktopNotificationsToggled(bodyUI->cbDesktopNotifications->isChecked());
 }
 
 void GeneralForm::onFauxOfflineMessaging()

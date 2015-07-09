@@ -208,11 +208,11 @@ if [[ $INSTALL_SNORENOTIFY = "true" ]]; then
     pushd ${BASE_DIR}/${SNORENOTIFY_DIR}
     
     if [[ $SYSTEM_WIDE = "false" ]]; then
-    	PREFIX=${BASE_DIR} cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_SHARED_LINKER_FLAGS=-m32 -qt5 .
+    	PREFIX=${BASE_DIR} cmake -qt5 .
         PREFIX=${BASE_DIR} make -j2
         PREFIX=${BASE_DIR} make install
     else
-    	cmake -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_SHARED_LINKER_FLAGS=-m32 -DCMAKE_MODULE_LINKER_FLAGS -m32 -qt5 .
+    	cmake -qt5 .
         make -j2
         sudo make install
         sudo ldconfig

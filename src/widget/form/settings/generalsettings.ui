@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>639</width>
-        <height>1334</height>
+        <height>1361</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,1">
@@ -371,6 +371,13 @@ instead of system taskbar.</string>
             </property>
             <property name="text">
              <string>Group chats always notify</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbDesktopNotifications">
+            <property name="text">
+             <string>Enable desktop notifications</string>
             </property>
            </widget>
           </item>

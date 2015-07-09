@@ -52,6 +52,7 @@ signals:
     void setShowSystemTray(bool newValue);
     void compactToggled(bool compact);
     void groupchatPositionToggled(bool groupchatPosition);
+    void desktopNotificationsToggled(bool desktopNotifications);
 
 private slots:
     void onTabChanged(int);

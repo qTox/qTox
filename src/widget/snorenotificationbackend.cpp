@@ -18,11 +18,9 @@
 */
 
 #include "snorenotificationbackend.h"
-
 #include <QApplication>
 #include <QPushButton>
 #include <QBoxLayout>
-
 #include <libsnore/settingsdialog.h>
 
 SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
@@ -41,13 +39,12 @@ SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
 
     Snore::SnoreCore::instance().loadPlugins(Snore::SnorePlugin::BACKEND);
     Snore::SnoreCore::instance().registerApplication(snoreApp);
-    Snore::SnoreCore::instance().setPrimaryNotificationBackend("Snore");
 }
 
 void SnoreNotificationBackend::notify(Type type, GenericChatroomWidget *chat, const QString &title, const QString &message, const QPixmap &icon)
 {
     Snore::Icon snoreIcon(icon.toImage());
-    Snore::Notification notification(snoreApp, snoreApp.alerts().values()[type], title, message, snoreIcon);
+    Snore::Notification notification(snoreApp, snoreApp.alerts()[typeToString(type)], title, message, snoreIcon);
     connect(&Snore::SnoreCore::instance(), &Snore::SnoreCore::actionInvoked, this, &SnoreNotificationBackend::notificationInvoked);
     connect(&Snore::SnoreCore::instance(), &Snore::SnoreCore::notificationClosed, this, &SnoreNotificationBackend::notificationClose);
 
@@ -99,15 +96,15 @@ QString SnoreNotificationBackend::typeToString(Type type)
     switch (type)
     {
         case NewMessage:
-            return tr("New Message");
+            return QStringLiteral("New Message");
         case Highlighted:
-            return tr("Highlighted");
+            return QStringLiteral("Highlighted");
         case FileTransferFinished:
-            return tr("File Transfer Finished");
+            return QStringLiteral("File Transfer Finished");
         case FriendRequest:
-            return tr("Friend Request");
+            return QStringLiteral("Friend Request");
         case AVCall:
-            return tr("AV Call");
+            return QStringLiteral("AV Call");
         default:
             return QString();
     }

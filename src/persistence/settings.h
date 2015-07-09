@@ -142,6 +142,9 @@ public:
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
+    bool getDesktopNotifications() const;
+    void setDesktopNotifications(bool newValue);
+
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
 
@@ -308,6 +311,7 @@ private:
     bool showInFront;
     bool notifySound;
     bool groupAlwaysNotify;
+    bool desktopNotifications;
 
     bool forceTCP;
 

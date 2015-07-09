@@ -68,6 +68,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(settingsWidgets, &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
 
     Translator::registerHandler(std::bind(&SettingsWidget::retranslateUi, this), this);
+
+    setNotificationWidget(nullptr);
 }
 
 SettingsWidget::~SettingsWidget()

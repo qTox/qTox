@@ -160,6 +160,7 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
+    void onDesktopNotificationsToggled(bool desktopNotifications);
     void notifyAvInvite(uint32_t friendId, int callIndex, bool video);
     void notifyFileTransferFinished(ToxFile file);
 
@@ -250,7 +251,7 @@ private:
 #endif
 
 #ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-    NotificationBackend* notification;
+    NotificationBackend* notification = nullptr;
 #endif
 };
 
