@@ -546,13 +546,13 @@ Ignore the proxy and connect to the Internet directly?</source>
         <location filename="../src/widget/circlewidget.cpp" line="85"/>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation type="unfinished">Переименовать группу</translation>
+        <translation type="unfinished">Переименовать список</translation>
     </message>
     <message>
         <location filename="../src/widget/circlewidget.cpp" line="86"/>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation type="unfinished">Удалить группу</translation>
+        <translation type="unfinished">Удалить список</translation>
     </message>
 </context>
 <context>
@@ -777,19 +777,19 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/widget/friendlistwidget.cpp" line="230"/>
         <source>Last 7 days</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation>Последние 7 дней</translation>
+        <translation>За последние 7 дней</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="237"/>
         <source>This month</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation>Этот месяц</translation>
+        <translation>За этот месяц</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="267"/>
         <source>Older than 6 Months</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation>Более 6 месяцев</translation>
+        <translation>За полгода</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="271"/>
@@ -860,22 +860,22 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/widget/friendwidget.cpp" line="97"/>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>Поместить в группу...</translation>
+        <translation>Поместить в список...</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="99"/>
         <source>To new circle</source>
-        <translation>В новую группу</translation>
+        <translation>В новый список</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="102"/>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Переместить из группы &apos;%1&apos;</translation>
+        <translation>Переместить из списка &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="112"/>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Поместить в группу &quot;%1&quot;</translation>
+        <translation>Поместить в список &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="127"/>
@@ -1331,12 +1331,12 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="517"/>
         <source>Start an audio call</source>
-        <translation>Начать аудио звонок</translation>
+        <translation>Позвонить</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="518"/>
         <source>Start a video call</source>
-        <translation>Начать видео звонок</translation>
+        <translation>Начать видеозвонок</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="368"/>
@@ -2139,7 +2139,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <location filename="../src/persistence/settings.cpp" line="1363"/>
         <source>Circle #%1</source>
-        <translation type="unfinished">Группа #%1</translation>
+        <translation type="unfinished">Список #%1</translation>
     </message>
 </context>
 <context>
@@ -2298,7 +2298,7 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
     <message>
         <location filename="../src/widget/widget.cpp" line="1575"/>
         <source>Add new circle...</source>
-        <translation>Добавить новую группу...</translation>
+        <translation>Добавить новый список...</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1601"/>
