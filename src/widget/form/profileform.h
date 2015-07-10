@@ -80,6 +80,7 @@ private slots:
 
 private:
     void retranslateUi();
+    void prFileLabelUpdate();
 
 private:
     void refreshProfiles();

@@ -118,6 +118,12 @@ ProfileForm::ProfileForm(QWidget *parent) :
     Translator::registerHandler(std::bind(&ProfileForm::retranslateUi, this), this);
 }
 
+void ProfileForm::prFileLabelUpdate()
+{
+    Nexus& nexus = Nexus::getInstance();
+    bodyUI->prFileLabel->setText(tr("The name of the current file Profile: ") + nexus.getProfile()->getName() + ".tox");
+}
+
 ProfileForm::~ProfileForm()
 {
     Translator::unregister(this);
@@ -132,6 +138,7 @@ void ProfileForm::show(Ui::MainWindow &ui)
     ui.mainContent->layout()->addWidget(this);
     head->show();
     QWidget::show();
+    prFileLabelUpdate();
     bodyUI->userName->setFocus();
     bodyUI->userName->selectAll();
 }
@@ -258,7 +265,10 @@ void ProfileForm::onRenameClicked()
             GUI::showError(tr("Failed to rename", "rename failed title"),
                              tr("Couldn't rename the profile to \"%1\"").arg(cur));
         else
+        {
+            prFileLabelUpdate();
             break;
+        }
     } while (true);
 }
 

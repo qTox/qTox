@@ -156,6 +156,13 @@ Share it with your friends to communicate.</string>
          </property>
          <layout class="QVBoxLayout" name="profilesVLayout">
           <item>
+           <widget class="QLabel" name="prFileLabel">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="profilesButtonsLayout">
             <item>
              <spacer name="horizontalSpacer">
