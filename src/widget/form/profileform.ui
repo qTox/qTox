@@ -163,6 +163,31 @@ Share it with your friends to communicate.</string>
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="dirPrLink">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::ClickFocus</enum>
+            </property>
+            <property name="text">
+             <string>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path\&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Directory file Profile:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::RichText</enum>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="openExternalLinks">
+             <bool>false</bool>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::TextSelectableByMouse</set>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="profilesButtonsLayout">
             <item>
              <spacer name="horizontalSpacer">

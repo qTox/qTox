@@ -139,6 +139,10 @@ void ProfileForm::show(Ui::MainWindow &ui)
     head->show();
     QWidget::show();
     prFileLabelUpdate();
+    QString DirPath = QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
+    bodyUI->dirPrLink->setText(bodyUI->dirPrLink->text().replace("Dir_Path",DirPath));
+    bodyUI->dirPrLink->setOpenExternalLinks(true);
+    bodyUI->dirPrLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::TextSelectableByMouse);
     bodyUI->userName->setFocus();
     bodyUI->userName->selectAll();
 }
