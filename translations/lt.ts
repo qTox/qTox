@@ -15,7 +15,7 @@
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="133"/>
         <source>%1x%2</source>
-        <translation></translation>
+        <translation>%1x%2</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="135"/>
@@ -93,7 +93,7 @@ WARNING: slider is not supposed to work yet.</source>
         <location filename="../src/widget/form/settings/avsettings.ui" line="87"/>
         <location filename="../src/widget/form/settings/avsettings.ui" line="101"/>
         <source>100</source>
-        <translation></translation>
+        <translation>100</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="156"/>
