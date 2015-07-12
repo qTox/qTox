@@ -15,18 +15,18 @@
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="133"/>
         <source>%1x%2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="135"/>
         <location filename="../src/widget/form/settings/avform.cpp" line="141"/>
         <source>Default resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Standartinė raiška</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="137"/>
         <source> at %1 FPS</source>
-        <translation type="unfinished"></translation>
+        <translation> (%1 kadrų/s)</translation>
     </message>
 </context>
 <context>
@@ -82,7 +82,7 @@ WARNING: slider is not supposed to work yet.</source>
         <location filename="../src/widget/form/settings/avsettings.ui" line="47"/>
         <location filename="../src/widget/form/settings/avsettings.ui" line="129"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="54"/>
@@ -93,7 +93,7 @@ WARNING: slider is not supposed to work yet.</source>
         <location filename="../src/widget/form/settings/avsettings.ui" line="87"/>
         <location filename="../src/widget/form/settings/avsettings.ui" line="101"/>
         <source>100</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="156"/>
@@ -103,7 +103,7 @@ WARNING: slider is not supposed to work yet.</source>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
         <source>Video device</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaizdą įrašymo įrenginys</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="178"/>
@@ -146,7 +146,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     <message>
         <location filename="../src/widget/form/settings/aboutform.h" line="37"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Apie</translation>
     </message>
 </context>
 <context>
@@ -154,22 +154,22 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished">Forma</translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="53"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versija</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are using a qTox nightly build.&lt;/p&gt;&lt;p&gt;Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/GIT_VERSION&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GIT_VERSION&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Naudojate momentinį qTox versiją.&lt;/p&gt;&lt;p&gt;Atnaujinimo maiša (&lt;i&gt;hash&lt;/i&gt;): &lt;a href=&quot;https://github.com/tux3/qTox/commit/GIT_VERSION&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GIT_VERSION&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="98"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licencija</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="125"/>
@@ -182,27 +182,35 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#000000;&quot;&gt;Autorių teisės: qTox projektas, 2014-2015.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox – Tox protokolu veikianti programa su Qt-grafine aplinka.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox yra atvira programinė įranga: galite ją platinti ir (arba) modifikuoti pagal GNU atvirosios programinės įrangos licencijos (GPL), kurią parengė Laisvosios programinės įrangos fondas (FSF), trečiąją (ar bet kurią vėlesnę) versiją.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Tikimės, kad qTox bus Jums naudinga, bet nesuteikiame JOKIOS GARANTIJOS, įskaitant PERKAMUMO ar TINKAMUMO KOKIAM NORS TIKSLUI. Detalesnė informacija pateikta GPL licencijoje. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;GPL licencijos kopiją turėjote gauti kartu su šia programine įranga. Priešingu atveju, apsilankykite &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="164"/>
         <source>Authors</source>
-        <translation type="unfinished"></translation>
+        <translation>Kūrėjai</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="181"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Projekto pradininkas: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Visą &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;talkininkų sąrašą&lt;/span&gt;&lt;/a&gt; rasite Github portale&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="209"/>
         <source>Known Issues</source>
-        <translation type="unfinished"></translation>
+        <translation>Žinomos klaidos</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="226"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Žinomų klaidų sąrašą rasite mūsų &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;klaidų pranešimų skiltyje&lt;/span&gt;&lt;/a&gt; Github portale. Jei radote qTox klaidą ar saugumo spragą, prašome apie ją pranešti pagal mūsų klaidų pranešimų nuostatas. Žr. viki straipsnį &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -566,12 +574,12 @@ Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translat
         <location filename="../src/widget/form/chatform.cpp" line="907"/>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko sukurti laikino failo</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="908"/>
         <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko išsaugoti momentinės ekrano kopijos</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="950"/>
@@ -620,13 +628,13 @@ Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translat
         <location filename="../src/widget/circlewidget.cpp" line="85"/>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pervadinti draugų ratą</translation>
     </message>
     <message>
         <location filename="../src/widget/circlewidget.cpp" line="86"/>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pervadinti draugų ratą</translation>
     </message>
 </context>
 <context>
@@ -643,12 +651,12 @@ Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translat
     <message>
         <location filename="../src/core/core.cpp" line="612"/>
         <source>You need to write a message with your request</source>
-        <translation type="unfinished"></translation>
+        <translation>Turite parašyti žinutę adresatui</translation>
     </message>
     <message>
         <location filename="../src/core/core.cpp" line="616"/>
         <source>Your message is too long!</source>
-        <translation type="unfinished"></translation>
+        <translation>Žinutė per ilga!</translation>
     </message>
     <message>
         <location filename="../src/core/core.cpp" line="620"/>
@@ -710,7 +718,7 @@ History will be disabled!</source>
         <location filename="../src/core/coreencryption.cpp" line="127"/>
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation type="unfinished"></translation>
+        <translation>Įveskite „%1“ profilio pokalbių žurnalo slaptažodį.</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="129"/>
@@ -883,40 +891,40 @@ Norite išmėginti kitą slaptažodį?</translation>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="328"/>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siuntimas atkuriamas...</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="354"/>
         <source>Open file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atidaryti failą.</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="359"/>
         <source>Open file directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atidaryti katalogą.</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="411"/>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="423"/>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="436"/>
         <source>Cancel transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Atšaukti siuntimą</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="415"/>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="442"/>
         <source>Pause transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pristabdyti siuntimą</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="427"/>
         <source>Resume transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Atkurti siuntimą</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="448"/>
         <source>Accept transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Priimti siuntimą</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="475"/>
@@ -950,37 +958,37 @@ Norite išmėginti kitą slaptažodį?</translation>
         <location filename="../src/widget/friendlistwidget.cpp" line="222"/>
         <source>Today</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Šiandien</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="226"/>
         <source>Yesterday</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vakar</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="230"/>
         <source>Last 7 days</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Per paskutinias 7 dienas</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="237"/>
         <source>This month</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Šį mėnesį</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="270"/>
         <source>Older than 6 Months</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Seniau nei prieš 6 mėnesius</translation>
     </message>
     <message>
         <location filename="../src/widget/friendlistwidget.cpp" line="274"/>
         <source>Unknown</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nežinoma</translation>
     </message>
 </context>
 <context>
@@ -1031,22 +1039,22 @@ Norite išmėginti kitą slaptažodį?</translation>
         <location filename="../src/widget/friendwidget.cpp" line="97"/>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Perkelti į draugų ratą...</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="99"/>
         <source>To new circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Į naują ratą</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="102"/>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pašalinti iš draugų rato „%1“</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="112"/>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkelti į draugų ratą „%1“</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="126"/>
@@ -1080,27 +1088,27 @@ Norite išmėginti kitą slaptažodį?</translation>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="287"/>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nauja žintutė</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="289"/>
         <source>Online</source>
-        <translation type="unfinished">Prisijungęs</translation>
+        <translation>Prisijungęs</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="291"/>
         <source>Away</source>
-        <translation type="unfinished">Pasitraukęs</translation>
+        <translation>Pasitraukęs</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="293"/>
         <source>Busy</source>
-        <translation type="unfinished">Užsiėmęs</translation>
+        <translation>Užsiėmęs</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="295"/>
         <source>Offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Neprisijungęs</translation>
     </message>
     <message>
         <source>User alias</source>
@@ -1293,7 +1301,7 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="286"/>
         <source>Default directory to save files</source>
-        <translation type="unfinished"></translation>
+        <translation>Numatytas katalogas failams išsaugoti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="308"/>
@@ -1304,12 +1312,12 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="325"/>
         <source>Play a sound when you recieve message.</source>
         <comment>toolTip for Notify sound setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paleisti garso signalą gavus žinutę.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="328"/>
         <source>Play sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Paleisti garso signalą</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="370"/>
@@ -1468,19 +1476,20 @@ kontaktams, bus nusiųstos jiems prisijungus.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jei pažymėta, grupių pokalbiai bus rodomi kontaktų sąrašo viršuje, priešingu atveju – apačioje.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="383"/>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti grupių pokalbius viršuje</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="390"/>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Žinutės, kurias siunčiate neprisijungusiems kontaktams,
+bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="401"/>
@@ -1522,7 +1531,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="538"/>
         <source>Date format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datos formatas:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="655"/>
@@ -1598,7 +1607,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="516"/>
         <source>Send a screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Siųsti ekrano kopiją</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="517"/>
@@ -1741,12 +1750,12 @@ Susijusi kontaktų informacija bei pokalbių žurnalas bus taip pat ištrinti.</
     <message>
         <location filename="../src/widget/form/profileform.ui" line="67"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vardas:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="77"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Būsena:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="92"/>
@@ -1769,41 +1778,41 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="155"/>
         <source>Profile</source>
-        <translation type="unfinished">Profilis</translation>
+        <translation>Profilis</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="176"/>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pervadinti profilį.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="186"/>
         <source>Delete profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti profilį.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="207"/>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grįžti į prisijungimo langą</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="210"/>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atsijungti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="247"/>
         <source>Remove password</source>
-        <translation type="unfinished"></translation>
+        <translation>Pašalinti slaptažodį</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="254"/>
         <source>Change password</source>
-        <translation type="unfinished">Pakeisti slaptažodį</translation>
+        <translation>Pakeisti slaptažodį</translation>
     </message>
     <message>
         <source>QRCODE</source>
@@ -1943,55 +1952,55 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     <message>
         <location filename="../src/loginscreen.ui" line="144"/>
         <source>qTox</source>
-        <translation type="unfinished">qTox</translation>
+        <translation>qTox</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="354"/>
         <location filename="../src/loginscreen.ui" line="727"/>
         <source>Username:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slapyvardis:</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="371"/>
         <location filename="../src/loginscreen.ui" line="740"/>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodis:</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="388"/>
         <source>Confirm:</source>
-        <translation type="unfinished"></translation>
+        <translation>Patvirtinti slaptažodį:</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="408"/>
         <source>Password strength: %p%</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio stiprumas: %p%</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="617"/>
         <source>Create Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti paskyrą</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="757"/>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Jei profilis neturi slaptažodžio, qTox gali prisijungti automatiškai</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="760"/>
         <source>Login automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisijungti automatiškai</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="982"/>
         <location filename="../src/loginscreen.ui" line="1097"/>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisijungti</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="1071"/>
         <source>New Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Naujas profilis</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="114"/>
@@ -2000,56 +2009,58 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
         <location filename="../src/widget/loginscreen.cpp" line="132"/>
         <location filename="../src/widget/loginscreen.cpp" line="140"/>
         <source>Couldn&apos;t create a new profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko sukurti naujo profilio</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="114"/>
         <source>The username must not be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Slapyvardis negali būti tuščias.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="120"/>
         <source>The password must be at least 6 characters long.</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodis negali būti trumpesnis nei 6 simboliai.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="126"/>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation type="unfinished"></translation>
+        <translation>Įvesti slaptažodžiai neatitinka.
+Įsitikinkite, kad tą patį slaptažodį įvedate du kartus.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="132"/>
         <source>A profile with this name already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toks profilis jau yra.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="140"/>
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatpažinta klaida: nepavyko sukurti profilio.
+Prašome pranešti apie šią klaidą.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="175"/>
         <location filename="../src/widget/loginscreen.cpp" line="184"/>
         <location filename="../src/widget/loginscreen.cpp" line="189"/>
         <source>Couldn&apos;t load this profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko įkelti šio profilio</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="175"/>
         <source>This profile is already in use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilis jau naudojamas.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="184"/>
         <source>Profile already in use. Close other clients.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilis jau naudojamas. Išjunkite kitas Tox programas.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="189"/>
         <source>Wrong password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neteisingas slaptažodis.</translation>
     </message>
 </context>
 <context>
@@ -2067,7 +2078,7 @@ If you encountered this error, please report it.</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1041"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1143"/>
@@ -2117,10 +2128,10 @@ If you encountered this error, please report it.</source>
     <message numerus="yes">
         <location filename="../src/widget/notificationedgewidget.cpp" line="54"/>
         <source>Unread message(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Neperskaityta žinutė</numerusform>
+            <numerusform>Neperskaitytų žinučių</numerusform>
+            <numerusform>Neperskaitytos žinutės</numerusform>
         </translation>
     </message>
 </context>
@@ -2242,12 +2253,12 @@ Ar norite senąjį pokalbių žurnalą ištrinti?</translation>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
         <source>Send typing notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti įvesties pranešimus</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
         <source>Keep chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Vesti pokalbių žurnalą</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="68"/>
@@ -2255,23 +2266,27 @@ Ar norite senąjį pokalbių žurnalą ištrinti?</translation>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation type="unfinished"></translation>
+        <translation>„Nospam“ yra Jūsų Tox ID dalis.
+Jį pakeitus nebegausite nepageidaujamų kontaktinių užklausų.
+Priimti kontaktai vis dar galės su Jumis bendrauti, bet nauji kontaktai,
+nežinantys Jūsų naujojo Tox ID, nebegalės atsiųsti Jums užklausų.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="73"/>
         <source>NoSpam</source>
-        <translation type="unfinished"></translation>
+        <translation>NoSpam</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation type="unfinished"></translation>
+        <translation>„NoSpam“ – Jūsų Tox ID dalis, kurią galima bet kada pakeisti.
+Jei gaunate nepageidaujamų kontaktinių užklausų, pakeiskite „NoSpam“.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
         <source>Generate random NoSpam</source>
-        <translation type="unfinished"></translation>
+        <translation>Sugeneruoti atsitiktinį „NoSpam“</translation>
     </message>
     <message>
         <source>Send Typing Notifications</source>
@@ -2435,7 +2450,7 @@ nežinantys Jūsų naujojo Tox ID, nebegalės atsiųsti Jums užklausų.</transl
         <location filename="../src/widget/form/profileform.cpp" line="285"/>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ar tikrai ištrinti profilį?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="309"/>
@@ -2458,41 +2473,42 @@ nežinantys Jūsų naujojo Tox ID, nebegalės atsiųsti Jums užklausų.</transl
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="206"/>
         <source>Unable to open this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko atidaryti failo.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="213"/>
         <source>Unable to read this image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko perskaityti paveikslėlio.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="236"/>
         <source>The supplied image is too large.
 Please use another image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinktas paveikslėlis per didelis.
+Pasirinkite kitą.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="255"/>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
-        <translation type="unfinished">Toks profilis jau yra</translation>
+        <translation>Toks profilis jau yra</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="256"/>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Profilis „%1“ jau egzistuoja.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="258"/>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko pervadinti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="259"/>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko pervadinti profilį į „%1“</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="279"/>
@@ -2503,35 +2519,35 @@ Please use another image.</source>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="329"/>
         <source>Nothing to remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Nėra slaptažodžio</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="329"/>
         <source>Your profile does not have a password!</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūsų profilis neturi slaptažodžio!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="333"/>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ar tikrai panaikinti slaptažodį?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="334"/>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ar tikrai norite panaikinti šio profilio slaptažodį?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="342"/>
         <source>Please enter a new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Įveskite naują slaptažodį.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="356"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation type="unfinished">Ši simbolių seka leidžia kitiems Tox naudotojams Jus surasti.
+        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams Jus surasti.
 Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
@@ -2694,7 +2710,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="354"/>
         <source>User Profile</source>
-        <translation type="unfinished">Naudotojo profilis</translation>
+        <translation>Naudotojo profilis</translation>
     </message>
 </context>
 <context>
@@ -2703,13 +2719,13 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="132"/>
         <source>Click and drag to select a region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paspauskite pelės klavišą ir vilkdami pelę pasirinkite norimą ekrano sritį. Veiksmą atšauksite paspaudę &lt;b&gt;Escape&lt;/b&gt; klavišą.</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="139"/>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selected region or select a new region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paspaudę &lt;b&gt;Enter&lt;/b&gt; klavišą nusiųsite pasirinktos ekrano srities kopiją. Jei pasirinkimas netinka, gali bandyti iš naujo. Veiksmą atšauksite paspaudę &lt;b&gt;Escape&lt;/b&gt; klavišą.</translation>
     </message>
 </context>
 <context>
@@ -2750,12 +2766,12 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <location filename="../src/widget/form/setpassworddialog.cpp" line="60"/>
         <source>The password is too short</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodis per trumpas</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.cpp" line="65"/>
         <source>The password doesn&apos;t match.</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodis neatitinka.</translation>
     </message>
 </context>
 <context>
@@ -2771,7 +2787,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <location filename="../src/persistence/settings.cpp" line="1363"/>
         <source>Circle #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Draugų ratas Nr. %1</translation>
     </message>
 </context>
 <context>
@@ -2885,7 +2901,7 @@ Deja tox1 protokolas turi saugumo spragų. Tęsti?</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="1607"/>
         <source>Online</source>
-        <translation type="unfinished">Prisijungęs</translation>
+        <translation>Prisijungę</translation>
     </message>
     <message>
         <source>Away</source>
@@ -2903,43 +2919,43 @@ Deja tox1 protokolas turi saugumo spragų. Tęsti?</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="1578"/>
         <source>Add new circle...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti naują draugų ratą...</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1604"/>
         <source>By Name</source>
-        <translation type="unfinished"></translation>
+        <translation>pagal vardą</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1605"/>
         <source>By Activity</source>
-        <translation type="unfinished"></translation>
+        <translation>pagal aktyvumą</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1606"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Visi</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1608"/>
         <source>Offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsijungę</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1609"/>
         <source>Friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktai</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1610"/>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupės</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1611"/>
         <location filename="../src/widget/widget.cpp" line="1614"/>
         <source>Search Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieškoti kontaktų</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1615"/>
@@ -3050,12 +3066,12 @@ Deja tox1 protokolas turi saugumo spragų. Tęsti?</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="924"/>
         <source>Removal of friend </source>
-        <translation type="unfinished"></translation>
+        <translation>Kontakto pašalinimas</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="925"/>
         <source>Do you want to remove history as well?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar kartu pašalinti pokalbių žurnalą?</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="984"/>
