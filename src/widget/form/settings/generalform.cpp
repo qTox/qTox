@@ -226,6 +226,7 @@ void GeneralForm::setNotificationWidget(QWidget* widget)
         bodyUI->notificationLayout->addWidget(widget);
 
     bodyUI->notificationGroup->setVisible(widget);
+    bodyUI->cbDesktopNotifications->setEnabled(widget);
 }
 
 void GeneralForm::onEnableIPv6Updated()

@@ -297,25 +297,29 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
     LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
 }
 }
-ENABLE_NOTIFICATION_SNORE_BACKEND=YES
+
 # The snorenotify backend implements a notification system compatible with many systems
-unix:!macx:!android {
-contains(ENABLE_NOTIFICATION_SNORE_BACKEND, NO) {
-} else {
+!android {
+contains(ENABLE_NOTIFICATION_SNORE_BACKEND, YES) {
     DEFINES += ENABLE_NOTIFICATION_SNORE_BACKEND
 
-    INCLUDEPATH += "/usr/local/include/snore/core"
-    equals(QT_ARCH, x86_64) {
-        INCLUDEPATH += "/usr/local/lib64/libsnore-qt5/include"
-        INCLUDEPATH += "/usr/local/lib/x86_64-linux-gnu/libsnore-qt5/include"
-    }
-    else {
-        INCLUDEPATH += "/usr/local/lib/libsnore-qt5/include"
-        INCLUDEPATH += "/usr/local/lib/i386-linux-gnu/libsnore-qt5/include"
+    unix {
+        INCLUDEPATH += "/usr/local/include/snore/core"
+        equals(QT_ARCH, x86_64) {
+            INCLUDEPATH += "/usr/local/lib64/libsnore-qt5/include"
+            INCLUDEPATH += "/usr/local/lib/x86_64-linux-gnu/libsnore-qt5/include"
+        }
+        else {
+            INCLUDEPATH += "/usr/local/lib/libsnore-qt5/include"
+            INCLUDEPATH += "/usr/local/lib/i386-linux-gnu/libsnore-qt5/include"
+        }
+
+        LIBS += -L/usr/local/lib64/ -lsnore-qt5
     }
 
-
-    LIBS += -L/usr/local/lib64/ -lsnore-qt5
+    win32 {
+        LIBS += -lsnore-qt5
+    }
 
     SOURCES += src/widget/snorenotificationbackend.cpp
 
