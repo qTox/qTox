@@ -29,6 +29,7 @@
 #include "src/widget/style.h"
 #include "src/widget/flowlayout.h"
 #include "src/widget/translator.h"
+#include "src/persistence/settings.h"
 #include "src/video/groupnetcamview.h"
 #include <QDebug>
 #include <QTimer>
@@ -42,6 +43,11 @@
 
 #include "ui_mainwindow.h"
 #include "src/chatlog/chatlog.h"
+
+class ClickLabel : public QLabel
+{
+
+};
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), inCall{false}
@@ -99,6 +105,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
 
+    connect(&Settings::getInstance(), &Settings::groupPeerListSideChanged, this, &GroupChatForm::resetLayout);
     resetLayout();
 }
 
@@ -167,16 +174,21 @@ void GroupChatForm::onUserListChanged()
     else
         nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
 
-    if (false)
+    if (!Settings::getInstance().getGroupPeerListSide())
     {
-        QLayoutItem *child;
-        while ((child = namesListLayout->takeAt(0)))
+        if (namesListLayout)
         {
-            child->widget()->hide();
-            delete child->widget();
-            delete child;
+            QLayoutItem *child;
+
+            while ((child = namesListLayout->takeAt(0)))
+            {
+                child->widget()->hide();
+                delete child->widget();
+                delete child;
+            }
+
+            peerLabels.clear();
         }
-        peerLabels.clear();
 
         // the list needs peers in peernumber order, nameLayout needs alphabetical
         QMap<QString, QLabel*> orderizer;
@@ -265,7 +277,7 @@ void GroupChatForm::peerAudioPlaying(int peer)
 
 void GroupChatForm::resetLayout()
 {
-    if (false)
+    if (!Settings::getInstance().getGroupPeerListSide())
     {
         if (mainSplitter)
             layout()->replaceWidget(mainSplitter, chatWidget);
@@ -274,28 +286,29 @@ void GroupChatForm::resetLayout()
         delete stringListModel;
 
         namesListLayout = new FlowLayout(0,5,0);
-        QStringList names(group->getPeerList());
-
-        for (QString& name : names)
-        {
-            QLabel *l = new QLabel();
-            QString tooltip = correctNames(name);
-            if (tooltip.isNull())
-            {
-                l->setToolTip(tooltip);
-            }
-            l->setText(name);
-            l->setTextFormat(Qt::PlainText);
-            namesListLayout->addWidget(l);
-        }
-
         headTextLayout->addLayout(namesListLayout);
+        onUserListChanged();
     }
     else
     {
+        if (namesListLayout)
+        {
+            QLayoutItem *child;
+
+            while ((child = namesListLayout->takeAt(0)))
+            {
+                child->widget()->hide();
+                delete child->widget();
+                delete child;
+            }
+
+            peerLabels.clear();
+        }
+
         delete namesListLayout;
 
         mainSplitter = new QSplitter(this);
+        mainSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         layout()->replaceWidget(chatWidget, mainSplitter);
         mainSplitter->setHandleWidth(6);
         mainSplitter->addWidget(chatWidget);

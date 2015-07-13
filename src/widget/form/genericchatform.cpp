@@ -622,7 +622,7 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
 
 bool GenericChatForm::hasFindWidget() const
 {
-    return mainLayout->itemAt(0)->widget() != chatWidget;
+    return mainLayout->count() == 3;
 }
 
 void GenericChatForm::onSplitterMoved(int, int)

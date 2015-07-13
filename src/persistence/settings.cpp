@@ -317,6 +317,7 @@ void Settings::loadPersonnal(Profile* profile)
 
     ps.beginGroup("General");
         compactLayout = ps.value("compactLayout", true).toBool();
+        groupPeerListSide = ps.value("groupPeerListSide", false).toBool();
     ps.endGroup();
 
     ps.beginGroup("Circles");
@@ -492,6 +493,7 @@ void Settings::savePersonal(QString profileName, QString password)
 
     ps.beginGroup("General");
         ps.setValue("compactLayout", compactLayout);
+        ps.setValue("groupPeerListSide", groupPeerListSide);
     ps.endGroup();
 
     ps.beginGroup("Circles");
@@ -1388,6 +1390,19 @@ void Settings::setCompactLayout(bool value)
 {
     QMutexLocker locker{&bigLock};
     compactLayout = value;
+}
+
+bool Settings::getGroupPeerListSide() const
+{
+    QMutexLocker locker{&bigLock};
+    return groupPeerListSide;
+}
+
+void Settings::setGroupPeerListSide(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    groupPeerListSide = value;
+    emit groupPeerListSideChanged();
 }
 
 bool Settings::getSeparateWindow() const
