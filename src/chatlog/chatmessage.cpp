@@ -30,9 +30,6 @@
 #include "src/persistence/smileypack.h"
 #include "src/widget/style.h"
 
-#define NAME_COL_WIDTH 90.0
-#define TIME_COL_WIDTH 90.0
-
 ChatMessage::ChatMessage()
 {
 
@@ -323,5 +320,5 @@ QString ChatMessage::detectQuotes(const QString& str, MessageType type)
 
 QString ChatMessage::wrapDiv(const QString &str, const QString &div)
 {
-    return QString("<div class=%1>%2</div>").arg(div, /*QChar(0x200E) + */QString(str).replace(" ", QChar(0xA0)));
+    return QString("<p class=%1>%2</p>").arg(div, /*QChar(0x200E) + */QString(str));
 }

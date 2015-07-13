@@ -62,7 +62,6 @@ public:
 
     virtual QString getText() const final;
 
-
 protected:
     // dynamic resource management
     void regenerate();

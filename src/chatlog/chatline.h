@@ -47,8 +47,8 @@ struct ColumnFormat
 
     ColumnFormat() {}
     ColumnFormat(Policy p, Align halign = Left)
-        : policy(p),
-          hAlign(halign)
+        : policy(p)
+        , hAlign(halign)
     {}
     ColumnFormat(qreal s, Policy p, Align halign = Left)
         : size(s)
