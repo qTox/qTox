@@ -786,13 +786,13 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/friendlistwidget.cpp" line="267"/>
+        <location filename="../src/widget/friendlistwidget.cpp" line="270"/>
         <source>Older than 6 Months</source>
         <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/friendlistwidget.cpp" line="271"/>
+        <location filename="../src/widget/friendlistwidget.cpp" line="274"/>
         <source>Unknown</source>
         <comment>Category for sorting friends by activity</comment>
         <translation type="unfinished"></translation>
@@ -942,25 +942,25 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 <context>
     <name>GeneralForm</name>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="98"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="103"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="99"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="104"/>
         <source>None</source>
         <translation>Отсутствует</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="299"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="300"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Выбрать папку для автоматического приёма</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="357"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="358"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Идёт звонок</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="358"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="359"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>Нельзя отключиться пока идёт звонок!</translation>
@@ -2245,30 +2245,30 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1604"/>
+        <location filename="../src/widget/widget.cpp" line="1607"/>
         <source>Online</source>
         <translation>В сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1234"/>
+        <location filename="../src/widget/widget.cpp" line="1237"/>
         <source>&amp;Quit</source>
         <translation>В&amp;ыход</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1612"/>
+        <location filename="../src/widget/widget.cpp" line="1615"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>В сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1613"/>
+        <location filename="../src/widget/widget.cpp" line="1616"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translatorcomment>Вероятно, это не столь долгое путешествие</translatorcomment>
         <translation>Отошёл</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1614"/>
+        <location filename="../src/widget/widget.cpp" line="1617"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Занят</translation>
@@ -2291,48 +2291,48 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
         <translation>Добавить друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="921"/>
+        <location filename="../src/widget/widget.cpp" line="924"/>
         <source>Removal of friend </source>
         <translation type="unfinished">Удаление друга</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1575"/>
+        <location filename="../src/widget/widget.cpp" line="1578"/>
         <source>Add new circle...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1601"/>
+        <location filename="../src/widget/widget.cpp" line="1604"/>
         <source>By Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1602"/>
+        <location filename="../src/widget/widget.cpp" line="1605"/>
         <source>By Activity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1603"/>
+        <location filename="../src/widget/widget.cpp" line="1606"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1605"/>
+        <location filename="../src/widget/widget.cpp" line="1608"/>
         <source>Offline</source>
         <translation>Не в сети</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1606"/>
+        <location filename="../src/widget/widget.cpp" line="1609"/>
         <source>Friends</source>
         <translation>Друзья</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1607"/>
+        <location filename="../src/widget/widget.cpp" line="1610"/>
         <source>Groups</source>
         <translation>Группы</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1608"/>
         <location filename="../src/widget/widget.cpp" line="1611"/>
+        <location filename="../src/widget/widget.cpp" line="1614"/>
         <source>Search Contacts</source>
         <translation>Поиск контактов</translation>
     </message>
@@ -2355,7 +2355,7 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="556"/>
-        <location filename="../src/widget/widget.cpp" line="1615"/>
+        <location filename="../src/widget/widget.cpp" line="1618"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -2400,35 +2400,35 @@ If unsure, press “No”, so that request to ToxDNS service will not be made us
         <translation>%1 сейчас %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="922"/>
+        <location filename="../src/widget/widget.cpp" line="925"/>
         <source>Do you want to remove history as well?</source>
         <translation type="unfinished">Хотите заодно удалить историю?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="981"/>
+        <location filename="../src/widget/widget.cpp" line="984"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation type="unfinished">Приглашение в группу</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="981"/>
+        <location filename="../src/widget/widget.cpp" line="984"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation type="unfinished">%1 пригласил вас в груповой чат. Хотите присоединиться?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1043"/>
+        <location filename="../src/widget/widget.cpp" line="1046"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Неизвестный&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1070"/>
+        <location filename="../src/widget/widget.cpp" line="1073"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 сменил заголовок на %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1314"/>
+        <location filename="../src/widget/widget.cpp" line="1317"/>
         <source>Message failed to send</source>
         <translation>Не удалось отправить сообщение</translation>
     </message>
