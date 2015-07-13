@@ -60,6 +60,7 @@ signals:
     void dhtServerListChanged();
     void smileyPackChanged();
     void emojiFontChanged();
+    void groupPeerListSideChanged();
 
 public:
     // Getter/setters
@@ -237,6 +238,9 @@ public:
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
+    bool getGroupPeerListSide() const;
+    void setGroupPeerListSide(bool side);
+
     bool getGroupchatPosition() const;
     void setGroupchatPosition(bool value);
 
@@ -294,6 +298,7 @@ private:
     bool autoLogin;
     bool fauxOfflineMessaging;
     bool compactLayout;
+    bool groupPeerListSide;
     bool groupchatPosition;
     bool enableIPv6;
     QString translation;

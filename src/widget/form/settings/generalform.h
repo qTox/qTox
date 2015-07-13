@@ -67,6 +67,7 @@ private slots:
     void onSetGroupAlwaysNotify();
     void onFauxOfflineMessaging();
     void onCompactLayout();
+    void onGroupPeerListSide();
     void onGroupchatPositionChanged();
     void onThemeColorChanged(int);
 
