@@ -405,8 +405,8 @@ void Settings::saveGlobal()
     s.beginGroup("GUI");
         s.setValue("smileyPack", smileyPack);
         s.setValue("emojiFontPointSize", emojiFontPointSize);
-        s.setValue("firstColumnHandlePos", columnRightWidth);
-        s.setValue("secondColumnHandlePosFromRight", columnLeftWidth);
+        s.setValue("columnRightWidth", columnRightWidth);
+        s.setValue("columnLeftWidth", columnLeftWidth);
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("dateFormat", dateFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);

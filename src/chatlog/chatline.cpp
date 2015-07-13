@@ -179,7 +179,7 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
         content[col]->update();
     }
 }
-
+#include <QDebug>
 void ChatLine::layout(qreal w, QPointF scenePos)
 {
     width = w;
@@ -220,7 +220,6 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal xOffset = 0.0;
     qreal xPos[content.size()];
 
-
     for (int i = 0; i < static_cast<int>(content.size()); ++i)
     {
         // calculate the effective width of the current column
@@ -242,6 +241,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
 
         // set the width of the current column
         content[i]->setWidth(width);
+        qDebug() << "WIDHT: " << width << "content:" << content[i]->getText();
 
         // calculate horizontal alignment
         qreal xAlign = 0.0;
