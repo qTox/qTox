@@ -41,6 +41,7 @@ public:
     explicit ChatLog(QWidget* parent = 0);
     virtual ~ChatLog();
 
+    void setVerticalScrollBar(QScrollBar* scrollbar);
     void insertChatlineAtBottom(ChatLine::Ptr l);
     void insertChatlineOnTop(ChatLine::Ptr l);
     void insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines);
@@ -62,6 +63,7 @@ public:
 
     bool isEmpty() const;
     bool hasTextToBeCopied() const;
+    void addDateMessage(QDate date, ChatMessage::Ptr message);
 
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
@@ -108,6 +110,7 @@ protected:
 private slots:
     void onSelectionTimerTimeout();
     void onWorkerTimeout();
+    void onScrollBarChanged(int value);
 
 private:
     void retranslateUi();
@@ -165,6 +168,12 @@ private:
 
     // find
     QHash<int, ChatLine::Ptr> foundText;
+
+    // global date
+    ChatMessage::Ptr globalDateMessage;
+    QGraphicsRectItem* globalDateRect;
+    QVector<QPair<QDate, ChatMessage::Ptr>> dateMessages;
+    int globalDateIndex;
 };
 
 #endif // CHATLOG_H

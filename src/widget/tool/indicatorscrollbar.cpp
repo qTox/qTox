@@ -22,7 +22,7 @@
 #include <QStyleOptionSlider>
 
 IndicatorScrollBar::IndicatorScrollBar(int total, QWidget *parent)
-    : QScrollBar(parent)
+    : DynamicScrollBar(parent)
 {
     setTotal(total);
 }
