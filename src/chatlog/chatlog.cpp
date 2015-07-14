@@ -22,6 +22,7 @@
 #include "chatlinecontent.h"
 #include "chatlinecontentproxy.h"
 #include "content/filetransferwidget.h"
+#include "persistence/settings.h"
 #include "widget/translator.h"
 
 #include <QDebug>
@@ -126,6 +127,15 @@ ChatLog::ChatLog(QWidget* parent)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
+
+    globalDateMessage = ChatMessage::createChatInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
+    globalDateMessage->getContent(0)->setZValue(2);
+    globalDateMessage->getContent(1)->setZValue(2);
+    globalDateMessage->getContent(2)->setZValue(2);
+    globalDateMessage->visibilityChanged(true);
+    globalDateRect = scene->addRect(globalDateMessage->sceneBoundingRect(), Qt::NoPen, Qt::white);
+    globalDateRect->setZValue(1);
+    globalDateIndex = 0;
 }
 
 ChatLog::~ChatLog()
@@ -174,6 +184,8 @@ void ChatLog::updateSceneRect()
 
 void ChatLog::layout(int start, int end, qreal width)
 {
+    onScrollBarChanged(verticalScrollBar()->value());
+
     if (lines.empty())
         return;
 
@@ -369,6 +381,14 @@ void ChatLog::reposition(int start, int end, qreal deltaY)
     }
 }
 
+void ChatLog::setVerticalScrollBar(QScrollBar* scrollbar)
+{
+    QGraphicsView::setVerticalScrollBar(scrollbar);
+    onScrollBarChanged(verticalScrollBar()->value());
+
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+}
+
 void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 {
     if (!l.get())
@@ -390,6 +410,10 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 
     checkVisibility();
     updateTypingNotification();
+
+    globalDateMessage->addToScene(scene);
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    onScrollBarChanged(verticalScrollBar()->value());
 }
 
 void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
@@ -435,6 +459,10 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
 
     // redo layout
     startResizeWorker();
+
+    globalDateMessage->addToScene(scene);
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    onScrollBarChanged(verticalScrollBar()->value());
 }
 
 bool ChatLog::stickToBottom() const
@@ -446,6 +474,7 @@ void ChatLog::scrollToBottom()
 {
     updateSceneRect();
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+    onScrollBarChanged(verticalScrollBar()->value());
 }
 
 void ChatLog::startResizeWorker()
@@ -480,6 +509,8 @@ void ChatLog::startResizeWorker()
     workerTimer->start();
 
     verticalScrollBar()->hide();
+    disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    onScrollBarChanged(verticalScrollBar()->value());
 }
 
 void ChatLog::mouseDoubleClickEvent(QMouseEvent *ev)
@@ -537,6 +568,11 @@ bool ChatLog::isEmpty() const
 bool ChatLog::hasTextToBeCopied() const
 {
     return selectionMode != None;
+}
+
+void ChatLog::addDateMessage(QDate date, ChatMessage::Ptr message)
+{
+    dateMessages.push_front(QPair<QDate, ChatMessage::Ptr>(date, message));
 }
 
 ChatLine::Ptr ChatLog::getTypingNotification() const
@@ -830,7 +866,71 @@ void ChatLog::onWorkerTimeout()
 
         // hidden during busy screen
         verticalScrollBar()->show();
+        connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     }
+}
+
+void ChatLog::onScrollBarChanged(int value)
+{
+    if (verticalScrollBar()->maximum() == verticalScrollBar()->minimum())
+        value = -margins.top();
+
+    //int currentGlobalDateY = dateMessages[globalDateIndex].second->getContent(1)->y();
+
+
+    if (dateMessages.count() != 0)
+    {
+        // Find a closer date.
+        while (globalDateIndex < dateMessages.count() - 1)
+        {
+            qDebug() << "U";
+            if (dateMessages[globalDateIndex].second->getContent(1)->y() - margins.top() > value)
+            {
+                ++globalDateIndex;
+                value = dateMessages[globalDateIndex].second->getContent(1)->y() - dateMessages[globalDateIndex].second->getContent(1)->boundingRect().height();
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        // Find a closer date.
+        while (globalDateIndex > 0)
+        {
+            qDebug() << "D" << dateMessages[globalDateIndex - 1].second->getContent(1)->y() << value;
+            int y = dateMessages[globalDateIndex - 1].second->getContent(1)->y() - margins.top();
+            if (y < value)
+            {
+                //value = dateMessages[globalDateIndex].second->getContent(1)->y() - dateMessages[globalDateIndex].second->getContent(1)->boundingRect().height();
+                --globalDateIndex;
+            }
+            else
+            {
+                int height = dateMessages[globalDateIndex - 1].second->sceneBoundingRect().height() + lineSpacing;
+                if (value > y - height)
+                {
+                    value = y - height;
+                }
+                break;
+            }
+        }
+
+        qDebug() << dateMessages.count() << dateMessages[globalDateIndex].first << (globalDateIndex) << (dateMessages.count() - 1);
+
+        globalDateMessage->removeFromScene();
+        globalDateMessage = ChatMessage::createChatInfoMessage(dateMessages[globalDateIndex].first.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
+        globalDateMessage->addToScene(scene);
+        globalDateMessage->getContent(0)->setZValue(2);
+        globalDateMessage->getContent(1)->setZValue(2);
+        globalDateMessage->getContent(2)->setZValue(2);
+        globalDateMessage->visibilityChanged(true);
+    }
+
+    globalDateMessage->layout(width(), QPointF(0.0, value + margins.top()));
+    QRectF globalDateSceneRect = globalDateMessage->sceneBoundingRect();
+    globalDateSceneRect.setY(globalDateSceneRect.y() - margins.top());
+    globalDateRect->setRect(globalDateSceneRect);
 }
 
 void ChatLog::showEvent(QShowEvent*)

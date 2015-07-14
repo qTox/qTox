@@ -387,6 +387,7 @@ HEADERS  += \
     src/widget/about/aboutuser.h \
     src/widget/form/groupinviteform.h \
     src/widget/tool/profileimporter.h \
+    src/widget/tool/dynamicscrollbar.h \
     src/widget/passwordedit.h \
     src/widget/form/settings/userinterfaceform.h
 
@@ -509,4 +510,5 @@ SOURCES += \
     src/widget/about/aboutuser.cpp \
     src/widget/form/groupinviteform.cpp \
     src/widget/tool/profileimporter.cpp \
+    src/widget/tool/dynamicscrollbar.cpp \
     src/widget/passwordedit.cpp
