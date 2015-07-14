@@ -17,25 +17,30 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef INDICATORSCROLLBAR_H
-#define INDICATORSCROLLBAR_H
+#ifndef DYNAMICSCROLLBAR_H
+#define DYNAMICSCROLLBAR_H
 
-#include "dynamicscrollbar.h"
+#include <QScrollBar>
 
-class IndicatorScrollBar : public DynamicScrollBar
+class DynamicScrollBar : public QScrollBar
 {
+    Q_OBJECT
 public:
-    IndicatorScrollBar(int total, QWidget *parent = 0);
-    void setTotal(int total);
-    void addIndicator(int pos);
-    void clearIndicators();
+    DynamicScrollBar(QWidget *parent = 0);
+    DynamicScrollBar(Qt::Orientation orientation, QWidget *parent = 0);
 
-protected:
-    virtual void paintEvent(QPaintEvent *event) final override;
+signals:
+    void dynamicRequest();
+
+private slots:
+    void onSliderMoved(int position);
+    void onSliderReleased();
 
 private:
-    QVector<int> indicators;
-    int total;
+    void init();
+
+    bool ready;
+    int lastValue;
 };
 
-#endif // INDICATORSCROLLBAR_H
+#endif // DYNAMICSCROLLBAR_H

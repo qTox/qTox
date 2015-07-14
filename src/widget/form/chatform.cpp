@@ -832,7 +832,9 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime()));
+            ChatMessage::Ptr dateMessage = ChatMessage::createChatInfoMessage(msgDate.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
+            historyMessages.append(dateMessage);
+            chatWidget->addDateMessage(lastDate, dateMessage);
         }
 
         // Show each messages

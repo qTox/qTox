@@ -496,7 +496,8 @@ SOURCES += \
     src/widget/categorywidget.cpp \
     src/widget/tool/findwidget.cpp \
     src/widget/tool/indicatorscrollbar.cpp \
-    src/widget/tool/labeledlineedit.cpp
+    src/widget/tool/labeledlineedit.cpp \
+    src/widget/tool/dynamicscrollbar.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -542,4 +543,5 @@ HEADERS += \
     src/widget/categorywidget.h \
     src/widget/tool/findwidget.h \
     src/widget/tool/indicatorscrollbar.h \
-    src/widget/tool/labeledlineedit.h
+    src/widget/tool/labeledlineedit.h \
+    src/widget/tool/dynamicscrollbar.h
