@@ -130,7 +130,8 @@ ChatForm::ChatForm(Friend* chatFriend)
     DynamicScrollBar* dynamicScroll = static_cast<DynamicScrollBar*>(chatWidget->verticalScrollBar());
     connect(dynamicScroll, &DynamicScrollBar::dynamicRequest, [this]()
     {
-        loadHistory(QDateTime(), false, true);
+        if (chatWidget->verticalScrollBar()->minimum() != chatWidget->verticalScrollBar()->maximum())
+            loadHistory(QDateTime(), false, true);
     });
 }
 
@@ -713,6 +714,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
     ToxId prevId;
 
     QList<ChatLine::Ptr> historyMessages;
+    QVector<QPair<QDate, ChatMessage::Ptr>> dateMessages;
 
     QDate lastDate(1,0,0);
     for (const auto &it : msgs)
@@ -726,7 +728,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
             lastDate = msgDate;
             ChatMessage::Ptr dateMessage = ChatMessage::createChatInfoMessage(msgDate.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
             historyMessages.append(dateMessage);
-            chatWidget->addDateMessage(lastDate, dateMessage);
+            dateMessages.append(QPair<QDate, ChatMessage::Ptr>(lastDate, dateMessage));
         }
 
         // Show each messages
@@ -770,6 +772,14 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
     int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
 
     earliestMessage = since;
+
+    QVectorIterator<QPair<QDate, ChatMessage::Ptr>> i(dateMessages);
+    i.toBack();
+    while (i.hasPrevious())
+    {
+        QPair<QDate, ChatMessage::Ptr> previous = i.previous();
+        chatWidget->addDateMessage(previous.first, previous.second);
+    }
 
     chatWidget->insertChatlineOnTop(historyMessages);
 
