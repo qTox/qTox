@@ -292,10 +292,17 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk,
                 "JOIN peers chat ON chat_id = chat.id "
                 "JOIN aliases ON sender_alias = aliases.id "
                 "JOIN peers sender ON aliases.owner = sender.id "
-                "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3';")
-            .arg(from.toMSecsSinceEpoch()).arg(to.toMSecsSinceEpoch()).arg(friendPk);
+                "WHERE timestamp < %1 AND chat.public_key='%2' "
+                "ORDER BY timestamp DECS LIMIT 20;")
+            .arg(from.toMSecsSinceEpoch()).arg(friendPk);
 
     db->execNow({queryText, rowCallback});
+
+    // Reverse list hack. TODO: Replace
+    for (int k = 0; k < (messages.size()/2); k++)
+    {
+        messages.swap(k, messages.size()-(1+k));
+    }
 
     return messages;
 }
