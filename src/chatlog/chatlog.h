@@ -68,6 +68,7 @@ public:
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
     ChatLine::Ptr getLatestLine() const;
+    QDate getLatestDate() const;
     // repetition interval sender name (sec)
     const uint repNameAfter = 5*60;
 

@@ -240,19 +240,7 @@ ChatLog *GenericChatForm::getChatLog() const
 
 QDate GenericChatForm::getLatestDate() const
 {
-    ChatLine::Ptr chatLine = chatWidget->getLatestLine();
-
-    if (chatLine)
-    {
-        Timestamp* timestamp = dynamic_cast<Timestamp*>(chatLine->getContent(2));
-
-        if (timestamp)
-            return timestamp->getTime().date();
-        else
-            return QDate::currentDate();
-    }
-
-    return QDate();
+    return chatWidget->getLatestDate();
 }
 
 QDateTime GenericChatForm::getEarliestDate() const

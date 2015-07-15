@@ -20,6 +20,7 @@
 #include "chatlog.h"
 #include "chatmessage.h"
 #include "chatlinecontent.h"
+#include "content/timestamp.h"
 #include "src/widget/translator.h"
 #include "src/persistence/settings.h"
 
@@ -112,11 +113,11 @@ ChatLog::ChatLog(QWidget* parent)
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 
-    globalDateMessage = ChatMessage::createChatInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
-    globalDateMessage->getContent(0)->setZValue(2);
+    globalDateMessage = ChatMessage::createChatInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::ERROR, QDateTime());
+    /*globalDateMessage->getContent(0)->setZValue(2);
     globalDateMessage->getContent(1)->setZValue(2);
     globalDateMessage->getContent(2)->setZValue(2);
-    globalDateMessage->visibilityChanged(true);
+    globalDateMessage->visibilityChanged(true);*/
     globalDateRect = scene->addRect(globalDateMessage->sceneBoundingRect(), Qt::NoPen, Qt::white);
     globalDateRect->setZValue(1);
     globalDateIndex = 0;
@@ -450,6 +451,18 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 
     bool stickToBtm = stickToBottom();
 
+    // check for date.
+    if (getLatestDate() < QDate::currentDate())
+    {
+        ChatMessage::Ptr date = ChatMessage::createChatInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO);
+        date->setRow(lines.size());
+        date->addToScene(scene);
+        lines.append(date);
+
+        addDateMessage(QDate::currentDate(), date);
+        layout(lines.last()->getRow(), lines.size(), useableWidth());
+    }
+
     //insert
     l->setRow(lines.size());
     l->addToScene(scene);
@@ -752,7 +765,20 @@ bool ChatLog::hasTextToBeCopied() const
 
 void ChatLog::addDateMessage(QDate date, ChatMessage::Ptr message)
 {
-    dateMessages.push_front(QPair<QDate, ChatMessage::Ptr>(date, message));
+    // Don't keep duplicate dates. Remove old, keep new.
+    if (!dateMessages.isEmpty() && date == dateMessages.last().first)
+    {
+        dateMessages.last().second->removeFromScene();
+        dateMessages.pop_back();
+
+        if (!lines.isEmpty())
+        {
+            lines.pop_front();
+            checkVisibility();
+        }
+    }
+
+    dateMessages.push_back(QPair<QDate, ChatMessage::Ptr>(date, message));
 }
 
 ChatLine::Ptr ChatLog::getTypingNotification() const
@@ -774,6 +800,21 @@ ChatLine::Ptr ChatLog::getLatestLine() const
     return nullptr;
 }
 
+QDate ChatLog::getLatestDate() const
+{
+    int index = lines.size() - 1;
+
+    while (index > 0)
+    {
+        Timestamp* timestamp = dynamic_cast<Timestamp*>(lines[index--]->getContent(2));
+
+        if (timestamp)
+            return timestamp->getTime().date();
+    }
+
+    return QDate();
+}
+
 void ChatLog::clear()
 {
     clearSelection();
@@ -783,6 +824,9 @@ void ChatLog::clear()
 
     lines.clear();
     visibleLines.clear();
+
+    dateMessages.clear();
+    globalDateIndex = 0;
 
     updateSceneRect();
 }
@@ -1022,11 +1066,13 @@ void ChatLog::onWorkerTimeout()
 
 void ChatLog::onScrollBarChanged(int value)
 {
+    if (dateMessages.isEmpty())
+        return;
 
-    if (verticalScrollBar()->maximum() == verticalScrollBar()->minimum())
-        value = -margins.top();
-    else if (value < 0)
-        value = 0;
+    if (verticalScrollBar()->maximum() != verticalScrollBar()->minimum())
+        value += margins.top();
+    //else if (value < 0)
+    //    value = 0;
 
     qDebug() << value;
 
@@ -1036,7 +1082,7 @@ void ChatLog::onScrollBarChanged(int value)
         while (globalDateIndex < dateMessages.count() - 1)
         {
             qDebug() << "U";
-            if (dateMessages[globalDateIndex].second->getContent(1)->y() - margins.top() > value)
+            if (dateMessages[globalDateIndex].second->getContent(1)->y() > value)
             {
                 ++globalDateIndex;
                 value = dateMessages[globalDateIndex].second->getContent(1)->y() - dateMessages[globalDateIndex].second->getContent(1)->boundingRect().height();
@@ -1051,7 +1097,7 @@ void ChatLog::onScrollBarChanged(int value)
         while (globalDateIndex > 0)
         {
             qDebug() << "D" << dateMessages[globalDateIndex - 1].second->getContent(1)->y() << value;
-            int y = dateMessages[globalDateIndex - 1].second->getContent(1)->y() - margins.top();
+            int y = dateMessages[globalDateIndex - 1].second->getContent(1)->y();
             if (y < value)
             {
                 //value = dateMessages[globalDateIndex].second->getContent(1)->y() - dateMessages[globalDateIndex].second->getContent(1)->boundingRect().height();
@@ -1069,8 +1115,6 @@ void ChatLog::onScrollBarChanged(int value)
             }
         }
 
-        qDebug() << dateMessages.count() << dateMessages[globalDateIndex].first << (globalDateIndex) << (dateMessages.count() - 1);
-
         globalDateMessage->removeFromScene();
         globalDateMessage = ChatMessage::createChatInfoMessage(dateMessages[globalDateIndex].first.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
         globalDateMessage->addToScene(scene);
@@ -1080,9 +1124,9 @@ void ChatLog::onScrollBarChanged(int value)
         globalDateMessage->visibilityChanged(true);
     }
 
-    globalDateMessage->layout(width(), QPointF(0.0, value + margins.top()));
+    globalDateMessage->layout(width(), QPointF(0.0, value));// - lineSpacing));
     QRectF globalDateSceneRect = globalDateMessage->sceneBoundingRect();
-    globalDateSceneRect.setY(globalDateSceneRect.y() - margins.top());
+    globalDateSceneRect.setY(globalDateSceneRect.y() - margins.top() - lineSpacing);
     globalDateRect->setRect(globalDateSceneRect);
 }
 
