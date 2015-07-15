@@ -275,6 +275,24 @@ QDate GenericChatForm::getLatestDate() const
     return QDate();
 }
 
+QDateTime GenericChatForm::getEarliestDate() const
+{
+    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+    int index = 0;
+
+    while (index < lines.size() - 1)
+    {
+        Timestamp* timestamp = dynamic_cast<Timestamp*>(lines[index++]->getContent(2));
+
+        if (timestamp && timestamp->getTime().isValid())
+            return timestamp->getTime();
+    }
+
+    qDebug() << "NOP";
+
+    return QDateTime::currentDateTime();
+}
+
 void GenericChatForm::setName(const QString &newName)
 {
     nameLabel->setText(newName);

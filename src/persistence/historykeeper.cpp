@@ -133,6 +133,8 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     ans = oldDb->exec("PRAGMA table_info (\"history\")");
     ans.seek(5);
     if (!ans.value(1).toString().contains("alias"))
+    (void)time_from;
+    //qint64 time64_from = time_from.toMSecsSinceEpoch();
     {
         //add collum in table
         oldDb->exec("ALTER TABLE history ADD COLUMN alias TEXT");
@@ -143,6 +145,9 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
 HistoryKeeper::~HistoryKeeper()
 {
     delete oldDb;
+
+    // Reverse list hack. TODO: Replace
+    for(int k = 0; k < (res.size()/2); k++) res.swap(k,res.size()-(1+k));
 }
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()
