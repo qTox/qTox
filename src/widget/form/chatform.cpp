@@ -56,6 +56,7 @@
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
+#include "src/widget/tool/dynamicscrollbar.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -114,6 +115,12 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
+
+    DynamicScrollBar* dynamicScroll = static_cast<DynamicScrollBar*>(chatWidget->verticalScrollBar());
+    connect(dynamicScroll, &DynamicScrollBar::dynamicRequest, [this]()
+    {
+        loadHistory(QDateTime(), false, true);
+    });
 }
 
 ChatForm::~ChatForm()
@@ -796,7 +803,7 @@ void ChatForm::onAvatarRemoved(uint32_t FriendId)
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
 }
 
-void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
+void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
 {
     QDateTime now = historyBaselineDate.addMSecs(-1);
 
@@ -814,6 +821,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
             now = now.addMSecs(-1);
         }
     }
+
+    if (next)
+        now = getEarliestDate();
+
+    qDebug() << now;
 
     auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->getToxId().publicKey, since, now);
 

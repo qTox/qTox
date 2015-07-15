@@ -1022,11 +1022,13 @@ void ChatLog::onWorkerTimeout()
 
 void ChatLog::onScrollBarChanged(int value)
 {
+
     if (verticalScrollBar()->maximum() == verticalScrollBar()->minimum())
         value = -margins.top();
+    else if (value < 0)
+        value = 0;
 
-    //int currentGlobalDateY = dateMessages[globalDateIndex].second->getContent(1)->y();
-
+    qDebug() << value;
 
     if (dateMessages.count() != 0)
     {
@@ -1060,6 +1062,7 @@ void ChatLog::onScrollBarChanged(int value)
                 int height = dateMessages[globalDateIndex - 1].second->sceneBoundingRect().height() + lineSpacing;
                 if (value > y - height)
                 {
+                    qDebug() << "NEW";
                     value = y - height;
                 }
                 break;

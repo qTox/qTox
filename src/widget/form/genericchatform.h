@@ -65,6 +65,7 @@ public:
 
     ChatLog* getChatLog() const;
     QDate getLatestDate() const;
+    QDateTime getEarliestDate() const;
 
 signals:
     void sendMessage(uint32_t, QString);
