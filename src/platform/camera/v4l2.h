@@ -24,8 +24,12 @@
 #include <QPair>
 #include "src/video/videomode.h"
 
-#ifndef Q_OS_LINUX
-#error "This file is only meant to be compiled for Linux targets"
+#if defined(Q_OS_UNIX) && !defined(__APPLE__)
+#define TOX_USE_V4L
+#endif
+
+#ifndef TOX_USE_V4L
+#error "This file is only meant to be compiled for Linux and Unix-like targets"
 #endif
 
 namespace v4l2

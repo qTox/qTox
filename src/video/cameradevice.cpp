@@ -31,7 +31,7 @@ extern "C" {
 #ifdef Q_OS_WIN
 #include "src/platform/camera/directshow.h"
 #endif
-#ifdef Q_OS_LINUX
+#ifdef TOX_USE_V4L
 #include "src/platform/camera/v4l2.h"
 #endif
 
@@ -105,7 +105,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
 
     AVDictionary* options = nullptr;
     if (!iformat);
-#ifdef Q_OS_LINUX
+#ifdef TOX_USE_V4L
     else if (devName.startsWith("x11grab#"))
     {
         QSize screen;
@@ -141,7 +141,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
     }
 #endif
-#ifdef Q_OS_LINUX
+#ifdef TOX_USE_V4L
     else if (iformat->name == QString("video4linux2,v4l2") && mode)
     {
         av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
@@ -299,7 +299,7 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
     else if (iformat->name == QString("dshow"))
         return DirectShow::getDeviceModes(devName);
 #endif
-#ifdef Q_OS_LINUX
+#ifdef TOX_USE_V4L
     else if (iformat->name == QString("video4linux2,v4l2"))
         return v4l2::getDeviceModes(devName);
 #endif
@@ -319,7 +319,7 @@ bool CameraDevice::getDefaultInputFormat()
     avdevice_register_all();
 
     // Desktop capture input formats
-#ifdef Q_OS_LINUX
+#ifdef TOX_USE_V4L
     idesktopFormat = av_find_input_format("x11grab");
 #endif
 #ifdef Q_OS_WIN
@@ -327,7 +327,7 @@ bool CameraDevice::getDefaultInputFormat()
 #endif
 
     // Webcam input formats
-#ifdef Q_OS_LINUX
+#ifdef TOX_USE_V4L
     if ((iformat = av_find_input_format("v4l2")))
         return true;
 #endif
