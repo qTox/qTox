@@ -23,6 +23,7 @@
 #include "content/timestamp.h"
 #include "src/widget/translator.h"
 #include "src/persistence/settings.h"
+#include "src/widget/notificationedgewidget.h"
 
 #include <QDebug>
 #include <QScrollBar>
@@ -532,6 +533,20 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     onScrollBarChanged(verticalScrollBar()->value());
 }
 
+void ChatLog::showNotification(ChatLine::Ptr l)
+{
+    if (!stickToBottom() && !edgeWidget)
+    {
+        edgeWidget = new NotificationEdgeWidget(NotificationEdgeWidget::Bottom, this);
+        connect(edgeWidget, &NotificationEdgeWidget::clicked, this, &ChatLog::focusNotifiedWidget);
+        recalculateNotificationEdge();
+        edgeWidget->show();
+        edgeWidget->updateNotificationCount(0);
+
+        edgeMessage = l;
+    }
+}
+
 bool ChatLog::stickToBottom() const
 {
     return verticalScrollBar()->value() == verticalScrollBar()->maximum();
@@ -943,6 +958,9 @@ void ChatLog::resizeEvent(QResizeEvent* ev)
 {
     updateLayout(ev->size().width(), ev->oldSize().width());
 
+    if (edgeWidget)
+        recalculateNotificationEdge();
+
     QGraphicsView::resizeEvent(ev);
 }
 
@@ -1066,22 +1084,20 @@ void ChatLog::onWorkerTimeout()
 
 void ChatLog::onScrollBarChanged(int value)
 {
+    if (stickToBottom())
+        removeNotificationWidget();
+
     if (dateMessages.isEmpty())
         return;
 
     if (verticalScrollBar()->maximum() != verticalScrollBar()->minimum())
         value += margins.top();
-    //else if (value < 0)
-    //    value = 0;
-
-    qDebug() << value;
 
     if (dateMessages.count() != 0)
     {
         // Find a closer date.
         while (globalDateIndex < dateMessages.count() - 1)
         {
-            qDebug() << "U";
             if (dateMessages[globalDateIndex].second->getContent(1)->y() > value)
             {
                 ++globalDateIndex;
@@ -1096,21 +1112,18 @@ void ChatLog::onScrollBarChanged(int value)
         // Find a closer date.
         while (globalDateIndex > 0)
         {
-            qDebug() << "D" << dateMessages[globalDateIndex - 1].second->getContent(1)->y() << value;
             int y = dateMessages[globalDateIndex - 1].second->getContent(1)->y();
+
             if (y < value)
             {
-                //value = dateMessages[globalDateIndex].second->getContent(1)->y() - dateMessages[globalDateIndex].second->getContent(1)->boundingRect().height();
                 --globalDateIndex;
             }
             else
             {
                 int height = dateMessages[globalDateIndex - 1].second->sceneBoundingRect().height() + lineSpacing;
+
                 if (value > y - height)
-                {
-                    qDebug() << "NEW";
                     value = y - height;
-                }
                 break;
             }
         }
@@ -1128,6 +1141,19 @@ void ChatLog::onScrollBarChanged(int value)
     QRectF globalDateSceneRect = globalDateMessage->sceneBoundingRect();
     globalDateSceneRect.setY(globalDateSceneRect.y() - margins.top() - lineSpacing);
     globalDateRect->setRect(globalDateSceneRect);
+}
+
+void ChatLog::focusNotifiedWidget()
+{
+    scrollToLine(edgeMessage);
+    removeNotificationWidget();
+}
+
+void ChatLog::removeNotificationWidget()
+{
+    edgeWidget->deleteLater();
+    edgeWidget = nullptr;
+    edgeMessage.reset();
 }
 
 void ChatLog::showEvent(QShowEvent*)
@@ -1183,4 +1209,12 @@ void ChatLog::updateLayout(int currentWidth, int previousWidth)
         scrollToBottom();
 
     updateBusyNotification();
+}
+
+void ChatLog::recalculateNotificationEdge()
+{
+    QPoint position = viewport()->pos();
+    position.setY(position.y() + viewport()->height() - edgeWidget->height());
+    edgeWidget->move(position);
+    edgeWidget->resize(viewport()->width(), edgeWidget->height());
 }

@@ -343,7 +343,7 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString 
         prevMsgDateTime = QDateTime::currentDateTime();
     }
 
-    insertChatMessage(msg);
+    insertChatMessage(msg, true);
 
     if (isSent)
         msg->markAsSent(datetime);
@@ -573,10 +573,13 @@ QString GenericChatForm::resolveToxId(const ToxId &id)
     return QString();
 }
 
-void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
+void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg, bool notify)
 {
     chatWidget->insertChatlineAtBottom(std::dynamic_pointer_cast<ChatLine>(msg));
     emit messageInserted();
+
+    if (notify)
+        chatWidget->showNotification(msg);
 }
 
 void GenericChatForm::hideEvent(QHideEvent* event)

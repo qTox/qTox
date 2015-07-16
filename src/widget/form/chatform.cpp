@@ -245,7 +245,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     }
 
     ChatMessage::Ptr msg = ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
-    insertChatMessage(msg);
+    insertChatMessage(msg, true);
 
     ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
     assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
