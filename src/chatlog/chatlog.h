@@ -33,6 +33,7 @@ class QMouseEvent;
 class QTimer;
 class ChatLineContent;
 struct ToxFile;
+class NotificationEdgeWidget;
 
 class ChatLog : public QGraphicsView
 {
@@ -45,6 +46,7 @@ public:
     void insertChatlineAtBottom(ChatLine::Ptr l);
     void insertChatlineOnTop(ChatLine::Ptr l);
     void insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines);
+    void showNotification(ChatLine::Ptr l);
     void clearSelection();
     void clear();
     void copySelectedText(bool toSelectionBuffer = false) const;
@@ -112,12 +114,15 @@ private slots:
     void onSelectionTimerTimeout();
     void onWorkerTimeout();
     void onScrollBarChanged(int value);
+    void focusNotifiedWidget();
+    void removeNotificationWidget();
 
 private:
     void retranslateUi();
 
 private:
     void updateLayout(int currentWidth, int previousWidth);
+    void recalculateNotificationEdge();
 
     enum SelectionMode {
         None          = 0x00,
@@ -175,6 +180,10 @@ private:
     QGraphicsRectItem* globalDateRect;
     QVector<QPair<QDate, ChatMessage::Ptr>> dateMessages;
     int globalDateIndex;
+
+    // notification
+    NotificationEdgeWidget* edgeWidget = nullptr;
+    ChatLine::Ptr edgeMessage;
 };
 
 #endif // CHATLOG_H

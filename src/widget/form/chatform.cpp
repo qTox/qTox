@@ -236,7 +236,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     }
 
     ChatMessage::Ptr msg = ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
-    insertChatMessage(msg);
+    insertChatMessage(msg, true);
 
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxId()).isEmpty()) //per contact autosave
     {

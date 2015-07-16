@@ -101,7 +101,7 @@ private:
 
 protected:
     QString resolveToxId(const ToxId &id);
-    void insertChatMessage(ChatMessage::Ptr msg);
+    void insertChatMessage(ChatMessage::Ptr msg, bool notify = false);
     void adjustFileMenuPosition();
     virtual void hideEvent(QHideEvent* event) override;
     virtual void showEvent(QShowEvent *) override;
