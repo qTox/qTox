@@ -303,11 +303,13 @@ void Widget::init()
     QAction* addContactAction = contactMenu->menu()->addAction(tr("Add Contact..."));
     connect(addContactAction, &QAction::triggered, this, &Widget::onAddClicked);
 
-    QAction* nextConversationAction = Nexus::getInstance().windowMenu->addAction(tr("Next Conversation"));
+    QAction* nextConversationAction = new QAction(tr("Next Conversation"), this);
+    Nexus::getInstance().windowMenu->addAction(nextConversationAction);
     nextConversationAction->setShortcut(QKeySequence::SelectNextPage);
     connect(nextConversationAction, &QAction::triggered, this, &Widget::nextContact);
 
-    QAction* previousConversationAction = Nexus::getInstance().windowMenu->addAction(tr("Previous Conversation"));
+    QAction* previousConversationAction = new QAction(tr("Previous Conversation"), this);
+    Nexus::getInstance().windowMenu->addAction(previousConversationAction);
     previousConversationAction->setShortcut(QKeySequence::SelectPreviousPage);
     connect(previousConversationAction, &QAction::triggered, this, &Widget::previousContact);
 
@@ -415,11 +417,6 @@ Widget::~Widget()
     delete trayMenu;
     delete ui;
     instance = nullptr;
-
-#ifdef Q_OS_MAC
-    //Nexus::getInstance().globalMenuBar->clear();
-    //Nexus::getInstance().globalMenuBar->addMenu(Nexus::getInstance().windowMenu);
-#endif
 }
 
 Widget* Widget::getInstance()
