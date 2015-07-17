@@ -346,23 +346,14 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
         }
         else if (index >= currentLayout->count())
         {
-            /*if (!loop && currentLayout == friendLayout->getLayoutOffline())
-            {
-                forward = !forward; // Go backward.
-                index += forward ? 2 : -2; // Go back to where started and then one.
-                continue; // Recheck bounds.
-            }
-            else*/
-            {
-                currentLayout = nextLayout(currentLayout, forward);
-                index = 0;
-            }
+            currentLayout = nextLayout(currentLayout, forward);
+            index = 0;
             continue;
         }
 
         GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
 
-        if (chatWidget != nullptr)
+        if (chatWidget != nullptr && chatWidget != activeChatroomWidget)
             onChatroomWidgetClicked(chatWidget, false);
 
         return;
