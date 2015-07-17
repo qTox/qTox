@@ -134,20 +134,31 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     ans.seek(5);
     if (!ans.value(1).toString().contains("alias"))
     (void)time_from;
-    //qint64 time64_from = time_from.toMSecsSinceEpoch();
+    qint64 time64_from = time_from.toMSecsSinceEpoch();
     {
         //add collum in table
         oldDb->exec("ALTER TABLE history ADD COLUMN alias TEXT");
         qDebug() << "Struct DB updated: Added column alias in table history.";
+        QString query = QString("SELECT history.id, timestamp, user_id, message, status FROM history LEFT JOIN sent_status ON history.id = sent_status.id ");
+
+        if (time_from.isValid())
+        {
+            dbAnswer = db->exec(query + QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3 ORDER BY timestamp DESC;")
+                                .arg(time64_from).arg(time64_to).arg(chat_id));
+        }
+        else
+        {
+            dbAnswer = db->exec(query + QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp < %1 AND chat_id = %2 ORDER BY timestamp DESC LIMIT 40;")
+                                .arg(time64_to).arg(chat_id));
+        }
     }
 }
 
 HistoryKeeper::~HistoryKeeper()
 {
     delete oldDb;
+    res.push_front(HistMessage(id, "", sender, message, time, isSent));
 
-    // Reverse list hack. TODO: Replace
-    for(int k = 0; k < (res.size()/2); k++) res.swap(k,res.size()-(1+k));
 }
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()

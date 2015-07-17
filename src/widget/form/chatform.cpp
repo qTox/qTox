@@ -131,7 +131,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(dynamicScroll, &DynamicScrollBar::dynamicRequest, [this]()
     {
         if (chatWidget->verticalScrollBar()->minimum() != chatWidget->verticalScrollBar()->maximum())
-            loadHistory(QDateTime(), false, true);
+            loadHistory(QDateTime(), false);
     });
 }
 
@@ -684,7 +684,7 @@ void ChatForm::onAvatarRemoved(uint32_t FriendId)
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
 }
 
-void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
+void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 {
     QDateTime now = historyBaselineDate.addMSecs(-1);
 
@@ -702,11 +702,6 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
             now = now.addMSecs(-1);
         }
     }
-
-    if (next)
-        now = getEarliestDate();
-
-    qDebug() << now;
 
     auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getToxId().publicKey, since, now);
 
@@ -771,8 +766,6 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
     previousId = storedPrevId;
     int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
 
-    earliestMessage = since;
-
     QVectorIterator<QPair<QDate, ChatMessage::Ptr>> i(dateMessages);
     i.toBack();
     while (i.hasPrevious())
@@ -782,6 +775,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
     }
 
     chatWidget->insertChatlineOnTop(historyMessages);
+
+    if (since.isNull())
+        earliestMessage = getEarliestDate();
+    else
+        earliestMessage = since;
 
     savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
     chatWidget->verticalScrollBar()->setValue(savedSliderPos);

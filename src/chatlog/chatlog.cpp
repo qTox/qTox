@@ -25,7 +25,6 @@
 #include "src/persistence/settings.h"
 #include "src/widget/notificationedgewidget.h"
 
-#include <QDebug>
 #include <QScrollBar>
 #include <QApplication>
 #include <QClipboard>
@@ -114,11 +113,8 @@ ChatLog::ChatLog(QWidget* parent)
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 
-    globalDateMessage = ChatMessage::createChatInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::ERROR, QDateTime());
-    /*globalDateMessage->getContent(0)->setZValue(2);
-    globalDateMessage->getContent(1)->setZValue(2);
-    globalDateMessage->getContent(2)->setZValue(2);
-    globalDateMessage->visibilityChanged(true);*/
+    // Place holders. They will be changed by layout().
+    globalDateMessage = ChatMessage::createChatInfoMessage("", ChatMessage::ERROR, QDateTime());
     globalDateRect = scene->addRect(globalDateMessage->sceneBoundingRect(), Qt::NoPen, Qt::white);
     globalDateRect->setZValue(1);
     globalDateIndex = 0;
@@ -226,7 +222,6 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
     int endLocation = width() - rightColumnWidth - margins.left() - verticalScrollBar()->sizeHint().width() - 15 / 2;
 
     bool splitterLeft = scenePos.x() > leftColumnWidth && scenePos.x() < leftColumnWidth + 15;
-    // Uncomment this for movable time stamps.
     bool splitterRight = scenePos.x() > endLocation - 15 && scenePos.x() < endLocation;
 
     if ((splitterLeft || splitterRight) && selectionMode == None)
@@ -457,10 +452,13 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     {
         ChatMessage::Ptr date = ChatMessage::createChatInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO);
         date->setRow(lines.size());
-        date->addToScene(scene);
+
+        if (!date->getContent(0)->scene())
+            date->addToScene(scene);
+
         lines.append(date);
 
-        addDateMessage(QDate::currentDate(), date);
+        dateMessages.push_front(QPair<QDate, ChatMessage::Ptr>(QDate::currentDate(), date));
         layout(lines.last()->getRow(), lines.size(), useableWidth());
     }
 
@@ -479,7 +477,6 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     checkVisibility();
     updateTypingNotification();
 
-    globalDateMessage->addToScene(scene);
     connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     onScrollBarChanged(verticalScrollBar()->value());
 }
@@ -528,7 +525,6 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     // redo layout
     startResizeWorker();
 
-    globalDateMessage->addToScene(scene);
     connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     onScrollBarChanged(verticalScrollBar()->value());
 }
@@ -1088,7 +1084,10 @@ void ChatLog::onScrollBarChanged(int value)
         removeNotificationWidget();
 
     if (dateMessages.isEmpty())
+    {
+        globalDateMessage->layout(width(), QPointF(0.0, value));// - lineSpacing));
         return;
+    }
 
     if (verticalScrollBar()->maximum() != verticalScrollBar()->minimum())
         value += margins.top();
@@ -1099,14 +1098,9 @@ void ChatLog::onScrollBarChanged(int value)
         while (globalDateIndex < dateMessages.count() - 1)
         {
             if (dateMessages[globalDateIndex].second->getContent(1)->y() > value)
-            {
                 ++globalDateIndex;
-                value = dateMessages[globalDateIndex].second->getContent(1)->y() - dateMessages[globalDateIndex].second->getContent(1)->boundingRect().height();
-            }
             else
-            {
                 break;
-            }
         }
 
         // Find a closer date.
@@ -1151,8 +1145,12 @@ void ChatLog::focusNotifiedWidget()
 
 void ChatLog::removeNotificationWidget()
 {
-    edgeWidget->deleteLater();
-    edgeWidget = nullptr;
+    if (edgeWidget)
+    {
+        edgeWidget->deleteLater();
+        edgeWidget = nullptr;
+    }
+
     edgeMessage.reset();
 }
 

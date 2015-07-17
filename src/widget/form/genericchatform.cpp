@@ -276,8 +276,6 @@ QDateTime GenericChatForm::getEarliestDate() const
             return timestamp->getTime();
     }
 
-    qDebug() << "NOP";
-
     return QDateTime::currentDateTime();
 }
 
@@ -478,15 +476,10 @@ void GenericChatForm::removeFindWidget(const QString& text)
         static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar());
         indicatorScroll->clearIndicators();
 
-        //foundText.clear();
-        //foundText.squeeze();
-
         QVector<ChatLine::Ptr> chatLines = getChatLog()->getLines();
 
         for (ChatLine::Ptr chatLine : chatLines)
             chatLine.get()->setHighlight(QString(), Qt::CaseInsensitive);
-
-        qDebug() << getChatLog()->getSelectedText();
 
         if (getChatLog()->getSelectedText() == text)
             getChatLog()->clearSelection();
