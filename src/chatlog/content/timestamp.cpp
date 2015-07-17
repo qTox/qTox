@@ -20,7 +20,7 @@
 #include "timestamp.h"
 #include <QCursor>
 Timestamp::Timestamp(const QDateTime &time, const QString &format, const QFont &font)
-    : Text(time.toString(format), font, false, time.toString(format))
+    : Text(time.toString(format), font, true, time.toString(format))
 {
     this->time = time;
     setCursor(Qt::ForbiddenCursor);
