@@ -16,6 +16,8 @@
 | OpenAL Soft  | >= 1.16.0   |                                                   |
 | filter_audio | most recent |                                                   |
 | qrencode     | >= 3.0.3    |                                                   |
+| libXScrnSaver | >= 1.2 | |
+
 
 Note to Fedora users: check qt5 version before building default is 4.8 on fedora 21 / 22, everything up until qmake-qt5 will build fine but then  qmake-qt5 will freak out.
 
