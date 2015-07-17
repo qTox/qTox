@@ -19,8 +19,6 @@
 
 #include "dynamicscrollbar.h"
 
-#include <QDebug>
-
 DynamicScrollBar::DynamicScrollBar(QWidget *parent)
     : QScrollBar(parent)
 {

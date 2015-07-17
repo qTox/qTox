@@ -179,7 +179,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     QList<HistMessage> res;
 
     (void)time_from;
-    //qint64 time64_from = time_from.toMSecsSinceEpoch();
+    qint64 time64_from = time_from.toMSecsSinceEpoch();
     qint64 time64_to = time_to.toMSecsSinceEpoch();
 
     int chat_id = getChatID(chat, ct).first;
@@ -187,9 +187,18 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     QSqlQuery dbAnswer;
     if (ct == ctSingle)
     {
-        dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
-                            QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp < %1 AND chat_id = %2 ORDER BY timestamp DESC LIMIT 20;")
-                            .arg(time64_to).arg(chat_id));
+        QString query = QString("SELECT history.id, timestamp, user_id, message, status FROM history LEFT JOIN sent_status ON history.id = sent_status.id ");
+
+        if (time_from.isValid())
+        {
+            dbAnswer = db->exec(query + QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3 ORDER BY timestamp DESC;")
+                                .arg(time64_from).arg(time64_to).arg(chat_id));
+        }
+        else
+        {
+            dbAnswer = db->exec(query + QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp < %1 AND chat_id = %2 ORDER BY timestamp DESC LIMIT 40;")
+                                .arg(time64_to).arg(chat_id));
+        }
     }
     else
     {
@@ -208,11 +217,8 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
 
         QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
 
-        res.push_back(HistMessage(id, "", sender, message, time, isSent));
+        res.push_front(HistMessage(id, "", sender, message, time, isSent));
     }
-
-    // Reverse list hack. TODO: Replace
-    for(int k = 0; k < (res.size()/2); k++) res.swap(k,res.size()-(1+k));
 
     return res;
 }

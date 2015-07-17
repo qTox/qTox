@@ -44,7 +44,7 @@ public:
     ChatForm(Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(QString newMessage);
-    void loadHistory(QDateTime since, bool processUndelivered = false, bool next = false);
+    void loadHistory(QDateTime since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
