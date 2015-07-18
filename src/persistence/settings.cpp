@@ -216,6 +216,7 @@ void Settings::loadGlobal()
         windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
         windowState = s.value("windowState", QByteArray()).toByteArray();
         splitterState = s.value("splitterState", QByteArray()).toByteArray();
+        groupSplitterState = s.value("groupSplitterState", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -412,6 +413,7 @@ void Settings::saveGlobal()
         s.setValue("windowGeometry", windowGeometry);
         s.setValue("windowState", windowState);
         s.setValue("splitterState", splitterState);
+        s.setValue("groupSplitterState", groupSplitterState);
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -1091,6 +1093,18 @@ void Settings::setSplitterState(const QByteArray &value)
 {
     QMutexLocker locker{&bigLock};
     splitterState = value;
+}
+
+QByteArray Settings::getGroupSplitterState() const
+{
+    QMutexLocker locker{&bigLock};
+    return groupSplitterState;
+}
+
+void Settings::setGroupSplitterState(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    groupSplitterState = value;
 }
 
 bool Settings::isMinimizeOnCloseEnabled() const

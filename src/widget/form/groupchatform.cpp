@@ -278,21 +278,24 @@ void GroupChatForm::resetLayout()
 
         delete namesListLayout;
 
+        QListView* listView = new QListView(this);
+        listView->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        listView->setStyleSheet("QListView {background-color: white; border:none} QListView::item:selected {background-color:#6fc062;}");
+        listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        listView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        stringListModel = new QStringListModel(group->getPeerList());
+        listView->setModel(stringListModel);
+
         mainSplitter = new QSplitter(this);
         mainSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         layout()->replaceWidget(chatWidget, mainSplitter);
         mainSplitter->setHandleWidth(6);
         mainSplitter->addWidget(chatWidget);
-        mainSplitter->setStretchFactor(0, 1);
-        mainSplitter->setCollapsible(0, false);
-        mainSplitter->setStyleSheet("QSplitter::handle:horizontal {border-right: 1px solid #c1c1c1;}");
-
-        QListView* listView = new QListView(this);
-        listView->setStyleSheet("QListView {background-color: white; border:none} QListView::item:selected {background-color:#6fc062;}");
-        listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        stringListModel = new QStringListModel(group->getPeerList());
-        listView->setModel(stringListModel);
         mainSplitter->addWidget(listView);
+        mainSplitter->setStyleSheet("QSplitter::handle:horizontal {border-right: 1px solid #c1c1c1;}");
+        mainSplitter->setStretchFactor(0, 4);
+        mainSplitter->restoreState(Settings::getInstance().getGroupSplitterState());
+        connect(mainSplitter, &QSplitter::splitterMoved, this, &GroupChatForm::onSplitterMoved);
     }
 }
 
@@ -395,6 +398,11 @@ void GroupChatForm::onCallClicked()
         volButton->setToolTip("");
         inCall = false;
     }
+}
+
+void GroupChatForm::onSplitterMoved()
+{
+    Settings::getInstance().setGroupSplitterState(mainSplitter->saveState());
 }
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)

@@ -218,6 +218,9 @@ public:
     QByteArray getSplitterState() const;
     void setSplitterState(const QByteArray &value);
 
+    QByteArray getGroupSplitterState() const;
+    void setGroupSplitterState(const QByteArray &value);
+
     QString getFriendAdress(const QString &publicKey) const;
     void updateFriendAdress(const QString &newAddr);
 
@@ -339,6 +342,7 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
+    QByteArray groupSplitterState;
     QString style;
     bool showSystemTray;
 

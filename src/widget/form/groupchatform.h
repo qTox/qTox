@@ -53,6 +53,7 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onCallClicked();
+    void onSplitterMoved();
 
 protected:
     virtual void keyPressEvent(QKeyEvent* ev) final override;
