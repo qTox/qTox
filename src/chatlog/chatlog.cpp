@@ -113,11 +113,10 @@ ChatLog::ChatLog(QWidget* parent)
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
 
-    // Place holders. They will be changed by layout().
-    globalDateMessage = ChatMessage::createChatInfoMessage("", ChatMessage::ERROR, QDateTime());
-    globalDateRect = scene->addRect(globalDateMessage->sceneBoundingRect(), Qt::NoPen, Qt::white);
+    // Place holders. They will be changed almost immediately.
+    globalDateRect = scene->addRect(QRect(), Qt::NoPen, Qt::white);
     globalDateRect->setZValue(1);
-    globalDateIndex = 0;
+    globalDateIndex = -1;
 }
 
 ChatLog::~ChatLog()
@@ -166,8 +165,6 @@ void ChatLog::updateSceneRect()
 
 void ChatLog::layout(int start, int end, qreal width)
 {
-    onScrollBarChanged(verticalScrollBar()->value());
-
     if (lines.empty())
         return;
 
@@ -437,6 +434,7 @@ void ChatLog::setVerticalScrollBar(QScrollBar* scrollbar)
     QGraphicsView::setVerticalScrollBar(scrollbar);
     onScrollBarChanged(verticalScrollBar()->value());
 
+    disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
 }
 
@@ -477,6 +475,7 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
     checkVisibility();
     updateTypingNotification();
 
+    disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     onScrollBarChanged(verticalScrollBar()->value());
 }
@@ -525,6 +524,7 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
     // redo layout
     startResizeWorker();
 
+    disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     onScrollBarChanged(verticalScrollBar()->value());
 }
@@ -837,7 +837,7 @@ void ChatLog::clear()
     visibleLines.clear();
 
     dateMessages.clear();
-    globalDateIndex = 0;
+    globalDateIndex = -1;
 
     updateSceneRect();
 }
@@ -1074,8 +1074,10 @@ void ChatLog::onWorkerTimeout()
 
         // hidden during busy screen
         verticalScrollBar()->show();
+        disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
         connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     }
+
 }
 
 void ChatLog::onScrollBarChanged(int value)
@@ -1084,54 +1086,68 @@ void ChatLog::onScrollBarChanged(int value)
         removeNotificationWidget();
 
     if (dateMessages.isEmpty())
-    {
-        globalDateMessage->layout(width(), QPointF(0.0, value));// - lineSpacing));
         return;
-    }
 
     if (verticalScrollBar()->maximum() != verticalScrollBar()->minimum())
         value += margins.top();
 
     if (dateMessages.count() != 0)
     {
-        // Find a closer date.
-        while (globalDateIndex < dateMessages.count() - 1)
+        int lastIndex = globalDateIndex;
+
+        if (lastIndex != -1)
         {
-            if (dateMessages[globalDateIndex].second->getContent(1)->y() > value)
-                ++globalDateIndex;
-            else
-                break;
+            // Find a closer date.
+            while (globalDateIndex < dateMessages.count() - 1)
+            {
+                if (dateMessages[globalDateIndex].second->getContent(1)->y() > value)
+                    ++globalDateIndex;
+                else
+                    break;
+            }
+
+            // Find a closer date.
+            while (globalDateIndex > 0)
+            {
+                int y = dateMessages[globalDateIndex - 1].second->getContent(1)->y();
+
+                if (y < value)
+                {
+                    --globalDateIndex;
+                }
+                else
+                {
+                    int height = dateMessages[globalDateIndex - 1].second->sceneBoundingRect().height() + lineSpacing;
+
+                    if (value > y - height)
+                        value = y - height;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            globalDateIndex = 0;
         }
 
-        // Find a closer date.
-        while (globalDateIndex > 0)
+        if (lastIndex != globalDateIndex)
         {
-            int y = dateMessages[globalDateIndex - 1].second->getContent(1)->y();
+            if (globalDateMessage)
+                globalDateMessage->removeFromScene();
 
-            if (y < value)
-            {
-                --globalDateIndex;
-            }
-            else
-            {
-                int height = dateMessages[globalDateIndex - 1].second->sceneBoundingRect().height() + lineSpacing;
-
-                if (value > y - height)
-                    value = y - height;
-                break;
-            }
+            globalDateMessage = ChatMessage::createChatInfoMessage(dateMessages[globalDateIndex].first.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
+            globalDateMessage->addToScene(scene);
+            globalDateMessage->getContent(0)->setZValue(2);
+            globalDateMessage->getContent(1)->setZValue(2);
+            globalDateMessage->getContent(2)->setZValue(2);
+            globalDateMessage->visibilityChanged(true);
         }
-
-        globalDateMessage->removeFromScene();
-        globalDateMessage = ChatMessage::createChatInfoMessage(dateMessages[globalDateIndex].first.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
-        globalDateMessage->addToScene(scene);
-        globalDateMessage->getContent(0)->setZValue(2);
-        globalDateMessage->getContent(1)->setZValue(2);
-        globalDateMessage->getContent(2)->setZValue(2);
-        globalDateMessage->visibilityChanged(true);
     }
 
-    globalDateMessage->layout(width(), QPointF(0.0, value));// - lineSpacing));
+    if (globalDateIndex == -1)
+        return;
+
+    globalDateMessage->layout(width(), QPointF(0.0, value));
     QRectF globalDateSceneRect = globalDateMessage->sceneBoundingRect();
     globalDateSceneRect.setY(globalDateSceneRect.y() - margins.top() - lineSpacing);
     globalDateRect->setRect(globalDateSceneRect);
