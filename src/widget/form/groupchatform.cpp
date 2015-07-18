@@ -226,6 +226,7 @@ void GroupChatForm::onUserListChanged()
     }
     else
     {
+        names.sort(Qt::CaseInsensitive);
         stringListModel->setStringList(names);
     }
 

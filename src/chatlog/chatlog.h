@@ -169,7 +169,7 @@ private:
     ChatLine::Ptr workerAnchorLine;
 
     // layout
-    QMargins margins = QMargins(10,10,10,10);
+    QMargins margins = QMargins(0,10,0,10);
     qreal lineSpacing = 5.0f;
 
     // find
