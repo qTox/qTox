@@ -227,6 +227,9 @@ public:
     QByteArray getDialogGeometry() const;
     void setDialogGeometry(const QByteArray& value);
 
+    QByteArray getGroupSplitterState() const;
+    void setGroupSplitterState(const QByteArray &value);
+
     QByteArray getDialogSplitterState() const;
     void setDialogSplitterState(const QByteArray &value);
 
@@ -363,6 +366,7 @@ private:
     QByteArray windowState;
     QByteArray splitterState;
     QByteArray dialogGeometry;
+    QByteArray groupSplitterState;
     QByteArray dialogSplitterState;
     QByteArray dialogSettingsGeometry;
     QString style;

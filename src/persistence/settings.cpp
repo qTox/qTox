@@ -219,6 +219,7 @@ void Settings::loadGlobal()
         windowState = s.value("windowState", QByteArray()).toByteArray();
         splitterState = s.value("splitterState", QByteArray()).toByteArray();
         dialogGeometry = s.value("dialogGeometry", QByteArray()).toByteArray();
+        groupSplitterState = s.value("groupSplitterState", QByteArray()).toByteArray();
         dialogSplitterState = s.value("dialogSplitterState", QByteArray()).toByteArray();
         dialogSettingsGeometry = s.value("dialogSettingsGeometry", QByteArray()).toByteArray();
     s.endGroup();
@@ -424,6 +425,7 @@ void Settings::saveGlobal()
         s.setValue("windowState", windowState);
         s.setValue("splitterState", splitterState);
         s.setValue("dialogGeometry", dialogGeometry);
+        s.setValue("groupSplitterState", groupSplitterState);
         s.setValue("dialogSplitterState", dialogSplitterState);
         s.setValue("dialogSettingsGeometry", dialogSettingsGeometry);
     s.endGroup();
@@ -1080,6 +1082,18 @@ void Settings::setSplitterState(const QByteArray &value)
 {
     QMutexLocker locker{&bigLock};
     splitterState = value;
+}
+
+QByteArray Settings::getGroupSplitterState() const
+{
+    QMutexLocker locker{&bigLock};
+    return groupSplitterState;
+}
+
+void Settings::setGroupSplitterState(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    groupSplitterState = value;
 }
 
 QByteArray Settings::getDialogGeometry() const
