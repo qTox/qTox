@@ -121,7 +121,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
 void ProfileForm::prFileLabelUpdate()
 {
     Nexus& nexus = Nexus::getInstance();
-    bodyUI->prFileLabel->setText(tr("The name of the current file Profile: ") + nexus.getProfile()->getName() + ".tox");
+    bodyUI->prFileLabel->setText(tr("Current profile:") + nexus.getProfile()->getName() + ".tox");
 }
 
 ProfileForm::~ProfileForm()

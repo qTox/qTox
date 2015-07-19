@@ -171,7 +171,7 @@ Share it with your friends to communicate.</string>
              <enum>Qt::ClickFocus</enum>
             </property>
             <property name="text">
-             <string>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path\&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Directory file Profile:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</string>
+             <string>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path\&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::RichText</enum>
