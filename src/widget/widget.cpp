@@ -1059,6 +1059,9 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 
 void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
 {
+    if (!ContentDialog::getGroupDialog(group->getGroupId()) && !Settings::getInstance().getSeparateWindow() && activeChatroomWidget == group->getGroupWidget())
+        onAddClicked();
+
     GroupWidget* groupWidget = dialog->addGroup(group->getGroupId(), group->getName());
     connect(groupWidget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(groupWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), group->getChatForm(), SLOT(focusInput()));
