@@ -22,6 +22,7 @@
 #include "src/video/videosurface.h"
 #include <QLabel>
 #include <QHBoxLayout>
+#include "src/widget/tool/movablewidget.h"
 
 NetCamView::NetCamView(QWidget* parent)
     : QWidget(parent)
@@ -34,6 +35,10 @@ NetCamView::NetCamView(QWidget* parent)
     videoSurface = new VideoSurface(this);
 
     mainLayout->addWidget(videoSurface);
+
+    selfFrame = new MovableWidget(this);
+    selfFrame->setStyleSheet("background-color: red;");
+    selfFrame->show();
 }
 
 void NetCamView::show(VideoSource *source, const QString &title)
@@ -59,4 +64,14 @@ void NetCamView::setSource(VideoSource *s)
 void NetCamView::setTitle(const QString &title)
 {
     setWindowTitle(title);
+}
+
+void NetCamView::resizeEvent(QResizeEvent* event)
+{
+    QWidget::resizeEvent(event);
+
+    float ratio = 1.33f;
+    int frameHeight = height() / 3.0f;
+    selfFrame->resize(frameHeight * ratio, frameHeight);
+    selfFrame->move(6, height() - selfFrame->height() - 6);
 }

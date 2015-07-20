@@ -1062,12 +1062,13 @@ void ChatForm::SendMessageStr(QString msg)
         Widget::getInstance()->updateFriendActivity(f);
     }
 }
-
+#include <QSplitter>
 void ChatForm::showNetcam()
 {
     if (!netcam)
         netcam = new NetCamView();
     netcam->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
+    bodySplitter->insertWidget(0, netcam);
 }
 
 void ChatForm::hideNetcam()

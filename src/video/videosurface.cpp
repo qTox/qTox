@@ -105,7 +105,7 @@ void VideoSurface::paintEvent(QPaintEvent*)
     }
 
     QPainter painter(this);
-    painter.fillRect(painter.viewport(), Qt::black);
+    //painter.fillRect(painter.viewport(), Qt::blue);
     if (lastFrame)
     {
         QSize frameSize = lastFrame->getSize();

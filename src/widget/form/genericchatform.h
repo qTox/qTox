@@ -40,6 +40,7 @@ class ChatLog;
 class MaskablePixmapWidget;
 class Widget;
 class FlyoutOverlayWidget;
+class QSplitter;
 
 namespace Ui {
     class MainWindow;
@@ -119,6 +120,7 @@ protected:
     QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
     bool audioInputFlag;
     bool audioOutputFlag;
+    QSplitter* bodySplitter;
 };
 
 #endif // GENERICCHATFORM_H

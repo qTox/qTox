@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QShortcut>
 #include <QKeyEvent>
+#include <QSplitter>
 
 #include "src/persistence/smileypack.h"
 #include "src/widget/emoticonswidget.h"
@@ -125,7 +126,11 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     micButton->setStyleSheet(micButtonStylesheet);
 
     setLayout(mainLayout);
-    mainLayout->addWidget(chatWidget);
+
+    bodySplitter = new QSplitter(Qt::Vertical, this);
+    bodySplitter->addWidget(chatWidget);
+
+    mainLayout->addWidget(bodySplitter);
     mainLayout->addLayout(mainFootLayout);
     mainLayout->setMargin(0);
 
