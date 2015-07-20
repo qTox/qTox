@@ -467,6 +467,12 @@ bool ContentDialog::event(QEvent* event)
                     frnd->getFriendWidget()->resetEventFlags();
                     frnd->getFriendWidget()->updateStatusLight();
                 }
+                else
+                {
+                    Group* g = activeChatroomWidget->getGroup();
+                    g->getGroupWidget()->resetEventFlags();
+                    g->getGroupWidget()->updateStatusLight();
+                }
             }
 
             currentDialog = this;
@@ -591,7 +597,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     widget->updateStatusLight();
     updateTitle(widget);
 
-    if (widget->getFriend() != nullptr)
+    if (widget->getFriend())
         widget->getFriend()->getFriendWidget()->updateStatusLight();
     else
         widget->getGroup()->getGroupWidget()->updateStatusLight();

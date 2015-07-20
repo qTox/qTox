@@ -33,6 +33,7 @@
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
 #include "src/widget/contentlayout.h"
+#include <QWindow>
 
 AddFriendForm::AddFriendForm()
 {
@@ -71,6 +72,7 @@ bool AddFriendForm::isShown() const
 {
     if (main->isVisible())
     {
+        head->window()->windowHandle()->alert(0);
         return true;
     }
 
