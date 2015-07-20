@@ -105,7 +105,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     FriendListWidget *friendList;
 
     if (circleWidget == nullptr)
-        friendList = dynamic_cast<FriendListWidget*>(parentWidget());
+        friendList = dynamic_cast<FriendListWidget*>(FriendList::findFriend(friendId)->getFriendWidget()->parentWidget());
     else
         friendList = dynamic_cast<FriendListWidget*>(circleWidget->parentWidget());
 
@@ -214,7 +214,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 circleWidget->updateStatus();
 
             if (friendList != nullptr)
-                friendList->addCircleWidget(this);
+                friendList->addCircleWidget(FriendList::findFriend(friendId)->getFriendWidget());
             else
                 Settings::getInstance().setFriendCircleID(id, Settings::getInstance().addCircle());
         }
@@ -226,7 +226,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
         {
             if (friendList != nullptr)
-                friendList->moveWidget(this, FriendList::findFriend(friendId)->getStatus(), true);
+                friendList->moveWidget(FriendList::findFriend(friendId)->getFriendWidget(), FriendList::findFriend(friendId)->getStatus(), true);
             else
                 Settings::getInstance().setFriendCircleID(id, -1);
 
@@ -242,7 +242,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 
             if (circle != nullptr)
             {
-                circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
+                circle->addFriendWidget(FriendList::findFriend(friendId)->getFriendWidget(), FriendList::findFriend(friendId)->getStatus());
                 circle->setExpanded(true);
                 Widget::getInstance()->searchCircle(circle);
                 Settings::getInstance().savePersonal();

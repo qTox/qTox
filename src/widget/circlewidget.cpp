@@ -92,54 +92,57 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
     QAction* selectedItem = menu.exec(mapToGlobal(event->pos()));
 
-    if (selectedItem == renameAction)
+    if (selectedItem)
     {
-        editName();
-    }
-    else if (selectedItem == removeAction)
-    {
-        FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
-        moveFriendWidgets(friendList);
-
-        friendList->removeCircleWidget(this);
-
-        int replacedCircle = Settings::getInstance().removeCircle(id);
-
-        auto circleReplace = circleList.find(replacedCircle);
-        if (circleReplace != circleList.end())
-            circleReplace.value()->updateID(id);
-        else
-            assert(true); // This should never happen.
-
-        circleList.remove(replacedCircle);
-    }
-    else if (selectedItem == openAction)
-    {
-        ContentDialog* dialog = Widget::getInstance()->createContentDialog();
-
-        for (int i = 0; i < friendOnlineLayout()->count(); ++i)
+        if (selectedItem == renameAction)
         {
-            FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
-
-            if (friendWidget != nullptr)
-            {
-                Friend* f = friendWidget->getFriend();
-                dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
-            }
+            editName();
         }
-        for (int i = 0; i < friendOfflineLayout()->count(); ++i)
+        else if (selectedItem == removeAction)
         {
-            FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
+            FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
+            moveFriendWidgets(friendList);
 
-            if (friendWidget != nullptr)
-            {
-                Friend* f = friendWidget->getFriend();
-                dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
-            }
+            friendList->removeCircleWidget(this);
+
+            int replacedCircle = Settings::getInstance().removeCircle(id);
+
+            auto circleReplace = circleList.find(replacedCircle);
+            if (circleReplace != circleList.end())
+                circleReplace.value()->updateID(id);
+            else
+                assert(true); // This should never happen.
+
+            circleList.remove(replacedCircle);
         }
+        else if (selectedItem == openAction)
+        {
+            ContentDialog* dialog = Widget::getInstance()->createContentDialog();
 
-        dialog->show();
-        dialog->ensureSplitterVisible();
+            for (int i = 0; i < friendOnlineLayout()->count(); ++i)
+            {
+                FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
+
+                if (friendWidget != nullptr)
+                {
+                    Friend* f = friendWidget->getFriend();
+                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                }
+            }
+            for (int i = 0; i < friendOfflineLayout()->count(); ++i)
+            {
+                FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
+
+                if (friendWidget != nullptr)
+                {
+                    Friend* f = friendWidget->getFriend();
+                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                }
+            }
+
+            dialog->show();
+            dialog->ensureSplitterVisible();
+        }
     }
 
     setContainerAttribute(Qt::WA_UnderMouse, false);
