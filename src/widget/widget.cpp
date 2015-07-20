@@ -173,21 +173,7 @@ void Widget::init()
 
     ui->searchContactFilterBox->setMenu(filterMenu);
 
-    /*ui->mainContent->setLayout(new QVBoxLayout());
-    ui->mainHead->setLayout(new QVBoxLayout());
-    ui->mainHead->layout()->setMargin(0);
-    ui->mainHead->layout()->setSpacing(0);
-
-    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
-            && Settings::getInstance().getStyle() != "None")
-    {
-        ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-        ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-    }*/
-
 #ifndef Q_OS_MAC
-    //ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
-    //ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
     ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
     ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 #endif
@@ -628,10 +614,9 @@ void Widget::onAddClicked()
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!addFriendForm->isShown())
-        {
             addFriendForm->show(createContentDialog(AddDialog));
-            setActiveToolMenuButton(Widget::None);
-        }
+
+        setActiveToolMenuButton(Widget::None);
     }
     else
     {
@@ -652,10 +637,9 @@ void Widget::onTransferClicked()
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!filesForm->isShown())
-        {
             filesForm->show(createContentDialog(TransferDialog));
-            setActiveToolMenuButton(Widget::None);
-        }
+
+        setActiveToolMenuButton(Widget::None);
     }
     else
     {
@@ -741,10 +725,9 @@ void Widget::onSettingsClicked()
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!settingsWidget->isShown())
-        {
             settingsWidget->show(createContentDialog(SettingDialog));
-            setActiveToolMenuButton(Widget::None);
-        }
+
+        setActiveToolMenuButton(Widget::None);
     }
     else
     {
@@ -760,10 +743,9 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!profileForm->isShown())
-        {
             profileForm->show(createContentDialog(ProfileDialog));
-            setActiveToolMenuButton(Widget::None);
-        }
+
+        setActiveToolMenuButton(Widget::None);
     }
     else
     {
@@ -1127,6 +1109,7 @@ bool Widget::newGroupMessageAlert(int groupId)
     bool hasActive;
     QWidget* currentWindow;
     ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
+    Group* g =  GroupList::findGroup(groupId);
 
     if (contentDialog != nullptr)
     {
@@ -1136,10 +1119,28 @@ bool Widget::newGroupMessageAlert(int groupId)
     else
     {
         currentWindow = window();
-        hasActive = GroupList::findGroup(groupId)->getGroupWidget() == activeChatroomWidget;
+        hasActive = g->getGroupWidget() == activeChatroomWidget;
     }
 
-    return newMessageAlert(currentWindow, hasActive);
+    if (newMessageAlert(currentWindow, hasActive))
+    {
+        g->setEventFlag(true);
+        g->getGroupWidget()->updateStatusLight();
+
+        if (contentDialog == nullptr)
+        {
+            if (hasActive)
+                setWindowTitle(g->getGroupWidget()->getTitle());
+        }
+        else
+        {
+            ContentDialog::updateGroupStatus(groupId);
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 QString Widget::fromDialogType(DialogType type)
@@ -1400,19 +1401,8 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     else
         g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
 
-    g->setEventFlag(static_cast<GenericChatroomWidget*>(g->getGroupWidget()) != activeChatroomWidget);
-
     if (targeted || Settings::getInstance().getGroupAlwaysNotify())
         newGroupMessageAlert(g->getGroupId());
-
-    if (targeted)
-        g->setMentionedFlag(true); // useful for highlighting line or desktop notifications
-
-    g->getGroupWidget()->updateStatusLight();
-    ContentDialog::updateGroupStatus(g->getGroupId());
-
-    if (g->getGroupWidget()->isActive())
-        setWindowTitle(g->getGroupWidget()->getTitle());
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)

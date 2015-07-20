@@ -44,6 +44,7 @@
 #include <QBuffer>
 #include <QMessageBox>
 #include <QComboBox>
+#include <QWindow>
 
 ProfileForm::ProfileForm(QWidget *parent) :
     QWidget{parent}, qr{nullptr}
@@ -132,6 +133,7 @@ bool ProfileForm::isShown() const
 {
     if (head->isVisible())
     {
+        window()->windowHandle()->alert(0);
         return true;
     }
 

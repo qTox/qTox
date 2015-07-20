@@ -29,6 +29,7 @@
 #include "src/widget/contentlayout.h"
 #include <QTabWidget>
 #include <QLabel>
+#include <QWindow>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent)
@@ -91,6 +92,7 @@ bool SettingsWidget::isShown() const
 {
     if (body->isVisible())
     {
+        body->window()->windowHandle()->alert(0);
         return true;
     }
 

@@ -22,6 +22,7 @@
 #include "src/widget/translator.h"
 #include "src/widget/contentlayout.h"
 #include <QFileInfo>
+#include <QWindow>
 
 FilesForm::FilesForm()
     : QObject(), doneIcon(":/ui/fileTransferWidget/fileDone.svg")
@@ -58,6 +59,7 @@ bool FilesForm::isShown() const
 {
     if (main.isVisible())
     {
+        head->window()->windowHandle()->alert(0);
         return true;
     }
 
