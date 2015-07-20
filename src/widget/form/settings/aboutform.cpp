@@ -30,6 +30,8 @@ AboutForm::AboutForm() :
     //to-do: when we finally have stable releases: build-in a way to tell
     //nightly builds from stable releases.
     bodyUI->label_4->setText(bodyUI->label_4->text().replace("GIT_VERSION", QString(GIT_VERSION)));
+    if (QString(GIT_VERSION).indexOf(" ") > -1)
+        bodyUI->label_4->setOpenExternalLinks(false);
 
     Translator::registerHandler(std::bind(&AboutForm::retranslateUi, this), this);
 }
