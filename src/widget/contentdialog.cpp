@@ -241,8 +241,12 @@ void ContentDialog::removeFriend(int friendId)
 void ContentDialog::removeGroup(int groupId)
 {
     Group* group = GroupList::findGroup(groupId);
-    disconnect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
-    disconnect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
+
+    if (group)
+    {
+        disconnect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
+        disconnect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
+    }
 
     auto iter = groupList.find(groupId);
 
@@ -424,7 +428,7 @@ ContentDialog* ContentDialog::getGroupDialog(int groupId)
 void ContentDialog::updateTitleUsername(const QString& username)
 {
     if (displayWidget != nullptr)
-        setWindowTitle(username + QStringLiteral(" - ") + displayWidget->getTitle());
+        setWindowTitle(displayWidget->getTitle() + QStringLiteral(" - ") + username);
     else
         setWindowTitle(username);
 }

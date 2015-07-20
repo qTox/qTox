@@ -389,8 +389,11 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
         }
 
         Widget::getInstance()->searchCircle(circleWidget);
-        circleWidget->editName();
+
+        if (window()->isActiveWindow())
+            circleWidget->editName();
     }
+    reDraw();
 }
 
 void FriendListWidget::removeCircleWidget(CircleWidget* widget)
