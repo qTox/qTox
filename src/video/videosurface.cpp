@@ -28,7 +28,7 @@ VideoSurface::VideoSurface(QWidget* parent)
     , frameLock{false}
     , hasSubscribed{false}
 {
-
+    //setMinimumWidth(160);
 }
 
 VideoSurface::VideoSurface(VideoSource *source, QWidget* parent)
@@ -50,6 +50,49 @@ void VideoSurface::setSource(VideoSource *src)
     unsubscribe();
     source = src;
     subscribe();
+}
+#include <QDebug>
+QRect VideoSurface::getRect()
+{
+    // Fast lock
+    {
+        bool expected = false;
+        while (!frameLock.compare_exchange_weak(expected, true))
+            expected = false;
+    }
+
+    std::shared_ptr<VideoFrame> last = lastFrame;
+    frameLock = false;
+
+    if (last)
+    {
+        QSize frameSize = lastFrame->getSize();
+        QRect rect = this->rect();
+        int width = frameSize.width()*rect.height()/frameSize.height();
+        rect.setLeft((rect.width()-width)/2);
+        rect.setWidth(width);
+        return rect;
+    }
+
+    return QRect();
+}
+
+QSize VideoSurface::getFrameSize()
+{
+    // Fast lock
+    {
+        bool expected = false;
+        while (!frameLock.compare_exchange_weak(expected, true))
+            expected = false;
+    }
+
+    QSize frameSize;
+
+    if (lastFrame)
+        frameSize = lastFrame->getSize();
+
+    frameLock = false;
+    return frameSize;
 }
 
 void VideoSurface::subscribe()
@@ -109,13 +152,40 @@ void VideoSurface::paintEvent(QPaintEvent*)
     if (lastFrame)
     {
         QSize frameSize = lastFrame->getSize();
-        QRect rect = painter.viewport();
+        QRect rect = this->rect();
         int width = frameSize.width()*rect.height()/frameSize.height();
         rect.setLeft((rect.width()-width)/2);
         rect.setWidth(width);
 
         QImage frame = lastFrame->toQImage(rect.size());
         painter.drawImage(rect, frame, frame.rect(), Qt::NoFormatConversion);
+        //qDebug() << "VIDEO 2" << rect;
     }
     frameLock = false;
+}
+#include <QResizeEvent>
+void VideoSurface::resizeEvent(QResizeEvent* event)
+{
+    QSize frameSize;
+
+    // Fast lock
+    {
+        bool expected = false;
+        while (!frameLock.compare_exchange_weak(expected, true))
+            expected = false;
+    }
+
+    if (lastFrame)
+    {
+        frameSize = lastFrame->getSize();
+    }
+
+    frameLock = false;
+
+    if (frameSize.isValid())
+    {
+        float ratio = frameSize.height() / static_cast<float>(frameSize.width());
+        int width = ratio*event->size().width();
+        setMaximumHeight(width);
+    }
 }

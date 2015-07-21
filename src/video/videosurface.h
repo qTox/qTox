@@ -35,12 +35,15 @@ public:
     ~VideoSurface();
 
     void setSource(VideoSource* src); //NULL is a valid option
+    QRect getRect();
+    QSize getFrameSize();
 
 protected:
     void subscribe();
     void unsubscribe();
 
     virtual void paintEvent(QPaintEvent * event) final override;
+    virtual void resizeEvent(QResizeEvent* event) final override;
 
 private slots:
     void onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame);

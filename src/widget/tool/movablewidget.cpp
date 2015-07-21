@@ -26,6 +26,15 @@ MovableWidget::MovableWidget(QWidget *parent)
 
 }
 
+void MovableWidget::setBoundary(const QRect& boundary)
+{
+    boundaryRect = boundary;
+
+    QPoint moveTo = pos();
+    checkBoundary(moveTo);
+    move(moveTo);
+}
+
 void MovableWidget::mousePressEvent(QMouseEvent* event)
 {
     if (event->buttons() & Qt::LeftButton)
@@ -40,18 +49,7 @@ void MovableWidget::mouseMoveEvent(QMouseEvent* event)
     if (moving)
     {
         QPoint moveTo = pos() - (lastPoint - event->globalPos());
-
-        if (moveTo.x() < 0)
-            moveTo.setX(0);
-
-        if (moveTo.y() < 0)
-            moveTo.setY(0);
-
-        if (moveTo.x() + width() > parentWidget()->width())
-            moveTo.setX(parentWidget()->width() - width());
-
-        if (moveTo.y() + height() > parentWidget()->height())
-            moveTo.setY(parentWidget()->height() - height());
+        checkBoundary(moveTo);
 
         move(moveTo);
         lastPoint = event->globalPos();
@@ -62,4 +60,53 @@ void MovableWidget::mouseReleaseEvent(QMouseEvent* event)
 {
     if (!(event->buttons() & Qt::LeftButton))
         moving = false;
+}
+#include <QGraphicsOpacityEffect>
+void MovableWidget::mouseDoubleClickEvent(QMouseEvent* event)
+{
+    if (!(event->buttons() & Qt::LeftButton))
+        return;
+
+    if (!graphicsEffect())
+    {
+        QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect(this);
+        opacityEffect->setOpacity(0.5);
+        setGraphicsEffect(opacityEffect);
+    }
+    else
+    {
+        setGraphicsEffect(nullptr);
+    }
+}
+
+void MovableWidget::checkBoundary(QPoint& point) const
+{
+    int x1, y1, x2, y2;
+    boundaryRect.getCoords(&x1, &y1, &x2, &y2);
+
+    // Video boundary.
+    if (point.x() + width() < x1)
+        point.setX(x1 - width());
+
+    if (point.y() + height() <y1)
+        point.setY(y1 - height());
+
+    if (point.x() > x2)
+        point.setX(x2);
+
+    if (point.y() > y2)
+        point.setY(y2);
+
+    // Parent boundary.
+    if (point.x() < 0)
+        point.setX(0);
+
+    if (point.y() < 0)
+        point.setY(0);
+
+    if (point.x() + width() > parentWidget()->width())
+        point.setX(parentWidget()->width() - width());
+
+    if (point.y() + height() > parentWidget()->height())
+        point.setY(parentWidget()->height() - height());
 }

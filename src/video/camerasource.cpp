@@ -286,6 +286,8 @@ bool CameraSource::openDevice()
     while (!streamFuture.isRunning())
         QThread::yieldCurrentThread();
 
+    emit deviceOpened();
+
     return true;
 }
 

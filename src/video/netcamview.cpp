@@ -23,6 +23,7 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include "src/widget/tool/movablewidget.h"
+#include "camerasource.h"
 
 NetCamView::NetCamView(QWidget* parent)
     : QWidget(parent)
@@ -36,15 +37,26 @@ NetCamView::NetCamView(QWidget* parent)
 
     mainLayout->addWidget(videoSurface);
 
-    selfFrame = new MovableWidget(this);
+    selfFrame = new MovableWidget(videoSurface);
     selfFrame->setStyleSheet("background-color: red;");
     selfFrame->show();
+
+    selfVideoSurface = new VideoSurface(selfFrame);
+    selfVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
+    selfVideoSurface->setMinimumSize(QSize(160, 120));
+    selfVideoSurface->setSource(&CameraSource::getInstance());
+    QHBoxLayout* camLayout = new QHBoxLayout(selfFrame);
+    camLayout->addWidget(selfVideoSurface);
+    camLayout->setMargin(0);
+
+    connect(&CameraSource::getInstance(), &CameraSource::deviceOpened, this, &NetCamView::updateSize);
 }
 
 void NetCamView::show(VideoSource *source, const QString &title)
 {
     setSource(source);
     setTitle(title);
+    selfFrame->setBoundary(videoSurface->getRect());
 
     QWidget::show();
 }
@@ -69,9 +81,16 @@ void NetCamView::setTitle(const QString &title)
 void NetCamView::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
+    updateSize();
+}
 
-    float ratio = 1.33f;
-    int frameHeight = height() / 3.0f;
+void NetCamView::updateSize()
+{
+    QSize frameSize = selfVideoSurface->getFrameSize();
+    float ratio = frameSize.width() / static_cast<float>(frameSize.height());
+    QRect videoRect = videoSurface->getRect();
+    int frameHeight = videoRect.height() / 3.0f;
     selfFrame->resize(frameHeight * ratio, frameHeight);
-    selfFrame->move(6, height() - selfFrame->height() - 6);
+    selfFrame->setBoundary(videoRect);
+    selfVideoSurface->resize(selfFrame->size());
 }

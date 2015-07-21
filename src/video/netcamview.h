@@ -27,6 +27,7 @@ struct vpx_image;
 class VideoSurface;
 class VideoSource;
 class QFrame;
+class MovableWidget;
 
 class NetCamView : public QWidget
 {
@@ -44,10 +45,14 @@ public:
 protected:
     void resizeEvent(QResizeEvent* event) final override;
 
+private slots:
+    void updateSize();
+
 private:
     QHBoxLayout* mainLayout;
     VideoSurface* videoSurface;
-    QWidget* selfFrame;
+    VideoSurface* selfVideoSurface;
+    MovableWidget* selfFrame;
 };
 
 #endif // NETCAMVIEW_H

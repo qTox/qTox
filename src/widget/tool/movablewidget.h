@@ -25,16 +25,21 @@
 class MovableWidget : public QWidget
 {
 public:
-    MovableWidget(QWidget* parent = 0);
+    MovableWidget(QWidget* parent);
+    void setBoundary(const QRect& boundary);
 
 protected:
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent* event);
 
 private:
+    void checkBoundary(QPoint& point) const;
+
     bool moving = false;
     QPoint lastPoint;
+    QRect boundaryRect;
 };
 
 #endif // MOVABLEWIDGET_H
