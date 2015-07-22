@@ -71,6 +71,7 @@ signals:
     void sendMessage(uint32_t, QString);
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
+    void messageInserted();
 
 public slots:
     void focusInput();

@@ -28,6 +28,7 @@ class VideoSurface;
 class VideoSource;
 class QFrame;
 class MovableWidget;
+class QPushButton;
 
 class NetCamView : public QWidget
 {
@@ -42,6 +43,12 @@ public:
     void setSource(VideoSource* s);
     void setTitle(const QString& title);
 
+signals:
+    void showMessageClicked();
+
+public slots:
+    void setShowMessages(bool show, bool notify = false);
+
 protected:
     void resizeEvent(QResizeEvent* event) final override;
 
@@ -49,10 +56,13 @@ private slots:
     void updateSize();
 
 private:
+    void updateFrameSize();
+
     QHBoxLayout* mainLayout;
     VideoSurface* videoSurface;
     VideoSurface* selfVideoSurface;
     MovableWidget* selfFrame;
+    QPushButton* button;
 };
 
 #endif // NETCAMVIEW_H

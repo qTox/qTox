@@ -19,18 +19,34 @@
 
 #include "movablewidget.h"
 #include <QMouseEvent>
+#include <QGraphicsOpacityEffect>
+#include <cmath>
 
 MovableWidget::MovableWidget(QWidget *parent)
     : QWidget(parent)
 {
 
 }
-
-void MovableWidget::setBoundary(const QRect& boundary)
+#include <QDebug>
+void MovableWidget::setBoundary(const QRect& boundary, QSize size)
 {
+    int widthEdge = boundaryRect.x() - width();
+    checkBoundaryLeft(widthEdge);
+    int widthRange = abs(widthEdge) * 2 + boundaryRect.width() - width();
+    float xPercent = static_cast<float>(x() - widthEdge) / widthRange;
+    qDebug() << xPercent << x() - widthEdge << widthRange;
+    float yPercent = static_cast<float>(y()) / (boundaryRect.height() - height());
+
+    if (size.isValid())
+        resize(size);
+
     boundaryRect = boundary;
+    widthEdge = boundaryRect.x() - width();
+    checkBoundaryLeft(widthEdge);
 
     QPoint moveTo = pos();
+    moveTo.setX((abs(widthEdge) * 2 + boundaryRect.width() - width()) * xPercent);
+    moveTo.setY((boundaryRect.height() - height()) * yPercent);
     checkBoundary(moveTo);
     move(moveTo);
 }
@@ -61,7 +77,7 @@ void MovableWidget::mouseReleaseEvent(QMouseEvent* event)
     if (!(event->buttons() & Qt::LeftButton))
         moving = false;
 }
-#include <QGraphicsOpacityEffect>
+
 void MovableWidget::mouseDoubleClickEvent(QMouseEvent* event)
 {
     if (!(event->buttons() & Qt::LeftButton))
@@ -81,12 +97,17 @@ void MovableWidget::mouseDoubleClickEvent(QMouseEvent* event)
 
 void MovableWidget::checkBoundary(QPoint& point) const
 {
+    if (boundaryRect.isNull())
+        return;
+
     int x1, y1, x2, y2;
     boundaryRect.getCoords(&x1, &y1, &x2, &y2);
 
+    x1 = point.x();
+    checkBoundaryLeft(x1);
+    point.setX(x1);
+
     // Video boundary.
-    if (point.x() + width() < x1)
-        point.setX(x1 - width());
 
     if (point.y() + height() <y1)
         point.setY(y1 - height());
@@ -98,9 +119,6 @@ void MovableWidget::checkBoundary(QPoint& point) const
         point.setY(y2);
 
     // Parent boundary.
-    if (point.x() < 0)
-        point.setX(0);
-
     if (point.y() < 0)
         point.setY(0);
 
@@ -109,4 +127,13 @@ void MovableWidget::checkBoundary(QPoint& point) const
 
     if (point.y() + height() > parentWidget()->height())
         point.setY(parentWidget()->height() - height());
+}
+
+void MovableWidget::checkBoundaryLeft(int &x) const
+{
+    if (x < 0)
+        x = 0;
+
+    if (x + width() < boundaryRect.x())
+        x = boundaryRect.x() - width();
 }

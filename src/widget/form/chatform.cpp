@@ -31,6 +31,7 @@
 #include <QTemporaryFile>
 #include <QGuiApplication>
 #include <QStyle>
+#include <QSplitter>
 #include <cassert>
 #include "chatform.h"
 #include "src/core/core.h"
@@ -87,6 +88,10 @@ ChatForm::ChatForm(Friend* chatFriend)
     callDuration = new QLabel();
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
+
+    chatWidget->setMinimumHeight(160);
+    connect(bodySplitter, &QSplitter::splitterMoved, this, &ChatForm::onSplitterMoved);
+    connect(this, &GenericChatForm::messageInserted, this, &ChatForm::onMessageInserted);
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
 
@@ -931,6 +936,31 @@ void ChatForm::onLoadHistory()
     }
 }
 
+void ChatForm::onSplitterMoved(int, int)
+{
+    if (netcam)
+        netcam->setShowMessages(bodySplitter->sizes()[1] == 0);
+}
+
+void ChatForm::onMessageInserted()
+{
+    if (netcam && bodySplitter->sizes()[1] == 0)
+        netcam->setShowMessages(true, true);
+}
+
+void ChatForm::onShowMessagesClicked()
+{
+    if (netcam)
+    {
+        if (bodySplitter->sizes()[1] == 0)
+            bodySplitter->setSizes({1, 1});
+        else
+            bodySplitter->setSizes({1, 0});
+
+        onSplitterMoved(0, 0);
+    }
+}
+
 void ChatForm::startCounter()
 {
     if (!callDurationTimer)
@@ -1062,13 +1092,16 @@ void ChatForm::SendMessageStr(QString msg)
         Widget::getInstance()->updateFriendActivity(f);
     }
 }
-#include <QSplitter>
+
 void ChatForm::showNetcam()
 {
     if (!netcam)
         netcam = new NetCamView();
+
     netcam->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
+    connect(netcam, &NetCamView::showMessageClicked, this, &ChatForm::onShowMessagesClicked);
     bodySplitter->insertWidget(0, netcam);
+    bodySplitter->setCollapsible(0, false);
 }
 
 void ChatForm::hideNetcam()
@@ -1083,4 +1116,7 @@ void ChatForm::hideNetcam()
 void ChatForm::retranslateUi()
 {
     loadHistoryAction->setText(tr("Load chat history..."));
+
+    if (netcam)
+        netcam->setShowMessages(chatWidget->isVisible());
 }

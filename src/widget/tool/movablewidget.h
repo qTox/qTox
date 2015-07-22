@@ -26,7 +26,7 @@ class MovableWidget : public QWidget
 {
 public:
     MovableWidget(QWidget* parent);
-    void setBoundary(const QRect& boundary);
+    void setBoundary(const QRect& boundary, QSize size = QSize());
 
 protected:
     void mousePressEvent(QMouseEvent* event);
@@ -36,6 +36,10 @@ protected:
 
 private:
     void checkBoundary(QPoint& point) const;
+    void checkBoundaryTop(int &x) const;
+    void checkBoundaryBottom(int &x) const;
+    void checkBoundaryLeft(int &x) const;
+    void checkBoundaryRight(int &x) const;
 
     bool moving = false;
     QPoint lastPoint;

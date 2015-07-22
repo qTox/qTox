@@ -100,6 +100,9 @@ private slots:
     void onScreenshotClicked();
     void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
+    void onSplitterMoved(int pos, int index);
+    void onMessageInserted();
+    void onShowMessagesClicked();
 
 private:
     void retranslateUi();

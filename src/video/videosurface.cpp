@@ -28,7 +28,7 @@ VideoSurface::VideoSurface(QWidget* parent)
     , frameLock{false}
     , hasSubscribed{false}
 {
-    //setMinimumWidth(160);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 VideoSurface::VideoSurface(VideoSource *source, QWidget* parent)
@@ -52,7 +52,7 @@ void VideoSurface::setSource(VideoSource *src)
     subscribe();
 }
 #include <QDebug>
-QRect VideoSurface::getRect()
+QRect VideoSurface::getRect() const
 {
     // Fast lock
     {
@@ -93,6 +93,11 @@ QSize VideoSurface::getFrameSize()
 
     frameLock = false;
     return frameSize;
+}
+
+QSize VideoSurface::sizeHint() const
+{
+    return getRect().size();
 }
 
 void VideoSurface::subscribe()
@@ -136,6 +141,8 @@ void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
     lastFrame = newFrame;
     frameLock = false;
     update();
+
+    emit drewNewFrame();
 }
 
 void VideoSurface::paintEvent(QPaintEvent*)
@@ -148,7 +155,7 @@ void VideoSurface::paintEvent(QPaintEvent*)
     }
 
     QPainter painter(this);
-    //painter.fillRect(painter.viewport(), Qt::blue);
+    //painter.fillRect(painter.viewport(), Qt::black);
     if (lastFrame)
     {
         QSize frameSize = lastFrame->getSize();
@@ -166,6 +173,7 @@ void VideoSurface::paintEvent(QPaintEvent*)
 #include <QResizeEvent>
 void VideoSurface::resizeEvent(QResizeEvent* event)
 {
+    // Locks aspect ratio.
     QSize frameSize;
 
     // Fast lock

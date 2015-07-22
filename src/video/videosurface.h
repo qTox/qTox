@@ -35,8 +35,13 @@ public:
     ~VideoSurface();
 
     void setSource(VideoSource* src); //NULL is a valid option
-    QRect getRect();
+    QRect getRect() const;
     QSize getFrameSize();
+
+    virtual QSize sizeHint() const override;
+
+signals:
+    void drewNewFrame();
 
 protected:
     void subscribe();
@@ -51,7 +56,7 @@ private slots:
 private:
     VideoSource* source;
     std::shared_ptr<VideoFrame> lastFrame;
-    std::atomic_bool frameLock; ///< Fast lock for lastFrame
+    mutable std::atomic_bool frameLock; ///< Fast lock for lastFrame
     bool hasSubscribed;
 };
 

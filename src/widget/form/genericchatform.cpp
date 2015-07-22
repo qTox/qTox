@@ -128,10 +128,14 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     setLayout(mainLayout);
 
     bodySplitter = new QSplitter(Qt::Vertical, this);
-    bodySplitter->addWidget(chatWidget);
+
+    QWidget* contentWidget = new QWidget(this);
+    QVBoxLayout* contentLayout = new QVBoxLayout(contentWidget);
+    contentLayout->addWidget(chatWidget);
+    contentLayout->addLayout(mainFootLayout);
+    bodySplitter->addWidget(contentWidget);
 
     mainLayout->addWidget(bodySplitter);
-    mainLayout->addLayout(mainFootLayout);
     mainLayout->setMargin(0);
 
     footButtonsSmall->addWidget(emoteButton);
@@ -464,6 +468,7 @@ QString GenericChatForm::resolveToxId(const ToxId &id)
 void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
 {
     chatWidget->insertChatlineAtBottom(std::dynamic_pointer_cast<ChatLine>(msg));
+    emit messageInserted();
 }
 
 void GenericChatForm::hideEvent(QHideEvent* event)
