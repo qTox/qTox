@@ -45,6 +45,8 @@ public:
     void show(Ui::MainWindow &ui);
     void setBodyHeadStyle(QString style);
 
+    void showAbout();
+
 signals:
     void setShowSystemTray(bool newValue);
     void compactToggled(bool compact);
