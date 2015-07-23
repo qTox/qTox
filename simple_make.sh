@@ -17,16 +17,16 @@ elif which dnf; then
     sudo dnf install \
         git qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel \
         openal-soft-devel libXScrnSaver-devel qrencode-devel \
-	opus-devel libvpx-devel qt5-qttools-devel glib2-devel \
-	gdk-pixbuf2-devel gtk2-devel
+        opus-devel libvpx-devel qt5-qttools-devel glib2-devel \
+        gdk-pixbuf2-devel gtk2-devel
 else
     echo "Unknown package manager, attempting to compile anyways"
 fi
 
 ./bootstrap.sh
 if [ -e /etc/redhat-release ]; then
-	qmake-qt5
+    qmake-qt5
 else
-	qmake
+    qmake
 fi
 make
