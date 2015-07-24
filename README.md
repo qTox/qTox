@@ -1,15 +1,15 @@
 qTox
 ======
 
- [**Compiling**](/INSTALL.md) **|** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **|** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **|** [**GitStats**](https://tux3-dev.tox.im/) **|** [**Mac & Linux jenkins**](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/) | [**Windows jenkins**](https://tux3-dev.tox.im/jenkins) **|** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|** [**Mailing list**](https://lists.tox.im) **|** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
+ [**Compiling**](/INSTALL.md) **|** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **|** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **|** [**Mac & Linux jenkins**](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/) **|** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
 
 ====
 
 <h5>qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms:</h5>
 
 * **Windows**:
-  - [**64 bit download**](https://tux3-dev.tox.im/jenkins/job/qTox-win64-nsis/lastSuccessfulBuild/artifact/setup-qtox64.exe)
-  - [**32 bit download** (for older hardware)](https://tux3-dev.tox.im/jenkins/job/qTox-win32-nsis/lastSuccessfulBuild/artifact/setup-qtox32.exe)
+  - [**64 bit download**](#) - Currently unmaintained
+  - [**32 bit download** (for older hardware)](#) - Currently unmaintained
 * **Linux**:
   - [**binary**](#) - Currently unmaintained
   - [**packages**](/INSTALL.md#simple-install)
