@@ -476,6 +476,11 @@ QString Widget::getUsername()
     return Nexus::getCore()->getUsername();
 }
 
+SystemTrayIcon* Widget::getSystemTrayIcon() const
+{
+    return icon;
+}
+
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 {
     profilePicture->setPixmap(pic);
@@ -1370,6 +1375,7 @@ void Widget::onTryCreateTrayIcon()
             dockMenu->addAction(changeStatusMenu->menuAction());
             qt_mac_set_dock_menu(dockMenu);
 #endif
+            onDesktopNotificationsToggled(Settings::getInstance().getDesktopNotifications());
         }
         else if (!isVisible())
         {

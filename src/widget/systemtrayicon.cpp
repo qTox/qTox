@@ -412,3 +412,11 @@ void SystemTrayIcon::setIcon(QIcon &icon)
         qtIcon->setIcon(icon);
     }
 }
+
+QSystemTrayIcon* SystemTrayIcon::getSystemTrayIcon() const
+{
+    if (backendType == SystrayBackendType::Qt)
+        return qtIcon;
+
+    return nullptr;
+}

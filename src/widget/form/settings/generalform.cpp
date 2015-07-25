@@ -85,6 +85,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
     bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
+    bodyUI->cbDesktopNotifications->setChecked(Settings::getInstance().getDesktopNotifications());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
     bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
@@ -225,8 +226,13 @@ void GeneralForm::setNotificationWidget(QWidget* widget)
     if (widget)
         bodyUI->notificationLayout->addWidget(widget);
 
-    bodyUI->notificationGroup->setVisible(widget);
-    bodyUI->cbDesktopNotifications->setEnabled(widget);
+    bodyUI->notificationGroup->setVisible(widget != nullptr);
+
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+    bodyUI->cbDesktopNotifications->setEnabled(true);
+#elif
+    bodyUI->cbDesktopNotifications->setEnabled(false);
+#endif
 }
 
 void GeneralForm::onEnableIPv6Updated()

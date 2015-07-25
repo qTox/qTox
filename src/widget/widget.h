@@ -63,6 +63,7 @@ public:
     void setCentralWidget(QWidget *widget, const QString &widgetName);
     QString getUsername();
     Camera* getCamera();
+    SystemTrayIcon* getSystemTrayIcon() const;
     static Widget* getInstance();
     void newMessageAlert(GenericChatroomWidget* chat);
     bool isFriendWidgetCurActiveWidget(const Friend* f) const;

@@ -18,9 +18,13 @@
 */
 
 #include "snorenotificationbackend.h"
+#include "systemtrayicon.h"
+#include "widget.h"
 #include <QApplication>
 #include <QPushButton>
 #include <QBoxLayout>
+#include <QPointer>
+#include <QSystemTrayIcon>
 #include <libsnore/settingsdialog.h>
 
 SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
@@ -36,6 +40,16 @@ SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
 
     snoreApp.hints().setValue("windows-app-id", "ToxFoundation.qTox");
     snoreApp.hints().setValue("desktop-entry", QApplication::applicationName());
+
+    SystemTrayIcon* qtoxTray = Widget::getInstance()->getSystemTrayIcon();
+
+    if (qtoxTray)
+    {
+        QSystemTrayIcon* trayIcon = qtoxTray->getSystemTrayIcon();
+
+        if (trayIcon)
+            snoreApp.hints().setValue("tray-icon", QVariant::fromValue(QPointer<QSystemTrayIcon>(trayIcon)));
+    }
 
     Snore::SnoreCore::instance().loadPlugins(Snore::SnorePlugin::BACKEND);
     Snore::SnoreCore::instance().registerApplication(snoreApp);
