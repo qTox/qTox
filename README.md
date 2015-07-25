@@ -1,7 +1,7 @@
 qTox
 ======
 
- [**Compiling**](/INSTALL.md) **|** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **|** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **|** [**Mac & Linux jenkins**](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/) **|** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
+ [**Compiling**](/INSTALL.md) **|** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **|** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **|** [**Mac & Linux jenkins**](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/) **|** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|** [**Mailing list**](https://lists.tox.chat) **|** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
 
 ====
 
