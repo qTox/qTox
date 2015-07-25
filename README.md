@@ -8,8 +8,7 @@ qTox
 <h5>qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms:</h5>
 
 * **Windows**:
-  - [**64 bit download**](https://tux3-dev.tox.im/jenkins/job/qTox-win64-nsis/lastSuccessfulBuild/artifact/setup-qtox64.exe)
-  - [**32 bit download** (for older hardware)](https://tux3-dev.tox.im/jenkins/job/qTox-win32-nsis/lastSuccessfulBuild/artifact/setup-qtox32.exe)
+  - (coming soon)
 * **Linux**:
   - [**binary**](#) - Currently unmaintained
   - [**packages**](/INSTALL.md#simple-install)
