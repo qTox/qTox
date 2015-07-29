@@ -495,7 +495,8 @@ SOURCES += \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
     src/widget/contentlayout.cpp \
-    src/widget/contentdialog.cpp
+    src/widget/contentdialog.cpp \
+    src/widget/tool/activatedialog.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -540,4 +541,5 @@ HEADERS += \
     src/widget/genericchatitemlayout.h \
     src/widget/categorywidget.h \
     src/widget/contentlayout.h \
-    src/widget/contentdialog.h
+    src/widget/contentdialog.h \
+    src/widget/tool/activatedialog.h

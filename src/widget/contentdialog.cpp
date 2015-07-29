@@ -46,7 +46,7 @@ QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::fr
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::groupList;
 
 ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
-    : QDialog(parent, Qt::Window)
+    : ActivateDialog(parent, Qt::Window)
     , activeChatroomWidget(nullptr)
     , settingsWidget(settingsWidget)
 {
@@ -476,11 +476,15 @@ bool ContentDialog::event(QEvent* event)
             }
 
             currentDialog = this;
+
+#ifdef Q_OS_MAC
+            emit activated();
+#endif
         default:
             break;
     }
 
-    return QWidget::event(event);
+    return ActivateDialog::event(event);
 }
 
 void ContentDialog::dragEnterEvent(QDragEnterEvent *event)

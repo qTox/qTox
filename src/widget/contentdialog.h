@@ -20,7 +20,7 @@
 #ifndef CONTENTDIALOG_H
 #define CONTENTDIALOG_H
 
-#include <QDialog>
+#include "src/widget/tool/activatedialog.h"
 #include <tuple>
 #include "src/core/corestructs.h"
 #include "src/widget/genericchatitemlayout.h"
@@ -37,7 +37,7 @@ class GroupWidget;
 class FriendListLayout;
 class SettingsWidget;
 
-class ContentDialog : public QDialog
+class ContentDialog : public ActivateDialog
 {
     Q_OBJECT
 public:
@@ -65,6 +65,11 @@ public:
     static bool isGroupWidgetActive(int groupId);
     static ContentDialog* getFriendDialog(int friendId);
     static ContentDialog* getGroupDialog(int groupId);
+
+#ifdef Q_OS_MAC
+signals:
+    void activated();
+#endif
 
 public slots:
     void updateTitleUsername(const QString& username);
