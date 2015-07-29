@@ -42,6 +42,8 @@
 #ifdef Q_OS_MAC
 #include <QWindow>
 #include <QMenuBar>
+#include <QActionGroup>
+#include <QSignalMapper>
 #endif
 
 static Nexus* nexus{nullptr};
@@ -89,26 +91,44 @@ void Nexus::start()
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
 
+    loginScreen = new LoginScreen();
+
 #ifdef Q_OS_MAC
     globalMenuBar = new QMenuBar(0);
+    dockMenu = new QMenu(globalMenuBar);
 
-    windowMenu = globalMenuBar->addMenu(tr("Window"));
+    viewMenu = globalMenuBar->addMenu(QString());
+
+    windowMenu = globalMenuBar->addMenu(QString());
     globalMenuBar->addAction(windowMenu->menuAction());
 
-    QAction* minimizeAction = Nexus::getInstance().windowMenu->addAction(tr("Minimize"));
+    fullscreenAction = viewMenu->addAction(QString());
+    fullscreenAction->setShortcut(QKeySequence::FullScreen);
+    connect(fullscreenAction, &QAction::triggered, this, &Nexus::toggleFullscreen);
+
+    minimizeAction = windowMenu->addAction(QString());
     minimizeAction->setShortcut(Qt::CTRL + Qt::Key_M);
-    connect(minimizeAction, &QAction::triggered, [minimizeAction]()
+    connect(minimizeAction, &QAction::triggered, [this]()
     {
+        minimizeAction->setEnabled(false);
         QApplication::focusWindow()->showMinimized();
     });
-    Nexus::getInstance().windowMenu->addSeparator();
+
+    windowMenu->addSeparator();
+    frontAction = windowMenu->addAction(QString());
+    connect(frontAction, &QAction::triggered, this, &Nexus::bringAllToFront);
 
     QAction* quitAction = new QAction(globalMenuBar);
     quitAction->setMenuRole(QAction::QuitRole);
     connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
-#endif
 
-    loginScreen = new LoginScreen();
+    windowMapper = new QSignalMapper(this);
+    connect(windowMapper, SIGNAL(mapped(QObject*)), this, SLOT(onOpenWindow(QObject*)));
+
+    connect(loginScreen, &LoginScreen::windowStateChanged, this, &Nexus::onWindowStateChanged);
+
+    retranslateUi();
+#endif
 
     if (profile)
         showMainGUI();
@@ -278,3 +298,131 @@ bool Nexus::tryRemoveFile(const QString& filepath)
     tmp.remove();
     return writable;
 }
+
+#ifdef Q_OS_MAC
+void Nexus::retranslateUi()
+{
+    viewMenu->menuAction()->setText(tr("View", "OS X Menu bar"));
+    windowMenu->menuAction()->setText(tr("Window", "OS X Menu bar"));
+    minimizeAction->setText(tr("Minimize", "OS X Menu bar"));
+    frontAction->setText((tr("Bring All to Front", "OS X Menu bar")));
+}
+
+void Nexus::onWindowStateChanged(Qt::WindowStates state)
+{
+    minimizeAction->setEnabled(QApplication::activeWindow() != nullptr);
+
+    if (QApplication::activeWindow() != nullptr && sender() == QApplication::activeWindow())
+    {
+        if (state & Qt::WindowFullScreen)
+            minimizeAction->setEnabled(false);
+
+        if (state & Qt::WindowFullScreen)
+            fullscreenAction->setText(tr("Exit Fullscreen"));
+        else
+            fullscreenAction->setText(tr("Enter Fullscreen"));
+
+        updateWindows();
+    }
+
+    updateWindowsStates();
+}
+
+void Nexus::updateWindows()
+{
+    updateWindowsArg(nullptr);
+}
+
+void Nexus::updateWindowsArg(QWindow* closedWindow)
+{
+    QWindowList windowList = QApplication::topLevelWindows();
+    delete windowActions;
+    windowActions = new QActionGroup(this);
+
+    windowMenu->addSeparator();
+
+    QAction* dockLast;
+    if (dockMenu->actions().count() != 0)
+        dockLast = dockMenu->actions().first();
+    else
+        dockLast = nullptr;
+
+    QWindow* activeWindow;
+
+    if (QApplication::activeWindow())
+        activeWindow = QApplication::activeWindow()->windowHandle();
+    else
+        activeWindow = nullptr;
+
+    for (int i = 0; i < windowList.size(); ++i)
+    {
+        if (closedWindow == windowList[i])
+            continue;
+
+        QAction* action = windowActions->addAction(windowList[i]->title());
+        action->setCheckable(true);
+        action->setChecked(windowList[i] == activeWindow);
+        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
+        windowMapper->setMapping(action, windowList[i]);
+        windowMenu->addAction(action);
+        dockMenu->insertAction(dockLast, action);
+    }
+
+    if (!dockLast->isSeparator())
+        dockMenu->insertSeparator(dockLast);
+}
+
+void Nexus::updateWindowsClosed()
+{
+    updateWindowsArg(static_cast<QWidget*>(sender())->windowHandle());
+}
+
+void Nexus::updateWindowsStates()
+{
+    bool exists = false;
+    QWindowList windowList = QApplication::topLevelWindows();
+
+    for (QWindow* window : windowList)
+    {
+        if (!(window->windowState() & Qt::WindowMinimized))
+        {
+            exists = true;
+            break;
+        }
+    }
+
+    frontAction->setEnabled(exists);
+}
+
+void Nexus::onOpenWindow(QObject* object)
+{
+    QWindow* window = static_cast<QWindow*>(object);
+
+    if (window->windowState() & QWindow::Minimized)
+        window->showNormal();
+
+    window->raise();
+    window->requestActivate();
+}
+
+void Nexus::toggleFullscreen()
+{
+    QWidget* window = QApplication::activeWindow();
+
+    if (window->isFullScreen())
+        window->showNormal();
+    else
+        window->showFullScreen();
+}
+
+void Nexus::bringAllToFront()
+{
+    QWindowList windowList = QApplication::topLevelWindows();
+    QWindow* focused = QApplication::focusWindow();
+
+    for (QWindow* window : windowList)
+        window->raise();
+
+    focused->raise();
+}
+#endif

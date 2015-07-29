@@ -50,6 +50,7 @@
 #include "src/widget/form/profileform.h"
 #include "src/widget/form/settingswidget.h"
 #include "tool/removefrienddialog.h"
+#include "src/widget/tool/activatedialog.h"
 #include <cassert>
 #include <QMessageBox>
 #include <QDebug>
@@ -76,6 +77,7 @@
 #ifdef Q_OS_MAC
 #include <QMenuBar>
 #include <QWindow>
+#include <QSignalMapper>
 #endif
 
 #ifdef Q_OS_ANDROID
@@ -243,13 +245,17 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
 #ifdef Q_OS_MAC
+    QMenuBar* globalMenu = Nexus::getInstance().globalMenuBar;
     QAction* windowMenu = Nexus::getInstance().windowMenu->menuAction();
-    QAction* fileMenu = Nexus::getInstance().globalMenuBar->insertMenu(windowMenu, new QMenu(tr("File"), this));
+    QAction* viewMenu = Nexus::getInstance().viewMenu->menuAction();
+    QAction* frontAction = Nexus::getInstance().frontAction;
 
-    QAction* editProfileAction = fileMenu->menu()->addAction(tr("Edit Profile"));
+    fileMenu = globalMenu->insertMenu(viewMenu, new QMenu(this));
+
+    editProfileAction = fileMenu->menu()->addAction(QString());
     connect(editProfileAction, &QAction::triggered, this, &Widget::showProfile);
 
-    QMenu* changeStatusMenu = fileMenu->menu()->addMenu(tr("Change Status"));
+    changeStatusMenu = fileMenu->menu()->addMenu(QString());
     fileMenu->menu()->addAction(changeStatusMenu->menuAction());
     changeStatusMenu->addAction(statusOnline);
     changeStatusMenu->addSeparator();
@@ -257,50 +263,47 @@ void Widget::init()
     changeStatusMenu->addAction(statusBusy);
 
     fileMenu->menu()->addSeparator();
-    QAction* logoutAction = fileMenu->menu()->addAction(tr("Log out"));
+    logoutAction = fileMenu->menu()->addAction(QString());
     connect(logoutAction, &QAction::triggered, [this]()
     {
         Nexus::getInstance().showLogin();
     });
 
-    QAction* editMenu = Nexus::getInstance().globalMenuBar->insertMenu(windowMenu, new QMenu(tr("Edit"), this));
+    editMenu = globalMenu->insertMenu(viewMenu, new QMenu(this));
     editMenu->menu()->addSeparator();
 
-    QAction* viewMenu = Nexus::getInstance().globalMenuBar->insertMenu(windowMenu, new QMenu(tr("View"), this));
+    viewMenu->menu()->insertMenu(Nexus::getInstance().fullscreenAction, filterMenu);
 
-    QMenu* filterMenu = viewMenu->menu()->addMenu(tr("Filter..."));
-    filterMenu->addAction(filterDisplayName);
-    filterMenu->addAction(filterDisplayActivity);
-    filterMenu->addSeparator();
-    filterMenu->addAction(filterAllAction);
-    filterMenu->addAction(filterOnlineAction);
-    filterMenu->addAction(filterOfflineAction);
-    filterMenu->addAction(filterFriendsAction);
-    filterMenu->addAction(filterGroupsAction);
+    viewMenu->menu()->insertSeparator(Nexus::getInstance().fullscreenAction);
 
-    viewMenu->menu()->addSeparator();
-    fullscreenAction = viewMenu->menu()->addAction(tr("Enter Fullscreen"));
-    fullscreenAction->setShortcut(QKeySequence::FullScreen);
-    connect(fullscreenAction, &QAction::triggered, this, &Widget::toggleFullscreen);
+    contactMenu = globalMenu->insertMenu(windowMenu, new QMenu(this));
 
-    QAction* contactMenu = Nexus::getInstance().globalMenuBar->insertMenu(windowMenu, new QMenu(tr("Contacts"), this));
-
-    QAction* addContactAction = contactMenu->menu()->addAction(tr("Add Contact..."));
+    addContactAction = contactMenu->menu()->addAction(QString());
     connect(addContactAction, &QAction::triggered, this, &Widget::onAddClicked);
 
-    QAction* nextConversationAction = new QAction(tr("Next Conversation"), this);
-    Nexus::getInstance().windowMenu->addAction(nextConversationAction);
+    nextConversationAction = new QAction(this);
+    Nexus::getInstance().windowMenu->insertAction(frontAction, nextConversationAction);
     nextConversationAction->setShortcut(QKeySequence::SelectNextPage);
-    connect(nextConversationAction, &QAction::triggered, this, &Widget::nextContact);
+    connect(nextConversationAction, &QAction::triggered, [this]()
+    {
+        if (ContentDialog::current() == QApplication::activeWindow())
+            ContentDialog::current()->cycleContacts(true);
+        else if (QApplication::activeWindow() == this)
+            cycleContacts(true);
+    });
 
-    QAction* previousConversationAction = new QAction(tr("Previous Conversation"), this);
-    Nexus::getInstance().windowMenu->addAction(previousConversationAction);
+    previousConversationAction = new QAction(this);
+    Nexus::getInstance().windowMenu->insertAction(frontAction, previousConversationAction);
     previousConversationAction->setShortcut(QKeySequence::SelectPreviousPage);
-    connect(previousConversationAction, &QAction::triggered, this, &Widget::previousContact);
+    connect(previousConversationAction, &QAction::triggered, [this]
+    {
+        if (ContentDialog::current() == QApplication::activeWindow())
+            ContentDialog::current()->cycleContacts(false);
+        else if (QApplication::activeWindow() == this)
+            cycleContacts(false);
+    });
 
-    Nexus::getInstance().windowMenu->addSeparator();
-    QAction* frontAction = Nexus::getInstance().windowMenu->addAction(tr("Bring All to Front"));
-    connect(frontAction, &QAction::triggered, this, &Widget::bringAllToFront);
+    windowMenu->menu()->insertSeparator(frontAction);
 
     QAction* preferencesAction = viewMenu->menu()->addAction(QString());
     preferencesAction->setMenuRole(QAction::PreferencesRole);
@@ -313,6 +316,16 @@ void Widget::init()
         onSettingsClicked();
         settingsWidget->showAbout();
     });
+
+    QMenu* dockChangeStatusMenu = new QMenu(tr("Status"), this);
+    dockChangeStatusMenu->addAction(statusOnline);
+    statusOnline->setIconVisibleInMenu(true);
+    dockChangeStatusMenu->addSeparator();
+    dockChangeStatusMenu->addAction(statusAway);
+    dockChangeStatusMenu->addAction(statusBusy);
+    Nexus::getInstance().dockMenu->addAction(dockChangeStatusMenu->menuAction());
+
+    connect(this, &Widget::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
 #endif
 
     contentLayout = nullptr;
@@ -343,6 +356,8 @@ void Widget::init()
 
     if (!Settings::getInstance().getShowSystemTray())
         show();
+
+    Nexus::getInstance().updateWindows();
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
@@ -357,6 +372,8 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
                 else
                     wasMaximized = false;
            }
+
+           emit windowStateChanged(windowState());
     }
     return false;
 }
@@ -1295,16 +1312,24 @@ void Widget::clearContactsList()
 
 ContentDialog* Widget::createContentDialog() const
 {
-    return new ContentDialog(settingsWidget);
+    ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+    contentDialog->show();
+#ifdef Q_OS_MAC
+    connect(contentDialog, &ContentDialog::destroyed, &Nexus::getInstance(), &Nexus::updateWindowsClosed);
+    connect(contentDialog, &ContentDialog::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
+    connect(contentDialog->windowHandle(), &QWindow::windowTitleChanged, &Nexus::getInstance(), &Nexus::updateWindows);
+    Nexus::getInstance().updateWindows();
+#endif
+    return contentDialog;
 }
 
-ContentLayout* Widget::createContentDialog(DialogType type) const
+ContentLayout* Widget::createContentDialog(DialogType type)
 {
-    class Dialog : public QDialog
+    class Dialog : public ActivateDialog
     {
     public:
         Dialog(DialogType type)
-            : QDialog()
+            : ActivateDialog()
             , type(type)
         {
             restoreGeometry(Settings::getInstance().getDialogSettingsGeometry());
@@ -1343,7 +1368,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
         DialogType type;
     };
 
-    QDialog* dialog = new Dialog(type);
+    Dialog* dialog = new Dialog(type);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     ContentLayout* contentLayoutDialog = new ContentLayout(dialog);
 
@@ -1354,6 +1379,13 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     dialog->setMinimumSize(720, 400);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
+
+#ifdef Q_OS_MAC
+    connect(dialog, &Dialog::destroyed, &Nexus::getInstance(), &Nexus::updateWindowsClosed);
+    connect(dialog, &ActivateDialog::windowStateChanged, &Nexus::getInstance(), &Nexus::updateWindowsStates);
+    connect(dialog->windowHandle(), &QWindow::windowTitleChanged, &Nexus::getInstance(), &Nexus::updateWindows);
+    Nexus::getInstance().updateWindows();
+#endif
 
     return contentLayoutDialog;
 }
@@ -1549,6 +1581,14 @@ bool Widget::event(QEvent * e)
                 eventIcon = false;
                 updateIcons();
             }
+
+#ifdef Q_OS_MAC
+            emit windowStateChanged(windowState());
+
+        case QEvent::WindowStateChange:
+            Nexus::getInstance().updateWindowsStates();
+#endif
+
         default:
             break;
     }
@@ -1630,16 +1670,7 @@ void Widget::onTryCreateTrayIcon()
             }
 
 #ifdef Q_OS_MAC
-            QMenu* changeStatusMenu = new QMenu(tr("Status"), this);
-            changeStatusMenu->addAction(statusOnline);
-            statusOnline->setIconVisibleInMenu(true);
-            changeStatusMenu->addSeparator();
-            changeStatusMenu->addAction(statusAway);
-            changeStatusMenu->addAction(statusBusy);
-
-            QMenu* dockMenu = new QMenu(this);
-            dockMenu->addAction(changeStatusMenu->menuAction());
-            qt_mac_set_dock_menu(dockMenu);
+            qt_mac_set_dock_menu(Nexus::getInstance().dockMenu);
 #endif
         }
         else if (!isVisible())
@@ -2003,33 +2034,20 @@ void Widget::retranslateUi()
 
     if (!Settings::getInstance().getSeparateWindow())
         setWindowTitle(fromDialogType(SettingDialog));
-}
 
 #ifdef Q_OS_MAC
-void Widget::bringAllToFront()
-{
-    QWindowList windowList = QApplication::topLevelWindows();
-    for (QWindow* window : windowList)
-    {
-        window->raise();
-        window->showNormal();
-        window->requestActivate();
-    }
-}
+    Nexus::getInstance().retranslateUi();
 
-void Widget::toggleFullscreen()
-{
-    QWidget* window = QApplication::activeWindow();
+    filterMenu->menuAction()->setText(tr("Filter..."));
 
-    if (window->isFullScreen())
-    {
-        window->showNormal();
-        fullscreenAction->setText(tr("Enter Fullscreen"));
-    }
-    else
-    {
-        window->showFullScreen();
-        fullscreenAction->setText(tr("Exit Fullscreen"));
-    }
-}
+    fileMenu->setText(tr("File"));
+    editMenu->setText(tr("Edit"));
+    contactMenu->setText(tr("Contacts"));
+    changeStatusMenu->menuAction()->setText(tr("Change Status"));
+    editProfileAction->setText(tr("Edit Profile"));
+    logoutAction->setText(tr("Log out"));
+    addContactAction->setText(tr("Add Contact..."));
+    nextConversationAction->setText(tr("Next Conversation"));
+    previousConversationAction->setText(tr("Previous Conversation"));
 #endif
+}

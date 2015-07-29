@@ -83,7 +83,7 @@ public:
 
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
-    ContentLayout* createContentDialog(DialogType type) const;
+    ContentLayout* createContentDialog(DialogType type);
 
     static void confirmExecutableOpen(const QFileInfo file);
 
@@ -147,6 +147,9 @@ signals:
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
     void resized();
+#ifdef Q_OS_MAC
+    void windowStateChanged(Qt::WindowStates states);
+#endif
 
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event) final override;
@@ -177,11 +180,6 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
-
-#ifdef Q_OS_MAC
-    void bringAllToFront();
-    void toggleFullscreen();
-#endif
 
 private:
     enum ActiveToolMenuButton {
@@ -263,7 +261,15 @@ private:
     bool wasMaximized = false;
 
 #ifdef Q_OS_MAC
-    QAction* fullscreenAction;
+    QAction* fileMenu;
+    QAction* editMenu;
+    QAction* contactMenu;
+    QMenu* changeStatusMenu;
+    QAction* editProfileAction;
+    QAction* logoutAction;
+    QAction* addContactAction;
+    QAction* nextConversationAction;
+    QAction* previousConversationAction;
 #endif
 };
 
