@@ -357,7 +357,9 @@ void Widget::init()
     if (!Settings::getInstance().getShowSystemTray())
         show();
 
+#ifdef Q_OS_MAC
     Nexus::getInstance().updateWindows();
+#endif
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
@@ -373,7 +375,9 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
                     wasMaximized = false;
            }
 
+#ifdef Q_OS_MAC
            emit windowStateChanged(windowState());
+#endif
     }
     return false;
 }
