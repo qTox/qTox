@@ -1127,7 +1127,7 @@ bool Widget::newFriendMessageAlert(int friendId)
     return false;
 }
 
-bool Widget::newGroupMessageAlert(int groupId)
+bool Widget::newGroupMessageAlert(int groupId, bool notify)
 {
     bool hasActive;
     QWidget* currentWindow;
@@ -1145,7 +1145,7 @@ bool Widget::newGroupMessageAlert(int groupId)
         hasActive = g->getGroupWidget() == activeChatroomWidget;
     }
 
-    if (newMessageAlert(currentWindow, hasActive))
+    if (newMessageAlert(currentWindow, hasActive, notify))
     {
         g->setEventFlag(true);
         g->getGroupWidget()->updateStatusLight();
@@ -1183,7 +1183,7 @@ QString Widget::fromDialogType(DialogType type)
     }
 }
 
-bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive)
+bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool notify)
 {
     bool inactiveWindow = isMinimized() || !currentWindow->isActiveWindow();
 
@@ -1193,28 +1193,31 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive)
     if (ui->statusButton->property("status").toString() == "busy")
         return false;
 
-    QApplication::alert(currentWindow);
-
-    if (Settings::getInstance().getShowWindow())
+    if (notify)
     {
-        currentWindow->show();
-        if (inactiveWindow && Settings::getInstance().getShowInFront())
-            currentWindow->activateWindow();
-    }
+        QApplication::alert(currentWindow);
 
-    if (Settings::getInstance().getNotifySound())
-    {
-        static QFile sndFile(":audio/notification.pcm");
-        static QByteArray sndData;
-
-        if (sndData.isEmpty())
+        if (Settings::getInstance().getShowWindow())
         {
-            sndFile.open(QIODevice::ReadOnly);
-            sndData = sndFile.readAll();
-            sndFile.close();
+            currentWindow->show();
+            if (inactiveWindow && Settings::getInstance().getShowInFront())
+                currentWindow->activateWindow();
         }
 
-        Audio::playMono16Sound(sndData);
+        if (Settings::getInstance().getNotifySound())
+        {
+            static QFile sndFile(":audio/notification.pcm");
+            static QByteArray sndData;
+
+            if (sndData.isEmpty())
+            {
+                sndFile.open(QIODevice::ReadOnly);
+                sndData = sndFile.readAll();
+                sndFile.close();
+            }
+
+            Audio::playMono16Sound(sndData);
+        }
     }
 
     return true;
@@ -1438,8 +1441,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     else
         g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
 
-    if (targeted || Settings::getInstance().getGroupAlwaysNotify())
-        newGroupMessageAlert(g->getGroupId());
+    newGroupMessageAlert(g->getGroupId(), targeted || Settings::getInstance().getGroupAlwaysNotify());
 }
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
