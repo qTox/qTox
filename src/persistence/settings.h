@@ -340,7 +340,7 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
-    QStringList themesAvailable = {"light", "darkblue", "wombat"}; //list of css files
+    QStringList themesAvailable = {"original", "light", "darkblue", "wombat"}; //list of css files
     QString theme; //style loaded from CSS, darkblue, light
     bool showSystemTray;
 

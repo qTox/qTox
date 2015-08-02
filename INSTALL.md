@@ -11,11 +11,13 @@
 |--------------|-------------|-------------------------------------------------- |
 | Qt           | >= 5.2.0    | core, gui, network, opengl, sql, svg, widget, xml |
 | GCC/MinGW    | >= 4.8      | C++11 enabled                                     |
-| Tox Core     | most recent | core, av                                          |
+| toxcore      | most recent | core, av                                          |
 | FFmpeg       | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
 | OpenAL Soft  | >= 1.16.0   |                                                   |
 | filter_audio | most recent |                                                   |
 | qrencode     | >= 3.0.3    |                                                   |
+
+Note to Fedora users: check qt5 version before building default is 4.8 on fedora 21 / 22, everything up until qmake-qt5 will build fine but then  qmake-qt5 will freak out.
 
 <a name="linux" />
 ##Linux
@@ -65,18 +67,16 @@ emerge qtox
 
 #### Slackware
 
-qTox SlackBuild and all of its dependencies can be found here:
-```bash
-http://slackbuilds.org/repository/14.1/network/qTox/
-```
+qTox SlackBuild and all of its dependencies can be found here: http://slackbuilds.org/repository/14.1/network/qTox/
 
+----
 
 If your distribution is not listed, or you want/need to compile qTox, there are provided instructions.
 
 
 ----
 
-Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning, which will attempt to automatically download dependencies followed by compilation.
+Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning this repository, which will attempt to automatically download dependencies followed by compilation.
 
 
 ###Cloning the Repository
@@ -133,25 +133,23 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 Fedora:
 ```bash
 sudo dnf group install "Development Tools"
-sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg openal-soft-devel libXScrnSaver-devel qrencode-devel
+sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
 ```
 
 openSUSE:
-
+**Note that ffmpeg is not included in the default repositories, you have to add the packman repository.**
 ```bash
 sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite 
 ```
 
 Slackware:
 
-List of all the ``qTox`` dependencies and their SlackBuilds can be found here:
-```bash
-http://slackbuilds.org/repository/14.1/network/qTox/
-```
+List of all the ``qTox`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/qTox/
 
-###Tox Core
 
-First of all install the dependencies of Tox Core.
+### toxcore
+
+First of all install the dependencies of toxcore.
 
 Arch Linux:
 ```bash
@@ -175,26 +173,32 @@ sudo zypper install libsodium-devel libvpx-devel libopus-devel patterns-openSUSE
 
 Slackware:
 
-List of all the ``toxcore`` dependencies and their SlackBuilds can be found here:
-```bash
-http://slackbuilds.org/repository/14.1/network/toxcore/
-```
+List of all the ``toxcore`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/toxcore/
 
-Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
-The script will automatically download and install Tox Core and libfilteraudio:
-```bash
-cd /home/user/qTox
-./bootstrap.sh # use -h or --help for more information
-```
-
+----
 ###filter_audio
 You also need to install filter_audio library separately if you did not run ``./bootstrap.sh``.
+
+This step is  best done before compiling Toxcore if not  using package manager. This also follows the flow of the homebrew instructions and reduces the likelihood of  later finding errors for  libavcodec compiling toxcore.
+
 ```bash
 git clone https://github.com/irungentoo/filter_audio
 cd filter_audio
 make
 sudo make install
+
+Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix
+or use the "bootstrap.sh" script located at "/home/user/qTox".
+The script will automatically download and install toxcore and libfilteraudio:
+
+```bash
+cd /home/user/qTox
+./bootstrap.sh # use -h or --help for more information
+
+
+if  using  /usr/local/bin for final build make sure to follow advise here: https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix, regarding  sudo ldconfig
 ```
+
 
 ###Compiling
 **Make sure that all the dependencies are installed.**  
@@ -204,7 +208,7 @@ qmake
 make
 ```
 
-for openSUSE you have to use:
+for openSUSE / Fedora you have to use:
 ```bash
 qmake-qt5
 make
@@ -220,7 +224,6 @@ Start make again. Repeat if nessary until all dependencies are installed.  If yo
 
 
 
-
 ###Building packages
 
 Alternately, qTox now has the experimental and probably-dodgy ability to package itself (in .deb
@@ -233,53 +236,50 @@ packages necessary for building .debs, so be prepared to type your password for 
 
 <a name="osx" />
 ##OS X
-Please be aware that if you've tried an earlier version of this set of instructions you may have 
-installed broken libraries and packages in the proces. Please delete them before continuing.
-
-Also, if you want to use qTox and are an end user download it by clicking the download button on tox.im, 
-as the copy you'll make by following this guide is only suitable for testing.
-
 Compiling qTox on OS X for development requires 3 tools, [Xcode](https://developer.apple.com/xcode/) and [Qt 5.4+](http://www.qt.io/qt5-4/), and [homebrew](http://brew.sh).
 
-###Required tools
+###Required Libraries
 
-First, let's install the dependencies
-* ```brew install git wget```
-* ``git clone https://github.com/tux3/qTox``
-* ```cd qTox```
+First, let's install the dependencies available via brew.
+```bash
+brew install git ffmpeg qrencode
+```
 
-###Libraries required to compile
+Next, install [filter_audio](https://github.com/irungentoo/filter_audio) (you may delete the directory it creates afterwards):
+```bash
+git clone https://github.com/irungentoo/filter_audio.git
+cd filter_audio
+sudo make install
+cd ../
+```
 
-Now we are in the qTox folder and need our library dependencies to actually build it.
+Then, clone qTox:
+```bash
+git clone https://github.com/tux3/qTox``
+```
 
-We've taken the time to prepare them automatically with our CI system so if you ever have issues redownload them.
-
-* ```wget https://jenkins.libtoxcore.so/job/qTox%20OS%20X/lastSuccessfulBuild/artifact/dep.zip```
-* ```unzip dep.zip```
-
-If you do not want to download our binaries, you must compile [opencv2](http://opencv.org), [toxcore](https://github.com/irungentoo/toxcore), [opus](https://www.opus-codec.org), [vpx](http://www.webmproject.org/tools/), [filteraudio](https://github.com/irungentoo/filter_audio), and our fork of [openal](https://github.com/irungentoo/openal-soft-tox) yourself with the prefix to the libs folder.
-
-Please be aware that no one has ever successfully got this working outside of on our CI system, but we encourage you to try and provide instructions on how you did so if you do.
-
-Please be aware that you shouldn't do this on your main Mac, as it's fairly hard to successfully do this without ruining a bunch of things in the process.
-
-Everything from opencv2 to filter_audio has now been installed in this library and is ready to go.
+Finally, copy all required files. Whenever you update your brew packages, you may skip all of the above steps and simply run the following commands:
+```bash
+cd qTox
+sudo bash bootstrap-osx.sh
+```
 
 ###Compiling
 
-Either open Qt creator and hit build or run qmake && make in your qTox folder and it'll just work™
+Either open Qt creator and hit build or run ```qmake && make``` in your qTox folder and it'll just work™.
 
 Note that if you use the CLI to build you'll need to add Qt5's bins to your path.
-```export PATH=$PATH:~/Qt/5.4/clang_64/bin/```
+```bash
+export PATH=$PATH:~/Qt/5.4/clang_64/bin/
+```
 
 ###Fixing things up
 
-The bad news is that Qt breaks our linker paths so we need to fix those.
-First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
+The bad news is that Qt breaks our linker paths so we need to fix those. First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
 
 Install qTox so we can copy its libraries and shove the following in a script somewhere:
 
-```
+```bash
 ~macdeployqt qtox.app
 cp -r /Applications/qtox.app qtox_old.app
 cp qtox.app/Contents/MacOS/qtox qtox_old.app/Contents/MacOS/qtox
@@ -290,9 +290,12 @@ mv qtox_old.app qtox.app
 * cd in to the folder with qtox.app
 * run ```bash ~/deploy.qtox.sh```
 
+
 ###Running qTox
 You've got 2 choices, either click on the qTox app that suddenly exists, or do the following:
-* ``qtox.app/Contents/MacOS/qtox`` 
+```bash
+qtox.app/Contents/MacOS/qtox
+```
 * Enjoy the snazzy CLI output as your friends and family congratulate you on becoming a hacker
 
 <a name="windows" />

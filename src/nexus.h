@@ -29,6 +29,11 @@ class Profile;
 class LoginScreen;
 class Core;
 
+#ifdef Q_OS_MAC
+class QMenuBar;
+class QMenu;
+#endif
+
 /// This class is in charge of connecting various systems together
 /// and forwarding signals appropriately to the right objects
 /// It is in charge of starting the GUI and the Core
@@ -51,6 +56,11 @@ public:
     static Widget* getDesktopGUI(); ///< Will return 0 if not started
     static QString getSupportedImageFilter();
     static bool tryRemoveFile(const QString& filepath); ///< Dangerous way to find out if a path is writable
+
+#ifdef Q_OS_MAC
+    QMenuBar* globalMenuBar;
+    QMenu* windowMenu;
+#endif
 
 private:
     explicit Nexus(QObject *parent = 0);

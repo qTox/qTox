@@ -1,3 +1,7 @@
+QSplitter#original {
+    background-color: white;
+}
+
 QSplitter#light {
     background-color: white;
 }

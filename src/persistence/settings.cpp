@@ -202,7 +202,7 @@ void Settings::loadGlobal()
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
         themeColor = s.value("themeColor", 0).toInt();
-        theme = s.value("theme", "light").toString();
+        theme = s.value("theme", "original").toString();
     s.endGroup();
 
     s.beginGroup("State");
