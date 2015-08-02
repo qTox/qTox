@@ -221,6 +221,23 @@ ChatLine { /* msg edit box */
     border-style: solid;
     border-color: #d1d1d1;
 }
+QGraphicsView,
+QDoubleSpinBox,
+QSpinBox,
+QTimeEdit,
+QNumberSpinBox,
+QListBox,
+QDateEdit,
+QDateTime,
+QDateTimeEdit,
+QComboBox,
+QLabel#statusLabel { /** for status label in chat */
+    padding: 2px;
+    border-width: 1px;
+    border-color: black;
+    color: black;
+    background: white;
+}
 /** Font formatting in CustomTextDocument */
 div.msg {
   color: @black;
