@@ -1,0 +1,7 @@
+QLineEdit, QLabel, QCheckBox {
+    color: black;
+    }
+
+QLineEdit {
+    background: white;
+    }

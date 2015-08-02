@@ -23,6 +23,7 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
 #include "src/nexus.h"
+#include "src/widget/style.h"
 #include "src/persistence/settings.h"
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/translator.h"
@@ -35,6 +36,8 @@ LoginScreen::LoginScreen(QWidget *parent) :
     quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
 {
     ui->setupUi(this);
+
+    this->setStyleSheet(Style::getStylesheet("ui/css/loginWindow.css"));
 
     connect(&quitShortcut, &QShortcut::activated, this, &LoginScreen::close);
     connect(ui->newProfilePgbtn, &QPushButton::clicked, this, &LoginScreen::onNewProfilePageClicked);
