@@ -30,9 +30,10 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QDebug>
+#include "src/widget/form/settingswidget.h"
 
-PrivacyForm::PrivacyForm() :
-    GenericForm(QPixmap(":/img/settings/privacy.png"))
+PrivacyForm::PrivacyForm(SettingsWidget *parent)
+    : GenericForm(QPixmap(":/img/settings/privacy.png"))
 {
     bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);

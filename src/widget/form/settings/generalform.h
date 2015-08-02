@@ -23,7 +23,7 @@
 #include "genericsettings.h"
 
 namespace Ui {
-class GeneralSettings;
+class GeneralForm;
 }
 
 class SettingsWidget;
@@ -50,7 +50,6 @@ private slots:
     void onProxyPortEdited(int port);
     void onUseProxyUpdated();
     void onEmoticonSizeChanged();
-    void onStyleSelected(QString style);
     void onTimestampSelected(int index);
     void onDateFormatSelected(int index);
     void onSetStatusChange();
@@ -68,13 +67,14 @@ private slots:
     void onFauxOfflineMessaging();
     void onCompactLayout();
     void onGroupchatPositionChanged();
-    void onThemeColorChanged(int);
+    void onThemeChanged(QString theme);
+    void onStyleColorChanged(int);
 
 private:
     void retranslateUi();
 
 private:
-    Ui::GeneralSettings *bodyUI;
+    Ui::GeneralForm *bodyUI;
     void reloadSmiles();
     SettingsWidget *parent;
 

@@ -25,6 +25,7 @@
 #include <QList>
 #include "genericsettings.h"
 #include "src/video/videomode.h"
+#include "src/widget/form/settingswidget.h"
 
 namespace Ui {
 class AVSettings;
@@ -37,7 +38,7 @@ class AVForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AVForm();
+    AVForm(SettingsWidget *parent);
     ~AVForm();
     virtual QString getFormName() final override {return tr("Audio/Video");}
 

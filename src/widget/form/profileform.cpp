@@ -52,21 +52,10 @@ ProfileForm::ProfileForm(QWidget *parent) :
     bodyUI->setupUi(this);
     core = Core::getInstance();
 
-    head = new QWidget(this);
-    QHBoxLayout* headLayout = new QHBoxLayout();
-    head->setLayout(headLayout);
-
-    QLabel* imgLabel = new QLabel();
-    headLayout->addWidget(imgLabel);
-
     nameLabel = new QLabel();
     QFont bold;
     bold.setBold(true);
     nameLabel->setFont(bold);
-    headLayout->addWidget(nameLabel);
-    headLayout->addStretch(1);
-
-    imgLabel->setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(40, Qt::SmoothTransformation));
 
     // tox
     toxId = new ClickableTE();
@@ -125,14 +114,11 @@ ProfileForm::~ProfileForm()
     Translator::unregister(this);
     delete qr;
     delete bodyUI;
-    head->deleteLater();
 }
 
 void ProfileForm::show(Ui::MainWindow &ui)
 {
-    ui.mainHead->layout()->addWidget(head);
     ui.mainContent->layout()->addWidget(this);
-    head->show();
     QWidget::show();
     bodyUI->userName->setFocus();
     bodyUI->userName->selectAll();

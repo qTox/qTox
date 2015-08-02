@@ -56,12 +56,12 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     bodyLayout->addWidget(settingsWidgets);
 
     GeneralForm* gfrm = new GeneralForm(this);
-    PrivacyForm* pfrm = new PrivacyForm;
-    AVForm* avfrm = new AVForm;
-    AdvancedForm *expfrm = new AdvancedForm;
-    AboutForm *abtfrm = new AboutForm;
-
+    PrivacyForm* pfrm = new PrivacyForm(this);
+    AVForm* avfrm = new AVForm(this);
+    AdvancedForm *expfrm = new AdvancedForm(this);
+    AboutForm *abtfrm = new AboutForm(this);
     cfgForms = {{ gfrm, pfrm, avfrm, expfrm, abtfrm }};
+
     for (GenericForm* cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
 
@@ -89,7 +89,6 @@ void SettingsWidget::showAbout()
 void SettingsWidget::show(Ui::MainWindow& ui)
 {
     ui.mainContent->layout()->addWidget(body);
-    ui.mainHead->layout()->addWidget(head);
     body->show();
     head->show();
     onTabChanged(settingsWidgets->currentIndex());

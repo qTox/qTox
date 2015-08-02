@@ -35,62 +35,65 @@
 
 AddFriendForm::AddFriendForm()
 {
-    main = new QWidget(), head = new QWidget();
-    QFont bold;
-    bold.setBold(true);
-    headLabel.setFont(bold);
+    main = new QWidget();
+
+    toxId = new QLineEdit(this);
+    toxIdLabel = new QLabel(this);
+    messageLabel = new QLabel(this);
+    sendButton = new QPushButton(this);
+    toxId = new QLineEdit(this);
+    message = new QTextEdit(this);
+    layout = new QVBoxLayout(this);
+
+    toxIdLabel->setText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
+    messageLabel->setText(tr("Message", "The message you send in friend requests"));
+    sendButton->setText(tr("Send friend request"));
+
+    layout->addWidget(toxIdLabel);
+    layout->addWidget(toxId);
+    layout->addWidget(messageLabel);
+    layout->addWidget(message);
+    layout->addWidget(sendButton);
+    main->setLayout(layout);
+
+    connect(toxId, &QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
+    connect(sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
 
     retranslateUi();
-
-    main->setLayout(&layout);
-    layout.addWidget(&toxIdLabel);
-    layout.addWidget(&toxId);
-    layout.addWidget(&messageLabel);
-    layout.addWidget(&message);
-    layout.addWidget(&sendButton);
-
-    head->setLayout(&headLayout);
-    headLayout.addWidget(&headLabel);
-
-    connect(&toxId,&QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
-    connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
-    connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
-
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 }
 
 AddFriendForm::~AddFriendForm()
 {
     Translator::unregister(this);
-    head->deleteLater();
     main->deleteLater();
 }
 
 void AddFriendForm::show(Ui::MainWindow &ui)
 {
     ui.mainContent->layout()->addWidget(main);
-    ui.mainHead->layout()->addWidget(head);
     main->show();
-    head->show();
     setIdFromClipboard();
-    toxId.setFocus();
+    toxId->setFocus();
 }
 
 QString AddFriendForm::getMessage() const
 {
-    const QString msg = message.toPlainText();
-    return !msg.isEmpty() ? msg : message.placeholderText();
+    const QString msg = message->toPlainText();
+    return !msg.isEmpty() ? msg : message->placeholderText();
 }
 
 void AddFriendForm::onUsernameSet(const QString& username)
 {
     lastUsername = username;
     retranslateUi();
+
+    message->setPlaceholderText(tr("%1 here! Tox me maybe?","Default message in friend requests if the field is left blank. Write something appropriate!").arg(username));
 }
 
 void AddFriendForm::onSendTriggered()
 {
-    QString id = toxId.text().trimmed();
+    QString id = toxId->text().trimmed();
 
     if (id.isEmpty())
     {
@@ -103,8 +106,8 @@ void AddFriendForm::onSendTriggered()
         else
             emit friendRequested(id, getMessage());
 
-        this->toxId.clear();
-        this->message.clear();
+        this->toxId->clear();
+        this->message->clear();
     }
     else
     {
@@ -125,8 +128,8 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
         }
 
         emit friendRequested(toxId.toString(), getMessage());
-        this->toxId.clear();
-        this->message.clear();
+        this->toxId->clear();
+        this->message->clear();
     }
 }
 
@@ -137,17 +140,16 @@ void AddFriendForm::setIdFromClipboard()
     if (Core::getInstance()->isReady() && !id.isEmpty() && ToxId::isToxId(id))
     {
         if (!ToxId(id).isActiveProfile())
-            toxId.setText(id);
+            toxId->setText(id);
     }
 }
 
 void AddFriendForm::retranslateUi()
 {
-    headLabel.setText(tr("Add Friends"));
-    toxIdLabel.setText(tr("Tox ID","Tox ID of the person you're sending a friend request to"));
-    messageLabel.setText(tr("Message","The message you send in friend requests"));
-    sendButton.setText(tr("Send friend request"));
-    message.setPlaceholderText(tr("%1 here! Tox me maybe?",
+    toxIdLabel->setText(tr("Tox ID","Tox ID of the person you're sending a friend request to"));
+    messageLabel->setText(tr("Message","The message you send in friend requests"));
+    sendButton->setText(tr("Send friend request"));
+    message->setPlaceholderText(tr("%1 here! Tox me maybe?",
                 "Default message in friend requests if the field is left blank. Write something appropriate!")
                 .arg(lastUsername));
 }

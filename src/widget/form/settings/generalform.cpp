@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ui_generalsettings.h"
+#include "ui_generalform.h"
 #include "generalform.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/widget.h"
@@ -44,13 +44,14 @@ static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
 static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
-GeneralForm::GeneralForm(SettingsWidget *myParent) :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+GeneralForm::GeneralForm(SettingsWidget *myParent) : GenericForm(QPixmap(":/img/settings/general.png"))
 {
     parent = myParent;
 
-    bodyUI = new Ui::GeneralSettings;
+    bodyUI = new Ui::GeneralForm;
     bodyUI->setupUi(this);
+
+    bodyUI->themeComboBox->setEnabled(false);
 
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
     bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
@@ -96,17 +97,16 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     reloadSmiles();
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 
-    bodyUI->styleBrowser->addItem(tr("None"));
-    bodyUI->styleBrowser->addItems(QStyleFactory::keys());
-    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
-        bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
-    else
-        bodyUI->styleBrowser->setCurrentText(tr("None"));
-
     for (QString color : Style::themeColorNames)
-        bodyUI->themeColorCBox->addItem(color);
+        bodyUI->styleColorCBox->addItem(color);
 
-    bodyUI->themeColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
+    bodyUI->styleColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
+
+    // light, darkblue, wombat...
+    bodyUI->themeComboBox->addItems(Settings::getInstance().getThemesAvailable());
+    bodyUI->themeComboBox->setCurrentText(Settings::getInstance().getTheme()); //current theme
+
+    bodyUI->styleColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
 
     bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
 
@@ -165,8 +165,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
-    connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
-    connect(bodyUI->themeColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onThemeColorChanged(int)));
+    connect(bodyUI->styleColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onStyleColorChanged(int)));
+    connect(bodyUI->themeComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onThemeChanged);
     connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));
     connect(bodyUI->timestamp, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimestampSelected(int)));
     connect(bodyUI->dateFormats, SIGNAL(currentIndexChanged(int)), this, SLOT(onDateFormatSelected(int)));
@@ -254,17 +254,6 @@ void GeneralForm::onSetLightTrayIcon()
 void GeneralForm::onSetMinimizeToTray()
 {
     Settings::getInstance().setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
-}
-
-void GeneralForm::onStyleSelected(QString style)
-{
-    if (bodyUI->styleBrowser->currentIndex() == 0)
-        Settings::getInstance().setStyle("None");
-    else
-        Settings::getInstance().setStyle(style);
-
-    this->setStyle(QStyleFactory::create(style));
-    parent->setBodyHeadStyle(style);
 }
 
 void GeneralForm::onEmoticonSizeChanged()
@@ -436,12 +425,27 @@ void GeneralForm::onGroupchatPositionChanged()
     emit parent->groupchatPositionToggled(bodyUI->cbGroupchatPosition->isChecked());
 }
 
-void GeneralForm::onThemeColorChanged(int)
+/**
+ * @brief GeneralForm::onStyleColorChanged this is for chaning style of contacts
+ */
+void GeneralForm::onStyleColorChanged(int)
 {
-    int index = bodyUI->themeColorCBox->currentIndex();
+    int index = bodyUI->styleColorCBox->currentIndex();
     Settings::getInstance().setThemeColor(index);
     Style::setThemeColor(index);
     Style::applyTheme();
+    Settings::getInstance().saveGlobal(); //not sure if global? ~@agilob
+}
+
+/**
+ * @brief GeneralForm::onThemeChanged This one changes global style.
+ * @param currentTheme
+ */
+void GeneralForm::onThemeChanged(QString currentTheme)
+{
+    Settings::getInstance().setTheme(currentTheme);
+    Settings::getInstance().saveGlobal(); //not sure if global? ~@agilob
+    Widget::getInstance()->reloadTheme();
 }
 
 bool GeneralForm::eventFilter(QObject *o, QEvent *e)

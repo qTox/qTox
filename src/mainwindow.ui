@@ -1085,7 +1085,6 @@ QSplitter:handle{
              <x>0</x>
              <y>0</y>
              <width>284</width>
-             <height>398</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1713,7 +1712,7 @@ QSplitter:handle{
        <property name="autoFillBackground">
         <bool>true</bool>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -1729,96 +1728,6 @@ QSplitter:handle{
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <item>
-         <widget class="QWidget" name="mainHead" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>0</width>
-            <height>57</height>
-           </size>
-          </property>
-          <property name="mouseTracking">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QFrame" name="mainHLine">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>1</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>1</height>
-           </size>
-          </property>
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="WindowText">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>193</red>
-                <green>193</green>
-                <blue>193</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="WindowText">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>193</red>
-                <green>193</green>
-                <blue>193</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="WindowText">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>127</red>
-                <green>127</green>
-                <blue>127</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::HLine</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QWidget" name="mainContent" native="true">
           <property name="sizePolicy">

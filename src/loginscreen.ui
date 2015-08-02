@@ -144,7 +144,7 @@
    <string>qTox</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../res.qrc">
+   <iconset resource="../res.qrc">
     <normaloff>:/img/icons/qtox.svg</normaloff>:/img/icons/qtox.svg</iconset>
   </property>
   <property name="autoFillBackground">
@@ -281,7 +281,7 @@
     <bool>true</bool>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="newPage">
     <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -349,7 +349,7 @@ margin-bottom:45px;</string>
           <number>9</number>
          </property>
          <item row="1" column="0">
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="usernameLabel">
            <property name="text">
             <string>Username:</string>
            </property>
@@ -366,7 +366,7 @@ margin-bottom:45px;</string>
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="passwordLabel">
            <property name="text">
             <string>Password:</string>
            </property>
@@ -383,7 +383,7 @@ margin-bottom:45px;</string>
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QLabel" name="label_8">
+          <widget class="QLabel" name="passwordLabel2">
            <property name="text">
             <string>Confirm:</string>
            </property>
@@ -722,7 +722,7 @@ margin-bottom:5px;</string>
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="topUsername">
            <property name="text">
             <string>Username:</string>
            </property>
@@ -1113,7 +1113,7 @@ color:white;</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="../../res.qrc">:/img/login_logo.svg</pixmap>
+    <pixmap resource="../res.qrc">:/img/login_logo.svg</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -1121,7 +1121,7 @@ color:white;</string>
   </widget>
  </widget>
  <resources>
-  <include location="../../res.qrc"/>
+  <include location="../res.qrc"/>
  </resources>
  <connections/>
 </ui>

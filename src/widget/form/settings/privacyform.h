@@ -21,6 +21,7 @@
 #define PRIVACYFORM_H
 
 #include "genericsettings.h"
+#include "src/widget/form/settingswidget.h"
 
 namespace Ui {
 class PrivacySettings;
@@ -30,7 +31,7 @@ class PrivacyForm : public GenericForm
 {
     Q_OBJECT
 public:
-    PrivacyForm();
+    PrivacyForm(SettingsWidget *parent);
     ~PrivacyForm();
     virtual QString getFormName() final override {return tr("Privacy");}
 

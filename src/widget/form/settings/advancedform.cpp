@@ -25,8 +25,7 @@
 #include "src/persistence/db/plaindb.h"
 #include "src/widget/translator.h"
 
-AdvancedForm::AdvancedForm() :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+AdvancedForm::AdvancedForm(SettingsWidget *parent) : GenericForm(QPixmap(":/img/settings/general.png"))
 {
     bodyUI = new Ui::AdvancedSettings;
     bodyUI->setupUi(this);

@@ -25,7 +25,6 @@
 
 ChatLine::ChatLine()
 {
-
 }
 
 ChatLine::~ChatLine()

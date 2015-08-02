@@ -33,8 +33,8 @@ FORMS    += \
     src/widget/form/settings/aboutsettings.ui \
     src/widget/form/settings/advancedsettings.ui \
     src/widget/form/settings/avsettings.ui \
-    src/widget/form/settings/generalsettings.ui \
-    src/widget/form/settings/privacysettings.ui
+    src/widget/form/settings/privacysettings.ui \
+    src/widget/form/settings/generalform.ui
 
 CONFIG   += c++11
 

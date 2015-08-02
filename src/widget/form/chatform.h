@@ -101,9 +101,6 @@ private slots:
     void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
 
-private:
-    void retranslateUi();
-
 protected:
     void showNetcam();
     void hideNetcam();
@@ -114,9 +111,9 @@ protected:
     virtual void showEvent(QShowEvent* event) final override;
 
 private:
-    Friend* f;
+    Friend *f;
     CroppingLabel *statusMessageLabel;
-    NetCamView* netcam;
+    NetCamView *netcam;
     int callId;
     QLabel *callDuration;
     QTimer *callDurationTimer;
@@ -133,6 +130,8 @@ private:
     CallConfirmWidget *callConfirm;
     void enableCallButtons();
     bool isTyping;
+
+    void retranslateUi();
     void SendMessageStr(QString msg);
 };
 

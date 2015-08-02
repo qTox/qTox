@@ -28,7 +28,7 @@
 
 namespace Ui {class MainWindow;}
 
-class AddFriendForm : public QObject
+class AddFriendForm : public QWidget
 {
     Q_OBJECT
 public:
@@ -54,13 +54,16 @@ private:
 
 private:
     void setIdFromClipboard();
-    QLabel headLabel, toxIdLabel, messageLabel;
-    QPushButton sendButton;
-    QLineEdit toxId;
-    QTextEdit message;
-    QVBoxLayout layout, headLayout;
-    QWidget *head, *main;
+
+    QLabel *toxIdLabel,
+           *messageLabel;
+    QPushButton *sendButton;
+    QLineEdit *toxId;
+    QTextEdit *message;
+    QVBoxLayout *layout;
+    QWidget *main;
     QString lastUsername; // Cached username so we can retranslate the invite message
+
 };
 
 #endif // ADDFRIENDFORM_H

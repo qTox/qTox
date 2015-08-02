@@ -21,6 +21,7 @@
 #define ABOUTFORM_H
 
 #include "genericsettings.h"
+#include "src/widget/form/settingswidget.h"
 
 class Core;
 
@@ -32,7 +33,7 @@ class AboutForm  : public GenericForm
 {
     Q_OBJECT
 public:
-    AboutForm();
+    AboutForm(SettingsWidget *parent);
     ~AboutForm();
     virtual QString getFormName() final override {return tr("About");}
 

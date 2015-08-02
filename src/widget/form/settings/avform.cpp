@@ -40,8 +40,7 @@
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
 
-AVForm::AVForm() :
-    GenericForm(QPixmap(":/img/settings/av.png")),
+  AVForm::AVForm(SettingsWidget *parent) :  GenericForm(QPixmap(":/img/settings/av.png")),
     camVideoSurface{nullptr}, camera(CameraSource::getInstance())
 {
     bodyUI = new Ui::AVSettings;
@@ -53,13 +52,6 @@ AVForm::AVForm() :
     bodyUI->filterAudio->setDisabled(true);
 #endif
 
-    auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
-    auto qcbxIndexChangedInt = (void(QComboBox::*)(int)) &QComboBox::currentIndexChanged;
-    connect(bodyUI->inDevCombobox, qcbxIndexChangedStr, this, &AVForm::onInDevChanged);
-    connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
-    connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
-    connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
-    connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
     bodyUI->playbackSlider->setValue(100);
     bodyUI->microphoneSlider->setValue(100);
 
@@ -68,6 +60,14 @@ AVForm::AVForm() :
         cb->installEventFilter(this);
         cb->setFocusPolicy(Qt::StrongFocus);
     }
+
+    auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
+    auto qcbxIndexChangedInt = (void(QComboBox::*)(int)) &QComboBox::currentIndexChanged;
+    connect(bodyUI->inDevCombobox, qcbxIndexChangedStr, this, &AVForm::onInDevChanged);
+    connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
+    connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
+    connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
+    connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
 
     Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
 }
@@ -88,13 +88,13 @@ void AVForm::showEvent(QShowEvent*)
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 {
-    if (index<0 || index>=videoModes.size())
+    if (index < 0 || index >= videoModes.size())
     {
         qWarning() << "Invalid mode index";
         return;
     }
     int devIndex = bodyUI->videoDevCombobox->currentIndex();
-    if (devIndex<0 || devIndex>=videoModes.size())
+    if (devIndex < 0 || devIndex >= videoModes.size())
     {
         qWarning() << "Invalid device index";
         return;
@@ -102,12 +102,13 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
     Settings::getInstance().setCamVideoRes(QSize(mode.width, mode.height));
+
     camera.open(devName, mode);
 }
 
 void AVForm::updateVideoModes(int curIndex)
 {
-    if (curIndex<0 || curIndex>=videoDeviceList.size())
+    if (curIndex < 0 || curIndex >= videoDeviceList.size())
     {
         qWarning() << "Invalid index";
         return;
@@ -116,29 +117,39 @@ void AVForm::updateVideoModes(int curIndex)
     videoModes = CameraDevice::getVideoModes(devName);
     std::sort(videoModes.begin(), videoModes.end(),
         [](const VideoMode& a, const VideoMode& b)
+
             {return a.width!=b.width ? a.width>b.width :
                     a.height!=b.height ? a.height>b.height :
                     a.FPS>b.FPS;});
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
+
     bodyUI->videoModescomboBox->clear();
     int prefResIndex = -1;
     QSize prefRes = Settings::getInstance().getCamVideoRes();
-    for (int i=0; i<videoModes.size(); ++i)
+    for (int i = 0; i < videoModes.size(); ++i)
     {
         VideoMode mode = videoModes[i];
-        if (mode.width==prefRes.width() && mode.height==prefRes.height() && prefResIndex==-1)
+        if (mode.width == prefRes.width() &&
+                mode.height == prefRes.height() &&
+                prefResIndex == -1)
+
             prefResIndex = i;
         QString str;
+
         if (mode.height && mode.width)
             str += tr("%1x%2").arg(mode.width).arg(mode.height);
         else
             str += tr("Default resolution");
+
         if (mode.FPS)
             str += tr(" at %1 FPS").arg(mode.FPS);
+
         bodyUI->videoModescomboBox->addItem(str);
     }
+
     if (videoModes.isEmpty())
         bodyUI->videoModescomboBox->addItem(tr("Default resolution"));
+
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
     if (prefResIndex != -1)
     {
@@ -153,7 +164,7 @@ void AVForm::updateVideoModes(int curIndex)
         // but if we picked the largest, FPS would be bad and thus quality bad too.
         int numRes=0;
         QSize lastSize;
-        for (int i=0; i<videoModes.size(); i++)
+        for (int i = 0; i < videoModes.size(); i++)
         {
             if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
             {
@@ -161,16 +172,16 @@ void AVForm::updateVideoModes(int curIndex)
                 lastSize = {videoModes[i].width, videoModes[i].height};
             }
         }
-        int target = numRes/2;
-        numRes=0;
-        for (int i=0; i<videoModes.size(); i++)
+        int target = numRes / 2;
+        numRes = 0;
+        for (int i = 0; i < videoModes.size(); i++)
         {
             if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
             {
                 numRes++;
                 lastSize = {videoModes[i].width, videoModes[i].height};
             }
-            if (numRes==target)
+            if (numRes == target)
             {
                 bodyUI->videoModescomboBox->setCurrentIndex(i);
                 break;
@@ -181,11 +192,13 @@ void AVForm::updateVideoModes(int curIndex)
 
 void AVForm::onVideoDevChanged(int index)
 {
-    if (index<0 || index>=videoDeviceList.size())
+    if (index < 0 || index >= videoDeviceList.size())
     {
         qWarning() << "Invalid index";
         return;
     }
+    camVideoSurface->setSource(nullptr);
+
     QString dev = videoDeviceList[index].first;
     Settings::getInstance().setVideoDev(dev);
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
@@ -200,13 +213,15 @@ void AVForm::onResProbingFinished(QList<QSize> res)
     int savedResIndex = -1;
     bodyUI->videoModescomboBox->clear();
 	bodyUI->videoModescomboBox->blockSignals(true);
-    for (int i=0; i<res.size(); ++i)
+
+    for (int i = 0; i < res.size(); ++i)
     {
         QSize& r = res[i];
         bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())), r);
         if (r == savedRes)
             savedResIndex = i;
     }
+
     //reset index, otherwise cameras with only one resolution won't get initialized
     bodyUI->videoModescomboBox->setCurrentIndex(-1);
     bodyUI->videoModescomboBox->blockSignals(false);
@@ -361,6 +376,7 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
+
     camVideoSurface = new VideoSurface(bodyUI->CamFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
@@ -372,6 +388,7 @@ void AVForm::killVideoSurface()
 {
     if (!camVideoSurface)
         return;
+
     QLayoutItem *child;
     while ((child = bodyUI->gridLayout->takeAt(0)) != 0)
         delete child;

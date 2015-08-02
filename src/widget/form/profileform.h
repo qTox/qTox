@@ -83,15 +83,14 @@ private:
 
 private:
     void refreshProfiles();
-    Ui::IdentitySettings* bodyUI;
-    MaskablePixmapWidget* profilePicture;
-    QLabel* nameLabel;
-    QWidget *head;
-    Core* core;
+    Ui::IdentitySettings *bodyUI;
+    MaskablePixmapWidget *profilePicture;
+    QLabel *nameLabel;
+    Core *core;
     QTimer timer;
     bool hasCheck = false;
     QRWidget *qr;
-    ClickableTE* toxId;
+    ClickableTE *toxId;
 };
 
 #endif

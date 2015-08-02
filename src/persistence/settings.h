@@ -37,6 +37,7 @@ enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
 class Settings : public QObject
 {
     Q_OBJECT
+
 public:
     static Settings& getInstance();
     static void destroyInstance();
@@ -86,9 +87,6 @@ public:
 
     bool getLightTrayIcon() const;
     void setLightTrayIcon(bool newValue);
-
-    QString getStyle() const;
-    void setStyle(const QString& newValue);
 
     bool getShowSystemTray() const;
     void setShowSystemTray(const bool& newValue);
@@ -273,7 +271,15 @@ public:
         setWidgetData(widget->objectName() + "State", widget->saveState());
     }
 
+    QString getTheme() const;
+    void setTheme(const QString &value);
+
+    QStringList getThemesAvailable() const;
+    void setThemesAvailable(const QStringList &value);
+
 private:
+    static QString genRandomProfileName();
+
     Settings();
     ~Settings();
     Settings(Settings &settings) = delete;
@@ -334,7 +340,8 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
-    QString style;
+    QStringList themesAvailable = {"original", "light", "darkblue", "wombat"}; //list of css files
+    QString theme; //style loaded from CSS, darkblue, light
     bool showSystemTray;
 
     // ChatView

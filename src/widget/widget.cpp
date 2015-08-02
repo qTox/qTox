@@ -136,6 +136,8 @@ void Widget::init()
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
 
+    ui->mainContent->setLayout(new QVBoxLayout(this));
+
     filterMenu = new QMenu(this);
     filterGroup = new QActionGroup(this);
     filterDisplayGroup = new QActionGroup(this);
@@ -174,25 +176,22 @@ void Widget::init()
     filterMenu->addAction(filterGroupsAction);
 
     ui->searchContactFilterBox->setMenu(filterMenu);
+    ui->searchContactText->setPlaceholderText("Search Contacts");
 
     ui->mainContent->setLayout(new QVBoxLayout());
-    ui->mainHead->setLayout(new QVBoxLayout());
-    ui->mainHead->layout()->setMargin(0);
-    ui->mainHead->layout()->setSpacing(0);
 
-    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
-            && Settings::getInstance().getStyle() != "None")
-    {
-        ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-        ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
-    }
+//    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
+//            && Settings::getInstance().getStyle() != "None")
+//    {
+//        //ui->mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
+//    }
 
-#ifndef Q_OS_MAC
-    ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
-    ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
-    ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
-    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
-#endif
+//#ifndef Q_OS_MAC
+    //ui->mainHead->setStyleSheet(Style::getStylesheet(":ui/settings/mainHead.css"));
+    //ui->mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
+    //ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    //ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+//#endif
 
     contactListWidget = new FriendListWidget(this, Settings::getInstance().getGroupchatPosition());
     ui->friendList->setWidget(contactListWidget);
@@ -201,17 +200,19 @@ void Widget::init()
 
     ui->statusLabel->setEditable(true);
 
-    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+    qDebug() << "Loading theme: " << Settings::getInstance().getTheme();
+    //ui->mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
+    ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" + Settings::getInstance().getTheme() + ".css"));
 
-    QMenu *statusButtonMenu = new QMenu(ui->statusButton);
+    QMenu *statusButtonMenu = new QMenu(this);//ui->statusButton);
     statusButtonMenu->addAction(statusOnline);
     statusButtonMenu->addAction(statusAway);
     statusButtonMenu->addAction(statusBusy);
     ui->statusButton->setMenu(statusButtonMenu);
 
     // disable proportional scaling
-    ui->mainSplitter->setStretchFactor(0,0);
-    ui->mainSplitter->setStretchFactor(1,1);
+    ui->mainSplitter->setStretchFactor(0, 0);
+    ui->mainSplitter->setStretchFactor(1, 1);
 
     onStatusSet(Status::Offline);
 
@@ -223,7 +224,7 @@ void Widget::init()
     updateIcons();
 
     filesForm = new FilesForm();
-    addFriendForm = new AddFriendForm;
+    addFriendForm = new AddFriendForm();
     profileForm = new ProfileForm();
     settingsWidget = new SettingsWidget();
 
@@ -645,8 +646,6 @@ void Widget::hideMainForms()
 {
     setActiveToolMenuButton(Widget::None);
     QLayoutItem* item;
-    while ((item = ui->mainHead->layout()->takeAt(0)) != 0)
-        item->widget()->hide();
 
     while ((item = ui->mainContent->layout()->takeAt(0)) != 0)
         item->widget()->hide();
@@ -1018,8 +1017,6 @@ void Widget::removeFriend(Friend* f, bool fake)
     Nexus::getCore()->removeFriend(f->getFriendID(), fake);
 
     delete f;
-    if (ui->mainHead->layout()->isEmpty())
-        onAddClicked();
 
     contactListWidget->reDraw();
 }
@@ -1173,8 +1170,6 @@ void Widget::removeGroup(Group* g, bool fake)
     GroupList::removeGroup(g->getGroupId(), fake);
     Nexus::getCore()->removeGroup(g->getGroupId(), fake);
     delete g;
-    if (ui->mainHead->layout()->isEmpty())
-        onAddClicked();
 
     contactListWidget->reDraw();
 }
@@ -1501,6 +1496,7 @@ void Widget::clearAllReceipts()
 void Widget::reloadTheme()
 {
     QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");
+    // css for menu below contacs, filetransfers, settings buttons etc.
     ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}QPushButton:checked{background-color:@themeMedium;border:none;}QPushButton:pressed{background-color:@themeMediumLight;border:none;}"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);
@@ -1513,6 +1509,12 @@ void Widget::reloadTheme()
 
     for (Group* g : GroupList::getAllGroups())
         g->getGroupWidget()->reloadTheme();
+
+    ui->mainPanel->setStyleSheet(Style::getStylesheet("ui/css/" + Settings::getInstance().getTheme() + ".css"));
+    ui->mainSplitter->setObjectName(Settings::getInstance().getTheme());
+
+    ui->mainSplitter->setStyleSheet(Style::getStylesheet("ui/css/splitter.css"));
+    ui->mainSplitter->repaint();
 }
 
 void Widget::nextContact()

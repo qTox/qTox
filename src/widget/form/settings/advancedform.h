@@ -21,6 +21,7 @@
 #define ADVANCEDFORM_H
 
 #include "genericsettings.h"
+#include "src/widget/form/settingswidget.h"
 
 class Core;
 
@@ -32,8 +33,9 @@ class AdvancedForm : public GenericForm
 {
     Q_OBJECT
 public:
-    AdvancedForm();
-    ~AdvancedForm();
+
+    AdvancedForm(SettingsWidget *parent);
+    virtual ~AdvancedForm();
     virtual QString getFormName() final override {return tr("Advanced");}
 
 protected:
@@ -46,8 +48,6 @@ private slots:
 
 private:
     void retranslateUi();
-
-private:
     Ui::AdvancedSettings* bodyUI;
 };
 

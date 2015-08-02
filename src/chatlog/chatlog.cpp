@@ -41,8 +41,7 @@ T clamp(T x, T min, T max)
     return x;
 }
 
-ChatLog::ChatLog(QWidget* parent)
-    : QGraphicsView(parent)
+ChatLog::ChatLog(QWidget* parent) : QGraphicsView(parent)
 {
     // Create the scene
     busyScene = new QGraphicsScene(this);
@@ -58,7 +57,7 @@ ChatLog::ChatLog(QWidget* parent)
     setDragMode(QGraphicsView::NoDrag);
     setViewportUpdateMode(MinimalViewportUpdate);
     setContextMenuPolicy(Qt::CustomContextMenu);
-    setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
+    //setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));  //removed to apply global CSS
 
     // The selection rect for multi-line selection
     selGraphItem = scene->addRect(0,0,0,0,selectionRectColor.darker(120),selectionRectColor);
@@ -174,7 +173,6 @@ void ChatLog::layout(int start, int end, qreal width)
     for (int i = start; i < end; ++i)
     {
         ChatLine* l = lines[i].get();
-
         l->layout(width, QPointF(0.0, h));
         h += l->sceneBoundingRect().height() + lineSpacing;
     }
@@ -652,9 +650,6 @@ void ChatLog::checkVisibility()
 
     // enforce order
     std::sort(visibleLines.begin(), visibleLines.end(), ChatLine::lessThanRowIndex);
-
-    //if (!visibleLines.empty())
-    //  qDebug() << "visible from " << visibleLines.first()->getRow() << "to " << visibleLines.last()->getRow() << " total " << visibleLines.size();
 }
 
 void ChatLog::scrollContentsBy(int dx, int dy)

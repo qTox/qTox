@@ -57,16 +57,13 @@
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
 
-ChatForm::ChatForm(Friend* chatFriend)
-    : f(chatFriend)
-    , callId{0}, isTyping{false}
+ChatForm::ChatForm(Friend* chatFriend) : f(chatFriend), callId{0}, isTyping{false}
 {
     nameLabel->setText(f->getDisplayedName());
 
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
 
-    statusMessageLabel = new CroppingLabel();
-    statusMessageLabel->setObjectName("statusLabel");
+    statusMessageLabel = new CroppingLabel(this);
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     statusMessageLabel->setTextFormat(Qt::PlainText);
@@ -127,13 +124,12 @@ ChatForm::~ChatForm()
 void ChatForm::setStatusMessage(QString newMessage)
 {
     statusMessageLabel->setText(newMessage);
-    statusMessageLabel->setToolTip(newMessage); // for overlength messsages
+    statusMessageLabel->setToolTip(newMessage); //for overlength messsages
 }
 
 void ChatForm::onSendTriggered()
 {
     SendMessageStr(msgEdit->toPlainText());
-
     msgEdit->clear();
 }
 
@@ -319,8 +315,7 @@ void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
         callButton->setToolTip("");
         videoButton->setObjectName("red");
         videoButton->setToolTip(tr("End video call"));
-        connect(videoButton, SIGNAL(clicked()),
-                this, SLOT(onHangupCallTriggered()));
+        connect(videoButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
 
         showNetcam();
     }
@@ -330,8 +325,7 @@ void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
         callButton->setToolTip(tr("End audio call"));
         videoButton->setObjectName("grey");
         videoButton->setToolTip("");
-        connect(callButton, SIGNAL(clicked()),
-                this, SLOT(onHangupCallTriggered()));
+        connect(callButton, SIGNAL(clicked()), this, SLOT(onHangupCallTriggered()));
     }
     callButton->style()->polish(callButton);
     videoButton->style()->polish(videoButton);
@@ -343,10 +337,8 @@ void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
     volButton->style()->polish(volButton);
     volButton->setToolTip(tr("Mute call"));
 
-    connect(micButton, SIGNAL(clicked()),
-            this, SLOT(onMicMuteToggle()));
-    connect(volButton, SIGNAL(clicked()),
-            this, SLOT(onVolMuteToggle()));
+    connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
+    connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
 
     startCounter();
 }
@@ -402,8 +394,7 @@ void ChatForm::onAvRinging(uint32_t FriendId, int CallId, bool video)
         videoButton->setObjectName("yellow");
         videoButton->style()->polish(videoButton);
         videoButton->setToolTip(tr("Cancel video call"));
-        connect(videoButton, SIGNAL(clicked()),
-                this, SLOT(onCancelCallTriggered()));
+        connect(videoButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
     }
     else
     {
@@ -413,8 +404,7 @@ void ChatForm::onAvRinging(uint32_t FriendId, int CallId, bool video)
         videoButton->setObjectName("grey");
         videoButton->style()->polish(videoButton);
         videoButton->setToolTip("");
-        connect(callButton, SIGNAL(clicked()),
-                this, SLOT(onCancelCallTriggered()));
+        connect(callButton, SIGNAL(clicked()), this, SLOT(onCancelCallTriggered()));
     }
 
     addSystemInfoMessage(tr("Calling to %1").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime());
