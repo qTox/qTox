@@ -247,10 +247,14 @@ void ProfileForm::onRenameClicked()
     Nexus& nexus = Nexus::getInstance();
     QString cur = nexus.getProfile()->getName();
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
+
     do
     {
-        QString name = QInputDialog::getText(this, title, title+":");
-        if (name.isEmpty()) break;
+        QString name = QInputDialog::getText(0, title, title + ":");
+
+        if (name.isEmpty())
+            break;
+
         name = Core::sanitize(name);
 
         if (Profile::exists(name))
