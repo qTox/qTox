@@ -221,6 +221,8 @@ void Settings::loadGlobal()
     s.beginGroup("Audio");
         inDev = s.value("inDev", "").toString();
         outDev = s.value("outDev", "").toString();
+        inVolume = s.value("inVolume", 100).toInt();
+        outVolume = s.value("outVolume", 100).toInt();
         filterAudio = s.value("filterAudio", false).toBool();
     s.endGroup();
 
@@ -416,6 +418,8 @@ void Settings::saveGlobal()
     s.beginGroup("Audio");
         s.setValue("inDev", inDev);
         s.setValue("outDev", outDev);
+        s.setValue("inVolume", inVolume);
+        s.setValue("outVolume", outVolume);
         s.setValue("filterAudio", filterAudio);
     s.endGroup();
 
@@ -1127,6 +1131,18 @@ void Settings::setInDev(const QString& deviceSpecifier)
     inDev = deviceSpecifier;
 }
 
+int Settings::getInVolume() const
+{
+    QMutexLocker locker{&bigLock};
+    return inVolume;
+}
+
+void Settings::setInVolume(int volume)
+{
+    QMutexLocker locker{&bigLock};
+    inVolume = volume;
+}
+
 QString Settings::getVideoDev() const
 {
     QMutexLocker locker{&bigLock};
@@ -1149,6 +1165,18 @@ void Settings::setOutDev(const QString& deviceSpecifier)
 {
     QMutexLocker locker{&bigLock};
     outDev = deviceSpecifier;
+}
+
+int Settings::getOutVolume() const
+{
+    QMutexLocker locker{&bigLock};
+    return outVolume;
+}
+
+void Settings::setOutVolume(int volume)
+{
+    QMutexLocker locker{&bigLock};
+    outVolume = volume;
 }
 
 bool Settings::getFilterAudio() const

@@ -60,6 +60,8 @@ private slots:
     void onFilterAudioToggled(bool filterAudio);
     void on_playbackSlider_valueChanged(int value);
     void on_microphoneSlider_valueChanged(int value);
+    void onPlaybackSliderReleased();
+    void onMicrophoneSliderReleased();
 
     // camera
     void onVideoDevChanged(int index);
