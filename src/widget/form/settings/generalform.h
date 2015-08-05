@@ -78,10 +78,11 @@ private:
 private:
     Ui::GeneralSettings *bodyUI;
     void reloadSmiles();
+    void installObject(QObject* object);
     SettingsWidget *parent;
 
 protected:
-    bool eventFilter(QObject *o, QEvent *e);
+    bool eventFilter(QObject *o, QEvent *e) override;
 };
 
 #endif

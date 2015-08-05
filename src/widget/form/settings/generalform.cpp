@@ -183,21 +183,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
     connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
 
-    // prevent stealing mouse whell scroll
-    // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
-    // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
-    // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
-    for (QComboBox* cb : findChildren<QComboBox*>())
-    {
-            cb->installEventFilter(this);
-            cb->setFocusPolicy(Qt::StrongFocus);
-    }
-
-    for (QSpinBox* sp : findChildren<QSpinBox*>())
-    {
-            sp->installEventFilter(this);
-            sp->setFocusPolicy(Qt::WheelFocus);
-    }
+    installObject(this);
 
 #ifndef QTOX_PLATFORM_EXT
     bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
@@ -224,7 +210,10 @@ void GeneralForm::setNotificationWidget(QWidget* widget)
     }
 
     if (widget)
+    {
         bodyUI->notificationLayout->addWidget(widget);
+        installObject(widget);
+    }
 
     bodyUI->notificationGroup->setVisible(widget != nullptr);
 
@@ -416,6 +405,25 @@ void GeneralForm::reloadSmiles()
     int maxSize = qMin(desktop.geometry().height()/8,
                        desktop.geometry().width()/8); // 8 is the count of row and column in emoji's in widget
     bodyUI->emoticonSize->setMaximum(SmileyPack::getInstance().getAsIcon(smiles[0]).actualSize(QSize(maxSize,maxSize)).width());
+}
+
+void GeneralForm::installObject(QObject* object)
+{
+    // prevent stealing mouse whell scroll
+    // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
+    // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
+    // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
+    for (QComboBox* cb : object->findChildren<QComboBox*>())
+    {
+        cb->installEventFilter(this);
+        cb->setFocusPolicy(Qt::StrongFocus);
+    }
+
+    for (QSpinBox* sp : object->findChildren<QSpinBox*>())
+    {
+        sp->installEventFilter(this);
+        sp->setFocusPolicy(Qt::WheelFocus);
+    }
 }
 
 void GeneralForm::onCheckUpdateChanged()
