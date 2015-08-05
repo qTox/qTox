@@ -28,10 +28,12 @@
 
 #include "audio.h"
 #include "src/core/core.h"
+#include "src/persistence/settings.h"
 
 #include <QDebug>
 #include <QThread>
 #include <QMutexLocker>
+#include <QTimer>
 
 #include <cassert>
 
@@ -46,6 +48,7 @@ ALCcontext* Audio::alContext{nullptr};
 ALuint Audio::alMainSource{0};
 float Audio::outputVolume{1.0};
 float Audio::inputVolume{1.0};
+QTimer* Audio::timer{nullptr};
 
 Audio& Audio::getInstance()
 {
@@ -58,6 +61,9 @@ Audio& Audio::getInstance()
         audioInLock = new QMutex(QMutex::Recursive);
         audioOutLock = new QMutex(QMutex::Recursive);
         instance->moveToThread(audioThread);
+        timer = new QTimer(instance);
+        timer->setSingleShot(true);
+        instance->connect(timer, &QTimer::timeout, instance, &Audio::closeOutput);
     }
     return *instance;
 }
@@ -115,11 +121,17 @@ void Audio::suscribeInput()
 
     qDebug() << "suscribing input";
     QMutexLocker lock(audioInLock);
-    if (!userCount++ && alInDev)
+    if (!userCount++)
     {
+        timer->stop();
+        openOutput(Settings::getInstance().getOutDev());
+
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        qDebug() << "starting capture";
-        alcCaptureStart(alInDev);
+        if (alInDev)
+        {
+            qDebug() << "starting capture";
+            alcCaptureStart(alInDev);
+        }
 #endif
     }
 }
@@ -134,11 +146,15 @@ void Audio::unsuscribeInput()
 
     qDebug() << "unsuscribing input";
     QMutexLocker lock(audioInLock);
-    if (!--userCount && alInDev)
+    if (!--userCount)
     {
+        closeOutput();
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        qDebug() << "stopping capture";
-        alcCaptureStop(alInDev);
+        if (alInDev)
+        {
+            qDebug() << "stopping capture";
+            alcCaptureStop(alInDev);
+        }
 #endif
     }
 }
@@ -263,7 +279,7 @@ void Audio::playMono16Sound(const QByteArray& data)
 {
     QMutexLocker lock(audioOutLock);
     if (!alOutDev)
-        return;
+        openOutput(Settings::getInstance().getOutDev());
 
     ALuint buffer;
     alGenBuffers(1, &buffer);
@@ -271,6 +287,25 @@ void Audio::playMono16Sound(const QByteArray& data)
     alSourcef(alMainSource, AL_GAIN, outputVolume);
     alSourcei(alMainSource, AL_BUFFER, buffer);
     alSourcePlay(alMainSource);
+
+    ALint sizeInBytes;
+    ALint channels;
+    ALint bits;
+
+    alGetBufferi(buffer, AL_SIZE, &sizeInBytes);
+    alGetBufferi(buffer, AL_CHANNELS, &channels);
+    alGetBufferi(buffer, AL_BITS, &bits);
+    int lengthInSamples = sizeInBytes * 8 / (channels * bits);
+
+    ALint frequency;
+    alGetBufferi(buffer, AL_FREQUENCY, &frequency);
+    float duration = (lengthInSamples / static_cast<float>(frequency)) * 1000;
+
+    int remaining = timer->interval();
+
+    if (duration > remaining)
+        timer->start(duration);
+
     alDeleteBuffers(1, &buffer);
 }
 
@@ -390,6 +425,14 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
     }
 
     return true;
+}
+
+void Audio::pauseOutput()
+{
+    QMutexLocker lock(audioInLock);
+
+    if (!userCount)
+        closeOutput();
 }
 
 #ifdef QTOX_FILTER_AUDIO
