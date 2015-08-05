@@ -56,7 +56,7 @@ public:
     static void unsuscribeInput(); ///< Call once you don't need to capture on the open input device anymore.
 
     static void openInput(const QString& inDevDescr); ///< Open an input device, use before suscribing
-    static void openOutput(const QString& outDevDescr); ///< Open an output device
+    static bool openOutput(const QString& outDevDescr); ///< Open an output device
 
     static void closeInput(); ///< Close an input device, please don't use unless everyone's unsuscribed
     static void closeOutput(); ///< Close an output device
