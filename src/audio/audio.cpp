@@ -113,11 +113,11 @@ void Audio::setInputVolume(float volume)
 
 void Audio::suscribeInput()
 {
-    if (!alInDev)
+    /*if (!alInDev)
     {
         qWarning()<<"input device is closed";
         return;
-    }
+    }*/
 
     qDebug() << "suscribing input";
     QMutexLocker lock(audioInLock);
@@ -125,6 +125,7 @@ void Audio::suscribeInput()
     {
         timer->stop();
         openOutput(Settings::getInstance().getOutDev());
+        openInput(Settings::getInstance().getInDev());
 
 #if (!FIX_SND_PCM_PREPARE_BUG)
         if (alInDev)
@@ -144,7 +145,9 @@ void Audio::unsuscribeInput()
         return;
     }
 
-    qDebug() << "unsuscribing input";
+    assert(userCount > 0);
+
+    qDebug() << "unsuscribing input" << userCount;
     QMutexLocker lock(audioInLock);
     if (!--userCount)
     {
@@ -156,6 +159,7 @@ void Audio::unsuscribeInput()
             alcCaptureStop(alInDev);
         }
 #endif
+        closeInput();
     }
 }
 
@@ -186,7 +190,7 @@ void Audio::openInput(const QString& inDevDescr)
         core->resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
-    if (userCount.load() != 0 && alInDev)
+    if (/*userCount.load() != 0 && */alInDev)
     {
         alcCaptureStart(alInDev);
     }
