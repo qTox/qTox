@@ -201,7 +201,7 @@ void Audio::openInput(const QString& inDevDescr)
 
 }
 
-void Audio::openOutput(const QString& outDevDescr)
+bool Audio::openOutput(const QString& outDevDescr)
 {
     qDebug() << "Trying to open output " + outDevDescr;
     QMutexLocker lock(audioOutLock);
@@ -215,6 +215,7 @@ void Audio::openOutput(const QString& outDevDescr)
     if (!alOutDev)
     {
         qWarning() << "Cannot open output audio device " + outDevDescr;
+        return false;
     }
     else
     {
@@ -229,6 +230,7 @@ void Audio::openOutput(const QString& outDevDescr)
         {
             qWarning() << "Cannot create output audio context";
             alcCloseDevice(alOutDev);
+            return false;
         }
         else
         {
@@ -242,6 +244,8 @@ void Audio::openOutput(const QString& outDevDescr)
     Core* core = Core::getInstance();
     if (core)
         core->resetCallSources(); // Force to regen each group call's sources
+
+    return true;
 }
 
 void Audio::closeInput()
@@ -281,8 +285,12 @@ void Audio::closeOutput()
 void Audio::playMono16Sound(const QByteArray& data)
 {
     QMutexLocker lock(audioOutLock);
+
     if (!alOutDev)
-        openOutput(Settings::getInstance().getOutDev());
+    {
+        if (!openOutput(Settings::getInstance().getOutDev()))
+            return;
+    }
 
     ALuint buffer;
     alGenBuffers(1, &buffer);
@@ -328,6 +336,9 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
 
     QMutexLocker lock(audioOutLock);
 
+    if (!alOutDev)
+        return;
+
     ToxGroupCall& call = Core::groupCalls[group];
 
     if (!call.active || call.muteVol)
@@ -347,6 +358,9 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
     assert(channels == 1 || channels == 2);
 
     QMutexLocker lock(audioOutLock);
+
+    if (!alOutDev)
+        return;
 
     ALuint bufid;
     ALint processed = 0, queued = 16;
