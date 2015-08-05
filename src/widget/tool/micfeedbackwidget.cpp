@@ -22,7 +22,9 @@
 #include <QPainter>
 #include <QLinearGradient>
 
-MicFeedbackWidget::MicFeedbackWidget(QWidget *parent) : QWidget(parent)
+MicFeedbackWidget::MicFeedbackWidget(QWidget *parent)
+    : QWidget(parent)
+    , timerId(0)
 {
     setFixedHeight(20);
 }
@@ -83,11 +85,16 @@ void MicFeedbackWidget::timerEvent(QTimerEvent*)
 void MicFeedbackWidget::showEvent(QShowEvent*)
 {
     Audio::suscribeInput();
-    int timerId = startTimer(60);
+    timerId = startTimer(60);
 }
 
 void MicFeedbackWidget::hideEvent(QHideEvent*)
 {
     Audio::unsuscribeInput();
-    killTimer(timerId);
+
+    if (timerId != 0)
+    {
+        killTimer(timerId);
+        timerId = 0;
+    }
 }
