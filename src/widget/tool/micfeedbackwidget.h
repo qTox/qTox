@@ -31,11 +31,12 @@ public:
 protected:
     void paintEvent(QPaintEvent* event) override;
     void timerEvent(QTimerEvent* event) override;
+    void showEvent(QShowEvent* event) override;
+    void hideEvent(QHideEvent* event) override;
 
 private:
-    double rms;
-    static const int previousNum = 4;
-    double previous[previousNum];
+    double current;
+    int timerId;
 };
 
 #endif // MICFEEDBACKWIDGET_H

@@ -25,9 +25,6 @@
 MicFeedbackWidget::MicFeedbackWidget(QWidget *parent) : QWidget(parent)
 {
     setFixedHeight(20);
-    startTimer(60);
-    Audio::suscribeInput();
-    Audio::setOutputVolume(1.0f);
 }
 
 void MicFeedbackWidget::paintEvent(QPaintEvent*)
@@ -36,7 +33,8 @@ void MicFeedbackWidget::paintEvent(QPaintEvent*)
     painter.setPen(QPen(Qt::black));
     painter.drawRect(QRect(0, 0, width() - 1, height() - 1));
 
-    int gradientWidth = round(width() * rms) - 4;
+    int gradientWidth = round(width() * current) - 4;
+
     if (gradientWidth < 0)
         gradientWidth = 0;
 
@@ -68,16 +66,28 @@ void MicFeedbackWidget::timerEvent(QTimerEvent*)
     if (Audio::tryCaptureSamples(buff, framesize))
     {
         double max = 0;
-        int16_t* buffReal = (int16_t*)(&buff[0]);
+        int16_t* buffReal = reinterpret_cast<int16_t*>(&buff[0]);
 
         for (int i = 0; i < bufsize / 2; ++i)
             max = std::max(max, fabs(buffReal[i] / 32767.0));
 
-        if (max > rms)
-            rms = max;
+        if (max > current)
+            current = max;
         else
-            rms -= 0.05;
+            current -= 0.05;
 
         update();
     }
+}
+
+void MicFeedbackWidget::showEvent(QShowEvent*)
+{
+    Audio::suscribeInput();
+    int timerId = startTimer(60);
+}
+
+void MicFeedbackWidget::hideEvent(QHideEvent*)
+{
+    Audio::unsuscribeInput();
+    killTimer(timerId);
 }
