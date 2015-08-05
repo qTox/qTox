@@ -19,13 +19,13 @@ cd $QTOX_DIR/libs
 
 
 ## toxcore
-if [ ! -f "libtoxcore-win32-i686.zip" ]; then
-    wget --no-check-certificate http://jenkins.libtoxcore.so/job/libtoxcore-win32-i686/lastSuccessfulBuild/artifact/libtoxcore-win32-i686.zip
+if [ ! -f "libtoxcore_build_windows_x86_shared_release.zip" ]; then
+    wget --no-check-certificate https://build.tox.chat/view/libtoxcore/job/libtoxcore_build_windows_x86_shared_release/lastSuccessfulBuild/artifact/libtoxcore_build_windows_x86_shared_release.zip
     rm -rf include/tox
 fi
 
 if [ ! -d "include/tox" ]; then
-    $QTOX_DIR/tools/unzip -o libtoxcore-win32-i686.zip -d ./
+    $QTOX_DIR/tools/unzip -o libtoxcore_build_windows_x86_shared_release.zip -d ./
 fi
 
 
