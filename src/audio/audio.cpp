@@ -336,9 +336,6 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
 
     QMutexLocker lock(audioOutLock);
 
-    if (!alOutDev)
-        return;
-
     ToxGroupCall& call = Core::groupCalls[group];
 
     if (!call.active || call.muteVol)
@@ -358,9 +355,6 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
     assert(channels == 1 || channels == 2);
 
     QMutexLocker lock(audioOutLock);
-
-    if (!alOutDev)
-        return;
 
     ALuint bufid;
     ALint processed = 0, queued = 16;
