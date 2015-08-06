@@ -175,7 +175,6 @@ void Core::answerCall(int32_t callId)
 void Core::hangupCall(int32_t callId)
 {
     qDebug() << QString("hanging up call %1").arg(callId);
-    calls[callId].active = false;
     toxav_hangup(toxav, callId);
 }
 
