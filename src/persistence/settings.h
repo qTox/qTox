@@ -145,6 +145,19 @@ public:
     bool getDesktopNotifications() const;
     void setDesktopNotifications(bool newValue);
 
+    bool getNotifyOnNewMessage() const;
+    bool getNotifyOnFriendRequest() const;
+    bool getNotifyOnHighlight() const;
+    bool getNotifyOnCallInvite() const;
+    bool getNotifyOnGroupInvite() const;
+    bool getNotifyOnFileTransfer() const;
+    void setNotifyOnNewMessage(bool notify);
+    void setNotifyOnFriendRequest(bool notify);
+    void setNotifyOnHighlight(bool notify);
+    void setNotifyOnCallInvite(bool notify);
+    void setNotifyOnGroupInvite(bool notify);
+    void setNotifyOnFileTransfer(bool notify);
+
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
 
@@ -312,6 +325,12 @@ private:
     bool notifySound;
     bool groupAlwaysNotify;
     bool desktopNotifications;
+    bool notifyOnNewMessage;
+    bool notifyOnFriendRequest;
+    bool notifyOnHighlight;
+    bool notifyOnCallInvite;
+    bool notifyOnGroupInvite;
+    bool notifyOnFileTransfer;
 
     bool forceTCP;
 

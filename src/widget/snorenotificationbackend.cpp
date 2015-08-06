@@ -36,7 +36,7 @@ SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
     snoreApp.addAlert(Snore::Alert(typeToString(Highlighted), icon));
     snoreApp.addAlert(Snore::Alert(typeToString(FileTransferFinished), icon));
     snoreApp.addAlert(Snore::Alert(typeToString(FriendRequest), icon));
-    snoreApp.addAlert(Snore::Alert(typeToString(AVCall), icon));
+    snoreApp.addAlert(Snore::Alert(typeToString(AVCallInvite), icon));
 
     snoreApp.hints().setValue("windows-app-id", "ToxFoundation.qTox");
     snoreApp.hints().setValue("desktop-entry", QApplication::applicationName());
@@ -64,7 +64,8 @@ void SnoreNotificationBackend::notify(Type type, GenericChatroomWidget *chat, co
 
     Snore::SnoreCore::instance().broadcastNotification(notification);
 
-    chatList[notification.id()] = chat;
+    if (chat != nullptr)
+        chatList.insert(notification.id(), chat);
 }
 
 QWidget* SnoreNotificationBackend::settingsWidget()
@@ -97,7 +98,10 @@ void SnoreNotificationBackend::setOptions(const QString& option)
 
 void SnoreNotificationBackend::notificationInvoked(Snore::Notification notification)
 {
-    emit activated(chatList[notification.id()]);
+    QHash<uint, GenericChatroomWidget*>::iterator chat = chatList.find(notification.id());
+
+    if (chat != chatList.end())
+        emit activated(chatList[notification.id()]);
 }
 
 void SnoreNotificationBackend::notificationClose(Snore::Notification notification)
@@ -117,7 +121,7 @@ QString SnoreNotificationBackend::typeToString(Type type)
             return QStringLiteral("File Transfer Finished");
         case FriendRequest:
             return QStringLiteral("Friend Request");
-        case AVCall:
+        case AVCallInvite:
             return QStringLiteral("AV Call");
         default:
             return QString();

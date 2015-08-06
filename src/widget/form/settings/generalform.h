@@ -67,6 +67,12 @@ private slots:
     void onSetNotifySound();
     void onSetGroupAlwaysNotify();
     void onSetDesktopNotifications();
+    void onSetNotifyNewMessage();
+    void onSetNotifyHighlighted();
+    void onSetNotifyFriendRequest();
+    void onSetNotifyCallInvite();
+    void onSetNotifyGroupInvite();
+    void onSetNotifyFileTransfer();
     void onFauxOfflineMessaging();
     void onCompactLayout();
     void onGroupchatPositionChanged();

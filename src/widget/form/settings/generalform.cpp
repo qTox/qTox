@@ -86,6 +86,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
     bodyUI->cbDesktopNotifications->setChecked(Settings::getInstance().getDesktopNotifications());
+    bodyUI->notifyOnNewMessage->setChecked(Settings::getInstance().getNotifyOnNewMessage());
+    bodyUI->notifyOnHighlighted->setChecked(Settings::getInstance().getNotifyOnHighlight());
+    bodyUI->notifyOnFriendRequest->setChecked(Settings::getInstance().getNotifyOnFriendRequest());
+    bodyUI->notifyOnCallInvite->setChecked(Settings::getInstance().getNotifyOnCallInvite());
+    bodyUI->notifyOnGroupInvite->setChecked(Settings::getInstance().getNotifyOnGroupInvite());
+    bodyUI->notifyOnFileTransfer->setChecked(Settings::getInstance().getNotifyOnFileTransfer());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
     bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
@@ -161,9 +167,16 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
-    connect(bodyUI->cbDesktopNotifications, &QCheckBox::stateChanged, this, &GeneralForm::onSetDesktopNotifications);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+    // notifications
+    connect(bodyUI->cbDesktopNotifications, &QCheckBox::stateChanged, this, &GeneralForm::onSetDesktopNotifications);
+    connect(bodyUI->notifyOnNewMessage, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyNewMessage);
+    connect(bodyUI->notifyOnHighlighted, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyHighlighted);
+    connect(bodyUI->notifyOnCallInvite, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyCallInvite);
+    connect(bodyUI->notifyOnGroupInvite, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyGroupInvite);
+    connect(bodyUI->notifyOnFriendRequest, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFriendRequest);
+    connect(bodyUI->notifyOnFileTransfer, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFileTransfer);
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
@@ -215,7 +228,7 @@ void GeneralForm::setNotificationWidget(QWidget* widget)
         installObject(widget);
     }
 
-    bodyUI->notificationGroup->setVisible(widget != nullptr);
+    bodyUI->notificationSettingsGroup->setVisible(widget != nullptr);
 
 #ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
     bodyUI->cbDesktopNotifications->setEnabled(true);
@@ -454,7 +467,38 @@ void GeneralForm::onSetGroupAlwaysNotify()
 void GeneralForm::onSetDesktopNotifications()
 {
     Settings::getInstance().setDesktopNotifications(bodyUI->cbDesktopNotifications->isChecked());
+    bodyUI->notificationEnableGroup->setEnabled(bodyUI->cbDesktopNotifications->isChecked());
     emit parent->desktopNotificationsToggled(bodyUI->cbDesktopNotifications->isChecked());
+}
+
+void GeneralForm::onSetNotifyNewMessage()
+{
+    Settings::getInstance().setNotifyOnNewMessage(bodyUI->notifyOnNewMessage->isChecked());
+}
+
+void GeneralForm::onSetNotifyHighlighted()
+{
+    Settings::getInstance().setNotifyOnHighlight(bodyUI->notifyOnHighlighted->isChecked());
+}
+
+void GeneralForm::onSetNotifyFriendRequest()
+{
+    Settings::getInstance().setNotifyOnFriendRequest(bodyUI->notifyOnFriendRequest->isChecked());
+}
+
+void GeneralForm::onSetNotifyCallInvite()
+{
+    Settings::getInstance().setNotifyOnCallInvite(bodyUI->notifyOnCallInvite->isChecked());
+}
+
+void GeneralForm::onSetNotifyGroupInvite()
+{
+    Settings::getInstance().setNotifyOnGroupInvite(bodyUI->notifyOnGroupInvite->isChecked());
+}
+
+void GeneralForm::onSetNotifyFileTransfer()
+{
+    Settings::getInstance().setNotifyOnFileTransfer(bodyUI->notifyOnFileTransfer->isChecked());
 }
 
 void GeneralForm::onFauxOfflineMessaging()

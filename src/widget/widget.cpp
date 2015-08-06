@@ -914,7 +914,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         setWindowTitle(windowTitle);
     }
 
-    if (f->getEventFlag() && notification)
+    if ((f->getEventFlag() || !isActiveWindow()) && notification && Settings::getInstance().getNotifyOnNewMessage())
         notification->notify(NotificationBackend::NewMessage, f->getFriendWidget(), f->getDisplayedName(), message, f->getFriendWidget()->getAvatar());
 }
 
@@ -988,7 +988,7 @@ void Widget::playRingtone()
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
-    if (notification)
+    if (notification && Settings::getInstance().getNotifyOnFriendRequest())
     {
         Friend* f = FriendList::findFriend(userId);
         notification->notify(NotificationBackend::FriendRequest, nullptr, tr("Friend Request from %1 Recieved").arg(userId), message, QPixmap());
@@ -1079,7 +1079,11 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("%1 has invited you to a groupchat. Would you like to join?", "popup text").arg(Nexus::getCore()->getFriendUsername(friendId)), true, false))
+        QString invitedText = tr("%1 has invited you to a groupchat.", "popup text part 1").arg(Nexus::getCore()->getFriendUsername(friendId));
+        if (notification && Settings::getInstance().getNotifyOnGroupInvite())
+            notification->notify(NotificationBackend::GroupInvite, nullptr, tr("Groupchat invite"), invitedText, FriendList::findFriend(friendId)->getFriendWidget()->getAvatar());
+
+        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("Would you like to join?", "popup text part 2"), true, false))
         {
             int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
             if (groupId < 0)
@@ -1128,9 +1132,9 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
 
     if (notification)
     {
-        if (g->getEventFlag())
+        if (g->getEventFlag() && Settings::getInstance().getNotifyOnNewMessage())
             notification->notify(NotificationBackend::NewMessage, g->getGroupWidget(), g->getGroupWidget()->getName(), message, g->getGroupWidget()->getAvatar());
-        else if (g->getMentionedFlag())
+        else if (g->getMentionedFlag() && Settings::getInstance().getNotifyOnHighlight())
             notification->notify(NotificationBackend::Highlighted, g->getGroupWidget(), g->getGroupWidget()->getName(), message, g->getGroupWidget()->getAvatar());
     }
 }
@@ -1725,21 +1729,21 @@ void Widget::onDesktopNotificationsToggled(bool desktopNotifications)
 
 void Widget::notifyAvInvite(uint32_t friendId, int, bool)
 {
-    if (notification)
+    if (notification && Settings::getInstance().getNotifyOnCallInvite())
     {
         Friend* f = FriendList::findFriend(friendId);
         FriendWidget* fwidget = f->getFriendWidget();
-        notification->notify(NotificationBackend::AVCall, fwidget, tr("Incoming Call"), f->getDisplayedName(), fwidget->getAvatar());
+        notification->notify(NotificationBackend::AVCallInvite, fwidget, tr("Incoming Call"), f->getDisplayedName(), fwidget->getAvatar());
     }
 }
 
 void Widget::notifyFileTransferFinished(ToxFile file)
 {
-    if (notification)
+    if (notification && Settings::getInstance().getNotifyOnFileTransfer())
     {
         Friend* f = FriendList::findFriend(file.friendId);
         FriendWidget* fwidget = f->getFriendWidget();
-        notification->notify(NotificationBackend::AVCall, fwidget, tr("File transfer finished"), file.fileName, fwidget->getAvatar());
+        notification->notify(NotificationBackend::FileTransferFinished, fwidget, tr("File transfer finished"), file.fileName, fwidget->getAvatar());
     }
 }
 

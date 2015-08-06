@@ -30,11 +30,12 @@ class NotificationBackend : public QObject
 public:
     enum Type
     {
-        NewMessage = 0,
-        Highlighted = 1,
-        FileTransferFinished = 2,
-        FriendRequest = 3,
-        AVCall = 4,
+        NewMessage = 0x1,
+        Highlighted = 0x2,
+        FileTransferFinished = 0x4,
+        FriendRequest = 0x8,
+        AVCallInvite = 0x10,
+        GroupInvite = 0x20
     };
 
     NotificationBackend(QObject* parent = 0);
