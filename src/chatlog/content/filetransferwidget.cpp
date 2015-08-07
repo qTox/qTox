@@ -24,6 +24,7 @@
 #include "src/core/core.h"
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
+#include "src/persistence/settings.h"
 
 #include <QMouseEvent>
 #include <QFileDialog>
@@ -143,6 +144,8 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
 
     //everything ok!
     Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
+
+    Settings::getInstance().setSaveFileDirectory(QDir(filepath).path());
 }
 
 void FileTransferWidget::setBackgroundColor(const QColor &c, bool whiteFont)
@@ -472,7 +475,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
         else if (btn->objectName() == "accept")
         {
-            QString path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(fileInfo.fileName));
+            QString path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir(Settings::getInstance().getSaveFileDirectory()).filePath(fileInfo.fileName));
             acceptTransfer(path);
         }
     }
