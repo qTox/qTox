@@ -49,10 +49,23 @@ SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
 
         if (trayIcon)
             snoreApp.hints().setValue("tray-icon", QVariant::fromValue(QPointer<QSystemTrayIcon>(trayIcon)));
+        else
+            qDebug() << "System tray icon not supported";
+    }
+    else
+    {
+        qDebug() << "System tray not found";
     }
 
-    Snore::SnoreCore::instance().loadPlugins(Snore::SnorePlugin::BACKEND);
+    if (Snore::SnoreCore::instance().pluginNames().isEmpty())
+        Snore::SnoreCore::instance().loadPlugins(Snore::SnorePlugin::BACKEND);
+
     Snore::SnoreCore::instance().registerApplication(snoreApp);
+}
+
+SnoreNotificationBackend::~SnoreNotificationBackend()
+{
+    Snore::SnoreCore::instance().deregisterApplication(snoreApp);
 }
 
 void SnoreNotificationBackend::notify(Type type, GenericChatroomWidget *chat, const QString &title, const QString &message, const QPixmap &icon)

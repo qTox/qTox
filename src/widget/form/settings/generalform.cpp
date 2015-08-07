@@ -232,7 +232,7 @@ void GeneralForm::setNotificationWidget(QWidget* widget)
 
 #ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
     bodyUI->cbDesktopNotifications->setEnabled(true);
-#elif
+#else
     bodyUI->cbDesktopNotifications->setEnabled(false);
 #endif
 }

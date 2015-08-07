@@ -28,6 +28,7 @@ class SnoreNotificationBackend : public NotificationBackend
     Q_OBJECT
 public:
     SnoreNotificationBackend(QObject* parent = 0);
+    ~SnoreNotificationBackend();
     virtual void notify(Type type, GenericChatroomWidget* chat, const QString& title, const QString& message, const QPixmap &icon) final override;
     virtual QWidget* settingsWidget() final override;
 
