@@ -119,6 +119,8 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
+
+    showNetcam();
 }
 
 ChatForm::~ChatForm()
@@ -1098,6 +1100,7 @@ void ChatForm::showNetcam()
     if (!netcam)
         netcam = new NetCamView();
 
+    //connect(Widget::getInstance(), &Widget::resized, netcam, &NetCamView::updateSize);
     netcam->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
     connect(netcam, &NetCamView::showMessageClicked, this, &ChatForm::onShowMessagesClicked);
     bodySplitter->insertWidget(0, netcam);

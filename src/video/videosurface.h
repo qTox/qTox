@@ -24,8 +24,9 @@
 #include <memory>
 #include <atomic>
 #include "src/video/videosource.h"
+#include "src/widget/tool/aspectratiowidget.h"
 
-class VideoSurface : public QWidget
+class VideoSurface : public AspectRatioWidget
 {
     Q_OBJECT
 
@@ -35,10 +36,8 @@ public:
     ~VideoSurface();
 
     void setSource(VideoSource* src); //NULL is a valid option
-    QRect getRect() const;
-    QSize getFrameSize();
-
-    virtual QSize sizeHint() const override;
+    //QRect getRect() const;
+    //QSize getFrameSize() const;
 
 signals:
     void drewNewFrame();
@@ -48,7 +47,7 @@ protected:
     void unsubscribe();
 
     virtual void paintEvent(QPaintEvent * event) final override;
-    virtual void resizeEvent(QResizeEvent* event) final override;
+    //virtual void resizeEvent(QResizeEvent* event) final override;
 
 private slots:
     void onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame);

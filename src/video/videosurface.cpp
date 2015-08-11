@@ -21,14 +21,16 @@
 #include "src/video/videoframe.h"
 #include <QPainter>
 #include <QLabel>
-
+#include <QDebug>
 VideoSurface::VideoSurface(QWidget* parent)
-    : QWidget{parent}
+    : AspectRatioWidget{parent}
     , source{nullptr}
     , frameLock{false}
     , hasSubscribed{false}
 {
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    qDebug() << "ddd" << minimumSize();
+    setMinimum(128);
+    setSizeHint(128, 128);
 }
 
 VideoSurface::VideoSurface(VideoSource *source, QWidget* parent)
@@ -51,7 +53,7 @@ void VideoSurface::setSource(VideoSource *src)
     source = src;
     subscribe();
 }
-#include <QDebug>
+/*#include <QDebug>
 QRect VideoSurface::getRect() const
 {
     // Fast lock
@@ -77,7 +79,7 @@ QRect VideoSurface::getRect() const
     return QRect();
 }
 
-QSize VideoSurface::getFrameSize()
+QSize VideoSurface::getFrameSize() const
 {
     // Fast lock
     {
@@ -93,12 +95,7 @@ QSize VideoSurface::getFrameSize()
 
     frameLock = false;
     return frameSize;
-}
-
-QSize VideoSurface::sizeHint() const
-{
-    return getRect().size();
-}
+}*/
 
 void VideoSurface::subscribe()
 {
@@ -140,6 +137,9 @@ void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
 
     lastFrame = newFrame;
     frameLock = false;
+    setRatio(lastFrame->getSize().width() / static_cast<float>(lastFrame->getSize().height()));
+    ///setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    updateGeometry();
     update();
 
     emit drewNewFrame();
@@ -155,22 +155,22 @@ void VideoSurface::paintEvent(QPaintEvent*)
     }
 
     QPainter painter(this);
-    //painter.fillRect(painter.viewport(), Qt::black);
+    painter.fillRect(painter.viewport(), QColor(193, 193, 193));
     if (lastFrame)
     {
-        QSize frameSize = lastFrame->getSize();
+        /*QSize frameSize = lastFrame->getSize();
         QRect rect = this->rect();
         int width = frameSize.width()*rect.height()/frameSize.height();
         rect.setLeft((rect.width()-width)/2);
-        rect.setWidth(width);
+        rect.setWidth(width);*/
 
-        QImage frame = lastFrame->toQImage(rect.size());
-        painter.drawImage(rect, frame, frame.rect(), Qt::NoFormatConversion);
+        QImage frame = lastFrame->toQImage(rect().size());
+        painter.drawImage(rect(), frame, frame.rect(), Qt::NoFormatConversion);
         //qDebug() << "VIDEO 2" << rect;
     }
     frameLock = false;
 }
-#include <QResizeEvent>
+/*#include <QResizeEvent>
 void VideoSurface::resizeEvent(QResizeEvent* event)
 {
     // Locks aspect ratio.
@@ -196,4 +196,4 @@ void VideoSurface::resizeEvent(QResizeEvent* event)
         int width = ratio*event->size().width();
         setMaximumHeight(width);
     }
-}
+}*/

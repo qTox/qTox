@@ -21,29 +21,42 @@
 #define MOVABLEWIDGET_H
 
 #include <QWidget>
+#include "aspectratiowidget.h"
 
-class MovableWidget : public QWidget
+class MovableWidget : public AspectRatioWidget
 {
 public:
     MovableWidget(QWidget* parent);
-    void setBoundary(const QRect& boundary, QSize size = QSize());
+    void setBoundary(QSize parentSize, QSize oldSize, float xPercent, float yPercent);
 
 protected:
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
     void mouseDoubleClickEvent(QMouseEvent* event);
+    void paintEvent(QPaintEvent*);
 
 private:
     void checkBoundary(QPoint& point) const;
-    void checkBoundaryTop(int &x) const;
-    void checkBoundaryBottom(int &x) const;
     void checkBoundaryLeft(int &x) const;
-    void checkBoundaryRight(int &x) const;
 
-    bool moving = false;
+    typedef uint8_t Modes;
+
+    enum Mode : Modes
+    {
+        Moving      = 0x01,
+        ResizeLeft  = 0x02,
+        ResizeRight = 0x04,
+        ResizeUp    = 0x08,
+        ResizeDown  = 0x10,
+        Resize      = ResizeLeft | ResizeRight | ResizeUp | ResizeDown
+    };
+
+    Modes mode = 0;
     QPoint lastPoint;
     QRect boundaryRect;
+    QSizeF actualSize;
+    QPointF actualPos;
 };
 
 #endif // MOVABLEWIDGET_H

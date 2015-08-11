@@ -21,6 +21,7 @@
 #define NETCAMVIEW_H
 
 #include <QWidget>
+#include "src/widget/tool/aspectratiowidget.h"
 
 class QHBoxLayout;
 struct vpx_image;
@@ -50,9 +51,10 @@ public slots:
     void setShowMessages(bool show, bool notify = false);
 
 protected:
+    void paintEvent(QPaintEvent* event);
     void resizeEvent(QResizeEvent* event) final override;
 
-private slots:
+public slots:
     void updateSize();
 
 private:
@@ -63,6 +65,7 @@ private:
     VideoSurface* selfVideoSurface;
     MovableWidget* selfFrame;
     QPushButton* button;
+    bool e = false;
 };
 
 #endif // NETCAMVIEW_H
