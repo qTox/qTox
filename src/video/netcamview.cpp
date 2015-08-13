@@ -25,8 +25,9 @@
 #include <QLabel>
 #include <QBoxLayout>
 #include <QPushButton>
+#include <QFrame>
 
-NetCamView::NetCamView(QWidget* parent)
+NetCamView::NetCamView(int friendId, QWidget* parent)
     : QWidget(parent)
     , mainLayout(new QHBoxLayout())
     , selfFrame{nullptr}
@@ -34,38 +35,43 @@ NetCamView::NetCamView(QWidget* parent)
     QVBoxLayout* layout = new QVBoxLayout(this);
     setWindowTitle(tr("Tox video"));
 
-    videoSurface = new VideoSurface(this);
-    videoSurface->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum));
+    videoSurface = new VideoSurface(friendId, this);
     videoSurface->setStyleSheet("background-color: blue;");
-    videoSurface->setMinimum(128);
+    videoSurface->setMinimumHeight(256);
+    videoSurface->setContentsMargins(6, 6, 6, 6);
 
-    mainLayout->addStretch(1);
-    //QWidget* wid = new QWidget(this);
-    //wid->setMinimumSize(600, 600);
-    QVBoxLayout* horLayout = new QVBoxLayout();
-    horLayout->addStretch(1);
-    horLayout->addWidget(videoSurface);
-    horLayout->addStretch(1);
-    mainLayout->addLayout(horLayout);
+    mainLayout->addWidget(videoSurface, 1);
 
     selfFrame = new MovableWidget(videoSurface);
     selfFrame->show();
 
-    selfVideoSurface = new VideoSurface(selfFrame);
+    selfVideoSurface = new VideoSurface(-1, selfFrame);
     selfVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     selfVideoSurface->setMouseTracking(true);
+    selfVideoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     QHBoxLayout* frameLayout = new QHBoxLayout(selfFrame);
     frameLayout->addWidget(selfVideoSurface);
     frameLayout->setMargin(0);
 
-    //mainLayout->addWidget(selfVideoSurface);
-    mainLayout->addStretch(1);
-
-    /*connect(&CameraSource::getInstance(), &CameraSource::deviceOpened, [this]()
+    connect(&CameraSource::getInstance(), &CameraSource::deviceOpened, [this]()
     {
-        connect(selfVideoSurface, &VideoSurface::drewNewFrame, this, &NetCamView::updateSize);
-    });*/
+        //qDebug() << "Device changed";
+        //selfFrame->setRatio(selfVideoSurface->getRatio());
+        //selfFrame->resetBoundary();
+        //connect(selfVideoSurface, &VideoSurface::drewNewFrame, this, &NetCamView::updateSize);
+    });
+
+    connect(selfVideoSurface, &VideoSurface::ratioChanged, [this]()
+    {
+        qDebug() << "Ratio changed";
+        selfFrame->setRatio(selfVideoSurface->getRatio());
+    });
+
+    connect(videoSurface, &VideoSurface::boundaryChanged, [this]()
+    {
+        selfFrame->setBoundary(videoSurface->getBoundingRect());
+    });
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->addStretch();
@@ -76,6 +82,12 @@ NetCamView::NetCamView(QWidget* parent)
     layout->addLayout(mainLayout, 1);
     layout->addLayout(buttonLayout);
 
+    QFrame* lineFrame = new QFrame(this);
+    lineFrame->setStyleSheet("border: 1px solid #c1c1c1;");
+    lineFrame->setFrameShape(QFrame::HLine);
+    lineFrame->setMaximumHeight(1);
+    layout->addWidget(lineFrame);
+
     setShowMessages(false);
 
     setStyleSheet("NetCamView { background-color: #c1c1c1; }");
@@ -84,16 +96,14 @@ NetCamView::NetCamView(QWidget* parent)
 void NetCamView::show(VideoSource *source, const QString &title)
 {
     setSource(source);
-    //selfVideoSurface->setSource(&CameraSource::getInstance());
+    selfVideoSurface->setSource(&CameraSource::getInstance());
     setTitle(title);
 
     QWidget::show();
-    //updateSize();
 }
 
 void NetCamView::hide()
 {
-    qDebug() << "jd";
     setSource(nullptr);
     selfVideoSurface->setSource(nullptr);
 
@@ -130,24 +140,22 @@ void NetCamView::setShowMessages(bool show, bool notify)
         button->setIcon(QIcon());
     }
 }
-#include <QPainter>
-#include "src/widget/style.h"
-void NetCamView::paintEvent(QPaintEvent*)
-{
-    QPainter painter(this);
-    painter.setBrush(Style::getColor(Style::ThemeDark));
-    painter.drawRect(rect());
-}
 
 void NetCamView::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
-    updateSize();
+    //updateSize();
+}
+
+void NetCamView::showEvent(QShowEvent *event)
+{
+    selfFrame->resetBoundary(videoSurface->getBoundingRect());
 }
 
 void NetCamView::updateSize()
 {
-    qDebug() << videoSurface->size();
+    qDebug() << selfFrame->geometry();
+    /*qDebug() << videoSurface->size();
     QSize usableSize = mainLayout->contentsRect().size();
     int possibleWidth = usableSize.height() * videoSurface->getRatio();
 
@@ -165,5 +173,9 @@ void NetCamView::updateSize()
 
     QSize newSize = videoSurface->sizeHint();
     QSizeF initialSize = initial;
-    selfFrame->setBoundary(newSize, initial, newSize.width() / initialSize.width(), newSize.height() / initialSize.height());
+    selfFrame->setRatio(selfVideoSurface->getRatio());*/
+
+    //selfFrame->setRatio(selfVideoSurface->getRatio());
+    //selfFrame->resetBoundary(videoSurface->getBoundingRect());
+    //selfFrame->setBoundary(newSize, initial, newSize.width() / initialSize.width(), newSize.height() / initialSize.height());
 }

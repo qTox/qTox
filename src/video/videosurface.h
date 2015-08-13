@@ -24,39 +24,47 @@
 #include <memory>
 #include <atomic>
 #include "src/video/videosource.h"
-#include "src/widget/tool/aspectratiowidget.h"
 
-class VideoSurface : public AspectRatioWidget
+class VideoSurface : public QWidget
 {
     Q_OBJECT
 
 public:
-    VideoSurface(QWidget* parent=0);
-    VideoSurface(VideoSource* source, QWidget* parent=0);
+    VideoSurface(int friendId, QWidget* parent=0);
+    VideoSurface(int friendId, VideoSource* source, QWidget* parent=0);
     ~VideoSurface();
 
     void setSource(VideoSource* src); //NULL is a valid option
-    //QRect getRect() const;
-    //QSize getFrameSize() const;
+    QRect getBoundingRect() const;
+    float getRatio() const;
 
 signals:
-    void drewNewFrame();
+    void ratioChanged();
+    void boundaryChanged();
 
 protected:
     void subscribe();
     void unsubscribe();
 
-    virtual void paintEvent(QPaintEvent * event) final override;
-    //virtual void resizeEvent(QResizeEvent* event) final override;
+    virtual void paintEvent(QPaintEvent* event) final override;
+    virtual void resizeEvent(QResizeEvent* event) final override;
+    virtual void showEvent(QShowEvent* event) final override;
 
 private slots:
     void onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame);
 
 private:
+    void recalulateBounds();
+    void lock();
+    void unlock();
+
+    QRect boundingRect;
     VideoSource* source;
     std::shared_ptr<VideoFrame> lastFrame;
-    mutable std::atomic_bool frameLock; ///< Fast lock for lastFrame
+    std::atomic_bool frameLock; ///< Fast lock for lastFrame
     bool hasSubscribed;
+    int friendId;
+    float ratio;
 };
 
 #endif // SELFCAMVIEW_H

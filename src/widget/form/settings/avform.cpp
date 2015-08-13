@@ -361,7 +361,7 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
-    camVideoSurface = new VideoSurface(bodyUI->CamFrame);
+    camVideoSurface = new VideoSurface(-1, bodyUI->CamFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
     camVideoSurface->setSource(&camera);

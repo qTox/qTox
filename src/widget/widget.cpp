@@ -210,7 +210,6 @@ void Widget::init()
     // disable proportional scaling
     ui->mainSplitter->setStretchFactor(0,0);
     ui->mainSplitter->setStretchFactor(1,1);
-    qDebug() << ui->mainSplitter->widget(0)->sizePolicy();
 
     onStatusSet(Status::Offline);
 

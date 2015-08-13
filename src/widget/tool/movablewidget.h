@@ -23,11 +23,14 @@
 #include <QWidget>
 #include "aspectratiowidget.h"
 
-class MovableWidget : public AspectRatioWidget
+class MovableWidget : public QWidget
 {
 public:
     MovableWidget(QWidget* parent);
-    void setBoundary(QSize parentSize, QSize oldSize, float xPercent, float yPercent);
+    void resetBoundary(QRect newBoundary);
+    void setBoundary(QRect newBoundary);
+    float getRatio() const;
+    void setRatio(float r);
 
 protected:
     void mousePressEvent(QMouseEvent* event);
@@ -57,6 +60,7 @@ private:
     QRect boundaryRect;
     QSizeF actualSize;
     QPointF actualPos;
+    float ratio;
 };
 
 #endif // MOVABLEWIDGET_H

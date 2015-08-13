@@ -36,7 +36,7 @@ class NetCamView : public QWidget
     Q_OBJECT
 
 public:
-    NetCamView(QWidget *parent=0);
+    NetCamView(int friendId, QWidget *parent=0);
 
     virtual void show(VideoSource* source, const QString& title);
     virtual void hide();
@@ -51,8 +51,8 @@ public slots:
     void setShowMessages(bool show, bool notify = false);
 
 protected:
-    void paintEvent(QPaintEvent* event);
     void resizeEvent(QResizeEvent* event) final override;
+    void showEvent(QShowEvent* event) final override;
 
 public slots:
     void updateSize();

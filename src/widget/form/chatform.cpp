@@ -1098,7 +1098,7 @@ void ChatForm::SendMessageStr(QString msg)
 void ChatForm::showNetcam()
 {
     if (!netcam)
-        netcam = new NetCamView();
+        netcam = new NetCamView(f->getFriendID());
 
     //connect(Widget::getInstance(), &Widget::resized, netcam, &NetCamView::updateSize);
     netcam->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());

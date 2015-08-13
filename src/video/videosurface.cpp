@@ -19,22 +19,31 @@
 
 #include "videosurface.h"
 #include "src/video/videoframe.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/widget/friendwidget.h"
+#include "src/persistence/settings.h"
 #include <QPainter>
 #include <QLabel>
-#include <QDebug>
-VideoSurface::VideoSurface(QWidget* parent)
-    : AspectRatioWidget{parent}
+
+float getSizeRatio(const QSize size)
+{
+    return size.width() / static_cast<float>(size.height());
+}
+
+VideoSurface::VideoSurface(int friendId, QWidget* parent)
+    : QWidget{parent}
     , source{nullptr}
     , frameLock{false}
     , hasSubscribed{false}
+    , friendId{friendId}
+    , ratio{1.0f}
 {
-    qDebug() << "ddd" << minimumSize();
-    setMinimum(128);
-    setSizeHint(128, 128);
+    recalulateBounds();
 }
 
-VideoSurface::VideoSurface(VideoSource *source, QWidget* parent)
-    : VideoSurface(parent)
+VideoSurface::VideoSurface(int friendId, VideoSource *source, QWidget* parent)
+    : VideoSurface(friendId, parent)
 {
     setSource(source);
 }
@@ -53,49 +62,19 @@ void VideoSurface::setSource(VideoSource *src)
     source = src;
     subscribe();
 }
-/*#include <QDebug>
-QRect VideoSurface::getRect() const
+#include <QDebug>
+QRect VideoSurface::getBoundingRect() const
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!frameLock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
-
-    std::shared_ptr<VideoFrame> last = lastFrame;
-    frameLock = false;
-
-    if (last)
-    {
-        QSize frameSize = lastFrame->getSize();
-        QRect rect = this->rect();
-        int width = frameSize.width()*rect.height()/frameSize.height();
-        rect.setLeft((rect.width()-width)/2);
-        rect.setWidth(width);
-        return rect;
-    }
-
-    return QRect();
+    qDebug() << boundingRect.bottomRight() << (QPoint(boundingRect.width(), boundingRect.height()) + boundingRect.topLeft());
+    QRect bRect = boundingRect;
+    bRect.setBottomRight(QPoint(boundingRect.bottom() + 1, boundingRect.right() + 1));
+    return boundingRect;
 }
 
-QSize VideoSurface::getFrameSize() const
+float VideoSurface::getRatio() const
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!frameLock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
-
-    QSize frameSize;
-
-    if (lastFrame)
-        frameSize = lastFrame->getSize();
-
-    frameLock = false;
-    return frameSize;
-}*/
+    return ratio;
+}
 
 void VideoSurface::subscribe()
 {
@@ -112,14 +91,14 @@ void VideoSurface::unsubscribe()
     if (!source || !hasSubscribed)
         return;
 
-    // Fast lock
-    {
-        bool expected = false;
-        while (!frameLock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    lock();
     lastFrame.reset();
-    frameLock = false;
+    unlock();
+
+    ratio = 1.0f;
+    recalulateBounds();
+    emit ratioChanged();
+    update();
 
     source->unsubscribe();
     hasSubscribed = false;
@@ -128,72 +107,105 @@ void VideoSurface::unsubscribe()
 
 void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
 {
-    // Fast lock
+    QSize newSize;
+
+    lock();
+    lastFrame = newFrame;
+    newSize = lastFrame->getSize();
+    unlock();
+
+    float newRatio = getSizeRatio(newSize);
+
+    if (newRatio != ratio && isVisible())
     {
-        bool expected = false;
-        while (!frameLock.compare_exchange_weak(expected, true))
-            expected = false;
+        ratio = newRatio;
+        recalulateBounds();
+        emit ratioChanged();
     }
 
-    lastFrame = newFrame;
-    frameLock = false;
-    setRatio(lastFrame->getSize().width() / static_cast<float>(lastFrame->getSize().height()));
-    ///setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    updateGeometry();
     update();
-
-    emit drewNewFrame();
 }
-
+#include "src/core/core.h"
+#include "src/widget/style.h"
+#include <QDebug>
 void VideoSurface::paintEvent(QPaintEvent*)
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!frameLock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    lock();
 
     QPainter painter(this);
-    painter.fillRect(painter.viewport(), QColor(193, 193, 193));
+    painter.fillRect(painter.viewport(), Qt::black);
     if (lastFrame)
     {
-        /*QSize frameSize = lastFrame->getSize();
-        QRect rect = this->rect();
-        int width = frameSize.width()*rect.height()/frameSize.height();
-        rect.setLeft((rect.width()-width)/2);
-        rect.setWidth(width);*/
-
         QImage frame = lastFrame->toQImage(rect().size());
-        painter.drawImage(rect(), frame, frame.rect(), Qt::NoFormatConversion);
-        //qDebug() << "VIDEO 2" << rect;
+        painter.drawImage(boundingRect, frame, frame.rect(), Qt::NoFormatConversion);
     }
-    frameLock = false;
+    else
+    {
+        painter.fillRect(boundingRect, Qt::white);
+        QPixmap avatar;
+
+        QString userId;
+
+        if (friendId != -1)
+            userId = FriendList::findFriend(friendId)->getToxId().toString();
+        else
+            userId = Core::getInstance()->getSelfId().toString();
+
+        avatar = Settings::getInstance().getSavedAvatar(userId);
+
+        if (avatar.isNull())
+            avatar = Style::scaleSvgImage(":/img/contact_dark.svg", boundingRect.width(), boundingRect.height());
+
+        painter.drawPixmap(boundingRect, avatar, avatar.rect());
+    }
+
+    unlock();
 }
-/*#include <QResizeEvent>
+
 void VideoSurface::resizeEvent(QResizeEvent* event)
 {
-    // Locks aspect ratio.
-    QSize frameSize;
+    QWidget::resizeEvent(event);
+    recalulateBounds();
+}
 
+void VideoSurface::showEvent(QShowEvent*)
+{
+    //emit ratioChanged();
+}
+
+void VideoSurface::recalulateBounds()
+{
+    if (ratio == 0)
+        return;
+
+    QPoint pos;
+    QSize size;
+    QSize usableSize = contentsRect().size();
+    int possibleWidth = usableSize.height() * ratio;
+
+    if (possibleWidth > usableSize.width())
+        size = (QSize(usableSize.width(), usableSize.width() / ratio));
+    else
+        size = (QSize(possibleWidth, usableSize.height()));
+
+    pos.setX(width() / 2 - size.width() / 2);
+    pos.setY(height() / 2 - size.height() / 2);
+    boundingRect.setRect(pos.x(), pos.y(), size.width(), size.height());
+
+    emit boundaryChanged();
+
+    update();
+}
+
+void VideoSurface::lock()
+{
     // Fast lock
-    {
-        bool expected = false;
-        while (!frameLock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    bool expected = false;
+    while (!frameLock.compare_exchange_weak(expected, true))
+        expected = false;
+}
 
-    if (lastFrame)
-    {
-        frameSize = lastFrame->getSize();
-    }
-
+void VideoSurface::unlock()
+{
     frameLock = false;
-
-    if (frameSize.isValid())
-    {
-        float ratio = frameSize.height() / static_cast<float>(frameSize.width());
-        int width = ratio*event->size().width();
-        setMaximumHeight(width);
-    }
-}*/
+}
