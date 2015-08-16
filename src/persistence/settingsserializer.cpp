@@ -31,17 +31,17 @@ using namespace std;
 
 const char SettingsSerializer::magic[] = {0x51,0x54,0x4F,0x58};
 
-QDataStream& operator<<(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
+inline QDataStream& operator<<(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
 {
     return dataStream << static_cast<uint8_t>(tag);
 }
 
-QDataStream& operator<<(QDataStream& dataStream, const QString& str)
+inline QDataStream& operator<<(QDataStream& dataStream, const QString& str)
 {
     return dataStream << str.toUtf8();
 }
 
-QDataStream& operator<<(QDataStream& dataStream, const QByteArray& data)
+inline QDataStream& operator<<(QDataStream& dataStream, const QByteArray& data)
 {
     QByteArray size = vuintToData(data.size());
     dataStream.writeRawData(size.data(), size.size());
@@ -54,7 +54,7 @@ QDataStream& operator>>(QDataStream& dataStream, SettingsSerializer::RecordTag& 
     return dataStream.operator >>((uint8_t&)tag);
 }
 
-QDataStream& operator>>(QDataStream& dataStream, QByteArray& data)
+inline QDataStream& operator>>(QDataStream& dataStream, QByteArray& data)
 {
     unsigned char num3;
     size_t num = 0;
