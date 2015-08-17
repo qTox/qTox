@@ -35,7 +35,9 @@ public:
         FileTransferFinished = 0x4,
         FriendRequest = 0x8,
         AVCallInvite = 0x10,
-        GroupInvite = 0x20
+        GroupInvite = 0x20,
+        FriendOnline = 0x40,
+        FriendOffline = 0x80
     };
 
     NotificationBackend(QObject* parent = 0);

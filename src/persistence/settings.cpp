@@ -176,6 +176,8 @@ void Settings::loadGlobal()
         notifyOnCallInvite = s.value("notifyOnCallInvite", true).toBool();
         notifyOnGroupInvite = s.value("notifyOnGroupInvite", true).toBool();
         notifyOnFileTransfer = s.value("notifyOnFileTransfer", true).toBool();
+        notifyOnFriendOnline = s.value("notifyOnFriendOnline", false).toBool();
+        notifyOnFriendOffline = s.value("notifyOnFriendOffline", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
@@ -389,6 +391,8 @@ void Settings::saveGlobal()
         s.setValue("notifyOnCallInvite", notifyOnCallInvite);
         s.setValue("notifyOnGroupInvite", notifyOnGroupInvite);
         s.setValue("notifyOnFileTransfer", notifyOnFileTransfer);
+        s.setValue("notifyOnFriendOnline", notifyOnFriendOnline);
+        s.setValue("notifyOnFriendOffline", notifyOnFriendOffline);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
@@ -842,6 +846,18 @@ bool Settings::getNotifyOnFileTransfer() const
     return notifyOnFileTransfer;
 }
 
+bool Settings::getNotifyOnFriendOnline() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnFriendOnline;
+}
+
+bool Settings::getNotifyOnFriendOffline() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnFriendOffline;
+}
+
 void Settings::setNotifyOnNewMessage(bool notify)
 {
     QMutexLocker locker{&bigLock};
@@ -876,6 +892,18 @@ void Settings::setNotifyOnFileTransfer(bool notify)
 {
     QMutexLocker locker{&bigLock};
     notifyOnFileTransfer = notify;
+}
+
+void Settings::setNotifyOnFriendOnline(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnFriendOnline = notify;
+}
+
+void Settings::setNotifyOnFriendOffline(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnFriendOffline = notify;
 }
 
 QString Settings::getTranslation() const

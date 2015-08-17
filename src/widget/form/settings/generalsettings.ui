@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-713</y>
+        <y>-328</y>
         <width>639</width>
-        <height>1793</height>
+        <height>1826</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,1">
@@ -441,10 +441,10 @@ will be sent to them when they appear online to you.</string>
              <string>Notify on...</string>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="3" column="0">
-              <widget class="QCheckBox" name="notifyOnCallInvite">
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="notifyOnGroupInvite">
                <property name="text">
-                <string>Call invite</string>
+                <string>Group invite</string>
                </property>
               </widget>
              </item>
@@ -455,10 +455,24 @@ will be sent to them when they appear online to you.</string>
                </property>
               </widget>
              </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="notifyOnCallInvite">
+               <property name="text">
+                <string>Call invite</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="1">
               <widget class="QCheckBox" name="notifyOnHighlighted">
                <property name="text">
                 <string>Highlighted</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="notifyOnFileTransfer">
+               <property name="text">
+                <string>File transfer completed</string>
                </property>
               </widget>
              </item>
@@ -469,17 +483,17 @@ will be sent to them when they appear online to you.</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QCheckBox" name="notifyOnGroupInvite">
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="notifyOnFriendOnline">
                <property name="text">
-                <string>Group invite</string>
+                <string>Friend Online</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <widget class="QCheckBox" name="notifyOnFileTransfer">
+             <item row="4" column="1">
+              <widget class="QCheckBox" name="notifyOnFriendOffline">
                <property name="text">
-                <string>File transfer completed</string>
+                <string>Friend Offline</string>
                </property>
               </widget>
              </item>

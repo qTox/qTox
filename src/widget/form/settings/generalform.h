@@ -76,6 +76,8 @@ private slots:
     void onSetNotifyCallInvite();
     void onSetNotifyGroupInvite();
     void onSetNotifyFileTransfer();
+    void onSetNotifyFriendOnline();
+    void onSetNotifyFriendOffline();
     void onFauxOfflineMessaging();
     void onCompactLayout();
     void onGroupchatPositionChanged();

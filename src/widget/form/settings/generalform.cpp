@@ -95,6 +95,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->notifyOnCallInvite->setChecked(Settings::getInstance().getNotifyOnCallInvite());
     bodyUI->notifyOnGroupInvite->setChecked(Settings::getInstance().getNotifyOnGroupInvite());
     bodyUI->notifyOnFileTransfer->setChecked(Settings::getInstance().getNotifyOnFileTransfer());
+    bodyUI->notifyOnFriendOnline->setChecked(Settings::getInstance().getNotifyOnFriendOnline());
+    bodyUI->notifyOnFriendOffline->setChecked(Settings::getInstance().getNotifyOnFriendOffline());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
     bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
@@ -188,6 +190,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->notifyOnGroupInvite, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyGroupInvite);
     connect(bodyUI->notifyOnFriendRequest, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFriendRequest);
     connect(bodyUI->notifyOnFileTransfer, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFileTransfer);
+    connect(bodyUI->notifyOnFriendOnline, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFriendOnline);
+    connect(bodyUI->notifyOnFriendOffline, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFriendOffline);
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
@@ -515,6 +519,16 @@ void GeneralForm::onSetNotifyGroupInvite()
 void GeneralForm::onSetNotifyFileTransfer()
 {
     Settings::getInstance().setNotifyOnFileTransfer(bodyUI->notifyOnFileTransfer->isChecked());
+}
+
+void GeneralForm::onSetNotifyFriendOnline()
+{
+    Settings::getInstance().setNotifyOnFriendOnline(bodyUI->notifyOnFriendOnline->isChecked());
+}
+
+void GeneralForm::onSetNotifyFriendOffline()
+{
+    Settings::getInstance().setNotifyOnFriendOffline(bodyUI->notifyOnFriendOffline->isChecked());
 }
 
 void GeneralForm::onFauxOfflineMessaging()

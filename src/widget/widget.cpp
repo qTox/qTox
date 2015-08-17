@@ -787,9 +787,19 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     if (isActualChange)
     {
         if (f->getStatus() == Status::Offline)
+        {
             contactListWidget->moveWidget(f->getFriendWidget(), Status::Online);
+
+            if (notification && Settings::getInstance().getNotifyOnFriendOnline())
+                notification->notify(NotificationBackend::FriendOnline, f->getFriendWidget(), tr("%1 is now online").arg(f->getDisplayedName()), QString(), f->getFriendWidget()->getAvatar());
+        }
         else if (status == Status::Offline)
+        {
             contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline);
+
+            if (notification && Settings::getInstance().getNotifyOnFriendOffline())
+                notification->notify(NotificationBackend::FriendOffline, f->getFriendWidget(), tr("%1 is now offline").arg(f->getDisplayedName()), QString(), f->getFriendWidget()->getAvatar());
+        }
     }
 
     f->setStatus(status);
