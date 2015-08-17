@@ -28,7 +28,7 @@
 
 SystemTrayIcon::SystemTrayIcon()
 {
-    QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    QString desktop = getenv("XDG_SESSION_DESKTOP");
     if (desktop.isEmpty())
         desktop = getenv("DESKTOP_SESSION");
     desktop = desktop.toLower();
