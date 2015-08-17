@@ -80,6 +80,10 @@ void MicFeedbackWidget::timerEvent(QTimerEvent*)
 
         update();
     }
+    else if (current > 0)
+    {
+        current -= 0.01;
+    }
 }
 
 void MicFeedbackWidget::showEvent(QShowEvent*)

@@ -86,6 +86,7 @@ void AVForm::showEvent(QShowEvent*)
     getAudioInDevices();
     createVideoSurface();
     getVideoDevices();
+    Audio::suscribeInput();
 }
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
@@ -201,7 +202,7 @@ void AVForm::onResProbingFinished(QList<QSize> res)
     QSize savedRes = Settings::getInstance().getCamVideoRes();
     int savedResIndex = -1;
     bodyUI->videoModescomboBox->clear();
-	bodyUI->videoModescomboBox->blockSignals(true);
+    bodyUI->videoModescomboBox->blockSignals(true);
     for (int i=0; i<res.size(); ++i)
     {
         QSize& r = res[i];
@@ -227,6 +228,7 @@ void AVForm::hideEvent(QHideEvent *)
         killVideoSurface();
     }
     videoDeviceList.clear();
+    Audio::unsuscribeInput();
 }
 
 void AVForm::getVideoDevices()
@@ -256,37 +258,37 @@ void AVForm::getVideoDevices()
 void AVForm::getAudioInDevices()
 {
     QString settingsInDev = Settings::getInstance().getInDev();
-	int inDevIndex = 0;
+    int inDevIndex = 0;
     bodyUI->inDevCombobox->clear();
     const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
     if (pDeviceList)
     {
-		//prevent currentIndexChanged to be fired while adding items
-		bodyUI->inDevCombobox->blockSignals(true);
+        //prevent currentIndexChanged to be fired while adding items
+        bodyUI->inDevCombobox->blockSignals(true);
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
 #ifdef Q_OS_WIN32
             QString inDev = QString::fromUtf8(pDeviceList,len);
 #else
-			QString inDev = QString::fromLocal8Bit(pDeviceList,len);
+            QString inDev = QString::fromLocal8Bit(pDeviceList,len);
 #endif
             bodyUI->inDevCombobox->addItem(inDev);
             if (settingsInDev == inDev)
-				inDevIndex = bodyUI->inDevCombobox->count()-1;
+                inDevIndex = bodyUI->inDevCombobox->count()-1;
             pDeviceList += len+1;
         }
-		//addItem changes currentIndex -> reset
-		bodyUI->inDevCombobox->setCurrentIndex(-1);
-		bodyUI->inDevCombobox->blockSignals(false);
+        //addItem changes currentIndex -> reset
+        bodyUI->inDevCombobox->setCurrentIndex(-1);
+        bodyUI->inDevCombobox->blockSignals(false);
     }
-	bodyUI->inDevCombobox->setCurrentIndex(inDevIndex);
+    bodyUI->inDevCombobox->setCurrentIndex(inDevIndex);
 }
 
 void AVForm::getAudioOutDevices()
 {
     QString settingsOutDev = Settings::getInstance().getOutDev();
-	int outDevIndex = 0;
+    int outDevIndex = 0;
     bodyUI->outDevCombobox->clear();
     const ALchar *pDeviceList;
     if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
@@ -295,15 +297,15 @@ void AVForm::getAudioOutDevices()
         pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
     if (pDeviceList)
     {
-		//prevent currentIndexChanged to be fired while adding items
-		bodyUI->outDevCombobox->blockSignals(true);
+        //prevent currentIndexChanged to be fired while adding items
+        bodyUI->outDevCombobox->blockSignals(true);
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
 #ifdef Q_OS_WIN32
             QString outDev = QString::fromUtf8(pDeviceList,len);
 #else
-			QString outDev = QString::fromLocal8Bit(pDeviceList,len);
+            QString outDev = QString::fromLocal8Bit(pDeviceList,len);
 #endif
             bodyUI->outDevCombobox->addItem(outDev);
             if (settingsOutDev == outDev)
@@ -312,23 +314,29 @@ void AVForm::getAudioOutDevices()
             }
             pDeviceList += len+1;
         }
-		//addItem changes currentIndex -> reset
-		bodyUI->outDevCombobox->setCurrentIndex(-1);
-		bodyUI->outDevCombobox->blockSignals(false);
+        //addItem changes currentIndex -> reset
+        bodyUI->outDevCombobox->setCurrentIndex(-1);
+        bodyUI->outDevCombobox->blockSignals(false);
     }
-	bodyUI->outDevCombobox->setCurrentIndex(outDevIndex);
+    bodyUI->outDevCombobox->setCurrentIndex(outDevIndex);
 }
 
 void AVForm::onInDevChanged(const QString &deviceDescriptor)
 {
     Settings::getInstance().setInDev(deviceDescriptor);
     Audio::openInput(deviceDescriptor);
+
+    Audio::unsuscribeInput();
+    Audio::suscribeInput();
 }
 
 void AVForm::onOutDevChanged(const QString& deviceDescriptor)
 {
-    Settings::getInstance().setOutDev(deviceDescriptor);
+    Settings::getInstance().setInDev(deviceDescriptor);
     Audio::openOutput(deviceDescriptor);
+
+    Audio::unsuscribeInput();
+    Audio::suscribeInput();
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)
