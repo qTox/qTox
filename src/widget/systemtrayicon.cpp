@@ -28,7 +28,7 @@
 
 SystemTrayIcon::SystemTrayIcon()
 {
-    QString desktop = getenv("XDG_SESSION_DESKTOP");
+    QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (desktop.isEmpty())
         desktop = getenv("DESKTOP_SESSION");
     desktop = desktop.toLower();
@@ -60,7 +60,7 @@ SystemTrayIcon::SystemTrayIcon()
     }
     #endif
     #ifdef ENABLE_SYSTRAY_GTK_BACKEND
-    else if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate")
+    else if (desktop == "XFCE" || desktop.contains("GNOME") || desktop == "MATE")
     {
         qDebug() << "Using GTK backend";
         backendType = SystrayBackendType::GTK;
@@ -95,7 +95,7 @@ SystemTrayIcon::SystemTrayIcon()
     }
     #endif
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-    else if (desktop == "kde"
+    else if (desktop == "KDE"
             && getenv("KDE_SESSION_VERSION") == QString("5"))
     {
         qDebug() << "Using Status Notifier backend";
