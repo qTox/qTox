@@ -161,7 +161,7 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
-    void onDesktopNotificationsToggled(bool desktopNotifications);
+    void onDesktopNotificationsToggled(NotificationBackend *notificationBackend);
     void notifyAvInvite(int friendId);
     void notifyFileTransferFinished(ToxFile file);
 

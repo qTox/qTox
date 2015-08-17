@@ -169,7 +169,7 @@ void Settings::loadGlobal()
         showInFront = s.value("showInFront", false).toBool();
         notifySound = s.value("notifySound", true).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
-        desktopNotifications = s.value("desktopNotifications", true).toBool();
+        desktopNotifications = s.value("desktopNotifications", 1).toUInt();
         notifyOnNewMessage = s.value("notifyOnNewMessage", true).toBool();
         notifyOnHighlight = s.value("notifyOnHighlight", true).toBool();
         notifyOnFriendRequest = s.value("notifyOnFriendRequest", true).toBool();
@@ -794,13 +794,13 @@ void Settings::setGroupAlwaysNotify(bool newValue)
     groupAlwaysNotify = newValue;
 }
 
-bool Settings::getDesktopNotifications() const
+uint8_t Settings::getDesktopNotifications() const
 {
     QMutexLocker locker{&bigLock};
     return desktopNotifications;
 }
 
-void Settings::setDesktopNotifications(bool newValue)
+void Settings::setDesktopNotifications(uint8_t newValue)
 {
     QMutexLocker locker{&bigLock};
     desktopNotifications = newValue;

@@ -32,6 +32,7 @@ class PrivacyForm;
 class AVForm;
 class QLabel;
 class QTabWidget;
+class NotificationBackend;
 
 namespace Ui {class MainWindow;}
 
@@ -44,7 +45,7 @@ public:
 
     void show(Ui::MainWindow &ui);
     void setBodyHeadStyle(QString style);
-    void setNotificationWidget(QWidget* widget);
+    void reloadNotificationBackend();
 
     void showAbout();
 
@@ -52,7 +53,7 @@ signals:
     void setShowSystemTray(bool newValue);
     void compactToggled(bool compact);
     void groupchatPositionToggled(bool groupchatPosition);
-    void desktopNotificationsToggled(bool desktopNotifications);
+    void desktopNotificationsToggled(NotificationBackend* notificationBackend);
 
 private slots:
     void onTabChanged(int);

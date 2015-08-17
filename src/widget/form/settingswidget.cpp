@@ -68,8 +68,6 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(settingsWidgets, &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
 
     Translator::registerHandler(std::bind(&SettingsWidget::retranslateUi, this), this);
-
-    setNotificationWidget(nullptr);
 }
 
 SettingsWidget::~SettingsWidget()
@@ -88,9 +86,9 @@ void SettingsWidget::showAbout()
     onTabChanged(settingsWidgets->count() - 1);
 }
 
-void SettingsWidget::setNotificationWidget(QWidget *widget)
+void SettingsWidget::reloadNotificationBackend()
 {
-    gfrm->setNotificationWidget(widget);
+    gfrm->reloadNotificationBackend();
 }
 
 void SettingsWidget::show(Ui::MainWindow& ui)

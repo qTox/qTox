@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-631</y>
+        <y>-713</y>
         <width>639</width>
-        <height>1789</height>
+        <height>1793</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,1">
@@ -413,13 +413,27 @@ will be sent to them when they appear online to you.</string>
          <property name="title">
           <string>Notifications</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QCheckBox" name="cbDesktopNotifications">
-            <property name="text">
-             <string>Enable desktop notifications</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="desktopNotificationLabel">
+              <property name="text">
+               <string>Deskop notification backend:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="desktopNotifications">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QGroupBox" name="notificationEnableGroup">

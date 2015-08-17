@@ -37,6 +37,10 @@
 #include <QStandardPaths>
 #include <QDebug>
 
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+#include "src/widget/snorenotificationbackend.h"
+#endif
+
 static QStringList locales = {"bg", "de", "en", "es", "fr", "hr", "hu", "it", "lt", "nl", "no_nb", "pl", "pt", "ru", "sl", "fi", "sv", "uk", "zh"};
 static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "Nederlands", "Norsk Bokmål", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
 
@@ -85,7 +89,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
     bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
-    bodyUI->cbDesktopNotifications->setChecked(Settings::getInstance().getDesktopNotifications());
     bodyUI->notifyOnNewMessage->setChecked(Settings::getInstance().getNotifyOnNewMessage());
     bodyUI->notifyOnHighlighted->setChecked(Settings::getInstance().getNotifyOnHighlight());
     bodyUI->notifyOnFriendRequest->setChecked(Settings::getInstance().getNotifyOnFriendRequest());
@@ -95,6 +98,14 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
     bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
+
+    bodyUI->desktopNotifications->addItem(tr("None", "Desktop notification"));
+    notificationFactories.push_back([]() -> NotificationBackend* { return nullptr; });
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+    bodyUI->desktopNotifications->addItem(QStringLiteral("Snorenotify"));
+    notificationFactories.push_back([]() -> NotificationBackend* { return new SnoreNotificationBackend(); });
+#endif
+    bodyUI->desktopNotifications->setCurrentIndex(Settings::getInstance().getDesktopNotifications());
 
     for (auto entry : SmileyPack::listSmileyPacks())
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
@@ -170,7 +181,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     // notifications
-    connect(bodyUI->cbDesktopNotifications, &QCheckBox::stateChanged, this, &GeneralForm::onSetDesktopNotifications);
+    connect(bodyUI->desktopNotifications, SIGNAL(currentIndexChanged(int)), this, SLOT(onSetDesktopNotifications(int)));
     connect(bodyUI->notifyOnNewMessage, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyNewMessage);
     connect(bodyUI->notifyOnHighlighted, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyHighlighted);
     connect(bodyUI->notifyOnCallInvite, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyCallInvite);
@@ -212,6 +223,11 @@ GeneralForm::~GeneralForm()
     delete bodyUI;
 }
 
+void GeneralForm::reloadNotificationBackend()
+{
+    onSetDesktopNotifications(bodyUI->desktopNotifications->currentIndex());
+}
+
 void GeneralForm::setNotificationWidget(QWidget* widget)
 {
     QLayoutItem* item;
@@ -229,12 +245,6 @@ void GeneralForm::setNotificationWidget(QWidget* widget)
     }
 
     bodyUI->notificationSettingsGroup->setVisible(widget != nullptr);
-
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-    bodyUI->cbDesktopNotifications->setEnabled(true);
-#else
-    bodyUI->cbDesktopNotifications->setEnabled(false);
-#endif
 }
 
 void GeneralForm::onEnableIPv6Updated()
@@ -464,11 +474,17 @@ void GeneralForm::onSetGroupAlwaysNotify()
     Settings::getInstance().setGroupAlwaysNotify(bodyUI->groupAlwaysNotify->isChecked());
 }
 
-void GeneralForm::onSetDesktopNotifications()
+void GeneralForm::onSetDesktopNotifications(int index)
 {
-    Settings::getInstance().setDesktopNotifications(bodyUI->cbDesktopNotifications->isChecked());
-    bodyUI->notificationEnableGroup->setEnabled(bodyUI->cbDesktopNotifications->isChecked());
-    emit parent->desktopNotificationsToggled(bodyUI->cbDesktopNotifications->isChecked());
+    Settings::getInstance().setDesktopNotifications(index);
+    bodyUI->notificationEnableGroup->setEnabled(index != 0);
+    NotificationBackend* notificationBackend = notificationFactories[index]();
+    emit parent->desktopNotificationsToggled(notificationBackend);
+
+    if (notificationBackend)
+        setNotificationWidget(notificationBackend->settingsWidget());
+    else
+        setNotificationWidget(nullptr);
 }
 
 void GeneralForm::onSetNotifyNewMessage()

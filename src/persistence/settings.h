@@ -142,8 +142,8 @@ public:
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
-    bool getDesktopNotifications() const;
-    void setDesktopNotifications(bool newValue);
+    uint8_t getDesktopNotifications() const;
+    void setDesktopNotifications(uint8_t newValue);
 
     bool getNotifyOnNewMessage() const;
     bool getNotifyOnFriendRequest() const;
@@ -324,7 +324,7 @@ private:
     bool showInFront;
     bool notifySound;
     bool groupAlwaysNotify;
-    bool desktopNotifications;
+    uint8_t desktopNotifications;
     bool notifyOnNewMessage;
     bool notifyOnFriendRequest;
     bool notifyOnHighlight;

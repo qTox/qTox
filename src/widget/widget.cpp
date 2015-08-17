@@ -80,11 +80,6 @@
 #define IS_ON_DESKTOP_GUI 1
 #endif
 
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-#include "snorenotificationbackend.h"
-#endif
-
-
 bool toxActivateEventHandler(const QByteArray&)
 {
     if (!Widget::getInstance()->isActiveWindow())
@@ -418,6 +413,7 @@ Widget::~Widget()
     delete filesForm;
     delete timer;
     delete offlineMsgTimer;
+    delete notification;
 
     FriendList::clear();
     GroupList::clear();
@@ -1379,7 +1375,7 @@ void Widget::onTryCreateTrayIcon()
             dockMenu->addAction(changeStatusMenu->menuAction());
             qt_mac_set_dock_menu(dockMenu);
 #endif
-            onDesktopNotificationsToggled(Settings::getInstance().getDesktopNotifications());
+            settingsWidget->reloadNotificationBackend();
         }
         else if (!isVisible())
         {
@@ -1706,25 +1702,13 @@ void Widget::friendListContextMenu(const QPoint &pos)
         contactListWidget->addCircleWidget();
 }
 
-void Widget::onDesktopNotificationsToggled(bool desktopNotifications)
+void Widget::onDesktopNotificationsToggled(NotificationBackend* notificationBackend)
 {
     delete notification;
-    notification = nullptr;
-
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
-    if (desktopNotifications)
-        notification = new SnoreNotificationBackend(this);
-#endif
+    notification = notificationBackend;
 
     if (notification)
-    {
-        settingsWidget->setNotificationWidget(notification->settingsWidget());
         connect(notification, &NotificationBackend::activated, this, &Widget::onChatroomWidgetClicked);
-    }
-    else
-    {
-        settingsWidget->setNotificationWidget(nullptr);
-    }
 }
 
 void Widget::notifyAvInvite(int friendId)
