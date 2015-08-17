@@ -734,7 +734,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
     connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
-    connect(core, &Core::avInvite, this, &Widget::notifyAvInvite);
+    connect(newfriend->getChatForm(), &ChatForm::invitedCall, this, &Widget::notifyAvInvite);
     connect(core, &Core::avStart, newfriend->getChatForm(), &ChatForm::onAvStart);
     connect(core, &Core::avCancel, newfriend->getChatForm(), &ChatForm::onAvCancel);
     connect(core, &Core::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd);
@@ -1727,8 +1727,9 @@ void Widget::onDesktopNotificationsToggled(bool desktopNotifications)
     }
 }
 
-void Widget::notifyAvInvite(uint32_t friendId, int, bool)
+void Widget::notifyAvInvite(int friendId)
 {
+    qDebug() << "notified...";
     if (notification && Settings::getInstance().getNotifyOnCallInvite())
     {
         Friend* f = FriendList::findFriend(friendId);

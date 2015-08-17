@@ -298,6 +298,8 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
         f->setEventFlag(true);
         f->getFriendWidget()->updateStatusLight();
     }
+
+    emit invitedCall(f->getFriendID());
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)

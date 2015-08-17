@@ -162,7 +162,7 @@ private slots:
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
     void onDesktopNotificationsToggled(bool desktopNotifications);
-    void notifyAvInvite(uint32_t friendId, int callIndex, bool video);
+    void notifyAvInvite(int friendId);
     void notifyFileTransferFinished(ToxFile file);
 
 #ifdef Q_OS_MAC
