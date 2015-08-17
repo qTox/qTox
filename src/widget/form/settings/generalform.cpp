@@ -249,6 +249,7 @@ void GeneralForm::setNotificationWidget(QWidget* widget)
     }
 
     bodyUI->notificationSettingsGroup->setVisible(widget != nullptr);
+    bodyUI->notificationEnableGroup->setVisible(widget != nullptr);
 }
 
 void GeneralForm::onEnableIPv6Updated()
@@ -451,6 +452,12 @@ void GeneralForm::installObject(QObject* object)
         sp->installEventFilter(this);
         sp->setFocusPolicy(Qt::WheelFocus);
     }
+
+    for (QTabBar* tb : object->findChildren<QTabBar*>())
+    {
+        tb->installEventFilter(this);
+        tb->setFocusPolicy(Qt::StrongFocus);
+    }
 }
 
 void GeneralForm::onCheckUpdateChanged()
@@ -559,7 +566,7 @@ void GeneralForm::onThemeColorChanged(int)
 bool GeneralForm::eventFilter(QObject *o, QEvent *e)
 {
     if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QTabBar*>(o) ))
     {
         e->ignore();
         return true;
