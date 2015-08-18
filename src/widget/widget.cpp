@@ -1196,6 +1196,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool notify)
     if (notify)
     {
         QApplication::alert(currentWindow);
+        eventFlag = true;
 
         if (Settings::getInstance().getShowWindow())
         {
