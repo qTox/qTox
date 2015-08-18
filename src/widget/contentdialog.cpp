@@ -663,6 +663,9 @@ bool ContentDialog::existsWidget(int id, bool focus, const QHash<int, std::tuple
 
     if (focus)
     {
+        if (std::get<0>(iter.value())->windowState() & Qt::WindowMinimized)
+            std::get<0>(iter.value())->showNormal();
+
         std::get<0>(iter.value())->raise();
         std::get<0>(iter.value())->activateWindow();
         std::get<0>(iter.value())->onChatroomWidgetClicked(std::get<1>(iter.value()), false);
