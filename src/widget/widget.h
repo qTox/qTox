@@ -251,9 +251,7 @@ private:
     QAction* fullscreenAction;
 #endif
 
-#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
     NotificationBackend* notification = nullptr;
-#endif
 };
 
 bool toxActivateEventHandler(const QByteArray& data);

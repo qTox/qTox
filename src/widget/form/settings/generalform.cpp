@@ -107,7 +107,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->desktopNotifications->addItem(QStringLiteral("Snorenotify"));
     notificationFactories.push_back([]() -> NotificationBackend* { return new SnoreNotificationBackend(); });
 #endif
-    bodyUI->desktopNotifications->setCurrentIndex(Settings::getInstance().getDesktopNotifications());
+    int desktopNotificationIndex = Settings::getInstance().getDesktopNotifications();
+
+    if (desktopNotificationIndex >= bodyUI->desktopNotifications->count())
+        desktopNotificationIndex = 0;
+
+    bodyUI->desktopNotifications->setCurrentIndex(desktopNotificationIndex);
 
     for (auto entry : SmileyPack::listSmileyPacks())
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
