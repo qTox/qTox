@@ -24,6 +24,11 @@
 
 #include <QDebug>
 
+static float getNetcamX = 0.0f;
+static float getNetcamY = 0.0f;
+static float getNetcamW = 0.0f;
+static float getNetcamH = 0.0f;
+
 MovableWidget::MovableWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -35,7 +40,6 @@ MovableWidget::MovableWidget(QWidget *parent)
     setRatio(1.0f);
     resize(minimumSize());
     actualPos = QPoint(0, 0);
-    qDebug() << "SRE" << size();
 
     //move()
 }
@@ -72,13 +76,17 @@ MovableWidget::MovableWidget(QWidget *parent)
 void MovableWidget::resetBoundary(QRect newBoundary)
 {
     boundaryRect = newBoundary;
-    resize(minimumSize());
+
+    //actualSize = QSize(getNetcamW * newBoundary.width(), getNetcamH * newBoundary.height());
+    resize(QSize(round(actualSize.width()), round(actualSize.height())));
+
+    //actualPos = QPointF(getNetcamX * (newBoundary.width() - width()), getNetcamY * (newBoundary.height() - height()));
     QPoint moveTo = QPoint(round(actualPos.x()), round(actualPos.y()));
     checkBoundary(moveTo);
     move(moveTo);
-    actualPos = pos();
-    actualSize = size();
-    qDebug() << "GEO" << geometry();
+    actualPos = moveTo;
+
+    qDebug() << "GGGG" << geometry();
 }
 
 void MovableWidget::setBoundary(QRect newBoundary)
@@ -89,7 +97,6 @@ void MovableWidget::setBoundary(QRect newBoundary)
         return;
     }
 
-    qDebug() << geometry() << actualPos << actualSize;
     float changeX = newBoundary.width() / static_cast<float>(boundaryRect.width());
     float changeY = newBoundary.height() / static_cast<float>(boundaryRect.height());
 
@@ -113,7 +120,9 @@ void MovableWidget::setBoundary(QRect newBoundary)
     QPoint moveTo = QPoint(round(actualPos.x()), round(actualPos.y()));
     move(moveTo);
 
+    qDebug() << "hhhhh" << geometry() << boundaryRect << newBoundary;
     boundaryRect = newBoundary;
+
 }
 
 float MovableWidget::getRatio() const
@@ -124,7 +133,6 @@ float MovableWidget::getRatio() const
 void MovableWidget::setRatio(float r)
 {
     ratio = r;
-    setMinimumWidth(minimumHeight() * ratio);
     resize(width(), width() / ratio);
     QPoint position = QPoint(actualPos.x(), actualPos.y());
     checkBoundary(position);
@@ -210,8 +218,8 @@ void MovableWidget::mouseMoveEvent(QMouseEvent* event)
                 {
                     lastSize.setHeight(height() + displacement.y());
 
-                    if (lastSize.height() > boundaryRect.height() / 3)
-                        lastPosition.setY(y() - displacement.y() + (lastSize.height() - boundaryRect.height() / 3));
+                    if (lastSize.height() > maximumHeight())
+                        lastPosition.setY(y() - displacement.y() + (lastSize.height() - maximumHeight()));
                     else
                         lastPosition.setY(y() - displacement.y());
                 }
@@ -219,8 +227,8 @@ void MovableWidget::mouseMoveEvent(QMouseEvent* event)
                 if (mode & ResizeLeft)
                 {
                     lastSize.setWidth(width() + displacement.x());
-                    if (lastSize.width() > boundaryRect.width() / 3)
-                        lastPosition.setX(x() - displacement.x() + (lastSize.width() - boundaryRect.width() / 3));
+                    if (lastSize.width() > maximumWidth())
+                        lastPosition.setX(x() - displacement.x() + (lastSize.width() - maximumWidth()));
                     else
                         lastPosition.setX(x() - displacement.x());
                 }
@@ -231,11 +239,11 @@ void MovableWidget::mouseMoveEvent(QMouseEvent* event)
                 if (mode & ResizeDown)
                     lastSize.setHeight(height() - displacement.y());
 
-                if (lastSize.height() > boundaryRect.height() / 3)
-                    lastSize.setHeight(boundaryRect.height() / 3);
+                if (lastSize.height() > maximumHeight())
+                    lastSize.setHeight(maximumHeight());
 
-                if (lastSize.width() > boundaryRect.width() / 3)
-                    lastSize.setWidth(boundaryRect.width() / 3);
+                if (lastSize.width() > maximumWidth())
+                    lastSize.setWidth(maximumWidth());
 
                 if (mode & (ResizeLeft | ResizeRight))
                 {

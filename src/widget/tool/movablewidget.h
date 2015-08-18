@@ -21,7 +21,6 @@
 #define MOVABLEWIDGET_H
 
 #include <QWidget>
-#include "aspectratiowidget.h"
 
 class MovableWidget : public QWidget
 {

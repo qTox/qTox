@@ -270,7 +270,7 @@ void Audio::playMono16Sound(const QByteArray& data)
     alSourcePlay(alMainSource);
     alDeleteBuffers(1, &buffer);
 }
-
+#include <QDebug>
 void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
@@ -297,6 +297,13 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
         alGenSources(1, &call.alSources[peer]);
         alSourcef(call.alSources[peer], AL_GAIN, outputVolume);
     }
+
+    size_t volume = 0;//data[1];
+    int bufsize = samples * 2 * channels;
+    for (int i = 0; i < bufsize; ++i)
+        volume += abs(data[i]);//std::max(volume, data[i]);
+
+    emit groupAudioPlayed(group, peer, volume / static_cast<float>(bufsize));
 
     playAudioBuffer(call.alSources[peer], data, samples, channels, sample_rate);
 }

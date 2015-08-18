@@ -41,7 +41,7 @@ class QMutex;
 struct Tox;
 class AudioFilterer;
 
-class Audio : QObject
+class Audio : public QObject
 {
     Q_OBJECT
 
@@ -80,6 +80,9 @@ public slots:
     /// Must be called from the audio thread, plays a group call's received audio
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
+
+signals:
+    void groupAudioPlayed(int group, int peer, unsigned short volume);
 
 private:
     explicit Audio()=default;

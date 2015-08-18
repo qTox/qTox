@@ -1059,7 +1059,8 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     }
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
     {
-        g->updatePeer(peernumber,Nexus::getCore()->getGroupPeerName(groupnumber, peernumber));
+        qDebug() << "UPDATING PEER";
+        g->updatePeer(peernumber, name);
     }
 }
 

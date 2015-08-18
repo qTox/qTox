@@ -43,6 +43,7 @@
 #include "src/chatlog/content/timestamp.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
+#include "src/video/genericnetcamview.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent)
@@ -128,6 +129,7 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     setLayout(mainLayout);
 
     bodySplitter = new QSplitter(Qt::Vertical, this);
+    connect(bodySplitter, &QSplitter::splitterMoved, this, &GenericChatForm::onSplitterMoved);
 
     QWidget* contentWidget = new QWidget(this);
     QVBoxLayout* contentLayout = new QVBoxLayout(contentWidget);
@@ -201,6 +203,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&GenericChatForm::retranslateUi, this), this);
+
+    netcam = nullptr;
 }
 
 GenericChatForm::~GenericChatForm()
@@ -518,6 +522,25 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
     return false;
 }
 
+void GenericChatForm::onSplitterMoved(int, int)
+{
+    if (netcam)
+        netcam->setShowMessages(bodySplitter->sizes()[1] == 0);
+}
+
+void GenericChatForm::onShowMessagesClicked()
+{
+    if (netcam)
+    {
+        if (bodySplitter->sizes()[1] == 0)
+            bodySplitter->setSizes({1, 1});
+        else
+            bodySplitter->setSizes({1, 0});
+
+        onSplitterMoved(0, 0);
+    }
+}
+
 void GenericChatForm::retranslateUi()
 {
     sendButton->setToolTip(tr("Send message"));
@@ -528,4 +551,24 @@ void GenericChatForm::retranslateUi()
     videoButton->setToolTip(tr("Start a video call"));
     saveChatAction->setText(tr("Save chat log"));
     clearAction->setText(tr("Clear displayed messages"));
+}
+
+void GenericChatForm::showNetcam()
+{
+    if (!netcam)
+        netcam = createNetcam();
+
+    connect(netcam, &GenericNetCamView::showMessageClicked, this, &GenericChatForm::onShowMessagesClicked);
+
+    bodySplitter->insertWidget(0, netcam);
+    bodySplitter->setCollapsible(0, false);
+}
+
+void GenericChatForm::hideNetcam()
+{
+    if (!netcam)
+        return;
+    netcam->hide();
+    delete netcam;
+    netcam = nullptr;
 }

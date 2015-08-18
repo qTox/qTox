@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2015 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,42 +17,43 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef NETCAMVIEW_H
-#define NETCAMVIEW_H
+#ifndef GROUPNETCAMVIEW_H
+#define GROUPNETCAMVIEW_H
 
 #include "genericnetcamview.h"
+#include <QMap>
 
+class LabeledVideo;
 class QHBoxLayout;
-struct vpx_image;
-class VideoSource;
-class QFrame;
-class MovableWidget;
 
-class NetCamView : public GenericNetCamView
+class GroupNetCamView : public GenericNetCamView
 {
-    Q_OBJECT
-
 public:
-    NetCamView(int friendId, QWidget *parent=0);
+    GroupNetCamView(int group, QWidget* parent = 0);
+    void clearPeers();
+    void addPeer(int peer, const QString &name);
+    void removePeer(int peer);
 
-    virtual void show(VideoSource* source, const QString& title);
-    virtual void hide();
-
-    void setSource(VideoSource* s);
-    void setTitle(const QString& title);
-
-protected:
-    void showEvent(QShowEvent* event) final override;
+public slots:
+    void groupAudioPlayed(int group, int peer, unsigned short volume);
 
 private slots:
-    void updateRatio();
+    void findActivePeer();
 
 private:
-    void updateFrameSize(QSize size);
+    struct PeerVideo
+    {
+        LabeledVideo* video;
+        unsigned short volume = 0;
+    };
 
-    VideoSurface* selfVideoSurface;
-    MovableWidget* selfFrame;
-    bool e = false;
+    void setActive(int peer);
+
+    QHBoxLayout* horLayout;
+    QMap<int, PeerVideo> videoList;
+    LabeledVideo* videoLabelSurface;
+    int activePeer;
+    int group;
 };
 
-#endif // NETCAMVIEW_H
+#endif // GROUPNETCAMVIEW_H

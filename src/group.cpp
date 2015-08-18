@@ -75,12 +75,13 @@ void Group::updatePeer(int peerId, QString name)
     QString toxid = id.publicKey;
     peers[peerId] = name;
     toxids[toxid] = name;
-    Friend *f = FriendList::findFriend(id);
+    // I don't know what this is doing here but it changes back to the old name.
+    /*Friend *f = FriendList::findFriend(id);
     if (f)
     {
         peers[peerId] = f->getDisplayedName();
         toxids[toxid] = f->getDisplayedName();
-    }
+    }*/
 
     widget->onUserListChanged();
     chatForm->onUserListChanged();

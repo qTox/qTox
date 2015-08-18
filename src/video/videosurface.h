@@ -30,10 +30,11 @@ class VideoSurface : public QWidget
     Q_OBJECT
 
 public:
-    VideoSurface(int friendId, QWidget* parent=0);
-    VideoSurface(int friendId, VideoSource* source, QWidget* parent=0);
+    VideoSurface(int friendId, QWidget* parent = 0, bool expanding = false);
+    VideoSurface(int friendId, VideoSource* source, QWidget* parent = 0);
     ~VideoSurface();
 
+    bool isExpanding() const;
     void setSource(VideoSource* src); //NULL is a valid option
     QRect getBoundingRect() const;
     float getRatio() const;
@@ -62,9 +63,10 @@ private:
     VideoSource* source;
     std::shared_ptr<VideoFrame> lastFrame;
     std::atomic_bool frameLock; ///< Fast lock for lastFrame
-    bool hasSubscribed;
+    uint8_t hasSubscribed;
     int friendId;
     float ratio;
+    bool expanding;
 };
 
 #endif // SELFCAMVIEW_H

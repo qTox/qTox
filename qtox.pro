@@ -357,7 +357,6 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/loadhistorydialog.h \
         src/widget/form/setpassworddialog.h \
         src/widget/form/tabcompleter.h \
-        src/widget/flowlayout.h \
         src/ipc.h \
         src/net/autoupdate.h \
         src/widget/tool/callconfirmwidget.h \
@@ -383,7 +382,6 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/loadhistorydialog.cpp \
         src/widget/form/setpassworddialog.cpp \
         src/widget/form/tabcompleter.cpp \
-        src/widget/flowlayout.cpp \
         src/ipc.cpp \
         src/net/autoupdate.cpp \
         src/widget/tool/callconfirmwidget.cpp \
@@ -494,7 +492,10 @@ SOURCES += \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
-    src/widget/tool/movablewidget.cpp
+    src/widget/tool/movablewidget.cpp \
+    src/widget/tool/flowlayout.cpp \
+    src/video/genericnetcamview.cpp \
+    src/video/groupnetcamview.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -538,4 +539,7 @@ HEADERS += \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
     src/widget/categorywidget.h \
-    src/widget/tool/movablewidget.h
+    src/widget/tool/movablewidget.h \
+    src/widget/tool/flowlayout.h \
+    src/video/genericnetcamview.h \
+    src/video/groupnetcamview.h

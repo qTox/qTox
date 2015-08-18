@@ -25,19 +25,21 @@
 #include "src/persistence/settings.h"
 #include <QPainter>
 #include <QLabel>
+#include <cassert>
 
 float getSizeRatio(const QSize size)
 {
     return size.width() / static_cast<float>(size.height());
 }
 
-VideoSurface::VideoSurface(int friendId, QWidget* parent)
+VideoSurface::VideoSurface(int friendId, QWidget* parent, bool expanding)
     : QWidget{parent}
     , source{nullptr}
     , frameLock{false}
-    , hasSubscribed{false}
+    , hasSubscribed{0}
     , friendId{friendId}
     , ratio{1.0f}
+    , expanding{expanding}
 {
     recalulateBounds();
 }
@@ -53,6 +55,11 @@ VideoSurface::~VideoSurface()
     unsubscribe();
 }
 
+bool VideoSurface::isExpanding() const
+{
+    return expanding;
+}
+
 void VideoSurface::setSource(VideoSource *src)
 {
     if (source == src)
@@ -62,10 +69,9 @@ void VideoSurface::setSource(VideoSource *src)
     source = src;
     subscribe();
 }
-#include <QDebug>
+
 QRect VideoSurface::getBoundingRect() const
 {
-    qDebug() << boundingRect.bottomRight() << (QPoint(boundingRect.width(), boundingRect.height()) + boundingRect.topLeft());
     QRect bRect = boundingRect;
     bRect.setBottomRight(QPoint(boundingRect.bottom() + 1, boundingRect.right() + 1));
     return boundingRect;
@@ -78,17 +84,23 @@ float VideoSurface::getRatio() const
 
 void VideoSurface::subscribe()
 {
-    if (source && !hasSubscribed)
+    assert(hasSubscribed >= 0);
+
+    if (source && hasSubscribed++ == 0)
     {
         source->subscribe();
-        hasSubscribed = true;
         connect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
     }
 }
 
 void VideoSurface::unsubscribe()
 {
-    if (!source || !hasSubscribed)
+    assert(hasSubscribed >= 0);
+
+    if (!source || hasSubscribed == 0)
+        return;
+
+    if (--hasSubscribed != 0)
         return;
 
     lock();
@@ -98,10 +110,9 @@ void VideoSurface::unsubscribe()
     ratio = 1.0f;
     recalulateBounds();
     emit ratioChanged();
-    update();
+    emit boundaryChanged();
 
     source->unsubscribe();
-    hasSubscribed = false;
     disconnect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
 }
 
@@ -121,6 +132,7 @@ void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
         ratio = newRatio;
         recalulateBounds();
         emit ratioChanged();
+        emit boundaryChanged();
     }
 
     update();
@@ -166,33 +178,38 @@ void VideoSurface::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
     recalulateBounds();
+    emit boundaryChanged();
 }
 
 void VideoSurface::showEvent(QShowEvent*)
 {
     //emit ratioChanged();
 }
-
+#include <QDebug>
 void VideoSurface::recalulateBounds()
 {
-    if (ratio == 0)
-        return;
-
-    QPoint pos;
-    QSize size;
-    QSize usableSize = contentsRect().size();
-    int possibleWidth = usableSize.height() * ratio;
-
-    if (possibleWidth > usableSize.width())
-        size = (QSize(usableSize.width(), usableSize.width() / ratio));
+    if (expanding)
+    {
+        boundingRect = contentsRect();
+    }
     else
-        size = (QSize(possibleWidth, usableSize.height()));
+    {
+        QPoint pos;
+        QSize size;
+        QSize usableSize = contentsRect().size();
+        int possibleWidth = usableSize.height() * ratio;
 
-    pos.setX(width() / 2 - size.width() / 2);
-    pos.setY(height() / 2 - size.height() / 2);
-    boundingRect.setRect(pos.x(), pos.y(), size.width(), size.height());
+        if (possibleWidth > usableSize.width())
+            size = (QSize(usableSize.width(), usableSize.width() / ratio));
+        else
+            size = (QSize(possibleWidth, usableSize.height()));
 
-    emit boundaryChanged();
+        pos.setX(width() / 2 - size.width() / 2);
+        pos.setY(height() / 2 - size.height() / 2);
+        boundingRect.setRect(pos.x(), pos.y(), size.width(), size.height());
+    }
+
+    qDebug() << contentsRect();
 
     update();
 }

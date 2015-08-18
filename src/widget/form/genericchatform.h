@@ -41,6 +41,7 @@ class MaskablePixmapWidget;
 class Widget;
 class FlyoutOverlayWidget;
 class QSplitter;
+class GenericNetCamView;
 
 namespace Ui {
     class MainWindow;
@@ -87,11 +88,16 @@ protected slots:
     void onSelectAllClicked();
     void showFileMenu();
     void hideFileMenu();
+    void onShowMessagesClicked();
+    void onSplitterMoved(int pos, int index);
 
 private:
     void retranslateUi();
 
 protected:
+    void showNetcam();
+    void hideNetcam();
+    virtual GenericNetCamView* createNetcam() = 0;
     QString resolveToxId(const ToxId &id);
     void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
@@ -122,6 +128,7 @@ protected:
     bool audioInputFlag;
     bool audioOutputFlag;
     QSplitter* bodySplitter;
+    GenericNetCamView* netcam;
 };
 
 #endif // GENERICCHATFORM_H

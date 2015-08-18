@@ -42,7 +42,6 @@
 #include "src/core/cstring.h"
 #include "src/widget/tool/callconfirmwidget.h"
 #include "src/widget/friendwidget.h"
-#include "src/video/netcamview.h"
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/widget.h"
@@ -53,6 +52,7 @@
 #include "src/chatlog/chatlinecontentproxy.h"
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
+#include "src/video/netcamview.h"
 #include "src/persistence/offlinemsgengine.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
@@ -77,7 +77,6 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     typingTimer.setSingleShot(true);
 
-    netcam = nullptr;
     callDurationTimer = nullptr;
     disableCallButtonsTimer = nullptr;
 
@@ -90,7 +89,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     callDuration->hide();
 
     chatWidget->setMinimumHeight(160);
-    connect(bodySplitter, &QSplitter::splitterMoved, this, &ChatForm::onSplitterMoved);
     connect(this, &GenericChatForm::messageInserted, this, &ChatForm::onMessageInserted);
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
@@ -120,7 +118,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
 
-    showNetcam();
+    //showNetcam();
 }
 
 ChatForm::~ChatForm()
@@ -751,6 +749,13 @@ void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
     avatar->setPixmap(pic);
 }
 
+GenericNetCamView *ChatForm::createNetcam()
+{
+    NetCamView* view = new NetCamView(f->getFriendID(), this);
+    view->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
+    return view;
+}
+
 void ChatForm::dragEnterEvent(QDragEnterEvent *ev)
 {
     if (ev->mimeData()->hasUrls())
@@ -938,29 +943,10 @@ void ChatForm::onLoadHistory()
     }
 }
 
-void ChatForm::onSplitterMoved(int, int)
-{
-    if (netcam)
-        netcam->setShowMessages(bodySplitter->sizes()[1] == 0);
-}
-
 void ChatForm::onMessageInserted()
 {
     if (netcam && bodySplitter->sizes()[1] == 0)
         netcam->setShowMessages(true, true);
-}
-
-void ChatForm::onShowMessagesClicked()
-{
-    if (netcam)
-    {
-        if (bodySplitter->sizes()[1] == 0)
-            bodySplitter->setSizes({1, 1});
-        else
-            bodySplitter->setSizes({1, 0});
-
-        onSplitterMoved(0, 0);
-    }
 }
 
 void ChatForm::startCounter()
@@ -1093,27 +1079,6 @@ void ChatForm::SendMessageStr(QString msg)
 
         Widget::getInstance()->updateFriendActivity(f);
     }
-}
-
-void ChatForm::showNetcam()
-{
-    if (!netcam)
-        netcam = new NetCamView(f->getFriendID());
-
-    //connect(Widget::getInstance(), &Widget::resized, netcam, &NetCamView::updateSize);
-    netcam->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
-    connect(netcam, &NetCamView::showMessageClicked, this, &ChatForm::onShowMessagesClicked);
-    bodySplitter->insertWidget(0, netcam);
-    bodySplitter->setCollapsible(0, false);
-}
-
-void ChatForm::hideNetcam()
-{
-    if (!netcam)
-        return;
-    netcam->hide();
-    delete netcam;
-    netcam = nullptr;
 }
 
 void ChatForm::retranslateUi()
