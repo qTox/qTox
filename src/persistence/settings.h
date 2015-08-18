@@ -163,6 +163,9 @@ public:
     QSize getCamVideoRes() const;
     void setCamVideoRes(QSize newValue);
 
+    unsigned short getCamVideoFPS() const;
+    void setCamVideoFPS(unsigned short newValue);
+
     bool isAnimationEnabled() const;
     void setAnimationEnabled(bool newValue);
 
@@ -356,6 +359,7 @@ private:
     // Video
     QString videoDev;
     QSize camVideoRes;
+    unsigned short camVideoFPS;
 
     struct friendProp
     {

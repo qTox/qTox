@@ -383,6 +383,7 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/setpassworddialog.cpp \
         src/widget/form/tabcompleter.cpp \
         src/ipc.cpp \
+        src/widget/flowlayout.cpp \
         src/net/autoupdate.cpp \
         src/widget/tool/callconfirmwidget.cpp \
         src/widget/systemtrayicon.cpp \
@@ -493,7 +494,6 @@ SOURCES += \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
     src/widget/tool/movablewidget.cpp \
-    src/widget/tool/flowlayout.cpp \
     src/video/genericnetcamview.cpp \
     src/video/groupnetcamview.cpp
 
@@ -540,6 +540,5 @@ HEADERS += \
     src/widget/genericchatitemlayout.h \
     src/widget/categorywidget.h \
     src/widget/tool/movablewidget.h \
-    src/widget/tool/flowlayout.h \
     src/video/genericnetcamview.h \
     src/video/groupnetcamview.h

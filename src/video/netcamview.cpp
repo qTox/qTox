@@ -19,9 +19,12 @@
 
 #include "netcamview.h"
 #include "camerasource.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
 #include "src/core/core.h"
 #include "src/video/videosurface.h"
 #include "src/widget/tool/movablewidget.h"
+#include "src/persistence/settings.h"
 #include <QLabel>
 #include <QBoxLayout>
 #include <QFrame>
@@ -30,13 +33,14 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     : GenericNetCamView(parent)
     , selfFrame{nullptr}
 {
-    videoSurface = new VideoSurface(friendId, this);
+    QString id = FriendList::findFriend(friendId)->getToxId().toString();
+    videoSurface = new VideoSurface(Settings::getInstance().getSavedAvatar(id), this);
     videoSurface->setMinimumHeight(256);
     videoSurface->setContentsMargins(6, 6, 6, 6);
 
     verLayout->insertWidget(0, videoSurface, 1);
 
-    selfVideoSurface = new VideoSurface(-1, this, true);
+    selfVideoSurface = new VideoSurface(Settings::getInstance().getSavedAvatar(Core::getInstance()->getSelfId().toString()), this, true);
     selfVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     selfVideoSurface->setMouseTracking(true);
     selfVideoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -65,6 +69,13 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
         updateFrameSize(boundingRect.size());
         selfFrame->resetBoundary(boundingRect);
     });
+
+    VideoMode videoMode;
+    QSize videoSize = Settings::getInstance().getCamVideoRes();
+    videoMode.width = videoSize.width();
+    videoMode.height = videoSize.height();
+    videoMode.FPS = Settings::getInstance().getCamVideoFPS();
+    CameraSource::getInstance().open(Settings::getInstance().getVideoDev(), videoMode);
 }
 
 void NetCamView::show(VideoSource *source, const QString &title)

@@ -32,20 +32,20 @@ float getSizeRatio(const QSize size)
     return size.width() / static_cast<float>(size.height());
 }
 
-VideoSurface::VideoSurface(int friendId, QWidget* parent, bool expanding)
+VideoSurface::VideoSurface(const QPixmap& avatar, QWidget* parent, bool expanding)
     : QWidget{parent}
     , source{nullptr}
     , frameLock{false}
     , hasSubscribed{0}
-    , friendId{friendId}
+    , avatar{avatar}
     , ratio{1.0f}
     , expanding{expanding}
 {
     recalulateBounds();
 }
 
-VideoSurface::VideoSurface(int friendId, VideoSource *source, QWidget* parent)
-    : VideoSurface(friendId, parent)
+VideoSurface::VideoSurface(const QPixmap& avatar, VideoSource *source, QWidget* parent)
+    : VideoSurface(avatar, parent)
 {
     setSource(source);
 }
@@ -80,6 +80,16 @@ QRect VideoSurface::getBoundingRect() const
 float VideoSurface::getRatio() const
 {
     return ratio;
+}
+
+void VideoSurface::setAvatar(const QPixmap &pixmap)
+{
+    avatar = pixmap;
+}
+
+QPixmap VideoSurface::getAvatar() const
+{
+    return avatar;
 }
 
 void VideoSurface::subscribe()
@@ -154,21 +164,12 @@ void VideoSurface::paintEvent(QPaintEvent*)
     else
     {
         painter.fillRect(boundingRect, Qt::white);
-        QPixmap avatar;
+        QPixmap drawnAvatar = avatar;
 
-        QString userId;
+        if (drawnAvatar.isNull())
+            drawnAvatar = Style::scaleSvgImage(":/img/contact_dark.svg", boundingRect.width(), boundingRect.height());
 
-        if (friendId != -1)
-            userId = FriendList::findFriend(friendId)->getToxId().toString();
-        else
-            userId = Core::getInstance()->getSelfId().toString();
-
-        avatar = Settings::getInstance().getSavedAvatar(userId);
-
-        if (avatar.isNull())
-            avatar = Style::scaleSvgImage(":/img/contact_dark.svg", boundingRect.width(), boundingRect.height());
-
-        painter.drawPixmap(boundingRect, avatar, avatar.rect());
+        painter.drawPixmap(boundingRect, drawnAvatar, drawnAvatar.rect());
     }
 
     unlock();
@@ -185,7 +186,7 @@ void VideoSurface::showEvent(QShowEvent*)
 {
     //emit ratioChanged();
 }
-#include <QDebug>
+
 void VideoSurface::recalulateBounds()
 {
     if (expanding)
@@ -208,8 +209,6 @@ void VideoSurface::recalulateBounds()
         pos.setY(height() / 2 - size.height() / 2);
         boundingRect.setRect(pos.x(), pos.y(), size.width(), size.height());
     }
-
-    qDebug() << contentsRect();
 
     update();
 }

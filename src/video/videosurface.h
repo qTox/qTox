@@ -30,14 +30,16 @@ class VideoSurface : public QWidget
     Q_OBJECT
 
 public:
-    VideoSurface(int friendId, QWidget* parent = 0, bool expanding = false);
-    VideoSurface(int friendId, VideoSource* source, QWidget* parent = 0);
+    VideoSurface(const QPixmap& avatar, QWidget* parent = 0, bool expanding = false);
+    VideoSurface(const QPixmap& avatar, VideoSource* source, QWidget* parent = 0);
     ~VideoSurface();
 
     bool isExpanding() const;
     void setSource(VideoSource* src); //NULL is a valid option
     QRect getBoundingRect() const;
     float getRatio() const;
+    void setAvatar(const QPixmap& pixmap);
+    QPixmap getAvatar() const;
 
 signals:
     void ratioChanged();
@@ -64,7 +66,7 @@ private:
     std::shared_ptr<VideoFrame> lastFrame;
     std::atomic_bool frameLock; ///< Fast lock for lastFrame
     uint8_t hasSubscribed;
-    int friendId;
+    QPixmap avatar;
     float ratio;
     bool expanding;
 };

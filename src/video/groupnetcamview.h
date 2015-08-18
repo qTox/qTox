@@ -52,6 +52,7 @@ private:
     QHBoxLayout* horLayout;
     QMap<int, PeerVideo> videoList;
     LabeledVideo* videoLabelSurface;
+    LabeledVideo* selfVideoSurface;
     int activePeer;
     int group;
 };

@@ -24,8 +24,8 @@
 #include <QTimer>
 #include <QMap>
 #include "src/audio/audio.h"
-
-#include "src/widget/tool/flowlayout.h"
+#include "src/core/core.h"
+#include <QBoxLayout>
 
 class LabeledVideo : public QFrame
 {
@@ -34,7 +34,7 @@ public:
         : QFrame(parent)
     {
         //setFrameStyle(QFrame::Box);
-        videoSurface = new VideoSurface(-1, 0, expanding);
+        videoSurface = new VideoSurface(QPixmap(), 0, expanding);
         videoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         videoSurface->setMinimumHeight(96);
         //videoSurface->setMaximumHeight(96);
@@ -133,13 +133,13 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
     //FlowLayout* horLayout = new FlowLayout(widget);
     horLayout->addStretch();
 
-    LabeledVideo* labeledVideo = new LabeledVideo(this);
-    horLayout->addWidget(labeledVideo);
-    horLayout->setAlignment(labeledVideo, Qt::AlignCenter | Qt::AlignHCenter);
+    selfVideoSurface = new LabeledVideo(this);
+    horLayout->addWidget(selfVideoSurface);
+    horLayout->setAlignment(selfVideoSurface, Qt::AlignCenter | Qt::AlignHCenter);
 
     horLayout->addStretch();
     verLayout->insertWidget(1, scrollArea);
-    scrollArea->setMinimumHeight(labeledVideo->height());
+    scrollArea->setMinimumHeight(selfVideoSurface->height());
 
     connect(&Audio::getInstance(), &Audio::groupAudioPlayed, this, &GroupNetCamView::groupAudioPlayed);
 
@@ -147,6 +147,18 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
     timer->setInterval(1000);
     connect(timer, &QTimer::timeout, this, &GroupNetCamView::findActivePeer);
     timer->start();
+
+    connect(Core::getInstance(), &Core::selfAvatarChanged, [this]()
+    {
+        selfVideoSurface->update();
+        findActivePeer();
+    });
+    connect(Core::getInstance(), &Core::usernameSet, [this](const QString& username)
+    {
+        selfVideoSurface->setText(username);
+        findActivePeer();
+    });
+    selfVideoSurface->setText(Core::getInstance()->getUsername());
 }
 
 void GroupNetCamView::clearPeers()
@@ -184,18 +196,16 @@ void GroupNetCamView::removePeer(int peer)
         findActivePeer();
     }
 }
-#include <QDebug>
+
 void GroupNetCamView::setActive(int peer)
 {
-    qDebug() << "HI: " << peer;
     if (peer == -1)
     {
-        // Show self.
+        videoLabelSurface->setText(selfVideoSurface->getText());
         return;
     }
 
     auto peerVideo = videoList.find(peer);
-    qDebug() << "BTW" << (peerVideo == videoList.end());
 
     if (peerVideo != videoList.end())
     {
