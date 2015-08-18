@@ -27,6 +27,7 @@
 #include "src/persistence/settings.h"
 
 SystemTrayIcon::SystemTrayIcon()
+    : qtIcon(nullptr)
 {
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (desktop.isEmpty())
@@ -410,4 +411,12 @@ void SystemTrayIcon::setIcon(QIcon &icon)
     {
         qtIcon->setIcon(icon);
     }
+}
+
+QSystemTrayIcon* SystemTrayIcon::getSystemTrayIcon() const
+{
+    if (backendType == SystrayBackendType::Qt)
+        return qtIcon;
+
+    return nullptr;
 }

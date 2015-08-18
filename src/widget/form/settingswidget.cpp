@@ -55,7 +55,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     bodyLayout->addWidget(settingsWidgets);
 
-    GeneralForm* gfrm = new GeneralForm(this);
+    gfrm = new GeneralForm(this);
     PrivacyForm* pfrm = new PrivacyForm;
     AVForm* avfrm = new AVForm;
     AdvancedForm *expfrm = new AdvancedForm;
@@ -84,6 +84,11 @@ void SettingsWidget::setBodyHeadStyle(QString style)
 void SettingsWidget::showAbout()
 {
     onTabChanged(settingsWidgets->count() - 1);
+}
+
+void SettingsWidget::reloadNotificationBackend()
+{
+    gfrm->reloadNotificationBackend();
 }
 
 void SettingsWidget::show(Ui::MainWindow& ui)

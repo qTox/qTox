@@ -142,6 +142,26 @@ public:
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
+    uint8_t getDesktopNotifications() const;
+    void setDesktopNotifications(uint8_t newValue);
+
+    bool getNotifyOnNewMessage() const;
+    bool getNotifyOnFriendRequest() const;
+    bool getNotifyOnHighlight() const;
+    bool getNotifyOnCallInvite() const;
+    bool getNotifyOnGroupInvite() const;
+    bool getNotifyOnFileTransfer() const;
+    bool getNotifyOnFriendOnline() const;
+    bool getNotifyOnFriendOffline() const;
+    void setNotifyOnNewMessage(bool notify);
+    void setNotifyOnFriendRequest(bool notify);
+    void setNotifyOnHighlight(bool notify);
+    void setNotifyOnCallInvite(bool notify);
+    void setNotifyOnGroupInvite(bool notify);
+    void setNotifyOnFileTransfer(bool notify);
+    void setNotifyOnFriendOnline(bool notify);
+    void setNotifyOnFriendOffline(bool notify);
+
     QPixmap getSavedAvatar(const QString& ownerId);
     void saveAvatar(QPixmap& pic, const QString& ownerId);
 
@@ -308,6 +328,15 @@ private:
     bool showInFront;
     bool notifySound;
     bool groupAlwaysNotify;
+    uint8_t desktopNotifications;
+    bool notifyOnNewMessage;
+    bool notifyOnFriendRequest;
+    bool notifyOnHighlight;
+    bool notifyOnCallInvite;
+    bool notifyOnGroupInvite;
+    bool notifyOnFileTransfer;
+    bool notifyOnFriendOnline;
+    bool notifyOnFriendOffline;
 
     bool forceTCP;
 

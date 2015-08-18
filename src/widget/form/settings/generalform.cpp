@@ -37,6 +37,10 @@
 #include <QStandardPaths>
 #include <QDebug>
 
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+#include "src/widget/snorenotificationbackend.h"
+#endif
+
 static QStringList locales = {"bg", "de", "en", "es", "fr", "hr", "hu", "it", "lt", "nl", "no_nb", "pl", "pt", "ru", "sl", "fi", "sv", "uk", "zh"};
 static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "Nederlands", "Norsk Bokmål", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
 
@@ -85,9 +89,30 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
     bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
+    bodyUI->notifyOnNewMessage->setChecked(Settings::getInstance().getNotifyOnNewMessage());
+    bodyUI->notifyOnHighlighted->setChecked(Settings::getInstance().getNotifyOnHighlight());
+    bodyUI->notifyOnFriendRequest->setChecked(Settings::getInstance().getNotifyOnFriendRequest());
+    bodyUI->notifyOnCallInvite->setChecked(Settings::getInstance().getNotifyOnCallInvite());
+    bodyUI->notifyOnGroupInvite->setChecked(Settings::getInstance().getNotifyOnGroupInvite());
+    bodyUI->notifyOnFileTransfer->setChecked(Settings::getInstance().getNotifyOnFileTransfer());
+    bodyUI->notifyOnFriendOnline->setChecked(Settings::getInstance().getNotifyOnFriendOnline());
+    bodyUI->notifyOnFriendOffline->setChecked(Settings::getInstance().getNotifyOnFriendOffline());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
     bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
+
+    bodyUI->desktopNotifications->addItem(tr("None", "Desktop notification"));
+    notificationFactories.push_back([]() -> NotificationBackend* { return nullptr; });
+#ifdef ENABLE_NOTIFICATION_SNORE_BACKEND
+    bodyUI->desktopNotifications->addItem(QStringLiteral("Snorenotify"));
+    notificationFactories.push_back([]() -> NotificationBackend* { return new SnoreNotificationBackend(); });
+#endif
+    int desktopNotificationIndex = Settings::getInstance().getDesktopNotifications();
+
+    if (desktopNotificationIndex >= bodyUI->desktopNotifications->count())
+        desktopNotificationIndex = 0;
+
+    bodyUI->desktopNotifications->setCurrentIndex(desktopNotificationIndex);
 
     for (auto entry : SmileyPack::listSmileyPacks())
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
@@ -162,6 +187,16 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+    // notifications
+    connect(bodyUI->desktopNotifications, SIGNAL(currentIndexChanged(int)), this, SLOT(onSetDesktopNotifications(int)));
+    connect(bodyUI->notifyOnNewMessage, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyNewMessage);
+    connect(bodyUI->notifyOnHighlighted, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyHighlighted);
+    connect(bodyUI->notifyOnCallInvite, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyCallInvite);
+    connect(bodyUI->notifyOnGroupInvite, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyGroupInvite);
+    connect(bodyUI->notifyOnFriendRequest, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFriendRequest);
+    connect(bodyUI->notifyOnFileTransfer, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFileTransfer);
+    connect(bodyUI->notifyOnFriendOnline, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFriendOnline);
+    connect(bodyUI->notifyOnFriendOffline, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifyFriendOffline);
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
@@ -181,21 +216,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
     connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
 
-    // prevent stealing mouse whell scroll
-    // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
-    // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
-    // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
-    for (QComboBox* cb : findChildren<QComboBox*>())
-    {
-            cb->installEventFilter(this);
-            cb->setFocusPolicy(Qt::StrongFocus);
-    }
-
-    for (QSpinBox* sp : findChildren<QSpinBox*>())
-    {
-            sp->installEventFilter(this);
-            sp->setFocusPolicy(Qt::WheelFocus);
-    }
+    installObject(this);
 
 #ifndef QTOX_PLATFORM_EXT
     bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
@@ -209,6 +230,31 @@ GeneralForm::~GeneralForm()
 {
     Translator::unregister(this);
     delete bodyUI;
+}
+
+void GeneralForm::reloadNotificationBackend()
+{
+    onSetDesktopNotifications(bodyUI->desktopNotifications->currentIndex());
+}
+
+void GeneralForm::setNotificationWidget(QWidget* widget)
+{
+    QLayoutItem* item;
+
+    while ((item = bodyUI->notificationLayout->takeAt(0)))
+    {
+        delete item->widget();
+        delete item;
+    }
+
+    if (widget)
+    {
+        bodyUI->notificationLayout->addWidget(widget);
+        installObject(widget);
+    }
+
+    bodyUI->notificationSettingsGroup->setVisible(widget != nullptr);
+    bodyUI->notificationEnableGroup->setVisible(widget != nullptr);
 }
 
 void GeneralForm::onEnableIPv6Updated()
@@ -394,6 +440,31 @@ void GeneralForm::reloadSmiles()
     bodyUI->emoticonSize->setMaximum(SmileyPack::getInstance().getAsIcon(smiles[0]).actualSize(QSize(maxSize,maxSize)).width());
 }
 
+void GeneralForm::installObject(QObject* object)
+{
+    // prevent stealing mouse whell scroll
+    // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
+    // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
+    // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
+    for (QComboBox* cb : object->findChildren<QComboBox*>())
+    {
+        cb->installEventFilter(this);
+        cb->setFocusPolicy(Qt::StrongFocus);
+    }
+
+    for (QSpinBox* sp : object->findChildren<QSpinBox*>())
+    {
+        sp->installEventFilter(this);
+        sp->setFocusPolicy(Qt::WheelFocus);
+    }
+
+    for (QTabBar* tb : object->findChildren<QTabBar*>())
+    {
+        tb->installEventFilter(this);
+        tb->setFocusPolicy(Qt::StrongFocus);
+    }
+}
+
 void GeneralForm::onCheckUpdateChanged()
 {
     Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
@@ -417,6 +488,59 @@ void GeneralForm::onSetNotifySound()
 void GeneralForm::onSetGroupAlwaysNotify()
 {
     Settings::getInstance().setGroupAlwaysNotify(bodyUI->groupAlwaysNotify->isChecked());
+}
+
+void GeneralForm::onSetDesktopNotifications(int index)
+{
+    Settings::getInstance().setDesktopNotifications(index);
+    bodyUI->notificationEnableGroup->setEnabled(index != 0);
+    NotificationBackend* notificationBackend = notificationFactories[index]();
+    emit parent->desktopNotificationsToggled(notificationBackend);
+
+    if (notificationBackend)
+        setNotificationWidget(notificationBackend->settingsWidget());
+    else
+        setNotificationWidget(nullptr);
+}
+
+void GeneralForm::onSetNotifyNewMessage()
+{
+    Settings::getInstance().setNotifyOnNewMessage(bodyUI->notifyOnNewMessage->isChecked());
+}
+
+void GeneralForm::onSetNotifyHighlighted()
+{
+    Settings::getInstance().setNotifyOnHighlight(bodyUI->notifyOnHighlighted->isChecked());
+}
+
+void GeneralForm::onSetNotifyFriendRequest()
+{
+    Settings::getInstance().setNotifyOnFriendRequest(bodyUI->notifyOnFriendRequest->isChecked());
+}
+
+void GeneralForm::onSetNotifyCallInvite()
+{
+    Settings::getInstance().setNotifyOnCallInvite(bodyUI->notifyOnCallInvite->isChecked());
+}
+
+void GeneralForm::onSetNotifyGroupInvite()
+{
+    Settings::getInstance().setNotifyOnGroupInvite(bodyUI->notifyOnGroupInvite->isChecked());
+}
+
+void GeneralForm::onSetNotifyFileTransfer()
+{
+    Settings::getInstance().setNotifyOnFileTransfer(bodyUI->notifyOnFileTransfer->isChecked());
+}
+
+void GeneralForm::onSetNotifyFriendOnline()
+{
+    Settings::getInstance().setNotifyOnFriendOnline(bodyUI->notifyOnFriendOnline->isChecked());
+}
+
+void GeneralForm::onSetNotifyFriendOffline()
+{
+    Settings::getInstance().setNotifyOnFriendOffline(bodyUI->notifyOnFriendOffline->isChecked());
 }
 
 void GeneralForm::onFauxOfflineMessaging()
@@ -447,7 +571,7 @@ void GeneralForm::onThemeColorChanged(int)
 bool GeneralForm::eventFilter(QObject *o, QEvent *e)
 {
     if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QTabBar*>(o) ))
     {
         e->ignore();
         return true;

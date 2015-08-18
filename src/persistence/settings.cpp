@@ -169,6 +169,15 @@ void Settings::loadGlobal()
         showInFront = s.value("showInFront", false).toBool();
         notifySound = s.value("notifySound", true).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
+        desktopNotifications = s.value("desktopNotifications", 1).toUInt();
+        notifyOnNewMessage = s.value("notifyOnNewMessage", true).toBool();
+        notifyOnHighlight = s.value("notifyOnHighlight", true).toBool();
+        notifyOnFriendRequest = s.value("notifyOnFriendRequest", true).toBool();
+        notifyOnCallInvite = s.value("notifyOnCallInvite", true).toBool();
+        notifyOnGroupInvite = s.value("notifyOnGroupInvite", true).toBool();
+        notifyOnFileTransfer = s.value("notifyOnFileTransfer", true).toBool();
+        notifyOnFriendOnline = s.value("notifyOnFriendOnline", false).toBool();
+        notifyOnFriendOffline = s.value("notifyOnFriendOffline", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
@@ -375,6 +384,15 @@ void Settings::saveGlobal()
         s.setValue("showInFront", showInFront);
         s.setValue("notifySound", notifySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
+        s.setValue("desktopNotifications", desktopNotifications);
+        s.setValue("notifyOnNewMessage", notifyOnNewMessage);
+        s.setValue("notifyOnHighlight", notifyOnHighlight);
+        s.setValue("notifyOnFriendRequest", notifyOnFriendRequest);
+        s.setValue("notifyOnCallInvite", notifyOnCallInvite);
+        s.setValue("notifyOnGroupInvite", notifyOnGroupInvite);
+        s.setValue("notifyOnFileTransfer", notifyOnFileTransfer);
+        s.setValue("notifyOnFriendOnline", notifyOnFriendOnline);
+        s.setValue("notifyOnFriendOffline", notifyOnFriendOffline);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
@@ -778,6 +796,114 @@ void Settings::setGroupAlwaysNotify(bool newValue)
 {
     QMutexLocker locker{&bigLock};
     groupAlwaysNotify = newValue;
+}
+
+uint8_t Settings::getDesktopNotifications() const
+{
+    QMutexLocker locker{&bigLock};
+    return desktopNotifications;
+}
+
+void Settings::setDesktopNotifications(uint8_t newValue)
+{
+    QMutexLocker locker{&bigLock};
+    desktopNotifications = newValue;
+}
+
+bool Settings::getNotifyOnNewMessage() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnNewMessage;
+}
+
+bool Settings::getNotifyOnFriendRequest() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnFriendRequest;
+}
+
+bool Settings::getNotifyOnHighlight() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnHighlight;
+}
+
+bool Settings::getNotifyOnCallInvite() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnCallInvite;
+}
+
+bool Settings::getNotifyOnGroupInvite() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnGroupInvite;
+}
+
+bool Settings::getNotifyOnFileTransfer() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnFileTransfer;
+}
+
+bool Settings::getNotifyOnFriendOnline() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnFriendOnline;
+}
+
+bool Settings::getNotifyOnFriendOffline() const
+{
+    QMutexLocker locker{&bigLock};
+    return notifyOnFriendOffline;
+}
+
+void Settings::setNotifyOnNewMessage(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnNewMessage = notify;
+}
+
+void Settings::setNotifyOnFriendRequest(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnFriendRequest = notify;
+}
+
+void Settings::setNotifyOnHighlight(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnHighlight = notify;
+}
+
+void Settings::setNotifyOnCallInvite(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnCallInvite = notify;
+}
+
+void Settings::setNotifyOnGroupInvite(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnGroupInvite = notify;
+}
+
+void Settings::setNotifyOnFileTransfer(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnFileTransfer = notify;
+}
+
+void Settings::setNotifyOnFriendOnline(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnFriendOnline = notify;
+}
+
+void Settings::setNotifyOnFriendOffline(bool notify)
+{
+    QMutexLocker locker{&bigLock};
+    notifyOnFriendOffline = notify;
 }
 
 QString Settings::getTranslation() const

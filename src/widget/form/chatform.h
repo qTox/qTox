@@ -62,6 +62,7 @@ signals:
     void micMuteToggle(int callId);
     void volMuteToggle(int callId);
     void aliasChanged(const QString& alias);
+    void invitedCall(int friendId);
 
 public slots:
     void startFileSend(ToxFile file);

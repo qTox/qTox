@@ -27,6 +27,9 @@ class GeneralSettings;
 }
 
 class SettingsWidget;
+class NotificationBackend;
+
+typedef NotificationBackend* (*NotificationFactory)();
 
 class GeneralForm : public GenericForm
 {
@@ -35,6 +38,7 @@ public:
     GeneralForm(SettingsWidget *parent);
     ~GeneralForm();
     virtual QString getFormName() final override {return tr("General");}
+    void reloadNotificationBackend();
 
 private slots:
     void onEnableIPv6Updated();
@@ -65,6 +69,15 @@ private slots:
     void onSetShowInFront();
     void onSetNotifySound();
     void onSetGroupAlwaysNotify();
+    void onSetDesktopNotifications(int index);
+    void onSetNotifyNewMessage();
+    void onSetNotifyHighlighted();
+    void onSetNotifyFriendRequest();
+    void onSetNotifyCallInvite();
+    void onSetNotifyGroupInvite();
+    void onSetNotifyFileTransfer();
+    void onSetNotifyFriendOnline();
+    void onSetNotifyFriendOffline();
     void onFauxOfflineMessaging();
     void onCompactLayout();
     void onGroupchatPositionChanged();
@@ -74,12 +87,16 @@ private:
     void retranslateUi();
 
 private:
+    void setNotificationWidget(QWidget* widget);
+
     Ui::GeneralSettings *bodyUI;
     void reloadSmiles();
+    void installObject(QObject* object);
     SettingsWidget *parent;
+    QVector<NotificationFactory> notificationFactories;
 
 protected:
-    bool eventFilter(QObject *o, QEvent *e);
+    bool eventFilter(QObject *o, QEvent *e) override;
 };
 
 #endif

@@ -38,12 +38,12 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-328</y>
         <width>639</width>
-        <height>1221</height>
+        <height>1826</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,1">
        <property name="spacing">
         <number>32</number>
        </property>
@@ -403,6 +403,109 @@ will be sent to them when they appear online to you.</string>
             <property name="text">
              <string>Compact contact list</string>
             </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="notificationGroup">
+         <property name="title">
+          <string>Notifications</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="desktopNotificationLabel">
+              <property name="text">
+               <string>Deskop notification backend:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="desktopNotifications">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="notificationEnableGroup">
+            <property name="title">
+             <string>Notify on...</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="notifyOnGroupInvite">
+               <property name="text">
+                <string>Group invite</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="notifyOnNewMessage">
+               <property name="text">
+                <string>New message</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="notifyOnCallInvite">
+               <property name="text">
+                <string>Call invite</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="notifyOnHighlighted">
+               <property name="text">
+                <string>Highlighted</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="notifyOnFileTransfer">
+               <property name="text">
+                <string>File transfer completed</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="notifyOnFriendRequest">
+               <property name="text">
+                <string>Friend request</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="notifyOnFriendOnline">
+               <property name="text">
+                <string>Friend Online</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QCheckBox" name="notifyOnFriendOffline">
+               <property name="text">
+                <string>Friend Offline</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="notificationSettingsGroup">
+            <property name="title">
+             <string>Backend Settings</string>
+            </property>
+            <layout class="QVBoxLayout" name="notificationLayout"/>
            </widget>
           </item>
          </layout>

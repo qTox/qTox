@@ -25,6 +25,7 @@
 #include <QFileInfo>
 #include "src/core/corestructs.h"
 #include "genericchatitemwidget.h"
+#include "notificationbackend.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -62,6 +63,7 @@ public:
     void setCentralWidget(QWidget *widget, const QString &widgetName);
     QString getUsername();
     Camera* getCamera();
+    SystemTrayIcon* getSystemTrayIcon() const;
     static Widget* getInstance();
     void newMessageAlert(GenericChatroomWidget* chat);
     bool isFriendWidgetCurActiveWidget(const Friend* f) const;
@@ -159,6 +161,9 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
+    void onDesktopNotificationsToggled(NotificationBackend *notificationBackend);
+    void notifyAvInvite(int friendId);
+    void notifyFileTransferFinished(ToxFile file);
 
 #ifdef Q_OS_MAC
     void bringAllToFront();
@@ -245,6 +250,8 @@ private:
 #ifdef Q_OS_MAC
     QAction* fullscreenAction;
 #endif
+
+    NotificationBackend* notification = nullptr;
 };
 
 bool toxActivateEventHandler(const QByteArray& data);
