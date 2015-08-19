@@ -52,6 +52,7 @@ private:
 
     VideoSurface* selfVideoSurface;
     MovableWidget* selfFrame;
+    int friendId;
     bool e = false;
 };
 

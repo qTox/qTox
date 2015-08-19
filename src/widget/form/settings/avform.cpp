@@ -178,6 +178,14 @@ void AVForm::updateVideoModes(int curIndex)
                 break;
             }
         }
+
+        if (videoModes.size())
+        {
+            bodyUI->videoModescomboBox->setUpdatesEnabled(false);
+            bodyUI->videoModescomboBox->setCurrentIndex(-1);
+            bodyUI->videoModescomboBox->setUpdatesEnabled(true);
+            bodyUI->videoModescomboBox->setCurrentIndex(0);
+        }
     }
 }
 

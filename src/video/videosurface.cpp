@@ -85,6 +85,7 @@ float VideoSurface::getRatio() const
 void VideoSurface::setAvatar(const QPixmap &pixmap)
 {
     avatar = pixmap;
+    update();
 }
 
 QPixmap VideoSurface::getAvatar() const
