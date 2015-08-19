@@ -20,19 +20,10 @@
 #include "movablewidget.h"
 #include <QMouseEvent>
 #include <QGraphicsOpacityEffect>
-#include <cmath>
-
-#include <QDebug>
-
-static float getNetcamX = 0.0f;
-static float getNetcamY = 0.0f;
-static float getNetcamW = 0.0f;
-static float getNetcamH = 0.0f;
 
 MovableWidget::MovableWidget(QWidget *parent)
     : QWidget(parent)
 {
-    setMouseTracking(true);
     setMinimumHeight(64);
     setSizePolicy(QSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored));
     actualSize = minimumSize();
@@ -40,53 +31,17 @@ MovableWidget::MovableWidget(QWidget *parent)
     setRatio(1.0f);
     resize(minimumSize());
     actualPos = QPoint(0, 0);
-
-    //move()
 }
-
-/*void MovableWidget::setBoundary(QSize parentSize, QSize oldSize, float xPercent, float yPercent)
-{
-    // NOTE: When called, the parentWidget has not resized yet.
-
-    // Prevent division with 0.
-    if (width() == oldSize.width() || height() == oldSize.height())
-        return;
-
-    float percentageX = x() / static_cast<float>(oldSize.width() - width());
-    float percentageY = y() / static_cast<float>(oldSize.height() - height());
-
-    actualSize.setWidth(actualSize.width() * xPercent);
-    actualSize.setHeight(actualSize.height() * yPercent);
-
-    if (actualSize.width() == 0)
-        actualSize.setWidth(1);
-
-    if (actualSize.height() == 0)
-        actualSize.setHeight(1);
-
-    resize(QSize(round(actualSize.width()), round(actualSize.height())));
-    updateGeometry();
-
-    actualPos = QPointF(percentageX * (parentSize.width() - width()), percentageY * (parentSize.height() - height()));
-
-    QPoint moveTo = QPoint(round(actualPos.x()), round(actualPos.y()));
-    move(moveTo);
-}*/
 
 void MovableWidget::resetBoundary(QRect newBoundary)
 {
     boundaryRect = newBoundary;
-
-    //actualSize = QSize(getNetcamW * newBoundary.width(), getNetcamH * newBoundary.height());
     resize(QSize(round(actualSize.width()), round(actualSize.height())));
 
-    //actualPos = QPointF(getNetcamX * (newBoundary.width() - width()), getNetcamY * (newBoundary.height() - height()));
     QPoint moveTo = QPoint(round(actualPos.x()), round(actualPos.y()));
     checkBoundary(moveTo);
     move(moveTo);
     actualPos = moveTo;
-
-    qDebug() << "GGGG" << geometry();
 }
 
 void MovableWidget::setBoundary(QRect newBoundary)
@@ -120,7 +75,6 @@ void MovableWidget::setBoundary(QRect newBoundary)
     QPoint moveTo = QPoint(round(actualPos.x()), round(actualPos.y()));
     move(moveTo);
 
-    qDebug() << "hhhhh" << geometry() << boundaryRect << newBoundary;
     boundaryRect = newBoundary;
 
 }
@@ -140,7 +94,6 @@ void MovableWidget::setRatio(float r)
 
     actualPos = pos();
     actualSize = size();
-    qDebug() << "GEO@" << geometry();
 }
 
 void MovableWidget::mousePressEvent(QMouseEvent* event)
@@ -312,13 +265,6 @@ void MovableWidget::mouseDoubleClickEvent(QMouseEvent* event)
     {
         setGraphicsEffect(nullptr);
     }
-}
-#include <QPainter>
-void MovableWidget::paintEvent(QPaintEvent*)
-{
-    QPainter painter(this);
-    painter.setBrush(Qt::black);
-    painter.drawRect(rect());
 }
 
 void MovableWidget::checkBoundary(QPoint& point) const

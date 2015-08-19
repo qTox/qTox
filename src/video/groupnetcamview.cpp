@@ -129,6 +129,7 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
     //verLayout->insertWidget(0, videoLabelSurface, 1);
 
     QSplitter* splitter = new QSplitter(Qt::Vertical, this);
+    splitter->setChildrenCollapsible(false);
     verLayout->insertWidget(0, splitter, 1);
     splitter->addWidget(videoLabelSurface);
     splitter->setStyleSheet("QSplitter { background-color: black; } QSplitter::handle { background-color: black; }");

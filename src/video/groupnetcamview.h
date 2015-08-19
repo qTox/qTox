@@ -40,7 +40,6 @@ public slots:
 private slots:
     void findActivePeer();
     void friendAvatarChanged(int FriendId, const QPixmap& pixmap);
-    //void update
 
 private:
     struct PeerVideo
