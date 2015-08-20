@@ -51,6 +51,7 @@ class SettingsWidget;
 class AddFriendForm;
 class CircleWidget;
 class QActionGroup;
+class QPushButton;
 
 class Widget final : public QMainWindow
 {
@@ -159,6 +160,8 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
+    void friendRequestRecieved(const QString& friendAddress, const QString& message);
+    void friendRequestsUpdate();
 
 #ifdef Q_OS_MAC
     void bringAllToFront();
@@ -241,6 +244,7 @@ private:
     bool eventFlag;
     bool eventIcon;
     bool wasMaximized = false;
+    QPushButton* friendRequestsButton;
 
 #ifdef Q_OS_MAC
     QAction* fullscreenAction;

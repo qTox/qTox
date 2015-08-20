@@ -26,12 +26,21 @@
 #include <QTextEdit>
 #include <QPushButton>
 
+class QTabWidget;
+class QSignalMapper;
+
 namespace Ui {class MainWindow;}
 
 class AddFriendForm : public QObject
 {
     Q_OBJECT
 public:
+    enum Mode
+    {
+        AddFriend = 0,
+        FriendRequest = 1
+    };
+
     AddFriendForm();
     AddFriendForm(const AddFriendForm&) = delete;
     AddFriendForm& operator=(const AddFriendForm&) = delete;
@@ -39,18 +48,27 @@ public:
 
     void show(Ui::MainWindow &ui);
     QString getMessage() const;
+    void setMode(Mode mode);
+
+    void addFriendRequest(const QString& friendAddress, const QString& message);
 
 signals:
     void friendRequested(const QString& friendAddress, const QString& message);
+    void friendRequestAccepted(const QString& friendAddress);
+    void friendRequestsSeen();
 
 public slots:
     void onUsernameSet(const QString& userName);
 
 private slots:
     void onSendTriggered();
+    void onFriendRequestAccepted(QWidget *friendWidget);
+    void onFriendRequestRejected(QWidget *friendWidget);
+    void onCurrentChanged(int index);
 
 private:
     void retranslateUi();
+    void addFriendRequestWidget(const QString& friendAddress, const QString& message);
 
 private:
     void setIdFromClipboard();
@@ -61,6 +79,10 @@ private:
     QVBoxLayout layout, headLayout;
     QWidget *head, *main;
     QString lastUsername; // Cached username so we can retranslate the invite message
+    QTabWidget* tabWidget;
+    QVBoxLayout* requestsLayout;
+    QSignalMapper* acceptMapper;
+    QSignalMapper* rejectMapper;
 };
 
 #endif // ADDFRIENDFORM_H

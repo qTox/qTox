@@ -349,6 +349,12 @@ void Widget::init()
 
     if (!Settings::getInstance().getShowSystemTray())
         show();
+
+    friendRequestsButton = nullptr;
+    friendRequestsUpdate();
+
+    connect(addFriendForm, &AddFriendForm::friendRequestsSeen, this, &Widget::friendRequestsUpdate);
+    connect(addFriendForm, &AddFriendForm::friendRequestAccepted, this, &Widget::friendRequestAccepted);
 }
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
@@ -534,6 +540,7 @@ void Widget::forceShow()
 void Widget::onAddClicked()
 {
     hideMainForms();
+    addFriendForm->setMode(AddFriendForm::AddFriend);
     addFriendForm->show(*ui);
     setWindowTitle(tr("Add friend"));
     setActiveToolMenuButton(Widget::AddButton);
@@ -971,10 +978,9 @@ void Widget::playRingtone()
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
-    FriendRequestDialog dialog(this, userId, message);
-
-    if (dialog.exec() == QDialog::Accepted)
-        emit friendRequestAccepted(userId);
+    QApplication::alert(this);
+    eventFlag = true;
+    friendRequestRecieved(userId, message);
 }
 
 void Widget::updateFriendActivity(Friend *frnd)
@@ -1668,6 +1674,38 @@ void Widget::friendListContextMenu(const QPoint &pos)
 
     if (chosenAction == addCircleAction)
         contactListWidget->addCircleWidget();
+}
+
+void Widget::friendRequestRecieved(const QString& friendAddress, const QString& message)
+{
+    addFriendForm->addFriendRequest(friendAddress, message);
+    friendRequestsUpdate();
+}
+
+void Widget::friendRequestsUpdate()
+{
+    unsigned int unreadFriendRequests = Settings::getInstance().getUnreadFriendRequests();
+
+    if (unreadFriendRequests == 0)
+    {
+        delete friendRequestsButton;
+        friendRequestsButton = nullptr;
+    }
+    else
+    {
+        if (!friendRequestsButton)
+        {
+            friendRequestsButton = new QPushButton(tr("%n New Friend Request(s)", "", unreadFriendRequests));
+            friendRequestsButton->setObjectName("green");
+        }
+
+        ui->statusLayout->insertWidget(2, friendRequestsButton);
+        connect(friendRequestsButton, &QPushButton::released, [this]()
+        {
+            onAddClicked();
+            addFriendForm->setMode(AddFriendForm::FriendRequest);
+        });
+    }
 }
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
