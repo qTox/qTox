@@ -76,6 +76,9 @@ protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dropEvent(QDropEvent* event) override;
 
+private slots:
+    void dayTimeout();
+
 private:
     CircleWidget* createCircleWidget(int id = -1);
     QLayout* nextLayout(QLayout* layout, bool forward) const;
@@ -86,6 +89,7 @@ private:
     GenericChatItemLayout* circleLayout = nullptr;
     GenericChatItemLayout groupLayout;
     QVBoxLayout* activityLayout = nullptr;
+    QTimer* dayTimer;
 };
 
 #endif // FRIENDLISTWIDGET_H

@@ -31,6 +31,7 @@
 #include <QMimeData>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
+#include <QTimer>
 #include <cassert>
 
 enum Time : int
@@ -114,6 +115,14 @@ QDate getDateFriend(Friend* contact)
     return Settings::getInstance().getFriendActivity(contact->getToxId());
 }
 
+qint64 timeUntilTomorrow()
+{
+    QDateTime now = QDateTime::currentDateTime();
+    QDateTime tomorrow = now.addDays(1); // Tomorrow.
+    tomorrow.setTime(QTime()); // Midnight.
+    return now.msecsTo(tomorrow);
+}
+
 FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     : QWidget(parent)
     // Prevent Valgrind from complaining. We're changing this to Name here.
@@ -135,6 +144,10 @@ FriendListWidget::FriendListWidget(Widget* parent, bool groupsOnTop)
     setMode(Name);
 
     onGroupchatPositionChanged(groupsOnTop);
+    dayTimer = new QTimer(this);
+    dayTimer->setTimerType(Qt::VeryCoarseTimer);
+    connect(dayTimer, &QTimer::timeout, this, &FriendListWidget::dayTimeout);
+    dayTimer->start(timeUntilTomorrow());
 
     setAcceptDrops(true);
 }
@@ -619,6 +632,17 @@ void FriendListWidget::dropEvent(QDropEvent* event)
         if (circleWidget != nullptr)
             circleWidget->updateStatus();
     }
+}
+
+void FriendListWidget::dayTimeout()
+{
+    if (mode == Activity)
+    {
+        setMode(Name);
+        setMode(Activity); // Refresh all.
+    }
+
+    dayTimer->start(timeUntilTomorrow());
 }
 
 void FriendListWidget::moveWidget(FriendWidget* w, Status s, bool add)
