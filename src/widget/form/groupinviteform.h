@@ -21,6 +21,7 @@
 #define GROUPINVITEFORM_H
 
 #include <QWidget>
+#include <QSet>
 
 class QLabel;
 class QVBoxLayout;
@@ -48,11 +49,13 @@ protected:
     void showEvent(QShowEvent* event) final override;
 
 private slots:
-    void onGroupInviteAccepted(QWidget* groupWidget);
-    void onGroupInviteRejected(QWidget* groupWidget);
+    void onGroupInviteAccepted();
+    void onGroupInviteRejected();
 
 private:
     void retranslateUi();
+    void retranslateAcceptButton(QPushButton* acceptButton);
+    void retranslateRejectButton(QPushButton* rejectButton);
 
 private:
     struct GroupInvite
@@ -67,8 +70,8 @@ private:
     QPushButton* createButton;
     QGroupBox* inviteBox;
     QVBoxLayout* inviteLayout;
-    QSignalMapper* acceptMapper;
-    QSignalMapper* rejectMapper;
+    QSet<QPushButton*> acceptButtons;
+    QSet<QPushButton*> rejectButtons;
     QList<GroupInvite> groupInvites;
 };
 

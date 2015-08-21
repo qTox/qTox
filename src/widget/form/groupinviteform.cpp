@@ -17,12 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "groupinviteform.h"
-#include "ui_mainwindow.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/nexus.h"
-#include "src/core/core.h"
+
 #include <tox/tox.h>
 #include <QSignalMapper>
 #include <QPushButton>
@@ -30,6 +26,11 @@
 #include <QGroupBox>
 #include <QDateTime>
 #include <QLabel>
+#include "ui_mainwindow.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/widget/translator.h"
+#include "src/nexus.h"
+#include "src/core/core.h"
 
 GroupInviteForm::GroupInviteForm()
 {
@@ -56,12 +57,8 @@ GroupInviteForm::GroupInviteForm()
     QHBoxLayout* headLayout = new QHBoxLayout(headWidget);
     headLayout->addWidget(headLabel);
 
-    acceptMapper = new QSignalMapper(this);
-    rejectMapper = new QSignalMapper(this);
-    connect(acceptMapper, SIGNAL(mapped(QWidget*)), this, SLOT(onGroupInviteAccepted(QWidget*)));
-    connect(rejectMapper, SIGNAL(mapped(QWidget*)), this, SLOT(onGroupInviteRejected(QWidget*)));
-
     retranslateUi();
+    Translator::registerHandler(std::bind(&GroupInviteForm::retranslateUi, this), this);
 }
 
 void GroupInviteForm::show(Ui::MainWindow &ui)
@@ -81,15 +78,17 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     groupLabel->setText(tr("Invited by <b>%1</b> on %2.").arg(Nexus::getCore()->getFriendUsername(friendId), QDateTime::currentDateTime().toString()));
     groupLayout->addWidget(groupLabel);
 
-    QPushButton* acceptButton = new QPushButton(tr("Join"));
-    connect(acceptButton, SIGNAL(pressed()), acceptMapper,SLOT(map()));
-    acceptMapper->setMapping(acceptButton, groupWidget);
+    QPushButton* acceptButton = new QPushButton(this);
+    acceptButtons.insert(acceptButton);
+    connect(acceptButton, &QPushButton::released, this, &GroupInviteForm::onGroupInviteAccepted);
     groupLayout->addWidget(acceptButton);
+    retranslateAcceptButton(acceptButton);
 
-    QPushButton* rejectButton = new QPushButton(tr("Decline"));
-    connect(rejectButton, SIGNAL(pressed()), rejectMapper,SLOT(map()));
-    rejectMapper->setMapping(rejectButton, groupWidget);
+    QPushButton* rejectButton = new QPushButton(this);
+    rejectButtons.insert(rejectButton);
+    connect(rejectButton, &QPushButton::released, this, &GroupInviteForm::onGroupInviteRejected);
     groupLayout->addWidget(rejectButton);
+    retranslateRejectButton(rejectButton);
 
     inviteLayout->insertWidget(0, groupWidget);
 
@@ -109,8 +108,9 @@ void GroupInviteForm::showEvent(QShowEvent* event)
     emit groupInvitesSeen();
 }
 
-void GroupInviteForm::onGroupInviteAccepted(QWidget* groupWidget)
+void GroupInviteForm::onGroupInviteAccepted()
 {
+    QWidget* groupWidget = static_cast<QWidget*>(sender());
     int index = inviteLayout->indexOf(groupWidget);
     GroupInvite invite = groupInvites.at(index);
     groupInvites.removeAt(index);
@@ -121,8 +121,9 @@ void GroupInviteForm::onGroupInviteAccepted(QWidget* groupWidget)
     emit groupInviteAccepted(invite.friendId, invite.type, invite.invite);
 }
 
-void GroupInviteForm::onGroupInviteRejected(QWidget* groupWidget)
+void GroupInviteForm::onGroupInviteRejected()
 {
+    QWidget* groupWidget = static_cast<QWidget*>(sender());
     int index = inviteLayout->indexOf(groupWidget);
     groupInvites.removeAt(index);
 
@@ -135,4 +136,20 @@ void GroupInviteForm::retranslateUi()
     headLabel->setText(tr("Groups"));
     createButton->setText(tr("Create new group"));
     inviteBox->setTitle(tr("Group invites"));
+
+    for (QPushButton* acceptButton : acceptButtons)
+        retranslateAcceptButton(acceptButton);
+
+    for (QPushButton* rejectButton : rejectButtons)
+        retranslateRejectButton(rejectButton);
+}
+
+void GroupInviteForm::retranslateAcceptButton(QPushButton *acceptButton)
+{
+    acceptButton->setText(tr("Join"));
+}
+
+void GroupInviteForm::retranslateRejectButton(QPushButton *rejectButton)
+{
+    rejectButton->setText(tr("Decline"));
 }

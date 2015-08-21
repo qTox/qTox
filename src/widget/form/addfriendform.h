@@ -25,9 +25,9 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPushButton>
+#include <QSet>
 
 class QTabWidget;
-class QSignalMapper;
 
 namespace Ui {class MainWindow;}
 
@@ -63,13 +63,15 @@ public slots:
 
 private slots:
     void onSendTriggered();
-    void onFriendRequestAccepted(QWidget *friendWidget);
-    void onFriendRequestRejected(QWidget *friendWidget);
+    void onFriendRequestAccepted();
+    void onFriendRequestRejected();
     void onCurrentChanged(int index);
 
 private:
     void retranslateUi();
     void addFriendRequestWidget(const QString& friendAddress, const QString& message);
+    void retranslateAcceptButton(QPushButton* acceptButton);
+    void retranslateRejectButton(QPushButton* rejectButton);
 
 private:
     void setIdFromClipboard();
@@ -82,8 +84,8 @@ private:
     QString lastUsername; // Cached username so we can retranslate the invite message
     QTabWidget* tabWidget;
     QVBoxLayout* requestsLayout;
-    QSignalMapper* acceptMapper;
-    QSignalMapper* rejectMapper;
+    QSet<QPushButton*> acceptButtons;
+    QSet<QPushButton*> rejectButtons;
 };
 
 #endif // ADDFRIENDFORM_H

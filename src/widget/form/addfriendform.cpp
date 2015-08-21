@@ -43,8 +43,6 @@ AddFriendForm::AddFriendForm()
     bold.setBold(true);
     headLabel.setFont(bold);
 
-    retranslateUi();
-
     tabWidget->addTab(main, QString());
     QScrollArea* scrollArea = new QScrollArea(tabWidget);
     QWidget* requestWidget = new QWidget(tabWidget);
@@ -69,12 +67,9 @@ AddFriendForm::AddFriendForm()
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
+    retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 
-    acceptMapper = new QSignalMapper(requestWidget);
-    rejectMapper = new QSignalMapper(requestWidget);
-    connect(acceptMapper, SIGNAL(mapped(QWidget*)), this, SLOT(onFriendRequestAccepted(QWidget*)));
-    connect(rejectMapper, SIGNAL(mapped(QWidget*)), this, SLOT(onFriendRequestRejected(QWidget*)));
     int size = Settings::getInstance().getFriendRequestSize();
 
     for (int i = 0; i < size; ++i)
@@ -178,8 +173,9 @@ void AddFriendForm::setIdFromClipboard()
     }
 }
 
-void AddFriendForm::onFriendRequestAccepted(QWidget* friendWidget)
+void AddFriendForm::onFriendRequestAccepted()
 {
+    QWidget* friendWidget = static_cast<QWidget*>(sender());
     int index = requestsLayout->indexOf(friendWidget);
     friendWidget->deleteLater();
     requestsLayout->removeWidget(friendWidget);
@@ -188,8 +184,9 @@ void AddFriendForm::onFriendRequestAccepted(QWidget* friendWidget)
     Settings::getInstance().savePersonal();
 }
 
-void AddFriendForm::onFriendRequestRejected(QWidget* friendWidget)
+void AddFriendForm::onFriendRequestRejected()
 {
+    QWidget* friendWidget = static_cast<QWidget*>(sender());
     int index = requestsLayout->indexOf(friendWidget);
     friendWidget->deleteLater();
     requestsLayout->removeWidget(friendWidget);
@@ -219,6 +216,12 @@ void AddFriendForm::retranslateUi()
 
     tabWidget->setTabText(0, tr("Add a friend"));
     tabWidget->setTabText(1, tr("Friend requests"));
+
+    for (QPushButton* acceptButton : acceptButtons)
+        retranslateAcceptButton(acceptButton);
+
+    for (QPushButton* rejectButton : rejectButtons)
+        retranslateRejectButton(rejectButton);
 }
 
 void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const QString &message)
@@ -228,19 +231,36 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
     QVBoxLayout* horLayout = new QVBoxLayout();
     horLayout->setMargin(0);
     friendLayout->addLayout(horLayout);
+
     CroppingLabel* friendLabel = new CroppingLabel(friendWidget);
     friendLabel->setText("<b>" + friendAddress + "</b>");
     horLayout->addWidget(friendLabel);
+
     QLabel* messageLabel = new QLabel(message);
     messageLabel->setWordWrap(true);
     horLayout->addWidget(messageLabel, 1);
-    QPushButton* acceptButton = new QPushButton(tr("Accept"));
-    connect(acceptButton, SIGNAL(pressed()), acceptMapper,SLOT(map()));
-    acceptMapper->setMapping(acceptButton, friendWidget);
+
+    QPushButton* acceptButton = new QPushButton(friendWidget);
+    acceptButtons.insert(acceptButton);
+    connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
     friendLayout->addWidget(acceptButton);
-    QPushButton* rejectButton = new QPushButton(tr("Reject"));
-    connect(rejectButton, SIGNAL(pressed()), rejectMapper,SLOT(map()));
-    rejectMapper->setMapping(rejectButton, friendWidget);
+    retranslateAcceptButton(acceptButton);
+
+    QPushButton* rejectButton = new QPushButton(friendWidget);
+    acceptButtons.insert(acceptButton);
+    connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
     friendLayout->addWidget(rejectButton);
+    retranslateRejectButton(rejectButton);
+
     requestsLayout->insertWidget(0, friendWidget);
+}
+
+void AddFriendForm::retranslateAcceptButton(QPushButton *acceptButton)
+{
+    acceptButton->setText(tr("Accept"));
+}
+
+void AddFriendForm::retranslateRejectButton(QPushButton *rejectButton)
+{
+    rejectButton->setText(tr("Reject"));
 }
