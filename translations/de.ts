@@ -1736,7 +1736,7 @@ Profile does not contain your history.</source>
         <location filename="../src/loginscreen.ui" line="354"/>
         <location filename="../src/loginscreen.ui" line="727"/>
         <source>Username:</source>
-        <translation>Spitzname:</translation>
+        <translation>Profilname:</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="371"/>
@@ -1792,7 +1792,7 @@ Profile does not contain your history.</source>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="114"/>
         <source>The username must not be empty.</source>
-        <translation>Der Spitzname darf nicht leer sein.</translation>
+        <translation>Der Profilname darf nicht leer sein.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="120"/>
