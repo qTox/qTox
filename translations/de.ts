@@ -2779,7 +2779,7 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="1578"/>
         <source>Add new circle...</source>
-        <translation>Zu neuem Kreis hinzufügen...</translation>
+        <translation>Neuen Kreis hinzufügen...</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1604"/>
