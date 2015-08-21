@@ -1752,7 +1752,7 @@ Profile does not contain your history.</source>
     <message>
         <location filename="../src/loginscreen.ui" line="408"/>
         <source>Password strength: %p%</source>
-        <translation>Passwordstärke: %p%</translation>
+        <translation>Passwortstärke: %p%</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="617"/>
