@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE" sourcelanguage="en_US">
+<TS version="2.0" language="de_DE" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -10,7 +10,7 @@
     </message>
     <message>
         <source>Initializing Camera...</source>
-        <translation type="vanished">Initialisiere Kamera...</translation>
+        <translation>Initialisiere Kamera...</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="133"/>
@@ -127,19 +127,19 @@ Zu hohe Auflösungen können zu Problemen in Videokonferenzen führen.</translat
     </message>
     <message>
         <source>Hue</source>
-        <translation type="vanished">Farbton</translation>
+        <translation>Farbton</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="vanished">Helligkeit</translation>
+        <translation>Helligkeit</translation>
     </message>
     <message>
         <source>Saturation</source>
-        <translation type="vanished">Sättigung</translation>
+        <translation>Sättigung</translation>
     </message>
     <message>
         <source>Contrast</source>
-        <translation type="vanished">Kontrast</translation>
+        <translation>Kontrast</translation>
     </message>
 </context>
 <context>
@@ -165,7 +165,7 @@ Zu hohe Auflösungen können zu Problemen in Videokonferenzen führen.</translat
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are using a qTox nightly build.&lt;/p&gt;&lt;p&gt;Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/GIT_VERSION&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GIT_VERSION&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Du verwendest den qTox &quot;Nightly Build&quot;.&lt;/p&gt;&lt;p&gt;Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/GIT_VERSION&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GIT_VERSION&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Du verwendest qTox &quot;Nightly Build&quot;.&lt;/p&gt;&lt;p&gt;Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/GIT_VERSION&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GIT_VERSION&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="98"/>
@@ -193,7 +193,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="181"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ursprünglich entwickelt von: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alle Mitwirkenden findest du unter &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; auf Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ursprünglich entwickelt von: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alle Mitwirkenden findest du unter &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; auf GitHub&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="209"/>
@@ -203,7 +203,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="226"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eine Liste aller bekannten Probleme findest du in unserem &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker (Englisch)&lt;/span&gt;&lt;/a&gt; auf Github. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, melde sie bitte wie in unserem Wiki Artikel &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports (Englisch)&lt;/span&gt;&lt;/a&gt; beschrieben an uns..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eine Liste aller bekannten Probleme findest du in unserem &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Bug-Tracker (Englisch)&lt;/span&gt;&lt;/a&gt; auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, melde sie bitte wie in unserem Wiki-Artikel &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports (Englisch)&lt;/span&gt;&lt;/a&gt; beschrieben an uns.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -600,11 +600,11 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <location filename="../src/core/core.cpp" line="260"/>
         <source>Toxing on qTox</source>
-        <translation>Tox ist Toll!</translation>
+        <translation>Tox ist toll</translation>
     </message>
     <message>
         <source>qTox User</source>
-        <translation type="vanished">Mein Name</translation>
+        <translation>Mein Name</translation>
     </message>
     <message>
         <location filename="../src/core/core.cpp" line="612"/>
@@ -633,16 +633,16 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     </message>
     <message>
         <source>Encryption error</source>
-        <translation type="vanished">Verschlüsselungsproblem</translation>
+        <translation>Verschlüsselungsproblem</translation>
     </message>
     <message>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
-        <translation type="vanished">Die Datendatei ist verschlüsselt, aber eine Verschlüsselung wurde nicht überprüft!</translation>
+        <translation>Die Datendatei ist verschlüsselt, aber eine Verschlüsselung wurde nicht überprüft.</translation>
     </message>
     <message>
         <source>Please enter the password for the %1 profile.</source>
         <comment>used in load() when no pw is already set</comment>
-        <translation type="vanished">Hallo %1,
+        <translation>Hallo %1,
 bitte gib dein Profil-Passwort ein.</translation>
     </message>
     <message>
@@ -654,11 +654,11 @@ bitte gib dein Profil-Passwort ein.</translation>
     <message>
         <source>The profile password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation type="vanished">Entschuldigung, das Passwort passt nicht. Versuch doch ein anderes!</translation>
+        <translation>Entschuldigung, das Passwort passt nicht. Versuch doch ein anderes!</translation>
     </message>
     <message>
         <source>Change profile</source>
-        <translation type="vanished">Profil wechseln</translation>
+        <translation>Profil wechseln</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="120"/>
@@ -675,7 +675,7 @@ Die Verlaufsfunktion wird erst einmal ausgeschaltet!</translation>
     <message>
         <source>Please enter the password for the chat history for the %1 profile.</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation type="vanished">%1, bitte gib dein Gesprächsverlaufpasswort ein.</translation>
+        <translation>%1, bitte gib dein Profil-Passwort ein.</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="127"/>
@@ -703,11 +703,11 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>NO Password</source>
-        <translation type="vanished">Passwort fehlt</translation>
+        <translation>Passwort fehlt</translation>
     </message>
     <message>
         <source>Local file encryption is enabled, but there is no password! It will be disabled.</source>
-        <translation type="vanished">Die Verschlüsselung der lokalen Dateien ist aktiviert, aber es ist kein Passwort vorhanden. Die Verschlüsselung wird deswegen abgeschaltet.</translation>
+        <translation>Die Verschlüsselung der lokalen Dateien ist aktiviert, aber es ist kein Passwort vorhanden. Die Verschlüsselung wird deswegen abgeschaltet.</translation>
     </message>
 </context>
 <context>
@@ -787,7 +787,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="354"/>
         <source>Open file.</source>
-        <translation>Datei öffen.</translation>
+        <translation>Datei öffnen.</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="359"/>
@@ -1004,12 +1004,12 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>User alias</source>
-        <translation type="vanished">Nutzername</translation>
+        <translation>Nutzername</translation>
     </message>
     <message>
         <source>You can also set this by clicking the chat form name.
 Alias:</source>
-        <translation type="vanished">Bitte trage hier einen neuen Namen ein.
+        <translation>Bitte trage hier einen neuen Namen ein.
 Das lässt sich auch durch einen Klick auf den Namen im Chat erreichen.</translation>
     </message>
 </context>
@@ -1106,7 +1106,7 @@ Das lässt sich auch durch einen Klick auf den Namen im Chat erreichen.</transla
         <location filename="../src/widget/form/settings/generalsettings.ui" line="119"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>Wenn aktiv, qTox startet minimiert.</translation>
+        <translation>Wenn aktiv, startet qTox minimiert.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
@@ -1118,7 +1118,7 @@ Das lässt sich auch durch einen Klick auf den Namen im Chat erreichen.</transla
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Wenn aktiv, qTox wird nicht sofort beendet, sondern in die Systemleiste minimiert.</translation>
+        <translation>Wenn aktiv, wird qTox nicht sofort beendet, sondern in die Systemleiste minimiert.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="146"/>
@@ -1130,7 +1130,7 @@ instead of closing itself.</source>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Wenn aktiv, qTox wird in die Systemleiste minimiert.</translation>
+        <translation>Wenn aktiv, wird qTox in die Systemleiste minimiert.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="173"/>
@@ -1140,7 +1140,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="249"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Wenn aktiv, qTox wird bei Systemstart geladen.</translation>
+        <translation>Wenn aktiv, wird qTox bei Systemstart geladen.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
@@ -1159,7 +1159,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Save to:</source>
-        <translation type="vanished">Speicherort:</translation>
+        <translation>Speicherort:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="293"/>
@@ -1351,13 +1351,13 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="655"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>UDP aktivieren (Empfohlen)</translation>
+        <translation>UDP aktivieren (empfohlen)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="662"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>IPv6 aktivieren (Empfohlen)</translation>
+        <translation>IPv6 aktivieren (empfohlen)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="696"/>
@@ -1524,12 +1524,12 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Group title</source>
-        <translation type="vanished">Gruppenname</translation>
+        <translation>Gruppenname</translation>
     </message>
     <message>
         <source>You can also set this by clicking the chat form name.
 Title:</source>
-        <translation type="vanished">Lässt sich auch durch einen Klick auf den Name im Chat ändern.
+        <translation type="unfinished">Lässt sich auch durch einen Klick auf den Name im Chat ändern.
 Name:</translation>
     </message>
 </context>
@@ -1542,11 +1542,11 @@ Name:</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="vanished">Dein Name</translation>
+        <translation>Dein Name</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="vanished">Dein Status</translation>
+        <translation>Dein Status</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="67"/>
@@ -1628,31 +1628,31 @@ Teile sie einfach deinen Bekannten mit!</translation>
     </message>
     <message>
         <source>Profiles</source>
-        <translation type="vanished">Profil Informationen</translation>
+        <translation>Profil Informationen</translation>
     </message>
     <message>
         <source>Available profiles:</source>
-        <translation type="vanished">Verfügbare Profile:</translation>
+        <translation>Verfügbare Profile:</translation>
     </message>
     <message>
         <source>Currently selected profile.</source>
         <comment>toolTip for currently set profile</comment>
-        <translation type="vanished">Zurzeit verwendetes Profile.</translation>
+        <translation>Zurzeit verwendetes Profile.</translation>
     </message>
     <message>
         <source>Load selected profile and switch to it.</source>
         <comment>tooltip for loading profile button</comment>
-        <translation type="vanished">Ausgewähltes Profil laden und verwenden.</translation>
+        <translation>Ausgewähltes Profil laden und verwenden.</translation>
     </message>
     <message>
         <source>Load</source>
         <comment>load profile button</comment>
-        <translation type="vanished">Profil laden</translation>
+        <translation>Profil laden</translation>
     </message>
     <message>
         <source>Rename selected profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="vanished">Ausgewähltes Profil umbenennen.</translation>
+        <translation>Ausgewähltes Profil umbenennen.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="179"/>
@@ -1682,7 +1682,7 @@ Profile does not contain your history.</source>
     <message>
         <source>Delete selected profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="vanished">Löscht das oben ausgewählte Profil.</translation>
+        <translation>Löscht das oben ausgewählte Profil.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="189"/>
@@ -1693,22 +1693,22 @@ Profile does not contain your history.</source>
     <message>
         <source>Import Tox profile from a .tox file.</source>
         <comment>tooltip for importing profile button</comment>
-        <translation type="vanished">Importiert ein Profil in Form einer &lt;i&gt;*.tox&lt;/i&gt; Datei.</translation>
+        <translation>Importiert ein Profil in Form einer &lt;i&gt;*.tox&lt;/i&gt; Datei.</translation>
     </message>
     <message>
         <source>Import a profile</source>
         <comment>import profile button</comment>
-        <translation type="vanished">Profil importieren</translation>
+        <translation>Profil importieren</translation>
     </message>
     <message>
         <source>Create new Tox ID and switch to it.</source>
         <comment>tooltip for creating new Tox ID button</comment>
-        <translation type="vanished">Erstellt ein neues Profil und wechselt zu diesem.</translation>
+        <translation>Erstellt ein neues Profil und wechselt zu diesem.</translation>
     </message>
     <message>
         <source>New Tox ID</source>
         <comment>new profile button</comment>
-        <translation type="vanished">Neues Profil</translation>
+        <translation>Neues Profil</translation>
     </message>
 </context>
 <context>
@@ -1922,31 +1922,31 @@ Bitte melde diesen Fehler an die Entwickler.</translation>
     </message>
     <message>
         <source>Please set your new chat history password.</source>
-        <translation type="vanished">Bitte wähle ein neues Passwort für die Verschlüsselung deiner Gesprächsverläufe.</translation>
+        <translation>Bitte wähle ein neues Passwort für die Verschlüsselung deiner Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.</source>
-        <translation type="vanished">Es scheint, dass bereits eine verschlüsselte Verlaufsdatei vorhanden ist. Sollte das angegebene Passwort passen, wird diese weiterverwendet.</translation>
+        <translation>Es scheint, dass bereits eine verschlüsselte Verlaufsdatei vorhanden ist. Sollte das angegebene Passwort passen, wird diese weiterverwendet.</translation>
     </message>
     <message>
         <source>Use data file password</source>
         <comment>pushbutton text</comment>
-        <translation type="vanished">Das Datenpasswort verwenden</translation>
+        <translation>Das Datenpasswort verwenden</translation>
     </message>
     <message>
         <source>Successfully decrypted old chat history</source>
         <comment>popup title</comment>
-        <translation type="vanished">Der alte Verlauf wurde erfolgreich entschlüsselt</translation>
+        <translation>Der alte Verlauf wurde erfolgreich entschlüsselt</translation>
     </message>
     <message>
         <source>You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.</source>
         <comment>popup text</comment>
-        <translation type="vanished">Die alte Verlaufsdatei wurde erfolgreich entschlüsselt und wurde in deine aktuellen Verläufe integriert.</translation>
+        <translation>Die alte Verlaufsdatei wurde erfolgreich entschlüsselt und wurde in deine aktuellen Verläufe integriert.</translation>
     </message>
     <message>
         <source>Old encrypted chat history</source>
         <comment>popup title</comment>
-        <translation type="vanished">Ehemalige Gesprächsverläufe</translation>
+        <translation>Ehemalige Gesprächsverläufe</translation>
     </message>
     <message>
         <source>There is currently an unused encrypted chat history, but the password you just entered doesn&apos;t match.
@@ -1954,59 +1954,59 @@ Bitte melde diesen Fehler an die Entwickler.</translation>
 If you don&apos;t care about the old history, you may delete it and use the password you just entered.
 Otherwise, hit Cancel to try again.</source>
         <comment>This happens when enabling encryption after previously &quot;Disabling History&quot;</comment>
-        <translation type="vanished">Es ist eine ehemalige Verlaufsdatei vorhanden, allerdings passt das Passwort nicht, dass du angegeben hast.
+        <translation>Es ist eine ehemalige Verlaufsdatei vorhanden, allerdings passt das Passwort nicht, dass du angegeben hast.
 
 Wenn es dich nicht stört, kann sie gelöscht und das neue Passwort verwendet werden.
 Falls doch, drücke auf Abbrechen und versuche es erneut.</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="vanished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Are you absolutely sure you want to lose the unused encrypted chat history?</source>
         <comment>secondary popup</comment>
-        <translation type="vanished">Bestätige, dass du die alten Verläufe löschen möchtest.</translation>
+        <translation>Bestätige, dass du die alten Verläufe löschen möchtest.</translation>
     </message>
     <message>
         <source>Old encrypted chat history</source>
         <comment>title</comment>
-        <translation type="vanished">Ehemalige Gesprächsverläufe</translation>
+        <translation>Ehemalige Gesprächsverläufe</translation>
     </message>
     <message>
         <source>Would you like to decrypt your chat history?
 Otherwise it will be deleted.</source>
-        <translation type="vanished">Möchtest du deinen Gesprächsverlauf entschlüsseln oder lieber löschen?</translation>
+        <translation>Möchtest du deinen Gesprächsverlauf entschlüsseln oder lieber löschen?</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="vanished">Entschlüsseln</translation>
+        <translation>Entschlüsseln</translation>
     </message>
     <message>
         <source>Are you sure you want to lose your entire chat history?</source>
-        <translation type="vanished">Bestätige, dass du deine Gesprächsverläufe löschen möchtest.</translation>
+        <translation>Bestätige, dass du deine Gesprächsverläufe löschen möchtest.</translation>
     </message>
     <message>
         <source>Please set your new data file password.</source>
-        <translation type="vanished">Bitte wähle ein neues Passwort für deine Daten.</translation>
+        <translation>Bitte wähle ein neues Passwort für deine Daten.</translation>
     </message>
     <message>
         <source>Use chat history password</source>
         <comment>pushbutton text</comment>
-        <translation type="vanished">Gesprächsverlauf-Passwort wiederverwenden</translation>
+        <translation>Gesprächsverlauf-Passwort wiederverwenden</translation>
     </message>
     <message>
         <source>Decrypt your data file</source>
         <comment>title</comment>
-        <translation type="vanished">Datendatei entschlüsseln</translation>
+        <translation>Datendatei entschlüsseln</translation>
     </message>
     <message>
         <source>Would you like to decrypt your data file?</source>
-        <translation type="vanished">Bestätige, dass du deine Datendatei entschlüsseln möchtest.</translation>
+        <translation>Bestätige, dass du deine Datendatei entschlüsseln möchtest.</translation>
     </message>
 </context>
 <context>
@@ -2057,7 +2057,7 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
     </message>
     <message>
         <source>Send Typing Notifications</source>
-        <translation type="vanished">Eingabehinweis senden</translation>
+        <translation>Eingabehinweis senden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="57"/>
@@ -2068,31 +2068,31 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Keep chat history (mostly stable)</source>
-        <translation type="vanished">Gesprächsverläufe dauerhaft sichern</translation>
+        <translation>Gesprächsverläufe dauerhaft sichern</translation>
     </message>
     <message>
         <source>Local file encryption</source>
-        <translation type="vanished">Verschlüsselung</translation>
+        <translation>Verschlüsselung</translation>
     </message>
     <message>
         <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
-        <translation type="vanished">Jegliche Kommunikation über qTox ist vollständig verschlüsselt. Diese Funktion lässt sich &lt;i&gt;nicht&lt;/i&gt; deaktiviern. Darüber hinaus kannst du deine lokalen Dateien verschlüsseln.</translation>
+        <translation>Jegliche Kommunikation über qTox ist vollständig verschlüsselt. Diese Funktion lässt sich &lt;i&gt;nicht&lt;/i&gt; deaktiviern. Darüber hinaus kannst du deine lokalen Dateien verschlüsseln.</translation>
     </message>
     <message>
         <source>Encrypt Tox data file</source>
-        <translation type="vanished">Datendateien verschlüsseln</translation>
+        <translation>Datendateien verschlüsseln</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="vanished">Passwort wechseln</translation>
+        <translation>Passwort wechseln</translation>
     </message>
     <message>
         <source>Encrypt chat history</source>
-        <translation type="vanished">Gesprächsverläufe verschlüsseln</translation>
+        <translation>Gesprächsverläufe verschlüsseln</translation>
     </message>
     <message>
         <source>Nospam</source>
-        <translation type="vanished">Störende Anfragen blockieren</translation>
+        <translation>Störende Anfragen blockieren</translation>
     </message>
     <message>
         <source>Nospam is part of your Tox ID.
@@ -2100,21 +2100,21 @@ It is there to help you change your Tox ID when you feel like you are getting to
 When you change nospam, your current contacts still can communicate with you,
 but new contacts need to know your new Tox ID to be able to add you.</source>
         <comment>toolTip for nospam</comment>
-        <translation type="vanished">Dies ist ein Teil deiner ID.
+        <translation>Dies ist ein Teil deiner ID.
 Diese ID soll dabei helfen, deine Tox ID zu ändern, falls dich zu viele ungewollte Anfragen erreichen.
 Deine bereits vorhandenen Kontakte können dich auch weiterhin erreichen,
 nur neue Kontakte benötigen deine neue ID.</translation>
     </message>
     <message>
         <source>Generate random nospam</source>
-        <translation type="vanished">ID Generieren</translation>
+        <translation>ID generieren</translation>
     </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
         <source>User Profile</source>
-        <translation type="vanished">Nutzerprofil</translation>
+        <translation>Nutzerprofil</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="196"/>
@@ -2130,25 +2130,25 @@ nur neue Kontakte benötigen deine neue ID.</translation>
     </message>
     <message>
         <source>Unable to open this file</source>
-        <translation type="vanished">Entschuldige, die ausgewählte Datei konnte nicht geöffnet werden</translation>
+        <translation>Entschuldige, die ausgewählte Datei konnte nicht geöffnet werden</translation>
     </message>
     <message>
         <source>Unable to read this image</source>
-        <translation type="vanished">Entschuldige, das ausgewählte Bild konnte nicht gelesen werden</translation>
+        <translation>Entschuldige, das ausgewählte Bild konnte nicht gelesen werden</translation>
     </message>
     <message>
         <source>This image is too big</source>
-        <translation type="vanished">Entschuldige, dieses Bild ist leider etwas zu groß</translation>
+        <translation>Entschuldige, dieses Bild ist leider etwas zu groß</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="vanished">Anruf aktiv</translation>
+        <translation>Anruf aktiv</translation>
     </message>
     <message>
         <source>You can&apos;t switch profiles while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="vanished">Entschuldige, aber du kannst dein Profil nicht wechseln, solange ein Anfruf aktiv ist.</translation>
+        <translation>Entschuldige, aber du kannst dein Profil nicht wechseln, solange ein Anfruf aktiv ist.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="247"/>
@@ -2159,12 +2159,12 @@ nur neue Kontakte benötigen deine neue ID.</translation>
     <message>
         <source>Profile already exists</source>
         <comment>rename confirm title</comment>
-        <translation type="vanished">Profil bereits vorhanden</translation>
+        <translation>Profil bereits vorhanden</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>rename confirm text</comment>
-        <translation type="vanished">Entschuldige, aber ein Profil namens &apos;%1&apos; existiert bereits. Möchtest du es überschreiben?</translation>
+        <translation>Entschuldige, aber ein Profil namens &apos;%1&apos; existiert bereits. Möchtest du es überschreiben?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="206"/>
@@ -2287,17 +2287,17 @@ Teile sie einfach deinen Bekannten mit!</translation>
     <message>
         <source>Profile currently loaded</source>
         <comment>current profile deletion warning title</comment>
-        <translation type="vanished">Profil zurzeit in Verwendung</translation>
+        <translation>Profil zurzeit in Verwendung</translation>
     </message>
     <message>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
-        <translation type="vanished">Dieses Profil wird zurzeit verwendet. Bevor du dieses Profil löschst, solltest du ein anderes laden.</translation>
+        <translation>Dieses Profil wird zurzeit verwendet. Bevor du dieses Profil löschst, solltest du ein anderes laden.</translation>
     </message>
     <message>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation type="vanished">Profil wird gelöscht</translation>
+        <translation>Profil wird gelöscht</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="286"/>
@@ -2308,32 +2308,32 @@ Teile sie einfach deinen Bekannten mit!</translation>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="vanished">Profil importieren</translation>
+        <translation>Profil importieren</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="vanished">Tox Datei (*.tox)</translation>
+        <translation>Tox Datei (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="vanished">Nicht-Tox Datei ignoriert</translation>
+        <translation>Nicht-Tox-Datei ignoriert</translation>
     </message>
     <message>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="vanished">Es scheint, dass du eine Datei gewählt hast, die nicht zu Tox gehört. Sie wird erst einmal ignoriert.</translation>
+        <translation>Es scheint, dass du eine Datei gewählt hast, die nicht zu Tox gehört. Sie wird erst einmal ignoriert.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="vanished">Profil bereits vorhanden</translation>
+        <translation>Profil bereits vorhanden</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="vanished">Ein Profil mit den Namen &apos;%1&apos; existiert bereits. Möchtest du es löschen?</translation>
+        <translation>Ein Profil mit den Namen &apos;%1&apos; existiert bereits. Möchtest du es löschen?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="309"/>
@@ -2520,11 +2520,11 @@ Viele Grüße
     <name>Settings</name>
     <message>
         <source>Choose a profile</source>
-        <translation type="vanished">Wähle ein Profil</translation>
+        <translation>Wähle ein Profil</translation>
     </message>
     <message>
         <source>Please choose which identity to use</source>
-        <translation type="vanished">Bitte wähle ein Profil aus</translation>
+        <translation>Bitte wähle ein Profil aus</translation>
     </message>
     <message>
         <location filename="../src/persistence/settings.cpp" line="1363"/>
