@@ -5,6 +5,7 @@ qTox
 
 qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms.
 
+
 ## Download
 
 Below you can download the latest nighly builds. As they do not update automatically at this stage of development make sure you get back to this site and regularely download the latest version of qTox.
@@ -19,8 +20,11 @@ Below you can download the latest nighly builds. As they do not update automatic
   - [**Gentoo overlay**](https://github.com/Tox/gentoo-overlay-tox)
 * **Mac**: [**download**](#) - Currently unmaintained<br/>
 
+
 ## Screenshots
-Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features
+**Note**: The screenshots may not always be up to date, but they should give a good idea of the general look and features.
+
+
 ![Screenshot 01](https://i.imgur.com/hwGmDeK.png)
 ![Screenshot 02](https://i.imgur.com/tmX8z9s.png)
 
