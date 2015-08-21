@@ -1,0 +1,138 @@
+/*
+    Copyright © 2015 by The qTox Project
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    qTox is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+#include "groupinviteform.h"
+#include "ui_mainwindow.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/nexus.h"
+#include "src/core/core.h"
+#include <tox/tox.h>
+#include <QSignalMapper>
+#include <QPushButton>
+#include <QBoxLayout>
+#include <QGroupBox>
+#include <QDateTime>
+#include <QLabel>
+
+GroupInviteForm::GroupInviteForm()
+{
+    QVBoxLayout* layout = new QVBoxLayout(this);
+    createButton = new QPushButton(this);
+    connect(createButton, &QPushButton::released, [this]()
+    {
+        emit groupCreate(TOX_GROUPCHAT_TYPE_AV);
+    });
+
+    inviteBox = new QGroupBox(this);
+    inviteLayout = new QVBoxLayout(inviteBox);
+    inviteLayout->addStretch(1);
+
+    layout->addWidget(createButton);
+    layout->addWidget(inviteBox);
+
+    QFont bold;
+    bold.setBold(true);
+
+    headLabel = new QLabel(this);
+    headLabel->setFont(bold);
+    headWidget = new QWidget(this);
+    QHBoxLayout* headLayout = new QHBoxLayout(headWidget);
+    headLayout->addWidget(headLabel);
+
+    acceptMapper = new QSignalMapper(this);
+    rejectMapper = new QSignalMapper(this);
+    connect(acceptMapper, SIGNAL(mapped(QWidget*)), this, SLOT(onGroupInviteAccepted(QWidget*)));
+    connect(rejectMapper, SIGNAL(mapped(QWidget*)), this, SLOT(onGroupInviteRejected(QWidget*)));
+
+    retranslateUi();
+}
+
+void GroupInviteForm::show(Ui::MainWindow &ui)
+{
+    ui.mainContent->layout()->addWidget(this);
+    ui.mainHead->layout()->addWidget(headWidget);
+    QWidget::show();
+    headWidget->show();
+}
+
+void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite)
+{
+    QWidget* groupWidget = new QWidget(this);
+    QHBoxLayout* groupLayout = new QHBoxLayout(groupWidget);
+
+    CroppingLabel* groupLabel = new CroppingLabel(this);
+    groupLabel->setText(tr("Invited by <b>%1</b> on %2.").arg(Nexus::getCore()->getFriendUsername(friendId), QDateTime::currentDateTime().toString()));
+    groupLayout->addWidget(groupLabel);
+
+    QPushButton* acceptButton = new QPushButton(tr("Join"));
+    connect(acceptButton, SIGNAL(pressed()), acceptMapper,SLOT(map()));
+    acceptMapper->setMapping(acceptButton, groupWidget);
+    groupLayout->addWidget(acceptButton);
+
+    QPushButton* rejectButton = new QPushButton(tr("Decline"));
+    connect(rejectButton, SIGNAL(pressed()), rejectMapper,SLOT(map()));
+    rejectMapper->setMapping(rejectButton, groupWidget);
+    groupLayout->addWidget(rejectButton);
+
+    inviteLayout->insertWidget(0, groupWidget);
+
+    GroupInvite group;
+    group.friendId = friendId;
+    group.type = type;
+    group.invite = invite;
+    groupInvites.push_front(group);
+
+    if (isVisible())
+        emit groupInvitesSeen();
+}
+
+void GroupInviteForm::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+    emit groupInvitesSeen();
+}
+
+void GroupInviteForm::onGroupInviteAccepted(QWidget* groupWidget)
+{
+    int index = inviteLayout->indexOf(groupWidget);
+    GroupInvite invite = groupInvites.at(index);
+    groupInvites.removeAt(index);
+
+    groupWidget->deleteLater();
+    inviteLayout->removeWidget(groupWidget);
+
+    emit groupInviteAccepted(invite.friendId, invite.type, invite.invite);
+}
+
+void GroupInviteForm::onGroupInviteRejected(QWidget* groupWidget)
+{
+    int index = inviteLayout->indexOf(groupWidget);
+    groupInvites.removeAt(index);
+
+    groupWidget->deleteLater();
+    inviteLayout->removeWidget(groupWidget);
+}
+
+void GroupInviteForm::retranslateUi()
+{
+    headLabel->setText(tr("Groups"));
+    createButton->setText(tr("Create new group"));
+    inviteBox->setTitle(tr("Group invites"));
+}

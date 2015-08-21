@@ -38,7 +38,8 @@ public:
     enum Mode
     {
         AddFriend = 0,
-        FriendRequest = 1
+        FriendRequest = 1,
+        GroupInvite = 2
     };
 
     AddFriendForm();

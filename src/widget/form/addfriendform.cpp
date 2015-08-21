@@ -45,14 +45,14 @@ AddFriendForm::AddFriendForm()
 
     retranslateUi();
 
-    tabWidget->addTab(main, tr("Add a friend"));
+    tabWidget->addTab(main, QString());
     QScrollArea* scrollArea = new QScrollArea(tabWidget);
     QWidget* requestWidget = new QWidget(tabWidget);
     scrollArea->setWidget(requestWidget);
     scrollArea->setWidgetResizable(true);
     requestsLayout = new QVBoxLayout(requestWidget);
     requestsLayout->addStretch(1);
-    tabWidget->addTab(scrollArea, tr("Friend requests"));
+    tabWidget->addTab(scrollArea, QString());
 
     main->setLayout(&layout);
     layout.addWidget(&toxIdLabel);
@@ -177,14 +177,15 @@ void AddFriendForm::setIdFromClipboard()
             toxId.setText(id);
     }
 }
-#include <QDebug>
+
 void AddFriendForm::onFriendRequestAccepted(QWidget* friendWidget)
 {
     int index = requestsLayout->indexOf(friendWidget);
     friendWidget->deleteLater();
     requestsLayout->removeWidget(friendWidget);
     emit friendRequestAccepted(Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1).first);
-    qDebug() << "Accepted:" << requestsLayout->count() - index - 1;
+    Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
+    Settings::getInstance().savePersonal();
 }
 
 void AddFriendForm::onFriendRequestRejected(QWidget* friendWidget)
@@ -194,7 +195,6 @@ void AddFriendForm::onFriendRequestRejected(QWidget* friendWidget)
     requestsLayout->removeWidget(friendWidget);
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
     Settings::getInstance().savePersonal();
-    qDebug() << "Rejected:" << requestsLayout->count() - index - 1;
 }
 
 void AddFriendForm::onCurrentChanged(int index)
@@ -216,6 +216,9 @@ void AddFriendForm::retranslateUi()
     message.setPlaceholderText(tr("%1 here! Tox me maybe?",
                 "Default message in friend requests if the field is left blank. Write something appropriate!")
                 .arg(lastUsername));
+
+    tabWidget->setTabText(0, tr("Add a friend"));
+    tabWidget->setTabText(1, tr("Friend requests"));
 }
 
 void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const QString &message)
@@ -226,7 +229,7 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
     horLayout->setMargin(0);
     friendLayout->addLayout(horLayout);
     CroppingLabel* friendLabel = new CroppingLabel(friendWidget);
-    friendLabel->setText("<b>" "12345678901234567890" "</b>");
+    friendLabel->setText("<b>" + friendAddress + "</b>");
     horLayout->addWidget(friendLabel);
     QLabel* messageLabel = new QLabel(message);
     messageLabel->setWordWrap(true);
