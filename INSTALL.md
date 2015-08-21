@@ -165,7 +165,7 @@ sudo apt-get install libtool autotools-dev automake checkinstall check libopus-d
 
 Fedora:
 ```bash
-sudo dnf install libtool autoconf automake check check-devel libsodium-devel
+sudo dnf install libtool autoconf automake check check-devel libsodium-devel opus-devel libvpx-devel
 ```
 
 openSUSE:
