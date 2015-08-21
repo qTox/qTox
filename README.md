@@ -22,7 +22,7 @@ Below you can download the latest nighly builds. As they do not update automatic
 
 
 ## Screenshots
-**Note**: The screenshots may not always be up to date, but they should give a good idea of the general look and features.
+**Note:** The screenshots may not always be up to date, but they should give a good idea of the general look and features.
 
 
 ![Screenshot 01](https://i.imgur.com/hwGmDeK.png)
