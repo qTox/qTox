@@ -3,7 +3,7 @@ qTox
 
  [**Compile**](/INSTALL.md) **⦁** [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **⦁** [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁** [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **⦁** [**Jenkins builds**](https://build.tox.chat/) **⦁** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **⦁** [**Mailing list**](https://lists.tox.chat) **⦁** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
 
-qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms.
+**qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms.**
 
 
 #### Download
