@@ -1,12 +1,12 @@
 qTox
 ======
 
- [**Compiling**](/INSTALL.md) **⦁** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **⦁** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **⦁** [**Jenkins builds**](https://build.tox.chat/) **⦁** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **⦁** [**Mailing list**](https://lists.tox.chat) **⦁** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
+ [**Compile**](/INSTALL.md) **⦁** [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **⦁** [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁** [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **⦁** [**Jenkins builds**](https://build.tox.chat/) **⦁** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **⦁** [**Mailing list**](https://lists.tox.chat) **⦁** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
 
 qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms.
 
 
-## Download
+#### Download
 
 Below you can download the latest nighly builds. As they do not update automatically at this stage of development make sure you get back to this site and regularely download the latest version of qTox.
 
@@ -21,15 +21,15 @@ Below you can download the latest nighly builds. As they do not update automatic
 * **Mac**: [**download**](#) - Currently unmaintained<br/>
 
 
-## Screenshots
-**Note:** The screenshots may not always be up to date, but they should give a good idea of the general look and features.
+#### Screenshots
+Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features.
 
 
 ![Screenshot 01](https://i.imgur.com/hwGmDeK.png)
 ![Screenshot 02](https://i.imgur.com/tmX8z9s.png)
 
 
-## Features
+#### Features
 
 - One to one chat with friends
 - Group chats
