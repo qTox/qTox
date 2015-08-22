@@ -581,7 +581,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <location filename="../src/core/core.cpp" line="259"/>
         <source>Toxing on qTox</source>
-        <translation>Tox ist toll</translation>
+        <translation>Tox ist toll!</translation>
     </message>
     <message>
         <location filename="../src/core/core.cpp" line="611"/>
@@ -630,7 +630,7 @@ Die Verlaufsfunktion wird erst einmal ausgeschaltet!</translation>
         <location filename="../src/core/coreencryption.cpp" line="127"/>
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation type="unfinished">%1, bitte gib dein Chatverlaufpasswort ein.</translation>
+        <translation>Um den Chat-Verlauf anzusehen, gib das Passwort für %1 ein.</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="129"/>
@@ -1037,7 +1037,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/widget/form/settings/generalsettings.ui" line="119"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>Wenn aktiv, startet qTox minimiert.</translation>
+        <translation>qTox minimiert starten.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
@@ -1049,7 +1049,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Wenn aktiv, wird qTox nicht sofort beendet, sondern in die Systemleiste minimiert.</translation>
+        <translation>qTox wird nicht beendet, sondern in die Systemleiste minimiert.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="146"/>
@@ -1061,7 +1061,7 @@ instead of closing itself.</source>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>Wenn aktiv, wird qTox in die Systemleiste minimiert.</translation>
+        <translation>qTox wird in die Systemleiste minimiert.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="173"/>
@@ -1385,12 +1385,12 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/groupchatform.cpp" line="370"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">%1 Benutzer im Chat</translation>
+        <translation>%1 Benutzer im Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="167"/>
         <source>%1 users in chat</source>
-        <translation type="unfinished">%1 Benutzer im Chat</translation>
+        <translation>%1 Benutzer im Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="212"/>
@@ -1754,7 +1754,7 @@ Bitte melde diesen Fehler an die Entwickler.</translation>
     <message>
         <location filename="../src/nexus.cpp" line="95"/>
         <source>Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenster</translation>
     </message>
     <message>
         <location filename="../src/nexus.cpp" line="98"/>
@@ -2232,7 +2232,7 @@ Viele Grüße
         <source>It appears that qTox has to use the old tox1 protocol to access DNS record of your friend&apos;s Tox ID.
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
-If unsure, press âNoâ, so that request to ToxDNS service will not be made using unsecure protocol.</source>
+If unsure, press “No”, so that request to ToxDNS service will not be made using unsecure protocol.</source>
         <translation>Es scheint, dass qTox ein altes Protokoll verwenden muss, um sich mit deinem Kontakt zu verbinden.
 Leider ist die Alternativmethode nicht sicher und es besteht die Gefahr, dass an ToxDNS gesendete Daten abgefangen werden.
 Soll das Alternativprotokoll trotzdem verwendet werden?
@@ -2316,7 +2316,7 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="262"/>
         <source>File</source>
-        <translation type="unfinished">Datei</translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="264"/>
@@ -2336,17 +2336,17 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="281"/>
         <source>Edit</source>
-        <translation type="unfinished">Editieren</translation>
+        <translation>Editieren</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="284"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="286"/>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter...</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="297"/>
@@ -2367,17 +2367,17 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="306"/>
         <source>Next Conversation</source>
-        <translation type="unfinished">Nächste Konversation</translation>
+        <translation>Nächste Konversation</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="311"/>
         <source>Previous Conversation</source>
-        <translation type="unfinished">Vorherige Konversation</translation>
+        <translation>Vorherige Konversation</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="317"/>
         <source>Bring All to Front</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nach vorne bringen</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="552"/>
