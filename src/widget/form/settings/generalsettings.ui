@@ -246,7 +246,7 @@ instead of system taskbar.</string>
             <item>
              <widget class="QCheckBox" name="cbAutorun">
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Start qTox on operating system startup (current profile).</string>
               </property>
               <property name="text">
                <string>Autostart</string>
