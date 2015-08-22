@@ -47,6 +47,7 @@
 #include "src/widget/form/filesform.h"
 #include "src/widget/form/profileform.h"
 #include "src/widget/form/settingswidget.h"
+#include "tool/removefrienddialog.h"
 #include <cassert>
 #include <QMessageBox>
 #include <QDebug>
@@ -994,14 +995,12 @@ void Widget::removeFriend(Friend* f, bool fake)
 {
     if (!fake)
     {
-        QMessageBox::StandardButton removeFriendMB;
-        removeFriendMB = QMessageBox::question(0,
-                                    tr("Removal of friend ")+"\""+ f->getDisplayedName()+"\"",
-                                    tr("Do you want to remove history as well?"),
-                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-        if (removeFriendMB == QMessageBox::Cancel)
+        RemoveFriendDialog ask(this, f);
+        ask.exec();
+
+        if (!ask.accepted())
                return;
-        else if (removeFriendMB == QMessageBox::Yes)
+        else if (ask.removeHistory())
             HistoryKeeper::getInstance()->removeFriendHistory(f->getToxId().publicKey);
     }
 
