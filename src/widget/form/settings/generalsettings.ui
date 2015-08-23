@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>639</width>
-        <height>1221</height>
+        <height>1359</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -402,6 +402,13 @@ will be sent to them when they appear online to you.</string>
             </property>
             <property name="text">
              <string>Compact contact list</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbGroupPeerListSide">
+            <property name="text">
+             <string>Show group peer list on the side.</string>
             </property>
            </widget>
           </item>

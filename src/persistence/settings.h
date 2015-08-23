@@ -60,6 +60,7 @@ signals:
     void dhtServerListChanged();
     void smileyPackChanged();
     void emojiFontChanged();
+    void groupPeerListSideChanged();
 
 public:
     // Getter/setters
@@ -185,11 +186,11 @@ public:
     void setGlobalAutoAcceptDir(const QString& dir);
 
     // ChatView
-    int getFirstColumnHandlePos() const;
-    void setFirstColumnHandlePos(const int pos);
+    int getColumnRightWidth() const;
+    void setColumnRightWidth(int width);
 
-    int getSecondColumnHandlePosFromRight() const;
-    void setSecondColumnHandlePosFromRight(const int pos);
+    int getColumnLeftWidth() const;
+    void setColumnLeftWidth(int pos);
 
     const QString& getTimestampFormat() const;
     void setTimestampFormat(const QString& format);
@@ -217,6 +218,9 @@ public:
     QByteArray getSplitterState() const;
     void setSplitterState(const QByteArray &value);
 
+    QByteArray getGroupSplitterState() const;
+    void setGroupSplitterState(const QByteArray &value);
+
     QString getFriendAdress(const QString &publicKey) const;
     void updateFriendAdress(const QString &newAddr);
 
@@ -236,6 +240,9 @@ public:
 
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
+
+    bool getGroupPeerListSide() const;
+    void setGroupPeerListSide(bool side);
 
     bool getGroupchatPosition() const;
     void setGroupchatPosition(bool value);
@@ -294,6 +301,7 @@ private:
     bool autoLogin;
     bool fauxOfflineMessaging;
     bool compactLayout;
+    bool groupPeerListSide;
     bool groupchatPosition;
     bool enableIPv6;
     QString translation;
@@ -334,12 +342,13 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
+    QByteArray groupSplitterState;
     QString style;
     bool showSystemTray;
 
     // ChatView
-    int firstColumnHandlePos;
-    int secondColumnHandlePosFromRight;
+    int columnRightWidth;
+    int columnLeftWidth;
     QString timestampFormat;
     QString dateFormat;
     bool statusChangeNotificationEnabled;

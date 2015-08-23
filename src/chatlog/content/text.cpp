@@ -23,13 +23,13 @@
 #include <QFontMetrics>
 #include <QPainter>
 #include <QPalette>
-#include <QDebug>
 #include <QTextBlock>
 #include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QGraphicsSceneMouseEvent>
 #include <QDesktopServices>
 #include <QTextFragment>
+#include <QRegularExpression>
 
 Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText, const QColor c)
     : rawText(rwText)
@@ -146,6 +146,49 @@ QString Text::getSelectedText() const
     return selectedText;
 }
 
+bool Text::hasSelection() const
+{
+    return selectionEnd != -1;
+}
+
+bool Text::selectNext(const QString& search, Qt::CaseSensitivity sensitivity)
+{
+    int indexOf = selectionEnd;
+
+    if (indexOf == -1)
+        indexOf = 0;
+
+    if ((indexOf = getText().indexOf(search, indexOf, sensitivity)) != -1)
+    {
+        selectionAnchor = indexOf;
+        selectionEnd = indexOf + search.count();
+        selectedText = search;
+        update();
+        return true;
+    }
+
+    return false;
+}
+
+bool Text::selectPrevious(const QString& search, Qt::CaseSensitivity sensitivity)
+{
+    int indexOf = getText().length();
+
+    if (hasSelection())
+        indexOf = selectionAnchor;
+
+    if ((indexOf = (getText().left(indexOf).lastIndexOf(search, -1, sensitivity)) ) != -1)
+    {
+        selectionAnchor = indexOf;
+        selectionEnd = indexOf + search.count();
+        selectedText = search;
+        update();
+        return true;
+    }
+
+    return false;
+}
+
 QRectF Text::boundingRect() const
 {
     return QRectF(QPointF(0, 0), size);
@@ -161,6 +204,24 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         QAbstractTextDocumentLayout::PaintContext ctx;
         QAbstractTextDocumentLayout::Selection sel;
 
+        if (!highlightText.isEmpty())
+        {
+            QTextCursor findCursor;
+            QTextDocument::FindFlags caseFlags;
+
+            if (sensitivity == Qt::CaseSensitive)
+                caseFlags = QTextDocument::FindCaseSensitively;
+
+            while (!(findCursor = doc->find(highlightText, findCursor, caseFlags)).isNull())
+            {
+                QAbstractTextDocumentLayout::Selection highlight;
+                highlight.cursor = findCursor;
+                highlight.format.setBackground(Qt::yellow);
+                highlight.format.setForeground(Qt::black);
+                ctx.selections.append(highlight);
+            }
+        }
+
         if (hasSelection())
         {
             sel.cursor = QTextCursor(doc);
@@ -175,6 +236,7 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         ctx.palette.setColor(QPalette::Text, color);
 
         // draw text
+        doc->setUseDesignMetrics(true);
         doc->documentLayout()->draw(painter, ctx);
     }
 
@@ -223,7 +285,7 @@ void Text::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     if (!anchor.isEmpty())
         setCursor(QCursor(Qt::PointingHandCursor));
     else
-        setCursor(QCursor());
+        setCursor(QCursor(Qt::IBeamCursor));
 
     // tooltip
     setToolTip(extractImgTooltip(cursorFromPos(event->scenePos(), false)));
@@ -232,6 +294,30 @@ void Text::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 QString Text::getText() const
 {
     return rawText;
+}
+
+int Text::setHighlight(const QString &highlight, Qt::CaseSensitivity sensitivity)
+{
+    int foundCount = 0;
+    int index = -highlight.count();
+
+    if (!highlight.isEmpty())
+    {
+        while ((index = getText().indexOf(highlight, index + highlight.count(), sensitivity)) != -1)
+            ++foundCount;
+    }
+
+    if (foundCount)
+        highlightText = highlight;
+    else
+        highlightText.clear();
+
+    this->sensitivity = sensitivity;
+
+    if (!isVisible())
+        update();
+
+    return foundCount;
 }
 
 void Text::regenerate()
@@ -309,11 +395,6 @@ int Text::getSelectionEnd() const
 int Text::getSelectionStart() const
 {
     return qMin(selectionAnchor, selectionEnd);
-}
-
-bool Text::hasSelection() const
-{
-    return selectionEnd >= 0;
 }
 
 QString Text::extractSanitizedText(int from, int to) const

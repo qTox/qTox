@@ -51,7 +51,7 @@ void Friend::loadHistory()
 {
     if (Settings::getInstance().getEnableLogging())
     {
-        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+        chatForm->loadHistory(QDateTime(), true);
         widget->historyLoaded = true;
     }
 }

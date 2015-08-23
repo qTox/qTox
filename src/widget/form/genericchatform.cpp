@@ -32,6 +32,7 @@
 #include "src/widget/widget.h"
 #include "src/persistence/settings.h"
 #include "src/widget/tool/chattextedit.h"
+#include "src/widget/tool/findwidget.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/core/core.h"
 #include "src/grouplist.h"
@@ -42,6 +43,7 @@
 #include "src/chatlog/content/timestamp.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
+#include "src/widget/tool/indicatorscrollbar.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent)
@@ -61,14 +63,15 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     QHBoxLayout *mainFootLayout = new QHBoxLayout(),
                 *headLayout = new QHBoxLayout();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(),
-                *footButtonsSmall = new QVBoxLayout(),
+    mainLayout = new QVBoxLayout();
+    QVBoxLayout *footButtonsSmall = new QVBoxLayout(),
                 *micButtonsLayout = new QVBoxLayout();
                 headTextLayout = new QVBoxLayout();
 
     QGridLayout *buttonsLayout = new QGridLayout();
 
     chatWidget = new ChatLog(this);
+    chatWidget->setVerticalScrollBar(new IndicatorScrollBar(1));
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
 
     connect(&Settings::getInstance(), &Settings::emojiFontChanged, this, [this]() { chatWidget->forceRelayout(); });
@@ -192,6 +195,9 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&GenericChatForm::retranslateUi, this), this);
+
+    QShortcut* shortcut = new QShortcut(QKeySequence::Find, this);
+    connect(shortcut, &QShortcut::activated, this, &GenericChatForm::toggleFindWidget);
 }
 
 GenericChatForm::~GenericChatForm()
@@ -234,19 +240,23 @@ ChatLog *GenericChatForm::getChatLog() const
 
 QDate GenericChatForm::getLatestDate() const
 {
-    ChatLine::Ptr chatLine = chatWidget->getLatestLine();
+    return chatWidget->getLatestDate();
+}
 
-    if (chatLine)
+QDateTime GenericChatForm::getEarliestDate() const
+{
+    QVector<ChatLine::Ptr> lines = chatWidget->getLines();
+    int index = 0;
+
+    while (index < lines.size() - 1)
     {
-        Timestamp* timestamp = dynamic_cast<Timestamp*>(chatLine->getContent(2));
+        Timestamp* timestamp = dynamic_cast<Timestamp*>(lines[index++]->getContent(2));
 
-        if (timestamp)
-            return timestamp->getTime().date();
-        else
-            return QDate::currentDate();
+        if (timestamp && timestamp->getTime().isValid())
+            return timestamp->getTime();
     }
 
-    return QDate();
+    return QDateTime::currentDateTime();
 }
 
 void GenericChatForm::setName(const QString &newName)
@@ -275,7 +285,7 @@ bool GenericChatForm::event(QEvent* e)
     {
         QKeyEvent* ke = static_cast<QKeyEvent*>(e);
         if ((ke->modifiers() == Qt::NoModifier || ke->modifiers() == Qt::ShiftModifier)
-                && !ke->text().isEmpty())
+                && !ke->text().isEmpty() && !hasFindWidget())
             msgEdit->setFocus();
     }
     return QWidget::event(e);
@@ -310,10 +320,12 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString 
         prevMsgDateTime = QDateTime::currentDateTime();
     }
 
-    insertChatMessage(msg);
+    insertChatMessage(msg, true);
 
     if (isSent)
         msg->markAsSent(datetime);
+
+    static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar())->setTotal(chatWidget->height());
 
     return msg;
 }
@@ -406,6 +418,83 @@ void GenericChatForm::focusInput()
     msgEdit->setFocus();
 }
 
+void GenericChatForm::toggleFindWidget()
+{
+    if (!hasFindWidget())
+        showFindWidget();
+    else
+        removeFindWidget(QString());
+}
+
+void GenericChatForm::showFindWidget()
+{
+    if (!hasFindWidget())
+    {
+        FindWidget *findWidget = new FindWidget(this);
+
+        connect(findWidget, &FindWidget::findText, this, &GenericChatForm::findText);
+        connect(findWidget, &FindWidget::findNext, this, &GenericChatForm::findNext);
+        connect(findWidget, &FindWidget::findPrevious, this, &GenericChatForm::findPrevious);
+        connect(findWidget, &FindWidget::close, this, &GenericChatForm::removeFindWidget);
+        connect(this, &GenericChatForm::findMatchesChanged, findWidget, &FindWidget::setMatches);
+        connect(this, &GenericChatForm::findIndexChanged, findWidget, &FindWidget::setIndex);
+
+        mainLayout->insertWidget(0, findWidget);
+    }
+}
+
+void GenericChatForm::removeFindWidget(const QString& text)
+{
+    if (hasFindWidget())
+    {
+        QWidget* findWidget = mainLayout->itemAt(0)->widget();
+        mainLayout->removeWidget(findWidget);
+        findWidget->deleteLater();
+
+        IndicatorScrollBar* indicatorScroll =
+        static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar());
+        indicatorScroll->clearIndicators();
+
+        QVector<ChatLine::Ptr> chatLines = getChatLog()->getLines();
+
+        for (ChatLine::Ptr chatLine : chatLines)
+            chatLine.get()->setHighlight(QString(), Qt::CaseInsensitive);
+
+        if (getChatLog()->getSelectedText() == text)
+            getChatLog()->clearSelection();
+
+    }
+}
+
+void GenericChatForm::findText(const QString &text, Qt::CaseSensitivity sensitivity)
+{
+    int index;
+    int total = getChatLog()->findText(text, sensitivity, index);
+
+    IndicatorScrollBar* indicatorScroll =
+    static_cast<IndicatorScrollBar*>(chatWidget->verticalScrollBar());
+    indicatorScroll->clearIndicators();
+
+    for (ChatLine::Ptr chatLine : getChatLog()->getFoundLines().values())
+    {
+        indicatorScroll->setTotal(chatWidget->sceneRect().height());
+        indicatorScroll->addIndicator(chatLine.get()->sceneBoundingRect().top() + 20);
+        indicatorScroll->update();
+    }
+
+    emit findMatchesChanged(index + 1, total);
+}
+
+void GenericChatForm::findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity)
+{
+    emit findIndexChanged(getChatLog()->findNext(text, to, total, sensitivity));
+}
+
+void GenericChatForm::findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity)
+{
+    emit findIndexChanged(getChatLog()->findPrevious(text, to, total, sensitivity));
+}
+
 void GenericChatForm::addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime)
 {
     previousId.clear();
@@ -456,9 +545,12 @@ QString GenericChatForm::resolveToxId(const ToxId &id)
     return QString();
 }
 
-void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
+void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg, bool notify)
 {
     chatWidget->insertChatlineAtBottom(std::dynamic_pointer_cast<ChatLine>(msg));
+
+    if (notify)
+        chatWidget->showNotification(msg);
 }
 
 void GenericChatForm::hideEvent(QHideEvent* event)
@@ -506,6 +598,11 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
     }
 
     return false;
+}
+
+bool GenericChatForm::hasFindWidget() const
+{
+    return mainLayout->count() == 3;
 }
 
 void GenericChatForm::retranslateUi()

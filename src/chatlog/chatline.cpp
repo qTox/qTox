@@ -20,8 +20,8 @@
 #include "chatline.h"
 #include "chatlinecontent.h"
 
-#include <QDebug>
 #include <QGraphicsScene>
+#include "src/persistence/settings.h"
 
 ChatLine::ChatLine()
 {
@@ -118,6 +118,21 @@ void ChatLine::selectionFocusChanged(bool focusIn)
         c->selectionFocusChanged(focusIn);
 }
 
+int ChatLine::selectNext(const QString&, Qt::CaseSensitivity)
+{
+    return -1;
+}
+
+int ChatLine::selectPrevious(const QString&, Qt::CaseSensitivity)
+{
+    return -1;
+}
+
+int ChatLine::setHighlight(const QString&, Qt::CaseSensitivity)
+{
+    return 0;
+}
+
 int ChatLine::getColumnCount()
 {
     return content.size();
@@ -175,10 +190,25 @@ void ChatLine::layout(qreal w, QPointF scenePos)
 
     for (int i = 0; i < static_cast<int>(format.size()); ++i)
     {
-        if (format[i].policy == ColumnFormat::FixedSize)
-            fixedWidth += format[i].size;
-        else
-            varWidth += format[i].size;
+        switch(format[i].policy)
+        {
+            case ColumnFormat::RightColumn:
+                format[i].size = Settings::getInstance().getColumnRightWidth();
+                fixedWidth += format[i].size;
+                break;
+            case ColumnFormat::LeftColumn:
+                format[i].size = Settings::getInstance().getColumnLeftWidth();
+                fixedWidth += format[i].size;
+                break;
+            case ColumnFormat::FixedSize:
+                fixedWidth += format[i].size;
+                break;
+            case ColumnFormat::VariableSize:
+                varWidth += format[i].size;
+                break;
+            default:
+                break;
+        }
     }
 
     if (varWidth == 0.0)
@@ -190,15 +220,24 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal xOffset = 0.0;
     qreal xPos[content.size()];
 
-
     for (int i = 0; i < static_cast<int>(content.size()); ++i)
     {
         // calculate the effective width of the current column
         qreal width;
-        if (format[i].policy == ColumnFormat::FixedSize)
-            width = format[i].size;
-        else
-            width = format[i].size / varWidth * leftover;
+
+        switch(format[i].policy)
+        {
+            case ColumnFormat::RightColumn:
+            case ColumnFormat::LeftColumn:
+            case ColumnFormat::FixedSize:
+                width = format[i].size;
+                break;
+            case ColumnFormat::VariableSize:
+                width = format[i].size / varWidth * leftover;
+                break;
+            default:
+                width = 0;
+        }
 
         // set the width of the current column
         content[i]->setWidth(width);

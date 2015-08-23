@@ -65,14 +65,23 @@ public:
 
     ChatLog* getChatLog() const;
     QDate getLatestDate() const;
+    QDateTime getEarliestDate() const;
 
 signals:
     void sendMessage(uint32_t, QString);
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
+    void findMatchesChanged(int index, int total);
+    void findIndexChanged(int index);
 
 public slots:
     void focusInput();
+    void toggleFindWidget();
+    void showFindWidget();
+    void removeFindWidget(const QString& text);
+    void findText(const QString& text, Qt::CaseSensitivity sensitivity);
+    void findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
+    void findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -87,11 +96,12 @@ protected slots:
     void hideFileMenu();
 
 private:
+    bool hasFindWidget() const;
     void retranslateUi();
 
 protected:
     QString resolveToxId(const ToxId &id);
-    void insertChatMessage(ChatMessage::Ptr msg);
+    void insertChatMessage(ChatMessage::Ptr msg, bool notify = false);
     void adjustFileMenuPosition();
     virtual void hideEvent(QHideEvent* event) override;
     virtual void showEvent(QShowEvent *) override;
@@ -119,6 +129,9 @@ protected:
     QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
     bool audioInputFlag;
     bool audioOutputFlag;
+
+private:
+    QVBoxLayout* mainLayout;
 };
 
 #endif // GENERICCHATFORM_H

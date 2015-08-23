@@ -45,6 +45,10 @@ public:
     virtual void selectionFocusChanged(bool focusIn) final;
     virtual bool isOverSelection(QPointF scenePos) const final;
     virtual QString getSelectedText() const final;
+    virtual bool hasSelection() const override final;
+    virtual bool selectNext(const QString& search, Qt::CaseSensitivity sensitivity) override final;
+    virtual bool selectPrevious(const QString& search, Qt::CaseSensitivity sensitivity) override final;
+    virtual int setHighlight(const QString& highlight, Qt::CaseSensitivity sensitivity) override final;
 
     virtual QRectF boundingRect() const final;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final;
@@ -67,7 +71,6 @@ protected:
     int cursorFromPos(QPointF scenePos, bool fuzzy = true) const;
     int getSelectionEnd() const;
     int getSelectionStart() const;
-    bool hasSelection() const;
     QString extractSanitizedText(int from, int to) const;
     QString extractImgTooltip(int pos) const;
 
@@ -77,6 +80,7 @@ private:
     QString rawText;
     QString elidedText;
     QString selectedText;
+    QString highlightText;
     QSizeF size;
     bool keepInMemory = false;
     bool elide = false;
@@ -88,7 +92,7 @@ private:
     qreal width = 0.0;
     QFont defFont;
     QColor color;
-
+    Qt::CaseSensitivity sensitivity;
 };
 
 #endif // TEXT_H

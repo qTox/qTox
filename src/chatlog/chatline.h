@@ -35,6 +35,8 @@ struct ColumnFormat
     enum Policy {
         FixedSize,
         VariableSize,
+        RightColumn,
+        LeftColumn
     };
 
     enum Align {
@@ -44,6 +46,10 @@ struct ColumnFormat
     };
 
     ColumnFormat() {}
+    ColumnFormat(Policy p, Align halign = Left)
+        : policy(p)
+        , hAlign(halign)
+    {}
     ColumnFormat(qreal s, Policy p, Align halign = Left)
         : size(s)
         , policy(p)
@@ -75,6 +81,9 @@ public:
     void setVisible(bool visible);
     void selectionCleared();
     void selectionFocusChanged(bool focusIn);
+    virtual int selectNext(const QString& text, Qt::CaseSensitivity sensitivity);
+    virtual int selectPrevious(const QString& text, Qt::CaseSensitivity sensitivity);
+    virtual int setHighlight(const QString& text, Qt::CaseSensitivity sensitivity);
 
     int getColumnCount();
     int getRow() const;

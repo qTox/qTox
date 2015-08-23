@@ -20,9 +20,11 @@
 #include "chatlog.h"
 #include "chatmessage.h"
 #include "chatlinecontent.h"
+#include "content/timestamp.h"
 #include "src/widget/translator.h"
+#include "src/persistence/settings.h"
+#include "src/widget/notificationedgewidget.h"
 
-#include <QDebug>
 #include <QScrollBar>
 #include <QApplication>
 #include <QClipboard>
@@ -110,6 +112,11 @@ ChatLog::ChatLog(QWidget* parent)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatLog::retranslateUi, this), this);
+
+    // Place holders. They will be changed almost immediately.
+    globalDateRect = scene->addRect(QRect(), Qt::NoPen, Qt::white);
+    globalDateRect->setZValue(1);
+    globalDateIndex = -1;
 }
 
 ChatLog::~ChatLog()
@@ -129,7 +136,7 @@ ChatLog::~ChatLog()
 
 void ChatLog::clearSelection()
 {
-    if (selectionMode == None)
+    if (!(selectionMode & Selected))
         return;
 
     for (int i=selFirstRow; i<=selLastRow; ++i)
@@ -195,7 +202,10 @@ void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
 {
     QGraphicsView::mouseReleaseEvent(ev);
 
+    viewport()->unsetCursor();
     selectionScrollDir = NoDirection;
+
+    mouseMoveEvent(ev); // To fix the cursor.
 }
 
 void ChatLog::mouseMoveEvent(QMouseEvent* ev)
@@ -204,8 +214,74 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
 
     QPointF scenePos = mapToScene(ev->pos());
 
+    int leftColumnWidth = Settings::getInstance().getColumnLeftWidth();
+    int rightColumnWidth = Settings::getInstance().getColumnRightWidth();
+    int endLocation = width() - rightColumnWidth - margins.left() - verticalScrollBar()->sizeHint().width() - 15 / 2;
+
+    bool splitterLeft = scenePos.x() > leftColumnWidth && scenePos.x() < leftColumnWidth + 15;
+    bool splitterRight = scenePos.x() > endLocation - 15 && scenePos.x() < endLocation;
+
+    if ((splitterLeft || splitterRight) && selectionMode == None)
+    {
+        viewport()->setCursor(Qt::SplitHCursor);
+
+        if (ev->buttons() & Qt::LeftButton)
+        {
+            if (splitterLeft)
+            {
+                selectionMode = SplitterLeft;
+                splitterVal = leftColumnWidth;
+            }
+            else
+            {
+                selectionMode = SplitterRight;
+                splitterVal = rightColumnWidth;
+            }
+        }
+    }
+    else if (viewport()->cursor().shape() == Qt::SplitHCursor)
+    {
+        viewport()->unsetCursor();
+    }
+
+    if (selectionMode & Splitter)
+    {
+        if (!(ev->buttons() & Qt::LeftButton))
+        {
+            selectionMode = None;
+        }
+    }
+
+
     if (ev->buttons() & Qt::LeftButton)
     {
+        if (selectionMode & Splitter)
+        {
+            viewport()->setCursor(Qt::SplitHCursor);
+            int previousWidth = splitterVal;
+            int newWidth;
+
+            if (selectionMode == SplitterLeft)
+            {
+                newWidth = clamp<int>(splitterVal - (clickPos.x() - ev->pos().x()), 32, 320);
+                Settings::getInstance().setColumnLeftWidth(newWidth);
+            }
+            else
+            {
+                newWidth = clamp<int>(splitterVal + (clickPos.x() - ev->pos().x()), 32, 320);
+                Settings::getInstance().setColumnRightWidth(newWidth);
+            }
+
+            if (newWidth == 32 || newWidth == 320)
+            {
+                splitterVal = newWidth;
+                clickPos.setX(ev->pos().x());
+            }
+
+            updateLayout(newWidth, previousWidth);
+            return;
+        }
+
         //autoscroll
         if (ev->pos().y() < 0)
             selectionScrollDir = Up;
@@ -246,7 +322,7 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
             }
         }
 
-        if (selectionMode != None)
+        if (selectionMode & Selected)
         {
             ChatLineContent* content = getContentFromPos(scenePos);
             ChatLine::Ptr line = findLineByPosY(scenePos.y());
@@ -294,8 +370,8 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                 selFirstRow = row;
 
             updateMultiSelectionRect();
+            viewport()->setCursor(Qt::IBeamCursor);
         }
-
         emit selectionChanged();
     }
 }
@@ -353,12 +429,36 @@ void ChatLog::reposition(int start, int end, qreal deltaY)
     }
 }
 
+void ChatLog::setVerticalScrollBar(QScrollBar* scrollbar)
+{
+    QGraphicsView::setVerticalScrollBar(scrollbar);
+    onScrollBarChanged(verticalScrollBar()->value());
+
+    disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+}
+
 void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 {
     if (!l.get())
         return;
 
     bool stickToBtm = stickToBottom();
+
+    // check for date.
+    if (getLatestDate() < QDate::currentDate())
+    {
+        ChatMessage::Ptr date = ChatMessage::createChatInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO);
+        date->setRow(lines.size());
+
+        if (!date->getContent(0)->scene())
+            date->addToScene(scene);
+
+        lines.append(date);
+
+        dateMessages.push_front(QPair<QDate, ChatMessage::Ptr>(QDate::currentDate(), date));
+        layout(lines.last()->getRow(), lines.size(), useableWidth());
+    }
 
     //insert
     l->setRow(lines.size());
@@ -374,6 +474,10 @@ void ChatLog::insertChatlineAtBottom(ChatLine::Ptr l)
 
     checkVisibility();
     updateTypingNotification();
+
+    disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    onScrollBarChanged(verticalScrollBar()->value());
 }
 
 void ChatLog::insertChatlineOnTop(ChatLine::Ptr l)
@@ -419,6 +523,24 @@ void ChatLog::insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines)
 
     // redo layout
     startResizeWorker();
+
+    disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    onScrollBarChanged(verticalScrollBar()->value());
+}
+
+void ChatLog::showNotification(ChatLine::Ptr l)
+{
+    if (!stickToBottom() && !edgeWidget)
+    {
+        edgeWidget = new NotificationEdgeWidget(NotificationEdgeWidget::Bottom, this);
+        connect(edgeWidget, &NotificationEdgeWidget::clicked, this, &ChatLog::focusNotifiedWidget);
+        recalculateNotificationEdge();
+        edgeWidget->show();
+        edgeWidget->updateNotificationCount(0);
+
+        edgeMessage = l;
+    }
 }
 
 bool ChatLog::stickToBottom() const
@@ -430,6 +552,7 @@ void ChatLog::scrollToBottom()
 {
     updateSceneRect();
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+    onScrollBarChanged(verticalScrollBar()->value());
 }
 
 void ChatLog::startResizeWorker()
@@ -464,6 +587,8 @@ void ChatLog::startResizeWorker()
     workerTimer->start();
 
     verticalScrollBar()->hide();
+    disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+    onScrollBarChanged(verticalScrollBar()->value());
 }
 
 void ChatLog::mouseDoubleClickEvent(QMouseEvent *ev)
@@ -513,6 +638,132 @@ QString ChatLog::getSelectedText() const
     return QString();
 }
 
+int ChatLog::findText(const QString &text, Qt::CaseSensitivity sensitivity, int &index)
+{
+    clearSelection();
+    foundText.clear();
+
+    index = -1;
+    int i = 0;
+    ChatLine::Ptr toSelect;
+    ChatLine::Ptr first;
+
+    for (ChatLine::Ptr chatLine : lines)
+    {
+        int last = i;
+        i += chatLine.get()->setHighlight(text, sensitivity);
+
+        if (last != i)
+        {
+            if (!first)
+                first = chatLine;
+
+            for (int iter = last; iter != i; ++iter)
+                foundText.insert(iter, chatLine);
+
+            bool above = chatLine.get()->sceneBoundingRect().top() >= verticalScrollBar()->value();
+
+            if (index == -1 && above)
+            {
+                index = last;
+                toSelect = chatLine;
+            }
+        }
+
+        chatLine.get()->selectionCleared();
+    }
+
+    // If we didn't find anything near the scroll area, then go to the first found.
+    if (index == -1 && i != 0)
+    {
+        index = 0;
+        toSelect = first;
+    }
+
+    if (index != -1)
+    {
+        ensureVisible(toSelect.get()->sceneBoundingRect());
+
+        selClickedCol = toSelect->selectNext(text, sensitivity);
+        selClickedRow = toSelect->getRow();
+        selFirstRow = toSelect->getRow();
+        selLastRow = toSelect->getRow();
+        selectionMode = Precise;
+    }
+
+    update();
+    emit selectionChanged();
+
+    return i;
+}
+
+int ChatLog::findNext(const QString &text, int to, int total, Qt::CaseSensitivity sensitivity)
+{
+    bool clear = true;
+    int next = to;
+    auto newFound = foundText.find(next - 1);
+    auto lastFound = foundText.find(next - 2);
+
+    if (lastFound == foundText.end())
+        lastFound = foundText.find(total - 1);
+
+    if (newFound == foundText.end())
+    {
+        newFound = foundText.find(0);
+        next = 1;
+    }
+
+    if (newFound.value() == lastFound.value())
+        clear = false;
+
+    if (clear)
+        lastFound.value().get()->selectionCleared();
+
+    ensureVisible(newFound.value().get()->sceneBoundingRect());
+
+    if (total != 1 || getSelectedText() != text)
+        newFound.value().get()->selectNext(text, sensitivity);
+
+    update();
+    return next;
+}
+
+int ChatLog::findPrevious(const QString &text, int to, int total, Qt::CaseSensitivity sensitivity)
+{
+    bool clear = true;
+    int next = to;
+    auto newFound = foundText.find(next - 1);
+    auto lastFound = foundText.find(next);
+
+    if (lastFound == foundText.end())
+        lastFound = foundText.find(0);
+
+    if (newFound == foundText.end())
+    {
+        newFound = foundText.find(total - 1);
+        next = total;
+    }
+
+    if (newFound.value() == lastFound.value())
+        clear = false;
+
+    if (clear)
+        lastFound.value().get()->selectionCleared();
+
+    ensureVisible(newFound.value().get()->sceneBoundingRect());
+
+    if (total != 1 || getSelectedText() != text)
+        newFound.value().get()->selectPrevious(text, sensitivity);
+
+    update();
+    return next;
+}
+
+const QHash<int, ChatLine::Ptr>& ChatLog::getFoundLines() const
+{
+    return foundText;
+}
+
 bool ChatLog::isEmpty() const
 {
     return lines.isEmpty();
@@ -520,7 +771,25 @@ bool ChatLog::isEmpty() const
 
 bool ChatLog::hasTextToBeCopied() const
 {
-    return selectionMode != None;
+    return selectionMode & Selected;
+}
+
+void ChatLog::addDateMessage(QDate date, ChatMessage::Ptr message)
+{
+    // Don't keep duplicate dates. Remove old, keep new.
+    if (!dateMessages.isEmpty() && date == dateMessages.last().first)
+    {
+        dateMessages.last().second->removeFromScene();
+        dateMessages.pop_back();
+
+        if (!lines.isEmpty())
+        {
+            lines.pop_front();
+            checkVisibility();
+        }
+    }
+
+    dateMessages.push_back(QPair<QDate, ChatMessage::Ptr>(date, message));
 }
 
 ChatLine::Ptr ChatLog::getTypingNotification() const
@@ -542,6 +811,21 @@ ChatLine::Ptr ChatLog::getLatestLine() const
     return nullptr;
 }
 
+QDate ChatLog::getLatestDate() const
+{
+    int index = lines.size() - 1;
+
+    while (index > 0)
+    {
+        Timestamp* timestamp = dynamic_cast<Timestamp*>(lines[index--]->getContent(2));
+
+        if (timestamp)
+            return timestamp->getTime().date();
+    }
+
+    return QDate();
+}
+
 void ChatLog::clear()
 {
     clearSelection();
@@ -551,6 +835,9 @@ void ChatLog::clear()
 
     lines.clear();
     visibleLines.clear();
+
+    dateMessages.clear();
+    globalDateIndex = -1;
 
     updateSceneRect();
 }
@@ -665,20 +952,12 @@ void ChatLog::scrollContentsBy(int dx, int dy)
 
 void ChatLog::resizeEvent(QResizeEvent* ev)
 {
-    bool stb = stickToBottom();
+    updateLayout(ev->size().width(), ev->oldSize().width());
 
-    if (ev->size().width() != ev->oldSize().width())
-    {
-        startResizeWorker();
-        stb = false; // let the resize worker handle it
-    }
+    if (edgeWidget)
+        recalculateNotificationEdge();
 
     QGraphicsView::resizeEvent(ev);
-
-    if (stb)
-        scrollToBottom();
-
-    updateBusyNotification();
 }
 
 void ChatLog::updateMultiSelectionRect()
@@ -795,7 +1074,100 @@ void ChatLog::onWorkerTimeout()
 
         // hidden during busy screen
         verticalScrollBar()->show();
+        disconnect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
+        connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &ChatLog::onScrollBarChanged);
     }
+
+}
+
+void ChatLog::onScrollBarChanged(int value)
+{
+    if (stickToBottom())
+        removeNotificationWidget();
+
+    if (dateMessages.isEmpty())
+        return;
+
+    if (verticalScrollBar()->maximum() != verticalScrollBar()->minimum())
+        value += margins.top();
+
+    if (dateMessages.count() != 0)
+    {
+        int lastIndex = globalDateIndex;
+
+        if (lastIndex != -1)
+        {
+            // Find a closer date.
+            while (globalDateIndex < dateMessages.count() - 1)
+            {
+                if (dateMessages[globalDateIndex].second->getContent(1)->y() > value)
+                    ++globalDateIndex;
+                else
+                    break;
+            }
+
+            // Find a closer date.
+            while (globalDateIndex > 0)
+            {
+                int y = dateMessages[globalDateIndex - 1].second->getContent(1)->y();
+
+                if (y < value)
+                {
+                    --globalDateIndex;
+                }
+                else
+                {
+                    int height = dateMessages[globalDateIndex - 1].second->sceneBoundingRect().height() + lineSpacing;
+
+                    if (value > y - height)
+                        value = y - height;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            globalDateIndex = 0;
+        }
+
+        if (lastIndex != globalDateIndex)
+        {
+            if (globalDateMessage)
+                globalDateMessage->removeFromScene();
+
+            globalDateMessage = ChatMessage::createChatInfoMessage(dateMessages[globalDateIndex].first.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
+            globalDateMessage->addToScene(scene);
+            globalDateMessage->getContent(0)->setZValue(2);
+            globalDateMessage->getContent(1)->setZValue(2);
+            globalDateMessage->getContent(2)->setZValue(2);
+            globalDateMessage->visibilityChanged(true);
+        }
+    }
+
+    if (globalDateIndex == -1)
+        return;
+
+    globalDateMessage->layout(width(), QPointF(0.0, value));
+    QRectF globalDateSceneRect = globalDateMessage->sceneBoundingRect();
+    globalDateSceneRect.setY(globalDateSceneRect.y() - margins.top() - lineSpacing);
+    globalDateRect->setRect(globalDateSceneRect);
+}
+
+void ChatLog::focusNotifiedWidget()
+{
+    scrollToLine(edgeMessage);
+    removeNotificationWidget();
+}
+
+void ChatLog::removeNotificationWidget()
+{
+    if (edgeWidget)
+    {
+        edgeWidget->deleteLater();
+        edgeWidget = nullptr;
+    }
+
+    edgeMessage.reset();
 }
 
 void ChatLog::showEvent(QShowEvent*)
@@ -809,7 +1181,7 @@ void ChatLog::focusInEvent(QFocusEvent* ev)
 {
     QGraphicsView::focusInEvent(ev);
 
-    if (selectionMode != None)
+    if (selectionMode & Selected)
     {
         selGraphItem->setBrush(QBrush(selectionRectColor));
 
@@ -822,7 +1194,7 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
 {
     QGraphicsView::focusOutEvent(ev);
 
-    if (selectionMode != None)
+    if (selectionMode & Selected)
     {
         selGraphItem->setBrush(QBrush(selectionRectColor.lighter(120)));
 
@@ -835,4 +1207,28 @@ void ChatLog::retranslateUi()
 {
     copyAction->setText(tr("Copy"));
     selectAllAction->setText(tr("Select all"));
+}
+
+void ChatLog::updateLayout(int currentWidth, int previousWidth)
+{
+    bool stb = stickToBottom();
+
+    if (currentWidth != previousWidth)
+    {
+        startResizeWorker();
+        stb = false; // let the resize worker handle it
+    }
+
+    if (stb)
+        scrollToBottom();
+
+    updateBusyNotification();
+}
+
+void ChatLog::recalculateNotificationEdge()
+{
+    QPoint position = viewport()->pos();
+    position.setY(position.y() + viewport()->height() - edgeWidget->height());
+    edgeWidget->move(position);
+    edgeWidget->resize(viewport()->width(), edgeWidget->height());
 }

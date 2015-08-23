@@ -30,12 +30,89 @@
 #include "src/persistence/smileypack.h"
 #include "src/widget/style.h"
 
-#define NAME_COL_WIDTH 90.0
-#define TIME_COL_WIDTH 90.0
-
 ChatMessage::ChatMessage()
 {
 
+}
+
+int ChatMessage::selectNext(const QString& text, Qt::CaseSensitivity sensitivity)
+{
+    bool done = false;
+
+    // First, check if a selection has been made. If it has, then move to next one.
+    for (int i = 0; i < 2; ++i)
+    {
+        if (getContent(i)->hasSelection() || done)
+        {
+            done = true;
+
+            if (getContent(i)->selectNext(text, sensitivity))
+                return i;
+            else
+                getContent(i)->selectionCleared();
+        }
+    }
+
+    // If not, then find the next one starting from the beginning.
+    if (!done)
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            if (i == 0 && isSenderHidden())
+                continue;
+
+            if (getContent(i)->selectNext(text, sensitivity))
+                return i;
+        }
+    }
+
+    // Text not found for selection.
+    return -1;
+}
+
+int ChatMessage::selectPrevious(const QString& text, Qt::CaseSensitivity sensitivity)
+{
+    bool done = false;
+
+    // First, check if a selection has been made. If it has, then move to next one.
+    for (int i = 1; i >= 0; --i)
+    {
+        if (getContent(i)->hasSelection() || done)
+        {
+            done = true;
+
+            if (getContent(i)->selectPrevious(text, sensitivity))
+                return i;
+            else
+                getContent(i)->selectionCleared();
+        }
+    }
+
+    // If not, then find the next one starting from the beginning.
+    if (!done)
+    {
+        for (int i = 1; i >= 0; --i)
+        {
+            if (i == 0 && isSenderHidden())
+                continue;
+
+            if (getContent(i)->selectPrevious(text, sensitivity))
+                return i;
+        }
+    }
+
+    // Text not found for selection.
+    return -1;
+}
+
+int ChatMessage::setHighlight(const QString &text, Qt::CaseSensitivity sensitivity)
+{
+    int total = 0;
+
+    if (!isSenderHidden())
+        total += getContent(0)->setHighlight(text, sensitivity);
+
+    return total + getContent(1)->setHighlight(text, sensitivity);
 }
 
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage, MessageType type, bool isMe, const QDateTime &date)
@@ -69,9 +146,9 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     }
 
     // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
-    msg->addColumn(new Text(senderText, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true, sender, type == ACTION ? actionColor : Qt::black), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(senderText, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true, sender, type == ACTION ? actionColor : Qt::black), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new Text(text, Style::getFont(Style::Big), false, ((type == ACTION) && isMe) ? QString("%1 %2").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0/1.6), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0/1.6), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Left));
 
     if (!date.isNull())
         msg->markAsSent(date);
@@ -92,9 +169,9 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     case TYPING: img = ":/ui/chatArea/typing.svg";   break;
     }
 
-    msg->addColumn(new Image(QSize(18, 18), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Image(QSize(18, 18), img), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new Text("<b>" + text + "</b>", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Left));
 
     return msg;
 }
@@ -103,9 +180,9 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
-    msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 320, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(ColumnFormat::RightColumn, ColumnFormat::Left));
 
     return msg;
 }
@@ -120,7 +197,7 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
     // user received typing notifications constantly since contact came online.
     // This causes "[user]..." to be displayed in place of user nick, as long
     // as user will keep typing. Issue #1280
-    msg->addColumn(new NotificationIcon(QSize(18, 18)), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new NotificationIcon(QSize(18, 18)), ColumnFormat(ColumnFormat::LeftColumn, ColumnFormat::Right));
     msg->addColumn(new Text("[user]...", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
 
     return msg;
@@ -153,19 +230,28 @@ QString ChatMessage::toString() const
 
 bool ChatMessage::isAction() const
 {
-    return action;
+    return flags & IsAction;
 }
 
 void ChatMessage::setAsAction()
 {
-    action = true;
+    flags |= IsAction;
+}
+
+bool ChatMessage::isSenderHidden() const
+{
+    return flags & SenderHidden;
 }
 
 void ChatMessage::hideSender()
 {
     ChatLineContent* c = getContent(0);
+
     if (c)
+    {
         c->hide();
+        flags |= SenderHidden;
+    }
 }
 
 void ChatMessage::hideDate()
@@ -234,5 +320,5 @@ QString ChatMessage::detectQuotes(const QString& str, MessageType type)
 
 QString ChatMessage::wrapDiv(const QString &str, const QString &div)
 {
-    return QString("<div class=%1>%2</div>").arg(div, str);
+    return QString("<p class=%1>%2</p>").arg(div, /*QChar(0x200E) + */str);
 }

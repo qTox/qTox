@@ -56,6 +56,7 @@
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
+#include "src/widget/tool/dynamicscrollbar.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -114,6 +115,13 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
+
+    DynamicScrollBar* dynamicScroll = static_cast<DynamicScrollBar*>(chatWidget->verticalScrollBar());
+    connect(dynamicScroll, &DynamicScrollBar::dynamicRequest, [this]()
+    {
+        if (chatWidget->verticalScrollBar()->minimum() != chatWidget->verticalScrollBar()->maximum())
+            loadHistory(QDateTime(), false);
+    });
 }
 
 ChatForm::~ChatForm()
@@ -228,7 +236,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     }
 
     ChatMessage::Ptr msg = ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
-    insertChatMessage(msg);
+    insertChatMessage(msg, true);
 
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxId()).isEmpty()) //per contact autosave
     {
@@ -821,6 +829,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     ToxId prevId;
 
     QList<ChatLine::Ptr> historyMessages;
+    QVector<QPair<QDate, ChatMessage::Ptr>> dateMessages;
 
     QDate lastDate(1,0,0);
     for (const auto &it : msgs)
@@ -832,7 +841,9 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime()));
+            ChatMessage::Ptr dateMessage = ChatMessage::createChatInfoMessage(msgDate.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
+            historyMessages.append(dateMessage);
+            dateMessages.append(QPair<QDate, ChatMessage::Ptr>(lastDate, dateMessage));
         }
 
         // Show each messages
@@ -875,9 +886,20 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     previousId = storedPrevId;
     int savedSliderPos = chatWidget->verticalScrollBar()->maximum() - chatWidget->verticalScrollBar()->value();
 
-    earliestMessage = since;
+    QVectorIterator<QPair<QDate, ChatMessage::Ptr>> i(dateMessages);
+    i.toBack();
+    while (i.hasPrevious())
+    {
+        QPair<QDate, ChatMessage::Ptr> previous = i.previous();
+        chatWidget->addDateMessage(previous.first, previous.second);
+    }
 
     chatWidget->insertChatlineOnTop(historyMessages);
+
+    if (since.isNull())
+        earliestMessage = getEarliestDate();
+    else
+        earliestMessage = since;
 
     savedSliderPos = chatWidget->verticalScrollBar()->maximum() - savedSliderPos;
     chatWidget->verticalScrollBar()->setValue(savedSliderPos);

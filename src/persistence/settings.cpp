@@ -192,8 +192,8 @@ void Settings::loadGlobal()
     s.beginGroup("GUI");
         smileyPack = s.value("smileyPack", ":/smileys/TwitterEmojiSVG/emoticons.xml").toString();
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
-        firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
-        secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
+        columnRightWidth = s.value("columnRightWidth", 90).toInt();
+        columnLeftWidth = s.value("columnLeftWidth", 90).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm:ss").toString();
         dateFormat = s.value("dateFormat", "dddd, MMMM d, yyyy").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
@@ -216,6 +216,7 @@ void Settings::loadGlobal()
         windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
         windowState = s.value("windowState", QByteArray()).toByteArray();
         splitterState = s.value("splitterState", QByteArray()).toByteArray();
+        groupSplitterState = s.value("groupSplitterState", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -303,6 +304,7 @@ void Settings::loadPersonnal(Profile* profile)
 
     ps.beginGroup("General");
         compactLayout = ps.value("compactLayout", false).toBool();
+        groupPeerListSide = ps.value("groupPeerListSide", false).toBool();
     ps.endGroup();
 
     ps.beginGroup("Circles");
@@ -394,8 +396,8 @@ void Settings::saveGlobal()
     s.beginGroup("GUI");
         s.setValue("smileyPack", smileyPack);
         s.setValue("emojiFontPointSize", emojiFontPointSize);
-        s.setValue("firstColumnHandlePos", firstColumnHandlePos);
-        s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
+        s.setValue("columnRightWidth", columnRightWidth);
+        s.setValue("columnLeftWidth", columnLeftWidth);
         s.setValue("timestampFormat", timestampFormat);
         s.setValue("dateFormat", dateFormat);
         s.setValue("minimizeOnClose", minimizeOnClose);
@@ -411,6 +413,7 @@ void Settings::saveGlobal()
         s.setValue("windowGeometry", windowGeometry);
         s.setValue("windowState", windowState);
         s.setValue("splitterState", splitterState);
+        s.setValue("groupSplitterState", groupSplitterState);
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -474,6 +477,7 @@ void Settings::savePersonal(QString profileName, QString password)
 
     ps.beginGroup("General");
         ps.setValue("compactLayout", compactLayout);
+        ps.setValue("groupPeerListSide", groupPeerListSide);
     ps.endGroup();
 
     ps.beginGroup("Circles");
@@ -983,28 +987,28 @@ void Settings::setEmojiFontPointSize(int value)
     emit emojiFontChanged();
 }
 
-int Settings::getFirstColumnHandlePos() const
+int Settings::getColumnRightWidth() const
 {
     QMutexLocker locker{&bigLock};
-    return firstColumnHandlePos;
+    return columnRightWidth;
 }
 
-void Settings::setFirstColumnHandlePos(const int pos)
+void Settings::setColumnRightWidth(const int pos)
 {
     QMutexLocker locker{&bigLock};
-    firstColumnHandlePos = pos;
+    columnRightWidth = pos;
 }
 
-int Settings::getSecondColumnHandlePosFromRight() const
+int Settings::getColumnLeftWidth() const
 {
     QMutexLocker locker{&bigLock};
-    return secondColumnHandlePosFromRight;
+    return columnLeftWidth;
 }
 
-void Settings::setSecondColumnHandlePosFromRight(const int pos)
+void Settings::setColumnLeftWidth(const int pos)
 {
     QMutexLocker locker{&bigLock};
-    secondColumnHandlePosFromRight = pos;
+    columnLeftWidth = pos;
 }
 
 const QString& Settings::getTimestampFormat() const
@@ -1089,6 +1093,18 @@ void Settings::setSplitterState(const QByteArray &value)
 {
     QMutexLocker locker{&bigLock};
     splitterState = value;
+}
+
+QByteArray Settings::getGroupSplitterState() const
+{
+    QMutexLocker locker{&bigLock};
+    return groupSplitterState;
+}
+
+void Settings::setGroupSplitterState(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    groupSplitterState = value;
 }
 
 bool Settings::isMinimizeOnCloseEnabled() const
@@ -1324,6 +1340,19 @@ void Settings::setCompactLayout(bool value)
 {
     QMutexLocker locker{&bigLock};
     compactLayout = value;
+}
+
+bool Settings::getGroupPeerListSide() const
+{
+    QMutexLocker locker{&bigLock};
+    return groupPeerListSide;
+}
+
+void Settings::setGroupPeerListSide(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    groupPeerListSide = value;
+    emit groupPeerListSideChanged();
 }
 
 bool Settings::getGroupchatPosition() const
