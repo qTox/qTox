@@ -31,8 +31,9 @@ Easy qTox install is provided for variety of distributions:
 * [Gentoo](#gentoo)
 * [Slackware](#slackware)
 
+* [Fedora] (#fedora)
 
-#### Arch
+
 
 **Please note that installing toxcore/qTox from AUR is not supported**, although installing other dependencies, provided that they met requirements, should be fine, unless you are installing cryptography library from AUR, which should rise red flags by itself…
 
