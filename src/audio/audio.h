@@ -50,12 +50,13 @@ public:
 
     static float getOutputVolume(); ///< Returns the current output volume, between 0 and 1
     static void setOutputVolume(float volume); ///< The volume must be between 0 and 1
+    static void setInputVolume(float volume); ///< The volume must be between 0 and 2
 
     static void suscribeInput(); ///< Call when you need to capture sound from the open input device.
     static void unsuscribeInput(); ///< Call once you don't need to capture on the open input device anymore.
 
     static void openInput(const QString& inDevDescr); ///< Open an input device, use before suscribing
-    static void openOutput(const QString& outDevDescr); ///< Open an output device
+    static bool openOutput(const QString& outDevDescr); ///< Open an output device
 
     static void closeInput(); ///< Close an input device, please don't use unless everyone's unsuscribed
     static void closeOutput(); ///< Close an output device
@@ -80,6 +81,7 @@ public slots:
     /// Must be called from the audio thread, plays a group call's received audio
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
+    static void pauseOutput();
 
 private:
     explicit Audio()=default;
@@ -92,9 +94,11 @@ private:
     static ALCdevice* alOutDev, *alInDev;
     static QMutex* audioInLock, *audioOutLock;
     static float outputVolume;
+    static float inputVolume;
     static ALuint alMainSource;
     static QThread* audioThread;
     static ALCcontext* alContext;
+    static QTimer* timer;
 };
 
 #endif // AUDIO_H

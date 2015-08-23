@@ -28,10 +28,12 @@
 
 #include "audio.h"
 #include "src/core/core.h"
+#include "src/persistence/settings.h"
 
 #include <QDebug>
 #include <QThread>
 #include <QMutexLocker>
+#include <QTimer>
 
 #include <cassert>
 
@@ -45,6 +47,8 @@ ALCdevice* Audio::alOutDev{nullptr};
 ALCcontext* Audio::alContext{nullptr};
 ALuint Audio::alMainSource{0};
 float Audio::outputVolume{1.0};
+float Audio::inputVolume{1.0};
+QTimer* Audio::timer{nullptr};
 
 Audio& Audio::getInstance()
 {
@@ -57,6 +61,10 @@ Audio& Audio::getInstance()
         audioInLock = new QMutex(QMutex::Recursive);
         audioOutLock = new QMutex(QMutex::Recursive);
         instance->moveToThread(audioThread);
+        timer = new QTimer(instance);
+        timer->moveToThread(audioThread);
+        timer->setSingleShot(true);
+        instance->connect(timer, &QTimer::timeout, instance, &Audio::closeOutput);
     }
     return *instance;
 }
@@ -100,41 +108,58 @@ void Audio::setOutputVolume(float volume)
     }
 }
 
+void Audio::setInputVolume(float volume)
+{
+    inputVolume = volume;
+}
+
 void Audio::suscribeInput()
 {
-    if (!alInDev)
-    {
-        qWarning()<<"input device is closed";
-        return;
-    }
+
+    QMutexLocker lock(audioInLock);
+    QMutexLocker locker(audioOutLock);
+    assert(userCount >= 0);
 
     qDebug() << "suscribing input";
-    QMutexLocker lock(audioInLock);
-    if (!userCount++ && alInDev)
+
+    if (!userCount++)
     {
+        openInput(Settings::getInstance().getInDev());
+
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        qDebug() << "starting capture";
-        alcCaptureStart(alInDev);
+        if (alInDev)
+        {
+            qDebug() << "starting capture";
+            alcCaptureStart(alInDev);
+        }
 #endif
     }
+
+
+    QTimer::singleShot(1, []()
+    {
+        Audio::openOutput(Settings::getInstance().getOutDev());
+    });
 }
 
 void Audio::unsuscribeInput()
 {
-    if (!alInDev)
-    {
-        qWarning()<<"input device is closed";
-        return;
-    }
-
-    qDebug() << "unsuscribing input";
     QMutexLocker lock(audioInLock);
-    if (!--userCount && alInDev)
+    QMutexLocker locker(audioOutLock);
+    assert(userCount > 0);
+
+    qDebug() << "unsuscribing input" << userCount;
+    if (!--userCount)
     {
+        closeOutput();
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        qDebug() << "stopping capture";
-        alcCaptureStop(alInDev);
+        if (alInDev)
+        {
+            qDebug() << "stopping capture";
+            alcCaptureStop(alInDev);
+        }
 #endif
+        closeInput();
     }
 }
 
@@ -166,7 +191,7 @@ void Audio::openInput(const QString& inDevDescr)
         core->resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
-    if (userCount.load() != 0 && alInDev)
+    if (/*userCount.load() != 0 && */alInDev)
     {
         alcCaptureStart(alInDev);
     }
@@ -179,7 +204,7 @@ void Audio::openInput(const QString& inDevDescr)
 
 }
 
-void Audio::openOutput(const QString& outDevDescr)
+bool Audio::openOutput(const QString& outDevDescr)
 {
     qDebug() << "Trying to open output " + outDevDescr;
     QMutexLocker lock(audioOutLock);
@@ -193,6 +218,7 @@ void Audio::openOutput(const QString& outDevDescr)
     if (!alOutDev)
     {
         qWarning() << "Cannot open output audio device " + outDevDescr;
+        return false;
     }
     else
     {
@@ -207,12 +233,12 @@ void Audio::openOutput(const QString& outDevDescr)
         {
             qWarning() << "Cannot create output audio context";
             alcCloseDevice(alOutDev);
+            return false;
         }
         else
         {
             alGenSources(1, &alMainSource);
         }
-
 
         qDebug() << "Opening audio output " + outDevDescr;
     }
@@ -220,6 +246,8 @@ void Audio::openOutput(const QString& outDevDescr)
     Core* core = Core::getInstance();
     if (core)
         core->resetCallSources(); // Force to regen each group call's sources
+
+    return true;
 }
 
 void Audio::closeInput()
@@ -244,8 +272,15 @@ void Audio::closeOutput()
 {
     qDebug() << "Closing output";
     QMutexLocker lock(audioOutLock);
+
+    if (userCount > 0)
+        return;
+
     if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
+    {
         alcDestroyContext(alContext);
+        alContext = nullptr;
+    }
 
     if (alOutDev)
     {
@@ -259,8 +294,12 @@ void Audio::closeOutput()
 void Audio::playMono16Sound(const QByteArray& data)
 {
     QMutexLocker lock(audioOutLock);
+
     if (!alOutDev)
-        return;
+    {
+        if (!openOutput(Settings::getInstance().getOutDev()))
+            return;
+    }
 
     ALuint buffer;
     alGenBuffers(1, &buffer);
@@ -268,6 +307,25 @@ void Audio::playMono16Sound(const QByteArray& data)
     alSourcef(alMainSource, AL_GAIN, outputVolume);
     alSourcei(alMainSource, AL_BUFFER, buffer);
     alSourcePlay(alMainSource);
+
+    ALint sizeInBytes;
+    ALint channels;
+    ALint bits;
+
+    alGetBufferi(buffer, AL_SIZE, &sizeInBytes);
+    alGetBufferi(buffer, AL_CHANNELS, &channels);
+    alGetBufferi(buffer, AL_BITS, &bits);
+    int lengthInSamples = sizeInBytes * 8 / (channels * bits);
+
+    ALint frequency;
+    alGetBufferi(buffer, AL_FREQUENCY, &frequency);
+    float duration = (lengthInSamples / static_cast<float>(frequency)) * 1000;
+
+    int remaining = timer->interval();
+
+    if (duration > remaining)
+        timer->start(duration);
+
     alDeleteBuffers(1, &buffer);
 }
 
@@ -362,7 +420,33 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 
     memset(buf, 0, framesize * 2 * av_DefaultSettings.audio_channels); // Avoid uninitialized values (Valgrind)
     alcCaptureSamples(Audio::alInDev, buf, framesize);
+
+    if (inputVolume != 1)
+    {
+        int16_t* bufReal = reinterpret_cast<int16_t*>(buf);
+        for (int i = 0; i < framesize; ++i)
+        {
+            int sample = bufReal[i] * pow(inputVolume, 2);
+
+            if (sample < std::numeric_limits<int16_t>::min())
+                sample = std::numeric_limits<int16_t>::min();
+            else if (sample > std::numeric_limits<int16_t>::max())
+                sample = std::numeric_limits<int16_t>::max();
+
+            bufReal[i] = sample;
+        }
+    }
+
     return true;
+}
+
+void Audio::pauseOutput()
+{
+    QMutexLocker lock(audioOutLock);
+
+    qDebug() << "Puase";
+    if (userCount == 0)
+        closeOutput();
 }
 
 #ifdef QTOX_FILTER_AUDIO

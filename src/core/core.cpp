@@ -82,10 +82,10 @@ Core::Core(QThread *CoreThread, Profile& profile) :
     }
 
     // OpenAL init
-    QString outDevDescr = Settings::getInstance().getOutDev();
-    Audio::openOutput(outDevDescr);
-    QString inDevDescr = Settings::getInstance().getInDev();
-    Audio::openInput(inDevDescr);
+    //QString outDevDescr = Settings::getInstance().getOutDev();
+    //Audio::openOutput(outDevDescr);
+    //QString inDevDescr = Settings::getInstance().getInDev();
+    //Audio::openInput(inDevDescr);
 }
 
 void Core::deadifyTox()
