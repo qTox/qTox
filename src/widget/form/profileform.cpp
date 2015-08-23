@@ -105,7 +105,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::onDeletePassClicked);
     connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
-    connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::copyIdClicked);
+    connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
