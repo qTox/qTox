@@ -5,7 +5,7 @@ qTox
 
 **qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms.**
 
-====
+----
 
 * **Windows**:
   - [**64 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip)
