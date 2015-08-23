@@ -30,10 +30,10 @@
 class CroppingLabel;
 class Core;
 class MaskablePixmapWidget;
+class ContentLayout;
 
 namespace Ui {
 class IdentitySettings;
-class MainWindow;
 }
 
 class ClickableTE : public QLineEdit
@@ -54,7 +54,8 @@ public:
     ProfileForm(QWidget *parent = nullptr);
     ~ProfileForm();
     virtual void show() final{}
-    void show(Ui::MainWindow &ui);
+    void show(ContentLayout* contentLayout);
+    bool isShown() const;
 
 signals:
     void userNameChanged(QString);

@@ -211,13 +211,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     if (file.friendId != f->getFriendID())
         return;
 
-    Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
-    {
-        w->newMessageAlert(f->getFriendWidget());
-        f->setEventFlag(true);
-        f->getFriendWidget()->updateStatusLight();
-    }
+    Widget::getInstance()->newFriendMessageAlert(file.friendId);
 
     QString name;
     ToxId friendId = f->getToxId();
@@ -259,7 +253,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
     if (video)
     {
         callConfirm = new CallConfirmWidget(videoButton, *f);
-        if (Widget::getInstance()->isFriendWidgetCurActiveWidget(f))
+        if (f->getFriendWidget()->chatFormIsSet(false))
             callConfirm->show();
 
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
@@ -274,7 +268,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
     else
     {
         callConfirm = new CallConfirmWidget(callButton, *f);
-        if (Widget::getInstance()->isFriendWidgetCurActiveWidget(f))
+        if (f->getFriendWidget()->chatFormIsSet(false))
             callConfirm->show();
 
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
@@ -286,18 +280,13 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
         videoButton->setToolTip("");
         connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
     }
+
     callButton->style()->polish(callButton);
     videoButton->style()->polish(videoButton);
 
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("%1 calling").arg(f->getDisplayedName()), ChatMessage::INFO, QDateTime::currentDateTime()));
 
-    Widget* w = Widget::getInstance();
-    if (!w->isFriendWidgetCurActiveWidget(f)|| w->isMinimized() || !w->isActiveWindow())
-    {
-        w->newMessageAlert(f->getFriendWidget());
-        f->setEventFlag(true);
-        f->getFriendWidget()->updateStatusLight();
-    }
+    Widget::getInstance()->newFriendMessageAlert(FriendId);
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
@@ -902,22 +891,22 @@ void ChatForm::doScreenshot()
 
 void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
     QTemporaryFile file(Settings::getInstance().getSettingsDirPath()+"screenshots"+QDir::separator()+"qTox-Screenshot-XXXXXXXX.png");
-	if (!file.open())
-	{
-	    QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
-	                         tr("qTox wasn't able to save the screenshot"));
-	    return;
-	}
+    if (!file.open())
+    {
+        QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
+                             tr("qTox wasn't able to save the screenshot"));
+        return;
+    }
 
-	file.setAutoRemove(false);
+    file.setAutoRemove(false);
 
-	pixmap.save(&file, "PNG");
+    pixmap.save(&file, "PNG");
 
-	long long filesize = file.size();
-	file.close();
-	QFileInfo fi(file);
+    long long filesize = file.size();
+    file.close();
+    QFileInfo fi(file);
 
-	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+    emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
 }
 
 void ChatForm::onLoadHistory()
@@ -994,9 +983,9 @@ void ChatForm::setFriendTyping(bool isTyping)
     text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
 }
 
-void ChatForm::show(Ui::MainWindow &ui)
+void ChatForm::show(ContentLayout* contentLayout)
 {
-    GenericChatForm::show(ui);
+    GenericChatForm::show(contentLayout);
 
     if (callConfirm)
         callConfirm->show();

@@ -43,12 +43,14 @@ signals:
     void accepted();
     void rejected();
 
+public slots:
+    void reposition(); ///< Recalculate our positions to track the anchor
+
 protected:
     virtual void paintEvent(QPaintEvent* event) final override;
     virtual void showEvent(QShowEvent* event) final override;
-
-protected slots:
-    void reposition(); ///< Recalculate our positions to track the anchor
+    virtual void hideEvent(QHideEvent* event) final override;
+    virtual bool eventFilter(QObject *, QEvent* event) final override;
 
 private:
     const QWidget* anchor; ///< The widget we're going to be tracking

@@ -19,7 +19,6 @@
 
 
 #include "callconfirmwidget.h"
-#include "src/widget/gui.h"
 #include "src/widget/widget.h"
 #include <assert.h>
 #include <QVBoxLayout>
@@ -33,7 +32,7 @@
 #include <QPalette>
 
 CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
-    QWidget(GUI::getMainWidget()), anchor(Anchor), f(f),
+    QWidget(), anchor(Anchor), f(f),
     rectW{120}, rectH{85},
     spikeW{30}, spikeH{15},
     roundedFactor{20},
@@ -47,6 +46,7 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     QLabel *callLabel = new QLabel(QObject::tr("Incoming call..."), this);
+    callLabel->setStyleSheet("color: white");
     callLabel->setWordWrap(true);
     callLabel->setAlignment(Qt::AlignHCenter);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
@@ -66,8 +66,6 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
     connect(buttonBox, &QDialogButtonBox::accepted, this, &CallConfirmWidget::accepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &CallConfirmWidget::rejected);
 
-    connect(&GUI::getInstance(), &GUI::resized, this, &CallConfirmWidget::reposition);
-
     layout->setMargin(12);
     layout->addSpacing(spikeH);
     layout->addWidget(callLabel);
@@ -79,7 +77,13 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
 
 void CallConfirmWidget::reposition()
 {
-    QWidget* w = GUI::getMainWidget();
+    if (parentWidget())
+        parentWidget()->removeEventFilter(this);
+
+    setParent(anchor->window());
+    parentWidget()->installEventFilter(this);
+
+    QWidget* w = anchor->window();
     QPoint pos = anchor->mapToGlobal({(anchor->width()-rectW)/2,anchor->height()})-w->mapToGlobal({0,0});
 
     // We don't want the widget to overflow past the right of the screen
@@ -114,11 +118,27 @@ void CallConfirmWidget::showEvent(QShowEvent*)
     // If someone does show() from Widget or lower, the event will reach us
     // because it's our parent, and we could show up in the wrong form.
     // So check here if our friend's form is actually the active one.
-    if (!Widget::getInstance()->isFriendWidgetCurActiveWidget(&f))
+    //if (!Widget::getInstance()->isFriendWidgetCurActiveWidget(&f))
     {
-        QWidget::hide();
-        return;
+        //QWidget::hide();
+        //return;
     }
     reposition();
     update();
+}
+
+void CallConfirmWidget::hideEvent(QHideEvent *)
+{
+    if (parentWidget())
+        parentWidget()->removeEventFilter(this);
+
+    setParent(nullptr);
+}
+
+bool CallConfirmWidget::eventFilter(QObject*, QEvent* event)
+{
+    if (event->type() == QEvent::Resize)
+        reposition();
+
+    return false;
 }

@@ -26,7 +26,7 @@
 #include <QTextEdit>
 #include <QPushButton>
 
-namespace Ui {class MainWindow;}
+class ContentLayout;
 
 class AddFriendForm : public QObject
 {
@@ -37,7 +37,8 @@ public:
     AddFriendForm& operator=(const AddFriendForm&) = delete;
     ~AddFriendForm();
 
-    void show(Ui::MainWindow &ui);
+    bool isShown() const;
+    void show(ContentLayout* contentLayout);
     QString getMessage() const;
 
 signals:

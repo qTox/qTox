@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>639</width>
-        <height>1221</height>
+        <height>1388</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -371,6 +371,23 @@ instead of system taskbar.</string>
             </property>
             <property name="text">
              <string>Group chats always notify</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbSeparateWindow">
+            <property name="text">
+             <string>Open chats in separate window.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbDontGroupWindows">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Don't group chat windows.</string>
             </property>
            </widget>
           </item>

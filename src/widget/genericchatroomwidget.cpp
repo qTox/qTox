@@ -144,6 +144,16 @@ QString GenericChatroomWidget::getStatusMsg() const
     return statusMessageLabel->text();
 }
 
+QString GenericChatroomWidget::getTitle() const
+{
+    QString title = getName();
+
+    if (!getStatusString().isNull())
+        title += QStringLiteral(" (") + getStatusString() + QStringLiteral(")");
+
+    return title;
+}
+
 void GenericChatroomWidget::reloadTheme()
 {
     QPalette p;
