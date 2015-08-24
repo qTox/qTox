@@ -57,6 +57,19 @@ void PrivacyForm::onEnableLoggingUpdated()
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     HistoryKeeper::resetInstance();
     Widget::getInstance()->clearAllReceipts();
+    if (!bodyUI->cbKeepHistory->isChecked())
+    {
+        QMessageBox::StandardButton dialogDelHistory;
+        dialogDelHistory = QMessageBox::question(0, tr("Confirmation"), tr("Do you want to permanently delete all chat history?"),
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (dialogDelHistory == QMessageBox::Yes)
+        {
+          if (!HistoryKeeper::removeHistory())
+          {
+              QMessageBox::critical(0, tr("Error"), tr("Could not delete chat history"), QMessageBox::Ok);
+          }
+        }
+    }
 }
 
 void PrivacyForm::onTypingNotificationEnabledUpdated()
