@@ -1,6 +1,35 @@
 #Install Instructions
 - [Dependencies](#dependencies)
 - [Linux](#linux)
+  - [Simple install](#simple-install)
+    - [Arch](#arch-easy)
+    - [Debian](#debian-easy)
+    - [Gentoo](#gentoo-easy)
+    - [Slackware](#slackware-easy)
+  - [Install git](#install-git)
+    - [Arch](#arch-git)
+    - [Debian](#debian-git)
+    - [Fedora](#fedora-git)
+    - [openSUSE](#opensuse-git)
+  - [Clone qTox](#clone-qtox)
+  - [GCC, Qt, FFmpeg, OpanAL Soft and qrencode](#other-deps)
+    - [Arch](#arch-other-deps)
+    - [Debian <10 / Ubuntu <15.04](#debian9-other-deps)
+    - [Debian >=10 / Ubuntu >=15.04](#debian10-other-deps)
+    - [Fedora](#fedora-other-deps)
+    - [openSUSE](#opensuse-other-deps)
+    - [Slackware](#slackware-other-deps)
+  - [FFmpeg (for Debian <10 / Ubuntu <15.04)](#ffmpeg)
+  - [filter_audio](#filter_audio)
+  - [toxcore dependencies](#toxcore-dependencies)
+    - [Arch](#arch-toxcore)
+    - [Debian >=8 / Ubuntu >=15.04](#debian8-toxcore)
+    - [Fedora](#fedora-toxcore)
+    - [openSUSE](#opensuse-toxcore)
+    - [Slackware](#slackware-toxcore)
+    - [Ubuntu <15.04](#ubuntu14-toxcore)
+  - [toxcore compiling](#toxcore-compiling)
+  - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
 - [Windows](#windows)
 
@@ -19,7 +48,6 @@
 | libXScrnSaver | >= 1.2 | |
 
 
-Note to Fedora users: check qt5 version before building default is 4.8 on fedora 21 / 22, everything up until qmake-qt5 will build fine but then  qmake-qt5 will freak out.
 
 <a name="linux" />
 ##Linux
@@ -32,6 +60,8 @@ Easy qTox install is provided for variety of distributions:
 * [Slackware](#slackware)
 
 
+
+<a name="arch-easy" />
 #### Arch
 
 **Please note that installing toxcore/qTox from AUR is not supported**, although installing other dependencies, provided that they met requirements, should be fine, unless you are installing cryptography library from AUR, which should rise red flags by itself…
@@ -39,7 +69,7 @@ Easy qTox install is provided for variety of distributions:
 That being said, there are supported PKGBUILDs at https://github.com/Tox/arch-repo-tox
 
 
-<a name="debian" />
+<a name="debian-easy" />
 #### Debian, Mint, Ubuntu, etc
 
 Use this script to add repository:
@@ -52,6 +82,7 @@ echo "qTox Repository Installed."
 ```
 
 
+<a name="gentoo-easy" />
 #### Gentoo
 
 qTox ebuild is available in ``tox-overlay``. To add it and install qTox you will need to have installed ``layman``:
@@ -67,13 +98,14 @@ emerge qtox
 ```
 
 
+<a name="slackware-easy" />
 #### Slackware
 
 qTox SlackBuild and all of its dependencies can be found here: http://slackbuilds.org/repository/14.1/network/qTox/
 
 ----
 
-If your distribution is not listed, or you want/need to compile qTox, there are provided instructions.
+If your distribution is not listed, or you want / need to compile qTox, there are provided instructions.
 
 
 ----
@@ -81,30 +113,39 @@ If your distribution is not listed, or you want/need to compile qTox, there are 
 Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning this repository, which will attempt to automatically download dependencies followed by compilation.
 
 
-###Cloning the Repository
+
+### Install git
 In order to clone the qTox repository you need Git.
 
-Arch Linux:
+
+<a name="arch-git" />
+#### Arch Linux:
 ```bash
 sudo pacman -S --needed git
 ```
 
-Debian / Ubuntu:
+<a name="debian-git" />
+#### Debian / Ubuntu:
 ```bash
 sudo apt-get install git
 ```
 
-Fedora: (yum is now officially deprecated by dnf using yum will redirect to dnf on Fedora 21 and fail on future versions)
+<a name="fedore-git" />
+#### Fedora:
+*`yum` is now officially deprecated by `dnf`. using `yum` will redirect to `dnf` on Fedora 21 and fail on future versions.*
 ```bash
 sudo dnf install git
 ```
 
-openSUSE:
+<a name="opensuse-git" />
+### openSUSE:
 ```bash
 sudo zypper install git
 ```
 
 
+
+### Clone qTox
 Afterwards open a new Terminal, change to a directory of your choice and clone the repository:
 ```bash
 cd /home/user/qTox
@@ -113,110 +154,235 @@ git clone https://github.com/tux3/qTox.git qTox
 
 The following steps assumes that you cloned the repository at "/home/user/qTox". If you decided to choose another location, replace corresponding parts.
 
-###GCC, Qt, FFmpeg, OpanAL Soft and QRCode
 
-Arch Linux:
+<a name="other-deps" />
+### GCC, Qt, FFmpeg, OpanAL Soft and qrencode
+
+<a name="arch-other-deps" />
+#### Arch Linux:
 ```bash
 sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 ```
 
-Debian <10 / Ubuntu <15.04:
-**Note that ffmpeg is not included in those distribution version(!).**
+<a name="debian9-other-deps" />
+#### Debian <10 / Ubuntu <15.04:
+**Note that FFmpeg is not included in those distribution version(!).**
+
+**This means that you have to compile FFmpeg yourself, otherwise compiling qTox will fail.**
+
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
 ```
 
-Debian >=10 / Ubuntu >=15.04:
+**Go to [FFmpeg](#ffmpeg) section to compile it.**
+
+
+<a name="debian10-other-deps" />
+#### Debian >=10 / Ubuntu >=15.04:
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
 ```
 
 
-Fedora:
+<a name="fedora-other-deps" />
+#### Fedora:
 ```bash
 sudo dnf group install "Development Tools"
 sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
 ```
 
-openSUSE:
-**Note that ffmpeg is not included in the default repositories, you have to add the packman repository.**
+<a name="opensuse-other-deps" />
+#### openSUSE:
+
 ```bash
-sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite 
+sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite ffmpeg
 ```
 
-Slackware:
+<a name="slackware-other-deps" />
+#### Slackware:
 
 List of all the ``qTox`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/qTox/
 
 
-### toxcore
+### FFmpeg
 
-First of all install the dependencies of toxcore.
+If you have installed FFmpeg earlier (i.e. you don't run Debian <10 / Ubuntu <15.04), skip this section, and go directly to installing [**toxcore**](#toxcore-dependencies).
 
-Arch Linux:
+To get ffmpeg compiled and put in directory `libs`, run this script in qTox directory:
+```bash
+[ ! -e "libs" ] && mkdir libs   # create directory libs if doesn't exist
+[ ! -e "ffmpeg" ] && mkdir ffmpeg
+
+cd libs/
+export PREFIX_DIR="$PWD"
+
+cd ../ffmpeg
+wget http://ffmpeg.org/releases/ffmpeg-2.7.2.tar.bz2
+tar xf ffmpeg*
+cd ffmpeg*
+
+
+./configure --prefix="$PREFIX_DIR" \
+            --enable-shared \
+            --disable-static \
+            --disable-programs \
+            --disable-protocols \
+            --disable-doc \
+            --disable-sdl \
+            --disable-avfilter \
+            --disable-avresample \
+            --disable-filters \
+            --disable-iconv \
+            --disable-network \
+            --disable-muxers \
+            --disable-postproc \
+            --disable-swresample \
+            --disable-swscale-alpha \
+            --disable-dct \
+            --disable-dwt \
+            --disable-lsp \
+            --disable-lzo \
+            --disable-mdct \
+            --disable-rdft \
+            --disable-fft \
+            --disable-faan \
+            --disable-vaapi \
+            --disable-vdpau \
+            --disable-zlib \
+            --disable-xlib \
+            --disable-bzlib \
+            --disable-lzma \
+            --disable-encoders \
+            --enable-memalign-hack   # rm that line for debug stuff
+
+
+make -j$(nproc)
+make install
+
+cd ../../
+```
+
+
+
+### filter_audio
+This step is  best done before compiling `toxcore`.
+
+Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the [`bootstrap.sh`](/bootstrap.sh) script.
+The script will automatically download and install `toxcore` and `libfilteraudio`:
+```bash
+## in qTox directory
+./bootstrap.sh # use -h or --help for more information
+
+```
+If you've used script, you can skip directly to [compiling qTox](#compile-qtox).
+
+
+If you want to compile and install it manually:
+```bash
+git clone https://github.com/irungentoo/filter_audio
+cd filter_audio
+make -j$(nproc)
+sudo make install
+```
+
+
+### toxcore dependencies
+
+Install all of the toxcore dependencies.
+
+<a name="arch-toxcore" />
+#### Arch Linux:
 ```bash
 sudo pacman -S --needed opus libvpx libsodium
 ```
 
-Debian / Ubuntu:
+<a name="debian8-toxcore" />
+#### Debian >=8 / Ubuntu >=15.04:
 ```bash
 sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev libsodium-dev
 ```
 
-Fedora:
+<a name="fedora-toxcore" />
+#### Fedora:
 ```bash
 sudo dnf install libtool autoconf automake check check-devel libsodium-devel opus-devel libvpx-devel
 ```
 
-openSUSE:
+<a name="opensuse-toxcore" />
+#### openSUSE:
 ```bash
 sudo zypper install libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis
 ```
 
-Slackware:
+<a name="slackware-toxcore" />
+#### Slackware:
 
 List of all the ``toxcore`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/toxcore/
 
-----
-###filter_audio
-You also need to install filter_audio library separately if you did not run ``./bootstrap.sh``.
 
-This step is  best done before compiling Toxcore if not  using package manager. This also follows the flow of the homebrew instructions and reduces the likelihood of  later finding errors for  libavcodec compiling toxcore.
-
+<a name="ubuntu14-toxcore" />
+#### Ubuntu <15.04:
 ```bash
-git clone https://github.com/irungentoo/filter_audio
-cd filter_audio
-make
+sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev
+```
+
+You will need to install manually `libsodium`:
+```
+git clone git://github.com/jedisct1/libsodium.git
+cd libsodium
+git checkout tags/1.0.3
+./autogen.sh
+./configure && make check
+sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.0 --nodoc
+sudo ldconfig
+cd ..
+```
+
+### toxcore compiling
+
+Provided that you have all required dependencies installed, you can simply run:
+```bash
+git clone https://github.com/irungentoo/toxcore.git
+cd toxcore
+autoreconf -if
+./configure
+make -j$(nproc)
 sudo make install
-
-Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix
-or use the "bootstrap.sh" script located at "/home/user/qTox".
-The script will automatically download and install toxcore and libfilteraudio:
-
-```bash
-cd /home/user/qTox
-./bootstrap.sh # use -h or --help for more information
-
-
-if  using  /usr/local/bin for final build make sure to follow advise here: https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix, regarding  sudo ldconfig
+echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
+sudo ldconfig
 ```
 
 
-###Compiling
-**Make sure that all the dependencies are installed.**  
-Now go to `/home/user/qTox/qTox` (or where you cloned) and simply run :
+### Compile qTox
+**Make sure that all the dependencies are installed.**  If you experience problems with compiling, it's most likely due to missing dependencies, so please make sure that you did install *all of them*.
+
+Run in qTox directory to compile:
 ```bash
 qmake
 make
 ```
 
-for openSUSE / Fedora you have to use:
+If you had to compile [FFmpeg](#ffmpeg) manually, run this script from qTox directory before starting qTox:
+```bash
+cd libs/lib
+export LD_LIBRARY_PATH="$PWD"
+cd ../../
+```
+
+Now you can start compiled qTox with `./qtox`
+
+Congratulations, you've compiled qTox `:)`
+
+
+#### openSUSE / Fedora:
+
+Note to Fedora users: check qt5 version before building default is 4.8 on fedora 21 / 22, everything up until qmake-qt5 will build fine but then  qmake-qt5 will freak out.
 ```bash
 qmake-qt5
 make
 ```
 
-(Debian / Ubuntu / Mint)
+#### Debian / Ubuntu / Mint
 If the compiling process stops with a missing dependency like: `... libswscale/swscale.h missing` try:
 ```
 apt-file search libswscale/swscale.h
@@ -225,6 +391,7 @@ And install the package that provides the missing file.
 Start make again. Repeat if nessary until all dependencies are installed.  If you can, please note down all additional dependencies you had to install that aren't listed here, and let us know what is missing `;)`
 
 
+====
 
 ###Building packages
 
