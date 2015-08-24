@@ -1,4 +1,4 @@
-qTox
+qTox [![Build Status](https://travis-ci.org/tux3/qTox.svg)](https://travis-ci.org/tux3/qTox)
 ======
 
  [**Compile**](/INSTALL.md) **⦁** [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **⦁** [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁** [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **⦁** [**Jenkins builds**](https://build.tox.chat/) **⦁** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **⦁** [**Mailing list**](https://lists.tox.chat) **⦁** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
