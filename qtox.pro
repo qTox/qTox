@@ -34,7 +34,8 @@ FORMS    += \
     src/widget/form/settings/advancedsettings.ui \
     src/widget/form/settings/avsettings.ui \
     src/widget/form/settings/generalsettings.ui \
-    src/widget/form/settings/privacysettings.ui
+    src/widget/form/settings/privacysettings.ui \
+    src/widget/form/removefrienddialog.ui
 
 CONFIG   += c++11
 
@@ -493,7 +494,8 @@ SOURCES += \
     src/widget/genericchatitemwidget.cpp \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
-    src/widget/categorywidget.cpp
+    src/widget/categorywidget.cpp \
+    src/widget/tool/removefrienddialog.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -536,4 +538,5 @@ HEADERS += \
     src/widget/genericchatitemwidget.h \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
-    src/widget/categorywidget.h
+    src/widget/categorywidget.h \
+    src/widget/tool/removefrienddialog.h
