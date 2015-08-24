@@ -287,6 +287,8 @@ ToxId ToxDNS::resolveToxAddress(const QString &address, bool silent)
         QByteArray pubkey = fetchLastTextRecord("_tox."+servname, true);
         if (!pubkey.isEmpty())
         {
+            pubkey = QByteArray::fromHex(pubkey);
+
             QByteArray servnameData = servname.toUtf8();
             ToxDNS::tox3_server server;
             server.name = servnameData.data();
