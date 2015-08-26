@@ -65,7 +65,7 @@ private:
     static QByteArray fetchLastTextRecord(const QString& record, bool silent=true);
 
 public:
-    static const tox3_server pinnedServers[3];
+    static const tox3_server pinnedServers[4];
 };
 
 #endif // QTOXDNS_H
