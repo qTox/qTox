@@ -2,8 +2,8 @@
 - [Dependencies](#dependencies)
 - [Linux](#linux)
   - [Simple install](#simple-install)
+    - [Generic](#generic)
     - [Arch](#arch-easy)
-    - [Debian](#debian-easy)
     - [Gentoo](#gentoo-easy)
     - [Slackware](#slackware-easy)
   - [Install git](#install-git)
@@ -54,12 +54,19 @@
 ###Simple install
 Easy qTox install is provided for variety of distributions:
 
+* [Generic](#generic)
 * [Arch](#arch)
-* [Debian, Mint, Ubuntu, etc](#debian)
 * [Gentoo](#gentoo)
 * [Slackware](#slackware)
 
 
+#### Generic
+There are available generic binaries for Linux:
+* [**64 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86-64_release.tar.xz)
+* [**32 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86_release.tar.xz)
+
+
+====
 
 <a name="arch-easy" />
 #### Arch
@@ -67,19 +74,6 @@ Easy qTox install is provided for variety of distributions:
 **Please note that installing toxcore/qTox from AUR is not supported**, although installing other dependencies, provided that they met requirements, should be fine, unless you are installing cryptography library from AUR, which should rise red flags by itself…
 
 That being said, there are supported PKGBUILDs at https://github.com/Tox/arch-repo-tox
-
-
-<a name="debian-easy" />
-#### Debian, Mint, Ubuntu, etc
-
-Use this script to add repository:
-```bash
-sudo sh -c 'echo "deb https://pkg.tox.chat/ nightly main" > /etc/apt/sources.list.d/tox.list'
-wget -qO - https://pkg.tox.chat/pubkey.gpg | sudo apt-key add -
-sudo apt-get install apt-transport-https
-sudo apt-get update -qq
-echo "qTox Repository Installed."
-```
 
 
 <a name="gentoo-easy" />
