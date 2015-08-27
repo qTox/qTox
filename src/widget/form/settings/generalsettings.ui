@@ -342,10 +342,10 @@ instead of system taskbar.</string>
                <item>
                 <widget class="QCheckBox" name="showWindow">
                  <property name="toolTip">
-                  <string comment="tooltip for Show window setting">Show qTox's window when you receive new message.</string>
+                  <string comment="tooltip for Show window setting">Open qTox's window when you receive a new message and no window is open yet.</string>
                  </property>
                  <property name="text">
-                  <string>Show window</string>
+                  <string>Open window</string>
                  </property>
                 </widget>
                </item>
