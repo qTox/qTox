@@ -638,7 +638,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);
 
-            HistoryKeeper::getInstance()->addChatEntry(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true);
+            HistoryKeeper::getInstance()->addChatEntry(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true, QString());
             emit friendAdded(friendId, userId);
             emit friendshipChanged(friendId);
         }

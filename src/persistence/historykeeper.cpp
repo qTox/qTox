@@ -42,7 +42,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
     {
         QList<QString> initLst;
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
-                          QString("chat_id INTEGER NOT NULL, sender INTEGER NOT NULL, message TEXT NOT NULL);"));
+                          QString("chat_id INTEGER NOT NULL, sender INTEGER NOT NULL, message TEXT NOT NULL, alias TEXT);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS sent_status (id INTEGER PRIMARY KEY AUTOINCREMENT, status INTEGER NOT NULL DEFAULT 0);"));
@@ -106,6 +106,7 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
        chat_id      -- current chat ID (resolves from chats table)
        sender       -- sender's ID (resolves from aliases table)
        message
+       alias        -- sender's alias in
     */
 
     // for old tables:
@@ -124,6 +125,15 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
             db->exec(cmd);
         }
     }
+    //check table stuct
+    ans = db->exec("PRAGMA table_info(\"history\")");
+    ans.seek(5);
+    if (!ans.value(1).toString().contains("alias"))
+    {
+        //add collum in table
+        db->exec("ALTER TABLE history ADD COLUMN alias TEXT");
+    }
+
 
     updateChatsID();
     updateAliases();
@@ -159,9 +169,9 @@ void HistoryKeeper::removeFriendHistory(const QString& chat)
     db->exec("COMMIT TRANSACTION;");
 }
 
-qint64 HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)
+qint64 HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName)
 {
-    QList<QString> cmds = generateAddChatEntryCmd(chat, message, sender, dt, isSent);
+    QList<QString> cmds = generateAddChatEntryCmd(chat, message, sender, dt, isSent, dispName);
 
     db->exec("BEGIN TRANSACTION;");
     for (auto &it : cmds)
@@ -186,7 +196,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     QSqlQuery dbAnswer;
     if (ct == ctSingle)
     {
-        dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
+        dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status, alias FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
                             QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;")
                             .arg(time64_from).arg(time64_to).arg(chat_id));
     }
@@ -200,6 +210,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
         qint64 id = dbAnswer.value(0).toLongLong();
         qint64 timeInt = dbAnswer.value(1).toLongLong();
         QString sender = dbAnswer.value(2).toString();
+        QString senderName = dbAnswer.value(5).toString();
         QString message = unWrapMessage(dbAnswer.value(3).toString());
         bool isSent = true;
         if (!dbAnswer.value(4).isNull())
@@ -207,7 +218,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
 
         QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
 
-        res.push_back(HistMessage(id, "", sender, message, time, isSent));
+        res.push_back(HistMessage(id, "", sender, message, time, isSent, senderName));
     }
 
     return res;
@@ -216,7 +227,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()
 {
     QSqlQuery dbAnswer;
-    dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status, name FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
+    dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status, name, alias FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
                         QString("INNER JOIN aliases ON history.sender = aliases.id INNER JOIN chats ON history.chat_id = chats.id;"));
 
     QList<HistMessage> res;
@@ -231,9 +242,10 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()
         if (!dbAnswer.value(4).isNull())
             isSent = dbAnswer.value(4).toBool();
         QString chat = dbAnswer.value(5).toString();
+        QString dispName = dbAnswer.value(6).toString();
         QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
 
-        res.push_back(HistMessage(id, chat, sender, message, time, isSent));
+        res.push_back(HistMessage(id, chat, sender, message, time, isSent, dispName));
     }
 
     return res;
@@ -244,7 +256,7 @@ void HistoryKeeper::importMessages(const QList<HistoryKeeper::HistMessage> &lst)
     db->exec("BEGIN TRANSACTION;");
     for (const HistMessage &msg : lst)
     {
-        QList<QString> cmds = generateAddChatEntryCmd(msg.chat, msg.message, msg.sender, msg.timestamp, msg.isSent);
+        QList<QString> cmds = generateAddChatEntryCmd(msg.chat, msg.message, msg.sender, msg.timestamp, msg.isSent, QString()); //!!!
         for (auto &it : cmds)
             db->exec(it);
 
@@ -253,15 +265,15 @@ void HistoryKeeper::importMessages(const QList<HistoryKeeper::HistMessage> &lst)
     db->exec("COMMIT TRANSACTION;");
 }
 
-QList<QString> HistoryKeeper::generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent)
+QList<QString> HistoryKeeper::generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName)
 {
     QList<QString> cmds;
 
     int chat_id = getChatID(chat, ctSingle).first;
     int sender_id = getAliasID(sender);
 
-    cmds.push_back(QString("INSERT INTO history (timestamp, chat_id, sender, message) VALUES (%1, %2, %3, '%4');")
-                   .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)));
+    cmds.push_back(QString("INSERT INTO history (timestamp, chat_id, sender, message, alias) VALUES (%1, %2, %3, '%4', '%5');")
+                   .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)).arg(dispName));
     cmds.push_back(QString("INSERT INTO sent_status (status) VALUES (%1);").arg(isSent));
 
     return cmds;

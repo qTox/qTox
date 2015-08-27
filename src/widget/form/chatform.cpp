@@ -837,7 +837,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
         // Show each messages
         ToxId authorId = ToxId(it.sender);
-        QString authorStr = authorId.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxId(authorId);
+        QString authorStr = !it.dispName.isEmpty() ? it.dispName : (authorId.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxId(authorId));
         bool isAction = it.message.startsWith("/me ", Qt::CaseInsensitive);
 
         ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
@@ -1045,7 +1045,7 @@ void ChatForm::SendMessageStr(QString msg)
         bool status = !Settings::getInstance().getFauxOfflineMessaging();
 
         int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxId().publicKey, qt_msg_hist,
-                                                            Core::getInstance()->getSelfId().publicKey, timestamp, status);
+                                                            Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername());
 
         ChatMessage::Ptr ma = addSelfMessage(qt_msg, isAction, timestamp, false);
 
