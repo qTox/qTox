@@ -1924,13 +1924,20 @@ QString Widget::getStatusIconPath(Status status)
 
 inline QIcon Widget::getStatusIcon(Status status, uint32_t, uint32_t)
 {
-#ifdef __linux__
+
+#ifdef Q_OS_LINUX
+
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (desktop.isEmpty())
+    {
         desktop = getenv("DESKTOP_SESSION");
+    }
     desktop = desktop.toLower();
-    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate") {
-        if (w > 0 && h > 0) {
+
+    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate")
+    {
+        if (w > 0 && h > 0)
+        {
             return getStatusIconPixmap(status, w, h);
         }
     }
