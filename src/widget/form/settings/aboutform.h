@@ -42,6 +42,7 @@ private slots:
 
 private:
     void retranslateUi();
+    void replaceVersions();
 
 private:
     Ui::AboutSettings* bodyUI;
