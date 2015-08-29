@@ -1699,6 +1699,7 @@ void Widget::onTryCreateTrayIcon()
             trayMenu = new QMenu(this);
             QStyle *style = qApp->style();
             actionQuit = new QAction(tr("&Exit"), this);
+            actionQuit->setMenuRole(QAction::QuitRole);
             actionQuit->setShortcut(QKeySequence::Quit); // system default quit shorcut
             actionQuit->setIcon(style->standardIcon(QStyle::SP_DialogCloseButton)); // system default exit icon
             connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
