@@ -43,11 +43,11 @@ void AboutForm::replaceVersions()
     bodyUI->gitVersion->setText(bodyUI->gitVersion->text().replace("$GIT_VERSION", QString(GIT_VERSION)));
     bodyUI->toxCoreVersion->setText(
                 bodyUI->toxCoreVersion->text().replace("$TOXCOREVERSION",
-                                                       QString::number(TOX_VERSION_MAJOR) +
-                                                       QString::number(TOX_VERSION_MINOR) +
+                                                       QString::number(TOX_VERSION_MAJOR) + "." +
+                                                       QString::number(TOX_VERSION_MINOR) + "." +
                                                        QString::number(TOX_VERSION_PATCH)));
     //TODO show when toxcore supports versioning #2086
-    //bodyUI->toxCoreVersion->hide();
+    bodyUI->toxCoreVersion->hide();
 }
 
 AboutForm::~AboutForm()
