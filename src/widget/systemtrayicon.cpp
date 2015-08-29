@@ -26,9 +26,8 @@
 #include <QDebug>
 #include "src/persistence/settings.h"
 
-SystemTrayIcon::SystemTrayIcon(Widget *parent)
+SystemTrayIcon::SystemTrayIcon()
 {
-    this->parent = parent;
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (desktop.isEmpty())
         desktop = getenv("DESKTOP_SESSION");

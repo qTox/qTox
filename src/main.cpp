@@ -71,6 +71,8 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
         case QtFatalMsg:
             LogMsg += "Fatal";
             break;
+        default:
+            break;
     }
 
     LogMsg += ": " + msg + "\n";
