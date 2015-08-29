@@ -119,6 +119,7 @@ void Widget::init()
     offlineMsgTimer = new QTimer();
     offlineMsgTimer->start(15000);
 
+    icon_size = 15;
     statusOnline = new QAction(this);
     statusOnline->setIcon(getStatusIcon(Status::Online, icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
@@ -1693,7 +1694,7 @@ void Widget::onTryCreateTrayIcon()
     {
         if (QSystemTrayIcon::isSystemTrayAvailable())
         {
-            icon = new SystemTrayIcon(this);
+            icon = new SystemTrayIcon();
             updateIcons();
             trayMenu = new QMenu(this);
             QStyle *style = qApp->style();

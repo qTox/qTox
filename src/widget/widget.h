@@ -183,7 +183,7 @@ private slots:
     void friendListContextMenu(const QPoint &pos);
 
 private:
-    const int icon_size = 15;
+    int icon_size;
 
 private:
     enum ActiveToolMenuButton {
