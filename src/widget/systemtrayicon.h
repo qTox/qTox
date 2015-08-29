@@ -22,6 +22,7 @@
 #define SYSTEMTRAYICON_H
 
 #include "systemtrayicon_private.h"
+#include "widget.h"
 #include <QObject>
 
 class QSystemTrayIcon;
@@ -31,7 +32,7 @@ class SystemTrayIcon : public QObject
 {
     Q_OBJECT
 public:
-    SystemTrayIcon();
+    SystemTrayIcon(Widget *parent);
     ~SystemTrayIcon();
     void setContextMenu(QMenu* menu);
     void show();
@@ -48,6 +49,8 @@ private:
 private:
     SystrayBackendType backendType;
     QSystemTrayIcon* qtIcon;
+    Widget *parent;
+
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     AppIndicator *unityIndicator;
     GtkWidget *unityMenu;
