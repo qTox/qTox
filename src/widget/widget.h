@@ -160,6 +160,9 @@ private slots:
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
 
+private:
+    const int icon_size = 15;
+
 #ifdef Q_OS_MAC
     void bringAllToFront();
     void toggleFullscreen();
