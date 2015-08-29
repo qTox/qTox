@@ -183,6 +183,9 @@ private slots:
     void friendListContextMenu(const QPoint &pos);
 
 private:
+    const int icon_size = 15;
+
+private:
     enum ActiveToolMenuButton {
         AddButton,
         GroupButton,

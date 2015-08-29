@@ -120,15 +120,15 @@ void Widget::init()
     offlineMsgTimer->start(15000);
 
     statusOnline = new QAction(this);
-    statusOnline->setIcon(getStatusIcon(Status::Online, 50, 50));
+    statusOnline->setIcon(getStatusIcon(Status::Online, icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
 
     statusAway = new QAction(this);
-    statusAway->setIcon(getStatusIcon(Status::Away, 50, 50));
+    statusAway->setIcon(getStatusIcon(Status::Away, icon_size, icon_size));
     connect(statusAway, &QAction::triggered, this, &Widget::setStatusAway);
 
     statusBusy = new QAction(this);
-    statusBusy->setIcon(getStatusIcon(Status::Busy, 50, 50));
+    statusBusy->setIcon(getStatusIcon(Status::Busy, icon_size, icon_size));
     connect(statusBusy, &QAction::triggered, this, &Widget::setStatusBusy);
 
     layout()->setContentsMargins(0, 0, 0, 0);
@@ -411,17 +411,16 @@ void Widget::updateIcons()
             status = "offline";
     }
 
-    QIcon ico = QIcon::fromTheme("qtox-" + status);
+    QIcon ico;
     if (ico.isNull())
     {
         QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
         QString path = ":img/taskbar/" + color + "/taskbar_" + status + ".svg";
-
         QSvgRenderer renderer(path);
 
         // Prepare a QImage with desired characteritisc
-        QImage image(250, 250, QImage::Format_ARGB32_Premultiplied);
-
+        QImage image = QImage(250, 250, QImage::Format_ARGB32);
+        image.fill(Qt::transparent);
         QPainter painter(&image);
         renderer.render(&painter);
         ico = QIcon(QPixmap::fromImage(image));
@@ -562,7 +561,7 @@ void Widget::onBadProxyCore()
 void Widget::onStatusSet(Status status)
 {
     ui->statusButton->setProperty("status", getStatusTitle(status));
-    ui->statusButton->setIcon(getStatusIcon(status, 10, 10));
+    ui->statusButton->setIcon(getStatusIcon(status, icon_size, icon_size));
     updateIcons();
 }
 
@@ -1924,6 +1923,17 @@ QString Widget::getStatusIconPath(Status status)
 
 inline QIcon Widget::getStatusIcon(Status status, uint32_t, uint32_t)
 {
+#ifdef __linux__
+    QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    if (desktop.isEmpty())
+        desktop = getenv("DESKTOP_SESSION");
+    desktop = desktop.toLower();
+    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate") {
+        if (w > 0 && h > 0) {
+            return getStatusIconPixmap(status, w, h);
+        }
+    }
+#endif
     return QIcon(getStatusIconPath(status));
 }
 
