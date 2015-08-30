@@ -23,6 +23,8 @@
 #include <QMessageBox>
 #include <QErrorMessage>
 #include <QClipboard>
+#include <QTabWidget>
+#include <QSignalMapper>
 #include <tox/tox.h>
 #include "ui_mainwindow.h"
 #include "src/nexus.h"
@@ -35,12 +37,20 @@
 
 AddFriendForm::AddFriendForm()
 {
-    main = new QWidget(), head = new QWidget();
+    tabWidget = new QTabWidget();
+    main = new QWidget(tabWidget), head = new QWidget();
     QFont bold;
     bold.setBold(true);
     headLabel.setFont(bold);
 
-    retranslateUi();
+    tabWidget->addTab(main, QString());
+    QScrollArea* scrollArea = new QScrollArea(tabWidget);
+    QWidget* requestWidget = new QWidget(tabWidget);
+    scrollArea->setWidget(requestWidget);
+    scrollArea->setWidgetResizable(true);
+    requestsLayout = new QVBoxLayout(requestWidget);
+    requestsLayout->addStretch(1);
+    tabWidget->addTab(scrollArea, QString());
 
     main->setLayout(&layout);
     layout.addWidget(&toxIdLabel);
@@ -52,25 +62,35 @@ AddFriendForm::AddFriendForm()
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
 
+    connect(tabWidget, &QTabWidget::currentChanged, this, &AddFriendForm::onCurrentChanged);
     connect(&toxId,&QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
+    retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
+
+    int size = Settings::getInstance().getFriendRequestSize();
+
+    for (int i = 0; i < size; ++i)
+    {
+        QPair<QString, QString> request = Settings::getInstance().getFriendRequest(i);
+        addFriendRequestWidget(request.first, request.second);
+    }
 }
 
 AddFriendForm::~AddFriendForm()
 {
     Translator::unregister(this);
     head->deleteLater();
-    main->deleteLater();
+    tabWidget->deleteLater();
 }
 
 void AddFriendForm::show(Ui::MainWindow &ui)
 {
-    ui.mainContent->layout()->addWidget(main);
+    ui.mainContent->layout()->addWidget(tabWidget);
     ui.mainHead->layout()->addWidget(head);
-    main->show();
+    tabWidget->show();
     head->show();
     setIdFromClipboard();
     toxId.setFocus();
@@ -80,6 +100,18 @@ QString AddFriendForm::getMessage() const
 {
     const QString msg = message.toPlainText();
     return !msg.isEmpty() ? msg : message.placeholderText();
+}
+
+void AddFriendForm::setMode(Mode mode)
+{
+    tabWidget->setCurrentIndex(mode);
+}
+
+void AddFriendForm::addFriendRequest(const QString &friendAddress, const QString &message)
+{
+    addFriendRequestWidget(friendAddress, message);
+    Settings::getInstance().addFriendRequest(friendAddress, message);
+    onCurrentChanged(tabWidget->currentIndex());
 }
 
 void AddFriendForm::onUsernameSet(const QString& username)
@@ -141,6 +173,37 @@ void AddFriendForm::setIdFromClipboard()
     }
 }
 
+void AddFriendForm::onFriendRequestAccepted()
+{
+    QWidget* friendWidget = static_cast<QWidget*>(sender());
+    int index = requestsLayout->indexOf(friendWidget);
+    friendWidget->deleteLater();
+    requestsLayout->removeWidget(friendWidget);
+    emit friendRequestAccepted(Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1).first);
+    Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
+    Settings::getInstance().savePersonal();
+}
+
+void AddFriendForm::onFriendRequestRejected()
+{
+    QWidget* friendWidget = static_cast<QWidget*>(sender());
+    int index = requestsLayout->indexOf(friendWidget);
+    friendWidget->deleteLater();
+    requestsLayout->removeWidget(friendWidget);
+    Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
+    Settings::getInstance().savePersonal();
+}
+
+void AddFriendForm::onCurrentChanged(int index)
+{
+    if (index == FriendRequest && Settings::getInstance().getUnreadFriendRequests() != 0)
+    {
+        Settings::getInstance().clearUnreadFriendRequests();
+        Settings::getInstance().savePersonal();
+        emit friendRequestsSeen();
+    }
+}
+
 void AddFriendForm::retranslateUi()
 {
     headLabel.setText(tr("Add Friends"));
@@ -150,4 +213,54 @@ void AddFriendForm::retranslateUi()
     message.setPlaceholderText(tr("%1 here! Tox me maybe?",
                 "Default message in friend requests if the field is left blank. Write something appropriate!")
                 .arg(lastUsername));
+
+    tabWidget->setTabText(0, tr("Add a friend"));
+    tabWidget->setTabText(1, tr("Friend requests"));
+
+    for (QPushButton* acceptButton : acceptButtons)
+        retranslateAcceptButton(acceptButton);
+
+    for (QPushButton* rejectButton : rejectButtons)
+        retranslateRejectButton(rejectButton);
+}
+
+void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const QString &message)
+{
+    QWidget* friendWidget = new QWidget(tabWidget);
+    QHBoxLayout* friendLayout = new QHBoxLayout(friendWidget);
+    QVBoxLayout* horLayout = new QVBoxLayout();
+    horLayout->setMargin(0);
+    friendLayout->addLayout(horLayout);
+
+    CroppingLabel* friendLabel = new CroppingLabel(friendWidget);
+    friendLabel->setText("<b>" + friendAddress + "</b>");
+    horLayout->addWidget(friendLabel);
+
+    QLabel* messageLabel = new QLabel(message);
+    messageLabel->setWordWrap(true);
+    horLayout->addWidget(messageLabel, 1);
+
+    QPushButton* acceptButton = new QPushButton(friendWidget);
+    acceptButtons.insert(acceptButton);
+    connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
+    friendLayout->addWidget(acceptButton);
+    retranslateAcceptButton(acceptButton);
+
+    QPushButton* rejectButton = new QPushButton(friendWidget);
+    acceptButtons.insert(acceptButton);
+    connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
+    friendLayout->addWidget(rejectButton);
+    retranslateRejectButton(rejectButton);
+
+    requestsLayout->insertWidget(0, friendWidget);
+}
+
+void AddFriendForm::retranslateAcceptButton(QPushButton *acceptButton)
+{
+    acceptButton->setText(tr("Accept"));
+}
+
+void AddFriendForm::retranslateRejectButton(QPushButton *rejectButton)
+{
+    rejectButton->setText(tr("Reject"));
 }
