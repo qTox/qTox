@@ -110,7 +110,7 @@ void GroupInviteForm::showEvent(QShowEvent* event)
 
 void GroupInviteForm::onGroupInviteAccepted()
 {
-    QWidget* groupWidget = static_cast<QWidget*>(sender());
+    QWidget* groupWidget = static_cast<QWidget*>(sender())->parentWidget();
     int index = inviteLayout->indexOf(groupWidget);
     GroupInvite invite = groupInvites.at(index);
     groupInvites.removeAt(index);
@@ -123,7 +123,7 @@ void GroupInviteForm::onGroupInviteAccepted()
 
 void GroupInviteForm::onGroupInviteRejected()
 {
-    QWidget* groupWidget = static_cast<QWidget*>(sender());
+    QWidget* groupWidget = static_cast<QWidget*>(sender())->parentWidget();
     int index = inviteLayout->indexOf(groupWidget);
     groupInvites.removeAt(index);
 

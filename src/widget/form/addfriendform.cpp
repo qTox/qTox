@@ -107,11 +107,16 @@ void AddFriendForm::setMode(Mode mode)
     tabWidget->setCurrentIndex(mode);
 }
 
-void AddFriendForm::addFriendRequest(const QString &friendAddress, const QString &message)
+bool AddFriendForm::addFriendRequest(const QString &friendAddress, const QString &message)
 {
-    addFriendRequestWidget(friendAddress, message);
-    Settings::getInstance().addFriendRequest(friendAddress, message);
-    onCurrentChanged(tabWidget->currentIndex());
+    if (Settings::getInstance().addFriendRequest(friendAddress, message))
+    {
+        addFriendRequestWidget(friendAddress, message);
+        onCurrentChanged(tabWidget->currentIndex());
+        return true;
+    }
+
+    return false;
 }
 
 void AddFriendForm::onUsernameSet(const QString& username)
@@ -175,7 +180,7 @@ void AddFriendForm::setIdFromClipboard()
 
 void AddFriendForm::onFriendRequestAccepted()
 {
-    QWidget* friendWidget = static_cast<QWidget*>(sender());
+    QWidget* friendWidget = static_cast<QWidget*>(sender())->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
     friendWidget->deleteLater();
     requestsLayout->removeWidget(friendWidget);
@@ -186,7 +191,7 @@ void AddFriendForm::onFriendRequestAccepted()
 
 void AddFriendForm::onFriendRequestRejected()
 {
-    QWidget* friendWidget = static_cast<QWidget*>(sender());
+    QWidget* friendWidget = static_cast<QWidget*>(sender())->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
     friendWidget->deleteLater();
     requestsLayout->removeWidget(friendWidget);
@@ -248,7 +253,7 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
 
     QPushButton* rejectButton = new QPushButton(friendWidget);
     acceptButtons.insert(acceptButton);
-    connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
+    connect(rejectButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestRejected);
     friendLayout->addWidget(rejectButton);
     retranslateRejectButton(rejectButton);
 
