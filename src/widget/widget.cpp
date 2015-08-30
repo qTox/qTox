@@ -1697,7 +1697,13 @@ void Widget::onTryCreateTrayIcon()
             icon = new SystemTrayIcon();
             updateIcons();
             trayMenu = new QMenu(this);
+
             QStyle *style = qApp->style();
+
+            actionLogout = new QAction(tr("&Logout"), this);
+            actionLogout->setIcon(style->standardIcon(QStyle::SP_BrowserStop));
+            connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
+
             actionQuit = new QAction(tr("&Exit"), this);
             actionQuit->setMenuRole(QAction::QuitRole);
             actionQuit->setShortcut(QKeySequence::Quit); // system default quit shorcut
@@ -1708,6 +1714,7 @@ void Widget::onTryCreateTrayIcon()
             trayMenu->addAction(statusAway);
             trayMenu->addAction(statusBusy);
             trayMenu->addSeparator();
+            trayMenu->addAction(actionLogout);
             trayMenu->addAction(actionQuit);
             icon->setContextMenu(trayMenu);
 
