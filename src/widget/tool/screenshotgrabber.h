@@ -57,6 +57,8 @@ signals:
 
 private:
     friend class ScreenGrabberOverlayItem;
+    // for exception multiple handling during switching window
+    bool blocked = false;
 
     void setupWindow();
     void setupScene(QGraphicsScene* scene);
