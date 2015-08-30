@@ -68,8 +68,8 @@ protected:
     virtual void paintEvent(QPaintEvent*) final override;
 
 private slots:
-    void on_topButton_clicked();
-    void on_bottomButton_clicked();
+    void onTopButtonClicked();
+    void onBottomButtonClicked();
 
 private:
     Ui::FileTransferWidget *ui;

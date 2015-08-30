@@ -706,7 +706,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
 void Widget::reloadHistory()
 {
     for (auto f : FriendList::getAllFriends())
-        f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+        f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-1), true);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)
@@ -977,7 +977,8 @@ void Widget::playRingtone()
 
     QApplication::alert(this);
 
-    static QFile sndFile1(":audio/ToxicIncomingCall.pcm"); // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
+    // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
+    static QFile sndFile1(":audio/ToxicIncomingCall.pcm");
     static QByteArray sndData1;
     if (sndData1.isEmpty())
     {

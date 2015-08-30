@@ -24,6 +24,7 @@
 #include "src/core/core.h"
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
+#include "src/persistence/settings.h"
 
 #include <QMouseEvent>
 #include <QFileDialog>
@@ -135,7 +136,7 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
     //test if writable
     if (!Nexus::tryRemoveFile(filepath))
     {
-        QMessageBox::warning(0,
+        QMessageBox::warning(this,
                              tr("Location not writable","Title of permissions popup"),
                              tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
         return;
@@ -192,7 +193,7 @@ void FileTransferWidget::paintEvent(QPaintEvent *)
 
     // draw background
     if (drawButtonAreaNeeded())
-        painter.setClipRect(QRect(0,0,width()-buttonFieldWidth,height()));
+        painter.setClipRect(QRect(0, 0, width()-buttonFieldWidth, height()));
 
     painter.setBrush(QBrush(backgroundColor));
     painter.drawRoundRect(geometry(), r * ratio, r);
@@ -389,7 +390,7 @@ QString FileTransferWidget::getHumanReadableSize(qint64 size)
     if (size > 0)
         exp = std::min( (int) (log(size) / log(1024)), (int) (sizeof(suffix) / sizeof(suffix[0]) - 1));
 
-    return QString().setNum(size / pow(1024, exp),'f', exp > 1 ? 2 : 0).append(suffix[exp]);
+    return QString().setNum(size / pow(1024, exp), 'f', exp > 1 ? 2 : 0).append(suffix[exp]);
 }
 
 void FileTransferWidget::hideWidgets()
@@ -430,7 +431,7 @@ void FileTransferWidget::setupButtons()
 
         break;
     case ToxFile::STOPPED:
-    case ToxFile::BROKEN: //TODO: ?
+    case ToxFile::BROKEN:
         ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->bottomButton->setObjectName("cancel");
         ui->bottomButton->setToolTip(tr("Cancel transfer"));
@@ -472,7 +473,9 @@ void FileTransferWidget::handleButton(QPushButton *btn)
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
         else if (btn->objectName() == "accept")
         {
-            QString path = QFileDialog::getSaveFileName(0, tr("Save a file","Title of the file saving dialog"), QDir::home().filePath(fileInfo.fileName));
+            QString path = QFileDialog::getSaveFileName(this,
+                                                        tr("Save a file", "Title of the file saving dialog"),
+                                                        Settings::getInstance().getGlobalAutoAcceptDir() + "/" + fileInfo.fileName);
             acceptTransfer(path);
         }
     }
@@ -497,13 +500,16 @@ void FileTransferWidget::showPreview(const QString &filename)
     {
         const int size = qMax(ui->previewLabel->width(), ui->previewLabel->height());
 
-        QPixmap pmap = QPixmap(filename).scaled(QSize(size, size), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        QPixmap pmap = QPixmap(filename).scaled(QSize(size, size),
+                                                Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         ui->previewLabel->setPixmap(pmap);
         ui->previewLabel->show();
         ui->previewLabel->setCursor(Qt::PointingHandCursor);
         // Show mouseover preview, but make sure it's not larger than 50% of the screen width/height
         QRect desktopSize = QApplication::desktop()->screenGeometry();
-        QImage image = QImage(filename).scaled(0.5*desktopSize.width(), 0.5*desktopSize.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QImage image = QImage(filename).scaled(0.5 * desktopSize.width(),
+                                               0.5 * desktopSize.height(),
+                                               Qt::KeepAspectRatio, Qt::SmoothTransformation);
         QByteArray imageData;
         QBuffer buffer(&imageData);
         buffer.open(QIODevice::WriteOnly);
@@ -513,12 +519,12 @@ void FileTransferWidget::showPreview(const QString &filename)
     }
 }
 
-void FileTransferWidget::on_topButton_clicked()
+void FileTransferWidget::onTopButtonClicked()
 {
     handleButton(ui->topButton);
 }
 
-void FileTransferWidget::on_bottomButton_clicked()
+void FileTransferWidget::onBottomButtonClicked()
 {
     handleButton(ui->bottomButton);
 }
