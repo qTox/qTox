@@ -368,7 +368,7 @@ QSplitter:handle{
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <layout class="QVBoxLayout" name="statusLayout">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -1090,8 +1090,6 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>284</width>
-             <height>401</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>

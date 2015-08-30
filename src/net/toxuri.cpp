@@ -57,7 +57,7 @@ bool handleToxURI(const QString &toxURI)
         qApp->processEvents();
 
     QString toxaddr;
-    if (toxURI.startsWith("tox://"))
+    if (toxURI.startsWith("tox:"))
         toxaddr = toxURI.mid(6);
     else
         toxaddr = toxURI.mid(4);
@@ -66,11 +66,13 @@ bool handleToxURI(const QString &toxURI)
 
     if (toxid.isEmpty())
     {
-        QMessageBox::warning(0, "qTox", toxaddr+" is not a valid Tox address.");
+        QMessageBox::warning(0, "qTox", toxaddr + " is not a valid Tox address.");
     }
     else
     {
-        ToxURIDialog dialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?","Default message in Tox URI friend requests. Write something appropriate!").arg(Nexus::getCore()->getUsername()));
+        ToxURIDialog dialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?",
+                                                    "Default message in Tox URI friend requests. Write something appropriate!")
+                            .arg(Nexus::getCore()->getUsername()));
         if (dialog.exec() == QDialog::Accepted)
             Core::getInstance()->requestFriendship(toxid, dialog.getRequestMessage());
     }
@@ -81,7 +83,7 @@ ToxURIDialog::ToxURIDialog(QWidget *parent, const QString &userId, const QString
     QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setWindowTitle(tr("Add a friend","Title of the window to add a friend through Tox URI"));
+    setWindowTitle(tr("Add a friend", "Title of the window to add a friend through Tox URI"));
 
     QLabel *friendsLabel = new QLabel(tr("Do you want to add %1 as a friend?").arg(userId), this);
     QLabel *userIdLabel = new QLabel(tr("User ID:"), this);
@@ -93,8 +95,8 @@ ToxURIDialog::ToxURIDialog(QWidget *parent, const QString &userId, const QString
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
 
-    buttonBox->addButton(tr("Send","Send a friend request"), QDialogButtonBox::AcceptRole);
-    buttonBox->addButton(tr("Cancel","Don't send a friend request"), QDialogButtonBox::RejectRole);
+    buttonBox->addButton(tr("Send", "Send a friend request"), QDialogButtonBox::AcceptRole);
+    buttonBox->addButton(tr("Cancel", "Don't send a friend request"), QDialogButtonBox::RejectRole);
 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &FriendRequestDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FriendRequestDialog::reject);

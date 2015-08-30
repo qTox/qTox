@@ -21,19 +21,33 @@
 
 #include "aboutform.h"
 #include "src/widget/translator.h"
+#include "tox/tox.h"
 
 AboutForm::AboutForm() :
     GenericForm(QPixmap(":/img/settings/general.png"))
 {
     bodyUI = new Ui::AboutSettings;
     bodyUI->setupUi(this);
-    //to-do: when we finally have stable releases: build-in a way to tell
-    //nightly builds from stable releases.
-    bodyUI->label_4->setText(bodyUI->label_4->text().replace("GIT_VERSION", QString(GIT_VERSION)));
+    replaceVersions();
+
     if (QString(GIT_VERSION).indexOf(" ") > -1)
-        bodyUI->label_4->setOpenExternalLinks(false);
+        bodyUI->gitVersion->setOpenExternalLinks(false);
 
     Translator::registerHandler(std::bind(&AboutForm::retranslateUi, this), this);
+}
+
+//to-do: when we finally have stable releases: build-in a way to tell
+//nightly builds from stable releases.
+void AboutForm::replaceVersions()
+{
+    bodyUI->gitVersion->setText(bodyUI->gitVersion->text().replace("$GIT_VERSION", QString(GIT_VERSION)));
+    bodyUI->toxCoreVersion->setText(
+                bodyUI->toxCoreVersion->text().replace("$TOXCOREVERSION",
+                                                       QString::number(TOX_VERSION_MAJOR) + "." +
+                                                       QString::number(TOX_VERSION_MINOR) + "." +
+                                                       QString::number(TOX_VERSION_PATCH)));
+    //TODO show when toxcore supports versioning #2086
+    bodyUI->toxCoreVersion->hide();
 }
 
 AboutForm::~AboutForm()
@@ -45,5 +59,5 @@ AboutForm::~AboutForm()
 void AboutForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
-    bodyUI->label_4->setText(bodyUI->label_4->text().replace("GIT_VERSION", QString(GIT_VERSION)));
+    replaceVersions();
 }
