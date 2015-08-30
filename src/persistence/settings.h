@@ -184,6 +184,9 @@ public:
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
 
+    QString getSaveFileDirectory() const;
+    void setSaveFileDirectory(const QString& file);
+
     // ChatView
     int getFirstColumnHandlePos() const;
     void setFirstColumnHandlePos(const int pos);
@@ -333,6 +336,7 @@ private:
     QHash<QString, QString> autoAccept;
     bool autoSaveEnabled;
     QString globalAutoAcceptDir;
+    QString saveFileDirectory;
 
     QList<QPair<QString, QString>> friendRequests;
     unsigned int unreadFriendRequests;

@@ -174,6 +174,7 @@ void Settings::loadGlobal()
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
+        saveFileDirectory = s.value("saveFileDirectory", QDir::home().path()).toString();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 
@@ -393,6 +394,7 @@ void Settings::saveGlobal()
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
+        s.setValue("saveFileDirectory", saveFileDirectory);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
     s.endGroup();
 
@@ -973,6 +975,18 @@ void Settings::setGlobalAutoAcceptDir(const QString& newValue)
 {
     QMutexLocker locker{&bigLock};
     globalAutoAcceptDir = newValue;
+}
+
+QString Settings::getSaveFileDirectory() const
+{
+    QMutexLocker locker{&bigLock};
+    return saveFileDirectory;
+}
+
+void Settings::setSaveFileDirectory(const QString& newValue)
+{
+    QMutexLocker locker{&bigLock};
+    saveFileDirectory = newValue;
 }
 
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)
