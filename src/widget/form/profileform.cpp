@@ -84,20 +84,20 @@ ProfileForm::ProfileForm(QWidget *parent) :
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setClickable(true);
-    connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     QHBoxLayout *publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
     publicGrouplayout->insertWidget(0, profilePicture);
     publicGrouplayout->insertSpacing(1, 7);
 
     timer.setInterval(750);
     timer.setSingleShot(true);
-    connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", "")); hasCheck = false;});
 
-    connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
+    connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", "")); hasCheck = false;});
+    connect(profilePicture, &MaskablePixmapWidget::clicked, this, &ProfileForm::onAvatarClicked);
+    connect(toxId, &ClickableTE::clicked, this, &ProfileForm::copyIdClicked);
     connect(core, &Core::idSet, this, &ProfileForm::setToxId);
-    connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
-    connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
+    connect(bodyUI->toxIdLabel, &CroppingLabel::clicked, this, &ProfileForm::copyIdClicked);
+    connect(bodyUI->userName, &QLineEdit::editingFinished, this, &ProfileForm::onUserNameEdited);
+    connect(bodyUI->statusMessage, &QLineEdit::editingFinished, this, &ProfileForm::onStatusMessageEdited);
     connect(bodyUI->renameButton, &QPushButton::clicked, this, &ProfileForm::onRenameClicked);
     connect(bodyUI->exportButton, &QPushButton::clicked, this, &ProfileForm::onExportClicked);
     connect(bodyUI->deleteButton, &QPushButton::clicked, this, &ProfileForm::onDeleteClicked);
@@ -142,7 +142,7 @@ void ProfileForm::show(Ui::MainWindow &ui)
     QWidget::show();
     prFileLabelUpdate();
     QString DirPath = QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
-    bodyUI->dirPrLink->setText(bodyUI->dirPrLink->text().replace("Dir_Path",DirPath));
+    bodyUI->dirPrLink->setText(bodyUI->dirPrLink->text().replace("Dir_Path", DirPath));
     bodyUI->dirPrLink->setOpenExternalLinks(true);
     bodyUI->dirPrLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::TextSelectableByMouse);
     bodyUI->userName->setFocus();
@@ -157,6 +157,7 @@ void ProfileForm::copyIdClicked()
     QApplication::clipboard()->setText(txt, QClipboard::Clipboard);
     if (QApplication::clipboard()->supportsSelection())
       QApplication::clipboard()->setText(txt, QClipboard::Selection);
+
     toxId->setCursorPosition(0);
 
     if (!hasCheck)
@@ -189,7 +190,7 @@ void ProfileForm::setToxId(const QString& id)
 
     delete qr;
     qr = new QRWidget();
-    qr->setQRData("tox:"+id);
+    qr->setQRData("tox:" + id);
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
 }
 
@@ -205,10 +206,10 @@ void ProfileForm::onAvatarClicked()
         return bytes;
     };
 
-    QString filename = QFileDialog::getOpenFileName(0,
-        tr("Choose a profile picture"),
-        QDir::homePath(),
-        Nexus::getSupportedImageFilter());
+    QString filename = QFileDialog::getOpenFileName(this,
+                                            tr("Choose a profile picture"),
+                                            QDir::homePath(),
+                                            Nexus::getSupportedImageFilter());
     if (filename.isEmpty())
         return;
 
@@ -232,15 +233,15 @@ void ProfileForm::onAvatarClicked()
     QByteArray bytes{picToPng(pic)};
     if (bytes.size() > 65535)
     {
-        pic = pic.scaled(256,256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        pic = pic.scaled(256, 256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         bytes = picToPng(pic);
     }
     if (bytes.size() > 65535)
         bytes = picToPng(pic.scaled(128,128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     if (bytes.size() > 65535)
-        bytes = picToPng(pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        bytes = picToPng(pic.scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     if (bytes.size() > 65535)
-        bytes = picToPng(pic.scaled(32,32, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        bytes = picToPng(pic.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     // If this happens, you're really doing it on purpose.
     if (bytes.size() > 65535)
@@ -262,6 +263,7 @@ void ProfileForm::onRenameClicked()
     {
         QString name = QInputDialog::getText(this, title, title+":");
         if (name.isEmpty()) break;
+
         name = Core::sanitize(name);
 
         if (Profile::exists(name))
@@ -281,25 +283,29 @@ void ProfileForm::onRenameClicked()
 void ProfileForm::onExportClicked()
 {
     QString current = Nexus::getProfile()->getName() + Core::TOX_EXT;
-    QString path = QFileDialog::getSaveFileName(0, tr("Export profile", "save dialog title"),
-                    QDir::home().filePath(current),
-                    tr("Tox save file (*.tox)", "save dialog filter"));
+    QString path = QFileDialog::getSaveFileName(this,
+                                                tr("Export profile", "save dialog title"),
+                                                QDir::home().filePath(current),
+                                                tr("Tox save file (*.tox)", "save dialog filter"));
     if (!path.isEmpty())
     {
         if (!Nexus::tryRemoveFile(path))
         {
-            GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+            GUI::showWarning(tr("Location not writable","Title of permissions popup"),
+                             tr("You do not have permission to write that location. Choose another, or cancel the save dialog.",
+                                "text of permissions popup"));
             return;
         }
         if (!QFile::copy(Settings::getInstance().getSettingsDirPath()+current, path))
-            GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
+            GUI::showWarning(tr("Failed to copy file"),
+                             tr("The file you chose could not be written to."));
     }
 }
 
 void ProfileForm::onDeleteClicked()
 {
-    if (GUI::askQuestion(tr("Really delete profile?","deletion confirmation title"),
-                      tr("Are you sure you want to delete this profile?","deletion confirmation text")))
+    if (GUI::askQuestion(tr("Really delete profile?", "deletion confirmation title"),
+                      tr("Are you sure you want to delete this profile?", "deletion confirmation text")))
     {
         Nexus& nexus = Nexus::getInstance();
         nexus.getProfile()->remove();
@@ -322,7 +328,7 @@ void ProfileForm::onCopyQrClicked()
 void ProfileForm::onSaveQrClicked()
 {
     QString current = Nexus::getProfile()->getName() + ".png";
-    QString path = QFileDialog::getSaveFileName(0, tr("Save", "save qr image"),
+    QString path = QFileDialog::getSaveFileName(this, tr("Save", "save qr image"),
                    QDir::home().filePath(current),
                    tr("Save QrCode (*.png)", "save dialog filter"));
     if (!path.isEmpty())
@@ -367,7 +373,7 @@ void ProfileForm::onChangePassClicked()
 void ProfileForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
-    nameLabel->setText(QObject::tr("User Profile"));
+    nameLabel->setText(tr("User Profile"));
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
 }
