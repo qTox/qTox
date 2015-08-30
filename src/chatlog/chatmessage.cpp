@@ -186,7 +186,7 @@ QString ChatMessage::detectAnchors(const QString &str)
                 "\\w+\\S+)" // any other character, lets domains and other
                 "|"   // standard protocols OR tox ID:
                 "tox:(([\\w]+@[\\S]+)" // tox:something@something.com
-                "|(\\w{76}))$" // tox:76 characters long tox id
+                "|([A-Fa-f0-9]{76}))$" // tox:76 characters long tox id
                 );
 
     int offset = 0;
