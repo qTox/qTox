@@ -45,7 +45,8 @@ private slots:
     // Buttons to change page
     void onNewProfilePageClicked();
     void onLoginPageClicked();
-    void onImportProfileClicked();
+    void onImportProfileClicked(); // changes page
+    void onImportProfile(); // imports profile
 
     // Buttons to submit form
     void onCreateNewProfile();

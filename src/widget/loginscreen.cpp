@@ -26,6 +26,7 @@
 #include "src/persistence/settings.h"
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/translator.h"
+#include "src/widget/tool/profileimporter.h"
 #include <QMessageBox>
 #include <QDebug>
 
@@ -54,7 +55,7 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->newPass, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->newPassConfirm, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
-
+    connect(ui->pushButton, &QPushButton::clicked, this, &LoginScreen::onImportProfile);
     reset();
     retranslateUi();
     Translator::registerHandler(std::bind(&LoginScreen::retranslateUi, this), this);
@@ -122,25 +123,32 @@ void LoginScreen::onCreateNewProfile()
 
     if (name.isEmpty())
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The username must not be empty."));
+        QMessageBox::critical(this,
+                              tr("Couldn't create a new profile"), tr("The username must not be empty."));
         return;
     }
 
     if (pass.size()!=0 && pass.size() < 6)
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The password must be at least 6 characters long."));
+        QMessageBox::critical(this,
+                              tr("Couldn't create a new profile"),
+                              tr("The password must be at least 6 characters long."));
         return;
     }
 
     if (ui->newPassConfirm->text() != pass)
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The passwords you've entered are different.\nPlease make sure to enter same password twice."));
+        QMessageBox::critical(this,
+                              tr("Couldn't create a new profile"),
+                              tr("The passwords you've entered are different.\nPlease make sure to enter same password twice."));
         return;
     }
 
     if (Profile::exists(name))
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("A profile with this name already exists."));
+        QMessageBox::critical(this,
+                              tr("Couldn't create a new profile"),
+                              tr("A profile with this name already exists."));
         return;
     }
 
@@ -148,7 +156,9 @@ void LoginScreen::onCreateNewProfile()
     if (!profile)
     {
         // Unknown error
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("Unknown error: Couldn't create a new profile.\nIf you encountered this error, please report it."));
+        QMessageBox::critical(this,
+                              tr("Couldn't create a new profile"),
+                              tr("Unknown error: Couldn't create a new profile.\nIf you encountered this error, please report it."));
         return;
     }
 
@@ -222,6 +232,15 @@ void LoginScreen::onAutoLoginToggled(int state)
         Settings::getInstance().setAutoLogin(true);
 
     Settings::getInstance().saveGlobal();
+}
+
+void LoginScreen::onImportProfile()
+{
+    ProfileImporter *pi = new ProfileImporter(this);
+    if(pi->importProfile() == true)
+    {
+        reset();
+    }
 }
 
 void LoginScreen::retranslateUi()
