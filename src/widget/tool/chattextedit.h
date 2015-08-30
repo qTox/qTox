@@ -40,6 +40,7 @@ protected:
 
 private:
     void retranslateUi();
+    void contextMenuEvent(QContextMenuEvent *e);
 
 private:
     QString lastMessage;
