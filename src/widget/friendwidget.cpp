@@ -68,16 +68,15 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
+    QAction* newGroupAction = inviteMenu->addAction(tr("To new group"));
+    inviteMenu->addSeparator();
     QMap<QAction*, Group*> groupActions;
 
     for (Group* group : GroupList::getAllGroups())
     {
-        QAction* groupAction = inviteMenu->addAction(group->getGroupWidget()->getName());
+        QAction* groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(group->getGroupWidget()->getName()));
         groupActions[groupAction] =  group;
     }
-
-    if (groupActions.isEmpty())
-        inviteMenu->setEnabled(false);
 
     int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId());
     CircleWidget *circleWidget = CircleWidget::getFromID(circleId);
@@ -173,6 +172,11 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 qDebug() << "setting auto accept dir for" << friendId << "to" << dir;
                 Settings::getInstance().setAutoAcceptDir(id, dir);
             }
+        }
+        else if (selectedItem == newGroupAction)
+        {
+            int groupId = Core::getInstance()->createGroup();
+            Core::getInstance()->groupInviteFriend(friendId, groupId);
         }
         else if (selectedItem == newCircleAction)
         {

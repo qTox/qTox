@@ -496,7 +496,8 @@ SOURCES += \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
     src/widget/tool/removefrienddialog.cpp \
-    src/widget/tool/profileimporter.cpp
+    src/widget/tool/profileimporter.cpp \
+    src/widget/form/groupinviteform.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -541,4 +542,5 @@ HEADERS += \
     src/widget/genericchatitemlayout.h \
     src/widget/categorywidget.h \
     src/widget/tool/removefrienddialog.h \
-    src/widget/tool/profileimporter.h
+    src/widget/tool/profileimporter.h \
+    src/widget/form/groupinviteform.h
