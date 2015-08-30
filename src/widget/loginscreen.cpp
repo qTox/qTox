@@ -43,6 +43,7 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(&quitShortcut, &QShortcut::activated, this, &LoginScreen::close);
     connect(ui->newProfilePgbtn, &QPushButton::clicked, this, &LoginScreen::onNewProfilePageClicked);
     connect(ui->loginPgbtn, &QPushButton::clicked, this, &LoginScreen::onLoginPageClicked);
+    connect(ui->importProfilePgbtn, &QPushButton::clicked, this, &LoginScreen::onImportProfileClicked);
     connect(ui->createAccountButton, &QPushButton::clicked, this, &LoginScreen::onCreateNewProfile);
     connect(ui->newUsername, &QLineEdit::returnPressed, this, &LoginScreen::onCreateNewProfile);
     connect(ui->newPass, &QLineEdit::returnPressed, this, &LoginScreen::onCreateNewProfile);
@@ -75,8 +76,9 @@ void LoginScreen::reset()
 
     Profile::scanProfiles();
     QString lastUsed = Settings::getInstance().getCurrentProfile();
-    qDebug() << "Last used profile is "<<lastUsed;
+    qDebug() << "Last used profile is " << lastUsed;
     QVector<QString> profiles = Profile::getProfiles();
+
     for (QString profile : profiles)
     {
         ui->loginUsernames->addItem(profile);
@@ -106,6 +108,11 @@ void LoginScreen::onNewProfilePageClicked()
 void LoginScreen::onLoginPageClicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+}
+
+void LoginScreen::onImportProfileClicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
 void LoginScreen::onCreateNewProfile()

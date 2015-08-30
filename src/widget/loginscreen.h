@@ -41,9 +41,12 @@ private slots:
     void onAutoLoginToggled(int state);
     void onLoginUsernameSelected(const QString& name);
     void onPasswordEdited();
+
     // Buttons to change page
     void onNewProfilePageClicked();
     void onLoginPageClicked();
+    void onImportProfileClicked();
+
     // Buttons to submit form
     void onCreateNewProfile();
     void onLogin();
