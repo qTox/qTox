@@ -159,7 +159,7 @@ void ScreenshotGrabber::useNothingSelectedTooltip()
 
 void ScreenshotGrabber::useRegionSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selected region or select a new region.<br>Press <b>Space</b> to hide/show qTox window and repeat region selection.<br> Press <b>Escape</b> to cancel.",
+    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selected region.<br>Press <b>Space</b> to hide/show qTox window and repeat region selection.<br> Press <b>Escape</b> to cancel.",
                               "Help text shown when a region has been selected"));
     adjustTooltipPosition();
 }
