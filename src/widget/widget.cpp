@@ -1930,9 +1930,8 @@ QString Widget::getStatusIconPath(Status status)
     }
 }
 
-inline QIcon Widget::getStatusIcon(Status status, uint32_t, uint32_t)
+inline QIcon Widget::getStatusIcon(Status status, uint32_t w, uint32_t h)
 {
-
 #ifdef Q_OS_LINUX
 
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
