@@ -52,6 +52,7 @@ void ScreenshotGrabber::reInit()
     setupWindow();
     setupScene(scene);
     showGrabber();
+    blocked = false;
 }
 
 ScreenshotGrabber::~ScreenshotGrabber()
@@ -84,14 +85,19 @@ bool ScreenshotGrabber::handleKeyPress(QKeyEvent* event)
         reject();
     else if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
         acceptRegion();
-    else if (event->key() == Qt::Key_Space) // minimize qTox window
+    else if (event->key() == Qt::Key_Space && !blocked) // hide/show qTox window
     {
         Widget *Widget = Widget::getInstance();
-        Widget->setVisible(false);
+        blocked = true;
+        if ( Widget->isVisible())
+            Widget->setVisible(false);
+        else
+            Widget->setVisible(true);
         this->window->setVisible(false);
         this->window->resetCachedContent();
         // Give the window manager a moment to hide windows
         QTimer::singleShot(200, this, SLOT(reInit()));
+
     }
     else
         return false;
@@ -146,14 +152,14 @@ void ScreenshotGrabber::setupScene(QGraphicsScene* scene)
 
 void ScreenshotGrabber::useNothingSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Click and drag to select a region. Press <b>Space</b> to hide qTox window. Press <b>Escape</b> to cancel.",
+    helperTooltip->setHtml(tr("Click and drag to select a region.<br>Press <b>Space</b> to hide/show qTox window.<br>Press <b>Escape</b> to cancel.",
                               "Help text shown when no region has been selected yet"));
     adjustTooltipPosition();
 }
 
 void ScreenshotGrabber::useRegionSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selected region or select a new region. Press <b>Space</b> to hide qTox window and repeat region selection. Press <b>Escape</b> to cancel.",
+    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selected region or select a new region.<br>Press <b>Space</b> to hide/show qTox window and repeat region selection.<br> Press <b>Escape</b> to cancel.",
                               "Help text shown when a region has been selected"));
     adjustTooltipPosition();
 }
