@@ -902,22 +902,22 @@ void ChatForm::doScreenshot()
 
 void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
     QTemporaryFile file(Settings::getInstance().getSettingsDirPath()+"screenshots"+QDir::separator()+"qTox-Screenshot-XXXXXXXX.png");
-	if (!file.open())
-	{
-	    QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
-	                         tr("qTox wasn't able to save the screenshot"));
-	    return;
-	}
+    if (!file.open())
+    {
+        QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
+                             tr("qTox wasn't able to save the screenshot"));
+        return;
+    }
 
-	file.setAutoRemove(false);
+    file.setAutoRemove(false);
 
-	pixmap.save(&file, "PNG");
+    pixmap.save(&file, "PNG");
 
-	long long filesize = file.size();
-	file.close();
-	QFileInfo fi(file);
+    long long filesize = file.size();
+    file.close();
+    QFileInfo fi(file);
 
-	emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+    emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
 }
 
 void ChatForm::onLoadHistory()
