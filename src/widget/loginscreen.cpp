@@ -193,7 +193,9 @@ void LoginScreen::onLogin()
 
     if (!ProfileLocker::isLockable(name))
     {
-        QMessageBox::critical(this, tr("Couldn't load this profile"), tr("This profile is already in use."));
+        QMessageBox::critical(this,
+                              tr("Couldn't load this profile"),
+                              tr("This profile is already in use."));
         return;
     }
 
@@ -202,12 +204,16 @@ void LoginScreen::onLogin()
     {
         if (!ProfileLocker::isLockable(name))
         {
-            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Profile already in use. Close other clients."));
+            QMessageBox::critical(this,
+                                  tr("Couldn't load this profile"),
+                                  tr("Profile already in use. Close other clients."));
             return;
         }
         else
         {
-            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
+            QMessageBox::critical(this,
+                                  tr("Couldn't load this profile"),
+                                  tr("Wrong password."));
             return;
         }
     }
