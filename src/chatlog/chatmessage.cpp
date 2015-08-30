@@ -184,8 +184,11 @@ QString ChatMessage::detectAnchors(const QString &str)
                 "(?:\\b)(www\\.|http[s]?|ftp)://" // (protocol)://(printable - non-special character)
                 // http://ONEORMOREALHPA-DIGIT
                 "\\w+\\S+)" // any other character, lets domains and other
-                "|(^tox:[@\\w]+$)"); // starts with `tox` then : and only alpha-digits till the end
-                // also accepts tox:agilob@net as simplified TOX ID
+                "|"   // standard protocols OR tox ID:
+                "tox:(([\\w]+@[\\S]+)" // tox:something@something.com
+                "|([A-Fa-f0-9]{76}))$" // tox:76 characters long tox id
+                );
+
     int offset = 0;
     while ((offset = exp.indexIn(out, offset)) != -1)
     {
