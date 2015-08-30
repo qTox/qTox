@@ -210,6 +210,7 @@ private:
     QAction *statusOnline;
     QAction *statusAway;
     QAction *statusBusy;
+    QAction *actionLogout;
     QAction *actionQuit;
 
     QMenu* filterMenu;
