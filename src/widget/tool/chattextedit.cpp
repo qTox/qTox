@@ -20,6 +20,7 @@
 #include "chattextedit.h"
 #include "src/widget/translator.h"
 #include <QKeyEvent>
+#include <QMenu>
 
 ChatTextEdit::ChatTextEdit(QWidget *parent) :
     QTextEdit(parent)
@@ -68,4 +69,55 @@ void ChatTextEdit::setLastMessage(QString lm)
 void ChatTextEdit::retranslateUi()
 {
     setPlaceholderText(tr("Type your message here..."));
+}
+
+void ChatTextEdit::contextMenuEvent(QContextMenuEvent *e)
+{
+    QMenu *menu = QTextEdit::createStandardContextMenu();
+    if (menu == NULL)
+        return QTextEdit::contextMenuEvent(e);
+
+    QList<QAction*> actions = menu->actions();
+
+    foreach (QAction *action, actions)
+    {
+       QString actionText = action->text();
+       if (actionText.contains("Undo"))
+       {
+           actionText.replace("Undo", tr("Undo"));
+           action->setText(actionText);
+       }
+       else if (actionText.contains("Redo"))
+       {
+           actionText.replace("Redo", tr("Redo"));
+           action->setText(actionText);
+       }
+       else if (actionText.contains("Cu&t"))
+       {
+           actionText.replace("Cu&t", tr("Cut"));
+           action->setText(actionText);
+       }
+       else if (actionText.contains("Copy"))
+       {
+           actionText.replace("Copy", tr("Copy"));
+           action->setText(actionText);
+       }
+       else if (actionText.contains("Paste"))
+       {
+           actionText.replace("Paste", tr("Paste"));
+           action->setText(actionText);
+       }
+       else if (actionText.contains("Delete"))
+       {
+           actionText.replace("Delete", tr("Delete"));
+           action->setText(actionText);
+       }
+       else if (actionText.contains("Select All"))
+       {
+           actionText.replace("Select All", tr("Select All"));
+           action->setText(actionText);
+       }
+    }
+
+    menu->exec(e->globalPos());
 }
