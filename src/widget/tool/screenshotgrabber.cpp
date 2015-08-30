@@ -152,14 +152,14 @@ void ScreenshotGrabber::setupScene(QGraphicsScene* scene)
 
 void ScreenshotGrabber::useNothingSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Click and drag to select a region.<br>Press <b>Space</b> to hide/show qTox window.<br>Press <b>Escape</b> to cancel.",
+    helperTooltip->setHtml(tr("Click and drag to select a region. Press <b>Space</b> to hide/show qTox window, or <b>Escape</b> to cancel.",
                               "Help text shown when no region has been selected yet"));
     adjustTooltipPosition();
 }
 
 void ScreenshotGrabber::useRegionSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selected region or select a new region.<br>Press <b>Space</b> to hide/show qTox window and repeat region selection.<br> Press <b>Escape</b> to cancel.",
+    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selection, <b>Space</b> to hide/show qTox window, or <b>Escape</b> to cancel.",
                               "Help text shown when a region has been selected"));
     adjustTooltipPosition();
 }
