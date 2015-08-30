@@ -1696,8 +1696,8 @@ void Widget::friendListContextMenu(const QPoint &pos)
 
 void Widget::friendRequestRecieved(const QString& friendAddress, const QString& message)
 {
-    addFriendForm->addFriendRequest(friendAddress, message);
-    friendRequestsUpdate();
+    if (addFriendForm->addFriendRequest(friendAddress, message))
+        friendRequestsUpdate();
 }
 
 void Widget::friendRequestsUpdate()

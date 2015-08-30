@@ -251,7 +251,7 @@ public:
     bool getCircleExpanded(int id) const;
     void setCircleExpanded(int id, bool expanded);
 
-    void addFriendRequest(const QString &friendAddress, const QString &message);
+    bool addFriendRequest(const QString &friendAddress, const QString &message);
     unsigned int getUnreadFriendRequests() const;
     QPair<QString, QString> getFriendRequest(int index) const;
     int getFriendRequestSize() const;

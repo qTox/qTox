@@ -38,8 +38,7 @@ public:
     enum Mode
     {
         AddFriend = 0,
-        FriendRequest = 1,
-        GroupInvite = 2
+        FriendRequest = 1
     };
 
     AddFriendForm();
@@ -51,7 +50,7 @@ public:
     QString getMessage() const;
     void setMode(Mode mode);
 
-    void addFriendRequest(const QString& friendAddress, const QString& message);
+    bool addFriendRequest(const QString& friendAddress, const QString& message);
 
 signals:
     void friendRequested(const QString& friendAddress, const QString& message);
