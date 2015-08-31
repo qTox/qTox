@@ -302,7 +302,7 @@ void Settings::loadPersonnal(Profile* profile)
     ps.endGroup();
 
     ps.beginGroup("General");
-        compactLayout = ps.value("compactLayout", false).toBool();
+        compactLayout = ps.value("compactLayout", true).toBool();
     ps.endGroup();
 
     ps.beginGroup("Circles");
@@ -321,8 +321,8 @@ void Settings::loadPersonnal(Profile* profile)
     ps.endGroup();
 
     ps.beginGroup("Privacy");
-        typingNotification = ps.value("typingNotification", false).toBool();
-        enableLogging = ps.value("enableLogging", false).toBool();
+        typingNotification = ps.value("typingNotification", true).toBool();
+        enableLogging = ps.value("enableLogging", true).toBool();
     ps.endGroup();
 }
 
