@@ -29,6 +29,7 @@
 #include "src/persistence/profile.h"
 #include "src/widget/translator.h"
 #include "src/net/autoupdate.h"
+#include <QDesktopWidget>
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QTime>
@@ -36,8 +37,8 @@
 #include <QStandardPaths>
 #include <QDebug>
 
-static QStringList locales = {"bg", "de", "en", "es", "fr", "hr", "hu", "it", "lt", "nl", "no_nb", "pl", "pt", "ru", "sl", "fi", "sv", "uk", "zh"};
-static QStringList langs = {"Български", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "Nederlands", "Norsk Bokmål", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
+static QStringList locales = {"bg", "cs", "de", "en", "es", "fr", "hr", "hu", "it", "lt", "nl", "no_nb", "pl", "pt", "ru", "sl", "fi", "sv", "uk", "zh"};
+static QStringList langs = {"Български", "Čeština", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "Nederlands", "Norsk Bokmål", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
@@ -160,8 +161,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
-    if (bodyUI->autoacceptFiles->isChecked())
-        connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+    connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
     //theme
     connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
     connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
@@ -291,19 +291,16 @@ void GeneralForm::onAutoAwayChanged()
 void GeneralForm::onAutoAcceptFileChange()
 {
     Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
-
-    if (bodyUI->autoacceptFiles->isChecked() == true)
-        connect(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
-    else
-        disconnect(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
 }
 
 void GeneralForm::onAutoSaveDirChange()
 {
     QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
     QString directory = QFileDialog::getExistingDirectory(0,
-                                                          tr("Choose an auto accept directory","popup title"));
-    if (directory.isEmpty())
+                                                          tr("Choose an auto accept directory", "popup title"),  //opens in home directory
+                                                             QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
+                                                          );
+    if (directory.isEmpty())  // cancel was pressed
         directory = previousDir;
 
     Settings::getInstance().setGlobalAutoAcceptDir(directory);
@@ -389,6 +386,12 @@ void GeneralForm::reloadSmiles()
     bodyUI->smile3->setToolTip(smiles[2]);
     bodyUI->smile4->setToolTip(smiles[3]);
     bodyUI->smile5->setToolTip(smiles[4]);
+
+    //set maximum size of emoji
+    QDesktopWidget desktop;
+    int maxSize = qMin(desktop.geometry().height()/8,
+                       desktop.geometry().width()/8); // 8 is the count of row and column in emoji's in widget
+    bodyUI->emoticonSize->setMaximum(SmileyPack::getInstance().getAsIcon(smiles[0]).actualSize(QSize(maxSize,maxSize)).width());
 }
 
 void GeneralForm::onCheckUpdateChanged()

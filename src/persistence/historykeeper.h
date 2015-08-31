@@ -23,6 +23,7 @@
 #include <QMap>
 #include <QList>
 #include <QDateTime>
+#include <tox/toxencryptsave.h>
 
 class GenericDdInterface;
 namespace Db { enum class syncType; }
@@ -51,7 +52,7 @@ public:
     static void resetInstance();
 
     static QString getHistoryPath(QString currentProfile = QString(), int encrypted = -1); // -1 defaults to checking settings, 0 or 1 to specify
-    static bool checkPassword(int encrypted = -1);
+    static bool checkPassword(const TOX_PASS_KEY& passkey, int encrypted = -1);
     static bool isFileExist();
     static void renameHistory(QString from, QString to);
     static bool removeHistory(int encrypted = -1);

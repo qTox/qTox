@@ -28,7 +28,7 @@ namespace Ui {
 class AboutSettings;
 }
 
-class AboutForm final : public GenericForm
+class AboutForm  : public GenericForm
 {
     Q_OBJECT
 public:
@@ -42,6 +42,7 @@ private slots:
 
 private:
     void retranslateUi();
+    void replaceVersions();
 
 private:
     Ui::AboutSettings* bodyUI;

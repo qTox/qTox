@@ -23,6 +23,7 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QPoint>
+#include <QTimer>
 
 class ScreenGrabberChooserRectItem;
 class QGraphicsSceneMouseEvent;
@@ -48,6 +49,7 @@ public slots:
 
     void showGrabber();
     void acceptRegion();
+    void reInit();
 
 signals:
     void screenshotTaken(const QPixmap &pixmap);
@@ -55,6 +57,8 @@ signals:
 
 private:
     friend class ScreenGrabberOverlayItem;
+    // for exception multiple handling during switching window
+    bool blocked = false;
 
     void setupWindow();
     void setupScene(QGraphicsScene* scene);

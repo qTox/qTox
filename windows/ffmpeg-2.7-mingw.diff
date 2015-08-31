@@ -1,0 +1,121 @@
+diff -rupN ffmpeg-2.7/libavutil/file.c ffmpeg-2.7-patched/libavutil/file.c
+--- ffmpeg-2.7/libavutil/file.c	2015-06-10 02:27:53 +0300
++++ ffmpeg-2.7-patched/libavutil/file.c	2015-06-25 19:25:32 +0300
+@@ -23,17 +23,17 @@
+ #include "mem.h"
+ #include <fcntl.h>
+ #include <sys/stat.h>
++#if HAVE_MMAP
++#include <sys/mman.h>
++#elif HAVE_MAPVIEWOFFILE
++#include <windows.h>
++#endif
+ #if HAVE_UNISTD_H
+ #include <unistd.h>
+ #endif
+ #if HAVE_IO_H
+ #include <io.h>
+ #endif
+-#if HAVE_MMAP
+-#include <sys/mman.h>
+-#elif HAVE_MAPVIEWOFFILE
+-#include <windows.h>
+-#endif
+ 
+ typedef struct FileLogContext {
+     const AVClass *class;
+diff -rupN ffmpeg-2.7/libavutil/file_open.c ffmpeg-2.7-patched/libavutil/file_open.c
+--- ffmpeg-2.7/libavutil/file_open.c	2015-06-10 02:27:53 +0300
++++ ffmpeg-2.7-patched/libavutil/file_open.c	2015-06-25 19:26:52 +0300
+@@ -22,12 +22,6 @@
+ #include <stdarg.h>
+ #include <fcntl.h>
+ #include <sys/stat.h>
+-#if HAVE_UNISTD_H
+-#include <unistd.h>
+-#endif
+-#if HAVE_IO_H
+-#include <io.h>
+-#endif
+ 
+ #if defined(_WIN32) && !defined(__MINGW32CE__)
+ #undef open
+@@ -63,6 +57,13 @@ fallback:
+ #define open win32_open
+ #endif
+ 
++#if HAVE_UNISTD_H
++#include <unistd.h>
++#endif
++#if HAVE_IO_H
++#include <io.h>
++#endif
++
+ int avpriv_open(const char *filename, int flags, ...)
+ {
+     int fd;
+diff -rupN ffmpeg-2.7/libavutil/log.c ffmpeg-2.7-patched/libavutil/log.c
+--- ffmpeg-2.7/libavutil/log.c	2015-06-10 02:27:53 +0300
++++ ffmpeg-2.7-patched/libavutil/log.c	2015-06-25 19:28:20 +0300
+@@ -26,9 +26,6 @@
+ 
+ #include "config.h"
+ 
+-#if HAVE_UNISTD_H
+-#include <unistd.h>
+-#endif
+ #if HAVE_IO_H
+ #include <io.h>
+ #endif
+@@ -120,6 +117,9 @@ static const uint32_t color[16 + AV_CLAS
+ };
+ 
+ #endif
++#if HAVE_UNISTD_H
++#include <unistd.h>
++#endif
+ static int use_color = -1;
+ 
+ static void check_color_terminal(void)
+diff -rupN ffmpeg-2.7/libavutil/random_seed.c ffmpeg-2.7-patched/libavutil/random_seed.c
+--- ffmpeg-2.7/libavutil/random_seed.c	2015-05-17 04:26:38 +0300
++++ ffmpeg-2.7-patched/libavutil/random_seed.c	2015-06-25 19:28:30 +0300
+@@ -20,9 +20,6 @@
+ 
+ #include "config.h"
+ 
+-#if HAVE_UNISTD_H
+-#include <unistd.h>
+-#endif
+ #if HAVE_IO_H
+ #include <io.h>
+ #endif
+@@ -30,6 +27,9 @@
+ #include <windows.h>
+ #include <wincrypt.h>
+ #endif
++#if HAVE_UNISTD_H
++#include <unistd.h>
++#endif
+ #include <fcntl.h>
+ #include <math.h>
+ #include <time.h>
+diff -rupN ffmpeg-2.7/libavutil/time.c ffmpeg-2.7-patched/libavutil/time.c
+--- ffmpeg-2.7/libavutil/time.c	2015-06-10 02:27:53 +0300
++++ ffmpeg-2.7-patched/libavutil/time.c	2015-06-25 19:28:37 +0300
+@@ -26,12 +26,12 @@
+ #if HAVE_GETTIMEOFDAY
+ #include <sys/time.h>
+ #endif
+-#if HAVE_UNISTD_H
+-#include <unistd.h>
+-#endif
+ #if HAVE_WINDOWS_H
+ #include <windows.h>
+ #endif
++#if HAVE_UNISTD_H
++#include <unistd.h>
++#endif
+ 
+ #include "time.h"
+ #include "error.h"

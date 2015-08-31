@@ -34,7 +34,8 @@ FORMS    += \
     src/widget/form/settings/advancedsettings.ui \
     src/widget/form/settings/avsettings.ui \
     src/widget/form/settings/generalsettings.ui \
-    src/widget/form/settings/privacysettings.ui
+    src/widget/form/settings/privacysettings.ui \
+    src/widget/form/removefrienddialog.ui
 
 CONFIG   += c++11
 
@@ -187,7 +188,7 @@ win32 {
             }
 
             contains(JENKINS, YES) {
-                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a ./libs/lib/libavformat.so ./libs/lib/libavdevice.so ./libs/lib/libavcodec.so ./libs/lib/libavutil.so ./libs/lib/libswscale.so -ldl -lX11 -lXss -lqrencode
+                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a ./libs/lib/libavformat-ffmpeg.so ./libs/lib/libavdevice-ffmpeg.so ./libs/lib/libavcodec-ffmpeg.so ./libs/lib/libavutil-ffmpeg.so ./libs/lib/libswscale-ffmpeg.so -ldl -lX11 -lXss -lqrencode
                 contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
                     LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
                 }
@@ -493,7 +494,8 @@ SOURCES += \
     src/widget/genericchatitemwidget.cpp \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
-    src/widget/categorywidget.cpp
+    src/widget/categorywidget.cpp \
+    src/widget/tool/removefrienddialog.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -536,4 +538,5 @@ HEADERS += \
     src/widget/genericchatitemwidget.h \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
-    src/widget/categorywidget.h
+    src/widget/categorywidget.h \
+    src/widget/tool/removefrienddialog.h

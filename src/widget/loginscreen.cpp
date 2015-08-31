@@ -36,6 +36,10 @@ LoginScreen::LoginScreen(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // permanently disables maximize button https://github.com/tux3/qTox/issues/1973
+    this->setWindowFlags(windowFlags() &! Qt::WindowMaximizeButtonHint);
+    this->setFixedSize(this->size());
+
     connect(&quitShortcut, &QShortcut::activated, this, &LoginScreen::close);
     connect(ui->newProfilePgbtn, &QPushButton::clicked, this, &LoginScreen::onNewProfilePageClicked);
     connect(ui->loginPgbtn, &QPushButton::clicked, this, &LoginScreen::onLoginPageClicked);
@@ -105,7 +109,7 @@ void LoginScreen::onLoginPageClicked()
 }
 
 void LoginScreen::onCreateNewProfile()
-{   
+{
     QString name = ui->newUsername->text();
     QString pass = ui->newPass->text();
 
@@ -179,15 +183,16 @@ void LoginScreen::onLogin()
     Profile* profile = Profile::loadProfile(name, pass);
     if (!profile)
     {
-        // Unknown error
-        QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Couldn't load this profile."));
-        return;
-    }
-    if (!profile->checkPassword())
-    {
-        QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
-        delete profile;
-        return;
+        if (!ProfileLocker::isLockable(name))
+        {
+            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Profile already in use. Close other clients."));
+            return;
+        }
+        else
+        {
+            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
+            return;
+        }
     }
 
     Nexus& nexus = Nexus::getInstance();

@@ -28,6 +28,7 @@
 #include "src/persistence/profilelocker.h"
 #include "src/widget/loginscreen.h"
 #include "src/widget/translator.h"
+#include "src/video/camerasource.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDateTime>
@@ -275,6 +276,7 @@ int main(int argc, char *argv[])
     logFile = nullptr;
 #endif
 
+    CameraSource::destroyInstance();
     Nexus::destroyInstance();
     Settings::destroyInstance();
     qDebug() << "Clean exit with status"<<errorcode;

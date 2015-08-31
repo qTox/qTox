@@ -104,7 +104,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     }
 
     AVDictionary* options = nullptr;
-    if (false);
+    if (!iformat);
 #ifdef Q_OS_LINUX
     else if (devName.startsWith("x11grab#"))
     {
@@ -255,7 +255,7 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     if (!getDefaultInputFormat())
             return devices;
 
-    if (false);
+    if (!iformat);
 #ifdef Q_OS_WIN
     else if (iformat->name == QString("dshow"))
         devices += DirectShow::getDeviceList();
@@ -294,7 +294,7 @@ QString CameraDevice::getDefaultDeviceName()
 
 QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
 {
-    if (false);
+    if (!iformat);
 #ifdef Q_OS_WIN
     else if (iformat->name == QString("dshow"))
         return DirectShow::getDeviceModes(devName);

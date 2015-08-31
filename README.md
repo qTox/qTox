@@ -1,29 +1,34 @@
-qTox
+qTox [![Build Status](https://travis-ci.org/tux3/qTox.svg)](https://travis-ci.org/tux3/qTox)
 ======
 
- [**Compiling**](/INSTALL.md) **|** [**Contributing**](https://github.com/tux3/qTox/wiki#contributing) **|** [**Reporting bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|** [**Translating**](https://github.com/tux3/qTox/wiki/Translating) **|** [**GitStats**](https://tux3-dev.tox.im/) **|** [**Mac & Linux jenkins**](https://jenkins.libtoxcore.so/user/tux3/my-views/view/qTox/) | [**Windows jenkins**](https://tux3-dev.tox.im/jenkins) **|** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|** [**Mailing list**](https://lists.tox.im) **|** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
+ [**Compile**](/INSTALL.md) **⦁** [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **⦁** [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁** [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **⦁** [**Jenkins builds**](https://build.tox.chat/) **⦁** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **⦁** [**Mailing list**](https://lists.tox.chat) **⦁** **IRC Channel:** [#tox@freenode](https://webchat.freenode.net/?channels=tox)
 
-====
+**qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms.**
 
-<h5>qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms:</h5>
+----
 
 * **Windows**:
-  - [**64 bit download**](https://tux3-dev.tox.im/jenkins/job/qTox-win64-nsis/lastSuccessfulBuild/artifact/setup-qtox64.exe)
-  - [**32 bit download** (for older hardware)](https://tux3-dev.tox.im/jenkins/job/qTox-win32-nsis/lastSuccessfulBuild/artifact/setup-qtox32.exe)
+  - [**64 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip)
+  - [**32 bit download** (for older hardware)](https://build.tox.chat/view/Clients/job/qTox_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86_release.zip)
 * **Linux**:
-  - [**binary**](#) - Currently unmaintained
-  - [**packages**](#) - Currently unmaintained
+  - [**64 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86-64_release.tar.xz)
+  - [**32 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86_release.tar.xz)
+  - [**packages**](/INSTALL.md#simple-install)
   - [**Gentoo overlay**](https://github.com/Tox/gentoo-overlay-tox)
 * **Mac**: [**download**](#) - Currently unmaintained<br/>
 
-
-<h4>Screenshots</h4>
-Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features
-<img src="http://i.imgur.com/hwGmDeK.png"/>
-<img src="http://i.imgur.com/tmX8z9s.png"/>
+Nighly builds do not update automatically at this stage of development, so make sure you get back to this site and regularly download the latest version of qTox.
 
 
-<h4>Features</h4>
+#### Screenshots
+Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features.
+
+
+![Screenshot 01](https://i.imgur.com/hwGmDeK.png)
+![Screenshot 02](https://i.imgur.com/tmX8z9s.png)
+
+
+#### Features
 
 - One to one chat with friends
 - Group chats

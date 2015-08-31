@@ -67,7 +67,6 @@ Core::Core(QThread *CoreThread, Profile& profile) :
     Audio::getInstance();
 
     videobuf = nullptr;
-    encryptionKey = nullptr;
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -127,8 +126,6 @@ Core::~Core()
         if (!call.active)
             continue;
         hangupCall(call.callId);
-        if (call.camera)
-            delete call.camera;
     }
 
     deadifyTox();
@@ -235,9 +232,8 @@ void Core::makeTox(QByteArray savedata)
             emit failedToStart();
             return;
         case TOX_ERR_NEW_LOAD_BAD_FORMAT:
-            qCritical() << "bad load data format";
-            emit failedToStart();
-            return;
+            qWarning() << "bad load data format";
+            break;
         default:
             qCritical() << "Tox core failed to start";
             emit failedToStart();
@@ -1222,7 +1218,7 @@ QString Core::getPeerName(const ToxId& id) const
         return name;
     }
 
-    name = name.fromLocal8Bit((char*)cname, nameSize);
+    name = CString::toString(cname, nameSize);
     delete[] cname;
     return name;
 }

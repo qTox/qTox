@@ -179,8 +179,13 @@ QString ChatMessage::detectAnchors(const QString &str)
 {
     QString out = str;
 
-    // detect urls
-    QRegExp exp("(?:\\b)(www\\.|http[s]?:\\/\\/|ftp:\\/\\/|tox:\\/\\/|tox:)\\S+");
+    // detect URIs
+    QRegExp exp("("
+                "(?:\\b)(www\\.|http[s]?|ftp)://" // (protocol)://(printable - non-special character)
+                // http://ONEORMOREALHPA-DIGIT
+                "\\w+\\S+)" // any other character, lets domains and other
+                "|(^tox:[@\\w]+$)"); // starts with `tox` then : and only alpha-digits till the end
+                // also accepts tox:agilob@net as simplified TOX ID
     int offset = 0;
     while ((offset = exp.indexIn(out, offset)) != -1)
     {

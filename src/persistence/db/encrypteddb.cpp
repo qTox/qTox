@@ -20,6 +20,8 @@
 #include "encrypteddb.h"
 #include "src/persistence/settings.h"
 #include "src/core/core.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
 
 #include <tox/toxencryptsave.h>
 
@@ -29,6 +31,8 @@
 
 qint64 EncryptedDb::encryptedChunkSize = 4096;
 qint64 EncryptedDb::plainChunkSize = EncryptedDb::encryptedChunkSize - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
+
+TOX_PASS_KEY EncryptedDb::decryptionKey;
 
 EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
     PlainDb(":memory:", initList), fileName(fname)
@@ -90,7 +94,7 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
     while (!dbFile.atEnd())
     {
         QByteArray encrChunk = dbFile.read(encryptedChunkSize);
-        buf = Core::getInstance()->decryptData(encrChunk);
+        buf = Core::getInstance()->decryptData(encrChunk, decryptionKey);
         if (buf.size() > 0)
         {
             fileContent += buf;
@@ -154,7 +158,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
     encrFile.flush();
 }
 
-bool EncryptedDb::check(const QString &fname)
+bool EncryptedDb::check(const TOX_PASS_KEY &passkey, const QString &fname)
 {
     QFile file(fname);
     file.open(QIODevice::ReadOnly);
@@ -163,9 +167,11 @@ bool EncryptedDb::check(const QString &fname)
     if (file.size() > 0)
     {
         QByteArray encrChunk = file.read(encryptedChunkSize);
-        QByteArray buf = Core::getInstance()->decryptData(encrChunk);
+        QByteArray buf = Core::getInstance()->decryptData(encrChunk, passkey);
         if (buf.size() == 0)
             state = false;
+        else
+            decryptionKey = passkey;
     }
     else
     {

@@ -190,10 +190,7 @@ void Settings::loadGlobal()
     s.endGroup();
 
     s.beginGroup("GUI");
-        enableSmoothAnimation = s.value("smoothAnimation", true).toBool();
         smileyPack = s.value("smileyPack", ":/smileys/TwitterEmojiSVG/emoticons.xml").toString();
-        customEmojiFont = s.value("customEmojiFont", true).toBool();
-        emojiFontFamily = s.value("emojiFontFamily", "DejaVu Sans").toString();
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
@@ -202,7 +199,6 @@ void Settings::loadGlobal()
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
-        useNativeStyle = s.value("nativeStyle", false).toBool();
         useEmoticons = s.value("useEmoticons", true).toBool();
         statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
         themeColor = s.value("themeColor", 0).toInt();
@@ -306,11 +302,12 @@ void Settings::loadPersonnal(Profile* profile)
     ps.endGroup();
 
     ps.beginGroup("General");
-        compactLayout = ps.value("compactLayout", false).toBool();
+        compactLayout = ps.value("compactLayout", true).toBool();
     ps.endGroup();
 
     ps.beginGroup("Circles");
         size = ps.beginReadArray("Circle");
+        circleLst.clear();
         circleLst.reserve(size);
         for (int i = 0; i < size; i ++)
         {
@@ -324,8 +321,8 @@ void Settings::loadPersonnal(Profile* profile)
     ps.endGroup();
 
     ps.beginGroup("Privacy");
-        typingNotification = ps.value("typingNotification", false).toBool();
-        enableLogging = ps.value("enableLogging", false).toBool();
+        typingNotification = ps.value("typingNotification", true).toBool();
+        enableLogging = ps.value("enableLogging", true).toBool();
     ps.endGroup();
 }
 
@@ -392,14 +389,10 @@ void Settings::saveGlobal()
     const QList<QString> widgetNames = widgetSettings.keys();
     for (const QString& name : widgetNames)
         s.setValue(name, widgetSettings.value(name));
-
     s.endGroup();
 
     s.beginGroup("GUI");
-        s.setValue("smoothAnimation", enableSmoothAnimation);
         s.setValue("smileyPack", smileyPack);
-        s.setValue("customEmojiFont", customEmojiFont);
-        s.setValue("emojiFontFamily", emojiFontFamily);
         s.setValue("emojiFontPointSize", emojiFontPointSize);
         s.setValue("firstColumnHandlePos", firstColumnHandlePos);
         s.setValue("secondColumnHandlePosFromRight", secondColumnHandlePosFromRight);
@@ -408,7 +401,6 @@ void Settings::saveGlobal()
         s.setValue("minimizeOnClose", minimizeOnClose);
         s.setValue("minimizeToTray", minimizeToTray);
         s.setValue("lightTrayIcon", lightTrayIcon);
-        s.setValue("nativeStyle", useNativeStyle);
         s.setValue("useEmoticons", useEmoticons);
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
@@ -965,18 +957,6 @@ QByteArray Settings::getWidgetData(const QString& uniqueName) const
     return widgetSettings.value(uniqueName);
 }
 
-bool Settings::isAnimationEnabled() const
-{
-    QMutexLocker locker{&bigLock};
-    return enableSmoothAnimation;
-}
-
-void Settings::setAnimationEnabled(bool newValue)
-{
-    QMutexLocker locker{&bigLock};
-    enableSmoothAnimation = newValue;
-}
-
 QString Settings::getSmileyPack() const
 {
     QMutexLocker locker{&bigLock};
@@ -988,19 +968,6 @@ void Settings::setSmileyPack(const QString &value)
     QMutexLocker locker{&bigLock};
     smileyPack = value;
     emit smileyPackChanged();
-}
-
-bool Settings::isCurstomEmojiFont() const
-{
-    QMutexLocker locker{&bigLock};
-    return customEmojiFont;
-}
-
-void Settings::setCurstomEmojiFont(bool value)
-{
-    QMutexLocker locker{&bigLock};
-    customEmojiFont = value;
-    emit emojiFontChanged();
 }
 
 int Settings::getEmojiFontPointSize() const
@@ -1062,31 +1029,6 @@ void Settings::setDateFormat(const QString &format)
 {
     QMutexLocker locker{&bigLock};
     dateFormat = format;
-}
-
-QString Settings::getEmojiFontFamily() const
-{
-    QMutexLocker locker{&bigLock};
-    return emojiFontFamily;
-}
-
-void Settings::setEmojiFontFamily(const QString &value)
-{
-    QMutexLocker locker{&bigLock};
-    emojiFontFamily = value;
-    emit emojiFontChanged();
-}
-
-bool Settings::getUseNativeStyle() const
-{
-    QMutexLocker locker{&bigLock};
-    return useNativeStyle;
-}
-
-void Settings::setUseNativeStyle(bool value)
-{
-    QMutexLocker locker{&bigLock};
-    useNativeStyle = value;
 }
 
 QByteArray Settings::getWindowGeometry() const

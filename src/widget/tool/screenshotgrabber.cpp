@@ -32,18 +32,27 @@
 #include "screengrabberchooserrectitem.h"
 #include "screengrabberoverlayitem.h"
 #include "toolboxgraphicsitem.h"
+#include "src/widget/widget.h"
 
 ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
     : QWidget(parent)
 {
-
     scene = new QGraphicsScene;
     window = new QGraphicsView (scene); // Top-level widget
     setupWindow();
     setupScene(scene);
 
     installEventFilter(this);
+}
 
+void ScreenshotGrabber::reInit()
+{
+    scene = new QGraphicsScene;
+    window = new QGraphicsView (scene); // Top-level widget
+    setupWindow();
+    setupScene(scene);
+    showGrabber();
+    blocked = false;
 }
 
 ScreenshotGrabber::~ScreenshotGrabber()
@@ -76,6 +85,20 @@ bool ScreenshotGrabber::handleKeyPress(QKeyEvent* event)
         reject();
     else if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
         acceptRegion();
+    else if (event->key() == Qt::Key_Space && !blocked) // hide/show qTox window
+    {
+        Widget *Widget = Widget::getInstance();
+        blocked = true;
+        if ( Widget->isVisible())
+            Widget->setVisible(false);
+        else
+            Widget->setVisible(true);
+        this->window->setVisible(false);
+        this->window->resetCachedContent();
+        // Give the window manager a moment to hide windows
+        QTimer::singleShot(200, this, SLOT(reInit()));
+
+    }
     else
         return false;
 
@@ -129,14 +152,14 @@ void ScreenshotGrabber::setupScene(QGraphicsScene* scene)
 
 void ScreenshotGrabber::useNothingSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Click and drag to select a region. Press <b>Escape</b> to cancel.",
+    helperTooltip->setHtml(tr("Click and drag to select a region. Press <b>Space</b> to hide/show qTox window, or <b>Escape</b> to cancel.",
                               "Help text shown when no region has been selected yet"));
     adjustTooltipPosition();
 }
 
 void ScreenshotGrabber::useRegionSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selected region or select a new region. Press <b>Escape</b> to cancel.",
+    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selection, <b>Space</b> to hide/show qTox window, or <b>Escape</b> to cancel.",
                               "Help text shown when a region has been selected"));
     adjustTooltipPosition();
 }

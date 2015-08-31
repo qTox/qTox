@@ -60,6 +60,7 @@ public:
     void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
     QVector<CircleWidget*> getAllCircles();
 
+    void updateActivityDate(const QDate& date);
     void reDraw();
 
 signals:
@@ -75,6 +76,9 @@ protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dropEvent(QDropEvent* event) override;
 
+private slots:
+    void dayTimeout();
+
 private:
     CircleWidget* createCircleWidget(int id = -1);
     QLayout* nextLayout(QLayout* layout, bool forward) const;
@@ -85,6 +89,7 @@ private:
     GenericChatItemLayout* circleLayout = nullptr;
     GenericChatItemLayout groupLayout;
     QVBoxLayout* activityLayout = nullptr;
+    QTimer* dayTimer;
 };
 
 #endif // FRIENDLISTWIDGET_H

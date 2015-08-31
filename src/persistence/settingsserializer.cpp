@@ -31,17 +31,17 @@ using namespace std;
 
 const char SettingsSerializer::magic[] = {0x51,0x54,0x4F,0x58};
 
-QDataStream& operator<<(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
+inline QDataStream& operator<<(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
 {
     return dataStream << static_cast<uint8_t>(tag);
 }
 
-QDataStream& operator<<(QDataStream& dataStream, const QString& str)
+inline QDataStream& operator<<(QDataStream& dataStream, const QString& str)
 {
     return dataStream << str.toUtf8();
 }
 
-QDataStream& operator<<(QDataStream& dataStream, const QByteArray& data)
+inline QDataStream& operator<<(QDataStream& dataStream, const QByteArray& data)
 {
     QByteArray size = vuintToData(data.size());
     dataStream.writeRawData(size.data(), size.size());
@@ -54,7 +54,7 @@ QDataStream& operator>>(QDataStream& dataStream, SettingsSerializer::RecordTag& 
     return dataStream.operator >>((uint8_t&)tag);
 }
 
-QDataStream& operator>>(QDataStream& dataStream, QByteArray& data)
+inline QDataStream& operator>>(QDataStream& dataStream, QByteArray& data)
 {
     unsigned char num3;
     size_t num = 0;
@@ -287,8 +287,8 @@ void SettingsSerializer::save()
     if (!password.isEmpty())
     {
         Core* core = Nexus::getCore();
-        core->setPassword(password);
-        data = core->encryptData(data);
+        auto passkey = core->createPasskey(password);
+        data = core->encryptData(data, *passkey);
     }
 
     f.write(data);
@@ -319,11 +319,14 @@ void SettingsSerializer::readSerialized()
 
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
-        core->setPassword(password, salt);
+        auto passkey = core->createPasskey(password, salt);
 
-        data = core->decryptData(data);
+        data = core->decryptData(data, *passkey);
         if (data.isEmpty())
+        {
             qCritical() << "Failed to decrypt the settings file";
+            return;
+        }
     }
     else
     {

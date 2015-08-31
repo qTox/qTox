@@ -273,14 +273,14 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
             if (Settings::getInstance().getAvatarHash(friendAddr) == QByteArray((char*)avatarHash, TOX_HASH_LENGTH))
             {
                 // If it's an avatar but we already have it cached, cancel
-                qDebug() << QString("Received avatar request %1:%2, and we have it in cache").arg(friendId).arg(fileId);
+                qDebug() << QString("Received avatar request %1:%2, reject, since we have it in cache.").arg(friendId).arg(fileId);
                 tox_file_control(core->tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
                 return;
             }
             else
             {
                 // It's an avatar and we don't have it, autoaccept the transfer
-                qDebug() << QString("Received avatar request %1:%2, and we don't have it in cache").arg(friendId).arg(fileId);
+                qDebug() << QString("Received avatar request %1:%2, accept, since we don't have it in cache.").arg(friendId).arg(fileId);
                 tox_file_control(core->tox, friendId, fileId, TOX_FILE_CONTROL_RESUME, nullptr);
             }
         }

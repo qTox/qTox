@@ -1,6 +1,7 @@
 # For autocompiling qm-files.
 
 TRANSLATIONS = translations/es.ts \
+               translations/cs.ts \
                translations/bg.ts \
                translations/de.ts \
                translations/fi.ts \

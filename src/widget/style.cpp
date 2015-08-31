@@ -77,16 +77,14 @@ QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#9
 
 QString Style::getStylesheet(const QString &filename)
 {
-    if (!Settings::getInstance().getUseNativeStyle())
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QFile file(filename);
-        if (file.open(QFile::ReadOnly | QFile::Text))
-            return resolve(file.readAll());
-        else
-            qWarning() << "Stylesheet " << filename << " not found";
+        qWarning() << "Stylesheet " << filename << " not found";
+        return QString();
     }
 
-    return QString();
+    return resolve(file.readAll());
 }
 
 QColor Style::getColor(Style::ColorPalette entry)
