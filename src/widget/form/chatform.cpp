@@ -173,14 +173,14 @@ void ChatForm::onAttachClicked()
         if (!file.exists() || !file.open(QIODevice::ReadOnly))
         {
             QMessageBox::warning(this,
-                                 tr("File not read"),
+                                 tr("Unable to open"),
                                  tr("qTox wasn't able to open %1").arg(QFileInfo(path).fileName()));
             continue;
         }
         if (file.isSequential())
         {
             QMessageBox::critical(this,
-                                  tr("Bad Idea"),
+                                  tr("Bad idea"),
                                   tr("You're trying to send a special (sequential) file, that's not going to work!"));
             file.close();
             continue;
@@ -235,19 +235,17 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     ChatMessage::Ptr msg = ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
     insertChatMessage(msg);
 
+    ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
+    assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
+    FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
+
     // there is auto-accept for that conact
     if (!Settings::getInstance().getAutoAcceptDir(f->getToxId()).isEmpty())
     {
-        ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
-        assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
-        FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
         tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxId()));
     }
     else if (Settings::getInstance().getAutoSaveEnabled())
-    { //global autosave to global directory
-        ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
-        assert(proxy->getWidgetType() == ChatLineContentProxy::FileTransferWidgetType);
-        FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
+    {   //global autosave to global directory
         tfWidget->autoAcceptTransfer(Settings::getInstance().getGlobalAutoAcceptDir());
     }
 
@@ -786,13 +784,13 @@ void ChatForm::dropEvent(QDropEvent *ev)
                 file.setFileName(info.absoluteFilePath());
                 if (!file.exists() || !file.open(QIODevice::ReadOnly))
                 {
-                    QMessageBox::warning(this, tr("File not read"), tr("qTox wasn't able to open %1").arg(info.fileName()));
+                    QMessageBox::warning(this, tr("Unable to open"), tr("qTox wasn't able to open %1").arg(info.fileName()));
                     continue;
                 }
             }
             if (file.isSequential())
             {
-                QMessageBox::critical(0, tr("Bad Idea"), tr("You're trying to send a special (sequential) file, that's not going to work!"));
+                QMessageBox::critical(0, tr("Bad idea"), tr("You're trying to send a special (sequential) file, that's not going to work!"));
                 file.close();
                 continue;
             }
@@ -920,7 +918,8 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
     QTemporaryFile file(Settings::getInstance().getSettingsDirPath()+"screenshots"+QDir::separator()+"qTox-Screenshot-XXXXXXXX.png");
     if (!file.open())
     {
-        QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
+        QMessageBox::warning(this,
+                             tr("Failed to open temporary file", "Temporary file for screenshot"),
                              tr("qTox wasn't able to save the screenshot"));
         return;
     }

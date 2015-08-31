@@ -83,6 +83,8 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     connect(Core::getInstance(), &Core::fileTransferFinished, this, &FileTransferWidget::onFileTransferFinished);
     connect(Core::getInstance(), &Core::fileTransferRemotePausedUnpaused, this, &FileTransferWidget::fileTransferRemotePausedUnpaused);
     connect(Core::getInstance(), &Core::fileTransferBrokenUnbroken, this, &FileTransferWidget::fileTransferBrokenUnbroken);
+    connect(ui->topButton, &QPushButton::clicked, this, &FileTransferWidget::onTopButtonClicked);
+    connect(ui->bottomButton, &QPushButton::clicked, this, &FileTransferWidget::onBottomButtonClicked);
 
     setupButtons();
 
@@ -137,7 +139,7 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
     if (!Nexus::tryRemoveFile(filepath))
     {
         QMessageBox::warning(this,
-                             tr("Location not writable","Title of permissions popup"),
+                             tr("Location not writable", "Title of permissions popup"),
                              tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
         return;
     }
@@ -176,7 +178,7 @@ void FileTransferWidget::setButtonColor(const QColor &c)
 bool FileTransferWidget::drawButtonAreaNeeded() const
 {
     return (ui->bottomButton->isVisible() || ui->topButton->isVisible()) &&
-          !(ui->topButton->isVisible() && ui->topButton->objectName() == "ok");
+            !(ui->topButton->isVisible() && ui->topButton->objectName() == "ok");
 }
 
 void FileTransferWidget::paintEvent(QPaintEvent *)
@@ -306,7 +308,7 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
     fileInfo = file;
 
     ui->etaLabel->setText("");
-    ui->progressLabel->setText(tr("paused", "file transfer widget"));
+    ui->progressLabel->setText(tr("Paused", "file transfer widget"));
 
     // reset mean
     meanIndex = 0;
@@ -352,12 +354,12 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 
     ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
     ui->topButton->setObjectName("ok");
-    ui->topButton->setToolTip(tr("Open file."));
+    ui->topButton->setToolTip(tr("Open file"));
     ui->topButton->show();
 
     ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/dir.svg"));
     ui->bottomButton->setObjectName("dir");
-    ui->bottomButton->setToolTip(tr("Open file directory."));
+    ui->bottomButton->setToolTip(tr("Open file directory"));
     ui->bottomButton->show();
 
     // preview
@@ -407,29 +409,29 @@ void FileTransferWidget::setupButtons()
     switch(fileInfo.status)
     {
     case ToxFile::TRANSMITTING:
-        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
-        ui->bottomButton->setObjectName("cancel");
-        ui->bottomButton->setToolTip(tr("Cancel transfer"));
-
         ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
         ui->topButton->setObjectName("pause");
         ui->topButton->setToolTip(tr("Pause transfer"));
 
-        setButtonColor(Style::getColor(Style::Green));
-
-        break;
-    case ToxFile::PAUSED:
         ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
         ui->bottomButton->setObjectName("cancel");
         ui->bottomButton->setToolTip(tr("Cancel transfer"));
 
+        setButtonColor(Style::getColor(Style::Green));
+        break;
+
+    case ToxFile::PAUSED:
         ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white.svg"));
         ui->topButton->setObjectName("resume");
         ui->topButton->setToolTip(tr("Resume transfer"));
 
-        setButtonColor(Style::getColor(Style::LightGrey));
+        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
+        ui->bottomButton->setObjectName("cancel");
+        ui->bottomButton->setToolTip(tr("Cancel transfer"));
 
+        setButtonColor(Style::getColor(Style::LightGrey));
         break;
+
     case ToxFile::STOPPED:
     case ToxFile::BROKEN:
         ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
@@ -463,7 +465,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
         else if (btn->objectName() == "resume")
             Core::getInstance()->pauseResumeFileSend(fileInfo.friendId, fileInfo.fileNum);
     }
-    else
+    else // receiving or paused
     {
         if (btn->objectName() == "cancel")
             Core::getInstance()->cancelFileRecv(fileInfo.friendId, fileInfo.fileNum);
