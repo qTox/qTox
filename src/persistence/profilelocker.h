@@ -48,10 +48,6 @@ public:
     static bool hasLock();
     /// Return the name of the currently loaded profile, a null string if there is none
     static QString getCurLockName();
-    /// Releases all locks on all profiles
-    /// DO NOT call unless all we're the only qTox instance
-    /// and we don't hold any lock yet.
-    static void clearAllLocks();
     /// Check that we actually own the lock
     /// In case the file was deleted on disk, restore it
     /// If we can't get a lock, exit qTox immediately

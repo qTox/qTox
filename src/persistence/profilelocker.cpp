@@ -72,23 +72,6 @@ void ProfileLocker::unlock()
     curLockName.clear();
 }
 
-void ProfileLocker::clearAllLocks()
-{
-    qDebug() << "clearAllLocks: Wiping out all lock files";
-    if (lockfile)
-        unlock();
-
-    QDir dir(Settings::getInstance().getSettingsDirPath());
-    dir.setFilter(QDir::Files);
-    dir.setNameFilters({"*.lock"});
-    QFileInfoList files = dir.entryInfoList();
-    for (QFileInfo fileInfo : files)
-    {
-        QFile file(fileInfo.absoluteFilePath());
-        file.remove();
-    }
-}
-
 void ProfileLocker::assertLock()
 {
     if (!lockfile)
