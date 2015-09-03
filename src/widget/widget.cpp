@@ -687,7 +687,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
 void Widget::reloadHistory()
 {
     for (auto f : FriendList::getAllFriends())
-        f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-1), true);
+        f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 }
 
 void Widget::addFriend(int friendId, const QString &userId)
