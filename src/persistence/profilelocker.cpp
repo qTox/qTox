@@ -49,6 +49,7 @@ bool ProfileLocker::lock(QString profile)
         return true;
 
     QLockFile* newLock = new QLockFile(lockPathFromName(profile));
+    newLock->setStaleLockTime(0);
     if (!newLock->tryLock())
     {
         delete newLock;
