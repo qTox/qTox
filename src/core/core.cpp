@@ -1062,24 +1062,19 @@ void Core::groupInviteFriend(uint32_t friendId, int groupId)
     tox_invite_friend(tox, friendId, groupId);
 }
 
-int Core::createGroup(uint8_t type)
+void Core::createGroup(uint8_t type)
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT)
     {
-        int group = tox_add_groupchat(tox);
-        emit emptyGroupCreated(group);
-        return group;
+        emit emptyGroupCreated(tox_add_groupchat(tox));
     }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int group = toxav_add_av_groupchat(tox, &Audio::playGroupAudioQueued, this);
-        emit emptyGroupCreated(group);
-        return group;
+        emit emptyGroupCreated(toxav_add_av_groupchat(tox, &Audio::playGroupAudioQueued, this));
     }
     else
     {
         qWarning() << "createGroup: Unknown type "<<type;
-        return -1;
     }
 }
 
