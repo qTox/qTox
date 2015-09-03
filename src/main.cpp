@@ -25,7 +25,6 @@
 #include "src/net/autoupdate.h"
 #include "src/persistence/toxsave.h"
 #include "src/persistence/profile.h"
-#include "src/persistence/profilelocker.h"
 #include "src/widget/loginscreen.h"
 #include "src/widget/translator.h"
 #include "src/video/camerasource.h"
@@ -162,13 +161,6 @@ int main(int argc, char *argv[])
     ipc.registerEventHandler("uri", &toxURIEventHandler);
     ipc.registerEventHandler("save", &toxSaveEventHandler);
     ipc.registerEventHandler("activate", &toxActivateEventHandler);
-
-    // If we're the IPC owner and we just started, then
-    // either we're the only running instance or any other instance
-    // is already so frozen it lost ownership.
-    // It's safe to remove any potential stale locks in this situation.
-    if (ipc.isCurrentOwner())
-        ProfileLocker::clearAllLocks();
 
     if (parser.isSet("p"))
     {
