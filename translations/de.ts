@@ -30,7 +30,8 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="41"/>
         <source>Audio Settings</source>
-        <translatorcomment>Die Frage hier ist immer ob man mit Leerzeichen oder Bindestrich übersetzt. Meiner Meinung sieht das aber nicht gut aus. Toneinstellungen alternativ.</translatorcomment>
+        <translatorcomment>Die Frage hier ist immer, ob man mit Leerzeichen oder Bindestrich übersetzt. Meiner Meinung sieht das aber nicht gut aus. Toneinstellungen alternativ.</translatorcomment>
+        <translatorcomment>Also mit Leerzeichen schonmal gar nicht. Bindestrich oder richtig zusammen.</translatorcomment>
         <translation>Audioeinstellungen</translation>
     </message>
     <message>
@@ -47,13 +48,13 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="67"/>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Verwende den Schieber um die Wiedergabelautstärke anzupassen.</translation>
+        <translation>Verwende den Schieber, um die Wiedergabelautstärke anzupassen.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
-        <translation>Verwende den Schieber um die Aufnahmelautstärke deines Mikrofons anzupassen.</translation>
+        <translation>Verwende den Schieber, um die Aufnahmelautstärke deines Mikrofons anzupassen. ACHTUNG: Schieber funktioniert noch nicht</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="146"/>
@@ -85,7 +86,7 @@ WARNING: slider is not supposed to work yet.</source>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="54"/>
         <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>Die Filterung verbessert deine Sprachqualität.</translation>
+        <translation>Das Filtern verbessert die Tonqualität.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="87"/>
@@ -119,7 +120,7 @@ Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Wähle deine Kameraauflösung.
 Höhere Werte führen zu einem schärferen Bild, allerdings nimmt die Netzwerkauslastung zu.
-Zu hohe Auflösungen können zu Problemen in Videokonferenzen führen.</translation>
+Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</translation>
     </message>
 </context>
 <context>
@@ -168,7 +169,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="164"/>
         <source>Authors</source>
-        <translation>Autoren</translation>
+        <translation>Entwickler</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="181"/>
@@ -183,7 +184,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="226"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eine Liste aller bekannten Probleme findest du in unserem &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Bug-Tracker (Englisch)&lt;/span&gt;&lt;/a&gt; auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, melde sie bitte wie in unserem Wiki Artikel &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports (Englisch)&lt;/span&gt;&lt;/a&gt; beschrieben an uns.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eine Liste aller bekannten Probleme findest du in unserem &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Bug-Tracker (Englisch)&lt;/span&gt;&lt;/a&gt; auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, melde sie bitte wie in unserem Wiki Artikel &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports (Englisch)&lt;/span&gt;&lt;/a&gt; beschrieben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -203,7 +204,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widget/form/addfriendform.cpp" line="148"/>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
-        <translation>Freundschaftsanfrage</translation>
+        <translation>Nachricht</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="149"/>
@@ -216,9 +217,9 @@ p, li { white-space: pre-wrap; }
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>Hallo,
 
-hier ist %1! Hast du Lust dich mit mir zu unterhalten?
+hier ist %1! Hast du Lust, dich mit mir zu unterhalten?
 
-Viele Grüße
+Viele Grüße,
 %1</translation>
     </message>
     <message>
@@ -232,26 +233,26 @@ Viele Grüße
         <location filename="../src/widget/form/addfriendform.cpp" line="97"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Entschuldigung, das hat nicht geklappt. Bitte gib eine korrekte ID an.</translation>
+        <translation>Bitte gib eine korrekte Tox ID an.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="102"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Entschuldige, aber du kannst dich nicht mit dir selbst anfreunden!</translation>
+        <translation>Du kannst Dich nicht selbst als Freund hinzufügen!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="113"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox verwendet Tox-DNS, um eine Verbindung herzustellen, aber kann das nicht mit einem aktivierten Proxyserver.
-Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werden? </translation>
+        <translation>qTox verwendet Tox-DNS, um eine Verbindung herzustellen, aber kann das nicht bei aktiviertem Proxyserver.
+Soll der Proxyserver ignoriert und eine Direktverbindung hergestellt werden? </translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="123"/>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation>Entschuldigung, aber diese ID existiert scheinbar nicht</translation>
+        <translation>Diese Tox ID existiert nicht</translation>
     </message>
 </context>
 <context>
@@ -265,17 +266,17 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
         <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
         <source>FULL - very safe, slowest (recommended)</source>
         <translatorcomment>Die englischen Bezeichnungen scheinen mir irreführend. Normal sollte der Fall sein der keine Probleme bereitet und empfohlen ist.</translatorcomment>
-        <translation>Synchron</translation>
+        <translation>Synchron - sehr sicher, langsam (empfohlen)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
         <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
-        <translation>Teilweise asynchron</translation>
+        <translation>Teilweise asynchron - 20% schneller als Synchron, etwas unsicherer</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
         <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
-        <translation>Vollständig asynchron (unsicher)</translation>
+        <translation>Vollständig asynchron (unsicher, nicht empfohlen)</translation>
     </message>
 </context>
 <context>
@@ -290,12 +291,12 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="35"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Wenn gesetzt werden die Benutzerdaten im Arbeitsverzeichnis gesichert</translation>
+        <translation>Wenn gesetzt, werden die Benutzerdaten im Arbeitsverzeichnis statt im üblichen Konfigurations-Verzeichnis gesichert</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="38"/>
         <source>Make Tox portable</source>
-        <translation>qTox portabel machen</translation>
+        <translation>Tox portabel machen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="45"/>
@@ -304,7 +305,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
         <translation>&lt;html&gt;
 &lt;body style=&quot; font-weight:400; color:#500;&quot;&gt;
 &lt;p&gt;Wichtiger Hinweis:&lt;/p&gt;
-&lt;p&gt;Bitte beachte, dass diese Einstellungen nur geändert werden sollten, wenn du weißt was du tust! Ansonsten kann es zu Beschädigungen der Gesprächsverläufe kommen!&lt;/p&gt;
+&lt;p&gt;Bitte beachte, dass diese Einstellungen nur geändert werden sollten, wenn du weißt, was du tust! Ansonsten kann es beispielsweise zu Beschädigungen der Gesprächsverläufe kommen!&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</translation>
     </message>
@@ -316,7 +317,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="68"/>
         <source>Chat history</source>
-        <translation>Gesprächsverlauf Einstellungen</translation>
+        <translation>Gesprächsverläufe</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
@@ -392,24 +393,24 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="1084"/>
         <source>Load chat history...</source>
-        <translation>Gesprächsverlauf laden...</translation>
+        <translation>Gesprächsverlauf laden ...</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="165"/>
         <source>Send a file</source>
-        <translation>Datei versenden</translation>
+        <translation>Datei verschicken</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="174"/>
         <location filename="../src/widget/form/chatform.cpp" line="773"/>
         <source>File not read</source>
-        <translation>Datei nicht gesendet</translation>
+        <translation>Datei nicht gelesen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="174"/>
         <location filename="../src/widget/form/chatform.cpp" line="773"/>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>Entschuldigung, %1 konnte nicht geöffnet werden.</translation>
+        <translation>%1 konnte nicht geöffnet werden.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="179"/>
@@ -421,7 +422,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
         <location filename="../src/widget/form/chatform.cpp" line="179"/>
         <location filename="../src/widget/form/chatform.cpp" line="779"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>Entschuldigung, es ist leider nicht möglich diese Art Datei zu senden!</translation>
+        <translation>Es ist leider nicht möglich, diese Art von Datei zu senden!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="271"/>
@@ -485,17 +486,17 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="522"/>
         <source>Call rejected</source>
-        <translation>Anruf abgelegt</translation>
+        <translation>Anruf abgelehnt</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="676"/>
         <source>Start audio call</source>
-        <translation>Anruf starten</translation>
+        <translation>Anrufen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="679"/>
         <source>Start video call</source>
-        <translation>Videoanruf starten</translation>
+        <translation>Videoanruf beginnen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="704"/>
@@ -510,7 +511,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="736"/>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Entschuldigung, %1 konnte nicht gesendet werden</translation>
+        <translation>&quot;%1&quot; konnte nicht verschickt werden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="907"/>
@@ -558,7 +559,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <location filename="../src/widget/tool/chattextedit.cpp" line="70"/>
         <source>Type your message here...</source>
-        <translation>Hier eine Nachricht eingeben...</translation>
+        <translation>Hier eine Nachricht eingeben ...</translation>
     </message>
 </context>
 <context>
@@ -612,7 +613,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
         <location filename="../src/core/coreencryption.cpp" line="128"/>
         <source>The previous password is incorrect; please try again:</source>
         <comment>used on retries in load()</comment>
-        <translation>Entschuldigung, das hat nicht geklappt. Versuch es erneut:</translation>
+        <translation>Das hat leider nicht geklappt. Versuch es erneut:</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="120"/>
@@ -623,7 +624,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
         <location filename="../src/core/coreencryption.cpp" line="120"/>
         <source>No encrypted chat history file found, or it was corrupted.
 History will be disabled!</source>
-        <translation>Entschuldige, die Verlaufsdatei wurde nicht gefunden oder ist beschädigt.
+        <translation>Die Verlaufsdatei wurde nicht gefunden oder ist beschädigt.
 Die Verlaufsfunktion wird erst einmal ausgeschaltet!</translation>
     </message>
     <message>
@@ -637,13 +638,13 @@ Die Verlaufsfunktion wird erst einmal ausgeschaltet!</translation>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation>Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Verlaufsdatei erhalten bleiben. Sollte dir später das Passwort wieder einfallen, kannst du deinen alten Verlauf weiterverwenden.</translation>
+        <translation>Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Verlaufsdatei erhalten bleiben. Sollte dir später das Passwort wieder einfallen, kannst du deinen alten Verlauf weiterverwenden, indem du die Verschlüsselung wieder aktivierst und das korrekte Passwort benutzt.</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="136"/>
         <source>The chat history password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Entschuldigung, das Passwort für deinen Verlauf hat nicht gepasst. Versuch es erneut!</translation>
+        <translation>Das Passwort für deinen Verlauf war nicht korrekt. Versuch es erneut!</translation>
     </message>
     <message>
         <location filename="../src/core/coreencryption.cpp" line="142"/>
@@ -693,7 +694,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="92"/>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>Dateitransfer läuft...</translation>
+        <translation>Dateitransfer läuft ...</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="96"/>
@@ -705,13 +706,13 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="139"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Ordner nicht beschreibbar</translation>
+        <translation>Keine Schreibrechte für diesen Ordner.</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="140"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Du besitzt nicht die Rechte um hier eine Datei zu speichern. Bitte wähle einen anderen Ordner oder breche die Aktion ab.</translation>
+        <translation>Du besitzt nicht die Rechte, um hier eine Datei zu speichern. Bitte wähle einen anderen Ordner oder brich die Aktion ab.</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="308"/>
@@ -723,17 +724,18 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="328"/>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation>Fortsetzen...</translation>
+        <translation>Fortsetzen ...</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="354"/>
         <source>Open file.</source>
-        <translation>Datei öffnen.</translation>
+        <translatorcomment>these are no sentences, the full stop is wrong, and inconsistnt</translatorcomment>
+        <translation>Datei öffnen</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="359"/>
         <source>Open file directory.</source>
-        <translation>Ordner öffnen.</translation>
+        <translation>Ordner öffnen</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="411"/>
@@ -771,6 +773,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/widget/form/filesform.cpp" line="91"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
+        <translatorcomment>transferred</translatorcomment>
         <translation>Übertragene Dateien</translation>
     </message>
     <message>
@@ -839,6 +842,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/tool/friendrequestdialog.cpp" line="38"/>
         <source>User ID:</source>
+        <translatorcomment>supposedly there is the proper name Tox ID for this, so why now call it User ID?</translatorcomment>
         <translation>ID:</translation>
     </message>
     <message>
@@ -897,7 +901,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="127"/>
         <source>Set alias...</source>
-        <translation>Namen setzen...</translation>
+        <translation>Namen setzen ...</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="130"/>
@@ -949,7 +953,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/gui.cpp" line="317"/>
         <source>Enter your password</source>
-        <translation>Passworteingabe</translation>
+        <translation>Gib dein Passwort ein</translation>
     </message>
     <message>
         <location filename="../src/widget/gui.cpp" line="319"/>
@@ -959,7 +963,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/gui.cpp" line="361"/>
         <source>You must enter a non-empty password:</source>
-        <translation>Du musst ein nicht-leeres Passwort angeben:</translation>
+        <translation>Das Passwort darf nicht leer sein:</translation>
     </message>
 </context>
 <context>
@@ -1020,7 +1024,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="129"/>
         <source>Show system tray icon</source>
-        <translation>Icon in Systemleiste</translation>
+        <translation>Icon in Systemleiste anzeigen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="153"/>
@@ -1037,7 +1041,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/widget/form/settings/generalsettings.ui" line="119"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox minimiert starten.</translation>
+        <translation>qTox wird minimiert starten.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
@@ -1049,7 +1053,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>qTox wird nicht beendet, sondern in die Systemleiste minimiert.</translation>
+        <translation>Durch das Klicken auf Schließen (X) wird qTox nicht beendet, sondern in die Systemleiste minimiert.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="146"/>
@@ -1061,7 +1065,7 @@ instead of closing itself.</source>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation>qTox wird in die Systemleiste minimiert.</translation>
+        <translation>Durch Klicken auf Minimieren (_) wird qTox in die Systemleiste minimiert.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="173"/>
@@ -1086,7 +1090,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="279"/>
         <source>Set where files will be saved.</source>
-        <translation>Datei-Speicherort angeben.</translation>
+        <translation>Datei-Speicherort festlegen.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="293"/>
@@ -1112,7 +1116,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="200"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Nach einer Weile wird dein Status auf &apos;Abwesend&apos; gesetzt.</translation>
+        <translation>Nach der festgelegten Zeit wird dein Status auf &apos;Abwesend&apos; gesetzt.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
@@ -1133,7 +1137,7 @@ instead of system taskbar.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="373"/>
         <source>Group chats always notify</source>
-        <translation>Gruppenchat Hinweise</translation>
+        <translation>Gruppenchats informieren über neue Nachrichten</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="363"/>
@@ -1171,7 +1175,7 @@ instead of system taskbar.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="325"/>
         <source>Play a sound when you recieve message.</source>
         <comment>toolTip for Notify sound setting</comment>
-        <translation>Bei neuen Nachrichten einen Ton abspielen.</translation>
+        <translation>Beim Eingagang neuer Nachrichten wird ein Ton abgespielt.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="328"/>
@@ -1183,7 +1187,7 @@ instead of system taskbar.</source>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation>Offline-Nachrichten werden übertragen, sobald der entsprechende Kontakt verfügbar wird, während du online bist.</translation>
+        <translation>Nachrichten, die du verschickst während der entprechende Kontakt nicht online ist, werden übertragen, sobald er verfügbar wird, und du online bist.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="394"/>
@@ -1210,7 +1214,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="286"/>
         <source>Default directory to save files</source>
-        <translation>Standartordner für Dateien</translation>
+        <translation>Standardordner für Dateien</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="383"/>
@@ -1231,7 +1235,7 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="438"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Smiley Art:</translation>
+        <translation>Smileyart:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="455"/>
@@ -1256,7 +1260,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="521"/>
         <source>Timestamp format:</source>
-        <translation>Zeitformat:</translation>
+        <translation>Zeitstempelformat:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="538"/>
@@ -1272,7 +1276,7 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="652"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Wenn deaktiviert, lässt sich qTox mit Tor verwenden. Die Deaktivierung belastet allerdings das Tox-Netzwerk.</translation>
+        <translation>Wenn deaktiviert, lässt sich qTox z.B. über Tor verwenden. Die Deaktivierung belastet allerdings das Tox-Netzwerk.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="655"/>
@@ -1295,7 +1299,7 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="703"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation>Addresse:</translation>
+        <translation>Adresse:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="713"/>
@@ -1330,7 +1334,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="513"/>
         <source>Send message</source>
-        <translation>Nachricht versenden</translation>
+        <translation>Nachricht abschicken</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="514"/>
@@ -1350,12 +1354,12 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="517"/>
         <source>Start an audio call</source>
-        <translation>Anruf starten</translation>
+        <translation>Einen Anruf tätigen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="518"/>
         <source>Start a video call</source>
-        <translation>Videoanruf starten</translation>
+        <translation>Einen Videoanruf tätigen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="368"/>
@@ -1396,7 +1400,7 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/groupchatform.cpp" line="212"/>
         <location filename="../src/widget/form/groupchatform.cpp" line="319"/>
         <source>Start audio call</source>
-        <translation>Anruf starten</translation>
+        <translation>Anruf tätigen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/groupchatform.cpp" line="260"/>
@@ -1431,17 +1435,17 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="92"/>
         <source>%1 users in chat</source>
-        <translation>%1 Kontakte im Chat</translation>
+        <translation>%1 Benutzer im Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="94"/>
         <source>0 users in chat</source>
-        <translation>Keine Kontakte im Chat</translation>
+        <translation>Keine Benutzer im Chat</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="65"/>
         <source>Set title...</source>
-        <translation>Titel wählen...</translation>
+        <translation>Titel wählen ...</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="66"/>
@@ -1502,7 +1506,7 @@ Teile sie einfach deinen Bekannten mit!</translation>
         <location filename="../src/widget/form/profileform.ui" line="207"/>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
-        <translation>Zurück zum Login Fenster</translation>
+        <translation>Zurück zum Login-Fenster</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="210"/>
@@ -1523,7 +1527,7 @@ Teile sie einfach deinen Bekannten mit!</translation>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="125"/>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Ein QR-Code, der deine Tox ID enthält. Dieser lässt sich anstatt der ID verwenden!</translation>
+        <translation>Dieser QR-Code enthält deine Tox-ID. Du kannst sie so mit deinen Freunden teilen.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="132"/>
@@ -1577,7 +1581,7 @@ Profile does not contain your history.</source>
     <message>
         <location filename="../src/widget/form/loadhistorydialog.ui" line="23"/>
         <source>Load history from:</source>
-        <translation>Den Verlauf von einem bestimmten Datum bis Heute anzeigen:</translation>
+        <translation>Den Verlauf von einem bestimmten Datum bis heute anzeigen:</translation>
     </message>
 </context>
 <context>
@@ -1592,7 +1596,7 @@ Profile does not contain your history.</source>
         <location filename="../src/loginscreen.ui" line="354"/>
         <location filename="../src/loginscreen.ui" line="727"/>
         <source>Username:</source>
-        <translation>Profilname:</translation>
+        <translation>Benutzername:</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="371"/>
@@ -1613,6 +1617,7 @@ Profile does not contain your history.</source>
     <message>
         <location filename="../src/loginscreen.ui" line="617"/>
         <source>Create Account</source>
+        <translatorcomment>this is called below a profile. </translatorcomment>
         <translation>Profil erstellen</translation>
     </message>
     <message>
@@ -1629,7 +1634,7 @@ Profile does not contain your history.</source>
         <location filename="../src/loginscreen.ui" line="982"/>
         <location filename="../src/loginscreen.ui" line="1097"/>
         <source>Login</source>
-        <translation>Login</translation>
+        <translation>Einloggen</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="1071"/>
@@ -1684,12 +1689,12 @@ Bitte melde diesen Fehler an die Entwickler.</translation>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="179"/>
         <source>This profile is already in use.</source>
-        <translation>Das Profil wird bereits benutzt.</translation>
+        <translation>Dieses Profil wird gerade verwendet.</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="188"/>
         <source>Profile already in use. Close other clients.</source>
-        <translation>Das Profil wird bereits benutzt. Bitte beende alle Tox Klienten.</translation>
+        <translation>Dieses Profil wird gerade verwendet. Laufen noch weitere Tox-Programme?</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="193"/>
@@ -1746,7 +1751,7 @@ Bitte melde diesen Fehler an die Entwickler.</translation>
     <message>
         <location filename="../src/video/netcamview.cpp" line="31"/>
         <source>Tox video</source>
-        <translation>qTox Videokonferenz</translation>
+        <translation>Tox-Videokonferenz</translation>
     </message>
 </context>
 <context>
@@ -1793,12 +1798,12 @@ Bitte melde diesen Fehler an die Entwickler.</translation>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="47"/>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>Wenn aktiviviert, können deine Kontakte sehen, dass du tippst.</translation>
+        <translation>Wenn aktiviert, können deine Kontakte sehen, wenn du eine Nachricht tippst.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
         <source>Send typing notifications</source>
-        <translation>Zeige anderen wenn du eine Nachricht tippst</translation>
+        <translation>Schreibbenachrichtigungen senden</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
@@ -1812,7 +1817,7 @@ If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
         <translation>NoSpam ist ein Teil deiner Tox ID.
-Wenn du mit Freundesanfragen überhäuft wirst, solltest du den NoSpam Wert ändern.
+Wenn du mit Freundesanfragen überhäuft wirst, solltest du den NoSpam-Wert ändern.
 Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich dann niemand mehr hinzufügen.</translation>
     </message>
     <message>
@@ -1825,7 +1830,7 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
         <translation>NoSpam ist ein Teil deiner Tox ID.
-Wenn du mit Freundesanfragen überhäuft wirst, solltest du den NoSpam Wert ändern.
+Wenn du mit Freundesanfragen überhäuft wirst, solltest du den NoSpam-Wert ändern.
 Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich dann niemand mehr hinzufügen.</translation>
     </message>
     <message>
@@ -1888,7 +1893,7 @@ Bitte benutze ein anderes.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="258"/>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
-        <translation>Das Profil &quot;%1&quot; existiert bereits.</translation>
+        <translation>Ein Profil &quot;%1&quot; existiert bereits.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="260"/>
@@ -1899,7 +1904,7 @@ Bitte benutze ein anderes.</translation>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="261"/>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Konnte das Profil nicht zu &quot;%1&quot; umbenennen</translation>
+        <translation>Konnte das Profil nicht in &quot;%1&quot; umbenennen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="270"/>
@@ -1911,21 +1916,21 @@ Bitte benutze ein anderes.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="272"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation>Tox Datei (*.tox)</translation>
+        <translation>Tox-Datei (*.tox)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="277"/>
         <location filename="../src/widget/form/profileform.cpp" line="318"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Verzeichnis nicht beschreibbar</translation>
+        <translation>Keine Schreibrechte für diesen Ordner.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="277"/>
         <location filename="../src/widget/form/profileform.cpp" line="318"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>Entschuldige, du scheinst nicht die nötigen Rechte zu haben, um hier eine Datei zu speichern. Wähle doch ein anderes Verzeichnis.</translation>
+        <translation>Du scheinst nicht die nötigen Rechte zu haben, um hier eine Datei zu speichern. Wähle doch ein anderes Verzeichnis.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="281"/>
@@ -1937,7 +1942,7 @@ Bitte benutze ein anderes.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="281"/>
         <location filename="../src/widget/form/profileform.cpp" line="322"/>
         <source>The file you chose could not be written to.</source>
-        <translation>Entschuldige, aber die gewählte Datei konnte leider nicht beschrieben werden.</translation>
+        <translation>In die gewählte Datei konnte leider nicht geschrieben werden.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="287"/>
@@ -1965,7 +1970,7 @@ Bitte benutze ein anderes.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="336"/>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Bist du sicher das du dein Passwort löschen möchtest?</translation>
+        <translation>Bist du sicher, dass du dein Passwort löschen möchtest?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="344"/>
@@ -1976,7 +1981,7 @@ Bitte benutze ein anderes.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="358"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation>Dies ist deine persönliche Addresse. Damit können dich andere qTox-Nutzer erreichen.
+        <translation>Dies ist deine persönliche Adresse. Damit können dich andere Tox-Nutzer erreichen.
 Teile sie einfach deinen Bekannten mit!</translation>
     </message>
     <message>
@@ -2004,14 +2009,14 @@ Teile sie einfach deinen Bekannten mit!</translation>
         <location filename="../src/net/autoupdate.cpp" line="501"/>
         <source>Update</source>
         <comment>The title of a message box</comment>
-        <translation>Aktualisieren</translation>
+        <translation>Aktualisierung</translation>
     </message>
     <message>
         <location filename="../src/net/autoupdate.cpp" line="502"/>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
         <translation>Eine Aktualisierung für qTox ist verfügbar! Möchtest du sie jetzt herunterladen?
-Sie wird bei einem Neustart installiert.</translation>
+Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <location filename="../src/chatlog/chatmessage.cpp" line="134"/>
@@ -2021,7 +2026,7 @@ Sie wird bei einem Neustart installiert.</translation>
     <message>
         <location filename="../src/main.cpp" line="112"/>
         <source>Tox URI to parse</source>
-        <translation>Zu parsende Tox URI</translation>
+        <translation>Zu parsende Tox-URI</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="113"/>
@@ -2061,19 +2066,19 @@ Sie wird bei einem Neustart installiert.</translation>
     <message>
         <location filename="../src/widget/tool/callconfirmwidget.cpp" line="49"/>
         <source>Incoming call...</source>
-        <translation>Eingehender Anruf...</translation>
+        <translation>Eingehender Anruf ...</translation>
     </message>
     <message>
         <location filename="../src/persistence/toxsave.cpp" line="57"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>Nicht-Tox Datei ignoriert</translation>
+        <translation>Nicht-Tox-Datei ignoriert</translation>
     </message>
     <message>
         <location filename="../src/persistence/toxsave.cpp" line="58"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Es scheint, dass du eine Datei gewählt hast, die nicht zu Tox gehört. Sie wird erst einmal ignoriert.</translation>
+        <translation>Warnung: Die von Dir gewählte Datei ist keine Tox-Datei. Sie wird ignoriert.</translation>
     </message>
     <message>
         <location filename="../src/persistence/toxsave.cpp" line="64"/>
@@ -2085,7 +2090,7 @@ Sie wird bei einem Neustart installiert.</translation>
         <location filename="../src/persistence/toxsave.cpp" line="65"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Entschuldige, aber ein Profil namens &apos;%1&apos; existiert bereits. Möchtest du es überschreiben?</translation>
+        <translation>Ein Profil namens &apos;%1&apos; existiert bereits. Möchtest du es überschreiben?</translation>
     </message>
     <message>
         <location filename="../src/persistence/toxsave.cpp" line="71"/>
@@ -2103,9 +2108,9 @@ Sie wird bei einem Neustart installiert.</translation>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Hallo,
 
-hier ist %1! Hast du Lust dich mit mir zu unterhalten?
+hier ist %1! Hast du Lust, dich mit mir zu unterhalten?
 
-Viele Grüße
+Viele Grüße,
 %1</translation>
     </message>
     <message>
@@ -2120,13 +2125,13 @@ Viele Grüße
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="132"/>
         <source>Click and drag to select a region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Klicke und Ziehe um einen Ausschnit auszuwählen. Drücke &lt;b&gt;Escape&lt;/b&gt; um abzubrechen.</translation>
+        <translation>Klicke und ziehe, um einen Ausschnit auszuwählen. Drücke &lt;b&gt;Escape&lt;/b&gt;, um abzubrechen.</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="139"/>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selected region or select a new region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Drücke &lt;b&gt;Enter&lt;/b&gt; um einen Screenshot des ausgewählten Ausschnitts zu senden oder wähle einen neuen aus. Drücke &lt;b&gt;Escape&lt;/b&gt; um abzubrechen.</translation>
+        <translation>Drücke &lt;b&gt;Enter&lt;/b&gt;, um einen Screenshot des ausgewählten Ausschnitts zu senden, oder wähle einen neuen aus. Drücke &lt;b&gt;Escape&lt;/b&gt;, um abzubrechen.</translation>
     </message>
 </context>
 <context>
@@ -2139,7 +2144,7 @@ Viele Grüße
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="31"/>
         <source>Repeat password</source>
-        <translation>Wiederholen</translation>
+        <translation>Passwort wiederholen</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="41"/>
@@ -2149,7 +2154,7 @@ Viele Grüße
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="65"/>
         <source>Password strength</source>
-        <translation>Stärke</translation>
+        <translation>Passwortstärke</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.cpp" line="36"/>
@@ -2172,7 +2177,7 @@ Viele Grüße
     <message>
         <location filename="../src/persistence/settings.cpp" line="1363"/>
         <source>Circle #%1</source>
-        <translation></translation>
+        <translation>Kreis #%1</translation>
     </message>
 </context>
 <context>
@@ -2205,26 +2210,26 @@ Viele Grüße
         <location filename="../src/net/toxdns.cpp" line="103"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
-        <translation>Unerwartete Anzahl an Einträgen in Text</translation>
+        <translation>Unerwartete Anzahl an Einträgen im Texteintrag</translation>
     </message>
     <message>
         <location filename="../src/net/toxdns.cpp" line="132"/>
         <source>The version of Tox DNS used by this server is not supported</source>
         <comment>Error with the DNS</comment>
-        <translation>Die von diesem Server verwendete Version von Tox DNS wird leider nicht unterstützt</translation>
+        <translation>Die von diesem Server verwendete Version von Tox-DNS wird leider nicht unterstützt</translation>
     </message>
     <message>
         <location filename="../src/net/toxdns.cpp" line="144"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>Die ToxDNS Nachfrage konnte keine Tox ID finden</translation>
+        <translation>ToxDNS konnte keine Tox ID finden.</translation>
     </message>
     <message>
         <location filename="../src/net/toxdns.cpp" line="153"/>
         <location filename="../src/net/toxdns.cpp" line="162"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>Die ToxDNS Nachfrage konnte keine gültige Tox ID finden</translation>
+        <translation>ToxDNS konnte keine gültige Tox ID finden</translation>
     </message>
     <message>
         <location filename="../src/net/toxdns.cpp" line="249"/>
@@ -2233,9 +2238,9 @@ Viele Grüße
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
 If unsure, press “No”, so that request to ToxDNS service will not be made using unsecure protocol.</source>
-        <translation>Es scheint, dass qTox ein altes Protokoll verwenden muss, um sich mit deinem Kontakt zu verbinden.
-Leider ist die Alternativmethode nicht sicher und es besteht die Gefahr, dass an ToxDNS gesendete Daten abgefangen werden.
-Soll das Alternativprotokoll trotzdem verwendet werden?
+        <translation>Es scheint, als ob qTox ein altes Protokoll verwenden muss, um sich mit deinem Kontakt zu verbinden.
+Leider ist die Alternativmethode nicht sicher, und es besteht die Gefahr, dass an ToxDNS gesendete Daten abgefangen werden.
+Soll das Alternativprotokoll tox1 dennoch verwendet werden?
 Falls du dir nicht sicher bist, wähle &apos;Nein&apos;.</translation>
     </message>
 </context>
@@ -2266,7 +2271,7 @@ Falls du dir nicht sicher bist, wähle &apos;Nein&apos;.</translation>
         <location filename="../src/net/toxuri.cpp" line="96"/>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation>Freundschaftsanfrage senden</translation>
+        <translation>Freundschaftsanfrage schicken</translation>
     </message>
     <message>
         <location filename="../src/net/toxuri.cpp" line="97"/>
@@ -2298,13 +2303,13 @@ Falls du dir nicht sicher bist, wähle &apos;Nein&apos;.</translation>
     <message>
         <location filename="../src/widget/widget.cpp" line="496"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>Entschuldige, es ist ein Fehler aufgetreten und die Anwendung lässt sich nicht starten.</translation>
+        <translation>Ein Fehler ist aufgetreten, und die Anwendung lässt sich nicht starten.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="506"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>Entschuldige, es ist ein Fehler aufgetreten und die Anwendung kann nicht gestartet werden.
+        <translation>Es ist ein Fehler ist aufgetreten, und die Anwendung kann nicht gestartet werden.
 Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einstellungen und versuche es erneut.</translation>
     </message>
     <message>
@@ -2336,7 +2341,7 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="281"/>
         <source>Edit</source>
-        <translation>Editieren</translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="284"/>
@@ -2346,7 +2351,7 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="286"/>
         <source>Filter...</source>
-        <translation>Filter...</translation>
+        <translation>Filter ...</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="297"/>
@@ -2362,22 +2367,22 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="303"/>
         <source>Add Contact...</source>
-        <translation>Kontakt hinzufügen...</translation>
+        <translation>Kontakt hinzufügen ...</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="306"/>
         <source>Next Conversation</source>
-        <translation>Nächste Konversation</translation>
+        <translation>Nächste Unterhaltung</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="311"/>
         <source>Previous Conversation</source>
-        <translation>Vorherige Konversation</translation>
+        <translation>Vorherige Unterhaltung</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="317"/>
         <source>Bring All to Front</source>
-        <translation type="unfinished">Nach vorne bringen</translation>
+        <translation type="unfinished">Alle in den Vordergrund bringen</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="552"/>
@@ -2394,7 +2399,7 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
         <location filename="../src/widget/widget.cpp" line="563"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Du hast qTox aufgefordert eine Datei auszuführen. Bitte beachte, dass ausführbare Dateien ein Sicherheitsrisiko darstellen können. Bist du dir sicher, dass du die Datei ausführen möchtest?</translation>
+        <translation>Du hast qTox aufgefordert, eine Datei auszuführen. Bitte beachte, dass ausführbare Dateien ein Sicherheitsrisiko darstellen können. Bist du dir sicher, dass du die Datei ausführen möchtest?</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="631"/>
@@ -2410,47 +2415,47 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="756"/>
         <source>Couldn&apos;t request friendship</source>
-        <translation>Freundschaftsanfrage konnte nicht gesendet werden</translation>
+        <translation>Freundschaftsanfrage konnte nicht verschickt werden</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="804"/>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>Abwesend</translation>
+        <translation>abwesend</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="806"/>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation>Beschäftigt</translation>
+        <translation>beschäftigt</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="808"/>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation>Offline</translation>
+        <translation>offline</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="812"/>
         <source>online</source>
         <comment>contact status</comment>
-        <translation>Online</translation>
+        <translation>online</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="815"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 ist jetzt %2</translation>
+        <translation>%1 ist jetzt %2.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="999"/>
         <source>Removal of friend </source>
-        <translation>Entferne </translation>
+        <translation>Entferne Kontakt</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1000"/>
         <source>Do you want to remove history as well?</source>
-        <translation>Möchtest du den Chatverlauf auch entfernen?</translation>
+        <translation>Möchtest du den Chatverlauf auch löschen?</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1059"/>
@@ -2462,7 +2467,7 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
         <location filename="../src/widget/widget.cpp" line="1059"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
-        <translation>%1 hat dich in eine Gruppe eingeladen! Möchtest du ihr beitreten?</translation>
+        <translation>%1 hat dich in eine Gruppe eingeladen! Möchtest du selbiger beitreten?</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1121"/>
@@ -2473,7 +2478,7 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="1148"/>
         <source>%1 has set the title to %2</source>
-        <translation>%1 hat den Titel auf %2 gesetzt</translation>
+        <translation>%1 hat den Titel auf %2 geändert.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1312"/>
@@ -2493,12 +2498,12 @@ Leider führen deine Proxyeinstellungen zu Problemen. Bitte ändere deine Einste
     <message>
         <location filename="../src/widget/widget.cpp" line="1666"/>
         <source>Add new circle...</source>
-        <translation>Neuen Kreis hinzufügen...</translation>
+        <translation>Neuen Kreis hinzufügen ...</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1692"/>
         <source>By Name</source>
-        <translation>Nach Name</translation>
+        <translation>Nach Namen</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1693"/>
