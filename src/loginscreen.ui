@@ -641,7 +641,7 @@ color:white;
 background-color:#6cc865;</string>
              </property>
              <property name="text">
-              <string>Create Account</string>
+              <string>Create Profile</string>
              </property>
              <property name="flat">
               <bool>true</bool>
