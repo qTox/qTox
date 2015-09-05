@@ -588,6 +588,10 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
         return;
     }
 
+    // If we clicked on the currently active widget, don't reload and relayout everything
+    if (activeChatroomWidget == widget)
+        return;
+
     contentLayout->clear();
 
     if (activeChatroomWidget != nullptr)
