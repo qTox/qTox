@@ -93,7 +93,6 @@ void Settings::loadGlobal()
         return;
 
     createSettingsDir();
-    QDir dir(getSettingsDirPath());
 
     if (QFile(globalSettingsFile).exists())
     {
@@ -107,6 +106,7 @@ void Settings::loadGlobal()
         makeToxPortable = false;
     }
 
+    QDir dir(getSettingsDirPath());
     QString filePath = dir.filePath(globalSettingsFile);
 
     // If no settings file exist -- use the default one
