@@ -127,7 +127,7 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>ToxCore version: $TOXCOREVERSION</string>
+             <string>toxcore version: $TOXCOREVERSION</string>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>

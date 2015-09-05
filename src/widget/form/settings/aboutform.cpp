@@ -46,8 +46,6 @@ void AboutForm::replaceVersions()
                                                        QString::number(TOX_VERSION_MAJOR) + "." +
                                                        QString::number(TOX_VERSION_MINOR) + "." +
                                                        QString::number(TOX_VERSION_PATCH)));
-    //TODO show when toxcore supports versioning #2086
-    bodyUI->toxCoreVersion->hide();
 }
 
 AboutForm::~AboutForm()
