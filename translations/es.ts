@@ -62,7 +62,7 @@
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
         <translation>Usa el control deslizante para ajustar el volumen del micrófono.
-ADVERTENCIA: el control deslizante aun no es funcional.</translation>
+ADVERTENCIA: el control deslizante aún no es funcional.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="146"/>
@@ -317,7 +317,7 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <location filename="../src/android.ui" line="14"/>
         <source>Form</source>
-        <translation>Planilla</translation>
+        <translation>Plantilla</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="252"/>
@@ -394,7 +394,7 @@ Ignore the proxy and connect to the Internet directly?</source>
         <location filename="../src/widget/form/chatform.cpp" line="179"/>
         <location filename="../src/widget/form/chatform.cpp" line="779"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>¡Estás inetentando mandar un archivo especial (secuencial), no va a funcionar!</translation>
+        <translation>¡Estás intentando mandar un archivo especial (secuencial), no va a funcionar!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="271"/>
@@ -633,7 +633,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="14"/>
         <source>Form</source>
-        <translation></translation>
+        <translation>Plantilla</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.ui" line="148"/>
@@ -1026,7 +1026,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="102"/>
         <source>System tray</source>
-        <translation>Badeja del sistema</translation>
+        <translation>Bandeja del sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="153"/>
@@ -1289,7 +1289,7 @@ serán enviados cuando los veas aparecer de nuevo en línea.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="652"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Desactivar esto permite, por ejemplo, el uso de Tox a treavés de Tor.
+        <translation>Desactivar esto permite, por ejemplo, el uso de Tox a través de Tor.
 Hazlo sólo en caso de ser necesario.</translation>
     </message>
     <message>
@@ -1833,7 +1833,7 @@ Si estás recibiendo solicitudes de amistad no deseadas, cambia tu NoSpam.</tran
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation>Mantener un historial de chat es una función aun en desarrollo.
+        <translation>Mantener un historial de chat es una función aún en desarrollo.
 Es posible que haya cambios en el formato de guardado, lo que puede generar pérdida de datos.</translation>
     </message>
 </context>
