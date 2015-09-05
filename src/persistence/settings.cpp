@@ -1291,7 +1291,6 @@ void Settings::setFriendActivity(const ToxId &id, const QDate &activity)
         fp.activity = activity;
         friendLst[key] = fp;
     }
-    savePersonal();
 }
 
 void Settings::removeFriendSettings(const ToxId &id)
