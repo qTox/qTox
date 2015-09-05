@@ -142,46 +142,63 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Versión</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are using a qTox nightly build.&lt;/p&gt;&lt;p&gt;Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/GIT_VERSION&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GIT_VERSION&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Las traducciones de &quot;nightly build&quot;, &quot;commit&quot; y &quot;hash&quot; no son muy conocidas. Va a ayudar más al debug dejarlo en inglés</translatorcomment>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Estás usando una nightly build de qTox.&lt;/p&gt;&lt;p&gt;Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/GIT_VERSION&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GIT_VERSION&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="98"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="149"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="125"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
+        <source>You are using a qTox nightly build.</source>
+        <translation>Estás usando una nightly build de qTox.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="103"/>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="130"/>
+        <source>toxcore version: $TOXCOREVERSION</source>
+        <translation>Versión de toxcore: $TOXCOREVERSION</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="176"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="164"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="215"/>
         <source>Authors</source>
         <translation>Autores</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="181"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Autor original: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Puedes encontrar una lista completa de &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;colaboradores&lt;/span&gt;&lt;/a&gt; en GitHub&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="209"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="260"/>
         <source>Known Issues</source>
         <translation>Problemas Conocidos</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="226"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="277"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Puedes encontrar una lista de problemas conocidos en el &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; en Github. Si encuentras un error o una falla de seguridad en qTox, por favor repórtalo siguiendo las instrucciones de nuestro artículo &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Como Escribir Reportes de Fallos Útiles&lt;/span&gt;&lt;/a&gt; en la wiki.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -258,18 +275,18 @@ Ignore the proxy and connect to the Internet directly?</source>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
-        <source>FULL - very safe, slowest (recommended)</source>
-        <translation>COMPLETO - Muy seguro. Modo más lento (recomendado)</translation>
+        <source>Synchronized - safe / recommended</source>
+        <translation>Sincronizada - seguro / recomendado</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
-        <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
-        <translation>NORMAL - Casi tan seguro como COMPLETO pero aproximadamente 20% más rápido</translation>
+        <source>Partially async - risky / 20% faster</source>
+        <translation>Parcialmente asíncrona - riesgoso / 20% más rápido</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
-        <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
-        <translation>DESACTIVADO - Seguridad desactivada. Si ocurre un error, tu historial puede desaparecer. Modo más rápido (no recomendado)</translation>
+        <source>Asynchronous - dangerous / fastest</source>
+        <translation>Asíncrona - peligroso / lo más rápido</translation>
     </message>
 </context>
 <context>
@@ -308,8 +325,8 @@ Ignore the proxy and connect to the Internet directly?</source>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Escritura sincrónica a BD&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Escritura a la BD&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -368,146 +385,146 @@ Ignore the proxy and connect to the Internet directly?</source>
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="165"/>
+        <location filename="../src/widget/form/chatform.cpp" line="166"/>
         <source>Send a file</source>
         <translation>Enviar un archivo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="174"/>
-        <location filename="../src/widget/form/chatform.cpp" line="773"/>
-        <source>File not read</source>
-        <translation>Archivo no leido</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/chatform.cpp" line="174"/>
-        <location filename="../src/widget/form/chatform.cpp" line="773"/>
+        <location filename="../src/widget/form/chatform.cpp" line="177"/>
+        <location filename="../src/widget/form/chatform.cpp" line="787"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translation>qTox no pudo abrir %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="179"/>
-        <location filename="../src/widget/form/chatform.cpp" line="779"/>
-        <source>Bad Idea</source>
-        <translation>Mala Idea</translation>
+        <location filename="../src/widget/form/chatform.cpp" line="176"/>
+        <location filename="../src/widget/form/chatform.cpp" line="787"/>
+        <source>Unable to open</source>
+        <translation>No se pudo abrir</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="179"/>
-        <location filename="../src/widget/form/chatform.cpp" line="779"/>
+        <location filename="../src/widget/form/chatform.cpp" line="183"/>
+        <location filename="../src/widget/form/chatform.cpp" line="793"/>
+        <source>Bad idea</source>
+        <translation>Mala idea</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="184"/>
+        <location filename="../src/widget/form/chatform.cpp" line="793"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>¡Estás intentando mandar un archivo especial (secuencial), no va a funcionar!</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="271"/>
+        <location filename="../src/widget/form/chatform.cpp" line="277"/>
         <source>Accept video call</source>
         <translation>Aceptar videollamada</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="284"/>
+        <location filename="../src/widget/form/chatform.cpp" line="290"/>
         <source>Accept audio call</source>
         <translation>Aceptar llamada de audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="292"/>
+        <location filename="../src/widget/form/chatform.cpp" line="298"/>
         <source>%1 calling</source>
         <translation>%1 llamando</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="321"/>
-        <location filename="../src/widget/form/chatform.cpp" line="443"/>
+        <location filename="../src/widget/form/chatform.cpp" line="329"/>
+        <location filename="../src/widget/form/chatform.cpp" line="455"/>
         <source>End video call</source>
         <translation>Terminar la videollamada</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="330"/>
-        <location filename="../src/widget/form/chatform.cpp" line="452"/>
+        <location filename="../src/widget/form/chatform.cpp" line="338"/>
+        <location filename="../src/widget/form/chatform.cpp" line="464"/>
         <source>End audio call</source>
         <translation>Terminar la llamada de audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="341"/>
-        <location filename="../src/widget/form/chatform.cpp" line="699"/>
+        <location filename="../src/widget/form/chatform.cpp" line="349"/>
+        <location filename="../src/widget/form/chatform.cpp" line="713"/>
         <source>Mute microphone</source>
         <translation>Silenciar micrófono</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="344"/>
-        <location filename="../src/widget/form/chatform.cpp" line="719"/>
+        <location filename="../src/widget/form/chatform.cpp" line="352"/>
+        <location filename="../src/widget/form/chatform.cpp" line="733"/>
         <source>Mute call</source>
         <translation>Silenciar llamada</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="369"/>
+        <location filename="../src/widget/form/chatform.cpp" line="377"/>
         <source>%1 stopped calling</source>
         <translation>%1 dejó de llamar</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="404"/>
+        <location filename="../src/widget/form/chatform.cpp" line="414"/>
         <source>Cancel video call</source>
         <translation>Cancelar la videollamada</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="412"/>
+        <location filename="../src/widget/form/chatform.cpp" line="422"/>
         <source>Cancel audio call</source>
         <translation>Cancelar la llamada de audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="420"/>
+        <location filename="../src/widget/form/chatform.cpp" line="430"/>
         <source>Calling to %1</source>
         <translation>Llamando a %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="522"/>
+        <location filename="../src/widget/form/chatform.cpp" line="534"/>
         <source>Call rejected</source>
         <translation>Llamada rechazada</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="676"/>
+        <location filename="../src/widget/form/chatform.cpp" line="690"/>
         <source>Start audio call</source>
         <translation>Iniciar llamada de audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="679"/>
+        <location filename="../src/widget/form/chatform.cpp" line="693"/>
         <source>Start video call</source>
         <translation>Iniciar videollamada</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="704"/>
+        <location filename="../src/widget/form/chatform.cpp" line="718"/>
         <source>Unmute microphone</source>
         <translation>Activar sonido del micrófono</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="724"/>
+        <location filename="../src/widget/form/chatform.cpp" line="738"/>
         <source>Unmute call</source>
         <translation>Activar sonido de la llamada</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="736"/>
+        <location filename="../src/widget/form/chatform.cpp" line="750"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>No se pudo enviar el archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="907"/>
+        <location filename="../src/widget/form/chatform.cpp" line="922"/>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Error al abrir el archivo temporal</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="908"/>
+        <location filename="../src/widget/form/chatform.cpp" line="923"/>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>qTox no pudo guardar la captura de pantalla</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="950"/>
+        <location filename="../src/widget/form/chatform.cpp" line="965"/>
         <source>Call with %1 ended. %2</source>
         <translation>Llamada con %1 terminada. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="969"/>
+        <location filename="../src/widget/form/chatform.cpp" line="984"/>
         <source>Call duration: </source>
         <translation>Duración de la llamada:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="1084"/>
+        <location filename="../src/widget/form/chatform.cpp" line="1099"/>
         <source>Load chat history...</source>
         <translation>Cargar historial de chat...</translation>
     </message>
@@ -661,76 +678,76 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>[vista previa]</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="92"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="95"/>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
         <translation>Envío en espera...</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="96"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="99"/>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
         <translation>Presiona aceptar para recibir este archivo</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="139"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="142"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Ubicación no escribible</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="140"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="143"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>No tienes permiso de escritura. Elije otra ubicación o cancela el envío.</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="308"/>
-        <source>paused</source>
-        <comment>file transfer widget</comment>
-        <translation>pausado</translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="328"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="331"/>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
         <translation>Reanudando...</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="354"/>
-        <source>Open file.</source>
-        <translation>Abrir archivo.</translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="359"/>
-        <source>Open file directory.</source>
-        <translation>Abrir directorio contenedor.</translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="411"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="423"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="436"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="418"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="430"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="439"/>
         <source>Cancel transfer</source>
         <translation>Cancelar transferencia</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="415"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="442"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="414"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="445"/>
         <source>Pause transfer</source>
         <translation>Pausar transferencia</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="427"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="311"/>
+        <source>Paused</source>
+        <comment>file transfer widget</comment>
+        <translation>Pausado</translation>
+    </message>
+    <message>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="357"/>
+        <source>Open file</source>
+        <translation>Abrir archivo</translation>
+    </message>
+    <message>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="362"/>
+        <source>Open file directory</source>
+        <translation>Abrir directorio del archivo</translation>
+    </message>
+    <message>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="426"/>
         <source>Resume transfer</source>
         <translation>Reanudar transferencia</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="448"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="451"/>
         <source>Accept transfer</source>
         <translation>Aceptar transferencia</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="475"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="479"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>Guardar un archivo</translation>
@@ -1108,17 +1125,6 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>Al recibir un nuevo mensaje:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="345"/>
-        <source>Show qTox&apos;s window when you receive new message.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation>Mostrar la ventana de qTox cuando recibas un nuevo mensaje.</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="348"/>
-        <source>Show window</source>
-        <translation>Mostrar ventana</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="335"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
@@ -1171,6 +1177,17 @@ en lugar de la barra de tareas del sistema.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="249"/>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>Iniciar qTox (usando el prefil actual) junto con el sistema operativo.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="345"/>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation>Abrir una ventana de qTox al recibir un nuevo mensaje si no hay ninguna ya abierta.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="348"/>
+        <source>Open window</source>
+        <translation>Abrir ventana</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="383"/>
@@ -1455,11 +1472,6 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <translation>Perfil</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="174"/>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path\&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path\&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Ubicación del perfil actual:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/profileform.ui" line="208"/>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
@@ -1507,6 +1519,11 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <location filename="../src/widget/form/profileform.ui" line="139"/>
         <source>Copy image</source>
         <translation>Copiar imagen</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.ui" line="174"/>
+        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Ubicación del perfil actual:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="211"/>
@@ -1566,50 +1583,50 @@ El perfil no contiene tu historial.</translation>
         <translation>qTox</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="354"/>
-        <location filename="../src/loginscreen.ui" line="727"/>
+        <location filename="../src/loginscreen.ui" line="381"/>
+        <location filename="../src/loginscreen.ui" line="754"/>
         <source>Username:</source>
         <translation>Usuario:</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="371"/>
-        <location filename="../src/loginscreen.ui" line="740"/>
+        <location filename="../src/loginscreen.ui" line="398"/>
+        <location filename="../src/loginscreen.ui" line="767"/>
         <source>Password:</source>
         <translation>Contraseña:</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="388"/>
+        <location filename="../src/loginscreen.ui" line="415"/>
         <source>Confirm:</source>
         <translation>Confirmar:</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="408"/>
+        <location filename="../src/loginscreen.ui" line="435"/>
         <source>Password strength: %p%</source>
         <translation>Robustez de la contraseña: %p%</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="617"/>
-        <source>Create Account</source>
-        <translation>Crear Cuenta</translation>
+        <location filename="../src/loginscreen.ui" line="644"/>
+        <source>Create Profile</source>
+        <translation>Crear Perfil</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="757"/>
+        <location filename="../src/loginscreen.ui" line="784"/>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
         <translation>Si el perfil no está protejido con contraseña, qTox puede saltarse la pantalla de inicio</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="760"/>
+        <location filename="../src/loginscreen.ui" line="787"/>
         <source>Login automatically</source>
         <translation>Iniciar sesión automáticamente</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="982"/>
-        <location filename="../src/loginscreen.ui" line="1097"/>
+        <location filename="../src/loginscreen.ui" line="1009"/>
+        <location filename="../src/loginscreen.ui" line="1124"/>
         <source>Login</source>
         <translation>Iniciar Sesión</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="1071"/>
+        <location filename="../src/loginscreen.ui" line="1098"/>
         <source>New Profile</source>
         <translation>Nuevo Perfil</translation>
     </message>
@@ -1840,6 +1857,11 @@ Es posible que haya cambios en el formato de guardado, lo que puede generar pér
 <context>
     <name>ProfileForm</name>
     <message>
+        <location filename="../src/widget/form/profileform.cpp" line="126"/>
+        <source>Current profile: </source>
+        <translation>Perfil actual:</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/profileform.cpp" line="209"/>
         <source>Choose a profile picture</source>
         <translation>Elije una imagen de perfil</translation>
@@ -1982,11 +2004,6 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <translation>¿Estás seguro de que deseas eliminar este perfil?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="126"/>
-        <source>Current profile:</source>
-        <translation>Perfil actual:</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/profileform.cpp" line="325"/>
         <source>Save</source>
         <comment>save qr image</comment>
@@ -2049,17 +2066,17 @@ It will be installed when qTox restarts.</source>
 Será instalada cuando reinicies qTox.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="111"/>
         <source>Tox URI to parse</source>
         <translation>URI Tox a utilizar</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="113"/>
+        <location filename="../src/main.cpp" line="112"/>
         <source>Starts new instance and loads specified profile.</source>
         <translation>Inicia una nueva instancia de qTox y carga el perfil especificado.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="113"/>
+        <location filename="../src/main.cpp" line="112"/>
         <source>profile</source>
         <translation>perfil</translation>
     </message>
@@ -2141,16 +2158,16 @@ Será instalada cuando reinicies qTox.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="132"/>
-        <source>Click and drag to select a region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
+        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="155"/>
+        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Haz clic y arrastra para seleccionar un área. Presiona &lt;b&gt;Escape&lt;/b&gt; para cancelar.</translation>
+        <translation>Cliquea y arrastra para seleccionar una región. Presiona &lt;b&gt;Espacio&lt;/b&gt; para mostar/ocultar la ventana de qTox, o &lt;b&gt;Escape&lt;/b&gt; para cancelar.</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="139"/>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selected region or select a new region. Press &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
+        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="162"/>
+        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Presiona &lt;b&gt;Enter&lt;/b&gt; para enviar una captura del área seleccionada, o selecciona una nueva. Presiona &lt;b&gt;Escape&lt;/b&gt; para cancelar.</translation>
+        <translation>Presiona &lt;b&gt;Enter&lt;/b&gt; para envir una captura de pantalla de la selección, &lt;b&gt;Espacio&lt;/b&gt; para mostar/ocultar la ventana de qTox, o &lt;b&gt;Escape&lt;/b&gt; para cancelar.</translation>
     </message>
 </context>
 <context>
@@ -2202,57 +2219,57 @@ Será instalada cuando reinicies qTox.</translation>
 <context>
     <name>ToxDNS</name>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="70"/>
+        <location filename="../src/net/toxdns.cpp" line="72"/>
         <source>The connection timed out</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>El tiempo de conexión ha expirado</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="78"/>
+        <location filename="../src/net/toxdns.cpp" line="80"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Esta dirección no existe</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="85"/>
+        <location filename="../src/net/toxdns.cpp" line="87"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>Error al consultar DNS</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="94"/>
+        <location filename="../src/net/toxdns.cpp" line="96"/>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
         <translation>Ningún registro encontrado</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="103"/>
+        <location filename="../src/net/toxdns.cpp" line="105"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Número de entradas inesperado en registro</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="132"/>
+        <location filename="../src/net/toxdns.cpp" line="134"/>
         <source>The version of Tox DNS used by this server is not supported</source>
         <comment>Error with the DNS</comment>
         <translation>La versión de DNS Tox usada por este servidor no es compatible</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="144"/>
+        <location filename="../src/net/toxdns.cpp" line="146"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La respuesta DNS no contiene ninguna Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="153"/>
-        <location filename="../src/net/toxdns.cpp" line="162"/>
+        <location filename="../src/net/toxdns.cpp" line="155"/>
+        <location filename="../src/net/toxdns.cpp" line="164"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>La respuesta DNS no contiene una Tox ID válida</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="249"/>
-        <location filename="../src/net/toxdns.cpp" line="303"/>
+        <location filename="../src/net/toxdns.cpp" line="251"/>
+        <location filename="../src/net/toxdns.cpp" line="305"/>
         <source>It appears that qTox has to use the old tox1 protocol to access DNS record of your friend&apos;s Tox ID.
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
@@ -2266,34 +2283,34 @@ Si no estás seguro, selecciona &quot;No&quot; para evitar comunicaciones usando
 <context>
     <name>ToxURIDialog</name>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="84"/>
+        <location filename="../src/net/toxuri.cpp" line="86"/>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
         <translation>Agregar un amigo</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="86"/>
+        <location filename="../src/net/toxuri.cpp" line="88"/>
         <source>Do you want to add %1 as a friend?</source>
         <translation>¿Deseas agregar a %1 como amigo?</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="87"/>
+        <location filename="../src/net/toxuri.cpp" line="89"/>
         <source>User ID:</source>
         <translation>ID de usuario:</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="91"/>
+        <location filename="../src/net/toxuri.cpp" line="93"/>
         <source>Friend request message:</source>
         <translation>Mensaje de solicitud de amistad:</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="96"/>
+        <location filename="../src/net/toxuri.cpp" line="98"/>
         <source>Send</source>
         <comment>Send a friend request</comment>
         <translation>Enviar</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="97"/>
+        <location filename="../src/net/toxuri.cpp" line="99"/>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Cancelar</translation>
@@ -2302,29 +2319,29 @@ Si no estás seguro, selecciona &quot;No&quot; para evitar comunicaciones usando
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1694"/>
+        <location filename="../src/widget/widget.cpp" line="1695"/>
         <source>Online</source>
         <translation>Conectados</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1311"/>
+        <location filename="../src/widget/widget.cpp" line="1312"/>
         <source>&amp;Quit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1702"/>
+        <location filename="../src/widget/widget.cpp" line="1703"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Conectado</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1703"/>
+        <location filename="../src/widget/widget.cpp" line="1704"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Ausente</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1704"/>
+        <location filename="../src/widget/widget.cpp" line="1705"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Ocupado</translation>
@@ -2347,43 +2364,43 @@ Si no estás seguro, selecciona &quot;No&quot; para evitar comunicaciones usando
         <translation>Agregar amigo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1665"/>
+        <location filename="../src/widget/widget.cpp" line="1666"/>
         <source>Add new circle...</source>
         <translation>Agregar un nuevo círculo...</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1691"/>
+        <location filename="../src/widget/widget.cpp" line="1692"/>
         <source>By Name</source>
         <translation>Por Nombre</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1692"/>
+        <location filename="../src/widget/widget.cpp" line="1693"/>
         <source>By Activity</source>
         <translation>Por Actividad</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1693"/>
+        <location filename="../src/widget/widget.cpp" line="1694"/>
         <source>All</source>
         <translation>Todos</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1695"/>
+        <location filename="../src/widget/widget.cpp" line="1696"/>
         <source>Offline</source>
         <translation>Desconectados</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1696"/>
+        <location filename="../src/widget/widget.cpp" line="1697"/>
         <source>Friends</source>
         <translation>Amigos</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1697"/>
+        <location filename="../src/widget/widget.cpp" line="1698"/>
         <source>Groups</source>
         <translation>Grupos</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1698"/>
-        <location filename="../src/widget/widget.cpp" line="1701"/>
+        <location filename="../src/widget/widget.cpp" line="1699"/>
+        <location filename="../src/widget/widget.cpp" line="1702"/>
         <source>Search Contacts</source>
         <translation>Buscar amigos</translation>
     </message>
@@ -2429,7 +2446,7 @@ Si no estás seguro, selecciona &quot;No&quot; para evitar comunicaciones usando
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="298"/>
-        <location filename="../src/widget/widget.cpp" line="1727"/>
+        <location filename="../src/widget/widget.cpp" line="1728"/>
         <source>Enter Fullscreen</source>
         <translation>Pantalla completa</translation>
     </message>
@@ -2472,7 +2489,7 @@ Si no estás seguro, selecciona &quot;No&quot; para evitar comunicaciones usando
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="632"/>
-        <location filename="../src/widget/widget.cpp" line="1705"/>
+        <location filename="../src/widget/widget.cpp" line="1706"/>
         <source>Settings</source>
         <translation>Opciones</translation>
     </message>
@@ -2517,40 +2534,40 @@ Si no estás seguro, selecciona &quot;No&quot; para evitar comunicaciones usando
         <translation>%1 ahora está %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1732"/>
+        <location filename="../src/widget/widget.cpp" line="1733"/>
         <source>Exit Fullscreen</source>
         <translation>Salir de Pantalla Completa</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1058"/>
+        <location filename="../src/widget/widget.cpp" line="1059"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>Invitación a grupo</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1058"/>
+        <location filename="../src/widget/widget.cpp" line="1059"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1 te ha invitado a un chat grupal. ¿Deseas unirte?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1120"/>
+        <location filename="../src/widget/widget.cpp" line="1121"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Desconocido&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1147"/>
+        <location filename="../src/widget/widget.cpp" line="1148"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 ha establecido el título: %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1335"/>
+        <location filename="../src/widget/widget.cpp" line="1336"/>
         <source>Status</source>
         <translation>Estado</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1404"/>
+        <location filename="../src/widget/widget.cpp" line="1405"/>
         <source>Message failed to send</source>
         <translation>Falló envío de mensaje</translation>
     </message>
