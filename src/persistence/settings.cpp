@@ -232,7 +232,6 @@ void Settings::loadGlobal()
     // Read the embedded DHT bootsrap nodes list if needed
     if (dhtServerList.isEmpty())
     {
-        qDebug() << "Using embeded bootstrap nodes list";
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
         rcs.beginGroup("DHT Server");
             int serverListSize = rcs.beginReadArray("dhtServerList");

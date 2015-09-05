@@ -399,7 +399,6 @@ void Widget::updateIcons()
 
 Widget::~Widget()
 {
-    qDebug() << "Deleting Widget";
     Translator::unregister(this);
     AutoUpdater::abortUpdates();
     if (icon)

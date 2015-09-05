@@ -42,10 +42,9 @@ IPC::IPC()
     std::default_random_engine randEngine((std::random_device())());
     std::uniform_int_distribution<uint64_t> distribution;
     globalId = distribution(randEngine);
-    qDebug() << "Our global ID is " << globalId;
+    qDebug() << "Our global IPC ID is " << globalId;
     if (globalMemory.create(sizeof(IPCMemory)))
     {
-        qDebug() << "Creating the global shared memory and taking ownership";
         if (globalMemory.lock())
         {
             IPCMemory* mem = global();

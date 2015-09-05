@@ -75,7 +75,6 @@ void LoginScreen::reset()
 
     Profile::scanProfiles();
     QString lastUsed = Settings::getInstance().getCurrentProfile();
-    qDebug() << "Last used profile is "<<lastUsed;
     QVector<QString> profiles = Profile::getProfiles();
     for (QString profile : profiles)
     {
