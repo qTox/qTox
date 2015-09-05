@@ -958,7 +958,8 @@ void Widget::playRingtone()
 
     QApplication::alert(this);
 
-    static QFile sndFile1(":audio/ToxicIncomingCall.pcm"); // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
+    // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
+    static QFile sndFile1(":audio/ToxicIncomingCall.pcm");
     static QByteArray sndData1;
     if (sndData1.isEmpty())
     {
