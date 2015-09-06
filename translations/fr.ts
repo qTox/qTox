@@ -1607,7 +1607,7 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     <message>
         <location filename="../src/loginscreen.ui" line="644"/>
         <source>Create Profile</source>
-        <translation>Créer le profile</translation>
+        <translation>Créer le profil</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="784"/>
