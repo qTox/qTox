@@ -493,7 +493,7 @@ void Widget::onDisconnected()
 void Widget::onFailedToStartCore()
 {
     QMessageBox critical(this);
-    critical.setText(tr("Toxcore failed to start, the application will terminate after you close this message."));
+    critical.setText(tr("toxcore failed to start, the application will terminate after you close this message."));
     critical.setIcon(QMessageBox::Critical);
     critical.exec();
     qApp->quit();

@@ -88,7 +88,7 @@ void FilesForm::onFileActivated(QListWidgetItem *item)
 
 void FilesForm::retranslateUi()
 {
-    headLabel.setText(tr("Transfered Files","\"Headline\" of the window"));
+    headLabel.setText(tr("Transferred Files","\"Headline\" of the window"));
     main.setTabText(0, tr("Downloads"));
     main.setTabText(1, tr("Uploads"));
 }
