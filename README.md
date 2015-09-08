@@ -13,6 +13,7 @@ qTox [![Build Status](https://travis-ci.org/tux3/qTox.svg)](https://travis-ci.or
 * **Linux**:
   - [**64 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86-64_release.tar.xz)
   - [**32 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86_release.tar.xz)
+  - [**Armhf download**](https://build.tox.chat/job/qTox-qt5.4.2_build_linux_armhf_release/lastSuccessfulBuild/artifact/qTox-qt5.4.2_build_linux_armhf_release.tar.xz)
   - [**packages**](/INSTALL.md#simple-install)
   - [**Gentoo overlay**](https://github.com/Tox/gentoo-overlay-tox)
 * **Mac**: [**download**](#) - Currently unmaintained<br/>
