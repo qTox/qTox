@@ -36,9 +36,9 @@ AdvancedForm::AdvancedForm() :
 
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->syncTypeComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
-    bodyUI->syncTypeComboBox->addItems({tr("Synchronized - safe / recommended"),
-                                        tr("Partially async - risky / 20% faster"),
-                                        tr("Asynchronous - dangerous / fastest")
+    bodyUI->syncTypeComboBox->addItems({tr("Synchronized - safe (recommended)"),
+                                        tr("Partially async - risky (20% faster)"),
+                                        tr("Asynchronous - dangerous (fastest)")
                                        });
     int index = 2 - static_cast<int>(Settings::getInstance().getDbSyncType());
     bodyUI->syncTypeComboBox->setCurrentIndex(index);
