@@ -321,7 +321,7 @@ void Settings::loadPersonnal(Profile* profile)
 
     ps.beginGroup("Privacy");
         typingNotification = ps.value("typingNotification", true).toBool();
-        enableLogging = ps.value("enableLogging", true).toBool();
+        enableLogging = ps.value("enableLogging", false).toBool();
     ps.endGroup();
 }
 
