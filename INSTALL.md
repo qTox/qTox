@@ -74,7 +74,7 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 Fedora:
 ```bash
 yum groupinstall "Development Tools"
-yum install qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
+yum install qt-devel qt-doc qtsingleapplication qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
 ```
 
 Slackware:
@@ -106,8 +106,10 @@ sudo apt-get install libtool autotools-dev automake checkinstall check libopus-d
 
 Fedora:
 ```bash
-yum install libtool autoconf automake check check-devel
+yum install libtool autoconf automake check check-devel  ffmpeg-devel 
 ```
+
+Assuming you are  building ffmpeg from source per toxcore  Documentation.   you will need to compile in the -devel bits.
 
 Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
 The script will automatically download and install Tox Core and libsodium to "/home/user/qTox/libs":
