@@ -389,8 +389,11 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
         }
 
         Widget::getInstance()->searchCircle(circleWidget);
-        circleWidget->editName();
+
+        if (window()->isActiveWindow())
+            circleWidget->editName();
     }
+    reDraw();
 }
 
 void FriendListWidget::removeCircleWidget(CircleWidget* widget)
@@ -594,17 +597,6 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
             return;
         }
     }
-}
-
-QVector<CircleWidget*> FriendListWidget::getAllCircles()
-{
-    QVector<CircleWidget*> vec;
-    vec.reserve(circleLayout->getLayout()->count());
-    for (int i = 0; i < circleLayout->getLayout()->count(); ++i)
-    {
-        vec.push_back(dynamic_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget()));
-    }
-    return vec;
 }
 
 void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)

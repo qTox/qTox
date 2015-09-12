@@ -24,6 +24,7 @@
 #include "src/persistence/settings.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
+#include "src/widget/contentdialog.h"
 #include "widget.h"
 #include <QVariant>
 #include <QBoxLayout>
@@ -84,29 +85,66 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
     QMenu menu;
     QAction* renameAction = menu.addAction(tr("Rename circle", "Menu for renaming a circle"));
     QAction* removeAction = menu.addAction(tr("Remove circle", "Menu for removing a circle"));
+    QAction* openAction = nullptr;
+
+    if (friendOfflineLayout()->count() + friendOnlineLayout()->count() > 0)
+        openAction = menu.addAction(tr("Open all in new window"));
 
     QAction* selectedItem = menu.exec(mapToGlobal(event->pos()));
-    if (selectedItem == renameAction)
+
+    if (selectedItem)
     {
-        editName();
+        if (selectedItem == renameAction)
+        {
+            editName();
+        }
+        else if (selectedItem == removeAction)
+        {
+            FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
+            moveFriendWidgets(friendList);
+
+            friendList->removeCircleWidget(this);
+
+            int replacedCircle = Settings::getInstance().removeCircle(id);
+
+            auto circleReplace = circleList.find(replacedCircle);
+            if (circleReplace != circleList.end())
+                circleReplace.value()->updateID(id);
+            else
+                assert(true); // This should never happen.
+
+            circleList.remove(replacedCircle);
+        }
+        else if (selectedItem == openAction)
+        {
+            ContentDialog* dialog = Widget::getInstance()->createContentDialog();
+
+            for (int i = 0; i < friendOnlineLayout()->count(); ++i)
+            {
+                FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
+
+                if (friendWidget != nullptr)
+                {
+                    Friend* f = friendWidget->getFriend();
+                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                }
+            }
+            for (int i = 0; i < friendOfflineLayout()->count(); ++i)
+            {
+                FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
+
+                if (friendWidget != nullptr)
+                {
+                    Friend* f = friendWidget->getFriend();
+                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
+                }
+            }
+
+            dialog->show();
+            dialog->ensureSplitterVisible();
+        }
     }
-    else if (selectedItem == removeAction)
-    {
-        FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
-        moveFriendWidgets(friendList);
 
-        friendList->removeCircleWidget(this);
-
-        int replacedCircle = Settings::getInstance().removeCircle(id);
-
-        auto circleReplace = circleList.find(replacedCircle);
-        if (circleReplace != circleList.end())
-            circleReplace.value()->updateID(id);
-        else
-            assert(true); // This should never happen.
-
-        circleList.remove(replacedCircle);
-    }
     setContainerAttribute(Qt::WA_UnderMouse, false);
 }
 
@@ -181,14 +219,14 @@ void CircleWidget::updateID(int index)
 
     for (int i = 0; i < friendOnlineLayout()->count(); ++i)
     {
-        FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i));
+        FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
         if (friendWidget != nullptr)
             Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
     }
     for (int i = 0; i < friendOfflineLayout()->count(); ++i)
     {
-        FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i));
+        FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
         if (friendWidget != nullptr)
             Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);

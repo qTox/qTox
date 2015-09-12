@@ -51,6 +51,8 @@ class SettingsWidget;
 class AddFriendForm;
 class CircleWidget;
 class QActionGroup;
+class ContentLayout;
+class ContentDialog;
 
 class Widget final : public QMainWindow
 {
@@ -63,11 +65,25 @@ public:
     QString getUsername();
     Camera* getCamera();
     static Widget* getInstance();
-    void newMessageAlert(GenericChatroomWidget* chat);
-    bool isFriendWidgetCurActiveWidget(const Friend* f) const;
+    void addFriendDialog(Friend* frnd, ContentDialog* dialog);
+    void addGroupDialog(Group* group, ContentDialog* dialog);
+    bool newFriendMessageAlert(int friendId);
+    bool newGroupMessageAlert(int groupId, bool notify);
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
+
+    enum DialogType
+    {
+        AddDialog,
+        TransferDialog,
+        SettingDialog,
+        ProfileDialog
+    };
+
+    static QString fromDialogType(DialogType type);
+    ContentDialog* createContentDialog() const;
+    ContentLayout* createContentDialog(DialogType type);
 
     static void confirmExecutableOpen(const QFileInfo file);
 
@@ -87,6 +103,8 @@ public:
 
 public slots:
     void onSettingsClicked();
+    void onSeparateWindowClicked(bool separate);
+    void onSeparateWindowChanged(bool separate, bool clicked);
     void setWindowTitle(const QString& title);
     void forceShow();
     void onConnected();
@@ -129,6 +147,9 @@ signals:
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
     void resized();
+#ifdef Q_OS_MAC
+    void windowStateChanged(Qt::WindowStates states);
+#endif
 
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event) final override;
@@ -143,8 +164,8 @@ private slots:
     void onTransferClicked();
     void showProfile();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
+    void onChatroomWidgetClicked(GenericChatroomWidget *, bool group);
     void onStatusMessageChanged(const QString& newStatusMessage);
-    void onChatroomWidgetClicked(GenericChatroomWidget *);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
@@ -159,11 +180,6 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
-
-#ifdef Q_OS_MAC
-    void bringAllToFront();
-    void toggleFullscreen();
-#endif
 
 private:
     enum ActiveToolMenuButton {
@@ -184,8 +200,9 @@ private:
     };
 
 private:
+    bool newMessageAlert(QWidget* currentWindow, bool isActive, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
-    void hideMainForms();
+    void hideMainForms(GenericChatroomWidget* chatroomWidget);
     Group *createGroup(int groupId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
@@ -225,6 +242,7 @@ private:
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
+    ContentLayout* contentLayout;
     AddFriendForm *addFriendForm;
     ProfileForm *profileForm;
     SettingsWidget *settingsWidget;
@@ -243,7 +261,15 @@ private:
     bool wasMaximized = false;
 
 #ifdef Q_OS_MAC
-    QAction* fullscreenAction;
+    QAction* fileMenu;
+    QAction* editMenu;
+    QAction* contactMenu;
+    QMenu* changeStatusMenu;
+    QAction* editProfileAction;
+    QAction* logoutAction;
+    QAction* addContactAction;
+    QAction* nextConversationAction;
+    QAction* previousConversationAction;
 #endif
 };
 

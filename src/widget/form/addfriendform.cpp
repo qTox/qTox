@@ -22,9 +22,9 @@
 #include <QFont>
 #include <QMessageBox>
 #include <QErrorMessage>
+#include <QApplication>
 #include <QClipboard>
 #include <tox/tox.h>
-#include "ui_mainwindow.h"
 #include "src/nexus.h"
 #include "src/core/core.h"
 #include "src/core/cdata.h"
@@ -32,6 +32,8 @@
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
+#include <QWindow>
 
 AddFriendForm::AddFriendForm()
 {
@@ -66,10 +68,21 @@ AddFriendForm::~AddFriendForm()
     main->deleteLater();
 }
 
-void AddFriendForm::show(Ui::MainWindow &ui)
+bool AddFriendForm::isShown() const
 {
-    ui.mainContent->layout()->addWidget(main);
-    ui.mainHead->layout()->addWidget(head);
+    if (main->isVisible())
+    {
+        head->window()->windowHandle()->alert(0);
+        return true;
+    }
+
+    return false;
+}
+
+void AddFriendForm::show(ContentLayout* contentLayout)
+{
+    contentLayout->mainContent->layout()->addWidget(main);
+    contentLayout->mainHead->layout()->addWidget(head);
     main->show();
     head->show();
     setIdFromClipboard();

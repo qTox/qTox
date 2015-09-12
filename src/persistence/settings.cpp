@@ -174,6 +174,8 @@ void Settings::loadGlobal()
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
+        separateWindow = s.value("separateWindow", false).toBool();
+        dontGroupWindows = s.value("dontGroupWindows", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 
@@ -216,6 +218,9 @@ void Settings::loadGlobal()
         windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
         windowState = s.value("windowState", QByteArray()).toByteArray();
         splitterState = s.value("splitterState", QByteArray()).toByteArray();
+        dialogGeometry = s.value("dialogGeometry", QByteArray()).toByteArray();
+        dialogSplitterState = s.value("dialogSplitterState", QByteArray()).toByteArray();
+        dialogSettingsGeometry = s.value("dialogSettingsGeometry", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -375,6 +380,8 @@ void Settings::saveGlobal()
         s.setValue("notifySound", notifySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
+        s.setValue("separateWindow", separateWindow);
+        s.setValue("dontGroupWindows", dontGroupWindows);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
@@ -410,6 +417,9 @@ void Settings::saveGlobal()
         s.setValue("windowGeometry", windowGeometry);
         s.setValue("windowState", windowState);
         s.setValue("splitterState", splitterState);
+        s.setValue("dialogGeometry", dialogGeometry);
+        s.setValue("dialogSplitterState", dialogSplitterState);
+        s.setValue("dialogSettingsGeometry", dialogSettingsGeometry);
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -746,7 +756,7 @@ void Settings::setStatusChangeNotificationEnabled(bool newValue)
 bool Settings::getShowInFront() const
 {
     QMutexLocker locker{&bigLock};
-   return showInFront;
+    return showInFront;
 }
 
 void Settings::setShowInFront(bool newValue)
@@ -1090,6 +1100,42 @@ void Settings::setSplitterState(const QByteArray &value)
     splitterState = value;
 }
 
+QByteArray Settings::getDialogGeometry() const
+{
+    QMutexLocker locker{&bigLock};
+    return dialogGeometry;
+}
+
+void Settings::setDialogGeometry(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    dialogGeometry = value;
+}
+
+QByteArray Settings::getDialogSplitterState() const
+{
+    QMutexLocker locker{&bigLock};
+    return dialogSplitterState;
+}
+
+void Settings::setDialogSplitterState(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    dialogSplitterState = value;
+}
+
+QByteArray Settings::getDialogSettingsGeometry() const
+{
+    QMutexLocker locker{&bigLock};
+    return dialogSettingsGeometry;
+}
+
+void Settings::setDialogSettingsGeometry(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    dialogSettingsGeometry = value;
+}
+
 bool Settings::isMinimizeOnCloseEnabled() const
 {
     QMutexLocker locker{&bigLock};
@@ -1322,6 +1368,30 @@ void Settings::setCompactLayout(bool value)
 {
     QMutexLocker locker{&bigLock};
     compactLayout = value;
+}
+
+bool Settings::getSeparateWindow() const
+{
+    QMutexLocker locker{&bigLock};
+    return separateWindow;
+}
+
+void Settings::setSeparateWindow(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    separateWindow = value;
+}
+
+bool Settings::getDontGroupWindows() const
+{
+    QMutexLocker locker{&bigLock};
+    return dontGroupWindows;
+}
+
+void Settings::setDontGroupWindows(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    dontGroupWindows = value;
 }
 
 bool Settings::getGroupchatPosition() const

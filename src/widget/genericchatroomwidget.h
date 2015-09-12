@@ -26,10 +26,9 @@ class CroppingLabel;
 class MaskablePixmapWidget;
 class QVBoxLayout;
 class QHBoxLayout;
-
-namespace Ui {
-    class MainWindow;
-}
+class ContentLayout;
+class Friend;
+class Group;
 
 class GenericChatroomWidget : public GenericChatItemWidget
 {
@@ -40,9 +39,12 @@ public:
     virtual void setAsActiveChatroom() = 0;
     virtual void setAsInactiveChatroom() = 0;
     virtual void updateStatusLight() = 0;
-    virtual void setChatForm(Ui::MainWindow &) = 0;
+    virtual bool chatFormIsSet(bool focus) const = 0;
+    virtual void setChatForm(ContentLayout* contentLayout) = 0;
     virtual void resetEventFlags() = 0;
-    virtual QString getStatusString() = 0;
+    virtual QString getStatusString() const = 0;
+    virtual Friend* getFriend() const{return nullptr;}
+    virtual Group* getGroup() const{return nullptr;}
 
     virtual bool eventFilter(QObject *, QEvent *) final override;
 
@@ -52,6 +54,7 @@ public:
     void setName(const QString& name);
     void setStatusMsg(const QString& status);
     QString getStatusMsg() const;
+    QString getTitle() const;
 
 	void reloadTheme();
 
@@ -59,12 +62,14 @@ public slots:
 	void compactChange(bool compact);
 
 signals:
-    void chatroomWidgetClicked(GenericChatroomWidget* widget);
+    void chatroomWidgetClicked(GenericChatroomWidget* widget, bool group = false);
 
 protected:
     virtual void mouseReleaseEvent(QMouseEvent* event) override;
     virtual void enterEvent(QEvent* e) override;
     virtual void leaveEvent(QEvent* e) override;
+
+    QPoint dragStartPos;
 
 protected:
     QColor lastColor;

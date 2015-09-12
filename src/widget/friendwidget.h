@@ -32,9 +32,11 @@ public:
     virtual void setAsActiveChatroom() override;
     virtual void setAsInactiveChatroom() override;
     virtual void updateStatusLight() override;
-    virtual void setChatForm(Ui::MainWindow &) override;
+    virtual bool chatFormIsSet(bool focus) const override;
+    virtual void setChatForm(ContentLayout* contentLayout) override;
     virtual void resetEventFlags() override;
-    virtual QString getStatusString() override;
+    virtual QString getStatusString() const override;
+    virtual Friend* getFriend() const override;
     void search(const QString &searchString, bool hide = false);
 
 signals:
@@ -56,7 +58,6 @@ public:
     int friendId;
     bool isDefaultAvatar;
     bool historyLoaded;
-    QPoint dragStartPos;
 };
 
 #endif // FRIENDWIDGET_H
