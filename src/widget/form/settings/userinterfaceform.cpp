@@ -118,13 +118,18 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     bodyUI->themeColorCBox->setCurrentIndex(s.getThemeColor());
     bodyUI->emoticonSize->setValue(s.getEmojiFontPointSize());
 
-    QStringList timestamps;
-    for (QString timestamp : timeFormats)
-        timestamps << QString("%1 - %2").arg(timestamp, QTime::currentTime().toString(timestamp));
-
-    bodyUI->timestamp->addItems(timestamps);
-
     QLocale ql;
+    timeFormats << ql.timeFormat(QLocale::ShortFormat)
+                << ql.timeFormat(QLocale::LongFormat);
+    timeFormats.removeDuplicates();
+
+    for (QString format : timeFormats)
+    {
+        QString timeExample = QTime::currentTime().toString(format);
+        QString element = QString("%1 - %2").arg(format, timeExample);
+        bodyUI->timestamp->addItem(element, format);
+    }
+
     QStringList dateFormats;
     dateFormats << QStringLiteral("yyyy-MM-dd")             // ISO 8601
 
@@ -133,10 +138,6 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
                 << ql.dateFormat(QLocale::ShortFormat)
                 << ql.dateFormat(QLocale::NarrowFormat);
     dateFormats.removeDuplicates();
-
-    timeFormats.append(ql.timeFormat());
-    timeFormats.append(ql.timeFormat(QLocale::LongFormat));
-    timeFormats.removeDuplicates();
 
     for (QString format : dateFormats)
     {
@@ -176,7 +177,15 @@ void UserInterfaceForm::on_emoticonSize_editingFinished()
 
 void UserInterfaceForm::on_timestamp_currentIndexChanged(int index)
 {
-    Settings::getInstance().setTimestampFormat(timeFormats.at(index));
+    Q_UNUSED(index)
+    QString format = bodyUI->timestamp->currentData().toString();
+    Settings::getInstance().setTimestampFormat(format);
+    Translator::translate();
+}
+
+void UserInterfaceForm::on_timestamp_editTextChanged(const QString &format)
+{
+    Settings::getInstance().setTimestampFormat(format);
     Translator::translate();
 }
 

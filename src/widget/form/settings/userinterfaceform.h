@@ -40,6 +40,7 @@ private slots:
     void on_emoticonSize_editingFinished();
     void on_styleBrowser_currentIndexChanged(QString style);
     void on_timestamp_currentIndexChanged(int index);
+    void on_timestamp_editTextChanged(const QString& format);
     void on_dateFormats_currentIndexChanged();
     void on_dateFormats_editTextChanged();
     void on_textStyleComboBox_currentTextChanged();
