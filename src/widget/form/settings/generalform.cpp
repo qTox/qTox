@@ -111,13 +111,18 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
 
+    QLocale ql;
+
+    timeFormats << ql.timeFormat(QLocale::LongFormat)
+                << ql.timeFormat(QLocale::ShortFormat);
+    timeFormats.removeDuplicates();
+
     QStringList timestamps;
     for (QString timestamp : timeFormats)
         timestamps << QString("%1 - %2").arg(timestamp, QTime::currentTime().toString(timestamp));
 
     bodyUI->timestamp->addItems(timestamps);
 
-    QLocale ql;
     QStringList dateFormats;
     dateFormats << QStringLiteral("yyyy-MM-dd")             // ISO 8601
 
@@ -126,9 +131,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
                 << ql.dateFormat(QLocale::ShortFormat)
                 << ql.dateFormat(QLocale::NarrowFormat);
     dateFormats.removeDuplicates();
-    timeFormats.append(ql.timeFormat());
-    timeFormats.append(ql.timeFormat(QLocale::LongFormat));
-    timeFormats.removeDuplicates();
 
     for (QString format : dateFormats) {
         bodyUI->dateFormats->addItem(QString("%1 - %2").arg(format, QDate::currentDate().toString(format)),
