@@ -37,7 +37,7 @@ public:
     virtual QString getFormName() final override {return tr("Advanced");}
 
 protected:
-    bool eventFilter(QObject *o, QEvent *e);
+    bool eventFilter(QObject *o, QEvent *e) override;
 
 private slots:
     void onMakeToxPortableUpdated();

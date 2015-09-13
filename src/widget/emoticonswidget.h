@@ -39,16 +39,16 @@ private slots:
     void PageButtonsUpdate();
 
 protected:
-    virtual void mouseReleaseEvent(QMouseEvent *ev) final override;
-    virtual void mousePressEvent(QMouseEvent *ev) final override;
-    virtual void wheelEvent(QWheelEvent * event) final override;
+    void mouseReleaseEvent(QMouseEvent *ev) final override;
+    void mousePressEvent(QMouseEvent *ev) final override;
+    void wheelEvent(QWheelEvent * event) final override;
 
 private:
     QStackedWidget stack;
     QVBoxLayout layout;
 
 public:
-    virtual QSize sizeHint() const;
+    QSize sizeHint() const override;
 
 };
 

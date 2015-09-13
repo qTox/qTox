@@ -43,7 +43,7 @@ public:
     ScreenshotGrabber(QWidget* parent);
     ~ScreenshotGrabber() override;
 
-    bool eventFilter(QObject* object, QEvent* event);
+    bool eventFilter(QObject* object, QEvent* event) override;
 
 public slots:
 
