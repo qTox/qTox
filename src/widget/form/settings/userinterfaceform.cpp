@@ -52,9 +52,6 @@
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 
-// http://doc.qt.io/qt-4.8/qdate.html#fromString
-static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
-
 /**
  * @brief Constructor of UserInterfaceForm.
  * @param myParent Setting widget which will contain this form as tab.
@@ -128,18 +125,26 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     bodyUI->timestamp->addItems(timestamps);
 
     QLocale ql;
-    QStringList datestamps;
-    dateFormats.append(ql.dateFormat());
-    dateFormats.append(ql.dateFormat(QLocale::LongFormat));
+    QStringList dateFormats;
+    dateFormats << QStringLiteral("yyyy-MM-dd")             // ISO 8601
+
+                // format strings from system locale
+                << ql.dateFormat(QLocale::LongFormat)
+                << ql.dateFormat(QLocale::ShortFormat)
+                << ql.dateFormat(QLocale::NarrowFormat);
     dateFormats.removeDuplicates();
+
     timeFormats.append(ql.timeFormat());
     timeFormats.append(ql.timeFormat(QLocale::LongFormat));
     timeFormats.removeDuplicates();
 
-    for (QString datestamp : dateFormats)
-        datestamps << QString("%1 - %2").arg(datestamp, QDate::currentDate().toString(datestamp));
+    for (QString format : dateFormats)
+    {
+        QString dateExample = QDate::currentDate().toString(format);
+        QString element = QString("%1 - %2").arg(format, dateExample);
+        bodyUI->dateFormats->addItem(element, format);
+    }
 
-    bodyUI->dateFormats->addItems(datestamps);
     bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(s.getTimestampFormat(), QTime::currentTime().toString(s.getTimestampFormat())));
     bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(s.getDateFormat(), QDate::currentDate().toString(s.getDateFormat())));
 
@@ -175,9 +180,19 @@ void UserInterfaceForm::on_timestamp_currentIndexChanged(int index)
     Translator::translate();
 }
 
-void UserInterfaceForm::on_dateFormats_currentIndexChanged(int index)
+void UserInterfaceForm::on_dateFormats_currentIndexChanged()
 {
-    Settings::getInstance().setDateFormat(dateFormats.at(index));
+    QString format = bodyUI->dateFormats->currentData().toString();
+    qDebug() << format;
+    Settings::getInstance().setDateFormat(format);
+    Translator::translate();
+}
+
+void UserInterfaceForm::on_dateFormats_editTextChanged()
+{
+    QString format = bodyUI->dateFormats->currentText();
+    qDebug() << format;
+    Settings::getInstance().setDateFormat(format);
     Translator::translate();
 }
 
