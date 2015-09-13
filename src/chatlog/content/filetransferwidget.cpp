@@ -475,7 +475,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
             Core::getInstance()->pauseResumeFileRecv(fileInfo.friendId, fileInfo.fileNum);
         else if (btn->objectName() == "accept")
         {
-            QString path = QFileDialog::getSaveFileName(this,
+            QString path = QFileDialog::getSaveFileName(parentWidget(),
                                                         tr("Save a file", "Title of the file saving dialog"),
                                                         Settings::getInstance().getGlobalAutoAcceptDir() + "/" + fileInfo.fileName);
             acceptTransfer(path);
