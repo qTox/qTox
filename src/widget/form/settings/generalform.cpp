@@ -41,8 +41,6 @@ static QStringList locales = {"bg", "cs", "de", "en", "es", "fr", "hr", "hu", "i
 static QStringList langs = {"Български", "Čeština", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "Nederlands", "Norsk Bokmål", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
-// http://doc.qt.io/qt-4.8/qdate.html#fromString
-static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(QPixmap(":/img/settings/general.png"))
@@ -120,18 +118,27 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->timestamp->addItems(timestamps);
 
     QLocale ql;
-    QStringList datestamps;
-    dateFormats.append(ql.dateFormat());
-    dateFormats.append(ql.dateFormat(QLocale::LongFormat));
+    QStringList dateFormats;
+    dateFormats << QStringLiteral("yyyy-MM-dd")             // ISO 8601
+
+                // format strings from system locale
+                << ql.dateFormat(QLocale::LongFormat)
+                << ql.dateFormat(QLocale::ShortFormat)
+                << ql.dateFormat(QLocale::NarrowFormat);
     dateFormats.removeDuplicates();
     timeFormats.append(ql.timeFormat());
     timeFormats.append(ql.timeFormat(QLocale::LongFormat));
     timeFormats.removeDuplicates();
 
-    for (QString datestamp : dateFormats)
-        datestamps << QString("%1 - %2").arg(datestamp, QDate::currentDate().toString(datestamp));
+    for (QString format : dateFormats) {
+        bodyUI->dateFormats->addItem(QString("%1 - %2").arg(format, QDate::currentDate().toString(format)),
+                                     format
+                                     );
+    }
 
-    bodyUI->dateFormats->addItems(datestamps);
+    QLineEdit* dateEdit = bodyUI->dateFormats->lineEdit();
+    Q_ASSERT(dateEdit);
+    connect(dateEdit, &QLineEdit::editingFinished, this, &GeneralForm::onSaveDateFormat);
 
     bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(), QTime::currentTime().toString(Settings::getInstance().getTimestampFormat())));
 
@@ -172,7 +179,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->themeColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onThemeColorChanged(int)));
     connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));
     connect(bodyUI->timestamp, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimestampSelected(int)));
-    connect(bodyUI->dateFormats, SIGNAL(currentIndexChanged(int)), this, SLOT(onDateFormatSelected(int)));
+    connect(bodyUI->dateFormats, SIGNAL(currentIndexChanged(int)), this, SLOT(onSaveDateFormat()));
     //connection
     connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
     connect(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
@@ -282,9 +289,10 @@ void GeneralForm::onTimestampSelected(int index)
     Settings::getInstance().setTimestampFormat(timeFormats.at(index));
 }
 
-void GeneralForm::onDateFormatSelected(int index)
+void GeneralForm::onSaveDateFormat()
 {
-    Settings::getInstance().setDateFormat(dateFormats.at(index));
+    const QString format = bodyUI->dateFormats->currentData().toString();
+    Settings::getInstance().setDateFormat(format);
 }
 
 void GeneralForm::onAutoAwayChanged()

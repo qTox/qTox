@@ -557,7 +557,14 @@ will be sent to them when they appear online to you.</string>
              </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QComboBox" name="dateFormats"/>
+             <widget class="QComboBox" name="dateFormats">
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <property name="insertPolicy">
+               <enum>QComboBox::NoInsert</enum>
+              </property>
+             </widget>
             </item>
             <item row="1" column="0">
              <spacer name="horizontalSpacer_2">
