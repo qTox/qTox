@@ -44,7 +44,7 @@ const ToxDNS::tox3_server ToxDNS::pinnedServers[]
 void ToxDNS::showWarning(const QString &message)
 {
     QMessageBox warning;
-    warning.setWindowTitle("Tox");
+    warning.setWindowTitle("Tox DNS");
     warning.setText(message);
     warning.setIcon(QMessageBox::Warning);
     warning.exec();
@@ -179,7 +179,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     void* tox_dns3 = tox_dns3_new(server.pubkey);
     if (!tox_dns3)
     {
-        qWarning() << "failed to create a tox_dns3 object for "<<server.name<<", using tox1 as a fallback";
+        qWarning() << "failed to create a tox_dns3 object for "<<server.name<<", using toxdns1 as a fallback";
         goto fallbackOnTox1;
     }
     uint32_t request_id;
@@ -187,9 +187,9 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     dns_string_len = tox_generate_dns3_string(tox_dns3, dns_string, dns_string_maxlen, &request_id,
                              (uint8_t*)nameData.data(), nameData.size());
 
-    if (dns_string_len < 0) // We can always fallback on tox1 if toxdns3 fails
+    if (dns_string_len < 0) // We can always fallback on toxdns1 if toxdns3 fails
     {
-        qWarning() << "failed to generate dns3 string for "<<server.name<<", using tox1 as a fallback";
+        qWarning() << "failed to generate dns3 string for "<<server.name<<", using toxdns1 as a fallback";
         goto fallbackOnTox1;
     }
 
@@ -212,7 +212,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
             QString ver = entry.mid(verx, verend-verx);
             if (ver != "tox3")
             {
-                qWarning() << "Server "<<server.name<<" returned a bad version ("<<ver<<"), using tox1 as a fallback";
+                qWarning() << "Server "<<server.name<<" returned a bad version ("<<ver<<"), using toxdns1 as a fallback";
                 goto fallbackOnTox1;
             }
         }
@@ -222,7 +222,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     idx = entry.indexOf("id=");
     if (idx < 0)
     {
-        qWarning() << "Server "<<server.name<<" returned an empty id, using tox1 as a fallback";
+        qWarning() << "Server "<<server.name<<" returned an empty id, using toxdns1 as a fallback";
         goto fallbackOnTox1;
     }
 
@@ -230,9 +230,9 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     id = entry.mid(idx).toUtf8();
     uint8_t toxId[TOX_ADDRESS_SIZE];
     toxIdSize = tox_decrypt_dns3_TXT(tox_dns3, toxId, (uint8_t*)id.data(), id.size(), request_id);
-    if (toxIdSize < 0) // We can always fallback on tox1 if toxdns3 fails
+    if (toxIdSize < 0) // We can always fallback on toxdns1 if toxdns3 fails
     {
-        qWarning() << "Failed to decrypt dns3 reply for "<<server.name<<", using tox1 as a fallback";
+        qWarning() << "Failed to decrypt dns3 reply for "<<server.name<<", using toxdns1 as a fallback";
         goto fallbackOnTox1;
     }
 
@@ -240,7 +240,7 @@ QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool
     toxIdStr = CFriendAddress::toString(toxId);
     return toxIdStr;
 
-    // Centralized error handling, fallback on tox1 queries
+    // Centralized error handling, fallback on toxdns1 queries
 fallbackOnTox1:
     if (tox_dns3)
         tox_dns3_kill(tox_dns3);
@@ -250,10 +250,10 @@ fallbackOnTox1:
 #elif TOX1_ASK_FALLBACK
     QMessageBox::StandardButton btn =
         QMessageBox::warning(nullptr, "qTox",
-                             tr("It appears that qTox has to use the old protocol to access DNS record of your friend's Tox ID.\n"
-                                "Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.\n"
-                                "Should tox1 be used anyway?\n"
-                                "If unsure, press 'No', so that request to ToxDNS service will not be made using unsecure protocol."),
+                             tr("It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend's Tox ID.\n"
+                                "Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.\n"
+                                "Should toxdns1 be used anyway?\n"
+                                "If unsure press 'No', so that the request to the ToxDNS service will not be made using an insecure protocol."),
                                 QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
     if (btn == QMessageBox::Yes)
         queryTox1(record, silent);
@@ -277,7 +277,7 @@ ToxId ToxDNS::resolveToxAddress(const QString &address, bool silent)
     }
     else
     {
-        // If we're querying one of our pinned server, do a tox3 request directly
+        // If we're querying one of our pinned server, do a toxdns3 request directly
         QString servname = address.mid(address.indexOf('@')+1);
         for (const ToxDNS::tox3_server& pin : ToxDNS::pinnedServers)
         {
@@ -288,7 +288,7 @@ ToxId ToxDNS::resolveToxAddress(const QString &address, bool silent)
             }
         }
 
-        // Otherwise try tox3 if we can get a pubkey or fallback to tox1
+        // Otherwise try toxdns3 if we can get a pubkey or fallback to toxdns1
         QByteArray pubkey = fetchLastTextRecord("_tox."+servname, true);
         if (!pubkey.isEmpty())
         {
@@ -307,10 +307,10 @@ ToxId ToxDNS::resolveToxAddress(const QString &address, bool silent)
 #elif TOX1_ASK_FALLBACK
             QMessageBox::StandardButton btn =
                 QMessageBox::warning(nullptr, "qTox",
-                                     tr("It appears that qTox has to use the old protocol to access DNS record of your friend's Tox ID.\n"
-                                     "Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.\n"
-                                     "Should tox1 be used anyway?\n"
-                                     "If unsure, press 'No', so that request to ToxDNS service will not be made using unsecure protocol."),
+                                     tr("It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend's Tox ID.\n"
+                                        "Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.\n"
+                                        "Should toxdns1 be used anyway?\n"
+                                        "If unsure press 'No', so that the request to the ToxDNS service will not be made using an insecure protocol."),
                                      QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
             if (btn == QMessageBox::Ok)
                 toxId = ToxId(queryTox1(address, silent));
