@@ -151,7 +151,7 @@ The following steps assumes that you cloned the repository at "/home/user/qTox".
 
 
 <a name="other-deps" />
-### GCC, Qt, FFmpeg, OpanAL Soft and qrencode ffmpeg-devel
+### GCC, Qt, FFmpeg, OpanAL Soft and qrencode
 
 <a name="arch-other-deps" />
 #### Arch Linux:
@@ -183,7 +183,7 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 #### Fedora:
 ```bash
 sudo dnf group install "Development Tools"
-sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel qtsingleapplication  ffmpeg-devel
+sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel qtsingleapplication ffmpeg-devel
 ```
 
 <a name="opensuse-other-deps" />
