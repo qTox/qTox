@@ -39,10 +39,10 @@ public:
     ChatLineContentProxy(QWidget* widget, int minWidth, float widthInPercent = 1.0f);
     ChatLineContentProxy(FileTransferWidget* widget, int minWidth, float widthInPercent = 1.0f);
 
-    virtual QRectF boundingRect() const;
-    virtual void setWidth(qreal width);
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    virtual qreal getAscent() const;
+    QRectF boundingRect() const override;
+    void setWidth(qreal width) override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    qreal getAscent() const override;
 
     QWidget* getWidget() const;
     ChatLineContentProxyType getWidgetType() const;
