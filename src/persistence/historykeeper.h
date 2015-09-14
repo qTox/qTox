@@ -35,8 +35,8 @@ public:
 
     struct HistMessage
     {
-        HistMessage(qint64 id, QString chat, QString sender, QString message, QDateTime timestamp, bool isSent) :
-            id(id), chat(chat), sender(sender), message(message), timestamp(timestamp), isSent(isSent) {}
+        HistMessage(qint64 id, QString chat, QString sender, QString message, QDateTime timestamp, bool isSent, QString dispName) :
+            id(id), chat(chat), sender(sender), message(message), timestamp(timestamp), isSent(isSent), dispName(dispName) {}
 
         qint64 id;
         QString chat;
@@ -44,6 +44,7 @@ public:
         QString message;
         QDateTime timestamp;
         bool isSent;
+        QString dispName;
     };
 
     virtual ~HistoryKeeper();
@@ -59,7 +60,7 @@ public:
     static QList<HistMessage> exportMessagesDeleteFile(int encrypted = -1);
 
     void removeFriendHistory(const QString& chat);
-    qint64 addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent);
+    qint64 addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName);
     qint64 addGroupChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt);
     QList<HistMessage> getChatHistory(ChatType ct, const QString &chat, const QDateTime &time_from, const QDateTime &time_to);
     void markAsSent(int m_id);
@@ -81,7 +82,7 @@ private:
     int getAliasID(const QString &id_str);
     QString wrapMessage(const QString &str);
     QString unWrapMessage(const QString &str);
-    QList<QString> generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent);
+    QList<QString> generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName);
 
     ChatType convertToChatType(int);
 
