@@ -129,9 +129,9 @@ void GenericChatroomWidget::setActive(bool _active)
     }
 }
 
-void GenericChatroomWidget::setName(const QString &name)
+void GenericChatroomWidget::setName(const QString &name, const QString &minor_name)
 {
-    nameLabel->setText(name);
+    nameLabel->setText(minor_name == "" ? name : (name + " | " + minor_name));
 }
 
 void GenericChatroomWidget::setStatusMsg(const QString &status)

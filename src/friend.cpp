@@ -60,27 +60,24 @@ void Friend::setName(QString name)
 {
     userName = name;
     if (userAlias.size() == 0)
-    {
-        widget->setName(name);
-        chatForm->setName(name);
-
-        if (widget->isActive())
-            GUI::setWindowTitle(name);
-
+    {   setAlias(name); }
+    else
+    {   widget->setName(userAlias, userAlias == userName ? "" : userName);
         emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
     }
 }
 
 void Friend::setAlias(QString name)
 {
+    if( name == "" )
+    {   name = userName; }
     userAlias = name;
-    QString dispName = userAlias.size() == 0 ? userName : userAlias;
+    widget->setName(userAlias, userAlias == userName ? "" : userName);
 
-    widget->setName(dispName);
-    chatForm->setName(dispName);
+    chatForm->setName(userAlias);
 
     if (widget->isActive())
-            GUI::setWindowTitle(dispName);
+        GUI::setWindowTitle(userAlias);
 
     emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
 }

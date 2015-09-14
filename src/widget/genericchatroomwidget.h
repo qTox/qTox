@@ -51,7 +51,7 @@ public:
     bool isActive();
     void setActive(bool active);
 
-    void setName(const QString& name);
+    void setName(const QString &name, const QString &minor_name="");
     void setStatusMsg(const QString& status);
     QString getStatusMsg() const;
     QString getTitle() const;
