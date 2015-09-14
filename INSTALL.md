@@ -183,7 +183,7 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 #### Fedora:
 ```bash
 sudo dnf group install "Development Tools"
-sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel
+sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel ffmpeg-devel qtsingleapplication
 ```
 
 <a name="opensuse-other-deps" />
