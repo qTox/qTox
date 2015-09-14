@@ -76,7 +76,7 @@ void Group::updatePeer(int peerId, QString name)
     peers[peerId] = name;
     toxids[toxid] = name;
     Friend *f = FriendList::findFriend(id);
-    if (f)
+    if (f && f->hasAlias())
     {
         peers[peerId] = f->getDisplayedName();
         toxids[toxid] = f->getDisplayedName();

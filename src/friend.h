@@ -43,6 +43,7 @@ public:
     void setName(QString name);
     void setAlias(QString name);
     QString getDisplayedName() const;
+    bool hasAlias() const;
 
     void setStatusMessage(QString message);
 

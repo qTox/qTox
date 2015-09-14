@@ -99,6 +99,11 @@ QString Friend::getDisplayedName() const
     return userAlias;
 }
 
+bool Friend::hasAlias() const
+{
+    return !userAlias.isEmpty();
+}
+
 const ToxId &Friend::getToxId() const
 {
     return userID;
