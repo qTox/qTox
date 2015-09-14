@@ -67,7 +67,6 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
 
     QMenu menu(this);
 
-    QAction* openChat = menu.addAction(tr("Open chat"));
     QAction* openChatWindow = nullptr;
     QAction* removeChatWindow = nullptr;
 
@@ -97,11 +96,6 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
         if (selectedItem == quitGroup)
         {
             emit removeGroup(groupId);
-        }
-        else if (selectedItem == openChat)
-        {
-            emit chatroomWidgetClicked(this);
-            return;
         }
         else if (selectedItem == openChatWindow)
         {

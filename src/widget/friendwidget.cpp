@@ -68,7 +68,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     ToxId id = FriendList::findFriend(friendId)->getToxId();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
-    QAction* openChat = menu.addAction(tr("Open chat"));
     QAction* openChatWindow = nullptr;
     QAction* removeChatWindow = nullptr;
 
@@ -172,11 +171,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         else if (selectedItem == removeFriendAction)
         {
             emit removeFriend(friendId);
-            return;
-        }
-        else if (selectedItem == openChat)
-        {
-            emit chatroomWidgetClicked(this);
             return;
         }
         else if (selectedItem == openChatWindow)
