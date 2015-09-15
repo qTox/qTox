@@ -137,7 +137,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 
     circleMenu->addActions(circleActionList);
 
-    QAction* copyId = menu.addAction(tr("Copy friend ID","Menu to copy the Tox ID of that friend"));
     QAction* setAlias = menu.addAction(tr("Set alias..."));
 
     menu.addSeparator();
@@ -160,11 +159,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 
     if (selectedItem)
     {
-        if (selectedItem == copyId)
-        {
-            emit copyFriendIdToClipboard(friendId);
-            return;
-        } else if (selectedItem == setAlias)
+        if (selectedItem == setAlias)
         {
             nameLabel->editBegin();
         }
