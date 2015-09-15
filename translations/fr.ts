@@ -764,7 +764,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <location filename="../src/widget/form/filesform.cpp" line="103"/>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Fichiers transferés</translation>
+        <translation>Fichiers transférés</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="104"/>
