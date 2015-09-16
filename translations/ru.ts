@@ -270,17 +270,17 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
         <source>Synchronized - safe (recommended)</source>
-        <translation type="unfinished">Синхроннизованная - безопасно (рекомендуется)</translation>
+        <translation>Синхроннизованная — безопасно (рекомендуется)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
         <source>Partially async - risky (20% faster)</source>
-        <translation type="unfinished">Частично асинхронная - рисковано (на 20% быстрее)</translation>
+        <translation>Частично асинхронная — рисковано (на 20% быстрее)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
         <source>Asynchronous - dangerous (fastest)</source>
-        <translation type="unfinished">Асинхронная - опасно (быстрее всего)</translation>
+        <translation>Асинхронная — опасно (быстрее всего)</translation>
     </message>
 </context>
 <context>
@@ -868,12 +868,12 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="78"/>
         <source>Open chat in new window</source>
-        <translation>Открыть диалог в новом окне</translation>
+        <translation>Перенести разговор в новое окно</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="81"/>
         <source>Remove chat from this window</source>
-        <translation>Исключить диалог из этого окна</translation>
+        <translation>Исключить разговор из этого окна</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="111"/>
@@ -1031,7 +1031,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="400"/>
         <source>Place groupchats at top of friend list</source>
-        <translation>Поместить групповые чаты вверху контакт-листа</translation>
+        <translation>Поместить групповые беседы вверху контакт-листа</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="411"/>
@@ -1145,6 +1145,16 @@ instead of system taskbar.</source>
         <translation>Активизировать окно</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
+        <source>Multiple windows mode</source>
+        <translation>Многооконный режим</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="390"/>
+        <source>Open each chat in an individual window</source>
+        <translation>Открывать каждый разговор в отдельном окне</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="418"/>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
@@ -1227,20 +1237,10 @@ instead of system taskbar.</source>
         <translation>Открыть окно</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
-        <source>Open chats in separate window.</source>
-        <translation>Открывать диалоги в отдельных окнах</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="390"/>
-        <source>Don&apos;t group chat windows.</source>
-        <translation>Не группировать окна диалогов</translation>
-    </message>
-    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Если отмечено, групповые чаты будут размещаться вверху списка контактов, выше списка друзей в сети.</translation>
+        <translation>Если отмечено, групповые беседы будут размещаться вверху списка контактов, выше списка друзей в сети.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="407"/>
@@ -1441,12 +1441,12 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="77"/>
         <source>Open chat in new window</source>
-        <translation>Открыть диалог в новом окне</translation>
+        <translation>Перенести разговор в новое окно</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="80"/>
         <source>Remove chat from this window</source>
-        <translation>Исключить диалог из этого окна</translation>
+        <translation>Исключить разговор из этого окна</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="85"/>
@@ -2331,7 +2331,7 @@ It will be installed when qTox restarts.</source>
 Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.
 Should toxdns1 be used anyway?
 If unsure press &apos;No&apos;, so that the request to the ToxDNS service will not be made using an insecure protocol.</source>
-        <translation type="unfinished">Похоже, что qTox использует старый tox1 протокол, для доступа к DNS записи Tox ID вашего друга.
+        <translation>Похоже, что qTox использует старый tox1 протокол, для доступа к DNS записи Tox ID вашего друга.
 К сожалению, tox1 не безопасен, и ваш аккаунт может быть угнан кем-то между вами и ToxDNS сервисом.
 Всё равно продолжить использование tox1?
 Если вы не уверены, нажмите «Нет», тогда запрос к ToxDNS не будет отправлен с использованием незащищенного протокола.</translation>
