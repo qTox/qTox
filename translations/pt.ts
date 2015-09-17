@@ -49,7 +49,7 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="67"/>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Deslize para ajustar os volume dos seus auto-falantes.</translation>
+        <translation>Deslize para ajustar o volume dos seus auto-falantes.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
@@ -685,7 +685,7 @@ Deve-se ignorar as configurações de proxy e conectar diretamente à internet? 
     </message>
     <message>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
-        <translation type="vanished">O arquivo .tox é criptografado, mas a critpografia não foi verificada, continuando mesmo assim.</translation>
+        <translation type="vanished">O arquivo .tox está criptografado, mas a critpografia não foi selecionada, continuando mesmo assim.</translation>
     </message>
     <message>
         <source>Please enter the password for the %1 profile.</source>
@@ -1618,11 +1618,11 @@ qTox&apos;s restart needed.</source>
     </message>
     <message>
         <source>Audio call: RED means you&apos;re on a call</source>
-        <translation type="vanished">Chamada e áudio: VERMELHO significa que você está em uma chamada</translation>
+        <translation type="vanished">Chamada e áudio: VERMELHO significa que você está numa chamada</translation>
     </message>
     <message>
         <source>Video call: RED means you&apos;re on a call</source>
-        <translation type="vanished">Chamada e vídeo: VERMELHO significa que você está em uma chamada</translation>
+        <translation type="vanished">Chamada e vídeo: VERMELHO significa que você está numa chamada</translation>
     </message>
     <message>
         <source>Toggle speakers volume: RED is OFF</source>

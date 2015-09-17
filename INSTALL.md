@@ -125,7 +125,7 @@ sudo pacman -S --needed git
 sudo apt-get install git
 ```
 
-<a name="fedore-git" />
+<a name="fedora-git" />
 #### Fedora:
 *`yum` is now officially deprecated by `dnf`. using `yum` will redirect to `dnf` on Fedora 21 and fail on future versions.*
 ```bash
