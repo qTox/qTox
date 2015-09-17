@@ -460,7 +460,7 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="366"/>
         <source>%1 stopped calling</source>
-        <translation>%1 a arreté l&apos;appel</translation>
+        <translation>%1 a arrêté l&apos;appel</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="403"/>
@@ -882,49 +882,48 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Déplacer vers le cercle « %1 »</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="140"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
-        <translation>Copier l&apos;ID du contact</translation>
+        <translation type="vanished">Copier l&apos;ID du contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="141"/>
+        <location filename="../src/widget/friendwidget.cpp" line="140"/>
         <source>Set alias...</source>
         <translation>Utiliser un alias...</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="144"/>
+        <location filename="../src/widget/friendwidget.cpp" line="143"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>Automatiquement accepter les fichiers de ce contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="315"/>
+        <location filename="../src/widget/friendwidget.cpp" line="310"/>
         <source>New message</source>
         <translation>Nouveau message</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="317"/>
+        <location filename="../src/widget/friendwidget.cpp" line="312"/>
         <source>Online</source>
         <translation>Connecté</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="319"/>
+        <location filename="../src/widget/friendwidget.cpp" line="314"/>
         <source>Away</source>
         <translation>Absent</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="321"/>
+        <location filename="../src/widget/friendwidget.cpp" line="316"/>
         <source>Busy</source>
         <translation>Occupé</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="323"/>
+        <location filename="../src/widget/friendwidget.cpp" line="318"/>
         <source>Offline</source>
         <translation>Hors ligne</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="199"/>
+        <location filename="../src/widget/friendwidget.cpp" line="194"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Choisir un dossier de téléchargement</translation>
@@ -940,7 +939,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Retirer la discussion de cette fenêtre</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="152"/>
+        <location filename="../src/widget/friendwidget.cpp" line="151"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Supprimer ce contact</translation>
@@ -1063,13 +1062,13 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
-        <source>Open chats in separate window.</source>
-        <translation>Ouvrir les discussions dans des fenêtres séparées.</translation>
+        <source>Multiple windows mode</source>
+        <translation>Mode fenêtres multiples</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="390"/>
-        <source>Don&apos;t group chat windows.</source>
-        <translation type="unfinished">Ne pas ouvrir les groupes dans des fenêtres séparées.</translation>
+        <source>Open each chat in an individual window</source>
+        <translation>Ouvrir chaque discussion dans une fenêtre séparée</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
