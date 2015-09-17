@@ -90,7 +90,7 @@ ATTENTION: la barre n&apos;est pas censée fonctionner pour le moment.</translat
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="94"/>
         <source>Rescan audio devices</source>
-        <translation>Redetecter le matériel audio</translation>
+        <translation>Redétecter le matériel audio</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="57"/>
@@ -316,7 +316,7 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="61"/>
         <source>Reset to default settings</source>
-        <translation>Retour aux options par default</translation>
+        <translation>Retour aux options par défaut</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="68"/>
@@ -2150,7 +2150,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <location filename="../src/widget/style.cpp" line="74"/>
         <source>Default</source>
-        <translation>Defaut</translation>
+        <translation>Défaut</translation>
     </message>
     <message>
         <location filename="../src/widget/style.cpp" line="74"/>
