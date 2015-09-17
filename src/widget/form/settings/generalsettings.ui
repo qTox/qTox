@@ -377,7 +377,7 @@ instead of system taskbar.</string>
           <item>
            <widget class="QCheckBox" name="cbSeparateWindow">
             <property name="text">
-             <string>Open chats in separate window.</string>
+             <string>Multiple windows mode</string>
             </property>
            </widget>
           </item>
@@ -387,7 +387,7 @@ instead of system taskbar.</string>
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>Don't group chat windows.</string>
+             <string>Open each chat in an individual window</string>
             </property>
            </widget>
           </item>
