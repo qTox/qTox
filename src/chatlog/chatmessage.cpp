@@ -177,38 +177,43 @@ void ChatMessage::hideDate()
 
 QString ChatMessage::detectAnchors(const QString &str)
 {
-    QString out = str;
+    QString out;
 
     // detect URIs
     QRegExp exp("("
-                "(?:\\b)(www\\.|http[s]?|ftp)://" // (protocol)://(printable - non-special character)
+                "(?:\\b)((www\\.)|(http[s]?|ftp)://)" // (protocol)://(printable - non-special character)
                 // http://ONEORMOREALHPA-DIGIT
                 "\\w+\\S+)" // any other character, lets domains and other
-                "|(^tox:[@\\w]+$)"); // starts with `tox` then : and only alpha-digits till the end
+                "|(?:\\b)(file:///.*$)" //link to a local file, valid until the end of the line
+                "|(?:\\b)(tox:[a-zA-Z\\d]{76}$)" //link with full user address
+                "|(?:\\b)(tox:\\S+@\\S+)"); // starts with `tox` then : and only alpha-digits till the end
                 // also accepts tox:agilob@net as simplified TOX ID
-    int offset = 0;
-    while ((offset = exp.indexIn(out, offset)) != -1)
+    //support for multi-line text
+    QStringList messageLines = str.split("\n");
+    QStringList outLines;
+    for (int i = 0; i < messageLines.size(); ++i)
     {
-        QString url = exp.cap();
-
-        // If there's a trailing " it's a HTML attribute, e.g. a smiley img's title=":tox:"
-        if (url == "tox:\"")
+        out = messageLines.at(i);
+        int offset = 0;
+        while ((offset = exp.indexIn(out, offset)) != -1)
         {
-            offset += url.length();
-            continue;
+            QString url = exp.cap();
+            // If there's a trailing " it's a HTML attribute, e.g. a smiley img's title=":tox:"
+            if (url == "tox:\"")
+            {
+                offset += url.length();
+                continue;
+            }
+            // add scheme if not specified
+            if (exp.cap(2) == "www.")
+                url.prepend("http://");
+            QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
+            out.replace(offset, exp.cap().length(), htmledUrl);
+            offset += htmledUrl.length();
         }
-
-        // add scheme if not specified
-        if (exp.cap(1) == "www.")
-            url.prepend("http://");
-
-        QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
-        out.replace(offset, exp.cap().length(), htmledUrl);
-
-        offset += htmledUrl.length();
+        outLines.push_back(out);
     }
-
-    return out;
+    return outLines.join("\n");
 }
 
 QString ChatMessage::detectQuotes(const QString& str, MessageType type)
