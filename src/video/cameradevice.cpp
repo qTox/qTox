@@ -250,7 +250,7 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
 {
     QVector<QPair<QString, QString>> devices;
 
-    devices.append({"none", "None"});
+    devices.append({"none", QObject::tr("None", "No camera device set")});
 
     if (!getDefaultInputFormat())
             return devices;
@@ -266,9 +266,9 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     if (idesktopFormat)
     {
         if (idesktopFormat->name == QString("x11grab"))
-            devices.push_back(QPair<QString,QString>{"x11grab#:0", "Desktop"});
+            devices.push_back(QPair<QString,QString>{"x11grab#:0", QObject::tr("Desktop", "Desktop as a camera input for screen sharing")});
         if (idesktopFormat->name == QString("gdigrab"))
-            devices.push_back(QPair<QString,QString>{"gdigrab#desktop", "Desktop"});
+            devices.push_back(QPair<QString,QString>{"gdigrab#desktop", QObject::tr("Desktop", "Desktop as a camera input for screen sharing")});
     }
 
     return devices;
