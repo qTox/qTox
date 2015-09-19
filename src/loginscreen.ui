@@ -784,7 +784,7 @@ margin-bottom:5px;</string>
             <string>If the profile does not have a password, qTox can skip the login screen</string>
            </property>
            <property name="text">
-            <string>Login automatically</string>
+            <string>Load automatically</string>
            </property>
           </widget>
          </item>
@@ -1006,7 +1006,7 @@ color:white;
 background-color:#6cc865;</string>
              </property>
              <property name="text">
-              <string>Login</string>
+              <string>Load</string>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -1121,7 +1121,7 @@ color:white;</string>
 color:white;</string>
    </property>
    <property name="text">
-    <string>Login</string>
+    <string>Load Profile</string>
    </property>
    <property name="flat">
     <bool>true</bool>
