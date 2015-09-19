@@ -882,11 +882,6 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Déplacer vers le cercle « %1 »</translation>
     </message>
     <message>
-        <source>Copy friend ID</source>
-        <comment>Menu to copy the Tox ID of that friend</comment>
-        <translation type="vanished">Copier l&apos;ID du contact</translation>
-    </message>
-    <message>
         <location filename="../src/widget/friendwidget.cpp" line="140"/>
         <source>Set alias...</source>
         <translation>Utiliser un alias...</translation>
@@ -1646,14 +1641,18 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="787"/>
-        <source>Login automatically</source>
-        <translation>Connexion automatique</translation>
+        <source>Load automatically</source>
+        <translation>Charger automatiquement</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="1009"/>
+        <source>Load</source>
+        <translation>Charger</translation>
+    </message>
+    <message>
         <location filename="../src/loginscreen.ui" line="1124"/>
-        <source>Login</source>
-        <translation>Connexion</translation>
+        <source>Load Profile</source>
+        <translation>Charger un profil</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="1098"/>
@@ -1774,14 +1773,6 @@ Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translati
 </context>
 <context>
     <name>Nexus</name>
-    <message>
-        <source>Window</source>
-        <translation type="vanished">Fenêtre</translation>
-    </message>
-    <message>
-        <source>Minimize</source>
-        <translation type="vanished">Minimiser</translation>
-    </message>
     <message>
         <location filename="../src/nexus.cpp" line="291"/>
         <source>Images (%1)</source>
@@ -2420,10 +2411,6 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupé</translation>
-    </message>
-    <message>
-        <source>Toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation type="vanished">ToxCore n&apos;as pas pu démarrer correctement, l&apos;application va s&apos;arrêter quand vous fermerez cette alerte.</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="528"/>
