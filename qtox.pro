@@ -148,7 +148,7 @@ win32 {
     }
 } else {
     macx {
-        BUNDLEID = im.tox.qtox
+        BUNDLEID = chat.tox.qtox
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7

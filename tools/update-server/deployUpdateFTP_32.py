@@ -8,7 +8,7 @@ import os
 
 target = 'win32'
 prefix = '/qtox/'+target+'/'
-uploadcmd1 = "bash -c '"+'ftp -n tux3-dev.tox.im 0<<<"`echo -ne "user qtox-win-update-upload INSERT-PASSWORD-HERE\ncd '+target+'\nsend '
+uploadcmd1 = "bash -c '"+'ftp -n tux3-dev.tox.chat 0<<<"`echo -ne "user qtox-win-update-upload INSERT-PASSWORD-HERE\ncd '+target+'\nsend '
 uploadcmd2 = '\n"`"'+"'"
 
 def upload(file, rfile):
