@@ -47,8 +47,9 @@ ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
 
 void ScreenshotGrabber::reInit()
 {
+    delete scene;
     scene = new QGraphicsScene;
-    window = new QGraphicsView (scene); // Top-level widget
+    window = new QGraphicsView(scene); // Top-level widget
     setupWindow();
     setupScene(scene);
     showGrabber();
@@ -89,7 +90,7 @@ bool ScreenshotGrabber::handleKeyPress(QKeyEvent* event)
     {
         Widget *Widget = Widget::getInstance();
         blocked = true;
-        if ( Widget->isVisible())
+        if (Widget->isVisible())
             Widget->setVisible(false);
         else
             Widget->setVisible(true);
@@ -115,6 +116,7 @@ void ScreenshotGrabber::acceptRegion()
     qDebug() << "Screenshot accepted, chosen region" << rect;
     emit screenshotTaken(this->screenGrab.copy(rect));
     this->window->close();
+    Widget::getInstance()->setVisible(true); // show window if it was hidden
 }
 
 void ScreenshotGrabber::setupWindow()
@@ -170,7 +172,6 @@ void ScreenshotGrabber::chooseHelperTooltipText(QRect rect)
         useNothingSelectedTooltip();
     else
         useRegionSelectedTooltip();
-
 }
 
 void ScreenshotGrabber::adjustTooltipPosition()
@@ -181,14 +182,13 @@ void ScreenshotGrabber::adjustTooltipPosition()
     // Align the toolbox center-top.
     helperToolbox->setX(screenRect.x() + (screenRect.width() - size.width() + size.x()) / 2);
     helperToolbox->setY(screenRect.y());
-
 }
 
 void ScreenshotGrabber::reject()
 {
     qDebug() << "Rejected screenshot";
     this->window->close();
-
+    Widget::getInstance()->setVisible(true); // show window if it was hidden
 }
 
 QRect ScreenshotGrabber::getSystemScreenRect()
