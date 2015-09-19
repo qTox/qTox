@@ -1429,14 +1429,10 @@ au lieu de se fermer.</translation>
         <translation>Mettre fin à l&apos;appel audio</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="167"/>
         <location filename="../src/widget/form/groupchatform.cpp" line="370"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>%1 personnes</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="167"/>
-        <source>%1 users in chat</source>
         <translation>%1 personnes</translation>
     </message>
 </context>
@@ -2191,6 +2187,19 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="382"/>
         <source>User Profile</source>
         <translation>Profil utilisateur</translation>
+    </message>
+    <message>
+        <location filename="../src/video/cameradevice.cpp" line="253"/>
+        <source>None</source>
+        <comment>No camera device set</comment>
+        <translation>Aucune</translation>
+    </message>
+    <message>
+        <location filename="../src/video/cameradevice.cpp" line="269"/>
+        <location filename="../src/video/cameradevice.cpp" line="271"/>
+        <source>Desktop</source>
+        <comment>Desktop as a camera input for screen sharing</comment>
+        <translation>Bureau</translation>
     </message>
 </context>
 <context>
