@@ -29,7 +29,7 @@ ToolBoxGraphicsItem::ToolBoxGraphicsItem()
     this->opacityAnimation->setKeyValueAt(1, this->activeOpacity);
     this->opacityAnimation->setDuration(this->fadeTimeMs);
 
-    setOpacity(this->idleOpacity);
+    setOpacity(this->activeOpacity);
 }
 
 ToolBoxGraphicsItem::~ToolBoxGraphicsItem()
@@ -39,13 +39,13 @@ ToolBoxGraphicsItem::~ToolBoxGraphicsItem()
 
 void ToolBoxGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-    startAnimation(QAbstractAnimation::Forward);
+    startAnimation(QAbstractAnimation::Backward);
     QGraphicsItemGroup::hoverEnterEvent(event);
 }
 
 void ToolBoxGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
-    startAnimation(QAbstractAnimation::Backward);
+    startAnimation(QAbstractAnimation::Forward);
     QGraphicsItemGroup::hoverLeaveEvent(event);
 }
 
