@@ -9,6 +9,8 @@ RemoveFriendDialog::RemoveFriendDialog(QWidget *parent, const Friend *f)
     setAttribute(Qt::WA_QuitOnClose, false);
     ui.setupUi(this);
     ui.label->setText(ui.label->text().replace("&lt;name&gt;", f->getDisplayedName()));
+    auto removeButton = ui.buttonBox->button(QDialogButtonBox::Ok);
+    removeButton->setText(tr("Remove"));
     adjustSize();
     connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &RemoveFriendDialog::onAccepted);
     connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &RemoveFriendDialog::close);
