@@ -46,7 +46,7 @@
 #include <QPushButton>
 
 GenericChatForm::GenericChatForm(QWidget *parent)
-  : QWidget(parent)
+  : QWidget(parent, Qt::Window)
   , audioInputFlag(false)
   , audioOutputFlag(false)
 {

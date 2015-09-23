@@ -32,7 +32,7 @@
 #include <QWindow>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
-    : QWidget(parent)
+    : QWidget(parent, Qt::Window)
 {
     body = new QWidget();
     QVBoxLayout* bodyLayout = new QVBoxLayout();
