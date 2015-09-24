@@ -94,7 +94,6 @@ SystemTrayIcon::SystemTrayIcon()
         g_signal_connect(gtkIcon, "button-release-event", G_CALLBACK(callbackButtonClick), this);
     }
     #endif
-    #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     else if (desktop == "kde" && getenv("KDE_SESSION_VERSION") == QString("5"))
     {
         qDebug() << "Using the Qt backend";
@@ -102,7 +101,6 @@ SystemTrayIcon::SystemTrayIcon()
         backendType = SystrayBackendType::Qt;
         connect(qtIcon, &QSystemTrayIcon::activated, this, &SystemTrayIcon::activated);
     }
-    #endif
     else if (desktop == "kde"
              && getenv("KDE_SESSION_VERSION") == QString("5"))
     {
