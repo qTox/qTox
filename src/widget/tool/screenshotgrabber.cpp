@@ -208,10 +208,11 @@ void ScreenshotGrabber::adjustWindowSize()
 
 QPixmap ScreenshotGrabber::grabScreen()
 {
-    QRect systemScreenRect = getSystemScreenRect();
-    return QApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId(),0,0,
-                                                       systemScreenRect.width(),
-                                                       systemScreenRect.height());
+    QScreen* screen = QApplication::primaryScreen();
+    if (screen)
+        return screen->grabWindow(0);
+
+    return QPixmap();
 }
 
 void ScreenshotGrabber::beginRectChooser(QGraphicsSceneMouseEvent* event)
