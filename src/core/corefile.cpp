@@ -312,10 +312,7 @@ void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
 
     if (control == TOX_FILE_CONTROL_CANCEL)
     {
-        if (file->fileKind == TOX_FILE_KIND_AVATAR)
-            qDebug() << "Avatar tranfer"<<friendId<<":"<<fileId
-                     << "cancelled by friend, assuming friend has it cached";
-        else
+        if (file->fileKind != TOX_FILE_KIND_AVATAR)
             qDebug() << "File tranfer"<<friendId<<":"<<fileId<<"cancelled by friend";
         emit static_cast<Core*>(core)->fileTransferCancelled(*file);
         removeFile(friendId, fileId);

@@ -26,7 +26,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
-namespace Ui {class MainWindow;}
+class ContentLayout;
 class QListWidget;
 
 class FilesForm : public QObject
@@ -37,7 +37,8 @@ public:
     FilesForm();
     ~FilesForm();
 
-    void show(Ui::MainWindow &ui);
+    bool isShown() const;
+    void show(ContentLayout* contentLayout);
 
 public slots:
     void onFileDownloadComplete(const QString& path);

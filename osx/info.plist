@@ -21,7 +21,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0-EXPERIMENTIAL</string>
 	<key>CFBundleIdentifier</key>
-	<string>im.tox.qtox</string>
+	<string>chat.tox.qtox</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

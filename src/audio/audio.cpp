@@ -63,7 +63,6 @@ Audio& Audio::getInstance()
 
 Audio::~Audio()
 {
-    qDebug() << "Deleting Audio";
     audioThread->exit(0);
     audioThread->wait();
     if (audioThread->isRunning())
@@ -140,7 +139,6 @@ void Audio::unsuscribeInput()
 
 void Audio::openInput(const QString& inDevDescr)
 {
-    qDebug() << "Trying to open input "+inDevDescr;
     QMutexLocker lock(audioInLock);
     auto* tmp = alInDev;
     alInDev = nullptr;
@@ -181,7 +179,6 @@ void Audio::openInput(const QString& inDevDescr)
 
 void Audio::openOutput(const QString& outDevDescr)
 {
-    qDebug() << "Trying to open output " + outDevDescr;
     QMutexLocker lock(audioOutLock);
     auto* tmp = alOutDev;
     alOutDev = nullptr;

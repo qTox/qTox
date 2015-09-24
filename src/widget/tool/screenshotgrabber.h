@@ -43,7 +43,7 @@ public:
     ScreenshotGrabber(QWidget* parent);
     ~ScreenshotGrabber() override;
 
-    bool eventFilter(QObject* object, QEvent* event);
+    bool eventFilter(QObject* object, QEvent* event) override;
 
 public slots:
 
@@ -57,6 +57,8 @@ signals:
 
 private:
     friend class ScreenGrabberOverlayItem;
+    // for exception multiple handling during switching window
+    bool blocked = false;
 
     void setupWindow();
     void setupScene(QGraphicsScene* scene);

@@ -49,10 +49,10 @@ class FilesForm;
 class ProfileForm;
 class SettingsWidget;
 class AddFriendForm;
-class GroupInviteForm;
 class CircleWidget;
 class QActionGroup;
-class QPushButton;
+class ContentLayout;
+class ContentDialog;
 
 class Widget final : public QMainWindow
 {
@@ -65,11 +65,25 @@ public:
     QString getUsername();
     Camera* getCamera();
     static Widget* getInstance();
-    void newMessageAlert(GenericChatroomWidget* chat);
-    bool isFriendWidgetCurActiveWidget(const Friend* f) const;
+    void addFriendDialog(Friend* frnd, ContentDialog* dialog);
+    void addGroupDialog(Group* group, ContentDialog* dialog);
+    bool newFriendMessageAlert(int friendId);
+    bool newGroupMessageAlert(int groupId, bool notify);
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
+
+    enum DialogType
+    {
+        AddDialog,
+        TransferDialog,
+        SettingDialog,
+        ProfileDialog
+    };
+
+    static QString fromDialogType(DialogType type);
+    ContentDialog* createContentDialog() const;
+    ContentLayout* createContentDialog(DialogType type);
 
     static void confirmExecutableOpen(const QFileInfo file);
 
@@ -89,6 +103,8 @@ public:
 
 public slots:
     void onSettingsClicked();
+    void onSeparateWindowClicked(bool separate);
+    void onSeparateWindowChanged(bool separate, bool clicked);
     void setWindowTitle(const QString& title);
     void forceShow();
     void onConnected();
@@ -113,7 +129,6 @@ public slots:
     void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
-    void onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
@@ -132,6 +147,9 @@ signals:
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
     void resized();
+#ifdef Q_OS_MAC
+    void windowStateChanged(Qt::WindowStates states);
+#endif
 
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event) final override;
@@ -146,8 +164,8 @@ private slots:
     void onTransferClicked();
     void showProfile();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
+    void onChatroomWidgetClicked(GenericChatroomWidget *, bool group);
     void onStatusMessageChanged(const QString& newStatusMessage);
-    void onChatroomWidgetClicked(GenericChatroomWidget *);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
     void removeGroup(int groupId);
@@ -162,10 +180,6 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
-    void friendRequestRecieved(const QString& friendAddress, const QString& message);
-    void friendRequestsUpdate();
-    void groupInvitesUpdate();
-    void groupInvitesClear();
 
 private:
     int icon_size;
@@ -194,8 +208,9 @@ private:
     };
 
 private:
+    bool newMessageAlert(QWidget* currentWindow, bool isActive, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
-    void hideMainForms();
+    void hideMainForms(GenericChatroomWidget* chatroomWidget);
     Group *createGroup(int groupId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
@@ -236,8 +251,8 @@ private:
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
+    ContentLayout* contentLayout;
     AddFriendForm *addFriendForm;
-    GroupInviteForm* groupInviteForm;
     ProfileForm *profileForm;
     SettingsWidget *settingsWidget;
     FilesForm *filesForm;
@@ -253,12 +268,17 @@ private:
     bool eventFlag;
     bool eventIcon;
     bool wasMaximized = false;
-    QPushButton* friendRequestsButton;
-    QPushButton* groupInvitesButton;
-    unsigned int unreadGroupInvites;
 
 #ifdef Q_OS_MAC
-    QAction* fullscreenAction;
+    QAction* fileMenu;
+    QAction* editMenu;
+    QAction* contactMenu;
+    QMenu* changeStatusMenu;
+    QAction* editProfileAction;
+    QAction* logoutAction;
+    QAction* addContactAction;
+    QAction* nextConversationAction;
+    QAction* previousConversationAction;
 #endif
 };
 

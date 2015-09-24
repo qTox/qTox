@@ -76,7 +76,7 @@ void Group::updatePeer(int peerId, QString name)
     peers[peerId] = name;
     toxids[toxid] = name;
     Friend *f = FriendList::findFriend(id);
-    if (f)
+    if (f && f->hasAlias())
     {
         peers[peerId] = f->getDisplayedName();
         toxids[toxid] = f->getDisplayedName();
@@ -84,6 +84,7 @@ void Group::updatePeer(int peerId, QString name)
 
     widget->onUserListChanged();
     chatForm->onUserListChanged();
+    emit userListChanged(getGroupWidget());
 }
 
 void Group::setName(const QString& name)
@@ -91,7 +92,14 @@ void Group::setName(const QString& name)
     chatForm->setName(name);
 
     if (widget->isActive())
-            GUI::setWindowTitle(name);
+        GUI::setWindowTitle(name);
+
+    emit titleChanged(this->getGroupWidget());
+}
+
+QString Group::getName() const
+{
+    return widget->getName();
 }
 
 void Group::regeneratePeerList()
@@ -117,6 +125,7 @@ void Group::regeneratePeerList()
 
     widget->onUserListChanged();
     chatForm->onUserListChanged();
+    emit userListChanged(getGroupWidget());
 }
 
 bool Group::isAvGroupchat() const

@@ -37,6 +37,13 @@ public:
     ~LoginScreen();
     void reset(); ///< Resets the UI, clears all fields
 
+#ifdef Q_OS_MAC
+    bool event(QEvent* event) final override;
+
+signals:
+    void windowStateChanged(Qt::WindowStates states);
+#endif
+
 private slots:
     void onAutoLoginToggled(int state);
     void onLoginUsernameSelected(const QString& name);

@@ -148,7 +148,7 @@ win32 {
     }
 } else {
     macx {
-        BUNDLEID = im.tox.qtox
+        BUNDLEID = chat.tox.qtox
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
@@ -496,7 +496,9 @@ SOURCES += \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
     src/widget/tool/removefrienddialog.cpp \
-    src/widget/form/groupinviteform.cpp
+    src/widget/contentlayout.cpp \
+    src/widget/contentdialog.cpp \
+    src/widget/tool/activatedialog.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -540,5 +542,7 @@ HEADERS += \
     src/widget/friendlistlayout.h \
     src/widget/genericchatitemlayout.h \
     src/widget/categorywidget.h \
-    src/widget/tool/removefrienddialog.h \
-    src/widget/form/groupinviteform.h
+    src/widget/contentlayout.h \
+    src/widget/contentdialog.h \
+    src/widget/tool/activatedialog.h \
+    src/widget/tool/removefrienddialog.h

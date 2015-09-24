@@ -217,6 +217,15 @@ public:
     QByteArray getSplitterState() const;
     void setSplitterState(const QByteArray &value);
 
+    QByteArray getDialogGeometry() const;
+    void setDialogGeometry(const QByteArray& value);
+
+    QByteArray getDialogSplitterState() const;
+    void setDialogSplitterState(const QByteArray &value);
+
+    QByteArray getDialogSettingsGeometry() const;
+    void setDialogSettingsGeometry(const QByteArray& value);
+
     QString getFriendAdress(const QString &publicKey) const;
     void updateFriendAdress(const QString &newAddr);
 
@@ -237,6 +246,12 @@ public:
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
+    bool getSeparateWindow() const;
+    void setSeparateWindow(bool value);
+
+    bool getDontGroupWindows() const;
+    void setDontGroupWindows(bool value);
+
     bool getGroupchatPosition() const;
     void setGroupchatPosition(bool value);
 
@@ -250,13 +265,6 @@ public:
     void setCircleName(int id, const QString &name);
     bool getCircleExpanded(int id) const;
     void setCircleExpanded(int id, bool expanded);
-
-    void addFriendRequest(const QString &friendAddress, const QString &message);
-    unsigned int getUnreadFriendRequests() const;
-    QPair<QString, QString> getFriendRequest(int index) const;
-    int getFriendRequestSize() const;
-    void clearUnreadFriendRequests();
-    void removeFriendRequest(int index);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -302,6 +310,8 @@ private:
     bool fauxOfflineMessaging;
     bool compactLayout;
     bool groupchatPosition;
+    bool separateWindow;
+    bool dontGroupWindows;
     bool enableIPv6;
     QString translation;
     bool makeToxPortable;
@@ -334,9 +344,6 @@ private:
     bool autoSaveEnabled;
     QString globalAutoAcceptDir;
 
-    QList<QPair<QString, QString>> friendRequests;
-    unsigned int unreadFriendRequests;
-
     // GUI
     QString smileyPack;
     int emojiFontPointSize;
@@ -344,6 +351,9 @@ private:
     QByteArray windowGeometry;
     QByteArray windowState;
     QByteArray splitterState;
+    QByteArray dialogGeometry;
+    QByteArray dialogSplitterState;
+    QByteArray dialogSettingsGeometry;
     QString style;
     bool showSystemTray;
 

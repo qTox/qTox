@@ -32,6 +32,10 @@ class Core;
 #ifdef Q_OS_MAC
 class QMenuBar;
 class QMenu;
+class QAction;
+class QWindow;
+class QActionGroup;
+class QSignalMapper;
 #endif
 
 /// This class is in charge of connecting various systems together
@@ -59,7 +63,28 @@ public:
 
 #ifdef Q_OS_MAC
     QMenuBar* globalMenuBar;
+    QMenu* viewMenu;
     QMenu* windowMenu;
+    QAction* minimizeAction;
+    QAction* fullscreenAction;
+    QAction* frontAction;
+    QMenu* dockMenu;
+
+public slots:
+    void retranslateUi();
+    void onWindowStateChanged(Qt::WindowStates state);
+    void updateWindows();
+    void updateWindowsClosed();
+    void updateWindowsStates();
+    void onOpenWindow(QObject* object);
+    void toggleFullscreen();
+    void bringAllToFront();
+
+private:
+    void updateWindowsArg(QWindow *closedWindow);
+
+    QSignalMapper* windowMapper;
+    QActionGroup* windowActions = nullptr;
 #endif
 
 private:

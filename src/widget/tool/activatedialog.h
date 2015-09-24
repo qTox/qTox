@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2015 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,38 +17,20 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ADVANCEDFORM_H
-#define ADVANCEDFORM_H
+#ifndef ACTIVATEDIALOG_H
+#define ACTIVATEDIALOG_H
 
-#include "genericsettings.h"
+#include <QDialog>
 
-class Core;
-
-namespace Ui {
-class AdvancedSettings;
-}
-
-class AdvancedForm : public GenericForm
+class ActivateDialog : public QDialog
 {
     Q_OBJECT
 public:
-    AdvancedForm();
-    ~AdvancedForm();
-    virtual QString getFormName() final override {return tr("Advanced");}
+    ActivateDialog(QWidget* parent = 0, Qt::WindowFlags f = 0);
+    bool event(QEvent* event) override;
 
-protected:
-    bool eventFilter(QObject *o, QEvent *e) override;
-
-private slots:
-    void onMakeToxPortableUpdated();
-    void onDbSyncTypeUpdated();
-    void resetToDefault();
-
-private:
-    void retranslateUi();
-
-private:
-    Ui::AdvancedSettings* bodyUI;
+signals:
+    void windowStateChanged(Qt::WindowStates state);
 };
 
-#endif // ADVANCEDFORM_H
+#endif // ACTIVATEDIALOG_H

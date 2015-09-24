@@ -18,10 +18,11 @@
 */
 
 #include "filesform.h"
-#include "ui_mainwindow.h"
 #include "src/widget/widget.h"
 #include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
 #include <QFileInfo>
+#include <QWindow>
 
 FilesForm::FilesForm()
     : QObject(), doneIcon(":/ui/fileTransferWidget/fileDone.svg")
@@ -54,10 +55,21 @@ FilesForm::~FilesForm()
     head->deleteLater();
 }
 
-void FilesForm::show(Ui::MainWindow& ui)
+bool FilesForm::isShown() const
 {
-    ui.mainContent->layout()->addWidget(&main);
-    ui.mainHead->layout()->addWidget(head);
+    if (main.isVisible())
+    {
+        head->window()->windowHandle()->alert(0);
+        return true;
+    }
+
+    return false;
+}
+
+void FilesForm::show(ContentLayout* contentLayout)
+{
+    contentLayout->mainContent->layout()->addWidget(&main);
+    contentLayout->mainHead->layout()->addWidget(head);
     main.show();
     head->show();
 }
@@ -88,7 +100,7 @@ void FilesForm::onFileActivated(QListWidgetItem *item)
 
 void FilesForm::retranslateUi()
 {
-    headLabel.setText(tr("Transfered Files","\"Headline\" of the window"));
+    headLabel.setText(tr("Transferred Files","\"Headline\" of the window"));
     main.setTabText(0, tr("Downloads"));
     main.setTabText(1, tr("Uploads"));
 }

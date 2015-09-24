@@ -164,7 +164,7 @@ void GroupChatForm::onSendTriggered()
 
 void GroupChatForm::onUserListChanged()
 {
-    nusersLabel->setText(tr("%1 users in chat").arg(group->getPeersCount()));
+    nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(group->getPeersCount()));
 
     QLayoutItem *child;
     while ((child = namesListLayout->takeAt(0)))
@@ -367,5 +367,5 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 
 void GroupChatForm::retranslateUi()
 {
-    nusersLabel->setText(GroupChatForm::tr("%1 users in chat","Number of users in chat").arg(group->getPeersCount()));
+    nusersLabel->setText(GroupChatForm::tr("%1 users in chat", "Number of users in chat").arg(group->getPeersCount()));
 }

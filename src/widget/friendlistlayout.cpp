@@ -62,7 +62,7 @@ void FriendListLayout::removeFriendWidget(FriendWidget *widget, Status s)
         friendOnlineLayout.removeSortedWidget(widget);
 }
 
-int FriendListLayout::indexOfFriendWidget(FriendWidget* widget, bool online) const
+int FriendListLayout::indexOfFriendWidget(GenericChatItemWidget* widget, bool online) const
 {
     if (online)
         return friendOnlineLayout.indexOfSortedWidget(widget);

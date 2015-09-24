@@ -67,6 +67,8 @@ private slots:
     void onSetGroupAlwaysNotify();
     void onFauxOfflineMessaging();
     void onCompactLayout();
+    void onSeparateWindowChanged();
+    void onDontGroupWindowsChanged();
     void onGroupchatPositionChanged();
     void onThemeColorChanged(int);
 
@@ -79,7 +81,7 @@ private:
     SettingsWidget *parent;
 
 protected:
-    bool eventFilter(QObject *o, QEvent *e);
+    bool eventFilter(QObject *o, QEvent *e) override;
 };
 
 #endif

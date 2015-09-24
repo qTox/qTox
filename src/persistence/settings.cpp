@@ -93,7 +93,6 @@ void Settings::loadGlobal()
         return;
 
     createSettingsDir();
-    QDir dir(getSettingsDirPath());
 
     if (QFile(globalSettingsFile).exists())
     {
@@ -107,6 +106,7 @@ void Settings::loadGlobal()
         makeToxPortable = false;
     }
 
+    QDir dir(getSettingsDirPath());
     QString filePath = dir.filePath(globalSettingsFile);
 
     // If no settings file exist -- use the default one
@@ -174,6 +174,8 @@ void Settings::loadGlobal()
         globalAutoAcceptDir = s.value("globalAutoAcceptDir",
                                       QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
                                       ).toString();
+        separateWindow = s.value("separateWindow", false).toBool();
+        dontGroupWindows = s.value("dontGroupWindows", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
     s.endGroup();
 
@@ -216,6 +218,9 @@ void Settings::loadGlobal()
         windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
         windowState = s.value("windowState", QByteArray()).toByteArray();
         splitterState = s.value("splitterState", QByteArray()).toByteArray();
+        dialogGeometry = s.value("dialogGeometry", QByteArray()).toByteArray();
+        dialogSplitterState = s.value("dialogSplitterState", QByteArray()).toByteArray();
+        dialogSettingsGeometry = s.value("dialogSettingsGeometry", QByteArray()).toByteArray();
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -232,7 +237,6 @@ void Settings::loadGlobal()
     // Read the embedded DHT bootsrap nodes list if needed
     if (dhtServerList.isEmpty())
     {
-        qDebug() << "Using embeded bootstrap nodes list";
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
         rcs.beginGroup("DHT Server");
             int serverListSize = rcs.beginReadArray("dhtServerList");
@@ -301,23 +305,8 @@ void Settings::loadPersonnal(Profile* profile)
         ps.endArray();
     ps.endGroup();
 
-    ps.beginGroup("Requests");
-        unreadFriendRequests = ps.value("unread", 0).toUInt();
-        size = ps.beginReadArray("Request");
-        friendLst.reserve(size);
-        for (int i = 0; i < size; i ++)
-        {
-            ps.setArrayIndex(i);
-            QPair<QString, QString> request;
-            request.first = ps.value("addr").toString();
-            request.second = ps.value("message").toString();
-            friendRequests.push_back(request);
-        }
-        ps.endArray();
-    ps.endGroup();
-
     ps.beginGroup("General");
-        compactLayout = ps.value("compactLayout", false).toBool();
+        compactLayout = ps.value("compactLayout", true).toBool();
     ps.endGroup();
 
     ps.beginGroup("Circles");
@@ -336,8 +325,8 @@ void Settings::loadPersonnal(Profile* profile)
     ps.endGroup();
 
     ps.beginGroup("Privacy");
-        typingNotification = ps.value("typingNotification", false).toBool();
-        enableLogging = ps.value("enableLogging", false).toBool();
+        typingNotification = ps.value("typingNotification", true).toBool();
+        enableLogging = ps.value("enableLogging", true).toBool();
     ps.endGroup();
 }
 
@@ -391,6 +380,8 @@ void Settings::saveGlobal()
         s.setValue("notifySound", notifySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
+        s.setValue("separateWindow", separateWindow);
+        s.setValue("dontGroupWindows", dontGroupWindows);
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
@@ -426,6 +417,9 @@ void Settings::saveGlobal()
         s.setValue("windowGeometry", windowGeometry);
         s.setValue("windowState", windowState);
         s.setValue("splitterState", splitterState);
+        s.setValue("dialogGeometry", dialogGeometry);
+        s.setValue("dialogSplitterState", dialogSplitterState);
+        s.setValue("dialogSettingsGeometry", dialogSettingsGeometry);
     s.endGroup();
 
     s.beginGroup("Audio");
@@ -482,22 +476,7 @@ void Settings::savePersonal(QString profileName, QString password)
             if (getEnableLogging())
                 ps.setValue("activity", frnd.activity);
 
-            ++index;
-        }
-        ps.endArray();
-    ps.endGroup();
-
-    ps.beginGroup("Requests");
-        ps.setValue("unread", unreadFriendRequests);
-        ps.beginWriteArray("Request", friendRequests.size());
-        index = 0;
-        for (auto& request : friendRequests)
-        {
-            ps.setArrayIndex(index);
-            ps.setValue("addr", request.first);
-            ps.setValue("message", request.second);
-
-            ++index;
+            index++;
         }
         ps.endArray();
     ps.endGroup();
@@ -777,7 +756,7 @@ void Settings::setStatusChangeNotificationEnabled(bool newValue)
 bool Settings::getShowInFront() const
 {
     QMutexLocker locker{&bigLock};
-   return showInFront;
+    return showInFront;
 }
 
 void Settings::setShowInFront(bool newValue)
@@ -1121,6 +1100,42 @@ void Settings::setSplitterState(const QByteArray &value)
     splitterState = value;
 }
 
+QByteArray Settings::getDialogGeometry() const
+{
+    QMutexLocker locker{&bigLock};
+    return dialogGeometry;
+}
+
+void Settings::setDialogGeometry(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    dialogGeometry = value;
+}
+
+QByteArray Settings::getDialogSplitterState() const
+{
+    QMutexLocker locker{&bigLock};
+    return dialogSplitterState;
+}
+
+void Settings::setDialogSplitterState(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    dialogSplitterState = value;
+}
+
+QByteArray Settings::getDialogSettingsGeometry() const
+{
+    QMutexLocker locker{&bigLock};
+    return dialogSettingsGeometry;
+}
+
+void Settings::setDialogSettingsGeometry(const QByteArray &value)
+{
+    QMutexLocker locker{&bigLock};
+    dialogSettingsGeometry = value;
+}
+
 bool Settings::isMinimizeOnCloseEnabled() const
 {
     QMutexLocker locker{&bigLock};
@@ -1322,7 +1337,6 @@ void Settings::setFriendActivity(const ToxId &id, const QDate &activity)
         fp.activity = activity;
         friendLst[key] = fp;
     }
-    savePersonal();
 }
 
 void Settings::removeFriendSettings(const ToxId &id)
@@ -1354,6 +1368,30 @@ void Settings::setCompactLayout(bool value)
 {
     QMutexLocker locker{&bigLock};
     compactLayout = value;
+}
+
+bool Settings::getSeparateWindow() const
+{
+    QMutexLocker locker{&bigLock};
+    return separateWindow;
+}
+
+void Settings::setSeparateWindow(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    separateWindow = value;
+}
+
+bool Settings::getDontGroupWindows() const
+{
+    QMutexLocker locker{&bigLock};
+    return dontGroupWindows;
+}
+
+void Settings::setDontGroupWindows(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    dontGroupWindows = value;
 }
 
 bool Settings::getGroupchatPosition() const
@@ -1407,48 +1445,6 @@ bool Settings::getCircleExpanded(int id) const
 void Settings::setCircleExpanded(int id, bool expanded)
 {
     circleLst[id].expanded = expanded;
-}
-
-void Settings::addFriendRequest(const QString &friendAddress, const QString &message)
-{
-    QMutexLocker locker{&bigLock};
-    QPair<QString, QString> request(friendAddress, message);
-
-    if (friendRequests.indexOf(request) != -1)
-        return;
-
-    friendRequests.push_back(request);
-    ++unreadFriendRequests;
-}
-
-unsigned int Settings::getUnreadFriendRequests() const
-{
-    QMutexLocker locker{&bigLock};
-    return unreadFriendRequests;
-}
-
-QPair<QString, QString> Settings::getFriendRequest(int index) const
-{
-    QMutexLocker locker{&bigLock};
-    return friendRequests.at(index);
-}
-
-int Settings::getFriendRequestSize() const
-{
-    QMutexLocker locker{&bigLock};
-    return friendRequests.size();
-}
-
-void Settings::clearUnreadFriendRequests()
-{
-    QMutexLocker locker{&bigLock};
-    unreadFriendRequests = 0;
-}
-
-void Settings::removeFriendRequest(int index)
-{
-    QMutexLocker locker{&bigLock};
-    friendRequests.removeAt(index);
 }
 
 int Settings::removeCircle(int id)

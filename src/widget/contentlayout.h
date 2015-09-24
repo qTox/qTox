@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2015 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,38 +17,28 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ADVANCEDFORM_H
-#define ADVANCEDFORM_H
+#ifndef CONTENTLAYOUT_H
+#define CONTENTLAYOUT_H
 
-#include "genericsettings.h"
+#include <QBoxLayout>
 
-class Core;
+class QFrame;
 
-namespace Ui {
-class AdvancedSettings;
-}
-
-class AdvancedForm : public GenericForm
+class ContentLayout : public QVBoxLayout
 {
-    Q_OBJECT
 public:
-    AdvancedForm();
-    ~AdvancedForm();
-    virtual QString getFormName() final override {return tr("Advanced");}
+    ContentLayout();
+    ContentLayout(QWidget* parent);
+    ~ContentLayout();
 
-protected:
-    bool eventFilter(QObject *o, QEvent *e) override;
+    void clear();
 
-private slots:
-    void onMakeToxPortableUpdated();
-    void onDbSyncTypeUpdated();
-    void resetToDefault();
+    QWidget* mainContent;
+    QFrame* mainHLine;
+    QWidget* mainHead;
 
 private:
-    void retranslateUi();
-
-private:
-    Ui::AdvancedSettings* bodyUI;
+    void init();
 };
 
-#endif // ADVANCEDFORM_H
+#endif // CONTENTLAYOUT_H

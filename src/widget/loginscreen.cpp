@@ -75,7 +75,6 @@ void LoginScreen::reset()
 
     Profile::scanProfiles();
     QString lastUsed = Settings::getInstance().getCurrentProfile();
-    qDebug() << "Last used profile is "<<lastUsed;
     QVector<QString> profiles = Profile::getProfiles();
     for (QString profile : profiles)
     {
@@ -97,6 +96,16 @@ void LoginScreen::reset()
 
     ui->autoLoginCB->setChecked(Settings::getInstance().getAutoLogin());
 }
+
+#ifdef Q_OS_MAC
+bool LoginScreen::event(QEvent* event)
+{
+    if (event->type() == QEvent::WindowActivate || event->type() == QEvent::WindowStateChange)
+       emit windowStateChanged(windowState());
+
+    return QWidget::event(event);
+}
+#endif
 
 void LoginScreen::onNewProfilePageClicked()
 {

@@ -30,9 +30,11 @@ public:
     virtual void setAsInactiveChatroom() final override;
     virtual void setAsActiveChatroom() final override;
     virtual void updateStatusLight() final override;
-    virtual void setChatForm(Ui::MainWindow &) final override;
+    virtual bool chatFormIsSet(bool focus) const final override;
+    virtual void setChatForm(ContentLayout* contentLayout) override;
     virtual void resetEventFlags() final override;
-    virtual QString getStatusString() final override;
+    virtual QString getStatusString() const final override;
+    virtual Group* getGroup() const override;
     void setName(const QString& name);
     void onUserListChanged();
     void editName();
@@ -43,10 +45,12 @@ signals:
     void removeGroup(int groupId);
 
 protected:
-    virtual void contextMenuEvent(QContextMenuEvent * event) final override;
-    virtual void dragEnterEvent(QDragEnterEvent* ev) override;
-    virtual void dragLeaveEvent(QDragLeaveEvent* ev);
-    virtual void dropEvent(QDropEvent* ev) override;
+    void contextMenuEvent(QContextMenuEvent * event) final override;
+    void mousePressEvent(QMouseEvent* event) final override;
+    void mouseMoveEvent(QMouseEvent* event) final override;
+    void dragEnterEvent(QDragEnterEvent* ev) override;
+    void dragLeaveEvent(QDragLeaveEvent* ev) override;
+    void dropEvent(QDropEvent* ev) override;
 
 public:
     int groupId;

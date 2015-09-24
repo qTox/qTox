@@ -104,8 +104,6 @@ void Core::deadifyTox()
 
 Core::~Core()
 {
-    qDebug() << "Deleting Core";
-
     if (coreThread->isRunning())
     {
         if (QThread::currentThread() == coreThread)
@@ -409,7 +407,7 @@ bool Core::checkConnection()
 
     if (toxConnected && !isConnected)
     {
-        qDebug() << "Connected to DHT";
+        qDebug() << "Connected to the DHT";
         emit connected();
         isConnected = true;
         //if (count) qDebug() << "disconnect count:" << count;
@@ -417,7 +415,7 @@ bool Core::checkConnection()
     }
     else if (!toxConnected && isConnected)
     {
-        qDebug() << "Disconnected to DHT";
+        qDebug() << "Disconnected from the DHT";
         emit disconnected();
         isConnected = false;
         //count++;
@@ -433,37 +431,26 @@ void Core::bootstrapDht()
     int listSize = dhtServerList.size();
     if (listSize == 0)
     {
-        qDebug() << "no bootstrap list?!?";
+        qWarning() << "no bootstrap list?!?";
         return;
     }
     static int j = qrand() % listSize;
-
-    qDebug() << "Bootstrapping to the DHT ...";
 
     int i=0;
     while (i < 2) // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     {
         const DhtServer& dhtServer = dhtServerList[j % listSize];
-        if (tox_bootstrap(tox, dhtServer.address.toLatin1().data(),
+        qDebug() << "Connecting to "+QString(dhtServer.address.toLatin1().data())
+                    +':'+QString().setNum(dhtServer.port)+" ("+dhtServer.name+')';
+
+        if (!tox_bootstrap(tox, dhtServer.address.toLatin1().data(),
             dhtServer.port, CUserId(dhtServer.userId).data(), nullptr))
-        {
-            qDebug() << "Bootstrapping from " + dhtServer.name
-                        + ", addr " + dhtServer.address.toLatin1().data()
-                        + ", port " + QString().setNum(dhtServer.port);
-        }
-        else
         {
             qDebug() << "Error bootstrapping from "+dhtServer.name;
         }
 
-        if (tox_add_tcp_relay(tox, dhtServer.address.toLatin1().data(),
+        if (!tox_add_tcp_relay(tox, dhtServer.address.toLatin1().data(),
             dhtServer.port, CUserId(dhtServer.userId).data(), nullptr))
-        {
-            qDebug() << "Adding TCP relay from " + dhtServer.name
-                        + ", addr " + dhtServer.address.toLatin1().data()
-                        + ", port " + QString().setNum(dhtServer.port);
-        }
-        else
         {
             qDebug() << "Error adding TCP relay from "+dhtServer.name;
         }
@@ -638,7 +625,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);
 
-            HistoryKeeper::getInstance()->addChatEntry(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true);
+            HistoryKeeper::getInstance()->addChatEntry(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true, QString());
             emit friendAdded(friendId, userId);
             emit friendshipChanged(friendId);
         }
@@ -1062,24 +1049,19 @@ void Core::groupInviteFriend(uint32_t friendId, int groupId)
     tox_invite_friend(tox, friendId, groupId);
 }
 
-int Core::createGroup(uint8_t type)
+void Core::createGroup(uint8_t type)
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT)
     {
-        int group = tox_add_groupchat(tox);
-        emit emptyGroupCreated(group);
-        return group;
+        emit emptyGroupCreated(tox_add_groupchat(tox));
     }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int group = toxav_add_av_groupchat(tox, &Audio::playGroupAudioQueued, this);
-        emit emptyGroupCreated(group);
-        return group;
+        emit emptyGroupCreated(toxav_add_av_groupchat(tox, &Audio::playGroupAudioQueued, this));
     }
     else
     {
         qWarning() << "createGroup: Unknown type "<<type;
-        return -1;
     }
 }
 

@@ -25,7 +25,6 @@ public:
 
 public slots:
     void onAccepted();
-    void onTextChanged(QString text);
 
 protected:
     Ui_RemoveFriendDialog ui;
