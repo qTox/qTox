@@ -158,11 +158,14 @@ Profile::~Profile()
         saveToxSave();
     delete core;
     delete coreThread;
-    Settings::getInstance().savePersonal(this);
-    Settings::getInstance().sync();
-    ProfileLocker::assertLock();
-    assert(ProfileLocker::getCurLockName() == name);
-    ProfileLocker::unlock();
+    if (!isRemoved)
+    {
+        Settings::getInstance().savePersonal(this);
+        Settings::getInstance().sync();
+        ProfileLocker::assertLock();
+        assert(ProfileLocker::getCurLockName() == name);
+        ProfileLocker::unlock();
+    }
 }
 
 QVector<QString> Profile::getFilesByExt(QString extension)
@@ -368,6 +371,7 @@ void Profile::remove()
         }
     }
     QString path = Settings::getInstance().getSettingsDirPath() + name;
+    ProfileLocker::unlock();
     QFile::remove(path+".tox");
     QFile::remove(path+".ini");
 
