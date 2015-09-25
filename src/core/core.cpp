@@ -838,6 +838,11 @@ QString Core::getStatusMessage() const
     return sname;
 }
 
+Status Core::getStatus() const
+{
+    return (Status)tox_self_get_status(tox);
+}
+
 void Core::setStatusMessage(const QString& message)
 {
     CString cMessage(message);

@@ -360,10 +360,15 @@ void GeneralForm::onUseProxyUpdated()
 void GeneralForm::onReconnectClicked()
 {
     if (Core::getInstance()->anyActiveCalls())
+    {
         QMessageBox::warning(this, tr("Call active", "popup title"),
                         tr("You can't disconnect while a call is active!", "popup text"));
+    }
     else
+    {
+        emit Core::getInstance()->statusSet(Status::Offline);
         Nexus::getProfile()->restartCore();
+    }
 }
 
 void GeneralForm::reloadSmiles()
