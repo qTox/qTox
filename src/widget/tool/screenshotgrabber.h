@@ -35,12 +35,12 @@ class QGraphicsTextItem;
 class QGraphicsScene;
 class QGraphicsView;
 
-class ScreenshotGrabber : public QWidget
+class ScreenshotGrabber : public QObject
 {
     Q_OBJECT
 public:
 
-    ScreenshotGrabber(QWidget* parent);
+    ScreenshotGrabber(QObject* parent);
     ~ScreenshotGrabber() override;
 
     bool eventFilter(QObject* object, QEvent* event) override;

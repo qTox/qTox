@@ -34,8 +34,8 @@
 #include "toolboxgraphicsitem.h"
 #include "src/widget/widget.h"
 
-ScreenshotGrabber::ScreenshotGrabber(QWidget* parent)
-    : QWidget(parent)
+ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
+    : QObject(parent)
 {
     scene = new QGraphicsScene;
     window = new QGraphicsView (scene); // Top-level widget
@@ -66,7 +66,7 @@ bool ScreenshotGrabber::eventFilter(QObject* object, QEvent* event)
     if (event->type() == QEvent::KeyPress)
         return handleKeyPress(static_cast<QKeyEvent*>(event));
 
-    return QWidget::eventFilter(object, event);
+    return QObject::eventFilter(object, event);
 }
 
 void ScreenshotGrabber::showGrabber()
