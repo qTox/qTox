@@ -78,10 +78,10 @@ void ScreenshotGrabber::showGrabber()
     this->window->grabKeyboard();
 
     QRect fullGrabbedRect = screenGrab.rect();
-    qDebug() << "adjusting grabber size to" << fullGrabbedRect;
+    QRect nr(QPoint(-1,-1), fullGrabbedRect.size());
 
-    this->window->setGeometry(fullGrabbedRect);
-    this->window->scene()->setSceneRect(fullGrabbedRect);
+    this->window->setGeometry(nr);
+    this->scene->setSceneRect(fullGrabbedRect);
     this->overlay->setRect(fullGrabbedRect);
 
     adjustTooltipPosition();
