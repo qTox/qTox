@@ -76,7 +76,14 @@ void ScreenshotGrabber::showGrabber()
     this->window->show();
     this->window->setFocus();
     this->window->grabKeyboard();
-    adjustWindowSize();
+
+    QRect fullGrabbedRect = screenGrab.rect();
+    qDebug() << "adjusting grabber size to" << fullGrabbedRect;
+
+    this->window->setGeometry(fullGrabbedRect);
+    this->window->scene()->setSceneRect(fullGrabbedRect);
+    this->overlay->setRect(fullGrabbedRect);
+
     adjustTooltipPosition();
 }
 
@@ -189,21 +196,6 @@ void ScreenshotGrabber::reject()
     qDebug() << "Rejected screenshot";
     this->window->close();
     Widget::getInstance()->setVisible(true); // show window if it was hidden
-}
-
-QRect ScreenshotGrabber::getSystemScreenRect()
-{
-    return QApplication::primaryScreen()->virtualGeometry();
-}
-
-void ScreenshotGrabber::adjustWindowSize()
-{
-    QRect systemScreenRect = getSystemScreenRect();
-    qDebug() << "adjusting grabber size to" << systemScreenRect;
-
-    this->window->setGeometry(systemScreenRect);
-    this->window->scene()->setSceneRect(systemScreenRect);
-    this->overlay->setRect(systemScreenRect);
 }
 
 QPixmap ScreenshotGrabber::grabScreen()

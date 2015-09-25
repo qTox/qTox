@@ -71,8 +71,6 @@ private:
     bool handleKeyPress(QKeyEvent* event);
     void reject();
 
-    QRect getSystemScreenRect();
-    void adjustWindowSize();
     QPixmap grabScreen();
 
     void beginRectChooser(QGraphicsSceneMouseEvent* event);
