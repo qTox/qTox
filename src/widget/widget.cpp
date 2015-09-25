@@ -499,15 +499,11 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 void Widget::onConnected()
 {
     ui->statusButton->setEnabled(true);
-    if (beforeDisconnect == Status::Offline)
-        emit statusSet(Status::Online);
-    else
-        emit statusSet(beforeDisconnect);
+    emit statusSet(Nexus::getCore()->getStatus());
 }
 
 void Widget::onDisconnected()
 {
-    beforeDisconnect = getStatusFromString(ui->statusButton->property("status").toString());
     ui->statusButton->setEnabled(false);
     emit statusSet(Status::Offline);
 }

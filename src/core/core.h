@@ -77,6 +77,7 @@ public:
     QString getIDString() const; ///< Get the 12 first characters of our Tox ID
 
     QString getUsername() const; ///< Returns our username, or an empty string on failure
+    Status getStatus() const; ///< Returns our user status
     QString getStatusMessage() const; ///< Returns our status message, or an empty string on failure
     ToxId getSelfId() const; ///< Returns our Tox ID
     QPair<QByteArray, QByteArray> getKeypair() const; ///< Returns our public and private keys
