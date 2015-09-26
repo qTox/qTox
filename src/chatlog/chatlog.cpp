@@ -279,13 +279,13 @@ void ChatLog::mouseMoveEvent(QMouseEvent* ev)
                 if (row != selClickedRow)
                 {
                     selectionMode = Multi;
-
                     lines[selClickedRow]->selectionCleared();
                 }
-
             }
             else
+            {
                 return;
+            }
 
             if (row >= selClickedRow)
                 selLastRow = row;

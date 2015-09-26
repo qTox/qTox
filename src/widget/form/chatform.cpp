@@ -907,9 +907,8 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
     QTemporaryFile file(Settings::getInstance().getSettingsDirPath()+"screenshots"+QDir::separator()+"qTox-Screenshot-XXXXXXXX.png");
     if (!file.open())
     {
-        QMessageBox::warning(this,
-                             tr("Failed to open temporary file", "Temporary file for screenshot"),
-                             tr("qTox wasn't able to save the screenshot"));
+        QMessageBox::warning(this, tr("Failed to open temporary file", "Temporary file for screenshot"),
+                            tr("qTox wasn't able to save the screenshot"));
         return;
     }
 
