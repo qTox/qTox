@@ -52,6 +52,9 @@ protected:
     void dragLeaveEvent(QDragLeaveEvent* ev) override;
     void dropEvent(QDropEvent* ev) override;
 
+private:
+    void retranslateUi();
+
 public:
     int groupId;
 };
