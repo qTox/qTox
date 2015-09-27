@@ -2032,7 +2032,6 @@ void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
 
 void Widget::retranslateUi()
 {
-    QString name = ui->nameLabel->text(), status = ui->statusLabel->text();
     Core* core = Nexus::getCore();
     ui->retranslateUi(this);
     setUsername(core->getUsername());
