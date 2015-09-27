@@ -858,9 +858,6 @@ QSplitter:handle{
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
-                 <property name="text">
-                  <string>Your name</string>
-                 </property>
                 </widget>
                </item>
                <item>
@@ -939,9 +936,6 @@ QSplitter:handle{
                   <font>
                    <pointsize>8</pointsize>
                   </font>
-                 </property>
-                 <property name="text">
-                  <string>Your status</string>
                  </property>
                 </widget>
                </item>
