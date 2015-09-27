@@ -66,6 +66,8 @@ public:
     static void playMono16Sound(const QByteArray& data); ///< Play a 44100Hz mono 16bit PCM sound
     static bool tryCaptureSamples(uint8_t* buf, int framesize); ///< Does nothing and return false on failure
 
+    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
+
     /// May be called from any thread, will always queue a call to playGroupAudio
     /// The first and last argument are ignored, but allow direct compatibility with toxcore
     static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
@@ -84,7 +86,6 @@ public slots:
 private:
     explicit Audio()=default;
     ~Audio();
-    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
 
 private:
     static Audio* instance;
