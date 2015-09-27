@@ -629,6 +629,7 @@ void ChatForm::onCancelCallTriggered()
     qDebug() << "onCancelCallTriggered";
 
     enableCallButtons();
+    stopCounter();
 
     hideNetcam();
     emit cancelCall(f->getFriendID());

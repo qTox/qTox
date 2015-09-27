@@ -37,7 +37,7 @@ QHash<int, ToxGroupCall> CoreAV::groupCalls;
 
 ToxCall::ToxCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     : sendAudioTimer{new QTimer}, friendNum{FriendNum},
-      muteMic{false}, muteVol{false},
+      ringing{true}, muteMic{false}, muteVol{false},
       videoEnabled{VideoEnabled},
       alSource{0}, videoSource{nullptr},
       state{static_cast<TOXAV_FRIEND_CALL_STATE>(0)}
@@ -45,7 +45,7 @@ ToxCall::ToxCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     Audio::getInstance().subscribeInput();
     sendAudioTimer->setInterval(5);
     sendAudioTimer->setSingleShot(true);
-    QObject::connect(sendAudioTimer, &QTimer::timeout, [=,&av](){av.sendCallAudio(friendNum);});
+    QObject::connect(sendAudioTimer, &QTimer::timeout, [FriendNum,&av](){av.sendCallAudio(FriendNum);});
     sendAudioTimer->start();
 
     if (videoEnabled)
@@ -73,7 +73,7 @@ ToxCall::ToxCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
 
 ToxCall::ToxCall(ToxCall&& other)
     : sendAudioTimer{other.sendAudioTimer}, friendNum{other.friendNum},
-      muteMic{other.muteMic}, muteVol{other.muteVol},
+      ringing{other.ringing}, muteMic{other.muteMic}, muteVol{other.muteVol},
       videoEnabled{other.videoEnabled},
       alSource{other.alSource}, videoSource{other.videoSource},
       state{other.state}
@@ -114,6 +114,7 @@ const ToxCall& ToxCall::operator=(ToxCall&& other)
     other.sendAudioTimer = nullptr;
     friendNum = other.friendNum;
     other.friendNum = std::numeric_limits<decltype(friendNum)>::max();
+    ringing = other.ringing;
     muteMic = other.muteMic;
     muteVol = other.muteVol;
     videoEnabled = other.videoEnabled;
@@ -172,6 +173,7 @@ void CoreAV::answerCall(uint32_t friendNum)
     TOXAV_ERR_ANSWER err;
     if (toxav_answer(toxav, friendNum, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err))
     {
+        calls[friendNum].ringing = false;
         emit avStart(friendNum, calls[friendNum].videoEnabled);
     }
     else
@@ -221,57 +223,48 @@ void CoreAV::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uin
 
 void CoreAV::sendCallAudio(uint32_t callId)
 {
-    qDebug() << "SEND CALL AUDIO CALLED";
     if (!calls.contains(callId))
         return;
 
-    if (calls[callId].muteMic || !Audio::getInstance().isInputReady())
+    ToxCall& call = calls[callId];
+
+    if (call.muteMic || call.ringing
+            || !(call.state & TOXAV_FRIEND_CALL_STATE_ACCEPTING_A)
+            || !Audio::getInstance().isInputReady())
     {
-        calls[callId].sendAudioTimer->start();
+        call.sendAudioTimer->start();
         return;
     }
 
-#if 0
-    const int framesize = (calls[callId].codecSettings.audio_frame_duration * calls[callId].codecSettings.audio_sample_rate) / 1000 * av_DefaultSettings.audio_channels;
-    const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
-    uint8_t buf[bufsize];
-
-    if (Audio::getInstance().tryCaptureSamples(buf, framesize))
+    int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS] = {0};
+    if (Audio::getInstance().tryCaptureSamples(buf, AUDIO_FRAME_SAMPLE_COUNT))
     {
 #ifdef QTOX_FILTER_AUDIO
         if (Settings::getInstance().getFilterAudio())
         {
-            if (!filterer[callId])
+            if (!call.filterer)
             {
-                filterer[callId] = new AudioFilterer();
-                filterer[callId]->startFilter(48000);
+                call.filterer = new AudioFilterer();
+                call.filterer->startFilter(AUDIO_SAMPLE_RATE);
             }
             // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
-            Audio::getEchoesToFilter(filterer[callId], framesize);
+            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
 
-            filterer[callId]->filterAudio((int16_t*) buf, framesize);
+            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT);
         }
-        else if (filterer[callId])
+        else if (call.filterer)
         {
-            delete filterer[callId];
-            filterer[callId] = nullptr;
+            delete call.filterer;
+            call.filterer = nullptr;
         }
 #endif
 
-        uint8_t dest[bufsize];
-        int r;
-        if ((r = toxav_prepare_audio_frame(toxav, callId, dest, framesize*2, (int16_t*)buf, framesize)) < 0)
-        {
-            qDebug() << "toxav_prepare_audio_frame error";
-            calls[callId].sendAudioTimer->start();
-            return;
-        }
-
-        if ((r = toxav_send_audio(toxav, callId, dest, r)) < 0)
-            qDebug() << "toxav_send_audio error";
+        if (!toxav_audio_send_frame(toxav, callId, buf, AUDIO_FRAME_SAMPLE_COUNT,
+                                    AUDIO_CHANNELS, AUDIO_SAMPLE_RATE, nullptr))
+            qDebug() << "toxav_audio_send_frame error";
     }
-#endif
-    calls[callId].sendAudioTimer->start();
+
+    call.sendAudioTimer->start();
 }
 
 void CoreAV::playCallVideo(void*, int32_t callId, const vpx_image *img, void *user_data)
@@ -454,11 +447,20 @@ void CoreAV::resetCallSources()
     }
 }
 
-void CoreAV::callCallback(ToxAV*, uint32_t friendNum, bool, bool video, void *_self)
+void CoreAV::callCallback(ToxAV*, uint32_t friendNum, bool audio, bool video, void *_self)
 {
     qWarning() << "RECEIVED CALL";
     CoreAV* self = static_cast<CoreAV*>(_self);
-    calls.insert({friendNum, video, *self});
+    const auto& callIt = calls.insert({friendNum, video, *self});
+
+    // We don't get a state callback when answering, so fill the state ourselves in advance
+    int state = 0;
+    if (audio)
+        state |= TOXAV_FRIEND_CALL_STATE_SENDING_A | TOXAV_FRIEND_CALL_STATE_ACCEPTING_A;
+    if (video)
+        state |= TOXAV_FRIEND_CALL_STATE_SENDING_V | TOXAV_FRIEND_CALL_STATE_ACCEPTING_V;
+    callIt->state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);
+
     emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
 }
 
@@ -483,9 +485,12 @@ void CoreAV::stateCallback(ToxAV *toxAV, uint32_t friendNum, uint32_t state, voi
     }
     else
     {
-        // If our state was null, we were ringing and the call just started
+        // If our state was null, we started the call and still ringing
         if (!call.state && state)
+        {
+            call.ringing = false;
             emit self->avStart(friendNum, call.videoEnabled);
+        }
 
         call.state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);
     }
@@ -501,10 +506,23 @@ void CoreAV::videoBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable,
     qWarning() << "AUDIO BITRATE IS "<<rate<<" STABILITY:"<<stable;
 }
 
-void CoreAV::audioFrameCallback(ToxAV *toxAV, uint32_t friendNum, const int16_t *pcm, size_t sampleCount, uint8_t channels, uint32_t samplingRate, void *self)
+void CoreAV::audioFrameCallback(ToxAV *toxAV, uint32_t friendNum, const int16_t *pcm,
+                                size_t sampleCount, uint8_t channels, uint32_t samplingRate, void *_self)
 {
-    qWarning() << "AUDIO FRAME";
-    Audio::playAudioBuffer(calls[friendNum].alSource, pcm, sampleCount, channels, samplingRate);
+    qWarning() << "AUDIO FRAME"<<sampleCount<<"SAMPLES AT"<<samplingRate<<"kHz"<<channels<<"CHANNELS";
+    CoreAV* self = static_cast<CoreAV*>(_self);
+    if (!self->calls.contains(friendNum))
+        return;
+
+    ToxCall& call = self->calls[friendNum];
+
+    if (call.muteVol)
+        return;
+
+    if (!call.alSource)
+        alGenSources(1, &call.alSource);
+
+    Audio::playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV *toxAV, uint32_t friendNum, uint16_t w, uint16_t h, const uint8_t *y, const uint8_t *u, const uint8_t *v, int32_t ystride, int32_t ustride, int32_t vstride, void *self)

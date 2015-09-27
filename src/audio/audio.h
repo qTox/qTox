@@ -43,6 +43,12 @@ class QMutex;
 struct Tox;
 class AudioFilterer;
 
+// Public default audio settings
+static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
+static constexpr uint32_t AUDIO_FRAME_DURATION = 20; ///< In milliseconds
+static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE/1000;
+static constexpr uint32_t AUDIO_CHANNELS = 2; ///< Ideally, we'd auto-detect, but that's a sane default
+
 class Audio : public QObject
 {
     Q_OBJECT
@@ -67,7 +73,7 @@ public:
     bool isOutputClosed();
 
     void playMono16Sound(const QByteArray& data);
-    bool tryCaptureSamples(uint8_t* buf, int framesize);
+    bool tryCaptureSamples(int16_t *buf, int samples);
 
     static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
 
@@ -107,12 +113,6 @@ private:
     ALuint              alMainSource;
     ALCcontext*         alContext;
     QTimer*             timer;
-
-    struct DefaultSettings {
-        static constexpr int sampleRate = 48000;
-        static constexpr int frameDuration = 20;
-        static constexpr int audioChannels = 1;
-    };
 };
 
 #endif // AUDIO_H

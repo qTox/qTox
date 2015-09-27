@@ -194,10 +194,10 @@ void Audio::openInput(const QString& inDevDescr)
     alInDev = nullptr;
 
     /// TODO: Try to actually detect if our audio source is stereo
-    int stereoFlag = DefaultSettings::audioChannels ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-    const uint32_t sampleRate = DefaultSettings::sampleRate;
-    const uint16_t frameDuration = DefaultSettings::frameDuration;
-    const uint32_t chnls = DefaultSettings::audioChannels;
+    int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+    const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
+    const uint16_t frameDuration = AUDIO_FRAME_DURATION;
+    const uint32_t chnls = AUDIO_CHANNELS;
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
     if (inDevDescr.isEmpty())
         alInDev = alcCaptureOpenDevice(nullptr, sampleRate, stereoFlag, bufSize);
@@ -474,31 +474,29 @@ bool Audio::isOutputClosed()
 /**
 Does nothing and return false on failure
 */
-bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
+bool Audio::tryCaptureSamples(int16_t* buf, int samples)
 {
     QMutexLocker lock(&audioInLock);
 
-    ALint samples=0;
-    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if (samples < framesize)
+    ALint curSamples=0;
+    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
+    if (curSamples < samples)
         return false;
 
-    memset(buf, 0, framesize * 2 * DefaultSettings::audioChannels); // Avoid uninitialized values (Valgrind)
-    alcCaptureSamples(Audio::alInDev, buf, framesize);
+    alcCaptureSamples(Audio::alInDev, buf, samples);
 
     if (inputVolume != 1)
     {
-        int16_t* bufReal = reinterpret_cast<int16_t*>(buf);
-        for (int i = 0; i < framesize; ++i)
+        for (int i = 0; i < samples; ++i)
         {
-            int sample = bufReal[i] * pow(inputVolume, 2);
+            int sample = buf[i] * pow(inputVolume, 2);
 
             if (sample < std::numeric_limits<int16_t>::min())
                 sample = std::numeric_limits<int16_t>::min();
             else if (sample > std::numeric_limits<int16_t>::max())
                 sample = std::numeric_limits<int16_t>::max();
 
-            bufReal[i] = sample;
+            buf[i] = sample;
         }
     }
 
