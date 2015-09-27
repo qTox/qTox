@@ -764,6 +764,8 @@ void Core::removeGroup(int groupId, bool fake)
 QString Core::getUsername() const
 {
     QString sname;
+    if (!tox)
+        return sname;
     int size = tox_self_get_name_size(tox);
     uint8_t* name = new uint8_t[size];
     tox_self_get_name(tox, name);
@@ -830,6 +832,8 @@ QPair<QByteArray, QByteArray> Core::getKeypair() const
 QString Core::getStatusMessage() const
 {
     QString sname;
+    if (!tox)
+        return sname;
     size_t size = tox_self_get_status_message_size(tox);
     uint8_t* name = new uint8_t[size];
     tox_self_get_status_message(tox, name);
