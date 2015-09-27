@@ -78,9 +78,9 @@ void ScreenshotGrabber::showGrabber()
     this->window->grabKeyboard();
 
     QRect fullGrabbedRect = screenGrab.rect();
-    QRect nr(QPoint(-1,-1), fullGrabbedRect.size());
+    QRect rec = QApplication::primaryScreen()->virtualGeometry();
 
-    this->window->setGeometry(nr);
+    this->window->setGeometry(rec);
     this->scene->setSceneRect(fullGrabbedRect);
     this->overlay->setRect(fullGrabbedRect);
 
@@ -200,11 +200,13 @@ void ScreenshotGrabber::reject()
 
 QPixmap ScreenshotGrabber::grabScreen()
 {
-    QScreen* screen = QApplication::primaryScreen();
-    if (screen)
-        return screen->grabWindow(0);
-
-    return QPixmap();
+    QScreen* screen = QGuiApplication::primaryScreen();
+    QRect rec = screen->virtualGeometry();
+    return screen->grabWindow(QApplication::desktop()->winId(),
+                              rec.x(),
+                              rec.y(),
+                              rec.width(),
+                              rec.height());
 }
 
 void ScreenshotGrabber::beginRectChooser(QGraphicsSceneMouseEvent* event)
