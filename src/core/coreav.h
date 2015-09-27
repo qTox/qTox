@@ -63,6 +63,7 @@ struct ToxCall
 
     QTimer* sendAudioTimer;
     uint32_t friendNum;
+    bool ringing; ///< True while we're ringing and the call hasn't started yet
     bool muteMic;
     bool muteVol;
     bool videoEnabled; ///< True if our user asked for a video call, sending and recving
