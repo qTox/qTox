@@ -204,10 +204,12 @@ QString ChatMessage::detectAnchors(const QString &str)
                 offset += url.length();
                 continue;
             }
+            QString htmledUrl;
             // add scheme if not specified
             if (exp.cap(2) == "www.")
-                url.prepend("http://");
-            QString htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
+                htmledUrl = QString("<a href=\"http://%1\">%1</a>").arg(url);
+            else
+                htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
             out.replace(offset, exp.cap().length(), htmledUrl);
             offset += htmledUrl.length();
         }
