@@ -36,7 +36,7 @@ public:
     inline const_iterator cend() const { return v.cend(); }
     inline iterator erase(iterator pos) { return v.erase(pos); }
     inline iterator erase(iterator first, iterator last) { return v.erase(first, last); }
-    inline iterator insert(T&& value) { v.push_back(std::move(value)); return v.end(); }
+    inline iterator insert(T&& value) { v.push_back(std::move(value)); return --v.end(); }
 
 private:
     std::vector<T> v;

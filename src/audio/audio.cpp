@@ -145,15 +145,13 @@ void Audio::openInput(const QString& inDevDescr)
         alcCaptureCloseDevice(tmp);
 
     /// TODO: Try to actually detect if our audio source is stereo
-    int stereoFlag = DefaultSettings::audioChannels ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+    int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr, DefaultSettings::sampleRate, stereoFlag,
-            (DefaultSettings::frameDuration * DefaultSettings::sampleRate * 4)
-                                       / 1000 * DefaultSettings::audioChannels);
+        alInDev = alcCaptureOpenDevice(nullptr, AUDIO_SAMPLE_RATE, stereoFlag,
+                                        4 * AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
     else
-        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),DefaultSettings::sampleRate, stereoFlag,
-                                       (DefaultSettings::frameDuration * DefaultSettings::sampleRate * 4)
-                                                                  / 1000 * DefaultSettings::audioChannels);
+        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(), AUDIO_SAMPLE_RATE, stereoFlag,
+                                        4 * AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
     if (!alInDev)
         qWarning() << "Cannot open input audio device " + inDevDescr;
     else
@@ -348,17 +346,16 @@ bool Audio::isOutputClosed()
     return (alOutDev);
 }
 
-bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
+bool Audio::tryCaptureSamples(int16_t* buf, int samples)
 {
     QMutexLocker lock(audioInLock);
 
-    ALint samples=0;
-    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if (samples < framesize)
+    ALint curSamples=0;
+    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
+    if (curSamples < samples)
         return false;
 
-    memset(buf, 0, framesize * 2 * DefaultSettings::audioChannels); // Avoid uninitialized values (Valgrind)
-    alcCaptureSamples(Audio::alInDev, buf, framesize);
+    alcCaptureSamples(Audio::alInDev, buf, samples);
     return true;
 }
 
