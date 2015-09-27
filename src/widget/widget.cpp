@@ -2035,27 +2035,8 @@ void Widget::retranslateUi()
     QString name = ui->nameLabel->text(), status = ui->statusLabel->text();
     Core* core = Nexus::getCore();
     ui->retranslateUi(this);
-    if (core->getUsername().isEmpty())
-    {
-        ui->nameLabel->setText(tr("Your name"));
-        ui->nameLabel->setToolTip(tr("Your name"));
-    }
-    else
-    {
-        ui->nameLabel->setText(name);
-        ui->nameLabel->setToolTip(name);
-    }
-
-    if (core->getStatusMessage().isEmpty())
-    {
-        ui->statusLabel->setText(tr("Your status"));
-        ui->statusLabel->setToolTip(tr("Your status"));
-    }
-    else
-    {
-        ui->statusLabel->setText(status);
-        ui->statusLabel->setToolTip(status);
-    }
+    setUsername(core->getUsername());
+    setStatusMessage(core->getStatusMessage());
 
     filterDisplayName->setText(tr("By Name"));
     filterDisplayActivity->setText(tr("By Activity"));
