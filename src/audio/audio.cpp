@@ -417,7 +417,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 {
     assert(channels == 1 || channels == 2);
 
-    QMutexLocker lock(&audioOutLock);
+    QMutexLocker lock(&getInstance().audioOutLock);
 
     ALuint bufid;
     ALint processed = 0, queued = 16;
@@ -448,7 +448,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
-    alSourcef(alSource, AL_GAIN, outputVolume);
+    alSourcef(alSource, AL_GAIN, getInstance().outputVolume);
     if (state != AL_PLAYING)
         alSourcePlay(alSource);
 }

@@ -35,6 +35,8 @@
  #include <AL/alc.h>
 #endif
 
+#include "src/core/indexedlist.h"
+
 #ifdef QTOX_FILTER_AUDIO
 class AudioFilterer;
 #endif
@@ -51,9 +53,15 @@ struct ToxCall
 {
     ToxCall() = default;
     ToxCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av);
+    ToxCall(const ToxCall& other) = delete;
+    ToxCall(ToxCall&& other) noexcept;
     ~ToxCall();
 
-    QTimer *sendAudioTimer;
+    inline operator int() {return friendNum;}
+    const ToxCall& operator=(const ToxCall& other) = delete;
+    const ToxCall& operator=(ToxCall&& other) noexcept;
+
+    QTimer* sendAudioTimer;
     uint32_t friendNum;
     bool muteMic;
     bool muteVol;
@@ -153,7 +161,7 @@ private:
 
 private:
     ToxAV* toxav;
-    static QHash<uint32_t, ToxCall> calls;
+    static IndexedList<ToxCall> calls;
     static QHash<int, ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
 
     friend class Audio;

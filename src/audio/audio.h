@@ -69,6 +69,8 @@ public:
     void playMono16Sound(const QByteArray& data);
     bool tryCaptureSamples(uint8_t* buf, int framesize);
 
+    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
+
     static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
@@ -89,8 +91,6 @@ signals:
 private:
     Audio();
     ~Audio();
-
-    void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
 
 private:
     static Audio* instance;

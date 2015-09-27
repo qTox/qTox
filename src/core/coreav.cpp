@@ -32,7 +32,7 @@
 #include <QDebug>
 #include <QTimer>
 
-QHash<uint32_t, ToxCall> CoreAV::calls;
+IndexedList<ToxCall> CoreAV::calls;
 QHash<int, ToxGroupCall> CoreAV::groupCalls;
 
 ToxCall::ToxCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
@@ -71,10 +71,32 @@ ToxCall::ToxCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
 #endif
 }
 
+ToxCall::ToxCall(ToxCall&& other)
+    : sendAudioTimer{other.sendAudioTimer}, friendNum{other.friendNum},
+      muteMic{other.muteMic}, muteVol{other.muteVol},
+      videoEnabled{other.videoEnabled},
+      alSource{other.alSource}, videoSource{other.videoSource},
+      state{other.state}
+{
+    other.sendAudioTimer = nullptr;
+    other.friendNum = std::numeric_limits<decltype(friendNum)>::max();
+    other.alSource = 0;
+    other.videoSource = nullptr;
+
+#ifdef QTOX_FILTER_AUDIO
+    filterer = other.filterer;
+    other.filterer = nullptr;
+#endif
+}
+
 ToxCall::~ToxCall()
 {
-    QObject::disconnect(sendAudioTimer, nullptr, nullptr, nullptr);
-    sendAudioTimer->stop();
+    if (sendAudioTimer)
+    {
+        QObject::disconnect(sendAudioTimer, nullptr, nullptr, nullptr);
+        sendAudioTimer->stop();
+        Audio::getInstance().unsubscribeInput();
+    }
     if (videoEnabled)
     {
         CameraSource::getInstance().unsubscribe();
@@ -84,8 +106,29 @@ ToxCall::~ToxCall()
             videoSource = nullptr;
         }
     }
+}
 
-    Audio::getInstance().unsubscribeInput();
+const ToxCall& ToxCall::operator=(ToxCall&& other)
+{
+    sendAudioTimer = other.sendAudioTimer;
+    other.sendAudioTimer = nullptr;
+    friendNum = other.friendNum;
+    other.friendNum = std::numeric_limits<decltype(friendNum)>::max();
+    muteMic = other.muteMic;
+    muteVol = other.muteVol;
+    videoEnabled = other.videoEnabled;
+    alSource = other.alSource;
+    other.alSource = 0;
+    videoSource = other.videoSource;
+    other.videoSource = nullptr;
+    state = other.state;
+
+    #ifdef QTOX_FILTER_AUDIO
+        filterer = other.filterer;
+        other.filterer = nullptr;
+    #endif
+
+    return *this;
 }
 
 CoreAV::CoreAV(Tox *tox)
@@ -102,7 +145,7 @@ CoreAV::CoreAV(Tox *tox)
 
 CoreAV::~CoreAV()
 {
-    for (ToxCall call : calls)
+    for (const ToxCall& call : calls)
         cancelCall(call.friendNum);
     toxav_kill(toxav);
 }
@@ -150,7 +193,7 @@ void CoreAV::startCall(uint32_t friendId, bool video)
         return;
     }
 
-    calls.insert(friendId, {friendId, video, *this});
+    calls.insert({friendId, video, *this});
     emit avRinging(friendId, video);
 }
 
@@ -178,6 +221,7 @@ void CoreAV::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uin
 
 void CoreAV::sendCallAudio(uint32_t callId)
 {
+    qDebug() << "SEND CALL AUDIO CALLED";
     if (!calls.contains(callId))
         return;
 
@@ -281,52 +325,6 @@ void CoreAV::volMuteToggle(uint32_t callId)
 {
     if (calls.contains(callId))
         calls[callId].muteVol = !calls[callId].muteVol;
-}
-
-// This function's logic was shamelessly stolen from uTox
-void CoreAV::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate)
-{
-    if (!channels || channels > 2)
-    {
-        qWarning() << "playAudioBuffer: trying to play on "<<channels<<" channels! Giving up.";
-        return;
-    }
-
-    ALuint bufid;
-    ALint processed = 0, queued = 16;
-    alGetSourcei(alSource, AL_BUFFERS_PROCESSED, &processed);
-    alGetSourcei(alSource, AL_BUFFERS_QUEUED, &queued);
-    alSourcei(alSource, AL_LOOPING, AL_FALSE);
-
-    if (processed)
-    {
-        ALuint bufids[processed];
-        alSourceUnqueueBuffers(alSource, processed, bufids);
-        alDeleteBuffers(processed - 1, bufids + 1);
-        bufid = bufids[0];
-    }
-    else if (queued < 32)
-    {
-        alGenBuffers(1, &bufid);
-    }
-    else
-    {
-        qDebug() << "Dropped audio frame";
-        return;
-    }
-
-    alBufferData(bufid, (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data,
-                    samples * 2 * channels, sampleRate);
-    alSourceQueueBuffers(alSource, 1, &bufid);
-
-    ALint state;
-    alGetSourcei(alSource, AL_SOURCE_STATE, &state);
-    alSourcef(alSource, AL_GAIN, Audio::getInstance().getOutputVolume());
-    if (state != AL_PLAYING)
-    {
-        alSourcePlay(alSource);
-        //qDebug() << "Starting audio source " << (int)alSource;
-    }
 }
 
 VideoSource *CoreAV::getVideoSourceFromCall(int friendNum)
@@ -460,7 +458,7 @@ void CoreAV::callCallback(ToxAV*, uint32_t friendNum, bool, bool video, void *_s
 {
     qWarning() << "RECEIVED CALL";
     CoreAV* self = static_cast<CoreAV*>(_self);
-    calls.insert(friendNum, {friendNum, video, *self});
+    calls.insert({friendNum, video, *self});
     emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
 }
 
@@ -506,6 +504,7 @@ void CoreAV::videoBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable,
 void CoreAV::audioFrameCallback(ToxAV *toxAV, uint32_t friendNum, const int16_t *pcm, size_t sampleCount, uint8_t channels, uint32_t samplingRate, void *self)
 {
     qWarning() << "AUDIO FRAME";
+    Audio::playAudioBuffer(calls[friendNum].alSource, pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV *toxAV, uint32_t friendNum, uint16_t w, uint16_t h, const uint8_t *y, const uint8_t *u, const uint8_t *v, int32_t ystride, int32_t ustride, int32_t vstride, void *self)
