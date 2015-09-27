@@ -61,7 +61,7 @@ QThread* Core::coreThread{nullptr};
 #define MAX_GROUP_MESSAGE_LEN 1024
 
 Core::Core(QThread *CoreThread, Profile& profile) :
-    tox(nullptr), toxav(nullptr), av(new CoreAV), profile(profile), ready{false}
+    tox(nullptr), av(nullptr), profile(profile), ready{false}
 {
     coreThread = CoreThread;
 
@@ -82,10 +82,10 @@ Core::Core(QThread *CoreThread, Profile& profile) :
 
 void Core::deadifyTox()
 {
-    if (toxav)
+    if (av)
     {
-        toxav_kill(toxav);
-        toxav = nullptr;
+        delete av;
+        av = nullptr;
     }
     if (tox)
     {
@@ -111,8 +111,6 @@ Core::~Core()
         coreThread->wait(500);
     }
 
-    delete av;
-
     deadifyTox();
 
     Audio::closeInput();
@@ -124,7 +122,7 @@ Core* Core::getInstance()
     return Nexus::getCore();
 }
 
-const CoreAV *Core::getAv() const
+CoreAV *Core::getAv()
 {
     return av;
 }
@@ -227,8 +225,8 @@ void Core::makeTox(QByteArray savedata)
             return;
     }
 
-    toxav = toxav_new(tox, nullptr);
-    if (toxav == nullptr)
+    av = new CoreAV(tox);
+    if (av->getToxAv() == nullptr)
     {
         qCritical() << "Toxav core failed to start";
         emit failedToStart();
@@ -352,7 +350,7 @@ void Core::process()
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
     tox_iterate(tox);
-    toxav_iterate(toxav); ///< TODO: This is best called in a separate thread, as per the doc.
+    av->process();
 
 #ifdef DEBUG
     //we want to see the debug messages immediately
@@ -369,7 +367,7 @@ void Core::process()
         tolerance = 3*CORE_DISCONNECT_TOLERANCE;
     }
 
-    unsigned sleeptime = qMin(tox_iteration_interval(tox), toxav_iteration_interval(toxav));
+    unsigned sleeptime = qMin(tox_iteration_interval(tox), toxav_iteration_interval(av->getToxAv()));
     sleeptime = qMin(sleeptime, CoreFile::corefileIterationInterval());
     toxTimer->start(sleeptime);
 }
@@ -1182,7 +1180,7 @@ QString Core::getPeerName(const ToxId& id) const
 
 bool Core::isReady()
 {
-    return toxav && tox && ready;
+    return av && av->getToxAv() && tox && ready;
 }
 
 void Core::setNospam(uint32_t nospam)

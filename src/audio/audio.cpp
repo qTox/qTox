@@ -94,8 +94,6 @@ void Audio::setOutputVolume(float volume)
 
     for (const ToxCall& call : CoreAV::calls)
     {
-        if (!call.active)
-            continue;
         alSourcef(call.alSource, AL_GAIN, outputVolume);
     }
 }
@@ -163,7 +161,7 @@ void Audio::openInput(const QString& inDevDescr)
 
     Core* core = Core::getInstance();
     if (core)
-        CoreAV::resetCallSources(); // Force to regen each group call's sources
+        core->getAv()->resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
     if (userCount.load() != 0 && alInDev)
@@ -218,7 +216,7 @@ void Audio::openOutput(const QString& outDevDescr)
 
     Core* core = Core::getInstance();
     if (core)
-        CoreAV::resetCallSources(); // Force to regen each group call's sources
+        core->getAv()->resetCallSources(); // Force to regen each group call's sources
 }
 
 void Audio::closeInput()

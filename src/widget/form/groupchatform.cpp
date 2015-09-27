@@ -256,13 +256,13 @@ void GroupChatForm::onMicMuteToggle()
     {
         if (micButton->objectName() == "red")
         {
-            CoreAV::enableGroupCallMic(group->getGroupId());
+            Core::getInstance()->getAv()->enableGroupCallMic(group->getGroupId());
             micButton->setObjectName("green");
             micButton->setToolTip(tr("Mute microphone"));
         }
         else
         {
-            CoreAV::disableGroupCallMic(group->getGroupId());
+            Core::getInstance()->getAv()->disableGroupCallMic(group->getGroupId());
             micButton->setObjectName("red");
             micButton->setToolTip(tr("Unmute microphone"));
         }
@@ -277,13 +277,13 @@ void GroupChatForm::onVolMuteToggle()
     {
         if (volButton->objectName() == "red")
         {
-            CoreAV::enableGroupCallVol(group->getGroupId());
+            Core::getInstance()->getAv()->enableGroupCallVol(group->getGroupId());
             volButton->setObjectName("green");
             volButton->setToolTip(tr("Mute call"));
         }
         else
         {
-            CoreAV::disableGroupCallVol(group->getGroupId());
+            Core::getInstance()->getAv()->disableGroupCallVol(group->getGroupId());
             volButton->setObjectName("red");
             volButton->setToolTip(tr("Unmute call"));
         }
@@ -296,7 +296,7 @@ void GroupChatForm::onCallClicked()
 {
     if (!inCall)
     {
-        CoreAV::joinGroupCall(group->getGroupId());
+        Core::getInstance()->getAv()->joinGroupCall(group->getGroupId());
         audioInputFlag = true;
         audioOutputFlag = true;
         callButton->setObjectName("red");
@@ -312,7 +312,7 @@ void GroupChatForm::onCallClicked()
     }
     else
     {
-        CoreAV::leaveGroupCall(group->getGroupId());
+        Core::getInstance()->getAv()->leaveGroupCall(group->getGroupId());
         audioInputFlag = false;
         audioOutputFlag = false;
         callButton->setObjectName("green");
@@ -333,9 +333,9 @@ void GroupChatForm::keyPressEvent(QKeyEvent* ev)
     // Push to talk (CTRL+P)
     if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall)
     {
-        if (!CoreAV::isGroupCallMicEnabled(group->getGroupId()))
+        if (!Core::getInstance()->getAv()->isGroupCallMicEnabled(group->getGroupId()))
         {
-            CoreAV::enableGroupCallMic(group->getGroupId());
+            Core::getInstance()->getAv()->enableGroupCallMic(group->getGroupId());
             micButton->setObjectName("green");
             micButton->style()->polish(micButton);
             Style::repolish(micButton);
@@ -351,9 +351,9 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
     // Push to talk (CTRL+P)
     if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall)
     {
-        if (CoreAV::isGroupCallMicEnabled(group->getGroupId()))
+        if (Core::getInstance()->getAv()->isGroupCallMicEnabled(group->getGroupId()))
         {
-            CoreAV::disableGroupCallMic(group->getGroupId());
+            Core::getInstance()->getAv()->disableGroupCallMic(group->getGroupId());
             micButton->setObjectName("red");
             micButton->style()->polish(micButton);
             Style::repolish(micButton);
