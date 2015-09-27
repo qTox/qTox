@@ -118,8 +118,9 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         {
             screen = QApplication::desktop()->screenGeometry().size();
             // Workaround https://trac.ffmpeg.org/ticket/4574 by choping 1 px bottom and right
-            screen.setWidth(screen.width()-1);
-            screen.setHeight(screen.height()-1);
+            // Actually, let's chop two pixels, toxav hates odd resolutions (off by one stride)
+            screen.setWidth(screen.width()-2);
+            screen.setHeight(screen.height()-2);
         }
         av_dict_set(&options, "video_size", QString("%1x%2").arg(screen.width()).arg(screen.height()).toStdString().c_str(), 0);
         if (mode.FPS)
