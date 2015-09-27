@@ -52,30 +52,30 @@ public:
 
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);
-    void startCall(uint32_t FriendId, bool video);
-    void answerCall(int callId);
-    void hangupCall(int callId);
-    void cancelCall(int callId, uint32_t FriendId);
-    void rejectCall(int callId);
-    void micMuteToggle(int callId);
-    void volMuteToggle(int callId);
+    void startCall(uint32_t friendId, bool video);
+    void answerCall(uint32_t friendId);
+    void hangupCall(uint32_t friendId);
+    void cancelCall(uint32_t friendId);
+    void rejectCall(uint32_t friendId);
+    void micMuteToggle(uint32_t friendId);
+    void volMuteToggle(uint32_t friendId);
     void aliasChanged(const QString& alias);
 
 public slots:
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
-    void onAvInvite(uint32_t FriendId, int CallId, bool video);
-    void onAvStart(uint32_t FriendId, int CallId, bool video);
-    void onAvCancel(uint32_t FriendId, int CallId);
-    void onAvEnd(uint32_t FriendId, int CallId);
-    void onAvRinging(uint32_t FriendId, int CallId, bool video);
-    void onAvStarting(uint32_t FriendId, int CallId, bool video);
-    void onAvEnding(uint32_t FriendId, int CallId);
-    void onAvRequestTimeout(uint32_t FriendId, int CallId);
-    void onAvPeerTimeout(uint32_t FriendId, int CallId);
-    void onAvMediaChange(uint32_t FriendId, int CallId, bool video);
+    void onAvInvite(uint32_t FriendId, bool video);
+    void onAvStart(uint32_t FriendId, bool video);
+    void onAvCancel(uint32_t FriendId);
+    void onAvEnd(uint32_t FriendId);
+    void onAvRinging(uint32_t FriendId, bool video);
+    void onAvStarting(uint32_t FriendId, bool video);
+    void onAvEnding(uint32_t FriendId);
+    void onAvRequestTimeout(uint32_t FriendId);
+    void onAvPeerTimeout(uint32_t FriendId);
+    void onAvMediaChange(uint32_t FriendId, bool video);
     void onAvCallFailed(uint32_t FriendId);
-    void onAvRejected(uint32_t FriendId, int CallId);
+    void onAvRejected(uint32_t FriendId);
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onAvatarChange(uint32_t FriendId, const QPixmap& pic);
@@ -114,7 +114,6 @@ protected:
 private:
     Friend* f;
     CroppingLabel *statusMessageLabel;
-    int callId;
     QLabel *callDuration;
     QTimer *callDurationTimer;
     QTimer typingTimer;

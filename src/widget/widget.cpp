@@ -882,6 +882,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
 
     Core* core = Nexus::getCore();
+    CoreAV* coreav = core->getAv();
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
     connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::compactChange);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
@@ -892,26 +893,26 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), &GenericChatForm::sendAction, core, &Core::sendAction);
     connect(newfriend->getChatForm(), &ChatForm::sendFile, core, &Core::sendFile);
     connect(newfriend->getChatForm(), &ChatForm::answerCall, core->getAv(), &CoreAV::answerCall);
-    connect(newfriend->getChatForm(), &ChatForm::hangupCall, core->getAv(), &CoreAV::hangupCall);
-    connect(newfriend->getChatForm(), &ChatForm::rejectCall, core->getAv(), &CoreAV::rejectCall);
+    connect(newfriend->getChatForm(), &ChatForm::hangupCall, core->getAv(), &CoreAV::cancelCall);
+    connect(newfriend->getChatForm(), &ChatForm::rejectCall, core->getAv(), &CoreAV::cancelCall);
     connect(newfriend->getChatForm(), &ChatForm::startCall, core->getAv(), &CoreAV::startCall);
     connect(newfriend->getChatForm(), &ChatForm::cancelCall, core->getAv(), &CoreAV::cancelCall);
     connect(newfriend->getChatForm(), &ChatForm::micMuteToggle, core->getAv(), &CoreAV::micMuteToggle);
     connect(newfriend->getChatForm(), &ChatForm::volMuteToggle, core->getAv(), &CoreAV::volMuteToggle);
     connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
-    connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
-    connect(core, &Core::avStart, newfriend->getChatForm(), &ChatForm::onAvStart);
-    connect(core, &Core::avCancel, newfriend->getChatForm(), &ChatForm::onAvCancel);
-    connect(core, &Core::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd);
-    connect(core, &Core::avRinging, newfriend->getChatForm(), &ChatForm::onAvRinging);
-    connect(core, &Core::avStarting, newfriend->getChatForm(), &ChatForm::onAvStarting);
-    connect(core, &Core::avEnding, newfriend->getChatForm(), &ChatForm::onAvEnding);
-    connect(core, &Core::avRequestTimeout, newfriend->getChatForm(), &ChatForm::onAvRequestTimeout);
-    connect(core, &Core::avPeerTimeout, newfriend->getChatForm(), &ChatForm::onAvPeerTimeout);
-    connect(core, &Core::avMediaChange, newfriend->getChatForm(), &ChatForm::onAvMediaChange);
-    connect(core, &Core::avCallFailed, newfriend->getChatForm(), &ChatForm::onAvCallFailed);
-    connect(core, &Core::avRejected, newfriend->getChatForm(), &ChatForm::onAvRejected);
+    connect(coreav, &CoreAV::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
+    connect(coreav, &CoreAV::avStart, newfriend->getChatForm(), &ChatForm::onAvStart);
+    connect(coreav, &CoreAV::avCancel, newfriend->getChatForm(), &ChatForm::onAvCancel);
+    connect(coreav, &CoreAV::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd);
+    connect(coreav, &CoreAV::avRinging, newfriend->getChatForm(), &ChatForm::onAvRinging);
+    connect(coreav, &CoreAV::avStarting, newfriend->getChatForm(), &ChatForm::onAvStarting);
+    connect(coreav, &CoreAV::avEnding, newfriend->getChatForm(), &ChatForm::onAvEnding);
+    connect(coreav, &CoreAV::avRequestTimeout, newfriend->getChatForm(), &ChatForm::onAvRequestTimeout);
+    connect(coreav, &CoreAV::avPeerTimeout, newfriend->getChatForm(), &ChatForm::onAvPeerTimeout);
+    connect(coreav, &CoreAV::avMediaChange, newfriend->getChatForm(), &ChatForm::onAvMediaChange);
+    connect(coreav, &CoreAV::avCallFailed, newfriend->getChatForm(), &ChatForm::onAvCallFailed);
+    connect(coreav, &CoreAV::avRejected, newfriend->getChatForm(), &ChatForm::onAvRejected);
     connect(core, &Core::friendAvatarChanged, newfriend->getChatForm(), &ChatForm::onAvatarChange);
     connect(core, &Core::friendAvatarChanged, newfriend->getFriendWidget(), &FriendWidget::onAvatarChange);
     connect(core, &Core::friendAvatarRemoved, newfriend->getChatForm(), &ChatForm::onAvatarRemoved);
@@ -1589,7 +1590,7 @@ Group *Widget::createGroup(int groupId)
     Core* core = Nexus::getCore();
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, CoreAV::isGroupAvEnabled(groupId));
+    Group* newgroup = GroupList::addGroup(groupId, groupName, core->getAv()->isGroupAvEnabled(groupId));
 
     contactListWidget->addGroupWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();

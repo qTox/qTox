@@ -359,7 +359,7 @@ void GeneralForm::onUseProxyUpdated()
 
 void GeneralForm::onReconnectClicked()
 {
-    if (CoreAV::anyActiveCalls())
+    if (Core::getInstance()->getAv()->anyActiveCalls())
     {
         QMessageBox::warning(this, tr("Call active", "popup title"),
                         tr("You can't disconnect while a call is active!", "popup text"));
