@@ -545,4 +545,5 @@ HEADERS += \
     src/widget/contentlayout.h \
     src/widget/contentdialog.h \
     src/widget/tool/activatedialog.h \
-    src/widget/tool/removefrienddialog.h
+    src/widget/tool/removefrienddialog.h \
+    src/core/indexedlist.h
