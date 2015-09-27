@@ -38,7 +38,7 @@ CameraSource::CameraSource()
     : deviceName{"none"}, device{nullptr}, mode(VideoMode{0,0,0}),
       cctx{nullptr}, cctxOrig{nullptr}, videoStreamIndex{-1},
       biglock{false}, freelistLock{false},
-      isOpen{false}, subscriptions{0}
+      _isOpen{false}, subscriptions{0}
 {
     av_register_all();
     avdevice_register_all();
@@ -89,9 +89,9 @@ void CameraSource::open(const QString DeviceName, VideoMode Mode)
 
     deviceName = DeviceName;
     mode = Mode;
-    isOpen = (deviceName != "none");
+    _isOpen = (deviceName != "none");
 
-    if (subscriptions && isOpen)
+    if (subscriptions && _isOpen)
         openDevice();
 
     biglock = false;
@@ -100,6 +100,11 @@ void CameraSource::open(const QString DeviceName, VideoMode Mode)
 void CameraSource::close()
 {
     open("none");
+}
+
+bool CameraSource::isOpen()
+{
+    return _isOpen;
 }
 
 CameraSource::~CameraSource()
@@ -111,7 +116,7 @@ CameraSource::~CameraSource()
             expected = false;
     }
 
-    if (!isOpen)
+    if (!_isOpen)
     {
         biglock = false;
         return;
@@ -153,7 +158,7 @@ bool CameraSource::subscribe()
             expected = false;
     }
 
-    if (!isOpen)
+    if (!_isOpen)
     {
         ++subscriptions;
         biglock = false;
@@ -188,7 +193,7 @@ void CameraSource::unsubscribe()
             expected = false;
     }
 
-    if (!isOpen)
+    if (!_isOpen)
     {
         --subscriptions;
         biglock = false;

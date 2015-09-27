@@ -617,6 +617,7 @@ void ChatForm::onAvCallFailed(uint32_t FriendId)
     callConfirm = nullptr;
 
     enableCallButtons();
+    stopCounter();
 }
 
 void ChatForm::onCancelCallTriggered()
