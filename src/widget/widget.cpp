@@ -793,8 +793,17 @@ void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUse
 
 void Widget::setUsername(const QString& username)
 {
-    ui->nameLabel->setText(username);
-    ui->nameLabel->setToolTip(username);    // for overlength names
+    if (username.isEmpty())
+    {
+        ui->nameLabel->setText(tr("Your name"));
+        ui->nameLabel->setToolTip(tr("Your name"));
+    }
+    else
+    {
+        ui->nameLabel->setText(username);
+        ui->nameLabel->setToolTip(username);    // for overlength names
+    }
+
     QString sanename = username;
     sanename.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
              nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
@@ -809,8 +818,16 @@ void Widget::onStatusMessageChanged(const QString& newStatusMessage)
 
 void Widget::setStatusMessage(const QString &statusMessage)
 {
-    ui->statusLabel->setText(statusMessage);
-    ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
+    if (statusMessage.isEmpty())
+    {
+        ui->statusLabel->setText(tr("Your status"));
+        ui->statusLabel->setToolTip(tr("Your status"));
+    }
+    else
+    {
+        ui->statusLabel->setText(statusMessage);
+        ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
+    }
 }
 
 void Widget::reloadHistory()
@@ -2016,9 +2033,29 @@ void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
 void Widget::retranslateUi()
 {
     QString name = ui->nameLabel->text(), status = ui->statusLabel->text();
+    Core* core = Nexus::getCore();
     ui->retranslateUi(this);
-    ui->nameLabel->setText(name);
-    ui->statusLabel->setText(status);
+    if (core->getUsername().isEmpty())
+    {
+        ui->nameLabel->setText(tr("Your name"));
+        ui->nameLabel->setToolTip(tr("Your name"));
+    }
+    else
+    {
+        ui->nameLabel->setText(name);
+        ui->nameLabel->setToolTip(name);
+    }
+
+    if (core->getStatusMessage().isEmpty())
+    {
+        ui->statusLabel->setText(tr("Your status"));
+        ui->statusLabel->setToolTip(tr("Your status"));
+    }
+    else
+    {
+        ui->statusLabel->setText(status);
+        ui->statusLabel->setToolTip(status);
+    }
 
     filterDisplayName->setText(tr("By Name"));
     filterDisplayActivity->setText(tr("By Activity"));
